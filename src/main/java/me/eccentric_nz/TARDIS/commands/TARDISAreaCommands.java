@@ -51,7 +51,7 @@ public class TARDISAreaCommands implements CommandExecutor {
     @Override
     public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
         if (!sender.hasPermission("tardis.admin")) {
-            sender.sendMessage(plugin.pluginName + "You do not have permission to add TARDIS areas!");
+            sender.sendMessage(plugin.getPluginName() + "You do not have permission to add TARDIS areas!");
             return true;
         }
         Player player = null;
@@ -65,13 +65,13 @@ public class TARDISAreaCommands implements CommandExecutor {
                 return false;
             }
             if (player == null) {
-                sender.sendMessage(plugin.pluginName + ChatColor.RED + MESSAGE.MUST_BE_PLAYER.getText());
+                sender.sendMessage(plugin.getPluginName() + ChatColor.RED + MESSAGE.MUST_BE_PLAYER.getText());
                 return false;
             }
             if (args[0].equals("start")) {
                 // check name is unique and acceptable
                 if (args.length < 2 || !args[1].matches("[A-Za-z0-9_]{2,16}")) {
-                    sender.sendMessage(plugin.pluginName + "That doesn't appear to be a valid area name (it may be too long)" + ChatColor.GREEN + " /tardisarea start [area_name_goes_here]");
+                    sender.sendMessage(plugin.getPluginName() + "That doesn't appear to be a valid area name (it may be too long)" + ChatColor.GREEN + " /tardisarea start [area_name_goes_here]");
                     return false;
                 }
                 ResultSetAreas rsa = new ResultSetAreas(plugin, null, true);
@@ -79,46 +79,46 @@ public class TARDISAreaCommands implements CommandExecutor {
                     ArrayList<HashMap<String, String>> data = rsa.getData();
                     for (HashMap<String, String> map : data) {
                         if (map.get("area_name").equals(args[1])) {
-                            sender.sendMessage(plugin.pluginName + "Area name already in use!");
+                            sender.sendMessage(plugin.getPluginName() + "Area name already in use!");
                             return false;
                         }
                     }
                 }
-                plugin.trackName.put(player.getName(), args[1]);
-                player.sendMessage(plugin.pluginName + "Click the area start block to save its position.");
+                plugin.getTrackerKeeper().getTrackName().put(player.getName(), args[1]);
+                player.sendMessage(plugin.getPluginName() + "Click the area start block to save its position.");
                 return true;
             }
             if (args[0].equals("end")) {
-                if (!plugin.trackBlock.containsKey(player.getName())) {
-                    player.sendMessage(plugin.pluginName + ChatColor.RED + "You haven't selected an area start block!");
+                if (!plugin.getTrackerKeeper().getTrackBlock().containsKey(player.getName())) {
+                    player.sendMessage(plugin.getPluginName() + ChatColor.RED + "You haven't selected an area start block!");
                     return false;
                 }
-                plugin.trackEnd.put(player.getName(), "end");
-                player.sendMessage(plugin.pluginName + "Click the area end block to complete the area.");
+                plugin.getTrackerKeeper().getTrackEnd().put(player.getName(), "end");
+                player.sendMessage(plugin.getPluginName() + "Click the area end block to complete the area.");
                 return true;
             }
             if (args[0].equals("remove")) {
                 if (args.length < 2) {
-                    player.sendMessage(plugin.pluginName + "You need to supply an area name!");
+                    player.sendMessage(plugin.getPluginName() + "You need to supply an area name!");
                     return false;
                 }
                 HashMap<String, Object> where = new HashMap<String, Object>();
                 where.put("area_name", args[1]);
                 QueryFactory qf = new QueryFactory(plugin);
                 qf.doDelete("areas", where);
-                player.sendMessage(plugin.pluginName + "Area [" + args[1] + "] deleted!");
+                player.sendMessage(plugin.getPluginName() + "Area [" + args[1] + "] deleted!");
                 return true;
             }
             if (args[0].equals("show")) {
                 if (args.length < 2) {
-                    player.sendMessage(plugin.pluginName + "You need to supply an area name!");
+                    player.sendMessage(plugin.getPluginName() + "You need to supply an area name!");
                     return false;
                 }
                 HashMap<String, Object> where = new HashMap<String, Object>();
                 where.put("area_name", args[1]);
                 ResultSetAreas rsa = new ResultSetAreas(plugin, where, false);
                 if (!rsa.resultSet()) {
-                    player.sendMessage(plugin.pluginName + "Could not find area [" + args[1] + "]! Did you type the name correctly?");
+                    player.sendMessage(plugin.getPluginName() + "Could not find area [" + args[1] + "]! Did you type the name correctly?");
                     return false;
                 }
                 int mix = rsa.getMinx();

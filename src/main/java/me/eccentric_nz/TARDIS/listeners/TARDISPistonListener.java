@@ -37,9 +37,9 @@ public class TARDISPistonListener implements Listener {
     @EventHandler
     public void onPistonExtend(BlockPistonExtendEvent event) {
         Block b = event.getBlock();
-        if (plugin.pistons.contains(b)) {
+        if (plugin.getGeneralKeeper().getDoorPistons().contains(b)) {
             event.setCancelled(true);
-            plugin.pistons.remove(b);
+            plugin.getGeneralKeeper().getDoorPistons().remove(b);
         }
     }
 }

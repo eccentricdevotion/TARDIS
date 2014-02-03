@@ -36,14 +36,14 @@ public class TARDISExterminateCommand {
 
     public boolean doExterminate(CommandSender sender, Player player) {
         if (player == null) {
-            sender.sendMessage(plugin.pluginName + MESSAGE.MUST_BE_PLAYER.getText());
+            sender.sendMessage(plugin.getPluginName() + MESSAGE.MUST_BE_PLAYER.getText());
             return false;
         }
-        if (!plugin.trackExterminate.containsKey(player.getName())) {
-            sender.sendMessage(plugin.pluginName + "You must break the TARDIS Police Box sign first!");
+        if (!plugin.getTrackerKeeper().getTrackExterminate().containsKey(player.getName())) {
+            sender.sendMessage(plugin.getPluginName() + "You must break the TARDIS Police Box sign first!");
             return false;
         }
         TARDISExterminator del = new TARDISExterminator(plugin);
-        return del.exterminate(player, plugin.trackExterminate.get(player.getName()));
+        return del.exterminate(player, plugin.getTrackerKeeper().getTrackExterminate().get(player.getName()));
     }
 }

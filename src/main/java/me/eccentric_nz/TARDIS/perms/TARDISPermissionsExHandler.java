@@ -78,13 +78,13 @@ public class TARDISPermissionsExHandler {
 //            String grpstr = entry.getKey();
 //            List<String> perms = entry.getValue();
 //            // pex set default group <group> [world]
-//            plugin.getServer().dispatchCommand(plugin.console, "pex set default group " + grpstr + " TARDIS_WORLD_" + player);
+//            plugin.getServer().dispatchCommand(plugin.getConsole(), "pex set default group " + grpstr + " TARDIS_WORLD_" + player);
 //            for (String p : perms) {
 //                // pex group <group> add <permission> [world]
-//                plugin.getServer().dispatchCommand(plugin.console, "pex group " + grpstr + " add " + p + " TARDIS_WORLD_" + player);
+//                plugin.getServer().dispatchCommand(plugin.getConsole(), "pex group " + grpstr + " add " + p + " TARDIS_WORLD_" + player);
 //            }
 //            if (i == 0) {
-//                plugin.getServer().dispatchCommand(plugin.console, "pex user " + player + " group add " + grpstr + " TARDIS_WORLD_" + player);
+//                plugin.getServer().dispatchCommand(plugin.getConsole(), "pex user " + player + " group add " + grpstr + " TARDIS_WORLD_" + player);
 //                // pex user <user> group add <group> [world]
 //            }
 //            i++;
@@ -92,7 +92,7 @@ public class TARDISPermissionsExHandler {
         // get the default world
         String w = plugin.getServer().getWorlds().get(0).getName();
         // pex world <world> inherit <parentWorld> - make the TARDIS world inherit the main worlds permissions
-        plugin.getServer().dispatchCommand(plugin.console, "pex world " + "TARDIS_WORLD_" + player + " inherit " + w);
-        plugin.getServer().dispatchCommand(plugin.console, "pex reload");
+        plugin.getServer().dispatchCommand(plugin.getConsole(), "pex world " + "TARDIS_WORLD_" + player + " inherit " + w);
+        plugin.getServer().dispatchCommand(plugin.getConsole(), "pex reload");
     }
 }

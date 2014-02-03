@@ -23,7 +23,6 @@ import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import me.eccentric_nz.TARDIS.database.ResultSetTravellers;
 import me.eccentric_nz.TARDIS.enumeration.MESSAGE;
-import me.eccentric_nz.TARDIS.travel.TARDISPluginRespect;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -44,20 +43,19 @@ public class TARDISHomeCommand {
     @SuppressWarnings("deprecation")
     public boolean setHome(Player player, String[] args) {
         if (player.hasPermission("tardis.timetravel")) {
-            Location eyeLocation = player.getTargetBlock(plugin.tardisCommand.transparent, 50).getLocation();
+            Location eyeLocation = player.getTargetBlock(plugin.getGeneralKeeper().getTransparent(), 50).getLocation();
             if (!plugin.getConfig().getBoolean("travel.include_default_world") && plugin.getConfig().getBoolean("creation.default_world") && eyeLocation.getWorld().getName().equals(plugin.getConfig().getString("creation.default_world_name"))) {
-                player.sendMessage(plugin.pluginName + "The server admin will not allow you to set the TARDIS home in this world!");
+                player.sendMessage(plugin.getPluginName() + "The server admin will not allow you to set the TARDIS home in this world!");
                 return true;
             }
-            if (!plugin.ta.areaCheckInExisting(eyeLocation)) {
-                player.sendMessage(plugin.pluginName + "You cannot use /tardis home in a TARDIS area! Please use " + ChatColor.AQUA + "/tardistravel area [area name]");
+            if (!plugin.getTardisArea().areaCheckInExisting(eyeLocation)) {
+                player.sendMessage(plugin.getPluginName() + "You cannot use /tardis home in a TARDIS area! Please use " + ChatColor.AQUA + "/tardistravel area [area name]");
                 return true;
             }
-            TARDISPluginRespect respect = new TARDISPluginRespect(plugin);
-            if (!respect.getRespect(player, eyeLocation, true)) {
+            if (!plugin.getPluginRespect().getRespect(player, eyeLocation, true)) {
                 return true;
             }
-            Material m = player.getTargetBlock(plugin.tardisCommand.transparent, 50).getType();
+            Material m = player.getTargetBlock(plugin.getGeneralKeeper().getTransparent(), 50).getType();
             if (m != Material.SNOW) {
                 int yplusone = eyeLocation.getBlockY();
                 eyeLocation.setY(yplusone + 1);
@@ -65,14 +63,14 @@ public class TARDISHomeCommand {
             // check the world is not excluded
             String world = eyeLocation.getWorld().getName();
             if (!plugin.getConfig().getBoolean("worlds." + world)) {
-                player.sendMessage(plugin.pluginName + "You cannot set the TARDIS home location to this world");
+                player.sendMessage(plugin.getPluginName() + "You cannot set the TARDIS home location to this world");
                 return true;
             }
             HashMap<String, Object> where = new HashMap<String, Object>();
             where.put("owner", player.getName());
             ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);
             if (!rs.resultSet()) {
-                player.sendMessage(plugin.pluginName + MESSAGE.NOT_A_TIMELORD.getText());
+                player.sendMessage(plugin.getPluginName() + MESSAGE.NOT_A_TIMELORD.getText());
                 return false;
             }
             int id = rs.getTardis_id();
@@ -82,7 +80,7 @@ public class TARDISHomeCommand {
                 tcc.getCircuits();
             }
             if (tcc != null && !tcc.hasMemory()) {
-                player.sendMessage(plugin.pluginName + MESSAGE.NO_MEM_CIRCUIT.getText());
+                player.sendMessage(plugin.getPluginName() + MESSAGE.NO_MEM_CIRCUIT.getText());
                 return true;
             }
             // check they are not in the tardis
@@ -91,7 +89,7 @@ public class TARDISHomeCommand {
             wherettrav.put("tardis_id", id);
             ResultSetTravellers rst = new ResultSetTravellers(plugin, wherettrav, false);
             if (rst.resultSet()) {
-                player.sendMessage(plugin.pluginName + "You cannot set the home location here because you are inside a TARDIS!");
+                player.sendMessage(plugin.getPluginName() + "You cannot set the home location here because you are inside a TARDIS!");
                 return true;
             }
             QueryFactory qf = new QueryFactory(plugin);
@@ -104,10 +102,10 @@ public class TARDISHomeCommand {
             set.put("z", eyeLocation.getBlockZ());
             set.put("submarine", isSub(eyeLocation) ? 1 : 0);
             qf.doUpdate("homes", set, tid);
-            player.sendMessage(plugin.pluginName + "The new TARDIS home was set!");
+            player.sendMessage(plugin.getPluginName() + "The new TARDIS home was set!");
             return true;
         } else {
-            player.sendMessage(plugin.pluginName + MESSAGE.NO_PERMS.getText());
+            player.sendMessage(plugin.getPluginName() + MESSAGE.NO_PERMS.getText());
             return false;
         }
     }

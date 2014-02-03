@@ -65,7 +65,7 @@ public class TARDISRoomRemover {
         // get start locations
         int sx, sy, sz, ex, ey, ez, downy, upy;
         // calculate values for downy and upy from schematic dimensions / config
-        short[] dimensions = plugin.room_dimensions.get(r);
+        short[] dimensions = plugin.getBuildKeeper().getRoomDimensions().get(r);
         downy = Math.abs(plugin.getRoomsConfig().getInt("rooms." + r + ".offset"));
         upy = dimensions[0] - (downy + 1);
         int xzoffset = (dimensions[1] / 2);

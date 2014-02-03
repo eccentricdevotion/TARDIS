@@ -83,7 +83,7 @@ public class TARDISRecipeCommands implements CommandExecutor {
     public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
         if (cmd.getName().equalsIgnoreCase("tardisrecipe")) {
             if (!sender.hasPermission("tardis.create")) {
-                sender.sendMessage(plugin.pluginName + MESSAGE.NO_PERMS.getText());
+                sender.sendMessage(plugin.getPluginName() + MESSAGE.NO_PERMS.getText());
                 return false;
             }
             Player player = null;
@@ -94,12 +94,12 @@ public class TARDISRecipeCommands implements CommandExecutor {
                 if (!firstArgs.contains(args[0].toLowerCase(Locale.ENGLISH))) {
                     new TARDISRecipeLister(plugin, sender).list();
                 } else {
-                    sender.sendMessage(plugin.pluginName + MESSAGE.MUST_BE_PLAYER.getText());
+                    sender.sendMessage(plugin.getPluginName() + MESSAGE.MUST_BE_PLAYER.getText());
                 }
                 return true;
             }
             if (args.length < 1) {
-                sender.sendMessage(plugin.pluginName + MESSAGE.TOO_FEW_ARGS.getText());
+                sender.sendMessage(plugin.getPluginName() + MESSAGE.TOO_FEW_ARGS.getText());
                 return false;
             }
             if (!firstArgs.contains(args[0].toLowerCase(Locale.ENGLISH))) {
@@ -219,9 +219,9 @@ public class TARDISRecipeCommands implements CommandExecutor {
     }
 
     public void showShapedRecipe(Player p, String str) {
-        ShapedRecipe recipe = plugin.figura.getShapedRecipes().get(str);
+        ShapedRecipe recipe = plugin.getFigura().getShapedRecipes().get(str);
         p.closeInventory();
-        plugin.trackRecipeView.add(p.getName());
+        plugin.getTrackerKeeper().getTrackRecipeView().add(p.getName());
         final InventoryView view = p.openWorkbench(null, true);
         final String[] recipeShape = recipe.getShape();
         final Map<Character, ItemStack> ingredientMap = recipe.getIngredientMap();
@@ -243,9 +243,9 @@ public class TARDISRecipeCommands implements CommandExecutor {
     }
 
     public void showShapelessRecipe(Player player, String str) {
-        ShapelessRecipe recipe = plugin.incomposita.getShapelessRecipes().get(str);
+        ShapelessRecipe recipe = plugin.getIncomposita().getShapelessRecipes().get(str);
         final List<ItemStack> ingredients = recipe.getIngredientList();
-        plugin.trackRecipeView.add(player.getName());
+        plugin.getTrackerKeeper().getTrackRecipeView().add(player.getName());
         final InventoryView view = player.openWorkbench(null, true);
         for (int i = 0; i < ingredients.size(); i++) {
             if (ingredients.get(i).getType().equals(Material.MAP)) {

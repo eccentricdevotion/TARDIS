@@ -63,7 +63,7 @@ public class TARDISAnvilListener implements Listener {
                 if (is != null && is.hasItemMeta()) {
                     ItemMeta im = is.getItemMeta();
                     if (im.hasDisplayName() && disallow.containsKey(im.getDisplayName()) && is.getType() == disallow.get(im.getDisplayName())) {
-                        player.sendMessage(plugin.pluginName + "You cannot name the item that!");
+                        player.sendMessage(plugin.getPluginName() + "You cannot name the item that!");
                         event.setCancelled(true);
                     }
                 }

@@ -80,15 +80,15 @@ public class TARDISBlockDamageListener implements Listener {
             }
             boolean m = false;
             boolean isDoor = false;
-            if (HADS && !plugin.inVortex.contains(Integer.valueOf(id)) && isOwnerOnline(id)) {
+            if (HADS && !plugin.getTrackerKeeper().getTrackInVortex().contains(Integer.valueOf(id)) && isOwnerOnline(id)) {
                 if (b.getTypeId() == 71) {
                     if (isOwner(id, p.getName())) {
                         isDoor = true;
                     }
                 }
                 if (!isDoor && rsb.isPolice_box()) {
-                    int damage = (plugin.trackDamage.containsKey(Integer.valueOf(id))) ? plugin.trackDamage.get(Integer.valueOf(id)) : 0;
-                    plugin.trackDamage.put(Integer.valueOf(id), damage + 1);
+                    int damage = (plugin.getTrackerKeeper().getTrackDamage().containsKey(Integer.valueOf(id))) ? plugin.getTrackerKeeper().getTrackDamage().get(Integer.valueOf(id)) : 0;
+                    plugin.getTrackerKeeper().getTrackDamage().put(Integer.valueOf(id), damage + 1);
                     if (damage == plugin.getConfig().getInt("preferences.hads_damage")) {
                         new TARDISHostileDisplacement(plugin).moveTARDIS(id, p);
                         m = true;
@@ -98,7 +98,7 @@ public class TARDISBlockDamageListener implements Listener {
             }
             event.setCancelled(true);
             if (b.getTypeId() != 71 && !m) {
-                p.sendMessage(plugin.pluginName + message);
+                p.sendMessage(plugin.getPluginName() + message);
             }
         }
     }
@@ -137,7 +137,7 @@ public class TARDISBlockDamageListener implements Listener {
             wherecl.put("tardis_id", id);
             final ResultSetCurrentLocation rsc = new ResultSetCurrentLocation(plugin, wherecl);
             if (!rsc.resultSet()) {
-                player.sendMessage(plugin.pluginName + MESSAGE.NO_CURRENT.getText());
+                player.sendMessage(plugin.getPluginName() + MESSAGE.NO_CURRENT.getText());
             }
             final Location l = new Location(rsc.getWorld(), rsc.getX(), rsc.getY(), rsc.getZ());
             HashMap<String, Object> wheret = new HashMap<String, Object>();
@@ -147,7 +147,7 @@ public class TARDISBlockDamageListener implements Listener {
             plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
                 @Override
                 public void run() {
-                    plugin.builderP.buildPreset(id, l, rsc.getDirection(), c, p, true, false, rsc.isSubmarine());
+                    plugin.getPresetBuilder().buildPreset(id, l, rsc.getDirection(), c, p, true, false, rsc.isSubmarine());
                 }
             }, 5L);
             // set hidden to false

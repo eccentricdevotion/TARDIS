@@ -36,7 +36,7 @@ public class TARDISWallsLookup {
 
     private HashMap<String, String> getLookup() {
         HashMap<String, String> hmap = new HashMap<String, String>();
-        for (Map.Entry<String, int[]> entry : plugin.tw.blocks.entrySet()) {
+        for (Map.Entry<String, int[]> entry : plugin.getTardisWalls().blocks.entrySet()) {
             int[] value = entry.getValue();
             hmap.put(value[0] + ":" + value[1], entry.getKey());
         }

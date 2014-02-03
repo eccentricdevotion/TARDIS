@@ -43,25 +43,25 @@ public class TARDISFindCommand {
                 where.put("owner", player.getName());
                 ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);
                 if (!rs.resultSet()) {
-                    player.sendMessage(plugin.pluginName + MESSAGE.NO_TARDIS.getText());
+                    player.sendMessage(plugin.getPluginName() + MESSAGE.NO_TARDIS.getText());
                     return false;
                 }
                 HashMap<String, Object> wherecl = new HashMap<String, Object>();
                 wherecl.put("tardis_id", rs.getTardis_id());
                 ResultSetCurrentLocation rsc = new ResultSetCurrentLocation(plugin, wherecl);
                 if (rsc.resultSet()) {
-                    player.sendMessage(plugin.pluginName + "TARDIS was left at " + rsc.getWorld().getName() + " at x: " + rsc.getX() + " y: " + rsc.getY() + " z: " + rsc.getZ());
+                    player.sendMessage(plugin.getPluginName() + "TARDIS was left at " + rsc.getWorld().getName() + " at x: " + rsc.getX() + " y: " + rsc.getY() + " z: " + rsc.getZ());
                     return true;
                 } else {
-                    player.sendMessage(plugin.pluginName + MESSAGE.NO_CURRENT.getText());
+                    player.sendMessage(plugin.getPluginName() + MESSAGE.NO_CURRENT.getText());
                     return true;
                 }
             } else {
-                player.sendMessage(plugin.pluginName + MESSAGE.NO_PERMS.getText());
+                player.sendMessage(plugin.getPluginName() + MESSAGE.NO_PERMS.getText());
                 return false;
             }
         } else {
-            player.sendMessage(plugin.pluginName + "You need to craft a TARDIS Locator! Type " + ChatColor.AQUA + "/tardisrecipe locator" + ChatColor.RESET + " to see how to make it.");
+            player.sendMessage(plugin.getPluginName() + "You need to craft a TARDIS Locator! Type " + ChatColor.AQUA + "/tardisrecipe locator" + ChatColor.RESET + " to see how to make it.");
             return true;
         }
     }

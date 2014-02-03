@@ -38,12 +38,12 @@ public class TARDISSignColourCommand {
     public boolean setColour(CommandSender sender, String[] args) {
         String colour = args[1].toUpperCase();
         if (!COLOURS.contains(colour)) {
-            sender.sendMessage(plugin.pluginName + "Incorrect colour specified, please check http://jd.bukkit.org/rb/apidocs/org/bukkit/ChatColor.html!");
+            sender.sendMessage(plugin.getPluginName() + "Incorrect colour specified, please check http://jd.bukkit.org/rb/apidocs/org/bukkit/ChatColor.html!");
             return true;
         }
         plugin.getConfig().set("police_box.sign_colour", colour);
         plugin.saveConfig();
-        sender.sendMessage(plugin.pluginName + MESSAGE.CONFIG_UPDATED.getText());
+        sender.sendMessage(plugin.getPluginName() + MESSAGE.CONFIG_UPDATED.getText());
         return true;
     }
 }

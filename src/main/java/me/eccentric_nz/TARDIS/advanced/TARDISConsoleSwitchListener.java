@@ -103,7 +103,7 @@ public class TARDISConsoleSwitchListener implements Listener {
                                 }
                             }, 1L);
                         } else {
-                            p.sendMessage(plugin.pluginName + MESSAGE.NO_TARDIS.getText());
+                            p.sendMessage(plugin.getPluginName() + MESSAGE.NO_TARDIS.getText());
                         }
                     }
                 }

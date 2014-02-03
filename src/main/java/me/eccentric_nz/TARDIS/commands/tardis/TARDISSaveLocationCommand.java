@@ -44,15 +44,15 @@ public class TARDISSaveLocationCommand {
             where.put("owner", player.getName());
             ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);
             if (!rs.resultSet()) {
-                player.sendMessage(plugin.pluginName + MESSAGE.NO_TARDIS.getText());
+                player.sendMessage(plugin.getPluginName() + MESSAGE.NO_TARDIS.getText());
                 return false;
             }
             if (args.length < 2) {
-                player.sendMessage(plugin.pluginName + MESSAGE.TOO_FEW_ARGS.getText());
+                player.sendMessage(plugin.getPluginName() + MESSAGE.TOO_FEW_ARGS.getText());
                 return false;
             }
             if (!args[1].matches("[A-Za-z0-9_]{2,16}")) {
-                player.sendMessage(plugin.pluginName + "That doesn't appear to be a valid save name (it may be too long or contain spaces).");
+                player.sendMessage(plugin.getPluginName() + "That doesn't appear to be a valid save name (it may be too long or contain spaces).");
                 return false;
             } else {
                 int id = rs.getTardis_id();
@@ -62,7 +62,7 @@ public class TARDISSaveLocationCommand {
                     tcc.getCircuits();
                 }
                 if (tcc != null && !tcc.hasMemory()) {
-                    player.sendMessage(plugin.pluginName + MESSAGE.NO_MEM_CIRCUIT.getText());
+                    player.sendMessage(plugin.getPluginName() + MESSAGE.NO_MEM_CIRCUIT.getText());
                     return true;
                 }
                 // check has unique name
@@ -72,7 +72,7 @@ public class TARDISSaveLocationCommand {
                 wherename.put("type", 0);
                 ResultSetDestinations rsd = new ResultSetDestinations(plugin, wherename, false);
                 if (rsd.resultSet()) {
-                    player.sendMessage(plugin.pluginName + "You already have a save with that name!");
+                    player.sendMessage(plugin.getPluginName() + "You already have a save with that name!");
                     return true;
                 }
                 // get current destination
@@ -80,7 +80,7 @@ public class TARDISSaveLocationCommand {
                 wherecl.put("tardis_id", rs.getTardis_id());
                 ResultSetCurrentLocation rsc = new ResultSetCurrentLocation(plugin, wherecl);
                 if (!rsc.resultSet()) {
-                    player.sendMessage(plugin.pluginName + MESSAGE.NO_CURRENT.getText());
+                    player.sendMessage(plugin.getPluginName() + MESSAGE.NO_CURRENT.getText());
                     return true;
                 }
                 QueryFactory qf = new QueryFactory(plugin);
@@ -96,12 +96,12 @@ public class TARDISSaveLocationCommand {
                 if (qf.doSyncInsert("destinations", set) < 0) {
                     return false;
                 } else {
-                    player.sendMessage(plugin.pluginName + "The location '" + args[1] + "' was saved successfully.");
+                    player.sendMessage(plugin.getPluginName() + "The location '" + args[1] + "' was saved successfully.");
                     return true;
                 }
             }
         } else {
-            player.sendMessage(plugin.pluginName + MESSAGE.NO_PERMS.getText());
+            player.sendMessage(plugin.getPluginName() + MESSAGE.NO_PERMS.getText());
             return false;
         }
     }

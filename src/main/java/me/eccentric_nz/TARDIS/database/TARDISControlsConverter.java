@@ -62,41 +62,41 @@ public class TARDISControlsConverter {
                 // insert values from tardis table
                 ps = connection.prepareStatement("INSERT INTO controls (tardis_id, type, location) VALUES (?,?,?)");
                 for (HashMap<String, String> map : data) {
-                    int id = plugin.utils.parseInt(map.get("tardis_id"));
+                    int id = plugin.getUtils().parseInt(map.get("tardis_id"));
                     String tmph;
                     if (map.get("handbrake") == null || map.get("handbrake").isEmpty()) {
                         tmph = estimateHandbrake(map.get("size"), map.get("chameleon"));
-                        plugin.console.sendMessage(plugin.pluginName + ChatColor.RED + "Handbrake location not found, making an educated guess...");
+                        plugin.getConsole().sendMessage(plugin.getPluginName() + ChatColor.RED + "Handbrake location not found, making an educated guess...");
                     } else {
                         tmph = map.get("handbrake");
                     }
                     String tmpb;
                     if (map.get("button") == null || map.get("button").isEmpty()) {
                         tmpb = estimateButton(map.get("size"), map.get("chameleon"));
-                        plugin.console.sendMessage(plugin.pluginName + ChatColor.RED + "Button location not found, making an educated guess...");
+                        plugin.getConsole().sendMessage(plugin.getPluginName() + ChatColor.RED + "Button location not found, making an educated guess...");
                     } else {
                         tmpb = map.get("button");
                     }
                     String tmpa;
                     if (map.get("artron_button") == null || map.get("artron_button").isEmpty()) {
                         tmpa = estimateArtron(map.get("size"), map.get("chameleon"));
-                        plugin.console.sendMessage(plugin.pluginName + ChatColor.RED + "Artron Button location not found, making an educated guess...");
+                        plugin.getConsole().sendMessage(plugin.getPluginName() + ChatColor.RED + "Artron Button location not found, making an educated guess...");
                     } else {
                         tmpa = map.get("artron_button");
                     }
                     String[] tmpr = new String[4];
                     if (map.get("repeater0") == null || map.get("repeater0").isEmpty()) {
                         tmpr = estimateRepeaters(map.get("size"), map.get("chameleon"));
-                        plugin.console.sendMessage(plugin.pluginName + ChatColor.RED + "Repeater locations not found, making an educated guess...");
+                        plugin.getConsole().sendMessage(plugin.getPluginName() + ChatColor.RED + "Repeater locations not found, making an educated guess...");
                     } else {
                         tmpr[0] = map.get("repeater0");
                         tmpr[1] = map.get("repeater1");
                         tmpr[2] = map.get("repeater2");
                         tmpr[3] = map.get("repeater3");
                     }
-                    String hb = plugin.utils.makeLocationStr(tmph);
-                    String bn = plugin.utils.makeLocationStr(tmpb);
-                    String ab = plugin.utils.makeLocationStr(tmpa);
+                    String hb = plugin.getUtils().makeLocationStr(tmph);
+                    String bn = plugin.getUtils().makeLocationStr(tmpb);
+                    String ab = plugin.getUtils().makeLocationStr(tmpa);
                     ps.setInt(1, id);
                     ps.setInt(2, 0);
                     ps.setString(3, hb);
@@ -149,7 +149,7 @@ public class TARDISControlsConverter {
                 }
             }
             if (i > 0) {
-                plugin.console.sendMessage(plugin.pluginName + "Converted " + i + " control consoles");
+                plugin.getConsole().sendMessage(plugin.getPluginName() + "Converted " + i + " control consoles");
                 plugin.getConfig().set("conversions.conversion_done", true);
                 plugin.saveConfig();
             }
@@ -159,9 +159,9 @@ public class TARDISControlsConverter {
     private String estimateHandbrake(String size, String cham) {
         SCHEMATIC s = SCHEMATIC.valueOf(size);
         String[] data = cham.split(":");
-        int x = plugin.utils.parseInt(data[1]);
-        int y = plugin.utils.parseInt(data[2]);
-        int z = plugin.utils.parseInt(data[3]);
+        int x = plugin.getUtils().parseInt(data[1]);
+        int y = plugin.getUtils().parseInt(data[2]);
+        int z = plugin.getUtils().parseInt(data[3]);
         switch (s) {
             case DELUXE:
                 return data[0] + ":" + (x + 1) + ":" + (y + 1) + ":" + (z - 2);
@@ -173,9 +173,9 @@ public class TARDISControlsConverter {
     private String estimateButton(String size, String cham) {
         SCHEMATIC s = SCHEMATIC.valueOf(size);
         String[] data = cham.split(":");
-        int x = plugin.utils.parseInt(data[1]);
-        int y = plugin.utils.parseInt(data[2]);
-        int z = plugin.utils.parseInt(data[3]);
+        int x = plugin.getUtils().parseInt(data[1]);
+        int y = plugin.getUtils().parseInt(data[2]);
+        int z = plugin.getUtils().parseInt(data[3]);
         switch (s) {
             case DELUXE:
                 return data[0] + ":" + (x - 1) + ":" + y + ":" + (z - 1);
@@ -187,9 +187,9 @@ public class TARDISControlsConverter {
     private String estimateArtron(String size, String cham) {
         SCHEMATIC s = SCHEMATIC.valueOf(size);
         String[] data = cham.split(":");
-        int x = plugin.utils.parseInt(data[1]);
-        int y = plugin.utils.parseInt(data[2]);
-        int z = plugin.utils.parseInt(data[3]);
+        int x = plugin.getUtils().parseInt(data[1]);
+        int y = plugin.getUtils().parseInt(data[2]);
+        int z = plugin.getUtils().parseInt(data[3]);
         switch (s) {
             case DELUXE:
                 return data[0] + ":" + (x + 5) + ":" + y + ":" + (z - 1);
@@ -202,9 +202,9 @@ public class TARDISControlsConverter {
         String[] r = new String[4];
         SCHEMATIC s = SCHEMATIC.valueOf(size);
         String[] data = cham.split(":");
-        int x = plugin.utils.parseInt(data[1]);
-        int y = plugin.utils.parseInt(data[2]);
-        int z = plugin.utils.parseInt(data[3]);
+        int x = plugin.getUtils().parseInt(data[1]);
+        int y = plugin.getUtils().parseInt(data[2]);
+        int z = plugin.getUtils().parseInt(data[3]);
         switch (s) {
             case DELUXE:
                 r[0] = data[0] + ":" + (x + 2) + ":" + (y + 1) + ":" + (z - 3); // environment

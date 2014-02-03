@@ -110,7 +110,7 @@ public class TARDISUtils {
         set.put("data", data);
         set.put("police_box", 1);
         qf.doInsert("blocks", set);
-        plugin.protectBlockMap.put(l, id);
+        plugin.getGeneralKeeper().getProtectBlockMap().put(l, id);
         // set the block
         b.setTypeId(m);
         b.setData(d, true);
@@ -145,7 +145,7 @@ public class TARDISUtils {
             set.put("data", b.getData());
             set.put("police_box", 1);
             qf.doInsert("blocks", set);
-            plugin.protectBlockMap.put(l, id);
+            plugin.getGeneralKeeper().getProtectBlockMap().put(l, id);
             // set the block
             b.setTypeId(m);
             b.setData(d, true);
@@ -218,34 +218,34 @@ public class TARDISUtils {
         short[] d;
         switch (schm) {
             case BIGGER:
-                d = plugin.biggerdimensions;
+                d = plugin.getBuildKeeper().getBiggerDimensions();
                 break;
             case DELUXE:
-                d = plugin.deluxedimensions;
+                d = plugin.getBuildKeeper().getDeluxeDimensions();
                 break;
             case ELEVENTH:
-                d = plugin.eleventhdimensions;
+                d = plugin.getBuildKeeper().getEleventhDimensions();
                 break;
             case REDSTONE:
-                d = plugin.redstonedimensions;
+                d = plugin.getBuildKeeper().getRedstoneDimensions();
                 break;
             case STEAMPUNK:
-                d = plugin.steampunkdimensions;
+                d = plugin.getBuildKeeper().getSteampunkDimensions();
                 break;
             case PLANK:
-                d = plugin.plankdimensions;
+                d = plugin.getBuildKeeper().getPlankDimensions();
                 break;
             case TOM:
-                d = plugin.tomdimensions;
+                d = plugin.getBuildKeeper().getTomDimensions();
                 break;
             case ARS:
-                d = plugin.arsdimensions;
+                d = plugin.getBuildKeeper().getARSDimensions();
                 break;
             case CUSTOM:
-                d = plugin.customdimensions;
+                d = plugin.getBuildKeeper().getCustomDimensions();
                 break;
             default:
-                d = plugin.budgetdimensions;
+                d = plugin.getBuildKeeper().getBudgetDimensions();
                 break;
         }
         int cw = roundUp(d[1], 16);
@@ -451,9 +451,9 @@ public class TARDISUtils {
         String[] yStr = loc_data[2].split("=");
         String[] zStr = loc_data[3].split("=");
         World w = plugin.getServer().getWorld(wStr[2].substring(0, (wStr[2].length() - 1)));
-        int x = plugin.utils.parseInt(xStr[1].substring(0, (xStr[1].length() - 2)));
-        int y = plugin.utils.parseInt(yStr[1].substring(0, (yStr[1].length() - 2)));
-        int z = plugin.utils.parseInt(zStr[1].substring(0, (zStr[1].length() - 2)));
+        int x = plugin.getUtils().parseInt(xStr[1].substring(0, (xStr[1].length() - 2)));
+        int y = plugin.getUtils().parseInt(yStr[1].substring(0, (yStr[1].length() - 2)));
+        int z = plugin.getUtils().parseInt(zStr[1].substring(0, (zStr[1].length() - 2)));
         return new Location(w, x, y, z);
     }
 

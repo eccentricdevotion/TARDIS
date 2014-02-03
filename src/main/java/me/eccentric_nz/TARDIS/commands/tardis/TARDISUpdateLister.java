@@ -41,7 +41,7 @@ public class TARDISUpdateLister {
     }
 
     public void list() {
-        player.sendMessage(plugin.pluginName + "You can update the postion of the following:");
+        player.sendMessage(plugin.getPluginName() + "You can update the postion of the following:");
         player.sendMessage(ChatColor.GRAY + "    Command argument" + ChatColor.RESET + " - " + ChatColor.DARK_GRAY + "Description");
         for (Map.Entry<String, List<String>> map : options.entrySet()) {
             player.sendMessage(map.getKey());

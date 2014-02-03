@@ -29,7 +29,6 @@ import me.eccentric_nz.TARDIS.database.ResultSetCurrentLocation;
 import me.eccentric_nz.TARDIS.database.ResultSetPlayerPrefs;
 import me.eccentric_nz.TARDIS.database.ResultSetTravellers;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
-import me.eccentric_nz.TARDIS.travel.TARDISPluginRespect;
 import me.eccentric_nz.TARDIS.travel.TARDISTimeTravel;
 import org.bukkit.Location;
 import org.bukkit.World;
@@ -151,12 +150,12 @@ public class TARDISTerminalListener implements Listener {
                                 HashMap<String, Object> wheret = new HashMap<String, Object>();
                                 wheret.put("tardis_id", terminalIDs.get(playerNameStr));
                                 new QueryFactory(plugin).doUpdate("next", set, wheret);
-                                plugin.tardisHasDestination.put(terminalIDs.get(playerNameStr), plugin.getArtronConfig().getInt("random"));
-                                if (plugin.trackRescue.containsKey(terminalIDs.get(playerNameStr))) {
-                                    plugin.trackRescue.remove(terminalIDs.get(playerNameStr));
+                                plugin.getTrackerKeeper().getTrackHasDestination().put(terminalIDs.get(playerNameStr), plugin.getArtronConfig().getInt("random"));
+                                if (plugin.getTrackerKeeper().getTrackRescue().containsKey(terminalIDs.get(playerNameStr))) {
+                                    plugin.getTrackerKeeper().getTrackRescue().remove(terminalIDs.get(playerNameStr));
                                 }
                                 close(player);
-                                player.sendMessage(plugin.pluginName + "Destination set. Please release the handbrake!");
+                                player.sendMessage(plugin.getPluginName() + "Destination set. Please release the handbrake!");
                             } else {
                                 // set lore
                                 ItemStack is = inv.getItem(49);
@@ -424,7 +423,6 @@ public class TARDISTerminalListener implements Listener {
                     World w = plugin.getServer().getWorld(world);
                     e = w.getEnvironment();
                     TARDISTimeTravel tt = new TARDISTimeTravel(plugin);
-                    TARDISPluginRespect respect = new TARDISPluginRespect(plugin);
                     if (world.equals(terminalUsers.get(name).getWorld().getName())) {
                         // add current co-ords
                         slotx += terminalUsers.get(name).getX();
@@ -440,7 +438,7 @@ public class TARDISTerminalListener implements Listener {
                                 int esafe = tt.safeLocation(estart[0], endy, estart[2], estart[1], estart[3], w, d);
                                 if (esafe == 0) {
                                     String save = world + ":" + slotx + ":" + endy + ":" + slotz;
-                                    if (respect.getRespect(p, new Location(w, slotx, endy, slotz), false)) {
+                                    if (plugin.getPluginRespect().getRespect(p, new Location(w, slotx, endy, slotz), false)) {
                                         terminalDestination.put(name, save);
                                         lore.add(save);
                                         lore.add("is a valid destination!");
@@ -481,7 +479,7 @@ public class TARDISTerminalListener implements Listener {
                             // check submarine
                             ItemMeta subim = inv.getItem(44).getItemMeta();
                             loc.setY(starty);
-                            if (subim.hasLore() && subim.getLore().get(0).equals("true") && plugin.utils.isOceanBiome(loc.getBlock().getBiome())) {
+                            if (subim.hasLore() && subim.getLore().get(0).equals("true") && plugin.getUtils().isOceanBiome(loc.getBlock().getBiome())) {
                                 Location subloc = tt.submarine(loc.getBlock(), d);
                                 if (subloc != null) {
                                     safe = 0;
@@ -495,7 +493,7 @@ public class TARDISTerminalListener implements Listener {
                             }
                             if (safe == 0) {
                                 String save = world + ":" + slotx + ":" + starty + ":" + slotz;
-                                if (respect.getRespect(p, new Location(w, slotx, starty, slotz), false)) {
+                                if (plugin.getPluginRespect().getRespect(p, new Location(w, slotx, starty, slotz), false)) {
                                     terminalDestination.put(name, save);
                                     lore.add(save);
                                     lore.add("is a valid destination!");

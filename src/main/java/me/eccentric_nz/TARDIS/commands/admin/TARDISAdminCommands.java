@@ -170,7 +170,7 @@ public class TARDISAdminCommands implements CommandExecutor {
                 }
                 String first = args[0].toLowerCase(Locale.ENGLISH);
                 if (!firstsStr.containsKey(first) && !firstsBool.containsKey(first) && !firstsInt.containsKey(first) && !firstsIntArtron.contains(first) && !firstsStrArtron.contains(first)) {
-                    sender.sendMessage(plugin.pluginName + "TARDIS does not recognise that command argument!");
+                    sender.sendMessage(plugin.getPluginName() + "TARDIS does not recognise that command argument!");
                     return false;
                 }
                 if (args.length == 1) {
@@ -185,7 +185,7 @@ public class TARDISAdminCommands implements CommandExecutor {
                     return new TARDISListTardisesCommand(plugin).listTardises(sender, args);
                 }
                 if (args.length < 2) {
-                    sender.sendMessage(plugin.pluginName + MESSAGE.TOO_FEW_ARGS.getText());
+                    sender.sendMessage(plugin.getPluginName() + MESSAGE.TOO_FEW_ARGS.getText());
                     return false;
                 }
                 if (first.equals("config")) {
@@ -194,7 +194,7 @@ public class TARDISAdminCommands implements CommandExecutor {
                 if (first.equals("database")) {
                     String dbtype = args[1].toLowerCase(Locale.ENGLISH);
                     if (!dbtype.equals("mysql") && !dbtype.equals("sqlite")) {
-                        sender.sendMessage(plugin.pluginName + "TARDIS database type must be one of 'mysql' or 'sqlite'!");
+                        sender.sendMessage(plugin.getPluginName() + "TARDIS database type must be one of 'mysql' or 'sqlite'!");
                         return true;
                     }
                     plugin.getConfig().set("database", dbtype);
@@ -240,14 +240,14 @@ public class TARDISAdminCommands implements CommandExecutor {
                 }
                 if (first.equals("difficulty")) {
                     if (!args[1].equalsIgnoreCase("easy") && !args[1].equalsIgnoreCase("hard")) {
-                        sender.sendMessage(plugin.pluginName + ChatColor.RED + "Difficulty must be easy or hard!");
+                        sender.sendMessage(plugin.getPluginName() + ChatColor.RED + "Difficulty must be easy or hard!");
                         return true;
                     }
                     plugin.getConfig().set("preferences.difficulty", args[1].toLowerCase(Locale.ENGLISH));
                 }
                 if (first.equals("gamemode")) {
                     if (!args[1].equalsIgnoreCase("creative") && !args[1].equalsIgnoreCase("survival")) {
-                        sender.sendMessage(plugin.pluginName + ChatColor.RED + "Gamemode must be creative or survival!");
+                        sender.sendMessage(plugin.getPluginName() + ChatColor.RED + "Gamemode must be creative or survival!");
                         return true;
                     }
                     plugin.getConfig().set("creation.gamemode", args[1].toLowerCase(Locale.ENGLISH));
@@ -274,10 +274,10 @@ public class TARDISAdminCommands implements CommandExecutor {
                     return new TARDISSetIntegerCommand(plugin).setConfigInt(sender, args);
                 }
                 plugin.saveConfig();
-                sender.sendMessage(plugin.pluginName + MESSAGE.CONFIG_UPDATED.getText());
+                sender.sendMessage(plugin.getPluginName() + MESSAGE.CONFIG_UPDATED.getText());
                 return true;
             } else {
-                sender.sendMessage(plugin.pluginName + ChatColor.RED + " You must be an Admin to run this command.");
+                sender.sendMessage(plugin.getPluginName() + ChatColor.RED + " You must be an Admin to run this command.");
                 return false;
             }
         }

@@ -62,7 +62,7 @@ public class TARDISFireListener implements Listener {
         for (BlockFace bf : faces) {
             Block chkBlock = b.getRelative(bf);
             String l = chkBlock.getLocation().toString();
-            if (plugin.protectBlockMap.containsKey(l) && !chkBlock.getType().equals(Material.BEDROCK)) {
+            if (plugin.getGeneralKeeper().getProtectBlockMap().containsKey(l) && !chkBlock.getType().equals(Material.BEDROCK)) {
                 event.setCancelled(true);
                 break;
             }
@@ -73,7 +73,7 @@ public class TARDISFireListener implements Listener {
     public void onBlockBurn(BlockBurnEvent event) {
         Block b = event.getBlock();
         String l = b.getLocation().toString();
-        if (plugin.protectBlockMap.containsKey(l)) {
+        if (plugin.getGeneralKeeper().getProtectBlockMap().containsKey(l)) {
             event.setCancelled(true);
         }
     }

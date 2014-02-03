@@ -42,12 +42,12 @@ public class TARDISSetMaterialCommand {
         String first = (section.isEmpty()) ? args[0].toLowerCase() : section + "." + args[0].toLowerCase();
         String setMaterial = args[1].toUpperCase(Locale.ENGLISH);
         if (!checkMaterial(setMaterial)) {
-            sender.sendMessage(plugin.pluginName + ChatColor.RED + MESSAGE.NOT_VALID_MATERIAL.getText());
+            sender.sendMessage(plugin.getPluginName() + ChatColor.RED + MESSAGE.NOT_VALID_MATERIAL.getText());
             return false;
         } else {
             plugin.getConfig().set(first, setMaterial);
             plugin.saveConfig();
-            sender.sendMessage(plugin.pluginName + MESSAGE.CONFIG_UPDATED.getText());
+            sender.sendMessage(plugin.getPluginName() + MESSAGE.CONFIG_UPDATED.getText());
             return true;
         }
     }
@@ -56,7 +56,7 @@ public class TARDISSetMaterialCommand {
         String first = args[0].toLowerCase();
         String setMaterial = args[1].toUpperCase(Locale.ENGLISH);
         if (!checkMaterial(setMaterial)) {
-            sender.sendMessage(plugin.pluginName + ChatColor.RED + MESSAGE.NOT_VALID_MATERIAL.getText());
+            sender.sendMessage(plugin.getPluginName() + ChatColor.RED + MESSAGE.NOT_VALID_MATERIAL.getText());
             return false;
         } else {
             plugin.getArtronConfig().set(first, setMaterial);
@@ -65,7 +65,7 @@ public class TARDISSetMaterialCommand {
             } catch (IOException io) {
                 plugin.debug("Could not save artron.yml, " + io);
             }
-            sender.sendMessage(plugin.pluginName + MESSAGE.CONFIG_UPDATED.getText());
+            sender.sendMessage(plugin.getPluginName() + MESSAGE.CONFIG_UPDATED.getText());
             return true;
         }
     }

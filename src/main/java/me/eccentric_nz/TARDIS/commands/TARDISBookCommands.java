@@ -63,7 +63,7 @@ public class TARDISBookCommands implements CommandExecutor {
                 String first = args[0].toLowerCase(Locale.ENGLISH);
                 if (first.equals("list")) {
                     int b = 1;
-                    sender.sendMessage(TARDIS.plugin.pluginName + "The books of Rassilon");
+                    sender.sendMessage(TARDIS.plugin.getPluginName() + "The books of Rassilon");
                     for (Map.Entry<String, String> entry : books.entrySet()) {
                         sender.sendMessage(b + ". [" + entry.getKey() + "] - " + entry.getValue());
                         b++;
@@ -75,16 +75,16 @@ public class TARDISBookCommands implements CommandExecutor {
                     player = (Player) sender;
                 }
                 if (player == null) {
-                    sender.sendMessage(plugin.pluginName + MESSAGE.MUST_BE_PLAYER.getText());
+                    sender.sendMessage(plugin.getPluginName() + MESSAGE.MUST_BE_PLAYER.getText());
                     return true;
                 }
                 if (args.length < 2) {
-                    sender.sendMessage(plugin.pluginName + "You need to specify a book name!");
+                    sender.sendMessage(plugin.getPluginName() + "You need to specify a book name!");
                     return false;
                 }
                 String bookname = args[1].toLowerCase(Locale.ENGLISH);
                 if (!books.containsKey(bookname)) {
-                    sender.sendMessage(plugin.pluginName + "Could not find that book!");
+                    sender.sendMessage(plugin.getPluginName() + "Could not find that book!");
                     return true;
                 }
                 if (first.equals("get")) {
@@ -95,8 +95,8 @@ public class TARDISBookCommands implements CommandExecutor {
                     return true;
                 }
                 if (first.equals("start")) {
-                    if (plugin.getAchivementConfig().getBoolean(bookname + ".auto")) {
-                        sender.sendMessage(plugin.pluginName + "This achievement is awarded automatically!");
+                    if (plugin.getAchievementConfig().getBoolean(bookname + ".auto")) {
+                        sender.sendMessage(plugin.getPluginName() + "This achievement is awarded automatically!");
                         return true;
                     }
                     // check they have not already started the achievement
@@ -106,12 +106,12 @@ public class TARDISBookCommands implements CommandExecutor {
                     ResultSetAchievements rsa = new ResultSetAchievements(plugin, where, false);
                     if (rsa.resultSet()) {
                         if (rsa.isCompleted()) {
-                            if (!plugin.getAchivementConfig().getBoolean(bookname + ".repeatable")) {
-                                sender.sendMessage(plugin.pluginName + "This achievement can only be gained once!");
+                            if (!plugin.getAchievementConfig().getBoolean(bookname + ".repeatable")) {
+                                sender.sendMessage(plugin.getPluginName() + "This achievement can only be gained once!");
                                 return true;
                             }
                         } else {
-                            sender.sendMessage(plugin.pluginName + "You have already started this achievement!");
+                            sender.sendMessage(plugin.getPluginName() + "You have already started this achievement!");
                             return true;
                         }
                     }
@@ -120,7 +120,7 @@ public class TARDISBookCommands implements CommandExecutor {
                     set.put("name", bookname);
                     QueryFactory qf = new QueryFactory(plugin);
                     qf.doInsert("achievements", set);
-                    sender.sendMessage(plugin.pluginName + "Achievement '" + bookname + "' started!");
+                    sender.sendMessage(plugin.getPluginName() + "Achievement '" + bookname + "' started!");
                     return true;
                 }
             }
@@ -130,10 +130,10 @@ public class TARDISBookCommands implements CommandExecutor {
 
     private LinkedHashMap<String, String> getAchievements() {
         LinkedHashMap<String, String> map = new LinkedHashMap<String, String>();
-        Set<String> aset = plugin.getAchivementConfig().getRoot().getKeys(false);
+        Set<String> aset = plugin.getAchievementConfig().getRoot().getKeys(false);
         for (String a : aset) {
-            if (plugin.getAchivementConfig().getBoolean(a + ".enabled")) {
-                String title_reward = plugin.getAchivementConfig().getString(a + ".name") + " - " + plugin.getAchivementConfig().getString(a + ".reward_type") + ":" + plugin.getAchivementConfig().getString(a + ".reward_amount");
+            if (plugin.getAchievementConfig().getBoolean(a + ".enabled")) {
+                String title_reward = plugin.getAchievementConfig().getString(a + ".name") + " - " + plugin.getAchievementConfig().getString(a + ".reward_type") + ":" + plugin.getAchievementConfig().getString(a + ".reward_amount");
                 map.put(a, title_reward);
             }
         }

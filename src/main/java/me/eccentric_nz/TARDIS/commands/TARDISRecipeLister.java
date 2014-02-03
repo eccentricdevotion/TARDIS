@@ -41,7 +41,7 @@ public class TARDISRecipeLister {
     }
 
     public void list() {
-        sender.sendMessage(plugin.pluginName + "You can view the following recipes:");
+        sender.sendMessage(plugin.getPluginName() + "You can view the following recipes:");
         sender.sendMessage(ChatColor.GRAY + "    Command argument" + ChatColor.RESET + " - " + ChatColor.DARK_GRAY + "Recipe Result");
         for (Map.Entry<String, List<String>> map : options.entrySet()) {
             sender.sendMessage(map.getKey());

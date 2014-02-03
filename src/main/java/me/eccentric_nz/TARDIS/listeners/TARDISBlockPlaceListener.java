@@ -30,7 +30,6 @@ import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
 import me.eccentric_nz.TARDIS.enumeration.MESSAGE;
 import me.eccentric_nz.TARDIS.enumeration.SCHEMATIC;
-import me.eccentric_nz.TARDIS.utility.TARDISUtils;
 import org.bukkit.ChatColor;
 import org.bukkit.Chunk;
 import org.bukkit.Location;
@@ -55,13 +54,12 @@ import org.bukkit.event.block.BlockPlaceEvent;
 public class TARDISBlockPlaceListener implements Listener {
 
     private final TARDIS plugin;
-    private final TARDISUtils utils;
+
     private final List<Material> blocks = new ArrayList<Material>();
     private Material custom;
 
     public TARDISBlockPlaceListener(TARDIS plugin) {
         this.plugin = plugin;
-        this.utils = new TARDISUtils(plugin);
         blocks.add(Material.IRON_BLOCK); // budget
         blocks.add(Material.GOLD_BLOCK); // bigger
         blocks.add(Material.DIAMOND_BLOCK); // deluxe
@@ -88,9 +86,9 @@ public class TARDISBlockPlaceListener implements Listener {
     @EventHandler
     public void onPlayerBlockPlace(BlockPlaceEvent event) {
         final Player player = event.getPlayer();
-        if (plugin.zeroRoomOccupants.contains(player.getName())) {
+        if (plugin.getTrackerKeeper().getTrackZeroRoomOccupants().contains(player.getName())) {
             event.setCancelled(true);
-            player.sendMessage(plugin.pluginName + MESSAGE.NOT_IN_ZERO.getText());
+            player.sendMessage(plugin.getPluginName() + MESSAGE.NOT_IN_ZERO.getText());
             return;
         }
         Block block = event.getBlockPlaced();
@@ -112,7 +110,7 @@ public class TARDISBlockPlaceListener implements Listener {
                     if (rsc.resultSet()) {
                         player_count = rsc.getCount();
                         if (player_count == max_count) {
-                            player.sendMessage(plugin.pluginName + "You have used up your quota of TARDISes!");
+                            player.sendMessage(plugin.getPluginName() + "You have used up your quota of TARDISes!");
                             return;
                         }
                     }
@@ -125,7 +123,7 @@ public class TARDISBlockPlaceListener implements Listener {
                         if (player.hasPermission("tardis.bigger")) {
                             schm = SCHEMATIC.BIGGER;
                         } else {
-                            player.sendMessage(plugin.pluginName + "You don't have permission to create a 'bigger' TARDIS!");
+                            player.sendMessage(plugin.getPluginName() + "You don't have permission to create a 'bigger' TARDIS!");
                             return;
                         }
                         break;
@@ -133,7 +131,7 @@ public class TARDISBlockPlaceListener implements Listener {
                         if (player.hasPermission("tardis.deluxe")) {
                             schm = SCHEMATIC.DELUXE;
                         } else {
-                            player.sendMessage(plugin.pluginName + "You don't have permission to create a 'deluxe' TARDIS!");
+                            player.sendMessage(plugin.getPluginName() + "You don't have permission to create a 'deluxe' TARDIS!");
                             return;
                         }
                         break;
@@ -141,7 +139,7 @@ public class TARDISBlockPlaceListener implements Listener {
                         if (player.hasPermission("tardis.eleventh")) {
                             schm = SCHEMATIC.ELEVENTH;
                         } else {
-                            player.sendMessage(plugin.pluginName + "You don't have permission to create an 'eleventh Doctor's' TARDIS!");
+                            player.sendMessage(plugin.getPluginName() + "You don't have permission to create an 'eleventh Doctor's' TARDIS!");
                             return;
                         }
                         break;
@@ -149,7 +147,7 @@ public class TARDISBlockPlaceListener implements Listener {
                         if (player.hasPermission("tardis.redstone")) {
                             schm = SCHEMATIC.REDSTONE;
                         } else {
-                            player.sendMessage(plugin.pluginName + "You don't have permission to create a 'redstone' TARDIS!");
+                            player.sendMessage(plugin.getPluginName() + "You don't have permission to create a 'redstone' TARDIS!");
                             return;
                         }
                         break;
@@ -157,7 +155,7 @@ public class TARDISBlockPlaceListener implements Listener {
                         if (player.hasPermission("tardis.steampunk")) {
                             schm = SCHEMATIC.STEAMPUNK;
                         } else {
-                            player.sendMessage(plugin.pluginName + "You don't have permission to create a 'steampunk' TARDIS!");
+                            player.sendMessage(plugin.getPluginName() + "You don't have permission to create a 'steampunk' TARDIS!");
                             return;
                         }
                         break;
@@ -165,7 +163,7 @@ public class TARDISBlockPlaceListener implements Listener {
                         if (player.hasPermission("tardis.tom")) {
                             schm = SCHEMATIC.TOM;
                         } else {
-                            player.sendMessage(plugin.pluginName + "You don't have permission to create a '4th Doctor's' TARDIS!");
+                            player.sendMessage(plugin.getPluginName() + "You don't have permission to create a '4th Doctor's' TARDIS!");
                             return;
                         }
                         break;
@@ -173,7 +171,7 @@ public class TARDISBlockPlaceListener implements Listener {
                         if (player.hasPermission("tardis.plank")) {
                             schm = SCHEMATIC.PLANK;
                         } else {
-                            player.sendMessage(plugin.pluginName + "You don't have permission to create a 'wood' TARDIS!");
+                            player.sendMessage(plugin.getPluginName() + "You don't have permission to create a 'wood' TARDIS!");
                             return;
                         }
                         break;
@@ -181,7 +179,7 @@ public class TARDISBlockPlaceListener implements Listener {
                         if (player.hasPermission("tardis.ars")) {
                             schm = SCHEMATIC.ARS;
                         } else {
-                            player.sendMessage(plugin.pluginName + "You don't have permission to create an 'ARS' TARDIS!");
+                            player.sendMessage(plugin.getPluginName() + "You don't have permission to create an 'ARS' TARDIS!");
                             return;
                         }
                         break;
@@ -190,7 +188,7 @@ public class TARDISBlockPlaceListener implements Listener {
                             if (player.hasPermission("tardis.custom") && blockBottom.getType().equals(custom)) {
                                 schm = SCHEMATIC.CUSTOM;
                             } else {
-                                player.sendMessage(plugin.pluginName + "You don't have permission to create the server's custom' TARDIS!");
+                                player.sendMessage(plugin.getPluginName() + "You don't have permission to create the server's custom' TARDIS!");
                                 return;
                             }
                         } else {
@@ -238,13 +236,13 @@ public class TARDISBlockPlaceListener implements Listener {
                             }
                             cx = chunk.getX();
                             cz = chunk.getZ();
-                            if (!plugin.getConfig().getBoolean("creation.default_world") && utils.checkChunk(cw, cx, cz, schm)) {
-                                player.sendMessage(plugin.pluginName + "A TARDIS already exists at this location, please try another chunk!");
+                            if (!plugin.getConfig().getBoolean("creation.default_world") && plugin.getUtils().checkChunk(cw, cx, cz, schm)) {
+                                player.sendMessage(plugin.getPluginName() + "A TARDIS already exists at this location, please try another chunk!");
                                 return;
                             }
                         }
                         // get player direction
-                        final String d = plugin.utils.getPlayersDirection(player, false);
+                        final String d = plugin.getUtils().getPlayersDirection(player, false);
                         // save data to database (tardis table)
                         final Location block_loc = blockBottom.getLocation();
                         String chun = cw + ":" + cx + ":" + cz;
@@ -303,8 +301,8 @@ public class TARDISBlockPlaceListener implements Listener {
                         blockBelow.setTypeId(0);
                         blockBottom.setTypeId(0);
                         // turn the block stack into a TARDIS
-                        plugin.builderP.buildPreset(lastInsertId, block_loc, COMPASS.valueOf(d), false, player, false, false, isSub(blockBottom));
-                        plugin.builderI.buildInner(schm, chunkworld, lastInsertId, player, middle_id, middle_data, 35, (byte) 8, tips);
+                        plugin.getPresetBuilder().buildPreset(lastInsertId, block_loc, COMPASS.valueOf(d), false, player, false, false, isSub(blockBottom));
+                        plugin.getInteriorBuilder().buildInner(schm, chunkworld, lastInsertId, player, middle_id, middle_data, 35, (byte) 8, tips);
                         // set achievement completed
                         if (player.hasPermission("tardis.book")) {
                             HashMap<String, Object> seta = new HashMap<String, Object>();
@@ -314,10 +312,10 @@ public class TARDISBlockPlaceListener implements Listener {
                             wherea.put("name", "tardis");
                             qf.doUpdate("achievements", seta, wherea);
                             player.sendMessage(ChatColor.YELLOW + "Achievement Get!");
-                            player.sendMessage(ChatColor.WHITE + plugin.getAchivementConfig().getString("tardis.message"));
+                            player.sendMessage(ChatColor.WHITE + plugin.getAchievementConfig().getString("tardis.message"));
                         }
                         if (max_count > 0) {
-                            player.sendMessage(plugin.pluginName + "You have used up " + (player_count + 1) + " of " + max_count + " TARDIS builds!");
+                            player.sendMessage(plugin.getPluginName() + "You have used up " + (player_count + 1) + " of " + max_count + " TARDIS builds!");
                             HashMap<String, Object> setc = new HashMap<String, Object>();
                             setc.put("count", player_count + 1);
                             if (player_count > 0) {
@@ -336,20 +334,20 @@ public class TARDISBlockPlaceListener implements Listener {
                         wherecl.put("tardis_id", rs.getTardis_id());
                         ResultSetCurrentLocation rsc = new ResultSetCurrentLocation(plugin, wherecl);
                         if (rsc.resultSet()) {
-                            player.sendMessage(plugin.pluginName + "You already have a TARDIS, you left it in " + rsc.getWorld().getName() + " at x:" + rsc.getX() + " y:" + rsc.getY() + " z:" + rsc.getZ());
+                            player.sendMessage(plugin.getPluginName() + "You already have a TARDIS, you left it in " + rsc.getWorld().getName() + " at x:" + rsc.getX() + " y:" + rsc.getY() + " z:" + rsc.getZ());
                         } else {
-                            player.sendMessage(plugin.pluginName + "You already have a TARDIS, but we couldn't find it! Try calling it to you.");
+                            player.sendMessage(plugin.getPluginName() + "You already have a TARDIS, but we couldn't find it! Try calling it to you.");
                         }
                     }
                 } else {
-                    player.sendMessage(plugin.pluginName + "You don't have permission to build a TARDIS!");
+                    player.sendMessage(plugin.getPluginName() + "You don't have permission to build a TARDIS!");
                 }
             }
         }
     }
 
     private String getWallKey(int i, int d) {
-        for (Map.Entry<String, int[]> entry : plugin.tw.blocks.entrySet()) {
+        for (Map.Entry<String, int[]> entry : plugin.getTardisWalls().blocks.entrySet()) {
             int[] value = entry.getValue();
             if (value[0] == i && value[1] == d) {
                 return entry.getKey();

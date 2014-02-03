@@ -48,7 +48,7 @@ public class TARDISRebuildCommand {
             where.put("owner", player.getName());
             ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);
             if (!rs.resultSet()) {
-                player.sendMessage(plugin.pluginName + MESSAGE.NO_TARDIS.getText());
+                player.sendMessage(plugin.getPluginName() + MESSAGE.NO_TARDIS.getText());
                 return false;
             }
             id = rs.getTardis_id();
@@ -58,19 +58,19 @@ public class TARDISRebuildCommand {
                 tcc.getCircuits();
             }
             if (tcc != null && !tcc.hasMaterialisation()) {
-                player.sendMessage(plugin.pluginName + MESSAGE.NO_MAT_CIRCUIT.getText());
+                player.sendMessage(plugin.getPluginName() + MESSAGE.NO_MAT_CIRCUIT.getText());
                 return true;
             }
             HashMap<String, Object> wherein = new HashMap<String, Object>();
             wherein.put("player", player.getName());
             ResultSetTravellers rst = new ResultSetTravellers(plugin, wherein, false);
-            if (rst.resultSet() && args[0].equalsIgnoreCase("rebuild") && plugin.tardisHasDestination.containsKey(id)) {
-                player.sendMessage(plugin.pluginName + "You cannot rebuild the TARDIS right now! Try travelling first.");
+            if (rst.resultSet() && args[0].equalsIgnoreCase("rebuild") && plugin.getTrackerKeeper().getTrackHasDestination().containsKey(id)) {
+                player.sendMessage(plugin.getPluginName() + "You cannot rebuild the TARDIS right now! Try travelling first.");
                 return true;
             }
             int level = rs.getArtron_level();
-            if (plugin.inVortex.contains(Integer.valueOf(id))) {
-                player.sendMessage(plugin.pluginName + MESSAGE.NOT_WHILE_MAT.getText());
+            if (plugin.getTrackerKeeper().getTrackInVortex().contains(Integer.valueOf(id))) {
+                player.sendMessage(plugin.getPluginName() + MESSAGE.NOT_WHILE_MAT.getText());
                 return true;
             }
             if (plugin.getConfig().getBoolean("travel.chameleon")) {
@@ -80,7 +80,7 @@ public class TARDISRebuildCommand {
             wherecl.put("tardis_id", rs.getTardis_id());
             final ResultSetCurrentLocation rsc = new ResultSetCurrentLocation(plugin, wherecl);
             if (!rsc.resultSet()) {
-                player.sendMessage(plugin.pluginName + MESSAGE.NO_CURRENT.getText());
+                player.sendMessage(plugin.getPluginName() + MESSAGE.NO_CURRENT.getText());
                 player.sendMessage("Try using the Stattenheim Remote, or the /tardis comehere command.");
                 return true;
             }
@@ -90,7 +90,7 @@ public class TARDISRebuildCommand {
             QueryFactory qf = new QueryFactory(plugin);
             int rebuild = plugin.getArtronConfig().getInt("random");
             if (level < rebuild) {
-                player.sendMessage(plugin.pluginName + ChatColor.RED + "The TARDIS does not have enough Artron Energy to rebuild!");
+                player.sendMessage(plugin.getPluginName() + ChatColor.RED + "The TARDIS does not have enough Artron Energy to rebuild!");
                 return false;
             }
             // remove the police box first - should fix conflict between wood and iron doors
@@ -98,10 +98,10 @@ public class TARDISRebuildCommand {
             plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
                 @Override
                 public void run() {
-                    plugin.builderP.buildPreset(id, l, rsc.getDirection(), c, player, true, false, rsc.isSubmarine());
+                    plugin.getPresetBuilder().buildPreset(id, l, rsc.getDirection(), c, player, true, false, rsc.isSubmarine());
                 }
             }, 10L);
-            player.sendMessage(plugin.pluginName + "The TARDIS Police Box was rebuilt!");
+            player.sendMessage(plugin.getPluginName() + "The TARDIS Police Box was rebuilt!");
             qf.alterEnergyLevel("tardis", -rebuild, wheret, player);
             // set hidden to false
             if (rs.isHidden()) {
@@ -113,7 +113,7 @@ public class TARDISRebuildCommand {
             }
             return true;
         } else {
-            player.sendMessage(plugin.pluginName + MESSAGE.NO_PERMS.getText());
+            player.sendMessage(plugin.getPluginName() + MESSAGE.NO_PERMS.getText());
             return false;
         }
     }

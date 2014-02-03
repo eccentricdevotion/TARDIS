@@ -48,7 +48,7 @@ public class TARDISSetWorldInclusionCommand {
         String nodots = StringUtils.replace(t, ".", "_");
         // check the world actually exists!
         if (plugin.getServer().getWorld(nodots) == null) {
-            sender.sendMessage(plugin.pluginName + ChatColor.RED + "World does not exist!");
+            sender.sendMessage(plugin.getPluginName() + ChatColor.RED + "World does not exist!");
             return false;
         }
         if (first.equals("include")) {
@@ -57,7 +57,7 @@ public class TARDISSetWorldInclusionCommand {
             plugin.getConfig().set("worlds." + nodots, false);
         }
         plugin.saveConfig();
-        sender.sendMessage(plugin.pluginName + MESSAGE.CONFIG_UPDATED.getText());
+        sender.sendMessage(plugin.getPluginName() + MESSAGE.CONFIG_UPDATED.getText());
         return true;
     }
 }

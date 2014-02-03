@@ -53,9 +53,9 @@ public class TARDISZeroRoomChatListener implements Listener {
             return;
         }
         Player zero = event.getPlayer();
-        if (plugin.zeroRoomOccupants.contains(zero.getName())) {
+        if (plugin.getTrackerKeeper().getTrackZeroRoomOccupants().contains(zero.getName())) {
             event.setCancelled(true);
-            zero.sendMessage(plugin.pluginName + MESSAGE.NOT_IN_ZERO.getText());
+            zero.sendMessage(plugin.getPluginName() + MESSAGE.NOT_IN_ZERO.getText());
         } else {
             List<Player> inZeroRoom = plugin.getServer().getWorld("TARDIS_Zero_Room").getPlayers();
             for (Player p : inZeroRoom) {
@@ -67,9 +67,9 @@ public class TARDISZeroRoomChatListener implements Listener {
     @EventHandler(priority = EventPriority.NORMAL)
     public void onPlayerCommandPreprocessEvent(PlayerCommandPreprocessEvent event) {
         Player zero = event.getPlayer();
-        if (plugin.zeroRoomOccupants.contains(zero.getName())) {
+        if (plugin.getTrackerKeeper().getTrackZeroRoomOccupants().contains(zero.getName())) {
             event.setCancelled(true);
-            zero.sendMessage(plugin.pluginName + MESSAGE.NOT_IN_ZERO.getText());
+            zero.sendMessage(plugin.getPluginName() + MESSAGE.NOT_IN_ZERO.getText());
         }
     }
 }

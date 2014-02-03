@@ -326,7 +326,7 @@ public class TARDISConfiguration {
                 plugin.getConfig().set("difficulty", "hard");
             }
             if (i > 0) {
-                plugin.console.sendMessage(plugin.pluginName + "Added " + ChatColor.AQUA + i + ChatColor.RESET + " new items to config");
+                plugin.getConsole().sendMessage(plugin.getPluginName() + "Added " + ChatColor.AQUA + i + ChatColor.RESET + " new items to config");
             }
         }
         // worlds
@@ -343,7 +343,7 @@ public class TARDISConfiguration {
             String worldname = "worlds." + w.getName();
             if (!config.contains(worldname)) {
                 plugin.getConfig().set(worldname, true);
-                plugin.console.sendMessage(plugin.pluginName + "Added '" + w.getName() + "' to config. To exclude this world run: /tardisadmin exclude " + w.getName());
+                plugin.getConsole().sendMessage(plugin.getPluginName() + "Added '" + w.getName() + "' to config. To exclude this world run: /tardisadmin exclude " + w.getName());
             }
         }
         plugin.saveConfig();
@@ -352,7 +352,7 @@ public class TARDISConfiguration {
         for (String cw : cWorlds) {
             if (plugin.getServer().getWorld(cw) == null) {
                 plugin.getConfig().set("worlds." + cw, null);
-                plugin.console.sendMessage(plugin.pluginName + "Removed '" + cw + " from config.yml");
+                plugin.getConsole().sendMessage(plugin.getPluginName() + "Removed '" + cw + " from config.yml");
             }
         }
     }
@@ -397,7 +397,7 @@ public class TARDISConfiguration {
         try {
             rooms_config.save(new File(plugin.getDataFolder(), "rooms.yml"));
             if (i > 0) {
-                plugin.console.sendMessage(plugin.pluginName + "Added " + ChatColor.AQUA + i + ChatColor.RESET + " new items to rooms.yml");
+                plugin.getConsole().sendMessage(plugin.getPluginName() + "Added " + ChatColor.AQUA + i + ChatColor.RESET + " new items to rooms.yml");
             }
         } catch (IOException io) {
             plugin.debug("Could not save rooms.yml, " + io);
@@ -492,7 +492,7 @@ public class TARDISConfiguration {
         try {
             blocks_config.save(new File(plugin.getDataFolder(), "blocks.yml"));
             if (i > 0) {
-                plugin.console.sendMessage(plugin.pluginName + "Added " + ChatColor.AQUA + i + ChatColor.RESET + " new items to blocks.yml");
+                plugin.getConsole().sendMessage(plugin.getPluginName() + "Added " + ChatColor.AQUA + i + ChatColor.RESET + " new items to blocks.yml");
             }
         } catch (IOException io) {
             plugin.debug("Could not save blocks.yml, " + io);
@@ -528,7 +528,7 @@ public class TARDISConfiguration {
         try {
             artron_config.save(new File(plugin.getDataFolder(), "artron.yml"));
             if (i > 0) {
-                plugin.console.sendMessage(plugin.pluginName + "Added " + ChatColor.AQUA + i + ChatColor.RESET + " new items to artron.yml");
+                plugin.getConsole().sendMessage(plugin.getPluginName() + "Added " + ChatColor.AQUA + i + ChatColor.RESET + " new items to artron.yml");
             }
         } catch (IOException io) {
             plugin.debug("Could not save artron.yml, " + io);

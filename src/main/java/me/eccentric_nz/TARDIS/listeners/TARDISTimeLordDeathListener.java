@@ -79,7 +79,7 @@ public class TARDISTimeLordDeathListener implements Listener {
                         // do they have the autonomous circuit on?
                         if (rsp.isAutoOn()) {
                             Location death_loc = player.getLocation();
-                            if (plugin.pm.isPluginEnabled("Citizens") && plugin.getConfig().getBoolean("allow.emergency_npc") && rsp.isEpsOn()) {
+                            if (plugin.getPM().isPluginEnabled("Citizens") && plugin.getConfig().getBoolean("allow.emergency_npc") && rsp.isEpsOn()) {
                                 // check if there are players in the TARDIS
                                 HashMap<String, Object> wherev = new HashMap<String, Object>();
                                 wherev.put("tardis_id", id);
@@ -150,9 +150,9 @@ public class TARDISTimeLordDeathListener implements Listener {
                                 final COMPASS fd = (going_home) ? hd : cd;
                                 // destroy police box
                                 if (!rs.isHidden()) {
-                                    plugin.destroyerP.destroyPreset(sl, cd, id, false, plugin.getConfig().getBoolean("police_box.materialise"), cham, player, rsc.isSubmarine());
+                                    plugin.getPresetDestroyer().destroyPreset(sl, cd, id, false, plugin.getConfig().getBoolean("police_box.materialise"), cham, player, rsc.isSubmarine());
                                 } else {
-                                    plugin.destroyerP.removeBlockProtection(id, qf);
+                                    plugin.getPresetDestroyer().removeBlockProtection(id, qf);
                                     HashMap<String, Object> set = new HashMap<String, Object>();
                                     set.put("hidden", 0);
                                     HashMap<String, Object> tid = new HashMap<String, Object>();
@@ -164,7 +164,7 @@ public class TARDISTimeLordDeathListener implements Listener {
                                     @Override
                                     public void run() {
                                         // rebuild police box - needs to be a delay
-                                        plugin.builderP.buildPreset(id, auto_loc, fd, cham, player, false, false, sub);
+                                        plugin.getPresetBuilder().buildPreset(id, auto_loc, fd, cham, player, false, false, sub);
                                     }
                                 }, 200L);
                                 // set current
@@ -212,7 +212,7 @@ public class TARDISTimeLordDeathListener implements Listener {
             if (!player.hasPermission("tardis.area." + area) || !player.isPermissionSet("tardis.area." + area)) {
                 return null;
             }
-            l = plugin.ta.getNextSpot(rsa.getArea_name());
+            l = plugin.getTardisArea().getNextSpot(rsa.getArea_name());
         }
         return l;
     }

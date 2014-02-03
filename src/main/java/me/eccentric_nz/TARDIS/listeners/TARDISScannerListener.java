@@ -99,20 +99,20 @@ public class TARDISScannerListener implements Listener {
                         tcc.getCircuits();
                     }
                     if (tcc != null && !tcc.hasScanner()) {
-                        player.sendMessage(plugin.pluginName + "The Scanner Circuit is missing from the console!");
+                        player.sendMessage(plugin.getPluginName() + "The Scanner Circuit is missing from the console!");
                         return;
                     }
                     final String renderer = rs.getRenderer();
-                    plugin.utils.playTARDISSound(player.getLocation(), player, "tardis_scanner");
+                    plugin.getUtils().playTARDISSound(player.getLocation(), player, "tardis_scanner");
                     final Location scan_loc;
                     String whereisit;
                     final COMPASS tardisDirection;
                     HashMap<String, Object> wherenl = new HashMap<String, Object>();
                     wherenl.put("tardis_id", id);
-                    if (plugin.tardisHasDestination.containsKey(Integer.valueOf(id))) {
+                    if (plugin.getTrackerKeeper().getTrackHasDestination().containsKey(Integer.valueOf(id))) {
                         ResultSetNextLocation rsn = new ResultSetNextLocation(plugin, wherenl);
                         if (!rsn.resultSet()) {
-                            player.sendMessage(plugin.pluginName + "Could not get TARDIS's next destination!");
+                            player.sendMessage(plugin.getPluginName() + "Could not get TARDIS's next destination!");
                             return;
                         }
                         scan_loc = new Location(rsn.getWorld(), rsn.getX(), rsn.getY(), rsn.getZ());
@@ -121,7 +121,7 @@ public class TARDISScannerListener implements Listener {
                     } else {
                         ResultSetCurrentLocation rsc = new ResultSetCurrentLocation(plugin, wherenl);
                         if (!rsc.resultSet()) {
-                            player.sendMessage(plugin.pluginName + MESSAGE.NO_CURRENT.getText());
+                            player.sendMessage(plugin.getPluginName() + MESSAGE.NO_CURRENT.getText());
                             return;
                         }
                         scan_loc = new Location(rsc.getWorld(), rsc.getX(), rsc.getY(), rsc.getZ());
@@ -150,9 +150,9 @@ public class TARDISScannerListener implements Listener {
                         }
                     }
                     final long time = scan_loc.getWorld().getTime();
-                    final String daynight = plugin.utils.getTime(time);
+                    final String daynight = plugin.getUtils().getTime(time);
                     // message the player
-                    player.sendMessage(plugin.pluginName + "Scanner results for the TARDIS's " + whereisit);
+                    player.sendMessage(plugin.getPluginName() + "Scanner results for the TARDIS's " + whereisit);
                     player.sendMessage("World: " + scan_loc.getWorld().getName());
                     player.sendMessage("Co-ordinates: " + scan_loc.getBlockX() + ":" + scan_loc.getBlockY() + ":" + scan_loc.getBlockZ());
                     BukkitScheduler bsched = plugin.getServer().getScheduler();
@@ -243,7 +243,7 @@ public class TARDISScannerListener implements Listener {
                                 }
                             }, 160L);
                         } else {
-                            player.sendMessage(plugin.pluginName + "You don't have enough Artron Energy to enter the Exterior Rendering Room!");
+                            player.sendMessage(plugin.getPluginName() + "You don't have enough Artron Energy to enter the Exterior Rendering Room!");
                         }
                     }
                 }

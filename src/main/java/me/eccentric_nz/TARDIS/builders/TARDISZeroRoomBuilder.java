@@ -42,7 +42,7 @@ public class TARDISZeroRoomBuilder {
 
     public boolean build(Player p, int tips, int id) {
         if (!plugin.getConfig().getBoolean("allow.zero_room")) {
-            p.sendMessage(plugin.pluginName + "This server does not allow Zero rooms!");
+            p.sendMessage(plugin.getPluginName() + "This server does not allow Zero rooms!");
             return true;
         }
         TARDISInteriorPostioning tintpos = new TARDISInteriorPostioning(plugin);
@@ -77,18 +77,18 @@ public class TARDISZeroRoomBuilder {
             qf.alterEnergyLevel("tardis", -amount, set, p);
             // remove blocks from condenser table if rooms_require_blocks is true
             if (plugin.getConfig().getBoolean("growth.rooms_require_blocks")) {
-                TARDISCondenserData c_data = plugin.roomCondenserData.get(playerNameStr);
+                TARDISCondenserData c_data = plugin.getGeneralKeeper().getRoomCondenserData().get(playerNameStr);
                 for (Map.Entry<String, Integer> entry : c_data.getBlockIDCount().entrySet()) {
                     HashMap<String, Object> wherec = new HashMap<String, Object>();
                     wherec.put("tardis_id", c_data.getTardis_id());
                     wherec.put("block_data", entry.getKey());
                     qf.alterCondenserBlockCount(entry.getValue(), wherec);
                 }
-                plugin.roomCondenserData.remove(playerNameStr);
+                plugin.getGeneralKeeper().getRoomCondenserData().remove(playerNameStr);
             }
             // are we doing an achievement?
-            if (plugin.getAchivementConfig().getBoolean("rooms.enabled")) {
-                TARDISAchievementFactory taf = new TARDISAchievementFactory(plugin, p, "rooms", plugin.seeds.size());
+            if (plugin.getAchievementConfig().getBoolean("rooms.enabled")) {
+                TARDISAchievementFactory taf = new TARDISAchievementFactory(plugin, p, "rooms", plugin.getBuildKeeper().getSeeds().size());
                 taf.doAchievement("ZERO");
             }
         }

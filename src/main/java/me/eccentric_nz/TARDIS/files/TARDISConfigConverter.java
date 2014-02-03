@@ -169,7 +169,7 @@ public class TARDISConfigConverter {
             plugin.debug("Could not save config.yml, " + io);
             return false;
         }
-        plugin.console.sendMessage(plugin.pluginName + "Config file successfully updated to new format!");
+        plugin.getConsole().sendMessage(plugin.getPluginName() + "Config file successfully updated to new format!");
         plugin.reloadConfig();
         return true;
     }

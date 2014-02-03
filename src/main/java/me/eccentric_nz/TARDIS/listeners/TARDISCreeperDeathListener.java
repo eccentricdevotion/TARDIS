@@ -83,9 +83,9 @@ public class TARDISCreeperDeathListener implements Listener {
                             set.put("artron_level", level);
                             qf.doUpdate("player_prefs", set, wherea);
                         }
-                        p.sendMessage(plugin.pluginName + "You received " + amount + " Artron Energy for killing a charged creeper!");
+                        p.sendMessage(plugin.getPluginName() + "You received " + amount + " Artron Energy for killing a charged creeper!");
                         // are we doing an achievement?
-                        if (plugin.getAchivementConfig().getBoolean("kill.enabled")) {
+                        if (plugin.getAchievementConfig().getBoolean("kill.enabled")) {
                             TARDISAchievementFactory taf = new TARDISAchievementFactory(plugin, p, "kill", 1);
                             taf.doAchievement(1);
                         }

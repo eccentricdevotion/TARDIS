@@ -70,7 +70,7 @@ public class TARDISSeedBlockProcessor {
                 if (rsc.resultSet()) {
                     player_count = rsc.getCount();
                     if (player_count == max_count) {
-                        player.sendMessage(plugin.pluginName + "You have used up your quota of TARDISes!");
+                        player.sendMessage(plugin.getPluginName() + "You have used up your quota of TARDISes!");
                         return false;
                     }
                 }
@@ -85,57 +85,57 @@ public class TARDISSeedBlockProcessor {
                 switch (schm) {
                     case CUSTOM:
                         if (!plugin.getConfig().getBoolean("creation.custom_schematic")) {
-                            player.sendMessage(plugin.pluginName + "The custom TARDIS schematic is not enabled on this server!");
+                            player.sendMessage(plugin.getPluginName() + "The custom TARDIS schematic is not enabled on this server!");
                             return false;
                         } else if (!player.hasPermission("tardis.custom")) {
-                            player.sendMessage(plugin.pluginName + "You don't have permission to create the server's custom' TARDIS!");
+                            player.sendMessage(plugin.getPluginName() + "You don't have permission to create the server's custom' TARDIS!");
                             return false;
                         }
                     case BIGGER:
                         if (!player.hasPermission("tardis.bigger")) {
-                            player.sendMessage(plugin.pluginName + "You don't have permission to create a 'bigger' TARDIS!");
+                            player.sendMessage(plugin.getPluginName() + "You don't have permission to create a 'bigger' TARDIS!");
                             return false;
                         }
                         break;
                     case DELUXE:
                         if (!player.hasPermission("tardis.deluxe")) {
-                            player.sendMessage(plugin.pluginName + "You don't have permission to create a 'deluxe' TARDIS!");
+                            player.sendMessage(plugin.getPluginName() + "You don't have permission to create a 'deluxe' TARDIS!");
                             return false;
                         }
                         break;
                     case ELEVENTH:
                         if (!player.hasPermission("tardis.eleventh")) {
-                            player.sendMessage(plugin.pluginName + "You don't have permission to create an 'eleventh Doctor's' TARDIS!");
+                            player.sendMessage(plugin.getPluginName() + "You don't have permission to create an 'eleventh Doctor's' TARDIS!");
                             return false;
                         }
                         break;
                     case REDSTONE:
                         if (!player.hasPermission("tardis.redstone")) {
-                            player.sendMessage(plugin.pluginName + "You don't have permission to create a 'redstone' TARDIS!");
+                            player.sendMessage(plugin.getPluginName() + "You don't have permission to create a 'redstone' TARDIS!");
                             return false;
                         }
                         break;
                     case STEAMPUNK:
                         if (!player.hasPermission("tardis.steampunk")) {
-                            player.sendMessage(plugin.pluginName + "You don't have permission to create a 'steampunk' TARDIS!");
+                            player.sendMessage(plugin.getPluginName() + "You don't have permission to create a 'steampunk' TARDIS!");
                             return false;
                         }
                         break;
                     case TOM:
                         if (!player.hasPermission("tardis.tom")) {
-                            player.sendMessage(plugin.pluginName + "You don't have permission to create a '4th Doctor's' TARDIS!");
+                            player.sendMessage(plugin.getPluginName() + "You don't have permission to create a '4th Doctor's' TARDIS!");
                             return false;
                         }
                         break;
                     case PLANK:
                         if (!player.hasPermission("tardis.plank")) {
-                            player.sendMessage(plugin.pluginName + "You don't have permission to create a 'wood' TARDIS!");
+                            player.sendMessage(plugin.getPluginName() + "You don't have permission to create a 'wood' TARDIS!");
                             return false;
                         }
                         break;
                     case ARS:
                         if (!player.hasPermission("tardis.ars")) {
-                            player.sendMessage(plugin.pluginName + "You don't have permission to create an 'ARS' TARDIS!");
+                            player.sendMessage(plugin.getPluginName() + "You don't have permission to create an 'ARS' TARDIS!");
                             return false;
                         }
                         break;
@@ -175,13 +175,13 @@ public class TARDISSeedBlockProcessor {
                     // get this chunk co-ords
                     cx = chunk.getX();
                     cz = chunk.getZ();
-                    if (!plugin.getConfig().getBoolean("creation.default_world") && plugin.utils.checkChunk(cw, cx, cz, schm)) {
-                        player.sendMessage(plugin.pluginName + "A TARDIS already exists at this location, please try another chunk!");
+                    if (!plugin.getConfig().getBoolean("creation.default_world") && plugin.getUtils().checkChunk(cw, cx, cz, schm)) {
+                        player.sendMessage(plugin.getPluginName() + "A TARDIS already exists at this location, please try another chunk!");
                         return false;
                     }
                 }
                 // get player direction
-                final String d = plugin.utils.getPlayersDirection(player, false);
+                final String d = plugin.getUtils().getPlayersDirection(player, false);
                 // save data to database (tardis table)
                 String chun = cw + ":" + cx + ":" + cz;
                 QueryFactory qf = new QueryFactory(plugin);
@@ -238,8 +238,8 @@ public class TARDISSeedBlockProcessor {
                 qf.insertLocations(setlocs);
                 // turn the block stack into a TARDIS
                 // police box needs to use chameleon id/data
-                plugin.builderP.buildPreset(lastInsertId, l, COMPASS.valueOf(d), false, player, false, false, isSub(l));
-                plugin.builderI.buildInner(schm, chunkworld, lastInsertId, player, middle_id, middle_data, floor_id, floor_data, tips);
+                plugin.getPresetBuilder().buildPreset(lastInsertId, l, COMPASS.valueOf(d), false, player, false, false, isSub(l));
+                plugin.getInteriorBuilder().buildInner(schm, chunkworld, lastInsertId, player, middle_id, middle_data, floor_id, floor_data, tips);
                 // set achievement completed
                 if (player.hasPermission("tardis.book")) {
                     HashMap<String, Object> seta = new HashMap<String, Object>();
@@ -249,10 +249,10 @@ public class TARDISSeedBlockProcessor {
                     wherea.put("name", "tardis");
                     qf.doUpdate("achievements", seta, wherea);
                     player.sendMessage(ChatColor.YELLOW + "Achievement Get!");
-                    player.sendMessage(ChatColor.WHITE + plugin.getAchivementConfig().getString("tardis.message"));
+                    player.sendMessage(ChatColor.WHITE + plugin.getAchievementConfig().getString("tardis.message"));
                 }
                 if (max_count > 0) {
-                    player.sendMessage(plugin.pluginName + "You have used up " + (player_count + 1) + " of " + max_count + " TARDIS builds!");
+                    player.sendMessage(plugin.getPluginName() + "You have used up " + (player_count + 1) + " of " + max_count + " TARDIS builds!");
                     HashMap<String, Object> setc = new HashMap<String, Object>();
                     setc.put("count", player_count + 1);
                     if (player_count > 0) {
@@ -272,20 +272,20 @@ public class TARDISSeedBlockProcessor {
                 wherecl.put("tardis_id", rs.getTardis_id());
                 ResultSetCurrentLocation rsc = new ResultSetCurrentLocation(plugin, wherecl);
                 if (rsc.resultSet()) {
-                    player.sendMessage(plugin.pluginName + "You already have a TARDIS, you left it in " + rsc.getWorld().getName() + " at x:" + rsc.getX() + " y:" + rsc.getY() + " z:" + rsc.getZ());
+                    player.sendMessage(plugin.getPluginName() + "You already have a TARDIS, you left it in " + rsc.getWorld().getName() + " at x:" + rsc.getX() + " y:" + rsc.getY() + " z:" + rsc.getZ());
                 } else {
-                    player.sendMessage(plugin.pluginName + "You already have a TARDIS, but we couldn't find it! Try calling it to you.");
+                    player.sendMessage(plugin.getPluginName() + "You already have a TARDIS, but we couldn't find it! Try calling it to you.");
                 }
                 return false;
             }
         } else {
-            player.sendMessage(plugin.pluginName + "You don't have permission to build a TARDIS!");
+            player.sendMessage(plugin.getPluginName() + "You don't have permission to build a TARDIS!");
             return false;
         }
     }
 
     private String getWallKey(int i, int d) {
-        for (Map.Entry<String, int[]> entry : plugin.tw.blocks.entrySet()) {
+        for (Map.Entry<String, int[]> entry : plugin.getTardisWalls().blocks.entrySet()) {
             int[] value = entry.getValue();
             if (value[0] == i && value[1] == d) {
                 return entry.getKey();

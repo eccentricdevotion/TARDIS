@@ -49,38 +49,38 @@ public class TARDISRoomCommand {
 
     public boolean startRoom(Player player, String[] args) {
         if (args.length < 2) {
-            player.sendMessage(plugin.pluginName + MESSAGE.TOO_FEW_ARGS.getText());
+            player.sendMessage(plugin.getPluginName() + MESSAGE.TOO_FEW_ARGS.getText());
             return false;
         }
         String room = args[1].toUpperCase(Locale.ENGLISH);
         StringBuilder buf = new StringBuilder();
-        for (String rl : plugin.tardisCommand.roomArgs) {
+        for (String rl : plugin.getGeneralKeeper().getRoomArgs()) {
             buf.append(rl).append(", ");
         }
         String roomlist = buf.toString().substring(0, buf.length() - 2);
-        if (room.equals("HELP") || !plugin.tardisCommand.roomArgs.contains(room)) {
+        if (room.equals("HELP") || !plugin.getGeneralKeeper().getRoomArgs().contains(room)) {
             new TARDISRoomLister(plugin, player).list();
             return true;
         }
         String perm = "tardis.room." + args[1].toLowerCase(Locale.ENGLISH);
         if (!player.hasPermission(perm) && !player.hasPermission("tardis.room")) {
             String grammar = (TARDISConstants.vowels.contains(room.substring(0, 1))) ? "an" : "a";
-            player.sendMessage(plugin.pluginName + "You do not have permission to grow " + grammar + " " + room);
+            player.sendMessage(plugin.getPluginName() + "You do not have permission to grow " + grammar + " " + room);
             return true;
         }
         HashMap<String, Object> where = new HashMap<String, Object>();
         where.put("owner", player.getName());
         ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);
         if (!rs.resultSet()) {
-            player.sendMessage(plugin.pluginName + MESSAGE.NOT_A_TIMELORD.getText());
+            player.sendMessage(plugin.getPluginName() + MESSAGE.NOT_A_TIMELORD.getText());
             return true;
         }
-        if (!plugin.utils.canGrowRooms(rs.getChunk())) {
-            player.sendMessage(plugin.pluginName + "You cannot grow rooms unless your TARDIS was created in its own world!");
+        if (!plugin.getUtils().canGrowRooms(rs.getChunk())) {
+            player.sendMessage(plugin.getPluginName() + "You cannot grow rooms unless your TARDIS was created in its own world!");
             return true;
         }
         if (!rs.getRenderer().isEmpty() && room.equals("RENDERER")) {
-            player.sendMessage(plugin.pluginName + "You already have an exterior rendering room! Please jettison the existing room first.");
+            player.sendMessage(plugin.getPluginName() + "You already have an exterior rendering room! Please jettison the existing room first.");
             return true;
         }
         int id = rs.getTardis_id();
@@ -90,7 +90,7 @@ public class TARDISRoomCommand {
             tcc.getCircuits();
         }
         if (tcc != null && !tcc.hasARS()) {
-            player.sendMessage(plugin.pluginName + "The ARS Circuit is missing from the console!");
+            player.sendMessage(plugin.getPluginName() + "The ARS Circuit is missing from the console!");
             return true;
         }
         int level = rs.getArtron_level();
@@ -103,18 +103,18 @@ public class TARDISRoomCommand {
         wheret.put("tardis_id", id);
         ResultSetTravellers rst = new ResultSetTravellers(plugin, wheret, false);
         if (!rst.resultSet()) {
-            player.sendMessage(plugin.pluginName + MESSAGE.NOT_IN_TARDIS.getText());
+            player.sendMessage(plugin.getPluginName() + MESSAGE.NOT_IN_TARDIS.getText());
             return true;
         }
         // check they have enough artron energy
         if (level < plugin.getRoomsConfig().getInt("rooms." + room + ".cost")) {
-            player.sendMessage(plugin.pluginName + "The TARDIS does not have enough Artron Energy to grow this room!");
+            player.sendMessage(plugin.getPluginName() + "The TARDIS does not have enough Artron Energy to grow this room!");
             return true;
         }
         if (plugin.getConfig().getBoolean("growth.rooms_require_blocks")) {
             HashMap<String, Integer> blockIDCount = new HashMap<String, Integer>();
             boolean hasRequired = true;
-            HashMap<String, Integer> roomBlocks = plugin.roomBlockCounts.get(room);
+            HashMap<String, Integer> roomBlocks = plugin.getBuildKeeper().getRoomBlockCounts().get(room);
             String wall = "ORANGE_WOOL";
             String floor = "LIGHT_GREY_WOOL";
             HashMap<String, Object> wherepp = new HashMap<String, Object>();
@@ -129,13 +129,13 @@ public class TARDISRoomCommand {
             HashMap<Integer, Integer> item_counts = new HashMap<Integer, Integer>();
             for (Map.Entry<String, Integer> entry : roomBlocks.entrySet()) {
                 String[] block_data = entry.getKey().split(":");
-                int bid = plugin.utils.parseInt(block_data[0]);
+                int bid = plugin.getUtils().parseInt(block_data[0]);
                 String mat;
                 String bdata;
                 int block_id;
                 if (hasPrefs && block_data.length == 2 && (block_data[1].equals("1") || block_data[1].equals("8"))) {
                     mat = (block_data[1].equals("1")) ? wall : floor;
-                    int[] iddata = plugin.tw.blocks.get(mat);
+                    int[] iddata = plugin.getTardisWalls().blocks.get(mat);
                     bdata = String.format("%d", iddata[0]);
                     block_id = iddata[0];
                 } else {
@@ -164,11 +164,11 @@ public class TARDISRoomCommand {
                     if (rsc.getBlock_count() < map.getValue()) {
                         hasRequired = false;
                         int diff = map.getValue() - rsc.getBlock_count();
-                        player.sendMessage(plugin.pluginName + "You need to condense " + diff + " more " + Material.getMaterial(map.getKey()).toString() + "!");
+                        player.sendMessage(plugin.getPluginName() + "You need to condense " + diff + " more " + Material.getMaterial(map.getKey()).toString() + "!");
                     }
                 } else {
                     hasRequired = false;
-                    player.sendMessage(plugin.pluginName + "You need to condense a minimum of " + map.getValue() + " " + Material.getMaterial(map.getKey()).toString());
+                    player.sendMessage(plugin.getPluginName() + "You need to condense a minimum of " + map.getValue() + " " + Material.getMaterial(map.getKey()).toString());
                 }
             }
             if (hasRequired == false) {
@@ -178,7 +178,7 @@ public class TARDISRoomCommand {
             TARDISCondenserData c_data = new TARDISCondenserData();
             c_data.setBlockIDCount(blockIDCount);
             c_data.setTardis_id(id);
-            plugin.roomCondenserData.put(player.getName(), c_data);
+            plugin.getGeneralKeeper().getRoomCondenserData().put(player.getName(), c_data);
         }
         if (room.equals("ZERO")) {
             return new TARDISZeroRoomBuilder(plugin).build(player, tips, id);
@@ -195,8 +195,8 @@ public class TARDISRoomCommand {
         ResultSetControls rsc = new ResultSetControls(plugin, wherea, false);
         sd.setARS(rsc.resultSet());
         String message = "Place the " + room + " seed block (" + plugin.getRoomsConfig().getString("rooms." + room + ".seed") + ") in front of the pressure plate, then hit it with the TARDIS key to start growing your room!";
-        plugin.trackRoomSeed.put(player.getName(), sd);
-        player.sendMessage(plugin.pluginName + message);
+        plugin.getTrackerKeeper().getTrackRoomSeed().put(player.getName(), sd);
+        player.sendMessage(plugin.getPluginName() + message);
         return true;
     }
 }

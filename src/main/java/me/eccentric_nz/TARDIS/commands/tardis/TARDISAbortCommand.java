@@ -33,16 +33,16 @@ public class TARDISAbortCommand {
 
     public boolean doAbort(Player player, String[] args) {
         if (args.length < 2) {
-            player.sendMessage(plugin.pluginName + "You must specify the task ID number!");
+            player.sendMessage(plugin.getPluginName() + "You must specify the task ID number!");
             return false;
         }
         try {
             int task = Integer.parseInt(args[1]);
             plugin.getServer().getScheduler().cancelTask(task);
-            player.sendMessage(plugin.pluginName + "Task aborted!");
+            player.sendMessage(plugin.getPluginName() + "Task aborted!");
             return true;
         } catch (NumberFormatException nfe) {
-            player.sendMessage(plugin.pluginName + "Task ID is not a number!");
+            player.sendMessage(plugin.getPluginName() + "Task ID is not a number!");
             return false;
         }
     }

@@ -58,6 +58,7 @@ import org.bukkit.material.DetectorRail;
 import org.bukkit.material.Door;
 import org.bukkit.material.Lever;
 import org.bukkit.material.PistonBaseMaterial;
+import org.bukkit.material.PistonExtensionMaterial;
 import org.bukkit.material.PoweredRail;
 import org.bukkit.scheduler.BukkitScheduler;
 import org.yi.acru.bukkit.Lockette.Lockette;
@@ -162,7 +163,7 @@ public class TARDISSonicListener implements Listener {
                                     }
                                     // freeze the closest player
                                     if (hit != null) {
-                                        hit.sendMessage(plugin.pluginName + player.getName() + " froze you with their Sonic Screwdriver!");
+                                        hit.sendMessage(plugin.getPluginName() + player.getName() + " froze you with their Sonic Screwdriver!");
                                         final String hitNme = hit.getName();
                                         frozenPlayers.add(hitNme);
                                         plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
@@ -177,7 +178,7 @@ public class TARDISSonicListener implements Listener {
                                 }
                             }, 20L);
                         } else {
-                            player.sendMessage(plugin.pluginName + player.getName() + " You cannot freeze another player yet!");
+                            player.sendMessage(plugin.getPluginName() + player.getName() + " You cannot freeze another player yet!");
                         }
                         return;
                     }
@@ -219,14 +220,14 @@ public class TARDISSonicListener implements Listener {
                                     wheren.put("tardis_id", id);
                                     ResultSetTardis rsn = new ResultSetTardis(plugin, wheren, "", false);
                                     if (rsn.resultSet()) {
-                                        player.sendMessage(plugin.pluginName + "This is " + rsn.getOwner() + "'s TARDIS");
+                                        player.sendMessage(plugin.getPluginName() + "This is " + rsn.getOwner() + "'s TARDIS");
                                         int percent = Math.round((rsn.getArtron_level() * 100F) / plugin.getArtronConfig().getInt("full_charge"));
-                                        player.sendMessage(plugin.pluginName + "The Artron Energy Capacitor is at " + percent + "%");
+                                        player.sendMessage(plugin.getPluginName() + "The Artron Energy Capacitor is at " + percent + "%");
                                         HashMap<String, Object> whereb = new HashMap<String, Object>();
                                         whereb.put("tardis_id", id);
                                         ResultSetBackLocation rsb = new ResultSetBackLocation(plugin, whereb);
                                         if (rsb.resultSet()) {
-                                            player.sendMessage(plugin.pluginName + "Its last location was: " + rsb.getWorld().getName() + " " + rsb.getX() + ":" + rsb.getY() + ":" + rsb.getZ());
+                                            player.sendMessage(plugin.getPluginName() + "Its last location was: " + rsb.getWorld().getName() + " " + rsb.getX() + ":" + rsb.getY() + ":" + rsb.getZ());
                                         }
                                     }
                                     HashMap<String, Object> whereid = new HashMap<String, Object>();
@@ -234,12 +235,12 @@ public class TARDISSonicListener implements Listener {
                                     ResultSetTravellers rst = new ResultSetTravellers(plugin, whereid, true);
                                     if (rst.resultSet()) {
                                         List<String> data = rst.getData();
-                                        player.sendMessage(plugin.pluginName + "The players inside this TARDIS are:");
+                                        player.sendMessage(plugin.getPluginName() + "The players inside this TARDIS are:");
                                         for (String s : data) {
                                             player.sendMessage(s);
                                         }
                                     } else {
-                                        player.sendMessage(plugin.pluginName + "The TARDIS is unoccupied.");
+                                        player.sendMessage(plugin.getPluginName() + "The TARDIS is unoccupied.");
                                     }
                                 }
                             }
@@ -258,24 +259,24 @@ public class TARDISSonicListener implements Listener {
                         switch (blockType) {
                             case DETECTOR_RAIL:
                                 DetectorRail drail = (DetectorRail) bs.getData();
-                                if (plugin.redstoneListener.getRails().contains(b.getLocation().toString())) {
-                                    plugin.redstoneListener.getRails().remove(b.getLocation().toString());
+                                if (plugin.getGeneralKeeper().getSonicRails().contains(b.getLocation().toString())) {
+                                    plugin.getGeneralKeeper().getSonicRails().remove(b.getLocation().toString());
                                     drail.setPressed(false);
                                     b.setData((byte) (drail.getData() - 8));
                                 } else {
-                                    plugin.redstoneListener.getRails().add(b.getLocation().toString());
+                                    plugin.getGeneralKeeper().getSonicRails().add(b.getLocation().toString());
                                     drail.setPressed(true);
                                     b.setData((byte) (drail.getData() + 8));
                                 }
                                 break;
                             case POWERED_RAIL:
                                 PoweredRail rail = (PoweredRail) bs.getData();
-                                if (plugin.redstoneListener.getRails().contains(b.getLocation().toString())) {
-                                    plugin.redstoneListener.getRails().remove(b.getLocation().toString());
+                                if (plugin.getGeneralKeeper().getSonicRails().contains(b.getLocation().toString())) {
+                                    plugin.getGeneralKeeper().getSonicRails().remove(b.getLocation().toString());
                                     rail.setPowered(false);
                                     b.setData((byte) (rail.getData() - 8));
                                 } else {
-                                    plugin.redstoneListener.getRails().add(b.getLocation().toString());
+                                    plugin.getGeneralKeeper().getSonicRails().add(b.getLocation().toString());
                                     rail.setPowered(true);
                                     b.setData((byte) (rail.getData() + 8));
                                 }
@@ -284,8 +285,8 @@ public class TARDISSonicListener implements Listener {
                             case PISTON_STICKY_BASE:
                                 PistonBaseMaterial piston = (PistonBaseMaterial) bs.getData();
                                 // find the direction the piston is facing
-                                if (plugin.redstoneListener.getPistons().contains(b.getLocation().toString())) {
-                                    plugin.redstoneListener.getPistons().remove(b.getLocation().toString());
+                                if (plugin.getGeneralKeeper().getSonicPistons().contains(b.getLocation().toString())) {
+                                    plugin.getGeneralKeeper().getSonicPistons().remove(b.getLocation().toString());
                                     for (BlockFace f : faces) {
                                         if (b.getRelative(f).getType().equals(Material.AIR)) {
                                             b.getRelative(f).setTypeIdAndData(20, (byte) 0, true);
@@ -294,8 +295,8 @@ public class TARDISSonicListener implements Listener {
                                         }
                                     }
                                 } else {
-                                    if (plugin.redstoneListener.setExtension(b)) {
-                                        plugin.redstoneListener.getPistons().add(b.getLocation().toString());
+                                    if (setExtension(b)) {
+                                        plugin.getGeneralKeeper().getSonicPistons().add(b.getLocation().toString());
                                         piston.setPowered(true);
                                         player.playSound(b.getLocation(), Sound.PISTON_EXTEND, 1.0f, 1.0f);
                                     }
@@ -306,16 +307,16 @@ public class TARDISSonicListener implements Listener {
                             case REDSTONE_LAMP_OFF:
                             case REDSTONE_LAMP_ON:
                                 if (blockType.equals(Material.REDSTONE_LAMP_OFF)) {
-                                    plugin.redstoneListener.getLamps().add(b.getLocation().toString());
+                                    plugin.getGeneralKeeper().getSonicLamps().add(b.getLocation().toString());
                                     b.setType(Material.REDSTONE_LAMP_ON);
-                                } else if (plugin.redstoneListener.getLamps().contains(b.getLocation().toString())) {
-                                    plugin.redstoneListener.getLamps().remove(b.getLocation().toString());
+                                } else if (plugin.getGeneralKeeper().getSonicLamps().contains(b.getLocation().toString())) {
+                                    plugin.getGeneralKeeper().getSonicLamps().remove(b.getLocation().toString());
                                     b.setType(Material.REDSTONE_LAMP_OFF);
                                 }
                                 break;
                             case REDSTONE_WIRE:
-                                if (plugin.redstoneListener.getWires().contains(b.getLocation().toString())) {
-                                    plugin.redstoneListener.getWires().remove(b.getLocation().toString());
+                                if (plugin.getGeneralKeeper().getSonicWires().contains(b.getLocation().toString())) {
+                                    plugin.getGeneralKeeper().getSonicWires().remove(b.getLocation().toString());
                                     b.setData((byte) 0);
                                     for (BlockFace f : faces) {
                                         if (b.getRelative(f).getType().equals(Material.REDSTONE_WIRE)) {
@@ -323,7 +324,7 @@ public class TARDISSonicListener implements Listener {
                                         }
                                     }
                                 } else {
-                                    plugin.redstoneListener.getWires().add(b.getLocation().toString());
+                                    plugin.getGeneralKeeper().getSonicWires().add(b.getLocation().toString());
                                     b.setData((byte) 15);
                                     for (BlockFace f : faces) {
                                         if (b.getRelative(f).getType().equals(Material.REDSTONE_WIRE)) {
@@ -386,7 +387,7 @@ public class TARDISSonicListener implements Listener {
             im.addEnchant(Enchantment.DURABILITY, 1, true);
             player.getItemInHand().setItemMeta(im);
             timeout.put(player.getName(), now + cooldown);
-            plugin.utils.playTARDISSound(player.getLocation(), player, sound);
+            plugin.getUtils().playTARDISSound(player.getLocation(), player, sound);
             plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
                 @Override
                 public void run() {
@@ -477,9 +478,9 @@ public class TARDISSonicListener implements Listener {
             }
         }
         final long time = scan_loc.getWorld().getTime();
-        final String daynight = plugin.utils.getTime(time);
+        final String daynight = plugin.getUtils().getTime(time);
         // message the player
-        player.sendMessage(plugin.pluginName + "Sonic Screwdriver environmental scan started...");
+        player.sendMessage(plugin.getPluginName() + "Sonic Screwdriver environmental scan started...");
         BukkitScheduler bsched = plugin.getServer().getScheduler();
         bsched.scheduleSyncDelayedTask(plugin, new Runnable() {
             @Override
@@ -555,7 +556,7 @@ public class TARDISSonicListener implements Listener {
 
     @SuppressWarnings("deprecation")
     private void standardSonic(Player player) {
-        Block targetBlock = player.getTargetBlock(plugin.tardisCommand.transparent, 50).getLocation().getBlock();
+        Block targetBlock = player.getTargetBlock(plugin.getGeneralKeeper().getTransparent(), 50).getLocation().getBlock();
         Material blockType = targetBlock.getType();
         if (distance.contains(blockType)) {
             final BlockState bs = targetBlock.getState();
@@ -570,14 +571,14 @@ public class TARDISSonicListener implements Listener {
                     }
                     boolean allow = true;
                     // is Lockette or LWC on the server?
-                    if (plugin.pm.isPluginEnabled("Lockette")) {
-                        Lockette Lockette = (Lockette) plugin.pm.getPlugin("Lockette");
+                    if (plugin.getPM().isPluginEnabled("Lockette")) {
+                        Lockette Lockette = (Lockette) plugin.getPM().getPlugin("Lockette");
                         if (Lockette.isProtected(lowerdoor)) {
                             allow = false;
                         }
                     }
-                    if (plugin.pm.isPluginEnabled("LWC")) {
-                        LWCPlugin lwcplug = (LWCPlugin) plugin.pm.getPlugin("LWC");
+                    if (plugin.getPM().isPluginEnabled("LWC")) {
+                        LWCPlugin lwcplug = (LWCPlugin) plugin.getPM().getPlugin("LWC");
                         LWC lwc = lwcplug.getLWC();
                         if (!lwc.canAccessProtection(player, lowerdoor)) {
                             allow = false;
@@ -617,5 +618,43 @@ public class TARDISSonicListener implements Listener {
                     break;
             }
         }
+    }
+
+    @SuppressWarnings("deprecation")
+    public boolean setExtension(Block b) {
+        BlockFace face = ((PistonBaseMaterial) b.getState().getData()).getFacing();
+        Block l = b.getRelative(face);
+        Material mat = l.getType();
+        byte data = l.getData();
+        // check if there is a block there
+        if (!mat.equals(Material.PISTON_EXTENSION)) {
+            if (mat.equals(Material.AIR)) {
+                extend(b, l);
+                return true;
+            } else {
+                // check the block further on for AIR
+                Block two = b.getRelative(face, 2);
+                if (two.getType().equals(Material.AIR)) {
+                    two.setType(mat);
+                    two.setData(data);
+                    extend(b, l);
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    @SuppressWarnings("deprecation")
+    private void extend(final Block b, final Block l) {
+        l.setType(Material.PISTON_EXTENSION);
+        if (b.getType().equals(Material.PISTON_STICKY_BASE)) {
+            l.setData((byte) (b.getData() - 8));
+        } else {
+            l.setData((byte) b.getData());
+        }
+        PistonExtensionMaterial extension = (PistonExtensionMaterial) l.getState().getData();
+        l.setData(extension.getData());
+        l.getState().update();
     }
 }

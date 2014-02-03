@@ -95,10 +95,10 @@ public class TARDISMinecartListener implements Listener {
                             HashMap<String, Object> whereid = new HashMap<String, Object>();
                             whereid.put("tardis_id", id);
                             ResultSetTardis rs = new ResultSetTardis(plugin, whereid, "", false);
-                            if (rs.resultSet() && !plugin.trackMinecart.contains(Integer.valueOf(id))) {
+                            if (rs.resultSet() && !plugin.getTrackerKeeper().getTrackMinecart().contains(Integer.valueOf(id))) {
                                 data = rs.getRail().split(":");
                                 p = rs.getOwner();
-                                plugin.trackMinecart.add(Integer.valueOf(id));
+                                plugin.getTrackerKeeper().getTrackMinecart().add(Integer.valueOf(id));
                             }
                         }
                         break;
@@ -124,7 +124,7 @@ public class TARDISMinecartListener implements Listener {
                             if (rspb.resultSet()) {
                                 data = rspb.getDoor_location().split(":");
                                 d = switchDirection(rspb.getDoor_direction());
-                                plugin.trackMinecart.remove(Integer.valueOf(id));
+                                plugin.getTrackerKeeper().getTrackMinecart().remove(Integer.valueOf(id));
                             }
                         }
                         break;
@@ -132,19 +132,19 @@ public class TARDISMinecartListener implements Listener {
                         break;
                 }
                 if (data != null) {
-                    if (plugin.pm.isPluginEnabled("Multiverse-Inventories")) {
-                        if (!plugin.tmic.checkMVI(bw, data[0])) {
+                    if (plugin.getPM().isPluginEnabled("Multiverse-Inventories")) {
+                        if (!plugin.getTMIChecker().checkMVI(bw, data[0])) {
                             if (!p.isEmpty() && plugin.getServer().getPlayer(p).isOnline()) {
-                                plugin.getServer().getPlayer(p).sendMessage(plugin.pluginName + "You cannot use minecarts from " + bw + " to " + data[0] + ".");
+                                plugin.getServer().getPlayer(p).sendMessage(plugin.getPluginName() + "You cannot use minecarts from " + bw + " to " + data[0] + ".");
                             }
-                            plugin.trackMinecart.remove(Integer.valueOf(id));
+                            plugin.getTrackerKeeper().getTrackMinecart().remove(Integer.valueOf(id));
                             return;
                         }
                     }
                     World w = plugin.getServer().getWorld(data[0]);
-                    int x = plugin.utils.parseInt(data[1]);
-                    int y = plugin.utils.parseInt(data[2]);
-                    int z = plugin.utils.parseInt(data[3]);
+                    int x = plugin.getUtils().parseInt(data[1]);
+                    int y = plugin.getUtils().parseInt(data[2]);
+                    int z = plugin.getUtils().parseInt(data[3]);
                     Location in_out = new Location(w, x, y, z);
                     if (mat.equals(Material.IRON_DOOR_BLOCK)) {
                         d = getDirection(in_out);

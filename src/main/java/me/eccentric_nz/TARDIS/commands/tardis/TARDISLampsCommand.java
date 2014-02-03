@@ -54,7 +54,7 @@ public class TARDISLampsCommand {
     public boolean addLampBlocks(Player owner) {
         // check they have permission
         if (!owner.hasPermission("tardis.update")) {
-            owner.sendMessage(plugin.pluginName + MESSAGE.NO_PERMS.getText());
+            owner.sendMessage(plugin.getPluginName() + MESSAGE.NO_PERMS.getText());
             return false;
         }
         HashMap<String, Object> where = new HashMap<String, Object>();
@@ -68,7 +68,7 @@ public class TARDISLampsCommand {
             ResultSetLamps rsl = new ResultSetLamps(plugin, wherel, false);
             QueryFactory qf = new QueryFactory(plugin);
             if (rsl.resultSet()) {
-                owner.sendMessage(plugin.pluginName + "Deleting previously stored TARDIS lamps!");
+                owner.sendMessage(plugin.getPluginName() + "Deleting previously stored TARDIS lamps!");
                 HashMap<String, Object> wheredel = new HashMap<String, Object>();
                 wheredel.put("tardis_id", id);
                 qf.doDelete("lamps", wheredel);
@@ -83,43 +83,43 @@ public class TARDISLampsCommand {
                 switch (rs.getSchematic()) {
                     case BIGGER:
                         starty = 65;
-                        dimensions = plugin.biggerdimensions;
+                        dimensions = plugin.getBuildKeeper().getBiggerDimensions();
                         break;
                     case DELUXE:
                         starty = 64;
-                        dimensions = plugin.deluxedimensions;
+                        dimensions = plugin.getBuildKeeper().getDeluxeDimensions();
                         break;
                     case ELEVENTH:
                         starty = 64;
-                        dimensions = plugin.eleventhdimensions;
+                        dimensions = plugin.getBuildKeeper().getEleventhDimensions();
                         break;
                     case REDSTONE:
                         starty = 65;
-                        dimensions = plugin.redstonedimensions;
+                        dimensions = plugin.getBuildKeeper().getRedstoneDimensions();
                         break;
                     case ARS:
                         starty = 64;
-                        dimensions = plugin.arsdimensions;
+                        dimensions = plugin.getBuildKeeper().getARSDimensions();
                         break;
                     case PLANK:
                         starty = 64;
-                        dimensions = plugin.plankdimensions;
+                        dimensions = plugin.getBuildKeeper().getPlankDimensions();
                         break;
                     case TOM:
                         starty = 64;
-                        dimensions = plugin.tomdimensions;
+                        dimensions = plugin.getBuildKeeper().getTomDimensions();
                         break;
                     case STEAMPUNK:
                         starty = 64;
-                        dimensions = plugin.steampunkdimensions;
+                        dimensions = plugin.getBuildKeeper().getSteampunkDimensions();
                         break;
                     case CUSTOM:
                         starty = 64;
-                        dimensions = plugin.customdimensions;
+                        dimensions = plugin.getBuildKeeper().getCustomDimensions();
                         break;
                     default:
                         starty = 64;
-                        dimensions = plugin.budgetdimensions;
+                        dimensions = plugin.getBuildKeeper().getBudgetDimensions();
                         break;
                 }
                 endy = starty + dimensions[0];
@@ -128,8 +128,8 @@ public class TARDISLampsCommand {
                 for (HashMap<String, String> map : data) {
                     String w = map.get("world");
                     World world = plugin.getServer().getWorld(w);
-                    int x = plugin.utils.parseInt(map.get("x"));
-                    int z = plugin.utils.parseInt(map.get("z"));
+                    int x = plugin.getUtils().parseInt(map.get("x"));
+                    int z = plugin.getUtils().parseInt(map.get("z"));
                     Chunk chunk = world.getChunkAt(x, z);
                     // find the lamps in the chunks
                     int bx = chunk.getX() << 4;
@@ -153,7 +153,7 @@ public class TARDISLampsCommand {
             }
             return true;
         } else {
-            owner.sendMessage(plugin.pluginName + MESSAGE.NOT_A_TIMELORD.getText());
+            owner.sendMessage(plugin.getPluginName() + MESSAGE.NOT_A_TIMELORD.getText());
             return false;
         }
     }

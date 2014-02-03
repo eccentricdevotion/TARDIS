@@ -59,21 +59,20 @@ public class TARDISRescue {
      */
     public boolean rescue(Player player, String saved, int id, TARDISTimeTravel tt, COMPASS d, boolean rescue) {
         if (plugin.getServer().getPlayer(saved) == null) {
-            player.sendMessage(plugin.pluginName + "That player is not online!");
+            player.sendMessage(plugin.getPluginName() + "That player is not online!");
             return true;
         }
         Player destPlayer = plugin.getServer().getPlayer(saved);
         Location player_loc = destPlayer.getLocation();
-        if (!plugin.ta.areaCheckInExisting(player_loc)) {
-            player.sendMessage(plugin.pluginName + "The player is in a TARDIS area! Please use " + ChatColor.AQUA + "/tardistravel area [area name]");
+        if (!plugin.getTardisArea().areaCheckInExisting(player_loc)) {
+            player.sendMessage(plugin.getPluginName() + "The player is in a TARDIS area! Please use " + ChatColor.AQUA + "/tardistravel area [area name]");
             return true;
         }
-        TARDISPluginRespect respect = new TARDISPluginRespect(plugin);
-        if (!respect.getRespect(player, player_loc, true)) {
+        if (!plugin.getPluginRespect().getRespect(player, player_loc, true)) {
             return true;
         }
         if (!plugin.getConfig().getBoolean("worlds." + player_loc.getWorld().getName())) {
-            player.sendMessage(plugin.pluginName + "The server does not allow time travel to this world!");
+            player.sendMessage(plugin.getPluginName() + "The server does not allow time travel to this world!");
             return true;
         }
         World w = player_loc.getWorld();
@@ -81,7 +80,7 @@ public class TARDISRescue {
         int move = (rescue) ? 0 : 3;
         int count = tt.safeLocation(start_loc[0] - move, player_loc.getBlockY(), start_loc[2], start_loc[1] - move, start_loc[3], w, d);
         if (count > 0) {
-            player.sendMessage(plugin.pluginName + "The player's location would not be safe! Please tell the player to move!");
+            player.sendMessage(plugin.getPluginName() + "The player's location would not be safe! Please tell the player to move!");
             return true;
         }
         HashMap<String, Object> set = new HashMap<String, Object>();
@@ -95,10 +94,10 @@ public class TARDISRescue {
         where.put("tardis_id", id);
         QueryFactory qf = new QueryFactory(plugin);
         qf.doUpdate("next", set, where);
-        player.sendMessage(plugin.pluginName + "The player location was saved succesfully. Please release the handbrake!");
-        plugin.tardisHasDestination.put(id, plugin.getArtronConfig().getInt("travel"));
+        player.sendMessage(plugin.getPluginName() + "The player location was saved succesfully. Please release the handbrake!");
+        plugin.getTrackerKeeper().getTrackHasDestination().put(id, plugin.getArtronConfig().getInt("travel"));
         if (rescue) {
-            plugin.trackRescue.put(id, saved);
+            plugin.getTrackerKeeper().getTrackRescue().put(id, saved);
         }
         return true;
     }
@@ -118,30 +117,30 @@ public class TARDISRescue {
             where.put("owner", player.getName());
             ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);
             if (!rs.resultSet()) {
-                player.sendMessage(plugin.pluginName + MESSAGE.NO_TARDIS.getText());
+                player.sendMessage(plugin.getPluginName() + MESSAGE.NO_TARDIS.getText());
                 return true;
             }
             int id = rs.getTardis_id();
             if (!rs.isHandbrake_on()) {
-                player.sendMessage(plugin.pluginName + ChatColor.RED + MESSAGE.NOT_WHILE_TRAVELLING.getText());
+                player.sendMessage(plugin.getPluginName() + ChatColor.RED + MESSAGE.NOT_WHILE_TRAVELLING.getText());
                 return true;
             }
             HashMap<String, Object> wheret = new HashMap<String, Object>();
             wheret.put("player", player.getName());
             ResultSetTravellers rst = new ResultSetTravellers(plugin, wheret, false);
             if (!rst.resultSet()) {
-                player.sendMessage(plugin.pluginName + MESSAGE.NOT_IN_TARDIS.getText());
+                player.sendMessage(plugin.getPluginName() + MESSAGE.NOT_IN_TARDIS.getText());
                 return true;
             }
             int tardis_id = rst.getTardis_id();
             if (tardis_id != id) {
-                player.sendMessage(plugin.pluginName + "You can only run this command if you are the Timelord of " + ChatColor.LIGHT_PURPLE + "this" + ChatColor.RESET + " TARDIS!");
+                player.sendMessage(plugin.getPluginName() + "You can only run this command if you are the Timelord of " + ChatColor.LIGHT_PURPLE + "this" + ChatColor.RESET + " TARDIS!");
                 return true;
             }
             int level = rs.getArtron_level();
             int travel = plugin.getArtronConfig().getInt("travel");
             if (level < travel) {
-                player.sendMessage(plugin.pluginName + ChatColor.RED + MESSAGE.NOT_ENOUGH_ENERGY.getText());
+                player.sendMessage(plugin.getPluginName() + ChatColor.RED + MESSAGE.NOT_ENOUGH_ENERGY.getText());
                 return true;
             }
             // get direction
@@ -149,7 +148,7 @@ public class TARDISRescue {
             wherecl.put("tardis_id", id);
             ResultSetCurrentLocation rsc = new ResultSetCurrentLocation(plugin, wherecl);
             if (!rsc.resultSet()) {
-                player.sendMessage(plugin.pluginName + ChatColor.RED + MESSAGE.NO_CURRENT.getText());
+                player.sendMessage(plugin.getPluginName() + ChatColor.RED + MESSAGE.NO_CURRENT.getText());
                 return true;
             }
             return rescue(player, saved, id, tt, rsc.getDirection(), true);

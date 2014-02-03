@@ -38,11 +38,11 @@ public class TARDISPruneCommand {
     public boolean startPruning(CommandSender sender, String[] args) {
         TARDISPruner pruner = new TARDISPruner(plugin);
         if (args[1].equalsIgnoreCase("list") && args.length == 3) {
-            sender.sendMessage(plugin.pluginName + "Please use the /tardisadmin prunelist command");
+            sender.sendMessage(plugin.getPluginName() + "Please use the /tardisadmin prunelist command");
             return true;
         }
         try {
-            sender.sendMessage(plugin.pluginName + "Backing up TARDIS database...");
+            sender.sendMessage(plugin.getPluginName() + "Backing up TARDIS database...");
             // backup database
             File oldFile = new File(plugin.getDataFolder() + File.separator + "TARDIS.db");
             File newFile = new File(plugin.getDataFolder() + File.separator + "TARDIS_" + System.currentTimeMillis() + ".db");
@@ -54,7 +54,7 @@ public class TARDISPruneCommand {
                 return false;
             }
             int days = Integer.parseInt(args[1]);
-            sender.sendMessage(plugin.pluginName + "Starting TARDIS prune...");
+            sender.sendMessage(plugin.getPluginName() + "Starting TARDIS prune...");
             pruner.prune(sender, days);
             return true;
         } catch (NumberFormatException nfe) {
@@ -64,7 +64,7 @@ public class TARDISPruneCommand {
     }
 
     public boolean listPrunes(CommandSender sender, String[] args) {
-        int days = plugin.utils.parseInt(args[1]);
+        int days = plugin.getUtils().parseInt(args[1]);
         TARDISPruner pruner = new TARDISPruner(plugin);
         pruner.list(sender, days);
         return true;

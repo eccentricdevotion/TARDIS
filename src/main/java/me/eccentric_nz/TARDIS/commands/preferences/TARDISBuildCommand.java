@@ -35,8 +35,8 @@ public class TARDISBuildCommand {
     }
 
     public boolean toggleCompanionBuilding(Player player, String[] args) {
-        if (!plugin.worldGuardOnServer || !plugin.getConfig().getBoolean("allow.wg_flag_set")) {
-            player.sendMessage(plugin.pluginName + "That command is not available on this server!");
+        if (!plugin.isWorldGuardOnServer() || !plugin.getConfig().getBoolean("allow.wg_flag_set")) {
+            player.sendMessage(plugin.getPluginName() + "That command is not available on this server!");
             return true;
         }
         String playerNameStr = player.getName();
@@ -45,19 +45,19 @@ public class TARDISBuildCommand {
         where.put("owner", playerNameStr);
         ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);
         if (!rs.resultSet()) {
-            player.sendMessage(plugin.pluginName + MESSAGE.NO_TARDIS.getText());
+            player.sendMessage(plugin.getPluginName() + MESSAGE.NO_TARDIS.getText());
             return true;
         }
         String data[] = rs.getChunk().split(":");
         if (plugin.getServer().getWorld(data[0]) == null) {
-            player.sendMessage(plugin.pluginName + "Could not get TARDIS world!");
+            player.sendMessage(plugin.getPluginName() + "Could not get TARDIS world!");
             return true;
         }
         if (args[1].equalsIgnoreCase("on")) {
-            plugin.getServer().dispatchCommand(plugin.console, "rg flag tardis_" + playerNameStr + " build -w " + data[0] + " -g members allow");
+            plugin.getServer().dispatchCommand(plugin.getConsole(), "rg flag tardis_" + playerNameStr + " build -w " + data[0] + " -g members allow");
             return true;
         } else {
-            plugin.getServer().dispatchCommand(plugin.console, "rg flag tardis_" + playerNameStr + " build -w " + data[0] + " -g members deny");
+            plugin.getServer().dispatchCommand(plugin.getConsole(), "rg flag tardis_" + playerNameStr + " build -w " + data[0] + " -g members deny");
             return true;
         }
     }

@@ -41,7 +41,7 @@ public class TARDISGiveLister {
     }
 
     public void list() {
-        sender.sendMessage(plugin.pluginName + "You can 'give' the following items:");
+        sender.sendMessage(plugin.getPluginName() + "You can 'give' the following items:");
         sender.sendMessage(ChatColor.GRAY + "    Command argument" + ChatColor.RESET + " - " + ChatColor.DARK_GRAY + "Description");
         for (Map.Entry<String, List<String>> map : options.entrySet()) {
             sender.sendMessage(map.getKey());

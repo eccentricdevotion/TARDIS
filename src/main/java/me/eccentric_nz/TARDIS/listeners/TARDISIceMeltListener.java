@@ -52,7 +52,7 @@ public class TARDISIceMeltListener implements Listener {
         Material m = b.getType();
         if (m.equals(Material.ICE)) {
             String l = b.getLocation().toString();
-            if (plugin.protectBlockMap.containsKey(l)) {
+            if (plugin.getGeneralKeeper().getProtectBlockMap().containsKey(l)) {
                 event.setCancelled(true);
             }
         }

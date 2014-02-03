@@ -17,6 +17,10 @@
 package me.eccentric_nz.TARDIS.travel;
 
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.utility.TARDISFactionsChecker;
+import me.eccentric_nz.TARDIS.utility.TARDISTownyChecker;
+import me.eccentric_nz.TARDIS.utility.TARDISWorldBorderChecker;
+import me.eccentric_nz.TARDIS.utility.Version;
 import org.bukkit.Location;
 import org.bukkit.World.Environment;
 import org.bukkit.entity.Player;
@@ -30,6 +34,12 @@ import org.bukkit.entity.Player;
 public class TARDISPluginRespect {
 
     private final TARDIS plugin;
+    private TARDISTownyChecker tychk;
+    private TARDISWorldBorderChecker borderchk;
+    private TARDISFactionsChecker factionschk;
+    public boolean townyOnServer = false;
+    public boolean borderOnServer = false;
+    public boolean factionsOnServer = false;
 
     public TARDISPluginRespect(TARDIS plugin) {
         this.plugin = plugin;
@@ -51,66 +61,103 @@ public class TARDISPluginRespect {
             String perm = l.getWorld().getName();
             if (!p.hasPermission("tardis.travel." + perm)) {
                 if (message) {
-                    p.sendMessage(plugin.pluginName + "You do not have permission to travel to " + perm + "!");
+                    p.sendMessage(plugin.getPluginName() + "You do not have permission to travel to " + perm + "!");
                 }
                 bool = false;
             }
         }
         if (!plugin.getConfig().getBoolean("travel.nether") && l.getWorld().getEnvironment().equals(Environment.NETHER)) {
             if (message) {
-                p.sendMessage(plugin.pluginName + "Time travel to the Nether is disabled!");
+                p.sendMessage(plugin.getPluginName() + "Time travel to the Nether is disabled!");
             }
             bool = false;
         }
         if (!p.hasPermission("tardis.nether") && l.getWorld().getEnvironment().equals(Environment.NETHER)) {
             if (message) {
-                p.sendMessage(plugin.pluginName + "You do not have permission to time travel to the Nether!");
+                p.sendMessage(plugin.getPluginName() + "You do not have permission to time travel to the Nether!");
             }
             bool = false;
         }
         if (!plugin.getConfig().getBoolean("travel.the_end") && l.getWorld().getEnvironment().equals(Environment.THE_END)) {
             if (message) {
-                p.sendMessage(plugin.pluginName + "Time travel to the The End is disabled!");
+                p.sendMessage(plugin.getPluginName() + "Time travel to the The End is disabled!");
             }
             bool = false;
         }
         if (!p.hasPermission("tardis.end") && l.getWorld().getEnvironment().equals(Environment.THE_END)) {
             if (message) {
-                p.sendMessage(plugin.pluginName + "You do not have permission to time travel to The End!");
+                p.sendMessage(plugin.getPluginName() + "You do not have permission to time travel to The End!");
             }
             bool = false;
         }
-        if (plugin.worldGuardOnServer && plugin.getConfig().getBoolean("preferences.respect_worldguard") && plugin.wgutils.cantBuild(p, l)) {
+        if (plugin.isWorldGuardOnServer() && plugin.getConfig().getBoolean("preferences.respect_worldguard") && plugin.getWorldGuardUtils().cantBuild(p, l)) {
             if (message) {
-                p.sendMessage(plugin.pluginName + "That location is protected by WorldGuard!");
+                p.sendMessage(plugin.getPluginName() + "That location is protected by WorldGuard!");
             }
             bool = false;
         }
-        if (plugin.townyOnServer && plugin.getConfig().getBoolean("preferences.respect_towny") && !plugin.tychk.isWilderness(p, l)) {
+        if (townyOnServer && plugin.getConfig().getBoolean("preferences.respect_towny") && !tychk.isWilderness(p, l)) {
             if (message) {
-                p.sendMessage(plugin.pluginName + "That location is protected by Towny!");
+                p.sendMessage(plugin.getPluginName() + "That location is protected by Towny!");
             }
             bool = false;
         }
-        if (plugin.borderOnServer && plugin.getConfig().getBoolean("preferences.respect_worldborder") && !plugin.borderchk.isInBorder(l)) {
+        if (borderOnServer && plugin.getConfig().getBoolean("preferences.respect_worldborder") && !borderchk.isInBorder(l)) {
             if (message) {
-                p.sendMessage(plugin.pluginName + "That location is outside the World Border!");
+                p.sendMessage(plugin.getPluginName() + "That location is outside the World Border!");
             }
             bool = false;
         }
-        if (plugin.factionsOnServer && plugin.getConfig().getBoolean("preferences.respect_factions") && !plugin.factionschk.isInFaction(p, l)) {
+        if (factionsOnServer && plugin.getConfig().getBoolean("preferences.respect_factions") && !factionschk.isInFaction(p, l)) {
             if (message) {
-                p.sendMessage(plugin.pluginName + "That location is in another faction's claim!");
+                p.sendMessage(plugin.getPluginName() + "That location is in another faction's claim!");
             }
             bool = false;
         }
-        if (plugin.ta.areaCheckLocPlayer(p, l)) {
+        if (plugin.getTardisArea().areaCheckLocPlayer(p, l)) {
             if (message) {
-                p.sendMessage(plugin.pluginName + "You do not have permission [" + plugin.trackPerm.get(p.getName()) + "] to bring the TARDIS to this location!");
+                p.sendMessage(plugin.getPluginName() + "You do not have permission [" + plugin.getTrackerKeeper().getTrackPerm().get(p.getName()) + "] to bring the TARDIS to this location!");
             }
-            plugin.trackPerm.remove(p.getName());
+            plugin.getTrackerKeeper().getTrackPerm().remove(p.getName());
             bool = false;
         }
         return bool;
+    }
+
+    /**
+     * Checks if the Towny plugin is available, and loads support if it is.
+     */
+    public void loadTowny() {
+        if (plugin.getPM().getPlugin("Towny") != null) {
+            townyOnServer = true;
+            tychk = new TARDISTownyChecker(plugin, townyOnServer);
+        }
+    }
+
+    /**
+     * Checks if the WorldBorder plugin is available, and loads support if it
+     * is.
+     */
+    public void loadWorldBorder() {
+        if (plugin.getPM().getPlugin("WorldBorder") != null) {
+            borderOnServer = true;
+            borderchk = new TARDISWorldBorderChecker(plugin, borderOnServer);
+        }
+    }
+
+    /**
+     * Checks if the Factions plugin is available, and loads support if it is.
+     */
+    public void loadFactions() {
+        if (plugin.getPM().getPlugin("Factions") != null) {
+            Version version = new Version(plugin.getPM().getPlugin("Factions").getDescription().getVersion());
+            Version min_version = new Version("2.0");
+            if (version.compareTo(min_version) >= 0) {
+                factionsOnServer = true;
+                factionschk = new TARDISFactionsChecker(plugin);
+            } else {
+                plugin.getConsole().sendMessage(plugin.getPluginName() + "This version of TARDIS is not compatible with Factions " + version.toString() + ", please update to Factions 2.0 or higher.");
+            }
+        }
     }
 }

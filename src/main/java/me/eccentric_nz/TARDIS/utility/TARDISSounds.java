@@ -60,7 +60,7 @@ public class TARDISSounds {
                     final Player player = Bukkit.getServer().getPlayer(s);
                     if (player != null) {
                         if (userSFX) {
-                            TARDIS.plugin.utils.playTARDISSound(player.getLocation(), player, "tardis_hum");
+                            TARDIS.plugin.getUtils().playTARDISSound(player.getLocation(), player, "tardis_hum");
                         }
                     }
                 }

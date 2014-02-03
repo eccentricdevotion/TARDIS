@@ -75,12 +75,12 @@ public class TARDISAdminTabComplete implements TabCompleter {
     }
 
     private List<String> combineLists() {
-        List<String> newList = new ArrayList<String>(plugin.tardisAdminCommand.firstsStr.size() + plugin.tardisAdminCommand.firstsBool.size() + plugin.tardisAdminCommand.firstsInt.size() + plugin.tardisAdminCommand.firstsStrArtron.size() + plugin.tardisAdminCommand.firstsIntArtron.size());
-        newList.addAll(plugin.tardisAdminCommand.firstsStr.keySet());
-        newList.addAll(plugin.tardisAdminCommand.firstsBool.keySet());
-        newList.addAll(plugin.tardisAdminCommand.firstsInt.keySet());
-        newList.addAll(plugin.tardisAdminCommand.firstsStrArtron);
-        newList.addAll(plugin.tardisAdminCommand.firstsIntArtron);
+        List<String> newList = new ArrayList<String>(plugin.getGeneralKeeper().getTardisAdminCommand().firstsStr.size() + plugin.getGeneralKeeper().getTardisAdminCommand().firstsBool.size() + plugin.getGeneralKeeper().getTardisAdminCommand().firstsInt.size() + plugin.getGeneralKeeper().getTardisAdminCommand().firstsStrArtron.size() + plugin.getGeneralKeeper().getTardisAdminCommand().firstsIntArtron.size());
+        newList.addAll(plugin.getGeneralKeeper().getTardisAdminCommand().firstsStr.keySet());
+        newList.addAll(plugin.getGeneralKeeper().getTardisAdminCommand().firstsBool.keySet());
+        newList.addAll(plugin.getGeneralKeeper().getTardisAdminCommand().firstsInt.keySet());
+        newList.addAll(plugin.getGeneralKeeper().getTardisAdminCommand().firstsStrArtron);
+        newList.addAll(plugin.getGeneralKeeper().getTardisAdminCommand().firstsIntArtron);
         return newList;
     }
 }

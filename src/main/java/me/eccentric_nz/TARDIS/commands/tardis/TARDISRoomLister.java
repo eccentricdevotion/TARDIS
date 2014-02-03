@@ -41,7 +41,7 @@ public class TARDISRoomLister {
     }
 
     public void list() {
-        player.sendMessage(plugin.pluginName + "There are currently " + plugin.tardisCommand.roomArgs.size() + " room types! They are:");
+        player.sendMessage(plugin.getPluginName() + "There are currently " + plugin.getGeneralKeeper().getRoomArgs().size() + " room types! They are:");
         for (Map.Entry<String, List<String>> map : options.entrySet()) {
             player.sendMessage(map.getKey());
             if (map.getValue().size() > 0) {

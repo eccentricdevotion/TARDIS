@@ -53,8 +53,8 @@ public class TARDISWorldGuardUtils {
      */
     public TARDISWorldGuardUtils(TARDIS plugin) {
         this.plugin = plugin;
-        if (plugin.worldGuardOnServer) {
-            wg = (WorldGuardPlugin) plugin.pm.getPlugin("WorldGuard");
+        if (plugin.isWorldGuardOnServer()) {
+            wg = (WorldGuardPlugin) plugin.getPM().getPlugin("WorldGuard");
         }
     }
 
@@ -67,7 +67,7 @@ public class TARDISWorldGuardUtils {
      * build at this location
      */
     public boolean cantBuild(Player p, Location l) {
-        return (plugin.worldGuardOnServer) && (!wg.canBuild(p, l));
+        return (plugin.isWorldGuardOnServer()) && (!wg.canBuild(p, l));
     }
 
     /**
@@ -111,7 +111,7 @@ public class TARDISWorldGuardUtils {
         try {
             rm.save();
         } catch (ProtectionDatabaseException e) {
-            plugin.console.sendMessage(plugin.pluginName + "could not create WorldGuard Protection for TARDIS! " + e);
+            plugin.getConsole().sendMessage(plugin.getPluginName() + "could not create WorldGuard Protection for TARDIS! " + e);
         }
     }
 
@@ -146,11 +146,11 @@ public class TARDISWorldGuardUtils {
         rm.addRegion(region);
         // deny access to anyone but the owner - companions will be added as the player defines them
         // usage = "<id> <flag> [-w world] [-g group] [value]",
-        plugin.getServer().dispatchCommand(plugin.console, "rg flag " + region_id + " entry -w " + w.getName() + " -g nonmembers deny");
+        plugin.getServer().dispatchCommand(plugin.getConsole(), "rg flag " + region_id + " entry -w " + w.getName() + " -g nonmembers deny");
         try {
             rm.save();
         } catch (ProtectionDatabaseException e) {
-            plugin.console.sendMessage(plugin.pluginName + "could not create WorldGuard Protection for TARDIS! " + e);
+            plugin.getConsole().sendMessage(plugin.getPluginName() + "could not create WorldGuard Protection for TARDIS! " + e);
         }
     }
 
@@ -186,7 +186,7 @@ public class TARDISWorldGuardUtils {
         try {
             rm.save();
         } catch (ProtectionDatabaseException e) {
-            plugin.console.sendMessage(plugin.pluginName + "could not create WorldGuard Protection for recharger! " + e);
+            plugin.getConsole().sendMessage(plugin.getPluginName() + "could not create WorldGuard Protection for recharger! " + e);
         }
     }
 
@@ -217,7 +217,7 @@ public class TARDISWorldGuardUtils {
         try {
             rm.save();
         } catch (ProtectionDatabaseException e) {
-            plugin.console.sendMessage(plugin.pluginName + "could not create WorldGuard Protection for exterior renderering room! " + e);
+            plugin.getConsole().sendMessage(plugin.getPluginName() + "could not create WorldGuard Protection for exterior renderering room! " + e);
         }
     }
 
@@ -233,7 +233,7 @@ public class TARDISWorldGuardUtils {
         try {
             rm.save();
         } catch (ProtectionDatabaseException e) {
-            plugin.console.sendMessage(plugin.pluginName + "could not remove WorldGuard Protection for TARDIS! " + e);
+            plugin.getConsole().sendMessage(plugin.getPluginName() + "could not remove WorldGuard Protection for TARDIS! " + e);
         }
     }
 
@@ -249,7 +249,7 @@ public class TARDISWorldGuardUtils {
         try {
             rm.save();
         } catch (ProtectionDatabaseException e) {
-            plugin.console.sendMessage(plugin.pluginName + "could not remove recharger WorldGuard Protection for recharger! " + e);
+            plugin.getConsole().sendMessage(plugin.getPluginName() + "could not remove recharger WorldGuard Protection for recharger! " + e);
         }
     }
 
@@ -267,7 +267,7 @@ public class TARDISWorldGuardUtils {
             try {
                 rm.save();
             } catch (ProtectionDatabaseException e) {
-                plugin.console.sendMessage(plugin.pluginName + "could not remove WorldGuard Protection for renderer room! " + e);
+                plugin.getConsole().sendMessage(plugin.getPluginName() + "could not remove WorldGuard Protection for renderer room! " + e);
             }
         }
     }
@@ -282,7 +282,7 @@ public class TARDISWorldGuardUtils {
     public void addMemberToRegion(World w, String p, String a) {
         RegionManager rm = wg.getRegionManager(w);
         if (rm.hasRegion("tardis_" + p)) {
-            plugin.getServer().dispatchCommand(plugin.console, "rg addmember tardis_" + p + " " + a + " -w " + w.getName());
+            plugin.getServer().dispatchCommand(plugin.getConsole(), "rg addmember tardis_" + p + " " + a + " -w " + w.getName());
         }
     }
 
@@ -296,7 +296,7 @@ public class TARDISWorldGuardUtils {
     public void removeMemberFromRegion(World w, String p, String a) {
         RegionManager rm = wg.getRegionManager(w);
         if (rm.hasRegion("tardis_" + p)) {
-            plugin.getServer().dispatchCommand(plugin.console, "rg removemember tardis_" + p + " " + a + " -w " + w.getName());
+            plugin.getServer().dispatchCommand(plugin.getConsole(), "rg removemember tardis_" + p + " " + a + " -w " + w.getName());
         }
     }
 

@@ -43,7 +43,7 @@ public class TARDISGravityConverterCommand {
 
     public boolean convertGravity(CommandSender sender, Player player, String[] args) {
         if (player == null) {
-            sender.sendMessage(plugin.pluginName + "Must be a player");
+            sender.sendMessage(plugin.getPluginName() + "Must be a player");
             return false;
         }
         // get the players TARDIS id
@@ -51,7 +51,7 @@ public class TARDISGravityConverterCommand {
         where.put("owner", player.getName());
         ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);
         if (!rs.resultSet()) {
-            sender.sendMessage(plugin.pluginName + MESSAGE.NO_TARDIS.getText());
+            sender.sendMessage(plugin.getPluginName() + MESSAGE.NO_TARDIS.getText());
             return false;
         }
         int id = rs.getTardis_id();
@@ -67,9 +67,9 @@ public class TARDISGravityConverterCommand {
                 values[0] = 1D;
                 values[1] = 11D;
                 values[2] = 0.5D;
-                plugin.gravityUpList.put(up, values);
+                plugin.getGeneralKeeper().getGravityUpList().put(up, values);
                 String down = "Location{world=" + rsg.getString("world") + ",x=" + rsg.getFloat("downx") + ",y=10.0,z=" + rsg.getFloat("downz") + ",pitch=0.0,yaw=0.0}";
-                plugin.gravityDownList.add(down);
+                plugin.getGeneralKeeper().getGravityDownList().add(down);
                 HashMap<String, Object> setu = new HashMap<String, Object>();
                 setu.put("tardis_id", id);
                 setu.put("location", up);
@@ -85,7 +85,7 @@ public class TARDISGravityConverterCommand {
                 QueryFactory qf = new QueryFactory(plugin);
                 qf.doInsert("gravity_well", setu);
                 qf.doInsert("gravity_well", setd);
-                player.sendMessage(plugin.pluginName + "Gravity well converted successfully.");
+                player.sendMessage(plugin.getPluginName() + "Gravity well converted successfully.");
                 return true;
             }
         } catch (SQLException e) {

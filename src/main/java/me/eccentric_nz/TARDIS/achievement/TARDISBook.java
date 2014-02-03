@@ -86,6 +86,6 @@ public class TARDISBook {
         Inventory inv = p.getInventory();
         inv.addItem(book);
         p.updateInventory();
-        p.sendMessage(plugin.pluginName + "You just recieved the book of " + name + "!");
+        p.sendMessage(plugin.getPluginName() + "You just recieved the book of " + name + "!");
     }
 }

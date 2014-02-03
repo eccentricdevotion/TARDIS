@@ -59,9 +59,9 @@ public class TARDISSonicEntityListener implements Listener {
                 Entity ent = event.getRightClicked();
                 if (ent instanceof Player) {
                     final Player scanned = (Player) ent;
-                    plugin.sonicListener.playSonicSound(player, now, 3050L, "sonic_screwdriver");
+                    plugin.getGeneralKeeper().getSonicListener().playSonicSound(player, now, 3050L, "sonic_screwdriver");
                     if (player.hasPermission("tardis.sonic.admin") && lore != null && lore.contains("Admin Upgrade")) {
-                        player.sendMessage(plugin.pluginName + "Opening player's inventory, please wait...");
+                        player.sendMessage(plugin.getPluginName() + "Opening player's inventory, please wait...");
                         plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
                             @Override
                             public void run() {
@@ -73,7 +73,7 @@ public class TARDISSonicEntityListener implements Listener {
                             }
                         }, 40L);
                     } else if (player.hasPermission("tardis.sonic.bio") && lore != null && lore.contains("Bio-scanner Upgrade")) {
-                        player.sendMessage(plugin.pluginName + "Scanning player...");
+                        player.sendMessage(plugin.getPluginName() + "Scanning player...");
                         plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
                             @Override
                             public void run() {

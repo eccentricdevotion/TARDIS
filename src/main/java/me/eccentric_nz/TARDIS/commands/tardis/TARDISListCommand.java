@@ -41,17 +41,17 @@ public class TARDISListCommand {
             where.put("owner", player.getName());
             ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);
             if (!rs.resultSet()) {
-                player.sendMessage(plugin.pluginName + MESSAGE.NO_TARDIS.getText());
+                player.sendMessage(plugin.getPluginName() + MESSAGE.NO_TARDIS.getText());
                 return false;
             }
             if (args.length < 2 || (!args[1].equalsIgnoreCase("saves") && !args[1].equalsIgnoreCase("companions") && !args[1].equalsIgnoreCase("areas") && !args[1].equalsIgnoreCase("rechargers"))) {
-                player.sendMessage(plugin.pluginName + "You need to specify which TARDIS list you want to view! [saves|companions|areas|rechargers]");
+                player.sendMessage(plugin.getPluginName() + "You need to specify which TARDIS list you want to view! [saves|companions|areas|rechargers]");
                 return false;
             }
             TARDISLister.list(player, args[1]);
             return true;
         } else {
-            player.sendMessage(plugin.pluginName + MESSAGE.NO_PERMS.getText());
+            player.sendMessage(plugin.getPluginName() + MESSAGE.NO_PERMS.getText());
             return false;
         }
     }

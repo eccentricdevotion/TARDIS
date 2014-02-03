@@ -55,8 +55,8 @@ public class TARDISQuitListener implements Listener {
                 World w = rsc.getWorld();
                 if (w != null) {
                     Chunk chunk = w.getChunkAt(new Location(w, rsc.getX(), rsc.getY(), rsc.getZ()));
-                    if (plugin.tardisChunkList.contains(chunk)) {
-                        plugin.tardisChunkList.remove(chunk);
+                    if (plugin.getGeneralKeeper().getTardisChunkList().contains(chunk)) {
+                        plugin.getGeneralKeeper().getTardisChunkList().remove(chunk);
                     }
                 }
             }

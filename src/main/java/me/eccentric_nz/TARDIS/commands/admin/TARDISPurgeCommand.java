@@ -40,14 +40,14 @@ public class TARDISPurgeCommand {
         where.put("owner", args[1]);
         ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);
         if (!rs.resultSet()) {
-            sender.sendMessage(plugin.pluginName + "Could not find a TARDIS record for player: " + args[1] + "!");
+            sender.sendMessage(plugin.getPluginName() + "Could not find a TARDIS record for player: " + args[1] + "!");
             return true;
         }
         int id = rs.getTardis_id();
         TARDISExterminator purger = new TARDISExterminator(plugin);
         purger.cleanHashMaps(id);
         purger.cleanDatabase(id);
-        sender.sendMessage(plugin.pluginName + "Database records for player: " + args[1] + "have been purged.");
+        sender.sendMessage(plugin.getPluginName() + "Database records for player: " + args[1] + "have been purged.");
         return true;
     }
 }

@@ -68,7 +68,7 @@ public class TARDISLightningListener implements Listener {
                     if (map.get("recharging").equals("0")) {
                         charging = false;
                     }
-                    int id = plugin.utils.parseInt(map.get("tardis_id"));
+                    int id = plugin.getUtils().parseInt(map.get("tardis_id"));
                     HashMap<String, Object> wherecl = new HashMap<String, Object>();
                     wherecl.put("tardis_id", id);
                     ResultSetCurrentLocation rsc = new ResultSetCurrentLocation(plugin, wherecl);
@@ -78,9 +78,9 @@ public class TARDISLightningListener implements Listener {
                         if (strikeworld.equals(w) && !charging) {
                             Location t = new Location(w, rsc.getX(), rsc.getY(), rsc.getZ());
                             // only recharge if the TARDIS is within range
-                            if (plugin.utils.compareLocations(t, l)) {
+                            if (plugin.getUtils().compareLocations(t, l)) {
                                 QueryFactory qf = new QueryFactory(plugin);
-                                int amount = plugin.getArtronConfig().getInt("lightning_recharge") + plugin.utils.parseInt(map.get("artron_level"));
+                                int amount = plugin.getArtronConfig().getInt("lightning_recharge") + plugin.getUtils().parseInt(map.get("artron_level"));
                                 HashMap<String, Object> set = new HashMap<String, Object>();
                                 set.put("artron_level", amount);
                                 HashMap<String, Object> where = new HashMap<String, Object>();

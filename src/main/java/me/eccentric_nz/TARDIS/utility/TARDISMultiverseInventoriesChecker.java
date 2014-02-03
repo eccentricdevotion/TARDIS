@@ -37,7 +37,7 @@ public class TARDISMultiverseInventoriesChecker {
     }
 
     public boolean checkMVI(String from, String to) {
-        MultiverseInventories mvi = (MultiverseInventories) plugin.pm.getPlugin("Multiverse-Inventories");
+        MultiverseInventories mvi = (MultiverseInventories) plugin.getPM().getPlugin("Multiverse-Inventories");
         GroupManager gm = mvi.getGroupManager();
         if (gm.hasGroup(from)) {
             List<WorldGroupProfile> profiles = gm.getGroupsForWorld(from);

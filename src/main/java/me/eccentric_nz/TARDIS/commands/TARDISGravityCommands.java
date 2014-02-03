@@ -75,11 +75,11 @@ public class TARDISGravityCommands implements CommandExecutor {
                 player = (Player) sender;
             }
             if (player == null) {
-                sender.sendMessage(plugin.pluginName + ChatColor.RED + MESSAGE.MUST_BE_PLAYER.getText());
+                sender.sendMessage(plugin.getPluginName() + ChatColor.RED + MESSAGE.MUST_BE_PLAYER.getText());
                 return false;
             }
             if (!player.hasPermission("tardis.gravity")) {
-                sender.sendMessage(plugin.pluginName + MESSAGE.NO_PERMS.getText());
+                sender.sendMessage(plugin.getPluginName() + MESSAGE.NO_PERMS.getText());
                 return true;
             }
             // check they are still in the TARDIS world
@@ -89,7 +89,7 @@ public class TARDISGravityCommands implements CommandExecutor {
             boolean special = name.contains("TARDIS_TimeVortex") && (world.getWorldType().equals(WorldType.FLAT) || gen instanceof TARDISChunkGenerator);
             if (!name.equals("TARDIS_WORLD_" + player.getName()) && !special) {
                 String mess_stub = (name.contains("TARDIS_WORLD_")) ? "your own" : "a";
-                player.sendMessage(plugin.pluginName + "You must be in " + mess_stub + " TARDIS world to make a gravity well!");
+                player.sendMessage(plugin.getPluginName() + "You must be in " + mess_stub + " TARDIS world to make a gravity well!");
                 return true;
             }
             if (args.length < 1) {
@@ -106,28 +106,28 @@ public class TARDISGravityCommands implements CommandExecutor {
                     try {
                         values[1] = Double.parseDouble(args[1]);
                         if (values[1] > plugin.getConfig().getDouble("growth.gravity_max_distance")) {
-                            player.sendMessage(plugin.pluginName + "That distance is too far!");
+                            player.sendMessage(plugin.getPluginName() + "That distance is too far!");
                             return true;
                         }
                     } catch (NumberFormatException e) {
-                        player.sendMessage(plugin.pluginName + "Second argument must be a number!");
+                        player.sendMessage(plugin.getPluginName() + "Second argument must be a number!");
                         return false;
                     }
                 } else {
                     values[1] = 0D;
                 }
                 if (args.length == 3) {
-                    values[2] = plugin.utils.parseDouble(args[2]);
+                    values[2] = plugin.getUtils().parseDouble(args[2]);
                     if (values[2] > plugin.getConfig().getDouble("growth.gravity_max_velocity")) {
-                        player.sendMessage(plugin.pluginName + "That velocity is too fast!");
+                        player.sendMessage(plugin.getPluginName() + "That velocity is too fast!");
                         return true;
                     }
                 } else {
                     values[2] = 0.5D;
                 }
-                plugin.trackGravity.put(player.getName(), values);
+                plugin.getTrackerKeeper().getTrackGravity().put(player.getName(), values);
                 String message = (dir.equals("remove")) ? "remove it from the database" : "save its position";
-                player.sendMessage(plugin.pluginName + "Click the wool block to " + message + ".");
+                player.sendMessage(plugin.getPluginName() + "Click the wool block to " + message + ".");
                 return true;
             }
         }

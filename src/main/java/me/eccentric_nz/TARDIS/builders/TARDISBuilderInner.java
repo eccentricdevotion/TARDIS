@@ -97,44 +97,44 @@ public class TARDISBuilderInner {
         switch (schm) {
             // TARDIS schematics supplied by Lord_Rahl and killeratnight at mcnovus.net
             case BIGGER:
-                s = plugin.biggerschematic;
-                d = plugin.biggerdimensions;
+                s = plugin.getBuildKeeper().getBiggerSchematic();
+                d = plugin.getBuildKeeper().getBiggerDimensions();
                 break;
             case DELUXE:
-                s = plugin.deluxeschematic;
-                d = plugin.deluxedimensions;
+                s = plugin.getBuildKeeper().getDeluxeSchematic();
+                d = plugin.getBuildKeeper().getDeluxeDimensions();
                 break;
             case ELEVENTH:
-                s = plugin.eleventhschematic;
-                d = plugin.eleventhdimensions;
+                s = plugin.getBuildKeeper().getEleventhSchematic();
+                d = plugin.getBuildKeeper().getEleventhDimensions();
                 break;
             case REDSTONE:
-                s = plugin.redstoneschematic;
-                d = plugin.redstonedimensions;
+                s = plugin.getBuildKeeper().getRedstoneSchematic();
+                d = plugin.getBuildKeeper().getRedstoneDimensions();
                 break;
             case STEAMPUNK:
-                s = plugin.steampunkschematic;
-                d = plugin.steampunkdimensions;
+                s = plugin.getBuildKeeper().getSteampunkSchematic();
+                d = plugin.getBuildKeeper().getSteampunkDimensions();
                 break;
             case PLANK:
-                s = plugin.plankschematic;
-                d = plugin.plankdimensions;
+                s = plugin.getBuildKeeper().getPlankSchematic();
+                d = plugin.getBuildKeeper().getPlankDimensions();
                 break;
             case TOM:
-                s = plugin.tomschematic;
-                d = plugin.tomdimensions;
+                s = plugin.getBuildKeeper().getTomSchematic();
+                d = plugin.getBuildKeeper().getTomDimensions();
                 break;
             case ARS:
-                s = plugin.arsschematic;
-                d = plugin.arsdimensions;
+                s = plugin.getBuildKeeper().getARSSchematic();
+                d = plugin.getBuildKeeper().getARSDimensions();
                 break;
             case CUSTOM:
-                s = plugin.customschematic;
-                d = plugin.customdimensions;
+                s = plugin.getBuildKeeper().getCustomSchematic();
+                d = plugin.getBuildKeeper().getCustomDimensions();
                 break;
             default:
-                s = plugin.budgetschematic;
-                d = plugin.budgetdimensions;
+                s = plugin.getBuildKeeper().getBudgetSchematic();
+                d = plugin.getBuildKeeper().getBudgetDimensions();
                 break;
         }
         short h = d[0];
@@ -176,7 +176,7 @@ public class TARDISBuilderInner {
             String chun = world.getName() + ":" + c.getX() + ":" + c.getZ();
             set.put("chunk", chun);
         } else {
-            int gsl[] = plugin.utils.getStartLocation(dbID);
+            int gsl[] = plugin.getUtils().getStartLocation(dbID);
             startx = gsl[0];
             resetx = gsl[1];
             startz = gsl[2];
@@ -201,7 +201,7 @@ public class TARDISBuilderInner {
             for (level = 0; level < h; level++) {
                 for (row = 0; row < w; row++) {
                     for (col = 0; col < l; col++) {
-                        plugin.utils.setBlock(world, startx, starty, startz, 0, (byte) 0);
+                        plugin.getUtils().setBlock(world, startx, starty, startz, 0, (byte) 0);
                         startx += 1;
                     }
                     startx = resetx;
@@ -224,8 +224,8 @@ public class TARDISBuilderInner {
                     if (!tmp.equals("-")) {
                         if (tmp.contains(":")) {
                             String[] iddata = tmp.split(":");
-                            id = plugin.utils.parseInt(iddata[0]);
-                            data = plugin.utils.parseByte(iddata[1]);
+                            id = plugin.getUtils().parseInt(iddata[0]);
+                            data = plugin.getUtils().parseByte(iddata[1]);
                             if (id == 7) {
                                 // remember bedrock location to block off the beacon light
                                 String bedrocloc = world.getName() + ":" + startx + ":" + starty + ":" + startz;
@@ -233,7 +233,7 @@ public class TARDISBuilderInner {
                             }
                             if (id == 25) { // noteblock
                                 // remember the location of this Disk Storage
-                                String storage = plugin.utils.makeLocationStr(world, startx, starty, startz);
+                                String storage = plugin.getUtils().makeLocationStr(world, startx, starty, startz);
                                 qf.insertSyncControl(dbID, 14, storage, 0);
                             }
                             if (id == 35) { // wool
@@ -303,8 +303,8 @@ public class TARDISBuilderInner {
                                 qf.doInsert("doors", setd);
                                 // if create_worlds is true, set the world spawn
                                 if (own_world) {
-                                    if (plugin.pm.isPluginEnabled("Multiverse-Core")) {
-                                        Plugin mvplugin = plugin.pm.getPlugin("Multiverse-Core");
+                                    if (plugin.getPM().isPluginEnabled("Multiverse-Core")) {
+                                        Plugin mvplugin = plugin.getPM().getPlugin("Multiverse-Core");
                                         if (mvplugin instanceof MultiverseCore) {
                                             MultiverseCore mvc = (MultiverseCore) mvplugin;
                                             MultiverseWorld foundWorld = mvc.getMVWorldManager().getMVWorld(world.getName());
@@ -318,22 +318,22 @@ public class TARDISBuilderInner {
                             }
                             if (id == 77) { // stone button
                                 // remember the location of this button
-                                String button = plugin.utils.makeLocationStr(world, startx, starty, startz);
+                                String button = plugin.getUtils().makeLocationStr(world, startx, starty, startz);
                                 qf.insertSyncControl(dbID, 1, button, 0);
                             }
                             if (id == 84) { // jukebox
                                 // remember the location of this Advanced Console
-                                String advanced = plugin.utils.makeLocationStr(world, startx, starty, startz);
+                                String advanced = plugin.getUtils().makeLocationStr(world, startx, starty, startz);
                                 qf.insertSyncControl(dbID, 15, advanced, 0);
                                 // check if player has storage record, and update the tardis_id field
-                                plugin.utils.updateStorageId(playerNameStr, dbID, qf);
+                                plugin.getUtils().updateStorageId(playerNameStr, dbID, qf);
                             }
                             if (id == 92) {
                                 /*
                                  * This block will be converted to a lever by
                                  * setBlock(), but remember it so we can use it as the handbrake!
                                  */
-                                String handbrakeloc = plugin.utils.makeLocationStr(world, startx, starty, startz);
+                                String handbrakeloc = plugin.getUtils().makeLocationStr(world, startx, starty, startz);
                                 qf.insertSyncControl(dbID, 0, handbrakeloc, 0);
                             }
                             if (id == 97) { // silverfish stone
@@ -466,22 +466,22 @@ public class TARDISBuilderInner {
                                  * wood button will be coverted to the correct id by
                                  * setBlock(), but remember it for the Artron Energy Capacitor.
                                  */
-                                String woodbuttonloc = plugin.utils.makeLocationStr(world, startx, starty, startz);
+                                String woodbuttonloc = plugin.getUtils().makeLocationStr(world, startx, starty, startz);
                                 qf.insertSyncControl(dbID, 6, woodbuttonloc, 0);
                             }
                         } else {
-                            id = plugin.utils.parseInt(tmp);
+                            id = plugin.getUtils().parseInt(tmp);
                             data = 0;
                         }
                         // if it's an iron/gold/diamond/emerald/beacon/redstone block put it in the blocks table
                         if (id == 41 || id == 42 || id == 57 || id == 133 || id == -123 || id == 138 || id == -118 || id == 152 || id == -104) {
                             HashMap<String, Object> setpb = new HashMap<String, Object>();
-                            String loc = plugin.utils.makeLocationStr(world, startx, starty, startz);
+                            String loc = plugin.getUtils().makeLocationStr(world, startx, starty, startz);
                             setpb.put("tardis_id", dbID);
                             setpb.put("location", loc);
                             setpb.put("police_box", 0);
                             qf.doInsert("blocks", setpb);
-                            plugin.protectBlockMap.put(loc, dbID);
+                            plugin.getGeneralKeeper().getProtectBlockMap().put(loc, dbID);
                         }
                         // if it's the door, don't set it just remember its block then do it at the end
                         if (id == 71) { // doors
@@ -547,9 +547,9 @@ public class TARDISBuilderInner {
                             } else {
                                 swap = 1;
                             }
-                            plugin.utils.setBlock(world, startx, starty, startz, swap, data);
+                            plugin.getUtils().setBlock(world, startx, starty, startz, swap, data);
                         } else {
-                            plugin.utils.setBlock(world, startx, starty, startz, id, data);
+                            plugin.getUtils().setBlock(world, startx, starty, startz, id, data);
                         }
                     }
                     startx += 1;
@@ -581,14 +581,14 @@ public class TARDISBuilderInner {
         }
         for (Map.Entry<Block, Byte> entry : postStickyPistonBaseBlocks.entrySet()) {
             Block pspb = entry.getKey();
-            plugin.pistons.add(pspb);
+            plugin.getGeneralKeeper().getDoorPistons().add(pspb);
             byte pspdata = entry.getValue();
             pspb.setTypeId(29);
             pspb.setData(pspdata, true);
         }
         for (Map.Entry<Block, Byte> entry : postPistonBaseBlocks.entrySet()) {
             Block ppb = entry.getKey();
-            plugin.pistons.add(ppb);
+            plugin.getGeneralKeeper().getDoorPistons().add(ppb);
             byte ppbdata = entry.getValue();
             ppb.setTypeId(33);
             ppb.setData(ppbdata, true);
@@ -689,13 +689,13 @@ public class TARDISBuilderInner {
             lamp.setType(Material.REDSTONE_LAMP_ON);
         }
         lampblocks.clear();
-        if (plugin.worldGuardOnServer && plugin.getConfig().getBoolean("preferences.use_worldguard")) {
+        if (plugin.isWorldGuardOnServer() && plugin.getConfig().getBoolean("preferences.use_worldguard")) {
             if (tips) {
                 if (pos != null) {
-                    plugin.wgutils.addWGProtection(p, pos, world);
+                    plugin.getWorldGuardUtils().addWGProtection(p, pos, world);
                 }
             } else {
-                plugin.wgutils.addWGProtection(p, wg1, wg2);
+                plugin.getWorldGuardUtils().addWGProtection(p, wg1, wg2);
             }
         }
         // finished processing - update tardis table!
@@ -716,7 +716,7 @@ public class TARDISBuilderInner {
                     qf.doInsert("achievements", setk);
                     // give the join kit
                     String kit = plugin.getKitsConfig().getString("give.create.kit");
-                    plugin.getServer().dispatchCommand(plugin.console, "tardisgive " + playerNameStr + " kit " + kit);
+                    plugin.getServer().dispatchCommand(plugin.getConsole(), "tardisgive " + playerNameStr + " kit " + kit);
                 }
             }
         }
@@ -733,8 +733,8 @@ public class TARDISBuilderInner {
      */
     public List<Chunk> getChunks(World w, int x, int z, short[] d) {
         List<Chunk> chunks = new ArrayList<Chunk>();
-        int cw = plugin.utils.roundUp(d[1], 16);
-        int cl = plugin.utils.roundUp(d[2], 16);
+        int cw = plugin.getUtils().roundUp(d[1], 16);
+        int cl = plugin.getUtils().roundUp(d[2], 16);
         // check all the chunks that will be used by the schematic
         for (int cx = 0; cx < cw; cx++) {
             for (int cz = 0; cz < cl; cz++) {

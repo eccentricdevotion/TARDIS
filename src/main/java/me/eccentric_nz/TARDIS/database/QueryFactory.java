@@ -85,12 +85,12 @@ public class QueryFactory {
                     ps.setString(i, entry.getValue().toString());
                 } else {
                     if (entry.getValue().getClass().getName().contains("Double")) {
-                        ps.setDouble(i, plugin.utils.parseDouble(entry.getValue().toString()));
+                        ps.setDouble(i, plugin.getUtils().parseDouble(entry.getValue().toString()));
                     }
                     if (entry.getValue().getClass().getName().contains("Long")) {
-                        ps.setLong(i, plugin.utils.parseLong(entry.getValue().toString()));
+                        ps.setLong(i, plugin.getUtils().parseLong(entry.getValue().toString()));
                     } else {
-                        ps.setInt(i, plugin.utils.parseInt(entry.getValue().toString()));
+                        ps.setInt(i, plugin.getUtils().parseInt(entry.getValue().toString()));
                     }
                 }
                 i++;

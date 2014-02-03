@@ -91,9 +91,9 @@ public class TARDISDematerialisationPreset implements Runnable {
         this.cham_data = cham_data;
         this.player = player;
         this.sub = sub;
-        column = plugin.presets.getColumn(preset, d);
-        stained_column = plugin.presets.getStained(preset, d);
-        glass_column = plugin.presets.getGlass(preset, d);
+        column = plugin.getPresets().getColumn(preset, d);
+        stained_column = plugin.getPresets().getStained(preset, d);
+        glass_column = plugin.getPresets().getGlass(preset, d);
         this.faces.add(BlockFace.NORTH);
         this.faces.add(BlockFace.SOUTH);
         this.faces.add(BlockFace.EAST);
@@ -157,10 +157,10 @@ public class TARDISDematerialisationPreset implements Runnable {
                                 flowerz = location.getBlockZ();
                                 break;
                         }
-                        plugin.utils.setBlock(world, flowerx, flowery, flowerz, 0, (byte) 0);
+                        plugin.getUtils().setBlock(world, flowerx, flowery, flowerz, 0, (byte) 0);
                         break;
                     case CAKE:
-                        plugin.destroyerP.destroyLamp(location, preset);
+                        plugin.getPresetDestroyer().destroyLamp(location, preset);
                     default:
                         break;
                 }
@@ -172,7 +172,7 @@ public class TARDISDematerialisationPreset implements Runnable {
                     minecart = rsp.isMinecartOn();
                 }
                 if (!minecart) {
-                    plugin.utils.playTARDISSound(location, player, "tardis_takeoff");
+                    plugin.getUtils().playTARDISSound(location, player, "tardis_takeoff");
                 } else {
                     world.playSound(location, Sound.MINECART_INSIDE, 1.0F, 0.0F);
                 }
@@ -234,7 +234,7 @@ public class TARDISDematerialisationPreset implements Runnable {
                             case 3:
                                 int subi = (preset.equals(PRESET.SUBMERGED)) ? cham_id : colids[yy];
                                 byte subd = (preset.equals(PRESET.SUBMERGED)) ? cham_data : coldatas[yy];
-                                plugin.utils.setBlock(world, xx, (y + yy), zz, subi, subd);
+                                plugin.getUtils().setBlock(world, xx, (y + yy), zz, subi, subd);
                                 break;
                             case 35: // wool
                                 int chai = (preset.equals(PRESET.NEW) || preset.equals(PRESET.OLD)) ? cham_id : colids[yy];
@@ -242,7 +242,7 @@ public class TARDISDematerialisationPreset implements Runnable {
                                 if (preset.equals(PRESET.PARTY) || (preset.equals(PRESET.FLOWER) && coldatas[yy] == 0)) {
                                     chad = the_colour;
                                 }
-                                plugin.utils.setBlock(world, xx, (y + yy), zz, chai, chad);
+                                plugin.getUtils().setBlock(world, xx, (y + yy), zz, chai, chad);
                                 break;
                             case 38:
                                 break;
@@ -250,7 +250,7 @@ public class TARDISDematerialisationPreset implements Runnable {
                             case 89:
                             case 124:
                                 int light = (preset.equals(PRESET.NEW) || preset.equals(PRESET.OLD)) ? lamp : colids[yy];
-                                plugin.utils.setBlock(world, xx, (y + yy), zz, light, coldatas[yy]);
+                                plugin.getUtils().setBlock(world, xx, (y + yy), zz, light, coldatas[yy]);
                                 break;
                             case 68: // except the sign
                                 break;
@@ -269,17 +269,17 @@ public class TARDISDematerialisationPreset implements Runnable {
                                                 chad = finaldatas[yy];
                                             }
                                         } else {
-                                            chad = plugin.lookup.getStain().get(cham_id);
+                                            chad = plugin.getBuildKeeper().getStainedGlassLookup().getStain().get(cham_id);
                                         }
                                     }
-                                    plugin.utils.setBlock(world, xx, (y + yy), zz, 95, chad);
+                                    plugin.getUtils().setBlock(world, xx, (y + yy), zz, 95, chad);
                                 } else {
-                                    plugin.utils.setBlock(world, xx, (y + yy), zz, colids[yy], coldatas[yy]);
+                                    plugin.getUtils().setBlock(world, xx, (y + yy), zz, colids[yy], coldatas[yy]);
                                 }
                                 break;
                             default: // everything else
                                 if (change) {
-                                    plugin.utils.setBlock(world, xx, (y + yy), zz, colids[yy], coldatas[yy]);
+                                    plugin.getUtils().setBlock(world, xx, (y + yy), zz, colids[yy], coldatas[yy]);
                                 }
                                 break;
                         }
@@ -299,7 +299,7 @@ public class TARDISDematerialisationPreset implements Runnable {
         where.put("door_type", 0);
         ResultSetDoors rs = new ResultSetDoors(plugin, where, false);
         if (rs.resultSet()) {
-            Block b = plugin.utils.getLocationFromDB(rs.getDoor_location(), 0.0F, 0.0F).getBlock();
+            Block b = plugin.getUtils().getLocationFromDB(rs.getDoor_location(), 0.0F, 0.0F).getBlock();
             if (p.equals(PRESET.FLOWER)) {
                 return b.getRelative(BlockFace.UP, 3).getData();
             } else {

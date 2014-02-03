@@ -52,14 +52,14 @@ public class TARDISToggleOnOffCommand {
             if (pref.equals("beacon")) {
                 toggleBeacon(player.getName(), true);
             }
-            player.sendMessage(plugin.pluginName + pref + grammar + " turned ON!");
+            player.sendMessage(plugin.getPluginName() + pref + grammar + " turned ON!");
         }
         if (args[1].equalsIgnoreCase("off")) {
             setp.put(pref + "_on", 0);
             if (pref.equals("beacon")) {
                 toggleBeacon(player.getName(), false);
             }
-            player.sendMessage(plugin.pluginName + pref + grammar + " turned OFF.");
+            player.sendMessage(plugin.getPluginName() + pref + grammar + " turned OFF.");
         }
         qf.doUpdate("player_prefs", setp, wherep);
         return true;
@@ -100,9 +100,9 @@ public class TARDISToggleOnOffCommand {
                 beaconData = beacon.split(":");
             }
             World w = plugin.getServer().getWorld(beaconData[0]);
-            int bx = plugin.utils.parseInt(beaconData[1]);
-            int by = plugin.utils.parseInt(beaconData[2]) + plusy;
-            int bz = plugin.utils.parseInt(beaconData[3]);
+            int bx = plugin.getUtils().parseInt(beaconData[1]);
+            int by = plugin.getUtils().parseInt(beaconData[2]) + plusy;
+            int bz = plugin.getUtils().parseInt(beaconData[3]);
             if (beacon.isEmpty()) {
                 // update the tardis table so we don't have to do this again
                 String beacon_loc = beaconData[0] + ":" + beaconData[1] + ":" + by + ":" + beaconData[3];

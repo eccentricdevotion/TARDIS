@@ -40,7 +40,7 @@ public class TARDISEmergencyRelocation {
     }
 
     public void relocate(int id, Player p) {
-        p.sendMessage(plugin.pluginName + MESSAGE.EMERGENCY.getText());
+        p.sendMessage(plugin.getPluginName() + MESSAGE.EMERGENCY.getText());
         // get the TARDIS
         HashMap<String, Object> where = new HashMap<String, Object>();
         where.put("tardis_id", id);
@@ -72,7 +72,7 @@ public class TARDISEmergencyRelocation {
                 setb.put("direction", "EAST");
                 setb.put("submarine", 0);
                 qf.doUpdate("current", setb, whereb);
-                p.sendMessage(plugin.pluginName + "Emergency Relocation complete.");
+                p.sendMessage(plugin.getPluginName() + "Emergency Relocation complete.");
                 HashMap<String, Object> wherea = new HashMap<String, Object>();
                 wherea.put("tardis_id", id);
                 qf.alterEnergyLevel("tardis", -plugin.getArtronConfig().getInt("travel"), wherea, p);

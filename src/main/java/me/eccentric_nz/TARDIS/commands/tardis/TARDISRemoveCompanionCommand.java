@@ -47,23 +47,23 @@ public class TARDISRemoveCompanionCommand {
             int id;
             String[] data;
             if (!rs.resultSet()) {
-                player.sendMessage(plugin.pluginName + MESSAGE.NO_TARDIS.getText());
+                player.sendMessage(plugin.getPluginName() + MESSAGE.NO_TARDIS.getText());
                 return false;
             } else {
                 comps = rs.getCompanions();
                 if (comps == null || comps.isEmpty()) {
-                    player.sendMessage(plugin.pluginName + "You have not added any TARDIS companions yet!");
+                    player.sendMessage(plugin.getPluginName() + "You have not added any TARDIS companions yet!");
                     return true;
                 }
                 id = rs.getTardis_id();
                 data = rs.getChunk().split(":");
             }
             if (args.length < 2) {
-                player.sendMessage(plugin.pluginName + MESSAGE.TOO_FEW_ARGS.getText());
+                player.sendMessage(plugin.getPluginName() + MESSAGE.TOO_FEW_ARGS.getText());
                 return false;
             }
             if (!args[1].matches("[A-Za-z0-9_]{2,16}")) {
-                player.sendMessage(plugin.pluginName + MESSAGE.NOT_VALID_NAME.getText());
+                player.sendMessage(plugin.getPluginName() + MESSAGE.NOT_VALID_NAME.getText());
                 return false;
             } else {
                 String newList = "";
@@ -93,17 +93,17 @@ public class TARDISRemoveCompanionCommand {
                 QueryFactory qf = new QueryFactory(plugin);
                 qf.doUpdate("tardis", set, tid);
                 // if using WorldGuard, remove them from the region membership
-                if (plugin.worldGuardOnServer && plugin.getConfig().getBoolean("preferences.use_worldguard")) {
+                if (plugin.isWorldGuardOnServer() && plugin.getConfig().getBoolean("preferences.use_worldguard")) {
                     World w = plugin.getServer().getWorld(data[0]);
                     if (w != null) {
-                        plugin.wgutils.removeMemberFromRegion(w, player.getName(), args[1].toLowerCase(Locale.ENGLISH));
+                        plugin.getWorldGuardUtils().removeMemberFromRegion(w, player.getName(), args[1].toLowerCase(Locale.ENGLISH));
                     }
                 }
-                player.sendMessage(plugin.pluginName + message);
+                player.sendMessage(plugin.getPluginName() + message);
                 return true;
             }
         } else {
-            player.sendMessage(plugin.pluginName + MESSAGE.NO_PERMS.getText());
+            player.sendMessage(plugin.getPluginName() + MESSAGE.NO_PERMS.getText());
             return false;
         }
     }

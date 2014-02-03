@@ -96,7 +96,7 @@ public class TARDISPresetDestroyerFactory {
         if (rsd.resultSet()) {
             String dl = rsd.getDoor_location();
             float f = 0.0F;
-            Block b = plugin.utils.getLocationFromDB(dl, f, f).getBlock();
+            Block b = plugin.getUtils().getLocationFromDB(dl, f, f).getBlock();
             b.setType(Material.AIR);
             b.getRelative(BlockFace.UP).setType(Material.AIR);
         }
@@ -212,9 +212,9 @@ public class TARDISPresetDestroyerFactory {
                 signy = 2;
                 break;
         }
-        plugin.utils.setBlock(w, l.getBlockX() + signx, l.getBlockY() + signy, l.getBlockZ() + signz, 0, (byte) 0);
+        plugin.getUtils().setBlock(w, l.getBlockX() + signx, l.getBlockY() + signy, l.getBlockZ() + signz, 0, (byte) 0);
         if (p.equals(PRESET.SWAMP)) {
-            plugin.utils.setBlock(w, l.getBlockX() + signx, l.getBlockY(), l.getBlockZ() + signz, 0, (byte) 0);
+            plugin.getUtils().setBlock(w, l.getBlockX() + signx, l.getBlockY(), l.getBlockZ() + signz, 0, (byte) 0);
         }
     }
 
@@ -226,11 +226,11 @@ public class TARDISPresetDestroyerFactory {
         if (p.equals(PRESET.CAKE)) {
             for (int i = (tx - 1); i < (tx + 2); i++) {
                 for (int j = (tz - 1); j < (tz + 2); j++) {
-                    plugin.utils.setBlock(w, i, ty, j, 0, (byte) 0);
+                    plugin.getUtils().setBlock(w, i, ty, j, 0, (byte) 0);
                 }
             }
         } else {
-            plugin.utils.setBlock(w, tx, ty, tz, 0, (byte) 0);
+            plugin.getUtils().setBlock(w, tx, ty, tz, 0, (byte) 0);
         }
     }
 
@@ -264,8 +264,8 @@ public class TARDISPresetDestroyerFactory {
                 rightz = l.getBlockZ() + 1;
                 break;
         }
-        plugin.utils.setBlock(w, leftx, eyey, leftz, 0, (byte) 0);
-        plugin.utils.setBlock(w, rightx, eyey, rightz, 0, (byte) 0);
+        plugin.getUtils().setBlock(w, leftx, eyey, leftz, 0, (byte) 0);
+        plugin.getUtils().setBlock(w, rightx, eyey, rightz, 0, (byte) 0);
     }
 
     public void destroyMineshaftTorches(Location l, COMPASS d) {
@@ -287,8 +287,8 @@ public class TARDISPresetDestroyerFactory {
                 rightz = l.getBlockZ() + 1;
                 break;
         }
-        plugin.utils.setBlock(w, leftx, eyey, leftz, 0, (byte) 0);
-        plugin.utils.setBlock(w, rightx, eyey, rightz, 0, (byte) 0);
+        plugin.getUtils().setBlock(w, leftx, eyey, leftz, 0, (byte) 0);
+        plugin.getUtils().setBlock(w, rightx, eyey, rightz, 0, (byte) 0);
     }
 
     public void removeBlockProtection(int id, QueryFactory qf) {
@@ -297,6 +297,6 @@ public class TARDISPresetDestroyerFactory {
         whereb.put("police_box", 1);
         qf.doDelete("blocks", whereb);
         // remove from protectBlockMap - remove(Integer.valueOf(id)) would only remove the first one
-        plugin.protectBlockMap.values().removeAll(Collections.singleton(Integer.valueOf(id)));
+        plugin.getGeneralKeeper().getProtectBlockMap().values().removeAll(Collections.singleton(Integer.valueOf(id)));
     }
 }

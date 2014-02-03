@@ -72,10 +72,10 @@ public class TARDISRoomBuilder {
             int middle_id, floor_id;
             byte middle_data, floor_data;
             if (rsp.resultSet()) {
-                int[] wid_data = plugin.tw.blocks.get(rsp.getWall());
+                int[] wid_data = plugin.getTardisWalls().blocks.get(rsp.getWall());
                 middle_id = wid_data[0];
                 middle_data = (byte) wid_data[1];
-                int[] fid_data = plugin.tw.blocks.get(rsp.getFloor());
+                int[] fid_data = plugin.getTardisWalls().blocks.get(rsp.getFloor());
                 floor_id = fid_data[0];
                 floor_data = (byte) fid_data[1];
             } else {
@@ -92,7 +92,7 @@ public class TARDISRoomBuilder {
             Block b = l.getBlock();
             roomData.setBlock(b);
             roomData.setDirection(d);
-            short[] dimensions = plugin.room_dimensions.get(r);
+            short[] dimensions = plugin.getBuildKeeper().getRoomDimensions().get(r);
             int xzoffset = (dimensions[1] / 2);
             switch (d) {
                 case NORTH:
@@ -117,7 +117,7 @@ public class TARDISRoomBuilder {
             roomData.setX(1);
             roomData.setZ(1);
             roomData.setRoom(r);
-            roomData.setSchematic(plugin.room_schematics.get(r));
+            roomData.setSchematic(plugin.getBuildKeeper().getRoomSchematics().get(r));
             roomData.setDimensions(dimensions);
 
             // determine how often to place a block (in ticks) - `room_speed` is the number of blocks to place in a second (20 ticks)
@@ -125,7 +125,7 @@ public class TARDISRoomBuilder {
             TARDISRoomRunnable runnable = new TARDISRoomRunnable(plugin, roomData, p);
             int taskID = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, runnable, delay, delay);
             runnable.setTask(taskID);
-            p.sendMessage(plugin.pluginName + "To cancel growing this room use the command /tardis abort " + taskID);
+            p.sendMessage(plugin.getPluginName() + "To cancel growing this room use the command /tardis abort " + taskID);
         }
         return true;
     }

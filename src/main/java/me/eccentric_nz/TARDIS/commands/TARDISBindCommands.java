@@ -66,7 +66,7 @@ public class TARDISBindCommands implements CommandExecutor {
     public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
         if (cmd.getName().equalsIgnoreCase("tardisbind")) {
             if (!sender.hasPermission("tardis.update")) {
-                sender.sendMessage(plugin.pluginName + MESSAGE.NO_PERMS.getText());
+                sender.sendMessage(plugin.getPluginName() + MESSAGE.NO_PERMS.getText());
                 return false;
             }
             Player player = null;
@@ -74,22 +74,22 @@ public class TARDISBindCommands implements CommandExecutor {
                 player = (Player) sender;
             }
             if (player == null) {
-                sender.sendMessage(plugin.pluginName + MESSAGE.MUST_BE_PLAYER.getText());
+                sender.sendMessage(plugin.getPluginName() + MESSAGE.MUST_BE_PLAYER.getText());
                 return false;
             }
             if (args.length < 1) {
-                sender.sendMessage(plugin.pluginName + MESSAGE.TOO_FEW_ARGS.getText());
+                sender.sendMessage(plugin.getPluginName() + MESSAGE.TOO_FEW_ARGS.getText());
                 return false;
             }
             if (!firstArgs.contains(args[0].toLowerCase(Locale.ENGLISH))) {
-                sender.sendMessage(plugin.pluginName + "That is not a valid 'bind' type! Try one of: save|cmd|player|area|remove");
+                sender.sendMessage(plugin.getPluginName() + "That is not a valid 'bind' type! Try one of: save|cmd|player|area|remove");
                 return false;
             }
             HashMap<String, Object> where = new HashMap<String, Object>();
             where.put("owner", player.getName());
             ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);
             if (!rs.resultSet()) {
-                sender.sendMessage(plugin.pluginName + MESSAGE.NOT_A_TIMELORD.getText());
+                sender.sendMessage(plugin.getPluginName() + MESSAGE.NOT_A_TIMELORD.getText());
                 return false;
             }
             int id = rs.getTardis_id();
@@ -97,7 +97,7 @@ public class TARDISBindCommands implements CommandExecutor {
             wheret.put("player", player.getName());
             ResultSetTravellers rst = new ResultSetTravellers(plugin, wheret, false);
             if (!rst.resultSet()) {
-                sender.sendMessage(plugin.pluginName + MESSAGE.NOT_IN_TARDIS.getText());
+                sender.sendMessage(plugin.getPluginName() + MESSAGE.NOT_IN_TARDIS.getText());
                 return false;
             }
             if (args[0].equalsIgnoreCase("update")) {
@@ -110,11 +110,11 @@ public class TARDISBindCommands implements CommandExecutor {
                     setu.put("type", 1);
                     qf.doUpdate("destinations", setu, whereu);
                 }
-                sender.sendMessage(plugin.pluginName + "Binds updated!");
+                sender.sendMessage(plugin.getPluginName() + "Binds updated!");
                 return true;
             }
             if (args.length < 2) {
-                sender.sendMessage(plugin.pluginName + MESSAGE.TOO_FEW_ARGS.getText());
+                sender.sendMessage(plugin.getPluginName() + MESSAGE.TOO_FEW_ARGS.getText());
                 return false;
             }
             if (args[0].equalsIgnoreCase("remove")) {
@@ -123,11 +123,11 @@ public class TARDISBindCommands implements CommandExecutor {
                 whered.put("dest_name", args[1].toLowerCase(Locale.ENGLISH));
                 ResultSetDestinations rsd = new ResultSetDestinations(plugin, whered, false);
                 if (!rsd.resultSet()) {
-                    sender.sendMessage(plugin.pluginName + "Could not find a save with that name! Try using " + ChatColor.AQUA + "/tardis list saves" + ChatColor.RESET + " first.");
+                    sender.sendMessage(plugin.getPluginName() + "Could not find a save with that name! Try using " + ChatColor.AQUA + "/tardis list saves" + ChatColor.RESET + " first.");
                     return true;
                 }
                 if (rsd.getBind().isEmpty()) {
-                    sender.sendMessage(plugin.pluginName + "There is no button bound to that save name!");
+                    sender.sendMessage(plugin.getPluginName() + "There is no button bound to that save name!");
                     return true;
                 }
                 int did = rsd.getDest_id();
@@ -144,7 +144,7 @@ public class TARDISBindCommands implements CommandExecutor {
                     set.put("bind", "");
                     qf.doUpdate("destinations", set, whereb);
                 }
-                player.sendMessage(plugin.pluginName + "The " + firstArgs.get(dtype) + " was unbound. You can safely delete the block.");
+                player.sendMessage(plugin.getPluginName() + "The " + firstArgs.get(dtype) + " was unbound. You can safely delete the block.");
                 return true;
             } else {
                 int did = 0;
@@ -154,7 +154,7 @@ public class TARDISBindCommands implements CommandExecutor {
                     whered.put("dest_name", args[1]);
                     ResultSetDestinations rsd = new ResultSetDestinations(plugin, whered, false);
                     if (!rsd.resultSet()) {
-                        sender.sendMessage(plugin.pluginName + "Could not find a save with that name! Try using " + ChatColor.AQUA + "/tardis list saves" + ChatColor.RESET + " first.");
+                        sender.sendMessage(plugin.getPluginName() + "Could not find a save with that name! Try using " + ChatColor.AQUA + "/tardis list saves" + ChatColor.RESET + " first.");
                         return true;
                     } else {
                         did = rsd.getDest_id();
@@ -165,7 +165,7 @@ public class TARDISBindCommands implements CommandExecutor {
                 set.put("tardis_id", id);
                 if (args[0].equalsIgnoreCase("cmd")) { // type 1
                     if (!type_1.contains(args[1])) {
-                        sender.sendMessage(plugin.pluginName + "You can only bind the hide, cave, rebuild and home commands!");
+                        sender.sendMessage(plugin.getPluginName() + "You can only bind the hide, cave, rebuild and home commands!");
                         return true;
                     }
                     set.put("dest_name", args[1].toLowerCase(Locale.ENGLISH));
@@ -178,7 +178,7 @@ public class TARDISBindCommands implements CommandExecutor {
                     if (p == null) {
                         OfflinePlayer offp = plugin.getServer().getOfflinePlayer(args[1]);
                         if (offp == null) {
-                            sender.sendMessage(plugin.pluginName + MESSAGE.COULD_NOT_FIND_NAME.getText());
+                            sender.sendMessage(plugin.getPluginName() + MESSAGE.COULD_NOT_FIND_NAME.getText());
                             return true;
                         }
                     }
@@ -191,11 +191,11 @@ public class TARDISBindCommands implements CommandExecutor {
                     wherea.put("area_name", args[1]);
                     ResultSetAreas rsa = new ResultSetAreas(plugin, wherea, false);
                     if (!rsa.resultSet()) {
-                        sender.sendMessage(plugin.pluginName + "Could not find an area with that name! try using " + ChatColor.AQUA + "/tardis list areas" + ChatColor.RESET + " first.");
+                        sender.sendMessage(plugin.getPluginName() + "Could not find an area with that name! try using " + ChatColor.AQUA + "/tardis list areas" + ChatColor.RESET + " first.");
                         return true;
                     }
                     if (!player.hasPermission("tardis.area." + args[1]) || !player.isPermissionSet("tardis.area." + args[1])) {
-                        sender.sendMessage(plugin.pluginName + "You do not have permission [tardis.area." + args[1] + "] to bind to this location!");
+                        sender.sendMessage(plugin.getPluginName() + "You do not have permission [tardis.area." + args[1] + "] to bind to this location!");
                         return true;
                     }
                     set.put("dest_name", args[1].toLowerCase(Locale.ENGLISH));
@@ -213,13 +213,13 @@ public class TARDISBindCommands implements CommandExecutor {
                             did = qf.doSyncInsert("destinations", set);
                         }
                     } catch (IllegalArgumentException iae) {
-                        player.sendMessage(plugin.pluginName + "Biome type not valid!");
+                        player.sendMessage(plugin.getPluginName() + "Biome type not valid!");
                         return true;
                     }
                 }
                 if (did != 0) {
-                    plugin.trackBinder.put(player.getName(), did);
-                    player.sendMessage(plugin.pluginName + "Click the block you want to bind to this save location.");
+                    plugin.getTrackerKeeper().getTrackBinder().put(player.getName(), did);
+                    player.sendMessage(plugin.getPluginName() + "Click the block you want to bind to this save location.");
                     return true;
                 }
             }

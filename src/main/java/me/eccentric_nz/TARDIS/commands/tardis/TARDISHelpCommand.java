@@ -47,7 +47,7 @@ public class TARDISHelpCommand {
             }
             // check that the second arument is valid
             if (!cmds.contains(args[1].toUpperCase(Locale.ENGLISH))) {
-                player.sendMessage(plugin.pluginName + "That is not a valid help topic!");
+                player.sendMessage(plugin.getPluginName() + "That is not a valid help topic!");
                 return true;
             }
             switch (CMDS.fromString(args[1])) {

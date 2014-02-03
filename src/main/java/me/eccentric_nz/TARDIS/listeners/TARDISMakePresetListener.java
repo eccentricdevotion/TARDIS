@@ -79,8 +79,8 @@ public class TARDISMakePresetListener implements Listener {
         final String playerNameStr = player.getName();
         Block block = event.getClickedBlock();
         if (block != null) {
-            if (plugin.trackPreset.containsKey(playerNameStr)) {
-                String[] split = plugin.trackPreset.get(playerNameStr).split(":");
+            if (plugin.getTrackerKeeper().getTrackPreset().containsKey(playerNameStr)) {
+                String[] split = plugin.getTrackerKeeper().getTrackPreset().get(playerNameStr).split(":");
                 String name = split[0];
                 String bool = split[1];
                 Location block_loc = block.getLocation();
@@ -88,7 +88,7 @@ public class TARDISMakePresetListener implements Listener {
                 int fx = block_loc.getBlockX();
                 int fy = block_loc.getBlockY();
                 int fz = block_loc.getBlockZ();
-                player.sendMessage(plugin.pluginName + "Scanning 3 x 3 x 4 area...");
+                player.sendMessage(plugin.getPluginName() + "Scanning 3 x 3 x 4 area...");
                 StringBuilder sb_id = new StringBuilder("[");
                 StringBuilder sb_data = new StringBuilder("[");
                 StringBuilder sb_stain_id = new StringBuilder("[");
@@ -119,7 +119,7 @@ public class TARDISMakePresetListener implements Listener {
                                 sb_glass_data.append(data);
                             } else {
                                 sb_stain_id.append(95);
-                                byte colour = plugin.lookup.getStain().get(id);
+                                byte colour = plugin.getBuildKeeper().getStainedGlassLookup().getStain().get(id);
                                 if (colour == -1) {
                                     // use the same data as the original block
                                     colour = data;
@@ -138,7 +138,7 @@ public class TARDISMakePresetListener implements Listener {
                                 sb_glass_data.append(data).append(",");
                             } else {
                                 sb_stain_id.append(95).append(",");
-                                byte colour = plugin.lookup.getStain().get(id);
+                                byte colour = plugin.getBuildKeeper().getStainedGlassLookup().getStain().get(id);
                                 if (colour == -1) {
                                     // use the same data as the original block
                                     colour = data;
@@ -228,8 +228,8 @@ public class TARDISMakePresetListener implements Listener {
                 } catch (IOException e) {
                     plugin.debug("Could not create and write to " + filename + "! " + e.getMessage());
                 }
-                plugin.trackPreset.remove(playerNameStr);
-                player.sendMessage(plugin.pluginName + "Scanning complete! " + filename + " written to the plugins/TARDIS folder.");
+                plugin.getTrackerKeeper().getTrackPreset().remove(playerNameStr);
+                player.sendMessage(plugin.getPluginName() + "Scanning complete! " + filename + " written to the plugins/TARDIS folder.");
             }
         }
     }

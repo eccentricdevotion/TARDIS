@@ -14,10 +14,9 @@
    * find a way to prevent items dropping between renders
 10. TARDIS Information System
    * auto log out?
-11. Zero room
-12. Custom data classes for mat / demat
-13. Add TARDIS unhide ability to admin sonic
-14. `/tardisadmin` remote TARDIS commands
+11. Custom data classes for mat / demat
+12. Add TARDIS unhide ability to admin sonic
+13. `/tardisadmin` remote TARDIS commands
 
     
 ##Future version `2.9+`
@@ -30,7 +29,7 @@ Reskin mobs for Resource pack, and add new mob sounds
 * Skeletons -> Weeping Angels - __done__
 * Wither Skeletons -> Vashta Nerada
 * Wolves -> K-9
-* Zombies -> Cybermen
+* Zombies -> Cybermen - __done__
 * Pigmen -> Ice Warriors - __done__
 * Endermen -> The Silence
 * Creepers -> Daleks

@@ -67,8 +67,8 @@ public class TARDISMalfunction {
             int chance = 100 - plugin.getConfig().getInt("preferences.malfunction");
             if (rand.nextInt(100) > chance) {
                 mal = true;
-                if (plugin.trackRescue.containsKey(Integer.valueOf(id))) {
-                    plugin.trackRescue.remove(Integer.valueOf(id));
+                if (plugin.getTrackerKeeper().getTrackRescue().containsKey(Integer.valueOf(id))) {
+                    plugin.getTrackerKeeper().getTrackRescue().remove(Integer.valueOf(id));
                 }
             }
         }
@@ -118,10 +118,10 @@ public class TARDISMalfunction {
             // flicker lights
             ArrayList<HashMap<String, String>> data = rsl.getData();
             for (HashMap<String, String> map : data) {
-                Location loc = plugin.utils.getLocationFromDB(map.get("location"), 0.0F, 0.0F);
+                Location loc = plugin.getUtils().getLocationFromDB(map.get("location"), 0.0F, 0.0F);
                 lamps.add(loc.getBlock());
             }
-            if (plugin.pm.isPluginEnabled("Citizens") && plugin.getConfig().getBoolean("allow.emergency_npc")) {
+            if (plugin.getPM().isPluginEnabled("Citizens") && plugin.getConfig().getBoolean("allow.emergency_npc")) {
                 // get player prefs
                 HashMap<String, Object> wherep = new HashMap<String, Object>();
                 wherep.put("player", p.getName());

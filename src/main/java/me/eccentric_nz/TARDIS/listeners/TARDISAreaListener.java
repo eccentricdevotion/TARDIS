@@ -57,53 +57,53 @@ public class TARDISAreaListener implements Listener {
         final String playerNameStr = player.getName();
         Block block = event.getClickedBlock();
         if (block != null) {
-            if (plugin.trackName.containsKey(playerNameStr) && !plugin.trackBlock.containsKey(playerNameStr)) {
+            if (plugin.getTrackerKeeper().getTrackName().containsKey(playerNameStr) && !plugin.getTrackerKeeper().getTrackBlock().containsKey(playerNameStr)) {
                 Location block_loc = block.getLocation();
                 // check if block is in an already defined area
-                if (plugin.ta.areaCheckInExisting(block_loc)) {
+                if (plugin.getTardisArea().areaCheckInExisting(block_loc)) {
                     String locStr = block_loc.getWorld().getName() + ":" + block_loc.getBlockX() + ":" + block_loc.getBlockY() + ":" + block_loc.getBlockZ();
-                    plugin.trackBlock.put(playerNameStr, locStr);
-                    player.sendMessage(plugin.pluginName + "You have 60 seconds to select the area end block - use the " + ChatColor.GREEN + "/tardisarea end" + ChatColor.RESET + " command.");
+                    plugin.getTrackerKeeper().getTrackBlock().put(playerNameStr, locStr);
+                    player.sendMessage(plugin.getPluginName() + "You have 60 seconds to select the area end block - use the " + ChatColor.GREEN + "/tardisarea end" + ChatColor.RESET + " command.");
                     plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
                         @Override
                         public void run() {
-                            plugin.trackName.remove(playerNameStr);
-                            plugin.trackBlock.remove(playerNameStr);
+                            plugin.getTrackerKeeper().getTrackName().remove(playerNameStr);
+                            plugin.getTrackerKeeper().getTrackBlock().remove(playerNameStr);
                         }
                     }, 1200L);
                 } else {
-                    player.sendMessage(plugin.pluginName + "That block is inside an already defined area! Try somewhere else.");
+                    player.sendMessage(plugin.getPluginName() + "That block is inside an already defined area! Try somewhere else.");
                 }
-            } else if (plugin.trackBlock.containsKey(playerNameStr) && plugin.trackEnd.containsKey(playerNameStr)) {
+            } else if (plugin.getTrackerKeeper().getTrackBlock().containsKey(playerNameStr) && plugin.getTrackerKeeper().getTrackEnd().containsKey(playerNameStr)) {
                 Location block_loc = block.getLocation();
                 // check if block is in an already defined area
-                if (plugin.ta.areaCheckInExisting(block_loc)) {
-                    String[] firstblock = plugin.trackBlock.get(playerNameStr).split(":");
+                if (plugin.getTardisArea().areaCheckInExisting(block_loc)) {
+                    String[] firstblock = plugin.getTrackerKeeper().getTrackBlock().get(playerNameStr).split(":");
                     if (!block_loc.getWorld().getName().equals(firstblock[0])) {
-                        player.sendMessage(plugin.pluginName + ChatColor.RED + "Area start and end blocks must be in the same world! Try again");
+                        player.sendMessage(plugin.getPluginName() + ChatColor.RED + "Area start and end blocks must be in the same world! Try again");
                         return;
                     }
                     int y = block_loc.getBlockY();
-                    if (y != (plugin.utils.parseInt(firstblock[2]))) {
-                        player.sendMessage(plugin.pluginName + ChatColor.RED + "Area start and end blocks must be at the same Y co-ordinate! Try again with a FLAT area.");
+                    if (y != (plugin.getUtils().parseInt(firstblock[2]))) {
+                        player.sendMessage(plugin.getPluginName() + ChatColor.RED + "Area start and end blocks must be at the same Y co-ordinate! Try again with a FLAT area.");
                         return;
                     }
                     int minx, minz, maxx, maxz;
-                    if (plugin.utils.parseInt(firstblock[1]) < block_loc.getBlockX()) {
-                        minx = plugin.utils.parseInt(firstblock[1]);
+                    if (plugin.getUtils().parseInt(firstblock[1]) < block_loc.getBlockX()) {
+                        minx = plugin.getUtils().parseInt(firstblock[1]);
                         maxx = block_loc.getBlockX();
                     } else {
                         minx = block_loc.getBlockX();
-                        maxx = plugin.utils.parseInt(firstblock[1]);
+                        maxx = plugin.getUtils().parseInt(firstblock[1]);
                     }
-                    if (plugin.utils.parseInt(firstblock[3]) < block_loc.getBlockZ()) {
-                        minz = plugin.utils.parseInt(firstblock[3]);
+                    if (plugin.getUtils().parseInt(firstblock[3]) < block_loc.getBlockZ()) {
+                        minz = plugin.getUtils().parseInt(firstblock[3]);
                         maxz = block_loc.getBlockZ();
                     } else {
                         minz = block_loc.getBlockZ();
-                        maxz = plugin.utils.parseInt(firstblock[3]);
+                        maxz = plugin.getUtils().parseInt(firstblock[3]);
                     }
-                    String n = plugin.trackName.get(playerNameStr);
+                    String n = plugin.getTrackerKeeper().getTrackName().get(playerNameStr);
                     QueryFactory qf = new QueryFactory(plugin);
                     HashMap<String, Object> set = new HashMap<String, Object>();
                     set.put("area_name", n);
@@ -114,12 +114,12 @@ public class TARDISAreaListener implements Listener {
                     set.put("maxz", maxz);
                     set.put("y", y + 1);
                     qf.doInsert("areas", set);
-                    player.sendMessage(plugin.pluginName + "The area [" + plugin.trackName.get(playerNameStr) + "] was saved successfully");
-                    plugin.trackName.remove(playerNameStr);
-                    plugin.trackBlock.remove(playerNameStr);
-                    plugin.trackEnd.remove(playerNameStr);
+                    player.sendMessage(plugin.getPluginName() + "The area [" + plugin.getTrackerKeeper().getTrackName().get(playerNameStr) + "] was saved successfully");
+                    plugin.getTrackerKeeper().getTrackName().remove(playerNameStr);
+                    plugin.getTrackerKeeper().getTrackBlock().remove(playerNameStr);
+                    plugin.getTrackerKeeper().getTrackEnd().remove(playerNameStr);
                 } else {
-                    player.sendMessage(plugin.pluginName + "That block is inside an already defined area! Try somewhere else.");
+                    player.sendMessage(plugin.getPluginName() + "That block is inside an already defined area! Try somewhere else.");
                 }
             }
         }

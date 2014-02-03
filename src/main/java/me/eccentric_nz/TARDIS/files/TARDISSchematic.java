@@ -62,7 +62,7 @@ public class TARDISSchematic {
                 }
             }
         } catch (IOException io) {
-            TARDIS.plugin.console.sendMessage(TARDIS.plugin.pluginName + "Could not read csv file");
+            TARDIS.plugin.getConsole().sendMessage(TARDIS.plugin.getPluginName() + "Could not read csv file");
         } finally {
             try {
                 if (bufRdr != null) {

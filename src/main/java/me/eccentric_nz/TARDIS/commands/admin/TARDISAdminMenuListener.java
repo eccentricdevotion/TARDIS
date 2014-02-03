@@ -19,14 +19,10 @@ package me.eccentric_nz.TARDIS.commands.admin;
 import java.util.Arrays;
 import java.util.List;
 import me.eccentric_nz.TARDIS.TARDIS;
-import org.bukkit.Material;
-import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
-import org.bukkit.event.block.Action;
 import org.bukkit.event.inventory.InventoryClickEvent;
-import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -47,20 +43,6 @@ public class TARDISAdminMenuListener implements Listener {
 
     public TARDISAdminMenuListener(TARDIS plugin) {
         this.plugin = plugin;
-    }
-
-    // TODO move this somewhere more appropriate?
-    @EventHandler(priority = EventPriority.NORMAL)
-    public void onPlayerInteract(PlayerInteractEvent event) {
-        Player p = event.getPlayer();
-        Material inhand = p.getItemInHand().getType();
-        if (event.getAction().equals(Action.RIGHT_CLICK_AIR) && inhand.equals(Material.WATCH) && p.hasPermission("tardis.temporal")) {
-            p.resetPlayerTime();
-            if (plugin.trackSetTime.containsKey(p.getName())) {
-                plugin.trackSetTime.remove(p.getName());
-            }
-            p.sendMessage(plugin.pluginName + "Temporal Location reset to server time.");
-        }
     }
 
     @EventHandler(priority = EventPriority.NORMAL)

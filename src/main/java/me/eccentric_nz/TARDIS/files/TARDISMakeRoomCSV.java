@@ -62,12 +62,12 @@ public class TARDISMakeRoomCSV {
                 if (sch.exists()) {
                     File file = createFile(lower + ".csv", basepath);
                     if (reader.readAndMakeRoomCSV(basepath + lower, r, false)) {
-                        short[] dimensions = plugin.room_dimensions.get(r);
+                        short[] dimensions = plugin.getBuildKeeper().getRoomDimensions().get(r);
                         String[][][] schem = TARDISSchematic.schematic(file, dimensions[0], dimensions[1], dimensions[2]);
-                        plugin.room_schematics.put(r, schem);
+                        plugin.getBuildKeeper().getRoomSchematics().put(r, schem);
                     }
                 } else {
-                    plugin.console.sendMessage(plugin.pluginName + ChatColor.RED + lower + ".schematic was not found in 'user_schematics' and was disabled!");
+                    plugin.getConsole().sendMessage(plugin.getPluginName() + ChatColor.RED + lower + ".schematic was not found in 'user_schematics' and was disabled!");
                     plugin.getRoomsConfig().set("rooms." + r + ".enabled", false);
                 }
             }
@@ -88,7 +88,7 @@ public class TARDISMakeRoomCSV {
             try {
                 file.createNewFile();
             } catch (IOException io) {
-                plugin.console.sendMessage(plugin.pluginName + filename + " could not be created! " + io.getMessage());
+                plugin.getConsole().sendMessage(plugin.getPluginName() + filename + " could not be created! " + io.getMessage());
             }
         }
         return file;

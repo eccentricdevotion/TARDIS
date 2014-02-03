@@ -21,12 +21,11 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.enumeration.COMPASS;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetCurrentLocation;
 import me.eccentric_nz.TARDIS.database.ResultSetPlayerPrefs;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
-import me.eccentric_nz.TARDIS.travel.TARDISPluginRespect;
+import me.eccentric_nz.TARDIS.enumeration.COMPASS;
 import me.eccentric_nz.TARDIS.travel.TARDISTimeTravel;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
@@ -110,8 +109,7 @@ public class TARDISHostileDisplacement {
                             }
                             if (safe) {
                                 final Location fl = (rsc.isSubmarine()) ? sub : l;
-                                TARDISPluginRespect pr = new TARDISPluginRespect(plugin);
-                                if (pr.getRespect(player, fl, false)) {
+                                if (plugin.getPluginRespect().getRespect(player, fl, false)) {
                                     // set current
                                     QueryFactory qf = new QueryFactory(plugin);
                                     HashMap<String, Object> tid = new HashMap<String, Object>();
@@ -123,45 +121,45 @@ public class TARDISHostileDisplacement {
                                     set.put("z", fl.getBlockZ());
                                     set.put("submarine", (rsc.isSubmarine()) ? 1 : 0);
                                     qf.doUpdate("current", set, tid);
-                                    plugin.trackDamage.remove(Integer.valueOf(id));
+                                    plugin.getTrackerKeeper().getTrackDamage().remove(Integer.valueOf(id));
                                     final boolean mat = plugin.getConfig().getBoolean("police_box.materialise");
                                     long delay = (mat) ? 1L : 180L;
                                     // move TARDIS
-                                    plugin.inVortex.add(Integer.valueOf(id));
+                                    plugin.getTrackerKeeper().getTrackInVortex().add(Integer.valueOf(id));
                                     plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
                                         @Override
                                         public void run() {
-                                            plugin.tardisDematerialising.add(Integer.valueOf(id));
-                                            plugin.destroyerP.destroyPreset(loc, d, id, false, mat, cham, player, rsc.isSubmarine());
+                                            plugin.getTrackerKeeper().getTrackDematerialising().add(Integer.valueOf(id));
+                                            plugin.getPresetDestroyer().destroyPreset(loc, d, id, false, mat, cham, player, rsc.isSubmarine());
                                         }
                                     }, delay);
                                     plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
                                         @Override
                                         public void run() {
-                                            plugin.builderP.buildPreset(id, fl, d, cham, player, false, false, rsc.isSubmarine());
+                                            plugin.getPresetBuilder().buildPreset(id, fl, d, cham, player, false, false, rsc.isSubmarine());
                                         }
                                     }, delay * 2);
                                     // message time lord
-                                    String message = plugin.pluginName + ChatColor.RED + "H" + ChatColor.RESET + "ostile " + ChatColor.RED + "A" + ChatColor.RESET + "ction " + ChatColor.RED + "D" + ChatColor.RESET + "isplacement " + ChatColor.RED + "S" + ChatColor.RESET + "ystem engaged, moving TARDIS!";
+                                    String message = plugin.getPluginName() + ChatColor.RED + "H" + ChatColor.RESET + "ostile " + ChatColor.RED + "A" + ChatColor.RESET + "ction " + ChatColor.RED + "D" + ChatColor.RESET + "isplacement " + ChatColor.RED + "S" + ChatColor.RESET + "ystem engaged, moving TARDIS!";
                                     player.sendMessage(message);
                                     String hads = fl.getWorld().getName() + ":" + fl.getBlockX() + ":" + fl.getBlockY() + ":" + fl.getBlockZ();
-                                    player.sendMessage(plugin.pluginName + "TARDIS moved to " + hads);
+                                    player.sendMessage(plugin.getPluginName() + "TARDIS moved to " + hads);
                                     if (player != hostile) {
                                         hostile.sendMessage(message);
                                     }
                                     break;
                                 } else {
-                                    player.sendMessage(plugin.pluginName + "HADS could not be engaged because the area is protected!");
+                                    player.sendMessage(plugin.getPluginName() + "HADS could not be engaged because the area is protected!");
                                     if (player != hostile) {
-                                        hostile.sendMessage(plugin.pluginName + "HADS could not be engaged because the area is protected!");
+                                        hostile.sendMessage(plugin.getPluginName() + "HADS could not be engaged because the area is protected!");
                                     }
                                 }
                             } else {
-                                player.sendMessage(plugin.pluginName + "HADS could not be engaged because the we couldn't find a safe area!");
+                                player.sendMessage(plugin.getPluginName() + "HADS could not be engaged because the it couldn't find a safe area!");
                             }
                         } else {
-                            plugin.trackDamage.remove(Integer.valueOf(id));
-                            player.sendMessage(plugin.pluginName + "HADS could not be engaged because the TARDIS cannot land on water!");
+                            plugin.getTrackerKeeper().getTrackDamage().remove(Integer.valueOf(id));
+                            player.sendMessage(plugin.getPluginName() + "HADS could not be engaged because the TARDIS cannot land on water!");
                         }
                     }
                 }

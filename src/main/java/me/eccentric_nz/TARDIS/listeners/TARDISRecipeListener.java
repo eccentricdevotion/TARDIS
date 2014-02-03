@@ -48,7 +48,7 @@ public class TARDISRecipeListener implements Listener {
         InventoryType type = top.getType();
         if (type == InventoryType.WORKBENCH) {
             final Player player = (Player) event.getWhoClicked();
-            if (plugin.trackRecipeView.contains(player.getName())) {
+            if (plugin.getTrackerKeeper().getTrackRecipeView().contains(player.getName())) {
                 event.setCancelled(true);
             }
         }
@@ -61,8 +61,8 @@ public class TARDISRecipeListener implements Listener {
         if (type == InventoryType.WORKBENCH) {
             Player p = (Player) event.getPlayer();
             String name = p.getName();
-            if (plugin.trackRecipeView.contains(name)) {
-                plugin.trackRecipeView.remove(name);
+            if (plugin.getTrackerKeeper().getTrackRecipeView().contains(name)) {
+                plugin.getTrackerKeeper().getTrackRecipeView().remove(name);
                 event.getView().getTopInventory().clear();
                 p.updateInventory();
             }

@@ -78,7 +78,7 @@ public class TARDISJoinListener implements Listener {
                     qf.doInsert("achievements", set);
                     // give the join kit
                     String kit = plugin.getKitsConfig().getString("give.join.kit");
-                    plugin.getServer().dispatchCommand(plugin.console, "tardisgive " + playerNameStr + " kit " + kit);
+                    plugin.getServer().dispatchCommand(plugin.getConsole(), "tardisgive " + playerNameStr + " kit " + kit);
                 }
             }
         }
@@ -139,7 +139,7 @@ public class TARDISJoinListener implements Listener {
                     while (!chunk.isLoaded()) {
                         chunk.load();
                     }
-                    plugin.tardisChunkList.add(chunk);
+                    plugin.getGeneralKeeper().getTardisChunkList().add(chunk);
                 }
             }
             long now;
@@ -154,6 +154,6 @@ public class TARDISJoinListener implements Listener {
             wherel.put("tardis_id", id);
             qf.doUpdate("tardis", set, wherel);
         }
-        plugin.filter.addPlayer(player);
+        plugin.getFilter().addPlayer(player);
     }
 }

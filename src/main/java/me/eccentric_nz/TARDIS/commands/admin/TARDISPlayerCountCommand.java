@@ -42,20 +42,20 @@ public class TARDISPlayerCountCommand {
         if (rsc.resultSet()) {
             if (args.length == 3) {
                 // set count
-                int count = plugin.utils.parseInt(args[2]);
+                int count = plugin.getUtils().parseInt(args[2]);
                 HashMap<String, Object> setc = new HashMap<String, Object>();
                 setc.put("count", count);
                 HashMap<String, Object> wherec = new HashMap<String, Object>();
                 wherec.put("player", args[1]);
                 QueryFactory qf = new QueryFactory(plugin);
                 qf.doUpdate("t_count", setc, wherec);
-                sender.sendMessage(plugin.pluginName + args[1] + "'s TARDIS count was set to: " + args[2] + " of " + max_count);
+                sender.sendMessage(plugin.getPluginName() + args[1] + "'s TARDIS count was set to: " + args[2] + " of " + max_count);
             } else {
                 // display count
-                sender.sendMessage(plugin.pluginName + args[1] + "'s TARDIS count is: " + rsc.getCount() + " of " + max_count);
+                sender.sendMessage(plugin.getPluginName() + args[1] + "'s TARDIS count is: " + rsc.getCount() + " of " + max_count);
             }
         } else {
-            sender.sendMessage(plugin.pluginName + "That player doesn't have a TARDIS count.");
+            sender.sendMessage(plugin.getPluginName() + "That player doesn't have a TARDIS count.");
         }
         return true;
     }

@@ -62,9 +62,9 @@ public class TARDISBlockBreakListener implements Listener {
     @EventHandler(priority = EventPriority.LOW)
     public void onSignBreak(BlockBreakEvent event) {
         Player player = event.getPlayer();
-        if (plugin.zeroRoomOccupants.contains(player.getName())) {
+        if (plugin.getTrackerKeeper().getTrackZeroRoomOccupants().contains(player.getName())) {
             event.setCancelled(true);
-            player.sendMessage(plugin.pluginName + MESSAGE.NOT_IN_ZERO.getText());
+            player.sendMessage(plugin.getPluginName() + MESSAGE.NOT_IN_ZERO.getText());
             return;
         }
         Block block = event.getBlock();
@@ -81,17 +81,17 @@ public class TARDISBlockBreakListener implements Listener {
                 if (player.hasPermission("tardis.exterminate")) {
                     final String playerNameStr = player.getName();
                     // check it is their TARDIS
-                    plugin.trackExterminate.put(playerNameStr, block);
+                    plugin.getTrackerKeeper().getTrackExterminate().put(playerNameStr, block);
                     long timeout = plugin.getConfig().getLong("police_box.confirm_timeout");
-                    player.sendMessage(plugin.pluginName + "Are you sure you want to delete the TARDIS? Type " + ChatColor.AQUA + "/tardis exterminate" + ChatColor.RESET + " within " + timeout + " seconds to proceed.");
+                    player.sendMessage(plugin.getPluginName() + "Are you sure you want to delete the TARDIS? Type " + ChatColor.AQUA + "/tardis exterminate" + ChatColor.RESET + " within " + timeout + " seconds to proceed.");
                     plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
                         @Override
                         public void run() {
-                            plugin.trackExterminate.remove(playerNameStr);
+                            plugin.getTrackerKeeper().getTrackExterminate().remove(playerNameStr);
                         }
                     }, timeout * 20);
                 } else {
-                    player.sendMessage(plugin.pluginName + "You do not have permission to delete a TARDIS!");
+                    player.sendMessage(plugin.getPluginName() + "You do not have permission to delete a TARDIS!");
                 }
             }
         }

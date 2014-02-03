@@ -85,7 +85,7 @@ public class TARDISSignListener implements Listener {
                 if (rs.resultSet()) {
                     event.setCancelled(true);
                     if (rs.isIso_on() && !player.getName().equals(rs.getOwner()) && event.isCancelled() && !player.hasPermission("tardis.skeletonkey")) {
-                        player.sendMessage(plugin.pluginName + MESSAGE.ISO_ON.getText());
+                        player.sendMessage(plugin.getPluginName() + MESSAGE.ISO_ON.getText());
                         return;
                     }
                     String line1;
@@ -102,7 +102,7 @@ public class TARDISSignListener implements Listener {
                     }
                     if (line1.equals("Chameleon")) {
                         if (tcc != null && !tcc.hasChameleon()) {
-                            player.sendMessage(plugin.pluginName + "The Chameleon Circuit is missing from the console!");
+                            player.sendMessage(plugin.getPluginName() + "The Chameleon Circuit is missing from the console!");
                             return;
                         }
                         // open Chameleon Circuit GUI
@@ -113,7 +113,7 @@ public class TARDISSignListener implements Listener {
                     } else {
                         if (event.getAction().equals(Action.RIGHT_CLICK_BLOCK)) {
                             if (tcc != null && !tcc.hasMemory()) {
-                                player.sendMessage(plugin.pluginName + MESSAGE.NO_MEM_CIRCUIT.getText());
+                                player.sendMessage(plugin.getPluginName() + MESSAGE.NO_MEM_CIRCUIT.getText());
                                 return;
                             }
                             TARDISSaveSignInventory sst = new TARDISSaveSignInventory(plugin, rs.getTardis_id());

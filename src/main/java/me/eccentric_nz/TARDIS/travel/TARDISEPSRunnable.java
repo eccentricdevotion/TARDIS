@@ -62,14 +62,14 @@ public class TARDISEPSRunnable implements Runnable {
         plugin.debug("Location:" + l);
         if (l != null) {
             try {
-                plugin.myspawn = true;
+                plugin.setMySpawn(true);
                 l.setX(l.getX() + 0.5F);
                 l.setZ(l.getZ() + 1.5F);
                 // set yaw if npc spawn location has been changed
                 if (!eps.isEmpty()) {
                     String[] creep = creeper.split(":");
-                    double cx = plugin.utils.parseDouble(creep[1]);
-                    double cz = plugin.utils.parseDouble(creep[3]);
+                    double cx = plugin.getUtils().parseDouble(creep[1]);
+                    double cz = plugin.getUtils().parseDouble(creep[3]);
                     float yaw = getCorrectYaw(cx, cz, l.getX(), l.getZ());
                     l.setYaw(yaw);
                 }
@@ -80,10 +80,10 @@ public class TARDISEPSRunnable implements Runnable {
                 int npcid = npc.getId();
                 if (npc.isSpawned()) {
                     // set the lookclose trait
-                    plugin.getServer().dispatchCommand(plugin.console, "npc select " + npcid);
-                    plugin.getServer().dispatchCommand(plugin.console, "npc lookclose");
+                    plugin.getServer().dispatchCommand(plugin.getConsole(), "npc select " + npcid);
+                    plugin.getServer().dispatchCommand(plugin.getConsole(), "npc lookclose");
                 }
-                plugin.npcIDs.add(npcid);
+                plugin.getGeneralKeeper().getNpcIDs().add(npcid);
                 for (String p : players) {
                     Player pp = plugin.getServer().getPlayer(p);
                     if (pp != null) {
@@ -106,9 +106,9 @@ public class TARDISEPSRunnable implements Runnable {
         if (!eps.isEmpty()) {
             String[] npc = eps.split(":");
             World w = plugin.getServer().getWorld(npc[0]);
-            int x = plugin.utils.parseInt(npc[1]);
-            int y = plugin.utils.parseInt(npc[2]);
-            int z = plugin.utils.parseInt(npc[3]);
+            int x = plugin.getUtils().parseInt(npc[1]);
+            int y = plugin.getUtils().parseInt(npc[2]);
+            int z = plugin.getUtils().parseInt(npc[3]);
             return new Location(w, x, y, z);
         } else {
             if (plugin.getConfig().getBoolean("creation.create_worlds")) {
@@ -122,9 +122,9 @@ public class TARDISEPSRunnable implements Runnable {
                 if (rsd.resultSet()) {
                     String[] door = rsd.getDoor_location().split(":");
                     World w = plugin.getServer().getWorld(door[0]);
-                    int x = plugin.utils.parseInt(door[1]);
-                    int y = plugin.utils.parseInt(door[2]);
-                    int z = plugin.utils.parseInt(door[3]);
+                    int x = plugin.getUtils().parseInt(door[1]);
+                    int y = plugin.getUtils().parseInt(door[2]);
+                    int z = plugin.getUtils().parseInt(door[3]);
                     switch (rsd.getDoor_direction()) {
                         case NORTH:
                             z -= 2;

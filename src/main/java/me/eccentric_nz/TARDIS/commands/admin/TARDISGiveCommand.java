@@ -84,7 +84,7 @@ public class TARDISGiveCommand implements CommandExecutor {
                     return true;
                 }
                 if (args.length < 3) {
-                    sender.sendMessage(plugin.pluginName + MESSAGE.TOO_FEW_ARGS.getText() + " /tardisgive [player] [item] [amount]");
+                    sender.sendMessage(plugin.getPluginName() + MESSAGE.TOO_FEW_ARGS.getText() + " /tardisgive [player] [item] [amount]");
                     return true;
                 }
                 String item = args[1].toLowerCase();
@@ -95,17 +95,17 @@ public class TARDISGiveCommand implements CommandExecutor {
                 if (item.equals("kit")) {
                     Player p = plugin.getServer().getPlayer(args[0]);
                     if (p == null) { // player must be online
-                        sender.sendMessage(plugin.pluginName + MESSAGE.COULD_NOT_FIND_NAME.getText());
+                        sender.sendMessage(plugin.getPluginName() + MESSAGE.COULD_NOT_FIND_NAME.getText());
                         return true;
                     }
                     if (!plugin.getKitsConfig().contains("kits." + args[2])) {
-                        sender.sendMessage(plugin.pluginName + "Could not find a kit with that name!");
+                        sender.sendMessage(plugin.getPluginName() + "Could not find a kit with that name!");
                         return true;
                     }
                     for (String k : plugin.getKitsConfig().getStringList("kits." + args[2])) {
                         this.giveItem(k, p);
                     }
-                    p.sendMessage(plugin.pluginName + sender.getName() + " just gave you the TARDIS Item Kit " + args[2]);
+                    p.sendMessage(plugin.getPluginName() + sender.getName() + " just gave you the TARDIS Item Kit " + args[2]);
                     return true;
                 }
                 int amount;
@@ -117,26 +117,26 @@ public class TARDISGiveCommand implements CommandExecutor {
                     try {
                         amount = Integer.parseInt(args[2]);
                     } catch (NumberFormatException nfe) {
-                        sender.sendMessage(plugin.pluginName + "Amount must be a number, 'full' or 'empty'! /tardisgive [player] [item] [amount]");
+                        sender.sendMessage(plugin.getPluginName() + "Amount must be a number, 'full' or 'empty'! /tardisgive [player] [item] [amount]");
                         return true;
                     }
                 }
                 if (item.equals("artron")) {
                     if (plugin.getServer().getOfflinePlayer(args[0]) == null) {
-                        sender.sendMessage(plugin.pluginName + MESSAGE.COULD_NOT_FIND_NAME.getText());
+                        sender.sendMessage(plugin.getPluginName() + MESSAGE.COULD_NOT_FIND_NAME.getText());
                         return true;
                     }
                     return this.giveArtron(sender, args[0], amount);
                 } else {
                     Player p = plugin.getServer().getPlayer(args[0]);
                     if (p == null) { // player must be online
-                        sender.sendMessage(plugin.pluginName + MESSAGE.COULD_NOT_FIND_NAME.getText());
+                        sender.sendMessage(plugin.getPluginName() + MESSAGE.COULD_NOT_FIND_NAME.getText());
                         return true;
                     }
                     return this.giveItem(sender, item, amount, p);
                 }
             } else {
-                sender.sendMessage(plugin.pluginName + MESSAGE.NO_PERMS.getText());
+                sender.sendMessage(plugin.getPluginName() + MESSAGE.NO_PERMS.getText());
                 return true;
             }
         }
@@ -145,32 +145,32 @@ public class TARDISGiveCommand implements CommandExecutor {
 
     private boolean giveItem(CommandSender sender, String item, int amount, Player player) {
         if (amount > 64) {
-            sender.sendMessage(plugin.pluginName + "You can only give a maximum of 64 items at once!");
+            sender.sendMessage(plugin.getPluginName() + "You can only give a maximum of 64 items at once!");
             return true;
         }
         String item_to_give = items.get(item);
         ItemStack result;
         if (item.equals("save-disk") || item.equals("preset-disk") || item.equals("biome-disk") || item.equals("player-disk")) {
-            ShapelessRecipe recipe = plugin.incomposita.getShapelessRecipes().get(item_to_give);
+            ShapelessRecipe recipe = plugin.getIncomposita().getShapelessRecipes().get(item_to_give);
             result = recipe.getResult();
         } else {
-            ShapedRecipe recipe = plugin.figura.getShapedRecipes().get(item_to_give);
+            ShapedRecipe recipe = plugin.getFigura().getShapedRecipes().get(item_to_give);
             result = recipe.getResult();
         }
         result.setAmount(amount);
         player.getInventory().addItem(result);
         player.updateInventory();
-        player.sendMessage(plugin.pluginName + sender.getName() + " just gave you " + amount + " " + item_to_give);
+        player.sendMessage(plugin.getPluginName() + sender.getName() + " just gave you " + amount + " " + item_to_give);
         return true;
     }
 
     private boolean giveItem(String item, Player player) {
         ItemStack result;
-        if (plugin.incomposita.getShapelessRecipes().containsKey(item)) {
-            ShapelessRecipe recipe = plugin.incomposita.getShapelessRecipes().get(item);
+        if (plugin.getIncomposita().getShapelessRecipes().containsKey(item)) {
+            ShapelessRecipe recipe = plugin.getIncomposita().getShapelessRecipes().get(item);
             result = recipe.getResult();
         } else {
-            ShapedRecipe recipe = plugin.figura.getShapedRecipes().get(item);
+            ShapedRecipe recipe = plugin.getFigura().getShapedRecipes().get(item);
             result = recipe.getResult();
         }
         result.setAmount(1);
@@ -192,7 +192,7 @@ public class TARDISGiveCommand implements CommandExecutor {
             } else {
                 // always fill to full and no more
                 if (level >= full && amount > 0) {
-                    sender.sendMessage(plugin.pluginName + player + " already has a full Artron Energy Capacitor!");
+                    sender.sendMessage(plugin.getPluginName() + player + " already has a full Artron Energy Capacitor!");
                     return true;
                 }
                 if ((full - level) < amount) {
@@ -207,7 +207,7 @@ public class TARDISGiveCommand implements CommandExecutor {
             HashMap<String, Object> wheret = new HashMap<String, Object>();
             wheret.put("tardis_id", id);
             qf.doUpdate("tardis", set, wheret);
-            sender.sendMessage(plugin.pluginName + player + "'s Artron Energy Level was set to " + set_level);
+            sender.sendMessage(plugin.getPluginName() + player + "'s Artron Energy Level was set to " + set_level);
         }
         return true;
     }

@@ -45,12 +45,12 @@ public class TARDISChameleonCommand {
     @SuppressWarnings("deprecation")
     public boolean doChameleon(Player player, String[] args) {
         if (!plugin.getConfig().getBoolean("travel.chameleon")) {
-            player.sendMessage(plugin.pluginName + "This server does not allow the use of the chameleon circuit!");
+            player.sendMessage(plugin.getPluginName() + "This server does not allow the use of the chameleon circuit!");
             return false;
         }
         if (player.hasPermission("tardis.timetravel")) {
             if (args.length < 2 || (!args[1].equalsIgnoreCase("on") && !args[1].equalsIgnoreCase("off") && !args[1].equalsIgnoreCase("short") && !args[1].equalsIgnoreCase("reset"))) {
-                player.sendMessage(plugin.pluginName + MESSAGE.TOO_FEW_ARGS.getText());
+                player.sendMessage(plugin.getPluginName() + MESSAGE.TOO_FEW_ARGS.getText());
                 return false;
             }
             // get the players TARDIS id
@@ -58,7 +58,7 @@ public class TARDISChameleonCommand {
             where.put("owner", player.getName());
             ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);
             if (!rs.resultSet()) {
-                player.sendMessage(plugin.pluginName + MESSAGE.NO_TARDIS.getText());
+                player.sendMessage(plugin.getPluginName() + MESSAGE.NO_TARDIS.getText());
                 return false;
             }
             int id = rs.getTardis_id();
@@ -68,12 +68,12 @@ public class TARDISChameleonCommand {
                 circ_chk.getCircuits();
             }
             if (circ_chk != null && !circ_chk.hasChameleon()) {
-                player.sendMessage(plugin.pluginName + "The Chameleon Circuit is missing from the console!");
+                player.sendMessage(plugin.getPluginName() + "The Chameleon Circuit is missing from the console!");
                 return true;
             }
             String chamStr = rs.getChameleon();
             if (chamStr.isEmpty()) {
-                player.sendMessage(plugin.pluginName + "Could not find the Chameleon Circuit!");
+                player.sendMessage(plugin.getPluginName() + "Could not find the Chameleon Circuit!");
                 return false;
             } else {
                 QueryFactory qf = new QueryFactory(plugin);
@@ -84,9 +84,9 @@ public class TARDISChameleonCommand {
                     int x, y, z;
                     String[] chamData = chamStr.split(":");
                     World w = plugin.getServer().getWorld(chamData[0]);
-                    x = plugin.utils.parseInt(chamData[1]);
-                    y = plugin.utils.parseInt(chamData[2]);
-                    z = plugin.utils.parseInt(chamData[3]);
+                    x = plugin.getUtils().parseInt(chamData[1]);
+                    y = plugin.getUtils().parseInt(chamData[2]);
+                    z = plugin.getUtils().parseInt(chamData[3]);
                     Block chamBlock = w.getBlockAt(x, y, z);
                     Material chamType = chamBlock.getType();
                     if (chamType == Material.WALL_SIGN || chamType == Material.SIGN_POST) {
@@ -94,13 +94,13 @@ public class TARDISChameleonCommand {
                         if (args[1].equalsIgnoreCase("on")) {
                             set.put("chamele_on", 1);
                             qf.doUpdate("tardis", set, tid);
-                            player.sendMessage(plugin.pluginName + "The Chameleon Circuit was turned ON!");
+                            player.sendMessage(plugin.getPluginName() + "The Chameleon Circuit was turned ON!");
                             cs.setLine(3, ChatColor.GREEN + "ON");
                         }
                         if (args[1].equalsIgnoreCase("off")) {
                             set.put("chamele_on", 0);
                             qf.doUpdate("tardis", set, tid);
-                            player.sendMessage(plugin.pluginName + "The Chameleon Circuit was turned OFF.");
+                            player.sendMessage(plugin.getPluginName() + "The Chameleon Circuit was turned OFF.");
                             cs.setLine(3, ChatColor.RED + "OFF");
                         }
                         cs.update();
@@ -110,7 +110,7 @@ public class TARDISChameleonCommand {
                 int dwd = plugin.getConfig().getInt("police_box.wall_data");
                 if (args[1].equalsIgnoreCase("short")) {
                     // get the block the player is targeting
-                    Block target_block = player.getTargetBlock(plugin.tardisCommand.transparent, 50).getLocation().getBlock();
+                    Block target_block = player.getTargetBlock(plugin.getGeneralKeeper().getTransparent(), 50).getLocation().getBlock();
                     TARDISChameleonCircuit tcc = new TARDISChameleonCircuit(plugin);
                     int[] b_data = tcc.getChameleonBlock(target_block, player, true);
                     int c_id = b_data[0], c_data = b_data[1];
@@ -119,19 +119,19 @@ public class TARDISChameleonCommand {
                     qf.doUpdate("tardis", set, tid);
                     boolean bluewool = (c_id == dwid && c_data == (byte) dwd);
                     if (!bluewool) {
-                        player.sendMessage(plugin.pluginName + "The Chameleon Circuit was shorted out to: " + target_block.getType().toString() + ".");
+                        player.sendMessage(plugin.getPluginName() + "The Chameleon Circuit was shorted out to: " + target_block.getType().toString() + ".");
                     }
                 }
                 if (args[1].equalsIgnoreCase("reset")) {
                     set.put("chameleon_id", dwid);
                     set.put("chameleon_data", dwd);
                     qf.doUpdate("tardis", set, tid);
-                    player.sendMessage(plugin.pluginName + "The Chameleon Circuit was repaired.");
+                    player.sendMessage(plugin.getPluginName() + "The Chameleon Circuit was repaired.");
                 }
             }
             return true;
         } else {
-            player.sendMessage(plugin.pluginName + MESSAGE.NO_PERMS.getText());
+            player.sendMessage(plugin.getPluginName() + MESSAGE.NO_PERMS.getText());
             return false;
         }
     }

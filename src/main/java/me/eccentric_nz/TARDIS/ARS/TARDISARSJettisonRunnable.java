@@ -80,7 +80,7 @@ public class TARDISARSJettisonRunnable implements Runnable {
             set.put("tardis_id", id);
             qf.alterEnergyLevel("tardis", amount, set, null);
             if (p.isOnline()) {
-                p.sendMessage(plugin.pluginName + amount + " Artron Energy recovered.");
+                p.sendMessage(plugin.getPluginName() + amount + " Artron Energy recovered.");
             }
             // if it is a secondary console room remove the controls
             if (r.equals("BAKER") || r.equals("WOOD")) {
@@ -99,7 +99,7 @@ public class TARDISARSJettisonRunnable implements Runnable {
                 where.put("tardis_id", id);
                 qf.doUpdate("tardis", setd, where);
                 // remove WorldGuard protection
-                plugin.wgutils.removeRendererRegion(w, p.getName());
+                plugin.getWorldGuardUtils().removeRendererRegion(w, p.getName());
             }
         }
     }

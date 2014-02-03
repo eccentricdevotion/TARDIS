@@ -83,7 +83,7 @@ public class TARDISPrefsCommands implements CommandExecutor {
                 return false;
             }
             if (player == null) {
-                sender.sendMessage(plugin.pluginName + MESSAGE.MUST_BE_PLAYER.getText());
+                sender.sendMessage(plugin.getPluginName() + MESSAGE.MUST_BE_PLAYER.getText());
                 return false;
             }
             String pref = args[0].toLowerCase(Locale.ENGLISH);
@@ -117,7 +117,7 @@ public class TARDISPrefsCommands implements CommandExecutor {
                         return new TARDISFloorCommand(plugin).setFloorOrWallBlock(player, args, qf);
                     }
                     if (args.length < 2 || (!args[1].equalsIgnoreCase("on") && !args[1].equalsIgnoreCase("off"))) {
-                        sender.sendMessage(plugin.pluginName + "You need to specify if " + pref + " should be on or off!");
+                        sender.sendMessage(plugin.getPluginName() + "You need to specify if " + pref + " should be on or off!");
                         return false;
                     }
                     if (pref.equals("build")) {
@@ -126,7 +126,7 @@ public class TARDISPrefsCommands implements CommandExecutor {
                         return new TARDISToggleOnOffCommand(plugin).doAbort(player, args, qf);
                     }
                 } else {
-                    sender.sendMessage(plugin.pluginName + MESSAGE.NO_PERMS.getText());
+                    sender.sendMessage(plugin.getPluginName() + MESSAGE.NO_PERMS.getText());
                     return false;
                 }
             }

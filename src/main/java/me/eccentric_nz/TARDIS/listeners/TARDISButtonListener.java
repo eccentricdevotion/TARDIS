@@ -124,7 +124,7 @@ public class TARDISButtonListener implements Listener {
                         if (rs.resultSet()) {
                             // check they initialised
                             if (!rs.isTardis_init()) {
-                                player.sendMessage(plugin.pluginName + ChatColor.RED + "The TARDIS Artron Energy Capacitor has not been initialised!");
+                                player.sendMessage(plugin.getPluginName() + ChatColor.RED + "The TARDIS Artron Energy Capacitor has not been initialised!");
                                 return;
                             }
                             int level = rs.getArtron_level();
@@ -142,11 +142,11 @@ public class TARDISButtonListener implements Listener {
                             switch (type) {
                                 case 1: // random location button
                                     if (!hb) {
-                                        player.sendMessage(plugin.pluginName + ChatColor.RED + MESSAGE.NOT_WHILE_TRAVELLING.getText());
+                                        player.sendMessage(plugin.getPluginName() + ChatColor.RED + MESSAGE.NOT_WHILE_TRAVELLING.getText());
                                         return;
                                     }
                                     if (level < plugin.getArtronConfig().getInt("random")) {
-                                        player.sendMessage(plugin.pluginName + ChatColor.RED + MESSAGE.NOT_ENOUGH_ENERGY.getText());
+                                        player.sendMessage(plugin.getPluginName() + ChatColor.RED + MESSAGE.NOT_ENOUGH_ENERGY.getText());
                                         return;
                                     }
                                     HashMap<String, Object> wherecl = new HashMap<String, Object>();
@@ -161,11 +161,11 @@ public class TARDISButtonListener implements Listener {
                                     Location cl = new Location(rscl.getWorld(), rscl.getX(), rscl.getY(), rscl.getZ());
                                     if (player.hasPermission("tardis.exile") && plugin.getConfig().getBoolean("travel.exile")) {
                                         // get the exile area
-                                        String permArea = plugin.ta.getExileArea(player);
-                                        player.sendMessage(plugin.pluginName + ChatColor.RED + " Notice:" + ChatColor.RESET + " Your travel has been restricted to the [" + permArea + "] area!");
-                                        Location l = plugin.ta.getNextSpot(permArea);
+                                        String permArea = plugin.getTardisArea().getExileArea(player);
+                                        player.sendMessage(plugin.getPluginName() + ChatColor.RED + " Notice:" + ChatColor.RESET + " Your travel has been restricted to the [" + permArea + "] area!");
+                                        Location l = plugin.getTardisArea().getNextSpot(permArea);
                                         if (l == null) {
-                                            player.sendMessage(plugin.pluginName + MESSAGE.NO_MORE_SPOTS.getText());
+                                            player.sendMessage(plugin.getPluginName() + MESSAGE.NO_MORE_SPOTS.getText());
                                         } else {
                                             set.put("world", l.getWorld().getName());
                                             set.put("x", l.getBlockX());
@@ -173,7 +173,7 @@ public class TARDISButtonListener implements Listener {
                                             set.put("z", l.getBlockZ());
                                             set.put("direction", dir.toString());
                                             set.put("submarine", 0);
-                                            player.sendMessage(plugin.pluginName + "Your TARDIS was approved for parking in [" + permArea + "]!");
+                                            player.sendMessage(plugin.getPluginName() + "Your TARDIS was approved for parking in [" + permArea + "]!");
                                             set_dest = true;
                                         }
                                     } else {
@@ -194,13 +194,13 @@ public class TARDISButtonListener implements Listener {
                                                     // check they have enough artron energy to travel to the NETHER
                                                     if (level < nether_min) {
                                                         environment = "NORMAL";
-                                                        player.sendMessage(plugin.pluginName + "You need at least " + nether_min + " Artron Energy to travel to the Nether! Overworld selected.");
+                                                        player.sendMessage(plugin.getPluginName() + "You need at least " + nether_min + " Artron Energy to travel to the Nether! Overworld selected.");
                                                     } else {
                                                         environment = "NETHER";
                                                     }
                                                 } else {
                                                     String message = (player.hasPermission("tardis.nether")) ? "The ancient, dusty senators of Gallifrey have disabled time travel to the Nether" : "You do not have permission to time travel to the Nether";
-                                                    player.sendMessage(plugin.pluginName + message);
+                                                    player.sendMessage(plugin.getPluginName() + message);
                                                 }
                                             }
                                             if (repeaters[0] >= 12 && repeaters[0] <= 15) { // last position
@@ -208,13 +208,13 @@ public class TARDISButtonListener implements Listener {
                                                     // check they have enough artron energy to travel to THE_END
                                                     if (level < the_end_min) {
                                                         environment = "NORMAL";
-                                                        player.sendMessage(plugin.pluginName + "You need at least " + the_end_min + " Artron Energy to travel to The End! Overworld selected.");
+                                                        player.sendMessage(plugin.getPluginName() + "You need at least " + the_end_min + " Artron Energy to travel to The End! Overworld selected.");
                                                     } else {
                                                         environment = "THE_END";
                                                     }
                                                 } else {
                                                     String message = (player.hasPermission("tardis.end")) ? "The ancient, dusty senators of Gallifrey have disabled time travel to The End" : "You do not have permission to time travel to The End";
-                                                    player.sendMessage(plugin.pluginName + message);
+                                                    player.sendMessage(plugin.getPluginName() + message);
                                                 }
                                             }
                                             // create a random destination
@@ -226,9 +226,9 @@ public class TARDISButtonListener implements Listener {
                                                 set.put("y", rand.getBlockY());
                                                 set.put("z", rand.getBlockZ());
                                                 set.put("direction", dir.toString());
-                                                set.put("submarine", (plugin.trackSubmarine.contains(Integer.valueOf(id))) ? 1 : 0);
+                                                set.put("submarine", (plugin.getTrackerKeeper().getTrackSubmarine().contains(Integer.valueOf(id))) ? 1 : 0);
                                                 set_dest = true;
-                                                plugin.trackSubmarine.remove(Integer.valueOf(id));
+                                                plugin.getTrackerKeeper().getTrackSubmarine().remove(Integer.valueOf(id));
                                                 String dchat = rand.getWorld().getName() + " at x: " + rand.getBlockX() + " y: " + rand.getBlockY() + " z: " + rand.getBlockZ();
                                                 boolean isTL = true;
                                                 if (comps != null && !comps.isEmpty()) {
@@ -242,7 +242,7 @@ public class TARDISButtonListener implements Listener {
                                                             wherec.put("player", c);
                                                             ResultSetTravellers rsv = new ResultSetTravellers(plugin, wherec, false);
                                                             if (rsv.resultSet()) {
-                                                                plugin.getServer().getPlayer(c).sendMessage(plugin.pluginName + "Destination: " + dchat);
+                                                                plugin.getServer().getPlayer(c).sendMessage(plugin.getPluginName() + "Destination: " + dchat);
                                                             }
                                                         }
                                                         if (c.equalsIgnoreCase(player.getName())) {
@@ -251,25 +251,25 @@ public class TARDISButtonListener implements Listener {
                                                     }
                                                 }
                                                 if (isTL == true) {
-                                                    player.sendMessage(plugin.pluginName + "Destination: " + dchat);
+                                                    player.sendMessage(plugin.getPluginName() + "Destination: " + dchat);
                                                 } else {
                                                     if (plugin.getServer().getPlayer(owner) != null) {
-                                                        plugin.getServer().getPlayer(owner).sendMessage(plugin.pluginName + "Destination: " + dchat);
+                                                        plugin.getServer().getPlayer(owner).sendMessage(plugin.getPluginName() + "Destination: " + dchat);
                                                     }
                                                 }
                                             } else {
-                                                player.sendMessage(plugin.pluginName + "Could not find a suitable location within the current settings, the area may be protected.");
+                                                player.sendMessage(plugin.getPluginName() + "Could not find a suitable location within the current settings, the area may be protected.");
                                             }
                                         }
                                     }
                                     break;
                                 case 8:
                                     if (!hb) {
-                                        player.sendMessage(plugin.pluginName + ChatColor.RED + MESSAGE.NOT_WHILE_TRAVELLING.getText());
+                                        player.sendMessage(plugin.getPluginName() + ChatColor.RED + MESSAGE.NOT_WHILE_TRAVELLING.getText());
                                         return;
                                     }
                                     if (level < plugin.getArtronConfig().getInt("random")) {
-                                        player.sendMessage(plugin.pluginName + ChatColor.RED + MESSAGE.NOT_ENOUGH_ENERGY.getText());
+                                        player.sendMessage(plugin.getPluginName() + ChatColor.RED + MESSAGE.NOT_ENOUGH_ENERGY.getText());
                                         return;
                                     }
                                     // fast return button
@@ -289,26 +289,26 @@ public class TARDISButtonListener implements Listener {
                                                 set.put("direction", rsb.getDirection().toString());
                                                 set.put("submarine", (rsb.isSubmarine()) ? 1 : 0);
                                                 set_dest = true;
-                                                player.sendMessage(plugin.pluginName + "Previous location selected. Please release the handbrake!");
+                                                player.sendMessage(plugin.getPluginName() + "Previous location selected. Please release the handbrake!");
                                             } else {
-                                                player.sendMessage(plugin.pluginName + "You are already at the previous location. You need to travel somewhere else first!");
+                                                player.sendMessage(plugin.getPluginName() + "You are already at the previous location. You need to travel somewhere else first!");
                                             }
                                         }
                                     } else {
-                                        player.sendMessage(plugin.pluginName + "Could not get the previous location!");
+                                        player.sendMessage(plugin.getPluginName() + "Could not get the previous location!");
                                     }
                                     break;
                                 case 9:
                                     if (!hb) {
-                                        player.sendMessage(plugin.pluginName + ChatColor.RED + MESSAGE.NOT_WHILE_TRAVELLING.getText());
+                                        player.sendMessage(plugin.getPluginName() + ChatColor.RED + MESSAGE.NOT_WHILE_TRAVELLING.getText());
                                         return;
                                     }
                                     if (level < plugin.getArtronConfig().getInt("random")) {
-                                        player.sendMessage(plugin.pluginName + ChatColor.RED + MESSAGE.NOT_ENOUGH_ENERGY.getText());
+                                        player.sendMessage(plugin.getPluginName() + ChatColor.RED + MESSAGE.NOT_ENOUGH_ENERGY.getText());
                                         return;
                                     }
                                     if (tcc != null && !tcc.hasInput()) {
-                                        player.sendMessage(plugin.pluginName + "The Input Circuit is missing from the console!");
+                                        player.sendMessage(plugin.getPluginName() + "The Input Circuit is missing from the console!");
                                         return;
                                     }
                                     // terminal sign
@@ -318,21 +318,21 @@ public class TARDISButtonListener implements Listener {
                                     break;
                                 case 10:
                                     if (!hb) {
-                                        player.sendMessage(plugin.pluginName + ChatColor.RED + "You cannot reconfigure rooms while the TARDIS is travelling!");
+                                        player.sendMessage(plugin.getPluginName() + ChatColor.RED + "You cannot reconfigure rooms while the TARDIS is travelling!");
                                         return;
                                     }
                                     // check they have permission to grow rooms
                                     if (!player.hasPermission("tardis.ars")) {
-                                        player.sendMessage(plugin.pluginName + "You do not have permission to grow rooms!");
+                                        player.sendMessage(plugin.getPluginName() + "You do not have permission to grow rooms!");
                                         return;
                                     }
                                     // check they're in a compatible world
-                                    if (!plugin.utils.canGrowRooms(rs.getChunk())) {
-                                        player.sendMessage(plugin.pluginName + "You cannot grow rooms unless your TARDIS was created in its own world!");
+                                    if (!plugin.getUtils().canGrowRooms(rs.getChunk())) {
+                                        player.sendMessage(plugin.getPluginName() + "You cannot grow rooms unless your TARDIS was created in its own world!");
                                         return;
                                     }
                                     if (tcc != null && !tcc.hasARS()) {
-                                        player.sendMessage(plugin.pluginName + "The ARS Circuit is missing from the console!");
+                                        player.sendMessage(plugin.getPluginName() + "The ARS Circuit is missing from the console!");
                                         return;
                                     }
                                     // ARS sign
@@ -343,7 +343,7 @@ public class TARDISButtonListener implements Listener {
                                 case 11:
                                     // Temporal Locator sign
                                     if (tcc != null && !tcc.hasTemporal()) {
-                                        player.sendMessage(plugin.pluginName + "The Temporal Circuit is missing from the console!");
+                                        player.sendMessage(plugin.getPluginName() + "The Temporal Circuit is missing from the console!");
                                         return;
                                     }
                                     if (player.hasPermission("tardis.temporal")) {
@@ -362,7 +362,7 @@ public class TARDISButtonListener implements Listener {
                                         // get lamp locations
                                         ArrayList<HashMap<String, String>> data = rsl.getData();
                                         for (HashMap<String, String> map : data) {
-                                            Location loc = plugin.utils.getLocationFromDB(map.get("location"), 0.0F, 0.0F);
+                                            Location loc = plugin.getUtils().getLocationFromDB(map.get("location"), 0.0F, 0.0F);
                                             lamps.add(loc.getBlock());
                                         }
                                     }
@@ -376,7 +376,7 @@ public class TARDISButtonListener implements Listener {
                                     break;
                                 case 13:
                                     // TIS
-                                    plugin.trackInfoMenu.put(player.getName(), TARDISInfoMenu.TIS);
+                                    plugin.getTrackerKeeper().getTrackInfoMenu().put(player.getName(), TARDISInfoMenu.TIS);
                                     player.sendMessage(ChatColor.GOLD + "-----------TARDIS Information System-----------");
                                     player.sendMessage(ChatColor.GOLD + "---*Please type a white letter to proceed*---");
                                     player.sendMessage("§6> TARDIS §fM§6anual");
@@ -393,7 +393,7 @@ public class TARDISButtonListener implements Listener {
                                     String name = player.getName();
                                     // only the time lord of this tardis
                                     if (!owner.equals(name)) {
-                                        player.sendMessage(plugin.pluginName + MESSAGE.NOT_OWNER.getText());
+                                        player.sendMessage(plugin.getPluginName() + MESSAGE.NOT_OWNER.getText());
                                         return;
                                     }
                                     // do they have a storage record?
@@ -431,30 +431,30 @@ public class TARDISButtonListener implements Listener {
                                     // enter zero room
                                     int zero_amount = plugin.getArtronConfig().getInt("zero");
                                     if (level < zero_amount) {
-                                        player.sendMessage(plugin.pluginName + ChatColor.RED + MESSAGE.NOT_ENOUGH_ZERO_ENERGY.getText());
+                                        player.sendMessage(plugin.getPluginName() + ChatColor.RED + MESSAGE.NOT_ENOUGH_ZERO_ENERGY.getText());
                                         return;
                                     }
-                                    final Location zero = plugin.utils.getLocationFromDB(rs.getZero(), 0.0F, 0.0F);
+                                    final Location zero = plugin.getUtils().getLocationFromDB(rs.getZero(), 0.0F, 0.0F);
                                     if (zero != null) {
-                                        player.sendMessage(plugin.pluginName + "Zero room ready, stand by for transmat...");
+                                        player.sendMessage(plugin.getPluginName() + "Zero room ready, stand by for transmat...");
                                         plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
                                             @Override
                                             public void run() {
                                                 new TARDISExteriorRenderer(plugin).transmat(player, COMPASS.SOUTH, zero);
                                             }
                                         }, 20L);
-                                        plugin.zeroRoomOccupants.add(player.getName());
+                                        plugin.getTrackerKeeper().getTrackZeroRoomOccupants().add(player.getName());
                                         HashMap<String, Object> wherez = new HashMap<String, Object>();
                                         wherez.put("tardis_id", id);
                                         qf.alterEnergyLevel("tardis", -zero_amount, wherez, player);
                                     } else {
-                                        player.sendMessage(plugin.pluginName + "You don't have a Zero room!");
+                                        player.sendMessage(plugin.getPluginName() + "You don't have a Zero room!");
                                     }
                                     break;
                                 case 17:
                                     // exit zero room
-                                    plugin.zeroRoomOccupants.remove(player.getName());
-                                    plugin.rendererListener.transmat(player);
+                                    plugin.getTrackerKeeper().getTrackZeroRoomOccupants().remove(player.getName());
+                                    plugin.getGeneralKeeper().getRendererListener().transmat(player);
                                     break;
                                 default:
                                     break;
@@ -463,9 +463,9 @@ public class TARDISButtonListener implements Listener {
                                 HashMap<String, Object> wherel = new HashMap<String, Object>();
                                 wherel.put("tardis_id", id);
                                 qf.doUpdate("next", set, wherel);
-                                plugin.tardisHasDestination.put(id, plugin.getArtronConfig().getInt("random"));
-                                if (plugin.trackRescue.containsKey(Integer.valueOf(id))) {
-                                    plugin.trackRescue.remove(Integer.valueOf(id));
+                                plugin.getTrackerKeeper().getTrackHasDestination().put(id, plugin.getArtronConfig().getInt("random"));
+                                if (plugin.getTrackerKeeper().getTrackRescue().containsKey(Integer.valueOf(id))) {
+                                    plugin.getTrackerKeeper().getTrackRescue().remove(Integer.valueOf(id));
                                 }
                             }
                         }

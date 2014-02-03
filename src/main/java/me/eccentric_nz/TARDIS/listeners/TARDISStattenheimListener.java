@@ -27,7 +27,6 @@ import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import me.eccentric_nz.TARDIS.database.ResultSetTravellers;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
 import me.eccentric_nz.TARDIS.enumeration.MESSAGE;
-import me.eccentric_nz.TARDIS.travel.TARDISPluginRespect;
 import me.eccentric_nz.TARDIS.travel.TARDISTimeTravel;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -92,22 +91,21 @@ public class TARDISStattenheimListener implements Listener {
                 if (player.hasPermission("tardis.timetravel")) {
                     final Location remoteLocation = b.getLocation();
                     if (!plugin.getConfig().getBoolean("travel.include_default_world") && plugin.getConfig().getBoolean("creation.default_world") && remoteLocation.getWorld().getName().equals(plugin.getConfig().getString("creation.default_world_name"))) {
-                        player.sendMessage(plugin.pluginName + "The server admin will not allow you to bring the TARDIS to this world!");
+                        player.sendMessage(plugin.getPluginName() + "The server admin will not allow you to bring the TARDIS to this world!");
                         return;
                     }
-                    TARDISPluginRespect respect = new TARDISPluginRespect(plugin);
-                    if (!respect.getRespect(player, remoteLocation, true)) {
+                    if (!plugin.getPluginRespect().getRespect(player, remoteLocation, true)) {
                         return;
                     }
                     if (player.hasPermission("tardis.exile") && plugin.getConfig().getBoolean("travel.exile")) {
-                        String areaPerm = plugin.ta.getExileArea(player);
-                        if (plugin.ta.areaCheckInExile(areaPerm, remoteLocation)) {
-                            player.sendMessage(plugin.pluginName + "You exile status does not allow you to bring the TARDIS to this location!");
+                        String areaPerm = plugin.getTardisArea().getExileArea(player);
+                        if (plugin.getTardisArea().areaCheckInExile(areaPerm, remoteLocation)) {
+                            player.sendMessage(plugin.getPluginName() + "You exile status does not allow you to bring the TARDIS to this location!");
                             return;
                         }
                     }
-                    if (!plugin.ta.areaCheckInExisting(remoteLocation)) {
-                        player.sendMessage(plugin.pluginName + "You cannot use /tardis comehere to bring the Police Box to a TARDIS area! Please use " + ChatColor.AQUA + "/tardistravel area [area name]");
+                    if (!plugin.getTardisArea().areaCheckInExisting(remoteLocation)) {
+                        player.sendMessage(plugin.getPluginName() + "You cannot use /tardis comehere to bring the Police Box to a TARDIS area! Please use " + ChatColor.AQUA + "/tardistravel area [area name]");
                         return;
                     }
                     if (!useless.contains(m)) {
@@ -117,7 +115,7 @@ public class TARDISStattenheimListener implements Listener {
                     // check the world is not excluded
                     String world = remoteLocation.getWorld().getName();
                     if (!plugin.getConfig().getBoolean("worlds." + world)) {
-                        player.sendMessage(plugin.pluginName + MESSAGE.NO_PB_IN_WORLD.getText());
+                        player.sendMessage(plugin.getPluginName() + MESSAGE.NO_PB_IN_WORLD.getText());
                         return;
                     }
                     // check they are a timelord
@@ -125,7 +123,7 @@ public class TARDISStattenheimListener implements Listener {
                     where.put("owner", player.getName());
                     final ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);
                     if (!rs.resultSet()) {
-                        player.sendMessage(plugin.pluginName + "You don't have a TARDIS!");
+                        player.sendMessage(plugin.getPluginName() + "You don't have a TARDIS!");
                         return;
                     }
                     final int id = rs.getTardis_id();
@@ -135,7 +133,7 @@ public class TARDISStattenheimListener implements Listener {
                         tcc.getCircuits();
                     }
                     if (tcc != null && !tcc.hasMaterialisation()) {
-                        player.sendMessage(plugin.pluginName + MESSAGE.NO_MAT_CIRCUIT.getText());
+                        player.sendMessage(plugin.getPluginName() + MESSAGE.NO_MAT_CIRCUIT.getText());
                         return;
                     }
                     boolean hidden = rs.isHidden();
@@ -147,11 +145,11 @@ public class TARDISStattenheimListener implements Listener {
                     wherettrav.put("tardis_id", id);
                     ResultSetTravellers rst = new ResultSetTravellers(plugin, wherettrav, false);
                     if (rst.resultSet()) {
-                        player.sendMessage(plugin.pluginName + MESSAGE.NO_PB_IN_TARDIS.getText());
+                        player.sendMessage(plugin.getPluginName() + MESSAGE.NO_PB_IN_TARDIS.getText());
                         return;
                     }
-                    if (plugin.inVortex.contains(Integer.valueOf(id))) {
-                        player.sendMessage(plugin.pluginName + MESSAGE.NOT_WHILE_MAT.getText());
+                    if (plugin.getTrackerKeeper().getTrackInVortex().contains(Integer.valueOf(id))) {
+                        player.sendMessage(plugin.getPluginName() + MESSAGE.NOT_WHILE_MAT.getText());
                         return;
                     }
                     // get TARDIS's current location
@@ -176,12 +174,12 @@ public class TARDISStattenheimListener implements Listener {
                         count = tt.safeLocation(start_loc[0], remoteLocation.getBlockY(), start_loc[2], start_loc[1], start_loc[3], remoteLocation.getWorld(), d);
                     }
                     if (count > 0) {
-                        player.sendMessage(plugin.pluginName + "That location would grief existing blocks! Try somewhere else!");
+                        player.sendMessage(plugin.getPluginName() + "That location would grief existing blocks! Try somewhere else!");
                         return;
                     }
                     int ch = plugin.getArtronConfig().getInt("comehere");
                     if (level < ch) {
-                        player.sendMessage(plugin.pluginName + ChatColor.RED + MESSAGE.NOT_ENOUGH_ENERGY.getText());
+                        player.sendMessage(plugin.getPluginName() + ChatColor.RED + MESSAGE.NOT_ENOUGH_ENERGY.getText());
                         return;
                     }
                     final Player p = player;
@@ -227,20 +225,20 @@ public class TARDISStattenheimListener implements Listener {
                         tid.put("tardis_id", id);
                         qf.doUpdate("tardis", set, tid);
                     }
-                    player.sendMessage(plugin.pluginName + "The TARDIS is coming...");
+                    player.sendMessage(plugin.getPluginName() + "The TARDIS is coming...");
                     final boolean mat = plugin.getConfig().getBoolean("police_box.materialise");
                     long delay = (mat) ? 10L : 180L;
-                    plugin.inVortex.add(Integer.valueOf(id));
+                    plugin.getTrackerKeeper().getTrackInVortex().add(Integer.valueOf(id));
                     final boolean hid = hidden;
                     final Location old = oldSave;
                     Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
                         @Override
                         public void run() {
                             if (!hid) {
-                                plugin.tardisDematerialising.add(Integer.valueOf(id));
-                                plugin.destroyerP.destroyPreset(old, d, id, false, mat, cham, p, rsc.isSubmarine());
+                                plugin.getTrackerKeeper().getTrackDematerialising().add(Integer.valueOf(id));
+                                plugin.getPresetDestroyer().destroyPreset(old, d, id, false, mat, cham, p, rsc.isSubmarine());
                             } else {
-                                plugin.destroyerP.removeBlockProtection(id, qf);
+                                plugin.getPresetDestroyer().removeBlockProtection(id, qf);
                             }
                         }
                     }, delay);
@@ -248,19 +246,19 @@ public class TARDISStattenheimListener implements Listener {
                     Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
                         @Override
                         public void run() {
-                            plugin.builderP.buildPreset(id, remoteLocation, d, cham, p, false, false, is_sub);
+                            plugin.getPresetBuilder().buildPreset(id, remoteLocation, d, cham, p, false, false, is_sub);
                         }
                     }, delay * 2);
                     // remove energy from TARDIS
                     HashMap<String, Object> wheret = new HashMap<String, Object>();
                     wheret.put("tardis_id", id);
                     qf.alterEnergyLevel("tardis", -ch, wheret, player);
-                    plugin.tardisHasDestination.remove(id);
-                    if (plugin.trackRescue.containsKey(Integer.valueOf(id))) {
-                        plugin.trackRescue.remove(Integer.valueOf(id));
+                    plugin.getTrackerKeeper().getTrackHasDestination().remove(id);
+                    if (plugin.getTrackerKeeper().getTrackRescue().containsKey(Integer.valueOf(id))) {
+                        plugin.getTrackerKeeper().getTrackRescue().remove(Integer.valueOf(id));
                     }
                 } else {
-                    player.sendMessage(plugin.pluginName + MESSAGE.NO_PERMS.getText());
+                    player.sendMessage(plugin.getPluginName() + MESSAGE.NO_PERMS.getText());
                 }
             }
         }

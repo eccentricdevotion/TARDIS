@@ -48,10 +48,10 @@ public class TARDISIsomorphicCommand {
             HashMap<String, Object> wheret = new HashMap<String, Object>();
             wheret.put("tardis_id", id);
             qf.doUpdate("tardis", seti, wheret);
-            player.sendMessage(plugin.pluginName + "Isomorphic controls were turned " + onoff + "!");
+            player.sendMessage(plugin.getPluginName() + "Isomorphic controls were turned " + onoff + "!");
             return true;
         } else {
-            player.sendMessage(plugin.pluginName + "You don't have a TARDIS yet!");
+            player.sendMessage(plugin.getPluginName() + "You don't have a TARDIS yet!");
             return true;
         }
     }

@@ -69,15 +69,15 @@ public class TARDISAreaSignListener implements Listener {
                     if (is != null) {
                         ItemMeta im = is.getItemMeta();
                         String area = im.getDisplayName();
-                        Location l = plugin.ta.getNextSpot(area);
+                        Location l = plugin.getTardisArea().getNextSpot(area);
                         if (l == null) {
-                            player.sendMessage(plugin.pluginName + MESSAGE.NO_MORE_SPOTS.getText());
+                            player.sendMessage(plugin.getPluginName() + MESSAGE.NO_MORE_SPOTS.getText());
                             close(player);
                             return;
                         }
                         // check the player is not already in the area!
-                        if (plugin.ta.areaCheckInExisting(l)) {
-                            player.sendMessage(plugin.pluginName + "You are already in this area!");
+                        if (plugin.getTardisArea().areaCheckInExisting(l)) {
+                            player.sendMessage(plugin.getPluginName() + "You are already in this area!");
                             close(player);
                             return;
                         }

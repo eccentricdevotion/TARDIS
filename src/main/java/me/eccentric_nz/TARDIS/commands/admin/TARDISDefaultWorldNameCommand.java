@@ -46,7 +46,7 @@ public class TARDISDefaultWorldNameCommand {
         String nodots = StringUtils.replace(t, ".", "_");
         plugin.getConfig().set("creation.default_world_name", nodots);
         plugin.saveConfig();
-        sender.sendMessage(plugin.pluginName + MESSAGE.CONFIG_UPDATED.getText());
+        sender.sendMessage(plugin.getPluginName() + MESSAGE.CONFIG_UPDATED.getText());
         return true;
     }
 }

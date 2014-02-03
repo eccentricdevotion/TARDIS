@@ -44,16 +44,16 @@ public class TARDISSetIntegerCommand {
             val = Integer.parseInt(a);
         } catch (NumberFormatException nfe) {
             // not a number
-            sender.sendMessage(plugin.pluginName + ChatColor.RED + " The last argument must be a number!");
+            sender.sendMessage(plugin.getPluginName() + ChatColor.RED + " The last argument must be a number!");
             return false;
         }
         plugin.getConfig().set(first, val);
         if (first.equals("terminal_step")) {
             // reset the terminal inventory
-            plugin.buttonListener.items = new TARDISTerminalInventory().getTerminal();
+            plugin.getGeneralKeeper().getButtonListener().items = new TARDISTerminalInventory().getTerminal();
         }
         plugin.saveConfig();
-        sender.sendMessage(plugin.pluginName + MESSAGE.CONFIG_UPDATED.getText());
+        sender.sendMessage(plugin.getPluginName() + MESSAGE.CONFIG_UPDATED.getText());
         return true;
     }
 
@@ -65,7 +65,7 @@ public class TARDISSetIntegerCommand {
             val = Integer.parseInt(a);
         } catch (NumberFormatException nfe) {
             // not a number
-            sender.sendMessage(plugin.pluginName + ChatColor.RED + " The last argument must be a number!");
+            sender.sendMessage(plugin.getPluginName() + ChatColor.RED + " The last argument must be a number!");
             return false;
         }
         plugin.getArtronConfig().set(first, val);
@@ -74,7 +74,7 @@ public class TARDISSetIntegerCommand {
         } catch (IOException io) {
             plugin.debug("Could not save artron.yml, " + io);
         }
-        sender.sendMessage(plugin.pluginName + MESSAGE.CONFIG_UPDATED.getText());
+        sender.sendMessage(plugin.getPluginName() + MESSAGE.CONFIG_UPDATED.getText());
         return true;
     }
 }

@@ -46,11 +46,11 @@ public class TARDISEnterCommand {
             player = (Player) sender;
         }
         if (player == null) {
-            sender.sendMessage(plugin.pluginName + "Only a player can run this command!");
+            sender.sendMessage(plugin.getPluginName() + "Only a player can run this command!");
             return true;
         }
         if (!player.hasPermission("tardis.skeletonkey")) {
-            sender.sendMessage(plugin.pluginName + MESSAGE.NO_PERMS.getText());
+            sender.sendMessage(plugin.getPluginName() + MESSAGE.NO_PERMS.getText());
             return true;
         }
         HashMap<String, Object> where = new HashMap<String, Object>();
@@ -67,9 +67,9 @@ public class TARDISEnterCommand {
                 String doorLocStr = rsi.getDoor_location();
                 String[] split = doorLocStr.split(":");
                 World cw = plugin.getServer().getWorld(split[0]);
-                int cx = plugin.utils.parseInt(split[1]);
-                int cy = plugin.utils.parseInt(split[2]);
-                int cz = plugin.utils.parseInt(split[3]);
+                int cx = plugin.getUtils().parseInt(split[1]);
+                int cy = plugin.getUtils().parseInt(split[2]);
+                int cz = plugin.getUtils().parseInt(split[3]);
                 Location tmp_loc = cw.getBlockAt(cx, cy, cz).getLocation();
                 int getx = tmp_loc.getBlockX();
                 int getz = tmp_loc.getBlockZ();
@@ -96,8 +96,8 @@ public class TARDISEnterCommand {
                         break;
                 }
                 // if WorldGuard is on the server check for TARDIS region protection and add admin as member
-                if (plugin.worldGuardOnServer && plugin.getConfig().getBoolean("preferences.use_worldguard")) {
-                    plugin.wgutils.addMemberToRegion(cw, args[1], player.getName());
+                if (plugin.isWorldGuardOnServer() && plugin.getConfig().getBoolean("preferences.use_worldguard")) {
+                    plugin.getWorldGuardUtils().addMemberToRegion(cw, args[1], player.getName());
                 }
                 // enter TARDIS!
                 cw.getChunkAt(tmp_loc).load();
@@ -105,27 +105,27 @@ public class TARDISEnterCommand {
                 float pitch = player.getLocation().getPitch();
                 tmp_loc.setPitch(pitch);
                 // get players direction so we can adjust yaw if necessary
-                COMPASS d = COMPASS.valueOf(plugin.utils.getPlayersDirection(player, false));
+                COMPASS d = COMPASS.valueOf(plugin.getUtils().getPlayersDirection(player, false));
                 if (!innerD.equals(d)) {
                     switch (d) {
                         case NORTH:
-                            yaw += plugin.doorListener.adjustYaw[0][innerD.ordinal()];
+                            yaw += plugin.getGeneralKeeper().getDoorListener().adjustYaw[0][innerD.ordinal()];
                             break;
                         case WEST:
-                            yaw += plugin.doorListener.adjustYaw[1][innerD.ordinal()];
+                            yaw += plugin.getGeneralKeeper().getDoorListener().adjustYaw[1][innerD.ordinal()];
                             break;
                         case SOUTH:
-                            yaw += plugin.doorListener.adjustYaw[2][innerD.ordinal()];
+                            yaw += plugin.getGeneralKeeper().getDoorListener().adjustYaw[2][innerD.ordinal()];
                             break;
                         case EAST:
-                            yaw += plugin.doorListener.adjustYaw[3][innerD.ordinal()];
+                            yaw += plugin.getGeneralKeeper().getDoorListener().adjustYaw[3][innerD.ordinal()];
                             break;
                     }
                 }
                 tmp_loc.setYaw(yaw);
                 final Location tardis_loc = tmp_loc;
                 World playerWorld = player.getLocation().getWorld();
-                plugin.doorListener.movePlayer(player, tardis_loc, false, playerWorld, false, 3, true);
+                plugin.getGeneralKeeper().getDoorListener().movePlayer(player, tardis_loc, false, playerWorld, false, 3, true);
                 // put player into travellers table
                 QueryFactory qf = new QueryFactory(plugin);
                 HashMap<String, Object> set = new HashMap<String, Object>();
@@ -135,7 +135,7 @@ public class TARDISEnterCommand {
                 return true;
             }
         }
-        sender.sendMessage(plugin.pluginName + args[1] + " has not created a TARDIS yet!");
+        sender.sendMessage(plugin.getPluginName() + args[1] + " has not created a TARDIS yet!");
         return true;
     }
 }

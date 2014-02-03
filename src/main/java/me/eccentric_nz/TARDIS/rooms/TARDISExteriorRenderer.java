@@ -56,14 +56,14 @@ public class TARDISExteriorRenderer {
         String isRendered = ew.getName() + ":" + epbx + ":" + epby + ":" + epbz;
         String[] idata = interior.split(":");
         World iw = plugin.getServer().getWorld(idata[0]);
-        int ipbx = plugin.utils.parseInt(idata[1]);
-        int ipby = plugin.utils.parseInt(idata[2]) + 2;
-        int ipbz = plugin.utils.parseInt(idata[3]);
+        int ipbx = plugin.getUtils().parseInt(idata[1]);
+        int ipby = plugin.getUtils().parseInt(idata[2]) + 2;
+        int ipbz = plugin.getUtils().parseInt(idata[3]);
         final Location location = new Location(iw, ipbx, ipby, ipbz);
-        if (plugin.trackRenderer.containsKey(id) && plugin.trackRenderer.get(id).equals(isRendered)) {
-            p.sendMessage(plugin.pluginName + "Destination unchanged, no rendering needed, stand by for transmat...");
+        if (plugin.getTrackerKeeper().getTrackRenderer().containsKey(id) && plugin.getTrackerKeeper().getTrackRenderer().get(id).equals(isRendered)) {
+            p.sendMessage(plugin.getPluginName() + "Destination unchanged, no rendering needed, stand by for transmat...");
         } else {
-            p.sendMessage(plugin.pluginName + "Starting exterior rendering, please wait...");
+            p.sendMessage(plugin.getPluginName() + "Starting exterior rendering, please wait...");
             int isx, isy, isz, esx, esy, esz, xx = 0, yy = 0, zz = 0;
             // get interior coords
             isx = ipbx - 6;
@@ -118,7 +118,7 @@ public class TARDISExteriorRenderer {
             int z = (location.getBlockZ());
             int plusz = (location.getBlockZ() + 1);
             int minusz = (location.getBlockZ() - 1);
-            TARDISChameleonColumn column = plugin.presets.getGlass(PRESET.RENDER, d);
+            TARDISChameleonColumn column = plugin.getPresets().getGlass(PRESET.RENDER, d);
             addPlatform(location, d, p.getName(), id);
             int px, pz;
             int[][] ids = column.getId();
@@ -165,7 +165,7 @@ public class TARDISExteriorRenderer {
                         break;
                 }
                 for (int py = 0; py < 4; py++) {
-                    plugin.utils.setBlock(iw, px, (y + py), pz, colids[py], coldatas[py]);
+                    plugin.getUtils().setBlock(iw, px, (y + py), pz, colids[py], coldatas[py]);
                 }
             }
             // change the black/blue/green wool to blue/black/ to reflect time of day and environment
@@ -260,22 +260,22 @@ public class TARDISExteriorRenderer {
                     }
                 }
             }
-            plugin.trackRenderer.put(id, isRendered);
-            p.sendMessage(plugin.pluginName + "Rendering complete, stand by for transmat...");
+            plugin.getTrackerKeeper().getTrackRenderer().put(id, isRendered);
+            p.sendMessage(plugin.getPluginName() + "Rendering complete, stand by for transmat...");
         }
         // charge artron energy for the render
         HashMap<String, Object> where = new HashMap<String, Object>();
         where.put("tardis_id", id);
         new QueryFactory(plugin).alterEnergyLevel("tardis", -plugin.getArtronConfig().getInt("render"), where, p);
         // tp the player inside the room
-        plugin.trackTransmat.add(p.getName());
+        plugin.getTrackerKeeper().getTrackTransmat().add(p.getName());
         plugin.getServer()
                 .getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
                     @Override
                     public void run() {
                         transmat(p, d, location);
                         p.playSound(location, Sound.ENDERMAN_TELEPORT, 1.0f, 1.0f);
-                        p.sendMessage(plugin.pluginName + "Right-click to exit.");
+                        p.sendMessage(plugin.getPluginName() + "Right-click to exit.");
                     }
                 },
                 10L);
@@ -354,7 +354,7 @@ public class TARDISExteriorRenderer {
                 for (Block pb : platform_blocks) {
                     int matint = pb.getTypeId();
                     if (TARDISConstants.PLATFORM_BLOCKS.contains(matint)) {
-                        plugin.utils.setBlock(world, pb.getX(), pb.getY(), pb.getZ(), platform_id, platform_data);
+                        plugin.getUtils().setBlock(world, pb.getX(), pb.getY(), pb.getZ(), platform_id, platform_data);
                     }
                 }
             }

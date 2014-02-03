@@ -143,13 +143,13 @@ public class TARDISCondenserListener implements Listener {
                 if (amount > 0) {
                     message = "You condensed the molecules of the universe itself into " + amount + " artron energy!";
                     // are we doing an achievement?
-                    if (plugin.getAchivementConfig().getBoolean("energy.enabled")) {
+                    if (plugin.getAchievementConfig().getBoolean("energy.enabled")) {
                         // determine the current percentage
                         int current_level = rs.getArtron_level() + amount;
                         int fc = plugin.getArtronConfig().getInt("full_charge");
                         int percent = Math.round((current_level * 100F) / fc);
                         TARDISAchievementFactory taf = new TARDISAchievementFactory(plugin, player, "energy", 1);
-                        if (percent >= plugin.getAchivementConfig().getInt("energy.required")) {
+                        if (percent >= plugin.getAchievementConfig().getInt("energy.required")) {
                             taf.doAchievement(percent);
                         } else {
                             taf.doAchievement(Math.round((amount * 100F) / fc));
@@ -158,7 +158,7 @@ public class TARDISCondenserListener implements Listener {
                 } else {
                     message = "There were no valid materials to condense!";
                 }
-                player.sendMessage(plugin.pluginName + message);
+                player.sendMessage(plugin.getPluginName() + message);
             }
         }
     }

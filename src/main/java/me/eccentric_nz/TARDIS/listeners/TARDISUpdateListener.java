@@ -105,10 +105,10 @@ public class TARDISUpdateListener implements Listener {
         final String playerNameStr = player.getName();
         String blockName;
         boolean secondary = false;
-        if (plugin.trackPlayers.containsKey(playerNameStr)) {
-            blockName = plugin.trackPlayers.get(playerNameStr);
-        } else if (plugin.trackSecondary.containsKey(playerNameStr)) {
-            blockName = plugin.trackSecondary.get(playerNameStr);
+        if (plugin.getTrackerKeeper().getTrackPlayers().containsKey(playerNameStr)) {
+            blockName = plugin.getTrackerKeeper().getTrackPlayers().get(playerNameStr);
+        } else if (plugin.getTrackerKeeper().getTrackSecondary().containsKey(playerNameStr)) {
+            blockName = plugin.getTrackerKeeper().getTrackSecondary().get(playerNameStr);
             secondary = true;
         } else {
             return;
@@ -130,7 +130,7 @@ public class TARDISUpdateListener implements Listener {
             where.put("owner", playerNameStr);
             ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);
             if (!rs.resultSet()) {
-                player.sendMessage(plugin.pluginName + MESSAGE.NO_TARDIS.getText());
+                player.sendMessage(plugin.getPluginName() + MESSAGE.NO_TARDIS.getText());
                 return;
             }
             int id = rs.getTardis_id();
@@ -151,9 +151,9 @@ public class TARDISUpdateListener implements Listener {
                 tid.put("secondary", 0);
             }
             if (secondary) {
-                plugin.trackSecondary.remove(playerNameStr);
+                plugin.getTrackerKeeper().getTrackSecondary().remove(playerNameStr);
             } else {
-                plugin.trackPlayers.remove(playerNameStr);
+                plugin.getTrackerKeeper().getTrackPlayers().remove(playerNameStr);
             }
             if (blockName.equalsIgnoreCase("door") && blockType == Material.IRON_DOOR_BLOCK && !secondary) {
                 // get door data this should let us determine the direction
@@ -165,7 +165,7 @@ public class TARDISUpdateListener implements Listener {
             }
             if ((blockName.equalsIgnoreCase("backdoor") || (blockName.equalsIgnoreCase("door") && secondary)) && blockType == Material.IRON_DOOR_BLOCK) {
                 // get door data - this should let us determine the direction
-                String d = plugin.utils.getPlayersDirection(player, true);
+                String d = plugin.getUtils().getPlayersDirection(player, true);
                 table = "doors";
                 set.put("door_location", blockLocStr);
                 set.put("door_direction", d);
@@ -179,8 +179,8 @@ public class TARDISUpdateListener implements Listener {
                 } else {
                     type = 2;
                     // check the world
-                    if (!plugin.utils.inTARDISWorld(player)) {
-                        player.sendMessage(plugin.pluginName + "You didn't enter the TARDIS by the regular door, aborting...");
+                    if (!plugin.getUtils().inTARDISWorld(player)) {
+                        player.sendMessage(plugin.getPluginName() + "You didn't enter the TARDIS by the regular door, aborting...");
                         return;
                     }
                 }
@@ -201,8 +201,8 @@ public class TARDISUpdateListener implements Listener {
                 }
             }
             // check they are still in the TARDIS world
-            if (!blockName.equals("backdoor") && !plugin.utils.inTARDISWorld(player)) {
-                player.sendMessage(plugin.pluginName + "You must be in a TARDIS world to update this block!");
+            if (!blockName.equals("backdoor") && !plugin.getUtils().inTARDISWorld(player)) {
+                player.sendMessage(plugin.getPluginName() + "You must be in a TARDIS world to update this block!");
                 return;
             }
             if (blockName.equalsIgnoreCase("button") && validBlocks.contains(blockType)) {
@@ -552,7 +552,7 @@ public class TARDISUpdateListener implements Listener {
                     set.put("location", blockLocStr);
                 }
                 // check if player has storage record, and update the tardis_id field
-                plugin.utils.updateStorageId(playerNameStr, id, qf);
+                plugin.getUtils().updateStorageId(playerNameStr, id, qf);
             }
             if (blockName.equalsIgnoreCase("advanced") && blockType.equals(Material.JUKEBOX)) {
                 HashMap<String, Object> wherel = new HashMap<String, Object>();
@@ -567,7 +567,7 @@ public class TARDISUpdateListener implements Listener {
                     set.put("location", blockLocStr);
                 }
                 // check if player has storage record, and update the tardis_id field
-                plugin.utils.updateStorageId(playerNameStr, id, qf);
+                plugin.getUtils().updateStorageId(playerNameStr, id, qf);
             }
             if (blockName.equalsIgnoreCase("zero") && (validBlocks.contains(blockType) || validSigns.contains(blockType))) {
                 HashMap<String, Object> wherez = new HashMap<String, Object>();
@@ -582,15 +582,15 @@ public class TARDISUpdateListener implements Listener {
                     set.put("location", blockLocStr);
                 }
                 // check if player has storage record, and update the tardis_id field
-                plugin.utils.updateStorageId(playerNameStr, id, qf);
+                plugin.getUtils().updateStorageId(playerNameStr, id, qf);
             }
             if (set.size() > 0 || secondary) {
                 if (!secondary) {
                     qf.doUpdate(table, set, tid);
                 }
-                player.sendMessage(plugin.pluginName + "The position of the TARDIS " + blockName + " was updated successfully.");
+                player.sendMessage(plugin.getPluginName() + "The position of the TARDIS " + blockName + " was updated successfully.");
             } else {
-                player.sendMessage(plugin.pluginName + "You didn't click the correct type of block for the " + blockName + "! Try the command again.");
+                player.sendMessage(plugin.getPluginName() + "You didn't click the correct type of block for the " + blockName + "! Try the command again.");
             }
         }
     }

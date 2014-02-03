@@ -132,133 +132,133 @@ public class TARDISChameleonListener implements Listener {
                                     // new Police Box
                                     set.put("chameleon_preset", "NEW");
                                     setSign(rs.getChameleon(), 3, "NEW", player);
-                                    player.sendMessage(plugin.pluginName + MESSAGE.CHAMELEON_SET.getText() + ChatColor.AQUA + "New Police Box");
+                                    player.sendMessage(plugin.getPluginName() + MESSAGE.CHAMELEON_SET.getText() + ChatColor.AQUA + "New Police Box");
                                     break;
                                 case 11:
                                     // factory
                                     set.put("chameleon_preset", "FACTORY");
                                     setSign(rs.getChameleon(), 3, "FACTORY", player);
-                                    player.sendMessage(plugin.pluginName + MESSAGE.CHAMELEON_SET.getText() + ChatColor.AQUA + "Factory Fresh");
+                                    player.sendMessage(plugin.getPluginName() + MESSAGE.CHAMELEON_SET.getText() + ChatColor.AQUA + "Factory Fresh");
                                     break;
                                 case 13:
                                     // jungle temple
                                     set.put("chameleon_preset", "JUNGLE");
                                     setSign(rs.getChameleon(), 3, "JUNGLE", player);
-                                    player.sendMessage(plugin.pluginName + MESSAGE.CHAMELEON_SET.getText() + ChatColor.AQUA + "Jungle Temple");
+                                    player.sendMessage(plugin.getPluginName() + MESSAGE.CHAMELEON_SET.getText() + ChatColor.AQUA + "Jungle Temple");
                                     break;
                                 case 15:
                                     // nether fortress
                                     set.put("chameleon_preset", "NETHER");
                                     setSign(rs.getChameleon(), 3, "NETHER", player);
-                                    player.sendMessage(plugin.pluginName + MESSAGE.CHAMELEON_SET.getText() + ChatColor.AQUA + "Nether Fortress");
+                                    player.sendMessage(plugin.getPluginName() + MESSAGE.CHAMELEON_SET.getText() + ChatColor.AQUA + "Nether Fortress");
                                     break;
                                 case 17:
                                     // old police box
                                     set.put("chameleon_preset", "OLD");
                                     setSign(rs.getChameleon(), 3, "OLD", player);
-                                    player.sendMessage(plugin.pluginName + MESSAGE.CHAMELEON_SET.getText() + ChatColor.AQUA + "Old Police Box");
+                                    player.sendMessage(plugin.getPluginName() + MESSAGE.CHAMELEON_SET.getText() + ChatColor.AQUA + "Old Police Box");
                                     break;
                                 case 19:
                                     // swamp
                                     set.put("chameleon_preset", "SWAMP");
                                     setSign(rs.getChameleon(), 3, "SWAMP", player);
-                                    player.sendMessage(plugin.pluginName + MESSAGE.CHAMELEON_SET.getText() + ChatColor.AQUA + "Swamp Hut");
+                                    player.sendMessage(plugin.getPluginName() + MESSAGE.CHAMELEON_SET.getText() + ChatColor.AQUA + "Swamp Hut");
                                     break;
                                 case 21:
                                     // party tent
                                     set.put("chameleon_preset", "PARTY");
                                     setSign(rs.getChameleon(), 3, "PARTY", player);
-                                    player.sendMessage(plugin.pluginName + MESSAGE.CHAMELEON_SET.getText() + ChatColor.AQUA + "Party Tent");
+                                    player.sendMessage(plugin.getPluginName() + MESSAGE.CHAMELEON_SET.getText() + ChatColor.AQUA + "Party Tent");
                                     break;
                                 case 23:
                                     // village house
                                     set.put("chameleon_preset", "VILLAGE");
                                     setSign(rs.getChameleon(), 3, "VILLAGE", player);
-                                    player.sendMessage(plugin.pluginName + MESSAGE.CHAMELEON_SET.getText() + ChatColor.AQUA + "Village House");
+                                    player.sendMessage(plugin.getPluginName() + MESSAGE.CHAMELEON_SET.getText() + ChatColor.AQUA + "Village House");
                                     break;
                                 case 25:
                                     // yellow submarine
                                     set.put("chameleon_preset", "YELLOW");
                                     setSign(rs.getChameleon(), 3, "YELLOW", player);
-                                    player.sendMessage(plugin.pluginName + MESSAGE.CHAMELEON_SET.getText() + ChatColor.AQUA + "Yellow Submarine");
+                                    player.sendMessage(plugin.getPluginName() + MESSAGE.CHAMELEON_SET.getText() + ChatColor.AQUA + "Yellow Submarine");
                                     break;
                                 case 27:
                                     // telephone
                                     set.put("chameleon_preset", "TELEPHONE");
                                     setSign(rs.getChameleon(), 3, "TELEPHONE", player);
-                                    player.sendMessage(plugin.pluginName + MESSAGE.CHAMELEON_SET.getText() + ChatColor.AQUA + "Red Telephone Box");
+                                    player.sendMessage(plugin.getPluginName() + MESSAGE.CHAMELEON_SET.getText() + ChatColor.AQUA + "Red Telephone Box");
                                     break;
                                 case 29:
                                     // weeping angel
                                     set.put("chameleon_preset", "ANGEL");
                                     setSign(rs.getChameleon(), 3, "ANGEL", player);
-                                    player.sendMessage(plugin.pluginName + MESSAGE.CHAMELEON_SET.getText() + ChatColor.AQUA + "Weeping Angel");
+                                    player.sendMessage(plugin.getPluginName() + MESSAGE.CHAMELEON_SET.getText() + ChatColor.AQUA + "Weeping Angel");
                                     break;
                                 case 31:
                                     // submerged
                                     set.put("chameleon_preset", "SUBMERGED");
                                     setSign(rs.getChameleon(), 3, "SUBMERGED", player);
-                                    player.sendMessage(plugin.pluginName + MESSAGE.CHAMELEON_SET.getText() + ChatColor.AQUA + "Submerged");
+                                    player.sendMessage(plugin.getPluginName() + MESSAGE.CHAMELEON_SET.getText() + ChatColor.AQUA + "Submerged");
                                     break;
                                 case 33:
                                     // flower
                                     set.put("chameleon_preset", "FLOWER");
                                     setSign(rs.getChameleon(), 3, "FLOWER", player);
-                                    player.sendMessage(plugin.pluginName + MESSAGE.CHAMELEON_SET.getText() + ChatColor.AQUA + "Daisy Flower");
+                                    player.sendMessage(plugin.getPluginName() + MESSAGE.CHAMELEON_SET.getText() + ChatColor.AQUA + "Daisy Flower");
                                     break;
                                 case 35:
                                     // stone brick column
                                     set.put("chameleon_preset", "STONE");
                                     setSign(rs.getChameleon(), 3, "STONE", player);
-                                    player.sendMessage(plugin.pluginName + MESSAGE.CHAMELEON_SET.getText() + ChatColor.AQUA + "Stone Brick Column");
+                                    player.sendMessage(plugin.getPluginName() + MESSAGE.CHAMELEON_SET.getText() + ChatColor.AQUA + "Stone Brick Column");
                                     break;
                                 case 37:
                                     // chalice
                                     set.put("chameleon_preset", "CHALICE");
                                     setSign(rs.getChameleon(), 3, "CHALICE", player);
-                                    player.sendMessage(plugin.pluginName + MESSAGE.CHAMELEON_SET.getText() + ChatColor.AQUA + "Quartz Chalice");
+                                    player.sendMessage(plugin.getPluginName() + MESSAGE.CHAMELEON_SET.getText() + ChatColor.AQUA + "Quartz Chalice");
                                     break;
                                 case 39:
                                     // desert temple
                                     set.put("chameleon_preset", "DESERT");
                                     setSign(rs.getChameleon(), 3, "DESERT", player);
-                                    player.sendMessage(plugin.pluginName + MESSAGE.CHAMELEON_SET.getText() + ChatColor.AQUA + "Desert Temple");
+                                    player.sendMessage(plugin.getPluginName() + MESSAGE.CHAMELEON_SET.getText() + ChatColor.AQUA + "Desert Temple");
                                     break;
                                 case 41:
                                     // mossy well
                                     set.put("chameleon_preset", "WELL");
                                     setSign(rs.getChameleon(), 3, "WELL", player);
-                                    player.sendMessage(plugin.pluginName + MESSAGE.CHAMELEON_SET.getText() + ChatColor.AQUA + "Mossy Well");
+                                    player.sendMessage(plugin.getPluginName() + MESSAGE.CHAMELEON_SET.getText() + ChatColor.AQUA + "Mossy Well");
                                     break;
                                 case 43:
                                     // windmill
                                     set.put("chameleon_preset", "WINDMILL");
                                     setSign(rs.getChameleon(), 3, "WINDMILL", player);
-                                    player.sendMessage(plugin.pluginName + MESSAGE.CHAMELEON_SET.getText() + ChatColor.AQUA + "Windmill");
+                                    player.sendMessage(plugin.getPluginName() + MESSAGE.CHAMELEON_SET.getText() + ChatColor.AQUA + "Windmill");
                                     break;
                                 case 45:
                                     // Cake
                                     set.put("chameleon_preset", "CAKE");
                                     setSign(rs.getChameleon(), 3, "CAKE", player);
-                                    player.sendMessage(plugin.pluginName + MESSAGE.CHAMELEON_SET.getText() + ChatColor.AQUA + "Birthday Cake");
+                                    player.sendMessage(plugin.getPluginName() + MESSAGE.CHAMELEON_SET.getText() + ChatColor.AQUA + "Birthday Cake");
                                     break;
                                 case 47:
                                     // Gravestone
                                     set.put("chameleon_preset", "GRAVESTONE");
                                     setSign(rs.getChameleon(), 3, "GRAVESTONE", player);
-                                    player.sendMessage(plugin.pluginName + MESSAGE.CHAMELEON_SET.getText() + ChatColor.AQUA + "Gravestone");
+                                    player.sendMessage(plugin.getPluginName() + MESSAGE.CHAMELEON_SET.getText() + ChatColor.AQUA + "Gravestone");
                                     break;
                                 case 49:
                                     // Topsy-turvey
                                     set.put("chameleon_preset", "TOPSYTURVEY");
                                     setSign(rs.getChameleon(), 3, "TOPSYTURVEY", player);
-                                    player.sendMessage(plugin.pluginName + MESSAGE.CHAMELEON_SET.getText() + ChatColor.AQUA + "Topsy-turvey");
+                                    player.sendMessage(plugin.getPluginName() + MESSAGE.CHAMELEON_SET.getText() + ChatColor.AQUA + "Topsy-turvey");
                                     break;
                                 case 51:
                                     // Mushroom
                                     set.put("chameleon_preset", "SHROOM");
                                     setSign(rs.getChameleon(), 3, "SHROOM", player);
-                                    player.sendMessage(plugin.pluginName + MESSAGE.CHAMELEON_SET.getText() + ChatColor.AQUA + "Mushroom");
+                                    player.sendMessage(plugin.getPluginName() + MESSAGE.CHAMELEON_SET.getText() + ChatColor.AQUA + "Mushroom");
                                     break;
                                 case 53:
                                     // page two
@@ -299,13 +299,13 @@ public class TARDISChameleonListener implements Listener {
      */
     private void setSign(String loc, int line, String text, Player p) {
         // get sign block so we can update it
-        Block cc = plugin.utils.getLocationFromDB(loc, 0, 0).getBlock();
+        Block cc = plugin.getUtils().getLocationFromDB(loc, 0, 0).getBlock();
         if (cc.getType() == Material.WALL_SIGN || cc.getType() == Material.SIGN_POST) {
             Sign sign = (Sign) cc.getState();
             sign.setLine(line, text);
             sign.update();
         } else {
-            p.sendMessage(plugin.pluginName + "Chameleon Circuit " + text);
+            p.sendMessage(plugin.getPluginName() + "Chameleon Circuit " + text);
         }
     }
 

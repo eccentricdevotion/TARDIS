@@ -36,7 +36,7 @@ public class TARDISEPSMessageCommand {
     public boolean setMessage(Player player, String[] args, QueryFactory qf) {
         int count = args.length;
         if (count < 2) {
-            player.sendMessage(plugin.pluginName + "You need to specify an Emergency Program System message!");
+            player.sendMessage(plugin.getPluginName() + "You need to specify an Emergency Program System message!");
             return false;
         }
         StringBuilder buf = new StringBuilder();
@@ -50,7 +50,7 @@ public class TARDISEPSMessageCommand {
         HashMap<String, Object> where = new HashMap<String, Object>();
         where.put("player", player.getName());
         qf.doUpdate("player_prefs", sete, where);
-        player.sendMessage(plugin.pluginName + "The Emergency Program System message was set!");
+        player.sendMessage(plugin.getPluginName() + "The Emergency Program System message was set!");
         return true;
     }
 }

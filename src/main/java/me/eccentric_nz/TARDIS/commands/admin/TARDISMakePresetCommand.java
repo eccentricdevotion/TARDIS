@@ -40,13 +40,13 @@ public class TARDISMakePresetCommand {
             player = (Player) sender;
         }
         if (player == null) {
-            sender.sendMessage(plugin.pluginName + "Only a player can run this command!");
+            sender.sendMessage(plugin.getPluginName() + "Only a player can run this command!");
             return true;
         }
         // check they are facing east
-        String yaw = plugin.utils.getPlayersDirection(player, false);
+        String yaw = plugin.getUtils().getPlayersDirection(player, false);
         if (!yaw.equals("EAST")) {
-            player.sendMessage(plugin.pluginName + "You must be facing EAST, with the preset front facing WEST!");
+            player.sendMessage(plugin.getPluginName() + "You must be facing EAST, with the preset front facing WEST!");
             return true;
         }
         String bool;
@@ -54,7 +54,7 @@ public class TARDISMakePresetCommand {
             // check they typed true of false
             String tf = args[2].toLowerCase(Locale.ENGLISH);
             if (!tf.equals("true") && !tf.equals("false")) {
-                sender.sendMessage(plugin.pluginName + ChatColor.RED + "The last argument must be true or false!");
+                sender.sendMessage(plugin.getPluginName() + ChatColor.RED + "The last argument must be true or false!");
                 return false;
             }
             bool = tf;
@@ -62,8 +62,8 @@ public class TARDISMakePresetCommand {
             // presume it is assymetric if not set
             bool = "true";
         }
-        player.sendMessage(plugin.pluginName + "Please right-click the lower left block of the preset with your TARDIS key. If there is no block there, place some sponge instead.");
-        plugin.trackPreset.put(player.getName(), args[1] + ":" + bool);
+        player.sendMessage(plugin.getPluginName() + "Please right-click the lower left block of the preset with your TARDIS key. If there is no block there, place some sponge instead.");
+        plugin.getTrackerKeeper().getTrackPreset().put(player.getName(), args[1] + ":" + bool);
         return true;
     }
 }

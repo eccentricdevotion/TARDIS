@@ -123,7 +123,7 @@ public class TARDISArtronCapacitorListener implements Listener {
                             }
                             if (item.equals(full) || item.equals(cell)) {
                                 if (!init) {
-                                    player.sendMessage(plugin.pluginName + "You haven't initialised the Artron Energy capacitor yet!");
+                                    player.sendMessage(plugin.getPluginName() + "You haven't initialised the Artron Energy capacitor yet!");
                                     return;
                                 }
                                 int amount = fc;
@@ -136,20 +136,20 @@ public class TARDISArtronCapacitorListener implements Listener {
                                     } else {
                                         player.getInventory().removeItem(new ItemStack(full, 1));
                                     }
-                                    player.sendMessage(plugin.pluginName + "Artron Energy Levels at maximum!");
+                                    player.sendMessage(plugin.getPluginName() + "Artron Energy Levels at maximum!");
                                 } else {
                                     ItemStack is = player.getItemInHand();
                                     if (is.hasItemMeta()) {
                                         ItemMeta im = is.getItemMeta();
                                         String name = im.getDisplayName();
                                         if (!name.equals("Artron Storage Cell")) {
-                                            player.sendMessage(plugin.pluginName + "That's not an Artron Storage Cell!");
+                                            player.sendMessage(plugin.getPluginName() + "That's not an Artron Storage Cell!");
                                             return;
                                         }
                                         List<String> lore = im.getLore();
-                                        int charge = plugin.utils.parseInt(lore.get(1));
+                                        int charge = plugin.getUtils().parseInt(lore.get(1));
                                         if (charge <= 0) {
-                                            player.sendMessage(plugin.pluginName + "The Artron Storage Cell is not charged!");
+                                            player.sendMessage(plugin.getPluginName() + "The Artron Storage Cell is not charged!");
                                             return;
                                         }
                                         amount = current_level + charge;
@@ -159,7 +159,7 @@ public class TARDISArtronCapacitorListener implements Listener {
                                         for (Enchantment e : is.getEnchantments().keySet()) {
                                             is.removeEnchantment(e);
                                         }
-                                        player.sendMessage(plugin.pluginName + "Energy transfered from Artron Storage Cell!");
+                                        player.sendMessage(plugin.getPluginName() + "Energy transfered from Artron Storage Cell!");
                                     }
                                 }
                                 // update charge
@@ -178,16 +178,16 @@ public class TARDISArtronCapacitorListener implements Listener {
                                         String[] beaconData = beacon.split(":");
                                         World w = block.getLocation().getWorld();
                                         int bx = 0, by = 0, bz = 0;
-                                        float cx = plugin.utils.parseFloat(creeperData[1]);
-                                        float cy = plugin.utils.parseFloat(creeperData[2]) + 1;
-                                        float cz = plugin.utils.parseFloat(creeperData[3]);
+                                        float cx = plugin.getUtils().parseFloat(creeperData[1]);
+                                        float cy = plugin.getUtils().parseFloat(creeperData[2]) + 1;
+                                        float cz = plugin.getUtils().parseFloat(creeperData[3]);
                                         if (beaconData.length > 2) {
-                                            bx = plugin.utils.parseInt(beaconData[1]);
-                                            by = plugin.utils.parseInt(beaconData[2]);
-                                            bz = plugin.utils.parseInt(beaconData[3]);
+                                            bx = plugin.getUtils().parseInt(beaconData[1]);
+                                            by = plugin.getUtils().parseInt(beaconData[2]);
+                                            bz = plugin.getUtils().parseInt(beaconData[3]);
                                         }
                                         Location cl = new Location(w, cx, cy, cz);
-                                        plugin.myspawn = true;
+                                        plugin.setMySpawn(true);
                                         Entity e = w.spawnEntity(cl, EntityType.CREEPER);
                                         Creeper c = (Creeper) e;
                                         c.setPowered(true);
@@ -202,19 +202,19 @@ public class TARDISArtronCapacitorListener implements Listener {
                                     set.put("artron_level", half);
                                     set.put("tardis_init", 1);
                                     qf.doUpdate("tardis", set, whereid);
-                                    player.sendMessage(plugin.pluginName + "Artron Energy Capacitor activated! Levels at 50%");
+                                    player.sendMessage(plugin.getPluginName() + "Artron Energy Capacitor activated! Levels at 50%");
                                 } else {
-                                    player.sendMessage(plugin.pluginName + "You can only kick-start the Artron Energy Capacitor once!");
+                                    player.sendMessage(plugin.getPluginName() + "You can only kick-start the Artron Energy Capacitor once!");
                                 }
                             } else if (player.isSneaking()) {
                                 if (!init) {
-                                    player.sendMessage(plugin.pluginName + "You haven't initialised the Artron Energy capacitor yet!");
+                                    player.sendMessage(plugin.getPluginName() + "You haven't initialised the Artron Energy capacitor yet!");
                                     return;
                                 }
                                 // transfer player artron energy into the capacitor
                                 int ten_percent = Math.round(fc * 0.1F);
                                 if (current_level >= ten_percent && plugin.getConfig().getBoolean("creation.create_worlds")) {
-                                    player.sendMessage(plugin.pluginName + "You can only transfer Timelord Artron Energy when the capacitor is below 10%");
+                                    player.sendMessage(plugin.getPluginName() + "You can only transfer Timelord Artron Energy when the capacitor is below 10%");
                                     return;
                                 }
                                 HashMap<String, Object> wherep = new HashMap<String, Object>();
@@ -222,7 +222,7 @@ public class TARDISArtronCapacitorListener implements Listener {
                                 if (hasPrefs) {
                                     int level = rsp.getArtronLevel();
                                     if (level < 1) {
-                                        player.sendMessage(plugin.pluginName + "You don't have any Artron Energy to give the TARDIS");
+                                        player.sendMessage(plugin.getPluginName() + "You don't have any Artron Energy to give the TARDIS");
                                         return;
                                     }
                                     int new_level = current_level + level;
@@ -237,9 +237,9 @@ public class TARDISArtronCapacitorListener implements Listener {
                                     sett.put("artron_level", new_level);
                                     qf.doUpdate("tardis", sett, whereid);
                                     int percent = Math.round((new_level * 100F) / fc);
-                                    player.sendMessage(plugin.pluginName + "You charged the Artron Energy Capacitor to " + percent + "%");
+                                    player.sendMessage(plugin.getPluginName() + "You charged the Artron Energy Capacitor to " + percent + "%");
                                 } else {
-                                    player.sendMessage(plugin.pluginName + "You don't have any Artron Energy to give the TARDIS");
+                                    player.sendMessage(plugin.getPluginName() + "You don't have any Artron Energy to give the TARDIS");
                                 }
                             } else {
                                 // just tell us how much energy we have
@@ -262,10 +262,10 @@ public class TARDISArtronCapacitorListener implements Listener {
     @EventHandler(priority = EventPriority.HIGHEST)
     public void onEntitySpawn(CreatureSpawnEvent event) {
         boolean isTardisWorldBreeding = (event.getLocation().getWorld().getName().contains("TARDIS") && (event.getSpawnReason().equals(SpawnReason.BREEDING)));
-        if (isTardisWorldBreeding || plugin.myspawn) {
+        if (isTardisWorldBreeding || plugin.isMySpawn()) {
             event.setCancelled(false);
-            if (plugin.myspawn == true) {
-                plugin.myspawn = false;
+            if (plugin.isMySpawn()) {
+                plugin.setMySpawn(false);
             }
         }
     }

@@ -65,7 +65,7 @@ public class TARDISTextureCommands implements CommandExecutor {
                 return false;
             }
             if (player == null) {
-                sender.sendMessage(plugin.pluginName + MESSAGE.MUST_BE_PLAYER.getText());
+                sender.sendMessage(plugin.getPluginName() + MESSAGE.MUST_BE_PLAYER.getText());
                 return false;
             }
             if (player.hasPermission("tardis.texture")) {
@@ -104,7 +104,7 @@ public class TARDISTextureCommands implements CommandExecutor {
                                 upd.put("texture_out", args[1]);
                             }
                         } catch (MalformedURLException e) {
-                            player.sendMessage(plugin.pluginName + "Not a valid URL! " + e.getMessage());
+                            player.sendMessage(plugin.getPluginName() + "Not a valid URL! " + e.getMessage());
                             return true;
                         }
                     }
@@ -113,7 +113,7 @@ public class TARDISTextureCommands implements CommandExecutor {
                     HashMap<String, Object> where = new HashMap<String, Object>();
                     where.put("player", playerNameStr);
                     qf.doUpdate("player_prefs", upd, where);
-                    player.sendMessage(plugin.pluginName + "Your texture pack preference was set.");
+                    player.sendMessage(plugin.getPluginName() + "Your texture pack preference was set.");
                     return true;
                 }
             }

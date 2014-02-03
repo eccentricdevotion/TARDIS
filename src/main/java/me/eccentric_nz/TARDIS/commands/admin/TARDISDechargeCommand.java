@@ -35,15 +35,15 @@ public class TARDISDechargeCommand {
 
     public boolean removeChragerStatus(CommandSender sender, String[] args) {
         if (!plugin.getConfig().contains("rechargers." + args[1])) {
-            sender.sendMessage(plugin.pluginName + "Could not find a recharger with that name! Try using " + ChatColor.AQUA + "/tardis list rechargers" + ChatColor.RESET + " first.");
+            sender.sendMessage(plugin.getPluginName() + "Could not find a recharger with that name! Try using " + ChatColor.AQUA + "/tardis list rechargers" + ChatColor.RESET + " first.");
             return true;
         }
-        if (plugin.worldGuardOnServer && plugin.getConfig().getBoolean("preferences.use_worldguard")) {
-            plugin.wgutils.removeRechargerRegion(args[1]);
+        if (plugin.isWorldGuardOnServer() && plugin.getConfig().getBoolean("preferences.use_worldguard")) {
+            plugin.getWorldGuardUtils().removeRechargerRegion(args[1]);
         }
         plugin.getConfig().set("rechargers." + args[1], null);
         plugin.saveConfig();
-        sender.sendMessage(plugin.pluginName + MESSAGE.CONFIG_UPDATED.getText());
+        sender.sendMessage(plugin.getPluginName() + MESSAGE.CONFIG_UPDATED.getText());
         return true;
     }
 }

@@ -86,11 +86,11 @@ public class TARDISFarmer {
      */
     @SuppressWarnings("deprecation")
     public List<TARDISMob> farmAnimals(Location l, COMPASS d, int id, final Player p, String to, String from) {
-        if (plugin.pm.isPluginEnabled("Multiverse-Inventories")) {
-            boolean canfarm = plugin.tmic.checkMVI(from, to);
+        if (plugin.getPM().isPluginEnabled("Multiverse-Inventories")) {
+            boolean canfarm = plugin.getTMIChecker().checkMVI(from, to);
             if (!canfarm) {
-                p.sendMessage(plugin.pluginName + "You cannot farm mobs from this world.");
-                plugin.trackFarming.remove(p.getName());
+                p.sendMessage(plugin.getPluginName() + "You cannot farm mobs from this world.");
+                plugin.getTrackerKeeper().getTrackFarming().remove(p.getName());
                 return null;
             }
         }
@@ -124,7 +124,7 @@ public class TARDISFarmer {
             List<TARDISVillager> old_macd_had_a_villager = new ArrayList<TARDISVillager>();
             // are we doing an achievement?
             TARDISAchievementFactory taf = null;
-            if (plugin.getAchivementConfig().getBoolean("farm.enabled")) {
+            if (plugin.getAchievementConfig().getBoolean("farm.enabled")) {
                 taf = new TARDISAchievementFactory(plugin, p, "farm", 5);
             }
             // count total farm mobs
@@ -200,8 +200,8 @@ public class TARDISFarmer {
                             tmhor.setHorseInventory(horse.getInventory().getContents());
                             tmhor.setDomesticity(horse.getDomestication());
                             tmhor.setJumpStrength(horse.getJumpStrength());
-                            if (plugin.pm.isPluginEnabled("TardisHorseSpeed")) {
-                                TardisHorseSpeed ths = (TardisHorseSpeed) plugin.pm.getPlugin("TardisHorseSpeed");
+                            if (plugin.getPM().isPluginEnabled("TardisHorseSpeed")) {
+                                TardisHorseSpeed ths = (TardisHorseSpeed) plugin.getPM().getPlugin("TardisHorseSpeed");
                                 double speed = ths.getHorseSpeed(horse);
                                 tmhor.setSpeed(speed);
                             }
@@ -315,16 +315,16 @@ public class TARDISFarmer {
                     // get location of farm room
                     String[] data = farm.split(":");
                     World world = plugin.getServer().getWorld(data[0]);
-                    int x = plugin.utils.parseInt(data[1]);
-                    int y = plugin.utils.parseInt(data[2]) + 1;
-                    int z = plugin.utils.parseInt(data[3]);
+                    int x = plugin.getUtils().parseInt(data[1]);
+                    int y = plugin.getUtils().parseInt(data[2]) + 1;
+                    int z = plugin.getUtils().parseInt(data[3]);
                     if (old_macd_had_a_chicken.size() > 0) {
                         Location chicken_pen = new Location(world, x + 3, y, z - 3);
                         while (!world.getChunkAt(chicken_pen).isLoaded()) {
                             world.getChunkAt(chicken_pen).load();
                         }
                         for (TARDISMob e : old_macd_had_a_chicken) {
-                            plugin.myspawn = true;
+                            plugin.setMySpawn(true);
                             Entity chicken = world.spawnEntity(chicken_pen, EntityType.CHICKEN);
                             Chicken pecker = (Chicken) chicken;
                             pecker.setAge(e.getAge());
@@ -339,7 +339,7 @@ public class TARDISFarmer {
                             world.getChunkAt(cow_pen).load();
                         }
                         for (TARDISMob e : old_macd_had_a_cow) {
-                            plugin.myspawn = true;
+                            plugin.setMySpawn(true);
                             Entity cow = world.spawnEntity(cow_pen, EntityType.COW);
                             Cow moo = (Cow) cow;
                             moo.setAge(e.getAge());
@@ -354,7 +354,7 @@ public class TARDISFarmer {
                             world.getChunkAt(pig_pen).load();
                         }
                         for (TARDISMob e : old_macd_had_a_pig) {
-                            plugin.myspawn = true;
+                            plugin.setMySpawn(true);
                             Entity pig = world.spawnEntity(pig_pen, EntityType.PIG);
                             Pig oinker = (Pig) pig;
                             oinker.setAge(e.getAge());
@@ -369,7 +369,7 @@ public class TARDISFarmer {
                             world.getChunkAt(sheep_pen).load();
                         }
                         for (TARDISMob e : old_macd_had_a_sheep) {
-                            plugin.myspawn = true;
+                            plugin.setMySpawn(true);
                             Entity sheep = world.spawnEntity(sheep_pen, EntityType.SHEEP);
                             Sheep baa = (Sheep) sheep;
                             baa.setAge(e.getAge());
@@ -385,7 +385,7 @@ public class TARDISFarmer {
                             world.getChunkAt(cow_pen).load();
                         }
                         for (TARDISMob e : old_macd_had_a_mooshroom) {
-                            plugin.myspawn = true;
+                            plugin.setMySpawn(true);
                             Entity mooshroom = world.spawnEntity(cow_pen, EntityType.MUSHROOM_COW);
                             MushroomCow fungi = (MushroomCow) mooshroom;
                             fungi.setAge(e.getAge());
@@ -420,23 +420,23 @@ public class TARDISFarmer {
                         }
                         p.updateInventory();
                     } else if (farmtotal > 0) {
-                        p.sendMessage(plugin.pluginName + "You need to grow a farm room before you can farm mobs!");
+                        p.sendMessage(plugin.getPluginName() + "You need to grow a farm room before you can farm mobs!");
                     }
                 }
                 if (!stable.isEmpty()) {
                     // get location of stable room
                     String[] data = stable.split(":");
                     World world = plugin.getServer().getWorld(data[0]);
-                    int x = plugin.utils.parseInt(data[1]);
-                    int y = plugin.utils.parseInt(data[2]) + 1;
-                    int z = plugin.utils.parseInt(data[3]);
+                    int x = plugin.getUtils().parseInt(data[1]);
+                    int y = plugin.getUtils().parseInt(data[2]) + 1;
+                    int z = plugin.getUtils().parseInt(data[3]);
                     if (old_macd_had_a_horse.size() > 0) {
                         Location horse_pen = new Location(world, x + 0.5F, y, z + 0.5F);
                         while (!world.getChunkAt(horse_pen).isLoaded()) {
                             world.getChunkAt(horse_pen).load();
                         }
                         for (TARDISHorse e : old_macd_had_a_horse) {
-                            plugin.myspawn = true;
+                            plugin.setMySpawn(true);
                             Entity horse = world.spawnEntity(horse_pen, EntityType.HORSE);
                             Horse equine = (Horse) horse;
                             equine.setAge(e.getAge());
@@ -477,8 +477,8 @@ public class TARDISFarmer {
                                 pinv.addItem(leash);
                                 p.updateInventory();
                             }
-                            if (plugin.pm.isPluginEnabled("TardisHorseSpeed")) {
-                                TardisHorseSpeed ths = (TardisHorseSpeed) plugin.pm.getPlugin("TardisHorseSpeed");
+                            if (plugin.getPM().isPluginEnabled("TardisHorseSpeed")) {
+                                TardisHorseSpeed ths = (TardisHorseSpeed) plugin.getPM().getPlugin("TardisHorseSpeed");
                                 ths.setHorseSpeed(equine, e.getSpeed());
                             }
                         }
@@ -492,23 +492,23 @@ public class TARDISFarmer {
                             p.updateInventory();
                         }
                     } else if (horsetotal > 0) {
-                        p.sendMessage(plugin.pluginName + "You need to grow a stable room before you can farm horses!");
+                        p.sendMessage(plugin.getPluginName() + "You need to grow a stable room before you can farm horses!");
                     }
                 }
                 if (!village.isEmpty()) {
                     // get location of village room
                     String[] data = village.split(":");
                     World world = plugin.getServer().getWorld(data[0]);
-                    int x = plugin.utils.parseInt(data[1]);
-                    int y = plugin.utils.parseInt(data[2]) + 1;
-                    int z = plugin.utils.parseInt(data[3]);
+                    int x = plugin.getUtils().parseInt(data[1]);
+                    int y = plugin.getUtils().parseInt(data[2]) + 1;
+                    int z = plugin.getUtils().parseInt(data[3]);
                     if (old_macd_had_a_villager.size() > 0) {
                         Location v_room = new Location(world, x + 0.5F, y, z + 0.5F);
                         while (!world.getChunkAt(v_room).isLoaded()) {
                             world.getChunkAt(v_room).load();
                         }
                         for (TARDISVillager e : old_macd_had_a_villager) {
-                            plugin.myspawn = true;
+                            plugin.setMySpawn(true);
                             Entity vill = world.spawnEntity(v_room, EntityType.VILLAGER);
                             Villager npc = (Villager) vill;
                             npc.setProfession(e.getProfession());
@@ -528,7 +528,7 @@ public class TARDISFarmer {
                             p.updateInventory();
                         }
                     } else if (villagertotal > 0) {
-                        p.sendMessage(plugin.pluginName + "You need to grow a village room before you can farm villagers!");
+                        p.sendMessage(plugin.getPluginName() + "You need to grow a village room before you can farm villagers!");
                     }
                 }
             }
@@ -537,7 +537,7 @@ public class TARDISFarmer {
         plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
             @Override
             public void run() {
-                plugin.trackFarming.remove(p.getName());
+                plugin.getTrackerKeeper().getTrackFarming().remove(p.getName());
             }
         }, 20L);
         return old_macd_had_a_pet;

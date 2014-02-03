@@ -23,7 +23,6 @@ import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import me.eccentric_nz.TARDIS.database.ResultSetTravellers;
 import me.eccentric_nz.TARDIS.enumeration.MESSAGE;
-import me.eccentric_nz.TARDIS.travel.TARDISPluginRespect;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.block.Block;
@@ -48,18 +47,18 @@ public class TARDISSetDestinationCommand {
             where.put("owner", player.getName());
             ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);
             if (!rs.resultSet()) {
-                player.sendMessage(plugin.pluginName + MESSAGE.NO_TARDIS.getText());
+                player.sendMessage(plugin.getPluginName() + MESSAGE.NO_TARDIS.getText());
                 return false;
             }
             if (args.length < 2) {
-                player.sendMessage(plugin.pluginName + MESSAGE.TOO_FEW_ARGS.getText());
+                player.sendMessage(plugin.getPluginName() + MESSAGE.TOO_FEW_ARGS.getText());
                 return false;
             }
             if (!args[1].matches("[A-Za-z0-9_]{2,16}")) {
-                player.sendMessage(plugin.pluginName + "The destination name must be between 2 and 16 characters and have no spaces!");
+                player.sendMessage(plugin.getPluginName() + "The destination name must be between 2 and 16 characters and have no spaces!");
                 return false;
             } else if (args[1].equalsIgnoreCase("hide") || args[1].equalsIgnoreCase("rebuild") || args[1].equalsIgnoreCase("home")) {
-                player.sendMessage(plugin.pluginName + "That is a reserved destination name!");
+                player.sendMessage(plugin.getPluginName() + "That is a reserved destination name!");
                 return false;
             } else {
                 int id = rs.getTardis_id();
@@ -69,7 +68,7 @@ public class TARDISSetDestinationCommand {
                     tcc.getCircuits();
                 }
                 if (tcc != null && !tcc.hasMemory()) {
-                    player.sendMessage(plugin.pluginName + MESSAGE.NO_MEM_CIRCUIT.getText());
+                    player.sendMessage(plugin.getPluginName() + MESSAGE.NO_MEM_CIRCUIT.getText());
                     return true;
                 }
                 // check they are not in the tardis
@@ -78,34 +77,33 @@ public class TARDISSetDestinationCommand {
                 wherettrav.put("tardis_id", id);
                 ResultSetTravellers rst = new ResultSetTravellers(plugin, wherettrav, false);
                 if (rst.resultSet()) {
-                    player.sendMessage(plugin.pluginName + MESSAGE.NO_PB_IN_TARDIS.getText());
+                    player.sendMessage(plugin.getPluginName() + MESSAGE.NO_PB_IN_TARDIS.getText());
                     return true;
                 }
                 // get location player is looking at
-                Block b = player.getTargetBlock(plugin.tardisCommand.transparent, 50);
+                Block b = player.getTargetBlock(plugin.getGeneralKeeper().getTransparent(), 50);
                 Location l = b.getLocation();
-                if (!plugin.ta.areaCheckInExisting(l)) {
-                    player.sendMessage(plugin.pluginName + "You cannot use /tardis setdest in a TARDIS area! Please use " + ChatColor.AQUA + "/tardistravel area [area name]");
+                if (!plugin.getTardisArea().areaCheckInExisting(l)) {
+                    player.sendMessage(plugin.getPluginName() + "You cannot use /tardis setdest in a TARDIS area! Please use " + ChatColor.AQUA + "/tardistravel area [area name]");
                     return true;
                 }
                 String world = l.getWorld().getName();
                 if (!plugin.getConfig().getBoolean("travel.include_default_world") && plugin.getConfig().getBoolean("creation.default_world") && world.equals(plugin.getConfig().getString("creation.default_world_name"))) {
-                    player.sendMessage(plugin.pluginName + "The server admin will not allow you to set the TARDIS destination to this world!");
+                    player.sendMessage(plugin.getPluginName() + "The server admin will not allow you to set the TARDIS destination to this world!");
                     return true;
                 }
                 // check the world is not excluded
                 if (!plugin.getConfig().getBoolean("worlds." + world)) {
-                    player.sendMessage(plugin.pluginName + MESSAGE.NO_PB_IN_WORLD.getText());
+                    player.sendMessage(plugin.getPluginName() + MESSAGE.NO_PB_IN_WORLD.getText());
                     return true;
                 }
-                TARDISPluginRespect respect = new TARDISPluginRespect(plugin);
-                if (!respect.getRespect(player, l, true)) {
+                if (!plugin.getPluginRespect().getRespect(player, l, true)) {
                     return true;
                 }
                 if (player.hasPermission("tardis.exile") && plugin.getConfig().getBoolean("travel.exile")) {
-                    String areaPerm = plugin.ta.getExileArea(player);
-                    if (plugin.ta.areaCheckInExile(areaPerm, l)) {
-                        player.sendMessage(plugin.pluginName + "You exile status does not allow you to save the TARDIS to this location!");
+                    String areaPerm = plugin.getTardisArea().getExileArea(player);
+                    if (plugin.getTardisArea().areaCheckInExile(areaPerm, l)) {
+                        player.sendMessage(plugin.getPluginName() + "You exile status does not allow you to save the TARDIS to this location!");
                         return false;
                     }
                 }
@@ -124,12 +122,12 @@ public class TARDISSetDestinationCommand {
                 if (qf.doSyncInsert("destinations", set) < 0) {
                     return false;
                 } else {
-                    player.sendMessage(plugin.pluginName + "The destination '" + args[1] + "' was saved successfully.");
+                    player.sendMessage(plugin.getPluginName() + "The destination '" + args[1] + "' was saved successfully.");
                     return true;
                 }
             }
         } else {
-            player.sendMessage(plugin.pluginName + MESSAGE.NO_PERMS.getText());
+            player.sendMessage(plugin.getPluginName() + MESSAGE.NO_PERMS.getText());
             return false;
         }
     }

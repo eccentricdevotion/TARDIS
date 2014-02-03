@@ -45,14 +45,14 @@ public class TARDISDirectionCommand {
     public boolean changeDirection(final Player player, String[] args) {
         if (player.hasPermission("tardis.timetravel")) {
             if (args.length < 2 || (!args[1].equalsIgnoreCase("north") && !args[1].equalsIgnoreCase("west") && !args[1].equalsIgnoreCase("south") && !args[1].equalsIgnoreCase("east"))) {
-                player.sendMessage(plugin.pluginName + "You need to specify the compass direction e.g. north, west, south or east!");
+                player.sendMessage(plugin.getPluginName() + "You need to specify the compass direction e.g. north, west, south or east!");
                 return false;
             }
             HashMap<String, Object> where = new HashMap<String, Object>();
             where.put("owner", player.getName());
             ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);
             if (!rs.resultSet()) {
-                player.sendMessage(plugin.pluginName + MESSAGE.NO_TARDIS.getText());
+                player.sendMessage(plugin.getPluginName() + MESSAGE.NO_TARDIS.getText());
                 return false;
             }
             final int id = rs.getTardis_id();
@@ -62,17 +62,17 @@ public class TARDISDirectionCommand {
                 tcc.getCircuits();
             }
             if (tcc != null && !tcc.hasMaterialisation()) {
-                player.sendMessage(plugin.pluginName + MESSAGE.NO_MAT_CIRCUIT.getText());
+                player.sendMessage(plugin.getPluginName() + MESSAGE.NO_MAT_CIRCUIT.getText());
                 return true;
             }
             int level = rs.getArtron_level();
             int amount = plugin.getArtronConfig().getInt("random");
             if (level < amount) {
-                player.sendMessage(plugin.pluginName + "The TARDIS does not have enough Artron Energy to change the Police Box direction!");
+                player.sendMessage(plugin.getPluginName() + "The TARDIS does not have enough Artron Energy to change the Police Box direction!");
                 return true;
             }
-            if (plugin.inVortex.contains(Integer.valueOf(id))) {
-                player.sendMessage(plugin.pluginName + MESSAGE.NOT_WHILE_MAT.getText());
+            if (plugin.getTrackerKeeper().getTrackInVortex().contains(Integer.valueOf(id))) {
+                player.sendMessage(plugin.getPluginName() + MESSAGE.NOT_WHILE_MAT.getText());
                 return true;
             }
             boolean tmp_cham = false;
@@ -87,7 +87,7 @@ public class TARDISDirectionCommand {
             wherecl.put("tardis_id", id);
             final ResultSetCurrentLocation rsc = new ResultSetCurrentLocation(plugin, wherecl);
             if (!rsc.resultSet()) {
-                player.sendMessage(plugin.pluginName + MESSAGE.NO_CURRENT.getText());
+                player.sendMessage(plugin.getPluginName() + MESSAGE.NO_CURRENT.getText());
                 return true;
             }
             COMPASS old_d = rsc.getDirection();
@@ -108,17 +108,17 @@ public class TARDISDirectionCommand {
             // destroy sign
             if (!hid) {
                 if (demat.equals(PRESET.DUCK)) {
-                    plugin.destroyerP.destroyDuckEyes(l, old_d);
+                    plugin.getPresetDestroyer().destroyDuckEyes(l, old_d);
                 }
                 if (demat.equals(PRESET.MINESHAFT)) {
-                    plugin.destroyerP.destroyMineshaftTorches(l, old_d);
+                    plugin.getPresetDestroyer().destroyMineshaftTorches(l, old_d);
                 }
-                plugin.destroyerP.destroyDoor(id);
-                plugin.destroyerP.destroySign(l, old_d, demat);
+                plugin.getPresetDestroyer().destroyDoor(id);
+                plugin.getPresetDestroyer().destroySign(l, old_d, demat);
                 plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
                     @Override
                     public void run() {
-                        plugin.builderP.buildPreset(id, l, d, cham, player, true, false, rsc.isSubmarine());
+                        plugin.getPresetBuilder().buildPreset(id, l, d, cham, player, true, false, rsc.isSubmarine());
                     }
                 }, 10L);
             }
@@ -127,11 +127,11 @@ public class TARDISDirectionCommand {
             qf.alterEnergyLevel("tardis", -amount, wherea, player);
             new TARDISArtronIndicator(plugin).showArtronLevel(player, id, true, amount);
             if (hid) {
-                player.sendMessage(plugin.pluginName + "Direction changed.");
+                player.sendMessage(plugin.getPluginName() + "Direction changed.");
             }
             return true;
         } else {
-            player.sendMessage(plugin.pluginName + MESSAGE.NO_PERMS.getText());
+            player.sendMessage(plugin.getPluginName() + MESSAGE.NO_PERMS.getText());
             return false;
         }
     }

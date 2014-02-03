@@ -42,7 +42,7 @@ public class TARDISInformationSystemListener implements Listener {
 
     public TARDISInformationSystemListener(TARDIS plugin) {
         this.plugin = plugin;
-        this.pluginYml = YamlConfiguration.loadConfiguration(this.plugin.pm.getPlugin("TARDIS").getResource("plugin.yml"));
+        this.pluginYml = YamlConfiguration.loadConfiguration(this.plugin.getPM().getPlugin("TARDIS").getResource("plugin.yml"));
     }
 
     /**
@@ -56,7 +56,7 @@ public class TARDISInformationSystemListener implements Listener {
     public void onTISChat(AsyncPlayerChatEvent event) {
         Player p = event.getPlayer();
         String name = p.getName();
-        if (plugin.trackInfoMenu.containsKey(name)) {
+        if (plugin.getTrackerKeeper().getTrackInfoMenu().containsKey(name)) {
             event.setCancelled(true);
             String chat = event.getMessage();
             // always exit if 'e' is pressed
@@ -64,7 +64,7 @@ public class TARDISInformationSystemListener implements Listener {
                 exit(p);
                 return;
             }
-            switch (plugin.trackInfoMenu.get(name)) {
+            switch (plugin.getTrackerKeeper().getTrackInfoMenu().get(name)) {
                 // TOP level menu
                 case TIS:
                     if (chat.equalsIgnoreCase("M")) {
@@ -911,7 +911,7 @@ public class TARDISInformationSystemListener implements Listener {
      * @param item the parent menu item to get the children of
      */
     private void processKey(Player p, TARDISInfoMenu item) {
-        plugin.trackInfoMenu.put(p.getName(), item);
+        plugin.getTrackerKeeper().getTrackInfoMenu().put(p.getName(), item);
         p.sendMessage("---");
         p.sendMessage("[" + item.getName() + "]");
         for (Map.Entry<String, String> m : TARDISInfoMenu.getChildren(item.toString()).entrySet()) {
@@ -1000,7 +1000,7 @@ public class TARDISInformationSystemListener implements Listener {
      * @param p the player to exit
      */
     private void exit(Player p) {
-        plugin.trackInfoMenu.remove(p.getName());
+        plugin.getTrackerKeeper().getTrackInfoMenu().remove(p.getName());
         p.sendMessage("§6---");
         p.sendMessage("§4You have been logged out of the TARDIS Information System");
     }

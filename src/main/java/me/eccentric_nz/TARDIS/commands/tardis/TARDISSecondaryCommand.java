@@ -41,33 +41,33 @@ public class TARDISSecondaryCommand {
         if (player.hasPermission("tardis.update")) {
             String[] validBlockNames = {"button", "world-repeater", "x-repeater", "z-repeater", "y-repeater", "artron", "handbrake", "door", "back"};
             if (args.length < 2) {
-                player.sendMessage(plugin.pluginName + MESSAGE.TOO_FEW_ARGS.getText());
+                player.sendMessage(plugin.getPluginName() + MESSAGE.TOO_FEW_ARGS.getText());
                 return false;
             }
             String tardis_block = args[1].toLowerCase(Locale.ENGLISH);
             if (!Arrays.asList(validBlockNames).contains(tardis_block)) {
-                player.sendMessage(plugin.pluginName + "That is not a valid TARDIS block name! Try one of : button|world-repeater|x-repeater|z-repeater|y-repeater|artron|handbrake|door|back");
+                player.sendMessage(plugin.getPluginName() + "That is not a valid TARDIS block name! Try one of : button|world-repeater|x-repeater|z-repeater|y-repeater|artron|handbrake|door|back");
                 return false;
             }
             HashMap<String, Object> where = new HashMap<String, Object>();
             where.put("owner", player.getName());
             ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);
             if (!rs.resultSet()) {
-                player.sendMessage(plugin.pluginName + MESSAGE.NOT_A_TIMELORD.getText());
+                player.sendMessage(plugin.getPluginName() + MESSAGE.NOT_A_TIMELORD.getText());
                 return false;
             }
             HashMap<String, Object> wheret = new HashMap<String, Object>();
             wheret.put("player", player.getName());
             ResultSetTravellers rst = new ResultSetTravellers(plugin, wheret, false);
             if (!rst.resultSet()) {
-                player.sendMessage(plugin.pluginName + MESSAGE.NOT_IN_TARDIS.getText());
+                player.sendMessage(plugin.getPluginName() + MESSAGE.NOT_IN_TARDIS.getText());
                 return false;
             }
-            plugin.trackSecondary.put(player.getName(), tardis_block);
-            player.sendMessage(plugin.pluginName + "Click the TARDIS " + tardis_block + " to update its position.");
+            plugin.getTrackerKeeper().getTrackSecondary().put(player.getName(), tardis_block);
+            player.sendMessage(plugin.getPluginName() + "Click the TARDIS " + tardis_block + " to update its position.");
             return true;
         } else {
-            player.sendMessage(plugin.pluginName + MESSAGE.NO_PERMS.getText());
+            player.sendMessage(plugin.getPluginName() + MESSAGE.NO_PERMS.getText());
             return false;
         }
     }

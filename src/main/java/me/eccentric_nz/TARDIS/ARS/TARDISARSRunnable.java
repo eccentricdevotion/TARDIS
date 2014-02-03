@@ -68,10 +68,10 @@ public class TARDISARSRunnable implements Runnable {
             int middle_id, floor_id;
             byte middle_data, floor_data;
             if (rsp.resultSet()) {
-                int[] wid_data = plugin.tw.blocks.get(rsp.getWall());
+                int[] wid_data = plugin.getTardisWalls().blocks.get(rsp.getWall());
                 middle_id = wid_data[0];
                 middle_data = (byte) wid_data[1];
-                int[] fid_data = plugin.tw.blocks.get(rsp.getFloor());
+                int[] fid_data = plugin.getTardisWalls().blocks.get(rsp.getFloor());
                 floor_id = fid_data[0];
                 floor_data = (byte) fid_data[1];
             } else {
@@ -87,14 +87,14 @@ public class TARDISARSRunnable implements Runnable {
             // get start locations
             Location l = new Location(w, slot.getX(), slot.getY(), slot.getZ());
             roomData.setDirection(COMPASS.SOUTH);
-            short[] dimensions = plugin.room_dimensions.get(whichroom);
+            short[] dimensions = plugin.getBuildKeeper().getRoomDimensions().get(whichroom);
             // set y offset - this needs to be how many blocks above ground 0 of the 16x16x16 chunk the room starts
             l.setY(l.getY() + TARDISARS.valueOf(whichroom).getOffset());
             roomData.setLocation(l);
             roomData.setX(1);
             roomData.setZ(1);
             roomData.setRoom(whichroom);
-            roomData.setSchematic(plugin.room_schematics.get(whichroom));
+            roomData.setSchematic(plugin.getBuildKeeper().getRoomSchematics().get(whichroom));
             roomData.setDimensions(dimensions);
             long delay = Math.round(20 / plugin.getConfig().getDouble("growth.room_speed"));
             TARDISRoomRunnable runnable = new TARDISRoomRunnable(plugin, roomData, p);
@@ -117,7 +117,7 @@ public class TARDISARSRunnable implements Runnable {
             set.put("owner", p.getName());
             qf.alterEnergyLevel("tardis", -amount, set, p);
             if (p.isOnline()) {
-                p.sendMessage(plugin.pluginName + "To cancel growing this [" + whichroom + "] room use the command /tardis abort " + taskID);
+                p.sendMessage(plugin.getPluginName() + "To cancel growing this [" + whichroom + "] room use the command /tardis abort " + taskID);
             }
         }
     }
@@ -128,7 +128,7 @@ public class TARDISARSRunnable implements Runnable {
 
     private HashMap<Integer, Integer> getRoomBlockCounts(String room, String player) {
         HashMap<Integer, Integer> blockIDCount = new HashMap<Integer, Integer>();
-        HashMap<String, Integer> roomBlocks = plugin.roomBlockCounts.get(room);
+        HashMap<String, Integer> roomBlocks = plugin.getBuildKeeper().getRoomBlockCounts().get(room);
         String wall = "ORANGE_WOOL";
         String floor = "LIGHT_GREY_WOOL";
         HashMap<String, Object> wherepp = new HashMap<String, Object>();
@@ -142,12 +142,12 @@ public class TARDISARSRunnable implements Runnable {
         }
         for (Map.Entry<String, Integer> entry : roomBlocks.entrySet()) {
             String[] block_data = entry.getKey().split(":");
-            int bid = plugin.utils.parseInt(block_data[0]);
+            int bid = plugin.getUtils().parseInt(block_data[0]);
             String mat;
             int bdata;
             if (hasPrefs && block_data.length == 2 && (block_data[1].equals("1") || block_data[1].equals("8"))) {
                 mat = (block_data[1].equals("1")) ? wall : floor;
-                int[] iddata = plugin.tw.blocks.get(mat);
+                int[] iddata = plugin.getTardisWalls().blocks.get(mat);
                 bdata = iddata[0];
             } else {
                 bdata = bid;

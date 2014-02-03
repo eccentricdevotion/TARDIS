@@ -88,7 +88,7 @@ public class TARDISARSListener implements Listener {
             ids.put(playerNameStr, getTardisId(playerNameStr, player.isOp()));
             int slot = event.getRawSlot();
             if (slot != 10 && !hasLoadedMap.contains(playerNameStr)) {
-                player.sendMessage(plugin.pluginName + "You need to load the map first!");
+                player.sendMessage(plugin.getPluginName() + "You need to load the map first!");
                 return;
             }
             if (slot >= 0 && slot < 54) {
@@ -549,11 +549,11 @@ public class TARDISARSListener implements Listener {
                         TARDISARSProcessor tap = new TARDISARSProcessor(plugin, ids.get(n));
                         boolean changed = tap.compare3DArray(save_map_data.get(n).getData(), map_data.get(n).getData());
                         if (changed && tap.checkCosts(tap.getChanged(), tap.getJettison())) {
-                            p.sendMessage(plugin.pluginName + "Architectural reconfiguration starting...");
-                            plugin.trackARS.add(ids.get(n));
+                            p.sendMessage(plugin.getPluginName() + "Architectural reconfiguration starting...");
+//                            plugin.getTrackerKeeper().getTrackARS().add(ids.get(n));
                             // do all jettisons first
                             if (tap.getJettison().size() > 0) {
-                                p.sendMessage(plugin.pluginName + "Jettisoning " + tap.getJettison().size() + " rooms...");
+                                p.sendMessage(plugin.getPluginName() + "Jettisoning " + tap.getJettison().size() + " rooms...");
                                 long del = 5L;
                                 for (Map.Entry<TARDISARSJettison, TARDISARS> map : tap.getJettison().entrySet()) {
                                     TARDISARSJettisonRunnable jr = new TARDISARSJettisonRunnable(plugin, map.getKey(), map.getValue(), ids.get(p.getName()), p);
@@ -570,12 +570,12 @@ public class TARDISARSListener implements Listener {
                                 delay += period;
                             }
                         } else {
-                            p.sendMessage(plugin.pluginName + tap.getError());
+                            p.sendMessage(plugin.getPluginName() + tap.getError());
                             // reset map to the previous version
                             revert(n);
                         }
                     } else {
-                        p.sendMessage(plugin.pluginName + "Only the Timelord of this TARDIS can reconfigure rooms!");
+                        p.sendMessage(plugin.getPluginName() + "Only the Timelord of this TARDIS can reconfigure rooms!");
                         revert(n);
                     }
                     map_data.remove(n);
@@ -700,7 +700,7 @@ public class TARDISARSListener implements Listener {
 
     public boolean hasCondensables(String player, String room) {
         boolean hasRequired = true;
-        HashMap<String, Integer> roomBlocks = plugin.roomBlockCounts.get(room);
+        HashMap<String, Integer> roomBlocks = plugin.getBuildKeeper().getRoomBlockCounts().get(room);
         String wall = "ORANGE_WOOL";
         String floor = "LIGHT_GREY_WOOL";
         HashMap<String, Object> wherepp = new HashMap<String, Object>();
@@ -715,12 +715,12 @@ public class TARDISARSListener implements Listener {
         HashMap<Integer, Integer> item_counts = new HashMap<Integer, Integer>();
         for (Map.Entry<String, Integer> entry : roomBlocks.entrySet()) {
             String[] block_data = entry.getKey().split(":");
-            int bid = plugin.utils.parseInt(block_data[0]);
+            int bid = plugin.getUtils().parseInt(block_data[0]);
             String mat;
             int bdata;
             if (hasPrefs && block_data.length == 2 && (block_data[1].equals("1") || block_data[1].equals("8"))) {
                 mat = (block_data[1].equals("1")) ? wall : floor;
-                int[] iddata = plugin.tw.blocks.get(mat);
+                int[] iddata = plugin.getTardisWalls().blocks.get(mat);
                 bdata = iddata[0];
             } else {
                 bdata = bid;

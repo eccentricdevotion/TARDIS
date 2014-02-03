@@ -46,7 +46,7 @@ public class TARDISBlockPhysicsListener implements Listener {
         if (event.isCancelled()) {
             return;
         }
-        if (plugin.inVortex.size() > 0) {
+        if (plugin.getTrackerKeeper().getTrackInVortex().size() > 0) {
             Block block = event.getBlock();
             if (block != null) {
                 BlockState state = block.getState();

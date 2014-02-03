@@ -38,7 +38,7 @@ public class TARDISReloadCommand {
         TARDISConfiguration tc = new TARDISConfiguration(plugin);
         tc.doWorlds();
         plugin.saveConfig();
-        sender.sendMessage(plugin.pluginName + "TARDIS config reloaded.");
+        sender.sendMessage(plugin.getPluginName() + "TARDIS config reloaded.");
         return true;
     }
 }

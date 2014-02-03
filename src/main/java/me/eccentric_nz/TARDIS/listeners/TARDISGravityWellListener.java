@@ -79,11 +79,11 @@ public class TARDISGravityWellListener implements Listener {
         Double[] values;
         double end;
         double vel;
-        if (plugin.gravityUpList.containsKey(loc)) {
+        if (plugin.getGeneralKeeper().getGravityUpList().containsKey(loc)) {
             Player player = event.getPlayer();
             int x = l.getBlockX();
             int z = l.getBlockZ();
-            values = plugin.gravityUpList.get(loc);
+            values = plugin.getGeneralKeeper().getGravityUpList().get(loc);
             end = l.getY() + values[1];
             vel = values[2];
             TARDISGravityWellRunnable runnable = new TARDISGravityWellRunnable(plugin, player, vel, end, x, z, 1);
@@ -91,12 +91,12 @@ public class TARDISGravityWellListener implements Listener {
             runnable.setTask(task);
             return;
         }
-        if (plugin.gravityNorthList.containsKey(loc)) {
+        if (plugin.getGeneralKeeper().getGravityNorthList().containsKey(loc)) {
             // move player north
             Player player = event.getPlayer();
             int x = l.getBlockX();
             int z = l.getBlockZ();
-            values = plugin.gravityNorthList.get(loc);
+            values = plugin.getGeneralKeeper().getGravityNorthList().get(loc);
             end = l.getZ() - values[1];
             vel = values[2];
             TARDISGravityWellRunnable runnable = new TARDISGravityWellRunnable(plugin, player, vel, end, x, z, 2);
@@ -104,12 +104,12 @@ public class TARDISGravityWellListener implements Listener {
             runnable.setTask(task);
             return;
         }
-        if (plugin.gravityWestList.containsKey(loc)) {
+        if (plugin.getGeneralKeeper().getGravityWestList().containsKey(loc)) {
             // move player west
             Player player = event.getPlayer();
             int x = l.getBlockX();
             int z = l.getBlockZ();
-            values = plugin.gravityWestList.get(loc);
+            values = plugin.getGeneralKeeper().getGravityWestList().get(loc);
             end = l.getX() - values[1];
             vel = values[2];
             TARDISGravityWellRunnable runnable = new TARDISGravityWellRunnable(plugin, player, vel, end, x, z, 3);
@@ -117,12 +117,12 @@ public class TARDISGravityWellListener implements Listener {
             runnable.setTask(task);
             return;
         }
-        if (plugin.gravitySouthList.containsKey(loc)) {
+        if (plugin.getGeneralKeeper().getGravitySouthList().containsKey(loc)) {
             // move player south
             Player player = event.getPlayer();
             int x = l.getBlockX();
             int z = l.getBlockZ();
-            values = plugin.gravitySouthList.get(loc);
+            values = plugin.getGeneralKeeper().getGravitySouthList().get(loc);
             end = l.getZ() + values[1];
             vel = values[2];
             TARDISGravityWellRunnable runnable = new TARDISGravityWellRunnable(plugin, player, vel, end, x, z, 4);
@@ -130,12 +130,12 @@ public class TARDISGravityWellListener implements Listener {
             runnable.setTask(task);
             return;
         }
-        if (plugin.gravityEastList.containsKey(loc)) {
+        if (plugin.getGeneralKeeper().getGravityEastList().containsKey(loc)) {
             // move player east
             Player player = event.getPlayer();
             int x = l.getBlockX();
             int z = l.getBlockZ();
-            values = plugin.gravityEastList.get(loc);
+            values = plugin.getGeneralKeeper().getGravityEastList().get(loc);
             end = l.getX() + values[1];
             vel = values[2];
             TARDISGravityWellRunnable runnable = new TARDISGravityWellRunnable(plugin, player, vel, end, x, z, 5);
@@ -163,7 +163,7 @@ public class TARDISGravityWellListener implements Listener {
                 l.setPitch(0.0F);
                 l.setYaw(0.0F);
                 String loc = l.toString();
-                if (plugin.gravityDownList.contains(loc)) {
+                if (plugin.getGeneralKeeper().getGravityDownList().contains(loc)) {
                     e.setCancelled(true);
                 }
             }
@@ -181,8 +181,8 @@ public class TARDISGravityWellListener implements Listener {
     public void onWoolInteract(PlayerInteractEvent event) {
         final Player player = event.getPlayer();
         String playerNameStr = player.getName();
-        if (plugin.trackGravity.containsKey(playerNameStr)) {
-            Double[] values = plugin.trackGravity.get(playerNameStr);
+        if (plugin.getTrackerKeeper().getTrackGravity().containsKey(playerNameStr)) {
+            Double[] values = plugin.getTrackerKeeper().getTrackGravity().get(playerNameStr);
             Block b = event.getClickedBlock();
             if (b != null) {
                 // get tardis_id
@@ -190,7 +190,7 @@ public class TARDISGravityWellListener implements Listener {
                 where.put("owner", player.getName());
                 ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);
                 if (!rs.resultSet()) {
-                    player.sendMessage(plugin.pluginName + MESSAGE.NOT_A_TIMELORD.getText());
+                    player.sendMessage(plugin.getPluginName() + MESSAGE.NOT_A_TIMELORD.getText());
                     return;
                 }
                 int id = rs.getTardis_id();
@@ -208,37 +208,37 @@ public class TARDISGravityWellListener implements Listener {
                         if (qf.doSyncDelete("gravity_well", whered)) {
                             switch (rsg.getDirection()) {
                                 case 1:
-                                    plugin.gravityUpList.remove(loc);
+                                    plugin.getGeneralKeeper().getGravityUpList().remove(loc);
                                     break;
                                 case 2:
-                                    plugin.gravityNorthList.remove(loc);
+                                    plugin.getGeneralKeeper().getGravityNorthList().remove(loc);
                                     break;
                                 case 3:
-                                    plugin.gravityWestList.remove(loc);
+                                    plugin.getGeneralKeeper().getGravityWestList().remove(loc);
                                     break;
                                 case 4:
-                                    plugin.gravitySouthList.remove(loc);
+                                    plugin.getGeneralKeeper().getGravitySouthList().remove(loc);
                                     break;
                                 case 5:
-                                    plugin.gravityEastList.remove(loc);
+                                    plugin.getGeneralKeeper().getGravityEastList().remove(loc);
                                     break;
                                 default:
-                                    plugin.gravityDownList.remove(loc);
+                                    plugin.getGeneralKeeper().getGravityDownList().remove(loc);
                                     break;
                             }
                             // set the block to light grey wool
                             b.setTypeId(35);
                             b.setData((byte) 8, true);
-                            player.sendMessage(plugin.pluginName + "The gravity block was removed successfully");
+                            player.sendMessage(plugin.getPluginName() + "The gravity block was removed successfully");
                         }
                     } else {
-                        player.sendMessage(plugin.pluginName + "Could not find the gravity block in the database!");
+                        player.sendMessage(plugin.getPluginName() + "Could not find the gravity block in the database!");
                     }
                 } else {
                     // check the wool block is the right colour
                     byte bit = woolData.get(values[0]);
                     if (b.getData() != bit) {
-                        player.sendMessage(plugin.pluginName + "That wool block is the wrong colour, it should be " + woolColour.get(values[0]) + ".");
+                        player.sendMessage(plugin.getPluginName() + "That wool block is the wrong colour, it should be " + woolColour.get(values[0]) + ".");
                         return;
                     }
                     // add a record
@@ -253,34 +253,34 @@ public class TARDISGravityWellListener implements Listener {
                     String dir;
                     switch (values[0].intValue()) {
                         case 1:
-                            plugin.gravityUpList.put(loc, values);
+                            plugin.getGeneralKeeper().getGravityUpList().put(loc, values);
                             dir = "UP";
                             break;
                         case 2:
-                            plugin.gravityNorthList.put(loc, values);
+                            plugin.getGeneralKeeper().getGravityNorthList().put(loc, values);
                             dir = "NORTH";
                             break;
                         case 3:
-                            plugin.gravityWestList.put(loc, values);
+                            plugin.getGeneralKeeper().getGravityWestList().put(loc, values);
                             dir = "WEST";
                             break;
                         case 4:
-                            plugin.gravitySouthList.put(loc, values);
+                            plugin.getGeneralKeeper().getGravitySouthList().put(loc, values);
                             dir = "SOUTH";
                             break;
                         case 5:
-                            plugin.gravityEastList.put(loc, values);
+                            plugin.getGeneralKeeper().getGravityEastList().put(loc, values);
                             dir = "EAST";
                             break;
                         default:
-                            plugin.gravityDownList.add(loc);
+                            plugin.getGeneralKeeper().getGravityDownList().add(loc);
                             dir = "DOWN";
                             break;
                     }
-                    player.sendMessage(plugin.pluginName + "The wool was set to a gravity " + dir + " block!");
+                    player.sendMessage(plugin.getPluginName() + "The wool was set to a gravity " + dir + " block!");
                 }
             }
-            plugin.trackGravity.remove(playerNameStr);
+            plugin.getTrackerKeeper().getTrackGravity().remove(playerNameStr);
         }
     }
 }

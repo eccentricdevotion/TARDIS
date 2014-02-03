@@ -44,12 +44,12 @@ public class TARDISRechargerCommand {
             player = (Player) sender;
         }
         if (player == null) {
-            sender.sendMessage(plugin.pluginName + "You can't set a recharger location from the console!");
+            sender.sendMessage(plugin.getPluginName() + "You can't set a recharger location from the console!");
             return true;
         }
-        Block b = player.getTargetBlock(plugin.tardisCommand.transparent, 50);
+        Block b = player.getTargetBlock(plugin.getGeneralKeeper().getTransparent(), 50);
         if (!b.getType().equals(Material.BEACON)) {
-            player.sendMessage(plugin.pluginName + "You must be targeting a BEACON block!");
+            player.sendMessage(plugin.getPluginName() + "You must be targeting a BEACON block!");
             return true;
         }
         // make sure they're not targeting their inner TARDIS beacon
@@ -57,7 +57,7 @@ public class TARDISRechargerCommand {
         where.put("player", player.getName());
         ResultSetTravellers rst = new ResultSetTravellers(plugin, where, false);
         if (rst.resultSet()) {
-            player.sendMessage(plugin.pluginName + "You cannot use the TARDIS BEACON to recharge!");
+            player.sendMessage(plugin.getPluginName() + "You cannot use the TARDIS BEACON to recharge!");
             return true;
         }
         Location l = b.getLocation();
@@ -66,17 +66,17 @@ public class TARDISRechargerCommand {
         plugin.getConfig().set("rechargers." + args[1] + ".y", l.getBlockY());
         plugin.getConfig().set("rechargers." + args[1] + ".z", l.getBlockZ());
         // if worldguard is on the server, protect a 3x3x3 area around beacon
-        if (plugin.worldGuardOnServer && plugin.getConfig().getBoolean("preferences.use_worldguard")) {
+        if (plugin.isWorldGuardOnServer() && plugin.getConfig().getBoolean("preferences.use_worldguard")) {
             int minx = l.getBlockX() - 2;
             int maxx = l.getBlockX() + 2;
             int minz = l.getBlockZ() - 2;
             int maxz = l.getBlockZ() + 2;
             Location wg1 = new Location(l.getWorld(), minx, l.getBlockY() + 2, minz);
             Location wg2 = new Location(l.getWorld(), maxx, l.getBlockY() - 2, maxz);
-            plugin.wgutils.addRechargerProtection(player, args[1], wg1, wg2);
+            plugin.getWorldGuardUtils().addRechargerProtection(player, args[1], wg1, wg2);
         }
         plugin.saveConfig();
-        sender.sendMessage(plugin.pluginName + MESSAGE.CONFIG_UPDATED.getText());
+        sender.sendMessage(plugin.getPluginName() + MESSAGE.CONFIG_UPDATED.getText());
         return true;
     }
 }

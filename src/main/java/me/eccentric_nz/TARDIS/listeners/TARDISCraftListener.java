@@ -118,7 +118,7 @@ public class TARDISCraftListener implements Listener {
                                         lore.add("Chameleon block: " + DyeColor.getByWoolData(inv.getItem(8).getData().getData()) + " " + m8.toString());
                                         break;
                                     default:
-                                        lore.add("Chameleon block: " + plugin.utils.getWoodType(m8, inv.getItem(8).getData().getData()) + " " + m8.toString());
+                                        lore.add("Chameleon block: " + plugin.getUtils().getWoodType(m8, inv.getItem(8).getData().getData()) + " " + m8.toString());
                                 }
                             } else {
                                 lore.add("Chameleon block: " + m8.toString());
@@ -128,11 +128,11 @@ public class TARDISCraftListener implements Listener {
                             is.setItemMeta(im);
                             Player player = (Player) event.getWhoClicked();
                             if (checkPerms(player, m7)) {
-                                player.sendMessage(plugin.pluginName + "Valid seed block :)");
+                                player.sendMessage(plugin.getPluginName() + "Valid seed block :)");
                                 inv.setItem(0, is);
                                 player.updateInventory();
                             } else {
-                                player.sendMessage(plugin.pluginName + MESSAGE.NO_PERMS.getText());
+                                player.sendMessage(plugin.getPluginName() + MESSAGE.NO_PERMS.getText());
                             }
                         }
                     }

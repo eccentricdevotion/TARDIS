@@ -94,7 +94,7 @@ public class TARDISConsoleListener implements Listener {
                         wheret.put("owner", p.getName());
                         ResultSetTardis rs = new ResultSetTardis(plugin, wheret, "", false);
                         if (!rs.resultSet()) {
-                            p.sendMessage(plugin.pluginName + MESSAGE.NOT_OWNER.getText());
+                            p.sendMessage(plugin.getPluginName() + MESSAGE.NOT_OWNER.getText());
                             return;
                         }
                         Inventory inv = plugin.getServer().createInventory(p, 9, "§4TARDIS Console");
@@ -121,7 +121,7 @@ public class TARDISConsoleListener implements Listener {
                         // open gui
                         p.openInventory(inv);
                     } else {
-                        p.sendMessage(plugin.pluginName + "You can only open the Advanced Console with the TARDIS key, a sonic screwdriver, a circuit or a disk.");
+                        p.sendMessage(plugin.getPluginName() + "You can only open the Advanced Console with the TARDIS key, a sonic screwdriver, a circuit or a disk.");
                     }
                 }
             }

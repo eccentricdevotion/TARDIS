@@ -60,8 +60,8 @@ public class TARDISTemporalLocatorListener implements Listener {
                     ItemMeta im = is.getItemMeta();
                     List<String> lore = im.getLore();
                     long time = getTime(lore);
-                    plugin.trackSetTime.put(playerNameStr, time);
-                    player.sendMessage(plugin.pluginName + "Your temporal location will be set to " + time + " ticks when exiting the TARDIS.");
+                    plugin.getTrackerKeeper().getTrackSetTime().put(playerNameStr, time);
+                    player.sendMessage(plugin.getPluginName() + "Your temporal location will be set to " + time + " ticks when exiting the TARDIS.");
                 }
                 close(player);
             }
@@ -77,7 +77,7 @@ public class TARDISTemporalLocatorListener implements Listener {
      */
     private long getTime(List<String> lore) {
         String[] data = lore.get(0).split(" ");
-        return plugin.utils.parseLong(data[0]);
+        return plugin.getUtils().parseLong(data[0]);
     }
 
     /**

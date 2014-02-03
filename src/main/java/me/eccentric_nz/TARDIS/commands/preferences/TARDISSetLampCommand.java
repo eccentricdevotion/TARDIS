@@ -36,20 +36,20 @@ public class TARDISSetLampCommand {
 
     public boolean setLampPref(Player player, String[] args, QueryFactory qf) {
         if (args.length < 2) {
-            player.sendMessage(plugin.pluginName + "You need to specify a lamp item ID!");
+            player.sendMessage(plugin.getPluginName() + "You need to specify a lamp item ID!");
             return false;
         }
         int lamp;
         try {
             lamp = Integer.parseInt(args[1]);
         } catch (NumberFormatException nfe) {
-            player.sendMessage(plugin.pluginName + "The lamp item ID was not a number!");
+            player.sendMessage(plugin.getPluginName() + "The lamp item ID was not a number!");
             return true;
         }
         // check it's an allowed block
         List<Integer> allowed_ids = plugin.getBlocksConfig().getIntegerList("lamp_blocks");
         if (!allowed_ids.contains(lamp)) {
-            player.sendMessage(plugin.pluginName + "You cannot set the lamp item to that ID!");
+            player.sendMessage(plugin.getPluginName() + "You cannot set the lamp item to that ID!");
             return true;
         }
         HashMap<String, Object> setl = new HashMap<String, Object>();
@@ -57,7 +57,7 @@ public class TARDISSetLampCommand {
         HashMap<String, Object> where = new HashMap<String, Object>();
         where.put("player", player.getName());
         qf.doUpdate("player_prefs", setl, where);
-        player.sendMessage(plugin.pluginName + "Lamp preference saved.");
+        player.sendMessage(plugin.getPluginName() + "Lamp preference saved.");
         return true;
     }
 }

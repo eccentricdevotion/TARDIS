@@ -88,7 +88,7 @@ public class TARDISArtronRunnable implements Runnable {
         Location pb_loc = new Location(rs.getWorld(), rs.getX(), rs.getY(), rs.getZ());
         // check location is within configured blocks of a recharger
         for (Location l : rechargers) {
-            if (plugin.utils.compareLocations(pb_loc, l)) {
+            if (plugin.getUtils().compareLocations(pb_loc, l)) {
                 // strike lightning to the Police Box torch location
                 if (plugin.getConfig().getBoolean("preferences.strike_lightning")) {
                     pb_loc.setY(pb_loc.getY() + 3);

@@ -57,7 +57,7 @@ public class TARDISDeleteCommand {
                 where.put("player", player.getName());
                 ResultSetTravellers rst = new ResultSetTravellers(plugin, where, false);
                 if (rst.resultSet()) {
-                    sender.sendMessage(plugin.pluginName + "You cannot be in your TARDIS when you delete it!");
+                    sender.sendMessage(plugin.getPluginName() + "You cannot be in your TARDIS when you delete it!");
                     return true;
                 }
             }
@@ -74,7 +74,7 @@ public class TARDISDeleteCommand {
             String name = cdata[0];
             World cw = plugin.getServer().getWorld(name);
             if (cw == null) {
-                sender.sendMessage(plugin.pluginName + "The server could not find the TARDIS world, has it been deleted?");
+                sender.sendMessage(plugin.getPluginName() + "The server could not find the TARDIS world, has it been deleted?");
                 return true;
             }
             int restore = getRestore(cw);
@@ -99,7 +99,7 @@ public class TARDISDeleteCommand {
                 d = rsc.getDirection();
             }
             if (bb_loc == null) {
-                sender.sendMessage(plugin.pluginName + MESSAGE.NO_CURRENT.getText());
+                sender.sendMessage(plugin.getPluginName() + MESSAGE.NO_CURRENT.getText());
                 return true;
             }
             // destroy the TARDIS
@@ -109,15 +109,15 @@ public class TARDISDeleteCommand {
                 for (Player p : players) {
                     p.kickPlayer("World scheduled for deletion!");
                 }
-                if (plugin.pm.isPluginEnabled("Multiverse-Core")) {
-                    plugin.getServer().dispatchCommand(plugin.console, "mv remove " + name);
+                if (plugin.getPM().isPluginEnabled("Multiverse-Core")) {
+                    plugin.getServer().dispatchCommand(plugin.getConsole(), "mv remove " + name);
                 }
-                if (plugin.pm.isPluginEnabled("MultiWorld")) {
-                    plugin.getServer().dispatchCommand(plugin.console, "mw unload " + name);
+                if (plugin.getPM().isPluginEnabled("MultiWorld")) {
+                    plugin.getServer().dispatchCommand(plugin.getConsole(), "mw unload " + name);
                 }
-                if (plugin.pm.isPluginEnabled("WorldBorder")) {
+                if (plugin.getPM().isPluginEnabled("WorldBorder")) {
                     // wb <world> clear
-                    plugin.getServer().dispatchCommand(plugin.console, "wb " + name + " clear");
+                    plugin.getServer().dispatchCommand(plugin.getConsole(), "wb " + name + " clear");
                 }
                 plugin.getServer().unloadWorld(cw, true);
                 File world_folder = new File(plugin.getServer().getWorldContainer() + File.separator + name + File.separator);
@@ -125,10 +125,10 @@ public class TARDISDeleteCommand {
                     plugin.debug("Could not delete world <" + name + ">");
                 }
             } else {
-                plugin.destroyerI.destroyInner(schm, id, cw, restore, args[1], tips);
+                plugin.getInteriorDestroyer().destroyInner(schm, id, cw, restore, args[1], tips);
             }
             if (!rs.isHidden()) {
-                plugin.destroyerP.destroyPreset(bb_loc, d, id, false, false, false, null, rsc.isSubmarine());
+                plugin.getPresetDestroyer().destroyPreset(bb_loc, d, id, false, false, false, null, rsc.isSubmarine());
             }
             // delete the TARDIS from the db
             HashMap<String, Object> wherec = new HashMap<String, Object>();
@@ -152,9 +152,9 @@ public class TARDISDeleteCommand {
             HashMap<String, Object> wheres = new HashMap<String, Object>();
             wheres.put("tardis_id", id);
             qf.doDelete("destinations", wheres);
-            sender.sendMessage(plugin.pluginName + "The TARDIS was removed from the world and database successfully.");
+            sender.sendMessage(plugin.getPluginName() + "The TARDIS was removed from the world and database successfully.");
         } else {
-            sender.sendMessage(plugin.pluginName + "Could not find player [" + args[1] + "] in the database!");
+            sender.sendMessage(plugin.getPluginName() + "Could not find player [" + args[1] + "] in the database!");
             return true;
         }
         return true;

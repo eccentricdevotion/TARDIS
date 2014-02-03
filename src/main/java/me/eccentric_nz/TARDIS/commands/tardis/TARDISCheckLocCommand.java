@@ -41,8 +41,8 @@ public class TARDISCheckLocCommand {
 
     @SuppressWarnings("deprecation")
     public boolean doACheckLocation(Player player, String[] args) {
-        final Location eyeLocation = player.getTargetBlock(plugin.tardisCommand.transparent, 50).getLocation();
-        Material m = player.getTargetBlock(plugin.tardisCommand.transparent, 50).getType();
+        final Location eyeLocation = player.getTargetBlock(plugin.getGeneralKeeper().getTransparent(), 50).getLocation();
+        Material m = player.getTargetBlock(plugin.getGeneralKeeper().getTransparent(), 50).getType();
         if (m != Material.SNOW) {
             int yplusone = eyeLocation.getBlockY();
             eyeLocation.setY(yplusone + 1);
@@ -52,14 +52,14 @@ public class TARDISCheckLocCommand {
         where.put("owner", player.getName());
         ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);
         if (!rs.resultSet()) {
-            player.sendMessage(plugin.pluginName + MESSAGE.NOT_A_TIMELORD.getText());
+            player.sendMessage(plugin.getPluginName() + MESSAGE.NOT_A_TIMELORD.getText());
             return true;
         }
         HashMap<String, Object> wherecl = new HashMap<String, Object>();
         wherecl.put("tardis_id", rs.getTardis_id());
         ResultSetCurrentLocation rsc = new ResultSetCurrentLocation(plugin, wherecl);
         if (!rsc.resultSet()) {
-            player.sendMessage(plugin.pluginName + "Could not get the TARDIS direction!");
+            player.sendMessage(plugin.getPluginName() + "Could not get the TARDIS direction!");
             return true;
         }
         COMPASS d = rsc.getDirection();

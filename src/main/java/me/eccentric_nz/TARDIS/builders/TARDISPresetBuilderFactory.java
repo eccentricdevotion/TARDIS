@@ -129,7 +129,7 @@ public class TARDISPresetBuilderFactory {
             }
             if (sub && notSubmarinePresets.contains(preset)) {
                 preset = PRESET.YELLOW;
-                p.sendMessage(plugin.pluginName + "Selected preset unsuitable for submarine mode - changed to Yellow Submarine.");
+                p.sendMessage(plugin.getPluginName() + "Selected preset unsuitable for submarine mode - changed to Yellow Submarine.");
             }
             // keep the chunk this Police box is in loaded
             Chunk thisChunk = l.getChunk();
@@ -141,7 +141,7 @@ public class TARDISPresetBuilderFactory {
              * occurence - and we want the chunk to remain loaded if there are other
              * Police Boxes in it.
              */
-            plugin.tardisChunkList.add(thisChunk);
+            plugin.getGeneralKeeper().getTardisChunkList().add(thisChunk);
             if (rebuild) {
                 // always destroy it first as the player may just be switching presets
                 if (!hidden) {
@@ -157,12 +157,12 @@ public class TARDISPresetBuilderFactory {
                 }, 10L);
             } else {
                 if (plugin.getConfig().getBoolean("police_box.materialise")) {
-                    plugin.tardisMaterialising.add(Integer.valueOf(id));
+                    plugin.getTrackerKeeper().getTrackMaterialising().add(Integer.valueOf(id));
                     TARDISMaterialisationPreset runnable = new TARDISMaterialisationPreset(plugin, l, preset, id, d, p, mal, lamp, sub, cham_id, cham_data, minecart);
                     int taskID = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, runnable, 10L, 20L);
                     runnable.setTask(taskID);
                 } else {
-                    plugin.tardisMaterialising.add(Integer.valueOf(id));
+                    plugin.getTrackerKeeper().getTrackMaterialising().add(Integer.valueOf(id));
                     TARDISInstaPreset insta = new TARDISInstaPreset(plugin, l, preset, id, d, p.getName(), mal, lamp, sub, cham_id, cham_data, false, minecart);
                     insta.buildPreset();
                 }
@@ -225,7 +225,7 @@ public class TARDISPresetBuilderFactory {
                 for (Block pb : platform_blocks) {
                     int matint = pb.getTypeId();
                     if (TARDISConstants.PLATFORM_BLOCKS.contains(matint)) {
-                        plugin.utils.setBlockAndRemember(world, pb.getX(), pb.getY(), pb.getZ(), platform_id, platform_data, id);
+                        plugin.getUtils().setBlockAndRemember(world, pb.getX(), pb.getY(), pb.getZ(), platform_id, platform_data, id);
                     }
                 }
             }

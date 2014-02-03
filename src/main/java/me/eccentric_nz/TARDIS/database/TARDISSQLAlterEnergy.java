@@ -89,7 +89,7 @@ public class TARDISSQLAlterEnergy implements Runnable {
                     if (id > 0) {
                         new TARDISArtronIndicator(plugin).showArtronLevel(p, id, true, Math.abs(amount));
                     } else {
-                        p.sendMessage(plugin.pluginName + "You used " + Math.abs(amount) + " Artron Energy.");
+                        p.sendMessage(plugin.getPluginName() + "You used " + Math.abs(amount) + " Artron Energy.");
                     }
                 }
             }.runTask(plugin);

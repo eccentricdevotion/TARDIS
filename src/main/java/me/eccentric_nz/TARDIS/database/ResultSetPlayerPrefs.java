@@ -100,7 +100,7 @@ public class ResultSetPlayerPrefs {
                     if (entry.getValue().getClass().equals(String.class)) {
                         statement.setString(s, entry.getValue().toString());
                     } else {
-                        statement.setInt(s, plugin.utils.parseInt(entry.getValue().toString()));
+                        statement.setInt(s, plugin.getUtils().parseInt(entry.getValue().toString()));
                     }
                     s++;
                 }
@@ -136,7 +136,7 @@ public class ResultSetPlayerPrefs {
                 this.textureOn = rs.getBoolean("texture_on");
                 this.textureIn = rs.getString("texture_in");
                 String tp_out = rs.getString("texture_out");
-                this.textureOut = (tp_out.equals("default")) ? plugin.tp : tp_out;
+                this.textureOut = (tp_out.equals("default")) ? plugin.getResourcePack() : tp_out;
                 this.DND = rs.getBoolean("dnd_on");
                 this.minecartOn = rs.getBoolean("minecart_on");
                 this.rendererOn = rs.getBoolean("renderer_on");

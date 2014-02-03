@@ -63,9 +63,9 @@ public class TARDISPerceptionFilterListener implements Listener {
                         player.updateInventory();
                         player.setItemInHand(new ItemStack(Material.AIR));
                         // make the player invisible
-                        plugin.filter.addPerceptionFilter(player);
+                        plugin.getFilter().addPerceptionFilter(player);
                     } else {
-                        player.sendMessage(plugin.pluginName + MESSAGE.NO_PERMS.getText());
+                        player.sendMessage(plugin.getPluginName() + MESSAGE.NO_PERMS.getText());
                     }
                 }
             }
@@ -83,7 +83,7 @@ public class TARDISPerceptionFilterListener implements Listener {
                         ItemMeta im = is.getItemMeta();
                         if (im.hasDisplayName() && im.getDisplayName().equals("Perception Filter")) {
                             if (event.getAction().equals(InventoryAction.PICKUP_ALL)) {
-                                plugin.filter.removePerceptionFilter((Player) event.getWhoClicked());
+                                plugin.getFilter().removePerceptionFilter((Player) event.getWhoClicked());
                             }
                         }
                     }

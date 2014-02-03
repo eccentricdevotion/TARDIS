@@ -46,13 +46,13 @@ public class TARDISLister {
         if (l.equals("rechargers")) {
             Set<String> therechargers = TARDIS.plugin.getConfig().getConfigurationSection("rechargers").getKeys(false);
             if (therechargers.size() < 1) {
-                p.sendMessage(TARDIS.plugin.pluginName + "No rechargers were found!");
+                p.sendMessage(TARDIS.plugin.getPluginName() + "No rechargers were found!");
             }
             int a = 1;
 
             for (String s : therechargers) {
                 if (a == 1) {
-                    p.sendMessage(TARDIS.plugin.pluginName + "Artron Energy Rechargers");
+                    p.sendMessage(TARDIS.plugin.getPluginName() + "Artron Energy Rechargers");
                 }
                 String w = TARDIS.plugin.getConfig().getString("rechargers." + s + ".world");
                 int x = TARDIS.plugin.getConfig().getInt("rechargers." + s + ".x");
@@ -67,14 +67,14 @@ public class TARDISLister {
             ResultSetAreas rsa = new ResultSetAreas(TARDIS.plugin, null, true);
             int a = 1;
             if (!rsa.resultSet()) {
-                p.sendMessage(TARDIS.plugin.pluginName + "No areas were found!");
+                p.sendMessage(TARDIS.plugin.getPluginName() + "No areas were found!");
             }
             ArrayList<HashMap<String, String>> data = rsa.getData();
             for (HashMap<String, String> map : data) {
                 String name = map.get("area_name");
                 String world = map.get("world");
                 if (a == 1) {
-                    p.sendMessage(TARDIS.plugin.pluginName + "Areas");
+                    p.sendMessage(TARDIS.plugin.getPluginName() + "Areas");
                 }
                 p.sendMessage(a + ". [" + name + "] in world: " + world);
                 a++;

@@ -43,7 +43,7 @@ public class TARDISOccupyCommand {
             where.put("owner", player.getName());
             ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);
             if (!rs.resultSet()) {
-                player.sendMessage(plugin.pluginName + MESSAGE.NOT_A_TIMELORD.getText());
+                player.sendMessage(plugin.getPluginName() + MESSAGE.NOT_A_TIMELORD.getText());
                 return false;
             }
             int id = rs.getTardis_id();
@@ -66,10 +66,10 @@ public class TARDISOccupyCommand {
                 qf.doInsert("travellers", wherei);
                 occupied = ChatColor.GREEN + "OCCUPIED";
             }
-            player.sendMessage(plugin.pluginName + " TARDIS occupation was set to: " + occupied);
+            player.sendMessage(plugin.getPluginName() + " TARDIS occupation was set to: " + occupied);
             return true;
         } else {
-            player.sendMessage(plugin.pluginName + MESSAGE.NO_PERMS.getText());
+            player.sendMessage(plugin.getPluginName() + MESSAGE.NO_PERMS.getText());
             return false;
         }
     }

@@ -45,7 +45,7 @@ public class TARDISRenderRoomListener implements Listener {
     @EventHandler
     public void onInteract(PlayerInteractEvent event) {
         final Player player = event.getPlayer();
-        if (plugin.trackTransmat.contains(player.getName())) {
+        if (plugin.getTrackerKeeper().getTrackTransmat().contains(player.getName())) {
             event.setCancelled(true);
             if (event.getAction().equals(Action.RIGHT_CLICK_BLOCK) || event.getAction().equals(Action.RIGHT_CLICK_AIR)) {
                 // tp the player back to the TARDIS console
@@ -55,7 +55,7 @@ public class TARDISRenderRoomListener implements Listener {
     }
 
     public void transmat(final Player p) {
-        p.sendMessage(plugin.pluginName + "Stand by for transmat...");
+        p.sendMessage(plugin.getPluginName() + "Stand by for transmat...");
         // get the TARDIS the player is in
         HashMap<String, Object> wherep = new HashMap<String, Object>();
         wherep.put("player", p.getName());
@@ -71,9 +71,9 @@ public class TARDISRenderRoomListener implements Listener {
                 String doorLocStr = rsd.getDoor_location();
                 String[] split = doorLocStr.split(":");
                 World cw = plugin.getServer().getWorld(split[0]);
-                int cx = plugin.utils.parseInt(split[1]);
-                int cy = plugin.utils.parseInt(split[2]);
-                int cz = plugin.utils.parseInt(split[3]);
+                int cx = plugin.getUtils().parseInt(split[1]);
+                int cy = plugin.getUtils().parseInt(split[2]);
+                int cz = plugin.getUtils().parseInt(split[3]);
                 Location tmp_loc = new Location(cw, cx, cy, cz);
                 int getx = tmp_loc.getBlockX();
                 int getz = tmp_loc.getBlockZ();
@@ -107,14 +107,14 @@ public class TARDISRenderRoomListener implements Listener {
                     public void run() {
                         p.playSound(tp_loc, Sound.ENDERMAN_TELEPORT, 1.0f, 1.0f);
                         p.teleport(tp_loc);
-                        plugin.trackTransmat.remove(p.getName());
+                        plugin.getTrackerKeeper().getTrackTransmat().remove(p.getName());
                     }
                 }, 10L);
             } else {
-                p.sendMessage(plugin.pluginName + "The Transmat device couldn't find the TARDIS console!");
+                p.sendMessage(plugin.getPluginName() + "The Transmat device couldn't find the TARDIS console!");
             }
         } else {
-            p.sendMessage(plugin.pluginName + "The Transmat device couldn't determine which TARDIS you are in!");
+            p.sendMessage(plugin.getPluginName() + "The Transmat device couldn't determine which TARDIS you are in!");
         }
     }
 }

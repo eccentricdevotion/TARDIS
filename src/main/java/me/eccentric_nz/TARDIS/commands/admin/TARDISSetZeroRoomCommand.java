@@ -39,16 +39,16 @@ public class TARDISSetZeroRoomCommand {
         // check they typed true of false
         String tf = args[1].toLowerCase(Locale.ENGLISH);
         if (!tf.equals("true") && !tf.equals("false")) {
-            sender.sendMessage(plugin.pluginName + ChatColor.RED + "The last argument must be true or false!");
+            sender.sendMessage(plugin.getPluginName() + ChatColor.RED + "The last argument must be true or false!");
             return false;
         }
         plugin.getConfig().set("allow.zero_room", Boolean.valueOf(tf));
         plugin.saveConfig();
-        sender.sendMessage(plugin.pluginName + MESSAGE.CONFIG_UPDATED.getText());
+        sender.sendMessage(plugin.getPluginName() + MESSAGE.CONFIG_UPDATED.getText());
         if (tf.equals("true") && plugin.getServer().getWorld("TARDIS_Zero_Room") == null) {
-            sender.sendMessage(plugin.pluginName + "The TARDIS_Zero_Room does not exist, attempting to create it!");
+            sender.sendMessage(plugin.getPluginName() + "The TARDIS_Zero_Room does not exist, attempting to create it!");
             new TARDISSpace(plugin).createDefaultWorld("TARDIS_Zero_Room");
-            sender.sendMessage(plugin.pluginName + "A server restart is also required to enable Zero room isolation and healing.");
+            sender.sendMessage(plugin.getPluginName() + "A server restart is also required to enable Zero room isolation and healing.");
         }
         return true;
     }

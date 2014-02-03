@@ -99,25 +99,25 @@ public class TARDISDeinstaPreset {
                         flowerz = l.getBlockZ();
                         break;
                 }
-                plugin.utils.setBlock(w, flowerx, flowery, flowerz, 0, (byte) 0);
+                plugin.getUtils().setBlock(w, flowerx, flowery, flowerz, 0, (byte) 0);
                 break;
             case DUCK:
-                plugin.destroyerP.destroyDuckEyes(l, d);
+                plugin.getPresetDestroyer().destroyDuckEyes(l, d);
                 break;
             case MINESHAFT:
-                plugin.destroyerP.destroyMineshaftTorches(l, d);
+                plugin.getPresetDestroyer().destroyMineshaftTorches(l, d);
                 break;
             default:
                 break;
         }
-        plugin.tardisDematerialising.remove(Integer.valueOf(id));
-        plugin.tardisChunkList.remove(l.getChunk());
+        plugin.getTrackerKeeper().getTrackDematerialising().remove(Integer.valueOf(id));
+        plugin.getGeneralKeeper().getTardisChunkList().remove(l.getChunk());
         // remove door
-        plugin.destroyerP.destroyDoor(id);
+        plugin.getPresetDestroyer().destroyDoor(id);
         // remove torch
-        plugin.destroyerP.destroyLamp(l, preset);
+        plugin.getPresetDestroyer().destroyLamp(l, preset);
         // remove sign
-        plugin.destroyerP.destroySign(l, d, preset);
+        plugin.getPresetDestroyer().destroySign(l, d, preset);
         // remove blue wool and door
         for (int yy = 0; yy < 4; yy++) {
             for (int xx = 0; xx < 3; xx++) {
@@ -130,7 +130,7 @@ public class TARDISDeinstaPreset {
             }
         }
 
-        if (sub && plugin.worldGuardOnServer) {
+        if (sub && plugin.isWorldGuardOnServer()) {
             // replace the block under the door if there is one
             HashMap<String, Object> where = new HashMap<String, Object>();
             where.put("tardis_id", id);
@@ -140,9 +140,9 @@ public class TARDISDeinstaPreset {
             if (rs.resultSet()) {
                 String replacedData = rs.getLocation();
                 if (!replacedData.isEmpty()) {
-                    Location sponge = plugin.utils.getLocationFromBukkitString(replacedData);
+                    Location sponge = plugin.getUtils().getLocationFromBukkitString(replacedData);
                     b = sponge.getBlock();
-                    plugin.wgutils.sponge(b, false);
+                    plugin.getWorldGuardUtils().sponge(b, false);
                 }
             }
         }
@@ -157,10 +157,10 @@ public class TARDISDeinstaPreset {
                 int bID = 0;
                 byte bd = (byte) 0;
                 if (map.get("block") != null) {
-                    bID = plugin.utils.parseInt(map.get("block"));
+                    bID = plugin.getUtils().parseInt(map.get("block"));
                 }
                 if (map.get("data") != null) {
-                    bd = plugin.utils.parseByte(map.get("data"));
+                    bd = plugin.getUtils().parseByte(map.get("data"));
                 }
                 String locStr = map.get("location");
                 String[] loc_data = locStr.split(",");
@@ -168,16 +168,16 @@ public class TARDISDeinstaPreset {
                 String[] xStr = loc_data[1].split("=");
                 String[] yStr = loc_data[2].split("=");
                 String[] zStr = loc_data[3].split("=");
-                int rx = plugin.utils.parseInt(xStr[1].substring(0, (xStr[1].length() - 2)));
-                int ry = plugin.utils.parseInt(yStr[1].substring(0, (yStr[1].length() - 2)));
-                int rz = plugin.utils.parseInt(zStr[1].substring(0, (zStr[1].length() - 2)));
-                plugin.utils.setBlock(w, rx, ry, rz, bID, bd);
+                int rx = plugin.getUtils().parseInt(xStr[1].substring(0, (xStr[1].length() - 2)));
+                int ry = plugin.getUtils().parseInt(yStr[1].substring(0, (yStr[1].length() - 2)));
+                int rz = plugin.getUtils().parseInt(zStr[1].substring(0, (zStr[1].length() - 2)));
+                plugin.getUtils().setBlock(w, rx, ry, rz, bID, bd);
             }
         }
 
         // if just hiding don't remove block protection
         if (!hide) {
-            plugin.destroyerP.removeBlockProtection(id, new QueryFactory(plugin));
+            plugin.getPresetDestroyer().removeBlockProtection(id, new QueryFactory(plugin));
         }
     }
 }

@@ -65,7 +65,7 @@ public class TARDISEntityGriefListener implements Listener {
             eType = null;
         }
         if (eType != null && ents.contains(eType)) {
-            if (plugin.protectBlockMap.containsKey(l)) {
+            if (plugin.getGeneralKeeper().getProtectBlockMap().containsKey(l)) {
                 event.setCancelled(true);
             }
         }

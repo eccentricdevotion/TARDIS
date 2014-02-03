@@ -39,12 +39,12 @@ public class TARDISSetBooleanCommand {
         // check they typed true of false
         String tf = args[1].toLowerCase(Locale.ENGLISH);
         if (!tf.equals("true") && !tf.equals("false")) {
-            sender.sendMessage(plugin.pluginName + ChatColor.RED + "The last argument must be true or false!");
+            sender.sendMessage(plugin.getPluginName() + ChatColor.RED + "The last argument must be true or false!");
             return false;
         }
         plugin.getConfig().set(first, Boolean.valueOf(tf));
         plugin.saveConfig();
-        sender.sendMessage(plugin.pluginName + MESSAGE.CONFIG_UPDATED.getText());
+        sender.sendMessage(plugin.getPluginName() + MESSAGE.CONFIG_UPDATED.getText());
         return true;
     }
 }

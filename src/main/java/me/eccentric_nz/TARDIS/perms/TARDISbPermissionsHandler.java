@@ -71,22 +71,22 @@ public class TARDISbPermissionsHandler {
                 }
             }
         }
-        plugin.getServer().dispatchCommand(plugin.console, "world TARDIS_WORLD_" + player);
+        plugin.getServer().dispatchCommand(plugin.getConsole(), "world TARDIS_WORLD_" + player);
         int i = 0;
         for (Map.Entry<String, List<String>> entry : permgroups.entrySet()) {
             String grpstr = entry.getKey();
             List<String> perms = entry.getValue();
-            plugin.getServer().dispatchCommand(plugin.console, "group " + grpstr);
+            plugin.getServer().dispatchCommand(plugin.getConsole(), "group " + grpstr);
             for (String p : perms) {
-                plugin.getServer().dispatchCommand(plugin.console, "group addperm " + p);
+                plugin.getServer().dispatchCommand(plugin.getConsole(), "group addperm " + p);
             }
             if (i == 0) {
-                plugin.getServer().dispatchCommand(plugin.console, "user " + player);
-                plugin.getServer().dispatchCommand(plugin.console, "user setgroup " + grpstr);
+                plugin.getServer().dispatchCommand(plugin.getConsole(), "user " + player);
+                plugin.getServer().dispatchCommand(plugin.getConsole(), "user setgroup " + grpstr);
             }
             i++;
         }
-        plugin.getServer().dispatchCommand(plugin.console, "permissions save");
-        plugin.getServer().dispatchCommand(plugin.console, "permissions reload");
+        plugin.getServer().dispatchCommand(plugin.getConsole(), "permissions save");
+        plugin.getServer().dispatchCommand(plugin.getConsole(), "permissions reload");
     }
 }

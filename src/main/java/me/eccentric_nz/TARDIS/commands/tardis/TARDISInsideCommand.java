@@ -42,7 +42,7 @@ public class TARDISInsideCommand {
         where.put("owner", player.getName());
         ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);
         if (!rs.resultSet()) {
-            player.sendMessage(plugin.pluginName + MESSAGE.NOT_A_TIMELORD.getText());
+            player.sendMessage(plugin.getPluginName() + MESSAGE.NOT_A_TIMELORD.getText());
             return true;
         }
         int id = rs.getTardis_id();
@@ -51,12 +51,12 @@ public class TARDISInsideCommand {
         ResultSetTravellers rst = new ResultSetTravellers(plugin, wheret, true);
         if (rst.resultSet()) {
             List<String> data = rst.getData();
-            player.sendMessage(plugin.pluginName + "The players inside your TARDIS are:");
+            player.sendMessage(plugin.getPluginName() + "The players inside your TARDIS are:");
             for (String s : data) {
                 player.sendMessage(s);
             }
         } else {
-            player.sendMessage(plugin.pluginName + "Nobody is inside your TARDIS.");
+            player.sendMessage(plugin.getPluginName() + "Nobody is inside your TARDIS.");
         }
         return true;
     }

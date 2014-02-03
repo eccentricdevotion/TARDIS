@@ -38,7 +38,7 @@ public class TARDISTagCommand {
 
     public boolean getStats(Player player) {
         ResultSetTag rs = new ResultSetTag(plugin);
-        player.sendMessage(plugin.pluginName + "Here are the stats:");
+        player.sendMessage(plugin.getPluginName() + "Here are the stats:");
         String who = (!plugin.getTagConfig().getString("it").equals("")) ? plugin.getTagConfig().getString("it") : "No one";
         player.sendMessage(who + " is currently the " + ChatColor.RED + "'OOD'");
         player.sendMessage("-----------");
@@ -48,7 +48,7 @@ public class TARDISTagCommand {
             ArrayList<HashMap<String, String>> data = rs.getData();
             for (HashMap<String, String> map : data) {
                 String p = map.get("player");
-                long t = plugin.utils.parseLong(map.get("time"));
+                long t = plugin.getUtils().parseLong(map.get("time"));
                 player.sendMessage(p + ": " + ChatColor.GREEN + getHoursMinutesSeconds(t));
             }
         } else {
