@@ -57,7 +57,7 @@ public class TARDISSayCommand implements CommandExecutor {
                 sender.sendMessage(plugin.getPluginName() + MESSAGE.TOO_FEW_ARGS.getText());
                 return false;
             }
-            String preferedLang = "ENGLISH";
+            String preferedLang = "AUTO_DETECT";
             HashMap<String, Object> where = new HashMap<String, Object>();
             where.put("player", sender.getName());
             ResultSetPlayerPrefs rs = new ResultSetPlayerPrefs(plugin, where);
