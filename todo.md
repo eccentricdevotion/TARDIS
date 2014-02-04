@@ -18,9 +18,6 @@
 12. Add TARDIS unhide ability to admin sonic
 13. `/tardisadmin` remote TARDIS commands
 14. Delete zero room when deleting the TARDIS!
-15. TARDISforBukkit
-16. +ziAoNOXlyGLTwLdhxi5bHrCuc6/0MUidZ4sz55xANE=
-17. +ziAoNOXlyGLTwLdhxi5bHrCuc6/0MUidZ4sz55xANE=
 
     
 ##Future version `2.9+`

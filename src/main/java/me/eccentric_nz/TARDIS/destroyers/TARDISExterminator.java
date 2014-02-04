@@ -22,6 +22,8 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.builders.TARDISInteriorPostioning;
+import me.eccentric_nz.TARDIS.builders.TARDISTIPSData;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetBlocks;
 import me.eccentric_nz.TARDIS.database.ResultSetCurrentLocation;
@@ -65,6 +67,7 @@ public class TARDISExterminator {
                 String chunkLoc = rs.getChunk();
                 String owner = rs.getOwner();
                 int tips = rs.getTIPS();
+                boolean hasZero = (!rs.getZero().isEmpty());
                 SCHEMATIC schm = rs.getSchematic();
                 HashMap<String, Object> wherecl = new HashMap<String, Object>();
                 wherecl.put("tardis_id", id);
@@ -89,6 +92,7 @@ public class TARDISExterminator {
                     plugin.getInteriorDestroyer().destroyInner(schm, id, cw, restore, owner, tips);
                 }
                 cleanWorlds(cw, owner);
+                removeZeroRoom(tips, hasZero);
                 cleanDatabase(id);
                 return true;
             }
@@ -153,6 +157,7 @@ public class TARDISExterminator {
             int id = rs.getTardis_id();
             String chunkLoc = rs.getChunk();
             int tips = rs.getTIPS();
+            boolean hasZero = (!rs.getZero().isEmpty());
             SCHEMATIC schm = rs.getSchematic();
             // need to check that a player is not currently in the TARDIS
             if (player.hasPermission("tardis.delete")) {
@@ -210,8 +215,9 @@ public class TARDISExterminator {
                 if (!cw.getName().contains("TARDIS_WORLD_")) {
                     plugin.getInteriorDestroyer().destroyInner(schm, id, cw, restore, playerNameStr, tips);
                 }
-                cleanDatabase(id);
                 cleanWorlds(cw, playerNameStr);
+                removeZeroRoom(tips, hasZero);
+                cleanDatabase(id);
                 player.sendMessage(plugin.getPluginName() + "The TARDIS was removed from the world and database successfully.");
                 return false;
             } else {
@@ -346,5 +352,16 @@ public class TARDISExterminator {
         }
         folder.delete();
         return true;
+    }
+
+    private void removeZeroRoom(int slot, boolean hasZero) {
+        if (slot != -1 && plugin.getConfig().getBoolean("allow.zero_room") && hasZero) {
+            TARDISInteriorPostioning tips = new TARDISInteriorPostioning(plugin);
+            TARDISTIPSData coords = tips.getTIPSData(slot);
+            World w = plugin.getServer().getWorld("TARDIS_Zero_Room");
+            if (w != null) {
+                tips.reclaimChunks(w, coords);
+            }
+        }
     }
 }
