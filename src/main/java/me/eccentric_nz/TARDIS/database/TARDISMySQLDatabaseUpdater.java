@@ -43,6 +43,7 @@ public class TARDISMySQLDatabaseUpdater {
         this.statement = statement;
         tardisupdates.add("renderer varchar(512) DEFAULT ''");
         tardisupdates.add("zero varchar(512) DEFAULT ''");
+        prefsupdates.add("language varchar(32) DEFAULT 'ENGLISH'");
         prefsupdates.add("minecart_on int(1) DEFAULT '0'");
         prefsupdates.add("renderer_on int(1) DEFAULT '1'");
     }

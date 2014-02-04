@@ -41,9 +41,6 @@ import org.bukkit.entity.Player;
  */
 public class TARDISPrefsCommands implements CommandExecutor {
 
-    public static String ucfirst(String str) {
-        return str.substring(0, 1).toUpperCase(Locale.ENGLISH) + str.substring(1).toLowerCase(Locale.ENGLISH);
-    }
     private final TARDIS plugin;
     private final List<String> firstArgs = new ArrayList<String>();
 
@@ -60,6 +57,7 @@ public class TARDISPrefsCommands implements CommandExecutor {
         firstArgs.add("isomorphic");
         firstArgs.add("key");
         firstArgs.add("lamp");
+        firstArgs.add("language");
         firstArgs.add("minecart");
         firstArgs.add("plain");
         firstArgs.add("platform");
@@ -84,7 +82,7 @@ public class TARDISPrefsCommands implements CommandExecutor {
             }
             if (player == null) {
                 sender.sendMessage(plugin.getPluginName() + MESSAGE.MUST_BE_PLAYER.getText());
-                return false;
+                return true;
             }
             String pref = args[0].toLowerCase(Locale.ENGLISH);
             if (firstArgs.contains(pref)) {
@@ -106,6 +104,9 @@ public class TARDISPrefsCommands implements CommandExecutor {
                     }
                     if (pref.equals("lamp")) {
                         return new TARDISSetLampCommand(plugin).setLampPref(player, args, qf);
+                    }
+                    if (pref.equals("language")) {
+                        return new TARDISSetLanguageCommand(plugin).setLanguagePref(player, args, qf);
                     }
                     if (pref.equals("isomorphic")) {
                         return new TARDISIsomorphicCommand(plugin).toggleIsomorphicControls(player, args, qf);
@@ -132,5 +133,9 @@ public class TARDISPrefsCommands implements CommandExecutor {
             }
         }
         return false;
+    }
+
+    public static String ucfirst(String str) {
+        return str.substring(0, 1).toUpperCase(Locale.ENGLISH) + str.substring(1).toLowerCase(Locale.ENGLISH);
     }
 }

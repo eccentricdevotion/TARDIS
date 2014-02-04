@@ -48,6 +48,7 @@ public class ResultSetPlayerPrefs {
     private boolean submarineOn;
     private int artronLevel;
     private int lamp;
+    private String language;
     private String wall;
     private String floor;
     private boolean epsOn;
@@ -120,6 +121,7 @@ public class ResultSetPlayerPrefs {
                 this.submarineOn = rs.getBoolean("submarine_on");
                 this.artronLevel = rs.getInt("artron_level");
                 this.lamp = rs.getInt("lamp");
+                this.language = rs.getString("language");
                 if (rs.wasNull()) {
                     this.lamp = plugin.getConfig().getInt("police_box.tardis_lamp");
                 }
@@ -231,6 +233,10 @@ public class ResultSetPlayerPrefs {
 
     public int getLamp() {
         return lamp;
+    }
+
+    public String getLanguage() {
+        return language;
     }
 
     public boolean isSubmarineOn() {

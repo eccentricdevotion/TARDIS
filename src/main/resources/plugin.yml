@@ -219,6 +219,9 @@ permissions:
   tardis.filter:
     description: Allows a player to use the TARDIS perception filter.
     default: op
+  tardis.translate:
+    description: Allows a player to use the TARDIS Universal Translator.
+    default: op
 commands:
   tardis:
     aliases: [tt,ttardis,/tardis,timelord]
@@ -542,4 +545,10 @@ commands:
     description: View TARDIS item recipes.
     usage: /<command> [a-circuit|ars-circuit|bio-circuit|biome-disk|blank|c-circuit|cell|d-circuit|e-circuit|filter|i-circuit|key|l-circuit|locator|m-circuit|mem-circuit|oscillator|player-disk|preset-disk|p-circuit|r-circuit|remote|s-circuit|save-disk|scan-circuit|sonic|t-circuit]
     permission: tardis.help
+    permission-message: You don't have the permission <permission> to use this command
+  tardissay:
+    aliases: [tsay, translate]
+    description: Say something in a different language via the TARDIS Universal Translator.
+    usage: /<command> [language] [message]
+    permission: tardis.translate
     permission-message: You don't have the permission <permission> to use this command

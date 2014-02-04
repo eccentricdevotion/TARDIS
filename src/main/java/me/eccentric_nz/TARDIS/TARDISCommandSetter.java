@@ -40,6 +40,8 @@ import me.eccentric_nz.TARDIS.commands.preferences.TARDISPrefsCommands;
 import me.eccentric_nz.TARDIS.commands.preferences.TARDISPrefsTabComplete;
 import me.eccentric_nz.TARDIS.commands.tardis.TARDISCommands;
 import me.eccentric_nz.TARDIS.commands.tardis.TARDISTabComplete;
+import me.eccentric_nz.TARDIS.universaltranslator.TARDISSayCommand;
+import me.eccentric_nz.TARDIS.universaltranslator.TARDISSayTabComplete;
 
 /**
  *
@@ -85,5 +87,7 @@ public class TARDISCommandSetter {
         plugin.getCommand("tardistravel").setExecutor(tardisTravelCommand);
         plugin.getGeneralKeeper().setTardisTravelCommand(tardisTravelCommand);
         plugin.getCommand("tardistravel").setTabCompleter(new TARDISTravelTabComplete(plugin));
+        plugin.getCommand("tardissay").setExecutor(new TARDISSayCommand(plugin));
+        plugin.getCommand("tardissay").setTabCompleter(new TARDISSayTabComplete());
     }
 }
