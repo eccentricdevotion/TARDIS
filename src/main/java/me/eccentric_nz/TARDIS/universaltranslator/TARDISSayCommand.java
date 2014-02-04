@@ -40,7 +40,7 @@ import org.bukkit.entity.Player;
 public class TARDISSayCommand implements CommandExecutor {
 
     private final TARDIS plugin;
-    private final String UT = ChatColor.GOLD + "[TARDIS Universal Transaltor]" + ChatColor.RESET;
+    private final String UT = ChatColor.GOLD + "[TARDIS Universal Translator]" + ChatColor.RESET;
 
     public TARDISSayCommand(TARDIS plugin) {
         this.plugin = plugin;
