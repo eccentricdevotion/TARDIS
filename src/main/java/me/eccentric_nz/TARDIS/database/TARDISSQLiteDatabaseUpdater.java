@@ -66,7 +66,7 @@ public class TARDISSQLiteDatabaseUpdater {
         prefsupdates.add("hads_on INTEGER DEFAULT 1");
         prefsupdates.add("key TEXT DEFAULT ''");
         prefsupdates.add("lamp INTEGER");
-        prefsupdates.add("language TEXT DEFAULT 'ENGLISH'");
+        prefsupdates.add("language TEXT DEFAULT 'AUTO_DETECT'");
         prefsupdates.add("minecart_on INTEGER DEFAULT 0");
         prefsupdates.add("renderer_on INTEGER DEFAULT 1");
         prefsupdates.add("submarine_on INTEGER DEFAULT 0");
