@@ -111,7 +111,7 @@ public class TARDISWorldGuardUtils {
         try {
             rm.save();
         } catch (ProtectionDatabaseException e) {
-            plugin.getConsole().sendMessage(plugin.getPluginName() + "could not create WorldGuard Protection for TARDIS! " + e);
+            plugin.getConsole().sendMessage(plugin.getPluginName() + "Could not create WorldGuard Protection for TARDIS! " + e.getMessage());
         }
     }
 
@@ -150,7 +150,7 @@ public class TARDISWorldGuardUtils {
         try {
             rm.save();
         } catch (ProtectionDatabaseException e) {
-            plugin.getConsole().sendMessage(plugin.getPluginName() + "could not create WorldGuard Protection for TARDIS! " + e);
+            plugin.getConsole().sendMessage(plugin.getPluginName() + "Could not create WorldGuard Protection for TARDIS! " + e.getMessage());
         }
     }
 
@@ -186,7 +186,7 @@ public class TARDISWorldGuardUtils {
         try {
             rm.save();
         } catch (ProtectionDatabaseException e) {
-            plugin.getConsole().sendMessage(plugin.getPluginName() + "could not create WorldGuard Protection for recharger! " + e);
+            plugin.getConsole().sendMessage(plugin.getPluginName() + "Could not create WorldGuard Protection for recharger! " + e.getMessage());
         }
     }
 
@@ -217,7 +217,7 @@ public class TARDISWorldGuardUtils {
         try {
             rm.save();
         } catch (ProtectionDatabaseException e) {
-            plugin.getConsole().sendMessage(plugin.getPluginName() + "could not create WorldGuard Protection for exterior renderering room! " + e);
+            plugin.getConsole().sendMessage(plugin.getPluginName() + "Could not create WorldGuard Protection for exterior renderering room! " + e.getMessage());
         }
     }
 
@@ -233,7 +233,7 @@ public class TARDISWorldGuardUtils {
         try {
             rm.save();
         } catch (ProtectionDatabaseException e) {
-            plugin.getConsole().sendMessage(plugin.getPluginName() + "could not remove WorldGuard Protection for TARDIS! " + e);
+            plugin.getConsole().sendMessage(plugin.getPluginName() + "Could not remove WorldGuard Protection for TARDIS! " + e.getMessage());
         }
     }
 
@@ -249,7 +249,7 @@ public class TARDISWorldGuardUtils {
         try {
             rm.save();
         } catch (ProtectionDatabaseException e) {
-            plugin.getConsole().sendMessage(plugin.getPluginName() + "could not remove recharger WorldGuard Protection for recharger! " + e);
+            plugin.getConsole().sendMessage(plugin.getPluginName() + "Could not remove recharger WorldGuard Protection for recharger! " + e.getMessage());
         }
     }
 
@@ -267,7 +267,7 @@ public class TARDISWorldGuardUtils {
             try {
                 rm.save();
             } catch (ProtectionDatabaseException e) {
-                plugin.getConsole().sendMessage(plugin.getPluginName() + "could not remove WorldGuard Protection for renderer room! " + e);
+                plugin.getConsole().sendMessage(plugin.getPluginName() + "Could not remove WorldGuard Protection for renderer room! " + e.getMessage());
             }
         }
     }
@@ -319,11 +319,9 @@ public class TARDISWorldGuardUtils {
     public void sponge(Block b, boolean clear) {
         if (clear) {
             // remove water
-            plugin.debug("Clearing water");
             SpongeUtil.clearSpongeWater(wg, b.getWorld(), b.getX(), b.getY(), b.getZ());
         } else {
             // put water back
-            plugin.debug("Restoring water");
             SpongeUtil.addSpongeWater(wg, b.getWorld(), b.getX(), b.getY(), b.getZ());
         }
     }
