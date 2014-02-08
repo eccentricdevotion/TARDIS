@@ -15,10 +15,8 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.memetix.mst.speak;
+package com.memetix.mst;
 
-import com.memetix.mst.MicrosoftTranslatorAPI;
-import com.memetix.mst.language.SpokenDialect;
 import java.net.URL;
 import java.net.URLEncoder;
 

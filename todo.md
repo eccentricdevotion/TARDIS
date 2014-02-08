@@ -3,7 +3,7 @@
 ##Current version `2.8`
 0. Videos!
 1. Custom room schematics in ARS (check they are 16x16x16)
-2. TARDIS direction sign
+2. TARDIS direction sign / (item frame ?)
 3. Configurable option to allow Gravity Wells outside of the TARDIS
 4. TARDIS invisiblity
 5. HADS + explosions + fireballs + lava
@@ -17,7 +17,6 @@
 11. Custom data classes for mat / demat
 12. Add TARDIS unhide ability to admin sonic
 13. `/tardisadmin` remote TARDIS commands
-14. Delete zero room when deleting the TARDIS!
 
     
 ##Future version `2.9+`
@@ -35,7 +34,7 @@ Reskin mobs for Resource pack, and add new mob sounds
 * Endermen -> The Silence
 * Creepers -> Daleks
 * Slimes -> Adipose
-* Witches -> Silurians
+* Witches -> Empty Child (no hat, the nose can be the gas mask filter)
 * Villagers -> Ood
 
 ##Waiting on Bukkit API

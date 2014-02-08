@@ -16,8 +16,8 @@
  */
 package me.eccentric_nz.TARDIS.universaltranslator;
 
-import com.memetix.mst.language.Language;
-import com.memetix.mst.translate.Translate;
+import com.memetix.mst.Language;
+import com.memetix.mst.Translate;
 import java.util.HashMap;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.ResultSetPlayerPrefs;

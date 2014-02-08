@@ -15,9 +15,8 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.memetix.mst.language;
+package com.memetix.mst;
 
-import com.memetix.mst.MicrosoftTranslatorAPI;
 import java.net.URL;
 import java.net.URLEncoder;
 import java.util.Map;
