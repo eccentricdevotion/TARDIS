@@ -49,17 +49,22 @@ public class TARDISBlockPhysicsListener implements Listener {
         if (plugin.getTrackerKeeper().getTrackInVortex().size() > 0) {
             Block block = event.getBlock();
             if (block != null) {
-                BlockState state = block.getState();
-                if (state != null) {
-                    MaterialData md = state.getData();
-                    if (md instanceof SimpleAttachableMaterialData) {
-                        Block blockBehind = getBlockBehindAttachable(block, ((SimpleAttachableMaterialData) md).getFacing());
-                        if (blockBehind != null) {
-                            if (blockBehind.getType().equals(Material.GLASS) || blockBehind.getType().equals(Material.ICE) || blockBehind.getType().equals(Material.STAINED_GLASS)) {
-                                event.setCancelled(true);
+                BlockState state;
+                try {
+                    state = block.getState();
+                    if (state != null) {
+                        MaterialData md = state.getData();
+                        if (md instanceof SimpleAttachableMaterialData) {
+                            Block blockBehind = getBlockBehindAttachable(block, ((SimpleAttachableMaterialData) md).getFacing());
+                            if (blockBehind != null) {
+                                if (blockBehind.getType().equals(Material.GLASS) || blockBehind.getType().equals(Material.ICE) || blockBehind.getType().equals(Material.STAINED_GLASS)) {
+                                    event.setCancelled(true);
+                                }
                             }
                         }
                     }
+                } catch (NullPointerException e) {
+                    plugin.debug("Invalid Tile Entity detected at " + block.getLocation());
                 }
                 if (block.getType().equals(Material.VINE)) {
                     event.setCancelled(true);
