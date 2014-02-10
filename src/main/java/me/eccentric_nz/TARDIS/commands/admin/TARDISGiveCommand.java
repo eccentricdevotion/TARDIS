@@ -203,7 +203,7 @@ public class TARDISGiveCommand implements CommandExecutor {
             }
             QueryFactory qf = new QueryFactory(plugin);
             HashMap<String, Object> set = new HashMap<String, Object>();
-            set.put("artron", set_level);
+            set.put("artron_level", set_level);
             HashMap<String, Object> wheret = new HashMap<String, Object>();
             wheret.put("tardis_id", id);
             qf.doUpdate("tardis", set, wheret);
