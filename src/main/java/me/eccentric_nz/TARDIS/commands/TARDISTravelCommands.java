@@ -100,6 +100,7 @@ public class TARDISTravelCommands implements CommandExecutor {
                     return true;
                 }
                 int id = rs.getTardis_id();
+                int level = rs.getArtron_level();
                 if (!rs.isHandbrake_on()) {
                     player.sendMessage(plugin.getPluginName() + ChatColor.RED + MESSAGE.NOT_WHILE_TRAVELLING.getText());
                     return true;
@@ -116,7 +117,6 @@ public class TARDISTravelCommands implements CommandExecutor {
                     sender.sendMessage(plugin.getPluginName() + "You can only run this command if you are the Timelord of " + ChatColor.LIGHT_PURPLE + "this" + ChatColor.RESET + " TARDIS!");
                     return true;
                 }
-                int level = rs.getArtron_level();
                 int travel = plugin.getArtronConfig().getInt("travel");
                 if (level < travel) {
                     player.sendMessage(plugin.getPluginName() + ChatColor.RED + MESSAGE.NOT_ENOUGH_ENERGY.getText());

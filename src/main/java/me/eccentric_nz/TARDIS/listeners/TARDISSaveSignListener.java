@@ -21,7 +21,9 @@ import java.util.List;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetCurrentLocation;
+import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import me.eccentric_nz.TARDIS.database.ResultSetTravellers;
+import me.eccentric_nz.TARDIS.enumeration.MESSAGE;
 import me.eccentric_nz.TARDIS.travel.TARDISAreasInventory;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
@@ -84,6 +86,21 @@ public class TARDISSaveSignListener implements Listener {
                         if (save_dest != null) {
                             // check the player is allowed!
                             if (!plugin.getPluginRespect().getRespect(player, save_dest, true)) {
+                                close(player);
+                                return;
+                            }
+                            // get tardis artron level
+                            HashMap<String, Object> wherel = new HashMap<String, Object>();
+                            wherel.put("tardis_id", id);
+                            ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);
+                            if (!rs.resultSet()) {
+                                close(player);
+                                return;
+                            }
+                            int level = rs.getArtron_level();
+                            int travel = plugin.getArtronConfig().getInt("travel");
+                            if (level < travel) {
+                                player.sendMessage(plugin.getPluginName() + ChatColor.RED + MESSAGE.NOT_ENOUGH_ENERGY.getText());
                                 close(player);
                                 return;
                             }
