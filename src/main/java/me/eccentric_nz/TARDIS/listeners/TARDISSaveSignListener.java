@@ -92,7 +92,7 @@ public class TARDISSaveSignListener implements Listener {
                             // get tardis artron level
                             HashMap<String, Object> wherel = new HashMap<String, Object>();
                             wherel.put("tardis_id", id);
-                            ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);
+                            ResultSetTardis rs = new ResultSetTardis(plugin, wherel, "", false);
                             if (!rs.resultSet()) {
                                 close(player);
                                 return;
