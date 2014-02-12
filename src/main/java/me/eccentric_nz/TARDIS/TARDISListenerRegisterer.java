@@ -54,6 +54,7 @@ import me.eccentric_nz.TARDIS.listeners.TARDISIceMeltListener;
 import me.eccentric_nz.TARDIS.listeners.TARDISJettisonSeeder;
 import me.eccentric_nz.TARDIS.listeners.TARDISJoinListener;
 import me.eccentric_nz.TARDIS.listeners.TARDISKeyboardListener;
+import me.eccentric_nz.TARDIS.listeners.TARDISKeyboardPacketListener;
 import me.eccentric_nz.TARDIS.listeners.TARDISLightningListener;
 import me.eccentric_nz.TARDIS.listeners.TARDISMakePresetListener;
 import me.eccentric_nz.TARDIS.listeners.TARDISMinecartListener;
@@ -187,6 +188,11 @@ public class TARDISListenerRegisterer {
             if (plugin.getPM().isPluginEnabled("ProtocolLib")) {
                 new TARDISZeroRoomPacketListener(plugin);
             }
+        }
+        if (plugin.getPM().isPluginEnabled("ProtocolLib")) {
+            TARDISKeyboardPacketListener kpl = new TARDISKeyboardPacketListener(plugin);
+            plugin.getPM().registerEvents(kpl, plugin);
+            kpl.startSignPackets();
         }
     }
 

@@ -64,7 +64,7 @@ public class TARDISKeyboardListener implements Listener {
         where.put("type", 7);
         where.put("location", loc_str);
         ResultSetControls rsc = new ResultSetControls(plugin, where, false);
-        if (rsc.resultSet()) {
+        if (rsc.resultSet() && !plugin.getPM().isPluginEnabled("ProtocolLib")) {
             TARDISCircuitChecker tcc = null;
             if (plugin.getConfig().getString("preferences.difficulty").equals("hard")) {
                 tcc = new TARDISCircuitChecker(plugin, rsc.getTardis_id());
@@ -77,6 +77,8 @@ public class TARDISKeyboardListener implements Listener {
             Sign keyboard = (Sign) against.getState();
             // track this sign
             plugin.getTrackerKeeper().getTrackSign().put(block.getLocation().toString(), keyboard);
+        } else {
+            event.setCancelled(true);
         }
     }
 
@@ -87,23 +89,25 @@ public class TARDISKeyboardListener implements Listener {
             return;
         }
         Sign keyboard = plugin.getTrackerKeeper().getTrackSign().get(loc);
-        int i = 0;
-        for (String l : event.getLines()) {
-            keyboard.setLine(i, l);
-            i++;
-        }
-        keyboard.update();
         Player p = event.getPlayer();
-        plugin.getTrackerKeeper().getTrackSign().remove(loc);
-        // cancel the edit and give the sign back to the player
-        event.setCancelled(true);
-        event.getBlock().setType(Material.AIR);
-        if (p.getGameMode() != GameMode.CREATIVE) {
-            ItemStack itemInHand = p.getItemInHand();
-            if ((itemInHand == null) || (itemInHand.getType() == Material.AIR)) {
-                p.setItemInHand(new ItemStack(Material.SIGN, 1));
-            } else {
-                itemInHand.setAmount(itemInHand.getAmount() + 1);
+        if (!plugin.getPM().isPluginEnabled("ProtocolLib")) {
+            int i = 0;
+            for (String l : event.getLines()) {
+                keyboard.setLine(i, l);
+                i++;
+            }
+            keyboard.update();
+            plugin.getTrackerKeeper().getTrackSign().remove(loc);
+            // cancel the edit and give the sign back to the player
+            event.setCancelled(true);
+            event.getBlock().setType(Material.AIR);
+            if (p.getGameMode() != GameMode.CREATIVE) {
+                ItemStack itemInHand = p.getItemInHand();
+                if ((itemInHand == null) || (itemInHand.getType() == Material.AIR)) {
+                    p.setItemInHand(new ItemStack(Material.SIGN, 1));
+                } else {
+                    itemInHand.setAmount(itemInHand.getAmount() + 1);
+                }
             }
         }
         // process the lines...
