@@ -34,7 +34,7 @@ Reskin mobs for Resource pack, and add new mob sounds
 * Endermen -> The Silence
 * Creepers -> Daleks
 * Slimes -> Adipose
-* Witches -> Empty Child (no hat, the nose can be the gas mask filter)
+* Witches -> Empty Child - __done__
 * Villagers -> Ood
 
 ##Waiting on Bukkit API

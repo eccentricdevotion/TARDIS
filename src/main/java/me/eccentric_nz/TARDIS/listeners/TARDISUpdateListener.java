@@ -176,11 +176,15 @@ public class TARDISUpdateListener implements Listener {
                 int type;
                 if (rst.resultSet()) {
                     type = (secondary) ? 4 : 3;
-                } else {
-                    type = 2;
                     // check the world
                     if (!plugin.getUtils().inTARDISWorld(player)) {
-                        player.sendMessage(plugin.getPluginName() + "You didn't enter the TARDIS by the regular door, aborting...");
+                        player.sendMessage(plugin.getPluginName() + MESSAGE.NOT_IN_TARDIS.getText());
+                        return;
+                    }
+                } else {
+                    type = 2;
+                    if (plugin.getUtils().inTARDISWorld(player)) {
+                        player.sendMessage(plugin.getPluginName() + "You should be outside of the TARDIS!");
                         return;
                     }
                 }
