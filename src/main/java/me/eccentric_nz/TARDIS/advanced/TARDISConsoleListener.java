@@ -46,12 +46,10 @@ public class TARDISConsoleListener implements Listener {
 
     private final TARDIS plugin;
     private final List<Material> onlythese = new ArrayList<Material>();
-    private final List<String> metanames = new ArrayList<String>();
 
     public TARDISConsoleListener(TARDIS plugin) {
         this.plugin = plugin;
         for (DISK_CIRCUIT dc : DISK_CIRCUIT.values()) {
-            metanames.add(dc.getName());
             if (!onlythese.contains(dc.getMaterial())) {
                 onlythese.add(dc.getMaterial());
             }
