@@ -43,7 +43,7 @@ import org.bukkit.inventory.ItemStack;
 public class TARDISConsoleSwitchListener implements Listener {
 
     private final TARDIS plugin;
-    private final List<Byte> gui_circuits = Arrays.asList(new Byte[]{(byte) 1966, (byte) 1973, (byte) 1974, (byte) 1975, (byte) 1976});
+    private final List<Byte> gui_circuits = Arrays.asList(new Byte[]{(byte) 1966, (byte) 1973, (byte) 1974, (byte) 1975, (byte) 1976, (byte) 1977});
 
     public TARDISConsoleSwitchListener(TARDIS plugin) {
         this.plugin = plugin;
@@ -71,8 +71,8 @@ public class TARDISConsoleSwitchListener implements Listener {
                             plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
                                 @Override
                                 public void run() {
-                                    ItemStack[] stack;
-                                    Inventory new_inv;
+                                    ItemStack[] stack = null;
+                                    Inventory new_inv = null;
                                     switch (map) {
                                         case (byte) 1966: // Chameleon circuit
                                             new_inv = plugin.getServer().createInventory(p, 54, "§4Chameleon Circuit");
@@ -90,16 +90,21 @@ public class TARDISConsoleSwitchListener implements Listener {
                                             new_inv = plugin.getServer().createInventory(p, 54, "§4TARDIS saves");
                                             stack = new TARDISSaveSignInventory(plugin, rs.getTardis_id()).getTerminal();
                                             break;
-                                        default: // Input circuit (terminal)
+                                        case (byte) 1976: // Input circuit (terminal)
                                             new_inv = plugin.getServer().createInventory(p, 54, "§4Destination Terminal");
                                             stack = new TARDISTerminalInventory().getTerminal();
+                                            break;
+                                        default: // scanner circuit
+                                            plugin.getGeneralKeeper().getScannerListener().scan(p, rs.getTardis_id(), plugin.getServer().getScheduler());
                                             break;
                                     }
                                     // close inventory
                                     p.closeInventory();
-                                    // open new inventory
-                                    new_inv.setContents(stack);
-                                    p.openInventory(new_inv);
+                                    if (new_inv != null && stack != null) {
+                                        // open new inventory
+                                        new_inv.setContents(stack);
+                                        p.openInventory(new_inv);
+                                    }
                                 }
                             }, 1L);
                         } else {

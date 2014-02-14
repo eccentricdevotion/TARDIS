@@ -132,7 +132,9 @@ public class TARDISListenerRegisterer {
         plugin.getPM().registerEvents(new TARDISCondenserListener(plugin), plugin);
         plugin.getPM().registerEvents(new TARDISIceMeltListener(plugin), plugin);
         plugin.getPM().registerEvents(new TARDISChunkListener(plugin), plugin);
-        plugin.getPM().registerEvents(new TARDISScannerListener(plugin), plugin);
+        TARDISScannerListener scannerListener = new TARDISScannerListener(plugin);
+        plugin.getPM().registerEvents(scannerListener, plugin);
+        plugin.getGeneralKeeper().setScannerListener(scannerListener);
         plugin.getPM().registerEvents(new TARDISTimeLordDeathListener(plugin), plugin);
         plugin.getPM().registerEvents(new TARDISJoinListener(plugin), plugin);
         plugin.getPM().registerEvents(new TARDISQuitListener(plugin), plugin);

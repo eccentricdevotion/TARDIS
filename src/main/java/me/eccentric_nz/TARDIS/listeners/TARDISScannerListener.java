@@ -23,6 +23,7 @@ import java.util.Map;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.advanced.TARDISCircuitChecker;
+import me.eccentric_nz.TARDIS.advanced.TARDISScannerData;
 import me.eccentric_nz.TARDIS.database.ResultSetCurrentLocation;
 import me.eccentric_nz.TARDIS.database.ResultSetNextLocation;
 import me.eccentric_nz.TARDIS.database.ResultSetPlayerPrefs;
@@ -103,147 +104,29 @@ public class TARDISScannerListener implements Listener {
                         return;
                     }
                     final String renderer = rs.getRenderer();
-                    plugin.getUtils().playTARDISSound(player.getLocation(), player, "tardis_scanner");
-                    final Location scan_loc;
-                    String whereisit;
-                    final COMPASS tardisDirection;
-                    HashMap<String, Object> wherenl = new HashMap<String, Object>();
-                    wherenl.put("tardis_id", id);
-                    if (plugin.getTrackerKeeper().getTrackHasDestination().containsKey(Integer.valueOf(id))) {
-                        ResultSetNextLocation rsn = new ResultSetNextLocation(plugin, wherenl);
-                        if (!rsn.resultSet()) {
-                            player.sendMessage(plugin.getPluginName() + "Could not get TARDIS's next destination!");
-                            return;
-                        }
-                        scan_loc = new Location(rsn.getWorld(), rsn.getX(), rsn.getY(), rsn.getZ());
-                        tardisDirection = rsn.getDirection();
-                        whereisit = "next destination";
-                    } else {
-                        ResultSetCurrentLocation rsc = new ResultSetCurrentLocation(plugin, wherenl);
-                        if (!rsc.resultSet()) {
-                            player.sendMessage(plugin.getPluginName() + MESSAGE.NO_CURRENT.getText());
-                            return;
-                        }
-                        scan_loc = new Location(rsc.getWorld(), rsc.getX(), rsc.getY(), rsc.getZ());
-                        tardisDirection = rsc.getDirection();
-                        whereisit = "current location";
-                    }
-                    // record nearby entities
-                    final HashMap<EntityType, Integer> scannedentities = new HashMap<EntityType, Integer>();
-                    final List<String> playernames = new ArrayList<String>();
-                    for (Entity k : getNearbyEntities(scan_loc, 16)) {
-                        EntityType et = k.getType();
-                        if (TARDISConstants.ENTITY_TYPES.contains(et)) {
-                            Integer entity_count = (scannedentities.containsKey(et)) ? scannedentities.get(et) : 0;
-                            boolean visible = true;
-                            if (et.equals(EntityType.PLAYER)) {
-                                Player entPlayer = (Player) k;
-                                if (player.canSee(entPlayer)) {
-                                    playernames.add(entPlayer.getName());
-                                } else {
-                                    visible = false;
-                                }
-                            }
-                            if (visible) {
-                                scannedentities.put(et, entity_count + 1);
-                            }
-                        }
-                    }
-                    final long time = scan_loc.getWorld().getTime();
-                    final String daynight = plugin.getUtils().getTime(time);
-                    // message the player
-                    player.sendMessage(plugin.getPluginName() + "Scanner results for the TARDIS's " + whereisit);
-                    player.sendMessage("World: " + scan_loc.getWorld().getName());
-                    player.sendMessage("Co-ordinates: " + scan_loc.getBlockX() + ":" + scan_loc.getBlockY() + ":" + scan_loc.getBlockZ());
                     BukkitScheduler bsched = plugin.getServer().getScheduler();
-                    bsched.scheduleSyncDelayedTask(plugin, new Runnable() {
-                        @Override
-                        public void run() {
-                            player.sendMessage("TARDIS Direction: " + tardisDirection);
+                    final TARDISScannerData data = scan(player, id, bsched);
+                    if (data != null) {
+                        boolean extrend = true;
+                        HashMap<String, Object> wherer = new HashMap<String, Object>();
+                        wherer.put("player", player.getName());
+                        ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, wherer);
+                        if (rsp.resultSet()) {
+                            extrend = rsp.isRendererOn();
                         }
-                    }, 20L);
-                    // get biome
-                    final Biome biome = scan_loc.getBlock().getBiome();
-                    bsched.scheduleSyncDelayedTask(plugin, new Runnable() {
-                        @Override
-                        public void run() {
-                            player.sendMessage("Biome type: " + biome);
-                        }
-                    }, 40L);
-                    bsched.scheduleSyncDelayedTask(plugin, new Runnable() {
-                        @Override
-                        public void run() {
-                            player.sendMessage("Time of day: " + daynight + " / " + time + " ticks");
-                        }
-                    }, 60L);
-                    // get weather
-                    final String weather;
-                    if (biome.equals(Biome.DESERT) || biome.equals(Biome.DESERT_HILLS) || biome.equals(Biome.SAVANNA) || biome.equals(Biome.SAVANNA_MOUNTAINS) || biome.equals(Biome.SAVANNA_PLATEAU) || biome.equals(Biome.SAVANNA_PLATEAU_MOUNTAINS) || biome.equals(Biome.MESA) || biome.equals(Biome.MESA_BRYCE) || biome.equals(Biome.MESA_PLATEAU) || biome.equals(Biome.MESA_PLATEAU_MOUNTAINS)) {
-                        weather = "dry as a bone";
-                    } else if (biome.equals(Biome.ICE_PLAINS) || biome.equals(Biome.ICE_PLAINS_SPIKES) || biome.equals(Biome.FROZEN_OCEAN) || biome.equals(Biome.FROZEN_RIVER) || biome.equals(Biome.COLD_BEACH) || biome.equals(Biome.COLD_TAIGA) || biome.equals(Biome.COLD_TAIGA_HILLS) || biome.equals(Biome.COLD_TAIGA_MOUNTAINS)) {
-                        weather = (scan_loc.getWorld().hasStorm()) ? "snowing" : "clear, but cold";
-                    } else {
-                        weather = (scan_loc.getWorld().hasStorm()) ? "raining" : "clear";
-                    }
-                    bsched.scheduleSyncDelayedTask(plugin, new Runnable() {
-                        @Override
-                        public void run() {
-                            player.sendMessage("Weather: " + weather);
-                        }
-                    }, 80L);
-                    bsched.scheduleSyncDelayedTask(plugin, new Runnable() {
-                        @Override
-                        public void run() {
-                            player.sendMessage("Humidity: " + String.format("%.2f", scan_loc.getBlock().getHumidity()));
-                        }
-                    }, 100L);
-                    bsched.scheduleSyncDelayedTask(plugin, new Runnable() {
-                        @Override
-                        public void run() {
-                            player.sendMessage("Temperature: " + String.format("%.2f", scan_loc.getBlock().getTemperature()));
-                        }
-                    }, 120L);
-                    bsched.scheduleSyncDelayedTask(plugin, new Runnable() {
-                        @Override
-                        public void run() {
-                            if (scannedentities.size() > 0) {
-                                player.sendMessage("Nearby entities:");
-                                for (Map.Entry<EntityType, Integer> entry : scannedentities.entrySet()) {
-                                    String message = "";
-                                    StringBuilder buf = new StringBuilder();
-                                    if (entry.getKey().equals(EntityType.PLAYER) && playernames.size() > 0) {
-                                        for (String p : playernames) {
-                                            buf.append(", ").append(p);
-                                        }
-                                        message = " (" + buf.toString().substring(2) + ")";
+                        if (!renderer.isEmpty() && extrend) {
+                            int required = plugin.getArtronConfig().getInt("render");
+                            if (level > required) {
+                                bsched.scheduleSyncDelayedTask(plugin, new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        TARDISExteriorRenderer ter = new TARDISExteriorRenderer(plugin);
+                                        ter.render(renderer, data.getScanLocation(), id, player, data.getTardisDirection(), data.getTime(), data.getBiome());
                                     }
-                                    player.sendMessage("    " + entry.getKey() + ": " + entry.getValue() + message);
-                                }
-                                scannedentities.clear();
+                                }, 160L);
                             } else {
-                                player.sendMessage("Nearby entities: none");
+                                player.sendMessage(plugin.getPluginName() + "You don't have enough Artron Energy to enter the Exterior Rendering Room!");
                             }
-                        }
-                    }, 140L);
-                    boolean extrend = true;
-                    HashMap<String, Object> wherer = new HashMap<String, Object>();
-                    wherer.put("player", player.getName());
-                    ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, wherer);
-                    if (rsp.resultSet()) {
-                        extrend = rsp.isRendererOn();
-                    }
-                    if (!renderer.isEmpty() && extrend) {
-                        int required = plugin.getArtronConfig().getInt("render");
-                        if (level > required) {
-                            bsched.scheduleSyncDelayedTask(plugin, new Runnable() {
-                                @Override
-                                public void run() {
-                                    TARDISExteriorRenderer ter = new TARDISExteriorRenderer(plugin);
-                                    ter.render(renderer, scan_loc, id, player, tardisDirection, time, biome);
-                                }
-                            }, 160L);
-                        } else {
-                            player.sendMessage(plugin.getPluginName() + "You don't have enough Artron Energy to enter the Exterior Rendering Room!");
                         }
                     }
                 }
@@ -265,5 +148,135 @@ public class TARDISScannerListener implements Listener {
             }
         }
         return radiusEntities;
+    }
+
+    public TARDISScannerData scan(final Player player, int id, BukkitScheduler bsched) {
+        TARDISScannerData data = new TARDISScannerData();
+        plugin.getUtils().playTARDISSound(player.getLocation(), player, "tardis_scanner");
+        final Location scan_loc;
+        String whereisit;
+        final COMPASS tardisDirection;
+        HashMap<String, Object> wherenl = new HashMap<String, Object>();
+        wherenl.put("tardis_id", id);
+        if (plugin.getTrackerKeeper().getTrackHasDestination().containsKey(Integer.valueOf(id))) {
+            ResultSetNextLocation rsn = new ResultSetNextLocation(plugin, wherenl);
+            if (!rsn.resultSet()) {
+                player.sendMessage(plugin.getPluginName() + "Could not get TARDIS's next destination!");
+                return null;
+            }
+            scan_loc = new Location(rsn.getWorld(), rsn.getX(), rsn.getY(), rsn.getZ());
+            tardisDirection = rsn.getDirection();
+            whereisit = "next destination";
+        } else {
+            ResultSetCurrentLocation rsc = new ResultSetCurrentLocation(plugin, wherenl);
+            if (!rsc.resultSet()) {
+                player.sendMessage(plugin.getPluginName() + MESSAGE.NO_CURRENT.getText());
+                return null;
+            }
+            scan_loc = new Location(rsc.getWorld(), rsc.getX(), rsc.getY(), rsc.getZ());
+            tardisDirection = rsc.getDirection();
+            whereisit = "current location";
+        }
+        data.setScanLocation(scan_loc);
+        data.setTardisDirection(tardisDirection);
+        // record nearby entities
+        final HashMap<EntityType, Integer> scannedentities = new HashMap<EntityType, Integer>();
+        final List<String> playernames = new ArrayList<String>();
+        for (Entity k : getNearbyEntities(scan_loc, 16)) {
+            EntityType et = k.getType();
+            if (TARDISConstants.ENTITY_TYPES.contains(et)) {
+                Integer entity_count = (scannedentities.containsKey(et)) ? scannedentities.get(et) : 0;
+                boolean visible = true;
+                if (et.equals(EntityType.PLAYER)) {
+                    Player entPlayer = (Player) k;
+                    if (player.canSee(entPlayer)) {
+                        playernames.add(entPlayer.getName());
+                    } else {
+                        visible = false;
+                    }
+                }
+                if (visible) {
+                    scannedentities.put(et, entity_count + 1);
+                }
+            }
+        }
+        final long time = scan_loc.getWorld().getTime();
+        data.setTime(time);
+        final String daynight = plugin.getUtils().getTime(time);
+        // message the player
+        player.sendMessage(plugin.getPluginName() + "Scanner results for the TARDIS's " + whereisit);
+        player.sendMessage("World: " + scan_loc.getWorld().getName());
+        player.sendMessage("Co-ordinates: " + scan_loc.getBlockX() + ":" + scan_loc.getBlockY() + ":" + scan_loc.getBlockZ());
+        bsched.scheduleSyncDelayedTask(plugin, new Runnable() {
+            @Override
+            public void run() {
+                player.sendMessage("TARDIS Direction: " + tardisDirection);
+            }
+        }, 20L);
+        // get biome
+        final Biome biome = scan_loc.getBlock().getBiome();
+        data.setBiome(biome);
+        bsched.scheduleSyncDelayedTask(plugin, new Runnable() {
+            @Override
+            public void run() {
+                player.sendMessage("Biome type: " + biome);
+            }
+        }, 40L);
+        bsched.scheduleSyncDelayedTask(plugin, new Runnable() {
+            @Override
+            public void run() {
+                player.sendMessage("Time of day: " + daynight + " / " + time + " ticks");
+            }
+        }, 60L);
+        // get weather
+        final String weather;
+        if (biome.equals(Biome.DESERT) || biome.equals(Biome.DESERT_HILLS) || biome.equals(Biome.SAVANNA) || biome.equals(Biome.SAVANNA_MOUNTAINS) || biome.equals(Biome.SAVANNA_PLATEAU) || biome.equals(Biome.SAVANNA_PLATEAU_MOUNTAINS) || biome.equals(Biome.MESA) || biome.equals(Biome.MESA_BRYCE) || biome.equals(Biome.MESA_PLATEAU) || biome.equals(Biome.MESA_PLATEAU_MOUNTAINS)) {
+            weather = "dry as a bone";
+        } else if (biome.equals(Biome.ICE_PLAINS) || biome.equals(Biome.ICE_PLAINS_SPIKES) || biome.equals(Biome.FROZEN_OCEAN) || biome.equals(Biome.FROZEN_RIVER) || biome.equals(Biome.COLD_BEACH) || biome.equals(Biome.COLD_TAIGA) || biome.equals(Biome.COLD_TAIGA_HILLS) || biome.equals(Biome.COLD_TAIGA_MOUNTAINS)) {
+            weather = (scan_loc.getWorld().hasStorm()) ? "snowing" : "clear, but cold";
+        } else {
+            weather = (scan_loc.getWorld().hasStorm()) ? "raining" : "clear";
+        }
+        bsched.scheduleSyncDelayedTask(plugin, new Runnable() {
+            @Override
+            public void run() {
+                player.sendMessage("Weather: " + weather);
+            }
+        }, 80L);
+        bsched.scheduleSyncDelayedTask(plugin, new Runnable() {
+            @Override
+            public void run() {
+                player.sendMessage("Humidity: " + String.format("%.2f", scan_loc.getBlock().getHumidity()));
+            }
+        }, 100L);
+        bsched.scheduleSyncDelayedTask(plugin, new Runnable() {
+            @Override
+            public void run() {
+                player.sendMessage("Temperature: " + String.format("%.2f", scan_loc.getBlock().getTemperature()));
+            }
+        }, 120L);
+        bsched.scheduleSyncDelayedTask(plugin, new Runnable() {
+            @Override
+            public void run() {
+                if (scannedentities.size() > 0) {
+                    player.sendMessage("Nearby entities:");
+                    for (Map.Entry<EntityType, Integer> entry : scannedentities.entrySet()) {
+                        String message = "";
+                        StringBuilder buf = new StringBuilder();
+                        if (entry.getKey().equals(EntityType.PLAYER) && playernames.size() > 0) {
+                            for (String p : playernames) {
+                                buf.append(", ").append(p);
+                            }
+                            message = " (" + buf.toString().substring(2) + ")";
+                        }
+                        player.sendMessage("    " + entry.getKey() + ": " + entry.getValue() + message);
+                    }
+                    scannedentities.clear();
+                } else {
+                    player.sendMessage("Nearby entities: none");
+                }
+            }
+        }, 140L);
+        return data;
     }
 }

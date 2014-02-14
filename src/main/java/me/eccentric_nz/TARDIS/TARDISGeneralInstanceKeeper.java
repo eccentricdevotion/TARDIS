@@ -25,6 +25,7 @@ import me.eccentric_nz.TARDIS.commands.admin.TARDISAdminCommands;
 import me.eccentric_nz.TARDIS.listeners.TARDISButtonListener;
 import me.eccentric_nz.TARDIS.listeners.TARDISDoorListener;
 import me.eccentric_nz.TARDIS.listeners.TARDISRenderRoomListener;
+import me.eccentric_nz.TARDIS.listeners.TARDISScannerListener;
 import me.eccentric_nz.TARDIS.rooms.TARDISCondenserData;
 import me.eccentric_nz.TARDIS.sonic.TARDISSonicListener;
 import org.bukkit.Chunk;
@@ -44,6 +45,7 @@ public class TARDISGeneralInstanceKeeper {
     private TARDISButtonListener buttonListener;
     private TARDISDoorListener doorListener;
     private TARDISRenderRoomListener rendererListener;
+    private TARDISScannerListener scannerListener;
     private TARDISSonicListener sonicListener;
     private TARDISTravelCommands tardisTravelCommand;
     private final HashMap<String, Double[]> gravityEastList = new HashMap<String, Double[]>();
@@ -163,6 +165,14 @@ public class TARDISGeneralInstanceKeeper {
 
     public void setRendererListener(TARDISRenderRoomListener rendererListener) {
         this.rendererListener = rendererListener;
+    }
+
+    public TARDISScannerListener getScannerListener() {
+        return scannerListener;
+    }
+
+    public void setScannerListener(TARDISScannerListener scannerListener) {
+        this.scannerListener = scannerListener;
     }
 
     public TARDISSonicListener getSonicListener() {
