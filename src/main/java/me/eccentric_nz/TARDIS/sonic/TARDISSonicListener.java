@@ -109,6 +109,8 @@ public class TARDISSonicListener implements Listener {
         faces.add(BlockFace.SOUTH);
         faces.add(BlockFace.EAST);
         faces.add(BlockFace.WEST);
+        faces.add(BlockFace.UP);
+        faces.add(BlockFace.DOWN);
     }
 
     @SuppressWarnings("deprecation")
