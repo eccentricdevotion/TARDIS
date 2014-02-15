@@ -23,6 +23,7 @@ import me.eccentric_nz.TARDIS.ARS.TARDISARSInventory;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.chameleon.TARDISChameleonInventory;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
+import me.eccentric_nz.TARDIS.database.ResultSetTravellers;
 import me.eccentric_nz.TARDIS.enumeration.MESSAGE;
 import me.eccentric_nz.TARDIS.travel.TARDISSaveSignInventory;
 import me.eccentric_nz.TARDIS.travel.TARDISTemporalLocatorInventory;
@@ -57,13 +58,21 @@ public class TARDISConsoleSwitchListener implements Listener {
         }
         Inventory inv = event.getInventory();
         if (inv.getTitle().equals("§4TARDIS Console")) {
+            final Player p = (Player) event.getWhoClicked();
+            // check they're in the TARDIS
+            HashMap<String, Object> wheret = new HashMap<String, Object>();
+            wheret.put("player", p.getName());
+            ResultSetTravellers rst = new ResultSetTravellers(plugin, wheret, false);
+            if (!rst.resultSet()) {
+                event.setCancelled(true);
+                p.sendMessage(plugin.getPluginName() + MESSAGE.NOT_IN_TARDIS.getText());
+            }
             if (event.getClick().equals(ClickType.SHIFT_RIGHT)) {
                 event.setCancelled(true);
                 final ItemStack item = inv.getItem(event.getRawSlot());
                 if (item != null && item.getType().equals(Material.MAP)) {
                     final byte map = item.getData().getData();
                     if (gui_circuits.contains(map)) {
-                        final Player p = (Player) event.getWhoClicked();
                         HashMap<String, Object> where = new HashMap<String, Object>();
                         where.put("owner", p.getName());
                         final ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);
