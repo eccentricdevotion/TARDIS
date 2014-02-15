@@ -54,17 +54,27 @@ public class TARDISOccupyCommand {
             String occupied;
             QueryFactory qf = new QueryFactory(plugin);
             if (rst.resultSet()) {
-                HashMap<String, Object> whered = new HashMap<String, Object>();
-                //whered.put("tardis_id", id);
-                whered.put("player", player.getName());
-                qf.doDelete("travellers", whered);
-                occupied = ChatColor.RED + "UNOCCUPIED";
+                // only if they're not in the TARDIS world
+                if (!plugin.getUtils().inTARDISWorld(player)) {
+                    HashMap<String, Object> whered = new HashMap<String, Object>();
+                    whered.put("player", player.getName());
+                    qf.doDelete("travellers", whered);
+                    occupied = ChatColor.RED + "UNOCCUPIED";
+                } else {
+                    player.sendMessage(plugin.getPluginName() + "You cannot set occupancy to UNOCCUPIED unless you are outside the TARDIS!");
+                    return true;
+                }
             } else {
-                HashMap<String, Object> wherei = new HashMap<String, Object>();
-                wherei.put("tardis_id", id);
-                wherei.put("player", player.getName());
-                qf.doInsert("travellers", wherei);
-                occupied = ChatColor.GREEN + "OCCUPIED";
+                if (plugin.getUtils().inTARDISWorld(player)) {
+                    HashMap<String, Object> wherei = new HashMap<String, Object>();
+                    wherei.put("tardis_id", id);
+                    wherei.put("player", player.getName());
+                    qf.doInsert("travellers", wherei);
+                    occupied = ChatColor.GREEN + "OCCUPIED";
+                } else {
+                    player.sendMessage(plugin.getPluginName() + "You cannot set occupancy to OCCUPIED unless you are inside the TARDIS!");
+                    return true;
+                }
             }
             player.sendMessage(plugin.getPluginName() + " TARDIS occupation was set to: " + occupied);
             return true;
