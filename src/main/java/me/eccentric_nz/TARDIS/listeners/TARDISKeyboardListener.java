@@ -64,7 +64,10 @@ public class TARDISKeyboardListener implements Listener {
         where.put("type", 7);
         where.put("location", loc_str);
         ResultSetControls rsc = new ResultSetControls(plugin, where, false);
-        if (rsc.resultSet() && !plugin.getPM().isPluginEnabled("ProtocolLib")) {
+        if (rsc.resultSet()) {
+            if (plugin.getPM().isPluginEnabled("ProtocolLib")) {
+                event.setCancelled(true);
+            }
             TARDISCircuitChecker tcc = null;
             if (plugin.getConfig().getString("preferences.difficulty").equals("hard")) {
                 tcc = new TARDISCircuitChecker(plugin, rsc.getTardis_id());
@@ -77,8 +80,6 @@ public class TARDISKeyboardListener implements Listener {
             Sign keyboard = (Sign) against.getState();
             // track this sign
             plugin.getTrackerKeeper().getTrackSign().put(block.getLocation().toString(), keyboard);
-        } else {
-            event.setCancelled(true);
         }
     }
 
