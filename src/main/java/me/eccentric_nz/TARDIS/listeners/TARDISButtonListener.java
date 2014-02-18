@@ -378,7 +378,7 @@ public class TARDISButtonListener implements Listener {
                                     // TIS
                                     plugin.getTrackerKeeper().getTrackInfoMenu().put(player.getName(), TARDISInfoMenu.TIS);
                                     player.sendMessage(ChatColor.GOLD + "-----------TARDIS Information System-----------");
-                                    player.sendMessage(ChatColor.GOLD + "---*Please type a white letter to proceed*---");
+                                    player.sendMessage(ChatColor.GOLD + "---*Please type a white letter in chat to proceed*---");
                                     player.sendMessage("§6> TARDIS §fM§6anual");
                                     player.sendMessage("§6> §fI§6tems");
                                     player.sendMessage("§6> §fC§6omponents");
