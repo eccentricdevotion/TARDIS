@@ -223,6 +223,9 @@ public class TARDISSaveSignListener implements Listener {
                     }
                 }
             }
+            if (plugin.getTrackerKeeper().getTrackArrangers().contains(p)) {
+                plugin.getTrackerKeeper().getTrackArrangers().remove(p);
+            }
         }
     }
 
