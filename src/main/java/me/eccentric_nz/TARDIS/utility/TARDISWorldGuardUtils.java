@@ -104,7 +104,6 @@ public class TARDISWorldGuardUtils {
         flags.put(DefaultFlag.LAVA_FLOW, State.DENY);
         flags.put(DefaultFlag.LIGHTER, State.DENY);
         flags.put(DefaultFlag.MOB_SPAWNING, State.DENY);
-        //flags.put(DefaultFlag.CONSTRUCT, RegionGroup.OWNERS);
         flags.put(DefaultFlag.CHEST_ACCESS, State.ALLOW);
         region.setFlags(flags);
         rm.addRegion(region);
