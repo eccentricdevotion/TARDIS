@@ -18,6 +18,8 @@ package me.eccentric_nz.TARDIS.utility;
 
 import java.io.File;
 import java.util.Set;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.files.TARDISMakeTardisCSV;
 import org.bukkit.ChatColor;
@@ -41,7 +43,15 @@ public class TARDISMapChecker {
         // is there a worlds container?
         File container = plugin.getServer().getWorldContainer();
         String s_world = plugin.getServer().getWorlds().get(0).getName();
-        String server_world = s_world + File.separator + "data" + File.separator;
+        // check for MCPC+
+        Pattern pat = Pattern.compile("MCPC", Pattern.DOTALL);
+        Matcher mat = pat.matcher(plugin.getServer().getVersion());
+        String server_world;
+        if (mat.find()) {
+            server_world = "data" + File.separator;
+        } else {
+            server_world = s_world + File.separator + "data" + File.separator;
+        }
         String map = "map_1973.dat";
         String root = container.getAbsolutePath() + File.separator + server_world;
         File file = new File(root, map);
