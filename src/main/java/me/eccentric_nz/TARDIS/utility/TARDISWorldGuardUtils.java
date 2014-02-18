@@ -324,4 +324,15 @@ public class TARDISWorldGuardUtils {
             SpongeUtil.addSpongeWater(wg, b.getWorld(), b.getX(), b.getY(), b.getZ());
         }
     }
+
+    /**
+     * Checks whether a block can be broken
+     *
+     * @param p the player trying to break the block
+     * @param b the block
+     * @return whether the block can be broken
+     */
+    public boolean canBreakBlock(Player p, Block b) {
+        return wg.canBuild(p, b);
+    }
 }

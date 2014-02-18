@@ -343,6 +343,13 @@ public class TARDISSonicListener implements Listener {
                 if (action.equals(Action.LEFT_CLICK_BLOCK)) {
                     Block b = event.getClickedBlock();
                     if (diamond.contains(b.getType()) && player.hasPermission("tardis.sonic.diamond") && lore != null && lore.contains("Diamond Upgrade")) {
+                        // check the block is not protected by WorldGuard
+                        if (plugin.isWorldGuardOnServer()) {
+                            if (!plugin.getWorldGuardUtils().canBreakBlock(player, b)) {
+                                player.sendMessage(plugin.getPluginName() + "That block is protected by WorldGuard!");
+                                return;
+                            }
+                        }
                         playSonicSound(player, now, 600L, "sonic_short");
 
                         // drop appropriate material
