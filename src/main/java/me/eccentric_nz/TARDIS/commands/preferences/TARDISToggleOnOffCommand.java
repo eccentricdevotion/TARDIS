@@ -43,6 +43,22 @@ public class TARDISToggleOnOffCommand {
 
     public boolean doAbort(Player player, String[] args, QueryFactory qf) {
         String pref = args[0];
+        if (pref.equals("auto") && !plugin.getConfig().getBoolean("allow.autonomous")) {
+            player.sendMessage(plugin.getPluginName() + "Autonomous homing is disabled on this server!");
+            return true;
+        }
+        if (pref.equals("platform") && !plugin.getConfig().getBoolean("travel.platform")) {
+            player.sendMessage(plugin.getPluginName() + "Safety platforms are disabled on this server!");
+            return true;
+        }
+        if (pref.equals("eps") && !plugin.getConfig().getBoolean("allow.emergency_npc")) {
+            player.sendMessage(plugin.getPluginName() + "Emergency Programme One is disabled on this server!");
+            return true;
+        }
+        if (pref.equals("hads") && !plugin.getConfig().getBoolean("allow.hads")) {
+            player.sendMessage(plugin.getPluginName() + "The Hostile Action Displacement System is disabled on this server!");
+            return true;
+        }
         HashMap<String, Object> setp = new HashMap<String, Object>();
         HashMap<String, Object> wherep = new HashMap<String, Object>();
         wherep.put("player", player.getName());
