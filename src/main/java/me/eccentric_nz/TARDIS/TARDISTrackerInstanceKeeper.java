@@ -55,6 +55,7 @@ public class TARDISTrackerInstanceKeeper {
     private final List<Integer> trackMaterialising = new ArrayList<Integer>();
     private final List<Integer> trackMinecart = new ArrayList<Integer>();
     private final List<Integer> trackSubmarine = new ArrayList<Integer>();
+    private final List<String> trackArrangers = new ArrayList<String>();
     private final List<String> trackFarming = new ArrayList<String>();
     private final List<String> trackRecipeView = new ArrayList<String>();
     private final List<String> trackReset = new ArrayList<String>();
@@ -159,6 +160,10 @@ public class TARDISTrackerInstanceKeeper {
 
     public List<Integer> getTrackSubmarine() {
         return trackSubmarine;
+    }
+
+    public List<String> getTrackArrangers() {
+        return trackArrangers;
     }
 
     public List<String> getTrackFarming() {

@@ -17,12 +17,15 @@
 package me.eccentric_nz.TARDIS.travel;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.database.ResultSetDestinations;
 import me.eccentric_nz.TARDIS.database.ResultSetHomeLocation;
+import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
@@ -37,6 +40,7 @@ public class TARDISSaveSignInventory {
 
     private final TARDIS plugin;
     private final ItemStack[] terminal;
+    private final List<Integer> slots = new LinkedList<Integer>(Arrays.asList(new Integer[]{1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 131, 4, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44}));
     int id;
 
     public TARDISSaveSignInventory(TARDIS plugin, int id) {
@@ -52,7 +56,7 @@ public class TARDISSaveSignInventory {
      */
     @SuppressWarnings("deprecation")
     private ItemStack[] getItemStack() {
-        List<ItemStack> dests = new ArrayList<ItemStack>();
+        HashMap<Integer, ItemStack> dests = new HashMap<Integer, ItemStack>();
         // home stack
         ItemStack his = new ItemStack(TARDISConstants.GUI_IDS.get(0), 1);
         ItemMeta him = his.getItemMeta();
@@ -75,12 +79,13 @@ public class TARDISSaveSignInventory {
         }
         him.setLore(hlore);
         his.setItemMeta(him);
-        dests.add(his);
+        dests.put(0, his);
         // saved destinations
         HashMap<String, Object> did = new HashMap<String, Object>();
         did.put("tardis_id", id);
         ResultSetDestinations rsd = new ResultSetDestinations(plugin, did, true);
         int i = 1;
+        ItemStack[] stack = new ItemStack[54];
         if (rsd.resultSet()) {
             ArrayList<HashMap<String, String>> data = rsd.getData();
             // cycle through saves
@@ -99,7 +104,14 @@ public class TARDISSaveSignInventory {
                         lore.add((map.get("submarine").equals("1")) ? "true" : "false");
                         im.setLore(lore);
                         is.setItemMeta(im);
-                        dests.add(is);
+                        int slot;
+                        if (!map.get("slot").equals("-1")) {
+                            slot = plugin.getUtils().parseInt(map.get("slot"));
+                        } else {
+                            slot = slots.get(0);
+                        }
+                        dests.put(Integer.valueOf(slot), is);
+                        slots.remove(Integer.valueOf(slot));
                         i++;
                     } else {
                         break;
@@ -108,24 +120,34 @@ public class TARDISSaveSignInventory {
             }
         }
 
-        ItemStack[] stack = new ItemStack[54];
-        for (int s = 0; s < 45; s++) {
-            if (s < dests.size()) {
+        for (Integer s = 0; s < 45; s++) {
+            if (dests.containsKey(s)) {
                 stack[s] = dests.get(s);
             } else {
                 stack[s] = null;
             }
         }
         // add button to load TARDIS areas
-        ItemStack map = new ItemStack(358, 1);
+        ItemStack map = new ItemStack(Material.MAP, 1);
         ItemMeta switchto = map.getItemMeta();
         switchto.setDisplayName("Load TARDIS areas");
         map.setItemMeta(switchto);
+        // add button to allow rearranging saves
+        ItemStack tool = new ItemStack(Material.YELLOW_FLOWER, 1);
+        ItemMeta rearrange = tool.getItemMeta();
+        rearrange.setDisplayName("Rearrange saves");
+        tool.setItemMeta(rearrange);
         for (int m = 45; m < 54; m++) {
-            if (m == 49) {
-                stack[m] = map;
-            } else {
-                stack[m] = null;
+            switch (m) {
+                case 45:
+                    stack[m] = tool;
+                    break;
+                case 49:
+                    stack[m] = map;
+                    break;
+                default:
+                    stack[m] = null;
+                    break;
             }
         }
         return stack;

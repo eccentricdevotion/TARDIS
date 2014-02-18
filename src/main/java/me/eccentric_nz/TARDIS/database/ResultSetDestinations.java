@@ -51,6 +51,7 @@ public class ResultSetDestinations {
     private String bind;
     private int type;
     private boolean submarine;
+    private int slot;
     private final ArrayList<HashMap<String, String>> data = new ArrayList<HashMap<String, String>>();
 
     /**
@@ -126,6 +127,7 @@ public class ResultSetDestinations {
                     this.submarine = rs.getBoolean("submarine");
                     this.bind = rs.getString("bind");
                     this.type = rs.getInt("type");
+                    this.slot = rs.getInt("slot");
                 }
             } else {
                 return false;
@@ -190,6 +192,10 @@ public class ResultSetDestinations {
 
     public int getType() {
         return type;
+    }
+
+    public int getSlot() {
+        return slot;
     }
 
     public ArrayList<HashMap<String, String>> getData() {
