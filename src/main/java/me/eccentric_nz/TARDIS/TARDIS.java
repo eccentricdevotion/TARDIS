@@ -28,6 +28,8 @@ import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Properties;
 import java.util.Set;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import me.eccentric_nz.TARDIS.artron.TARDISCondensables;
 import me.eccentric_nz.TARDIS.builders.TARDISBuilderInner;
 import me.eccentric_nz.TARDIS.builders.TARDISPresetBuilderFactory;
@@ -59,7 +61,6 @@ import me.eccentric_nz.TARDIS.utility.TARDISSounds;
 import me.eccentric_nz.TARDIS.utility.TARDISUtils;
 import me.eccentric_nz.TARDIS.utility.TARDISWorldGuardUtils;
 import me.eccentric_nz.TARDIS.utility.Version;
-import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.command.ConsoleCommandSender;
@@ -135,9 +136,7 @@ public class TARDIS extends JavaPlugin {
         pluginName = ChatColor.GOLD + "[" + pdfFile.getName() + "]" + ChatColor.RESET + " ";
         plugin = this;
         console = getServer().getConsoleSender();
-
-        String[] v = Bukkit.getServer().getBukkitVersion().split("-");
-        Version bukkitversion = (!v[0].equalsIgnoreCase("unknown")) ? new Version(v[0]) : new Version("1.6.4");
+        Version bukkitversion = getServerVersion(getServer().getVersion());
         Version minversion = new Version("1.7.2");
         // check CraftBukkit version
         if (bukkitversion.compareTo(minversion) >= 0) {
@@ -205,6 +204,19 @@ public class TARDIS extends JavaPlugin {
             console.sendMessage(pluginName + "This plugin requires CraftBukkit 1.7.2 or higher, disabling...");
             pm.disablePlugin(this);
         }
+    }
+
+    private Version getServerVersion(String s) {
+        Pattern pat = Pattern.compile("\\((.+?)\\)", Pattern.DOTALL);
+        Matcher mat = pat.matcher(s);
+        String v;
+        if (mat.find()) {
+            String[] split = mat.group(1).split(" ");
+            v = split[1];
+        } else {
+            v = "1.6.4";
+        }
+        return new Version(v);
     }
 
     @Override
