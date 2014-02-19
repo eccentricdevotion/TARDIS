@@ -91,7 +91,7 @@ public class TARDISRecipeCommands implements CommandExecutor {
                 player = (Player) sender;
             }
             if (player == null) {
-                if (!firstArgs.contains(args[0].toLowerCase(Locale.ENGLISH))) {
+                if (args.length == 0 || !firstArgs.contains(args[0].toLowerCase(Locale.ENGLISH))) {
                     new TARDISRecipeLister(plugin, sender).list();
                 } else {
                     sender.sendMessage(plugin.getPluginName() + MESSAGE.MUST_BE_PLAYER.getText());
