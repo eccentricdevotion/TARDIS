@@ -229,24 +229,29 @@ public class TARDISConsoleCloseListener implements Listener {
                                             }
                                             break;
                                         case RECORD_4: // save
-                                            ignore = true;
-                                            String world = lore.get(1);
-                                            int x = plugin.getUtils().parseInt(lore.get(2));
-                                            int y = plugin.getUtils().parseInt(lore.get(3));
-                                            int z = plugin.getUtils().parseInt(lore.get(4));
-                                            if (current.getWorld().toString().equals(world) && current.getBlockX() == x && current.getBlockZ() == z) {
+                                            if (p.hasPermission("tardis.save")) {
+                                                ignore = true;
+                                                String world = lore.get(1);
+                                                int x = plugin.getUtils().parseInt(lore.get(2));
+                                                int y = plugin.getUtils().parseInt(lore.get(3));
+                                                int z = plugin.getUtils().parseInt(lore.get(4));
+                                                if (current.getWorld().toString().equals(world) && current.getBlockX() == x && current.getBlockZ() == z) {
+                                                    continue;
+                                                }
+                                                // read the lore from the disk
+                                                set_next.put("world", world);
+                                                set_next.put("x", x);
+                                                set_next.put("y", y);
+                                                set_next.put("z", z);
+                                                set_next.put("direction", lore.get(6));
+                                                boolean sub = Boolean.valueOf(lore.get(7));
+                                                set_next.put("submarine", (sub) ? 1 : 0);
+                                                set_tardis.put("chameleon_preset", lore.get(5));
+                                                p.sendMessage(plugin.getPluginName() + "The specified location was set succesfully. Please release the handbrake!");
+                                            } else {
+                                                p.sendMessage(plugin.getPluginName() + "You do not have permission to time travel to a save!");
                                                 continue;
                                             }
-                                            // read the lore from the disk
-                                            set_next.put("world", world);
-                                            set_next.put("x", x);
-                                            set_next.put("y", y);
-                                            set_next.put("z", z);
-                                            set_next.put("direction", lore.get(6));
-                                            boolean sub = Boolean.valueOf(lore.get(7));
-                                            set_next.put("submarine", (sub) ? 1 : 0);
-                                            set_tardis.put("chameleon_preset", lore.get(5));
-                                            p.sendMessage(plugin.getPluginName() + "The specified location was set succesfully. Please release the handbrake!");
                                             break;
                                         default:
                                             break;
