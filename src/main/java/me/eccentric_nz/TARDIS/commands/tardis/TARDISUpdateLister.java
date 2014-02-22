@@ -67,6 +67,7 @@ public class TARDISUpdateLister {
         guis.add(ChatColor.RED + "advanced" + ChatColor.RESET + " - " + ChatColor.DARK_RED + "TARDIS Advanced Console");
         guis.add(ChatColor.RED + "ars" + ChatColor.RESET + " - " + ChatColor.DARK_RED + "Architectural Reconfiguration System");
         guis.add(ChatColor.RED + "chameleon" + ChatColor.RESET + " - " + ChatColor.DARK_RED + "Chameleon Circuit");
+        guis.add(ChatColor.RED + "direction" + ChatColor.RESET + " - " + ChatColor.DARK_RED + "Direction Item Frame");
         guis.add(ChatColor.RED + "info" + ChatColor.RESET + " - " + ChatColor.DARK_RED + "TARDIS Information System");
         guis.add(ChatColor.RED + "save-sign" + ChatColor.RESET + " - " + ChatColor.DARK_RED + "Saved locations and TARDIS areas");
         guis.add(ChatColor.RED + "temporal" + ChatColor.RESET + " - " + ChatColor.DARK_RED + "Temporal Relocator");

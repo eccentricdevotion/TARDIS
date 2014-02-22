@@ -40,7 +40,7 @@ public class TARDISUpdateCommand {
 
     public boolean startUpdate(Player player, String[] args) {
         if (player.hasPermission("tardis.update")) {
-            String[] validBlockNames = {"advanced", "ars", "artron", "back", "backdoor", "button", "chameleon", "condenser", "creeper", "door", "eps", "farm", "handbrake", "info", "keyboard", "light", "rail", "save-sign", "scanner", "stable", "storage", "temporal", "terminal", "village", "world-repeater", "x-repeater", "y-repeater", "z-repeater", "zero"};
+            String[] validBlockNames = {"advanced", "ars", "artron", "back", "backdoor", "button", "chameleon", "condenser", "creeper", "direction", "door", "eps", "farm", "handbrake", "info", "keyboard", "light", "rail", "save-sign", "scanner", "stable", "storage", "temporal", "terminal", "village", "world-repeater", "x-repeater", "y-repeater", "z-repeater", "zero"};
             if (args.length < 2) {
                 player.sendMessage(plugin.getPluginName() + MESSAGE.TOO_FEW_ARGS.getText());
                 return false;
@@ -126,6 +126,9 @@ public class TARDISUpdateCommand {
             }
             plugin.getTrackerKeeper().getTrackPlayers().put(player.getName(), tardis_block);
             player.sendMessage(plugin.getPluginName() + "Click the TARDIS " + tardis_block + " to update its position.");
+            if (tardis_block.equals("direction")) {
+                player.sendMessage(plugin.getPluginName() + "Don't forget to place a TRIPWIRE HOOK in the Direction Frame to enable it.");
+            }
             return true;
         } else {
             player.sendMessage(plugin.getPluginName() + MESSAGE.NO_PERMS.getText());

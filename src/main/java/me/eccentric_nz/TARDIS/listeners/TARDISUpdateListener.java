@@ -79,6 +79,7 @@ public class TARDISUpdateListener implements Listener {
         controls.put("advanced", 15);
         controls.put("zero", 16); // enter control
         // zero room exit control = 17
+        // direction item frame = 18
         validBlocks.add(Material.LEVER);
         validBlocks.add(Material.REDSTONE_COMPARATOR_OFF);
         validBlocks.add(Material.REDSTONE_COMPARATOR_ON);

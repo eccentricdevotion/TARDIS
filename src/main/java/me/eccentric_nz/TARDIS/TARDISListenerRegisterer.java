@@ -51,6 +51,7 @@ import me.eccentric_nz.TARDIS.listeners.TARDISHandbrakeListener;
 import me.eccentric_nz.TARDIS.listeners.TARDISHorseListener;
 import me.eccentric_nz.TARDIS.listeners.TARDISHotbarListener;
 import me.eccentric_nz.TARDIS.listeners.TARDISIceMeltListener;
+import me.eccentric_nz.TARDIS.listeners.TARDISItemFrameListener;
 import me.eccentric_nz.TARDIS.listeners.TARDISJettisonSeeder;
 import me.eccentric_nz.TARDIS.listeners.TARDISJoinListener;
 import me.eccentric_nz.TARDIS.listeners.TARDISKeyboardListener;
@@ -196,6 +197,7 @@ public class TARDISListenerRegisterer {
             plugin.getPM().registerEvents(kpl, plugin);
             kpl.startSignPackets();
         }
+        plugin.getPM().registerEvents(new TARDISItemFrameListener(plugin), plugin);
     }
 
     private boolean getNPCManager() {
