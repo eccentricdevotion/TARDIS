@@ -21,10 +21,10 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.enumeration.SCHEMATIC;
 import me.eccentric_nz.TARDIS.builders.TARDISBuildData;
 import me.eccentric_nz.TARDIS.builders.TARDISSeedBlockProcessor;
 import me.eccentric_nz.TARDIS.database.ResultSetPlayerPrefs;
+import me.eccentric_nz.TARDIS.enumeration.SCHEMATIC;
 import me.eccentric_nz.TARDIS.rooms.TARDISWallsLookup;
 import org.bukkit.DyeColor;
 import org.bukkit.GameMode;
@@ -168,6 +168,10 @@ public class TARDISSeedBlockListener implements Listener {
                     key = plugin.getConfig().getString("preferences.key");
                 }
                 if (player.getItemInHand().getType().equals(Material.getMaterial(key))) {
+                    if (!plugin.getConfig().getBoolean("worlds." + l.getWorld().getName())) {
+                        player.sendMessage(plugin.getPluginName() + "You cannot create a TARDIS in this world!");
+                        return;
+                    }
                     // grow a TARDIS
                     TARDISBuildData seed = trackTARDISSeed.get(l);
                     // process seed data

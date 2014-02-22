@@ -100,6 +100,10 @@ public class TARDISBlockPlaceListener implements Listener {
             Block blockBottom = blockBelow.getRelative(BlockFace.DOWN);
             // only continue if the redstone torch is placed on top of [JUST ABOUT ANY] BLOCK on top of an IRON/GOLD/DIAMOND_BLOCK
             if (plugin.getBlocksConfig().getStringList("tardis_blocks").contains(blockBelow.getType().toString()) && blocks.contains(blockBottom.getType())) {
+                if (!plugin.getConfig().getBoolean("worlds." + block.getLocation().getWorld().getName())) {
+                    player.sendMessage(plugin.getPluginName() + "You cannot create a TARDIS in this world!");
+                    return;
+                }
                 final SCHEMATIC schm;
                 int max_count = plugin.getConfig().getInt("creation.count");
                 int player_count = 0;
