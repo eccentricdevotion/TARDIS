@@ -20,14 +20,18 @@ import java.util.HashMap;
 import java.util.Locale;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.advanced.TARDISCircuitChecker;
-import me.eccentric_nz.TARDIS.artron.TARDISArtronIndicator;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
+import me.eccentric_nz.TARDIS.database.ResultSetControls;
 import me.eccentric_nz.TARDIS.database.ResultSetCurrentLocation;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
 import me.eccentric_nz.TARDIS.enumeration.MESSAGE;
 import me.eccentric_nz.TARDIS.enumeration.PRESET;
+import org.bukkit.Chunk;
 import org.bukkit.Location;
+import org.bukkit.Rotation;
+import org.bukkit.entity.Entity;
+import org.bukkit.entity.ItemFrame;
 import org.bukkit.entity.Player;
 
 /**
@@ -125,9 +129,43 @@ public class TARDISDirectionCommand {
             HashMap<String, Object> wherea = new HashMap<String, Object>();
             wherea.put("tardis_id", id);
             qf.alterEnergyLevel("tardis", -amount, wherea, player);
-            new TARDISArtronIndicator(plugin).showArtronLevel(player, id, true, amount);
             if (hid) {
                 player.sendMessage(plugin.getPluginName() + "Direction changed.");
+            }
+            // if they have a Direction Frame, update the rotation
+            HashMap<String, Object> wheredf = new HashMap<String, Object>();
+            wheredf.put("tardis_id", id);
+            wheredf.put("type", 18);
+            ResultSetControls rsdf = new ResultSetControls(plugin, wheredf, false);
+            if (rsdf.resultSet()) {
+                String locToCheck = rsdf.getLocation();
+                Location dfl = plugin.getUtils().getLocationFromBukkitString(locToCheck);
+                Chunk chunk = dfl.getChunk();
+                if (!chunk.isLoaded()) {
+                    chunk.load();
+                }
+                for (Entity e : chunk.getEntities()) {
+                    if (e instanceof ItemFrame && e.getLocation().toString().equals(locToCheck)) {
+                        ItemFrame frame = (ItemFrame) e;
+                        Rotation r;
+                        switch (d) {
+                            case EAST:
+                                r = Rotation.COUNTER_CLOCKWISE;
+                                break;
+                            case SOUTH:
+                                r = Rotation.NONE;
+                                break;
+                            case WEST:
+                                r = Rotation.CLOCKWISE;
+                                break;
+                            default:
+                                r = Rotation.FLIPPED;
+                                break;
+                        }
+                        frame.setRotation(r);
+                        break;
+                    }
+                }
             }
             return true;
         } else {
