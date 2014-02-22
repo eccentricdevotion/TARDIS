@@ -175,7 +175,9 @@ public class TARDISSonicListener implements Listener {
                                             }
                                         }, 100L);
                                     } else {
-                                        standardSonic(player);
+                                        if (player.hasPermission("tardis.sonic.standard")) {
+                                            standardSonic(player);
+                                        }
                                     }
                                 }
                             }, 20L);
