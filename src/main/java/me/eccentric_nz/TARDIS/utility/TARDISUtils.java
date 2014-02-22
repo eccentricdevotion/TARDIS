@@ -451,9 +451,9 @@ public class TARDISUtils {
         String[] yStr = loc_data[2].split("=");
         String[] zStr = loc_data[3].split("=");
         World w = plugin.getServer().getWorld(wStr[2].substring(0, (wStr[2].length() - 1)));
-        int x = plugin.getUtils().parseInt(xStr[1].substring(0, (xStr[1].length() - 2)));
-        int y = plugin.getUtils().parseInt(yStr[1].substring(0, (yStr[1].length() - 2)));
-        int z = plugin.getUtils().parseInt(zStr[1].substring(0, (zStr[1].length() - 2)));
+        double x = parseDouble(xStr[1]);
+        double y = parseDouble(yStr[1]);
+        double z = parseDouble(zStr[1]);
         return new Location(w, x, y, z);
     }
 
