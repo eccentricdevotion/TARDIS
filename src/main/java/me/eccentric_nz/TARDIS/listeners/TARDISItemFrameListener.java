@@ -65,9 +65,9 @@ public class TARDISItemFrameListener implements Listener {
                 HashMap<String, Object> where = new HashMap<String, Object>();
                 where.put("location", l);
                 where.put("type", 18);
-                ResultSetControls rs = new ResultSetControls(plugin, where, false);
+                ResultSetControls rsc = new ResultSetControls(plugin, where, false);
                 HashMap<String, Object> set = new HashMap<String, Object>();
-                if (rs.resultSet()) {
+                if (rsc.resultSet()) {
                     // update location
                     set.put("location", l);
                     HashMap<String, Object> whereu = new HashMap<String, Object>();
@@ -92,6 +92,15 @@ public class TARDISItemFrameListener implements Listener {
             ResultSetControls rs = new ResultSetControls(plugin, where, false);
             if (rs.resultSet()) {
                 // it's a TARDIS direction frame
+                int id = rs.getTardis_id();
+                // prevent other players from stealing the tripwire hook
+                HashMap<String, Object> wherep = new HashMap<String, Object>();
+                wherep.put("tardis_id", id);
+                ResultSetTardis rso = new ResultSetTardis(plugin, wherep, "", false);
+                if (rso.resultSet() && !rso.getOwner().equals(playerNameStr)) {
+                    event.setCancelled(true);
+                    return;
+                }
                 if (frame.getItem().getType().equals(Material.TRIPWIRE_HOOK)) {
                     String direction;
                     if (player.isSneaking()) {
@@ -137,15 +146,15 @@ public class TARDISItemFrameListener implements Listener {
                     if (frame.getItem().getType().equals(Material.AIR) && player.getItemInHand().getType().equals(Material.TRIPWIRE_HOOK)) {
                         // get current tardis direction
                         HashMap<String, Object> wherec = new HashMap<String, Object>();
-                        wherec.put("tardis_id", rs.getTardis_id());
-                        final ResultSetCurrentLocation rsc = new ResultSetCurrentLocation(plugin, wherec);
-                        if (rsc.resultSet()) {
+                        wherec.put("tardis_id", id);
+                        final ResultSetCurrentLocation rscl = new ResultSetCurrentLocation(plugin, wherec);
+                        if (rscl.resultSet()) {
                             plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
                                 @Override
                                 public void run() {
                                     // update the TRIPWIRE_HOOK rotation
                                     Rotation r;
-                                    switch (rsc.getDirection()) {
+                                    switch (rscl.getDirection()) {
                                         case EAST:
                                             r = Rotation.COUNTER_CLOCKWISE;
                                             break;
@@ -160,7 +169,7 @@ public class TARDISItemFrameListener implements Listener {
                                             break;
                                     }
                                     frame.setRotation(r);
-                                    player.sendMessage(plugin.getPluginName() + "Current TARDIS direction is " + rsc.getDirection().toString());
+                                    player.sendMessage(plugin.getPluginName() + "Current TARDIS direction is " + rscl.getDirection().toString());
                                 }
                             }, 4L);
                         }
