@@ -24,6 +24,12 @@ rooms:
     offset: -4
     seed: PUMPKIN
     user: false
+  LAZARUS:
+    enabled: true
+    cost: 750
+    offset: -4
+    seed: FURNACE
+    user: false
   LIBRARY:
     enabled: true
     cost: 550

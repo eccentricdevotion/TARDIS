@@ -38,6 +38,7 @@ public enum SCHEMATIC {
     GREENHOUSE("greenhouse.schematic"),
     HARMONY("harmony.schematic"),
     KITCHEN("kitchen.schematic"),
+    LAZARUS("lazarus.schematic"),
     LIBRARY("library.schematic"),
     MUSHROOM("mushroom.schematic"),
     PASSAGE("passage.schematic"),

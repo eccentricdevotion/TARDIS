@@ -265,6 +265,11 @@ public class TARDISRoomRunnable implements Runnable {
                 id = (floor_id == 35 && floor_data == 8 && plugin.getConfig().getBoolean("creation.use_clay")) ? 159 : floor_id;
                 data = floor_data;
             }
+            // set lazarus
+            if (id == 72 && room.equals("LAZARUS")) {
+                String plate = (new Location(world, startx, starty, startz)).toString();
+                qf.insertControl(tardis_id, 19, plate, 0);
+            }
             // set stable
             if (id == 88 && (room.equals("STABLE") || room.equals("VILLAGE") || room.equals("RENDERER") || room.equals("ZERO"))) {
                 HashMap<String, Object> sets = new HashMap<String, Object>();

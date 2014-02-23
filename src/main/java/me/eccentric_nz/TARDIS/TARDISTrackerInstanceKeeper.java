@@ -35,6 +35,7 @@ public class TARDISTrackerInstanceKeeper {
     private final HashMap<Integer, String> trackRenderer = new HashMap<Integer, String>();
     private final HashMap<Integer, String> trackRescue = new HashMap<Integer, String>();
     private final HashMap<String, Block> trackExterminate = new HashMap<String, Block>();
+    private final HashMap<String, Block> trackLazarus = new HashMap<String, Block>();
     private final HashMap<String, Double[]> trackGravity = new HashMap<String, Double[]>();
     private final HashMap<String, Integer> trackBinder = new HashMap<String, Integer>();
     private final HashMap<String, Long> trackSetTime = new HashMap<String, Long>();
@@ -57,6 +58,7 @@ public class TARDISTrackerInstanceKeeper {
     private final List<Integer> trackSubmarine = new ArrayList<Integer>();
     private final List<String> trackArrangers = new ArrayList<String>();
     private final List<String> trackFarming = new ArrayList<String>();
+    private final List<String> trackGeneticmanipulation = new ArrayList<String>();
     private final List<String> trackRecipeView = new ArrayList<String>();
     private final List<String> trackReset = new ArrayList<String>();
     private final List<String> trackTransmat = new ArrayList<String>();
@@ -80,6 +82,10 @@ public class TARDISTrackerInstanceKeeper {
 
     public HashMap<String, Block> getTrackExterminate() {
         return trackExterminate;
+    }
+
+    public HashMap<String, Block> getTrackLazarus() {
+        return trackLazarus;
     }
 
     public HashMap<String, Double[]> getTrackGravity() {
@@ -168,6 +174,10 @@ public class TARDISTrackerInstanceKeeper {
 
     public List<String> getTrackFarming() {
         return trackFarming;
+    }
+
+    public List<String> getTrackGeneticmanipulation() {
+        return trackGeneticmanipulation;
     }
 
     public List<String> getTrackRecipeView() {

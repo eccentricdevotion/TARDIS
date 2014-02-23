@@ -30,6 +30,7 @@ public enum TARDISARS {
     BEDROOM(89, "Bedroom", 1),
     KITCHEN(86, "Kitchen", 1),
     LIBRARY(116, "Library", 1),
+    LAZARUS(61, "Genetic Manipulator", 1),
     POOL(80, "Pool", 1),
     VAULT(23, "Storage Vault", 1),
     WORKSHOP(112, "Workshop", 1),

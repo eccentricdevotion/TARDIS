@@ -122,6 +122,7 @@ public class TARDISMakeTardisCSV {
         String grenstr = basepath + SCHEMATIC.GREENHOUSE.getFile();
         String harnstr = basepath + SCHEMATIC.HARMONY.getFile();
         String kitnstr = basepath + SCHEMATIC.KITCHEN.getFile();
+        String laznstr = basepath + SCHEMATIC.LAZARUS.getFile();
         String libnstr = basepath + SCHEMATIC.LIBRARY.getFile();
         String musnstr = basepath + SCHEMATIC.MUSHROOM.getFile();
         String passnstr = basepath + SCHEMATIC.PASSAGE.getFile();
@@ -146,6 +147,7 @@ public class TARDISMakeTardisCSV {
         copy(grenstr, plugin.getResource(SCHEMATIC.GREENHOUSE.getFile()));
         copy(harnstr, plugin.getResource(SCHEMATIC.HARMONY.getFile()));
         copy(kitnstr, plugin.getResource(SCHEMATIC.KITCHEN.getFile()));
+        copy(laznstr, plugin.getResource(SCHEMATIC.LAZARUS.getFile()));
         copy(libnstr, plugin.getResource(SCHEMATIC.LIBRARY.getFile()));
         copy(musnstr, plugin.getResource(SCHEMATIC.MUSHROOM.getFile()));
         copy(passnstr, plugin.getResource(SCHEMATIC.PASSAGE.getFile()));

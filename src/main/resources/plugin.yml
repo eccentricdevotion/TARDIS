@@ -3,7 +3,7 @@ description: A plugin for all Doctor Who fans - create and use a TARDIS! Telepor
 main: me.eccentric_nz.TARDIS.TARDIS
 name: TARDIS
 startup: postworld
-softdepend: [Multiverse-Core,Multiverse-Adventure,Multiverse-Inventories,MultiWorld,My Worlds,WorldGuard,WorldBorder,Towny,Citizens,ProtocolLib]
+softdepend: [Multiverse-Core,Multiverse-Adventure,Multiverse-Inventories,MultiWorld,My Worlds,WorldGuard,WorldBorder,Towny,Citizens,ProtocolLib,LibsDisguises]
 website: http://dev.bukkit.org/bukkit-plugins/tardis/
 dev-url: http://dev.bukkit.org/bukkit-plugins/tardis/
 url: http://eccentricdevotion.github.io/TARDIS/
@@ -221,6 +221,9 @@ permissions:
     default: op
   tardis.translate:
     description: Allows a player to use the TARDIS Universal Translator.
+    default: op
+  tardis.lazarus:
+    description: Allows a player to use the TARDIS Genetic Manipulator.
     default: op
 commands:
   tardis:

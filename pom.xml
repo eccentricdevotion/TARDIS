@@ -339,5 +339,10 @@
                 </exclusion>
             </exclusions>
         </dependency>
+        <dependency>
+            <groupId>me.libraryaddict.disguise</groupId>
+            <artifactId>LibsDisguises</artifactId>
+            <version>7.9.8</version>
+        </dependency>
     </dependencies>
 </project>

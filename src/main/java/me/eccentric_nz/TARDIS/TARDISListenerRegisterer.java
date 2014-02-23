@@ -27,6 +27,8 @@ import me.eccentric_nz.TARDIS.chameleon.TARDISPresetListener;
 import me.eccentric_nz.TARDIS.commands.admin.TARDISAdminMenuListener;
 import me.eccentric_nz.TARDIS.commands.preferences.TARDISPrefsMenuListener;
 import me.eccentric_nz.TARDIS.info.TARDISInformationSystemListener;
+import me.eccentric_nz.TARDIS.lazarus.TARDISLazarusGUIListener;
+import me.eccentric_nz.TARDIS.lazarus.TARDISLazarusListener;
 import me.eccentric_nz.TARDIS.listeners.TARDISAnvilListener;
 import me.eccentric_nz.TARDIS.listeners.TARDISAreaListener;
 import me.eccentric_nz.TARDIS.listeners.TARDISAreaSignListener;
@@ -196,6 +198,10 @@ public class TARDISListenerRegisterer {
             TARDISKeyboardPacketListener kpl = new TARDISKeyboardPacketListener(plugin);
             plugin.getPM().registerEvents(kpl, plugin);
             kpl.startSignPackets();
+            if (plugin.getPM().isPluginEnabled("LibsDisguises")) {
+                plugin.getPM().registerEvents(new TARDISLazarusListener(plugin), plugin);
+                plugin.getPM().registerEvents(new TARDISLazarusGUIListener(plugin), plugin);
+            }
         }
         plugin.getPM().registerEvents(new TARDISItemFrameListener(plugin), plugin);
     }
