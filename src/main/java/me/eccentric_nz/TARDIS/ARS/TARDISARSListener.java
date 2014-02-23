@@ -338,7 +338,7 @@ public class TARDISARSListener implements Listener {
      * @param layer the level to to get
      * @param x the x position of the slice
      * @param z the z position of the slice
-     * @return
+     * @return a slice of the larger array
      */
     private int[][] sliceGrid(int[][] layer, int x, int z) {
         int[][] slice = new int[5][5];

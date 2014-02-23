@@ -72,7 +72,7 @@ public class TARDISXPRewarder {
      * with an XP quantity beyond the range of the existing lookup tables.
      *
      * @param exp
-     * @return
+     * @return the level
      */
     private static int calculateLevelForExp(int exp) {
         int level = 0;

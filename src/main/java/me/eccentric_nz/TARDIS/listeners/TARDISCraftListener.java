@@ -146,7 +146,7 @@ public class TARDISCraftListener implements Listener {
      * TARDIS Seed block.
      *
      * @param inv
-     * @return
+     * @return whether it is a valid seed block
      */
     @SuppressWarnings("deprecation")
     private boolean checkSlots(Inventory inv) {
