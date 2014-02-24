@@ -139,13 +139,15 @@ public class TARDISButtonListener implements Listener {
                             }
                             QueryFactory qf = new QueryFactory(plugin);
                             HashMap<String, Object> set = new HashMap<String, Object>();
+                            int cost = 0;
                             switch (type) {
                                 case 1: // random location button
                                     if (!hb) {
                                         player.sendMessage(plugin.getPluginName() + ChatColor.RED + MESSAGE.NOT_WHILE_TRAVELLING.getText());
                                         return;
                                     }
-                                    if (level < plugin.getArtronConfig().getInt("random")) {
+                                    cost = plugin.getArtronConfig().getInt("random");
+                                    if (level < cost) {
                                         player.sendMessage(plugin.getPluginName() + ChatColor.RED + MESSAGE.NOT_ENOUGH_ENERGY.getText());
                                         return;
                                     }
@@ -268,7 +270,8 @@ public class TARDISButtonListener implements Listener {
                                         player.sendMessage(plugin.getPluginName() + ChatColor.RED + MESSAGE.NOT_WHILE_TRAVELLING.getText());
                                         return;
                                     }
-                                    if (level < plugin.getArtronConfig().getInt("random")) {
+                                    cost = plugin.getArtronConfig().getInt("travel");
+                                    if (level < cost) {
                                         player.sendMessage(plugin.getPluginName() + ChatColor.RED + MESSAGE.NOT_ENOUGH_ENERGY.getText());
                                         return;
                                     }
@@ -463,7 +466,7 @@ public class TARDISButtonListener implements Listener {
                                 HashMap<String, Object> wherel = new HashMap<String, Object>();
                                 wherel.put("tardis_id", id);
                                 qf.doUpdate("next", set, wherel);
-                                plugin.getTrackerKeeper().getTrackHasDestination().put(id, plugin.getArtronConfig().getInt("random"));
+                                plugin.getTrackerKeeper().getTrackHasDestination().put(id, cost);
                                 if (plugin.getTrackerKeeper().getTrackRescue().containsKey(Integer.valueOf(id))) {
                                     plugin.getTrackerKeeper().getTrackRescue().remove(Integer.valueOf(id));
                                 }

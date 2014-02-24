@@ -147,7 +147,7 @@ public class TARDISSaveSignListener implements Listener {
                                     HashMap<String, Object> wheret = new HashMap<String, Object>();
                                     wheret.put("tardis_id", id);
                                     new QueryFactory(plugin).doUpdate("next", set, wheret);
-                                    plugin.getTrackerKeeper().getTrackHasDestination().put(id, plugin.getArtronConfig().getInt("random"));
+                                    plugin.getTrackerKeeper().getTrackHasDestination().put(id, travel);
                                     if (plugin.getTrackerKeeper().getTrackRescue().containsKey(Integer.valueOf(id))) {
                                         plugin.getTrackerKeeper().getTrackRescue().remove(Integer.valueOf(id));
                                     }

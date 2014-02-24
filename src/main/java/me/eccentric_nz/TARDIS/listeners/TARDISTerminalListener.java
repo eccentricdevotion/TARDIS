@@ -150,7 +150,7 @@ public class TARDISTerminalListener implements Listener {
                                 HashMap<String, Object> wheret = new HashMap<String, Object>();
                                 wheret.put("tardis_id", terminalIDs.get(playerNameStr));
                                 new QueryFactory(plugin).doUpdate("next", set, wheret);
-                                plugin.getTrackerKeeper().getTrackHasDestination().put(terminalIDs.get(playerNameStr), plugin.getArtronConfig().getInt("random"));
+                                plugin.getTrackerKeeper().getTrackHasDestination().put(terminalIDs.get(playerNameStr), plugin.getArtronConfig().getInt("travel"));
                                 if (plugin.getTrackerKeeper().getTrackRescue().containsKey(terminalIDs.get(playerNameStr))) {
                                     plugin.getTrackerKeeper().getTrackRescue().remove(terminalIDs.get(playerNameStr));
                                 }

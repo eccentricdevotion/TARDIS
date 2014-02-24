@@ -1,14 +1,16 @@
 # TODO
 
 ##Current version `2.8`
+1. The Master's reverse polarity button in Genetic Manipulator - turns everyone on the server into the player who is in the Genetic Manipulator
+2. Add extra options buttons in Genetic Manipulator - set colours, age etc
+
 These are all really boring!
 
 ####Stuff I'll get round to (but I'm not rushing to code):
 1. Videos
 2. Custom room schematics in ARS (check they are 16x16x16)
-3. TARDIS direction sign / (item frame ?)
-4. Localisation
-5. Configurable option to allow Gravity Wells outside of the TARDIS
+3. Localisation
+4. Configurable option to allow Gravity Wells outside of the TARDIS
 
 ####Stuff I don't really want to do, but probably will (eventually)
 1. Toggle both doors open when shift-clicking the door, and when exiting (if the preset has a door and the door is open) tp the player to the door location.
