@@ -225,6 +225,9 @@ permissions:
   tardis.lazarus:
     description: Allows a player to use the TARDIS Genetic Manipulator.
     default: op
+  tardis.themaster:
+    description: Allows a player to reverse the polarity of the TARDIS Genetic Manipulator turning it into the Immortality Gate.
+    default: op
 commands:
   tardis:
     aliases: [tt,ttardis,/tardis,timelord]

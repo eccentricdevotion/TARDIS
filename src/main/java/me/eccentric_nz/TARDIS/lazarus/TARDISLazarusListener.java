@@ -27,7 +27,6 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
-import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.Inventory;
 
@@ -70,22 +69,6 @@ public class TARDISLazarusListener implements Listener {
                     inv.setContents(new TARDISLazarusInventory().getTerminal());
                     player.openInventory(inv);
                 }
-            }
-        }
-    }
-
-    @EventHandler
-    public void onLazarusClose(InventoryCloseEvent event) {
-        String name = event.getInventory().getTitle();
-        String playerNameStr = event.getPlayer().getName();
-        if (name.equals("§4Genetic Manipulator") && !plugin.getTrackerKeeper().getTrackGeneticmanipulation().contains(playerNameStr)) {
-            Block b = plugin.getTrackerKeeper().getTrackLazarus().get(event.getPlayer().getName());
-            if (b.getRelative(BlockFace.SOUTH).getType().equals(Material.COBBLE_WALL)) {
-                b.getRelative(BlockFace.SOUTH).setType(Material.AIR);
-                b.getRelative(BlockFace.SOUTH).getRelative(BlockFace.UP).setType(Material.AIR);
-            }
-            if (plugin.getTrackerKeeper().getTrackLazarus().containsKey(playerNameStr)) {
-                plugin.getTrackerKeeper().getTrackLazarus().remove(playerNameStr);
             }
         }
     }

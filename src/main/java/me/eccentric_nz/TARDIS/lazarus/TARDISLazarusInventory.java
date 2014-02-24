@@ -16,6 +16,7 @@
  */
 package me.eccentric_nz.TARDIS.lazarus;
 
+import java.util.Arrays;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import org.bukkit.Material;
@@ -124,6 +125,31 @@ public class TARDISLazarusInventory {
         war.setDisplayName("ICE WARRIOR");
         ice.setItemMeta(war);
         eggs[i] = ice;
+        // add options
+        ItemStack the = new ItemStack(Material.REDSTONE_COMPARATOR, 1);
+        ItemMeta master = the.getItemMeta();
+        master.setDisplayName("The Master's reverse polarity button");
+        master.setLore(Arrays.asList(new String[]{"OFF"}));
+        the.setItemMeta(master);
+        eggs[37] = the;
+        ItemStack adult = new ItemStack(Material.HOPPER, 1);
+        ItemMeta baby = adult.getItemMeta();
+        baby.setDisplayName("Age");
+        baby.setLore(Arrays.asList(new String[]{"ADULT"}));
+        adult.setItemMeta(baby);
+        eggs[39] = adult;
+        ItemStack typ = new ItemStack(Material.INK_SACK, 1, (byte) 6);
+        ItemMeta col = typ.getItemMeta();
+        col.setDisplayName("Type/Colour");
+        col.setLore(Arrays.asList(new String[]{"WHITE"}));
+        typ.setItemMeta(col);
+        eggs[41] = typ;
+        ItemStack tamed = new ItemStack(Material.LEASH, 1, (byte) 6);
+        ItemMeta tf = tamed.getItemMeta();
+        tf.setDisplayName("Tamed/Flying/Blazing/Powered/Agressive");
+        tf.setLore(Arrays.asList(new String[]{"FALSE"}));
+        tamed.setItemMeta(tf);
+        eggs[43] = tamed;
         // add buttons
         ItemStack rem = new ItemStack(Material.DAYLIGHT_DETECTOR, 1);
         ItemMeta ove = rem.getItemMeta();
