@@ -151,6 +151,7 @@ permissions:
       tardis.room.greenhouse: true
       tardis.room.harmony: true
       tardis.room.kitchen: true
+      tardis.room.lazarus: true
       tardis.room.library: true
       tardis.room.mushroom: true
       tardis.room.passage: true
@@ -217,7 +218,7 @@ permissions:
     description: Allows the Artron Energy to be stored in an Artron Storage Cell.
     default: op
   tardis.filter:
-    description: Allows a player to use the TARDIS perception filter.
+    description: Allows a player to use the TARDIS Perception Filter.
     default: op
   tardis.translate:
     description: Allows a player to use the TARDIS Universal Translator.
