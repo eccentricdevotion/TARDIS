@@ -139,6 +139,7 @@ public class TARDISLazarusGUIListener implements Listener {
                 // animate the manipulator walls
                 plugin.getTrackerKeeper().getTrackGeneticManipulation().add(playerNameStr);
                 plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, new TARDISLazarusRunnable(plugin, b), 6L, 6L);
+                plugin.getUtils().playTARDISSound(player.getLocation(), player, "lazarus_machine");
                 // undisguise the player
                 plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
                     @Override
@@ -176,6 +177,7 @@ public class TARDISLazarusGUIListener implements Listener {
                 // animate the manipulator walls
                 plugin.getTrackerKeeper().getTrackGeneticManipulation().add(playerNameStr);
                 plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, new TARDISLazarusRunnable(plugin, b), 6L, 6L);
+                plugin.getUtils().playTARDISSound(player.getLocation(), player, "lazarus_machine");
                 // disguise the player
                 plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
                     @Override
@@ -224,6 +226,10 @@ public class TARDISLazarusGUIListener implements Listener {
                                             SheepWatcher sw = (SheepWatcher) mobDisguise.getWatcher();
                                             sw.setColor(getColor(inv));
                                             sw.setBaby(getBaby(inv));
+                                            if (getBoolean(inv)) {
+                                                sw.setCustomName("jeb_");
+                                                sw.setCustomNameVisible(true);
+                                            }
                                             break;
                                         case HORSE:
                                             HorseWatcher hw = (HorseWatcher) mobDisguise.getWatcher();
@@ -432,7 +438,7 @@ public class TARDISLazarusGUIListener implements Listener {
     }
 
     private boolean isReversedPolarity(Inventory i) {
-        ItemStack is = i.getItem(41);
+        ItemStack is = i.getItem(37);
         ItemMeta im = is.getItemMeta();
         return im.getLore().get(0).equals("ON");
     }
