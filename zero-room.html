@@ -25,9 +25,26 @@
 	</header>
 	<section>
 		<h1>TARDIS Zero Room</h1>
-		<p>The Zero Room is one of the most peaceful locations in existence. It is a place completely cut off from the rest of the universe, cut off even from the TARDIS interior, in a entirely separate dimension.</p>
-		<p>To create a Zero Room, simply run the command <code>/tardis room ZERO</code>. If you have condensed the required material</p>
-		<p><strong>Note:</strong> The Zero room must be grown using the <code>/tardis room</code> command, as it is not part of the ARS.</p>
+		<p>The Zero Room is one of the most peaceful locations in existence. It is a place completely cut off from the rest of the universe, cut off even from the TARDIS interior, in a entirely separate dimension. As such, no voice can be heard within it's walls, and no commands can be run. There is no communication to the outside world.</p>
+		<h2>Creation</h2>
+		<p>The Zero room is not a room within the TARDIS interior, as most rooms are. Before any players can grow and use it, a server administrator must first enable <code>zero_room</code> in the TARDIS config, preferably using the command <code>/tardisadmin zero_room true</code>. TARDIS will then create the TARDIS_Zero_Room world, if it does not already exist. The server must then be restarted to enable it's more advanced features.</p>
+		<p>Once the room is enabled, growing the Zero Room is a simple matter of following these steps:</p>
+		<ol>
+			<li>Run the command <code>/tardis room ZERO</code>, normal room growing requirements apply (artron energy, required blocks, etc.)</li>
+			<li>Place a button, sign, lever or comparator, and run the command <code>/tardis update zero</code></li>
+			<li>Click on the desired control to update the position of the Zero Room Transmat System</li>
+			<li>Once the Zero Room has grown, activate the control to teleport into the room</li>
+		</ol>
+		<p><strong>Note:</strong> The Zero room <strong>must</strong> be grown using the <code>/tardis room</code> command, as it is not part of the ARS.</p>
+		<h2>Capabilities</h2>
+		<p>The Zero Room has several useful abilities, including:</p>
+		<ul>
+			<li>Slow healing, default 200 ticks (1/2 heart every 10 seconds)</li>
+			<li>Chat isolation &dash; Both chat and commands are disabled, and only server-wide broadcasts (the important things) can be heard</li>
+			<li>Configurable artron cost to enter the room, default 250 (can be changed in <em>artron.yml</em>)</li>
+		</ul>
+		<h2>Video</h2>
+		<iframe src="http://player.vimeo.com/video/87441837" width="600" height="366" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
 	</section>
 </div>
 <footer>
