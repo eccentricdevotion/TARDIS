@@ -108,8 +108,12 @@ public class TARDISLazarusGUIListener implements Listener {
                 ItemStack is = inv.getItem(slot);
                 ItemMeta im = is.getItemMeta();
                 if (player.hasPermission("tardis.themaster")) {
-                    String onoff = (im.getLore().get(0).equals("OFF")) ? "ON" : "OFF";
-                    im.setLore(Arrays.asList(new String[]{onoff}));
+                    if (plugin.getTrackerKeeper().getTrackImmortalityGate().equals("")) {
+                        String onoff = (im.getLore().get(0).equals("OFF")) ? "ON" : "OFF";
+                        im.setLore(Arrays.asList(new String[]{onoff}));
+                    } else {
+                        im.setLore(Arrays.asList(new String[]{"The Master Race is already", " set to " + plugin.getTrackerKeeper().getTrackImmortalityGate() + "!", "Try again later."}));
+                    }
                 } else {
                     im.setLore(Arrays.asList(new String[]{"You do not have permission", "to be The Master!"}));
                 }
@@ -186,6 +190,7 @@ public class TARDISLazarusGUIListener implements Listener {
                             DisguiseAPI.undisguiseToAll(player);
                         }
                         if (isReversedPolarity(inv)) {
+                            plugin.getTrackerKeeper().setTrackImmortalityGate(playerNameStr);
                             PlayerDisguise playerDisguise = new PlayerDisguise(playerNameStr);
                             for (Player p : plugin.getServer().getOnlinePlayers()) {
                                 if (!p.getName().equals(playerNameStr)) {
@@ -203,6 +208,7 @@ public class TARDISLazarusGUIListener implements Listener {
                                         }
                                     }
                                     plugin.getServer().broadcastMessage(plugin.getPluginName() + "Lord Rassilon has reset the Master Race back to human form.");
+                                    plugin.getTrackerKeeper().setTrackImmortalityGate("");
                                 }
                             }, 3600L);
                         } else {

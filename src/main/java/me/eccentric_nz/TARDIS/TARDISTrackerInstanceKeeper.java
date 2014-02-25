@@ -63,6 +63,7 @@ public class TARDISTrackerInstanceKeeper {
     private final List<String> trackReset = new ArrayList<String>();
     private final List<String> trackTransmat = new ArrayList<String>();
     private final List<String> trackZeroRoomOccupants = new ArrayList<String>();
+    private String trackImmortalityGate = "";
 
     public HashMap<Integer, Integer> getTrackDamage() {
         return trackDamage;
@@ -196,4 +197,11 @@ public class TARDISTrackerInstanceKeeper {
         return trackZeroRoomOccupants;
     }
 
+    public String getTrackImmortalityGate() {
+        return trackImmortalityGate;
+    }
+
+    public void setTrackImmortalityGate(String trackImmortalityGate) {
+        this.trackImmortalityGate = trackImmortalityGate;
+    }
 }
