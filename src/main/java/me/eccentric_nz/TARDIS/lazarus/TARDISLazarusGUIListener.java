@@ -81,7 +81,7 @@ public class TARDISLazarusGUIListener implements Listener {
      * @param event a player clicking an inventory slot
      */
     @EventHandler(priority = EventPriority.NORMAL)
-    public void onAreaTerminalClick(InventoryClickEvent event) {
+    public void onLazarusClick(InventoryClickEvent event) {
         final Inventory inv = event.getInventory();
         String name = inv.getTitle();
         if (name.equals("§4Genetic Manipulator")) {
@@ -90,18 +90,23 @@ public class TARDISLazarusGUIListener implements Listener {
             final Player player = (Player) event.getWhoClicked();
             final String playerNameStr = player.getName();
             final Block b = plugin.getTrackerKeeper().getTrackLazarus().get(playerNameStr);
+            if (b == null) {
+                return;
+            }
             if (slot >= 0 && slot < 36) {
                 // get selection
                 ItemStack is = inv.getItem(slot);
-                ItemMeta im = is.getItemMeta();
-                // remember selection
-                String display = im.getDisplayName();
-                if ((display.equals("WEEPING ANGEL") || display.equals("CYBERMAN") || display.equals("ICE WARRIOR")) && !plugin.getPM().isPluginEnabled("TARDISWeepingAngels")) {
-                    im.setLore(Arrays.asList(new String[]{"Genetic modification not available!"}));
-                    is.setItemMeta(im);
-                } else {
-                    disguises.put(playerNameStr, display);
-                    setSlotFourtyOne(inv, display, playerNameStr);
+                if (is != null) {
+                    ItemMeta im = is.getItemMeta();
+                    // remember selection
+                    String display = im.getDisplayName();
+                    if ((display.equals("WEEPING ANGEL") || display.equals("CYBERMAN") || display.equals("ICE WARRIOR")) && !plugin.getPM().isPluginEnabled("TARDISWeepingAngels")) {
+                        im.setLore(Arrays.asList(new String[]{"Genetic modification not available!"}));
+                        is.setItemMeta(im);
+                    } else {
+                        disguises.put(playerNameStr, display);
+                        setSlotFourtyOne(inv, display, playerNameStr);
+                    }
                 }
             }
             if (slot == 37) { // The Master Switch : ON | OFF
@@ -317,11 +322,11 @@ public class TARDISLazarusGUIListener implements Listener {
                     }
                 }, 100L);
             }
-            if (slot == 51) {
+            if (slot == 51) { //
                 close(player);
                 openDoor(b);
                 untrack(player.getName());
-            }
+            } //
         }
     }
 
