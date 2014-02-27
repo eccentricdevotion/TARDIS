@@ -6,7 +6,6 @@ These are all really boring!
 
 ####Stuff I'll get round to (but I'm not rushing to code):
 1. Videos
-2. Custom room schematics in ARS (check they are 16x16x16)
 3. Localisation
 4. Configurable option to allow Gravity Wells outside of the TARDIS
 
