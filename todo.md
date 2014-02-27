@@ -1,8 +1,6 @@
 # TODO
 
 ##Current version `2.8`
-1. The Master's reverse polarity button in Genetic Manipulator - turns everyone on the server into the player who is in the Genetic Manipulator
-2. Add extra options buttons in Genetic Manipulator - set colours, age etc
 
 These are all really boring!
 
@@ -25,8 +23,6 @@ These are all really boring!
     * find a way to prevent items dropping between renders
 5. TARDIS Information System
     * auto log out?
-6. Add TARDIS unhide ability to admin sonic
-
     
 ##Future version `2.9+`
 * ?
