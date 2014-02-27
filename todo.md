@@ -7,7 +7,6 @@ These are all really boring!
 ####Stuff I'll get round to (but I'm not rushing to code):
 1. Videos
 3. Localisation
-4. Configurable option to allow Gravity Wells outside of the TARDIS
 
 ####Stuff I don't really want to do, but probably will (eventually)
 1. Toggle both doors open when shift-clicking the door, and when exiting (if the preset has a door and the door is open) tp the player to the door location.

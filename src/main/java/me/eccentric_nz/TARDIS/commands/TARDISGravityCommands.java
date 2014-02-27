@@ -82,15 +82,17 @@ public class TARDISGravityCommands implements CommandExecutor {
                 sender.sendMessage(plugin.getPluginName() + MESSAGE.NO_PERMS.getText());
                 return true;
             }
-            // check they are still in the TARDIS world
-            World world = player.getLocation().getWorld();
-            String name = world.getName();
-            ChunkGenerator gen = world.getGenerator();
-            boolean special = name.contains("TARDIS_TimeVortex") && (world.getWorldType().equals(WorldType.FLAT) || gen instanceof TARDISChunkGenerator);
-            if (!name.equals("TARDIS_WORLD_" + player.getName()) && !special) {
-                String mess_stub = (name.contains("TARDIS_WORLD_")) ? "your own" : "a";
-                player.sendMessage(plugin.getPluginName() + "You must be in " + mess_stub + " TARDIS world to make a gravity well!");
-                return true;
+            if (!plugin.getConfig().getBoolean("allow.external_gravity")) {
+                // check they are still in the TARDIS world
+                World world = player.getLocation().getWorld();
+                String name = world.getName();
+                ChunkGenerator gen = world.getGenerator();
+                boolean special = name.contains("TARDIS_TimeVortex") && (world.getWorldType().equals(WorldType.FLAT) || gen instanceof TARDISChunkGenerator);
+                if (!name.equals("TARDIS_WORLD_" + player.getName()) && !special) {
+                    String mess_stub = (name.contains("TARDIS_WORLD_")) ? "your own" : "a";
+                    player.sendMessage(plugin.getPluginName() + "You must be in " + mess_stub + " TARDIS world to make a gravity well!");
+                    return true;
+                }
             }
             if (args.length < 1) {
                 return false;

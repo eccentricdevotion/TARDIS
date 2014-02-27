@@ -66,6 +66,7 @@ public class TARDISConfiguration {
         boolOptions.put("allow.all_blocks", false);
         boolOptions.put("allow.autonomous", true);
         boolOptions.put("allow.emergency_npc", true);
+        boolOptions.put("allow.external_gravity", false);
         boolOptions.put("allow.hads", true);
         boolOptions.put("allow.mob_farming", true);
         boolOptions.put("allow.sfx", true);
