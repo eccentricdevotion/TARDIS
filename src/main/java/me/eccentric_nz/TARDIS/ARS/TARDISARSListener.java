@@ -21,8 +21,10 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import me.eccentric_nz.TARDIS.JSON.JSONArray;
 import me.eccentric_nz.TARDIS.TARDIS;
+import static me.eccentric_nz.TARDIS.commands.preferences.TARDISPrefsCommands.ucfirst;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetARS;
 import me.eccentric_nz.TARDIS.database.ResultSetCondenser;
@@ -200,7 +202,6 @@ public class TARDISARSListener implements Listener {
                             startr = 0;
                         }
                         scroll_start.put(playerNameStr, startr);
-
                         for (int i = 0; i < 9; i++) {
                             // setSlot(Inventory inv, int slot, int id, String room)
                             setSlot(inv, (45 + i), room_ids[(startr + i)], room_names[(startr + i)], playerNameStr, false);
@@ -237,7 +238,13 @@ public class TARDISARSListener implements Listener {
                                 break;
                             } else {
                                 ItemStack ris = inv.getItem(slot);
-                                String room = TARDISARS.getARS(ris.getItemMeta().getDisplayName()).toString();
+                                String displayName = ris.getItemMeta().getDisplayName();
+                                String room;
+//                                if (displayName.startsWith("§3(Custom)§r ")) {
+//                                    room = displayName.substring(13);
+//                                } else {
+                                room = TARDISARS.ARSFor(displayName).getActualName();
+//                                }
                                 if (!player.hasPermission("tardis.room." + room.toLowerCase())) {
                                     setLore(inv, slot, "You don't have permission for this room!");
                                     break;
@@ -555,7 +562,7 @@ public class TARDISARSListener implements Listener {
                             if (tap.getJettison().size() > 0) {
                                 p.sendMessage(plugin.getPluginName() + "Jettisoning " + tap.getJettison().size() + " rooms...");
                                 long del = 5L;
-                                for (Map.Entry<TARDISARSJettison, TARDISARS> map : tap.getJettison().entrySet()) {
+                                for (Map.Entry<TARDISARSJettison, ARS> map : tap.getJettison().entrySet()) {
                                     TARDISARSJettisonRunnable jr = new TARDISARSJettisonRunnable(plugin, map.getKey(), map.getValue(), ids.get(p.getName()), p);
                                     plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, jr, del);
                                     del += 5L;
@@ -564,7 +571,7 @@ public class TARDISARSListener implements Listener {
                             // one every 40 seconds at default room_speed
                             long period = 2400L * (Math.round(20 / plugin.getConfig().getDouble("growth.room_speed")));
                             long delay = 20L;
-                            for (Map.Entry<TARDISARSSlot, TARDISARS> map : tap.getChanged().entrySet()) {
+                            for (Map.Entry<TARDISARSSlot, ARS> map : tap.getChanged().entrySet()) {
                                 TARDISARSRunnable ar = new TARDISARSRunnable(plugin, map.getKey(), map.getValue(), p, ids.get(p.getName()));
                                 plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, ar, delay);
                                 delay += period;
@@ -633,7 +640,7 @@ public class TARDISARSListener implements Listener {
             for (int j = 0; j < 5; j++) {
                 int slot = i + (j * 9);
                 int id = map[indexx][indexz];
-                String name = TARDISARS.getARS(Integer.valueOf(id)).getName();
+                String name = TARDISARS.ARSFor(Integer.valueOf(id)).getDescriptiveName();
                 setSlot(inv, slot, id, name, player, false);
                 indexz++;
             }
@@ -681,23 +688,84 @@ public class TARDISARSListener implements Listener {
         }
     }
 
+    /**
+     * Populates arrays of room names and seed IDs for the scrollable room
+     * buttons.
+     */
+    @SuppressWarnings("deprecation")
     private void getRoomIdAndNames() {
+        List<String> custom_names = getCustomRoomNames();
         TARDISARS[] ars = TARDISARS.values();
-
         // less non-room types
-        int l = ars.length - notrooms.size();
+        int l = (custom_names.size() + ars.length) - notrooms.size();
+//        int l = ars.length - notrooms.size();
         this.room_ids = new int[l];
         this.room_names = new String[l];
         int i = 0;
         for (TARDISARS a : ars) {
             if (!notrooms.contains(a)) {
                 this.room_ids[i] = a.getId();
-                this.room_names[i] = a.getName();
+                this.room_names[i] = a.getDescriptiveName();
                 i++;
             }
         }
+        for (final String c : custom_names) {
+            this.room_ids[i] = Material.valueOf(plugin.getRoomsConfig().getString("rooms." + c + ".seed")).getId();
+            final String uc = ucfirst(c);
+            this.room_names[i] = uc;
+            i++;
+            TARDISARS.addNewARS(new ARS() {
+                @Override
+                public int getId() {
+                    return Material.valueOf(plugin.getRoomsConfig().getString("rooms." + c + ".seed")).getId();
+                }
+
+                @Override
+                public String getActualName() {
+                    return c;
+                }
+
+                @Override
+                public String getDescriptiveName() {
+                    return uc;
+                }
+
+                @Override
+                public int getOffset() {
+                    return 1;
+                }
+            });
+        }
     }
 
+    /**
+     * Checks and gets custom rooms for ARS.
+     *
+     * @return a list of enabled custom room names
+     */
+    private List<String> getCustomRoomNames() {
+        List<String> crooms = new ArrayList<String>();
+        Set<String> names = plugin.getRoomsConfig().getConfigurationSection("rooms").getKeys(false);
+        for (String cr : names) {
+            if (plugin.getRoomsConfig().getBoolean("rooms." + cr + ".user") && plugin.getRoomsConfig().getBoolean("rooms." + cr + ".enabled")) {
+                // check room dimensions
+                short[] dim = plugin.getBuildKeeper().getRoomDimensions().get(cr);
+                if (dim[0] <= (short) 16 && dim[1] == (short) 16) {
+                    crooms.add(cr);
+                }
+            }
+        }
+        return crooms;
+    }
+
+    /**
+     * Checks whether a player has condensed the required blocks to grow the
+     * room.
+     *
+     * @param player the player to check for
+     * @param room the room to check
+     * @return true or false
+     */
     public boolean hasCondensables(String player, String room) {
         boolean hasRequired = true;
         HashMap<String, Integer> roomBlocks = plugin.getBuildKeeper().getRoomBlockCounts().get(room);

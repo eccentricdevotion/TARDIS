@@ -18,11 +18,11 @@ package me.eccentric_nz.TARDIS.ARS;
 
 import java.util.HashMap;
 import java.util.Map;
+import me.eccentric_nz.TARDIS.JSON.JSONArray;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetARS;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
-import me.eccentric_nz.TARDIS.JSON.JSONArray;
 import org.bukkit.Chunk;
 import org.bukkit.World;
 
@@ -35,8 +35,8 @@ public class TARDISARSProcessor {
     private final TARDIS plugin;
     private final int id;
     private String error;
-    private HashMap<TARDISARSSlot, TARDISARS> changed;
-    private HashMap<TARDISARSJettison, TARDISARS> jettison;
+    private HashMap<TARDISARSSlot, ARS> changed;
+    private HashMap<TARDISARSJettison, ARS> jettison;
 
     public TARDISARSProcessor(TARDIS plugin, int id) {
         this.plugin = plugin;
@@ -44,8 +44,8 @@ public class TARDISARSProcessor {
     }
 
     public boolean compare3DArray(int[][][] start, int[][][] end) {
-        changed = new HashMap<TARDISARSSlot, TARDISARS>();
-        jettison = new HashMap<TARDISARSJettison, TARDISARS>();
+        changed = new HashMap<TARDISARSSlot, ARS>();
+        jettison = new HashMap<TARDISARSJettison, ARS>();
         Chunk c = getTARDISChunk(id);
         for (int l = 0; l < 3; l++) {
             for (int x = 0; x < 9; x++) {
@@ -63,7 +63,7 @@ public class TARDISARSProcessor {
                                     slot.setY(l);
                                     slot.setX(x);
                                     slot.setZ(z);
-                                    jettison.put(slot, TARDISARS.getARS(start[l][x][z]));
+                                    jettison.put(slot, TARDISARS.ARSFor(start[l][x][z]));
                                     TARDISARSJettison slot2 = new TARDISARSJettison();
                                     slot2.setChunk(c);
                                     slot2.setY(l - 1);
@@ -84,7 +84,7 @@ public class TARDISARSProcessor {
                                     slot.setY(l);
                                     slot.setX(x);
                                     slot.setZ(z);
-                                    jettison.put(slot, TARDISARS.getARS(start[l][x][z]));
+                                    jettison.put(slot, TARDISARS.ARSFor(start[l][x][z]));
                                     TARDISARSJettison slot2 = new TARDISARSJettison();
                                     slot2.setChunk(c);
                                     slot2.setY(l + 1);
@@ -101,7 +101,7 @@ public class TARDISARSProcessor {
                                 slot.setY(l);
                                 slot.setX(x);
                                 slot.setZ(z);
-                                jettison.put(slot, TARDISARS.getARS(start[l][x][z]));
+                                jettison.put(slot, TARDISARS.ARSFor(start[l][x][z]));
                             }
                         } else {
                             if (end[l][x][z] == 48) {
@@ -112,7 +112,7 @@ public class TARDISARSProcessor {
                                     slot.setY(l);
                                     slot.setX(x);
                                     slot.setZ(z);
-                                    changed.put(slot, TARDISARS.getARS(end[l][x][z]));
+                                    changed.put(slot, TARDISARS.ARSFor(end[l][x][z]));
                                 }
                             } else if (end[l][x][z] == 24) {
                                 if (l == 0 || ((l - 1) > 0 && end[l - 1][x][z] == 24)) {
@@ -122,7 +122,7 @@ public class TARDISARSProcessor {
                                     slot.setY(l - 1);
                                     slot.setX(x);
                                     slot.setZ(z);
-                                    changed.put(slot, TARDISARS.getARS(end[l][x][z]));
+                                    changed.put(slot, TARDISARS.ARSFor(end[l][x][z]));
                                 }
                             } else {
                                 TARDISARSSlot slot = new TARDISARSSlot();
@@ -130,7 +130,7 @@ public class TARDISARSProcessor {
                                 slot.setY(l);
                                 slot.setX(x);
                                 slot.setZ(z);
-                                changed.put(slot, TARDISARS.getARS(end[l][x][z]));
+                                changed.put(slot, TARDISARS.ARSFor(end[l][x][z]));
                             }
                         }
                     }
@@ -140,18 +140,18 @@ public class TARDISARSProcessor {
         return jettison.size() > 0 || changed.size() > 0;
     }
 
-    public boolean checkCosts(HashMap<TARDISARSSlot, TARDISARS> changed, HashMap<TARDISARSJettison, TARDISARS> jettison) {
+    public boolean checkCosts(HashMap<TARDISARSSlot, ARS> changed, HashMap<TARDISARSJettison, ARS> jettison) {
         if (changed.size() > 0) {
             int totalcost = 0;
             int recoveredcost = 0;
             // calculate energy gained by jettisons
-            for (Map.Entry<TARDISARSJettison, TARDISARS> c : jettison.entrySet()) {
+            for (Map.Entry<TARDISARSJettison, ARS> c : jettison.entrySet()) {
                 if (c.getValue() != null) {
-                    recoveredcost += Math.round((plugin.getArtronConfig().getInt("jettison") / 100F) * plugin.getRoomsConfig().getInt("rooms." + c.getValue().toString() + ".cost"));
+                    recoveredcost += Math.round((plugin.getArtronConfig().getInt("jettison") / 100F) * plugin.getRoomsConfig().getInt("rooms." + c.getValue().getActualName() + ".cost"));
                 }
             }
-            for (Map.Entry<TARDISARSSlot, TARDISARS> c : changed.entrySet()) {
-                totalcost += plugin.getRoomsConfig().getInt("rooms." + c.getValue().toString() + ".cost");
+            for (Map.Entry<TARDISARSSlot, ARS> c : changed.entrySet()) {
+                totalcost += plugin.getRoomsConfig().getInt("rooms." + c.getValue().getActualName() + ".cost");
             }
             HashMap<String, Object> where = new HashMap<String, Object>();
             where.put("tardis_id", id);
@@ -168,11 +168,11 @@ public class TARDISARSProcessor {
         return true;
     }
 
-    public HashMap<TARDISARSSlot, TARDISARS> getChanged() {
+    public HashMap<TARDISARSSlot, ARS> getChanged() {
         return changed;
     }
 
-    public HashMap<TARDISARSJettison, TARDISARS> getJettison() {
+    public HashMap<TARDISARSJettison, ARS> getJettison() {
         return jettison;
     }
 

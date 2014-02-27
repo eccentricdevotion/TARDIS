@@ -37,12 +37,12 @@ public class TARDISARSRunnable implements Runnable {
 
     private final TARDIS plugin;
     private final TARDISARSSlot slot;
-    private final TARDISARS room;
+    private final ARS room;
     private final Player p;
     private int id;
     private final int tardis_id;
 
-    public TARDISARSRunnable(TARDIS plugin, TARDISARSSlot slot, TARDISARS room, Player p, int tardis_id) {
+    public TARDISARSRunnable(TARDIS plugin, TARDISARSSlot slot, ARS room, Player p, int tardis_id) {
         this.plugin = plugin;
         this.slot = slot;
         this.room = room;
@@ -52,7 +52,7 @@ public class TARDISARSRunnable implements Runnable {
 
     @Override
     public void run() {
-        String whichroom = room.toString();
+        String whichroom = room.getActualName();
         HashMap<String, Object> where = new HashMap<String, Object>();
         where.put("owner", p.getName());
         ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);
@@ -89,7 +89,7 @@ public class TARDISARSRunnable implements Runnable {
             roomData.setDirection(COMPASS.SOUTH);
             short[] dimensions = plugin.getBuildKeeper().getRoomDimensions().get(whichroom);
             // set y offset - this needs to be how many blocks above ground 0 of the 16x16x16 chunk the room starts
-            l.setY(l.getY() + TARDISARS.valueOf(whichroom).getOffset());
+            l.setY(l.getY() + room.getOffset());
             roomData.setLocation(l);
             roomData.setX(1);
             roomData.setZ(1);
@@ -103,7 +103,7 @@ public class TARDISARSRunnable implements Runnable {
             QueryFactory qf = new QueryFactory(plugin);
             // remove blocks from condenser table if rooms_require_blocks is true
             if (plugin.getConfig().getBoolean("growth.rooms_require_blocks")) {
-                HashMap<Integer, Integer> roomBlockCounts = getRoomBlockCounts(room.toString(), p.getName());
+                HashMap<Integer, Integer> roomBlockCounts = getRoomBlockCounts(whichroom, p.getName());
                 for (Map.Entry<Integer, Integer> entry : roomBlockCounts.entrySet()) {
                     HashMap<String, Object> wherec = new HashMap<String, Object>();
                     wherec.put("tardis_id", tardis_id);

@@ -33,11 +33,11 @@ public class TARDISARSJettisonRunnable implements Runnable {
 
     private final TARDIS plugin;
     private final TARDISARSJettison slot;
-    private final TARDISARS room;
+    private final ARS room;
     private final int id;
     private final Player p;
 
-    public TARDISARSJettisonRunnable(TARDIS plugin, TARDISARSJettison slot, TARDISARS room, int id, Player p) {
+    public TARDISARSJettisonRunnable(TARDIS plugin, TARDISARSJettison slot, ARS room, int id, Player p) {
         this.plugin = plugin;
         this.slot = slot;
         this.room = room;
@@ -48,7 +48,7 @@ public class TARDISARSJettisonRunnable implements Runnable {
     @Override
     public void run() {
         QueryFactory qf = new QueryFactory(plugin);
-        String r = room.toString();
+        String r = room.getActualName();
         // remove the room
         World w = slot.getChunk().getWorld();
         int x = slot.getX();
