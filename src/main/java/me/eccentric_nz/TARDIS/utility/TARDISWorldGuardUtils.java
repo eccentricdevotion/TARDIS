@@ -286,7 +286,7 @@ public class TARDISWorldGuardUtils {
     }
 
     /**
-     * Adds a player to a region's membership.
+     * Removes a player from a region's membership.
      *
      * @param w the world the region is located in
      * @param p the player whose region it is
