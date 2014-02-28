@@ -37,7 +37,6 @@ import org.bukkit.World;
 import org.bukkit.block.Biome;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
-import org.bukkit.entity.Player;
 
 /**
  * The Wibbly lever was a part of The Doctor's TARDIS console. The lever had at
@@ -79,40 +78,32 @@ public class TARDISPresetBuilderFactory {
     /**
      * Builds the TARDIS Police Box.
      *
-     * @param id the unique key of the record for this TARDIS in the database.
-     * @param l the location where the Police Box should be built.
-     * @param d the direction the Police Box is built in.
-     * @param c boolean determining whether to engage the chameleon circuit.
-     * @param p an instance of the player who owns the TARDIS.
-     * @param rebuild boolean determining whether the Police Box blocks should
-     * be remembered in the database for protection purposes.
-     * @param mal boolean determining whether a malfunction has occurred
-     * @param sub whether the location is submarine
+     * @param pbd the TARDIS build data
      */
-    public void buildPreset(int id, Location l, COMPASS d, boolean c, Player p, boolean rebuild, boolean mal, boolean sub) {
+    public void buildPreset(TARDISPresetBuilderData pbd) {
         HashMap<String, Object> where = new HashMap<String, Object>();
-        where.put("tardis_id", id);
+        where.put("tardis_id", pbd.getTardisID());
         ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);
         if (rs.resultSet()) {
             PRESET preset = rs.getPreset();
             if (rs.isAdapti_on()) {
-                Biome biome = l.getWorld().getBiome(l.getBlockX(), l.getBlockZ());
+                Biome biome = pbd.getLocation().getWorld().getBiome(pbd.getLocation().getBlockX(), pbd.getLocation().getBlockZ());
                 preset = adapt(biome, preset);
             }
             PRESET demat = rs.getDemat();
             int cham_id = rs.getChameleon_id();
             byte cham_data = rs.getChameleon_data();
-            if (c && (preset.equals(PRESET.NEW) || preset.equals(PRESET.OLD) || preset.equals(PRESET.SUBMERGED))) {
+            if (pbd.isChameleon() && (preset.equals(PRESET.NEW) || preset.equals(PRESET.OLD) || preset.equals(PRESET.SUBMERGED))) {
                 Block chameleonBlock;
                 // chameleon circuit is on - get block under TARDIS
-                if (l.getBlock().getType() == Material.SNOW) {
-                    chameleonBlock = l.getBlock();
+                if (pbd.getLocation().getBlock().getType() == Material.SNOW) {
+                    chameleonBlock = pbd.getLocation().getBlock();
                 } else {
-                    chameleonBlock = l.getBlock().getRelative(BlockFace.DOWN);
+                    chameleonBlock = pbd.getLocation().getBlock().getRelative(BlockFace.DOWN);
                 }
                 // determine cham_id
                 TARDISChameleonCircuit tcc = new TARDISChameleonCircuit(plugin);
-                int[] b_data = tcc.getChameleonBlock(chameleonBlock, p, false);
+                int[] b_data = tcc.getChameleonBlock(chameleonBlock, pbd.getPlayer(), false);
                 cham_id = b_data[0];
                 cham_data = (byte) b_data[1];
             }
@@ -121,18 +112,18 @@ public class TARDISPresetBuilderFactory {
             boolean minecart = false;
             boolean hidden = rs.isHidden();
             HashMap<String, Object> wherepp = new HashMap<String, Object>();
-            wherepp.put("player", p.getName());
+            wherepp.put("player", pbd.getPlayer().getName());
             ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, wherepp);
             if (rsp.resultSet()) {
                 lamp = rsp.getLamp();
                 minecart = rsp.isMinecartOn();
             }
-            if (sub && notSubmarinePresets.contains(preset)) {
+            if (pbd.isSubmarine() && notSubmarinePresets.contains(preset)) {
                 preset = PRESET.YELLOW;
-                p.sendMessage(plugin.getPluginName() + "Selected preset unsuitable for submarine mode - changed to Yellow Submarine.");
+                pbd.getPlayer().sendMessage(plugin.getPluginName() + "Selected preset unsuitable for submarine mode - changed to Yellow Submarine.");
             }
             // keep the chunk this Police box is in loaded
-            Chunk thisChunk = l.getChunk();
+            Chunk thisChunk = pbd.getLocation().getChunk();
             while (!thisChunk.isLoaded()) {
                 thisChunk.load();
             }
@@ -142,13 +133,13 @@ public class TARDISPresetBuilderFactory {
              * Police Boxes in it.
              */
             plugin.getGeneralKeeper().getTardisChunkList().add(thisChunk);
-            if (rebuild) {
+            if (pbd.isRebuild()) {
                 // always destroy it first as the player may just be switching presets
                 if (!hidden) {
                     TARDISDeinstaPreset deinsta = new TARDISDeinstaPreset(plugin);
-                    deinsta.instaDestroyPreset(l, d, id, false, demat, sub);
+                    deinsta.instaDestroyPreset(pbd.getLocation(), pbd.getDirection(), pbd.getTardisID(), false, demat, pbd.isSubmarine());
                 }
-                final TARDISInstaPreset trp = new TARDISInstaPreset(plugin, l, preset, id, d, p.getName(), mal, lamp, sub, cham_id, cham_data, true, minecart);
+                final TARDISInstaPreset trp = new TARDISInstaPreset(plugin, pbd.getLocation(), preset, pbd.getTardisID(), pbd.getDirection(), pbd.getPlayer().getName(), pbd.isMalfunction(), lamp, pbd.isSubmarine(), cham_id, cham_data, true, minecart);
                 plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
                     @Override
                     public void run() {
@@ -157,19 +148,19 @@ public class TARDISPresetBuilderFactory {
                 }, 10L);
             } else {
                 if (plugin.getConfig().getBoolean("police_box.materialise")) {
-                    plugin.getTrackerKeeper().getTrackMaterialising().add(Integer.valueOf(id));
-                    TARDISMaterialisationPreset runnable = new TARDISMaterialisationPreset(plugin, l, preset, id, d, p, mal, lamp, sub, cham_id, cham_data, minecart);
+                    plugin.getTrackerKeeper().getTrackMaterialising().add(Integer.valueOf(pbd.getTardisID()));
+                    TARDISMaterialisationPreset runnable = new TARDISMaterialisationPreset(plugin, pbd.getLocation(), preset, pbd.getTardisID(), pbd.getDirection(), pbd.getPlayer(), pbd.isMalfunction(), lamp, pbd.isSubmarine(), cham_id, cham_data, minecart);
                     int taskID = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, runnable, 10L, 20L);
                     runnable.setTask(taskID);
                 } else {
-                    plugin.getTrackerKeeper().getTrackMaterialising().add(Integer.valueOf(id));
-                    TARDISInstaPreset insta = new TARDISInstaPreset(plugin, l, preset, id, d, p.getName(), mal, lamp, sub, cham_id, cham_data, false, minecart);
+                    plugin.getTrackerKeeper().getTrackMaterialising().add(Integer.valueOf(pbd.getTardisID()));
+                    TARDISInstaPreset insta = new TARDISInstaPreset(plugin, pbd.getLocation(), preset, pbd.getTardisID(), pbd.getDirection(), pbd.getPlayer().getName(), pbd.isMalfunction(), lamp, pbd.isSubmarine(), cham_id, cham_data, false, minecart);
                     insta.buildPreset();
                 }
             }
             // update demat so it knows about the current preset after it has changed
             HashMap<String, Object> whered = new HashMap<String, Object>();
-            whered.put("tardis_id", id);
+            whered.put("tardis_id", pbd.getTardisID());
             HashMap<String, Object> set = new HashMap<String, Object>();
             set.put("chameleon_demat", preset.toString());
             new QueryFactory(plugin).doUpdate("tardis", set, whered);

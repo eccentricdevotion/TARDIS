@@ -19,6 +19,7 @@ package me.eccentric_nz.TARDIS.commands.tardis;
 import java.util.HashMap;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.advanced.TARDISCircuitChecker;
+import me.eccentric_nz.TARDIS.builders.TARDISPresetBuilderData;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetCurrentLocation;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
@@ -42,7 +43,6 @@ public class TARDISRebuildCommand {
 
     public boolean rebuildPreset(final Player player, String[] args) {
         if (player.hasPermission("tardis.rebuild")) {
-            final int id;
             boolean cham = false;
             HashMap<String, Object> where = new HashMap<String, Object>();
             where.put("owner", player.getName());
@@ -51,7 +51,7 @@ public class TARDISRebuildCommand {
                 player.sendMessage(plugin.getPluginName() + MESSAGE.NO_TARDIS.getText());
                 return false;
             }
-            id = rs.getTardis_id();
+            int id = rs.getTardis_id();
             TARDISCircuitChecker tcc = null;
             if (plugin.getConfig().getString("preferences.difficulty").equals("hard")) {
                 tcc = new TARDISCircuitChecker(plugin, id);
@@ -78,13 +78,13 @@ public class TARDISRebuildCommand {
             }
             HashMap<String, Object> wherecl = new HashMap<String, Object>();
             wherecl.put("tardis_id", rs.getTardis_id());
-            final ResultSetCurrentLocation rsc = new ResultSetCurrentLocation(plugin, wherecl);
+            ResultSetCurrentLocation rsc = new ResultSetCurrentLocation(plugin, wherecl);
             if (!rsc.resultSet()) {
                 player.sendMessage(plugin.getPluginName() + MESSAGE.NO_CURRENT.getText());
                 player.sendMessage("Try using the Stattenheim Remote, or the /tardis comehere command.");
                 return true;
             }
-            final Location l = new Location(rsc.getWorld(), rsc.getX(), rsc.getY(), rsc.getZ());
+            Location l = new Location(rsc.getWorld(), rsc.getX(), rsc.getY(), rsc.getZ());
             HashMap<String, Object> wheret = new HashMap<String, Object>();
             wheret.put("tardis_id", id);
             QueryFactory qf = new QueryFactory(plugin);
@@ -94,11 +94,19 @@ public class TARDISRebuildCommand {
                 return false;
             }
             // remove the police box first - should fix conflict between wood and iron doors
-            final boolean c = cham;
+            final TARDISPresetBuilderData pbd = new TARDISPresetBuilderData();
+            pbd.setChameleon(cham);
+            pbd.setDirection(rsc.getDirection());
+            pbd.setLocation(l);
+            pbd.setMalfunction(false);
+            pbd.setPlayer(player);
+            pbd.setRebuild(true);
+            pbd.setSubmarine(rsc.isSubmarine());
+            pbd.setTardisID(id);
             plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
                 @Override
                 public void run() {
-                    plugin.getPresetBuilder().buildPreset(id, l, rsc.getDirection(), c, player, true, false, rsc.isSubmarine());
+                    plugin.getPresetBuilder().buildPreset(pbd);
                 }
             }, 10L);
             player.sendMessage(plugin.getPluginName() + "The TARDIS Police Box was rebuilt!");

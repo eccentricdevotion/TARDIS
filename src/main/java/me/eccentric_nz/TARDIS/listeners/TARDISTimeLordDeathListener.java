@@ -19,6 +19,7 @@ package me.eccentric_nz.TARDIS.listeners;
 import java.util.HashMap;
 import java.util.List;
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.builders.TARDISPresetBuilderData;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetAreas;
 import me.eccentric_nz.TARDIS.database.ResultSetCurrentLocation;
@@ -26,6 +27,7 @@ import me.eccentric_nz.TARDIS.database.ResultSetHomeLocation;
 import me.eccentric_nz.TARDIS.database.ResultSetPlayerPrefs;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import me.eccentric_nz.TARDIS.database.ResultSetTravellers;
+import me.eccentric_nz.TARDIS.destroyers.TARDISPresetDestroyerData;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
 import me.eccentric_nz.TARDIS.travel.TARDISEPSRunnable;
 import org.bukkit.Location;
@@ -61,7 +63,7 @@ public class TARDISTimeLordDeathListener implements Listener {
     @EventHandler(priority = EventPriority.MONITOR)
     public void onTimeLordDeath(PlayerDeathEvent event) {
         if (plugin.getConfig().getBoolean("allow.autonomous")) {
-            final Player player = event.getEntity();
+            Player player = event.getEntity();
             if (player.hasPermission("tardis.autonomous")) {
                 String playerNameStr = player.getName();
                 HashMap<String, Object> where = new HashMap<String, Object>();
@@ -69,9 +71,9 @@ public class TARDISTimeLordDeathListener implements Listener {
                 ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);
                 // are they a time lord?
                 if (rs.resultSet()) {
-                    final int id = rs.getTardis_id();
-                    final String eps = rs.getEps();
-                    final String creeper = rs.getCreeper();
+                    int id = rs.getTardis_id();
+                    String eps = rs.getEps();
+                    String creeper = rs.getCreeper();
                     HashMap<String, Object> wherep = new HashMap<String, Object>();
                     wherep.put("player", playerNameStr);
                     ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, wherep);
@@ -115,7 +117,7 @@ public class TARDISTimeLordDeathListener implements Listener {
                             World hw = rsh.getWorld();
                             Location home_loc = new Location(hw, rsh.getX(), rsh.getY(), rsh.getZ());
                             COMPASS hd = rsh.getDirection();
-                            final boolean sub = rsh.isSubmarine();
+                            boolean sub = rsh.isSubmarine();
                             Location goto_loc;
                             boolean going_home = false;
                             // if home world is NOT the death world
@@ -146,11 +148,20 @@ public class TARDISTimeLordDeathListener implements Listener {
                             // if the TARDIS is already at the home location, do nothing
                             if (!compareCurrentToHome(rsc, rsh)) {
                                 QueryFactory qf = new QueryFactory(plugin);
-                                final boolean cham = rs.isChamele_on();
-                                final COMPASS fd = (going_home) ? hd : cd;
+                                boolean cham = rs.isChamele_on();
+                                COMPASS fd = (going_home) ? hd : cd;
                                 // destroy police box
+                                final TARDISPresetDestroyerData pdd = new TARDISPresetDestroyerData();
+                                pdd.setChameleon(cham);
+                                pdd.setDirection(cd);
+                                pdd.setLocation(sl);
+                                pdd.setDematerialise(plugin.getConfig().getBoolean("police_box.materialise"));
+                                pdd.setPlayer(player);
+                                pdd.setHide(false);
+                                pdd.setSubmarine(rsc.isSubmarine());
+                                pdd.setTardisID(id);
                                 if (!rs.isHidden()) {
-                                    plugin.getPresetDestroyer().destroyPreset(sl, cd, id, false, plugin.getConfig().getBoolean("police_box.materialise"), cham, player, rsc.isSubmarine());
+                                    plugin.getPresetDestroyer().destroyPreset(pdd);
                                 } else {
                                     plugin.getPresetDestroyer().removeBlockProtection(id, qf);
                                     HashMap<String, Object> set = new HashMap<String, Object>();
@@ -159,12 +170,20 @@ public class TARDISTimeLordDeathListener implements Listener {
                                     tid.put("tardis_id", id);
                                     qf.doUpdate("tardis", set, tid);
                                 }
-                                final Location auto_loc = goto_loc;
+                                final TARDISPresetBuilderData pbd = new TARDISPresetBuilderData();
+                                pbd.setChameleon(cham);
+                                pbd.setDirection(fd);
+                                pbd.setLocation(goto_loc);
+                                pbd.setMalfunction(false);
+                                pbd.setPlayer(player);
+                                pbd.setRebuild(false);
+                                pbd.setSubmarine(sub);
+                                pbd.setTardisID(id);
                                 plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
                                     @Override
                                     public void run() {
                                         // rebuild police box - needs to be a delay
-                                        plugin.getPresetBuilder().buildPreset(id, auto_loc, fd, cham, player, false, false, sub);
+                                        plugin.getPresetBuilder().buildPreset(pbd);
                                     }
                                 }, 200L);
                                 // set current

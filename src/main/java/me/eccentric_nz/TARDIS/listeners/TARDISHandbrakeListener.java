@@ -22,6 +22,7 @@ import me.eccentric_nz.TARDIS.achievement.TARDISAchievementFactory;
 import me.eccentric_nz.TARDIS.advanced.TARDISCircuitChecker;
 import me.eccentric_nz.TARDIS.artron.TARDISArtronIndicator;
 import me.eccentric_nz.TARDIS.artron.TARDISArtronLevels;
+import me.eccentric_nz.TARDIS.builders.TARDISPresetBuilderData;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetControls;
 import me.eccentric_nz.TARDIS.database.ResultSetCurrentLocation;
@@ -29,6 +30,7 @@ import me.eccentric_nz.TARDIS.database.ResultSetDoors;
 import me.eccentric_nz.TARDIS.database.ResultSetNextLocation;
 import me.eccentric_nz.TARDIS.database.ResultSetPlayerPrefs;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
+import me.eccentric_nz.TARDIS.destroyers.TARDISPresetDestroyerData;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
 import me.eccentric_nz.TARDIS.enumeration.MESSAGE;
 import me.eccentric_nz.TARDIS.travel.TARDISMalfunction;
@@ -112,7 +114,7 @@ public class TARDISHandbrakeListener implements Listener {
                             player.sendMessage(plugin.getPluginName() + MESSAGE.ISO_ON.getText());
                             return;
                         }
-                        final boolean cham = rs.isChamele_on();
+                        boolean cham = rs.isChamele_on();
                         boolean hidden = rs.isHidden();
                         String beacon = rs.getBeacon();
                         String eps = rs.getEps();
@@ -159,9 +161,9 @@ public class TARDISHandbrakeListener implements Listener {
                                             resetw = rscl.getWorld().getName();
                                             l = new Location(rscl.getWorld(), rscl.getX(), rscl.getY(), rscl.getZ());
                                         }
-                                        final COMPASS cd = rscl.getDirection();
+                                        COMPASS cd = rscl.getDirection();
                                         boolean sub = rscl.isSubmarine();
-                                        COMPASS tmpd = cd;
+                                        COMPASS sd = cd;
                                         boolean malfunction = false;
                                         boolean is_next_sub = false;
                                         if (plugin.getConfig().getInt("preferences.malfunction") > 0) {
@@ -214,7 +216,7 @@ public class TARDISHandbrakeListener implements Listener {
                                             }
                                             is_next_sub = rsn.isSubmarine();
                                             exit = new Location(rsn.getWorld(), rsn.getX(), rsn.getY(), rsn.getZ());
-                                            tmpd = rsn.getDirection();
+                                            sd = rsn.getDirection();
                                             // Changes the lever to off
                                             lever.setPowered(false);
                                             state.setData(lever);
@@ -235,24 +237,38 @@ public class TARDISHandbrakeListener implements Listener {
                                             }
                                             boolean mat = plugin.getConfig().getBoolean("police_box.materialise");
                                             plugin.getTrackerKeeper().getTrackInVortex().add(Integer.valueOf(id));
+                                            final TARDISPresetDestroyerData pdd = new TARDISPresetDestroyerData();
+                                            pdd.setChameleon(cham);
+                                            pdd.setDirection(cd);
+                                            pdd.setLocation(l);
+                                            pdd.setDematerialise(mat);
+                                            pdd.setPlayer(player);
+                                            pdd.setHide(false);
+                                            pdd.setSubmarine(sub);
+                                            pdd.setTardisID(id);
                                             if (!hidden && !plugin.getTrackerKeeper().getTrackReset().contains(resetw)) {
                                                 plugin.getTrackerKeeper().getTrackDematerialising().add(Integer.valueOf(Integer.valueOf(id)));
-                                                plugin.getPresetDestroyer().destroyPreset(l, cd, id, false, mat, cham, player, sub);
+                                                plugin.getPresetDestroyer().destroyPreset(pdd);
                                             } else {
                                                 // set hidden false!
                                                 set.put("hidden", 0);
                                                 plugin.getPresetDestroyer().removeBlockProtection(id, new QueryFactory(plugin));
                                             }
                                             long delay = (mat) ? 500L : 1L;
-                                            final Location e = exit;
-                                            final boolean mal = malfunction;
                                             final boolean mine_sound = minecart;
-                                            final boolean next_sub = is_next_sub;
-                                            final COMPASS sd = tmpd;
+                                            final TARDISPresetBuilderData pbd = new TARDISPresetBuilderData();
+                                            pbd.setChameleon(cham);
+                                            pbd.setDirection(sd);
+                                            pbd.setLocation(exit);
+                                            pbd.setMalfunction(malfunction);
+                                            pbd.setPlayer(player);
+                                            pbd.setRebuild(false);
+                                            pbd.setSubmarine(is_next_sub);
+                                            pbd.setTardisID(id);
                                             plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
                                                 @Override
                                                 public void run() {
-                                                    plugin.getPresetBuilder().buildPreset(id, e, sd, cham, player, false, mal, next_sub);
+                                                    plugin.getPresetBuilder().buildPreset(pbd);
                                                     if (!mine_sound) {
                                                         plugin.getUtils().playTARDISSound(handbrake_loc, player, "tardis_land");
                                                     } else {

@@ -81,7 +81,7 @@ public class TARDISSeedBlockProcessor {
             where.put("owner", playerNameStr);
             ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);
             if (!rs.resultSet()) {
-                final SCHEMATIC schm = seed.getSchematic();
+                SCHEMATIC schm = seed.getSchematic();
                 switch (schm) {
                     case CUSTOM:
                         if (!plugin.getConfig().getBoolean("creation.custom_schematic")) {
@@ -145,7 +145,7 @@ public class TARDISSeedBlockProcessor {
                 int cx;
                 int cz;
                 String cw;
-                final World chunkworld;
+                World chunkworld;
                 boolean tips = false;
                 if (plugin.getConfig().getBoolean("creation.create_worlds") && !plugin.getConfig().getBoolean("creation.default_world")) {
                     // create a new world to store this TARDIS
@@ -181,7 +181,7 @@ public class TARDISSeedBlockProcessor {
                     }
                 }
                 // get player direction
-                final String d = plugin.getUtils().getPlayersDirection(player, false);
+                String d = plugin.getUtils().getPlayersDirection(player, false);
                 // save data to database (tardis table)
                 String chun = cw + ":" + cx + ":" + cz;
                 QueryFactory qf = new QueryFactory(plugin);
@@ -190,12 +190,12 @@ public class TARDISSeedBlockProcessor {
                 set.put("chunk", chun);
                 set.put("size", schm.name());
                 HashMap<String, Object> setpp = new HashMap<String, Object>();
-                final int middle_id = seed.getWall_id();
-                final byte middle_data = seed.getWall_data();
-                final int floor_id = seed.getFloor_id();
-                final byte floor_data = seed.getFloor_data();
-                final int c_id = seed.getBox_id();
-                final byte c_data = seed.getBox_data();
+                int middle_id = seed.getWall_id();
+                byte middle_data = seed.getWall_data();
+                int floor_id = seed.getFloor_id();
+                byte floor_data = seed.getFloor_data();
+                int c_id = seed.getBox_id();
+                byte c_data = seed.getBox_data();
                 set.put("middle_id", middle_id);
                 set.put("middle_data", middle_data);
                 set.put("chameleon_id", c_id);
@@ -211,7 +211,7 @@ public class TARDISSeedBlockProcessor {
                 setpp.put("wall", getWallKey(middle_id, (int) middle_data));
                 setpp.put("floor", getWallKey(floor_id, (int) floor_data));
                 setpp.put("lamp", seed.getLamp());
-                final int lastInsertId = qf.doSyncInsert("tardis", set);
+                int lastInsertId = qf.doSyncInsert("tardis", set);
                 // insert/update  player prefs
                 HashMap<String, Object> wherep = new HashMap<String, Object>();
                 wherep.put("player", player.getName());
@@ -237,8 +237,17 @@ public class TARDISSeedBlockProcessor {
                 setlocs.put("direction", d);
                 qf.insertLocations(setlocs);
                 // turn the block stack into a TARDIS
+                TARDISPresetBuilderData pbd = new TARDISPresetBuilderData();
+                pbd.setChameleon(false);
+                pbd.setDirection(COMPASS.valueOf(d));
+                pbd.setLocation(l);
+                pbd.setMalfunction(false);
+                pbd.setPlayer(player);
+                pbd.setRebuild(false);
+                pbd.setSubmarine(isSub(l));
+                pbd.setTardisID(lastInsertId);
                 // police box needs to use chameleon id/data
-                plugin.getPresetBuilder().buildPreset(lastInsertId, l, COMPASS.valueOf(d), false, player, false, false, isSub(l));
+                plugin.getPresetBuilder().buildPreset(pbd);
                 plugin.getInteriorBuilder().buildInner(schm, chunkworld, lastInsertId, player, middle_id, middle_data, floor_id, floor_data, tips);
                 // set achievement completed
                 if (player.hasPermission("tardis.book")) {

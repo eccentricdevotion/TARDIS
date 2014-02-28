@@ -21,10 +21,12 @@ import java.util.HashMap;
 import java.util.List;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.advanced.TARDISCircuitChecker;
+import me.eccentric_nz.TARDIS.builders.TARDISPresetBuilderData;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetCurrentLocation;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import me.eccentric_nz.TARDIS.database.ResultSetTravellers;
+import me.eccentric_nz.TARDIS.destroyers.TARDISPresetDestroyerData;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
 import me.eccentric_nz.TARDIS.enumeration.MESSAGE;
 import me.eccentric_nz.TARDIS.travel.TARDISTimeTravel;
@@ -78,18 +80,18 @@ public class TARDISStattenheimListener implements Listener {
     @SuppressWarnings("deprecation")
     @EventHandler(priority = EventPriority.MONITOR)
     public void onStattenheimInteract(PlayerInteractEvent event) {
-        final Player player = event.getPlayer();
+        Player player = event.getPlayer();
         ItemStack is = player.getItemInHand();
         if (is.getType().equals(remote) && is.hasItemMeta()) {
             ItemMeta im = is.getItemMeta();
             if (im.getDisplayName().equals("Stattenheim Remote") && event.getAction().equals(Action.RIGHT_CLICK_BLOCK)) {
-                final Block b = event.getClickedBlock();
+                Block b = event.getClickedBlock();
                 Material m = b.getType();
                 if (b.getState() instanceof InventoryHolder || doors.contains(m)) {
                     return;
                 }
                 if (player.hasPermission("tardis.timetravel")) {
-                    final Location remoteLocation = b.getLocation();
+                    Location remoteLocation = b.getLocation();
                     if (!plugin.getConfig().getBoolean("travel.include_default_world") && plugin.getConfig().getBoolean("creation.default_world") && remoteLocation.getWorld().getName().equals(plugin.getConfig().getString("creation.default_world_name"))) {
                         player.sendMessage(plugin.getPluginName() + "The server admin will not allow you to bring the TARDIS to this world!");
                         return;
@@ -121,7 +123,7 @@ public class TARDISStattenheimListener implements Listener {
                     // check they are a timelord
                     HashMap<String, Object> where = new HashMap<String, Object>();
                     where.put("owner", player.getName());
-                    final ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);
+                    ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);
                     if (!rs.resultSet()) {
                         player.sendMessage(plugin.getPluginName() + "You don't have a TARDIS!");
                         return;
@@ -138,7 +140,7 @@ public class TARDISStattenheimListener implements Listener {
                     }
                     boolean hidden = rs.isHidden();
                     int level = rs.getArtron_level();
-                    final boolean cham = (plugin.getConfig().getBoolean("travel.chameleon") && rs.isChamele_on());
+                    boolean cham = (plugin.getConfig().getBoolean("travel.chameleon") && rs.isChamele_on());
                     // check they are not in the tardis
                     HashMap<String, Object> wherettrav = new HashMap<String, Object>();
                     wherettrav.put("player", player.getName());
@@ -155,11 +157,11 @@ public class TARDISStattenheimListener implements Listener {
                     // get TARDIS's current location
                     HashMap<String, Object> wherecl = new HashMap<String, Object>();
                     wherecl.put("tardis_id", rs.getTardis_id());
-                    final ResultSetCurrentLocation rsc = new ResultSetCurrentLocation(plugin, wherecl);
+                    ResultSetCurrentLocation rsc = new ResultSetCurrentLocation(plugin, wherecl);
                     if (!rsc.resultSet()) {
                         hidden = true;
                     }
-                    final COMPASS d = rsc.getDirection();
+                    COMPASS d = rsc.getDirection();
                     TARDISTimeTravel tt = new TARDISTimeTravel(plugin);
                     int count;
                     boolean sub = false;
@@ -182,7 +184,6 @@ public class TARDISStattenheimListener implements Listener {
                         player.sendMessage(plugin.getPluginName() + ChatColor.RED + MESSAGE.NOT_ENOUGH_ENERGY.getText());
                         return;
                     }
-                    final Player p = player;
                     final QueryFactory qf = new QueryFactory(plugin);
                     Location oldSave = null;
                     HashMap<String, Object> bid = new HashMap<String, Object>();
@@ -226,27 +227,43 @@ public class TARDISStattenheimListener implements Listener {
                         qf.doUpdate("tardis", set, tid);
                     }
                     player.sendMessage(plugin.getPluginName() + "The TARDIS is coming...");
-                    final boolean mat = plugin.getConfig().getBoolean("police_box.materialise");
+                    boolean mat = plugin.getConfig().getBoolean("police_box.materialise");
                     long delay = (mat) ? 10L : 180L;
                     plugin.getTrackerKeeper().getTrackInVortex().add(Integer.valueOf(id));
                     final boolean hid = hidden;
-                    final Location old = oldSave;
+                    final TARDISPresetDestroyerData pdd = new TARDISPresetDestroyerData();
+                    pdd.setChameleon(cham);
+                    pdd.setDirection(d);
+                    pdd.setLocation(oldSave);
+                    pdd.setDematerialise(mat);
+                    pdd.setPlayer(player);
+                    pdd.setHide(false);
+                    pdd.setSubmarine(rsc.isSubmarine());
+                    pdd.setTardisID(id);
                     Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
                         @Override
                         public void run() {
                             if (!hid) {
                                 plugin.getTrackerKeeper().getTrackDematerialising().add(Integer.valueOf(id));
-                                plugin.getPresetDestroyer().destroyPreset(old, d, id, false, mat, cham, p, rsc.isSubmarine());
+                                plugin.getPresetDestroyer().destroyPreset(pdd);
                             } else {
                                 plugin.getPresetDestroyer().removeBlockProtection(id, qf);
                             }
                         }
                     }, delay);
-                    final boolean is_sub = sub;
+                    final TARDISPresetBuilderData pbd = new TARDISPresetBuilderData();
+                    pbd.setChameleon(cham);
+                    pbd.setDirection(d);
+                    pbd.setLocation(remoteLocation);
+                    pbd.setMalfunction(false);
+                    pbd.setPlayer(player);
+                    pbd.setRebuild(false);
+                    pbd.setSubmarine(sub);
+                    pbd.setTardisID(id);
                     Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
                         @Override
                         public void run() {
-                            plugin.getPresetBuilder().buildPreset(id, remoteLocation, d, cham, p, false, false, is_sub);
+                            plugin.getPresetBuilder().buildPreset(pbd);
                         }
                     }, delay * 2);
                     // remove energy from TARDIS

@@ -76,9 +76,17 @@ public class TARDISExterminator {
                     return false;
                 }
                 Location bb_loc = new Location(rsc.getWorld(), rsc.getX(), rsc.getY(), rsc.getZ());
-                COMPASS d = rsc.getDirection();
+                final TARDISPresetDestroyerData pdd = new TARDISPresetDestroyerData();
+                pdd.setChameleon(false);
+                pdd.setDirection(rsc.getDirection());
+                pdd.setLocation(bb_loc);
+                pdd.setDematerialise(false);
+                pdd.setPlayer(null);
+                pdd.setHide(false);
+                pdd.setSubmarine(rsc.isSubmarine());
+                pdd.setTardisID(id);
                 if (!hid) {
-                    plugin.getPresetDestroyer().destroyPreset(bb_loc, d, id, false, false, false, null, rsc.isSubmarine());
+                    plugin.getPresetDestroyer().destroyPreset(pdd);
                 }
                 cleanHashMaps(id);
                 String[] chunkworld = chunkLoc.split(":");
@@ -200,10 +208,19 @@ public class TARDISExterminator {
             }
             int signy = -2;
             // if the sign was on the TARDIS destroy the TARDIS!
+            final TARDISPresetDestroyerData pdd = new TARDISPresetDestroyerData();
+            pdd.setChameleon(false);
+            pdd.setDirection(d);
+            pdd.setLocation(bb_loc);
+            pdd.setDematerialise(false);
+            pdd.setPlayer(null);
+            pdd.setHide(false);
+            pdd.setSubmarine(rsc.isSubmarine());
+            pdd.setTardisID(id);
             if (sign_loc.getBlockX() == bb_loc.getBlockX() + signx && sign_loc.getBlockY() + signy == bb_loc.getBlockY() && sign_loc.getBlockZ() == bb_loc.getBlockZ() + signz) {
                 if (!rs.isHidden()) {
                     // remove Police Box
-                    plugin.getPresetDestroyer().destroyPreset(bb_loc, d, id, false, false, false, null, rsc.isSubmarine());
+                    plugin.getPresetDestroyer().destroyPreset(pdd);
                 }
                 String[] chunkworld = chunkLoc.split(":");
                 World cw = plugin.getServer().getWorld(chunkworld[0]);

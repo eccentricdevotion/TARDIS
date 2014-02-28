@@ -31,7 +31,6 @@ import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
-import org.bukkit.entity.Player;
 
 /**
  * Destroy the TARDIS Police Box.
@@ -49,41 +48,41 @@ public class TARDISPresetDestroyerFactory {
         this.plugin = plugin;
     }
 
-    public void destroyPreset(Location l, COMPASS d, int id, boolean hide, boolean dematerialise, boolean c, Player player, boolean sub) {
+    public void destroyPreset(TARDISPresetDestroyerData pdd) {
         HashMap<String, Object> where = new HashMap<String, Object>();
-        where.put("tardis_id", id);
+        where.put("tardis_id", pdd.getTardisID());
         ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);
         if (rs.resultSet()) {
             PRESET demat = rs.getDemat();
-            if (dematerialise && !hide) {
+            if (pdd.isDematerialise() && !pdd.isHide()) {
                 int cham_id = rs.getChameleon_id();
                 byte cham_data = rs.getChameleon_data();
-                if (c && (demat.equals(PRESET.NEW) || demat.equals(PRESET.OLD) || demat.equals(PRESET.SUBMERGED))) {
+                if (pdd.isChameleon() && (demat.equals(PRESET.NEW) || demat.equals(PRESET.OLD) || demat.equals(PRESET.SUBMERGED))) {
                     Block chameleonBlock;
                     // chameleon circuit is on - get block under TARDIS
-                    if (l.getBlock().getType() == Material.SNOW) {
-                        chameleonBlock = l.getBlock();
+                    if (pdd.getLocation().getBlock().getType() == Material.SNOW) {
+                        chameleonBlock = pdd.getLocation().getBlock();
                     } else {
-                        chameleonBlock = l.getBlock().getRelative(BlockFace.DOWN);
+                        chameleonBlock = pdd.getLocation().getBlock().getRelative(BlockFace.DOWN);
                     }
                     // determine cham_id
                     TARDISChameleonCircuit tcc = new TARDISChameleonCircuit(plugin);
-                    int[] b_data = tcc.getChameleonBlock(chameleonBlock, player, false);
+                    int[] b_data = tcc.getChameleonBlock(chameleonBlock, pdd.getPlayer(), false);
                     cham_id = b_data[0];
                     cham_data = (byte) b_data[1];
                 }
                 int lamp = plugin.getConfig().getInt("police_box.tardis_lamp");
                 HashMap<String, Object> wherepp = new HashMap<String, Object>();
-                wherepp.put("player", player.getName());
+                wherepp.put("player", pdd.getPlayer().getName());
                 ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, wherepp);
                 if (rsp.resultSet()) {
                     lamp = rsp.getLamp();
                 }
-                TARDISDematerialisationPreset runnable = new TARDISDematerialisationPreset(plugin, l, demat, lamp, id, d, cham_id, cham_data, player, sub);
+                TARDISDematerialisationPreset runnable = new TARDISDematerialisationPreset(plugin, pdd.getLocation(), demat, lamp, pdd.getTardisID(), pdd.getDirection(), cham_id, cham_data, pdd.getPlayer(), pdd.isSubmarine());
                 int taskID = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, runnable, 10L, 20L);
                 runnable.setTask(taskID);
             } else {
-                new TARDISDeinstaPreset(plugin).instaDestroyPreset(l, d, id, hide, demat, sub);
+                new TARDISDeinstaPreset(plugin).instaDestroyPreset(pdd.getLocation(), pdd.getDirection(), pdd.getTardisID(), pdd.isHide(), demat, pdd.isSubmarine());
             }
         }
     }

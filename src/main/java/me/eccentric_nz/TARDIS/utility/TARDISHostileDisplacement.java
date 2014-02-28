@@ -21,10 +21,12 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.builders.TARDISPresetBuilderData;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetCurrentLocation;
 import me.eccentric_nz.TARDIS.database.ResultSetPlayerPrefs;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
+import me.eccentric_nz.TARDIS.destroyers.TARDISPresetDestroyerData;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
 import me.eccentric_nz.TARDIS.travel.TARDISTimeTravel;
 import org.bukkit.ChatColor;
@@ -61,7 +63,7 @@ public class TARDISHostileDisplacement {
         if (rs.resultSet()) {
             //String current = rs.getCurrent();
             String owner = rs.getOwner();
-            final boolean cham = rs.isChamele_on();
+            boolean cham = rs.isChamele_on();
             HashMap<String, Object> wherep = new HashMap<String, Object>();
             wherep.put("player", owner);
             ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, wherep);
@@ -71,12 +73,12 @@ public class TARDISHostileDisplacement {
                     int r = plugin.getConfig().getInt("preferences.hads_distance");
                     HashMap<String, Object> wherecl = new HashMap<String, Object>();
                     wherecl.put("tardis_id", id);
-                    final ResultSetCurrentLocation rsc = new ResultSetCurrentLocation(plugin, wherecl);
+                    ResultSetCurrentLocation rsc = new ResultSetCurrentLocation(plugin, wherecl);
                     if (!rsc.resultSet()) {
                         plugin.debug("Could not get current TARDIS location for HADS!");
                     }
-                    final Location loc = new Location(rsc.getWorld(), rsc.getX(), rsc.getY(), rsc.getZ());
-                    final COMPASS d = rsc.getDirection();
+                    Location loc = new Location(rsc.getWorld(), rsc.getX(), rsc.getY(), rsc.getZ());
+                    COMPASS d = rsc.getDirection();
                     Location l = loc.clone();
                     // randomise the direction
                     Collections.shuffle(angles);
@@ -96,7 +98,7 @@ public class TARDISHostileDisplacement {
                         if (l.getBlock().getRelative(BlockFace.DOWN).isLiquid() && !plugin.getConfig().getBoolean("travel.land_on_water") && !rsc.isSubmarine()) {
                             bool = false;
                         }
-                        final Player player = plugin.getServer().getPlayer(owner);
+                        Player player = plugin.getServer().getPlayer(owner);
                         if (bool) {
                             Location sub = null;
                             boolean safe;
@@ -108,7 +110,7 @@ public class TARDISHostileDisplacement {
                                 safe = (tt.safeLocation(start[0], y, start[2], start[1], start[3], l.getWorld(), d) < 1);
                             }
                             if (safe) {
-                                final Location fl = (rsc.isSubmarine()) ? sub : l;
+                                Location fl = (rsc.isSubmarine()) ? sub : l;
                                 if (plugin.getPluginRespect().getRespect(player, fl, false)) {
                                     // set current
                                     QueryFactory qf = new QueryFactory(plugin);
@@ -122,21 +124,39 @@ public class TARDISHostileDisplacement {
                                     set.put("submarine", (rsc.isSubmarine()) ? 1 : 0);
                                     qf.doUpdate("current", set, tid);
                                     plugin.getTrackerKeeper().getTrackDamage().remove(Integer.valueOf(id));
-                                    final boolean mat = plugin.getConfig().getBoolean("police_box.materialise");
+                                    boolean mat = plugin.getConfig().getBoolean("police_box.materialise");
                                     long delay = (mat) ? 1L : 180L;
                                     // move TARDIS
                                     plugin.getTrackerKeeper().getTrackInVortex().add(Integer.valueOf(id));
+                                    final TARDISPresetDestroyerData pdd = new TARDISPresetDestroyerData();
+                                    pdd.setChameleon(cham);
+                                    pdd.setDirection(d);
+                                    pdd.setLocation(loc);
+                                    pdd.setDematerialise(mat);
+                                    pdd.setPlayer(player);
+                                    pdd.setHide(false);
+                                    pdd.setSubmarine(rsc.isSubmarine());
+                                    pdd.setTardisID(id);
                                     plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
                                         @Override
                                         public void run() {
                                             plugin.getTrackerKeeper().getTrackDematerialising().add(Integer.valueOf(id));
-                                            plugin.getPresetDestroyer().destroyPreset(loc, d, id, false, mat, cham, player, rsc.isSubmarine());
+                                            plugin.getPresetDestroyer().destroyPreset(pdd);
                                         }
                                     }, delay);
+                                    final TARDISPresetBuilderData pbd = new TARDISPresetBuilderData();
+                                    pbd.setChameleon(cham);
+                                    pbd.setDirection(d);
+                                    pbd.setLocation(fl);
+                                    pbd.setMalfunction(false);
+                                    pbd.setPlayer(player);
+                                    pbd.setRebuild(false);
+                                    pbd.setSubmarine(rsc.isSubmarine());
+                                    pbd.setTardisID(id);
                                     plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
                                         @Override
                                         public void run() {
-                                            plugin.getPresetBuilder().buildPreset(id, fl, d, cham, player, false, false, rsc.isSubmarine());
+                                            plugin.getPresetBuilder().buildPreset(pbd);
                                         }
                                     }, delay * 2);
                                     // message time lord

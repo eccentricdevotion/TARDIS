@@ -18,6 +18,7 @@ package me.eccentric_nz.TARDIS.listeners;
 
 import java.util.HashMap;
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.builders.TARDISPresetBuilderData;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetBlocks;
 import me.eccentric_nz.TARDIS.database.ResultSetCurrentLocation;
@@ -127,7 +128,7 @@ public class TARDISBlockDamageListener implements Listener {
         where.put("tardis_id", id);
         ResultSetTardis rst = new ResultSetTardis(plugin, where, "", false);
         if (rst.resultSet() && rst.isHidden()) {
-            final Player p = (Player) plugin.getServer().getOfflinePlayer(rst.getOwner());
+            Player p = (Player) plugin.getServer().getOfflinePlayer(rst.getOwner());
             // unhide this tardis
             boolean cham = false;
             if (plugin.getConfig().getBoolean("travel.chameleon")) {
@@ -135,19 +136,27 @@ public class TARDISBlockDamageListener implements Listener {
             }
             HashMap<String, Object> wherecl = new HashMap<String, Object>();
             wherecl.put("tardis_id", id);
-            final ResultSetCurrentLocation rsc = new ResultSetCurrentLocation(plugin, wherecl);
+            ResultSetCurrentLocation rsc = new ResultSetCurrentLocation(plugin, wherecl);
             if (!rsc.resultSet()) {
                 player.sendMessage(plugin.getPluginName() + MESSAGE.NO_CURRENT.getText());
             }
-            final Location l = new Location(rsc.getWorld(), rsc.getX(), rsc.getY(), rsc.getZ());
+            Location l = new Location(rsc.getWorld(), rsc.getX(), rsc.getY(), rsc.getZ());
             HashMap<String, Object> wheret = new HashMap<String, Object>();
             wheret.put("tardis_id", id);
             QueryFactory qf = new QueryFactory(plugin);
-            final boolean c = cham;
+            final TARDISPresetBuilderData pbd = new TARDISPresetBuilderData();
+            pbd.setChameleon(cham);
+            pbd.setDirection(rsc.getDirection());
+            pbd.setLocation(l);
+            pbd.setMalfunction(false);
+            pbd.setPlayer(player);
+            pbd.setRebuild(true);
+            pbd.setSubmarine(rsc.isSubmarine());
+            pbd.setTardisID(id);
             plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
                 @Override
                 public void run() {
-                    plugin.getPresetBuilder().buildPreset(id, l, rsc.getDirection(), c, p, true, false, rsc.isSubmarine());
+                    plugin.getPresetBuilder().buildPreset(pbd);
                 }
             }, 5L);
             // set hidden to false

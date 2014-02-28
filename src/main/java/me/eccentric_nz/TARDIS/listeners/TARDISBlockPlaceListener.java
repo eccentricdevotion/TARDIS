@@ -21,6 +21,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.builders.TARDISPresetBuilderData;
 import me.eccentric_nz.TARDIS.builders.TARDISSpace;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetCount;
@@ -85,7 +86,7 @@ public class TARDISBlockPlaceListener implements Listener {
     @SuppressWarnings("deprecation")
     @EventHandler
     public void onPlayerBlockPlace(BlockPlaceEvent event) {
-        final Player player = event.getPlayer();
+        Player player = event.getPlayer();
         if (plugin.getTrackerKeeper().getTrackZeroRoomOccupants().contains(player.getName())) {
             event.setCancelled(true);
             player.sendMessage(plugin.getPluginName() + MESSAGE.NOT_IN_ZERO.getText());
@@ -95,8 +96,8 @@ public class TARDISBlockPlaceListener implements Listener {
         // only listen for redstone torches
         if (block.getType() == Material.REDSTONE_TORCH_ON) {
             Block blockBelow = block.getRelative(BlockFace.DOWN);
-            final int middle_id = blockBelow.getTypeId();
-            final byte middle_data = blockBelow.getData();
+            int middle_id = blockBelow.getTypeId();
+            byte middle_data = blockBelow.getData();
             Block blockBottom = blockBelow.getRelative(BlockFace.DOWN);
             // only continue if the redstone torch is placed on top of [JUST ABOUT ANY] BLOCK on top of an IRON/GOLD/DIAMOND_BLOCK
             if (plugin.getBlocksConfig().getStringList("tardis_blocks").contains(blockBelow.getType().toString()) && blocks.contains(blockBottom.getType())) {
@@ -104,7 +105,7 @@ public class TARDISBlockPlaceListener implements Listener {
                     player.sendMessage(plugin.getPluginName() + "You cannot create a TARDIS in this world!");
                     return;
                 }
-                final SCHEMATIC schm;
+                SCHEMATIC schm;
                 int max_count = plugin.getConfig().getInt("creation.count");
                 int player_count = 0;
                 if (max_count > 0) {
@@ -212,7 +213,7 @@ public class TARDISBlockPlaceListener implements Listener {
                         int cx;
                         int cz;
                         String cw;
-                        final World chunkworld;
+                        World chunkworld;
                         boolean tips = false;
                         if (plugin.getConfig().getBoolean("creation.create_worlds") && !plugin.getConfig().getBoolean("creation.default_world")) {
                             // create a new world to store this TARDIS
@@ -246,9 +247,9 @@ public class TARDISBlockPlaceListener implements Listener {
                             }
                         }
                         // get player direction
-                        final String d = plugin.getUtils().getPlayersDirection(player, false);
+                        String d = plugin.getUtils().getPlayersDirection(player, false);
                         // save data to database (tardis table)
-                        final Location block_loc = blockBottom.getLocation();
+                        Location block_loc = blockBottom.getLocation();
                         String chun = cw + ":" + cx + ":" + cz;
                         QueryFactory qf = new QueryFactory(plugin);
                         HashMap<String, Object> set = new HashMap<String, Object>();
@@ -278,7 +279,7 @@ public class TARDISBlockPlaceListener implements Listener {
                             // determine wall block material from HashMap
                             setpp.put("wall", getWallKey(middle_id, (int) middle_data));
                         }
-                        final int lastInsertId = qf.doSyncInsert("tardis", set);
+                        int lastInsertId = qf.doSyncInsert("tardis", set);
                         // insert/update  player prefs
                         HashMap<String, Object> wherep = new HashMap<String, Object>();
                         wherep.put("player", player.getName());
@@ -305,7 +306,16 @@ public class TARDISBlockPlaceListener implements Listener {
                         blockBelow.setTypeId(0);
                         blockBottom.setTypeId(0);
                         // turn the block stack into a TARDIS
-                        plugin.getPresetBuilder().buildPreset(lastInsertId, block_loc, COMPASS.valueOf(d), false, player, false, false, isSub(blockBottom));
+                        final TARDISPresetBuilderData pbd = new TARDISPresetBuilderData();
+                        pbd.setChameleon(false);
+                        pbd.setDirection(COMPASS.valueOf(d));
+                        pbd.setLocation(block_loc);
+                        pbd.setMalfunction(false);
+                        pbd.setPlayer(player);
+                        pbd.setRebuild(false);
+                        pbd.setSubmarine(isSub(blockBottom));
+                        pbd.setTardisID(lastInsertId);
+                        plugin.getPresetBuilder().buildPreset(pbd);
                         plugin.getInteriorBuilder().buildInner(schm, chunkworld, lastInsertId, player, middle_id, middle_data, 35, (byte) 8, tips);
                         // set achievement completed
                         if (player.hasPermission("tardis.book")) {

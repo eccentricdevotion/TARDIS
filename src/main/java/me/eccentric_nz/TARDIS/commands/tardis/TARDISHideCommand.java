@@ -23,6 +23,7 @@ import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetCurrentLocation;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import me.eccentric_nz.TARDIS.database.ResultSetTravellers;
+import me.eccentric_nz.TARDIS.destroyers.TARDISPresetDestroyerData;
 import me.eccentric_nz.TARDIS.enumeration.MESSAGE;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
@@ -94,7 +95,16 @@ public class TARDISHideCommand {
                 player.sendMessage(plugin.getPluginName() + ChatColor.RED + "The TARDIS does not have enough Artron Energy to hide!");
                 return false;
             }
-            plugin.getPresetDestroyer().destroyPreset(l, rsc.getDirection(), id, true, false, false, null, rsc.isSubmarine());
+            final TARDISPresetDestroyerData pdd = new TARDISPresetDestroyerData();
+            pdd.setChameleon(false);
+            pdd.setDirection(rsc.getDirection());
+            pdd.setLocation(l);
+            pdd.setDematerialise(false);
+            pdd.setPlayer(null);
+            pdd.setHide(false);
+            pdd.setSubmarine(rsc.isSubmarine());
+            pdd.setTardisID(id);
+            plugin.getPresetDestroyer().destroyPreset(pdd);
             player.sendMessage(plugin.getPluginName() + "The TARDIS Police Box was hidden! Use " + ChatColor.GREEN + "/tardis rebuild" + ChatColor.RESET + " to show it again.");
             qf.alterEnergyLevel("tardis", -hide, wheret, player);
             // set hidden to true

@@ -20,6 +20,7 @@ import java.util.HashMap;
 import java.util.Locale;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.advanced.TARDISCircuitChecker;
+import me.eccentric_nz.TARDIS.builders.TARDISPresetBuilderData;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetControls;
 import me.eccentric_nz.TARDIS.database.ResultSetCurrentLocation;
@@ -59,7 +60,7 @@ public class TARDISDirectionCommand {
                 player.sendMessage(plugin.getPluginName() + MESSAGE.NO_TARDIS.getText());
                 return false;
             }
-            final int id = rs.getTardis_id();
+            int id = rs.getTardis_id();
             TARDISCircuitChecker tcc = null;
             if (plugin.getConfig().getString("preferences.difficulty").equals("hard")) {
                 tcc = new TARDISCircuitChecker(plugin, id);
@@ -83,13 +84,13 @@ public class TARDISDirectionCommand {
             if (plugin.getConfig().getBoolean("travel.chameleon")) {
                 tmp_cham = rs.isChamele_on();
             }
-            final boolean cham = tmp_cham;
+            boolean cham = tmp_cham;
             boolean hid = rs.isHidden();
             PRESET demat = rs.getDemat();
             String dir = args[1].toUpperCase(Locale.ENGLISH);
             HashMap<String, Object> wherecl = new HashMap<String, Object>();
             wherecl.put("tardis_id", id);
-            final ResultSetCurrentLocation rsc = new ResultSetCurrentLocation(plugin, wherecl);
+            ResultSetCurrentLocation rsc = new ResultSetCurrentLocation(plugin, wherecl);
             if (!rsc.resultSet()) {
                 player.sendMessage(plugin.getPluginName() + MESSAGE.NO_CURRENT.getText());
                 return true;
@@ -107,8 +108,8 @@ public class TARDISDirectionCommand {
             did.put("tardis_id", id);
             setd.put("door_direction", dir);
             qf.doUpdate("doors", setd, did);
-            final Location l = new Location(rsc.getWorld(), rsc.getX(), rsc.getY(), rsc.getZ());
-            final COMPASS d = COMPASS.valueOf(dir);
+            Location l = new Location(rsc.getWorld(), rsc.getX(), rsc.getY(), rsc.getZ());
+            COMPASS d = COMPASS.valueOf(dir);
             // destroy sign
             if (!hid) {
                 if (demat.equals(PRESET.DUCK)) {
@@ -119,10 +120,19 @@ public class TARDISDirectionCommand {
                 }
                 plugin.getPresetDestroyer().destroyDoor(id);
                 plugin.getPresetDestroyer().destroySign(l, old_d, demat);
+                final TARDISPresetBuilderData pbd = new TARDISPresetBuilderData();
+                pbd.setChameleon(cham);
+                pbd.setDirection(d);
+                pbd.setLocation(l);
+                pbd.setMalfunction(false);
+                pbd.setPlayer(player);
+                pbd.setRebuild(true);
+                pbd.setSubmarine(rsc.isSubmarine());
+                pbd.setTardisID(id);
                 plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
                     @Override
                     public void run() {
-                        plugin.getPresetBuilder().buildPreset(id, l, d, cham, player, true, false, rsc.isSubmarine());
+                        plugin.getPresetBuilder().buildPreset(pbd);
                     }
                 }, 10L);
             }

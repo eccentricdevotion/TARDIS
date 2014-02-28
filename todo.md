@@ -7,8 +7,7 @@ These are all really boring!
 ####Stuff I'll get round to (but I'm not rushing to code):
 1. Videos
 2. Localisation
-3. Custom data classes for mat / demat
-4. `/tardisadmin` remote TARDIS commands
+3. `/tardisadmin` remote TARDIS commands
 
 ####I couldn't really be bothered
 1. HADS + explosions + fireballs + lava

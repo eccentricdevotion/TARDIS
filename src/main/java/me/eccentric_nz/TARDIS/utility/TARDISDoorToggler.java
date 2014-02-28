@@ -47,6 +47,10 @@ public class TARDISDoorToggler {
         this.playsound = playsound;
     }
 
+    /**
+     * Toggle the door open and closed.
+     */
+    @SuppressWarnings("deprecation")
     public void toggleDoor() {
         boolean open = true;
         Block door_bottom;
