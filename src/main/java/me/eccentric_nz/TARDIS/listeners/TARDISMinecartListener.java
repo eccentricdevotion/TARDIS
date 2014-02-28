@@ -48,7 +48,6 @@ public class TARDISMinecartListener implements Listener {
 
     private final TARDIS plugin;
     private final List<Integer> rails = new ArrayList<Integer>();
-    private final List<BlockFace> faces = new ArrayList<BlockFace>();
 
     public TARDISMinecartListener(TARDIS plugin) {
         this.plugin = plugin;
@@ -56,10 +55,6 @@ public class TARDISMinecartListener implements Listener {
         this.rails.add(28);
         this.rails.add(66);
         this.rails.add(157);
-        this.faces.add(BlockFace.NORTH);
-        this.faces.add(BlockFace.SOUTH);
-        this.faces.add(BlockFace.EAST);
-        this.faces.add(BlockFace.WEST);
     }
 
     @EventHandler(priority = EventPriority.NORMAL)
@@ -169,7 +164,6 @@ public class TARDISMinecartListener implements Listener {
             thisChunk.load();
         }
         minecart.remove();
-        //trackLocation.setY(trackLocation.getY() - 1);
         Entity e = trackLocation.getWorld().spawnEntity(trackLocation, EntityType.MINECART_CHEST);
         StorageMinecart smc = (StorageMinecart) e;
         smc.getInventory().setContents(inv);
@@ -193,7 +187,7 @@ public class TARDISMinecartListener implements Listener {
     public Location findTrack(Location center) {
         Block centerBlock = center.getBlock();
         Block block;
-        for (BlockFace f : faces) {
+        for (BlockFace f : plugin.getGeneralKeeper().getFaces()) {
             block = centerBlock.getRelative(f);
             if (isTrack(block)) {
                 return block.getLocation();
@@ -212,10 +206,9 @@ public class TARDISMinecartListener implements Listener {
     }
 
     private COMPASS getDirection(Location l) {
-//        COMPASS d = COMPASS.SOUTH;
         Block centerBlock = l.getBlock();
         Block block;
-        for (BlockFace f : faces) {
+        for (BlockFace f : plugin.getGeneralKeeper().getFaces()) {
             block = centerBlock.getRelative(f);
             if (isTrack(block)) {
                 return COMPASS.valueOf(f.toString());

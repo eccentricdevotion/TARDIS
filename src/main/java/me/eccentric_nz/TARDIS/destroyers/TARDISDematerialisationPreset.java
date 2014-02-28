@@ -16,9 +16,7 @@
  */
 package me.eccentric_nz.TARDIS.destroyers;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.chameleon.TARDISChameleonColumn;
 import me.eccentric_nz.TARDIS.database.ResultSetDoors;
@@ -58,7 +56,6 @@ public class TARDISDematerialisationPreset implements Runnable {
     private final TARDISChameleonColumn column;
     private final TARDISChameleonColumn stained_column;
     private final TARDISChameleonColumn glass_column;
-    private final List<BlockFace> faces = new ArrayList<BlockFace>();
     private byte the_colour;
 
     /**
@@ -94,10 +91,6 @@ public class TARDISDematerialisationPreset implements Runnable {
         column = plugin.getPresets().getColumn(preset, d);
         stained_column = plugin.getPresets().getStained(preset, d);
         glass_column = plugin.getPresets().getGlass(preset, d);
-        this.faces.add(BlockFace.NORTH);
-        this.faces.add(BlockFace.SOUTH);
-        this.faces.add(BlockFace.EAST);
-        this.faces.add(BlockFace.WEST);
     }
 
     @Override
@@ -303,7 +296,7 @@ public class TARDISDematerialisationPreset implements Runnable {
             if (p.equals(PRESET.FLOWER)) {
                 return b.getRelative(BlockFace.UP, 3).getData();
             } else {
-                for (BlockFace f : faces) {
+                for (BlockFace f : plugin.getGeneralKeeper().getFaces()) {
                     if (b.getRelative(f).getType().equals(Material.WOOL)) {
                         return b.getRelative(f).getData();
                     }

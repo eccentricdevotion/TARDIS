@@ -16,8 +16,6 @@
  */
 package me.eccentric_nz.TARDIS.lazarus;
 
-import java.util.ArrayList;
-import java.util.List;
 import me.eccentric_nz.TARDIS.TARDIS;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
@@ -33,7 +31,6 @@ public class TARDISLazarusRunnable implements Runnable {
 
     private final TARDIS plugin;
     private final Block b;
-    private final List<BlockFace> faces = new ArrayList<BlockFace>();
     private int taskID;
     private final int loops = 12;
     private int i = 0;
@@ -41,16 +38,12 @@ public class TARDISLazarusRunnable implements Runnable {
     public TARDISLazarusRunnable(TARDIS plugin, Block b) {
         this.plugin = plugin;
         this.b = b;
-        this.faces.add(BlockFace.NORTH);
-        this.faces.add(BlockFace.WEST);
-        this.faces.add(BlockFace.SOUTH);
-        this.faces.add(BlockFace.EAST);
     }
 
     @Override
     public void run() {
         if (i < loops) {
-            for (BlockFace face : faces) {
+            for (BlockFace face : plugin.getGeneralKeeper().getFaces()) {
                 if ((i % 4) == face.ordinal()) {
                     // set mossy
                     b.getRelative(face).setData((byte) 1);
@@ -63,7 +56,7 @@ public class TARDISLazarusRunnable implements Runnable {
             }
             i++;
         } else {
-            for (BlockFace face : faces) {
+            for (BlockFace face : plugin.getGeneralKeeper().getFaces()) {
                 b.getRelative(face).setData((byte) 0);
                 b.getRelative(face).getRelative(BlockFace.UP).setData((byte) 0);
             }
