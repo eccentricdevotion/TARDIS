@@ -32,6 +32,8 @@ import org.bukkit.Sound;
 import org.bukkit.World;
 import org.bukkit.block.Biome;
 import org.bukkit.block.Block;
+import org.bukkit.entity.Entity;
+import org.bukkit.entity.Item;
 import org.bukkit.entity.Player;
 
 /**
@@ -262,6 +264,12 @@ public class TARDISExteriorRenderer {
             }
             plugin.getTrackerKeeper().getTrackRenderer().put(id, isRendered);
             p.sendMessage(plugin.getPluginName() + "Rendering complete, stand by for transmat...");
+            // remove dropped items
+            for (Entity e : location.getChunk().getEntities()) {
+                if (e instanceof Item) {
+                    e.remove();
+                }
+            }
         }
         // charge artron energy for the render
         HashMap<String, Object> where = new HashMap<String, Object>();
