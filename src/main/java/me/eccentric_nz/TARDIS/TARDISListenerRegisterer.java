@@ -84,6 +84,7 @@ import me.eccentric_nz.TARDIS.listeners.TARDISUpdateListener;
 import me.eccentric_nz.TARDIS.listeners.TARDISWorldResetListener;
 import me.eccentric_nz.TARDIS.listeners.TARDISZeroRoomChatListener;
 import me.eccentric_nz.TARDIS.listeners.TARDISZeroRoomPacketListener;
+import me.eccentric_nz.TARDIS.sonic.TARDISFarmBlockListener;
 import me.eccentric_nz.TARDIS.sonic.TARDISSonicEntityListener;
 import me.eccentric_nz.TARDIS.sonic.TARDISSonicListener;
 import me.eccentric_nz.TARDIS.sonic.TARDISSonicSorterListener;
@@ -177,6 +178,7 @@ public class TARDISListenerRegisterer {
         plugin.getGeneralKeeper().setSonicListener(sonicListener);
         plugin.getPM().registerEvents(new TARDISSonicEntityListener(plugin), plugin);
         plugin.getPM().registerEvents(new TARDISSonicSorterListener(plugin), plugin);
+        plugin.getPM().registerEvents(new TARDISFarmBlockListener(plugin), plugin);
         TARDISRenderRoomListener rendererListener = new TARDISRenderRoomListener(plugin);
         plugin.getPM().registerEvents(rendererListener, plugin);
         plugin.getGeneralKeeper().setRendererListener(rendererListener);

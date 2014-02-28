@@ -17,6 +17,7 @@
 package me.eccentric_nz.TARDIS;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -30,6 +31,7 @@ import me.eccentric_nz.TARDIS.rooms.TARDISCondenserData;
 import me.eccentric_nz.TARDIS.sonic.TARDISSonicListener;
 import org.bukkit.Chunk;
 import org.bukkit.block.Block;
+import org.bukkit.block.BlockFace;
 
 /**
  *
@@ -55,6 +57,7 @@ public class TARDISGeneralInstanceKeeper {
     private final HashMap<String, Double[]> gravityWestList = new HashMap<String, Double[]>();
     private final HashMap<String, Integer> protectBlockMap = new HashMap<String, Integer>();
     private final HashMap<String, TARDISCondenserData> roomCondenserData = new HashMap<String, TARDISCondenserData>();
+    private List<BlockFace> faces = Arrays.asList(new BlockFace[]{BlockFace.NORTH, BlockFace.WEST, BlockFace.SOUTH, BlockFace.EAST});
     private final List<Chunk> roomChunkList = new ArrayList<Chunk>();
     private final List<Chunk> tardisChunkList = new ArrayList<Chunk>();
     private final List<String> gravityDownList = new ArrayList<String>();
@@ -77,6 +80,10 @@ public class TARDISGeneralInstanceKeeper {
 
     public void setQuotes(ArrayList<String> quotes) {
         this.quotes = quotes;
+    }
+
+    public List<BlockFace> getFaces() {
+        return faces;
     }
 
     public List<Chunk> getTardisChunkList() {
