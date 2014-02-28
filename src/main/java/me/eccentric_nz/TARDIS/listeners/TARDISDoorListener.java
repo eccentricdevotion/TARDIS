@@ -871,7 +871,7 @@ public class TARDISDoorListener implements Listener {
         }
     }
 
-    private boolean idDoorOpen(byte door_data, COMPASS d) {
+    public boolean idDoorOpen(byte door_data, COMPASS d) {
         switch (d) {
             case NORTH:
                 if (door_data == 7) {

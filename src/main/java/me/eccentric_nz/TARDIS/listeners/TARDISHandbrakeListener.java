@@ -25,6 +25,7 @@ import me.eccentric_nz.TARDIS.artron.TARDISArtronLevels;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetControls;
 import me.eccentric_nz.TARDIS.database.ResultSetCurrentLocation;
+import me.eccentric_nz.TARDIS.database.ResultSetDoors;
 import me.eccentric_nz.TARDIS.database.ResultSetNextLocation;
 import me.eccentric_nz.TARDIS.database.ResultSetPlayerPrefs;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
@@ -138,6 +139,11 @@ public class TARDISHandbrakeListener implements Listener {
                             if (action == Action.RIGHT_CLICK_BLOCK) {
                                 if (rs.isHandbrake_on()) {
                                     if (plugin.getTrackerKeeper().getTrackHasDestination().containsKey(Integer.valueOf(id))) {
+                                        // check if door is open
+                                        if (isDoorOpen(id)) {
+                                            player.sendMessage(plugin.getPluginName() + "You need to close the door!");
+                                            return;
+                                        }
                                         plugin.getUtils().playTARDISSound(handbrake_loc, player, "tardis_handbrake_release");
                                         if (!beac_on && !beacon.isEmpty()) {
                                             toggleBeacon(beacon, true);
@@ -382,5 +388,17 @@ public class TARDISHandbrakeListener implements Listener {
         Location bl = new Location(w, bx, by, bz);
         Block b = bl.getBlock();
         b.setType((on) ? Material.GLASS : Material.BEDROCK);
+    }
+
+    private boolean isDoorOpen(int id) {
+        HashMap<String, Object> where = new HashMap<String, Object>();
+        where.put("tardis_id", id);
+        where.put("door_type", 1);
+        ResultSetDoors rs = new ResultSetDoors(plugin, where, false);
+        if (rs.resultSet()) {
+            byte data = plugin.getUtils().getLocationFromDB(rs.getDoor_location(), 0.0f, 0.0f).getBlock().getData();
+            return plugin.getGeneralKeeper().getDoorListener().idDoorOpen(data, rs.getDoor_direction());
+        }
+        return false;
     }
 }
