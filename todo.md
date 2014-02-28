@@ -9,21 +9,20 @@ These are all really boring!
 3. Localisation
 
 ####Stuff I don't really want to do, but probably will (eventually)
-1. Toggle both doors open when shift-clicking the door, and when exiting (if the preset has a door and the door is open) tp the player to the door location.
-2. Custom data classes for mat / demat
+1. Custom data classes for mat / demat
 3. `/tardisadmin` remote TARDIS commands
 
 ####I couldn't really be bothered
-1. TARDIS invisiblity
-2. HADS + explosions + fireballs + lava
-3. Put farmland, crops, buttons, ladders, levers and signs on last when growing rooms
-4. TARDIS exterior rendering / scanner room
+1. HADS + explosions + fireballs + lava
+2. Put farmland, crops, buttons, ladders, levers and signs on last when growing rooms
+3. TARDIS exterior rendering / scanner room
     * find a way to prevent items dropping between renders
-5. TARDIS Information System
+4. TARDIS Information System
     * auto log out?
     
 ##Future version `2.9+`
-* ?
+1. UHC flying mode
+2. TARDIS invisiblity - 1.8 barrier blocks?
 
 
 ##Resource Pack / TARDISWeepingAngels

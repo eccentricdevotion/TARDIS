@@ -31,9 +31,11 @@ import me.eccentric_nz.TARDIS.database.ResultSetPlayerPrefs;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
 import me.eccentric_nz.TARDIS.enumeration.MESSAGE;
+import me.eccentric_nz.TARDIS.enumeration.PRESET;
 import me.eccentric_nz.TARDIS.travel.TARDISDoorLocation;
 import me.eccentric_nz.TARDIS.travel.TARDISFarmer;
 import me.eccentric_nz.TARDIS.travel.TARDISMob;
+import me.eccentric_nz.TARDIS.utility.TARDISDoorToggler;
 import me.eccentric_nz.TARDIS.utility.TARDISItemRenamer;
 import me.eccentric_nz.TARDIS.utility.TARDISResourcePackChanger;
 import multiworld.MultiWorldPlugin;
@@ -145,7 +147,7 @@ public class TARDISDoorListener implements Listener {
                     } else {
                         key = plugin.getConfig().getString("preferences.key");
                     }
-                    boolean minecart = rsp.isMinecartOn();
+                    final boolean minecart = rsp.isMinecartOn();
                     Material m = Material.getMaterial(key);
                     HashMap<String, Object> where = new HashMap<String, Object>();
                     where.put("door_location", doorloc);
@@ -202,47 +204,35 @@ public class TARDISDoorListener implements Listener {
                                 }
                                 if (!rsd.isLocked()) {
                                     // toogle the door open/closed
-                                    int open = 1;
                                     if (blockType.equals(Material.IRON_DOOR_BLOCK) || blockType.equals(Material.WOODEN_DOOR)) {
-                                        Block door_bottom;
-                                        Door door = (Door) block.getState().getData();
-                                        door_bottom = (door.isTopHalf()) ? block.getRelative(BlockFace.DOWN) : block;
-                                        byte door_data = door_bottom.getData();
-                                        switch (dd) {
-                                            case NORTH:
-                                                if (door_data == 3) {
-                                                    door_bottom.setData((byte) 7, false);
-                                                } else {
-                                                    door_bottom.setData((byte) 3, false);
-                                                    open = 2;
+                                        // toggle the door
+                                        new TARDISDoorToggler(plugin, block, dd, player, minecart, true).toggleDoor();
+                                        if (doortype == 0 || doortype == 1) {
+                                            // also toggle the other door
+                                            HashMap<String, Object> whered = new HashMap<String, Object>();
+                                            whered.put("tardis_id", rsd.getTardis_id());
+                                            if (doortype == 0) {
+                                                whered.put("door_type", 1);
+                                            } else {
+                                                whered.put("door_type", 0);
+                                            }
+                                            ResultSetDoors rsod = new ResultSetDoors(plugin, whered, false);
+                                            if (rsod.resultSet()) {
+                                                final Block opposite = plugin.getUtils().getLocationFromDB(rsod.getDoor_location(), 0.0f, 0.0f).getBlock();
+                                                final COMPASS od = rsod.getDoor_direction();
+                                                if (!opposite.getChunk().isLoaded()) {
+                                                    opposite.getChunk().load();
                                                 }
-                                                break;
-                                            case WEST:
-                                                if (door_data == 2) {
-                                                    door_bottom.setData((byte) 6, false);
-                                                } else {
-                                                    door_bottom.setData((byte) 2, false);
-                                                    open = 2;
-                                                }
-                                                break;
-                                            case SOUTH:
-                                                if (door_data == 1) {
-                                                    door_bottom.setData((byte) 5, false);
-                                                } else {
-                                                    door_bottom.setData((byte) 1, false);
-                                                    open = 2;
-                                                }
-                                                break;
-                                            default:
-                                                if (door_data == 0) {
-                                                    door_bottom.setData((byte) 4, false);
-                                                } else {
-                                                    door_bottom.setData((byte) 0, false);
-                                                    open = 2;
-                                                }
-                                                break;
+                                                plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
+                                                    @Override
+                                                    public void run() {
+                                                        new TARDISDoorToggler(plugin, opposite, od, player, minecart, false).toggleDoor();
+                                                    }
+                                                }, 5L);
+                                            }
                                         }
                                     } else if (blockType.equals(Material.TRAP_DOOR)) {
+                                        int open = 1;
                                         byte door_data = block.getData();
                                         switch (dd) {
                                             case NORTH:
@@ -278,8 +268,8 @@ public class TARDISDoorListener implements Listener {
                                                 }
                                                 break;
                                         }
+                                        playDoorSound(player, open, player.getLocation(), minecart);
                                     }
-                                    playDoorSound(player, open, player.getLocation(), minecart);
                                 } else {
                                     player.sendMessage(plugin.getPluginName() + "You need to unlock the door!");
                                 }
@@ -296,6 +286,7 @@ public class TARDISDoorListener implements Listener {
                                     int artron = rs.getArtron_level();
                                     int required = plugin.getArtronConfig().getInt("backdoor");
                                     String tl = rs.getOwner();
+                                    PRESET preset = rs.getPreset();
                                     //String current = rs.getCurrent();
                                     float yaw = player.getLocation().getYaw();
                                     float pitch = player.getLocation().getPitch();
@@ -341,8 +332,17 @@ public class TARDISDoorListener implements Listener {
                                                 player.sendMessage(plugin.getPluginName() + MESSAGE.LOST_IN_VORTEX.getText());
                                                 return;
                                             }
+                                            Location exitLoc;
                                             // player is in the TARDIS - always exit to current location
-                                            Location exitLoc = new Location(rsc.getWorld(), rsc.getX(), rsc.getY(), rsc.getZ(), yaw, pitch);
+                                            Block door_bottom;
+                                            Door door = (Door) block.getState().getData();
+                                            door_bottom = (door.isTopHalf()) ? block.getRelative(BlockFace.DOWN) : block;
+                                            boolean opened = idDoorOpen(door_bottom.getData(), dd);
+                                            if (opened && preset.hasDoor()) {
+                                                exitLoc = plugin.getUtils().getLocationFromDB(rse.getDoor_location(), 0.0f, 0.0f);
+                                            } else {
+                                                exitLoc = new Location(rsc.getWorld(), rsc.getX(), rsc.getY(), rsc.getZ(), yaw, pitch);
+                                            }
                                             if (hb) {
                                                 // change the yaw if the door directions are different
                                                 if (!dd.equals(d)) {
@@ -354,23 +354,28 @@ public class TARDISDoorListener implements Listener {
                                                 // make location safe ie. outside of the bluebox
                                                 double ex = exitTardis.getX();
                                                 double ez = exitTardis.getZ();
-                                                switch (d) {
-                                                    case NORTH:
-                                                        exitTardis.setX(ex + 0.5);
-                                                        exitTardis.setZ(ez + 2.5);
-                                                        break;
-                                                    case EAST:
-                                                        exitTardis.setX(ex - 1.5);
-                                                        exitTardis.setZ(ez + 0.5);
-                                                        break;
-                                                    case SOUTH:
-                                                        exitTardis.setX(ex + 0.5);
-                                                        exitTardis.setZ(ez - 1.5);
-                                                        break;
-                                                    case WEST:
-                                                        exitTardis.setX(ex + 2.5);
-                                                        exitTardis.setZ(ez + 0.5);
-                                                        break;
+                                                if (opened) {
+                                                    exitTardis.setX(ex + 0.5);
+                                                    exitTardis.setZ(ez + 0.5);
+                                                } else {
+                                                    switch (d) {
+                                                        case NORTH:
+                                                            exitTardis.setX(ex + 0.5);
+                                                            exitTardis.setZ(ez + 2.5);
+                                                            break;
+                                                        case EAST:
+                                                            exitTardis.setX(ex - 1.5);
+                                                            exitTardis.setZ(ez + 0.5);
+                                                            break;
+                                                        case SOUTH:
+                                                            exitTardis.setX(ex + 0.5);
+                                                            exitTardis.setZ(ez - 1.5);
+                                                            break;
+                                                        case WEST:
+                                                            exitTardis.setX(ex + 2.5);
+                                                            exitTardis.setZ(ez + 0.5);
+                                                            break;
+                                                    }
                                                 }
                                                 // exit TARDIS!
                                                 movePlayer(player, exitTardis, true, playerWorld, userQuotes, 2, minecart);
@@ -571,7 +576,11 @@ public class TARDISDoorListener implements Listener {
      * @param m whether to play the resource pack sound
      */
     @SuppressWarnings("deprecation")
-    public void movePlayer(final Player p, Location l, final boolean exit, final World from, boolean q, final int sound, final boolean m) {
+    public void movePlayer(final Player p, Location l, final boolean exit,
+            final World from,
+            boolean q, final int sound,
+            final boolean m
+    ) {
 
         final int i = r.nextInt(plugin.getGeneralKeeper().getQuotes().size());
         final Location theLocation = l;
@@ -860,6 +869,32 @@ public class TARDISDoorListener implements Listener {
             default:
                 break;
         }
+    }
+
+    private boolean idDoorOpen(byte door_data, COMPASS d) {
+        switch (d) {
+            case NORTH:
+                if (door_data == 7) {
+                    return true;
+                }
+                break;
+            case WEST:
+                if (door_data == 6) {
+                    return true;
+                }
+                break;
+            case SOUTH:
+                if (door_data == 5) {
+                    return true;
+                }
+                break;
+            default:
+                if (door_data == 4) {
+                    return true;
+                }
+                break;
+        }
+        return false;
     }
 
     /**
