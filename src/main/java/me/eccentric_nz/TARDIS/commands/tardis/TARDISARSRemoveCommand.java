@@ -22,6 +22,7 @@ import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetControls;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import me.eccentric_nz.TARDIS.enumeration.MESSAGE;
+import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.block.Sign;
 import org.bukkit.entity.Player;
@@ -55,11 +56,13 @@ public class TARDISARSRemoveCommand {
         ResultSetControls rsc = new ResultSetControls(plugin, wheres, false);
         if (rsc.resultSet()) {
             Block b = plugin.getUtils().getLocationFromBukkitString(rsc.getLocation()).getBlock();
-            Sign sign = (Sign) b.getState();
-            for (int i = 0; i < 4; i++) {
-                sign.setLine(i, "");
+            if (b.getType().equals(Material.WALL_SIGN) || b.getType().equals(Material.SIGN_POST)) {
+                Sign sign = (Sign) b.getState();
+                for (int i = 0; i < 4; i++) {
+                    sign.setLine(i, "");
+                }
+                sign.update();
             }
-            sign.update();
             HashMap<String, Object> del = new HashMap<String, Object>();
             del.put("tardis_id", id);
             del.put("type", 10);
