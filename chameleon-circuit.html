@@ -15,7 +15,6 @@
 <body>
 <div class="wrapper">
     <header>
-        <p><a href="#video">Jump to video</a></p>
         <h1>TARDIS</h1>
         <p>A Bukkit plugin for all Doctor Who fans &mdash; create and use a TARDIS! It&rsquo;s bigger on the inside!</p>
         <p class="view"><a href="https://github.com/eccentricdevotion/TARDIS">View the Project on GitHub <small>eccentricdevotion/TARDIS</small></a></p>
@@ -25,16 +24,28 @@
         </ul>
     </header>
     <section>
-        <h1>The Chameleon circuit</h1>
+        <p><a href="#video">Jump to video</a></p>
+        <h1>The Chameleon Circuit</h1>
         <p>To make your TARDIS Police Box blend in with its surroundings you can use the Chameleon Circuit. The Chameleon Circuit will be created automatically when you make a new TARDIS, and is located on a wall sign on the TARDIS console.</p>
-        <p><img src="https://dl.dropboxusercontent.com/u/53758864/chameleoncircuit.jpg" alt="Chameleon circuit sign" /></p>
+        <p><img src="images/chameleon/sign.jpg" alt="Chameleon Circuit sign" /></p>
         <p>If you have an existing TARDIS, you can add the Chameleon Circuit by placing a sign where you want the Chameleon Circuit to be, and running the command:</p>
         <pre><code>/tardis update chameleon</code></pre>
         <p>Click on the sign and its position will be added to the TARDIS database.</p>
         <h2>Using the circuit</h2>
-        <p>To toggle the circuit on and off, click on the sign.</p>
-        <p>If the Chameleon circuit is <strong>ON</strong>, the next time you time travel the TARDIS will blend in.</p>
+        <p>To use the Chameleon Circuit, right-click on the sign.</p>
+		<p>The Chameleon GUI opens, giving you a range of options. Hover each button to see what it does. The top row of buttons have special functions as explained below:</p>
+		<p><strong>Circuit button</strong> &mdash; use this to toggle the Chameleon Circuit on and off.</p>
+		<p><img src="images/chameleon/circuitonoff.jpg" alt="Toggle on / off" /></p>
+        <p>If the Chameleon circuit is <strong>ON</strong> and the current preset is a Police Box or submerged, the next time you time travel the TARDIS will blend in.</p>
         <p><img src="https://dl.dropboxusercontent.com/u/53758864/chameleonoutside.jpg" alt="Chameleon circuit ON" /></p>
+		<p><strong>Apply button</strong> &mdash; use this to rebuild the TARDIS exterior with the currently selected Chameleon preset.</p>
+		<p><strong>Biome adaption button</strong> &mdash; use this to toggle biome adaption on and off. If ON, the TARDIS will choose a Chameleon preset suited to the biome that the TARDIS lands in (for example the swamp hut preset for the SWAMP biome).</p>
+		<p><img src="images/chameleon/morebuttons.jpg" alt="Apply and Biome Adaption buttons" /></p>
+		<h2>Chameleon presets</h2>
+		<p>The rest of the Chameleon GUI buttons are for Chameleon presets. You can see a what all the presets look like on the <a href="presets.html">Preset page</a>. Selecting one of the presets will change the appearance of the TARDIS exterior next time you time travel. To change the appearance immediately, use the Apply button.</p>
+		<p><img src="images/chameleon/page1.jpg" alt="Page 1 presets" /></p>
+		<p>There are two pages of presets, use the arrow button in the bottom right-hand corner to navigate between pages.</p>
+		<p><img src="images/chameleon/page2.jpg" alt="Page 2 presets" /></p>
         <h2>Shorting out the circuit</h2>
         <p>If you want your Police Box to keep a certain chameleon appearance, you can run the following command while targeting the type of block you want to use:</p>
         <pre><code>/tardis chameleon short</code></pre>
