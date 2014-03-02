@@ -390,35 +390,40 @@ public class TARDISTravelCommands implements CommandExecutor {
                         }
                     }
                     if (args.length == 2 && args[0].equalsIgnoreCase("area")) {
-                        // we're thinking this is admin defined area name
-                        HashMap<String, Object> wherea = new HashMap<String, Object>();
-                        wherea.put("area_name", args[1]);
-                        ResultSetAreas rsa = new ResultSetAreas(plugin, wherea, false);
-                        if (!rsa.resultSet()) {
-                            sender.sendMessage(plugin.getPluginName() + "Could not find an area with that name! try using " + ChatColor.GREEN + "/tardis list areas" + ChatColor.RESET + " first.");
+                        if (plugin.getConfig().getString("preferences.difficulty").equalsIgnoreCase("easy")) {
+                            // we're thinking this is admin defined area name
+                            HashMap<String, Object> wherea = new HashMap<String, Object>();
+                            wherea.put("area_name", args[1]);
+                            ResultSetAreas rsa = new ResultSetAreas(plugin, wherea, false);
+                            if (!rsa.resultSet()) {
+                                sender.sendMessage(plugin.getPluginName() + "Could not find an area with that name! try using " + ChatColor.GREEN + "/tardis list areas" + ChatColor.RESET + " first.");
+                                return true;
+                            }
+                            if ((!player.hasPermission("tardis.area." + args[1]) && !player.hasPermission("tardis.area.*")) || (!player.isPermissionSet("tardis.area." + args[1]) && !player.isPermissionSet("tardis.area.*"))) {
+                                sender.sendMessage(plugin.getPluginName() + "You do not have permission [tardis.area." + args[1] + "] to send the TARDIS to this location!");
+                                return true;
+                            }
+                            Location l = plugin.getTardisArea().getNextSpot(rsa.getArea_name());
+                            if (l == null) {
+                                sender.sendMessage(plugin.getPluginName() + MESSAGE.NO_MORE_SPOTS.getText());
+                                return true;
+                            }
+                            set.put("world", l.getWorld().getName());
+                            set.put("x", l.getBlockX());
+                            set.put("y", l.getBlockY());
+                            set.put("z", l.getBlockZ());
+                            set.put("submarine", 0);
+                            qf.doUpdate("next", set, tid);
+                            sender.sendMessage(plugin.getPluginName() + "Your TARDIS was approved for parking in [" + args[1] + "]!");
+                            plugin.getTrackerKeeper().getTrackHasDestination().put(id, travel);
+                            if (plugin.getTrackerKeeper().getTrackRescue().containsKey(Integer.valueOf(id))) {
+                                plugin.getTrackerKeeper().getTrackRescue().remove(Integer.valueOf(id));
+                            }
+                            return true;
+                        } else {
+                            player.sendMessage(plugin.getPluginName() + "You need to use the Advanced Console! See the " + ChatColor.AQUA + "TARDIS Information System" + ChatColor.RESET + " for help using Disks.");
                             return true;
                         }
-                        if ((!player.hasPermission("tardis.area." + args[1]) && !player.hasPermission("tardis.area.*")) || (!player.isPermissionSet("tardis.area." + args[1]) && !player.isPermissionSet("tardis.area.*"))) {
-                            sender.sendMessage(plugin.getPluginName() + "You do not have permission [tardis.area." + args[1] + "] to send the TARDIS to this location!");
-                            return true;
-                        }
-                        Location l = plugin.getTardisArea().getNextSpot(rsa.getArea_name());
-                        if (l == null) {
-                            sender.sendMessage(plugin.getPluginName() + MESSAGE.NO_MORE_SPOTS.getText());
-                            return true;
-                        }
-                        set.put("world", l.getWorld().getName());
-                        set.put("x", l.getBlockX());
-                        set.put("y", l.getBlockY());
-                        set.put("z", l.getBlockZ());
-                        set.put("submarine", 0);
-                        qf.doUpdate("next", set, tid);
-                        sender.sendMessage(plugin.getPluginName() + "Your TARDIS was approved for parking in [" + args[1] + "]!");
-                        plugin.getTrackerKeeper().getTrackHasDestination().put(id, travel);
-                        if (plugin.getTrackerKeeper().getTrackRescue().containsKey(Integer.valueOf(id))) {
-                            plugin.getTrackerKeeper().getTrackRescue().remove(Integer.valueOf(id));
-                        }
-                        return true;
                     }
                     if (args.length == 3 && args[0].startsWith("~") && player.hasPermission("tardis.timetravel.location")) {
                         HashMap<String, Object> wherecl = new HashMap<String, Object>();
