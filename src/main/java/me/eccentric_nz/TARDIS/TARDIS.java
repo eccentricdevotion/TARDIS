@@ -688,4 +688,8 @@ public class TARDIS extends JavaPlugin {
     public TARDISMakeTardisCSV getTardisCSV() {
         return tardisCSV;
     }
+
+    public TARDII getTARDII() {
+        return new TARDII();
+    }
 }
