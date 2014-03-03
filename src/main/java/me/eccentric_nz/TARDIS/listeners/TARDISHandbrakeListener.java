@@ -363,7 +363,7 @@ public class TARDISHandbrakeListener implements Listener {
                                         if (!player.getName().equals(owner)) {
                                             Player ptl = plugin.getServer().getPlayer(owner);
                                             if (ptl != null) {
-                                                new TARDISArtronIndicator(plugin).showArtronLevel(ptl, id, true, Math.abs(amount));
+                                                new TARDISArtronIndicator(plugin).showArtronLevel(ptl, id, Math.abs(amount));
                                             }
                                         }
                                     }

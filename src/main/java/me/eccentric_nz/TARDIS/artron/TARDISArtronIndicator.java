@@ -48,7 +48,7 @@ public class TARDISArtronIndicator {
         this.filter = Material.valueOf(plugin.getRecipesConfig().getString("shaped.Perception Filter.result"));
     }
 
-    public void showArtronLevel(final Player p, int id, boolean hide, int used) {
+    public void showArtronLevel(final Player p, int id, int used) {
         // check if they have the perception filter on
         boolean isFiltered = false;
         ItemStack[] armour = p.getInventory().getArmorContents();
@@ -57,7 +57,13 @@ public class TARDISArtronIndicator {
                 isFiltered = true;
             }
         }
-        final Scoreboard currentScoreboard = p.getScoreboard();
+//        boolean isArtronDisplay = false;
+//        for (Objective o : p.getScoreboard().getObjectives()) {
+//            if (o.getDisplayName().equals("Artron Energy")) {
+//                isArtronDisplay = true;
+//            }
+//        }
+        final Scoreboard currentScoreboard = (p.getScoreboard().getObjective("TARDIS") != null) ? manager.getMainScoreboard() : p.getScoreboard();
         // get Artron level
         HashMap<String, Object> where = new HashMap<String, Object>();
         where.put("tardis_id", id);
@@ -88,14 +94,12 @@ public class TARDISArtronIndicator {
                     timelord.setScore(rsp.getArtronLevel());
                 }
                 p.setScoreboard(board);
-                if (hide) {
-                    plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
-                        @Override
-                        public void run() {
-                            p.setScoreboard(currentScoreboard);
-                        }
-                    }, 150L);
-                }
+                plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
+                    @Override
+                    public void run() {
+                        p.setScoreboard(currentScoreboard);
+                    }
+                }, 150L);
             } else {
                 if (used > 0) {
                     p.sendMessage(plugin.getPluginName() + "You used " + used + " Artron Energy.");

@@ -243,7 +243,7 @@ public class TARDISArtronCapacitorListener implements Listener {
                                 }
                             } else {
                                 // just tell us how much energy we have
-                                new TARDISArtronIndicator(plugin).showArtronLevel(player, id, true, 0);
+                                new TARDISArtronIndicator(plugin).showArtronLevel(player, id, 0);
                             }
                         }
                     }
