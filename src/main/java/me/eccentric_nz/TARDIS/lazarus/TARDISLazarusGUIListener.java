@@ -143,10 +143,10 @@ public class TARDISLazarusGUIListener implements Listener {
                 im.setLore(Arrays.asList(new String[]{truefalse}));
                 is.setItemMeta(im);
             }
-            if (slot == 47) {
+            if (slot == 47) { //remove disguise
+                plugin.getTrackerKeeper().getTrackGeneticManipulation().add(playerNameStr);
                 close(player);
                 // animate the manipulator walls
-                plugin.getTrackerKeeper().getTrackGeneticManipulation().add(playerNameStr);
                 plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, new TARDISLazarusRunnable(plugin, b), 6L, 6L);
                 plugin.getUtils().playTARDISSound(player.getLocation(), player, "lazarus_machine");
                 // undisguise the player
@@ -181,10 +181,10 @@ public class TARDISLazarusGUIListener implements Listener {
                     }
                 }, 100L);
             }
-            if (slot == 49) {
+            if (slot == 49) { // add disguise
+                plugin.getTrackerKeeper().getTrackGeneticManipulation().add(playerNameStr);
                 close(player);
                 // animate the manipulator walls
-                plugin.getTrackerKeeper().getTrackGeneticManipulation().add(playerNameStr);
                 plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, new TARDISLazarusRunnable(plugin, b), 6L, 6L);
                 plugin.getUtils().playTARDISSound(player.getLocation(), player, "lazarus_machine");
                 // disguise the player

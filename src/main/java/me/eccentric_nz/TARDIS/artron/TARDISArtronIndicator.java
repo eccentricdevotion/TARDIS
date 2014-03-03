@@ -57,12 +57,6 @@ public class TARDISArtronIndicator {
                 isFiltered = true;
             }
         }
-//        boolean isArtronDisplay = false;
-//        for (Objective o : p.getScoreboard().getObjectives()) {
-//            if (o.getDisplayName().equals("Artron Energy")) {
-//                isArtronDisplay = true;
-//            }
-//        }
         final Scoreboard currentScoreboard = (p.getScoreboard().getObjective("TARDIS") != null) ? manager.getMainScoreboard() : p.getScoreboard();
         // get Artron level
         HashMap<String, Object> where = new HashMap<String, Object>();
