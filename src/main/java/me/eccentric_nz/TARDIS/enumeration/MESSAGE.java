@@ -35,7 +35,7 @@ public enum MESSAGE {
     NOT_ENOUGH_ZERO_ENERGY("The TARDIS does not have enough Artron Energy for the Zero Room!"),
     NOT_IN_TARDIS("You are not inside your TARDIS. You need to be to use this feature!"),
     NOT_IN_ZERO("You cannot do that in the Zero Room!"),
-    NOT_OWNER("You are not the Timelord or Companion for this TARDIS!"),
+    NOT_OWNER("You are not the Timelord for this TARDIS!"),
     NOT_VALID_MATERIAL("That is not a valid Material! Try checking http://jd.bukkit.org/apidocs/org/bukkit/Material.html"),
     NOT_VALID_NAME("That doesn't appear to be a valid username."),
     NOT_WHILE_MAT("You cannot do that while the TARDIS is materialising!"),
