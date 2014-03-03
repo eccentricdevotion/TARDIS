@@ -60,6 +60,10 @@ public class TARDISSaveLocationCommand {
                 if (plugin.getConfig().getString("preferences.difficulty").equals("hard")) {
                     tcc = new TARDISCircuitChecker(plugin, id);
                     tcc.getCircuits();
+                    if (tcc == null) {
+                        player.sendMessage(plugin.getPluginName() + "You need to use a Storage Disk! See the " + ChatColor.AQUA + "TARDIS Information System" + ChatColor.RESET + " for help using Disks.");
+                        return true;
+                    }
                 }
                 if (tcc != null && !tcc.hasMemory()) {
                     player.sendMessage(plugin.getPluginName() + MESSAGE.NO_MEM_CIRCUIT.getText());
