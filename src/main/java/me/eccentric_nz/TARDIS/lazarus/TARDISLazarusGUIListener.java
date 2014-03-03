@@ -325,7 +325,6 @@ public class TARDISLazarusGUIListener implements Listener {
             if (slot == 51) {
                 close(player);
                 openDoor(b);
-                untrack(player.getName());
             }
         }
     }
