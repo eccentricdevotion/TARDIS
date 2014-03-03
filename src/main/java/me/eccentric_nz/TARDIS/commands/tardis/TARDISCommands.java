@@ -177,6 +177,10 @@ public class TARDISCommands implements CommandExecutor {
                 }
                 if (args[0].equalsIgnoreCase("save")) {
                     ItemStack is = player.getItemInHand();
+                    if (plugin.getConfig().getString("preferences.difficulty").equals("hard") && heldDiskIsWrong(is)) {
+                        sender.sendMessage(plugin.getPluginName() + "You must be holding a Save Storage Disk in your hand!");
+                        return true;
+                    }
                     if (is != null && is.hasItemMeta() && is.getItemMeta().hasDisplayName() && is.getItemMeta().getDisplayName().equals("Save Storage Disk")) {
                         return new TARDISDiskWriterCommand(plugin).writeSave(player, args);
                     } else {
@@ -220,5 +224,25 @@ public class TARDISCommands implements CommandExecutor {
         }
         // If the above has happened the function will break and return true. If this hasn't happened then value of false will be returned.
         return false;
+    }
+
+    private boolean heldDiskIsWrong(ItemStack is) {
+        boolean complexBool = false;
+        if (is == null) {
+            complexBool = true;
+        } else {
+            if (!is.hasItemMeta()) {
+                complexBool = true;
+            } else {
+                if (!is.getItemMeta().hasDisplayName()) {
+                    complexBool = true;
+                } else {
+                    if (!is.getItemMeta().getDisplayName().equals("Save Storage Disk")) {
+                        complexBool = true;
+                    }
+                }
+            }
+        }
+        return complexBool;
     }
 }

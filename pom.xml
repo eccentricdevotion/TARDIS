@@ -198,6 +198,16 @@
             <artifactId>worldedit</artifactId>
             <version>5.5.9-SNAPSHOT</version>
             <type>jar</type>
+            <exclusions>
+                <exclusion>
+                    <artifactId>js</artifactId>
+                    <groupId>rhino</groupId>
+                </exclusion>
+                <exclusion>
+                    <artifactId>truezip</artifactId>
+                    <groupId>de.schlichtherle</groupId>
+                </exclusion>
+            </exclusions>
         </dependency>
         <dependency>
             <groupId>com.palmergames.bukkit</groupId>

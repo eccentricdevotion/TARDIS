@@ -61,6 +61,7 @@ public class TARDISTravelCommands implements CommandExecutor {
 
     private final TARDIS plugin;
     private final List<String> BIOME_SUBS = new ArrayList<String>();
+    private final List<String> mustUseAdvanced = Arrays.asList(new String[]{"area", "biome", "dest"});
 
     public TARDISTravelCommands(TARDIS plugin) {
         this.plugin = plugin;
@@ -214,6 +215,10 @@ public class TARDISTravelCommands implements CommandExecutor {
                             return true;
                         } else {
                             if (player.hasPermission("tardis.timetravel.player")) {
+                                if (plugin.getConfig().getString("preferences.difficulty").equals("hard")) {
+                                    player.sendMessage(plugin.getPluginName() + "You need to use the Advanced Console! See the " + ChatColor.AQUA + "TARDIS Information System" + ChatColor.RESET + " for help with using Disks.");
+                                    return true;
+                                }
                                 if (player.getName().equalsIgnoreCase(args[0])) {
                                     player.sendMessage(plugin.getPluginName() + "You cannot travel to yourself!");
                                     return true;
@@ -240,6 +245,10 @@ public class TARDISTravelCommands implements CommandExecutor {
                                 return true;
                             }
                         }
+                    }
+                    if (plugin.getConfig().getString("preferences.difficulty").equals("hard") && mustUseAdvanced.contains(args[0].toLowerCase())) {
+                        player.sendMessage(plugin.getPluginName() + "You need to use the Advanced Console! See the " + ChatColor.AQUA + "TARDIS Information System" + ChatColor.RESET + " for help with using Disks.");
+                        return true;
                     }
                     if (args.length == 2 && args[0].equalsIgnoreCase("biome")) {
                         // we're thinking this is a biome search
