@@ -213,141 +213,60 @@ public class TARDISTravelCommands implements CommandExecutor {
                             }
                             return true;
                         } else {
-                            if (player.hasPermission("tardis.timetravel.player")) {
-                                if (player.getName().equalsIgnoreCase(args[0])) {
-                                    player.sendMessage(plugin.getPluginName() + "You cannot travel to yourself!");
+                            if (plugin.getConfig().getString("preferences.difficulty").equalsIgnoreCase("easy")) {
+                                if (player.hasPermission("tardis.timetravel.player")) {
+                                    if (player.getName().equalsIgnoreCase(args[0])) {
+                                        player.sendMessage(plugin.getPluginName() + "You cannot travel to yourself!");
+                                        return true;
+                                    }
+                                    HashMap<String, Object> wherecl = new HashMap<String, Object>();
+                                    wherecl.put("tardis_id", id);
+                                    ResultSetCurrentLocation rsc = new ResultSetCurrentLocation(plugin, wherecl);
+                                    if (!rsc.resultSet()) {
+                                        player.sendMessage(plugin.getPluginName() + MESSAGE.NO_CURRENT.getText());
+                                        return true;
+                                    }
+                                    // check the to player's DND status
+                                    HashMap<String, Object> wherednd = new HashMap<String, Object>();
+                                    wherednd.put("player", args[0].toLowerCase());
+                                    ResultSetPlayerPrefs rspp = new ResultSetPlayerPrefs(plugin, wherednd);
+                                    if (rspp.resultSet() && rspp.isDND()) {
+                                        player.sendMessage(plugin.getPluginName() + args[0] + " does not want to be disturbed right now! Try again later.");
+                                        return true;
+                                    }
+                                    TARDISRescue to_player = new TARDISRescue(plugin);
+                                    return to_player.rescue(player, args[0], id, tt, rsc.getDirection(), false);
+                                } else {
+                                    player.sendMessage(plugin.getPluginName() + "You do not have permission to time travel to a player!");
                                     return true;
                                 }
-                                HashMap<String, Object> wherecl = new HashMap<String, Object>();
-                                wherecl.put("tardis_id", id);
-                                ResultSetCurrentLocation rsc = new ResultSetCurrentLocation(plugin, wherecl);
-                                if (!rsc.resultSet()) {
-                                    player.sendMessage(plugin.getPluginName() + MESSAGE.NO_CURRENT.getText());
-                                    return true;
-                                }
-                                // check the to player's DND status
-                                HashMap<String, Object> wherednd = new HashMap<String, Object>();
-                                wherednd.put("player", args[0].toLowerCase());
-                                ResultSetPlayerPrefs rspp = new ResultSetPlayerPrefs(plugin, wherednd);
-                                if (rspp.resultSet() && rspp.isDND()) {
-                                    player.sendMessage(plugin.getPluginName() + args[0] + " does not want to be disturbed right now! Try again later.");
-                                    return true;
-                                }
-                                TARDISRescue to_player = new TARDISRescue(plugin);
-                                return to_player.rescue(player, args[0], id, tt, rsc.getDirection(), false);
                             } else {
-                                player.sendMessage(plugin.getPluginName() + "You do not have permission to time travel to a player!");
+                                player.sendMessage(plugin.getPluginName() + "You need to use the Advanced Console! See the " + ChatColor.AQUA + "TARDIS Information System" + ChatColor.RESET + " for help using Disks.");
                                 return true;
                             }
                         }
                     }
                     if (args.length == 2 && args[0].equalsIgnoreCase("biome")) {
                         // we're thinking this is a biome search
-                        if (!player.hasPermission("tardis.timetravel.biome")) {
-                            player.sendMessage(plugin.getPluginName() + "You do not have permission to time travel to a biome!");
-                            return true;
-                        }
-                        String upper = args[1].toUpperCase(Locale.ENGLISH);
-                        if (upper.equals("LIST")) {
-                            StringBuilder buf = new StringBuilder();
-                            for (String bi : BIOME_SUBS) {
-                                buf.append(bi).append(", ");
-                            }
-                            String b = buf.toString().substring(0, buf.length() - 2);
-                            sender.sendMessage(plugin.getPluginName() + "Biomes: " + b);
-                            return true;
-                        } else {
-                            try {
-                                Biome biome = Biome.valueOf(upper);
-                                sender.sendMessage(plugin.getPluginName() + "Searching for biome, this may take some time!");
-
-                                HashMap<String, Object> wherecl = new HashMap<String, Object>();
-                                wherecl.put("tardis_id", rs.getTardis_id());
-                                ResultSetCurrentLocation rsc = new ResultSetCurrentLocation(plugin, wherecl);
-                                if (!rsc.resultSet()) {
-                                    player.sendMessage(plugin.getPluginName() + MESSAGE.NO_CURRENT.getText());
-                                    return true;
-                                }
-                                Location nsob = searchBiome(player, id, biome, rsc.getWorld(), rsc.getX(), rsc.getZ());
-                                if (nsob == null) {
-                                    sender.sendMessage(plugin.getPluginName() + "Could not find biome!");
-                                    return true;
-                                } else {
-                                    if (!plugin.getPluginRespect().getRespect(player, nsob, true)) {
-                                        return true;
-                                    }
-                                    World bw = nsob.getWorld();
-                                    // check location
-                                    while (!bw.getChunkAt(nsob).isLoaded()) {
-                                        bw.getChunkAt(nsob).load();
-                                    }
-                                    int[] start_loc = tt.getStartLocation(nsob, rsc.getDirection());
-                                    int tmp_y = nsob.getBlockY();
-                                    for (int up = 0; up < 10; up++) {
-                                        int count = tt.safeLocation(start_loc[0], tmp_y + up, start_loc[2], start_loc[1], start_loc[3], nsob.getWorld(), rsc.getDirection());
-                                        if (count == 0) {
-                                            nsob.setY(tmp_y + up);
-                                            break;
-                                        }
-                                    }
-                                    set.put("world", nsob.getWorld().getName());
-                                    set.put("x", nsob.getBlockX());
-                                    set.put("y", nsob.getBlockY());
-                                    set.put("z", nsob.getBlockZ());
-                                    set.put("direction", rsc.getDirection().toString());
-                                    set.put("submarine", 0);
-                                    qf.doUpdate("next", set, tid);
-                                    sender.sendMessage(plugin.getPluginName() + "The biome was set succesfully. Please release the handbrake!");
-                                    plugin.getTrackerKeeper().getTrackHasDestination().put(id, travel);
-                                    if (plugin.getTrackerKeeper().getTrackRescue().containsKey(Integer.valueOf(id))) {
-                                        plugin.getTrackerKeeper().getTrackRescue().remove(Integer.valueOf(id));
-                                    }
-                                }
-                            } catch (IllegalArgumentException iae) {
-                                sender.sendMessage(plugin.getPluginName() + "Biome type not valid!");
+                        if (plugin.getConfig().getString("preferences.difficulty").equalsIgnoreCase("easy")) {
+                            if (!player.hasPermission("tardis.timetravel.biome")) {
+                                player.sendMessage(plugin.getPluginName() + "You do not have permission to time travel to a biome!");
                                 return true;
                             }
-                            return true;
-                        }
-                    }
-                    if (args.length == 2 && args[0].equalsIgnoreCase("dest")) {
-                        // we're thinking this is a saved destination name
-                        if (player.hasPermission("tardis.save")) {
-                            HashMap<String, Object> whered = new HashMap<String, Object>();
-                            whered.put("dest_name", args[1]);
-                            whered.put("tardis_id", id);
-                            ResultSetDestinations rsd = new ResultSetDestinations(plugin, whered, false);
-                            if (!rsd.resultSet()) {
-                                sender.sendMessage(plugin.getPluginName() + "Could not find a destination with that name! try using " + ChatColor.GREEN + "/TARDIS list saves" + ChatColor.RESET + " first.");
+                            String upper = args[1].toUpperCase(Locale.ENGLISH);
+                            if (upper.equals("LIST")) {
+                                StringBuilder buf = new StringBuilder();
+                                for (String bi : BIOME_SUBS) {
+                                    buf.append(bi).append(", ");
+                                }
+                                String b = buf.toString().substring(0, buf.length() - 2);
+                                sender.sendMessage(plugin.getPluginName() + "Biomes: " + b);
                                 return true;
-                            }
-                            World w = plugin.getServer().getWorld(rsd.getWorld());
-                            if (w != null) {
-                                Location save_dest = new Location(w, rsd.getX(), rsd.getY(), rsd.getZ());
-                                if (!plugin.getPluginRespect().getRespect(player, save_dest, true)) {
-                                    return true;
-                                }
-                                if (!plugin.getTardisArea().areaCheckInExisting(save_dest)) {
-                                    // save is in a TARDIS area, so check that the spot is not occupied
-                                    HashMap<String, Object> wheres = new HashMap<String, Object>();
-                                    wheres.put("world", rsd.getWorld());
-                                    wheres.put("x", rsd.getX());
-                                    wheres.put("y", rsd.getY());
-                                    wheres.put("z", rsd.getZ());
-                                    ResultSetCurrentLocation rsz = new ResultSetCurrentLocation(plugin, wheres);
-                                    if (rsz.resultSet()) {
-                                        sender.sendMessage(plugin.getPluginName() + "A TARDIS already occupies this parking spot! Try using the " + ChatColor.AQUA + "/tardistravel area [name]" + ChatColor.RESET + " command instead.");
-                                        return true;
-                                    }
-                                }
-                                set.put("world", rsd.getWorld());
-                                set.put("x", rsd.getX());
-                                set.put("y", rsd.getY());
-                                set.put("z", rsd.getZ());
-                                if (!rsd.getDirection().isEmpty() && rsd.getDirection().length() < 6) {
-                                    set.put("direction", rsd.getDirection());
-                                } else {
-                                    // get current direction
+                            } else {
+                                try {
+                                    Biome biome = Biome.valueOf(upper);
+                                    sender.sendMessage(plugin.getPluginName() + "Searching for biome, this may take some time!");
+    
                                     HashMap<String, Object> wherecl = new HashMap<String, Object>();
                                     wherecl.put("tardis_id", rs.getTardis_id());
                                     ResultSetCurrentLocation rsc = new ResultSetCurrentLocation(plugin, wherecl);
@@ -355,55 +274,156 @@ public class TARDISTravelCommands implements CommandExecutor {
                                         player.sendMessage(plugin.getPluginName() + MESSAGE.NO_CURRENT.getText());
                                         return true;
                                     }
-                                    set.put("direction", rsc.getDirection().toString());
+                                    Location nsob = searchBiome(player, id, biome, rsc.getWorld(), rsc.getX(), rsc.getZ());
+                                    if (nsob == null) {
+                                        sender.sendMessage(plugin.getPluginName() + "Could not find biome!");
+                                        return true;
+                                    } else {
+                                        if (!plugin.getPluginRespect().getRespect(player, nsob, true)) {
+                                            return true;
+                                        }
+                                        World bw = nsob.getWorld();
+                                        // check location
+                                        while (!bw.getChunkAt(nsob).isLoaded()) {
+                                            bw.getChunkAt(nsob).load();
+                                        }
+                                        int[] start_loc = tt.getStartLocation(nsob, rsc.getDirection());
+                                        int tmp_y = nsob.getBlockY();
+                                        for (int up = 0; up < 10; up++) {
+                                            int count = tt.safeLocation(start_loc[0], tmp_y + up, start_loc[2], start_loc[1], start_loc[3], nsob.getWorld(), rsc.getDirection());
+                                            if (count == 0) {
+                                                nsob.setY(tmp_y + up);
+                                                break;
+                                            }
+                                        }
+                                        set.put("world", nsob.getWorld().getName());
+                                        set.put("x", nsob.getBlockX());
+                                        set.put("y", nsob.getBlockY());
+                                        set.put("z", nsob.getBlockZ());
+                                        set.put("direction", rsc.getDirection().toString());
+                                        set.put("submarine", 0);
+                                        qf.doUpdate("next", set, tid);
+                                        sender.sendMessage(plugin.getPluginName() + "The biome was set succesfully. Please release the handbrake!");
+                                        plugin.getTrackerKeeper().getTrackHasDestination().put(id, travel);
+                                        if (plugin.getTrackerKeeper().getTrackRescue().containsKey(Integer.valueOf(id))) {
+                                            plugin.getTrackerKeeper().getTrackRescue().remove(Integer.valueOf(id));
+                                        }
+                                    }
+                                } catch (IllegalArgumentException iae) {
+                                    sender.sendMessage(plugin.getPluginName() + "Biome type not valid!");
+                                    return true;
                                 }
-                                set.put("submarine", (rsd.isSubmarine()) ? 1 : 0);
-                                qf.doUpdate("next", set, tid);
-                                sender.sendMessage(plugin.getPluginName() + "The specified location was set succesfully. Please release the handbrake!");
-                                plugin.getTrackerKeeper().getTrackHasDestination().put(id, travel);
-                                if (plugin.getTrackerKeeper().getTrackRescue().containsKey(Integer.valueOf(id))) {
-                                    plugin.getTrackerKeeper().getTrackRescue().remove(Integer.valueOf(id));
-                                }
-                                return true;
-                            } else {
-                                sender.sendMessage(plugin.getPluginName() + "Could not get the world for this save!");
                                 return true;
                             }
                         } else {
-                            player.sendMessage(plugin.getPluginName() + "You do not have permission to time travel to a save!");
+                            player.sendMessage(plugin.getPluginName() + "You need to use the Advanced Console! See the " + ChatColor.AQUA + "TARDIS Information System" + ChatColor.RESET + " for help using Disks.");
+                            return true;
+                        }
+                    }
+                    if (args.length == 2 && args[0].equalsIgnoreCase("dest")) {
+                        // we're thinking this is a saved destination name
+                        if (plugin.getConfig().getString("preferences.difficulty").equalsIgnoreCase("easy")) {
+                            if (player.hasPermission("tardis.save")) {
+                                HashMap<String, Object> whered = new HashMap<String, Object>();
+                                whered.put("dest_name", args[1]);
+                                whered.put("tardis_id", id);
+                                ResultSetDestinations rsd = new ResultSetDestinations(plugin, whered, false);
+                                if (!rsd.resultSet()) {
+                                    sender.sendMessage(plugin.getPluginName() + "Could not find a destination with that name! try using " + ChatColor.GREEN + "/TARDIS list saves" + ChatColor.RESET + " first.");
+                                    return true;
+                                }
+                                World w = plugin.getServer().getWorld(rsd.getWorld());
+                                if (w != null) {
+                                    Location save_dest = new Location(w, rsd.getX(), rsd.getY(), rsd.getZ());
+                                    if (!plugin.getPluginRespect().getRespect(player, save_dest, true)) {
+                                        return true;
+                                    }
+                                    if (!plugin.getTardisArea().areaCheckInExisting(save_dest)) {
+                                        // save is in a TARDIS area, so check that the spot is not occupied
+                                        HashMap<String, Object> wheres = new HashMap<String, Object>();
+                                        wheres.put("world", rsd.getWorld());
+                                        wheres.put("x", rsd.getX());
+                                        wheres.put("y", rsd.getY());
+                                        wheres.put("z", rsd.getZ());
+                                        ResultSetCurrentLocation rsz = new ResultSetCurrentLocation(plugin, wheres);
+                                        if (rsz.resultSet()) {
+                                            sender.sendMessage(plugin.getPluginName() + "A TARDIS already occupies this parking spot! Try using the " + ChatColor.AQUA + "/tardistravel area [name]" + ChatColor.RESET + " command instead.");
+                                            return true;
+                                        }
+                                    }
+                                    set.put("world", rsd.getWorld());
+                                    set.put("x", rsd.getX());
+                                    set.put("y", rsd.getY());
+                                    set.put("z", rsd.getZ());
+                                    if (!rsd.getDirection().isEmpty() && rsd.getDirection().length() < 6) {
+                                        set.put("direction", rsd.getDirection());
+                                    } else {
+                                        // get current direction
+                                        HashMap<String, Object> wherecl = new HashMap<String, Object>();
+                                        wherecl.put("tardis_id", rs.getTardis_id());
+                                        ResultSetCurrentLocation rsc = new ResultSetCurrentLocation(plugin, wherecl);
+                                        if (!rsc.resultSet()) {
+                                            player.sendMessage(plugin.getPluginName() + MESSAGE.NO_CURRENT.getText());
+                                            return true;
+                                        }
+                                        set.put("direction", rsc.getDirection().toString());
+                                    }
+                                    set.put("submarine", (rsd.isSubmarine()) ? 1 : 0);
+                                    qf.doUpdate("next", set, tid);
+                                    sender.sendMessage(plugin.getPluginName() + "The specified location was set succesfully. Please release the handbrake!");
+                                    plugin.getTrackerKeeper().getTrackHasDestination().put(id, travel);
+                                    if (plugin.getTrackerKeeper().getTrackRescue().containsKey(Integer.valueOf(id))) {
+                                        plugin.getTrackerKeeper().getTrackRescue().remove(Integer.valueOf(id));
+                                    }
+                                    return true;
+                                } else {
+                                    sender.sendMessage(plugin.getPluginName() + "Could not get the world for this save!");
+                                    return true;
+                                }
+                            } else {
+                                player.sendMessage(plugin.getPluginName() + "You do not have permission to time travel to a save!");
+                                return true;
+                            }
+                        } else {
+                            player.sendMessage(plugin.getPluginName() + "You need to use the Advanced Console! See the " + ChatColor.AQUA + "TARDIS Information System" + ChatColor.RESET + " for help using Disks.");
                             return true;
                         }
                     }
                     if (args.length == 2 && args[0].equalsIgnoreCase("area")) {
-                        // we're thinking this is admin defined area name
-                        HashMap<String, Object> wherea = new HashMap<String, Object>();
-                        wherea.put("area_name", args[1]);
-                        ResultSetAreas rsa = new ResultSetAreas(plugin, wherea, false);
-                        if (!rsa.resultSet()) {
-                            sender.sendMessage(plugin.getPluginName() + "Could not find an area with that name! try using " + ChatColor.GREEN + "/tardis list areas" + ChatColor.RESET + " first.");
+                        if (plugin.getConfig().getString("preferences.difficulty").equalsIgnoreCase("easy")) {
+                            // we're thinking this is admin defined area name
+                            HashMap<String, Object> wherea = new HashMap<String, Object>();
+                            wherea.put("area_name", args[1]);
+                            ResultSetAreas rsa = new ResultSetAreas(plugin, wherea, false);
+                            if (!rsa.resultSet()) {
+                                sender.sendMessage(plugin.getPluginName() + "Could not find an area with that name! try using " + ChatColor.GREEN + "/tardis list areas" + ChatColor.RESET + " first.");
+                                return true;
+                            }
+                            if ((!player.hasPermission("tardis.area." + args[1]) && !player.hasPermission("tardis.area.*")) || (!player.isPermissionSet("tardis.area." + args[1]) && !player.isPermissionSet("tardis.area.*"))) {
+                                sender.sendMessage(plugin.getPluginName() + "You do not have permission [tardis.area." + args[1] + "] to send the TARDIS to this location!");
+                                return true;
+                            }
+                            Location l = plugin.getTardisArea().getNextSpot(rsa.getArea_name());
+                            if (l == null) {
+                                sender.sendMessage(plugin.getPluginName() + MESSAGE.NO_MORE_SPOTS.getText());
+                                return true;
+                            }
+                            set.put("world", l.getWorld().getName());
+                            set.put("x", l.getBlockX());
+                            set.put("y", l.getBlockY());
+                            set.put("z", l.getBlockZ());
+                            set.put("submarine", 0);
+                            qf.doUpdate("next", set, tid);
+                            sender.sendMessage(plugin.getPluginName() + "Your TARDIS was approved for parking in [" + args[1] + "]!");
+                            plugin.getTrackerKeeper().getTrackHasDestination().put(id, travel);
+                            if (plugin.getTrackerKeeper().getTrackRescue().containsKey(Integer.valueOf(id))) {
+                                plugin.getTrackerKeeper().getTrackRescue().remove(Integer.valueOf(id));
+                            }
+                            return true;
+                        } else {
+                            player.sendMessage(plugin.getPluginName() + "You need to use the Advanced Console! See the " + ChatColor.AQUA + "TARDIS Information System" + ChatColor.RESET + " for help using Disks.");
                             return true;
                         }
-                        if ((!player.hasPermission("tardis.area." + args[1]) && !player.hasPermission("tardis.area.*")) || (!player.isPermissionSet("tardis.area." + args[1]) && !player.isPermissionSet("tardis.area.*"))) {
-                            sender.sendMessage(plugin.getPluginName() + "You do not have permission [tardis.area." + args[1] + "] to send the TARDIS to this location!");
-                            return true;
-                        }
-                        Location l = plugin.getTardisArea().getNextSpot(rsa.getArea_name());
-                        if (l == null) {
-                            sender.sendMessage(plugin.getPluginName() + MESSAGE.NO_MORE_SPOTS.getText());
-                            return true;
-                        }
-                        set.put("world", l.getWorld().getName());
-                        set.put("x", l.getBlockX());
-                        set.put("y", l.getBlockY());
-                        set.put("z", l.getBlockZ());
-                        set.put("submarine", 0);
-                        qf.doUpdate("next", set, tid);
-                        sender.sendMessage(plugin.getPluginName() + "Your TARDIS was approved for parking in [" + args[1] + "]!");
-                        plugin.getTrackerKeeper().getTrackHasDestination().put(id, travel);
-                        if (plugin.getTrackerKeeper().getTrackRescue().containsKey(Integer.valueOf(id))) {
-                            plugin.getTrackerKeeper().getTrackRescue().remove(Integer.valueOf(id));
-                        }
-                        return true;
                     }
                     if (args.length == 3 && args[0].startsWith("~") && player.hasPermission("tardis.timetravel.location")) {
                         HashMap<String, Object> wherecl = new HashMap<String, Object>();
