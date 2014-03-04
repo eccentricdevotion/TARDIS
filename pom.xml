@@ -23,10 +23,10 @@
             <id>sk89q-repo</id>
             <url>http://maven.sk89q.com/repo/</url>
         </repository>
-        <!--<repository>
-            <id>citizensnpcs</id>
-            <url>http://repo.citizensnpcs.com</url>
-        </repository>-->
+        <repository>
+            <id>md-5</id>
+            <url>http://repo.md-5.net/content/groups/public</url>
+        </repository>
         <repository>
             <id>onarandombox</id>
             <url>http://repo.onarandombox.com/content/groups/public</url>
@@ -350,9 +350,15 @@
             </exclusions>
         </dependency>
         <dependency>
-            <groupId>me.libraryaddict.disguise</groupId>
+            <groupId>LibsDisguises</groupId>
             <artifactId>LibsDisguises</artifactId>
-            <version>7.9.8</version>
+            <version>LATEST</version>
+            <exclusions>
+                <exclusion>
+                    <artifactId>spigot-api</artifactId>
+                    <groupId>org.spigotmc</groupId>
+                </exclusion>
+            </exclusions>
         </dependency>
     </dependencies>
 </project>
