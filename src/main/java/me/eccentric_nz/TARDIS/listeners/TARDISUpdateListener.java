@@ -258,17 +258,6 @@ public class TARDISUpdateListener implements Listener {
             if (blockName.equalsIgnoreCase("world-repeater") && (blockType == Material.DIODE_BLOCK_OFF || blockType == Material.DIODE_BLOCK_ON)) {
                 HashMap<String, Object> wherec = new HashMap<String, Object>();
                 wherec.put("tardis_id", id);
-                wherec.put("type", 5);
-                ResultSetControls rsc = new ResultSetControls(plugin, wherec, false);
-                if (secondary || !rsc.resultSet()) {
-                    qf.insertControl(id, 5, blockLocStr, 1);
-                } else {
-                    set.put("location", blockLocStr);
-                }
-            }
-            if (blockName.equalsIgnoreCase("x-repeater") && (blockType == Material.DIODE_BLOCK_OFF || blockType == Material.DIODE_BLOCK_ON)) {
-                HashMap<String, Object> wherec = new HashMap<String, Object>();
-                wherec.put("tardis_id", id);
                 wherec.put("type", 2);
                 ResultSetControls rsc = new ResultSetControls(plugin, wherec, false);
                 if (secondary || !rsc.resultSet()) {
@@ -277,7 +266,7 @@ public class TARDISUpdateListener implements Listener {
                     set.put("location", blockLocStr);
                 }
             }
-            if (blockName.equalsIgnoreCase("z-repeater") && (blockType == Material.DIODE_BLOCK_OFF || blockType == Material.DIODE_BLOCK_ON)) {
+            if (blockName.equalsIgnoreCase("x-repeater") && (blockType == Material.DIODE_BLOCK_OFF || blockType == Material.DIODE_BLOCK_ON)) {
                 HashMap<String, Object> wherec = new HashMap<String, Object>();
                 wherec.put("tardis_id", id);
                 wherec.put("type", 3);
@@ -288,13 +277,24 @@ public class TARDISUpdateListener implements Listener {
                     set.put("location", blockLocStr);
                 }
             }
-            if (blockName.equalsIgnoreCase("y-repeater") && (blockType == Material.DIODE_BLOCK_OFF || blockType == Material.DIODE_BLOCK_ON)) {
+            if (blockName.equalsIgnoreCase("z-repeater") && (blockType == Material.DIODE_BLOCK_OFF || blockType == Material.DIODE_BLOCK_ON)) {
                 HashMap<String, Object> wherec = new HashMap<String, Object>();
                 wherec.put("tardis_id", id);
                 wherec.put("type", 4);
                 ResultSetControls rsc = new ResultSetControls(plugin, wherec, false);
                 if (secondary || !rsc.resultSet()) {
                     qf.insertControl(id, 4, blockLocStr, 1);
+                } else {
+                    set.put("location", blockLocStr);
+                }
+            }
+            if (blockName.equalsIgnoreCase("y-repeater") && (blockType == Material.DIODE_BLOCK_OFF || blockType == Material.DIODE_BLOCK_ON)) {
+                HashMap<String, Object> wherec = new HashMap<String, Object>();
+                wherec.put("tardis_id", id);
+                wherec.put("type", 5);
+                ResultSetControls rsc = new ResultSetControls(plugin, wherec, false);
+                if (secondary || !rsc.resultSet()) {
+                    qf.insertControl(id, 5, blockLocStr, 1);
                 } else {
                     set.put("location", blockLocStr);
                 }
