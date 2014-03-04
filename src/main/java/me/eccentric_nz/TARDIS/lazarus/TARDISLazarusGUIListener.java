@@ -107,6 +107,8 @@ public class TARDISLazarusGUIListener implements Listener {
                         disguises.put(playerNameStr, display);
                         setSlotFourtyOne(inv, display, playerNameStr);
                     }
+                } else {
+                    disguises.put(playerNameStr, "PLAYER");
                 }
             }
             if (slot == 37) { // The Master Switch : ON | OFF
@@ -231,83 +233,88 @@ public class TARDISLazarusGUIListener implements Listener {
                                     }
                                 } else {
                                     DisguiseType dt = DisguiseType.valueOf(disguise);
-                                    MobDisguise mobDisguise = new MobDisguise(dt);
-                                    switch (dt) {
-                                        case SHEEP:
-                                            SheepWatcher sw = (SheepWatcher) mobDisguise.getWatcher();
-                                            sw.setColor(getColor(inv));
-                                            sw.setBaby(getBaby(inv));
-                                            if (getBoolean(inv)) {
-                                                sw.setCustomName("jeb_");
-                                                sw.setCustomNameVisible(true);
-                                            }
-                                            break;
-                                        case HORSE:
-                                            HorseWatcher hw = (HorseWatcher) mobDisguise.getWatcher();
-                                            hw.setColor(getHorseColor(inv));
-                                            hw.setBaby(getBaby(inv));
-                                            break;
-                                        case OCELOT:
-                                            OcelotWatcher ow = (OcelotWatcher) mobDisguise.getWatcher();
-                                            ow.setType(getCatType(inv));
-                                            ow.setBaby(getBaby(inv));
-                                            break;
-                                        case PIG:
-                                            PigWatcher pw = (PigWatcher) mobDisguise.getWatcher();
-                                            pw.setSaddled(getBoolean(inv));
-                                            pw.setBaby(getBaby(inv));
-                                            break;
-                                        case VILLAGER:
-                                            VillagerWatcher vw = (VillagerWatcher) mobDisguise.getWatcher();
-                                            vw.setProfession(getProfession(inv));
-                                            vw.setBaby(getBaby(inv));
-                                            break;
-                                        case WOLF:
-                                            WolfWatcher ww = (WolfWatcher) mobDisguise.getWatcher();
-                                            if (getBoolean(inv)) {
-                                                ww.setTamed(true);
-                                                ww.setCollarColor(getColor(inv));
-                                            }
-                                            ww.setBaby(getBaby(inv));
-                                            break;
-                                        case SLIME:
-                                        case MAGMA_CUBE:
-                                            SlimeWatcher lw = (SlimeWatcher) mobDisguise.getWatcher();
-                                            lw.setSize(getSlimeSize(inv));
-                                            break;
-                                        case BAT:
-                                            BatWatcher bw = (BatWatcher) mobDisguise.getWatcher();
-                                            bw.setFlying(getBoolean(inv));
-                                            break;
-                                        case BLAZE:
-                                            BlazeWatcher bbw = (BlazeWatcher) mobDisguise.getWatcher();
-                                            bbw.setBlazing(getBoolean(inv));
-                                            break;
-                                        case CREEPER:
-                                            CreeperWatcher cw = (CreeperWatcher) mobDisguise.getWatcher();
-                                            cw.setPowered(getBoolean(inv));
-                                            break;
-                                        case ENDERMAN:
-                                            EndermanWatcher ew = (EndermanWatcher) mobDisguise.getWatcher();
-                                            ew.setAgressive(getBoolean(inv));
-                                            break;
-                                        case COW:
-                                        case DONKEY:
-                                        case MULE:
-                                        case SKELETON_HORSE:
-                                        case UNDEAD_HORSE:
-                                            AgeableWatcher aw = (AgeableWatcher) mobDisguise.getWatcher();
-                                            aw.setBaby(getBaby(inv));
-                                            break;
-                                        case ZOMBIE:
-                                        case ZOMBIE_VILLAGER:
-                                            ZombieWatcher zw = (ZombieWatcher) mobDisguise.getWatcher();
-                                            zw.setBaby(getBaby(inv));
-                                            break;
-                                        default:
-                                            break;
+                                    if (dt.equals(DisguiseType.PLAYER)) {
+                                        PlayerDisguise playerDisguise = new PlayerDisguise("Herobrine");
+                                        DisguiseAPI.disguiseToAll(player, playerDisguise);
+                                    } else {
+                                        MobDisguise mobDisguise = new MobDisguise(dt);
+                                        switch (dt) {
+                                            case SHEEP:
+                                                SheepWatcher sw = (SheepWatcher) mobDisguise.getWatcher();
+                                                sw.setColor(getColor(inv));
+                                                sw.setBaby(getBaby(inv));
+                                                if (getBoolean(inv)) {
+                                                    sw.setCustomName("jeb_");
+                                                    sw.setCustomNameVisible(true);
+                                                }
+                                                break;
+                                            case HORSE:
+                                                HorseWatcher hw = (HorseWatcher) mobDisguise.getWatcher();
+                                                hw.setColor(getHorseColor(inv));
+                                                hw.setBaby(getBaby(inv));
+                                                break;
+                                            case OCELOT:
+                                                OcelotWatcher ow = (OcelotWatcher) mobDisguise.getWatcher();
+                                                ow.setType(getCatType(inv));
+                                                ow.setBaby(getBaby(inv));
+                                                break;
+                                            case PIG:
+                                                PigWatcher pw = (PigWatcher) mobDisguise.getWatcher();
+                                                pw.setSaddled(getBoolean(inv));
+                                                pw.setBaby(getBaby(inv));
+                                                break;
+                                            case VILLAGER:
+                                                VillagerWatcher vw = (VillagerWatcher) mobDisguise.getWatcher();
+                                                vw.setProfession(getProfession(inv));
+                                                vw.setBaby(getBaby(inv));
+                                                break;
+                                            case WOLF:
+                                                WolfWatcher ww = (WolfWatcher) mobDisguise.getWatcher();
+                                                if (getBoolean(inv)) {
+                                                    ww.setTamed(true);
+                                                    ww.setCollarColor(getColor(inv));
+                                                }
+                                                ww.setBaby(getBaby(inv));
+                                                break;
+                                            case SLIME:
+                                            case MAGMA_CUBE:
+                                                SlimeWatcher lw = (SlimeWatcher) mobDisguise.getWatcher();
+                                                lw.setSize(getSlimeSize(inv));
+                                                break;
+                                            case BAT:
+                                                BatWatcher bw = (BatWatcher) mobDisguise.getWatcher();
+                                                bw.setFlying(getBoolean(inv));
+                                                break;
+                                            case BLAZE:
+                                                BlazeWatcher bbw = (BlazeWatcher) mobDisguise.getWatcher();
+                                                bbw.setBlazing(getBoolean(inv));
+                                                break;
+                                            case CREEPER:
+                                                CreeperWatcher cw = (CreeperWatcher) mobDisguise.getWatcher();
+                                                cw.setPowered(getBoolean(inv));
+                                                break;
+                                            case ENDERMAN:
+                                                EndermanWatcher ew = (EndermanWatcher) mobDisguise.getWatcher();
+                                                ew.setAgressive(getBoolean(inv));
+                                                break;
+                                            case COW:
+                                            case DONKEY:
+                                            case MULE:
+                                            case SKELETON_HORSE:
+                                            case UNDEAD_HORSE:
+                                                AgeableWatcher aw = (AgeableWatcher) mobDisguise.getWatcher();
+                                                aw.setBaby(getBaby(inv));
+                                                break;
+                                            case ZOMBIE:
+                                            case ZOMBIE_VILLAGER:
+                                                ZombieWatcher zw = (ZombieWatcher) mobDisguise.getWatcher();
+                                                zw.setBaby(getBaby(inv));
+                                                break;
+                                            default:
+                                                break;
+                                        }
+                                        DisguiseAPI.disguiseToAll(player, mobDisguise);
                                     }
-                                    DisguiseAPI.disguiseToAll(player, mobDisguise);
                                 }
                             }
                         }
