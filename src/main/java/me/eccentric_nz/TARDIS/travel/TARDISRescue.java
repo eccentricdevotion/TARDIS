@@ -60,20 +60,20 @@ public class TARDISRescue {
     public boolean rescue(Player player, String saved, int id, TARDISTimeTravel tt, COMPASS d, boolean rescue) {
         if (plugin.getServer().getPlayer(saved) == null) {
             player.sendMessage(plugin.getPluginName() + "That player is not online!");
-            return true;
+            return false;
         }
         Player destPlayer = plugin.getServer().getPlayer(saved);
         Location player_loc = destPlayer.getLocation();
         if (!plugin.getTardisArea().areaCheckInExisting(player_loc)) {
             player.sendMessage(plugin.getPluginName() + "The player is in a TARDIS area! Please use " + ChatColor.AQUA + "/tardistravel area [area name]");
-            return true;
+            return false;
         }
         if (!plugin.getPluginRespect().getRespect(player, player_loc, true)) {
-            return true;
+            return false;
         }
         if (!plugin.getConfig().getBoolean("worlds." + player_loc.getWorld().getName())) {
             player.sendMessage(plugin.getPluginName() + "The server does not allow time travel to this world!");
-            return true;
+            return false;
         }
         World w = player_loc.getWorld();
         int[] start_loc = tt.getStartLocation(player_loc, d);
@@ -81,7 +81,7 @@ public class TARDISRescue {
         int count = tt.safeLocation(start_loc[0] - move, player_loc.getBlockY(), start_loc[2], start_loc[1] - move, start_loc[3], w, d);
         if (count > 0) {
             player.sendMessage(plugin.getPluginName() + "The player's location would not be safe! Please tell the player to move!");
-            return true;
+            return false;
         }
         HashMap<String, Object> set = new HashMap<String, Object>();
         set.put("world", player_loc.getWorld().getName());
