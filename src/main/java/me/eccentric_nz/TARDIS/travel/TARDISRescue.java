@@ -60,7 +60,7 @@ public class TARDISRescue {
     public boolean rescue(Player player, String saved, int id, TARDISTimeTravel tt, COMPASS d, boolean rescue) {
         if (plugin.getServer().getPlayer(saved) == null) {
             player.sendMessage(plugin.getPluginName() + "That player is not online!");
-            return true;
+            return (!rescue);
         }
         Player destPlayer = plugin.getServer().getPlayer(saved);
         Location player_loc = destPlayer.getLocation();
@@ -94,7 +94,9 @@ public class TARDISRescue {
         where.put("tardis_id", id);
         QueryFactory qf = new QueryFactory(plugin);
         qf.doUpdate("next", set, where);
-        player.sendMessage(plugin.getPluginName() + "The player location was saved successfully.");
+        if (!rescue) {
+            player.sendMessage(plugin.getPluginName() + "The player location was saved successfully. Please release the handbrake!");
+        }
         plugin.getTrackerKeeper().getTrackHasDestination().put(id, plugin.getArtronConfig().getInt("travel"));
         if (rescue) {
             plugin.getTrackerKeeper().getTrackRescue().put(id, saved);
