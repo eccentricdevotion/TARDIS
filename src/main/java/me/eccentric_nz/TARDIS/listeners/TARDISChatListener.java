@@ -51,6 +51,7 @@ public class TARDISChatListener implements Listener {
     public void onChat(AsyncPlayerChatEvent event) {
         final String saved = event.getPlayer().getName();
         String chat = event.getMessage();
+        boolean successful = false;
         if (chat != null && chat.equalsIgnoreCase("tardis rescue accept")) {
             if (plugin.getTrackerKeeper().getTrackChat().containsKey(saved)) {
                 final Player rescuer = plugin.getServer().getPlayer(plugin.getTrackerKeeper().getTrackChat().get(saved));
@@ -60,8 +61,10 @@ public class TARDISChatListener implements Listener {
                 plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
                     @Override
                     public void run() {
-                        res.tryRescue(rescuer, saved);
-                        rescuer.sendMessage(plugin.getPluginName() + "Release the handbrake to start rescuing " + saved);
+                        successful = res.tryRescue(rescuer, saved);
+                        if (successful) {
+                            rescuer.sendMessage(plugin.getPluginName() + "Release the handbrake to start rescuing " + saved);
+                        }
                     }
                 }, 2L);
             } else {
