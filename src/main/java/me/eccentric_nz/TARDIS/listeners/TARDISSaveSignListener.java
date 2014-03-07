@@ -172,7 +172,10 @@ public class TARDISSaveSignListener implements Listener {
                     wherez.put("owner", playerNameStr);
                     ResultSetTardis rs = new ResultSetTardis(plugin, wherez, "", false);
                     if (rs.resultSet()) {
-                        plugin.getTrackerKeeper().getTrackArrangers().add(playerNameStr);
+                        if (!plugin.getTrackerKeeper().getTrackArrangers().contains(playerNameStr)) {
+                            // Only add one at a time
+                            plugin.getTrackerKeeper().getTrackArrangers().add(playerNameStr);
+                        }
                         player.sendMessage(plugin.getPluginName() + "Save rearrangement enabled");
                     } else {
                         player.sendMessage(plugin.getPluginName() + MESSAGE.NOT_OWNER.getText());
