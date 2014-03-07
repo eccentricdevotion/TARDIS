@@ -126,17 +126,25 @@ public class TARDISArtronCapacitorListener implements Listener {
                                     player.sendMessage(plugin.getPluginName() + "You haven't initialised the Artron Energy capacitor yet!");
                                     return;
                                 }
-                                int amount = fc;
+                                int amount = 0;
                                 if (item.equals(full)) {
-                                    // remove the NETHER_STAR!
+                                    // remove the NETHER_STAR! (if appropriate)
                                     int a = player.getInventory().getItemInHand().getAmount();
                                     int a2 = Integer.valueOf(a) - 1;
-                                    if (a2 > 0) {
-                                        player.getInventory().getItemInHand().setAmount(a2);
+                                    if (current_level < fc) {
+                                        // There's room in the tank!
+                                        amount = fc;
+                                        if (a2 > 0) {
+                                            player.getInventory().getItemInHand().setAmount(a2);
+                                        } else {
+                                            player.getInventory().removeItem(new ItemStack(full, 1));
+                                        }
+                                            player.sendMessage(plugin.getPluginName() + "Artron Energy Levels at maximum!");
                                     } else {
-                                        player.getInventory().removeItem(new ItemStack(full, 1));
+                                        // We're either full or exceeding maximum, so don't do anything!
+                                        amount = current_level;
+                                        player.sendMessage(plugin.getPluginName() + "Artron Energy Levels already at maximum!");
                                     }
-                                    player.sendMessage(plugin.getPluginName() + "Artron Energy Levels at maximum!");
                                 } else {
                                     ItemStack is = player.getItemInHand();
                                     if (is.hasItemMeta()) {
