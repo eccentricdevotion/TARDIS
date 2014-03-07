@@ -26,9 +26,37 @@
 	<section>
 		<p><a href="#video">Jump to video</a></p>
 		<h1>The Custom Chameleon preset</h1>
-		<p>Server admins can set up a custom preset.</a></p>
+		<p>The TARDIS Chmeleon Circuit GUI has one preset slot set up so that server admins can add a custom preset.</p>
+		<p>Custom presets need to be a certain size and shape:</p>
+		<ul>
+			<li>Maximum 4 blocks tall</li>
+			<li>Maximum 3 blocks wide</li>
+			<li>Maximum 3 blocks deep</li>
+			<li>A single 4 block column at the front</li>
+		</ul>
+		<p><img src="images/docs/preset-max-shape.jpg" alt="maximum preset area" /></p>
+		<p>You can build the custom preset with almost any block (directional blocks can sometimes be an issue), it can contain empty spaces (AIR), and there should be a door in it somewhere (iron, wood and trap doors will all work). <strong>IMPORTANT:</strong> When you build it, start by facing EAST so you are looking at the FRONT of the design.</p>
+		<p>Once you have constructed your new design, you need to create a preset file for the TARDIS plugin to use. The easiest way to do this is to use the <code>/tardisadmin make_preset [name] [asymmetric]</code> command.</p>
+		<p>To use the command:</p>
+		<ul>
+			<li>Face the front of the preset (you should be facing EAST)</li>
+			<li>If the bottom left corner block is empty (AIR), place a sponge block there instead</li>
+			<li>Run the <code>/tardisadmin make_preset [name] [asymmetric]</code> command</li>
+			<li>Give the preset a name, and if the preset is an irregular shape (for example like the DUCK preset) put <code>true</code> for [asymmetric]. If it is boxy like the Police Box preset, put <code>false</code> for [asymmetric]</li>
+			<li>Click the bottom left corner block</li>
+		</ul>
+		<p>The plugin creates a text file in the <em>plugins/TARDIS</em> folder called <code>custom_preset_[name].txt</code></p>
+		<h4>Final steps</h4>
+		<p>If your custom preset contained a sign, you can change the text that is displayed on the second and third lines (the first line is reserved for the player&rsquo; name).</p>
+		<ul>
+			<li>Open the text file that was created and find the section starting with <code>##sign text</code></li>
+			<li>Change the lines that don't start with a <code>#</code> to what you want the sign to say</li>
+			<li>Save the file, and then rename it to <em>custom_preset.txt</em> (you may have to remove/rename the old custom preset file first)</li>
+			<li>Start up the server and select the custom preset in the Chameleon GUI</li>
+			<li>Test the preset by rebuilding the TARDIS in each direction</li>
+		</ul>
 		<h3 id="video">Video</h3>
-		<!--<iframe src="http://player.vimeo.com/video/87380933" width="600" height="366" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>-->
+		<iframe src="http://player.vimeo.com/video/88423516" width="600" height="366" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
 		<p>Video here</p>
 	</section>
 </div>
