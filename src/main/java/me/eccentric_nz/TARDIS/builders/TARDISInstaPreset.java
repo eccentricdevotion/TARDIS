@@ -361,8 +361,6 @@ public class TARDISInstaPreset {
                                     s.setLine(2, sign_colour + line2);
                                     s.setLine(3, sign_colour + "HOT ROD");
                                     break;
-                                case CUSTOM:
-                                    break;
                                 default:
                                     s.setLine(1, sign_colour + line1);
                                     s.setLine(2, sign_colour + line2);
