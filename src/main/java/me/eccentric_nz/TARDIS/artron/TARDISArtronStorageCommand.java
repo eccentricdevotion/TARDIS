@@ -80,7 +80,7 @@ public class TARDISArtronStorageCommand implements CommandExecutor {
             }
             ItemMeta im = is.getItemMeta();
             String name = im.getDisplayName();
-            if (!name.equals("Artron Storage Cell")) {
+            if (name == null || !name.equals("Artron Storage Cell")) {
                 sender.sendMessage(plugin.getPluginName() + "You must be holding an Artron Storage Cell in your hand!");
                 return true;
             }
