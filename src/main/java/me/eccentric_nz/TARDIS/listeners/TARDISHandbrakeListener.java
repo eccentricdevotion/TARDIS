@@ -226,6 +226,10 @@ public class TARDISHandbrakeListener implements Listener {
                                             player.sendMessage(plugin.getPluginName() + "Handbrake OFF! Entering the time vortex...");
                                             if (!minecart) {
                                                 plugin.getUtils().playTARDISSound(handbrake_loc, player, "tardis_takeoff");
+                                                // play sound at current TARDIS location
+                                                if (l != null) {
+                                                    plugin.getUtils().playTARDISSoundNearby(l, "tardis_takeoff");
+                                                }
                                             } else {
                                                 handbrake_loc.getWorld().playSound(handbrake_loc, Sound.MINECART_INSIDE, 1.0F, 0.0F);
                                             }
@@ -271,6 +275,7 @@ public class TARDISHandbrakeListener implements Listener {
                                                     plugin.getPresetBuilder().buildPreset(pbd);
                                                     if (!mine_sound) {
                                                         plugin.getUtils().playTARDISSound(handbrake_loc, player, "tardis_land");
+                                                        plugin.getUtils().playTARDISSoundNearby(pbd.getLocation(), "tardis_land");
                                                     } else {
                                                         handbrake_loc.getWorld().playSound(handbrake_loc, Sound.MINECART_INSIDE, 1.0F, 0.0F);
                                                     }

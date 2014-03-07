@@ -33,6 +33,7 @@ import org.bukkit.WorldType;
 import org.bukkit.block.Biome;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Entity;
+import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.generator.ChunkGenerator;
 
@@ -457,14 +458,44 @@ public class TARDISUtils {
         return new Location(w, x, y, z);
     }
 
+    /**
+     * Plays a TARDIS sound for the player and surrounding players at the
+     * current location.
+     *
+     * @param l The location
+     * @param p The player who initiated the sound playing, i.e. released the
+     * handbrake
+     * @param s The sound to play
+     */
     public void playTARDISSound(Location l, Player p, String s) {
         p.playSound(l, s, volume, 1.0F);
-        for (Entity e : p.getNearbyEntities(5.0D, 5.0D, 5.0D)) {
+        for (Entity e : p.getNearbyEntities(10.0D, 10.0D, 10.0D)) {
             if (e instanceof Player) {
                 Player pp = (Player) e;
                 pp.playSound(pp.getLocation(), s, volume, 1.0F);
             }
         }
+    }
+
+    /**
+     * Attempts to play a TARDIS sound at an external location. Generally the
+     * location is outside the TARDIS, so this will attempt to find rescued
+     * players and players nearby to the TARDIS as it re-materialises.
+     *
+     * @param l The location to play the sound
+     * @param s The sound to play
+     */
+    public void playTARDISSoundNearby(Location l, String s) {
+        // spawn an entity at the location - an egg will do
+        Entity egg = l.getWorld().spawnEntity(l, EntityType.EGG);
+        for (Entity e : egg.getNearbyEntities(10.0D, 10.0D, 10.0D)) {
+            if (e instanceof Player) {
+                Player pp = (Player) e;
+                pp.playSound(pp.getLocation(), s, volume, 1.0F);
+            }
+        }
+        // remove entity
+        egg.remove();
     }
 
     public String getWoodType(Material m, byte d) {
