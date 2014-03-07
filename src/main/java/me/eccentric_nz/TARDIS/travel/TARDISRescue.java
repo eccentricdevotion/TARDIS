@@ -94,7 +94,7 @@ public class TARDISRescue {
         where.put("tardis_id", id);
         QueryFactory qf = new QueryFactory(plugin);
         qf.doUpdate("next", set, where);
-        player.sendMessage(plugin.getPluginName() + "The player location was saved succesfully. Please release the handbrake!");
+        player.sendMessage(plugin.getPluginName() + "The player location was saved succesfully.");
         plugin.getTrackerKeeper().getTrackHasDestination().put(id, plugin.getArtronConfig().getInt("travel"));
         if (rescue) {
             plugin.getTrackerKeeper().getTrackRescue().put(id, saved);
