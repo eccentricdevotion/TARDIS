@@ -120,30 +120,30 @@ public class TARDISRescue {
             ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);
             if (!rs.resultSet()) {
                 player.sendMessage(plugin.getPluginName() + MESSAGE.NO_TARDIS.getText());
-                return true;
+                return false;
             }
             int id = rs.getTardis_id();
             if (!rs.isHandbrake_on()) {
                 player.sendMessage(plugin.getPluginName() + ChatColor.RED + MESSAGE.NOT_WHILE_TRAVELLING.getText());
-                return true;
+                return false;
             }
             HashMap<String, Object> wheret = new HashMap<String, Object>();
             wheret.put("player", player.getName());
             ResultSetTravellers rst = new ResultSetTravellers(plugin, wheret, false);
             if (!rst.resultSet()) {
                 player.sendMessage(plugin.getPluginName() + MESSAGE.NOT_IN_TARDIS.getText());
-                return true;
+                return false;
             }
             int tardis_id = rst.getTardis_id();
             if (tardis_id != id) {
                 player.sendMessage(plugin.getPluginName() + "You can only run this command if you are the Timelord of " + ChatColor.LIGHT_PURPLE + "this" + ChatColor.RESET + " TARDIS!");
-                return true;
+                return false;
             }
             int level = rs.getArtron_level();
             int travel = plugin.getArtronConfig().getInt("travel");
             if (level < travel) {
                 player.sendMessage(plugin.getPluginName() + ChatColor.RED + MESSAGE.NOT_ENOUGH_ENERGY.getText());
-                return true;
+                return false;
             }
             // get direction
             HashMap<String, Object> wherecl = new HashMap<String, Object>();
@@ -151,7 +151,7 @@ public class TARDISRescue {
             ResultSetCurrentLocation rsc = new ResultSetCurrentLocation(plugin, wherecl);
             if (!rsc.resultSet()) {
                 player.sendMessage(plugin.getPluginName() + ChatColor.RED + MESSAGE.NO_CURRENT.getText());
-                return true;
+                return false;
             }
             return rescue(player, saved, id, tt, rsc.getDirection(), true);
         } else {
