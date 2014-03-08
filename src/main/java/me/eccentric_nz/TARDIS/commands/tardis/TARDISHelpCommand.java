@@ -38,7 +38,7 @@ public class TARDISHelpCommand {
 
     public boolean showHelp(Player player, String[] args) {
         if (args.length == 1) {
-            player.sendMessage(CMDS.COMMANDS.getHelp().split("\n"));
+            TARDISMessage.send(player, CMDS.COMMANDS.getHelp());
             return true;
         }
         if (args.length == 2) {
@@ -53,76 +53,76 @@ public class TARDISHelpCommand {
             }
             switch (CMDS.fromString(args[1])) {
                 case CREATE:
-                    player.sendMessage(CMDS.CREATE.getHelp().split("\n"));
+                    TARDISMessage.send(player, CMDS.CREATE.getHelp());
                     break;
                 case DELETE:
-                    player.sendMessage(CMDS.DELETE.getHelp().split("\n"));
+                    TARDISMessage.send(player, CMDS.DELETE.getHelp());
                     break;
                 case TIMETRAVEL:
-                    player.sendMessage(CMDS.TIMETRAVEL.getHelp().split("\n"));
+                    TARDISMessage.send(player, CMDS.TIMETRAVEL.getHelp());
                     break;
                 case LIST:
-                    player.sendMessage(CMDS.LIST.getHelp().split("\n"));
+                    TARDISMessage.send(player, CMDS.LIST.getHelp());
                     break;
                 case FIND:
-                    player.sendMessage(CMDS.FIND.getHelp().split("\n"));
+                    TARDISMessage.send(player, CMDS.FIND.getHelp());
                     break;
                 case SAVE:
-                    player.sendMessage(CMDS.SAVE.getHelp().split("\n"));
+                    TARDISMessage.send(player, CMDS.SAVE.getHelp());
                     break;
                 case REMOVESAVE:
-                    player.sendMessage(CMDS.REMOVESAVE.getHelp().split("\n"));
+                    TARDISMessage.send(player, CMDS.REMOVESAVE.getHelp());
                     break;
                 case ADD:
-                    player.sendMessage(CMDS.ADD.getHelp().split("\n"));
+                    TARDISMessage.send(player, CMDS.ADD.getHelp());
                     break;
                 case TRAVEL:
-                    player.sendMessage(CMDS.TRAVEL.getHelp().split("\n"));
+                    TARDISMessage.send(player, CMDS.TRAVEL.getHelp());
                     break;
                 case UPDATE:
-                    player.sendMessage(CMDS.UPDATE.getHelp().split("\n"));
+                    TARDISMessage.send(player, CMDS.UPDATE.getHelp());
                     break;
                 case REBUILD:
-                    player.sendMessage(CMDS.REBUILD.getHelp().split("\n"));
+                    TARDISMessage.send(player, CMDS.REBUILD.getHelp());
                     break;
                 case CHAMELEON:
-                    player.sendMessage(CMDS.CHAMELEON.getHelp().split("\n"));
+                    TARDISMessage.send(player, CMDS.CHAMELEON.getHelp());
                     break;
                 case SFX:
-                    player.sendMessage(CMDS.SFX.getHelp().split("\n"));
+                    TARDISMessage.send(player, CMDS.SFX.getHelp());
                     break;
                 case PLATFORM:
-                    player.sendMessage(CMDS.PLATFORM.getHelp().split("\n"));
+                    TARDISMessage.send(player, CMDS.PLATFORM.getHelp());
                     break;
                 case SETDEST:
-                    player.sendMessage(CMDS.SETDEST.getHelp().split("\n"));
+                    TARDISMessage.send(player, CMDS.SETDEST.getHelp());
                     break;
                 case HOME:
-                    player.sendMessage(CMDS.HOME.getHelp().split("\n"));
+                    TARDISMessage.send(player, CMDS.HOME.getHelp());
                     break;
                 case HIDE:
-                    player.sendMessage(CMDS.HIDE.getHelp().split("\n"));
+                    TARDISMessage.send(player, CMDS.HIDE.getHelp());
                     break;
                 case VERSION:
-                    player.sendMessage(CMDS.HIDE.getHelp().split("\n"));
+                    TARDISMessage.send(player, CMDS.HIDE.getHelp());
                     break;
                 case ADMIN:
-                    player.sendMessage(CMDS.ADMIN.getHelp().split("\n"));
+                    TARDISMessage.send(player, CMDS.ADMIN.getHelp());
                     break;
                 case AREA:
-                    player.sendMessage(CMDS.AREA.getHelp().split("\n"));
+                    TARDISMessage.send(player, CMDS.AREA.getHelp());
                     break;
                 case ROOM:
-                    player.sendMessage(CMDS.ROOM.getHelp().split("\n"));
+                    TARDISMessage.send(player, CMDS.ROOM.getHelp());
                     break;
                 case ARTRON:
-                    player.sendMessage(CMDS.ARTRON.getHelp().split("\n"));
+                    TARDISMessage.send(player, CMDS.ARTRON.getHelp());
                     break;
                 case BIND:
-                    player.sendMessage(CMDS.BIND.getHelp().split("\n"));
+                    TARDISMessage.send(player, CMDS.BIND.getHelp());
                     break;
                 default:
-                    player.sendMessage(CMDS.COMMANDS.getHelp().split("\n"));
+                    TARDISMessage.send(player, CMDS.COMMANDS.getHelp());
             }
         }
         return true;
