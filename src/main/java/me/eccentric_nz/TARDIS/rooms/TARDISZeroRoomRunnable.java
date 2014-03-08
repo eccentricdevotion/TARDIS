@@ -27,11 +27,9 @@ import org.bukkit.entity.Player;
  */
 public class TARDISZeroRoomRunnable implements Runnable {
 
-    private final TARDIS plugin;
     private final World zero_world;
 
     public TARDISZeroRoomRunnable(TARDIS plugin) {
-        this.plugin = plugin;
         this.zero_world = plugin.getServer().getWorld("TARDIS_Zero_Room");
     }
 
@@ -45,7 +43,8 @@ public class TARDISZeroRoomRunnable implements Runnable {
             return;
         }
         for (Player p : inZeroRoom) {
-            if (p.isOnline() && p.getHealth() < p.getMaxHealth()) {
+            // setHealth() method max is 20.0
+            if (p.isOnline() && p.getHealth() < 19.5) {
                 p.setHealth(p.getHealth() + 0.5);
             }
         }
