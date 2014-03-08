@@ -119,7 +119,7 @@ public enum TARDISInfoMenu {
     PLAYER_DISK("TIS|TARDIS Disks|Player Storage Disk", "DISKS", "P"),
     PLAYER_DISK_INFO("TIS|TARDIS Disks|Player Storage Disk|Info", "PLAYER_DISK", "I"),
     PLAYER_DISK_RECIPE("TIS|TARDIS Disks|Player Storage Disk|Recipe", "PLAYER_DISK", "R"),
-    PRESET_DISK("TIS|TARDIS Disks|Preset Storage Disk", "DISKS", "R"),
+    PRESET_DISK("TIS|TARDIS Disks|Preset Storage Disk", "DISKS", "r"),
     PRESET_DISK_INFO("TIS|TARDIS Disks|Preset Storage Disk|Info", "PRESET_DISK", "I"),
     PRESET_DISK_RECIPE("TIS|TARDIS Disks|Preset Storage Disk|Recipe", "PRESET_DISK", "R"),
     SAVE_DISK("TIS|TARDIS Disks|Save Storage Disk", "DISKS", "S"),
