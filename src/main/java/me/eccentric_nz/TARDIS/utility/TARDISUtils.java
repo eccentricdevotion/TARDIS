@@ -470,7 +470,7 @@ public class TARDISUtils {
     public void playTARDISSound(Location l, Player p, String s) {
         p.playSound(l, s, volume, 1.0F);
         for (Entity e : p.getNearbyEntities(10.0D, 10.0D, 10.0D)) {
-            if (e instanceof Player) {
+            if (e instanceof Player && !((Player) e).equals(p)) {
                 Player pp = (Player) e;
                 pp.playSound(pp.getLocation(), s, volume, 1.0F);
             }
