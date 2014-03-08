@@ -21,6 +21,7 @@ import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import me.eccentric_nz.TARDIS.enumeration.MESSAGE;
+import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -105,7 +106,7 @@ public class TARDISGiveCommand implements CommandExecutor {
                     for (String k : plugin.getKitsConfig().getStringList("kits." + args[2])) {
                         this.giveItem(k, p);
                     }
-                    p.sendMessage(plugin.getPluginName() + sender.getName() + " just gave you the TARDIS Item Kit " + args[2]);
+                    TARDISMessage.send(p, plugin.getPluginName() + sender.getName() + " just gave you the TARDIS Item Kit " + args[2]);
                     return true;
                 }
                 int amount;
@@ -160,7 +161,7 @@ public class TARDISGiveCommand implements CommandExecutor {
         result.setAmount(amount);
         player.getInventory().addItem(result);
         player.updateInventory();
-        player.sendMessage(plugin.getPluginName() + sender.getName() + " just gave you " + amount + " " + item_to_give);
+        TARDISMessage.send(player, plugin.getPluginName() + sender.getName() + " just gave you " + amount + " " + item_to_give);
         return true;
     }
 

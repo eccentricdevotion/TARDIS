@@ -35,6 +35,7 @@ import me.eccentric_nz.TARDIS.enumeration.MESSAGE;
 import me.eccentric_nz.TARDIS.files.TARDISMakeRoomCSV;
 import me.eccentric_nz.TARDIS.files.TARDISRoomSchematicReader;
 import me.eccentric_nz.TARDIS.files.TARDISSchematic;
+import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.command.Command;
@@ -157,7 +158,7 @@ public class TARDISRoomCommands implements CommandExecutor {
                 String name = args[1].toUpperCase(Locale.ENGLISH);
                 Set<String> rooms = plugin.getRoomsConfig().getConfigurationSection("rooms").getKeys(false);
                 if (!rooms.contains(name)) {
-                    sender.sendMessage(plugin.getPluginName() + MESSAGE.COULD_NOT_FIND_ROOM.getText());
+                    TARDISMessage.send(player, plugin.getPluginName() + MESSAGE.COULD_NOT_FIND_ROOM.getText());
                     return true;
                 }
                 HashMap<String, Integer> blockIDs = plugin.getBuildKeeper().getRoomBlockCounts().get(name);
@@ -177,7 +178,7 @@ public class TARDISRoomCommands implements CommandExecutor {
                 wheret.put("owner", player.getName());
                 ResultSetTardis rs = new ResultSetTardis(plugin, wheret, "", false);
                 if (rs.resultSet()) {
-                    sender.sendMessage(plugin.getPluginName() + "You need to condense the following blocks to grow a " + name + ":");
+                    TARDISMessage.send(player, plugin.getPluginName() + "You need to condense the following blocks to grow a " + name + ":");
                     HashMap<Integer, Integer> item_counts = new HashMap<Integer, Integer>();
                     for (Map.Entry<String, Integer> entry : blockIDs.entrySet()) {
                         String[] block_data = entry.getKey().split(":");
@@ -210,16 +211,16 @@ public class TARDISRoomCommands implements CommandExecutor {
                         int required = map.getValue() - has;
                         if (required > 0) {
                             String line = Material.getMaterial(map.getKey()).toString() + ", " + required;
-                            sender.sendMessage(line);
+                            TARDISMessage.send(player, line);
                             total += required;
                         }
                     }
                     if (total == 0) {
-                        sender.sendMessage("Nothing! You are good to grow.");
+                        TARDISMessage.send(player, "Nothing! You are good to grow.");
                     }
                     return true;
                 } else {
-                    sender.sendMessage(plugin.getPluginName() + "Could not get TARDIS id!");
+                    TARDISMessage.send(player, plugin.getPluginName() + "Could not get TARDIS id!");
                     return true;
                 }
             } else if (args[0].toLowerCase(Locale.ENGLISH).equals("add")) {

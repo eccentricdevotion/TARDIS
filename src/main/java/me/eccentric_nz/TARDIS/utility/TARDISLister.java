@@ -46,19 +46,19 @@ public class TARDISLister {
         if (l.equals("rechargers")) {
             Set<String> therechargers = TARDIS.plugin.getConfig().getConfigurationSection("rechargers").getKeys(false);
             if (therechargers.size() < 1) {
-                p.sendMessage(TARDIS.plugin.getPluginName() + "No rechargers were found!");
+                TARDISMessage.send(p, TARDIS.plugin.getPluginName() + "No rechargers were found!");
             }
             int a = 1;
 
             for (String s : therechargers) {
                 if (a == 1) {
-                    p.sendMessage(TARDIS.plugin.getPluginName() + "Artron Energy Rechargers");
+                    TARDISMessage.send(p, TARDIS.plugin.getPluginName() + "Artron Energy Rechargers");
                 }
                 String w = TARDIS.plugin.getConfig().getString("rechargers." + s + ".world");
                 int x = TARDIS.plugin.getConfig().getInt("rechargers." + s + ".x");
                 int y = TARDIS.plugin.getConfig().getInt("rechargers." + s + ".y");
                 int z = TARDIS.plugin.getConfig().getInt("rechargers." + s + ".z");
-                p.sendMessage(a + ". [" + s + "] in world: " + w + ", at " + x + ":" + y + ":" + z);
+                TARDISMessage.send(p, a + ". [" + s + "] in world: " + w + ", at " + x + ":" + y + ":" + z);
                 a++;
             }
         }
@@ -67,16 +67,16 @@ public class TARDISLister {
             ResultSetAreas rsa = new ResultSetAreas(TARDIS.plugin, null, true);
             int a = 1;
             if (!rsa.resultSet()) {
-                p.sendMessage(TARDIS.plugin.getPluginName() + "No areas were found!");
+                TARDISMessage.send(p, TARDIS.plugin.getPluginName() + "No areas were found!");
             }
             ArrayList<HashMap<String, String>> data = rsa.getData();
             for (HashMap<String, String> map : data) {
                 String name = map.get("area_name");
                 String world = map.get("world");
                 if (a == 1) {
-                    p.sendMessage(TARDIS.plugin.getPluginName() + "Areas");
+                    TARDISMessage.send(p, TARDIS.plugin.getPluginName() + "Areas");
                 }
-                p.sendMessage(a + ". [" + name + "] in world: " + world);
+                TARDISMessage.send(p, a + ". [" + name + "] in world: " + world);
                 a++;
             }
         } else {
@@ -92,8 +92,8 @@ public class TARDISLister {
                     wherehl.put("tardis_id", id);
                     ResultSetHomeLocation rsh = new ResultSetHomeLocation(TARDIS.plugin, wherehl);
                     rsh.resultSet();
-                    p.sendMessage(ChatColor.GRAY + "Saves");
-                    p.sendMessage(ChatColor.GREEN + "HOME: " + rsh.getWorld().getName() + " at x:" + rsh.getX() + " y:" + rsh.getY() + " z:" + rsh.getZ());
+                    TARDISMessage.send(p, ChatColor.GRAY + "Saves");
+                    TARDISMessage.send(p, ChatColor.GREEN + "HOME: " + rsh.getWorld().getName() + " at x:" + rsh.getX() + " y:" + rsh.getY() + " z:" + rsh.getZ());
                     // list other saved destinations
                     HashMap<String, Object> whered = new HashMap<String, Object>();
                     whered.put("tardis_id", id);
@@ -103,12 +103,12 @@ public class TARDISLister {
                         ArrayList<HashMap<String, String>> data = rsd.getData();
                         for (HashMap<String, String> map : data) {
                             if (i == 1) {
-                                p.sendMessage(ChatColor.GRAY + "----------------");
+                                TARDISMessage.send(p, ChatColor.GRAY + "----------------");
                             }
                             String type = map.get("type");
                             if (type.equals("0")) {
                                 String dn = map.get("dest_name");
-                                p.sendMessage(ChatColor.GREEN + "" + i + ". [" + dn + "]: " + map.get("world") + " at x:" + map.get("x") + " y:" + map.get("y") + " z:" + map.get("z"));
+                                TARDISMessage.send(p, ChatColor.GREEN + "" + i + ". [" + dn + "]: " + map.get("world") + " at x:" + map.get("x") + " y:" + map.get("y") + " z:" + map.get("z"));
                                 i++;
                             }
                         }
@@ -119,12 +119,12 @@ public class TARDISLister {
                     String comps = rst.getCompanions();
                     if (comps != null && !comps.isEmpty()) {
                         String[] companionData = comps.split(":");
-                        p.sendMessage(ChatColor.AQUA + "Your TARDIS companions are:");
+                        TARDISMessage.send(p, ChatColor.AQUA + "Your TARDIS companions are:");
                         for (String c : companionData) {
-                            p.sendMessage(ChatColor.AQUA + c);
+                            TARDISMessage.send(p, ChatColor.AQUA + c);
                         }
                     } else {
-                        p.sendMessage(ChatColor.DARK_BLUE + "You don't have any TARDIS companions yet." + ChatColor.RESET + " Use " + ChatColor.GREEN + "/tardis add [player]" + ChatColor.RESET + " to add some");
+                        TARDISMessage.send(p, ChatColor.DARK_BLUE + "You don't have any TARDIS companions yet." + ChatColor.RESET + " Use " + ChatColor.GREEN + "/tardis add [player]" + ChatColor.RESET + " to add some");
                     }
                 }
             }

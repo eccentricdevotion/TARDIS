@@ -22,6 +22,7 @@ import java.util.List;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
+import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.block.Block;
@@ -44,19 +45,19 @@ public class TARDISToggleOnOffCommand {
     public boolean doAbort(Player player, String[] args, QueryFactory qf) {
         String pref = args[0];
         if (pref.equals("auto") && !plugin.getConfig().getBoolean("allow.autonomous")) {
-            player.sendMessage(plugin.getPluginName() + "Autonomous homing is disabled on this server!");
+            TARDISMessage.send(player, plugin.getPluginName() + "Autonomous homing is disabled on this server!");
             return true;
         }
         if (pref.equals("platform") && !plugin.getConfig().getBoolean("travel.platform")) {
-            player.sendMessage(plugin.getPluginName() + "Safety platforms are disabled on this server!");
+            TARDISMessage.send(player, plugin.getPluginName() + "Safety platforms are disabled on this server!");
             return true;
         }
         if (pref.equals("eps") && !plugin.getConfig().getBoolean("allow.emergency_npc")) {
-            player.sendMessage(plugin.getPluginName() + "Emergency Programme One is disabled on this server!");
+            TARDISMessage.send(player, plugin.getPluginName() + "Emergency Programme One is disabled on this server!");
             return true;
         }
         if (pref.equals("hads") && !plugin.getConfig().getBoolean("allow.hads")) {
-            player.sendMessage(plugin.getPluginName() + "The Hostile Action Displacement System is disabled on this server!");
+            TARDISMessage.send(player, plugin.getPluginName() + "The Hostile Action Displacement System is disabled on this server!");
             return true;
         }
         HashMap<String, Object> setp = new HashMap<String, Object>();
@@ -68,14 +69,14 @@ public class TARDISToggleOnOffCommand {
             if (pref.equals("beacon")) {
                 toggleBeacon(player.getName(), true);
             }
-            player.sendMessage(plugin.getPluginName() + pref + grammar + " turned ON!");
+            TARDISMessage.send(player, plugin.getPluginName() + pref + grammar + " turned ON!");
         }
         if (args[1].equalsIgnoreCase("off")) {
             setp.put(pref + "_on", 0);
             if (pref.equals("beacon")) {
                 toggleBeacon(player.getName(), false);
             }
-            player.sendMessage(plugin.getPluginName() + pref + grammar + " turned OFF.");
+            TARDISMessage.send(player, plugin.getPluginName() + pref + grammar + " turned OFF.");
         }
         qf.doUpdate("player_prefs", setp, wherep);
         return true;

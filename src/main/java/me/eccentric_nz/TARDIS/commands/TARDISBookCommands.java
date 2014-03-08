@@ -26,6 +26,7 @@ import me.eccentric_nz.TARDIS.achievement.TARDISBook;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetAchievements;
 import me.eccentric_nz.TARDIS.enumeration.MESSAGE;
+import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -79,12 +80,12 @@ public class TARDISBookCommands implements CommandExecutor {
                     return true;
                 }
                 if (args.length < 2) {
-                    sender.sendMessage(plugin.getPluginName() + "You need to specify a book name!");
+                    TARDISMessage.send(player, plugin.getPluginName() + "You need to specify a book name!");
                     return false;
                 }
                 String bookname = args[1].toLowerCase(Locale.ENGLISH);
                 if (!books.containsKey(bookname)) {
-                    sender.sendMessage(plugin.getPluginName() + "Could not find that book!");
+                    TARDISMessage.send(player, plugin.getPluginName() + "Could not find that book!");
                     return true;
                 }
                 if (first.equals("get")) {
@@ -96,7 +97,7 @@ public class TARDISBookCommands implements CommandExecutor {
                 }
                 if (first.equals("start")) {
                     if (plugin.getAchievementConfig().getBoolean(bookname + ".auto")) {
-                        sender.sendMessage(plugin.getPluginName() + "This achievement is awarded automatically!");
+                        TARDISMessage.send(player, plugin.getPluginName() + "This achievement is awarded automatically!");
                         return true;
                     }
                     // check they have not already started the achievement
@@ -107,11 +108,11 @@ public class TARDISBookCommands implements CommandExecutor {
                     if (rsa.resultSet()) {
                         if (rsa.isCompleted()) {
                             if (!plugin.getAchievementConfig().getBoolean(bookname + ".repeatable")) {
-                                sender.sendMessage(plugin.getPluginName() + "This achievement can only be gained once!");
+                                TARDISMessage.send(player, plugin.getPluginName() + "This achievement can only be gained once!");
                                 return true;
                             }
                         } else {
-                            sender.sendMessage(plugin.getPluginName() + "You have already started this achievement!");
+                            TARDISMessage.send(player, plugin.getPluginName() + "You have already started this achievement!");
                             return true;
                         }
                     }
@@ -120,7 +121,7 @@ public class TARDISBookCommands implements CommandExecutor {
                     set.put("name", bookname);
                     QueryFactory qf = new QueryFactory(plugin);
                     qf.doInsert("achievements", set);
-                    sender.sendMessage(plugin.getPluginName() + "Achievement '" + bookname + "' started!");
+                    TARDISMessage.send(player, plugin.getPluginName() + "Achievement '" + bookname + "' started!");
                     return true;
                 }
             }

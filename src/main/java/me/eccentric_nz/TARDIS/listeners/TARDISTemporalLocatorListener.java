@@ -18,6 +18,7 @@ package me.eccentric_nz.TARDIS.listeners;
 
 import java.util.List;
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -61,7 +62,7 @@ public class TARDISTemporalLocatorListener implements Listener {
                     List<String> lore = im.getLore();
                     long time = getTime(lore);
                     plugin.getTrackerKeeper().getTrackSetTime().put(playerNameStr, time);
-                    player.sendMessage(plugin.getPluginName() + "Your temporal location will be set to " + time + " ticks when exiting the TARDIS.");
+                    TARDISMessage.send(player, plugin.getPluginName() + "Your temporal location will be set to " + time + " ticks when exiting the TARDIS.");
                 }
                 close(player);
             }

@@ -25,6 +25,7 @@ import me.eccentric_nz.TARDIS.database.ResultSetCurrentLocation;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import me.eccentric_nz.TARDIS.enumeration.MESSAGE;
 import me.eccentric_nz.TARDIS.utility.TARDISHostileDisplacement;
+import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
@@ -99,7 +100,7 @@ public class TARDISBlockDamageListener implements Listener {
             }
             event.setCancelled(true);
             if (b.getTypeId() != 71 && !m) {
-                p.sendMessage(plugin.getPluginName() + message);
+                TARDISMessage.send(p, plugin.getPluginName() + message);
             }
         }
     }
@@ -138,7 +139,7 @@ public class TARDISBlockDamageListener implements Listener {
             wherecl.put("tardis_id", id);
             ResultSetCurrentLocation rsc = new ResultSetCurrentLocation(plugin, wherecl);
             if (!rsc.resultSet()) {
-                player.sendMessage(plugin.getPluginName() + MESSAGE.NO_CURRENT.getText());
+                TARDISMessage.send(player, plugin.getPluginName() + MESSAGE.NO_CURRENT.getText());
             }
             Location l = new Location(rsc.getWorld(), rsc.getX(), rsc.getY(), rsc.getZ());
             HashMap<String, Object> wheret = new HashMap<String, Object>();

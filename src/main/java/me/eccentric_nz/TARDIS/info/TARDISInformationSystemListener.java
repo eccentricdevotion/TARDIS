@@ -20,6 +20,7 @@ import java.util.Locale;
 import java.util.Map;
 import me.eccentric_nz.TARDIS.TARDIS;
 import static me.eccentric_nz.TARDIS.info.TARDISInfoMenu.L_CIRCUIT;
+import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
@@ -902,7 +903,7 @@ public class TARDISInformationSystemListener implements Listener {
                         break;
                 }
             } else {
-                p.sendMessage(plugin.getPluginName() + "You are still logged in to the TARDIS Information System, type an 'e' in chat to exit.");
+                TARDISMessage.send(p, plugin.getPluginName() + "You are still logged in to the TARDIS Information System, type an 'e' in chat to exit.");
             }
         }
     }
@@ -916,13 +917,13 @@ public class TARDISInformationSystemListener implements Listener {
      */
     private void processKey(Player p, TARDISInfoMenu item) {
         plugin.getTrackerKeeper().getTrackInfoMenu().put(p.getName(), item);
-        p.sendMessage("---");
-        p.sendMessage("[" + item.getName() + "]");
+        TARDISMessage.send(p, "---");
+        TARDISMessage.send(p, "[" + item.getName() + "]");
         for (Map.Entry<String, String> m : TARDISInfoMenu.getChildren(item.toString()).entrySet()) {
             String menu = m.getKey().replaceFirst(m.getValue(), "§f" + m.getValue() + "§6");
-            p.sendMessage("§6> " + menu);
+            TARDISMessage.send(p, "§6> " + menu);
         }
-        p.sendMessage("§6> §fE§6xit");
+        TARDISMessage.send(p, "§6> §fE§6xit");
     }
 
     /**
@@ -934,14 +935,14 @@ public class TARDISInformationSystemListener implements Listener {
      * @param item the room to display
      */
     private void showRoomInfo(Player p, TARDISInfoMenu item) {
-        p.sendMessage("---");
-        p.sendMessage("[" + item.getName() + "]");
-        p.sendMessage("§6" + TARDISDescription.valueOf(item.toString()).getDesc());
+        TARDISMessage.send(p, "---");
+        TARDISMessage.send(p, "[" + item.getName() + "]");
+        TARDISMessage.send(p, "§6" + TARDISDescription.valueOf(item.toString()).getDesc());
         String r = item.toString();
-        p.sendMessage("§6Seed Block: " + plugin.getRoomsConfig().getString("rooms." + r + ".seed"));
-        p.sendMessage("§6Offset: " + plugin.getRoomsConfig().getString("rooms." + r + ".offset"));
-        p.sendMessage("§6Cost: " + plugin.getRoomsConfig().getString("rooms." + r + ".cost"));
-        p.sendMessage("§6Enabled: " + plugin.getRoomsConfig().getString("rooms." + r + ".enabled"));
+        TARDISMessage.send(p, "§6Seed Block: " + plugin.getRoomsConfig().getString("rooms." + r + ".seed"));
+        TARDISMessage.send(p, "§6Offset: " + plugin.getRoomsConfig().getString("rooms." + r + ".offset"));
+        TARDISMessage.send(p, "§6Cost: " + plugin.getRoomsConfig().getString("rooms." + r + ".cost"));
+        TARDISMessage.send(p, "§6Enabled: " + plugin.getRoomsConfig().getString("rooms." + r + ".enabled"));
         exit(p);
     }
 
@@ -953,9 +954,9 @@ public class TARDISInformationSystemListener implements Listener {
      * @param item the item or TARDIS type to display
      */
     private void showInfo(Player p, TARDISInfoMenu item) {
-        p.sendMessage("---");
-        p.sendMessage("[" + item.getName() + "]");
-        p.sendMessage("§6" + TARDISDescription.valueOf(item.toString()).getDesc());
+        TARDISMessage.send(p, "---");
+        TARDISMessage.send(p, "[" + item.getName() + "]");
+        TARDISMessage.send(p, "§6" + TARDISDescription.valueOf(item.toString()).getDesc());
         exit(p);
     }
 
@@ -991,10 +992,10 @@ public class TARDISInformationSystemListener implements Listener {
             desc = pluginYml.getString("commands." + c[0] + ".description");
             usage = pluginYml.getString("commands." + c[0] + ".usage").replace("<command>", c[0]);
         }
-        p.sendMessage("---");
-        p.sendMessage("[" + item.getName() + "]");
-        p.sendMessage("§6Description: " + desc);
-        p.sendMessage("§6Usage: " + usage);
+        TARDISMessage.send(p, "---");
+        TARDISMessage.send(p, "[" + item.getName() + "]");
+        TARDISMessage.send(p, "§6Description: " + desc);
+        TARDISMessage.send(p, "§6Usage: " + usage);
         exit(p);
     }
 
@@ -1005,7 +1006,7 @@ public class TARDISInformationSystemListener implements Listener {
      */
     private void exit(Player p) {
         plugin.getTrackerKeeper().getTrackInfoMenu().remove(p.getName());
-        p.sendMessage("§6---");
-        p.sendMessage("§4You have been logged out of the TARDIS Information System");
+        TARDISMessage.send(p, "§6---");
+        TARDISMessage.send(p, "§4You have been logged out of the TARDIS Information System");
     }
 }

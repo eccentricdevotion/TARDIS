@@ -25,6 +25,7 @@ import me.eccentric_nz.TARDIS.database.ResultSetDoors;
 import me.eccentric_nz.TARDIS.database.ResultSetTravellers;
 import me.eccentric_nz.TARDIS.travel.TARDISDoorLocation;
 import me.eccentric_nz.TARDIS.travel.TARDISHorse;
+import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import me.eccentric_nz.tardishorsespeed.TardisHorseSpeed;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -78,7 +79,7 @@ public class TARDISHorseListener implements Listener {
                         whered.put("door_type", 1);
                         ResultSetDoors rsd = new ResultSetDoors(plugin, whered, false);
                         if (rsd.resultSet() && rsd.isLocked()) {
-                            p.sendMessage(plugin.getPluginName() + "You need to unlock the door!");
+                            TARDISMessage.send(p, plugin.getPluginName() + "You need to unlock the door!");
                             return;
                         }
                         // get spawn location

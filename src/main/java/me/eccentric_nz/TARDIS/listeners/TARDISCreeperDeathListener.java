@@ -22,6 +22,7 @@ import me.eccentric_nz.TARDIS.achievement.TARDISAchievementFactory;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetPlayerPrefs;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
+import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import org.bukkit.entity.Creeper;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
@@ -83,7 +84,7 @@ public class TARDISCreeperDeathListener implements Listener {
                             set.put("artron_level", level);
                             qf.doUpdate("player_prefs", set, wherea);
                         }
-                        p.sendMessage(plugin.getPluginName() + "You received " + amount + " Artron Energy for killing a charged creeper!");
+                        TARDISMessage.send(p, plugin.getPluginName() + "You received " + amount + " Artron Energy for killing a charged creeper!");
                         // are we doing an achievement?
                         if (plugin.getAchievementConfig().getBoolean("kill.enabled")) {
                             TARDISAchievementFactory taf = new TARDISAchievementFactory(plugin, p, "kill", 1);

@@ -26,6 +26,7 @@ import me.eccentric_nz.TARDIS.builders.TARDISSeedBlockProcessor;
 import me.eccentric_nz.TARDIS.database.ResultSetPlayerPrefs;
 import me.eccentric_nz.TARDIS.enumeration.SCHEMATIC;
 import me.eccentric_nz.TARDIS.rooms.TARDISWallsLookup;
+import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import org.bukkit.DyeColor;
 import org.bukkit.GameMode;
 import org.bukkit.Location;
@@ -93,7 +94,7 @@ public class TARDISSeedBlockListener implements Listener {
             seed.setLamp(lamp_data.getId());
             Location l = event.getBlockPlaced().getLocation();
             trackTARDISSeed.put(l, seed);
-            player.sendMessage(plugin.getPluginName() + "You placed a TARDIS seed block!");
+            TARDISMessage.send(player, plugin.getPluginName() + "You placed a TARDIS seed block!");
             // now the player has to click the block with the TARDIS key
         }
     }
@@ -169,7 +170,7 @@ public class TARDISSeedBlockListener implements Listener {
                 }
                 if (player.getItemInHand().getType().equals(Material.getMaterial(key))) {
                     if (!plugin.getConfig().getBoolean("worlds." + l.getWorld().getName())) {
-                        player.sendMessage(plugin.getPluginName() + "You cannot create a TARDIS in this world!");
+                        TARDISMessage.send(player, plugin.getPluginName() + "You cannot create a TARDIS in this world!");
                         return;
                     }
                     // grow a TARDIS

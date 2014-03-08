@@ -21,6 +21,7 @@ import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.ResultSetDoors;
 import me.eccentric_nz.TARDIS.database.ResultSetTravellers;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
+import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import org.bukkit.Location;
 import org.bukkit.Sound;
 import org.bukkit.World;
@@ -55,7 +56,7 @@ public class TARDISRenderRoomListener implements Listener {
     }
 
     public void transmat(final Player p) {
-        p.sendMessage(plugin.getPluginName() + "Stand by for transmat...");
+        TARDISMessage.send(p, plugin.getPluginName() + "Stand by for transmat...");
         // get the TARDIS the player is in
         HashMap<String, Object> wherep = new HashMap<String, Object>();
         wherep.put("player", p.getName());
@@ -111,10 +112,10 @@ public class TARDISRenderRoomListener implements Listener {
                     }
                 }, 10L);
             } else {
-                p.sendMessage(plugin.getPluginName() + "The Transmat device couldn't find the TARDIS console!");
+                TARDISMessage.send(p, plugin.getPluginName() + "The Transmat device couldn't find the TARDIS console!");
             }
         } else {
-            p.sendMessage(plugin.getPluginName() + "The Transmat device couldn't determine which TARDIS you are in!");
+            TARDISMessage.send(p, plugin.getPluginName() + "The Transmat device couldn't determine which TARDIS you are in!");
         }
     }
 }

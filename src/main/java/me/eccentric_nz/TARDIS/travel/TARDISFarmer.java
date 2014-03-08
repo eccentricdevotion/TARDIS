@@ -23,6 +23,7 @@ import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.achievement.TARDISAchievementFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
+import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import me.eccentric_nz.tardishorsespeed.TardisHorseSpeed;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -89,7 +90,7 @@ public class TARDISFarmer {
         if (plugin.getPM().isPluginEnabled("Multiverse-Inventories")) {
             boolean canfarm = plugin.getTMIChecker().checkMVI(from, to);
             if (!canfarm) {
-                p.sendMessage(plugin.getPluginName() + "You cannot farm mobs from this world.");
+                TARDISMessage.send(p, plugin.getPluginName() + "You cannot farm mobs from this world.");
                 plugin.getTrackerKeeper().getTrackFarming().remove(p.getName());
                 return null;
             }
@@ -420,7 +421,7 @@ public class TARDISFarmer {
                         }
                         p.updateInventory();
                     } else if (farmtotal > 0) {
-                        p.sendMessage(plugin.getPluginName() + "You need to grow a farm room before you can farm mobs!");
+                        TARDISMessage.send(p, plugin.getPluginName() + "You need to grow a farm room before you can farm mobs!");
                     }
                 }
                 if (!stable.isEmpty()) {
@@ -492,7 +493,7 @@ public class TARDISFarmer {
                             p.updateInventory();
                         }
                     } else if (horsetotal > 0) {
-                        p.sendMessage(plugin.getPluginName() + "You need to grow a stable room before you can farm horses!");
+                        TARDISMessage.send(p, plugin.getPluginName() + "You need to grow a stable room before you can farm horses!");
                     }
                 }
                 if (!village.isEmpty()) {
@@ -528,7 +529,7 @@ public class TARDISFarmer {
                             p.updateInventory();
                         }
                     } else if (villagertotal > 0) {
-                        p.sendMessage(plugin.getPluginName() + "You need to grow a village room before you can farm villagers!");
+                        TARDISMessage.send(p, plugin.getPluginName() + "You need to grow a village room before you can farm villagers!");
                     }
                 }
             }

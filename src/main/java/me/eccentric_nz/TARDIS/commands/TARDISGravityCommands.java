@@ -22,6 +22,7 @@ import java.util.List;
 import java.util.Locale;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.enumeration.MESSAGE;
+import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import me.eccentric_nz.tardischunkgenerator.TARDISChunkGenerator;
 import org.bukkit.ChatColor;
 import org.bukkit.World;
@@ -90,7 +91,7 @@ public class TARDISGravityCommands implements CommandExecutor {
                 boolean special = name.contains("TARDIS_TimeVortex") && (world.getWorldType().equals(WorldType.FLAT) || gen instanceof TARDISChunkGenerator);
                 if (!name.equals("TARDIS_WORLD_" + player.getName()) && !special) {
                     String mess_stub = (name.contains("TARDIS_WORLD_")) ? "your own" : "a";
-                    player.sendMessage(plugin.getPluginName() + "You must be in " + mess_stub + " TARDIS world to make a gravity well!");
+                    TARDISMessage.send(player, plugin.getPluginName() + "You must be in " + mess_stub + " TARDIS world to make a gravity well!");
                     return true;
                 }
             }
@@ -108,11 +109,11 @@ public class TARDISGravityCommands implements CommandExecutor {
                     try {
                         values[1] = Double.parseDouble(args[1]);
                         if (values[1] > plugin.getConfig().getDouble("growth.gravity_max_distance")) {
-                            player.sendMessage(plugin.getPluginName() + "That distance is too far!");
+                            TARDISMessage.send(player, plugin.getPluginName() + "That distance is too far!");
                             return true;
                         }
                     } catch (NumberFormatException e) {
-                        player.sendMessage(plugin.getPluginName() + "Second argument must be a number!");
+                        TARDISMessage.send(player, plugin.getPluginName() + "Second argument must be a number!");
                         return false;
                     }
                 } else {
@@ -121,7 +122,7 @@ public class TARDISGravityCommands implements CommandExecutor {
                 if (args.length == 3) {
                     values[2] = plugin.getUtils().parseDouble(args[2]);
                     if (values[2] > plugin.getConfig().getDouble("growth.gravity_max_velocity")) {
-                        player.sendMessage(plugin.getPluginName() + "That velocity is too fast!");
+                        TARDISMessage.send(player, plugin.getPluginName() + "That velocity is too fast!");
                         return true;
                     }
                 } else {
@@ -129,7 +130,7 @@ public class TARDISGravityCommands implements CommandExecutor {
                 }
                 plugin.getTrackerKeeper().getTrackGravity().put(player.getName(), values);
                 String message = (dir.equals("remove")) ? "remove it from the database" : "save its position";
-                player.sendMessage(plugin.getPluginName() + "Click the wool block to " + message + ".");
+                TARDISMessage.send(player, plugin.getPluginName() + "Click the wool block to " + message + ".");
                 return true;
             }
         }

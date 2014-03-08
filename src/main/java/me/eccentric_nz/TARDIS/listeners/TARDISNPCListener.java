@@ -17,6 +17,7 @@
 package me.eccentric_nz.TARDIS.listeners;
 
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import net.citizensnpcs.api.event.NPCRightClickEvent;
 import net.citizensnpcs.api.npc.NPC;
 import org.bukkit.ChatColor;
@@ -51,7 +52,7 @@ public class TARDISNPCListener implements Listener {
         Integer id = Integer.valueOf(npc.getId());
         if (plugin.getGeneralKeeper().getNpcIDs().contains(id)) {
             npc.destroy();
-            event.getClicker().sendMessage(ChatColor.RED + "[Emergency Program One] " + ChatColor.RESET + "Bye!");
+            TARDISMessage.send(event.getClicker(), ChatColor.RED + "[Emergency Program One] " + ChatColor.RESET + "Bye!");
             plugin.getGeneralKeeper().getNpcIDs().remove(id);
         }
     }

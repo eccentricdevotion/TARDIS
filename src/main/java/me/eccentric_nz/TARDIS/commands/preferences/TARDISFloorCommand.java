@@ -24,6 +24,7 @@ import java.util.Locale;
 import me.eccentric_nz.TARDIS.TARDIS;
 import static me.eccentric_nz.TARDIS.commands.preferences.TARDISPrefsCommands.ucfirst;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
+import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import org.bukkit.entity.Player;
 
 /**
@@ -41,7 +42,7 @@ public class TARDISFloorCommand {
     public boolean setFloorOrWallBlock(Player player, String[] args, QueryFactory qf) {
         String pref = args[0];
         if (args.length < 2) {
-            player.sendMessage(plugin.getPluginName() + "You need to specify a " + pref + " material!");
+            TARDISMessage.send(player, plugin.getPluginName() + "You need to specify a " + pref + " material!");
             return false;
         }
         String wall_mat;
@@ -59,11 +60,11 @@ public class TARDISFloorCommand {
         }
         if (!plugin.getTardisWalls().blocks.containsKey(wall_mat)) {
             String message = (wall_mat.equals("HELP")) ? "Here is a list of valid " + pref + " materials:" : "That is not a valid " + pref + " material! Try:";
-            player.sendMessage(plugin.getPluginName() + message);
+            TARDISMessage.send(player, plugin.getPluginName() + message);
             List<String> sortedKeys = new ArrayList(plugin.getTardisWalls().blocks.keySet());
             Collections.sort(sortedKeys);
             for (String w : sortedKeys) {
-                player.sendMessage(w);
+                TARDISMessage.send(player, w);
             }
             return true;
         }
@@ -72,7 +73,7 @@ public class TARDISFloorCommand {
         HashMap<String, Object> where = new HashMap<String, Object>();
         where.put("player", player.getName());
         qf.doUpdate("player_prefs", setw, where);
-        player.sendMessage(plugin.getPluginName() + ucfirst(pref) + " material saved.");
+        TARDISMessage.send(player, plugin.getPluginName() + ucfirst(pref) + " material saved.");
         return true;
     }
 }

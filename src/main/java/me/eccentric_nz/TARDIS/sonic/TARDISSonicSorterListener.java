@@ -25,6 +25,7 @@ import com.griefcraft.lwc.LWC;
 import com.griefcraft.lwc.LWCPlugin;
 import java.util.Arrays;
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
@@ -85,7 +86,7 @@ public class TARDISSonicSorterListener implements Listener {
                         }
                         if (allow) {
                             sortInventory(inventory, 0, inventory.getSize());
-                            player.sendMessage(plugin.getPluginName() + "Chest sonically sorted!");
+                            TARDISMessage.send(player, plugin.getPluginName() + "Chest sonically sorted!");
                         }
                     }
                 }

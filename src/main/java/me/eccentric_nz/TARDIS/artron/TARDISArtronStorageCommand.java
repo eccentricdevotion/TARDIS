@@ -25,6 +25,7 @@ import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetPlayerPrefs;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import me.eccentric_nz.TARDIS.enumeration.MESSAGE;
+import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -71,22 +72,22 @@ public class TARDISArtronStorageCommand implements CommandExecutor {
             }
             ItemStack is = player.getItemInHand();
             if (is == null || !is.hasItemMeta()) {
-                sender.sendMessage(plugin.getPluginName() + "You must be holding an Artron Storage Cell in your hand!");
+                TARDISMessage.send(player, plugin.getPluginName() + "You must be holding an Artron Storage Cell in your hand!");
                 return true;
             }
             if (is.getAmount() > 1) {
-                sender.sendMessage(plugin.getPluginName() + "You can only charge 1 Artron Storage Cell at a time!");
+                TARDISMessage.send(player, plugin.getPluginName() + "You can only charge 1 Artron Storage Cell at a time!");
                 return true;
             }
             ItemMeta im = is.getItemMeta();
             String name = im.getDisplayName();
             if (name == null || !name.equals("Artron Storage Cell")) {
-                sender.sendMessage(plugin.getPluginName() + "You must be holding an Artron Storage Cell in your hand!");
+                TARDISMessage.send(player, plugin.getPluginName() + "You must be holding an Artron Storage Cell in your hand!");
                 return true;
             }
             String which = args[0].toLowerCase(Locale.ENGLISH);
             if (!firstArgs.contains(which)) {
-                sender.sendMessage(plugin.getPluginName() + "You must specify 'tardis' or 'timelord' energy to transfer!");
+                TARDISMessage.send(player, plugin.getPluginName() + "You must specify 'tardis' or 'timelord' energy to transfer!");
                 return false;
             }
             // must be a timelord
@@ -97,7 +98,7 @@ public class TARDISArtronStorageCommand implements CommandExecutor {
                 wheret.put("owner", playerNameStr);
                 ResultSetTardis rs = new ResultSetTardis(plugin, wheret, "", false);
                 if (!rs.resultSet()) {
-                    sender.sendMessage(plugin.getPluginName() + MESSAGE.NO_TARDIS.getText());
+                    TARDISMessage.send(player, plugin.getPluginName() + MESSAGE.NO_TARDIS.getText());
                     return true;
                 }
                 current_level = rs.getArtron_level();
@@ -105,7 +106,7 @@ public class TARDISArtronStorageCommand implements CommandExecutor {
                 wheret.put("player", playerNameStr);
                 ResultSetPlayerPrefs rs = new ResultSetPlayerPrefs(plugin, wheret);
                 if (!rs.resultSet()) {
-                    sender.sendMessage(plugin.getPluginName() + MESSAGE.NO_TARDIS.getText());
+                    TARDISMessage.send(player, plugin.getPluginName() + MESSAGE.NO_TARDIS.getText());
                     return true;
                 }
                 current_level = rs.getArtronLevel();
@@ -114,22 +115,22 @@ public class TARDISArtronStorageCommand implements CommandExecutor {
             try {
                 amount = Integer.parseInt(args[1]);
                 if (amount < 0) {
-                    sender.sendMessage(plugin.getPluginName() + "The amount cannot be negative!");
+                    TARDISMessage.send(player, plugin.getPluginName() + "The amount cannot be negative!");
                     return true;
                 }
             } catch (NumberFormatException n) {
-                sender.sendMessage(plugin.getPluginName() + "The second command argument must be a number!");
+                TARDISMessage.send(player, plugin.getPluginName() + "The second command argument must be a number!");
                 return false;
             }
             // must have sufficient energy
             if (which.equals("tardis")) {
                 if (current_level - amount < plugin.getArtronConfig().getInt("comehere")) {
-                    sender.sendMessage(plugin.getPluginName() + "You cannot transfer that much energy, you must have enough left to call your TARDIS!");
+                    TARDISMessage.send(player, plugin.getPluginName() + "You cannot transfer that much energy, you must have enough left to call your TARDIS!");
                     return true;
                 }
             } else {
                 if (current_level - amount < 0) {
-                    sender.sendMessage(plugin.getPluginName() + "You do not have that much Time Lord energy to transfer!");
+                    TARDISMessage.send(player, plugin.getPluginName() + "You do not have that much Time Lord energy to transfer!");
                     return true;
                 }
             }
@@ -138,7 +139,7 @@ public class TARDISArtronStorageCommand implements CommandExecutor {
             int new_amount = amount + level;
             int max = plugin.getArtronConfig().getInt("full_charge");
             if (new_amount > max) {
-                sender.sendMessage(plugin.getPluginName() + "You cannot overcharge this cell, transfer " + (max - level) + ", or use an empty cell!");
+                TARDISMessage.send(player, plugin.getPluginName() + "You cannot overcharge this cell, transfer " + (max - level) + ", or use an empty cell!");
                 return false;
             }
             lore.set(1, "" + new_amount);
@@ -156,7 +157,7 @@ public class TARDISArtronStorageCommand implements CommandExecutor {
                 table = "player_prefs";
             }
             new QueryFactory(plugin).alterEnergyLevel(table, -amount, where, player);
-            sender.sendMessage(plugin.getPluginName() + "Artron Storage Cell charged to " + new_amount);
+            TARDISMessage.send(player, plugin.getPluginName() + "Artron Storage Cell charged to " + new_amount);
             return true;
         }
         return false;

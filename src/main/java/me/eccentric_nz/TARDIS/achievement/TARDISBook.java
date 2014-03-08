@@ -22,6 +22,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
@@ -86,6 +87,6 @@ public class TARDISBook {
         Inventory inv = p.getInventory();
         inv.addItem(book);
         p.updateInventory();
-        p.sendMessage(plugin.getPluginName() + "You just recieved the book of " + name + "!");
+        TARDISMessage.send(p, plugin.getPluginName() + "You just recieved the book of " + name + "!");
     }
 }

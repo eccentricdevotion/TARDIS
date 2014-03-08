@@ -20,6 +20,7 @@ import java.util.HashMap;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.enumeration.MESSAGE;
 import me.eccentric_nz.TARDIS.enumeration.PRESET;
+import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
@@ -64,7 +65,7 @@ public class TARDISBlockBreakListener implements Listener {
         Player player = event.getPlayer();
         if (plugin.getTrackerKeeper().getTrackZeroRoomOccupants().contains(player.getName())) {
             event.setCancelled(true);
-            player.sendMessage(plugin.getPluginName() + MESSAGE.NOT_IN_ZERO.getText());
+            TARDISMessage.send(player, plugin.getPluginName() + MESSAGE.NOT_IN_ZERO.getText());
             return;
         }
         Block block = event.getBlock();
@@ -83,7 +84,7 @@ public class TARDISBlockBreakListener implements Listener {
                     // check it is their TARDIS
                     plugin.getTrackerKeeper().getTrackExterminate().put(playerNameStr, block);
                     long timeout = plugin.getConfig().getLong("police_box.confirm_timeout");
-                    player.sendMessage(plugin.getPluginName() + "Are you sure you want to delete the TARDIS? Type " + ChatColor.AQUA + "/tardis exterminate" + ChatColor.RESET + " within " + timeout + " seconds to proceed.");
+                    TARDISMessage.send(player, plugin.getPluginName() + "Are you sure you want to delete the TARDIS? Type " + ChatColor.AQUA + "/tardis exterminate" + ChatColor.RESET + " within " + timeout + " seconds to proceed.");
                     plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
                         @Override
                         public void run() {
@@ -91,7 +92,7 @@ public class TARDISBlockBreakListener implements Listener {
                         }
                     }, timeout * 20);
                 } else {
-                    player.sendMessage(plugin.getPluginName() + "You do not have permission to delete a TARDIS!");
+                    TARDISMessage.send(player, plugin.getPluginName() + "You do not have permission to delete a TARDIS!");
                 }
             }
         }

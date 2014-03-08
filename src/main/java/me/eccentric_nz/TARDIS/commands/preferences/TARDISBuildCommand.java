@@ -20,6 +20,7 @@ import java.util.HashMap;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import me.eccentric_nz.TARDIS.enumeration.MESSAGE;
+import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import org.bukkit.entity.Player;
 
 /**
@@ -36,7 +37,7 @@ public class TARDISBuildCommand {
 
     public boolean toggleCompanionBuilding(Player player, String[] args) {
         if (!plugin.isWorldGuardOnServer() || !plugin.getConfig().getBoolean("allow.wg_flag_set")) {
-            player.sendMessage(plugin.getPluginName() + "That command is not available on this server!");
+            TARDISMessage.send(player, plugin.getPluginName() + "That command is not available on this server!");
             return true;
         }
         String playerNameStr = player.getName();
@@ -45,12 +46,12 @@ public class TARDISBuildCommand {
         where.put("owner", playerNameStr);
         ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);
         if (!rs.resultSet()) {
-            player.sendMessage(plugin.getPluginName() + MESSAGE.NO_TARDIS.getText());
+            TARDISMessage.send(player, plugin.getPluginName() + MESSAGE.NO_TARDIS.getText());
             return true;
         }
         String data[] = rs.getChunk().split(":");
         if (plugin.getServer().getWorld(data[0]) == null) {
-            player.sendMessage(plugin.getPluginName() + "Could not get TARDIS world!");
+            TARDISMessage.send(player, plugin.getPluginName() + "Could not get TARDIS world!");
             return true;
         }
         if (args[1].equalsIgnoreCase("on")) {

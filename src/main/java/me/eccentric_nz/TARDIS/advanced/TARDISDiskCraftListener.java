@@ -22,6 +22,7 @@ import java.util.List;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.enumeration.BIOME_LOOKUP;
 import me.eccentric_nz.TARDIS.enumeration.PRESET;
+import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -94,7 +95,7 @@ public class TARDISDiskCraftListener implements Listener {
                                 inv.setItem(0, disk);
                             }
                         } else {
-                            player.sendMessage(plugin.getPluginName() + "You must use a blank Biome Storage Disk!");
+                            TARDISMessage.send(player, plugin.getPluginName() + "You must use a blank Biome Storage Disk!");
                         }
                     }
                 }
@@ -125,7 +126,7 @@ public class TARDISDiskCraftListener implements Listener {
                                 }
                             }
                         } else {
-                            player.sendMessage(plugin.getPluginName() + "You must use a blank Preset Storage Disk!");
+                            TARDISMessage.send(player, plugin.getPluginName() + "You must use a blank Preset Storage Disk!");
                         }
                     }
                 }

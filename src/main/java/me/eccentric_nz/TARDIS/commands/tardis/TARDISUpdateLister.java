@@ -21,6 +21,7 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 
@@ -41,12 +42,12 @@ public class TARDISUpdateLister {
     }
 
     public void list() {
-        player.sendMessage(plugin.getPluginName() + "You can update the postion of the following:");
-        player.sendMessage(ChatColor.GRAY + "    Command argument" + ChatColor.RESET + " - " + ChatColor.DARK_GRAY + "Description");
+        TARDISMessage.send(player, plugin.getPluginName() + "You can update the postion of the following:");
+        TARDISMessage.send(player, ChatColor.GRAY + "    Command argument" + ChatColor.RESET + " - " + ChatColor.DARK_GRAY + "Description");
         for (Map.Entry<String, List<String>> map : options.entrySet()) {
-            player.sendMessage(map.getKey());
+            TARDISMessage.send(player, map.getKey());
             for (String s : map.getValue()) {
-                player.sendMessage("    " + s);
+                TARDISMessage.send(player, "    " + s);
             }
         }
     }

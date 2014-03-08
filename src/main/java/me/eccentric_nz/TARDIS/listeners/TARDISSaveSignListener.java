@@ -25,6 +25,7 @@ import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import me.eccentric_nz.TARDIS.database.ResultSetTravellers;
 import me.eccentric_nz.TARDIS.enumeration.MESSAGE;
 import me.eccentric_nz.TARDIS.travel.TARDISAreasInventory;
+import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.World;
@@ -109,7 +110,7 @@ public class TARDISSaveSignListener implements Listener {
                                 int level = rs.getArtron_level();
                                 int travel = plugin.getArtronConfig().getInt("travel");
                                 if (level < travel) {
-                                    player.sendMessage(plugin.getPluginName() + ChatColor.RED + MESSAGE.NOT_ENOUGH_ENERGY.getText());
+                                    TARDISMessage.send(player, plugin.getPluginName() + ChatColor.RED + MESSAGE.NOT_ENOUGH_ENERGY.getText());
                                     close(player);
                                     return;
                                 }
@@ -122,7 +123,7 @@ public class TARDISSaveSignListener implements Listener {
                                     wheresave.put("z", lore.get(3));
                                     ResultSetCurrentLocation rsz = new ResultSetCurrentLocation(plugin, wheresave);
                                     if (rsz.resultSet()) {
-                                        player.sendMessage(plugin.getPluginName() + "A TARDIS already occupies this parking spot! Try using the " + ChatColor.AQUA + "/tardistravel area [name]" + ChatColor.RESET + " command instead.");
+                                        TARDISMessage.send(player, plugin.getPluginName() + "A TARDIS already occupies this parking spot! Try using the " + ChatColor.AQUA + "/tardistravel area [name]" + ChatColor.RESET + " command instead.");
                                         close(player);
                                         return;
                                     }
@@ -152,7 +153,7 @@ public class TARDISSaveSignListener implements Listener {
                                         plugin.getTrackerKeeper().getTrackRescue().remove(Integer.valueOf(id));
                                     }
                                     close(player);
-                                    player.sendMessage(plugin.getPluginName() + im.getDisplayName() + " destination set. Please release the handbrake!");
+                                    TARDISMessage.send(player, plugin.getPluginName() + im.getDisplayName() + " destination set. Please release the handbrake!");
                                 } else if (!lore.contains("§6Current location")) {
                                     lore.add("§6Current location");
                                     im.setLore(lore);
@@ -160,7 +161,7 @@ public class TARDISSaveSignListener implements Listener {
                                 }
                             } else {
                                 close(player);
-                                player.sendMessage(plugin.getPluginName() + im.getDisplayName() + " is not a valid destination!");
+                                TARDISMessage.send(player, plugin.getPluginName() + im.getDisplayName() + " is not a valid destination!");
                             }
                         }
                     }
@@ -176,9 +177,9 @@ public class TARDISSaveSignListener implements Listener {
                             // Only add one at a time
                             plugin.getTrackerKeeper().getTrackArrangers().add(playerNameStr);
                         }
-                        player.sendMessage(plugin.getPluginName() + "Save rearrangement enabled");
+                        TARDISMessage.send(player, plugin.getPluginName() + "Save rearrangement enabled");
                     } else {
-                        player.sendMessage(plugin.getPluginName() + MESSAGE.NOT_OWNER.getText());
+                        TARDISMessage.send(player, plugin.getPluginName() + MESSAGE.NOT_OWNER.getText());
                     }
                 }
                 if (slot == 49) {

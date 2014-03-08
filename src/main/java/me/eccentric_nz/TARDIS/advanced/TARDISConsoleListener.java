@@ -28,6 +28,7 @@ import me.eccentric_nz.TARDIS.database.ResultSetPlayerPrefs;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import me.eccentric_nz.TARDIS.enumeration.DISK_CIRCUIT;
 import me.eccentric_nz.TARDIS.enumeration.MESSAGE;
+import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
@@ -92,7 +93,7 @@ public class TARDISConsoleListener implements Listener {
                         wheret.put("owner", p.getName());
                         ResultSetTardis rs = new ResultSetTardis(plugin, wheret, "", false);
                         if (!rs.resultSet()) {
-                            p.sendMessage(plugin.getPluginName() + MESSAGE.NOT_OWNER.getText());
+                            TARDISMessage.send(p, plugin.getPluginName() + MESSAGE.NOT_OWNER.getText());
                             return;
                         }
                         Inventory inv = plugin.getServer().createInventory(p, 9, "§4TARDIS Console");
@@ -119,7 +120,7 @@ public class TARDISConsoleListener implements Listener {
                         // open gui
                         p.openInventory(inv);
                     } else {
-                        p.sendMessage(plugin.getPluginName() + "You can only open the Advanced Console with the TARDIS key, a sonic screwdriver, a circuit or a disk.");
+                        TARDISMessage.send(p, plugin.getPluginName() + "You can only open the Advanced Console with the TARDIS key, a sonic screwdriver, a circuit or a disk.");
                     }
                 }
             }

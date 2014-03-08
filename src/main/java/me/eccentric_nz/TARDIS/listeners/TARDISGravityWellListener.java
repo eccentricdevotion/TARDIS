@@ -23,6 +23,7 @@ import me.eccentric_nz.TARDIS.database.ResultSetGravity;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import me.eccentric_nz.TARDIS.enumeration.MESSAGE;
 import me.eccentric_nz.TARDIS.rooms.TARDISGravityWellRunnable;
+import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.block.Block;
@@ -190,7 +191,7 @@ public class TARDISGravityWellListener implements Listener {
                 where.put("owner", player.getName());
                 ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);
                 if (!rs.resultSet()) {
-                    player.sendMessage(plugin.getPluginName() + MESSAGE.NOT_A_TIMELORD.getText());
+                    TARDISMessage.send(player, plugin.getPluginName() + MESSAGE.NOT_A_TIMELORD.getText());
                     return;
                 }
                 int id = rs.getTardis_id();
@@ -229,16 +230,16 @@ public class TARDISGravityWellListener implements Listener {
                             // set the block to light grey wool
                             b.setTypeId(35);
                             b.setData((byte) 8, true);
-                            player.sendMessage(plugin.getPluginName() + "The gravity block was removed successfully");
+                            TARDISMessage.send(player, plugin.getPluginName() + "The gravity block was removed successfully");
                         }
                     } else {
-                        player.sendMessage(plugin.getPluginName() + "Could not find the gravity block in the database!");
+                        TARDISMessage.send(player, plugin.getPluginName() + "Could not find the gravity block in the database!");
                     }
                 } else {
                     // check the wool block is the right colour
                     byte bit = woolData.get(values[0]);
                     if (b.getData() != bit) {
-                        player.sendMessage(plugin.getPluginName() + "That wool block is the wrong colour, it should be " + woolColour.get(values[0]) + ".");
+                        TARDISMessage.send(player, plugin.getPluginName() + "That wool block is the wrong colour, it should be " + woolColour.get(values[0]) + ".");
                         return;
                     }
                     // add a record
@@ -277,7 +278,7 @@ public class TARDISGravityWellListener implements Listener {
                             dir = "DOWN";
                             break;
                     }
-                    player.sendMessage(plugin.getPluginName() + "The wool was set to a gravity " + dir + " block!");
+                    TARDISMessage.send(player, plugin.getPluginName() + "The wool was set to a gravity " + dir + " block!");
                 }
             }
             plugin.getTrackerKeeper().getTrackGravity().remove(playerNameStr);

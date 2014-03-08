@@ -19,6 +19,7 @@ package me.eccentric_nz.TARDIS.sonic;
 import java.util.HashMap;
 import java.util.List;
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import org.bukkit.Material;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
@@ -61,7 +62,7 @@ public class TARDISSonicEntityListener implements Listener {
                     final Player scanned = (Player) ent;
                     plugin.getGeneralKeeper().getSonicListener().playSonicSound(player, now, 3050L, "sonic_screwdriver");
                     if (player.hasPermission("tardis.sonic.admin") && lore != null && lore.contains("Admin Upgrade")) {
-                        player.sendMessage(plugin.getPluginName() + "Opening player's inventory, please wait...");
+                        TARDISMessage.send(player, plugin.getPluginName() + "Opening player's inventory, please wait...");
                         plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
                             @Override
                             public void run() {
@@ -73,17 +74,17 @@ public class TARDISSonicEntityListener implements Listener {
                             }
                         }, 40L);
                     } else if (player.hasPermission("tardis.sonic.bio") && lore != null && lore.contains("Bio-scanner Upgrade")) {
-                        player.sendMessage(plugin.getPluginName() + "Scanning player...");
+                        TARDISMessage.send(player, plugin.getPluginName() + "Scanning player...");
                         plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
                             @Override
                             public void run() {
                                 // getHealth() / getMaxHealth() * getHealthScale()
                                 double health = scanned.getHealth() / scanned.getMaxHealth() * scanned.getHealthScale();
                                 float hunger = (scanned.getFoodLevel() / 20F) * 100;
-                                player.sendMessage("Name: " + scanned.getName());
-                                player.sendMessage("Has been alive for: " + convertTicksToTime(scanned.getTicksLived()));
-                                player.sendMessage("Health: " + health);
-                                player.sendMessage("Hunger: " + String.format("%.2f", hunger) + "%");
+                                TARDISMessage.send(player, "Name: " + scanned.getName());
+                                TARDISMessage.send(player, "Has been alive for: " + convertTicksToTime(scanned.getTicksLived()));
+                                TARDISMessage.send(player, "Health: " + health);
+                                TARDISMessage.send(player, "Hunger: " + String.format("%.2f", hunger) + "%");
                             }
                         }, 40L);
                     }

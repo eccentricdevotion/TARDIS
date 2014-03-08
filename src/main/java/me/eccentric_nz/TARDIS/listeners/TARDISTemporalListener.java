@@ -17,6 +17,7 @@
 package me.eccentric_nz.TARDIS.listeners;
 
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -46,7 +47,7 @@ public class TARDISTemporalListener implements Listener {
             if (plugin.getTrackerKeeper().getTrackSetTime().containsKey(p.getName())) {
                 plugin.getTrackerKeeper().getTrackSetTime().remove(p.getName());
             }
-            p.sendMessage(plugin.getPluginName() + "Temporal Location reset to server time.");
+            TARDISMessage.send(p, plugin.getPluginName() + "Temporal Location reset to server time.");
         }
     }
 }

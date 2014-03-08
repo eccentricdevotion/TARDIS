@@ -18,6 +18,7 @@ package me.eccentric_nz.TARDIS.listeners;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.travel.TARDISRescue;
+import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -61,12 +62,12 @@ public class TARDISChatListener implements Listener {
                     @Override
                     public void run() {
                         if (res.tryRescue(rescuer, saved)) {
-                            rescuer.sendMessage(plugin.getPluginName() + "Release the handbrake to start rescuing " + saved);
+                            TARDISMessage.send(rescuer, plugin.getPluginName() + "Release the handbrake to start rescuing " + saved);
                         }
                     }
                 }, 2L);
             } else {
-                event.getPlayer().sendMessage(plugin.getPluginName() + "Rescue request timed out! You need to respond within 60 seconds.");
+                TARDISMessage.send(event.getPlayer(), plugin.getPluginName() + "Rescue request timed out! You need to respond within 60 seconds.");
             }
         }
     }

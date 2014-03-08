@@ -24,6 +24,7 @@ import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
 import me.eccentric_nz.TARDIS.rooms.TARDISRoomDirection;
 import me.eccentric_nz.TARDIS.rooms.TARDISRoomRemover;
+import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import org.bukkit.Effect;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -89,7 +90,7 @@ public class TARDISJettisonSeeder implements Listener {
                 TARDISRoomDirection trd = new TARDISRoomDirection(block);
                 trd.getDirection();
                 if (!trd.isFound()) {
-                    player.sendMessage(plugin.getPluginName() + "Could not find the door pressure plate! Check the seed block position.");
+                    TARDISMessage.send(player, plugin.getPluginName() + "Could not find the door pressure plate! Check the seed block position.");
                     return;
                 }
                 COMPASS d = trd.getCompass();
@@ -132,12 +133,12 @@ public class TARDISJettisonSeeder implements Listener {
                             inv.addItem(is);
                             player.updateInventory();
                         }
-                        player.sendMessage(plugin.getPluginName() + "You added " + amount + " to the Artron Energy Capacitor");
+                        TARDISMessage.send(player, plugin.getPluginName() + "You added " + amount + " to the Artron Energy Capacitor");
                     } else {
-                        player.sendMessage(plugin.getPluginName() + "The room has already been jettisoned!");
+                        TARDISMessage.send(player, plugin.getPluginName() + "The room has already been jettisoned!");
                     }
                 } else {
-                    player.sendMessage(plugin.getPluginName() + "Could not get TARDIS id!");
+                    TARDISMessage.send(player, plugin.getPluginName() + "Could not get TARDIS id!");
                 }
             }
         }

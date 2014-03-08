@@ -25,6 +25,7 @@ import me.eccentric_nz.TARDIS.achievement.TARDISAchievementFactory;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetCondenser;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
+import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import org.bukkit.Effect;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -158,7 +159,7 @@ public class TARDISCondenserListener implements Listener {
                 } else {
                     message = "There were no valid materials to condense!";
                 }
-                player.sendMessage(plugin.getPluginName() + message);
+                TARDISMessage.send(player, plugin.getPluginName() + message);
             }
         }
     }

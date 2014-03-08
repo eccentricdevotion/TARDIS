@@ -19,6 +19,7 @@ package me.eccentric_nz.TARDIS.listeners;
 import java.util.HashMap;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
+import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.block.Block;
@@ -63,7 +64,7 @@ public class TARDISAreaListener implements Listener {
                 if (plugin.getTardisArea().areaCheckInExisting(block_loc)) {
                     String locStr = block_loc.getWorld().getName() + ":" + block_loc.getBlockX() + ":" + block_loc.getBlockY() + ":" + block_loc.getBlockZ();
                     plugin.getTrackerKeeper().getTrackBlock().put(playerNameStr, locStr);
-                    player.sendMessage(plugin.getPluginName() + "You have 60 seconds to select the area end block - use the " + ChatColor.GREEN + "/tardisarea end" + ChatColor.RESET + " command.");
+                    TARDISMessage.send(player, plugin.getPluginName() + "You have 60 seconds to select the area end block - use the " + ChatColor.GREEN + "/tardisarea end" + ChatColor.RESET + " command.");
                     plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
                         @Override
                         public void run() {
@@ -72,7 +73,7 @@ public class TARDISAreaListener implements Listener {
                         }
                     }, 1200L);
                 } else {
-                    player.sendMessage(plugin.getPluginName() + "That block is inside an already defined area! Try somewhere else.");
+                    TARDISMessage.send(player, plugin.getPluginName() + "That block is inside an already defined area! Try somewhere else.");
                 }
             } else if (plugin.getTrackerKeeper().getTrackBlock().containsKey(playerNameStr) && plugin.getTrackerKeeper().getTrackEnd().containsKey(playerNameStr)) {
                 Location block_loc = block.getLocation();
@@ -80,12 +81,12 @@ public class TARDISAreaListener implements Listener {
                 if (plugin.getTardisArea().areaCheckInExisting(block_loc)) {
                     String[] firstblock = plugin.getTrackerKeeper().getTrackBlock().get(playerNameStr).split(":");
                     if (!block_loc.getWorld().getName().equals(firstblock[0])) {
-                        player.sendMessage(plugin.getPluginName() + ChatColor.RED + "Area start and end blocks must be in the same world! Try again");
+                        TARDISMessage.send(player, plugin.getPluginName() + ChatColor.RED + "Area start and end blocks must be in the same world! Try again");
                         return;
                     }
                     int y = block_loc.getBlockY();
                     if (y != (plugin.getUtils().parseInt(firstblock[2]))) {
-                        player.sendMessage(plugin.getPluginName() + ChatColor.RED + "Area start and end blocks must be at the same Y co-ordinate! Try again with a FLAT area.");
+                        TARDISMessage.send(player, plugin.getPluginName() + ChatColor.RED + "Area start and end blocks must be at the same Y co-ordinate! Try again with a FLAT area.");
                         return;
                     }
                     int minx, minz, maxx, maxz;
@@ -114,12 +115,12 @@ public class TARDISAreaListener implements Listener {
                     set.put("maxz", maxz);
                     set.put("y", y + 1);
                     qf.doInsert("areas", set);
-                    player.sendMessage(plugin.getPluginName() + "The area [" + plugin.getTrackerKeeper().getTrackName().get(playerNameStr) + "] was saved successfully");
+                    TARDISMessage.send(player, plugin.getPluginName() + "The area [" + plugin.getTrackerKeeper().getTrackName().get(playerNameStr) + "] was saved successfully");
                     plugin.getTrackerKeeper().getTrackName().remove(playerNameStr);
                     plugin.getTrackerKeeper().getTrackBlock().remove(playerNameStr);
                     plugin.getTrackerKeeper().getTrackEnd().remove(playerNameStr);
                 } else {
-                    player.sendMessage(plugin.getPluginName() + "That block is inside an already defined area! Try somewhere else.");
+                    TARDISMessage.send(player, plugin.getPluginName() + "That block is inside an already defined area! Try somewhere else.");
                 }
             }
         }

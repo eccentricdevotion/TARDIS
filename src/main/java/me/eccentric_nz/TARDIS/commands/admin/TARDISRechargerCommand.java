@@ -20,6 +20,7 @@ import java.util.HashMap;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.ResultSetTravellers;
 import me.eccentric_nz.TARDIS.enumeration.MESSAGE;
+import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
@@ -49,7 +50,7 @@ public class TARDISRechargerCommand {
         }
         Block b = player.getTargetBlock(plugin.getGeneralKeeper().getTransparent(), 50);
         if (!b.getType().equals(Material.BEACON)) {
-            player.sendMessage(plugin.getPluginName() + "You must be targeting a BEACON block!");
+            TARDISMessage.send(player, plugin.getPluginName() + "You must be targeting a BEACON block!");
             return true;
         }
         // make sure they're not targeting their inner TARDIS beacon
@@ -57,7 +58,7 @@ public class TARDISRechargerCommand {
         where.put("player", player.getName());
         ResultSetTravellers rst = new ResultSetTravellers(plugin, where, false);
         if (rst.resultSet()) {
-            player.sendMessage(plugin.getPluginName() + "You cannot use the TARDIS BEACON to recharge!");
+            TARDISMessage.send(player, plugin.getPluginName() + "You cannot use the TARDIS BEACON to recharge!");
             return true;
         }
         Location l = b.getLocation();

@@ -21,6 +21,7 @@ import java.util.List;
 import java.util.Locale;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.enumeration.CMDS;
+import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import org.bukkit.entity.Player;
 
 /**
@@ -47,7 +48,7 @@ public class TARDISHelpCommand {
             }
             // check that the second arument is valid
             if (!cmds.contains(args[1].toUpperCase(Locale.ENGLISH))) {
-                player.sendMessage(plugin.getPluginName() + "That is not a valid help topic!");
+                TARDISMessage.send(player, plugin.getPluginName() + "That is not a valid help topic!");
                 return true;
             }
             switch (CMDS.fromString(args[1])) {

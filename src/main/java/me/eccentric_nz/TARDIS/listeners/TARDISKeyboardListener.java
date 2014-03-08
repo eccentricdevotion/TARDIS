@@ -23,6 +23,7 @@ import me.eccentric_nz.TARDIS.advanced.TARDISCircuitChecker;
 import me.eccentric_nz.TARDIS.database.ResultSetAreas;
 import me.eccentric_nz.TARDIS.database.ResultSetControls;
 import me.eccentric_nz.TARDIS.database.ResultSetDestinations;
+import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import org.bukkit.GameMode;
 import org.bukkit.Material;
 import org.bukkit.block.Biome;
@@ -74,7 +75,7 @@ public class TARDISKeyboardListener implements Listener {
                 tcc.getCircuits();
             }
             if (tcc != null && !tcc.hasInput()) {
-                event.getPlayer().sendMessage(plugin.getPluginName() + "The Input Circuit is missing from the console!");
+                TARDISMessage.send(event.getPlayer(), plugin.getPluginName() + "The Input Circuit is missing from the console!");
                 return;
             }
             Sign keyboard = (Sign) against.getState();
@@ -163,6 +164,6 @@ public class TARDISKeyboardListener implements Listener {
             plugin.getConsole().sendMessage(p.getName() + " issued server command: /tardistravel area " + event.getLine(0));
             return;
         }
-        p.sendMessage(plugin.getPluginName() + "Keyboard not responding, press any key to continue.");
+        TARDISMessage.send(p, plugin.getPluginName() + "Keyboard not responding, press any key to continue.");
     }
 }

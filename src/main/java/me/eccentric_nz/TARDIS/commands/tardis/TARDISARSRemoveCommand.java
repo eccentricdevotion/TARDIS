@@ -22,6 +22,7 @@ import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetControls;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import me.eccentric_nz.TARDIS.enumeration.MESSAGE;
+import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.block.Sign;
@@ -45,7 +46,7 @@ public class TARDISARSRemoveCommand {
         where.put("owner", player.getName());
         ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);
         if (!rs.resultSet()) {
-            player.sendMessage(plugin.getPluginName() + MESSAGE.NOT_A_TIMELORD.getText());
+            TARDISMessage.send(player, plugin.getPluginName() + MESSAGE.NOT_A_TIMELORD.getText());
             return true;
         }
         int id = rs.getTardis_id();
@@ -67,10 +68,10 @@ public class TARDISARSRemoveCommand {
             del.put("tardis_id", id);
             del.put("type", 10);
             new QueryFactory(plugin).doDelete("controls", del);
-            player.sendMessage(plugin.getPluginName() + "Architectural Reconfiguration System GUI removed successfully");
+            TARDISMessage.send(player, plugin.getPluginName() + "Architectural Reconfiguration System GUI removed successfully");
             return true;
         } else {
-            player.sendMessage(plugin.getPluginName() + "You don't have an Architectural Reconfiguration System GUI!");
+            TARDISMessage.send(player, plugin.getPluginName() + "You don't have an Architectural Reconfiguration System GUI!");
             return true;
         }
     }

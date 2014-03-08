@@ -23,6 +23,7 @@ import java.util.Map;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.enumeration.MAP;
 import me.eccentric_nz.TARDIS.enumeration.MESSAGE;
+import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import org.bukkit.Material;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -99,7 +100,7 @@ public class TARDISRecipeCommands implements CommandExecutor {
                 return true;
             }
             if (args.length < 1) {
-                sender.sendMessage(plugin.getPluginName() + MESSAGE.TOO_FEW_ARGS.getText());
+                TARDISMessage.send(player, plugin.getPluginName() + MESSAGE.TOO_FEW_ARGS.getText());
                 return false;
             }
             if (!firstArgs.contains(args[0].toLowerCase(Locale.ENGLISH))) {

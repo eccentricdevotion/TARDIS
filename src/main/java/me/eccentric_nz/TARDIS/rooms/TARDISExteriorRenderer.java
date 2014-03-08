@@ -26,6 +26,7 @@ import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetPlayerPrefs;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
 import me.eccentric_nz.TARDIS.enumeration.PRESET;
+import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.Sound;
@@ -63,9 +64,9 @@ public class TARDISExteriorRenderer {
         int ipbz = plugin.getUtils().parseInt(idata[3]);
         final Location location = new Location(iw, ipbx, ipby, ipbz);
         if (plugin.getTrackerKeeper().getTrackRenderer().containsKey(id) && plugin.getTrackerKeeper().getTrackRenderer().get(id).equals(isRendered)) {
-            p.sendMessage(plugin.getPluginName() + "Destination unchanged, no rendering needed, stand by for transmat...");
+            TARDISMessage.send(p, plugin.getPluginName() + "Destination unchanged, no rendering needed, stand by for transmat...");
         } else {
-            p.sendMessage(plugin.getPluginName() + "Starting exterior rendering, please wait...");
+            TARDISMessage.send(p, plugin.getPluginName() + "Starting exterior rendering, please wait...");
             int isx, isy, isz, esx, esy, esz, xx = 0, yy = 0, zz = 0;
             // get interior coords
             isx = ipbx - 6;
@@ -263,7 +264,7 @@ public class TARDISExteriorRenderer {
                 }
             }
             plugin.getTrackerKeeper().getTrackRenderer().put(id, isRendered);
-            p.sendMessage(plugin.getPluginName() + "Rendering complete, stand by for transmat...");
+            TARDISMessage.send(p, plugin.getPluginName() + "Rendering complete, stand by for transmat...");
             // remove dropped items
             for (Entity e : location.getChunk().getEntities()) {
                 if (e instanceof Item) {
@@ -283,7 +284,7 @@ public class TARDISExteriorRenderer {
                     public void run() {
                         transmat(p, d, location);
                         p.playSound(location, Sound.ENDERMAN_TELEPORT, 1.0f, 1.0f);
-                        p.sendMessage(plugin.getPluginName() + "Right-click to exit.");
+                        TARDISMessage.send(p, plugin.getPluginName() + "Right-click to exit.");
                     }
                 },
                 10L);

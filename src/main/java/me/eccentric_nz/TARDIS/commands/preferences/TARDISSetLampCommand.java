@@ -20,6 +20,7 @@ import java.util.HashMap;
 import java.util.List;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
+import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import org.bukkit.entity.Player;
 
 /**
@@ -36,20 +37,20 @@ public class TARDISSetLampCommand {
 
     public boolean setLampPref(Player player, String[] args, QueryFactory qf) {
         if (args.length < 2) {
-            player.sendMessage(plugin.getPluginName() + "You need to specify a lamp item ID!");
+            TARDISMessage.send(player, plugin.getPluginName() + "You need to specify a lamp item ID!");
             return false;
         }
         int lamp;
         try {
             lamp = Integer.parseInt(args[1]);
         } catch (NumberFormatException nfe) {
-            player.sendMessage(plugin.getPluginName() + "The lamp item ID was not a number!");
+            TARDISMessage.send(player, plugin.getPluginName() + "The lamp item ID was not a number!");
             return true;
         }
         // check it's an allowed block
         List<Integer> allowed_ids = plugin.getBlocksConfig().getIntegerList("lamp_blocks");
         if (!allowed_ids.contains(lamp)) {
-            player.sendMessage(plugin.getPluginName() + "You cannot set the lamp item to that ID!");
+            TARDISMessage.send(player, plugin.getPluginName() + "You cannot set the lamp item to that ID!");
             return true;
         }
         HashMap<String, Object> setl = new HashMap<String, Object>();
@@ -57,7 +58,7 @@ public class TARDISSetLampCommand {
         HashMap<String, Object> where = new HashMap<String, Object>();
         where.put("player", player.getName());
         qf.doUpdate("player_prefs", setl, where);
-        player.sendMessage(plugin.getPluginName() + "Lamp preference saved.");
+        TARDISMessage.send(player, plugin.getPluginName() + "Lamp preference saved.");
         return true;
     }
 }

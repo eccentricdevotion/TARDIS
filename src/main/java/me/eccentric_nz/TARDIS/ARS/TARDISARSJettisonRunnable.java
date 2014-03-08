@@ -19,6 +19,7 @@ package me.eccentric_nz.TARDIS.ARS;
 import java.util.HashMap;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
+import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
@@ -80,7 +81,7 @@ public class TARDISARSJettisonRunnable implements Runnable {
             set.put("tardis_id", id);
             qf.alterEnergyLevel("tardis", amount, set, null);
             if (p.isOnline()) {
-                p.sendMessage(plugin.getPluginName() + amount + " Artron Energy recovered.");
+                TARDISMessage.send(p, plugin.getPluginName() + amount + " Artron Energy recovered.");
             }
             // if it is a secondary console room remove the controls
             if (r.equals("BAKER") || r.equals("WOOD")) {

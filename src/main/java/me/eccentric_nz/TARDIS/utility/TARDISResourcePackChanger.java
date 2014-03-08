@@ -51,7 +51,7 @@ public class TARDISResourcePackChanger {
                 plugin.getServer().getPlayer(player).setResourcePack(url);
             }
         } catch (MalformedURLException e) {
-            p.sendMessage(plugin.getPluginName() + "Could not access the URL! " + e.getMessage());
+            TARDISMessage.send(p, plugin.getPluginName() + "Could not access the URL! " + e.getMessage());
         }
     }
 }

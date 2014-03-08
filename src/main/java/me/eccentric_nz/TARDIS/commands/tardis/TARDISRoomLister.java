@@ -21,6 +21,7 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 
@@ -41,18 +42,18 @@ public class TARDISRoomLister {
     }
 
     public void list() {
-        player.sendMessage(plugin.getPluginName() + "There are currently " + plugin.getGeneralKeeper().getRoomArgs().size() + " room types! They are:");
+        TARDISMessage.send(player, plugin.getPluginName() + "There are currently " + plugin.getGeneralKeeper().getRoomArgs().size() + " room types! They are:");
         for (Map.Entry<String, List<String>> map : options.entrySet()) {
-            player.sendMessage(map.getKey());
+            TARDISMessage.send(player, map.getKey());
             if (map.getValue().size() > 0) {
                 for (String s : map.getValue()) {
-                    player.sendMessage("    " + s);
+                    TARDISMessage.send(player, "    " + s);
                 }
             } else {
-                player.sendMessage("    None");
+                TARDISMessage.send(player, "    None");
             }
         }
-        player.sendMessage("View a TARDIS room gallery at http://eccentricdevotion.github.com/TARDIS/room-gallery.html");
+        TARDISMessage.send(player, "View a TARDIS room gallery at http://eccentricdevotion.github.com/TARDIS/room-gallery.html");
     }
 
     private LinkedHashMap<String, List<String>> createRoomOptions(Player player) {

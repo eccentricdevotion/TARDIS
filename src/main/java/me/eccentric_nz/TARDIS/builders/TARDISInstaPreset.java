@@ -29,6 +29,7 @@ import me.eccentric_nz.TARDIS.database.ResultSetTravellers;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
 import me.eccentric_nz.TARDIS.enumeration.PRESET;
 import me.eccentric_nz.TARDIS.travel.TARDISDoorLocation;
+import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -425,7 +426,7 @@ public class TARDISInstaPreset {
                             Player p = plugin.getServer().getPlayer(s);
                             if (p != null) {
                                 String message = (mal) ? "There was a malfunction and the emergency handbrake was engaged! Scan location before exit!" : "LEFT-click the handbrake to exit!";
-                                p.sendMessage(plugin.getPluginName() + message);
+                                TARDISMessage.send(p, plugin.getPluginName() + message);
                             }
                         }
                     }

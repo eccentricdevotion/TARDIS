@@ -30,6 +30,7 @@ import me.eccentric_nz.TARDIS.rooms.TARDISCondenserData;
 import me.eccentric_nz.TARDIS.rooms.TARDISRoomBuilder;
 import me.eccentric_nz.TARDIS.rooms.TARDISRoomDirection;
 import me.eccentric_nz.TARDIS.rooms.TARDISSeedData;
+import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import me.eccentric_nz.tardischunkgenerator.TARDISChunkGenerator;
 import org.bukkit.Chunk;
 import org.bukkit.Location;
@@ -105,7 +106,7 @@ public class TARDISRoomSeeder implements Listener {
                 ChunkGenerator gen = world.getGenerator();
                 boolean special = name.contains("TARDIS_TimeVortex") && (world.getWorldType().equals(WorldType.FLAT) || gen instanceof TARDISChunkGenerator);
                 if (!name.equals("TARDIS_WORLD_" + playerNameStr) && !special) {
-                    player.sendMessage(plugin.getPluginName() + "You must be in a TARDIS world to grow a room!");
+                    TARDISMessage.send(player, plugin.getPluginName() + "You must be in a TARDIS world to grow a room!");
                     return;
                 }
                 // get clicked block location
@@ -114,7 +115,7 @@ public class TARDISRoomSeeder implements Listener {
                 TARDISRoomDirection trd = new TARDISRoomDirection(block);
                 trd.getDirection();
                 if (!trd.isFound()) {
-                    player.sendMessage(plugin.getPluginName() + "Could not find the door pressure plate! Check the seed block position.");
+                    TARDISMessage.send(player, plugin.getPluginName() + "Could not find the door pressure plate! Check the seed block position.");
                     return;
                 }
                 COMPASS d = trd.getCompass();
@@ -122,7 +123,7 @@ public class TARDISRoomSeeder implements Listener {
                 // check there is not a block in the direction the player is facing
                 Block check_block = b.getBlock().getRelative(BlockFace.DOWN).getRelative(facing, 9);
                 if (!check_block.getType().equals(Material.AIR)) {
-                    player.sendMessage(plugin.getPluginName() + "There seems to be a block in the way! You should be growing out into the void...");
+                    TARDISMessage.send(player, plugin.getPluginName() + "There seems to be a block in the way! You should be growing out into the void...");
                     return;
                 }
                 // get seed data
@@ -134,7 +135,7 @@ public class TARDISRoomSeeder implements Listener {
                     int cy = block.getY();
                     int cz = c.getZ();
                     if ((cx >= sd.getMinx() && cx <= sd.getMaxx()) && (cy >= 48 && cy <= 96) && (cz >= sd.getMinz() && cz <= sd.getMaxz())) {
-                        player.sendMessage(plugin.getPluginName() + "You cannot manually grow a room here, please use the Architectural Reconfiguration System!");
+                        TARDISMessage.send(player, plugin.getPluginName() + "You cannot manually grow a room here, please use the Architectural Reconfiguration System!");
                         return;
                     }
                 }
@@ -142,7 +143,7 @@ public class TARDISRoomSeeder implements Listener {
                 String r = plugin.getBuildKeeper().getSeeds().get(blockType);
                 // check that the blockType is the same as the one they ran the /tardis room [type] command for
                 if (!sd.getRoom().equals(r)) {
-                    player.sendMessage(plugin.getPluginName() + "That is not the correct seed block to grow a " + plugin.getTrackerKeeper().getTrackRoomSeed().get(playerNameStr).getRoom() + "!");
+                    TARDISMessage.send(player, plugin.getPluginName() + "That is not the correct seed block to grow a " + plugin.getTrackerKeeper().getTrackRoomSeed().get(playerNameStr).getRoom() + "!");
                     return;
                 }
                 // adjust the location three/four blocks out

@@ -23,6 +23,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.block.Block;
@@ -88,7 +89,7 @@ public class TARDISMakePresetListener implements Listener {
                 int fx = block_loc.getBlockX();
                 int fy = block_loc.getBlockY();
                 int fz = block_loc.getBlockZ();
-                player.sendMessage(plugin.getPluginName() + "Scanning 3 x 3 x 4 area...");
+                TARDISMessage.send(player, plugin.getPluginName() + "Scanning 3 x 3 x 4 area...");
                 StringBuilder sb_id = new StringBuilder("[");
                 StringBuilder sb_data = new StringBuilder("[");
                 StringBuilder sb_stain_id = new StringBuilder("[");
@@ -229,7 +230,7 @@ public class TARDISMakePresetListener implements Listener {
                     plugin.debug("Could not create and write to " + filename + "! " + e.getMessage());
                 }
                 plugin.getTrackerKeeper().getTrackPreset().remove(playerNameStr);
-                player.sendMessage(plugin.getPluginName() + "Scanning complete! " + filename + " written to the plugins/TARDIS folder.");
+                TARDISMessage.send(player, plugin.getPluginName() + "Scanning complete! " + filename + " written to the plugins/TARDIS folder.");
             }
         }
     }

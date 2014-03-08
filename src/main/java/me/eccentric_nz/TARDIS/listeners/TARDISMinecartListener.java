@@ -23,6 +23,7 @@ import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.ResultSetDoors;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
+import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import org.bukkit.Chunk;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -130,7 +131,7 @@ public class TARDISMinecartListener implements Listener {
                     if (plugin.getPM().isPluginEnabled("Multiverse-Inventories")) {
                         if (!plugin.getTMIChecker().checkMVI(bw, data[0])) {
                             if (!p.isEmpty() && plugin.getServer().getPlayer(p).isOnline()) {
-                                plugin.getServer().getPlayer(p).sendMessage(plugin.getPluginName() + "You cannot use minecarts from " + bw + " to " + data[0] + ".");
+                                TARDISMessage.send(plugin.getServer().getPlayer(p), plugin.getPluginName() + "You cannot use minecarts from " + bw + " to " + data[0] + ".");
                             }
                             plugin.getTrackerKeeper().getTrackMinecart().remove(Integer.valueOf(id));
                             return;

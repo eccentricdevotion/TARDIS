@@ -21,6 +21,7 @@ import java.util.HashMap;
 import java.util.List;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
+import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -59,7 +60,7 @@ public class TARDISTeleportListener implements Listener {
                 where.put("player", playerNameStr);
                 new QueryFactory(plugin).doDelete("travellers", where);
                 if (!cause.equals(TeleportCause.PLUGIN)) {
-                    p.sendMessage(plugin.getPluginName() + "You left the TARDIS, setting OCCUPIED to false");
+                    TARDISMessage.send(p, plugin.getPluginName() + "You left the TARDIS, setting OCCUPIED to false");
                 }
             }
         }

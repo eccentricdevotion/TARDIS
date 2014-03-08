@@ -26,6 +26,7 @@ import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetPlayerPrefs;
 import me.eccentric_nz.TARDIS.enumeration.MESSAGE;
+import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -104,7 +105,7 @@ public class TARDISTextureCommands implements CommandExecutor {
                                 upd.put("texture_out", args[1]);
                             }
                         } catch (MalformedURLException e) {
-                            player.sendMessage(plugin.getPluginName() + "Not a valid URL! " + e.getMessage());
+                            TARDISMessage.send(player, plugin.getPluginName() + "Not a valid URL! " + e.getMessage());
                             return true;
                         }
                     }
@@ -113,7 +114,7 @@ public class TARDISTextureCommands implements CommandExecutor {
                     HashMap<String, Object> where = new HashMap<String, Object>();
                     where.put("player", playerNameStr);
                     qf.doUpdate("player_prefs", upd, where);
-                    player.sendMessage(plugin.getPluginName() + "Your texture pack preference was set.");
+                    TARDISMessage.send(player, plugin.getPluginName() + "Your texture pack preference was set.");
                     return true;
                 }
             }

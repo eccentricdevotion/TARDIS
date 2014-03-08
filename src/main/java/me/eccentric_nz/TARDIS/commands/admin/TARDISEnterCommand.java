@@ -23,6 +23,7 @@ import me.eccentric_nz.TARDIS.database.ResultSetDoors;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
 import me.eccentric_nz.TARDIS.enumeration.MESSAGE;
+import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.command.CommandSender;
@@ -50,7 +51,7 @@ public class TARDISEnterCommand {
             return true;
         }
         if (!player.hasPermission("tardis.skeletonkey")) {
-            sender.sendMessage(plugin.getPluginName() + MESSAGE.NO_PERMS.getText());
+            TARDISMessage.send(player, plugin.getPluginName() + MESSAGE.NO_PERMS.getText());
             return true;
         }
         HashMap<String, Object> where = new HashMap<String, Object>();
@@ -135,7 +136,7 @@ public class TARDISEnterCommand {
                 return true;
             }
         }
-        sender.sendMessage(plugin.getPluginName() + args[1] + " has not created a TARDIS yet!");
+        TARDISMessage.send(player, plugin.getPluginName() + args[1] + " has not created a TARDIS yet!");
         return true;
     }
 }

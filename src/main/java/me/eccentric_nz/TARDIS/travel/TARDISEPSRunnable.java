@@ -20,6 +20,7 @@ import java.util.HashMap;
 import java.util.List;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.ResultSetDoors;
+import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import net.citizensnpcs.api.CitizensAPI;
 import net.citizensnpcs.api.npc.NPC;
 import net.citizensnpcs.api.npc.NPCRegistry;
@@ -87,8 +88,8 @@ public class TARDISEPSRunnable implements Runnable {
                 for (String p : players) {
                     Player pp = plugin.getServer().getPlayer(p);
                     if (pp != null) {
-                        pp.sendMessage(ChatColor.RED + "[Emergency Program One] " + ChatColor.RESET + message);
-                        pp.sendMessage(ChatColor.RED + "[Emergency Program One] " + ChatColor.RESET + "Right-click me to make me go away.");
+                        TARDISMessage.send(pp, ChatColor.RED + "[Emergency Program One] " + ChatColor.RESET + message);
+                        TARDISMessage.send(pp, ChatColor.RED + "[Emergency Program One] " + ChatColor.RESET + "Right-click me to make me go away.");
                     }
                 }
             } catch (CommandException e) {

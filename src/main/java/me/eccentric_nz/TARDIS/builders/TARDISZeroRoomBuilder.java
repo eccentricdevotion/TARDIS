@@ -24,6 +24,7 @@ import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
 import me.eccentric_nz.TARDIS.rooms.TARDISCondenserData;
 import me.eccentric_nz.TARDIS.rooms.TARDISRoomBuilder;
+import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.entity.Player;
@@ -42,7 +43,7 @@ public class TARDISZeroRoomBuilder {
 
     public boolean build(Player p, int tips, int id) {
         if (!plugin.getConfig().getBoolean("allow.zero_room")) {
-            p.sendMessage(plugin.getPluginName() + "This server does not allow Zero rooms!");
+            TARDISMessage.send(p, plugin.getPluginName() + "This server does not allow Zero rooms!");
             return true;
         }
         TARDISInteriorPostioning tintpos = new TARDISInteriorPostioning(plugin);

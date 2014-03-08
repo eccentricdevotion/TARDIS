@@ -30,6 +30,7 @@ import me.eccentric_nz.TARDIS.enumeration.DISK_CIRCUIT;
 import me.eccentric_nz.TARDIS.enumeration.MESSAGE;
 import me.eccentric_nz.TARDIS.travel.TARDISRescue;
 import me.eccentric_nz.TARDIS.travel.TARDISTimeTravel;
+import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -93,7 +94,7 @@ public class TARDISConsoleCloseListener implements Listener {
                     tcc.getCircuits();
                     // if no materialisation circuit exit
                     if (!tcc.hasMaterialisation() && (inv.contains(Material.GREEN_RECORD) || inv.contains(Material.RECORD_3) || inv.contains(Material.RECORD_4) || inv.contains(Material.RECORD_12))) {
-                        p.sendMessage(plugin.getPluginName() + "The Materialisation Circuit is missing from the console! No destination will be set.");
+                        TARDISMessage.send(p, plugin.getPluginName() + "The Materialisation Circuit is missing from the console! No destination will be set.");
                         return;
                     }
                 }
@@ -133,16 +134,16 @@ public class TARDISConsoleCloseListener implements Listener {
                                             wherea.put("area_name", first);
                                             ResultSetAreas rsa = new ResultSetAreas(plugin, wherea, false);
                                             if (!rsa.resultSet()) {
-                                                p.sendMessage(plugin.getPluginName() + "Could not find an area with that name! try using " + ChatColor.GREEN + "/tardis list areas" + ChatColor.RESET + " first.");
+                                                TARDISMessage.send(p, plugin.getPluginName() + "Could not find an area with that name! try using " + ChatColor.GREEN + "/tardis list areas" + ChatColor.RESET + " first.");
                                                 continue;
                                             }
                                             if ((!p.hasPermission("tardis.area." + first) && !p.hasPermission("tardis.area.*")) || (!p.isPermissionSet("tardis.area." + first) && !p.isPermissionSet("tardis.area.*"))) {
-                                                p.sendMessage(plugin.getPluginName() + "You do not have permission [tardis.area." + first + "] to send the TARDIS to this location!");
+                                                TARDISMessage.send(p, plugin.getPluginName() + "You do not have permission [tardis.area." + first + "] to send the TARDIS to this location!");
                                                 continue;
                                             }
                                             Location l = plugin.getTardisArea().getNextSpot(rsa.getArea_name());
                                             if (l == null) {
-                                                p.sendMessage(plugin.getPluginName() + MESSAGE.NO_MORE_SPOTS.getText());
+                                                TARDISMessage.send(p, plugin.getPluginName() + MESSAGE.NO_MORE_SPOTS.getText());
                                                 continue;
                                             }
                                             set_next.put("world", l.getWorld().getName());
@@ -150,13 +151,13 @@ public class TARDISConsoleCloseListener implements Listener {
                                             set_next.put("y", l.getBlockY());
                                             set_next.put("z", l.getBlockZ());
                                             set_next.put("submarine", 0);
-                                            p.sendMessage(plugin.getPluginName() + "Your TARDIS was approved for parking in [" + first + "]!");
+                                            TARDISMessage.send(p, plugin.getPluginName() + "Your TARDIS was approved for parking in [" + first + "]!");
                                             plugin.getTrackerKeeper().getTrackHasDestination().put(id, plugin.getArtronConfig().getInt("travel"));
                                             break;
                                         case GREEN_RECORD: // biome
                                             // find a biome location
                                             if (!p.hasPermission("tardis.timetravel.biome")) {
-                                                p.sendMessage(plugin.getPluginName() + "You do not have permission to time travel to a biome!");
+                                                TARDISMessage.send(p, plugin.getPluginName() + "You do not have permission to time travel to a biome!");
                                                 continue;
                                             }
                                             if (current.getBlock().getBiome().toString().equals(first)) {
@@ -164,10 +165,10 @@ public class TARDISConsoleCloseListener implements Listener {
                                             }
                                             try {
                                                 Biome biome = Biome.valueOf(first);
-                                                p.sendMessage(plugin.getPluginName() + "Searching for biome, this may take some time!");
+                                                TARDISMessage.send(p, plugin.getPluginName() + "Searching for biome, this may take some time!");
                                                 Location nsob = plugin.getGeneralKeeper().getTardisTravelCommand().searchBiome(p, id, biome, rsc.getWorld(), rsc.getX(), rsc.getZ());
                                                 if (nsob == null) {
-                                                    p.sendMessage(plugin.getPluginName() + "Could not find biome!");
+                                                    TARDISMessage.send(p, plugin.getPluginName() + "Could not find biome!");
                                                     continue;
                                                 } else {
                                                     if (!plugin.getPluginRespect().getRespect(p, nsob, true)) {
@@ -193,10 +194,10 @@ public class TARDISConsoleCloseListener implements Listener {
                                                     set_next.put("z", nsob.getBlockZ());
                                                     set_next.put("direction", rsc.getDirection().toString());
                                                     set_next.put("submarine", 0);
-                                                    p.sendMessage(plugin.getPluginName() + "The biome was set succesfully. Please release the handbrake!");
+                                                    TARDISMessage.send(p, plugin.getPluginName() + "The biome was set succesfully. Please release the handbrake!");
                                                 }
                                             } catch (IllegalArgumentException iae) {
-                                                p.sendMessage(plugin.getPluginName() + "Biome type not valid!");
+                                                TARDISMessage.send(p, plugin.getPluginName() + "Biome type not valid!");
                                                 continue;
                                             }
                                             break;
@@ -204,7 +205,7 @@ public class TARDISConsoleCloseListener implements Listener {
                                             // get the player's location
                                             if (p.hasPermission("tardis.timetravel.player")) {
                                                 if (p.getName().equalsIgnoreCase(first)) {
-                                                    p.sendMessage(plugin.getPluginName() + "You cannot travel to yourself!");
+                                                    TARDISMessage.send(p, plugin.getPluginName() + "You cannot travel to yourself!");
                                                     continue;
                                                 }
                                                 // check the to player's DND status
@@ -212,13 +213,13 @@ public class TARDISConsoleCloseListener implements Listener {
                                                 wherednd.put("player", first.toLowerCase());
                                                 ResultSetPlayerPrefs rspp = new ResultSetPlayerPrefs(plugin, wherednd);
                                                 if (rspp.resultSet() && rspp.isDND()) {
-                                                    p.sendMessage(plugin.getPluginName() + first + " does not want to be disturbed right now! Try again later.");
+                                                    TARDISMessage.send(p, plugin.getPluginName() + first + " does not want to be disturbed right now! Try again later.");
                                                     continue;
                                                 }
                                                 TARDISRescue to_player = new TARDISRescue(plugin);
                                                 to_player.rescue(p, first, id, tt, rsc.getDirection(), false);
                                             } else {
-                                                p.sendMessage(plugin.getPluginName() + "You do not have permission to time travel to a player!");
+                                                TARDISMessage.send(p, plugin.getPluginName() + "You do not have permission to time travel to a player!");
                                                 continue;
                                             }
                                             break;
@@ -247,9 +248,9 @@ public class TARDISConsoleCloseListener implements Listener {
                                                 boolean sub = Boolean.valueOf(lore.get(7));
                                                 set_next.put("submarine", (sub) ? 1 : 0);
                                                 set_tardis.put("chameleon_preset", lore.get(5));
-                                                p.sendMessage(plugin.getPluginName() + "The specified location was set succesfully. Please release the handbrake!");
+                                                TARDISMessage.send(p, plugin.getPluginName() + "The specified location was set succesfully. Please release the handbrake!");
                                             } else {
-                                                p.sendMessage(plugin.getPluginName() + "You do not have permission to time travel to a save!");
+                                                TARDISMessage.send(p, plugin.getPluginName() + "You do not have permission to time travel to a save!");
                                                 continue;
                                             }
                                             break;
@@ -272,14 +273,14 @@ public class TARDISConsoleCloseListener implements Listener {
                                         plugin.getTrackerKeeper().getTrackRescue().remove(Integer.valueOf(id));
                                     }
                                 } else {
-                                    p.sendMessage(plugin.getPluginName() + "The console cannot process blank disks!");
+                                    TARDISMessage.send(p, plugin.getPluginName() + "The console cannot process blank disks!");
                                 }
                             }
                         }
                     }
                 }
             } else {
-                p.sendMessage(plugin.getPluginName() + MESSAGE.NOT_IN_TARDIS.getText());
+                TARDISMessage.send(p, plugin.getPluginName() + MESSAGE.NOT_IN_TARDIS.getText());
             }
         }
     }

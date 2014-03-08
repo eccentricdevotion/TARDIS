@@ -30,6 +30,7 @@ import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import me.eccentric_nz.TARDIS.destroyers.TARDISDeinstaPreset;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
 import me.eccentric_nz.TARDIS.enumeration.PRESET;
+import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import org.bukkit.Chunk;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -120,7 +121,7 @@ public class TARDISPresetBuilderFactory {
             }
             if (pbd.isSubmarine() && notSubmarinePresets.contains(preset)) {
                 preset = PRESET.YELLOW;
-                pbd.getPlayer().sendMessage(plugin.getPluginName() + "Selected preset unsuitable for submarine mode - changed to Yellow Submarine.");
+                TARDISMessage.send(pbd.getPlayer(), plugin.getPluginName() + "Selected preset unsuitable for submarine mode - changed to Yellow Submarine.");
             }
             // keep the chunk this Police box is in loaded
             Chunk thisChunk = pbd.getLocation().getChunk();

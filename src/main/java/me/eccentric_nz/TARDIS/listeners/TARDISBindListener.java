@@ -25,6 +25,7 @@ import me.eccentric_nz.TARDIS.database.ResultSetDestinations;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import me.eccentric_nz.TARDIS.database.ResultSetTravellers;
 import me.eccentric_nz.TARDIS.enumeration.MESSAGE;
+import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
@@ -85,7 +86,7 @@ public class TARDISBindListener implements Listener {
                     set.put("bind", l);
                     QueryFactory qf = new QueryFactory(plugin);
                     qf.doUpdate("destinations", set, where);
-                    player.sendMessage(plugin.getPluginName() + "Save successfully bound to " + m.toString());
+                    TARDISMessage.send(player, plugin.getPluginName() + "Save successfully bound to " + m.toString());
                 } else {
                     // is player travelling in TARDIS
                     where.put("player", playerNameStr);
@@ -98,7 +99,7 @@ public class TARDISBindListener implements Listener {
                         if (rs.resultSet()) {
                             String owner = rs.getOwner();
                             if (rs.isIso_on() && !player.getName().equals(owner) && !event.isCancelled()) {
-                                player.sendMessage(plugin.getPluginName() + MESSAGE.ISO_ON.getText());
+                                TARDISMessage.send(player, plugin.getPluginName() + MESSAGE.ISO_ON.getText());
                                 return;
                             }
                             HashMap<String, Object> whereb = new HashMap<String, Object>();
@@ -107,7 +108,7 @@ public class TARDISBindListener implements Listener {
                             ResultSetDestinations rsd = new ResultSetDestinations(plugin, whereb, false);
                             if (rsd.resultSet()) {
                                 if (!rs.isHandbrake_on()) {
-                                    player.sendMessage(plugin.getPluginName() + ChatColor.RED + MESSAGE.NOT_WHILE_TRAVELLING.getText());
+                                    TARDISMessage.send(player, plugin.getPluginName() + ChatColor.RED + MESSAGE.NOT_WHILE_TRAVELLING.getText());
                                     return;
                                 }
                                 // what bind type is it?

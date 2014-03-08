@@ -21,6 +21,7 @@ import java.util.Locale;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.enumeration.MESSAGE;
+import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -39,14 +40,14 @@ public class TARDISSetKeyCommand {
 
     public boolean setKeyPref(Player player, String[] args, QueryFactory qf) {
         if (args.length < 2) {
-            player.sendMessage(plugin.getPluginName() + "You need to specify a key item!");
+            TARDISMessage.send(player, plugin.getPluginName() + "You need to specify a key item!");
             return false;
         }
         String setMaterial = args[1].toUpperCase(Locale.ENGLISH);
         try {
             Material go = Material.valueOf(setMaterial);
         } catch (IllegalArgumentException e) {
-            player.sendMessage(plugin.getPluginName() + ChatColor.RED + MESSAGE.NOT_VALID_MATERIAL.getText());
+            TARDISMessage.send(player, plugin.getPluginName() + ChatColor.RED + MESSAGE.NOT_VALID_MATERIAL.getText());
             return false;
         }
         String field = (plugin.getConfig().getString("storage.database").equals("sqlite")) ? "key" : "key_item";
@@ -55,7 +56,7 @@ public class TARDISSetKeyCommand {
         HashMap<String, Object> where = new HashMap<String, Object>();
         where.put("player", player.getName());
         qf.doUpdate("player_prefs", setk, where);
-        player.sendMessage(plugin.getPluginName() + "Key preference saved.");
+        TARDISMessage.send(player, plugin.getPluginName() + "Key preference saved.");
         return true;
     }
 }

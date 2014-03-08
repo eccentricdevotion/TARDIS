@@ -26,6 +26,7 @@ import me.eccentric_nz.TARDIS.database.ResultSetDestinations;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import me.eccentric_nz.TARDIS.enumeration.MESSAGE;
 import me.eccentric_nz.TARDIS.enumeration.PRESET;
+import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -54,22 +55,22 @@ public class TARDISDiskWriterCommand {
             if (is.getItemMeta().getDisplayName().equals("Save Storage Disk")) {
                 List<String> lore = im.getLore();
                 if (!lore.get(0).equals("Blank")) {
-                    player.sendMessage(plugin.getPluginName() + "You can only write to a blank disk!");
+                    TARDISMessage.send(player, plugin.getPluginName() + "You can only write to a blank disk!");
                     return true;
                 }
                 if (args.length < 2) {
-                    player.sendMessage(plugin.getPluginName() + MESSAGE.TOO_FEW_ARGS.getText());
+                    TARDISMessage.send(player, plugin.getPluginName() + MESSAGE.TOO_FEW_ARGS.getText());
                     return false;
                 }
                 if (!args[1].matches("[A-Za-z0-9_]{2,16}")) {
-                    player.sendMessage(plugin.getPluginName() + "That doesn't appear to be a valid save name (it may be too long or contain spaces).");
+                    TARDISMessage.send(player, plugin.getPluginName() + "That doesn't appear to be a valid save name (it may be too long or contain spaces).");
                     return false;
                 }
                 HashMap<String, Object> where = new HashMap<String, Object>();
                 where.put("owner", player.getName());
                 ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);
                 if (!rs.resultSet()) {
-                    player.sendMessage(plugin.getPluginName() + MESSAGE.NO_TARDIS.getText());
+                    TARDISMessage.send(player, plugin.getPluginName() + MESSAGE.NO_TARDIS.getText());
                     return false;
                 } else {
                     int id = rs.getTardis_id();
@@ -81,7 +82,7 @@ public class TARDISDiskWriterCommand {
                     wherename.put("type", 0);
                     ResultSetDestinations rsd = new ResultSetDestinations(plugin, wherename, false);
                     if (rsd.resultSet()) {
-                        player.sendMessage(plugin.getPluginName() + "You already have a save with that name!");
+                        TARDISMessage.send(player, plugin.getPluginName() + "You already have a save with that name!");
                         return true;
                     }
                     // get current destination
@@ -89,7 +90,7 @@ public class TARDISDiskWriterCommand {
                     wherecl.put("tardis_id", rs.getTardis_id());
                     ResultSetCurrentLocation rsc = new ResultSetCurrentLocation(plugin, wherecl);
                     if (!rsc.resultSet()) {
-                        player.sendMessage(plugin.getPluginName() + MESSAGE.NO_CURRENT.getText());
+                        TARDISMessage.send(player, plugin.getPluginName() + MESSAGE.NO_CURRENT.getText());
                         return true;
                     }
                     lore.set(0, args[1]);
@@ -102,7 +103,7 @@ public class TARDISDiskWriterCommand {
                     lore.add(7, (rsc.isSubmarine()) ? "true" : "false");
                     im.setLore(lore);
                     is.setItemMeta(im);
-                    player.sendMessage(plugin.getPluginName() + "Location successfully saved to disk!");
+                    TARDISMessage.send(player, plugin.getPluginName() + "Location successfully saved to disk!");
                     return true;
                 }
             }
@@ -117,32 +118,32 @@ public class TARDISDiskWriterCommand {
             if (is.getItemMeta().getDisplayName().equals("Player Storage Disk")) {
                 List<String> lore = im.getLore();
                 if (!lore.get(0).equals("Blank")) {
-                    player.sendMessage(plugin.getPluginName() + "You can only write to a blank disk!");
+                    TARDISMessage.send(player, plugin.getPluginName() + "You can only write to a blank disk!");
                     return true;
                 }
                 if (args.length < 2) {
-                    player.sendMessage(plugin.getPluginName() + MESSAGE.TOO_FEW_ARGS.getText());
+                    TARDISMessage.send(player, plugin.getPluginName() + MESSAGE.TOO_FEW_ARGS.getText());
                     return false;
                 }
                 if (!args[1].matches("[A-Za-z0-9_]{2,16}")) {
-                    player.sendMessage(plugin.getPluginName() + MESSAGE.NOT_VALID_NAME.getText());
+                    TARDISMessage.send(player, plugin.getPluginName() + MESSAGE.NOT_VALID_NAME.getText());
                     return false;
                 }
                 if (player.getName().equalsIgnoreCase(args[1])) {
-                    player.sendMessage(plugin.getPluginName() + "You cannot save yourself to disk!");
+                    TARDISMessage.send(player, plugin.getPluginName() + "You cannot save yourself to disk!");
                     return true;
                 }
                 HashMap<String, Object> where = new HashMap<String, Object>();
                 where.put("owner", player.getName());
                 ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);
                 if (!rs.resultSet()) {
-                    player.sendMessage(plugin.getPluginName() + MESSAGE.NO_TARDIS.getText());
+                    TARDISMessage.send(player, plugin.getPluginName() + MESSAGE.NO_TARDIS.getText());
                     return false;
                 } else {
                     lore.set(0, args[1]);
                     im.setLore(lore);
                     is.setItemMeta(im);
-                    player.sendMessage(plugin.getPluginName() + "Player successfully saved to disk!");
+                    TARDISMessage.send(player, plugin.getPluginName() + "Player successfully saved to disk!");
                     return true;
                 }
             }
@@ -157,10 +158,10 @@ public class TARDISDiskWriterCommand {
             List<String> lore = Arrays.asList(new String[]{"Blank"});
             im.setLore(lore);
             is.setItemMeta(im);
-            player.sendMessage(plugin.getPluginName() + "Disk erased successfully!");
+            TARDISMessage.send(player, plugin.getPluginName() + "Disk erased successfully!");
             return true;
         } else {
-            player.sendMessage(plugin.getPluginName() + "You must be holding a Storage Disk in your hand!");
+            TARDISMessage.send(player, plugin.getPluginName() + "You must be holding a Storage Disk in your hand!");
             return true;
         }
     }

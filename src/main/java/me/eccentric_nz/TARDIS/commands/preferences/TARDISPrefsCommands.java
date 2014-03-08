@@ -24,6 +24,7 @@ import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetPlayerPrefs;
 import me.eccentric_nz.TARDIS.enumeration.MESSAGE;
+import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -118,7 +119,7 @@ public class TARDISPrefsCommands implements CommandExecutor {
                         return new TARDISFloorCommand(plugin).setFloorOrWallBlock(player, args, qf);
                     }
                     if (args.length < 2 || (!args[1].equalsIgnoreCase("on") && !args[1].equalsIgnoreCase("off"))) {
-                        sender.sendMessage(plugin.getPluginName() + "You need to specify if " + pref + " should be on or off!");
+                        TARDISMessage.send(player, plugin.getPluginName() + "You need to specify if " + pref + " should be on or off!");
                         return false;
                     }
                     if (pref.equals("build")) {
@@ -127,7 +128,7 @@ public class TARDISPrefsCommands implements CommandExecutor {
                         return new TARDISToggleOnOffCommand(plugin).doAbort(player, args, qf);
                     }
                 } else {
-                    sender.sendMessage(plugin.getPluginName() + MESSAGE.NO_PERMS.getText());
+                    TARDISMessage.send(player, plugin.getPluginName() + MESSAGE.NO_PERMS.getText());
                     return false;
                 }
             }

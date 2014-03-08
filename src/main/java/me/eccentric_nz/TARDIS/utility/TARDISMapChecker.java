@@ -98,7 +98,7 @@ public class TARDISMapChecker {
                     for (OfflinePlayer olp : ops) {
                         if (olp.isOnline()) {
                             Player p = (Player) olp;
-                            p.sendMessage(plugin.getPluginName() + ChatColor.RED + "Could not find TARDIS map files, some recipes will not work!");
+                            TARDISMessage.send(p, plugin.getPluginName() + ChatColor.RED + "Could not find TARDIS map files, some recipes will not work!");
                         }
                     }
                 }

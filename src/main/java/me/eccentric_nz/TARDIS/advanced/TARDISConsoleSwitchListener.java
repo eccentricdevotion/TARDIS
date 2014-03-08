@@ -28,6 +28,7 @@ import me.eccentric_nz.TARDIS.enumeration.MESSAGE;
 import me.eccentric_nz.TARDIS.travel.TARDISSaveSignInventory;
 import me.eccentric_nz.TARDIS.travel.TARDISTemporalLocatorInventory;
 import me.eccentric_nz.TARDIS.travel.TARDISTerminalInventory;
+import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -65,7 +66,7 @@ public class TARDISConsoleSwitchListener implements Listener {
             ResultSetTravellers rst = new ResultSetTravellers(plugin, wheret, false);
             if (!rst.resultSet()) {
                 event.setCancelled(true);
-                p.sendMessage(plugin.getPluginName() + MESSAGE.NOT_IN_TARDIS.getText());
+                TARDISMessage.send(p, plugin.getPluginName() + MESSAGE.NOT_IN_TARDIS.getText());
             }
             if (event.getClick().equals(ClickType.SHIFT_RIGHT)) {
                 event.setCancelled(true);
@@ -117,7 +118,7 @@ public class TARDISConsoleSwitchListener implements Listener {
                                 }
                             }, 1L);
                         } else {
-                            p.sendMessage(plugin.getPluginName() + MESSAGE.NO_TARDIS.getText());
+                            TARDISMessage.send(p, plugin.getPluginName() + MESSAGE.NO_TARDIS.getText());
                         }
                     }
                 }

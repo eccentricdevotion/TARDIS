@@ -17,6 +17,7 @@
 package me.eccentric_nz.TARDIS.commands.tardis;
 
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import org.bukkit.entity.Player;
 
 /**
@@ -33,16 +34,16 @@ public class TARDISAbortCommand {
 
     public boolean doAbort(Player player, String[] args) {
         if (args.length < 2) {
-            player.sendMessage(plugin.getPluginName() + "You must specify the task ID number!");
+            TARDISMessage.send(player, plugin.getPluginName() + "You must specify the task ID number!");
             return false;
         }
         try {
             int task = Integer.parseInt(args[1]);
             plugin.getServer().getScheduler().cancelTask(task);
-            player.sendMessage(plugin.getPluginName() + "Task aborted!");
+            TARDISMessage.send(player, plugin.getPluginName() + "Task aborted!");
             return true;
         } catch (NumberFormatException nfe) {
-            player.sendMessage(plugin.getPluginName() + "Task ID is not a number!");
+            TARDISMessage.send(player, plugin.getPluginName() + "Task ID is not a number!");
             return false;
         }
     }

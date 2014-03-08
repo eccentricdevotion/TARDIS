@@ -25,6 +25,7 @@ import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
 import me.eccentric_nz.TARDIS.rooms.TARDISRoomData;
 import me.eccentric_nz.TARDIS.rooms.TARDISRoomRunnable;
+import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.entity.Player;
@@ -117,7 +118,7 @@ public class TARDISARSRunnable implements Runnable {
             set.put("owner", p.getName());
             qf.alterEnergyLevel("tardis", -amount, set, p);
             if (p.isOnline()) {
-                p.sendMessage(plugin.getPluginName() + "To cancel growing this [" + whichroom + "] room use the command /tardis abort " + taskID);
+                TARDISMessage.send(p, plugin.getPluginName() + "To cancel growing this [" + whichroom + "] room use the command /tardis abort " + taskID);
             }
         }
     }

@@ -161,25 +161,25 @@ public class TARDISHostileDisplacement {
                                     }, delay * 2);
                                     // message time lord
                                     String message = plugin.getPluginName() + ChatColor.RED + "H" + ChatColor.RESET + "ostile " + ChatColor.RED + "A" + ChatColor.RESET + "ction " + ChatColor.RED + "D" + ChatColor.RESET + "isplacement " + ChatColor.RED + "S" + ChatColor.RESET + "ystem engaged, moving TARDIS!";
-                                    player.sendMessage(message);
+                                    TARDISMessage.send(player, message);
                                     String hads = fl.getWorld().getName() + ":" + fl.getBlockX() + ":" + fl.getBlockY() + ":" + fl.getBlockZ();
-                                    player.sendMessage(plugin.getPluginName() + "TARDIS moved to " + hads);
+                                    TARDISMessage.send(player, plugin.getPluginName() + "TARDIS moved to " + hads);
                                     if (player != hostile) {
-                                        hostile.sendMessage(message);
+                                        TARDISMessage.send(hostile, message);
                                     }
                                     break;
                                 } else {
-                                    player.sendMessage(plugin.getPluginName() + "HADS could not be engaged because the area is protected!");
+                                    TARDISMessage.send(player, plugin.getPluginName() + "HADS could not be engaged because the area is protected!");
                                     if (player != hostile) {
-                                        hostile.sendMessage(plugin.getPluginName() + "HADS could not be engaged because the area is protected!");
+                                        TARDISMessage.send(hostile, plugin.getPluginName() + "HADS could not be engaged because the area is protected!");
                                     }
                                 }
                             } else {
-                                player.sendMessage(plugin.getPluginName() + "HADS could not be engaged because the it couldn't find a safe area!");
+                                TARDISMessage.send(player, plugin.getPluginName() + "HADS could not be engaged because the it couldn't find a safe area!");
                             }
                         } else {
                             plugin.getTrackerKeeper().getTrackDamage().remove(Integer.valueOf(id));
-                            player.sendMessage(plugin.getPluginName() + "HADS could not be engaged because the TARDIS cannot land on water!");
+                            TARDISMessage.send(player, plugin.getPluginName() + "HADS could not be engaged because the TARDIS cannot land on water!");
                         }
                     }
                 }

@@ -19,6 +19,7 @@ package me.eccentric_nz.TARDIS.commands.preferences;
 import java.util.HashMap;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
+import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import org.bukkit.entity.Player;
 
 /**
@@ -36,7 +37,7 @@ public class TARDISEPSMessageCommand {
     public boolean setMessage(Player player, String[] args, QueryFactory qf) {
         int count = args.length;
         if (count < 2) {
-            player.sendMessage(plugin.getPluginName() + "You need to specify an Emergency Program System message!");
+            TARDISMessage.send(player, plugin.getPluginName() + "You need to specify an Emergency Program System message!");
             return false;
         }
         StringBuilder buf = new StringBuilder();
@@ -50,7 +51,7 @@ public class TARDISEPSMessageCommand {
         HashMap<String, Object> where = new HashMap<String, Object>();
         where.put("player", player.getName());
         qf.doUpdate("player_prefs", sete, where);
-        player.sendMessage(plugin.getPluginName() + "The Emergency Program System message was set!");
+        TARDISMessage.send(player, plugin.getPluginName() + "The Emergency Program System message was set!");
         return true;
     }
 }

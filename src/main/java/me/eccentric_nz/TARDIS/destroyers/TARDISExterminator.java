@@ -33,6 +33,7 @@ import me.eccentric_nz.TARDIS.database.ResultSetTravellers;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
 import me.eccentric_nz.TARDIS.enumeration.MESSAGE;
 import me.eccentric_nz.TARDIS.enumeration.SCHEMATIC;
+import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import me.eccentric_nz.tardischunkgenerator.TARDISChunkGenerator;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
@@ -149,12 +150,12 @@ public class TARDISExterminator {
                 wherecl.put("z", bd_loc.getBlockZ());
                 ResultSetCurrentLocation rsc = new ResultSetCurrentLocation(plugin, wherecl);
                 if (!rsc.resultSet()) {
-                    player.sendMessage(plugin.getPluginName() + ChatColor.RED + MESSAGE.NO_CURRENT.getText());
+                    TARDISMessage.send(player, plugin.getPluginName() + ChatColor.RED + MESSAGE.NO_CURRENT.getText());
                     return false;
                 }
                 where.put("tardis_id", rsc.getTardis_id());
             } else {
-                player.sendMessage(plugin.getPluginName() + ChatColor.RED + MESSAGE.NO_CURRENT.getText());
+                TARDISMessage.send(player, plugin.getPluginName() + ChatColor.RED + MESSAGE.NO_CURRENT.getText());
                 return false;
             }
         } else {
@@ -173,7 +174,7 @@ public class TARDISExterminator {
                 travid.put("tardis_id", id);
                 ResultSetTravellers rst = new ResultSetTravellers(plugin, travid, false);
                 if (rst.resultSet()) {
-                    player.sendMessage(plugin.getPluginName() + ChatColor.RED + "You cannot delete this TARDIS as it is occupied!");
+                    TARDISMessage.send(player, plugin.getPluginName() + ChatColor.RED + "You cannot delete this TARDIS as it is occupied!");
                     return false;
                 }
             }
@@ -182,7 +183,7 @@ public class TARDISExterminator {
             wherecl.put("tardis_id", id);
             ResultSetCurrentLocation rsc = new ResultSetCurrentLocation(plugin, wherecl);
             if (!rsc.resultSet()) {
-                player.sendMessage(plugin.getPluginName() + ChatColor.RED + MESSAGE.NO_CURRENT.getText());
+                TARDISMessage.send(player, plugin.getPluginName() + ChatColor.RED + MESSAGE.NO_CURRENT.getText());
                 return false;
             }
             Location bb_loc = new Location(rsc.getWorld(), rsc.getX(), rsc.getY(), rsc.getZ());
@@ -225,7 +226,7 @@ public class TARDISExterminator {
                 String[] chunkworld = chunkLoc.split(":");
                 World cw = plugin.getServer().getWorld(chunkworld[0]);
                 if (cw == null) {
-                    player.sendMessage(plugin.getPluginName() + "The server could not find the TARDIS world, has it been deleted?");
+                    TARDISMessage.send(player, plugin.getPluginName() + "The server could not find the TARDIS world, has it been deleted?");
                     return true;
                 }
                 int restore = getRestore(cw);
@@ -235,15 +236,15 @@ public class TARDISExterminator {
                 cleanWorlds(cw, playerNameStr);
                 removeZeroRoom(tips, hasZero);
                 cleanDatabase(id);
-                player.sendMessage(plugin.getPluginName() + "The TARDIS was removed from the world and database successfully.");
+                TARDISMessage.send(player, plugin.getPluginName() + "The TARDIS was removed from the world and database successfully.");
                 return false;
             } else {
                 // cancel the event because it's not the player's TARDIS
-                player.sendMessage(MESSAGE.NOT_OWNER.getText());
+                TARDISMessage.send(player, MESSAGE.NOT_OWNER.getText());
                 return false;
             }
         } else {
-            player.sendMessage("Don't grief the TARDIS!");
+            TARDISMessage.send(player, "Don't grief the TARDIS!");
             return false;
         }
     }
@@ -329,7 +330,7 @@ public class TARDISExterminator {
             List<Player> players = w.getPlayers();
             Location spawn = plugin.getServer().getWorlds().get(0).getSpawnLocation();
             for (Player p : players) {
-                p.sendMessage(plugin.getPluginName() + "World scheduled for deletion, teleporting you to spawn!");
+                TARDISMessage.send(p, plugin.getPluginName() + "World scheduled for deletion, teleporting you to spawn!");
                 p.teleport(spawn);
             }
             if (plugin.getPM().isPluginEnabled("Multiverse-Core")) {

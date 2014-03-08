@@ -22,6 +22,7 @@ import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import me.eccentric_nz.TARDIS.enumeration.MESSAGE;
+import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import org.bukkit.ChatColor;
 import org.bukkit.World;
 import org.bukkit.entity.Player;
@@ -47,23 +48,23 @@ public class TARDISRemoveCompanionCommand {
             int id;
             String[] data;
             if (!rs.resultSet()) {
-                player.sendMessage(plugin.getPluginName() + MESSAGE.NO_TARDIS.getText());
+                TARDISMessage.send(player, plugin.getPluginName() + MESSAGE.NO_TARDIS.getText());
                 return false;
             } else {
                 comps = rs.getCompanions();
                 if (comps == null || comps.isEmpty()) {
-                    player.sendMessage(plugin.getPluginName() + "You have not added any TARDIS companions yet!");
+                    TARDISMessage.send(player, plugin.getPluginName() + "You have not added any TARDIS companions yet!");
                     return true;
                 }
                 id = rs.getTardis_id();
                 data = rs.getChunk().split(":");
             }
             if (args.length < 2) {
-                player.sendMessage(plugin.getPluginName() + MESSAGE.TOO_FEW_ARGS.getText());
+                TARDISMessage.send(player, plugin.getPluginName() + MESSAGE.TOO_FEW_ARGS.getText());
                 return false;
             }
             if (!args[1].matches("[A-Za-z0-9_]{2,16}")) {
-                player.sendMessage(plugin.getPluginName() + MESSAGE.NOT_VALID_NAME.getText());
+                TARDISMessage.send(player, plugin.getPluginName() + MESSAGE.NOT_VALID_NAME.getText());
                 return false;
             } else {
                 String newList = "";
@@ -99,11 +100,11 @@ public class TARDISRemoveCompanionCommand {
                         plugin.getWorldGuardUtils().removeMemberFromRegion(w, player.getName(), args[1].toLowerCase(Locale.ENGLISH));
                     }
                 }
-                player.sendMessage(plugin.getPluginName() + message);
+                TARDISMessage.send(player, plugin.getPluginName() + message);
                 return true;
             }
         } else {
-            player.sendMessage(plugin.getPluginName() + MESSAGE.NO_PERMS.getText());
+            TARDISMessage.send(player, plugin.getPluginName() + MESSAGE.NO_PERMS.getText());
             return false;
         }
     }

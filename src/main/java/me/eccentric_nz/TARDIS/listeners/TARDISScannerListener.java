@@ -31,6 +31,7 @@ import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
 import me.eccentric_nz.TARDIS.enumeration.MESSAGE;
 import me.eccentric_nz.TARDIS.rooms.TARDISExteriorRenderer;
+import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Biome;
@@ -100,7 +101,7 @@ public class TARDISScannerListener implements Listener {
                         tcc.getCircuits();
                     }
                     if (tcc != null && !tcc.hasScanner()) {
-                        player.sendMessage(plugin.getPluginName() + "The Scanner Circuit is missing from the console!");
+                        TARDISMessage.send(player, plugin.getPluginName() + "The Scanner Circuit is missing from the console!");
                         return;
                     }
                     final String renderer = rs.getRenderer();
@@ -125,7 +126,7 @@ public class TARDISScannerListener implements Listener {
                                     }
                                 }, 160L);
                             } else {
-                                player.sendMessage(plugin.getPluginName() + "You don't have enough Artron Energy to enter the Exterior Rendering Room!");
+                                TARDISMessage.send(player, plugin.getPluginName() + "You don't have enough Artron Energy to enter the Exterior Rendering Room!");
                             }
                         }
                     }
@@ -161,7 +162,7 @@ public class TARDISScannerListener implements Listener {
         if (plugin.getTrackerKeeper().getTrackHasDestination().containsKey(Integer.valueOf(id))) {
             ResultSetNextLocation rsn = new ResultSetNextLocation(plugin, wherenl);
             if (!rsn.resultSet()) {
-                player.sendMessage(plugin.getPluginName() + "Could not get TARDIS's next destination!");
+                TARDISMessage.send(player, plugin.getPluginName() + "Could not get TARDIS's next destination!");
                 return null;
             }
             scan_loc = new Location(rsn.getWorld(), rsn.getX(), rsn.getY(), rsn.getZ());
@@ -170,7 +171,7 @@ public class TARDISScannerListener implements Listener {
         } else {
             ResultSetCurrentLocation rsc = new ResultSetCurrentLocation(plugin, wherenl);
             if (!rsc.resultSet()) {
-                player.sendMessage(plugin.getPluginName() + MESSAGE.NO_CURRENT.getText());
+                TARDISMessage.send(player, plugin.getPluginName() + MESSAGE.NO_CURRENT.getText());
                 return null;
             }
             scan_loc = new Location(rsc.getWorld(), rsc.getX(), rsc.getY(), rsc.getZ());
@@ -204,13 +205,13 @@ public class TARDISScannerListener implements Listener {
         data.setTime(time);
         final String daynight = plugin.getUtils().getTime(time);
         // message the player
-        player.sendMessage(plugin.getPluginName() + "Scanner results for the TARDIS's " + whereisit);
-        player.sendMessage("World: " + scan_loc.getWorld().getName());
-        player.sendMessage("Co-ordinates: " + scan_loc.getBlockX() + ":" + scan_loc.getBlockY() + ":" + scan_loc.getBlockZ());
+        TARDISMessage.send(player, plugin.getPluginName() + "Scanner results for the TARDIS's " + whereisit);
+        TARDISMessage.send(player, "World: " + scan_loc.getWorld().getName());
+        TARDISMessage.send(player, "Co-ordinates: " + scan_loc.getBlockX() + ":" + scan_loc.getBlockY() + ":" + scan_loc.getBlockZ());
         bsched.scheduleSyncDelayedTask(plugin, new Runnable() {
             @Override
             public void run() {
-                player.sendMessage("TARDIS Direction: " + tardisDirection);
+                TARDISMessage.send(player, "TARDIS Direction: " + tardisDirection);
             }
         }, 20L);
         // get biome
@@ -219,13 +220,13 @@ public class TARDISScannerListener implements Listener {
         bsched.scheduleSyncDelayedTask(plugin, new Runnable() {
             @Override
             public void run() {
-                player.sendMessage("Biome type: " + biome);
+                TARDISMessage.send(player, "Biome type: " + biome);
             }
         }, 40L);
         bsched.scheduleSyncDelayedTask(plugin, new Runnable() {
             @Override
             public void run() {
-                player.sendMessage("Time of day: " + daynight + " / " + time + " ticks");
+                TARDISMessage.send(player, "Time of day: " + daynight + " / " + time + " ticks");
             }
         }, 60L);
         // get weather
@@ -240,26 +241,26 @@ public class TARDISScannerListener implements Listener {
         bsched.scheduleSyncDelayedTask(plugin, new Runnable() {
             @Override
             public void run() {
-                player.sendMessage("Weather: " + weather);
+                TARDISMessage.send(player, "Weather: " + weather);
             }
         }, 80L);
         bsched.scheduleSyncDelayedTask(plugin, new Runnable() {
             @Override
             public void run() {
-                player.sendMessage("Humidity: " + String.format("%.2f", scan_loc.getBlock().getHumidity()));
+                TARDISMessage.send(player, "Humidity: " + String.format("%.2f", scan_loc.getBlock().getHumidity()));
             }
         }, 100L);
         bsched.scheduleSyncDelayedTask(plugin, new Runnable() {
             @Override
             public void run() {
-                player.sendMessage("Temperature: " + String.format("%.2f", scan_loc.getBlock().getTemperature()));
+                TARDISMessage.send(player, "Temperature: " + String.format("%.2f", scan_loc.getBlock().getTemperature()));
             }
         }, 120L);
         bsched.scheduleSyncDelayedTask(plugin, new Runnable() {
             @Override
             public void run() {
                 if (scannedentities.size() > 0) {
-                    player.sendMessage("Nearby entities:");
+                    TARDISMessage.send(player, "Nearby entities:");
                     for (Map.Entry<EntityType, Integer> entry : scannedentities.entrySet()) {
                         String message = "";
                         StringBuilder buf = new StringBuilder();
@@ -269,11 +270,11 @@ public class TARDISScannerListener implements Listener {
                             }
                             message = " (" + buf.toString().substring(2) + ")";
                         }
-                        player.sendMessage("    " + entry.getKey() + ": " + entry.getValue() + message);
+                        TARDISMessage.send(player, "    " + entry.getKey() + ": " + entry.getValue() + message);
                     }
                     scannedentities.clear();
                 } else {
-                    player.sendMessage("Nearby entities: none");
+                    TARDISMessage.send(player, "Nearby entities: none");
                 }
             }
         }, 140L);

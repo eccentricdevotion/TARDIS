@@ -18,6 +18,7 @@ package me.eccentric_nz.TARDIS.commands.admin;
 
 import java.util.Locale;
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
@@ -46,7 +47,7 @@ public class TARDISMakePresetCommand {
         // check they are facing east
         String yaw = plugin.getUtils().getPlayersDirection(player, false);
         if (!yaw.equals("EAST")) {
-            player.sendMessage(plugin.getPluginName() + "You must be facing EAST, with the preset front facing WEST!");
+            TARDISMessage.send(player, plugin.getPluginName() + "You must be facing EAST, with the preset front facing WEST!");
             return true;
         }
         String bool;
@@ -54,7 +55,7 @@ public class TARDISMakePresetCommand {
             // check they typed true of false
             String tf = args[2].toLowerCase(Locale.ENGLISH);
             if (!tf.equals("true") && !tf.equals("false")) {
-                sender.sendMessage(plugin.getPluginName() + ChatColor.RED + "The last argument must be true or false!");
+                TARDISMessage.send(player, plugin.getPluginName() + ChatColor.RED + "The last argument must be true or false!");
                 return false;
             }
             bool = tf;
@@ -62,7 +63,7 @@ public class TARDISMakePresetCommand {
             // presume it is assymetric if not set
             bool = "true";
         }
-        player.sendMessage(plugin.getPluginName() + "Please right-click the lower left block of the preset with your TARDIS key. If there is no block there, place some sponge instead.");
+        TARDISMessage.send(player, plugin.getPluginName() + "Please right-click the lower left block of the preset with your TARDIS key. If there is no block there, place some sponge instead.");
         plugin.getTrackerKeeper().getTrackPreset().put(player.getName(), args[1] + ":" + bool);
         return true;
     }

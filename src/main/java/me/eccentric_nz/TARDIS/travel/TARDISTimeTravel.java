@@ -25,6 +25,7 @@ import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.ResultSetPlayerPrefs;
 import me.eccentric_nz.TARDIS.database.ResultSetTravellers;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
+import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
@@ -210,7 +211,7 @@ public class TARDISTimeTravel {
                             if (rsp.resultSet()) {
                                 if (rsp.isSubmarineOn() && plugin.getUtils().isOceanBiome(currentBlock.getBiome())) {
                                     // get submarine location
-                                    p.sendMessage(plugin.getPluginName() + "Searching for underwater location...");
+                                    TARDISMessage.send(p, plugin.getPluginName() + "Searching for underwater location...");
                                     Location underwater = submarine(currentBlock, d);
                                     if (underwater != null) {
                                         // get TARDIS id

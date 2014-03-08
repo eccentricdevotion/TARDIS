@@ -21,6 +21,7 @@ import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.ResultSetPlayerPrefs;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
+import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import org.bukkit.Location;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
@@ -125,7 +126,7 @@ public class TARDISRoomBuilder {
             TARDISRoomRunnable runnable = new TARDISRoomRunnable(plugin, roomData, p);
             int taskID = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, runnable, delay, delay);
             runnable.setTask(taskID);
-            p.sendMessage(plugin.getPluginName() + "To cancel growing this room use the command /tardis abort " + taskID);
+            TARDISMessage.send(p, plugin.getPluginName() + "To cancel growing this room use the command /tardis abort " + taskID);
         }
         return true;
     }

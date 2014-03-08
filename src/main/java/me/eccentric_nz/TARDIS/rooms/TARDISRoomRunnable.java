@@ -27,6 +27,7 @@ import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
 import me.eccentric_nz.TARDIS.enumeration.ROOM;
+import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import org.bukkit.Chunk;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -121,13 +122,13 @@ public class TARDISRoomRunnable implements Runnable {
             if (room.equals("GRAVITY") || room.equals("ANTIGRAVITY")) {
                 grammar += " WELL";
             }
-            p.sendMessage(plugin.getPluginName() + "Started growing " + grammar + "...");
+            TARDISMessage.send(p, plugin.getPluginName() + "Started growing " + grammar + "...");
         }
         String tmp;
         if (level == h && row == w && col == (c - 1)) {
             // the entire schematic has been read :)
             if (iceblocks.size() > 0) {
-                p.sendMessage(plugin.getPluginName() + "Melting the ice!");
+                TARDISMessage.send(p, plugin.getPluginName() + "Melting the ice!");
                 // set all the ice to water
                 for (Block ice : iceblocks) {
                     ice.setTypeId(9);
@@ -164,7 +165,7 @@ public class TARDISRoomRunnable implements Runnable {
                 doorblocks.clear();
             }
             // update lamp block states
-            p.sendMessage(plugin.getPluginName() + "Turning on the power!");
+            TARDISMessage.send(p, plugin.getPluginName() + "Turning on the power!");
             for (Block lamp : lampblocks) {
                 lamp.setType(Material.REDSTONE_LAMP_ON);
             }
@@ -191,7 +192,7 @@ public class TARDISRoomRunnable implements Runnable {
             plugin.getServer().getScheduler().cancelTask(task);
             task = 0;
             String rname = (room.equals("GRAVITY") || room.equals("ANTIGRAVITY")) ? room + " WELL" : room;
-            p.sendMessage(plugin.getPluginName() + "Finished growing the " + rname + "!");
+            TARDISMessage.send(p, plugin.getPluginName() + "Finished growing the " + rname + "!");
         } else {
             // place one block
             tmp = s[level][row][col];

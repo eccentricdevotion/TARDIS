@@ -30,6 +30,7 @@ import me.eccentric_nz.TARDIS.database.ResultSetPlayerPrefs;
 import me.eccentric_nz.TARDIS.database.ResultSetTravellers;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
 import me.eccentric_nz.TARDIS.travel.TARDISTimeTravel;
+import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.World.Environment;
@@ -155,7 +156,7 @@ public class TARDISTerminalListener implements Listener {
                                     plugin.getTrackerKeeper().getTrackRescue().remove(terminalIDs.get(playerNameStr));
                                 }
                                 close(player);
-                                player.sendMessage(plugin.getPluginName() + "Destination set. Please release the handbrake!");
+                                TARDISMessage.send(player, plugin.getPluginName() + "Destination set. Please release the handbrake!");
                             } else {
                                 // set lore
                                 ItemStack is = inv.getItem(49);

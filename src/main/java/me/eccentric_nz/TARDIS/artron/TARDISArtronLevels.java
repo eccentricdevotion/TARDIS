@@ -20,6 +20,7 @@ import java.util.HashMap;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
+import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import org.bukkit.entity.Player;
 
 /**
@@ -75,7 +76,7 @@ public class TARDISArtronLevels {
         }
         int level = rs.getArtron_level();
         if (level - required <= 100) {
-            p.sendMessage(plugin.getPluginName() + "The Artron Levels are critically low. You should recharge soon!");
+            TARDISMessage.send(p, plugin.getPluginName() + "The Artron Levels are critically low. You should recharge soon!");
         }
         return (level > required);
     }

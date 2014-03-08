@@ -26,6 +26,7 @@ import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetDiskStorage;
 import me.eccentric_nz.TARDIS.enumeration.DISK_CIRCUIT;
 import me.eccentric_nz.TARDIS.enumeration.STORAGE;
+import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -93,7 +94,7 @@ public class TARDISStorageListener implements Listener {
                         Location loc = p.getLocation();
                         loc.getWorld().dropItemNaturally(loc, stack);
                         inv.setItem(i, new ItemStack(Material.AIR));
-                        p.sendMessage(plugin.getPluginName() + "You cannot store Area Storage Disks here!");
+                        TARDISMessage.send(p, plugin.getPluginName() + "You cannot store Area Storage Disks here!");
                     }
                 }
             }
@@ -229,7 +230,7 @@ public class TARDISStorageListener implements Listener {
             if (ims.hasDisplayName() && ims.getDisplayName().equals("Area Storage Disk")) {
                 event.setCancelled(true);
                 Player p = event.getPlayer();
-                p.sendMessage(plugin.getPluginName() + "You cannot drop Area Storage Disks!");
+                TARDISMessage.send(p, plugin.getPluginName() + "You cannot drop Area Storage Disks!");
             }
         }
     }

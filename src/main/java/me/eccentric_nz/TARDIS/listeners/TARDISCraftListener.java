@@ -22,6 +22,7 @@ import java.util.List;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.enumeration.MESSAGE;
 import me.eccentric_nz.TARDIS.rooms.TARDISWallsLookup;
+import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import org.bukkit.DyeColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -128,11 +129,11 @@ public class TARDISCraftListener implements Listener {
                             is.setItemMeta(im);
                             Player player = (Player) event.getWhoClicked();
                             if (checkPerms(player, m7)) {
-                                player.sendMessage(plugin.getPluginName() + "Valid seed block :)");
+                                TARDISMessage.send(player, plugin.getPluginName() + "Valid seed block :)");
                                 inv.setItem(0, is);
                                 player.updateInventory();
                             } else {
-                                player.sendMessage(plugin.getPluginName() + MESSAGE.NO_PERMS.getText());
+                                TARDISMessage.send(player, plugin.getPluginName() + MESSAGE.NO_PERMS.getText());
                             }
                         }
                     }

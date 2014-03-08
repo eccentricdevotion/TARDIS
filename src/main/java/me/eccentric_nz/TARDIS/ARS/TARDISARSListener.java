@@ -31,6 +31,7 @@ import me.eccentric_nz.TARDIS.database.ResultSetCondenser;
 import me.eccentric_nz.TARDIS.database.ResultSetPlayerPrefs;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import me.eccentric_nz.TARDIS.database.ResultSetTravellers;
+import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -90,7 +91,7 @@ public class TARDISARSListener implements Listener {
             ids.put(playerNameStr, getTardisId(playerNameStr, player.isOp()));
             int slot = event.getRawSlot();
             if (slot != 10 && !hasLoadedMap.contains(playerNameStr)) {
-                player.sendMessage(plugin.getPluginName() + "You need to load the map first!");
+                TARDISMessage.send(player, plugin.getPluginName() + "You need to load the map first!");
                 return;
             }
             if (slot >= 0 && slot < 54) {
@@ -556,11 +557,11 @@ public class TARDISARSListener implements Listener {
                         TARDISARSProcessor tap = new TARDISARSProcessor(plugin, ids.get(n));
                         boolean changed = tap.compare3DArray(save_map_data.get(n).getData(), map_data.get(n).getData());
                         if (changed && tap.checkCosts(tap.getChanged(), tap.getJettison())) {
-                            p.sendMessage(plugin.getPluginName() + "Architectural reconfiguration starting...");
+                            TARDISMessage.send(p, plugin.getPluginName() + "Architectural reconfiguration starting...");
 //                            plugin.getTrackerKeeper().getTrackARS().add(ids.get(n));
                             // do all jettisons first
                             if (tap.getJettison().size() > 0) {
-                                p.sendMessage(plugin.getPluginName() + "Jettisoning " + tap.getJettison().size() + " rooms...");
+                                TARDISMessage.send(p, plugin.getPluginName() + "Jettisoning " + tap.getJettison().size() + " rooms...");
                                 long del = 5L;
                                 for (Map.Entry<TARDISARSJettison, ARS> map : tap.getJettison().entrySet()) {
                                     TARDISARSJettisonRunnable jr = new TARDISARSJettisonRunnable(plugin, map.getKey(), map.getValue(), ids.get(p.getName()), p);
@@ -577,12 +578,12 @@ public class TARDISARSListener implements Listener {
                                 delay += period;
                             }
                         } else {
-                            p.sendMessage(plugin.getPluginName() + tap.getError());
+                            TARDISMessage.send(p, plugin.getPluginName() + tap.getError());
                             // reset map to the previous version
                             revert(n);
                         }
                     } else {
-                        p.sendMessage(plugin.getPluginName() + "Only the Timelord of this TARDIS can reconfigure rooms!");
+                        TARDISMessage.send(p, plugin.getPluginName() + "Only the Timelord of this TARDIS can reconfigure rooms!");
                         revert(n);
                     }
                     map_data.remove(n);
