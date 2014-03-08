@@ -62,7 +62,7 @@ public class TARDISFindCommand {
                 return false;
             }
         } else {
-            TARDISMessage.send(player, plugin.getPluginName() + "You need to craft a TARDIS Locator! Type " + ChatColor.AQUA + "/tardisrecipe locator" + ChatColor.RESET + " to see how to make it.");
+            TARDISMessage.send(player, plugin.getPluginName() + "You need to craft a TARDIS Locator! Type " + ChatColor.AQUA + " /tardisrecipe locator " + ChatColor.RESET + " to see how to make it.");
             return true;
         }
     }

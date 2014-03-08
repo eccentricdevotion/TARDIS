@@ -50,7 +50,7 @@ public class TARDISHomeCommand {
                 return true;
             }
             if (!plugin.getTardisArea().areaCheckInExisting(eyeLocation)) {
-                TARDISMessage.send(player, plugin.getPluginName() + "You cannot use /tardis home in a TARDIS area! Please use " + ChatColor.AQUA + "/tardistravel area [area name]");
+                TARDISMessage.send(player, plugin.getPluginName() + "You cannot use /tardis home in a TARDIS area! Please use " + ChatColor.AQUA + " /tardistravel area [area name]");
                 return true;
             }
             if (!plugin.getPluginRespect().getRespect(player, eyeLocation, true)) {

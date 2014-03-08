@@ -66,7 +66,7 @@ public class TARDISRescue {
         Player destPlayer = plugin.getServer().getPlayer(saved);
         Location player_loc = destPlayer.getLocation();
         if (!plugin.getTardisArea().areaCheckInExisting(player_loc)) {
-            TARDISMessage.send(player, plugin.getPluginName() + "The player is in a TARDIS area! Please use " + ChatColor.AQUA + "/tardistravel area [area name]");
+            TARDISMessage.send(player, plugin.getPluginName() + "The player is in a TARDIS area! Please use " + ChatColor.AQUA + " /tardistravel area [area name]");
             return (!rescue);
         }
         if (!plugin.getPluginRespect().getRespect(player, player_loc, true)) {
@@ -137,7 +137,7 @@ public class TARDISRescue {
             }
             int tardis_id = rst.getTardis_id();
             if (tardis_id != id) {
-                TARDISMessage.send(player, plugin.getPluginName() + "You can only run this command if you are the Timelord of " + ChatColor.LIGHT_PURPLE + "this" + ChatColor.RESET + " TARDIS!");
+                TARDISMessage.send(player, plugin.getPluginName() + "You can only run this command if you are the Timelord of " + ChatColor.LIGHT_PURPLE + " this " + ChatColor.RESET + " TARDIS!");
                 return false;
             }
             int level = rs.getArtron_level();

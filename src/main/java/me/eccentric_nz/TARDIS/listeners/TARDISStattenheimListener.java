@@ -108,7 +108,7 @@ public class TARDISStattenheimListener implements Listener {
                         }
                     }
                     if (!plugin.getTardisArea().areaCheckInExisting(remoteLocation)) {
-                        TARDISMessage.send(player, plugin.getPluginName() + "You cannot use /tardis comehere to bring the Police Box to a TARDIS area! Please use " + ChatColor.AQUA + "/tardistravel area [area name]");
+                        TARDISMessage.send(player, plugin.getPluginName() + "You cannot use /tardis comehere to bring the Police Box to a TARDIS area! Please use " + ChatColor.AQUA + " /tardistravel area [area name]");
                         return;
                     }
                     if (!useless.contains(m)) {

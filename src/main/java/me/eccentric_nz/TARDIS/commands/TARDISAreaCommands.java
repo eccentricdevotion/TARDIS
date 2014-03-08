@@ -72,7 +72,7 @@ public class TARDISAreaCommands implements CommandExecutor {
             if (args[0].equals("start")) {
                 // check name is unique and acceptable
                 if (args.length < 2 || !args[1].matches("[A-Za-z0-9_]{2,16}")) {
-                    TARDISMessage.send(player, plugin.getPluginName() + "That doesn't appear to be a valid area name (it may be too long)" + ChatColor.GREEN + " /tardisarea start [area_name_goes_here]");
+                    TARDISMessage.send(player, plugin.getPluginName() + "That doesn't appear to be a valid area name (it may be too long) " + ChatColor.GREEN + " /tardisarea start [area_name_goes_here]");
                     return false;
                 }
                 ResultSetAreas rsa = new ResultSetAreas(plugin, null, true);
@@ -91,7 +91,7 @@ public class TARDISAreaCommands implements CommandExecutor {
             }
             if (args[0].equals("end")) {
                 if (!plugin.getTrackerKeeper().getTrackBlock().containsKey(player.getName())) {
-                    TARDISMessage.send(player, plugin.getPluginName() + ChatColor.RED + "You haven't selected an area start block!");
+                    TARDISMessage.send(player, plugin.getPluginName() + ChatColor.RED + " You haven't selected an area start block!");
                     return false;
                 }
                 plugin.getTrackerKeeper().getTrackEnd().put(player.getName(), "end");

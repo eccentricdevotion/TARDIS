@@ -116,7 +116,7 @@ public class TARDISTravelCommands implements CommandExecutor {
                 }
                 int tardis_id = rst.getTardis_id();
                 if (tardis_id != id) {
-                    TARDISMessage.send(player, plugin.getPluginName() + "You can only run this command if you are the Timelord of " + ChatColor.LIGHT_PURPLE + "this" + ChatColor.RESET + " TARDIS!");
+                    TARDISMessage.send(player, plugin.getPluginName() + "You can only run this command if you are the Timelord of " + ChatColor.LIGHT_PURPLE + " this" + ChatColor.RESET + " TARDIS!");
                     return true;
                 }
                 int travel = plugin.getArtronConfig().getInt("travel");
@@ -130,7 +130,7 @@ public class TARDISTravelCommands implements CommandExecutor {
                 if (player.hasPermission("tardis.exile") && plugin.getConfig().getBoolean("travel.exile")) {
                     // get the exile area
                     String permArea = plugin.getTardisArea().getExileArea(player);
-                    TARDISMessage.send(player, plugin.getPluginName() + ChatColor.RED + " Notice:" + ChatColor.RESET + " Your travel has been restricted to the [" + permArea + "] area!");
+                    TARDISMessage.send(player, plugin.getPluginName() + ChatColor.RED + " Notice: " + ChatColor.RESET + " Your travel has been restricted to the [" + permArea + "] area!");
                     Location l = plugin.getTardisArea().getNextSpot(permArea);
                     if (l == null) {
                         TARDISMessage.send(player, plugin.getPluginName() + MESSAGE.NO_MORE_SPOTS.getText());
@@ -217,7 +217,7 @@ public class TARDISTravelCommands implements CommandExecutor {
                         } else {
                             if (player.hasPermission("tardis.timetravel.player")) {
                                 if (plugin.getConfig().getString("preferences.difficulty").equals("hard")) {
-                                    TARDISMessage.send(player, plugin.getPluginName() + "You need to use the Advanced Console! See the " + ChatColor.AQUA + "TARDIS Information System" + ChatColor.RESET + " for help with using Disks.");
+                                    TARDISMessage.send(player, plugin.getPluginName() + "You need to use the Advanced Console! See the " + ChatColor.AQUA + " TARDIS Information System" + ChatColor.RESET + " for help with using Disks.");
                                     return true;
                                 }
                                 if (player.getName().equalsIgnoreCase(args[0])) {
@@ -248,7 +248,7 @@ public class TARDISTravelCommands implements CommandExecutor {
                         }
                     }
                     if (plugin.getConfig().getString("preferences.difficulty").equals("hard") && mustUseAdvanced.contains(args[0].toLowerCase())) {
-                        TARDISMessage.send(player, plugin.getPluginName() + "You need to use the Advanced Console! See the " + ChatColor.AQUA + "TARDIS Information System" + ChatColor.RESET + " for help with using Disks.");
+                        TARDISMessage.send(player, plugin.getPluginName() + "You need to use the Advanced Console! See the " + ChatColor.AQUA + " TARDIS Information System " + ChatColor.RESET + " for help with using Disks.");
                         return true;
                     }
                     if (args.length == 2 && args[0].equalsIgnoreCase("biome")) {
@@ -328,7 +328,7 @@ public class TARDISTravelCommands implements CommandExecutor {
                             whered.put("tardis_id", id);
                             ResultSetDestinations rsd = new ResultSetDestinations(plugin, whered, false);
                             if (!rsd.resultSet()) {
-                                TARDISMessage.send(player, plugin.getPluginName() + "Could not find a destination with that name! try using " + ChatColor.GREEN + "/TARDIS list saves" + ChatColor.RESET + " first.");
+                                TARDISMessage.send(player, plugin.getPluginName() + "Could not find a destination with that name! try using " + ChatColor.GREEN + " /TARDIS list saves " + ChatColor.RESET + " first.");
                                 return true;
                             }
                             World w = plugin.getServer().getWorld(rsd.getWorld());
@@ -346,7 +346,7 @@ public class TARDISTravelCommands implements CommandExecutor {
                                     wheres.put("z", rsd.getZ());
                                     ResultSetCurrentLocation rsz = new ResultSetCurrentLocation(plugin, wheres);
                                     if (rsz.resultSet()) {
-                                        TARDISMessage.send(player, plugin.getPluginName() + "A TARDIS already occupies this parking spot! Try using the " + ChatColor.AQUA + "/tardistravel area [name]" + ChatColor.RESET + " command instead.");
+                                        TARDISMessage.send(player, plugin.getPluginName() + "A TARDIS already occupies this parking spot! Try using the " + ChatColor.AQUA + " /tardistravel area [name] " + ChatColor.RESET + " command instead.");
                                         return true;
                                     }
                                 }
@@ -390,7 +390,7 @@ public class TARDISTravelCommands implements CommandExecutor {
                         wherea.put("area_name", args[1]);
                         ResultSetAreas rsa = new ResultSetAreas(plugin, wherea, false);
                         if (!rsa.resultSet()) {
-                            TARDISMessage.send(player, plugin.getPluginName() + "Could not find an area with that name! try using " + ChatColor.GREEN + "/tardis list areas" + ChatColor.RESET + " first.");
+                            TARDISMessage.send(player, plugin.getPluginName() + "Could not find an area with that name! try using " + ChatColor.GREEN + " /tardis list areas " + ChatColor.RESET + " first.");
                             return true;
                         }
                         if ((!player.hasPermission("tardis.area." + args[1]) && !player.hasPermission("tardis.area.*")) || (!player.isPermissionSet("tardis.area." + args[1]) && !player.isPermissionSet("tardis.area.*"))) {
@@ -616,7 +616,7 @@ public class TARDISTravelCommands implements CommandExecutor {
 
     private int checkLocation(Location location, Player player, int id, TARDISTimeTravel tt) {
         if (!plugin.getTardisArea().areaCheckInExisting(location)) {
-            TARDISMessage.send(player, plugin.getPluginName() + "The location is in a TARDIS area! Please use " + ChatColor.AQUA + "/tardistravel area [area name]");
+            TARDISMessage.send(player, plugin.getPluginName() + "The location is in a TARDIS area! Please use " + ChatColor.AQUA + " /tardistravel area [area name]");
             return 1;
         }
         if (!plugin.getPluginRespect().getRespect(player, location, true)) {

@@ -106,7 +106,7 @@ public class TARDISHideCommand {
             pdd.setSubmarine(rsc.isSubmarine());
             pdd.setTardisID(id);
             plugin.getPresetDestroyer().destroyPreset(pdd);
-            TARDISMessage.send(player, plugin.getPluginName() + "The TARDIS Police Box was hidden! Use " + ChatColor.GREEN + "/tardis rebuild" + ChatColor.RESET + " to show it again.");
+            TARDISMessage.send(player, plugin.getPluginName() + "The TARDIS Police Box was hidden! Use " + ChatColor.GREEN + " /tardis rebuild " + ChatColor.RESET + " to show it again.");
             qf.alterEnergyLevel("tardis", -hide, wheret, player);
             // set hidden to true
             HashMap<String, Object> whereh = new HashMap<String, Object>();
