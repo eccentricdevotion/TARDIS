@@ -17,7 +17,11 @@
 package me.eccentric_nz.TARDIS.utility;
 
 import com.palmergames.bukkit.towny.Towny;
+import com.palmergames.bukkit.towny.exceptions.NotRegisteredException;
+import com.palmergames.bukkit.towny.object.Resident;
+import com.palmergames.bukkit.towny.object.TownBlock;
 import com.palmergames.bukkit.towny.object.TownyUniverse;
+import java.util.List;
 import me.eccentric_nz.TARDIS.TARDIS;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
@@ -41,20 +45,44 @@ public class TARDISTownyChecker {
     }
 
     /**
-     * Checks whether a location is in 'wilderness'... ie NOT in a Towny town.
+     * Checks whether a player can land in a location that may be in a Towny
+     * town. If the player is a resident of the town, then it will be allowed.
      *
      * @param p the player
      * @param l the location instance to check.
      * @return true or false depending on whether the player can build in this
      * location
      */
-    public boolean isWilderness(Player p, Location l) {
-        boolean bool = true;
+    public boolean playerIsResident(Player p, Location l) {
         if (towny != null) {
-            if (!TownyUniverse.isWilderness(l.getBlock())) {
-                bool = false;
+            TownBlock tb = TownyUniverse.getTownBlock(l);
+            if (tb == null) {
+                // allow, location is not within a town
+                return true;
             }
+            Resident res;
+            try {
+                res = TownyUniverse.getDataSource().getResident(p.getName());
+            } catch (NotRegisteredException ex) {
+                // deny, player is not a resident
+                return false;
+            }
+            if (res != null) {
+                try {
+                    List<Resident> residents = tb.getTown().getResidents();
+                    if (residents.contains(res)) {
+                        // allow, player is resident
+                        return true;
+                    }
+                } catch (NotRegisteredException ex) {
+                    // allow, town is not registered
+                    return true;
+                }
+            }
+            // final fallback - check wilderness
+            // allow if wilderness, deny if a claimed town
+            return (TownyUniverse.isWilderness(l.getBlock()));
         }
-        return bool;
+        return false;
     }
 }

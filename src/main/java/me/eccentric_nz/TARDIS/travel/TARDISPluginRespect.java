@@ -97,7 +97,7 @@ public class TARDISPluginRespect {
             }
             bool = false;
         }
-        if (townyOnServer && plugin.getConfig().getBoolean("preferences.respect_towny") && !tychk.isWilderness(p, l)) {
+        if (townyOnServer && plugin.getConfig().getBoolean("preferences.respect_towny") && !tychk.playerIsResident(p, l)) {
             if (message) {
                 TARDISMessage.send(p, plugin.getPluginName() + "That location is protected by Towny!");
             }
