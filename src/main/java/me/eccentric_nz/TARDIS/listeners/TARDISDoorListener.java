@@ -187,7 +187,7 @@ public class TARDISDoorListener implements Listener {
                                         return;
                                     }
                                     int locked = (rsd.isLocked()) ? 0 : 1;
-                                    String message = (rsd.isLocked()) ? "unlocked" : "locked";
+                                    String message = (rsd.isLocked()) ? "unlocked" : "deadlocked";
                                     HashMap<String, Object> setl = new HashMap<String, Object>();
                                     setl.put("locked", locked);
                                     HashMap<String, Object> wherel = new HashMap<String, Object>();
@@ -276,7 +276,7 @@ public class TARDISDoorListener implements Listener {
                                 }
                             } else if (action == Action.RIGHT_CLICK_BLOCK) {
                                 if (rsd.isLocked()) {
-                                    TARDISMessage.send(player, plugin.getPluginName() + "The door is locked!");
+                                    TARDISMessage.send(player, plugin.getPluginName() + "The door is deadlocked!");
                                     return;
                                 }
                                 int id = rsd.getTardis_id();
