@@ -469,10 +469,10 @@ public class TARDISUtils {
      */
     public void playTARDISSound(Location l, Player p, String s) {
         p.playSound(l, s, volume, 1.0F);
-        for (Entity e : p.getNearbyEntities(10.0D, 10.0D, 10.0D)) {
+        for (Entity e : p.getNearbyEntities(10.0d, 10.0d, 10.0d)) {
             if (e instanceof Player && !((Player) e).equals(p)) {
                 Player pp = (Player) e;
-                pp.playSound(pp.getLocation(), s, volume, 1.0F);
+                pp.playSound(pp.getLocation(), s, volume, 1.0f);
             }
         }
     }
@@ -488,10 +488,10 @@ public class TARDISUtils {
     public void playTARDISSoundNearby(Location l, String s) {
         // spawn an entity at the location - an egg will do
         Entity egg = l.getWorld().spawnEntity(l, EntityType.EGG);
-        for (Entity e : egg.getNearbyEntities(10.0D, 10.0D, 10.0D)) {
+        for (Entity e : egg.getNearbyEntities(16.0d, 16.0d, 16.0d)) {
             if (e instanceof Player) {
                 Player pp = (Player) e;
-                pp.playSound(pp.getLocation(), s, volume, 1.0F);
+                pp.playSound(pp.getLocation(), s, volume, 1.0f);
             }
         }
         // remove entity
