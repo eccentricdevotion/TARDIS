@@ -22,7 +22,7 @@ import me.eccentric_nz.TARDIS.achievement.TARDISAchievementFactory;
 import me.eccentric_nz.TARDIS.advanced.TARDISCircuitChecker;
 import me.eccentric_nz.TARDIS.artron.TARDISArtronIndicator;
 import me.eccentric_nz.TARDIS.artron.TARDISArtronLevels;
-import me.eccentric_nz.TARDIS.builders.TARDISPresetBuilderData;
+import me.eccentric_nz.TARDIS.builders.TARDISMaterialisationData;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetControls;
 import me.eccentric_nz.TARDIS.database.ResultSetCurrentLocation;
@@ -30,7 +30,6 @@ import me.eccentric_nz.TARDIS.database.ResultSetDoors;
 import me.eccentric_nz.TARDIS.database.ResultSetNextLocation;
 import me.eccentric_nz.TARDIS.database.ResultSetPlayerPrefs;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
-import me.eccentric_nz.TARDIS.destroyers.TARDISPresetDestroyerData;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
 import me.eccentric_nz.TARDIS.enumeration.MESSAGE;
 import me.eccentric_nz.TARDIS.travel.TARDISMalfunction;
@@ -242,13 +241,14 @@ public class TARDISHandbrakeListener implements Listener {
                                             }
                                             boolean mat = plugin.getConfig().getBoolean("police_box.materialise");
                                             plugin.getTrackerKeeper().getTrackInVortex().add(Integer.valueOf(id));
-                                            final TARDISPresetDestroyerData pdd = new TARDISPresetDestroyerData();
+                                            final TARDISMaterialisationData pdd = new TARDISMaterialisationData();
                                             pdd.setChameleon(cham);
                                             pdd.setDirection(cd);
                                             pdd.setLocation(l);
                                             pdd.setDematerialise(mat);
                                             pdd.setPlayer(player);
                                             pdd.setHide(false);
+                                            pdd.setOutside(false);
                                             pdd.setSubmarine(sub);
                                             pdd.setTardisID(id);
                                             if (!hidden && !plugin.getTrackerKeeper().getTrackReset().contains(resetw)) {
@@ -261,11 +261,12 @@ public class TARDISHandbrakeListener implements Listener {
                                             }
                                             long delay = (mat) ? 500L : 1L;
                                             final boolean mine_sound = minecart;
-                                            final TARDISPresetBuilderData pbd = new TARDISPresetBuilderData();
+                                            final TARDISMaterialisationData pbd = new TARDISMaterialisationData();
                                             pbd.setChameleon(cham);
                                             pbd.setDirection(sd);
                                             pbd.setLocation(exit);
                                             pbd.setMalfunction(malfunction);
+                                            pbd.setOutside(false);
                                             pbd.setPlayer(player);
                                             pbd.setRebuild(false);
                                             pbd.setSubmarine(is_next_sub);

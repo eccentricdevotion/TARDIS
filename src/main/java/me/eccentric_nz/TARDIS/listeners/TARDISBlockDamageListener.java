@@ -18,7 +18,7 @@ package me.eccentric_nz.TARDIS.listeners;
 
 import java.util.HashMap;
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.builders.TARDISPresetBuilderData;
+import me.eccentric_nz.TARDIS.builders.TARDISMaterialisationData;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetBlocks;
 import me.eccentric_nz.TARDIS.database.ResultSetCurrentLocation;
@@ -145,11 +145,12 @@ public class TARDISBlockDamageListener implements Listener {
             HashMap<String, Object> wheret = new HashMap<String, Object>();
             wheret.put("tardis_id", id);
             QueryFactory qf = new QueryFactory(plugin);
-            final TARDISPresetBuilderData pbd = new TARDISPresetBuilderData();
+            final TARDISMaterialisationData pbd = new TARDISMaterialisationData();
             pbd.setChameleon(cham);
             pbd.setDirection(rsc.getDirection());
             pbd.setLocation(l);
             pbd.setMalfunction(false);
+            pbd.setOutside(false);
             pbd.setPlayer(player);
             pbd.setRebuild(true);
             pbd.setSubmarine(rsc.isSubmarine());

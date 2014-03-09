@@ -19,7 +19,7 @@ package me.eccentric_nz.TARDIS.listeners;
 import java.util.HashMap;
 import java.util.List;
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.builders.TARDISPresetBuilderData;
+import me.eccentric_nz.TARDIS.builders.TARDISMaterialisationData;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetAreas;
 import me.eccentric_nz.TARDIS.database.ResultSetCurrentLocation;
@@ -27,7 +27,6 @@ import me.eccentric_nz.TARDIS.database.ResultSetHomeLocation;
 import me.eccentric_nz.TARDIS.database.ResultSetPlayerPrefs;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import me.eccentric_nz.TARDIS.database.ResultSetTravellers;
-import me.eccentric_nz.TARDIS.destroyers.TARDISPresetDestroyerData;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
 import me.eccentric_nz.TARDIS.travel.TARDISEPSRunnable;
 import org.bukkit.Location;
@@ -151,13 +150,14 @@ public class TARDISTimeLordDeathListener implements Listener {
                                 boolean cham = rs.isChamele_on();
                                 COMPASS fd = (going_home) ? hd : cd;
                                 // destroy police box
-                                final TARDISPresetDestroyerData pdd = new TARDISPresetDestroyerData();
+                                final TARDISMaterialisationData pdd = new TARDISMaterialisationData();
                                 pdd.setChameleon(cham);
                                 pdd.setDirection(cd);
                                 pdd.setLocation(sl);
                                 pdd.setDematerialise(plugin.getConfig().getBoolean("police_box.materialise"));
                                 pdd.setPlayer(player);
                                 pdd.setHide(false);
+                                pdd.setOutside(false);
                                 pdd.setSubmarine(rsc.isSubmarine());
                                 pdd.setTardisID(id);
                                 if (!rs.isHidden()) {
@@ -170,13 +170,14 @@ public class TARDISTimeLordDeathListener implements Listener {
                                     tid.put("tardis_id", id);
                                     qf.doUpdate("tardis", set, tid);
                                 }
-                                final TARDISPresetBuilderData pbd = new TARDISPresetBuilderData();
+                                final TARDISMaterialisationData pbd = new TARDISMaterialisationData();
                                 pbd.setChameleon(cham);
                                 pbd.setDirection(fd);
                                 pbd.setLocation(goto_loc);
                                 pbd.setMalfunction(false);
                                 pbd.setPlayer(player);
                                 pbd.setRebuild(false);
+                                pbd.setOutside(false);
                                 pbd.setSubmarine(sub);
                                 pbd.setTardisID(id);
                                 plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {

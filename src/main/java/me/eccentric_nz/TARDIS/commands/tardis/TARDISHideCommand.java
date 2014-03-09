@@ -19,11 +19,11 @@ package me.eccentric_nz.TARDIS.commands.tardis;
 import java.util.HashMap;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.advanced.TARDISCircuitChecker;
+import me.eccentric_nz.TARDIS.builders.TARDISMaterialisationData;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetCurrentLocation;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import me.eccentric_nz.TARDIS.database.ResultSetTravellers;
-import me.eccentric_nz.TARDIS.destroyers.TARDISPresetDestroyerData;
 import me.eccentric_nz.TARDIS.enumeration.MESSAGE;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import org.bukkit.ChatColor;
@@ -96,13 +96,14 @@ public class TARDISHideCommand {
                 TARDISMessage.send(player, plugin.getPluginName() + ChatColor.RED + "The TARDIS does not have enough Artron Energy to hide!");
                 return false;
             }
-            final TARDISPresetDestroyerData pdd = new TARDISPresetDestroyerData();
+            final TARDISMaterialisationData pdd = new TARDISMaterialisationData();
             pdd.setChameleon(false);
             pdd.setDirection(rsc.getDirection());
             pdd.setLocation(l);
             pdd.setDematerialise(false);
             pdd.setPlayer(null);
             pdd.setHide(false);
+            pdd.setOutside(false);
             pdd.setSubmarine(rsc.isSubmarine());
             pdd.setTardisID(id);
             plugin.getPresetDestroyer().destroyPreset(pdd);

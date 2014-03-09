@@ -23,6 +23,7 @@ import java.util.HashMap;
 import java.util.List;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.builders.TARDISInteriorPostioning;
+import me.eccentric_nz.TARDIS.builders.TARDISMaterialisationData;
 import me.eccentric_nz.TARDIS.builders.TARDISTIPSData;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetBlocks;
@@ -77,13 +78,14 @@ public class TARDISExterminator {
                     return false;
                 }
                 Location bb_loc = new Location(rsc.getWorld(), rsc.getX(), rsc.getY(), rsc.getZ());
-                final TARDISPresetDestroyerData pdd = new TARDISPresetDestroyerData();
+                final TARDISMaterialisationData pdd = new TARDISMaterialisationData();
                 pdd.setChameleon(false);
                 pdd.setDirection(rsc.getDirection());
                 pdd.setLocation(bb_loc);
                 pdd.setDematerialise(false);
                 pdd.setPlayer(null);
                 pdd.setHide(false);
+                pdd.setOutside(false);
                 pdd.setSubmarine(rsc.isSubmarine());
                 pdd.setTardisID(id);
                 if (!hid) {
@@ -209,13 +211,14 @@ public class TARDISExterminator {
             }
             int signy = -2;
             // if the sign was on the TARDIS destroy the TARDIS!
-            final TARDISPresetDestroyerData pdd = new TARDISPresetDestroyerData();
+            final TARDISMaterialisationData pdd = new TARDISMaterialisationData();
             pdd.setChameleon(false);
             pdd.setDirection(d);
             pdd.setLocation(bb_loc);
             pdd.setDematerialise(false);
             pdd.setPlayer(null);
             pdd.setHide(false);
+            pdd.setOutside(false);
             pdd.setSubmarine(rsc.isSubmarine());
             pdd.setTardisID(id);
             if (sign_loc.getBlockX() == bb_loc.getBlockX() + signx && sign_loc.getBlockY() + signy == bb_loc.getBlockY() && sign_loc.getBlockZ() == bb_loc.getBlockZ() + signz) {

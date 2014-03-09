@@ -20,12 +20,12 @@ import java.io.File;
 import java.util.HashMap;
 import java.util.List;
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.builders.TARDISMaterialisationData;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetCurrentLocation;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import me.eccentric_nz.TARDIS.database.ResultSetTravellers;
 import static me.eccentric_nz.TARDIS.destroyers.TARDISExterminator.deleteFolder;
-import me.eccentric_nz.TARDIS.destroyers.TARDISPresetDestroyerData;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
 import me.eccentric_nz.TARDIS.enumeration.MESSAGE;
 import me.eccentric_nz.TARDIS.enumeration.SCHEMATIC;
@@ -129,13 +129,14 @@ public class TARDISDeleteCommand {
                 plugin.getInteriorDestroyer().destroyInner(schm, id, cw, restore, args[1], tips);
             }
             if (!rs.isHidden()) {
-                final TARDISPresetDestroyerData pdd = new TARDISPresetDestroyerData();
+                final TARDISMaterialisationData pdd = new TARDISMaterialisationData();
                 pdd.setChameleon(false);
                 pdd.setDirection(d);
                 pdd.setLocation(bb_loc);
                 pdd.setDematerialise(false);
                 pdd.setPlayer(null);
                 pdd.setHide(false);
+                pdd.setOutside(false);
                 pdd.setSubmarine(rsc.isSubmarine());
                 pdd.setTardisID(id);
                 plugin.getPresetDestroyer().destroyPreset(pdd);

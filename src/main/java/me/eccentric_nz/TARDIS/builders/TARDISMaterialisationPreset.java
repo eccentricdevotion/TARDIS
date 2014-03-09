@@ -61,6 +61,7 @@ public class TARDISMaterialisationPreset implements Runnable {
     private final int lamp;
     private final boolean sub;
     private final boolean minecart;
+    private final boolean outside;
     private final int cham_id;
     private final byte cham_data;
     private Block sponge;
@@ -92,8 +93,10 @@ public class TARDISMaterialisationPreset implements Runnable {
      * @param cham_data the chameleon block data for the police box
      * @param minecart whether to play the minecart sound instead of the
      * resource pack sounds
+     * @param outside whether the player is outside the TARDIS (and the
+     * materialisation sound should be played)
      */
-    public TARDISMaterialisationPreset(TARDIS plugin, Location location, PRESET preset, int tid, COMPASS d, Player player, boolean mal, int lamp, boolean sub, int cham_id, byte cham_data, boolean minecart) {
+    public TARDISMaterialisationPreset(TARDIS plugin, Location location, PRESET preset, int tid, COMPASS d, Player player, boolean mal, int lamp, boolean sub, int cham_id, byte cham_data, boolean minecart, boolean outside) {
         this.plugin = plugin;
         this.d = d;
         this.loops = 18;
@@ -105,6 +108,7 @@ public class TARDISMaterialisationPreset implements Runnable {
         this.mal = mal;
         this.lamp = lamp;
         this.sub = sub;
+        this.outside = outside;
         this.cham_id = cham_id;
         this.cham_data = cham_data;
         this.minecart = minecart;
@@ -176,10 +180,12 @@ public class TARDISMaterialisationPreset implements Runnable {
                     plugin.getPresetBuilder().addPlatform(location, false, d, player.getName(), tid);
                     HashMap<String, Object> where = new HashMap<String, Object>();
                     where.put("tardis_id", tid);
-                    if (!minecart) {
-                        plugin.getUtils().playTARDISSound(location, player, "tardis_land");
-                    } else {
-                        world.playSound(location, Sound.MINECART_INSIDE, 1.0F, 0.0F);
+                    if (outside) {
+                        if (!minecart) {
+                            plugin.getUtils().playTARDISSound(location, player, "tardis_land");
+                        } else {
+                            world.playSound(location, Sound.MINECART_INSIDE, 1.0F, 0.0F);
+                        }
                     }
                     // get direction player is facing from yaw place block under door if block is in list of blocks an iron door cannot go on
                     switch (d) {

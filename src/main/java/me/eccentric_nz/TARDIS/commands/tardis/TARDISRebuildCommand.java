@@ -19,7 +19,7 @@ package me.eccentric_nz.TARDIS.commands.tardis;
 import java.util.HashMap;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.advanced.TARDISCircuitChecker;
-import me.eccentric_nz.TARDIS.builders.TARDISPresetBuilderData;
+import me.eccentric_nz.TARDIS.builders.TARDISMaterialisationData;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetCurrentLocation;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
@@ -95,11 +95,12 @@ public class TARDISRebuildCommand {
                 return false;
             }
             // remove the police box first - should fix conflict between wood and iron doors
-            final TARDISPresetBuilderData pbd = new TARDISPresetBuilderData();
+            final TARDISMaterialisationData pbd = new TARDISMaterialisationData();
             pbd.setChameleon(cham);
             pbd.setDirection(rsc.getDirection());
             pbd.setLocation(l);
             pbd.setMalfunction(false);
+            pbd.setOutside(false);
             pbd.setPlayer(player);
             pbd.setRebuild(true);
             pbd.setSubmarine(rsc.isSubmarine());

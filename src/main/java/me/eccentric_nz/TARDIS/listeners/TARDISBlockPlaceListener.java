@@ -21,7 +21,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.builders.TARDISPresetBuilderData;
+import me.eccentric_nz.TARDIS.builders.TARDISMaterialisationData;
 import me.eccentric_nz.TARDIS.builders.TARDISSpace;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetCount;
@@ -307,11 +307,12 @@ public class TARDISBlockPlaceListener implements Listener {
                         blockBelow.setTypeId(0);
                         blockBottom.setTypeId(0);
                         // turn the block stack into a TARDIS
-                        final TARDISPresetBuilderData pbd = new TARDISPresetBuilderData();
+                        final TARDISMaterialisationData pbd = new TARDISMaterialisationData();
                         pbd.setChameleon(false);
                         pbd.setDirection(COMPASS.valueOf(d));
                         pbd.setLocation(block_loc);
                         pbd.setMalfunction(false);
+                        pbd.setOutside(true);
                         pbd.setPlayer(player);
                         pbd.setRebuild(false);
                         pbd.setSubmarine(isSub(blockBottom));

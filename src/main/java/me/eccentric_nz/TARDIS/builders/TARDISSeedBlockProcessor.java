@@ -238,11 +238,12 @@ public class TARDISSeedBlockProcessor {
                 setlocs.put("direction", d);
                 qf.insertLocations(setlocs);
                 // turn the block stack into a TARDIS
-                TARDISPresetBuilderData pbd = new TARDISPresetBuilderData();
+                TARDISMaterialisationData pbd = new TARDISMaterialisationData();
                 pbd.setChameleon(false);
                 pbd.setDirection(COMPASS.valueOf(d));
                 pbd.setLocation(l);
                 pbd.setMalfunction(false);
+                pbd.setOutside(true);
                 pbd.setPlayer(player);
                 pbd.setRebuild(false);
                 pbd.setSubmarine(isSub(l));

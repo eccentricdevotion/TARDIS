@@ -25,13 +25,16 @@ import org.bukkit.entity.Player;
  *
  * @author eccentric_nz
  */
-public class TARDISPresetBuilderData {
+public class TARDISMaterialisationData {
 
     private COMPASS direction;
     private Location location;
     private Player player;
     private boolean chameleon;
+    private boolean dematerialise;
+    private boolean hide;
     private boolean malfunction;
+    private boolean outside;
     private boolean rebuild;
     private boolean submarine;
     private int tardisID;
@@ -68,12 +71,36 @@ public class TARDISPresetBuilderData {
         this.chameleon = chameleon;
     }
 
+    public boolean isDematerialise() {
+        return dematerialise;
+    }
+
+    public void setDematerialise(boolean dematerialise) {
+        this.dematerialise = dematerialise;
+    }
+
+    public boolean isHide() {
+        return hide;
+    }
+
+    public void setHide(boolean hide) {
+        this.hide = hide;
+    }
+
     public boolean isMalfunction() {
         return malfunction;
     }
 
     public void setMalfunction(boolean malfunction) {
         this.malfunction = malfunction;
+    }
+
+    public boolean isOutside() {
+        return outside;
+    }
+
+    public void setOutside(boolean outside) {
+        this.outside = outside;
     }
 
     public boolean isRebuild() {

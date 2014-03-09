@@ -81,7 +81,7 @@ public class TARDISPresetBuilderFactory {
      *
      * @param pbd the TARDIS build data
      */
-    public void buildPreset(TARDISPresetBuilderData pbd) {
+    public void buildPreset(TARDISMaterialisationData pbd) {
         HashMap<String, Object> where = new HashMap<String, Object>();
         where.put("tardis_id", pbd.getTardisID());
         ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);
@@ -150,7 +150,7 @@ public class TARDISPresetBuilderFactory {
             } else {
                 if (plugin.getConfig().getBoolean("police_box.materialise")) {
                     plugin.getTrackerKeeper().getTrackMaterialising().add(Integer.valueOf(pbd.getTardisID()));
-                    TARDISMaterialisationPreset runnable = new TARDISMaterialisationPreset(plugin, pbd.getLocation(), preset, pbd.getTardisID(), pbd.getDirection(), pbd.getPlayer(), pbd.isMalfunction(), lamp, pbd.isSubmarine(), cham_id, cham_data, minecart);
+                    TARDISMaterialisationPreset runnable = new TARDISMaterialisationPreset(plugin, pbd.getLocation(), preset, pbd.getTardisID(), pbd.getDirection(), pbd.getPlayer(), pbd.isMalfunction(), lamp, pbd.isSubmarine(), cham_id, cham_data, minecart, pbd.isOutside());
                     int taskID = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, runnable, 10L, 20L);
                     runnable.setTask(taskID);
                 } else {

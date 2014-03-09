@@ -53,6 +53,7 @@ public class TARDISDematerialisationPreset implements Runnable {
     private final byte cham_data;
     private final Player player;
     private final boolean sub;
+    private final boolean outside;
     private final TARDISChameleonColumn column;
     private final TARDISChameleonColumn stained_column;
     private final TARDISChameleonColumn glass_column;
@@ -74,8 +75,10 @@ public class TARDISDematerialisationPreset implements Runnable {
      * @param cham_data the chameleon block data for the police box
      * @param player the player to play the sound to
      * @param sub whether the location is submarine
+     * @param outside whether the player is outside the TARDIS (and the
+     * materialisation sound should be played)
      */
-    public TARDISDematerialisationPreset(TARDIS plugin, Location location, PRESET preset, int lamp, int tid, COMPASS d, int cham_id, byte cham_data, Player player, boolean sub) {
+    public TARDISDematerialisationPreset(TARDIS plugin, Location location, PRESET preset, int lamp, int tid, COMPASS d, int cham_id, byte cham_data, Player player, boolean sub, boolean outside) {
         this.plugin = plugin;
         this.d = d;
         this.loops = 18;
@@ -88,6 +91,7 @@ public class TARDISDematerialisationPreset implements Runnable {
         this.cham_data = cham_data;
         this.player = player;
         this.sub = sub;
+        this.outside = outside;
         column = plugin.getPresets().getColumn(preset, d);
         stained_column = plugin.getPresets().getStained(preset, d);
         glass_column = plugin.getPresets().getGlass(preset, d);
@@ -157,17 +161,20 @@ public class TARDISDematerialisationPreset implements Runnable {
                     default:
                         break;
                 }
-                HashMap<String, Object> wherep = new HashMap<String, Object>();
-                wherep.put("player", player.getName());
-                ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, wherep);
-                boolean minecart = false;
-                if (rsp.resultSet()) {
-                    minecart = rsp.isMinecartOn();
-                }
-                if (!minecart) {
-                    plugin.getUtils().playTARDISSound(location, player, "tardis_takeoff");
-                } else {
-                    world.playSound(location, Sound.MINECART_INSIDE, 1.0F, 0.0F);
+                // only play the sound if the player is outside the TARDIS
+                if (outside) {
+                    HashMap<String, Object> wherep = new HashMap<String, Object>();
+                    wherep.put("player", player.getName());
+                    ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, wherep);
+                    boolean minecart = false;
+                    if (rsp.resultSet()) {
+                        minecart = rsp.isMinecartOn();
+                    }
+                    if (!minecart) {
+                        plugin.getUtils().playTARDISSound(location, player, "tardis_takeoff");
+                    } else {
+                        world.playSound(location, Sound.MINECART_INSIDE, 1.0F, 0.0F);
+                    }
                 }
                 the_colour = getWoolColour(tid, preset);
             } else {

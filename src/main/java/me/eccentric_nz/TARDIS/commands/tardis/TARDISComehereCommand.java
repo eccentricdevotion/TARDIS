@@ -19,12 +19,11 @@ package me.eccentric_nz.TARDIS.commands.tardis;
 import java.util.HashMap;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.advanced.TARDISCircuitChecker;
-import me.eccentric_nz.TARDIS.builders.TARDISPresetBuilderData;
+import me.eccentric_nz.TARDIS.builders.TARDISMaterialisationData;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetCurrentLocation;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import me.eccentric_nz.TARDIS.database.ResultSetTravellers;
-import me.eccentric_nz.TARDIS.destroyers.TARDISPresetDestroyerData;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
 import me.eccentric_nz.TARDIS.enumeration.MESSAGE;
 import me.eccentric_nz.TARDIS.travel.TARDISTimeTravel;
@@ -198,13 +197,14 @@ public class TARDISComehereCommand {
                 long delay = (mat) ? 1L : 180L;
                 plugin.getTrackerKeeper().getTrackInVortex().add(Integer.valueOf(id));
                 final boolean hid = hidden;
-                final TARDISPresetDestroyerData pdd = new TARDISPresetDestroyerData();
+                final TARDISMaterialisationData pdd = new TARDISMaterialisationData();
                 pdd.setChameleon(cham);
                 pdd.setDirection(d);
                 pdd.setLocation(oldSave);
                 pdd.setDematerialise(mat);
                 pdd.setPlayer(player);
                 pdd.setHide(false);
+                pdd.setOutside(true);
                 pdd.setSubmarine(rsc.isSubmarine());
                 pdd.setTardisID(id);
                 Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
@@ -218,11 +218,12 @@ public class TARDISComehereCommand {
                         }
                     }
                 }, delay);
-                final TARDISPresetBuilderData pbd = new TARDISPresetBuilderData();
+                final TARDISMaterialisationData pbd = new TARDISMaterialisationData();
                 pbd.setChameleon(cham);
                 pbd.setDirection(d);
                 pbd.setLocation(eyeLocation);
                 pbd.setMalfunction(false);
+                pbd.setOutside(true);
                 pbd.setPlayer(player);
                 pbd.setRebuild(false);
                 pbd.setSubmarine(sub);

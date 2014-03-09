@@ -19,6 +19,7 @@ package me.eccentric_nz.TARDIS.destroyers;
 import java.util.Collections;
 import java.util.HashMap;
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.builders.TARDISMaterialisationData;
 import me.eccentric_nz.TARDIS.chameleon.TARDISChameleonCircuit;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetDoors;
@@ -48,7 +49,7 @@ public class TARDISPresetDestroyerFactory {
         this.plugin = plugin;
     }
 
-    public void destroyPreset(TARDISPresetDestroyerData pdd) {
+    public void destroyPreset(TARDISMaterialisationData pdd) {
         HashMap<String, Object> where = new HashMap<String, Object>();
         where.put("tardis_id", pdd.getTardisID());
         ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);
@@ -78,7 +79,7 @@ public class TARDISPresetDestroyerFactory {
                 if (rsp.resultSet()) {
                     lamp = rsp.getLamp();
                 }
-                TARDISDematerialisationPreset runnable = new TARDISDematerialisationPreset(plugin, pdd.getLocation(), demat, lamp, pdd.getTardisID(), pdd.getDirection(), cham_id, cham_data, pdd.getPlayer(), pdd.isSubmarine());
+                TARDISDematerialisationPreset runnable = new TARDISDematerialisationPreset(plugin, pdd.getLocation(), demat, lamp, pdd.getTardisID(), pdd.getDirection(), cham_id, cham_data, pdd.getPlayer(), pdd.isSubmarine(), pdd.isOutside());
                 int taskID = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, runnable, 10L, 20L);
                 runnable.setTask(taskID);
             } else {
