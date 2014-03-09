@@ -596,6 +596,37 @@ public class TARDISSonicListener implements Listener {
                             allow = false;
                         }
                     }
+                    // is it a TARDIS door?
+                    HashMap<String, Object> where = new HashMap<String, Object>();
+                    String bw = lowerdoor.getLocation().getWorld().getName();
+                    int bx = lowerdoor.getLocation().getBlockX();
+                    int by = lowerdoor.getLocation().getBlockY();
+                    int bz = lowerdoor.getLocation().getBlockZ();
+                    String doorloc = bw + ":" + bx + ":" + by + ":" + bz;
+                    where.put("door_location", doorloc);
+                    ResultSetDoors rs = new ResultSetDoors(plugin, where, false);
+                    if (rs.resultSet()) {
+                        int type = rs.getDoor_type();
+                        if (!rs.isLocked() && (type == 0 || type == 1)) { // only preset doors
+                            // yes and it is not deadlocked
+                            HashMap<String, Object> opposite = new HashMap<String, Object>();
+                            opposite.put("door_type", (type == 0) ? 1 : 0);
+                            opposite.put("tardis_id", rs.getTardis_id());
+                            ResultSetDoors rsd = new ResultSetDoors(plugin, opposite, false);
+                            if (rsd.resultSet()) {
+                                // update the state of the opposite door as well
+                                Block opp_block = plugin.getUtils().getLocationFromDB(rsd.getDoor_location(), 0.0f, 0.0f).getBlock();
+                                BlockState bsopp = opp_block.getState();
+                                Door opp_door = (Door) bsopp.getData();
+                                opp_door.setOpen(!opp_door.isOpen());
+                                bsopp.setData(opp_door);
+                                bsopp.update(true);
+                            }
+                        } else {
+                            allow = false;
+                            TARDISMessage.send(player, plugin.getPluginName() + "The door is deadlocked!");
+                        }
+                    }
                     if (allow) {
                         BlockState bsl = lowerdoor.getState();
                         Door door = (Door) bsl.getData();
