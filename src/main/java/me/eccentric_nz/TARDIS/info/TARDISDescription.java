@@ -93,7 +93,8 @@ public enum TARDISDescription {
     VILLAGE("A home for the weary trader."),
     WOOD("A secondary console room made of wood."),
     WORKSHOP("Craft, smelt, brew, enchant and repair."),
-    MALFUNCTIONS("When the TARDIS travels, there is a chance of a malfunctioning happening that deposits the TARDIS in an unexpected location."),
+    ALT_CONTROLS("Please refer to the Advanced Console, the Save Sign,  the Keyboard, the Destination Terminal and the travel commands."),
+    MALFUNCTIONS("When the TARDIS travels, there is a chance of a malfunction happening that deposits the TARDIS in an unexpected location."),
     CONSOLE_ARS(" INFO: The Architectural Reconfiguration System allows the player to add and remove rooms in the TARDIS\n"
             + "USAGE: Right-click.\n"
             + "UPDATING: /tardis update ARS\n"

@@ -267,7 +267,7 @@ public enum TARDISInfoMenu {
     Y_REPEATER("TIS|Manual|Console Blocks 2|Y Repeater", "CONSOLE_BLOCKS_2", "Y"), //Y
     Z_REPEATER("TIS|Manual|Console Blocks 2|Z Repeater", "CONSOLE_BLOCKS_2", "Z"), //Z
     TARDIS_CONTROLS("TIS|Manual|TARDIS Controls", "MANUAL", "S"),
-    MALFUNCTIONS("TIS|Manual|TARDIS Controls", "TARDIS_CONTROLS", "M"),
+    MALFUNCTIONS("TIS|Manual|TARDIS Controls|Malfunctions", "TARDIS_CONTROLS", "M"),
     ALT_CONTROLS("TIS|Manual|TARDIS Controls|Alternative Controls", "TARDIS_CONTROLS", "l"),;
     private final String name;
     private final String parent;

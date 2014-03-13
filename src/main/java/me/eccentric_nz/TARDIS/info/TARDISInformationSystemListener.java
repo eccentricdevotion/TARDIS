@@ -94,10 +94,10 @@ public class TARDISInformationSystemListener implements Listener {
                     // SECOND level menu
                     case CONSOLE_BLOCKS:
                         if (chat.equalsIgnoreCase("v")) {
-                            processKey(p, TARDISInfoMenu.ADVANCED);
+                            showInfo(p, TARDISInfoMenu.ADVANCED);
                         }
                         if (chat.equalsIgnoreCase("S")) {
-                            processKey(p, TARDISInfoMenu.STORAGE);
+                            showInfo(p, TARDISInfoMenu.STORAGE);
                         }
                         if (chat.equalsIgnoreCase("A")) {
                             showInfo(p, TARDISInfoMenu.CONSOLE_ARS);
@@ -283,20 +283,20 @@ public class TARDISInformationSystemListener implements Listener {
                             showInfo(p, TARDISInfoMenu.MALFUNCTIONS);
                         }
                         if (chat.equalsIgnoreCase("l")) {
-                            processKey(p, TARDISInfoMenu.ALT_CONTROLS);
+                            showInfo(p, TARDISInfoMenu.ALT_CONTROLS);
                         }
                         break;
                     case TIME_TRAVEL:
 
                         break;
-                    case ALT_CONTROLS:
-                        if (chat.equalsIgnoreCase("S")) {
-                            processKey(p, TARDISInfoMenu.SAVE_SIGN);
-                        }
-                        if (chat.equalsIgnoreCase("K")) {
-                            showInfo(p, TARDISInfoMenu.KEYBOARD);
-                        }
-                        break;
+//                    case ALT_CONTROLS:
+//                        if (chat.equalsIgnoreCase("S")) {
+//                            processKey(p, TARDISInfoMenu.SAVE_SIGN);
+//                        }
+//                        if (chat.equalsIgnoreCase("K")) {
+//                            showInfo(p, TARDISInfoMenu.KEYBOARD);
+//                        }
+//                        break;
                     case DOOR:
                         showInfo(p, TARDISInfoMenu.DOOR);
                         break;
