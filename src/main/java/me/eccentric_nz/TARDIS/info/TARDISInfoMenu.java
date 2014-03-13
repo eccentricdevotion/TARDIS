@@ -241,8 +241,8 @@ public enum TARDISInfoMenu {
     CONSOLE_BLOCKS("TIS|Manual|Console Blocks", "MANUAL", "C"),
     CONSOLE_BLOCKS_2("TIS|Manual|Console Blocks 2", "MANUAL", "o"),
     CONSOLE_ARS("TIS|Manual|Console Blocks|ARS", "CONSOLE_BLOCKS", "A"), //A
-    ADVANCED("TIS|Manual|Console Blocks|Advanced Console", "CONSOLE_BLOCKS", "d"), //r
-    STORAGE("TIS|Manual|Console Blocks|Disk Storage", "CONSOLE_BLOCKS", "S"), //c
+    ADVANCED("TIS|Manual|Console Blocks|Advanced Console", "CONSOLE_BLOCKS", "v"), //v
+    STORAGE("TIS|Manual|Console Blocks|Disk Storage", "CONSOLE_BLOCKS", "S"), //S
     ARTRON("TIS|Manual|Console Blocks|Artron Energy Capacitor", "CONSOLE_BLOCKS", "r"), //r
     BACKDOOR("TIS|Manual|Console Blocks|Backdoor", "CONSOLE_BLOCKS", "B"), //B
     BUTTON("TIS|Manual|Console Blocks|Button", "CONSOLE_BLOCKS", "u"), //u
@@ -252,9 +252,9 @@ public enum TARDISInfoMenu {
     DOOR("TIS|Manual|Console Blocks|Door", "CONSOLE_BLOCKS", "D"), //D
     EPS("TIS|Manual|Console Blocks|EPS", "CONSOLE_BLOCKS", "P"), //P
     CONSOLE_FARM("TIS|Manual|Console Blocks|Farm", "CONSOLE_BLOCKS", "m"), //m
-    HANDBRAKE("TIS|Manual|Console Blocks|Handbrake", "CONSOLE_BLOCKS", "b"), //a
-    INFO("TIS|Manual|Console Blocks|Information System", "CONSOLE_BLOCKS", "I"), //I
-    KEYBOARD("TIS|Manual|Console Blocks|Keyboard", "CONSOLE_BLOCKS", "K"), //K
+    HANDBRAKE("TIS|Manual|Console Blocks|Handbrake", "CONSOLE_BLOCKS", "k"), //k
+    INFO("TIS|Manual|Console Blocks|Information System", "CONSOLE_BLOCKS_2", "I"), //I
+    KEYBOARD("TIS|Manual|Console Blocks|Keyboard", "CONSOLE_BLOCKS_2", "K"), //K
     LIGHT("TIS|Manual|Console Blocks 2|Light", "CONSOLE_BLOCKS_2", "L"), //L
     CONSOLE_RAIL("TIS|Manual|Console Blocks 2|Rails", "CONSOLE_BLOCKS_2", "R"), //R
     SAVE_SIGN("TIS|Manual|Console Blocks 2|Save Sign", "CONSOLE_BLOCKS_2", "S"), //S

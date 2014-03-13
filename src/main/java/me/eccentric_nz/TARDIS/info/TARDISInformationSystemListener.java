@@ -93,7 +93,7 @@ public class TARDISInformationSystemListener implements Listener {
                         break;
                     // SECOND level menu
                     case CONSOLE_BLOCKS:
-                        if (chat.equalsIgnoreCase("d")) {
+                        if (chat.equalsIgnoreCase("v")) {
                             processKey(p, TARDISInfoMenu.ADVANCED);
                         }
                         if (chat.equalsIgnoreCase("S")) {
@@ -129,7 +129,7 @@ public class TARDISInformationSystemListener implements Listener {
                         if (chat.equalsIgnoreCase("m")) {
                             showInfo(p, TARDISInfoMenu.CONSOLE_FARM);
                         }
-                        if (chat.equalsIgnoreCase("b`")) {
+                        if (chat.equalsIgnoreCase("k")) {
                             showInfo(p, TARDISInfoMenu.HANDBRAKE);
                         }
                         break;
