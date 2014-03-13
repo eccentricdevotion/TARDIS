@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2013 eccentric_nz
+ * Copyright (C) 2014 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -28,10 +28,9 @@ import org.bukkit.Location;
 import org.bukkit.entity.Player;
 
 /**
- * Due to the age of the TARDIS, it is inclined to break down. The Doctor is
- * often seen with his head stuck in a panel carrying out maintenance of some
- * kind or another, and he occasionally has to give it "percussive maintenance"
- * (a good thump on the console) to get it to start working properly.
+ * A country or nation is a governing entity that is generally smaller than a
+ * planetary government. It is composed of smaller subnational entities, states
+ * or provinces, as are found in many instances on Earth.
  *
  * @author eccentric_nz
  */
@@ -43,6 +42,7 @@ public class TARDISTownyChecker {
     public TARDISTownyChecker(TARDIS plugin, boolean onServer) {
         if (onServer) {
             towny = (Towny) plugin.getPM().getPlugin("Towny");
+            // get the respect_towny setting
             try {
                 tr = TownyRegion.valueOf(plugin.getConfig().getString("preferences.respect_towny"));
             } catch (IllegalArgumentException e) {
@@ -58,7 +58,7 @@ public class TARDISTownyChecker {
      * allowed.
      *
      * @param p the player
-     * @param l the location instance to check.
+     * @param l the location instance to check
      * @return true or false depending on whether the player can build in this
      * location
      */
@@ -79,6 +79,14 @@ public class TARDISTownyChecker {
         return false;
     }
 
+    /**
+     * Checks whether a player can land their TARDIS in a town.
+     *
+     * @param p the player
+     * @param l the location instance to check
+     * @return An instance of the TownyData class that, if necessary, we can use
+     * to do further checks
+     */
     public TownyData playerIsResident(Player p, Location l) {
 
         TownyData td = new TownyData();
@@ -117,6 +125,14 @@ public class TARDISTownyChecker {
         return td;
     }
 
+    /**
+     * Checks whether a player can land in a town that is in the same nation as
+     * his own town.
+     *
+     * @param p the player
+     * @param l the location instance to check
+     * @return true if the player can land in an allied (same Nation) town
+     */
     public boolean playerIsCompatriot(Player p, Location l) {
         TownyData td = playerIsResident(p, l);
         if (td.canTravel()) {
@@ -137,11 +153,17 @@ public class TARDISTownyChecker {
         return false;
     }
 
+    /**
+     * Valid respect_towny config values.
+     */
     private enum TownyRegion {
 
         wilderness, town, nation
     }
 
+    /**
+     * Data class to store check results so we can reuse them again if needed.
+     */
     public class TownyData {
 
         private boolean travel;
