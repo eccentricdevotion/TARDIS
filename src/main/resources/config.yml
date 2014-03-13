@@ -56,7 +56,7 @@ preferences:
     key: GOLD_NUGGET
     use_worldguard: true
     respect_worldguard: true
-    respect_towny: true
+    respect_towny: nation
     respect_worldborder: true
     respect_factions: true
     sfx_volume: 10;

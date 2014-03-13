@@ -75,6 +75,7 @@ public class TARDISAdminCommands implements CommandExecutor {
         firstsStr.put("purge", "");
         firstsStr.put("recharger", "");
         firstsStr.put("reload", "");
+        firstsStr.put("respect_towny", "preferences");
         firstsStr.put("sign_colour", "police_box");
         firstsStrArtron.add("full_charge_item");
         firstsStrArtron.add("jettison_seed");
@@ -104,7 +105,6 @@ public class TARDISAdminCommands implements CommandExecutor {
         firstsBool.put("per_world_perms", "travel");
         firstsBool.put("platform", "travel");
         firstsBool.put("respect_factions", "preferences");
-        firstsBool.put("respect_towny", "preferences");
         firstsBool.put("respect_worldborder", "preferences");
         firstsBool.put("respect_worldguard", "preferences");
         firstsBool.put("return_room_seed", "growth");
@@ -237,6 +237,9 @@ public class TARDISAdminCommands implements CommandExecutor {
                 }
                 if (first.equals("default_world_name")) {
                     return new TARDISDefaultWorldNameCommand(plugin).setName(sender, args);
+                }
+                if (first.equals("respect_towny")) {
+                    return new TARDISSetTownyCommand(plugin).setRegion(sender, args);
                 }
                 if (first.equals("difficulty")) {
                     if (!args[1].equalsIgnoreCase("easy") && !args[1].equalsIgnoreCase("hard")) {

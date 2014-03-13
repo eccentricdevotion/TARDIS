@@ -18,6 +18,7 @@ package me.eccentric_nz.TARDIS.utility;
 
 import com.palmergames.bukkit.towny.Towny;
 import com.palmergames.bukkit.towny.exceptions.NotRegisteredException;
+import com.palmergames.bukkit.towny.object.Nation;
 import com.palmergames.bukkit.towny.object.Resident;
 import com.palmergames.bukkit.towny.object.TownBlock;
 import com.palmergames.bukkit.towny.object.TownyUniverse;
@@ -37,52 +38,138 @@ import org.bukkit.entity.Player;
 public class TARDISTownyChecker {
 
     private Towny towny;
+    private TownyRegion tr;
 
     public TARDISTownyChecker(TARDIS plugin, boolean onServer) {
         if (onServer) {
             towny = (Towny) plugin.getPM().getPlugin("Towny");
+            try {
+                tr = TownyRegion.valueOf(plugin.getConfig().getString("preferences.respect_towny"));
+            } catch (IllegalArgumentException e) {
+                plugin.debug("Could not get TownyRegion from config!");
+                tr = TownyRegion.nation;
+            }
         }
     }
 
     /**
      * Checks whether a player can land in a location that may be in a Towny
-     * town. If the player is a resident of the town, then it will be allowed.
+     * town. If the player is a resident of the town or nation, then it will be
+     * allowed.
      *
      * @param p the player
      * @param l the location instance to check.
      * @return true or false depending on whether the player can build in this
      * location
      */
-    public boolean playerIsResident(Player p, Location l) {
+    public boolean checkTowny(Player p, Location l) {
         if (towny != null) {
-            TownBlock tb = TownyUniverse.getTownBlock(l);
-            if (tb == null) {
-                // allow, location is not within a town
-                return true;
+            switch (tr) {
+                case wilderness:
+                    // allow if wilderness, deny if a claimed town
+                    return (TownyUniverse.isWilderness(l.getBlock()));
+                case town:
+                    // allow wilderness and the player's own town
+                    return playerIsResident(p, l).canTravel();
+                default:
+                    // allow wilderness, the player's own town and any town in the player's nation
+                    return playerIsCompatriot(p, l);
             }
-            Resident res;
+        }
+        return false;
+    }
+
+    public TownyData playerIsResident(Player p, Location l) {
+
+        TownyData td = new TownyData();
+
+        TownBlock tb = TownyUniverse.getTownBlock(l);
+        if (tb == null) {
+            // allow, location is not within a town
+            td.setCanTravel(true);
+            return td;
+        }
+        td.setTownBlock(tb);
+        Resident res;
+        try {
+            res = TownyUniverse.getDataSource().getResident(p.getName());
+            td.setResident(res);
+        } catch (NotRegisteredException ex) {
+            // deny, player is not a resident
+            td.setCanTravel(false);
+            return td;
+        }
+        if (res != null) {
             try {
-                res = TownyUniverse.getDataSource().getResident(p.getName());
+                List<Resident> residents = tb.getTown().getResidents();
+                if (residents.contains(res)) {
+                    // allow, player is resident
+                    td.setCanTravel(true);
+                    return td;
+                }
             } catch (NotRegisteredException ex) {
-                // deny, player is not a resident
-                return false;
+                // allow, town is not registered
+                td.setCanTravel(true);
+                return td;
             }
-            if (res != null) {
+        }
+        td.setCanTravel(TownyUniverse.isWilderness(l.getBlock()));
+        return td;
+    }
+
+    public boolean playerIsCompatriot(Player p, Location l) {
+        TownyData td = playerIsResident(p, l);
+        if (td.canTravel()) {
+            return true;
+        } else {
+            if (td.getResident().hasNation() && td.getResident().hasTown()) {
                 try {
-                    List<Resident> residents = tb.getTown().getResidents();
-                    if (residents.contains(res)) {
-                        // allow, player is resident
+                    Nation nation = td.getResident().getTown().getNation();
+                    if (td.getTownBlock().hasTown() && td.getTownBlock().getTown().getNation().equals(nation)) {
                         return true;
                     }
                 } catch (NotRegisteredException ex) {
-                    // allow, town is not registered
-                    return true;
+                    // no nation, return false
+                    return false;
                 }
             }
-            // final fallback - check wilderness
-            // allow if wilderness, deny if a claimed town
-            return (TownyUniverse.isWilderness(l.getBlock()));
         }
         return false;
+    }
+
+    private enum TownyRegion {
+
+        wilderness, town, nation
+    }
+
+    public class TownyData {
+
+        private boolean travel;
+        private TownBlock townBlock;
+        private Resident resident;
+
+        public boolean canTravel() {
+            return travel;
+        }
+
+        public void setCanTravel(boolean travel) {
+            this.travel = travel;
+        }
+
+        public TownBlock getTownBlock() {
+            return townBlock;
+        }
+
+        public void setTownBlock(TownBlock townBlock) {
+            this.townBlock = townBlock;
+        }
+
+        public Resident getResident() {
+            return resident;
+        }
+
+        public void setResident(Resident resident) {
+            this.resident = resident;
+        }
     }
 }

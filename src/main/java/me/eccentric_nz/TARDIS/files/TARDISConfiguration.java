@@ -88,7 +88,6 @@ public class TARDISConfiguration {
         boolOptions.put("police_box.materialise", true);
         boolOptions.put("police_box.name_tardis", false);
         boolOptions.put("preferences.respect_factions", true);
-        boolOptions.put("preferences.respect_towny", true);
         boolOptions.put("preferences.respect_worldborder", true);
         boolOptions.put("preferences.respect_worldguard", true);
         boolOptions.put("preferences.strike_lightning", true);
@@ -252,6 +251,7 @@ public class TARDISConfiguration {
         strOptions.put("police_box.sign_colour", "WHITE");
         strOptions.put("preferences.difficulty", "hard");
         strOptions.put("preferences.key", "GOLD_NUGGET");
+        strOptions.put("preferences.respect_towny", "nation");
         strOptions.put("storage.database", "sqlite");
         strOptions.put("storage.mysql.password", "mysecurepassword");
         strOptions.put("storage.mysql.url", "mysql://localhost:3306/TARDIS");
@@ -295,6 +295,12 @@ public class TARDISConfiguration {
             new TARDISConfigConverter(plugin).convert();
         } else {
             int i = 0;
+            if (config.contains("preferences.respect_towny")) {
+                if (plugin.getConfig().getString("preferences.respect_towny").equals("true") || plugin.getConfig().getString("preferences.respect_towny").equals("false")) {
+                    String towny = (plugin.getConfig().getBoolean("preferences.respect_towny")) ? "nation" : "none";
+                    plugin.getConfig().set("preferences.respect_towny", towny);
+                }
+            }
             // boolean values
             for (Map.Entry<String, Boolean> entry : boolOptions.entrySet()) {
                 if (!config.contains(entry.getKey())) {
