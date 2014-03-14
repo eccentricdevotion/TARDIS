@@ -131,6 +131,8 @@ public class TARDISPrefsCommands implements CommandExecutor {
                     TARDISMessage.send(player, plugin.getPluginName() + MESSAGE.NO_PERMS.getText());
                     return false;
                 }
+            } else {
+                TARDISMessage.send(player, plugin.getPluginName() + "That is not a valid TARDIS player preference!");
             }
         }
         return false;
