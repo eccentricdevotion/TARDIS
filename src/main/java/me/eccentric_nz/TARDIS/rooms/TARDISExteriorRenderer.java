@@ -278,16 +278,14 @@ public class TARDISExteriorRenderer {
         new QueryFactory(plugin).alterEnergyLevel("tardis", -plugin.getArtronConfig().getInt("render"), where, p);
         // tp the player inside the room
         plugin.getTrackerKeeper().getTrackTransmat().add(p.getName());
-        plugin.getServer()
-                .getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
-                    @Override
-                    public void run() {
-                        transmat(p, d, location);
-                        p.playSound(location, Sound.ENDERMAN_TELEPORT, 1.0f, 1.0f);
-                        TARDISMessage.send(p, plugin.getPluginName() + "Right-click to exit.");
-                    }
-                },
-                10L);
+        plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
+            @Override
+            public void run() {
+                transmat(p, d, location);
+                p.playSound(location, Sound.ENDERMAN_TELEPORT, 1.0f, 1.0f);
+                TARDISMessage.send(p, plugin.getPluginName() + "Right-click to exit.");
+            }
+        }, 10L);
     }
 
     public void transmat(Player player, COMPASS d, Location loc) {
