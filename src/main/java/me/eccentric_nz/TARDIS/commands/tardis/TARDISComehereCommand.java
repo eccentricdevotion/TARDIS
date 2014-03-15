@@ -248,7 +248,7 @@ public class TARDISComehereCommand {
                 return false;
             }
         } else {
-            TARDISMessage.send(player, plugin.getPluginName() + "You need to craft a Stattenheim Remote Control! Type " + ChatColor.AQUA + " /tardisrecipe remote " + ChatColor.RESET + " to see how to make it.");
+            TARDISMessage.send(player, plugin.getPluginName() + "You need to craft a Stattenheim Remote Control! Type " + ChatColor.AQUA + "/tardisrecipe remote" + ChatColor.RESET + " to see how to make it.");
             return true;
         }
     }
