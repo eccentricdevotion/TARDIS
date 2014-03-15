@@ -61,7 +61,7 @@ public class QueryFactory {
      * @param table the database table name to insert the data into.
      * @param data a HashMap<String, Object> of table fields and values to
      * insert.
-     * @return the number of records that were inserted
+     * @return the primary key of the record that was inserted
      */
     public int doSyncInsert(String table, HashMap<String, Object> data) {
         PreparedStatement ps = null;
