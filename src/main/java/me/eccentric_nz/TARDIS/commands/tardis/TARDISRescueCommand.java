@@ -47,7 +47,7 @@ public class TARDISRescueCommand {
                 return true;
             }
             String playerNameStr = player.getName();
-            TARDISMessage.send(destPlayer, plugin.getPluginName() + playerNameStr + " wants to rescue you! Type: " + ChatColor.AQUA + " tardis rescue accept " + ChatColor.RESET + " in chat within 60 seconds to accept the rescue.");
+            TARDISMessage.send(destPlayer, plugin.getPluginName() + playerNameStr + " wants to rescue you! Type: " + ChatColor.AQUA + "tardis rescue accept" + ChatColor.RESET + " in chat within 60 seconds to accept the rescue.");
             plugin.getTrackerKeeper().getTrackChat().put(saved, playerNameStr);
             plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
                 @Override

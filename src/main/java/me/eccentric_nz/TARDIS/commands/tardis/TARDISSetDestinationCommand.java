@@ -85,7 +85,7 @@ public class TARDISSetDestinationCommand {
                 Block b = player.getTargetBlock(plugin.getGeneralKeeper().getTransparent(), 50);
                 Location l = b.getLocation();
                 if (!plugin.getTardisArea().areaCheckInExisting(l)) {
-                    TARDISMessage.send(player, plugin.getPluginName() + "You cannot use /tardis setdest in a TARDIS area! Please use " + ChatColor.AQUA + " /tardistravel area [area name]");
+                    TARDISMessage.send(player, plugin.getPluginName() + "You cannot use /tardis setdest in a TARDIS area! Please use " + ChatColor.AQUA + "/tardistravel area [area name]");
                     return true;
                 }
                 String world = l.getWorld().getName();

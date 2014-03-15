@@ -69,7 +69,7 @@ public class TARDISComehereCommand {
                     }
                 }
                 if (!plugin.getTardisArea().areaCheckInExisting(eyeLocation)) {
-                    TARDISMessage.send(player, plugin.getPluginName() + "You cannot use /tardis comehere to bring the Police Box to a TARDIS area! Please use " + ChatColor.AQUA + " /tardistravel area [area name]");
+                    TARDISMessage.send(player, plugin.getPluginName() + "You cannot use /tardis comehere to bring the Police Box to a TARDIS area! Please use " + ChatColor.AQUA + "/tardistravel area [area name]");
                     return true;
                 }
                 Material m = player.getTargetBlock(plugin.getGeneralKeeper().getTransparent(), 50).getType();

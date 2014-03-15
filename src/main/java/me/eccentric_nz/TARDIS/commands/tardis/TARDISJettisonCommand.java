@@ -46,7 +46,7 @@ public class TARDISJettisonCommand {
             }
             String room = args[1].toUpperCase(Locale.ENGLISH);
             if (room.equals("GRAVITY") || room.equals("ANTIGRAVITY")) {
-                TARDISMessage.send(player, plugin.getPluginName() + "Please make sure you have removed the gravity blocks with the " + ChatColor.AQUA + " /tardisgravity remove " + ChatColor.RESET + " command before proceeding!");
+                TARDISMessage.send(player, plugin.getPluginName() + "Please make sure you have removed the gravity blocks with the " + ChatColor.AQUA + "/tardisgravity remove" + ChatColor.RESET + " command before proceeding!");
             }
             if (!plugin.getGeneralKeeper().getRoomArgs().contains(room)) {
                 StringBuilder buf = new StringBuilder(args[1]);

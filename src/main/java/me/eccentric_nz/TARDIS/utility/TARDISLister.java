@@ -124,7 +124,7 @@ public class TARDISLister {
                             TARDISMessage.send(p, ChatColor.AQUA + c);
                         }
                     } else {
-                        TARDISMessage.send(p, ChatColor.DARK_BLUE + "You don't have any TARDIS companions yet." + ChatColor.RESET + " Use " + ChatColor.GREEN + " /tardis add [player] " + ChatColor.RESET + " to add some");
+                        TARDISMessage.send(p, ChatColor.DARK_BLUE + "You don't have any TARDIS companions yet." + ChatColor.RESET + " Use " + ChatColor.GREEN + "/tardis add [player]" + ChatColor.RESET + " to add some");
                     }
                 }
             }
