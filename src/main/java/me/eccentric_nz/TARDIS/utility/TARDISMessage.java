@@ -17,7 +17,6 @@
 package me.eccentric_nz.TARDIS.utility;
 
 import org.bukkit.entity.Player;
-import org.bukkit.util.ChatPaginator;
 
 /**
  * Send tidy messages.
@@ -26,7 +25,7 @@ import org.bukkit.util.ChatPaginator;
  */
 public class TARDISMessage {
 
-    private static final int lineLength = ChatPaginator.GUARANTEED_NO_WRAP_CHAT_PAGE_WIDTH;
+    private static final int lineLength = TARDISChatPaginator.GUARANTEED_NO_WRAP_CHAT_PAGE_WIDTH;
 
     /**
      * Splits a message into multiple lines if it is longer than the guaranteed
@@ -37,7 +36,7 @@ public class TARDISMessage {
      */
     public static void send(Player p, String message) {
         if (message.length() > lineLength) {
-            String[] multiline = ChatPaginator.wordWrap(message, lineLength);
+            String[] multiline = TARDISChatPaginator.wordWrap(message, lineLength);
             p.sendMessage(multiline);
         } else {
             p.sendMessage(message);
