@@ -21,6 +21,7 @@ import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import net.citizensnpcs.api.event.NPCRightClickEvent;
 import net.citizensnpcs.api.npc.NPC;
 import org.bukkit.ChatColor;
+import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
@@ -49,8 +50,9 @@ public class TARDISNPCListener implements Listener {
     @EventHandler(priority = EventPriority.MONITOR)
     public void onNPCInteract(NPCRightClickEvent event) {
         NPC npc = event.getNPC();
+        Player p = event.getClicker();
         Integer id = Integer.valueOf(npc.getId());
-        if (plugin.getGeneralKeeper().getNpcIDs().contains(id)) {
+        if (plugin.getGeneralKeeper().getNpcIDs().contains(id) || (npc.getName().equals(p.getName()) && plugin.getUtils().inTARDISWorld(p))) {
             npc.destroy();
             TARDISMessage.send(event.getClicker(), ChatColor.RED + "[Emergency Program One] " + ChatColor.RESET + "Bye!");
             plugin.getGeneralKeeper().getNpcIDs().remove(id);
