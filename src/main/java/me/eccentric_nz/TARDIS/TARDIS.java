@@ -356,7 +356,7 @@ public class TARDIS extends JavaPlugin {
      */
     private void loadWorldGuard() {
         if (pm.getPlugin("WorldGuard") != null) {
-            debug(pluginName + "Hooking into WorldGuard!");
+            debug("Hooking into WorldGuard!");
             worldGuardOnServer = true;
             worldGuardUtils = new TARDISWorldGuardUtils(this);
         }
@@ -368,7 +368,7 @@ public class TARDIS extends JavaPlugin {
      */
     private void loadHorseSpeed() {
         if (pm.getPlugin("TARDISHorseSpeed") != null) {
-            debug(pluginName + "Hooking into TARDISHorseSpeed!");
+            debug("Hooking into TARDISHorseSpeed!");
             horseSpeedOnServer = true;
         }
     }
