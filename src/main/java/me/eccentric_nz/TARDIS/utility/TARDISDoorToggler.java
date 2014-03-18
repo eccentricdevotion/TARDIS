@@ -19,6 +19,7 @@ package me.eccentric_nz.TARDIS.utility;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
 import org.bukkit.Location;
+import org.bukkit.Material;
 import org.bukkit.Sound;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
@@ -52,47 +53,49 @@ public class TARDISDoorToggler {
      */
     @SuppressWarnings("deprecation")
     public void toggleDoor() {
-        boolean open = true;
-        Block door_bottom;
-        Door door = (Door) block.getState().getData();
-        door_bottom = (door.isTopHalf()) ? block.getRelative(BlockFace.DOWN) : block;
-        byte door_data = door_bottom.getData();
-        switch (dd) {
-            case NORTH:
-                if (door_data == 3) {
-                    door_bottom.setData((byte) 7, false);
-                } else {
-                    door_bottom.setData((byte) 3, false);
-                    open = false;
-                }
-                break;
-            case WEST:
-                if (door_data == 2) {
-                    door_bottom.setData((byte) 6, false);
-                } else {
-                    door_bottom.setData((byte) 2, false);
-                    open = false;
-                }
-                break;
-            case SOUTH:
-                if (door_data == 1) {
-                    door_bottom.setData((byte) 5, true);
-                } else {
-                    door_bottom.setData((byte) 1, false);
-                    open = false;
-                }
-                break;
-            default:
-                if (door_data == 0) {
-                    door_bottom.setData((byte) 4, false);
-                } else {
-                    door_bottom.setData((byte) 0, false);
-                    open = false;
-                }
-                break;
-        }
-        if (playsound) {
-            playDoorSound(player, open, block.getLocation(), minecart);
+        if (isTogglable(block)) {
+            boolean open = true;
+            Block door_bottom;
+            Door door = (Door) block.getState().getData();
+            door_bottom = (door.isTopHalf()) ? block.getRelative(BlockFace.DOWN) : block;
+            byte door_data = door_bottom.getData();
+            switch (dd) {
+                case NORTH:
+                    if (door_data == 3) {
+                        door_bottom.setData((byte) 7, false);
+                    } else {
+                        door_bottom.setData((byte) 3, false);
+                        open = false;
+                    }
+                    break;
+                case WEST:
+                    if (door_data == 2) {
+                        door_bottom.setData((byte) 6, false);
+                    } else {
+                        door_bottom.setData((byte) 2, false);
+                        open = false;
+                    }
+                    break;
+                case SOUTH:
+                    if (door_data == 1) {
+                        door_bottom.setData((byte) 5, true);
+                    } else {
+                        door_bottom.setData((byte) 1, false);
+                        open = false;
+                    }
+                    break;
+                default:
+                    if (door_data == 0) {
+                        door_bottom.setData((byte) 4, false);
+                    } else {
+                        door_bottom.setData((byte) 0, false);
+                        open = false;
+                    }
+                    break;
+            }
+            if (playsound) {
+                playDoorSound(player, open, block.getLocation(), minecart);
+            }
         }
     }
 
@@ -119,5 +122,9 @@ public class TARDISDoorToggler {
                 p.playSound(p.getLocation(), Sound.DOOR_OPEN, 1.0F, 1.0F);
             }
         }
+    }
+
+    private boolean isTogglable(Block b) {
+        return block.getType().equals(Material.IRON_DOOR_BLOCK) || block.getType().equals(Material.WOODEN_DOOR);
     }
 }
