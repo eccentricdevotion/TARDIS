@@ -104,7 +104,7 @@ public enum TARDISInfoMenu {
     T_CIRCUIT_RECIPE("TIS|Components|Temporal Circuit|Recipe", "T_CIRCUIT", "R"),
     MEM_CIRCUIT("TIS|Components|Memory Circuit", "COMPONENTS", "y"),
     MEM_CIRCUIT_INFO("TIS|Components|Memory Circuit|Info", "MEM_CIRCUIT", "I"),
-    MEM_CIRCUIT_RECIPE("TIS|Components|Memory Circuit|Recipe", "MEM_CIRCUIT", "R"),
+    MEM_CIRCUIT_RECIPE("TIS|Components|Memory Circuit|Recipe", "MEMORY_CIRCUIT", "R"),
     SCAN_CIRCUIT("TIS|Components|Scanner Circuit", "COMPONENTS", "n"),
     SCAN_CIRCUIT_INFO("TIS|Components|Scanner Circuit|Info", "SCAN_CIRCUIT", "I"),
     SCAN_CIRCUIT_RECIPE("TIS|Components|Scanner Circuit|Recipe", "SCAN_CIRCUIT", "R"),
