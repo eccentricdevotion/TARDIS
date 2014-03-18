@@ -248,6 +248,9 @@ public class TARDISInformationSystemListener implements Listener {
                         if (chat.equalsIgnoreCase("R")) {
                             processKey(p, TARDISInfoMenu.R_CIRCUIT);
                         }
+                        if (chat.equalsIgnoreCase("n")) {
+                            processKey(p, TARDISInfoMenu.SCANNER_CIRCUIT);
+                        }
                         if (chat.equalsIgnoreCase("S")) {
                             processKey(p, TARDISInfoMenu.S_CIRCUIT);
                         }
@@ -255,7 +258,7 @@ public class TARDISInformationSystemListener implements Listener {
                             processKey(p, TARDISInfoMenu.T_CIRCUIT);
                         }
                         if (chat.equalsIgnoreCase("y")) {
-                            processKey(p, TARDISInfoMenu.MEM_CIRCUIT);
+                            processKey(p, TARDISInfoMenu.MEMORY_CIRCUIT);
                         }
                         break;
                     case MANUAL:
@@ -625,12 +628,20 @@ public class TARDISInformationSystemListener implements Listener {
                             showRecipe(p, TARDISInfoMenu.T_CIRCUIT_RECIPE);
                         }
                         break;
-                    case MEM_CIRCUIT:
+                    case MEMORY_CIRCUIT:
                         if (chat.equalsIgnoreCase("I")) {
-                            showInfo(p, TARDISInfoMenu.MEM_CIRCUIT_INFO);
+                            showInfo(p, TARDISInfoMenu.MEMORY_CIRCUIT_INFO);
                         }
                         if (chat.equalsIgnoreCase("R")) {
-                            showRecipe(p, TARDISInfoMenu.MEM_CIRCUIT_RECIPE);
+                            showRecipe(p, TARDISInfoMenu.MEMORY_CIRCUIT_RECIPE);
+                        }
+                        break;
+                    case SCANNER_CIRCUIT:
+                        if (chat.equalsIgnoreCase("I")) {
+                            showInfo(p, TARDISInfoMenu.SCANNER_CIRCUIT_INFO);
+                        }
+                        if (chat.equalsIgnoreCase("R")) {
+                            showRecipe(p, TARDISInfoMenu.SCANNER_CIRCUIT_RECIPE);
                         }
                         break;
                     case TARDIS:
