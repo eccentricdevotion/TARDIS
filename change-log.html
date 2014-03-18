@@ -26,6 +26,45 @@
 	<section>
 		<h1>Change log</h1>
 		<h2>What&rsquo;s been changed?</h2>
+		<h3>v2.8-beta-2</h3>
+		<h4>Additions</h4>
+		<ul>
+			<li>Added double plants for use in custom presets</li>
+			<li>
+				<p>Added &lsquo;Nations&rsquo; support to TARDIS Towny compatibility &mdash; the config will be updated automatically, and there are now 4 values for <code>respect_towny</code></p>
+				<ol>
+					<li><code>none</code> &mdash; no Towny checking will take place at all, players can land in any town</li>
+					<li><code>wilderness</code> &mdash; players can only land in wilderness</li>
+					<li><code>town</code> &mdash; players can land in wilderness and in any town they are a
+						resident of</li>
+					<li><code>nation</code> &mdash; players can land in wilderness and in any town they are a
+						resident of, and any town which is in the same nation as the player&rsquo;s
+						town</li>
+				</ol>
+			</li>
+		</ul>
+		<h4>Changes</h4>
+		<ul>
+			<li>When using the <code>full_charge_item</code>, if the current Artron levels exceed a full charge, TARDIS no longer <em>reduces</em> an overcharged capacitor to a full charge and does&rsquo;t remove the <code>full_charge_item</code> from the player.</li>
+			<li>TARDIS sounds are now played to nearby players who are outside the TARDIS (and the range has been increased as well)</li>
+			<li>TARDIS now sends nice multiline messages to players when line length is longer than the <code>GUARANTEED_NO_WRAP_CHAT_PAGE_WIDTH</code></li>
+			<li>Changed the TARDIS door &ldquo;locked&rdquo; messaging to read &ldquo;deadlocked&rdquo; instead.</li>
+			<li>TARDIS now toggles both TARDIS doors with standard sonic if the door is not deadlocked</li>
+			<li>Removed the deprecated <code>/tardisprefs sign</code> command</li>
+			<li>Emergency Program One will now remove itself after a reload/restart</li>
+		</ul>
+		<h4>Bug fixes</h4>
+		<ul>
+			<li>Fixed broken TARDISHorseSpeed hook-in</li>
+			<li>Fixed a ClassCastException when trying to toggle both doors and the outside door is a TRAP_DOOR</li>
+			<li>Fixed a NPE when trying to store Artron in an enchanted item that has no display name</li>
+			<li>Fixed double / misleading messages when rescuing a player</li>
+			<li>Fixed save sign re-arrangement persisting if you clicked the re-arrange button multiple times</li>
+			<li>Custom preset sign text is now actually written on the sign (if there is one)</li>
+			<li>Fixed an IllegalArgumentException trying to set health to more than 20.0 in the Zero room</li>
+			<li>Fix TARDIS sounds playing twice to some players</li>
+			<li>Fixed quite a few TARDIS Information System bugs</li>
+		</ul>
 		<h3>v2.8-beta-1</h3>
 		<h4>Additions</h4>
 		<ul>
@@ -37,12 +76,12 @@
 					<li>contains an Easter Egg!</li>
 				</ul>
 			</li>
-			<li>Added a Zero room, the feature is disabled by default, use the <code>/tadmin zero_room true</code> command to enable it and create the TARDIS<em>Zero</em>Room world if it doesn't exist. <a href="http://eccentricdevotion.github.io/TARDIS/zero-room.html">http://eccentricdevotion.github.io/TARDIS/zero-room.html</a>
+			<li>Added a Zero room, the feature is disabled by default, use the <code>/tadmin zero_room true</code> command to enable it and create the TARDIS<em>Zero</em>Room world if it doesn&rsquo;t exist. <a href="http://eccentricdevotion.github.io/TARDIS/zero-room.html">http://eccentricdevotion.github.io/TARDIS/zero-room.html</a>
 				<ul>
 					<li>a restart is required to enable chat isolation and healing</li>
-					<li>use <code>/tardis room zero</code> to add the room (it's not compatible with ARS, as it is located in its own universe)</li>
+					<li>use <code>/tardis room zero</code> to add the room (it&rsquo;s not compatible with ARS, as it is located in its own universe)</li>
 					<li>players can use <code>/tardis update zero</code> to add transmat button to move between the TARDIS and the Zero room</li>
-					<li>you can't break blocks or use chat / commands in the zero room</li>
+					<li>you can&rsquo;t break blocks or use chat / commands in the zero room</li>
 				</ul>
 			</li>
 			<li>Added custom rooms to ARS if they are 16 x 16, we make no guarantees that they will work like the default rooms though!
@@ -50,32 +89,32 @@
 					<li>Use the template.schematic (in the <em>plugins/TARDIS/schematics</em> folder) when building custom rooms to ensure compatibility</li>
 				</ul>
 			</li>
-			<li>Added a TARDIS Universal Translator - <code>/tardissay [language] [message]</code>, the <code>[message]</code> defaults to AUTO_DETECT unless <code>/tardisprefs language [language]</code> is used
+			<li>Added a TARDIS Universal Translator &mdash; <code>/tardissay [language] [message]</code>, the <code>[message]</code> defaults to AUTO_DETECT unless <code>/tardisprefs language [language]</code> is used
 				<ul>
 					<li>use tab-completion to see the available languages</li>
 					<li>limited to 2,000,000 characters per month, who knows what happens after that!</li>
 				</ul>
 			</li>
 			<li>If the TARDIS is hidden, but blocks have been placed in its location, you can unhide the TARDIS if the blocks are hit with the admin sonic</li>
-			<li>Added configurable Police Box sign colour - in the config: <code>police_box: sign_colour: WHITE</code> or by command: <code>/tardisadmin sign_colour [ChatColor]</code></li>
+			<li>Added configurable Police Box sign colour &mdash; in the config: <code>police_box: sign_colour: WHITE</code> or by command: <code>/tardisadmin sign_colour [ChatColor]</code></li>
 			<li>Added clearer lists for incorrect command arguments, added missing items to <code>/tardisgive</code> command, and made arguments consistent across commands (e.g. <code>/tardisrecipe</code>)</li>
 			<li>Added better preference messaging when a feature has been disabled server wide</li>
 			<li>Added the ability to rearrange saves in the Save-Sign GUI
 				<ul>
-					<li>Click the 'Rearrange saves' button to enable arranging</li>
+					<li>Click the &lsquo;Rearrange saves&rsquo; button to enable arranging</li>
 				</ul>
 			</li>
-			<li>Added a TARDIS Direction Frame - place an Item Frame and run the <code>/tardis update direction</code> command, then place a TRIPWIRE_HOOK in the frame
+			<li>Added a TARDIS Direction Frame &mdash; place an Item Frame and run the <code>/tardis update direction</code> command, then place a TRIPWIRE_HOOK in the frame
 				<ul>
 					<li>Right-click the Direction Frame to change the TARDIS direction</li>
 					<li>SHIFT-right-click the Direction Frame to rebuild the TARDIS in the new direction</li>
 					<li>the tripwire hook in the Direction frame is protected from stealing</li>
 				</ul>
 			</li>
-			<li>Added a configuration option to allow gravity wells outside of the TARDIS - <code>allow: external_gravity [true|false]</code></li>
-			<li>Added a new ability to the Emerald Environment Sonic - you can now re-sow plants if the appropriate seed item is in the player's inventory. Permission: <code>tardis.sonic.plant</code></li>
-			<li>Added support for <a href="http://dev.bukkit.org/bukkit-plugins/dynmap-tardis/">Dynmap-TARDIS plugin</a> - one day the Bukkit team will get around to approving it... it's been 5 days now and counting!</li>
-			<li>Added a message to players who don't log out of the TARDIS Information System</li>
+			<li>Added a configuration option to allow gravity wells outside of the TARDIS &mdash; <code>allow: external_gravity [true|false]</code></li>
+			<li>Added a new ability to the Emerald Environment Sonic &mdash; you can now re-sow plants if the appropriate seed item is in the player&rsquo;s inventory. Permission: <code>tardis.sonic.plant</code></li>
+			<li>Added support for <a href="http://dev.bukkit.org/bukkit-plugins/dynmap-tardis/">Dynmap-TARDIS plugin</a> &mdash; one day the Bukkit team will get around to approving it... it&rsquo;s been 5 days now and counting!</li>
+			<li>Added a message to players who don&rsquo;t log out of the TARDIS Information System</li>
 		</ul>
 		<h4>Changes</h4>
 		<ul>
@@ -85,25 +124,25 @@
 					<li>players need to be holding a blank save disk in hand when using the save command</li>
 				</ul>
 			</li>
-			<li>Both doors are toggled open when shift-clicking either door (most of the time, it can be a bit buggy). When exiting - if the preset has a door and the door is open - the player is teleported to the door location (instead of right outside the Police Box).</li>
+			<li>Both doors are toggled open when shift-clicking either door (most of the time, it can be a bit buggy). When exiting &mdash; if the preset has a door and the door is open &mdash; the player is teleported to the door location (instead of right outside the Police Box).</li>
 			<li>The door must be closed to time travel</li>
-			<li>Now using the correct Artron Energy values for the type of travel, instead of the 'random' value everytime</li>
+			<li>Now using the correct Artron Energy values for the type of travel, instead of the &lsquo;random&rsquo; value everytime</li>
 			<li>If a world is disabled in config, TARDIS creation is no longer allowed in that world</li>
-			<li>We're now respecting the <code>tardis.save</code> permission in the Advanced Console and for <code>/tardistravel dest [save]</code> command</li>
-			<li>We're now respecting the <code>tardis.sonic.standard</code> permission for standard sonic functions</li>
+			<li>We&rsquo;re now respecting the <code>tardis.save</code> permission in the Advanced Console and for <code>/tardistravel dest [save]</code> command</li>
+			<li>We&rsquo;re now respecting the <code>tardis.sonic.standard</code> permission for standard sonic functions</li>
 			<li>To list TARDISes to prune you now need to use the <code>/tardisadmin prunelist</code> command</li>
-			<li>If the current TARDIS location can't be found in the database (maybe because a world has been deleted), then the plugin performs an Emergency Relocation</li>
+			<li>If the current TARDIS location can&rsquo;t be found in the database (maybe because a world has been deleted), then the plugin performs an Emergency Relocation</li>
 			<li>The plugin now checks there is sufficient energy to use the Exterior Rendering Room</li>
 			<li>The plugin now checks the player has sufficient Artron Energy when using the save sign</li>
 			<li>If ProtocolLib is enabled on the server, you can now just click the keyboard sign to edit it (rather than having to click it with another sign)</li>
-			<li>The plugin is now stricter with the use of the <code>/tardis occupy</code> command - it only sets occupied if the player is IN the TARDIS or UNoccupied if outside</li>
+			<li>The plugin is now stricter with the use of the <code>/tardis occupy</code> command &mdash; it only sets occupied if the player is IN the TARDIS or UNoccupied if outside</li>
 			<li>Altered the Bukkit version checker so that the plugin will enable on MCPC+ servers</li>
 			<li>The plugin now checks the player has permission to break the block with the Diamond Sonic Screwdriver</li>
 			<li>The plugin now only equips the perception filter if the chest plate slot is empty</li>
 		</ul>
 		<h4>Bug fixes</h4>
 		<ul>
-			<li>Fixed the <code>/tardis update</code> and <code>/tardis secondary</code> commands not updating the correct repeater control - many thanks to WonkoTheSane for finding this one (and a few others)</li>
+			<li>Fixed the <code>/tardis update</code> and <code>/tardis secondary</code> commands not updating the correct repeater control &mdash; many thanks to WonkoTheSane for finding this one (and a few others)</li>
 			<li>Dropped items are removed from the Renderer Room before transmat</li>
 			<li>Fixed stained glass colour in Police Box materialisation</li>
 			<li>Player scoreboards should be restored properly after the TARDIS Artron display is shown. Also fixed Artron scoreboard persistence</li>
@@ -113,7 +152,7 @@
 			<li>Fixed ARS not updating the condenser blocks after growing the room</li>
 			<li>Fixed glitch with Admin sonic not opening player inventory</li>
 			<li>Removed potential for Police Box duplication after changing direction while TARDIS is hidden</li>
-			<li>Fixed <code>/tardisgive [player] artron [amount]</code> command, and don't allow negative Artron amounts when storing energy</li>
+			<li>Fixed <code>/tardisgive [player] artron [amount]</code> command, and don&rsquo;t allow negative Artron amounts when storing energy</li>
 			<li>Fixed broken <code>/tardis update backdoor</code></li>
 			<li>Fixe a couple of NPEs in the Advanced Console</li>
 			<li>Fixed some minor Information System errors</li>
