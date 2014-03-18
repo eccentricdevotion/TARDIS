@@ -115,11 +115,7 @@ public class TARDISKeyboardPacketListener implements Listener {
 
         // Permit this
         editing.put(player, sign.getLocation());
-
-        editSignPacket.getIntegers().
-                write(0, sign.getX()).
-                write(1, sign.getY()).
-                write(2, sign.getZ());
+        editSignPacket.getIntegers().write(0, sign.getX()).write(1, sign.getY()).write(2, sign.getZ());
 
         try {
             ProtocolLibrary.getProtocolManager().sendServerPacket(player, editSignPacket);
