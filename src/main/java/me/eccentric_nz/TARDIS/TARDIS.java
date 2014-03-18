@@ -115,7 +115,8 @@ public class TARDIS extends JavaPlugin {
     private boolean hasVersion = false;
     private boolean mySpawn = false;
     private boolean worldGuardOnServer;
-    private final PluginManager pm = this.getServer().getPluginManager();
+    private boolean horseSpeedOnServer;
+    private PluginManager pm;
     private final TARDISArea tardisArea = new TARDISArea(this);
     private final TARDISBuilderInner interiorBuilder = new TARDISBuilderInner(this);
     private final TARDISBuilderInstanceKeeper buildKeeper = new TARDISBuilderInstanceKeeper();
@@ -129,10 +130,12 @@ public class TARDIS extends JavaPlugin {
 
     public TARDIS() {
         this.worldGuardOnServer = false;
+        this.horseSpeedOnServer = false;
     }
 
     @Override
     public void onEnable() {
+        pm = this.getServer().getPluginManager();
         pdfFile = getDescription();
         pluginName = ChatColor.GOLD + "[" + pdfFile.getName() + "]" + ChatColor.RESET + " ";
         plugin = this;
@@ -160,6 +163,7 @@ public class TARDIS extends JavaPlugin {
             startSound();
             loadWorldGuard();
             loadPluginRespect();
+            loadHorseSpeed();
             startZeroHealing();
 
             TARDISCreeperChecker cc = new TARDISCreeperChecker(this);
@@ -352,8 +356,20 @@ public class TARDIS extends JavaPlugin {
      */
     private void loadWorldGuard() {
         if (pm.getPlugin("WorldGuard") != null) {
+            debug(pluginName + "Hooking into WorldGuard!");
             worldGuardOnServer = true;
             worldGuardUtils = new TARDISWorldGuardUtils(this);
+        }
+    }
+
+    /**
+     * Checks if the TARDISHorseSpeed plugin is available, and loads support if
+     * it is.
+     */
+    private void loadHorseSpeed() {
+        if (pm.getPlugin("TARDISHorseSpeed") != null) {
+            debug(pluginName + "Hooking into TARDISHorseSpeed!");
+            horseSpeedOnServer = true;
         }
     }
 
@@ -680,6 +696,10 @@ public class TARDIS extends JavaPlugin {
 
     public boolean isWorldGuardOnServer() {
         return worldGuardOnServer;
+    }
+
+    public boolean isHorseSpeedOnServer() {
+        return horseSpeedOnServer;
     }
 
     public PluginManager getPM() {
