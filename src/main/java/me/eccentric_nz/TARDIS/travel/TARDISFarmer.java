@@ -201,8 +201,8 @@ public class TARDISFarmer {
                             tmhor.setHorseInventory(horse.getInventory().getContents());
                             tmhor.setDomesticity(horse.getDomestication());
                             tmhor.setJumpStrength(horse.getJumpStrength());
-                            if (plugin.getPM().isPluginEnabled("TardisHorseSpeed")) {
-                                TardisHorseSpeed ths = (TardisHorseSpeed) plugin.getPM().getPlugin("TardisHorseSpeed");
+                            if (plugin.isHorseSpeedOnServer()) {
+                                TardisHorseSpeed ths = (TardisHorseSpeed) plugin.getPM().getPlugin("TARDISHorseSpeed");
                                 double speed = ths.getHorseSpeed(horse);
                                 tmhor.setSpeed(speed);
                             }
@@ -478,8 +478,8 @@ public class TARDISFarmer {
                                 pinv.addItem(leash);
                                 p.updateInventory();
                             }
-                            if (plugin.getPM().isPluginEnabled("TardisHorseSpeed")) {
-                                TardisHorseSpeed ths = (TardisHorseSpeed) plugin.getPM().getPlugin("TardisHorseSpeed");
+                            if (plugin.isHorseSpeedOnServer()) {
+                                TardisHorseSpeed ths = (TardisHorseSpeed) plugin.getPM().getPlugin("TARDISHorseSpeed");
                                 ths.setHorseSpeed(equine, e.getSpeed());
                             }
                         }

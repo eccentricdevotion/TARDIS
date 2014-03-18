@@ -114,8 +114,8 @@ public class TARDISHorseListener implements Listener {
                         tmhor.setDomesticity(h.getDomestication());
                         tmhor.setJumpStrength(h.getJumpStrength());
                         tmhor.setHealth(h.getHealth());
-                        if (plugin.getPM().isPluginEnabled("TardisHorseSpeed")) {
-                            TardisHorseSpeed ths = (TardisHorseSpeed) plugin.getPM().getPlugin("TardisHorseSpeed");
+                        if (plugin.isHorseSpeedOnServer()) {
+                            TardisHorseSpeed ths = (TardisHorseSpeed) plugin.getPM().getPlugin("TARDISHorseSpeed");
                             double speed = ths.getHorseSpeed(h);
                             tmhor.setSpeed(speed);
                         }
@@ -156,8 +156,8 @@ public class TARDISHorseListener implements Listener {
                                     equine.getInventory().setArmor(bard);
                                 }
                             }
-                            if (plugin.getPM().isPluginEnabled("TardisHorseSpeed")) {
-                                TardisHorseSpeed ths = (TardisHorseSpeed) plugin.getPM().getPlugin("TardisHorseSpeed");
+                            if (plugin.isHorseSpeedOnServer()) {
+                                TardisHorseSpeed ths = (TardisHorseSpeed) plugin.getPM().getPlugin("TARDISHorseSpeed");
                                 ths.setHorseSpeed(equine, tmhor.getSpeed());
                             }
                             Tameable tamed = (Tameable) equine;
