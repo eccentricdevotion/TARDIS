@@ -23,6 +23,7 @@ import java.util.Locale;
 import me.eccentric_nz.TARDIS.JSON.JSONArray;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
+import me.eccentric_nz.TARDIS.database.ResultSetARS;
 import me.eccentric_nz.TARDIS.database.ResultSetControls;
 import me.eccentric_nz.TARDIS.database.ResultSetCurrentLocation;
 import me.eccentric_nz.TARDIS.database.ResultSetDoors;
@@ -410,72 +411,78 @@ public class TARDISUpdateListener implements Listener {
                 if (!rsc.resultSet()) {
                     // insert control
                     qf.insertControl(id, 10, blockLocStr, 0);
-                    // create default json
-                    int[][][] empty = new int[3][9][9];
-                    for (int y = 0; y < 3; y++) {
-                        for (int x = 0; x < 9; x++) {
-                            for (int z = 0; z < 9; z++) {
-                                empty[y][x][z] = 1;
+                    // check if they already have an ARS record (they may have used `/tardis arsremove`)
+                    HashMap<String, Object> wherer = new HashMap<String, Object>();
+                    wherer.put("tardis_id", id);
+                    ResultSetARS rsa = new ResultSetARS(plugin, where);
+                    if (!rsa.resultSet()) {
+                        // create default json
+                        int[][][] empty = new int[3][9][9];
+                        for (int y = 0; y < 3; y++) {
+                            for (int x = 0; x < 9; x++) {
+                                for (int z = 0; z < 9; z++) {
+                                    empty[y][x][z] = 1;
+                                }
                             }
                         }
-                    }
-                    int control = 42;
-                    switch (schm) {
-                        case DELUXE:
-                            control = 57;
-                            empty[0][4][4] = control;
-                            empty[0][4][5] = control;
-                            empty[0][5][4] = control;
-                            empty[0][5][5] = control;
-                            empty[1][4][5] = control;
-                            empty[1][5][4] = control;
-                            empty[1][5][5] = control;
-                            break;
-                        case ELEVENTH:
-                            control = 133;
-                            empty[0][4][4] = control;
-                            empty[0][4][5] = control;
-                            empty[0][5][4] = control;
-                            empty[0][5][5] = control;
-                            empty[1][4][5] = control;
-                            empty[1][5][4] = control;
-                            empty[1][5][5] = control;
-                            break;
-                        case BIGGER:
-                            control = 41;
-                            empty[1][4][5] = control;
-                            empty[1][5][4] = control;
-                            empty[1][5][5] = control;
-                            break;
-                        case REDSTONE:
-                            control = 152;
-                            empty[1][4][5] = control;
-                            empty[1][5][4] = control;
-                            empty[1][5][5] = control;
-                            break;
-                        case STEAMPUNK:
-                            control = 173;
-                            break;
-                        case ARS:
-                            control = 159;
-                            break;
-                        case PLANK:
-                            control = 22;
-                            break;
-                        case TOM:
-                            control = 155;
-                            break;
-                        default:
-                            break;
-                    }
-                    empty[1][4][4] = control;
-                    JSONArray json = new JSONArray(empty);
+                        int control = 42;
+                        switch (schm) {
+                            case DELUXE:
+                                control = 57;
+                                empty[0][4][4] = control;
+                                empty[0][4][5] = control;
+                                empty[0][5][4] = control;
+                                empty[0][5][5] = control;
+                                empty[1][4][5] = control;
+                                empty[1][5][4] = control;
+                                empty[1][5][5] = control;
+                                break;
+                            case ELEVENTH:
+                                control = 133;
+                                empty[0][4][4] = control;
+                                empty[0][4][5] = control;
+                                empty[0][5][4] = control;
+                                empty[0][5][5] = control;
+                                empty[1][4][5] = control;
+                                empty[1][5][4] = control;
+                                empty[1][5][5] = control;
+                                break;
+                            case BIGGER:
+                                control = 41;
+                                empty[1][4][5] = control;
+                                empty[1][5][4] = control;
+                                empty[1][5][5] = control;
+                                break;
+                            case REDSTONE:
+                                control = 152;
+                                empty[1][4][5] = control;
+                                empty[1][5][4] = control;
+                                empty[1][5][5] = control;
+                                break;
+                            case STEAMPUNK:
+                                control = 173;
+                                break;
+                            case ARS:
+                                control = 159;
+                                break;
+                            case PLANK:
+                                control = 22;
+                                break;
+                            case TOM:
+                                control = 155;
+                                break;
+                            default:
+                                break;
+                        }
+                        empty[1][4][4] = control;
+                        JSONArray json = new JSONArray(empty);
 
-                    HashMap<String, Object> seta = new HashMap<String, Object>();
-                    seta.put("tardis_id", id);
-                    seta.put("player", playerNameStr);
-                    seta.put("json", json.toString());
-                    qf.doInsert("ars", seta);
+                        HashMap<String, Object> seta = new HashMap<String, Object>();
+                        seta.put("tardis_id", id);
+                        seta.put("player", playerNameStr);
+                        seta.put("json", json.toString());
+                        qf.doInsert("ars", seta);
+                    }
                     secondary = true;
                 } else {
                     set.put("location", blockLocStr);
