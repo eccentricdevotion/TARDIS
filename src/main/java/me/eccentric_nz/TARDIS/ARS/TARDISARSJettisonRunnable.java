@@ -100,7 +100,7 @@ public class TARDISARSJettisonRunnable implements Runnable {
                 where.put("tardis_id", id);
                 qf.doUpdate("tardis", setd, where);
                 // remove WorldGuard protection
-                plugin.getWorldGuardUtils().removeRendererRegion(w, p.getName());
+                plugin.getWorldGuardUtils().removeRoomRegion(w, p.getName(), "renderer");
             }
         }
     }

@@ -122,9 +122,21 @@ public class TARDISJettisonSeeder implements Listener {
                             del.put("secondary", secondary);
                             qf.doDelete("controls", del);
                         }
+                        if (r.equals("FARM")) {
+                            // remove WorldGuard allow mob spawning
+                            plugin.getWorldGuardUtils().removeRoomRegion(l.getWorld(), playerNameStr, "farm");
+                        }
                         if (r.equals("RENDERER")) {
                             // remove WorldGuard protection
-                            plugin.getWorldGuardUtils().removeRendererRegion(l.getWorld(), playerNameStr);
+                            plugin.getWorldGuardUtils().removeRoomRegion(l.getWorld(), playerNameStr, "renderer");
+                        }
+                        if (r.equals("STABLE")) {
+                            // remove WorldGuard allow mob spawning
+                            plugin.getWorldGuardUtils().removeRoomRegion(l.getWorld(), playerNameStr, "stable");
+                        }
+                        if (r.equals("VILLAGE")) {
+                            // remove WorldGuard allow mob spawning
+                            plugin.getWorldGuardUtils().removeRoomRegion(l.getWorld(), playerNameStr, "village");
                         }
                         if (plugin.getConfig().getBoolean("growth.return_room_seed")) {
                             // give the player back the room seed block
