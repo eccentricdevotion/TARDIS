@@ -76,7 +76,7 @@ public class TARDISSpace {
             plugin.saveConfig();
             if (plugin.getPM().isPluginEnabled("Multiverse-Core")) {
                 plugin.getServer().dispatchCommand(plugin.getConsole(), "mv import " + name + " normal -g TARDISChunkGenerator -n");
-                plugin.getServer().dispatchCommand(plugin.getConsole(), "mv modify set animals false " + name);
+//                plugin.getServer().dispatchCommand(plugin.getConsole(), "mv modify set animals false " + name);
                 plugin.getServer().dispatchCommand(plugin.getConsole(), "mv modify set monsters false " + name);
                 plugin.getServer().dispatchCommand(plugin.getConsole(), "mv modify set hidden true " + name);
                 plugin.getServer().dispatchCommand(plugin.getConsole(), "mv modify set weather false " + name);
@@ -170,7 +170,7 @@ public class TARDISSpace {
         plugin.saveConfig();
         if (plugin.getPM().isPluginEnabled("Multiverse-Core")) {
             plugin.getServer().dispatchCommand(plugin.getConsole(), "mv import " + name + " normal -g TARDISChunkGenerator -n");
-            plugin.getServer().dispatchCommand(plugin.getConsole(), "mv modify set animals false " + name);
+//            plugin.getServer().dispatchCommand(plugin.getConsole(), "mv modify set animals false " + name);
             plugin.getServer().dispatchCommand(plugin.getConsole(), "mv modify set monsters false " + name);
             plugin.getServer().dispatchCommand(plugin.getConsole(), "mv modify set hidden true " + name);
             plugin.getServer().dispatchCommand(plugin.getConsole(), "mv modify set weather false " + name);
