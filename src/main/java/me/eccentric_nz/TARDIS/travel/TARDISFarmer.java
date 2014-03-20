@@ -332,6 +332,7 @@ public class TARDISFarmer {
                             if (e.isBaby()) {
                                 pecker.setBaby();
                             }
+                            pecker.setRemoveWhenFarAway(false);
                         }
                     }
                     if (old_macd_had_a_cow.size() > 0) {
@@ -347,6 +348,7 @@ public class TARDISFarmer {
                             if (e.isBaby()) {
                                 moo.setBaby();
                             }
+                            moo.setRemoveWhenFarAway(false);
                         }
                     }
                     if (old_macd_had_a_pig.size() > 0) {
@@ -362,6 +364,7 @@ public class TARDISFarmer {
                             if (e.isBaby()) {
                                 oinker.setBaby();
                             }
+                            oinker.setRemoveWhenFarAway(false);
                         }
                     }
                     if (old_macd_had_a_sheep.size() > 0) {
@@ -378,6 +381,7 @@ public class TARDISFarmer {
                             if (e.isBaby()) {
                                 baa.setBaby();
                             }
+                            baa.setRemoveWhenFarAway(false);
                         }
                     }
                     if (old_macd_had_a_mooshroom.size() > 0) {
@@ -393,6 +397,7 @@ public class TARDISFarmer {
                             if (e.isBaby()) {
                                 fungi.setBaby();
                             }
+                            fungi.setRemoveWhenFarAway(false);
                         }
                     }
                 } else {
@@ -482,6 +487,7 @@ public class TARDISFarmer {
                                 TardisHorseSpeed ths = (TardisHorseSpeed) plugin.getPM().getPlugin("TARDISHorseSpeed");
                                 ths.setHorseSpeed(equine, e.getSpeed());
                             }
+                            equine.setRemoveWhenFarAway(false);
                         }
                     }
                 } else {
@@ -518,6 +524,7 @@ public class TARDISFarmer {
                                 npc.setBaby();
                             }
                             npc.setHealth(e.getHealth());
+                            npc.setRemoveWhenFarAway(false);
                         }
                     }
                 } else {
