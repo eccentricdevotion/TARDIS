@@ -69,6 +69,7 @@ public class TARDISAdminCommands implements CommandExecutor {
         firstsStr.put("key", "preferences");
         firstsStr.put("list", "");
         firstsStr.put("make_preset", "");
+        firstsStr.put("mv_modify", "");
         firstsStr.put("playercount", "");
         firstsStr.put("prune", "");
         firstsStr.put("prunelist", "");
@@ -179,6 +180,9 @@ public class TARDISAdminCommands implements CommandExecutor {
                     }
                     if (first.equals("reload")) {
                         return new TARDISReloadCommand(plugin).reloadConfig(sender);
+                    }
+                    if (first.equals("mv_modify")) {
+                        return new TARDISMVModifyCommand(plugin).setMobSpawning(sender);
                     }
                 }
                 if (first.equals("list")) {
