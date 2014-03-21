@@ -52,8 +52,8 @@ public class TARDISMVModifyCommand {
                 if (p != null) {
                     p.sendMessage(plugin.getPluginName() + "Multiverse settings for " + w.getName() + " modified!");
                 }
-                plugin.getServer().dispatchCommand(plugin.getConsole(), "mv reload");
             }
+            plugin.getServer().dispatchCommand(plugin.getConsole(), "mv reload");
         }
         return true;
     }
