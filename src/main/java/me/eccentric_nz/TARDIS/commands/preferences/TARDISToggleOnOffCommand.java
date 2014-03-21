@@ -42,7 +42,7 @@ public class TARDISToggleOnOffCommand {
         this.was = Arrays.asList(new String[]{"auto", "beacon", "dnd", "platform", "eps", "hads", "minecart", "plain", "renderer", "submarine"});
     }
 
-    public boolean doAbort(Player player, String[] args, QueryFactory qf) {
+    public boolean toggle(Player player, String[] args, QueryFactory qf) {
         String pref = args[0];
         if (pref.equals("auto") && !plugin.getConfig().getBoolean("allow.autonomous")) {
             TARDISMessage.send(player, plugin.getPluginName() + "Autonomous homing is disabled on this server!");

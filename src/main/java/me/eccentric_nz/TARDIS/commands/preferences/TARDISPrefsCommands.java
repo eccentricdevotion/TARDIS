@@ -125,7 +125,7 @@ public class TARDISPrefsCommands implements CommandExecutor {
                     if (pref.equals("build")) {
                         return new TARDISBuildCommand(plugin).toggleCompanionBuilding(player, args);
                     } else {
-                        return new TARDISToggleOnOffCommand(plugin).doAbort(player, args, qf);
+                        return new TARDISToggleOnOffCommand(plugin).toggle(player, args, qf);
                     }
                 } else {
                     TARDISMessage.send(player, plugin.getPluginName() + MESSAGE.NO_PERMS.getText());
