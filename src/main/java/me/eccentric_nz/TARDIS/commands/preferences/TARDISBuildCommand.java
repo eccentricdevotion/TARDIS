@@ -16,12 +16,16 @@
  */
 package me.eccentric_nz.TARDIS.commands.preferences;
 
+import com.sk89q.worldguard.protection.regions.ProtectedRegion;
 import java.util.HashMap;
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import me.eccentric_nz.TARDIS.enumeration.MESSAGE;
+import me.eccentric_nz.TARDIS.utility.TARDISAntiBuild;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import org.bukkit.entity.Player;
+import org.bukkit.util.Vector;
 
 /**
  *
@@ -49,17 +53,33 @@ public class TARDISBuildCommand {
             TARDISMessage.send(player, plugin.getPluginName() + MESSAGE.NO_TARDIS.getText());
             return true;
         }
-        String data[] = rs.getChunk().split(":");
-        if (plugin.getServer().getWorld(data[0]) == null) {
-            TARDISMessage.send(player, plugin.getPluginName() + "Could not get TARDIS world!");
-            return true;
-        }
+        Integer id = Integer.valueOf(rs.getTardis_id());
+        HashMap<String, Object> setp = new HashMap<String, Object>();
+        HashMap<String, Object> wherep = new HashMap<String, Object>();
+        wherep.put("player", player.getName());
         if (args[1].equalsIgnoreCase("on")) {
-            plugin.getServer().dispatchCommand(plugin.getConsole(), "rg flag tardis_" + playerNameStr + " build -w " + data[0] + " -g members allow");
-            return true;
-        } else {
-            plugin.getServer().dispatchCommand(plugin.getConsole(), "rg flag tardis_" + playerNameStr + " build -w " + data[0] + " -g members deny");
-            return true;
+            setp.put("build_on", 1);
+            plugin.getTrackerKeeper().getTrackAntiBuild().remove(id);
+            TARDISMessage.send(player, plugin.getPluginName() + "Companion building was turned ON!");
         }
+        if (args[1].equalsIgnoreCase("off")) {
+            setp.put("build_on", 0);
+            TARDISAntiBuild tab = new TARDISAntiBuild();
+            // get region vectors
+            ProtectedRegion pr = plugin.getWorldGuardUtils().getRegion(rs.getChunk().split(":")[0], playerNameStr);
+            if (pr == null) {
+                TARDISMessage.send(player, plugin.getPluginName() + "Could not get WorldGuard region!");
+                return true;
+            }
+            Vector min = new Vector(pr.getMinimumPoint().getBlockX(), pr.getMinimumPoint().getBlockY(), pr.getMinimumPoint().getBlockZ());
+            Vector max = new Vector(pr.getMaximumPoint().getBlockX(), pr.getMaximumPoint().getBlockY(), pr.getMaximumPoint().getBlockZ());
+            tab.setMin(min);
+            tab.setMax(max);
+            tab.setTimelord(playerNameStr);
+            plugin.getTrackerKeeper().getTrackAntiBuild().put(id, tab);
+            TARDISMessage.send(player, plugin.getPluginName() + "Companion building was turned OFF.");
+        }
+        new QueryFactory(plugin).doUpdate("player_prefs", setp, wherep);
+        return true;
     }
 }

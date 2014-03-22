@@ -166,8 +166,7 @@ public class TARDIS extends JavaPlugin {
             loadHorseSpeed();
             startZeroHealing();
 
-            TARDISCreeperChecker cc = new TARDISCreeperChecker(this);
-            cc.startCreeperCheck();
+            new TARDISCreeperChecker(this).startCreeperCheck();
             if (pm.isPluginEnabled("TARDISChunkGenerator")) {
                 TARDISSpace alwaysNight = new TARDISSpace(this);
                 if (getConfig().getBoolean("creation.keep_night")) {
@@ -177,6 +176,9 @@ public class TARDIS extends JavaPlugin {
             TARDISBlockLoader bl = new TARDISBlockLoader(this);
             bl.loadProtectBlocks();
             bl.loadGravityWells();
+            if (worldGuardOnServer && getConfig().getBoolean("allow.wg_flag_set")) {
+                bl.loadAntiBuild();
+            }
             loadPerms();
             loadBooks();
             if (!getConfig().getBoolean("conversions.conversion_done")) {

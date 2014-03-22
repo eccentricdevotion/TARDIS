@@ -16,11 +16,19 @@
  */
 package me.eccentric_nz.TARDIS.files;
 
+import com.sk89q.worldguard.protection.regions.ProtectedRegion;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.HashMap;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.ResultSetBlocks;
 import me.eccentric_nz.TARDIS.database.ResultSetGravity;
+import me.eccentric_nz.TARDIS.database.TARDISDatabaseConnection;
+import me.eccentric_nz.TARDIS.utility.TARDISAntiBuild;
+import org.bukkit.util.Vector;
 
 /**
  * An anti-gravity spiral is a projectable beam used for removing gravity from
@@ -93,6 +101,53 @@ public class TARDISBlockLoader {
                         plugin.getGeneralKeeper().getGravityDownList().add(map.get("location"));
                         break;
                 }
+            }
+        }
+    }
+
+    /**
+     * Loads players antibuild preferences. Needed so that the preference is
+     * persisted between restarts.
+     */
+    public void loadAntiBuild() {
+        TARDISDatabaseConnection service = TARDISDatabaseConnection.getInstance();
+        Connection connection = service.getConnection();
+        Statement statement = null;
+        ResultSet rs = null;
+        String query = "SELECT tardis.tardis_id, tardis.owner, tardis.chunk FROM tardis, player_prefs WHERE player_prefs.build_on = 0 AND player_prefs.player = tardis.owner";
+        try {
+            service.testConnection(connection);
+            statement = connection.createStatement();
+            rs = statement.executeQuery(query);
+            if (rs.isBeforeFirst()) {
+                while (rs.next()) {
+                    Integer id = Integer.valueOf(rs.getInt("tardis_id"));
+                    String tl = rs.getString("owner");
+                    TARDISAntiBuild tab = new TARDISAntiBuild();
+                    // get region vectors
+                    ProtectedRegion pr = plugin.getWorldGuardUtils().getRegion(rs.getString("chunk").split(":")[0], tl);
+                    if (pr != null) {
+                        Vector min = new Vector(pr.getMinimumPoint().getBlockX(), pr.getMinimumPoint().getBlockY(), pr.getMinimumPoint().getBlockZ());
+                        Vector max = new Vector(pr.getMaximumPoint().getBlockX(), pr.getMaximumPoint().getBlockY(), pr.getMaximumPoint().getBlockZ());
+                        tab.setMin(min);
+                        tab.setMax(max);
+                        tab.setTimelord(tl);
+                        plugin.getTrackerKeeper().getTrackAntiBuild().put(id, tab);
+                    }
+                }
+            }
+        } catch (SQLException e) {
+            plugin.debug("ResultSet error for antibuild load! " + e.getMessage());
+        } finally {
+            try {
+                if (rs != null) {
+                    rs.close();
+                }
+                if (statement != null) {
+                    statement.close();
+                }
+            } catch (SQLException e) {
+                plugin.debug("Error closing antibuild load! " + e.getMessage());
             }
         }
     }

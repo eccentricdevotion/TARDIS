@@ -26,6 +26,7 @@ import com.sk89q.worldguard.protection.flags.Flag;
 import com.sk89q.worldguard.protection.flags.StateFlag.State;
 import com.sk89q.worldguard.protection.managers.RegionManager;
 import com.sk89q.worldguard.protection.regions.ProtectedCuboidRegion;
+import com.sk89q.worldguard.protection.regions.ProtectedRegion;
 import java.util.HashMap;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.builders.TARDISTIPSData;
@@ -362,5 +363,21 @@ public class TARDISWorldGuardUtils {
      */
     public boolean canBreakBlock(Player p, Block b) {
         return wg.canBuild(p, b);
+    }
+
+    /**
+     * Gets a TARDIS WorldGuard region.
+     *
+     * @param world the world the region is in
+     * @param p the Timelord whose region it is
+     * @return the protected region
+     */
+    public ProtectedRegion getRegion(String world, String p) {
+        World w = plugin.getServer().getWorld(world);
+        if (w == null) {
+            return null;
+        }
+        RegionManager rm = wg.getRegionManager(w);
+        return rm.getRegion("tardis_" + p);
     }
 }

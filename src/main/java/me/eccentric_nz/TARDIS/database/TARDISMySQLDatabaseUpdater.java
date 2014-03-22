@@ -45,6 +45,7 @@ public class TARDISMySQLDatabaseUpdater {
         tardisupdates.add("renderer varchar(512) DEFAULT ''");
         tardisupdates.add("zero varchar(512) DEFAULT ''");
         prefsupdates.add("language varchar(32) DEFAULT 'AUTO_DETECT'");
+        prefsupdates.add("build_on int(1) DEFAULT '1'");
         prefsupdates.add("minecart_on int(1) DEFAULT '0'");
         prefsupdates.add("renderer_on int(1) DEFAULT '1'");
         destsupdates.add("slot int(1) DEFAULT '-1'");

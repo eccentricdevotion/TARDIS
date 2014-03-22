@@ -22,6 +22,7 @@ import me.eccentric_nz.TARDIS.advanced.TARDISConsoleListener;
 import me.eccentric_nz.TARDIS.advanced.TARDISConsoleSwitchListener;
 import me.eccentric_nz.TARDIS.advanced.TARDISDiskCraftListener;
 import me.eccentric_nz.TARDIS.advanced.TARDISStorageListener;
+import me.eccentric_nz.TARDIS.artron.TARDISArtronCapacitorListener;
 import me.eccentric_nz.TARDIS.chameleon.TARDISChameleonListener;
 import me.eccentric_nz.TARDIS.chameleon.TARDISPresetListener;
 import me.eccentric_nz.TARDIS.commands.admin.TARDISAdminMenuListener;
@@ -29,10 +30,10 @@ import me.eccentric_nz.TARDIS.commands.preferences.TARDISPrefsMenuListener;
 import me.eccentric_nz.TARDIS.info.TARDISInformationSystemListener;
 import me.eccentric_nz.TARDIS.lazarus.TARDISLazarusGUIListener;
 import me.eccentric_nz.TARDIS.lazarus.TARDISLazarusListener;
+import me.eccentric_nz.TARDIS.listeners.TARDISAntiBuildListener;
 import me.eccentric_nz.TARDIS.listeners.TARDISAnvilListener;
 import me.eccentric_nz.TARDIS.listeners.TARDISAreaListener;
 import me.eccentric_nz.TARDIS.listeners.TARDISAreaSignListener;
-import me.eccentric_nz.TARDIS.artron.TARDISArtronCapacitorListener;
 import me.eccentric_nz.TARDIS.listeners.TARDISBindListener;
 import me.eccentric_nz.TARDIS.listeners.TARDISBlockBreakListener;
 import me.eccentric_nz.TARDIS.listeners.TARDISBlockDamageListener;
@@ -206,6 +207,9 @@ public class TARDISListenerRegisterer {
             }
         }
         plugin.getPM().registerEvents(new TARDISItemFrameListener(plugin), plugin);
+        if (plugin.getConfig().getBoolean("allow.wg_flag_set") && plugin.getPM().isPluginEnabled("WorldGuard")) {
+            plugin.getPM().registerEvents(new TARDISAntiBuildListener(plugin), plugin);
+        }
     }
 
     private boolean getNPCManager() {
