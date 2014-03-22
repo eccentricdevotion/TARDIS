@@ -64,6 +64,7 @@ public class TARDISZeroRoomBuilder {
         int z = pos.getCentreZ();
         World w = plugin.getServer().getWorld("TARDIS_Zero_room");
         if (w == null) {
+            TARDISMessage.send(p, plugin.getPluginName() + "Could not find the TARDIS_Zero_Room world! Has it been created yet?");
             return true;
         }
         Location l = new Location(w, x, y, z);

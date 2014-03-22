@@ -9,15 +9,15 @@ These are all really boring!
 2. Localisation
 3. `/tardisadmin` remote TARDIS commands
 
+##Future version `2.9+`
+1. UHC flying mode
+2. TARDIS invisiblity - 1.8 barrier blocks?
+
 ####I couldn't really be bothered
 1. HADS + explosions + fireballs + lava
 2. Put farmland, crops, buttons, ladders, levers and signs on last when growing rooms
 3. TARDIS Information System
     * auto log out?
-    
-##Future version `2.9+`
-1. UHC flying mode
-2. TARDIS invisiblity - 1.8 barrier blocks?
 
 
 ##Resource Pack / TARDISWeepingAngels
