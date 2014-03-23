@@ -28,6 +28,7 @@ public class TARDISVillager {
     private int age;
     private double health;
     private boolean baby;
+    private String name;
 
     /**
      * Data storage class for TARDIS villagers.
@@ -65,5 +66,13 @@ public class TARDISVillager {
 
     public void setBaby(boolean baby) {
         this.baby = baby;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 }

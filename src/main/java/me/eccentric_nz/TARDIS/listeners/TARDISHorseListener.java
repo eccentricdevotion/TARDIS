@@ -33,6 +33,7 @@ import org.bukkit.World;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Horse;
+import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Tameable;
 import org.bukkit.event.EventHandler;
@@ -106,6 +107,7 @@ public class TARDISHorseListener implements Listener {
                         tmhor.setHorseColour(h.getColor());
                         tmhor.setHorseStyle(h.getStyle());
                         tmhor.setHorseVariant(h.getVariant());
+                        tmhor.setName(((LivingEntity) h).getCustomName());
                         tmhor.setTamed(true);
                         if (h.isCarryingChest()) {
                             tmhor.setHasChest(true);
@@ -116,8 +118,7 @@ public class TARDISHorseListener implements Listener {
                         tmhor.setHealth(h.getHealth());
                         if (plugin.isHorseSpeedOnServer()) {
                             TardisHorseSpeed ths = (TardisHorseSpeed) plugin.getPM().getPlugin("TARDISHorseSpeed");
-                            double speed = ths.getHorseSpeed(h);
-                            tmhor.setSpeed(speed);
+                            tmhor.setSpeed(ths.getHorseSpeed(h));
                         }
                         // eject player
                         // if (p.leaveVehicle()) {
@@ -138,6 +139,11 @@ public class TARDISHorseListener implements Listener {
                             equine.setStyle(tmhor.getHorseStyle());
                             equine.setDomestication(tmhor.getDomesticity());
                             equine.setJumpStrength(tmhor.getJumpStrength());
+                            String name = tmhor.getName();
+                            if (name != null && !name.isEmpty()) {
+                                equine.setCustomName(name);
+                                equine.setCustomNameVisible(true);
+                            }
                             if (tmhor.hasChest()) {
                                 equine.setCarryingChest(true);
                             }
