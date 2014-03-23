@@ -560,6 +560,11 @@ public class TARDISFarmer {
                                 npc.setBaby();
                             }
                             npc.setHealth(e.getHealth());
+                            String name = e.getName();
+                            if (name != null && !name.isEmpty()) {
+                                npc.setCustomName(name);
+                                npc.setCustomNameVisible(true);
+                            }
                             npc.setRemoveWhenFarAway(false);
                         }
                     }
