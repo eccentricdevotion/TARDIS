@@ -27,12 +27,18 @@ import com.sk89q.worldguard.protection.flags.StateFlag.State;
 import com.sk89q.worldguard.protection.managers.RegionManager;
 import com.sk89q.worldguard.protection.regions.ProtectedCuboidRegion;
 import com.sk89q.worldguard.protection.regions.ProtectedRegion;
+import java.io.File;
+import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.builders.TARDISTIPSData;
 import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.block.Block;
+import org.bukkit.configuration.file.FileConfiguration;
+import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 
 /**
@@ -46,6 +52,7 @@ public class TARDISWorldGuardUtils {
 
     private final TARDIS plugin;
     private WorldGuardPlugin wg;
+    private final List<String> deny_mobs = new ArrayList<String>();
 
     /**
      * Checks if WorldGuard is on the server.
@@ -57,6 +64,12 @@ public class TARDISWorldGuardUtils {
         if (plugin.isWorldGuardOnServer()) {
             wg = (WorldGuardPlugin) plugin.getPM().getPlugin("WorldGuard");
         }
+        this.deny_mobs.add("Creeper");
+        this.deny_mobs.add("Zombie");
+        this.deny_mobs.add("Skeleton");
+        this.deny_mobs.add("Enderman");
+        this.deny_mobs.add("Spider");
+        this.deny_mobs.add("Witch");
     }
 
     /**
@@ -113,6 +126,8 @@ public class TARDISWorldGuardUtils {
         } catch (ProtectionDatabaseException e) {
             plugin.getConsole().sendMessage(plugin.getPluginName() + "Could not create WorldGuard Protection for TARDIS! " + e.getMessage());
         }
+        // set the mob spawning configuration
+        setDenyInConfig("TARDIS_WORLD_" + p.getName());
     }
 
     /**
@@ -152,6 +167,8 @@ public class TARDISWorldGuardUtils {
         } catch (ProtectionDatabaseException e) {
             plugin.getConsole().sendMessage(plugin.getPluginName() + "Could not create WorldGuard Protection for TARDIS! " + e.getMessage());
         }
+        // set the mob spawning configuration
+        setDenyInConfig(w.getName());
     }
 
     /**
@@ -222,7 +239,7 @@ public class TARDISWorldGuardUtils {
     }
 
     /**
-     * Adds a WorldGuard region that allows mobs pawning in the specified room.
+     * Adds a WorldGuard region that allows mobs spawning in the specified room.
      *
      * @param name the name of the recharger
      * @param room the name of the room the region is for
@@ -379,5 +396,29 @@ public class TARDISWorldGuardUtils {
         }
         RegionManager rm = wg.getRegionManager(w);
         return rm.getRegion("tardis_" + p);
+    }
+
+    /**
+     * Sets monster spawning to false in the TARDIS world's WorldGuard
+     * configuration.
+     *
+     * @param world the world we are setting the configuration for
+     */
+    public void setDenyInConfig(String world) {
+        String world_folder = "worlds" + File.separator + world + File.separator;
+        plugin.debug("world folder: " + world_folder);
+        File configFile = new File(wg.getDataFolder(), world_folder + "config.yml");
+        if (!configFile.exists()) {
+            plugin.debug("Can't find world config file!");
+        }
+        FileConfiguration config = YamlConfiguration.loadConfiguration(configFile);
+        if (!config.contains("mobs.block-creature-spawn")) {
+            config.set("mobs.block-creature-spawn", deny_mobs);
+            try {
+                config.save(configFile);
+            } catch (IOException io) {
+                plugin.debug("Could not save " + world_folder + "config.yml, " + io);
+            }
+        }
     }
 }
