@@ -95,6 +95,7 @@ public class TARDISAdminCommands implements CommandExecutor {
         firstsBool.put("debug", "");
         firstsBool.put("default_world", "creation");
         firstsBool.put("emergency_npc", "allow");
+        firstsBool.put("external_gravity", "allow");
         firstsBool.put("exile", "travel");
         firstsBool.put("give_key", "travel");
         firstsBool.put("include_default_world", "travel");
@@ -117,6 +118,7 @@ public class TARDISAdminCommands implements CommandExecutor {
         firstsBool.put("use_block_stack", "creation");
         firstsBool.put("use_clay", "creation");
         firstsBool.put("use_worldguard", "preferences");
+        firstsBool.put("wg_flag_set", "allow");
         firstsBool.put("zero_room", "allow");
         // integer
         firstsInt.put("border_radius", "creation");
