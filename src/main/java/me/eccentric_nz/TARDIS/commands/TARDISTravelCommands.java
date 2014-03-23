@@ -217,7 +217,7 @@ public class TARDISTravelCommands implements CommandExecutor {
                         } else {
                             if (player.hasPermission("tardis.timetravel.player")) {
                                 if (plugin.getConfig().getString("preferences.difficulty").equals("hard")) {
-                                    TARDISMessage.send(player, plugin.getPluginName() + "You need to use the Advanced Console! See the " + ChatColor.AQUA + "TARDIS Information System" + ChatColor.RESET + " for help with using Disks.");
+                                    TARDISMessage.send(player, plugin.getPluginName() + "The TARDIS difficulty level on this server requires you to use the Advanced Console! See the " + ChatColor.AQUA + "TARDIS Information System" + ChatColor.RESET + " for help with using Player Disks.");
                                     return true;
                                 }
                                 if (player.getName().equalsIgnoreCase(args[0])) {
@@ -247,14 +247,14 @@ public class TARDISTravelCommands implements CommandExecutor {
                             }
                         }
                     }
-                    if (plugin.getConfig().getString("preferences.difficulty").equals("hard") && mustUseAdvanced.contains(args[0].toLowerCase())) {
-                        TARDISMessage.send(player, plugin.getPluginName() + "You need to use the Advanced Console! See the " + ChatColor.AQUA + "TARDIS Information System" + ChatColor.RESET + " for help with using Disks.");
-                        return true;
-                    }
                     if (args.length == 2 && args[0].equalsIgnoreCase("biome")) {
                         // we're thinking this is a biome search
                         if (!player.hasPermission("tardis.timetravel.biome")) {
                             TARDISMessage.send(player, plugin.getPluginName() + "You do not have permission to time travel to a biome!");
+                            return true;
+                        }
+                        if (plugin.getConfig().getString("preferences.difficulty").equals("hard") && mustUseAdvanced.contains(args[0].toLowerCase())) {
+                            TARDISMessage.send(player, plugin.getPluginName() + "The TARDIS difficulty level on this server requires you to use the Advanced Console! See the " + ChatColor.AQUA + "TARDIS Information System" + ChatColor.RESET + " for help with using Biome Disks, or type " + ChatColor.AQUA + "/tardisrecipe biome-disk" + ChatColor.RESET + " to see how to craft a Biome Storage Disk.");
                             return true;
                         }
                         String upper = args[1].toUpperCase(Locale.ENGLISH);
@@ -323,6 +323,10 @@ public class TARDISTravelCommands implements CommandExecutor {
                     if (args.length == 2 && args[0].equalsIgnoreCase("dest")) {
                         // we're thinking this is a saved destination name
                         if (player.hasPermission("tardis.save")) {
+//                            if (plugin.getConfig().getString("preferences.difficulty").equals("hard") && mustUseAdvanced.contains(args[0].toLowerCase())) {
+//                                TARDISMessage.send(player, plugin.getPluginName() + "The TARDIS difficulty level on this server requires you to use the Advanced Console! See the " + ChatColor.AQUA + "TARDIS Information System" + ChatColor.RESET + " for help with using Save Disks, or type " + ChatColor.AQUA + "/tardisrecipe save-disk" + ChatColor.RESET + " to see how to craft a Save Storage Disk.");
+//                                return true;
+//                            }
                             HashMap<String, Object> whered = new HashMap<String, Object>();
                             whered.put("dest_name", args[1]);
                             whered.put("tardis_id", id);
@@ -386,6 +390,10 @@ public class TARDISTravelCommands implements CommandExecutor {
                     }
                     if (args.length == 2 && args[0].equalsIgnoreCase("area")) {
                         // we're thinking this is admin defined area name
+                        if (plugin.getConfig().getString("preferences.difficulty").equals("hard") && mustUseAdvanced.contains(args[0].toLowerCase())) {
+                            TARDISMessage.send(player, plugin.getPluginName() + "The TARDIS difficulty level on this server requires you to use the Advanced Console! See the " + ChatColor.AQUA + "TARDIS Information System" + ChatColor.RESET + " for help with using Area Disks.");
+                            return true;
+                        }
                         HashMap<String, Object> wherea = new HashMap<String, Object>();
                         wherea.put("area_name", args[1]);
                         ResultSetAreas rsa = new ResultSetAreas(plugin, wherea, false);

@@ -54,7 +54,7 @@ public enum TARDISDescription {
     SCANNER_CIRCUIT_INFO("The Scanner Circuit is a component of the TARDIS Advanced Console and is required to use the TARDIS Scanner and Exterior Rendering room."),
     P_CIRCUIT_INFO("The Perception Circuit is used in crafting the Perception Filter."),
     FILTER_INFO("The Perception Filter is used to make yourself less noticeable."),
-    AREA_DISK("An Area Storage Disk lets you travel to a TARDIS Area. These disks are not craftable."),
+    AREA_DISK("An Area Storage Disk lets you travel to a TARDIS Area. These disks are not craftable, but are stored automatically in the Disk Storage Container for the areas you have permission to travel to."),
     BLANK_INFO("A Blank Storage Disk is a craftable disk that is the base disk for crafting into another sort of TARDIS disk."),
     BIOME_DISK_INFO("A Biome Storage Disk is a craftable disk that lets you travel to specific biomes."),
     PLAYER_DISK_INFO("A Player Storage Disk is a craftable disk that lets you travel to players."),
