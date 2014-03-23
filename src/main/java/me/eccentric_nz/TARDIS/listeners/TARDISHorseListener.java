@@ -86,18 +86,23 @@ public class TARDISHorseListener implements Listener {
                         // get spawn location
                         TARDISDoorLocation dl = plugin.getGeneralKeeper().getDoorListener().getDoor(0, id);
                         Location l = dl.getL();
+                        // set the horse's direction as you would for a player when exiting
                         switch (dl.getD()) {
                             case NORTH:
                                 l.setZ(l.getZ() + 5);
+                                l.setYaw(180.0f);
                                 break;
                             case WEST:
                                 l.setX(l.getX() + 5);
+                                l.setY(90.0f);
                                 break;
                             case SOUTH:
                                 l.setZ(l.getZ() - 5);
+                                l.setYaw(0.0f);
                                 break;
                             default:
                                 l.setX(l.getX() - 5);
+                                l.setYaw(270.0f);
                                 break;
                         }
                         // save horse
