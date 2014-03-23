@@ -29,7 +29,6 @@ import org.bukkit.Rotation;
 import org.bukkit.entity.ItemFrame;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
-import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerInteractEntityEvent;
 
@@ -45,7 +44,7 @@ public class TARDISItemFrameListener implements Listener {
         this.plugin = plugin;
     }
 
-    @EventHandler(priority = EventPriority.MONITOR)
+    @EventHandler(ignoreCancelled = true)
     public void onItemFrameClick(PlayerInteractEntityEvent event) {
         final Player player = event.getPlayer();
         if (event.getRightClicked() instanceof ItemFrame) {
