@@ -41,10 +41,18 @@ public class TARDISAntiBuildListener implements Listener {
 
     public TARDISAntiBuildListener(TARDIS plugin) {
         this.plugin = plugin;
-        this.no_place.add(Material.LAVA_BUCKET);
-        this.no_place.add(Material.WATER_BUCKET);
-        this.no_place.add(Material.PAINTING);
+        this.no_place.add(Material.BOAT);
+        this.no_place.add(Material.EXPLOSIVE_MINECART);
+        this.no_place.add(Material.FLINT_AND_STEEL);
+        this.no_place.add(Material.HOPPER_MINECART);
         this.no_place.add(Material.ITEM_FRAME);
+        this.no_place.add(Material.LAVA_BUCKET);
+        this.no_place.add(Material.MINECART);
+        this.no_place.add(Material.MONSTER_EGG);
+        this.no_place.add(Material.PAINTING);
+        this.no_place.add(Material.POWERED_MINECART);
+        this.no_place.add(Material.STORAGE_MINECART);
+        this.no_place.add(Material.WATER_BUCKET);
     }
 
     @EventHandler(ignoreCancelled = true)
