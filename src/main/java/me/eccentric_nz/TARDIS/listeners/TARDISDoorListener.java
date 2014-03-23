@@ -706,7 +706,6 @@ public class TARDISDoorListener implements Listener {
             String pet_name = pet.getName();
             if (pet_name != null && !pet_name.isEmpty()) {
                 ent.setCustomName(pet.getName());
-                ent.setCustomNameVisible(true);
             }
             ent.setHealth(pet.getHealth());
             ((Tameable) ent).setTamed(true);

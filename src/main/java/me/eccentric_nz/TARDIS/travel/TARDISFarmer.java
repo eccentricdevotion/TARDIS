@@ -340,7 +340,6 @@ public class TARDISFarmer {
                             String name = e.getName();
                             if (name != null && !name.isEmpty()) {
                                 pecker.setCustomName(name);
-                                pecker.setCustomNameVisible(true);
                             }
                             pecker.setRemoveWhenFarAway(false);
                         }
@@ -361,7 +360,6 @@ public class TARDISFarmer {
                             String name = e.getName();
                             if (name != null && !name.isEmpty()) {
                                 moo.setCustomName(name);
-                                moo.setCustomNameVisible(true);
                             }
                             moo.setRemoveWhenFarAway(false);
                         }
@@ -382,7 +380,6 @@ public class TARDISFarmer {
                             String name = e.getName();
                             if (name != null && !name.isEmpty()) {
                                 oinker.setCustomName(name);
-                                oinker.setCustomNameVisible(true);
                             }
                             oinker.setSaddle(e.isSaddled());
                             oinker.setRemoveWhenFarAway(false);
@@ -405,7 +402,6 @@ public class TARDISFarmer {
                             String name = e.getName();
                             if (name != null && !name.isEmpty()) {
                                 baa.setCustomName(name);
-                                baa.setCustomNameVisible(true);
                             }
                             baa.setRemoveWhenFarAway(false);
                         }
@@ -426,7 +422,6 @@ public class TARDISFarmer {
                             String name = e.getName();
                             if (name != null && !name.isEmpty()) {
                                 fungi.setCustomName(name);
-                                fungi.setCustomNameVisible(true);
                             }
                             fungi.setRemoveWhenFarAway(false);
                         }
@@ -487,7 +482,6 @@ public class TARDISFarmer {
                             String name = e.getName();
                             if (name != null && !name.isEmpty()) {
                                 equine.setCustomName(name);
-                                equine.setCustomNameVisible(true);
                             }
                             Tameable tamed = (Tameable) equine;
                             if (e.isTamed()) {
@@ -563,7 +557,6 @@ public class TARDISFarmer {
                             String name = e.getName();
                             if (name != null && !name.isEmpty()) {
                                 npc.setCustomName(name);
-                                npc.setCustomNameVisible(true);
                             }
                             npc.setRemoveWhenFarAway(false);
                         }

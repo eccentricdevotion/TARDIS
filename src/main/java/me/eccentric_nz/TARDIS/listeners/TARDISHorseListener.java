@@ -142,7 +142,6 @@ public class TARDISHorseListener implements Listener {
                             String name = tmhor.getName();
                             if (name != null && !name.isEmpty()) {
                                 equine.setCustomName(name);
-                                equine.setCustomNameVisible(true);
                             }
                             if (tmhor.hasChest()) {
                                 equine.setCarryingChest(true);
