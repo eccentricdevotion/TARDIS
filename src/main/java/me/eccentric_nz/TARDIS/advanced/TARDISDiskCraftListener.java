@@ -93,6 +93,7 @@ public class TARDISDiskCraftListener implements Listener {
                                 disk.setItemMeta(dim);
                                 inv.clear();
                                 inv.setItem(0, disk);
+                                player.updateInventory();
                             }
                         } else {
                             TARDISMessage.send(player, plugin.getPluginName() + "You must use a blank Biome Storage Disk!");
@@ -123,6 +124,7 @@ public class TARDISDiskCraftListener implements Listener {
                                     disk.setItemMeta(dim);
                                     inv.clear();
                                     inv.setItem(0, disk);
+                                    player.updateInventory();
                                 }
                             }
                         } else {
