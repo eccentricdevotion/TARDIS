@@ -32,6 +32,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.builders.TARDISTIPSData;
 import org.bukkit.Location;
@@ -420,5 +421,23 @@ public class TARDISWorldGuardUtils {
                 plugin.debug("Could not save " + world_folder + "config.yml, " + io);
             }
         }
+    }
+
+    /**
+     * Removes the build flags and build group from all TARDIS regions in a
+     * world.
+     *
+     * @param w the world to remove the flags from
+     * @return a list of TARDIS region names for this world
+     */
+    public List<String> getRegions(World w) {
+        List<String> regions = new ArrayList<String>();
+        RegionManager rm = wg.getRegionManager(w);
+        for (Map.Entry<String, ProtectedRegion> pr : rm.getRegions().entrySet()) {
+            if (pr.getKey().contains("tardis") && pr.getValue().getFlags().containsKey(DefaultFlag.BUILD)) {
+                regions.add(pr.getKey());
+            }
+        }
+        return regions;
     }
 }
