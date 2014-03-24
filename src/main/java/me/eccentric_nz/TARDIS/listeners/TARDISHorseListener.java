@@ -94,7 +94,7 @@ public class TARDISHorseListener implements Listener {
                                 break;
                             case WEST:
                                 l.setX(l.getX() + 5);
-                                l.setY(270.0f);
+                                l.setYaw(270.0f);
                                 break;
                             case SOUTH:
                                 l.setZ(l.getZ() - 5);
