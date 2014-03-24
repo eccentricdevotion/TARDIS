@@ -20,6 +20,7 @@ import java.util.ArrayList;
 import java.util.List;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.ResultSetAntiBuild;
+import me.eccentric_nz.TARDIS.enumeration.MESSAGE;
 import me.eccentric_nz.TARDIS.utility.TARDISAntiBuild;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import org.bukkit.Material;
@@ -94,7 +95,7 @@ public class TARDISAntiBuildListener implements Listener {
         TARDISAntiBuild tab = plugin.getTrackerKeeper().getTrackAntiBuild().get(rs.getTardis_id());
         if (v.isInAABB(tab.getMin(), tab.getMax())) {
             event.setCancelled(true);
-            TARDISMessage.send(event.getPlayer(), plugin.getPluginName() + tab.getTimelord() + " has turned off companion building!");
+            TARDISMessage.send(event.getPlayer(), plugin.getPluginName() + String.format(MESSAGE.ANTIBUILD_TIMELORD.getText(), tab.getTimelord()));
         }
     }
 
@@ -109,7 +110,7 @@ public class TARDISAntiBuildListener implements Listener {
         TARDISAntiBuild tab = plugin.getTrackerKeeper().getTrackAntiBuild().get(rs.getTardis_id());
         if (v.isInAABB(tab.getMin(), tab.getMax())) {
             event.setCancelled(true);
-            TARDISMessage.send(event.getPlayer(), plugin.getPluginName() + tab.getTimelord() + " has turned off companion building!");
+            TARDISMessage.send(event.getPlayer(), plugin.getPluginName() + String.format(MESSAGE.ANTIBUILD_TIMELORD.getText(), tab.getTimelord()));
         }
     }
 
@@ -123,12 +124,12 @@ public class TARDISAntiBuildListener implements Listener {
         if (no_place.contains(event.getPlayer().getItemInHand().getType()) && !allow_interact.contains(event.getClickedBlock().getType())) {
             event.setUseItemInHand(Result.DENY);
             event.setCancelled(true);
-            TARDISMessage.send(event.getPlayer(), plugin.getPluginName() + "Companion building has been turned off!");
+            TARDISMessage.send(event.getPlayer(), plugin.getPluginName() + MESSAGE.ANTIBUILD.getText());
         }
         if (event.getClickedBlock().getType().equals(Material.FLOWER_POT) && no_flower_pot.contains(event.getPlayer().getItemInHand().getType())) {
             event.setUseItemInHand(Result.DENY);
             event.setCancelled(true);
-            TARDISMessage.send(event.getPlayer(), plugin.getPluginName() + "Companion planting has been turned off!");
+            TARDISMessage.send(event.getPlayer(), plugin.getPluginName() + MESSAGE.ANTIBUILD.getText());
         }
     }
 
@@ -143,7 +144,7 @@ public class TARDISAntiBuildListener implements Listener {
         TARDISAntiBuild tab = plugin.getTrackerKeeper().getTrackAntiBuild().get(rs.getTardis_id());
         if (v.isInAABB(tab.getMin(), tab.getMax())) {
             event.setCancelled(true);
-            TARDISMessage.send(event.getPlayer(), plugin.getPluginName() + tab.getTimelord() + " has turned off entity interaction for companions!");
+            TARDISMessage.send(event.getPlayer(), plugin.getPluginName() + String.format(MESSAGE.ANTIBUILD_TIMELORD.getText(), tab.getTimelord()));
         }
     }
 
@@ -159,7 +160,7 @@ public class TARDISAntiBuildListener implements Listener {
             TARDISAntiBuild tab = plugin.getTrackerKeeper().getTrackAntiBuild().get(rs.getTardis_id());
             if (v.isInAABB(tab.getMin(), tab.getMax())) {
                 event.setCancelled(true);
-                TARDISMessage.send(p, plugin.getPluginName() + tab.getTimelord() + " has turned off entity damage for companions!");
+                TARDISMessage.send(p, plugin.getPluginName() + String.format(MESSAGE.ANTIBUILD_TIMELORD.getText(), tab.getTimelord()));
             }
         }
     }
@@ -176,7 +177,7 @@ public class TARDISAntiBuildListener implements Listener {
             TARDISAntiBuild tab = plugin.getTrackerKeeper().getTrackAntiBuild().get(rs.getTardis_id());
             if (v.isInAABB(tab.getMin(), tab.getMax())) {
                 event.setCancelled(true);
-                TARDISMessage.send(p, plugin.getPluginName() + tab.getTimelord() + " has turned off painting breaking for companions!");
+                TARDISMessage.send(p, plugin.getPluginName() + String.format(MESSAGE.ANTIBUILD_TIMELORD.getText(), tab.getTimelord()));
             }
         }
     }

@@ -22,6 +22,8 @@ package me.eccentric_nz.TARDIS.enumeration;
  */
 public enum MESSAGE {
 
+    ANTIBUILD("You can't do that because the TARDIS has placed this area in a stasis field!"),
+    ANTIBUILD_TIMELORD("You can't do that because %s has locked the TARDIS in a perpetual state of relativistic stability!"),
     CHAMELEON_SET("Chameleon Preset set to "),
     CONFIG_UPDATED("The config was updated!"),
     COULD_NOT_FIND_NAME("Could not find a player with that name!"),
