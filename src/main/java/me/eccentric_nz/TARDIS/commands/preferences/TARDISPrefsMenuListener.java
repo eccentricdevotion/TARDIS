@@ -52,6 +52,7 @@ public class TARDISPrefsMenuListener implements Listener {
         lookup.put("Interior SFX", "sfx_on");
         lookup.put("Submarine Mode", "submarine_on");
         lookup.put("Resource Pack Switching", "texture_on");
+        lookup.put("Companion Anti-build", "build_on");
     }
 
     @EventHandler(priority = EventPriority.NORMAL)
@@ -69,12 +70,19 @@ public class TARDISPrefsMenuListener implements Listener {
                     boolean bool = (lore.get(0).equals("ON"));
                     String value = (bool) ? "OFF" : "ON";
                     int b = (bool) ? 0 : 1;
-                    HashMap<String, Object> set = new HashMap<String, Object>();
-                    set.put(lookup.get(im.getDisplayName()), b);
-                    HashMap<String, Object> where = new HashMap<String, Object>();
                     String p = ((Player) event.getWhoClicked()).getName();
-                    where.put("player", p);
-                    new QueryFactory(plugin).doUpdate("player_prefs", set, where);
+                    if (im.getDisplayName().equals("Companion Anti-build")) {
+                        String[] args = new String[2];
+                        args[0] = "";
+                        args[1] = value;
+                        new TARDISBuildCommand(plugin).toggleCompanionBuilding(((Player) event.getWhoClicked()), args);
+                    } else {
+                        HashMap<String, Object> set = new HashMap<String, Object>();
+                        set.put(lookup.get(im.getDisplayName()), b);
+                        HashMap<String, Object> where = new HashMap<String, Object>();
+                        where.put("player", p);
+                        new QueryFactory(plugin).doUpdate("player_prefs", set, where);
+                    }
                     lore.set(0, value);
                     im.setLore(lore);
                     is.setItemMeta(im);

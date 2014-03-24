@@ -152,6 +152,14 @@ public class TARDISPrefsMenuInventory {
             t_im.setLore(Arrays.asList(new String[]{t_value}));
             tex.setItemMeta(t_im);
             options.add(tex);
+            // antibuild
+            ItemStack anti = new ItemStack(TARDISConstants.GUI_ITEMS.get(12), 1);
+            ItemMeta build = anti.getItemMeta();
+            build.setDisplayName("Companion Anti-build");
+            String ab_value = (rsp.isBuildOn()) ? "ON" : "OFF";
+            build.setLore(Arrays.asList(new String[]{ab_value}));
+            anti.setItemMeta(build);
+            options.add(anti);
         }
         ItemStack[] stack = new ItemStack[18];
         for (int s = 0; s < 18; s++) {

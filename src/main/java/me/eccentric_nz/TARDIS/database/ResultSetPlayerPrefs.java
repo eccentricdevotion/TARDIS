@@ -51,6 +51,7 @@ public class ResultSetPlayerPrefs {
     private String language;
     private String wall;
     private String floor;
+    private boolean buildOn;
     private boolean epsOn;
     private String epsMessage;
     private boolean textureOn;
@@ -127,6 +128,7 @@ public class ResultSetPlayerPrefs {
                 }
                 this.wall = rs.getString("wall");
                 this.floor = rs.getString("floor");
+                this.buildOn = rs.getBoolean("build_on");
                 this.epsOn = rs.getBoolean("eps_on");
                 // if empty use default
                 String message = rs.getString("eps_message");
@@ -209,6 +211,10 @@ public class ResultSetPlayerPrefs {
 
     public String getFloor() {
         return floor;
+    }
+
+    public boolean isBuildOn() {
+        return buildOn;
     }
 
     public boolean isEpsOn() {
