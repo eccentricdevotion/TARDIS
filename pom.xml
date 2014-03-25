@@ -36,6 +36,11 @@
             <name>Comphenix Repository</name>
             <url>http://repo.comphenix.net/content/groups/public</url>
         </repository>
+        <repository>
+            <id>rassilon-repo</id>
+            <name>Project Rassilon Repository</name>
+            <url>http://repo.pekkit.net</url>
+          </repository>
     </repositories>
     <scm>
         <connection>scm:git:ssh://github.com/eccentricdevotion/TARDIS</connection>
@@ -351,6 +356,11 @@
                     <groupId>org.spigotmc</groupId>
                 </exclusion>
             </exclusions>
+        </dependency>
+        <dependency>
+            <groupId>net.pekkit</groupId>
+            <artifactId>Project_Rassilon</artifactId>
+            <version>1.2</version>
         </dependency>
     </dependencies>
 </project>
