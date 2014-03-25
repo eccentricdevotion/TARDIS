@@ -40,7 +40,7 @@
             <id>rassilon-repo</id>
             <name>Project Rassilon Repository</name>
             <url>http://repo.pekkit.net</url>
-          </repository>
+        </repository>
     </repositories>
     <scm>
         <connection>scm:git:ssh://github.com/eccentricdevotion/TARDIS</connection>
