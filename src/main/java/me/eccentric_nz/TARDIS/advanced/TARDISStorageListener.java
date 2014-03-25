@@ -70,6 +70,23 @@ public class TARDISStorageListener implements Listener {
         Inventory inv = event.getInventory();
         String title = inv.getTitle();
         if (titles.contains(title)) {
+            // TODO *** remove this next section for release ***
+
+            // scan the upper slots for misplaced disks
+            for (int i = 0; i < 27; i++) {
+                ItemStack stack = inv.getItem(i);
+                if (stack != null && stack.getType().isRecord() && stack.hasItemMeta()) {
+                    ItemMeta ims = stack.getItemMeta();
+                    if (ims.hasDisplayName() && ims.getDisplayName().contains("Disk")) {
+                        Player p = (Player) event.getPlayer();
+                        Location loc = p.getLocation();
+                        loc.getWorld().dropItemNaturally(loc, stack);
+                        inv.setItem(i, new ItemStack(Material.AIR));
+                    }
+                }
+            }
+            // *** end section ***
+
             // which inventory screen is it?
             String[] split = title.split(" ");
             String tmp = split[0].toUpperCase(Locale.ENGLISH);
