@@ -52,7 +52,7 @@ public class TARDISPrefsMenuListener implements Listener {
         lookup.put("Interior SFX", "sfx_on");
         lookup.put("Submarine Mode", "submarine_on");
         lookup.put("Resource Pack Switching", "texture_on");
-        lookup.put("Companion Anti-build", "build_on");
+        lookup.put("Companion Build", "build_on");
     }
 
     @EventHandler(priority = EventPriority.NORMAL)
@@ -71,7 +71,7 @@ public class TARDISPrefsMenuListener implements Listener {
                     String value = (bool) ? "OFF" : "ON";
                     int b = (bool) ? 0 : 1;
                     String p = ((Player) event.getWhoClicked()).getName();
-                    if (im.getDisplayName().equals("Companion Anti-build")) {
+                    if (im.getDisplayName().equals("Companion Build")) {
                         String[] args = new String[2];
                         args[0] = "";
                         args[1] = value;

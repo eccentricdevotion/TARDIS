@@ -155,7 +155,7 @@ public class TARDISPrefsMenuInventory {
             // antibuild
             ItemStack anti = new ItemStack(TARDISConstants.GUI_ITEMS.get(12), 1);
             ItemMeta build = anti.getItemMeta();
-            build.setDisplayName("Companion Anti-build");
+            build.setDisplayName("Companion Build");
             String ab_value = (rsp.isBuildOn()) ? "ON" : "OFF";
             build.setLore(Arrays.asList(new String[]{ab_value}));
             anti.setItemMeta(build);
