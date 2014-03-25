@@ -21,6 +21,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
+import java.util.Set;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetDiskStorage;
@@ -35,6 +36,7 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryCloseEvent;
+import org.bukkit.event.inventory.InventoryDragEvent;
 import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.event.player.PlayerDropItemEvent;
 import org.bukkit.inventory.Inventory;
@@ -101,15 +103,30 @@ public class TARDISStorageListener implements Listener {
         }
     }
 
-    @EventHandler(priority = EventPriority.MONITOR)
+    @EventHandler(ignoreCancelled = true)
+    public void onDiskStorageInteract(InventoryDragEvent event) {
+        Inventory inv = event.getInventory();
+        String title = inv.getTitle();
+        if (!titles.contains(title)) {
+            return;
+        }
+        Set<Integer> slots = event.getRawSlots();
+        for (Integer slot : slots) {
+            if ((slot >= 0 && slot < 27)) {
+                event.setCancelled(true);
+            }
+        }
+    }
+
+    @EventHandler(ignoreCancelled = true)
     public void onDiskStorageInteract(InventoryClickEvent event) {
         Inventory inv = event.getInventory();
         String title = inv.getTitle();
-        if (!titles.contains(title) || event.isCancelled()) {
+        if (!titles.contains(title)) {
             return;
         }
         int slot = event.getRawSlot();
-        if (slot >= 0 && slot < 27 || event.isShiftClick()) {
+        if ((slot >= 0 && slot < 27) || event.isShiftClick()) {
             event.setCancelled(true);
         }
         final Player player = (Player) event.getWhoClicked();
