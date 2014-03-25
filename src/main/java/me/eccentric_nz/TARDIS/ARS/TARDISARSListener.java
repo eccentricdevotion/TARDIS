@@ -558,7 +558,6 @@ public class TARDISARSListener implements Listener {
                         boolean changed = tap.compare3DArray(save_map_data.get(n).getData(), map_data.get(n).getData());
                         if (changed && tap.checkCosts(tap.getChanged(), tap.getJettison())) {
                             TARDISMessage.send(p, plugin.getPluginName() + "Architectural reconfiguration starting...");
-//                            plugin.getTrackerKeeper().getTrackARS().add(ids.get(n));
                             // do all jettisons first
                             if (tap.getJettison().size() > 0) {
                                 TARDISMessage.send(p, plugin.getPluginName() + "Jettisoning " + tap.getJettison().size() + " rooms...");

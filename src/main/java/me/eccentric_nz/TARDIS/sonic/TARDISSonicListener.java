@@ -77,6 +77,7 @@ public class TARDISSonicListener implements Listener {
     private final List<Material> diamond = new ArrayList<Material>();
     private final List<Material> distance = new ArrayList<Material>();
     private final List<Material> doors = new ArrayList<Material>();
+    private final List<Material> interactables = new ArrayList<Material>();
     private final List<Material> redstone = new ArrayList<Material>();
     private final List<String> frozenPlayers = new ArrayList<String>();
     private final List<BlockFace> faces = new ArrayList<BlockFace>();
@@ -99,6 +100,28 @@ public class TARDISSonicListener implements Listener {
         doors.add(Material.IRON_DOOR_BLOCK);
         doors.add(Material.TRAP_DOOR);
         doors.add(Material.WOODEN_DOOR);
+        interactables.add(Material.ANVIL);
+        interactables.add(Material.BEACON);
+        interactables.add(Material.CHEST);
+        interactables.add(Material.DIODE_BLOCK_OFF);
+        interactables.add(Material.DIODE_BLOCK_ON);
+        interactables.add(Material.DISPENSER);
+        interactables.add(Material.DROPPER);
+        interactables.add(Material.FURNACE);
+        interactables.add(Material.HOPPER);
+        interactables.add(Material.IRON_DOOR_BLOCK);
+        interactables.add(Material.IRON_DOOR_BLOCK);
+        interactables.add(Material.LEVER);
+        interactables.add(Material.NOTE_BLOCK);
+        interactables.add(Material.NOTE_BLOCK);
+        interactables.add(Material.REDSTONE_COMPARATOR_OFF);
+        interactables.add(Material.REDSTONE_COMPARATOR_ON);
+        interactables.add(Material.STONE_BUTTON);
+        interactables.add(Material.TRAPPED_CHEST);
+        interactables.add(Material.TRAP_DOOR);
+        interactables.add(Material.WOODEN_DOOR);
+        interactables.add(Material.WOOD_BUTTON);
+        interactables.add(Material.WORKBENCH);
         redstone.add(Material.DETECTOR_RAIL);
         redstone.add(Material.PISTON_BASE);
         redstone.add(Material.PISTON_STICKY_BASE);
@@ -251,7 +274,7 @@ public class TARDISSonicListener implements Listener {
                             }
                         }, 60L);
                     }
-                    if (!redstone.contains(b.getType()) && player.hasPermission("tardis.sonic.emerald") && lore != null && lore.contains("Emerald Upgrade")) {
+                    if (!redstone.contains(b.getType()) && player.hasPermission("tardis.sonic.emerald") && lore != null && lore.contains("Emerald Upgrade") && !interactables.contains(b.getType())) {
                         playSonicSound(player, now, 3050L, "sonic_screwdriver");
                         // scan environment
                         this.scan(b.getLocation(), player);
