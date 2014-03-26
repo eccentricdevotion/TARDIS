@@ -179,5 +179,7 @@ public class TARDISDeinstaPreset {
         if (!hide) {
             plugin.getPresetDestroyer().removeBlockProtection(id, new QueryFactory(plugin));
         }
+        // refresh chunk
+        w.refreshChunk(chunk.getX(), chunk.getZ());
     }
 }
