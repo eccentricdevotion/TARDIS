@@ -116,6 +116,7 @@ public class TARDIS extends JavaPlugin {
     private boolean mySpawn = false;
     private boolean worldGuardOnServer;
     private boolean horseSpeedOnServer;
+    private boolean projRassilonOnServer;
     private PluginManager pm;
     private final TARDISArea tardisArea = new TARDISArea(this);
     private final TARDISBuilderInner interiorBuilder = new TARDISBuilderInner(this);
@@ -131,6 +132,7 @@ public class TARDIS extends JavaPlugin {
     public TARDIS() {
         this.worldGuardOnServer = false;
         this.horseSpeedOnServer = false;
+        this.projRassilonOnServer = false;
     }
 
     @Override
@@ -207,6 +209,7 @@ public class TARDIS extends JavaPlugin {
             TARDISCondensables cond = new TARDISCondensables(this);
             cond.makeCondensables();
             condensables = cond.getCondensables();
+            loadProjRassilon();
         } else {
             console.sendMessage(pluginName + "This plugin requires CraftBukkit 1.7.2 or higher, disabling...");
             pm.disablePlugin(this);
@@ -372,6 +375,16 @@ public class TARDIS extends JavaPlugin {
         if (pm.getPlugin("TARDISHorseSpeed") != null) {
             debug("Hooking into TARDISHorseSpeed!");
             horseSpeedOnServer = true;
+        }
+    }
+    
+    /**
+     * Checks if the ProjectRassilon plugin is available, and loads support if it is.
+     */
+    private void loadProjRassilon() {
+        if (pm.getPlugin("ProjectRassilon") != null) {
+            debug("Hooking into ProjectRassilon!");
+            projRassilonOnServer = true;
         }
     }
 
