@@ -300,7 +300,7 @@ public class TARDISPresetDestroyerFactory {
         whereb.put("tardis_id", id);
         whereb.put("police_box", 1);
         qf.doDelete("blocks", whereb);
-        // remove from protectBlockMap - remove(Integer.valueOf(id)) would only remove the first one
-        plugin.getGeneralKeeper().getProtectBlockMap().values().removeAll(Collections.singleton(Integer.valueOf(id)));
+        // remove from protectBlockMap - remove(id) would only remove the first one
+        plugin.getGeneralKeeper().getProtectBlockMap().values().removeAll(Collections.singleton(id));
     }
 }

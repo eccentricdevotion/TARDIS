@@ -91,10 +91,10 @@ public class TARDISMinecartListener implements Listener {
                             HashMap<String, Object> whereid = new HashMap<String, Object>();
                             whereid.put("tardis_id", id);
                             ResultSetTardis rs = new ResultSetTardis(plugin, whereid, "", false);
-                            if (rs.resultSet() && !plugin.getTrackerKeeper().getTrackMinecart().contains(Integer.valueOf(id))) {
+                            if (rs.resultSet() && !plugin.getTrackerKeeper().getTrackMinecart().contains(id)) {
                                 data = rs.getRail().split(":");
                                 p = rs.getOwner();
-                                plugin.getTrackerKeeper().getTrackMinecart().add(Integer.valueOf(id));
+                                plugin.getTrackerKeeper().getTrackMinecart().add(id);
                             }
                         }
                         break;
@@ -203,7 +203,7 @@ public class TARDISMinecartListener implements Listener {
     }
 
     public boolean isTrack(int id) {
-        return (rails.contains(Integer.valueOf(id)));
+        return (rails.contains(id));
     }
 
     private COMPASS getDirection(Location l) {

@@ -67,7 +67,7 @@ public class ResultSetAntiBuild {
             rs = statement.executeQuery();
             if (rs.isBeforeFirst()) {
                 while (rs.next()) {
-                    this.tardis_id = Integer.valueOf(rs.getInt("tardis_id"));
+                    this.tardis_id = rs.getInt("tardis_id");
                 }
             } else {
                 return false;

@@ -474,7 +474,7 @@ public class TARDISRoomRunnable implements Runnable {
                 int type;
                 String loc_str;
                 List<Integer> controls = Arrays.asList(new Integer[]{69, 77, 100, 143, -113});
-                if (controls.contains(Integer.valueOf(id))) {
+                if (controls.contains(id)) {
                     switch (id) {
                         case 77: // stone button - random
                             type = 1;

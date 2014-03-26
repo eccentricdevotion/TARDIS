@@ -51,7 +51,7 @@ public class TARDISNPCListener implements Listener {
     public void onNPCInteract(NPCRightClickEvent event) {
         NPC npc = event.getNPC();
         Player p = event.getClicker();
-        Integer id = Integer.valueOf(npc.getId());
+        Integer id = npc.getId();
         if (plugin.getGeneralKeeper().getNpcIDs().contains(id) || (npc.getName().equals(p.getName()) && plugin.getUtils().inTARDISWorld(p))) {
             npc.destroy();
             TARDISMessage.send(event.getClicker(), ChatColor.RED + "[Emergency Program One] " + ChatColor.RESET + "Bye!");

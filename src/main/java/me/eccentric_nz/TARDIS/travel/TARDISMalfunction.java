@@ -67,8 +67,8 @@ public class TARDISMalfunction {
             int chance = 100 - plugin.getConfig().getInt("preferences.malfunction");
             if (rand.nextInt(100) > chance) {
                 mal = true;
-                if (plugin.getTrackerKeeper().getTrackRescue().containsKey(Integer.valueOf(id))) {
-                    plugin.getTrackerKeeper().getTrackRescue().remove(Integer.valueOf(id));
+                if (plugin.getTrackerKeeper().getTrackRescue().containsKey(id)) {
+                    plugin.getTrackerKeeper().getTrackRescue().remove(id);
                 }
             }
         }

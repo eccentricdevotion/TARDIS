@@ -115,23 +115,6 @@ public enum TARDISARS implements ARS {
         return offset;
     }
 
-//    public static TARDISARS getARS(final int id) {
-//        if (BY_ID.containsKey(Integer.valueOf(id))) {
-//            return BY_ID.get(id);
-//        } else {
-//            return SLOT;
-//        }
-//    }
-//    public static TARDISARS getARS(final String name) {
-//        return BY_NAME.get(name);
-//    }
-//
-//    static {
-//        for (TARDISARS room : values()) {
-//            BY_ID.put(room.getId(), room);
-//            BY_NAME.put(room.getDescriptiveName(), room);
-//        }
-//    }
     static {
         for (ARS room : values()) {
             EXTENDED_NAME.put(room.getDescriptiveName(), room);
@@ -156,8 +139,8 @@ public enum TARDISARS implements ARS {
      * @return ARS room if found, or null
      */
     public static ARS ARSFor(int id) {
-        if (EXTENDED_ID.containsKey(Integer.valueOf(id))) {
-            return EXTENDED_ID.get(Integer.valueOf(id));
+        if (EXTENDED_ID.containsKey(id)) {
+            return EXTENDED_ID.get(id);
         } else {
             return SLOT;
         }

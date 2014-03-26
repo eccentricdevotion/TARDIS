@@ -149,8 +149,8 @@ public class TARDISSaveSignListener implements Listener {
                                     wheret.put("tardis_id", id);
                                     new QueryFactory(plugin).doUpdate("next", set, wheret);
                                     plugin.getTrackerKeeper().getTrackHasDestination().put(id, travel);
-                                    if (plugin.getTrackerKeeper().getTrackRescue().containsKey(Integer.valueOf(id))) {
-                                        plugin.getTrackerKeeper().getTrackRescue().remove(Integer.valueOf(id));
+                                    if (plugin.getTrackerKeeper().getTrackRescue().containsKey(id)) {
+                                        plugin.getTrackerKeeper().getTrackRescue().remove(id);
                                     }
                                     close(player);
                                     TARDISMessage.send(player, plugin.getPluginName() + im.getDisplayName() + " destination set. Please release the handbrake!");

@@ -159,7 +159,7 @@ public class TARDISScannerListener implements Listener {
         final COMPASS tardisDirection;
         HashMap<String, Object> wherenl = new HashMap<String, Object>();
         wherenl.put("tardis_id", id);
-        if (plugin.getTrackerKeeper().getTrackHasDestination().containsKey(Integer.valueOf(id))) {
+        if (plugin.getTrackerKeeper().getTrackHasDestination().containsKey(id)) {
             ResultSetNextLocation rsn = new ResultSetNextLocation(plugin, wherenl);
             if (!rsn.resultSet()) {
                 TARDISMessage.send(player, plugin.getPluginName() + "Could not get TARDIS's next destination!");

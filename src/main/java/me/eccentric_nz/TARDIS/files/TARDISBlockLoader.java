@@ -121,7 +121,7 @@ public class TARDISBlockLoader {
             rs = statement.executeQuery(query);
             if (rs.isBeforeFirst()) {
                 while (rs.next()) {
-                    Integer id = Integer.valueOf(rs.getInt("tardis_id"));
+                    Integer id = rs.getInt("tardis_id");
                     String tl = rs.getString("owner");
                     TARDISAntiBuild tab = new TARDISAntiBuild();
                     // get region vectors

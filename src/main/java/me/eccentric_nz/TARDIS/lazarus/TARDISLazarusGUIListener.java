@@ -403,7 +403,7 @@ public class TARDISLazarusGUIListener implements Listener {
         int o;
         if (d.equals("SHEEP") || d.equals("WOLF")) {
             if (sheep.containsKey(p)) {
-                o = (sheep.get(p) + 1 < Integer.valueOf(16)) ? sheep.get(p) + 1 : 0;
+                o = (sheep.get(p) + 1 < 16) ? sheep.get(p) + 1 : 0;
             } else {
                 o = 0;
             }
@@ -412,7 +412,7 @@ public class TARDISLazarusGUIListener implements Listener {
         }
         if (d.equals("HORSE")) {
             if (horses.containsKey(p)) {
-                o = (horses.get(p) + 1 < Integer.valueOf(7)) ? horses.get(p) + 1 : 0;
+                o = (horses.get(p) + 1 < 7) ? horses.get(p) + 1 : 0;
             } else {
                 o = 0;
             }
@@ -421,7 +421,7 @@ public class TARDISLazarusGUIListener implements Listener {
         }
         if (d.equals("OCELOT")) {
             if (cats.containsKey(p)) {
-                o = (cats.get(p) + 1 < Integer.valueOf(4)) ? cats.get(p) + 1 : 0;
+                o = (cats.get(p) + 1 < 4) ? cats.get(p) + 1 : 0;
             } else {
                 o = 0;
             }
@@ -430,7 +430,7 @@ public class TARDISLazarusGUIListener implements Listener {
         }
         if (d.equals("VILLAGER")) {
             if (professions.containsKey(p)) {
-                o = (professions.get(p) + 1 < Integer.valueOf(5)) ? professions.get(p) + 1 : 0;
+                o = (professions.get(p) + 1 < 5) ? professions.get(p) + 1 : 0;
             } else {
                 o = 0;
             }
@@ -439,7 +439,7 @@ public class TARDISLazarusGUIListener implements Listener {
         }
         if (d.equals("SLIME") || d.equals("MAGMA_CUBE")) {
             if (slimes.containsKey(p)) {
-                o = (slimes.get(p) + 1 < Integer.valueOf(3)) ? slimes.get(p) + 1 : 0;
+                o = (slimes.get(p) + 1 < 3) ? slimes.get(p) + 1 : 0;
             } else {
                 o = 0;
             }

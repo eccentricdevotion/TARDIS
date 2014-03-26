@@ -150,7 +150,7 @@ public class TARDISStattenheimListener implements Listener {
                         TARDISMessage.send(player, plugin.getPluginName() + MESSAGE.NO_PB_IN_TARDIS.getText());
                         return;
                     }
-                    if (plugin.getTrackerKeeper().getTrackInVortex().contains(Integer.valueOf(id))) {
+                    if (plugin.getTrackerKeeper().getTrackInVortex().contains(id)) {
                         TARDISMessage.send(player, plugin.getPluginName() + MESSAGE.NOT_WHILE_MAT.getText());
                         return;
                     }
@@ -229,7 +229,7 @@ public class TARDISStattenheimListener implements Listener {
                     TARDISMessage.send(player, plugin.getPluginName() + "The TARDIS is coming...");
                     boolean mat = plugin.getConfig().getBoolean("police_box.materialise");
                     long delay = (mat) ? 10L : 180L;
-                    plugin.getTrackerKeeper().getTrackInVortex().add(Integer.valueOf(id));
+                    plugin.getTrackerKeeper().getTrackInVortex().add(id);
                     final boolean hid = hidden;
                     final TARDISMaterialisationData pdd = new TARDISMaterialisationData();
                     pdd.setChameleon(cham);
@@ -245,7 +245,7 @@ public class TARDISStattenheimListener implements Listener {
                         @Override
                         public void run() {
                             if (!hid) {
-                                plugin.getTrackerKeeper().getTrackDematerialising().add(Integer.valueOf(id));
+                                plugin.getTrackerKeeper().getTrackDematerialising().add(id);
                                 plugin.getPresetDestroyer().destroyPreset(pdd);
                             } else {
                                 plugin.getPresetDestroyer().removeBlockProtection(id, qf);
@@ -273,8 +273,8 @@ public class TARDISStattenheimListener implements Listener {
                     wheret.put("tardis_id", id);
                     qf.alterEnergyLevel("tardis", -ch, wheret, player);
                     plugin.getTrackerKeeper().getTrackHasDestination().remove(id);
-                    if (plugin.getTrackerKeeper().getTrackRescue().containsKey(Integer.valueOf(id))) {
-                        plugin.getTrackerKeeper().getTrackRescue().remove(Integer.valueOf(id));
+                    if (plugin.getTrackerKeeper().getTrackRescue().containsKey(id)) {
+                        plugin.getTrackerKeeper().getTrackRescue().remove(id);
                     }
                 } else {
                     TARDISMessage.send(player, plugin.getPluginName() + MESSAGE.NO_PERMS.getText());

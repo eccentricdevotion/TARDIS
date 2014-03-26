@@ -269,8 +269,8 @@ public class TARDISConsoleCloseListener implements Listener {
                                         where_tardis.put("tardis_id", id);
                                         qf.doUpdate("tardis", set_tardis, where_tardis);
                                     }
-                                    if (plugin.getTrackerKeeper().getTrackRescue().containsKey(Integer.valueOf(id))) {
-                                        plugin.getTrackerKeeper().getTrackRescue().remove(Integer.valueOf(id));
+                                    if (plugin.getTrackerKeeper().getTrackRescue().containsKey(id)) {
+                                        plugin.getTrackerKeeper().getTrackRescue().remove(id);
                                     }
                                 } else {
                                     TARDISMessage.send(p, plugin.getPluginName() + "The console cannot process blank disks!");

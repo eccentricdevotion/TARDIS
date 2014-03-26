@@ -82,15 +82,15 @@ public class TARDISBlockDamageListener implements Listener {
             }
             boolean m = false;
             boolean isDoor = false;
-            if (HADS && !plugin.getTrackerKeeper().getTrackInVortex().contains(Integer.valueOf(id)) && isOwnerOnline(id)) {
+            if (HADS && !plugin.getTrackerKeeper().getTrackInVortex().contains(id) && isOwnerOnline(id)) {
                 if (b.getTypeId() == 71) {
                     if (isOwner(id, p.getName())) {
                         isDoor = true;
                     }
                 }
                 if (!isDoor && rsb.isPolice_box()) {
-                    int damage = (plugin.getTrackerKeeper().getTrackDamage().containsKey(Integer.valueOf(id))) ? plugin.getTrackerKeeper().getTrackDamage().get(Integer.valueOf(id)) : 0;
-                    plugin.getTrackerKeeper().getTrackDamage().put(Integer.valueOf(id), damage + 1);
+                    int damage = (plugin.getTrackerKeeper().getTrackDamage().containsKey(id)) ? plugin.getTrackerKeeper().getTrackDamage().get(Integer.valueOf(id)) : 0;
+                    plugin.getTrackerKeeper().getTrackDamage().put(id, damage + 1);
                     if (damage == plugin.getConfig().getInt("preferences.hads_damage")) {
                         new TARDISHostileDisplacement(plugin).moveTARDIS(id, p);
                         m = true;

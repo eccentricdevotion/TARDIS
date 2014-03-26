@@ -199,7 +199,7 @@ public class TARDISDoorListener implements Listener {
                                 }
                             }
                             if (action == Action.RIGHT_CLICK_BLOCK && player.isSneaking()) {
-                                if (plugin.getTrackerKeeper().getTrackInVortex().contains(Integer.valueOf(rsd.getTardis_id()))) {
+                                if (plugin.getTrackerKeeper().getTrackInVortex().contains(rsd.getTardis_id())) {
                                     TARDISMessage.send(player, plugin.getPluginName() + MESSAGE.NOT_WHILE_MAT.getText());
                                     return;
                                 }
@@ -329,7 +329,7 @@ public class TARDISDoorListener implements Listener {
                                         case 1:
                                         case 4:
                                             // is the TARDIS materialising?
-                                            if (plugin.getTrackerKeeper().getTrackInVortex().contains(Integer.valueOf(id))) {
+                                            if (plugin.getTrackerKeeper().getTrackInVortex().contains(id)) {
                                                 TARDISMessage.send(player, plugin.getPluginName() + MESSAGE.LOST_IN_VORTEX.getText());
                                                 return;
                                             }
@@ -403,7 +403,7 @@ public class TARDISDoorListener implements Listener {
                                             break;
                                         case 0:
                                             // is the TARDIS materialising?
-                                            if (plugin.getTrackerKeeper().getTrackInVortex().contains(Integer.valueOf(id))) {
+                                            if (plugin.getTrackerKeeper().getTrackInVortex().contains(id)) {
                                                 TARDISMessage.send(player, plugin.getPluginName() + MESSAGE.LOST_IN_VORTEX.getText());
                                                 return;
                                             }

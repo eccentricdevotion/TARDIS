@@ -126,7 +126,7 @@ public class TARDISMaterialisationPreset implements Runnable {
 
     @Override
     public void run() {
-        if (!plugin.getTrackerKeeper().getTrackDematerialising().contains(Integer.valueOf(tid))) {
+        if (!plugin.getTrackerKeeper().getTrackDematerialising().contains(tid)) {
             int[][] ids;
             byte[][] datas;
             // get relative locations
@@ -592,8 +592,8 @@ public class TARDISMaterialisationPreset implements Runnable {
                 plugin.getServer().getScheduler().cancelTask(task);
                 task = 0;
                 // tardis has moved so remove HADS damage count
-                if (plugin.getTrackerKeeper().getTrackDamage().containsKey(Integer.valueOf(tid))) {
-                    plugin.getTrackerKeeper().getTrackDamage().remove(Integer.valueOf(tid));
+                if (plugin.getTrackerKeeper().getTrackDamage().containsKey(tid)) {
+                    plugin.getTrackerKeeper().getTrackDamage().remove(tid);
                 }
                 // message travellers in tardis
                 HashMap<String, Object> where = new HashMap<String, Object>();

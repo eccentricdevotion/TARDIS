@@ -230,7 +230,7 @@ public class TARDISButtonListener implements Listener {
                                                 set.put("y", rand.getBlockY());
                                                 set.put("z", rand.getBlockZ());
                                                 set.put("direction", dir.toString());
-                                                set.put("submarine", (plugin.getTrackerKeeper().getTrackSubmarine().contains(Integer.valueOf(id))) ? 1 : 0);
+                                                set.put("submarine", (plugin.getTrackerKeeper().getTrackSubmarine().contains(id)) ? 1 : 0);
                                                 set_dest = true;
                                                 plugin.getTrackerKeeper().getTrackSubmarine().remove(Integer.valueOf(id));
                                                 String dchat = rand.getWorld().getName() + " at x: " + rand.getBlockX() + " y: " + rand.getBlockY() + " z: " + rand.getBlockZ();

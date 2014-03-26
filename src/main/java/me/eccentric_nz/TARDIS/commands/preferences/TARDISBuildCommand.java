@@ -53,7 +53,7 @@ public class TARDISBuildCommand {
             TARDISMessage.send(player, plugin.getPluginName() + MESSAGE.NO_TARDIS.getText());
             return true;
         }
-        Integer id = Integer.valueOf(rs.getTardis_id());
+        Integer id = rs.getTardis_id();
         HashMap<String, Object> setp = new HashMap<String, Object>();
         HashMap<String, Object> wherep = new HashMap<String, Object>();
         wherep.put("player", player.getName());

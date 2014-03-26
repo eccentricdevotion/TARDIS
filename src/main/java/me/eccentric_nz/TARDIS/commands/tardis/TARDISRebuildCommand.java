@@ -70,7 +70,7 @@ public class TARDISRebuildCommand {
                 return true;
             }
             int level = rs.getArtron_level();
-            if (plugin.getTrackerKeeper().getTrackInVortex().contains(Integer.valueOf(id))) {
+            if (plugin.getTrackerKeeper().getTrackInVortex().contains(id)) {
                 TARDISMessage.send(player, plugin.getPluginName() + MESSAGE.NOT_WHILE_MAT.getText());
                 return true;
             }

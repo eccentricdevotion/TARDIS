@@ -157,8 +157,8 @@ public class TARDISDestroyerInner {
         HashMap<String, Object> where = new HashMap<String, Object>();
         where.put("tardis_id", id);
         qf.doDelete("blocks", where);
-        // remove from protectBlockMap - remove(Integer.valueOf(id)) would only remove the first one
-        plugin.getGeneralKeeper().getProtectBlockMap().values().removeAll(Collections.singleton(Integer.valueOf(id)));
+        // remove from protectBlockMap - remove(id) would only remove the first one
+        plugin.getGeneralKeeper().getProtectBlockMap().values().removeAll(Collections.singleton(id));
         if (plugin.isWorldGuardOnServer()) {
             plugin.getWorldGuardUtils().removeRegion(w, p);
         }

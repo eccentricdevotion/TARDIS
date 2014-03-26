@@ -101,11 +101,11 @@ public class TARDISCondenserListener implements Listener {
                             }
                             int block_data = is.getTypeId();
                             if (plugin.getConfig().getBoolean("growth.rooms_require_blocks")) {
-                                if (item_counts.containsKey(Integer.valueOf(block_data))) {
-                                    Integer add_this = (item_counts.get(Integer.valueOf(block_data)) + Integer.valueOf(stack_size));
-                                    item_counts.put(Integer.valueOf(block_data), add_this);
+                                if (item_counts.containsKey(block_data)) {
+                                    Integer add_this = (item_counts.get(Integer.valueOf(block_data)) + stack_size);
+                                    item_counts.put(block_data, add_this);
                                 } else {
-                                    item_counts.put(Integer.valueOf(block_data), Integer.valueOf(stack_size));
+                                    item_counts.put(block_data, stack_size);
                                 }
                             }
                             inv.remove(is);

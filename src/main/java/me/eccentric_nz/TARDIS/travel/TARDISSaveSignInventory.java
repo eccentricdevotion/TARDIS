@@ -110,7 +110,7 @@ public class TARDISSaveSignInventory {
                         } else {
                             slot = slots.get(0);
                         }
-                        dests.put(Integer.valueOf(slot), is);
+                        dests.put(slot, is);
                         slots.remove(Integer.valueOf(slot));
                         i++;
                     } else {

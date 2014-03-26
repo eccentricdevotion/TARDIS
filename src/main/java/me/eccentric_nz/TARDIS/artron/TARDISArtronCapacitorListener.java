@@ -130,7 +130,7 @@ public class TARDISArtronCapacitorListener implements Listener {
                                 if (item.equals(full)) {
                                     // remove the NETHER_STAR! (if appropriate)
                                     int a = player.getInventory().getItemInHand().getAmount();
-                                    int a2 = Integer.valueOf(a) - 1;
+                                    int a2 = a - 1;
                                     if (current_level < fc) {
                                         // There's room in the tank!
                                         amount = fc;
