@@ -20,6 +20,8 @@ import java.util.HashMap;
 import java.util.List;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
+import net.pekkit.projectrassilon.ProjectRassilon;
+import net.pekkit.projectrassilon.api.RassilonAPI;
 import org.bukkit.Material;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
@@ -31,7 +33,6 @@ import org.bukkit.event.player.PlayerInteractEntityEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
-import net.pekkit.projectrassilon.api.RassilonAPI;
 
 /**
  *
@@ -42,8 +43,7 @@ public class TARDISSonicEntityListener implements Listener {
     private final TARDIS plugin;
     private final Material sonic;
     private final HashMap<String, Long> timeout = new HashMap<String, Long>();
-    
-    private final RassilonAPI ra;
+    private RassilonAPI ra;
 
     public TARDISSonicEntityListener(TARDIS plugin) {
         this.plugin = plugin;
@@ -77,8 +77,8 @@ public class TARDISSonicEntityListener implements Listener {
                             }
                         }, 40L);
                     } else if (player.hasPermission("tardis.sonic.bio") && lore != null && lore.contains("Bio-scanner Upgrade")) {
-                        if (plugin.projRassilonOnServer()) {
-                            RassilonAPI = plugin.getPM().getPlugin("ProjectRassilon").getAPI();
+                        if (plugin.isProjRassilonOnServer()) {
+                            ra = ((ProjectRassilon) plugin.getPM().getPlugin("ProjectRassilon")).getAPI();
                         }
                         TARDISMessage.send(player, plugin.getPluginName() + "Scanning player...");
                         plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {

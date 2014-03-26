@@ -377,9 +377,10 @@ public class TARDIS extends JavaPlugin {
             horseSpeedOnServer = true;
         }
     }
-    
+
     /**
-     * Checks if the ProjectRassilon plugin is available, and loads support if it is.
+     * Checks if the ProjectRassilon plugin is available, and loads support if
+     * it is.
      */
     private void loadProjRassilon() {
         if (pm.getPlugin("ProjectRassilon") != null) {
@@ -715,6 +716,10 @@ public class TARDIS extends JavaPlugin {
 
     public boolean isHorseSpeedOnServer() {
         return horseSpeedOnServer;
+    }
+
+    public boolean isProjRassilonOnServer() {
+        return projRassilonOnServer;
     }
 
     public PluginManager getPM() {
