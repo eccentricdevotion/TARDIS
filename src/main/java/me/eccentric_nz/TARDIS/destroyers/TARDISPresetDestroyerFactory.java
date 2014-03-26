@@ -55,6 +55,10 @@ public class TARDISPresetDestroyerFactory {
         ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);
         if (rs.resultSet()) {
             PRESET demat = rs.getDemat();
+            // load the chunk if unloaded
+            if (!pdd.getLocation().getWorld().isChunkLoaded(pdd.getLocation().getChunk())) {
+                pdd.getLocation().getWorld().loadChunk(pdd.getLocation().getChunk());
+            }
             if (pdd.isDematerialise() && !pdd.isHide()) {
                 int cham_id = rs.getChameleon_id();
                 byte cham_data = rs.getChameleon_data();
