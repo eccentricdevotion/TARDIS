@@ -37,7 +37,7 @@
             <url>http://repo.comphenix.net/content/groups/public</url>
         </repository>
         <repository>
-            <id>rassilon-repo</id>
+            <id>pekkit-repo</id>
             <name>Project Rassilon Repository</name>
             <url>http://repo.pekkit.net</url>
         </repository>
