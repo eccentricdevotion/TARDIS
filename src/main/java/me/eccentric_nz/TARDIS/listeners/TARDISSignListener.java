@@ -17,11 +17,13 @@
 package me.eccentric_nz.TARDIS.listeners;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.advanced.TARDISCircuitChecker;
 import me.eccentric_nz.TARDIS.chameleon.TARDISChameleonInventory;
 import me.eccentric_nz.TARDIS.database.ResultSetTardisSign;
+import me.eccentric_nz.TARDIS.database.ResultSetTravellers;
 import me.eccentric_nz.TARDIS.enumeration.MESSAGE;
 import me.eccentric_nz.TARDIS.travel.TARDISSaveSignInventory;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
@@ -74,6 +76,14 @@ public class TARDISSignListener implements Listener {
             Action action = event.getAction();
             // only proceed if they are right-clicking a valid sign block!
             if (action == Action.RIGHT_CLICK_BLOCK && validSigns.contains(blockType)) {
+                // check they are in the TARDIS
+                // get the TARDIS the player is in
+                HashMap<String, Object> wheres = new HashMap<String, Object>();
+                wheres.put("player", player.getName());
+                ResultSetTravellers rst = new ResultSetTravellers(plugin, wheres, false);
+                if (!rst.resultSet()) {
+                    return;
+                }
                 // get clicked block location
                 Location b = block.getLocation();
                 String bw = b.getWorld().getName();
