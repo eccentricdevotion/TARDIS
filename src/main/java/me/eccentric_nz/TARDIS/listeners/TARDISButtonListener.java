@@ -32,6 +32,7 @@ import me.eccentric_nz.TARDIS.database.ResultSetControls;
 import me.eccentric_nz.TARDIS.database.ResultSetCurrentLocation;
 import me.eccentric_nz.TARDIS.database.ResultSetDiskStorage;
 import me.eccentric_nz.TARDIS.database.ResultSetLamps;
+import me.eccentric_nz.TARDIS.database.ResultSetPlayerPrefs;
 import me.eccentric_nz.TARDIS.database.ResultSetRepeaters;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import me.eccentric_nz.TARDIS.database.ResultSetTravellers;
@@ -116,7 +117,7 @@ public class TARDISButtonListener implements Listener {
                     if (rsc.resultSet()) {
                         int id = rsc.getTardis_id();
                         int type = rsc.getType();
-                        if (!onlythese.contains(Integer.valueOf(type))) {
+                        if (!onlythese.contains(type)) {
                             return;
                         }
                         HashMap<String, Object> whereid = new HashMap<String, Object>();
@@ -266,7 +267,7 @@ public class TARDISButtonListener implements Listener {
                                         }
                                     }
                                     break;
-                                case 8:
+                                case 8: // fast return button
                                     if (!hb) {
                                         TARDISMessage.send(player, plugin.getPluginName() + ChatColor.RED + MESSAGE.NOT_WHILE_TRAVELLING.getText());
                                         return;
@@ -276,7 +277,6 @@ public class TARDISButtonListener implements Listener {
                                         TARDISMessage.send(player, plugin.getPluginName() + ChatColor.RED + MESSAGE.NOT_ENOUGH_ENERGY.getText());
                                         return;
                                     }
-                                    // fast return button
                                     HashMap<String, Object> wherebl = new HashMap<String, Object>();
                                     wherebl.put("tardis_id", rs.getTardis_id());
                                     ResultSetBackLocation rsb = new ResultSetBackLocation(plugin, wherebl);
@@ -302,7 +302,7 @@ public class TARDISButtonListener implements Listener {
                                         TARDISMessage.send(player, plugin.getPluginName() + "Could not get the previous location!");
                                     }
                                     break;
-                                case 9:
+                                case 9: // terminal sign
                                     if (!hb) {
                                         TARDISMessage.send(player, plugin.getPluginName() + ChatColor.RED + MESSAGE.NOT_WHILE_TRAVELLING.getText());
                                         return;
@@ -315,12 +315,11 @@ public class TARDISButtonListener implements Listener {
                                         TARDISMessage.send(player, plugin.getPluginName() + "The Input Circuit is missing from the console!");
                                         return;
                                     }
-                                    // terminal sign
                                     Inventory aec = plugin.getServer().createInventory(player, 54, "§4Destination Terminal");
                                     aec.setContents(items);
                                     player.openInventory(aec);
                                     break;
-                                case 10:
+                                case 10: // ARS sign
                                     if (!hb) {
                                         TARDISMessage.send(player, plugin.getPluginName() + ChatColor.RED + "You cannot reconfigure rooms while the TARDIS is travelling!");
                                         return;
@@ -339,13 +338,11 @@ public class TARDISButtonListener implements Listener {
                                         TARDISMessage.send(player, plugin.getPluginName() + "The ARS Circuit is missing from the console!");
                                         return;
                                     }
-                                    // ARS sign
                                     Inventory ars = plugin.getServer().createInventory(player, 54, "§4Architectural Reconfiguration");
                                     ars.setContents(tars);
                                     player.openInventory(ars);
                                     break;
-                                case 11:
-                                    // Temporal Locator sign
+                                case 11: // Temporal Locator sign
                                     if (tcc != null && !tcc.hasTemporal()) {
                                         TARDISMessage.send(player, plugin.getPluginName() + "The Temporal Circuit is missing from the console!");
                                         return;
@@ -356,8 +353,7 @@ public class TARDISButtonListener implements Listener {
                                         player.openInventory(tmpl);
                                     }
                                     break;
-                                case 12:
-                                    // Control room light switch
+                                case 12: // Control room light switch
                                     HashMap<String, Object> wherel = new HashMap<String, Object>();
                                     wherel.put("tardis_id", id);
                                     ResultSetLamps rsl = new ResultSetLamps(plugin, wherel, true);
@@ -370,16 +366,27 @@ public class TARDISButtonListener implements Listener {
                                             lamps.add(loc.getBlock());
                                         }
                                     }
+                                    HashMap<String, Object> wherepp = new HashMap<String, Object>();
+                                    wherepp.put("player", player.getName());
+                                    ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, wherepp);
+                                    boolean use_wool = false;
+                                    if (rsp.resultSet()) {
+                                        use_wool = rsp.isWoolLightsOn();
+                                    }
                                     for (Block b : lamps) {
-                                        if (b.getTypeId() == 124) {
-                                            b.setTypeId(19);
-                                        } else if (b.getTypeId() == 19) {
-                                            b.setTypeId(124);
+                                        if (b.getType().equals(Material.REDSTONE_LAMP_ON)) {
+                                            if (use_wool) {
+                                                b.setType(Material.WOOL);
+                                                b.setData((byte) 15);
+                                            } else {
+                                                b.setType(Material.SPONGE);
+                                            }
+                                        } else if (b.getType().equals(Material.SPONGE) || (b.getType().equals(Material.WOOL) && b.getData() == (byte) 15)) {
+                                            b.setType(Material.REDSTONE_LAMP_ON);
                                         }
                                     }
                                     break;
-                                case 13:
-                                    // TIS
+                                case 13: // TIS
                                     plugin.getTrackerKeeper().getTrackInfoMenu().put(player.getName(), TARDISInfoMenu.TIS);
                                     TARDISMessage.send(player, ChatColor.GOLD + "-----------TARDIS Information System-----------");
                                     TARDISMessage.send(player, ChatColor.GOLD + "---*Please type a white letter in chat to proceed*---");
@@ -392,8 +399,7 @@ public class TARDISButtonListener implements Listener {
                                     TARDISMessage.send(player, "§6> §fR§6ooms");
                                     TARDISMessage.send(player, "§6> §fE§6xit");
                                     break;
-                                case 14:
-                                    // Disk Storage
+                                case 14: // Disk Storage
                                     String name = player.getName();
                                     // only the time lord of this tardis
                                     if (!owner.equals(name)) {
@@ -431,8 +437,7 @@ public class TARDISButtonListener implements Listener {
                                     inv.setContents(stack);
                                     player.openInventory(inv);
                                     break;
-                                case 16:
-                                    // enter zero room
+                                case 16: // enter zero room
                                     int zero_amount = plugin.getArtronConfig().getInt("zero");
                                     if (level < zero_amount) {
                                         TARDISMessage.send(player, plugin.getPluginName() + ChatColor.RED + MESSAGE.NOT_ENOUGH_ZERO_ENERGY.getText());
@@ -468,8 +473,8 @@ public class TARDISButtonListener implements Listener {
                                 wherel.put("tardis_id", id);
                                 qf.doUpdate("next", set, wherel);
                                 plugin.getTrackerKeeper().getTrackHasDestination().put(id, cost);
-                                if (plugin.getTrackerKeeper().getTrackRescue().containsKey(Integer.valueOf(id))) {
-                                    plugin.getTrackerKeeper().getTrackRescue().remove(Integer.valueOf(id));
+                                if (plugin.getTrackerKeeper().getTrackRescue().containsKey(id)) {
+                                    plugin.getTrackerKeeper().getTrackRescue().remove(id);
                                 }
                             }
                         }

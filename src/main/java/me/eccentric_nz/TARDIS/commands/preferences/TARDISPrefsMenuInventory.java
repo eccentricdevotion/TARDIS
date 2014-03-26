@@ -152,7 +152,7 @@ public class TARDISPrefsMenuInventory {
             t_im.setLore(Arrays.asList(new String[]{t_value}));
             tex.setItemMeta(t_im);
             options.add(tex);
-            // antibuild
+            // build
             ItemStack anti = new ItemStack(TARDISConstants.GUI_ITEMS.get(12), 1);
             ItemMeta build = anti.getItemMeta();
             build.setDisplayName("Companion Build");
@@ -160,6 +160,14 @@ public class TARDISPrefsMenuInventory {
             build.setLore(Arrays.asList(new String[]{ab_value}));
             anti.setItemMeta(build);
             options.add(anti);
+            // wool_lights
+            ItemStack wool = new ItemStack(TARDISConstants.GUI_ITEMS.get(13), 1);
+            ItemMeta lights = wool.getItemMeta();
+            lights.setDisplayName("Wool For Lights Off");
+            String wl_value = (rsp.isWoolLightsOn()) ? "ON" : "OFF";
+            lights.setLore(Arrays.asList(new String[]{wl_value}));
+            wool.setItemMeta(lights);
+            options.add(wool);
         }
         ItemStack[] stack = new ItemStack[18];
         for (int s = 0; s < 18; s++) {

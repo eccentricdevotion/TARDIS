@@ -53,6 +53,7 @@ public class TARDISPrefsMenuListener implements Listener {
         lookup.put("Submarine Mode", "submarine_on");
         lookup.put("Resource Pack Switching", "texture_on");
         lookup.put("Companion Build", "build_on");
+        lookup.put("Wool For Lights Off", "wool_lights_on");
     }
 
     @EventHandler(priority = EventPriority.NORMAL)

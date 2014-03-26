@@ -60,6 +60,7 @@ public class ResultSetPlayerPrefs {
     private boolean DND;
     private boolean minecartOn;
     private boolean rendererOn;
+    private boolean woolLightsOn;
 
     /**
      * Creates a class instance that can be used to retrieve an SQL ResultSet
@@ -144,6 +145,7 @@ public class ResultSetPlayerPrefs {
                 this.DND = rs.getBoolean("dnd_on");
                 this.minecartOn = rs.getBoolean("minecart_on");
                 this.rendererOn = rs.getBoolean("renderer_on");
+                this.woolLightsOn = rs.getBoolean("wool_lights_on");
             } else {
                 return false;
             }
@@ -259,5 +261,9 @@ public class ResultSetPlayerPrefs {
 
     public boolean isRendererOn() {
         return rendererOn;
+    }
+
+    public boolean isWoolLightsOn() {
+        return woolLightsOn;
     }
 }

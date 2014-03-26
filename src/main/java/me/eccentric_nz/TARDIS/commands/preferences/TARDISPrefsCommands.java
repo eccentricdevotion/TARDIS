@@ -67,6 +67,7 @@ public class TARDISPrefsCommands implements CommandExecutor {
         firstArgs.add("sfx");
         firstArgs.add("submarine");
         firstArgs.add("wall");
+        firstArgs.add("wool_lights");
     }
 
     @Override
