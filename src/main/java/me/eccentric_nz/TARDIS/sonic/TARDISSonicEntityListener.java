@@ -43,7 +43,6 @@ public class TARDISSonicEntityListener implements Listener {
     private final TARDIS plugin;
     private final Material sonic;
     private final HashMap<String, Long> timeout = new HashMap<String, Long>();
-    private RassilonAPI ra;
 
     public TARDISSonicEntityListener(TARDIS plugin) {
         this.plugin = plugin;
@@ -77,9 +76,6 @@ public class TARDISSonicEntityListener implements Listener {
                             }
                         }, 40L);
                     } else if (player.hasPermission("tardis.sonic.bio") && lore != null && lore.contains("Bio-scanner Upgrade")) {
-                        if (plugin.isProjRassilonOnServer()) {
-                            ra = ((ProjectRassilon) plugin.getPM().getPlugin("ProjectRassilon")).getAPI();
-                        }
                         TARDISMessage.send(player, plugin.getPluginName() + "Scanning player...");
                         plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
                             @Override
@@ -88,11 +84,14 @@ public class TARDISSonicEntityListener implements Listener {
                                 double health = scanned.getHealth() / scanned.getMaxHealth() * scanned.getHealthScale();
                                 float hunger = (scanned.getFoodLevel() / 20F) * 100;
                                 TARDISMessage.send(player, "Name: " + scanned.getName());
-                                if (ra != null) {
-                                    TARDISMessage.send(player, "Timelord: " + ra.getTimelordStatus(scanned));
-                                    TARDISMessage.send(player, "Regen count: " + ra.getRegenCount(scanned));
-                                    TARDISMessage.send(player, "Regenerating: " + ra.getRegenStatus(scanned));
-                                    TARDISMessage.send(player, "Blocking regeneration: " + ra.getRegenBlock(scanned));
+                                if (plugin.isProjRassilonOnServer()) {
+                                    RassilonAPI ra = ((ProjectRassilon) plugin.getPM().getPlugin("ProjectRassilon")).getAPI();
+                                    if (ra != null) {
+                                        TARDISMessage.send(player, "Timelord: " + ra.getTimelordStatus(scanned));
+                                        TARDISMessage.send(player, "Regen count: " + ra.getRegenCount(scanned));
+                                        TARDISMessage.send(player, "Regenerating: " + ra.getRegenStatus(scanned));
+                                        TARDISMessage.send(player, "Blocking regeneration: " + ra.getRegenBlock(scanned));
+                                    }
                                 }
                                 TARDISMessage.send(player, "Has been alive for: " + convertTicksToTime(scanned.getTicksLived()));
                                 TARDISMessage.send(player, "Health: " + health);

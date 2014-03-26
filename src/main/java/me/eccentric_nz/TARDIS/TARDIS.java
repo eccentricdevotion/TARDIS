@@ -166,6 +166,7 @@ public class TARDIS extends JavaPlugin {
             loadWorldGuard();
             loadPluginRespect();
             loadHorseSpeed();
+            loadProjRassilon();
             startZeroHealing();
 
             new TARDISCreeperChecker(this).startCreeperCheck();
@@ -209,7 +210,6 @@ public class TARDIS extends JavaPlugin {
             TARDISCondensables cond = new TARDISCondensables(this);
             cond.makeCondensables();
             condensables = cond.getCondensables();
-            loadProjRassilon();
         } else {
             console.sendMessage(pluginName + "This plugin requires CraftBukkit 1.7.2 or higher, disabling...");
             pm.disablePlugin(this);
