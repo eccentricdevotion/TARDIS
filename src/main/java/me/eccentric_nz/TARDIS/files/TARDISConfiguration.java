@@ -304,7 +304,7 @@ public class TARDISConfiguration {
             if (config.contains("preferences.respect_worldguard")) {
                 if (plugin.getConfig().getString("preferences.respect_worldguard").equals("true") || plugin.getConfig().getString("preferences.respect_worldguard").equals("false")) {
                     String guard = (plugin.getConfig().getBoolean("preferences.respect_worldguard")) ? "build" : "none";
-                    plugin.getConfig().set("preferences.respect_towny", guard);
+                    plugin.getConfig().set("preferences.respect_worldguard", guard);
                 }
             }
             // boolean values
