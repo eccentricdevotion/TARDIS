@@ -121,12 +121,12 @@ public class TARDISMalfunction {
                 Location loc = plugin.getUtils().getLocationFromDB(map.get("location"), 0.0F, 0.0F);
                 lamps.add(loc.getBlock());
             }
-            if (plugin.getPM().isPluginEnabled("Citizens") && plugin.getConfig().getBoolean("allow.emergency_npc")) {
-                // get player prefs
-                HashMap<String, Object> wherep = new HashMap<String, Object>();
-                wherep.put("player", p.getName());
-                ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, wherep);
-                if (rsp.resultSet() && rsp.isEpsOn()) {
+            // get player prefs
+            HashMap<String, Object> wherep = new HashMap<String, Object>();
+            wherep.put("player", p.getName());
+            ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, wherep);
+            if (rsp.resultSet()) {
+                if (plugin.getPM().isPluginEnabled("Citizens") && plugin.getConfig().getBoolean("allow.emergency_npc") && rsp.isEpsOn()) {
                     // schedule the NPC to appear
                     String message = "This is Emergency Programme One. Now listen, this is important. If this message is activated, then it can only mean one thing: we must be in danger, and I mean fatal. You're about to die any second with no chance of escape.";
                     HashMap<String, Object> wherev = new HashMap<String, Object>();
@@ -142,12 +142,12 @@ public class TARDISMalfunction {
                     TARDISEPSRunnable EPS_runnable = new TARDISEPSRunnable(plugin, message, p, players, id, eps, creeper);
                     plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, EPS_runnable, 220L);
                 }
+                final long start = System.currentTimeMillis() + 10000;
+                TARDISLampsRunnable runnable = new TARDISLampsRunnable(plugin, lamps, start, rsp.isWoolLightsOn());
+                runnable.setHandbrake(handbrake_loc);
+                int taskID = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, runnable, 10L, 10L);
+                runnable.setTask(taskID);
             }
-            final long start = System.currentTimeMillis() + 10000;
-            TARDISLampsRunnable runnable = new TARDISLampsRunnable(plugin, lamps, start);
-            runnable.setHandbrake(handbrake_loc);
-            int taskID = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, runnable, 10L, 10L);
-            runnable.setTask(taskID);
         }
     }
 }
