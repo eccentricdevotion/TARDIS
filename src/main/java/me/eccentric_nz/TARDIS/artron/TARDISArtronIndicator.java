@@ -71,23 +71,25 @@ public class TARDISArtronIndicator {
                 Objective objective = board.registerNewObjective("TARDIS", "Artron");
                 objective.setDisplaySlot(DisplaySlot.SIDEBAR);
                 objective.setDisplayName("Artron Energy");
+                if (used == 0) {
+                    Score max = objective.getScore(plugin.getServer().getOfflinePlayer(ChatColor.AQUA + "Maximum:"));
+                    max.setScore(fc);
+                    Score timelord = objective.getScore(plugin.getServer().getOfflinePlayer(ChatColor.YELLOW + "Time Lord:"));
+                    HashMap<String, Object> wherep = new HashMap<String, Object>();
+                    wherep.put("player", p.getName());
+                    ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, wherep);
+                    if (rsp.resultSet()) {
+                        timelord.setScore(rsp.getArtronLevel());
+                    }
+                }
                 Score current = objective.getScore(plugin.getServer().getOfflinePlayer(ChatColor.GREEN + "Remaining:"));
-                Score max = objective.getScore(plugin.getServer().getOfflinePlayer(ChatColor.AQUA + "Maximum:"));
                 Score percentage = objective.getScore(plugin.getServer().getOfflinePlayer(ChatColor.LIGHT_PURPLE + "Percent:"));
-                Score timelord = objective.getScore(plugin.getServer().getOfflinePlayer(ChatColor.YELLOW + "Time Lord:"));
                 if (used > 0) {
                     Score amount_used = objective.getScore(plugin.getServer().getOfflinePlayer(ChatColor.RED + "Used:"));
                     amount_used.setScore(used);
                 }
                 current.setScore(current_level);
-                max.setScore(fc);
                 percentage.setScore(percent);
-                HashMap<String, Object> wherep = new HashMap<String, Object>();
-                wherep.put("player", p.getName());
-                ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, wherep);
-                if (rsp.resultSet()) {
-                    timelord.setScore(rsp.getArtronLevel());
-                }
                 p.setScoreboard(board);
                 plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
                     @Override
