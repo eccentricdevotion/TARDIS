@@ -91,7 +91,7 @@ public class TARDISPluginRespect {
             }
             bool = false;
         }
-        if (plugin.isWorldGuardOnServer() && plugin.getConfig().getBoolean("preferences.respect_worldguard") && plugin.getWorldGuardUtils().cantBuild(p, l)) {
+        if (plugin.isWorldGuardOnServer() && !plugin.getWorldGuardUtils().canLand(p, l)) {
             if (message) {
                 TARDISMessage.send(p, plugin.getPluginName() + "That location is protected by WorldGuard!");
             }

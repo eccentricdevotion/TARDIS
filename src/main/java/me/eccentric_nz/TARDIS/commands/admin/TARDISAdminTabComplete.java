@@ -21,6 +21,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.utility.TARDISWorldGuardFlag;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabCompleter;
@@ -36,6 +37,7 @@ public class TARDISAdminTabComplete implements TabCompleter {
     private final ImmutableList<String> BOOL_SUBS = ImmutableList.of("true", "false");
     private final ImmutableList<String> DB_SUBS = ImmutableList.of("mysql", "sqlite");
     private final ImmutableList<String> TOWNY_SUBS = ImmutableList.of("none", "wilderness", "town", "nation");
+    private final ImmutableList<String> FLAG_SUBS = ImmutableList.copyOf(TARDISWorldGuardFlag.getFLAG_LOOKUP().keySet());
     private final ImmutableList<String> CONFIG_SUBS = ImmutableList.of("worlds", "rechargers", "storage", "creation", "police_box", "travel", "preferences", "allow", "growth", "rooms");
     private final ImmutableList<String> COLOURS = ImmutableList.of("AQUA", "BLACK", "BLUE", "DARK_AQUA", "DARK_BLUE", "DARK_GRAY", "DARK_GREEN", "DARK_PURPLE", "DARK_RED", "GOLD", "GRAY", "GREEN", "LIGHT_PURPLE", "RED", "WHITE", "YELLOW");
 
@@ -58,6 +60,9 @@ public class TARDISAdminTabComplete implements TabCompleter {
             }
             if (sub.equals("respect_towny")) {
                 return partial(lastArg, TOWNY_SUBS);
+            }
+            if (sub.equals("respect_worldguard")) {
+                return partial(lastArg, FLAG_SUBS);
             }
             if (sub.equals("sign_colour")) {
                 return partial(lastArg, COLOURS);

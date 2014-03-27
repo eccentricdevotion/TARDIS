@@ -20,9 +20,11 @@ import com.sk89q.worldedit.BlockVector;
 import com.sk89q.worldguard.bukkit.SpongeUtil;
 import com.sk89q.worldguard.bukkit.WorldGuardPlugin;
 import com.sk89q.worldguard.domains.DefaultDomain;
+import com.sk89q.worldguard.protection.ApplicableRegionSet;
 import com.sk89q.worldguard.protection.databases.ProtectionDatabaseException;
 import com.sk89q.worldguard.protection.flags.DefaultFlag;
 import com.sk89q.worldguard.protection.flags.Flag;
+import com.sk89q.worldguard.protection.flags.StateFlag;
 import com.sk89q.worldguard.protection.flags.StateFlag.State;
 import com.sk89q.worldguard.protection.managers.RegionManager;
 import com.sk89q.worldguard.protection.regions.ProtectedCuboidRegion;
@@ -83,6 +85,30 @@ public class TARDISWorldGuardUtils {
      */
     public boolean cantBuild(Player p, Location l) {
         return (plugin.isWorldGuardOnServer()) && (!wg.canBuild(p, l));
+    }
+
+    /**
+     * Checks if a player can land (a Police Box) at this location.
+     *
+     * @param p the player to check
+     * @param l the location to check
+     * @return true of false depending on whether the player has permission to
+     * land at this location
+     */
+    public boolean canLand(Player p, Location l) {
+        // get the flag we should be checking
+        String f = plugin.getConfig().getString("preferences.use_worldguard");
+        if (f.toLowerCase().equals("none")) {
+            return true;
+        }
+        // get the flag to check
+        StateFlag flag = TARDISWorldGuardFlag.getFLAG_LOOKUP().get(f.toLowerCase());
+        if (flag == null) {
+            return true;
+        }
+        // get the regions for this location
+        ApplicableRegionSet rs = wg.getRegionManager(l.getWorld()).getApplicableRegions(l);
+        return rs.allows(flag, wg.wrapPlayer(p));
     }
 
     /**

@@ -20,6 +20,7 @@ import com.google.common.collect.ImmutableList;
 import java.util.Locale;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.enumeration.MESSAGE;
+import me.eccentric_nz.TARDIS.utility.TARDISWorldGuardFlag;
 import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
 
@@ -27,12 +28,15 @@ import org.bukkit.command.CommandSender;
  *
  * @author eccentric_nz
  */
-public class TARDISSetTownyCommand {
+public class TARDISSetRespectCommand {
 
     private final TARDIS plugin;
     private final ImmutableList<String> regions = ImmutableList.of("none", "wilderness", "town", "nation");
+    private final ImmutableList<String> flags = ImmutableList.copyOf(TARDISWorldGuardFlag.getFLAG_LOOKUP().keySet());
 
-    public TARDISSetTownyCommand(TARDIS plugin) {
+    ;
+
+    public TARDISSetRespectCommand(TARDIS plugin) {
         this.plugin = plugin;
     }
 
@@ -43,6 +47,18 @@ public class TARDISSetTownyCommand {
             return false;
         }
         plugin.getConfig().set("preferences.respect_towny", region);
+        plugin.saveConfig();
+        sender.sendMessage(plugin.getPluginName() + MESSAGE.CONFIG_UPDATED.getText());
+        return true;
+    }
+
+    public boolean setFlag(CommandSender sender, String[] args) {
+        String flag = args[1].toLowerCase(Locale.ENGLISH);
+        if (!flags.contains(flag)) {
+            sender.sendMessage(plugin.getPluginName() + ChatColor.RED + "The last argument must be a WorldGuard flag!");
+            return false;
+        }
+        plugin.getConfig().set("preferences.respect_worldguard", flag);
         plugin.saveConfig();
         sender.sendMessage(plugin.getPluginName() + MESSAGE.CONFIG_UPDATED.getText());
         return true;

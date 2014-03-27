@@ -91,7 +91,6 @@ public class TARDISConfiguration {
         boolOptions.put("preferences.respect_worldborder", true);
         boolOptions.put("preferences.respect_worldguard", true);
         boolOptions.put("preferences.strike_lightning", true);
-        boolOptions.put("preferences.use_worldguard", true);
         boolOptions.put("preferences.use_default_condensables", true);
         boolOptions.put("growth.return_room_seed", true);
         boolOptions.put("growth.rooms_require_blocks", false);
@@ -252,6 +251,7 @@ public class TARDISConfiguration {
         strOptions.put("preferences.difficulty", "hard");
         strOptions.put("preferences.key", "GOLD_NUGGET");
         strOptions.put("preferences.respect_towny", "nation");
+        strOptions.put("preferences.use_worldguard", "build");
         strOptions.put("storage.database", "sqlite");
         strOptions.put("storage.mysql.password", "mysecurepassword");
         strOptions.put("storage.mysql.url", "mysql://localhost:3306/TARDIS");
@@ -299,6 +299,12 @@ public class TARDISConfiguration {
                 if (plugin.getConfig().getString("preferences.respect_towny").equals("true") || plugin.getConfig().getString("preferences.respect_towny").equals("false")) {
                     String towny = (plugin.getConfig().getBoolean("preferences.respect_towny")) ? "nation" : "none";
                     plugin.getConfig().set("preferences.respect_towny", towny);
+                }
+            }
+            if (config.contains("preferences.respect_worldguard")) {
+                if (plugin.getConfig().getString("preferences.respect_worldguard").equals("true") || plugin.getConfig().getString("preferences.respect_worldguard").equals("false")) {
+                    String guard = (plugin.getConfig().getBoolean("preferences.respect_worldguard")) ? "build" : "none";
+                    plugin.getConfig().set("preferences.respect_towny", guard);
                 }
             }
             // boolean values
