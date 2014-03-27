@@ -52,7 +52,7 @@
 			<id>jenkins</id>
 			<repositories>
 				<repository>
-					<id>local</id>
+					<id>macgeek</id>
 					<url>file:///Users/macgeek/maven/repo</url>
 				</repository>
 			</repositories>
@@ -63,10 +63,10 @@
 			</activation>
 			<properties>
 				<project.build.number>${env.BUILD_NUMBER}</project.build.number>
-				<javadocExecutable>${java.home}/../bin/javadoc</javadocExecutable>
+				<!--<javadocExecutable>${java.home}/../bin/javadoc</javadocExecutable>-->
 			</properties>
 			<build>
-				<plugins>
+				<!--<plugins>
 					<plugin>
 						<artifactId>maven-javadoc-plugin</artifactId>
 						<version>2.9.1</version>
@@ -74,13 +74,14 @@
 							<execution>
 								<id>javadoc-jar</id>
 								<phase>verify</phase>
+								<failOnError>false</failOnError>
 								<goals>
 									<goal>jar</goal>
 								</goals>
 							</execution>
 						</executions>
 					</plugin>
-				</plugins>
+				</plugins>-->
 			</build>
 		</profile>
 	</profiles>
