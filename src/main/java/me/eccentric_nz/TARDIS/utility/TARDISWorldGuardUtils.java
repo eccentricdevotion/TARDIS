@@ -97,7 +97,7 @@ public class TARDISWorldGuardUtils {
      */
     public boolean canLand(Player p, Location l) {
         // get the flag we should be checking
-        String f = plugin.getConfig().getString("preferences.use_worldguard");
+        String f = plugin.getConfig().getString("preferences.respect_worldguard");
         if (f.toLowerCase().equals("none")) {
             return true;
         }
