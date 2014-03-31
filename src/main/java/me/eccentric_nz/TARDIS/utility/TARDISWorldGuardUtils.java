@@ -83,8 +83,8 @@ public class TARDISWorldGuardUtils {
      * @return true of false depending on whether the player has permission to
      * build at this location
      */
-    public boolean cantBuild(Player p, Location l) {
-        return (plugin.isWorldGuardOnServer()) && (!wg.canBuild(p, l));
+    public boolean canBuild(Player p, Location l) {
+        return wg.canBuild(p, l);
     }
 
     /**
@@ -101,6 +101,10 @@ public class TARDISWorldGuardUtils {
         if (f.toLowerCase().equals("none")) {
             return true;
         }
+        // WorldGuard will throw an IllegalArgumentException if the build flag is given to allows()
+        if (f.toLowercase().equals("build")) {
+            return wg.canBuild(p, l);
+        }
         // get the flag to check
         StateFlag flag = TARDISWorldGuardFlag.getFLAG_LOOKUP().get(f.toLowerCase());
         if (flag == null) {
@@ -108,7 +112,7 @@ public class TARDISWorldGuardUtils {
         }
         // get the regions for this location
         ApplicableRegionSet rs = wg.getRegionManager(l.getWorld()).getApplicableRegions(l);
-        return rs.allows(flag, wg.wrapPlayer(p));
+        return rs.allows(flag);
     }
 
     /**
