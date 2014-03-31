@@ -142,6 +142,7 @@ public class TARDISAdminCommands implements CommandExecutor {
         firstsInt.put("terminal_step", "travel");
         firstsInt.put("timeout", "travel");
         firstsInt.put("timeout_height", "travel");
+        firstsInt.put("tips_limit", "creation");
         firstsInt.put("tp_radius", "travel");
         firstsInt.put("wall_id", "police_box");
         firstsInt.put("wall_data", "police_box");

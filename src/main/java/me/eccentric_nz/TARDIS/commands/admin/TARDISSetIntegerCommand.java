@@ -18,6 +18,8 @@ package me.eccentric_nz.TARDIS.commands.admin;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.Arrays;
+import java.util.List;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.enumeration.MESSAGE;
 import me.eccentric_nz.TARDIS.travel.TARDISTerminalInventory;
@@ -31,6 +33,7 @@ import org.bukkit.command.CommandSender;
 public class TARDISSetIntegerCommand {
 
     private final TARDIS plugin;
+    private final List<String> TIPS_SUBS = Arrays.asList("400", "800", "1200", "1600");
 
     public TARDISSetIntegerCommand(TARDIS plugin) {
         this.plugin = plugin;
@@ -39,6 +42,10 @@ public class TARDISSetIntegerCommand {
     public boolean setConfigInt(CommandSender sender, String[] args, String section) {
         String first = (section.isEmpty()) ? args[0].toLowerCase() : section + "." + args[0].toLowerCase();
         String a = args[1];
+        if (args[0].toLowerCase().equals("tips_limit") && !TIPS_SUBS.contains(a)) {
+            sender.sendMessage(plugin.getPluginName() + ChatColor.RED + " The last argument must be '400', '800', '1200' or '1600'!");
+            return false;
+        }
         int val;
         try {
             val = Integer.parseInt(a);

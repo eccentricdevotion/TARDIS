@@ -172,6 +172,7 @@ public class TARDISConfiguration {
         intOptions.put("creation.count", 0);
         intOptions.put("creation.custom_creeper_id", 138);
         intOptions.put("creation.inventory_group", 0);
+        intOptions.put("creation.tips_limit", 400);
         intOptions.put("police_box.confirm_timeout", 15);
         intOptions.put("police_box.platform_data", 8);
         intOptions.put("police_box.platform_id", 35);
@@ -431,7 +432,7 @@ public class TARDISConfiguration {
                 // remove old tardis_blocks section
                 plugin.getConfig().set("tardis_blocks", null);
             } else {
-                MIDDLE_BLOCKS = Arrays.asList(new String[]{"COBBLESTONE", "MOSSY_COBBLESTONE", "LOG", "LOG_2", "STONE", "DIRT", "WOOD", "SANDSTONE", "WOOL", "BRICK", "NETHERRACK", "SOUL_SAND", "SMOOTH_BRICK", "HUGE_MUSHROOM_1", "HUGE_MUSHROOM_2", "ENDER_STONE", "QUARTZ_BLOCK", "CLAY", "STAINED_CLAY", "HAY_BLOCK", "HARD_CLAY", "PACKED_ICE"});
+                MIDDLE_BLOCKS = Arrays.asList("COBBLESTONE", "MOSSY_COBBLESTONE", "LOG", "LOG_2", "STONE", "DIRT", "WOOD", "SANDSTONE", "WOOL", "BRICK", "NETHERRACK", "SOUL_SAND", "SMOOTH_BRICK", "HUGE_MUSHROOM_1", "HUGE_MUSHROOM_2", "ENDER_STONE", "QUARTZ_BLOCK", "CLAY", "STAINED_CLAY", "HAY_BLOCK", "HARD_CLAY", "PACKED_ICE");
             }
             blocks_config.set("tardis_blocks", MIDDLE_BLOCKS);
             i++;
@@ -459,7 +460,7 @@ public class TARDISConfiguration {
             }
         }
         if (!blocks_config.contains("chameleon_blocks")) {
-            List<Integer> CHAM_BLOCKS = Arrays.asList(new Integer[]{1, 3, 4, 5, 7, 14, 15, 16, 17, 18, 19, 20, 21, 22, 24, 25, 35, 41, 42, 43, 45, 46, 47, 48, 49, 56, 57, 58, 73, 74, 79, 80, 82, 84, 86, 87, 88, 89, 91, 98, 99, 100, 103, 110, 112, 121, 123, 124, 129, 133, 155, 159, 161, 162, 170, 172, 173, 174});
+            List<Integer> CHAM_BLOCKS = Arrays.asList(1, 3, 4, 5, 7, 14, 15, 16, 17, 18, 19, 20, 21, 22, 24, 25, 35, 41, 42, 43, 45, 46, 47, 48, 49, 56, 57, 58, 73, 74, 79, 80, 82, 84, 86, 87, 88, 89, 91, 98, 99, 100, 103, 110, 112, 121, 123, 124, 129, 133, 155, 159, 161, 162, 170, 172, 173, 174);
             blocks_config.set("chameleon_blocks", CHAM_BLOCKS);
             i++;
         } else {
@@ -482,12 +483,12 @@ public class TARDISConfiguration {
         }
         // add lamp blocks
         if (!blocks_config.contains("lamp_blocks")) {
-            List<Integer> LAMP_BLOCKS = Arrays.asList(new Integer[]{50, 76, 89, 91, 123});
+            List<Integer> LAMP_BLOCKS = Arrays.asList(50, 76, 89, 91, 123);
             blocks_config.set("lamp_blocks", LAMP_BLOCKS);
             i++;
         }
         if (!blocks_config.contains("under_door_blocks")) {
-            List<Integer> UNDER_BLOCKS = Arrays.asList(new Integer[]{0, 6, 8, 9, 10, 11, 18, 20, 26, 27, 28, 29, 30, 31, 32, 33, 34, 37, 38, 39, 40, 44, 46, 50, 51, 53, 54, 55, 58, 59, 60, 61, 62, 63, 64, 65, 66, 67, 68, 69, 70, 71, 72, 75, 76, 77, 78, 79, 81, 83, 85, 89, 92, 93, 94, 96, 101, 102, 104, 105, 106, 107, 108, 109, 111, 113, 114, 115, 116, 117, 118, 119, 120, 122, 126, 128, 130, 131, 132, 134, 135, 136, 161, 171});
+            List<Integer> UNDER_BLOCKS = Arrays.asList(0, 6, 8, 9, 10, 11, 18, 20, 26, 27, 28, 29, 30, 31, 32, 33, 34, 37, 38, 39, 40, 44, 46, 50, 51, 53, 54, 55, 58, 59, 60, 61, 62, 63, 64, 65, 66, 67, 68, 69, 70, 71, 72, 75, 76, 77, 78, 79, 81, 83, 85, 89, 92, 93, 94, 96, 101, 102, 104, 105, 106, 107, 108, 109, 111, 113, 114, 115, 116, 117, 118, 119, 120, 122, 126, 128, 130, 131, 132, 134, 135, 136, 161, 171);
             blocks_config.set("under_door_blocks", UNDER_BLOCKS);
             i++;
         } else {

@@ -36,6 +36,7 @@ public class TARDISAdminTabComplete implements TabCompleter {
     private final ImmutableList<String> DIFFICULTY_SUBS = ImmutableList.of("easy", "hard");
     private final ImmutableList<String> BOOL_SUBS = ImmutableList.of("true", "false");
     private final ImmutableList<String> DB_SUBS = ImmutableList.of("mysql", "sqlite");
+    private final ImmutableList<String> TIPS_SUBS = ImmutableList.of("400", "800", "1200", "1600");
     private final ImmutableList<String> TOWNY_SUBS = ImmutableList.of("none", "wilderness", "town", "nation");
     private final ImmutableList<String> FLAG_SUBS = ImmutableList.copyOf(TARDISWorldGuardFlag.getFLAG_LOOKUP().keySet());
     private final ImmutableList<String> CONFIG_SUBS = ImmutableList.of("worlds", "rechargers", "storage", "creation", "police_box", "travel", "preferences", "allow", "growth", "rooms");
@@ -69,6 +70,9 @@ public class TARDISAdminTabComplete implements TabCompleter {
             }
             if (sub.equals("database")) {
                 return partial(lastArg, DB_SUBS);
+            }
+            if (sub.equals("tips_limit")) {
+                return partial(lastArg, TIPS_SUBS);
             }
             if (sub.equals("delete") || sub.equals("enter") || sub.equals("purge")) { // return null to default to online player name matching
                 return null;

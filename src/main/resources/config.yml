@@ -13,6 +13,7 @@ creation:
     create_worlds_with_perms: false
     default_world: false
     default_world_name: myridiculouslylongworldnameiscalledcuthbert
+    tips_limit: 400
     border_radius: 256
     gamemode: survival
     keep_night: true
