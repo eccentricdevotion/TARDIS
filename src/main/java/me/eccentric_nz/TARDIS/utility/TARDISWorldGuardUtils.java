@@ -102,7 +102,7 @@ public class TARDISWorldGuardUtils {
             return true;
         }
         // WorldGuard will throw an IllegalArgumentException if the build flag is given to allows()
-        if (f.toLowercase().equals("build")) {
+        if (f.toLowerCase().equals("build")) {
             return wg.canBuild(p, l);
         }
         // get the flag to check
