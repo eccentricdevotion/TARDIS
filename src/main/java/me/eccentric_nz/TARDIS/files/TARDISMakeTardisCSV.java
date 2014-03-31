@@ -184,11 +184,11 @@ public class TARDISMakeTardisCSV {
         plugin.getBuildKeeper().setPlankSchematic(TARDISSchematic.schematic(plankSchematicCSV, plugin.getBuildKeeper().getPlankDimensions()[0], plugin.getBuildKeeper().getPlankDimensions()[1], plugin.getBuildKeeper().getPlankDimensions()[2]));
         plugin.getBuildKeeper().setTomSchematic(TARDISSchematic.schematic(tomSchematicCSV, plugin.getBuildKeeper().getTomDimensions()[0], plugin.getBuildKeeper().getTomDimensions()[1], plugin.getBuildKeeper().getTomDimensions()[2]));
         // do custom schematic last
-        File c_file = new File(userbasepath + SCHEMATIC.CUSTOM);
+        File c_file = new File(userbasepath + SCHEMATIC.CUSTOM.getFile());
         if (plugin.getConfig().getBoolean("creation.custom_schematic")) {
             if (c_file.exists()) {
                 customSchematicCSV = createCustomFile(SCHEMATIC.CUSTOM.getFile() + ".csv");
-                String cusnstr = userbasepath + SCHEMATIC.CUSTOM;
+                String cusnstr = userbasepath + SCHEMATIC.CUSTOM.getFile();
                 reader.readAndMakeInteriorCSV(cusnstr, SCHEMATIC.CUSTOM);
                 plugin.getBuildKeeper().setCustomSchematic(TARDISSchematic.schematic(customSchematicCSV, plugin.getBuildKeeper().getCustomDimensions()[0], plugin.getBuildKeeper().getCustomDimensions()[1], plugin.getBuildKeeper().getCustomDimensions()[2]));
             } else {
