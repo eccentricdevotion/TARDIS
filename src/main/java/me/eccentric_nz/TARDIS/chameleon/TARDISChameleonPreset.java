@@ -38,7 +38,7 @@ import me.eccentric_nz.TARDIS.utility.recalculators.TARDISTrapdoorRecalculator;
  */
 public class TARDISChameleonPreset {
 
-    private final List<Integer> problemBlocks = Arrays.asList(new Integer[]{50, 53, 63, 64, 66, 67, 68, 69, 71, 77, 91, 96, 99, 106, 108, 109, 114, 128, 134, 135, 136, 143, 145, 156, 163, 164});
+    private final List<Integer> problemBlocks = Arrays.asList(50, 53, 63, 64, 66, 67, 68, 69, 71, 77, 91, 96, 99, 106, 108, 109, 114, 128, 134, 135, 136, 143, 145, 156, 163, 164);
     public final TARDISAngelDownPreset angeld;
     public final TARDISAngelUpPreset angelu;
     public final TARDISAppertureSciencePreset apperture;

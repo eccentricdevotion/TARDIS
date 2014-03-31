@@ -70,7 +70,7 @@ public class TARDISButtonListener implements Listener {
 
     private final TARDIS plugin;
     private final List<Material> validBlocks = new ArrayList<Material>();
-    private final List<Integer> onlythese = Arrays.asList(new Integer[]{1, 8, 9, 10, 11, 12, 13, 14, 16, 17});
+    private final List<Integer> onlythese = Arrays.asList(1, 8, 9, 10, 11, 12, 13, 14, 16, 17);
     public ItemStack[] items;
     private final ItemStack[] tars;
     private final ItemStack[] clocks;

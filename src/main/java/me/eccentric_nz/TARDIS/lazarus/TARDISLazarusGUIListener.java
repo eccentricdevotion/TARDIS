@@ -68,7 +68,7 @@ public class TARDISLazarusGUIListener implements Listener {
     private final HashMap<String, Integer> cats = new HashMap<String, Integer>();
     private final HashMap<String, Integer> professions = new HashMap<String, Integer>();
     private final HashMap<String, Integer> slimes = new HashMap<String, Integer>();
-    private final List<Integer> slimeSizes = Arrays.asList(new Integer[]{1, 2, 4});
+    private final List<Integer> slimeSizes = Arrays.asList(1, 2, 4);
 
     public TARDISLazarusGUIListener(TARDIS plugin) {
         this.plugin = plugin;
@@ -101,7 +101,7 @@ public class TARDISLazarusGUIListener implements Listener {
                     // remember selection
                     String display = im.getDisplayName();
                     if ((display.equals("WEEPING ANGEL") || display.equals("CYBERMAN") || display.equals("ICE WARRIOR")) && !plugin.getPM().isPluginEnabled("TARDISWeepingAngels")) {
-                        im.setLore(Arrays.asList(new String[]{"Genetic modification not available!"}));
+                        im.setLore(Arrays.asList("Genetic modification not available!"));
                         is.setItemMeta(im);
                     } else {
                         disguises.put(playerNameStr, display);
@@ -117,12 +117,12 @@ public class TARDISLazarusGUIListener implements Listener {
                 if (player.hasPermission("tardis.themaster")) {
                     if (plugin.getTrackerKeeper().getTrackImmortalityGate().equals("")) {
                         String onoff = (im.getLore().get(0).equals("OFF")) ? "ON" : "OFF";
-                        im.setLore(Arrays.asList(new String[]{onoff}));
+                        im.setLore(Arrays.asList(onoff));
                     } else {
-                        im.setLore(Arrays.asList(new String[]{"The Master Race is already", " set to " + plugin.getTrackerKeeper().getTrackImmortalityGate() + "!", "Try again later."}));
+                        im.setLore(Arrays.asList("The Master Race is already", " set to " + plugin.getTrackerKeeper().getTrackImmortalityGate() + "!", "Try again later."));
                     }
                 } else {
-                    im.setLore(Arrays.asList(new String[]{"You do not have permission", "to be The Master!"}));
+                    im.setLore(Arrays.asList("You do not have permission", "to be The Master!"));
                 }
                 is.setItemMeta(im);
             }
@@ -130,7 +130,7 @@ public class TARDISLazarusGUIListener implements Listener {
                 ItemStack is = inv.getItem(slot);
                 ItemMeta im = is.getItemMeta();
                 String onoff = (im.getLore().get(0).equals("ADULT")) ? "BABY" : "ADULT";
-                im.setLore(Arrays.asList(new String[]{onoff}));
+                im.setLore(Arrays.asList(onoff));
                 is.setItemMeta(im);
             }
             if (slot == 41) { // type / colour
@@ -142,7 +142,7 @@ public class TARDISLazarusGUIListener implements Listener {
                 ItemStack is = inv.getItem(slot);
                 ItemMeta im = is.getItemMeta();
                 String truefalse = (im.getLore().get(0).equals("FALSE")) ? "TRUE" : "FALSE";
-                im.setLore(Arrays.asList(new String[]{truefalse}));
+                im.setLore(Arrays.asList(truefalse));
                 is.setItemMeta(im);
             }
             if (slot == 47) { //remove disguise
@@ -449,7 +449,7 @@ public class TARDISLazarusGUIListener implements Listener {
         if (t != null) {
             ItemStack is = i.getItem(41);
             ItemMeta im = is.getItemMeta();
-            im.setLore(Arrays.asList(new String[]{t}));
+            im.setLore(Arrays.asList(t));
             is.setItemMeta(im);
         }
     }

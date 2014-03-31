@@ -161,7 +161,7 @@ public class TARDISTerminalListener implements Listener {
                                 // set lore
                                 ItemStack is = inv.getItem(49);
                                 ItemMeta im = is.getItemMeta();
-                                List<String> lore = Arrays.asList(new String[]{"No valid destination has been set!"});
+                                List<String> lore = Arrays.asList("No valid destination has been set!");
                                 im.setLore(lore);
                                 is.setItemMeta(im);
                             }
@@ -209,7 +209,7 @@ public class TARDISTerminalListener implements Listener {
                 String sub = (rsp.isSubmarineOn()) ? "true" : "false";
                 ItemStack is = inv.getItem(44);
                 ItemMeta im = is.getItemMeta();
-                im.setLore(Arrays.asList(new String[]{sub}));
+                im.setLore(Arrays.asList(sub));
                 is.setItemMeta(im);
             }
         }
@@ -259,7 +259,7 @@ public class TARDISTerminalListener implements Listener {
                 str = (signed) ? "0" : "x" + 4;
                 break;
         }
-        return Arrays.asList(new String[]{str});
+        return Arrays.asList(str);
     }
 
     private int getValue(int max, int slot, boolean signed, String name) {
@@ -316,18 +316,18 @@ public class TARDISTerminalListener implements Listener {
                 switch (slot) {
                     case 38:
                         // get a normal world
-                        lore = Arrays.asList(new String[]{getWorld("NORMAL", current, p)});
+                        lore = Arrays.asList(getWorld("NORMAL", current, p));
                         break;
                     case 40:
                         // get a nether world
-                        lore = Arrays.asList(new String[]{getWorld("NETHER", current, p)});
+                        lore = Arrays.asList(getWorld("NETHER", current, p));
                         break;
                     case 42:
                         // get an end world
-                        lore = Arrays.asList(new String[]{getWorld("THE_END", current, p)});
+                        lore = Arrays.asList(getWorld("THE_END", current, p));
                         break;
                     default:
-                        lore = Arrays.asList(new String[]{current});
+                        lore = Arrays.asList(current);
                         break;
                 }
             }
@@ -344,7 +344,7 @@ public class TARDISTerminalListener implements Listener {
             String bool = (rsp.isSubmarineOn()) ? "false" : "true";
             ItemStack is = inv.getItem(44);
             ItemMeta im = is.getItemMeta();
-            im.setLore(Arrays.asList(new String[]{bool}));
+            im.setLore(Arrays.asList(bool));
             is.setItemMeta(im);
             int tf = (rsp.isSubmarineOn()) ? 0 : 1;
             HashMap<String, Object> set = new HashMap<String, Object>();

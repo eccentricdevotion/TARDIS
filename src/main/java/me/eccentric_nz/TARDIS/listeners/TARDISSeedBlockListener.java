@@ -56,7 +56,7 @@ public class TARDISSeedBlockListener implements Listener {
     public TARDISSeedBlockListener(TARDIS plugin) {
         this.plugin = plugin;
         twl = new TARDISWallsLookup(plugin);
-        hasColour.addAll(Arrays.asList(new Integer[]{5, 17, 35, 95, 159, 162}));
+        hasColour.addAll(Arrays.asList(5, 17, 35, 95, 159, 162));
     }
 
     /**

@@ -61,7 +61,7 @@ public class TARDISPrefsMenuInventory {
             ItemMeta a_im = auto.getItemMeta();
             a_im.setDisplayName("Autonomous");
             String a_value = (rsp.isAutoOn()) ? "ON" : "OFF";
-            a_im.setLore(Arrays.asList(new String[]{a_value}));
+            a_im.setLore(Arrays.asList(a_value));
             auto.setItemMeta(a_im);
             options.add(auto);
             // Beacon
@@ -69,7 +69,7 @@ public class TARDISPrefsMenuInventory {
             ItemMeta b_im = beacon.getItemMeta();
             b_im.setDisplayName("Beacon");
             String b_value = (rsp.isBeaconOn()) ? "ON" : "OFF";
-            b_im.setLore(Arrays.asList(new String[]{b_value}));
+            b_im.setLore(Arrays.asList(b_value));
             beacon.setItemMeta(b_im);
             options.add(beacon);
             // DND
@@ -77,7 +77,7 @@ public class TARDISPrefsMenuInventory {
             ItemMeta d_im = dnd.getItemMeta();
             d_im.setDisplayName("Do Not Disturb");
             String d_value = (rsp.isDND()) ? "ON" : "OFF";
-            d_im.setLore(Arrays.asList(new String[]{d_value}));
+            d_im.setLore(Arrays.asList(d_value));
             dnd.setItemMeta(d_im);
             options.add(dnd);
             // eps
@@ -85,7 +85,7 @@ public class TARDISPrefsMenuInventory {
             ItemMeta e_im = eps.getItemMeta();
             e_im.setDisplayName("Emergency Program One");
             String e_value = (rsp.isEpsOn()) ? "ON" : "OFF";
-            e_im.setLore(Arrays.asList(new String[]{e_value}));
+            e_im.setLore(Arrays.asList(e_value));
             eps.setItemMeta(e_im);
             options.add(eps);
             // hads
@@ -93,7 +93,7 @@ public class TARDISPrefsMenuInventory {
             ItemMeta h_im = hads.getItemMeta();
             h_im.setDisplayName("Hostile Action Displacement System");
             String h_value = (rsp.isHadsOn()) ? "ON" : "OFF";
-            h_im.setLore(Arrays.asList(new String[]{h_value}));
+            h_im.setLore(Arrays.asList(h_value));
             hads.setItemMeta(h_im);
             options.add(hads);
             // minecart
@@ -101,7 +101,7 @@ public class TARDISPrefsMenuInventory {
             ItemMeta m_im = mine.getItemMeta();
             m_im.setDisplayName("Minecart Sounds");
             String m_value = (rsp.isMinecartOn()) ? "ON" : "OFF";
-            m_im.setLore(Arrays.asList(new String[]{m_value}));
+            m_im.setLore(Arrays.asList(m_value));
             mine.setItemMeta(m_im);
             options.add(mine);
             // platform
@@ -109,7 +109,7 @@ public class TARDISPrefsMenuInventory {
             ItemMeta p_im = plat.getItemMeta();
             p_im.setDisplayName("Safety Platform");
             String p_value = (rsp.isPlatformOn()) ? "ON" : "OFF";
-            p_im.setLore(Arrays.asList(new String[]{p_value}));
+            p_im.setLore(Arrays.asList(p_value));
             plat.setItemMeta(p_im);
             options.add(plat);
             // quotes
@@ -117,7 +117,7 @@ public class TARDISPrefsMenuInventory {
             ItemMeta q_im = quotes.getItemMeta();
             q_im.setDisplayName("Who Quotes");
             String q_value = (rsp.isQuotesOn()) ? "ON" : "OFF";
-            q_im.setLore(Arrays.asList(new String[]{q_value}));
+            q_im.setLore(Arrays.asList(q_value));
             quotes.setItemMeta(q_im);
             options.add(quotes);
             // Renderer
@@ -125,7 +125,7 @@ public class TARDISPrefsMenuInventory {
             ItemMeta r_im = renderer.getItemMeta();
             r_im.setDisplayName("Exterior Rendering Room");
             String i_value = (rsp.isRendererOn()) ? "ON" : "OFF";
-            r_im.setLore(Arrays.asList(new String[]{i_value}));
+            r_im.setLore(Arrays.asList(i_value));
             renderer.setItemMeta(r_im);
             options.add(renderer);
             // sfx
@@ -133,7 +133,7 @@ public class TARDISPrefsMenuInventory {
             ItemMeta s_im = sfx.getItemMeta();
             s_im.setDisplayName("Interior SFX");
             String s_value = (rsp.isSfxOn()) ? "ON" : "OFF";
-            s_im.setLore(Arrays.asList(new String[]{s_value}));
+            s_im.setLore(Arrays.asList(s_value));
             sfx.setItemMeta(s_im);
             options.add(sfx);
             // submarine
@@ -141,7 +141,7 @@ public class TARDISPrefsMenuInventory {
             ItemMeta u_im = sub.getItemMeta();
             u_im.setDisplayName("Submarine Mode");
             String u_value = (rsp.isSubmarineOn()) ? "ON" : "OFF";
-            u_im.setLore(Arrays.asList(new String[]{u_value}));
+            u_im.setLore(Arrays.asList(u_value));
             sub.setItemMeta(u_im);
             options.add(sub);
             // texture
@@ -149,7 +149,7 @@ public class TARDISPrefsMenuInventory {
             ItemMeta t_im = tex.getItemMeta();
             t_im.setDisplayName("Resource Pack Switching");
             String t_value = (rsp.isTextureOn()) ? "ON" : "OFF";
-            t_im.setLore(Arrays.asList(new String[]{t_value}));
+            t_im.setLore(Arrays.asList(t_value));
             tex.setItemMeta(t_im);
             options.add(tex);
             // build
@@ -157,7 +157,7 @@ public class TARDISPrefsMenuInventory {
             ItemMeta build = anti.getItemMeta();
             build.setDisplayName("Companion Build");
             String ab_value = (rsp.isBuildOn()) ? "ON" : "OFF";
-            build.setLore(Arrays.asList(new String[]{ab_value}));
+            build.setLore(Arrays.asList(ab_value));
             anti.setItemMeta(build);
             options.add(anti);
             // wool_lights
@@ -165,7 +165,7 @@ public class TARDISPrefsMenuInventory {
             ItemMeta lights = wool.getItemMeta();
             lights.setDisplayName("Wool For Lights Off");
             String wl_value = (rsp.isWoolLightsOn()) ? "ON" : "OFF";
-            lights.setLore(Arrays.asList(new String[]{wl_value}));
+            lights.setLore(Arrays.asList(wl_value));
             wool.setItemMeta(lights);
             options.add(wool);
         }

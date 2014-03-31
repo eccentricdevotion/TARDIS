@@ -60,7 +60,7 @@ public class TARDISBindCommands implements CommandExecutor {
         firstArgs.add("biome"); // type 4
         firstArgs.add("remove");
         firstArgs.add("update");
-        type_1 = Arrays.asList(new String[]{"hide", "rebuild", "home", "cave"});
+        type_1 = Arrays.asList("hide", "rebuild", "home", "cave");
     }
 
     @Override

@@ -76,7 +76,7 @@ public class TARDISAdminMenuListener implements Listener {
     }
 
     private void setLore(Inventory inv, int slot, String str) {
-        List<String> lore = (str != null) ? Arrays.asList(new String[]{str}) : null;
+        List<String> lore = (str != null) ? Arrays.asList(str) : null;
         ItemStack is = inv.getItem(slot);
         ItemMeta im = is.getItemMeta();
         im.setLore(lore);

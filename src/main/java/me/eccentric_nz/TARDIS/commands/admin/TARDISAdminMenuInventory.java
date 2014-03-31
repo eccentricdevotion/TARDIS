@@ -58,7 +58,7 @@ public class TARDISAdminMenuInventory {
                 ItemStack is = new ItemStack(TARDISConstants.GUI_ITEMS.get(i), 1);
                 ItemMeta im = is.getItemMeta();
                 im.setDisplayName(c);
-                im.setLore(Arrays.asList(new String[]{value}));
+                im.setLore(Arrays.asList(value));
                 is.setItemMeta(im);
                 options.add(is);
                 i++;

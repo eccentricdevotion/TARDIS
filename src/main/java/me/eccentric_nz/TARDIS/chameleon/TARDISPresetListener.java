@@ -100,7 +100,7 @@ public class TARDISPresetListener implements Listener {
                                         oo = 1;
                                     }
                                     ItemMeta im = is.getItemMeta();
-                                    im.setLore(Arrays.asList(new String[]{onoff, "Click to turn " + engage}));
+                                    im.setLore(Arrays.asList(onoff, "Click to turn " + engage));
                                     is.setItemMeta(im);
                                     // set sign text
                                     setSign(rs.getChameleon(), 2, onoff, player);
@@ -125,7 +125,7 @@ public class TARDISPresetListener implements Listener {
                                         ba = 1;
                                     }
                                     ItemMeta bio = is.getItemMeta();
-                                    bio.setLore(Arrays.asList(new String[]{biome, "Click to turn " + to_turn}));
+                                    bio.setLore(Arrays.asList(biome, "Click to turn " + to_turn));
                                     is.setItemMeta(bio);
                                     set.put("adapti_on", ba);
                                     break;

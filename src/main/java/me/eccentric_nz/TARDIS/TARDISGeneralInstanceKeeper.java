@@ -57,7 +57,7 @@ public class TARDISGeneralInstanceKeeper {
     private final HashMap<String, Double[]> gravityWestList = new HashMap<String, Double[]>();
     private final HashMap<String, Integer> protectBlockMap = new HashMap<String, Integer>();
     private final HashMap<String, TARDISCondenserData> roomCondenserData = new HashMap<String, TARDISCondenserData>();
-    private List<BlockFace> faces = Arrays.asList(new BlockFace[]{BlockFace.NORTH, BlockFace.WEST, BlockFace.SOUTH, BlockFace.EAST});
+    private final List<BlockFace> faces = Arrays.asList(BlockFace.NORTH, BlockFace.WEST, BlockFace.SOUTH, BlockFace.EAST);
     private final List<Chunk> roomChunkList = new ArrayList<Chunk>();
     private final List<Chunk> tardisChunkList = new ArrayList<Chunk>();
     private final List<String> gravityDownList = new ArrayList<String>();

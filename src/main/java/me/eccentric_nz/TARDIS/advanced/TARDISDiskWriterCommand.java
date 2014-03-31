@@ -155,7 +155,7 @@ public class TARDISDiskWriterCommand {
         ItemStack is = player.getItemInHand();
         if (is.hasItemMeta() && disks.contains(is.getItemMeta().getDisplayName())) {
             ItemMeta im = is.getItemMeta();
-            List<String> lore = Arrays.asList(new String[]{"Blank"});
+            List<String> lore = Arrays.asList("Blank");
             im.setLore(lore);
             is.setItemMeta(im);
             TARDISMessage.send(player, plugin.getPluginName() + "Disk erased successfully!");

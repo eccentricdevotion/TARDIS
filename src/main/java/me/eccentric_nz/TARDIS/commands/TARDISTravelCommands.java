@@ -62,7 +62,7 @@ public class TARDISTravelCommands implements CommandExecutor {
 
     private final TARDIS plugin;
     private final List<String> BIOME_SUBS = new ArrayList<String>();
-    private final List<String> mustUseAdvanced = Arrays.asList(new String[]{"area", "biome", "dest"});
+    private final List<String> mustUseAdvanced = Arrays.asList("area", "biome", "dest");
 
     public TARDISTravelCommands(TARDIS plugin) {
         this.plugin = plugin;

@@ -312,7 +312,7 @@ public class TARDISExterminator {
 
     public void cleanDatabase(int id) {
         QueryFactory qf = new QueryFactory(plugin);
-        List<String> tables = Arrays.asList(new String[]{"tardis", "blocks", "lamps", "ars", "doors", "controls", "gravity_well", "destinations", "homes", "current", "next", "back", "travellers", "chunks"});
+        List<String> tables = Arrays.asList("tardis", "blocks", "lamps", "ars", "doors", "controls", "gravity_well", "destinations", "homes", "current", "next", "back", "travellers", "chunks");
         // remove record from database tables
         for (String table : tables) {
             HashMap<String, Object> where = new HashMap<String, Object>();

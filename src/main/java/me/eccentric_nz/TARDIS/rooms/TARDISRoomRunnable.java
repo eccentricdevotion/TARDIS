@@ -463,7 +463,7 @@ public class TARDISRoomRunnable implements Runnable {
                     setu.put("distance", 16);
                     setu.put("velocity", 0.5);
                     qf.doInsert("gravity_well", setu);
-                    Double[] values = new Double[]{1D, 16D, 0.5D};
+                    Double[] values = {1D, 16D, 0.5D};
                     plugin.getGeneralKeeper().getGravityUpList().put(loc, values);
                 }
             }
@@ -473,7 +473,7 @@ public class TARDISRoomRunnable implements Runnable {
                 int r = 2;
                 int type;
                 String loc_str;
-                List<Integer> controls = Arrays.asList(new Integer[]{69, 77, 100, 143, -113});
+                List<Integer> controls = Arrays.asList(69, 77, 100, 143, -113);
                 if (controls.contains(id)) {
                     switch (id) {
                         case 77: // stone button - random

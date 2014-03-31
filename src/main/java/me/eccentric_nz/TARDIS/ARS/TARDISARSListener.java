@@ -69,9 +69,9 @@ public class TARDISARSListener implements Listener {
 
     public TARDISARSListener(TARDIS plugin) {
         this.plugin = plugin;
-        this.notrooms = Arrays.asList(new TARDISARS[]{TARDISARS.ARS, TARDISARS.BIGGER, TARDISARS.BUDGET, TARDISARS.DELUXE, TARDISARS.ELEVENTH, TARDISARS.JETTISON, TARDISARS.PLANK, TARDISARS.REDSTONE, TARDISARS.SLOT, TARDISARS.STEAMPUNK, TARDISARS.TOM});
+        this.notrooms = Arrays.asList(TARDISARS.ARS, TARDISARS.BIGGER, TARDISARS.BUDGET, TARDISARS.DELUXE, TARDISARS.ELEVENTH, TARDISARS.JETTISON, TARDISARS.PLANK, TARDISARS.REDSTONE, TARDISARS.SLOT, TARDISARS.STEAMPUNK, TARDISARS.TOM);
         getRoomIdAndNames();
-        this.consoleBlocks = Arrays.asList(new Material[]{Material.IRON_BLOCK, Material.GOLD_BLOCK, Material.DIAMOND_BLOCK, Material.EMERALD_BLOCK, Material.REDSTONE_BLOCK, Material.COAL_BLOCK, Material.QUARTZ_BLOCK, Material.LAPIS_BLOCK, Material.BOOKSHELF});
+        this.consoleBlocks = Arrays.asList(Material.IRON_BLOCK, Material.GOLD_BLOCK, Material.DIAMOND_BLOCK, Material.EMERALD_BLOCK, Material.REDSTONE_BLOCK, Material.COAL_BLOCK, Material.QUARTZ_BLOCK, Material.LAPIS_BLOCK, Material.BOOKSHELF);
     }
 
     /**
@@ -501,7 +501,7 @@ public class TARDISARSListener implements Listener {
      * @param str the lore to set
      */
     private void setLore(Inventory inv, int slot, String str) {
-        List<String> lore = (str != null) ? Arrays.asList(new String[]{str}) : null;
+        List<String> lore = (str != null) ? Arrays.asList(str) : null;
         ItemStack is = inv.getItem(slot);
         ItemMeta im = is.getItemMeta();
         im.setLore(lore);

@@ -45,7 +45,7 @@ import org.bukkit.inventory.ItemStack;
 public class TARDISConsoleSwitchListener implements Listener {
 
     private final TARDIS plugin;
-    private final List<Byte> gui_circuits = Arrays.asList(new Byte[]{(byte) 1966, (byte) 1973, (byte) 1974, (byte) 1975, (byte) 1976, (byte) 1977});
+    private final List<Byte> gui_circuits = Arrays.asList((byte) 1966, (byte) 1973, (byte) 1974, (byte) 1975, (byte) 1976, (byte) 1977);
 
     public TARDISConsoleSwitchListener(TARDIS plugin) {
         this.plugin = plugin;
