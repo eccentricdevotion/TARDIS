@@ -76,6 +76,7 @@ public class TARDISConfiguration {
         boolOptions.put("allow.zero_room", false);
         boolOptions.put("conversions.conversion_done", false);
         boolOptions.put("conversions.location_conversion_done", false);
+        boolOptions.put("conversions.uuid_conversion_done", false);
         boolOptions.put("creation.add_perms", true);
         boolOptions.put("creation.create_worlds", true);
         boolOptions.put("creation.create_worlds_with_perms", false);

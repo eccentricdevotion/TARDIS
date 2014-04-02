@@ -42,6 +42,7 @@ import me.eccentric_nz.TARDIS.database.TARDISDatabaseConnection;
 import me.eccentric_nz.TARDIS.database.TARDISLocationsConverter;
 import me.eccentric_nz.TARDIS.database.TARDISMySQLDatabase;
 import me.eccentric_nz.TARDIS.database.TARDISSQLiteDatabase;
+import me.eccentric_nz.TARDIS.database.TARDISUUIDConverter;
 import me.eccentric_nz.TARDIS.destroyers.TARDISDestroyerInner;
 import me.eccentric_nz.TARDIS.destroyers.TARDISPresetDestroyerFactory;
 import me.eccentric_nz.TARDIS.files.TARDISBlockLoader;
@@ -143,7 +144,7 @@ public class TARDIS extends JavaPlugin {
         plugin = this;
         console = getServer().getConsoleSender();
         Version bukkitversion = getServerVersion(getServer().getVersion());
-        Version minversion = new Version("1.7.2");
+        Version minversion = new Version("1.7.5");
         // check CraftBukkit version
         if (bukkitversion.compareTo(minversion) >= 0) {
             hasVersion = true;
@@ -151,12 +152,24 @@ public class TARDIS extends JavaPlugin {
             loadCustomConfigs();
             TARDISConfiguration tc = new TARDISConfiguration(this);
             tc.checkConfig();
+            loadDatabase();
+            // update database add and populate uuid fields
+            if (!getConfig().getBoolean("conversions.uuid_conversion_done")) {
+                TARDISUUIDConverter uc = new TARDISUUIDConverter(this);
+                if (!uc.convert()) {
+                    // conversion failed
+                    console.sendMessage(pluginName + ChatColor.RED + "UUID conversion failed, disabling...");
+                    pm.disablePlugin(this);
+                } else {
+                    getConfig().set("conversions.uuid_conversion_done", true);
+                    console.sendMessage(pluginName + "UUID conversion successful :)");
+                }
+            }
             checkTCG();
             checkDefaultWorld();
             utils = new TARDISUtils(this);
             buildKeeper.setSeeds(getSeeds());
             tardisWalls = new TARDISWalls();
-            loadDatabase();
             loadFiles();
             generalKeeper = new TARDISGeneralInstanceKeeper(this);
             generalKeeper.setQuotes(quotes());
@@ -211,7 +224,7 @@ public class TARDIS extends JavaPlugin {
             cond.makeCondensables();
             condensables = cond.getCondensables();
         } else {
-            console.sendMessage(pluginName + "This plugin requires CraftBukkit 1.7.2 or higher, disabling...");
+            console.sendMessage(pluginName + ChatColor.RED + "This plugin requires CraftBukkit 1.7.5 or higher, disabling...");
             pm.disablePlugin(this);
         }
     }
@@ -224,7 +237,7 @@ public class TARDIS extends JavaPlugin {
             String[] split = mat.group(1).split(" ");
             v = split[1];
         } else {
-            v = "1.6.4";
+            v = "1.7.2";
         }
         return new Version(v);
     }
