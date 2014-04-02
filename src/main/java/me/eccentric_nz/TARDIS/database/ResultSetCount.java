@@ -43,6 +43,7 @@ public class ResultSetCount {
     private final HashMap<String, Object> where;
     private final boolean multiple;
     private int id;
+    private String uuid;
     private String player;
     private int count;
     private final ArrayList<HashMap<String, String>> data = new ArrayList<HashMap<String, String>>();
@@ -110,6 +111,7 @@ public class ResultSetCount {
                         data.add(row);
                     }
                     this.id = rs.getInt("t_id");
+                    this.uuid = rs.getString("uuid");
                     this.player = rs.getString("player");
                     this.count = rs.getInt("count");
                 }
@@ -136,6 +138,10 @@ public class ResultSetCount {
 
     public int getId() {
         return id;
+    }
+
+    public String getUuid() {
+        return uuid;
     }
 
     public String getPlayer() {

@@ -46,6 +46,7 @@ public class ResultSetTravellers {
     private final boolean multiple;
     private int traveller_id;
     private int tardis_id;
+    private String uuid;
     private String player;
     private final List<String> data = new ArrayList<String>();
 
@@ -107,6 +108,7 @@ public class ResultSetTravellers {
                     }
                     this.traveller_id = rs.getInt("traveller_id");
                     this.tardis_id = rs.getInt("tardis_id");
+                    this.uuid = rs.getString("uuid");
                     this.player = rs.getString("player");
                 }
             } else {
@@ -136,6 +138,10 @@ public class ResultSetTravellers {
 
     public int getTardis_id() {
         return tardis_id;
+    }
+
+    public String getUuid() {
+        return uuid;
     }
 
     public String getPlayer() {

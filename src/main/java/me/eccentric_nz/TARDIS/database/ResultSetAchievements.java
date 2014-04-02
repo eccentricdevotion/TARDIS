@@ -43,6 +43,7 @@ public class ResultSetAchievements {
     private final HashMap<String, Object> where;
     private final boolean multiple;
     private int a_id;
+    private String uuid;
     private String player;
     private String name;
     private String amount;
@@ -109,6 +110,7 @@ public class ResultSetAchievements {
                     data.add(row);
                 }
                 this.a_id = rs.getInt("a_id");
+                this.uuid = rs.getString("uuid");
                 this.player = rs.getString("player");
                 this.name = rs.getString("name");
                 this.amount = rs.getString("amount");
@@ -139,6 +141,10 @@ public class ResultSetAchievements {
 
     public int getA_id() {
         return a_id;
+    }
+
+    public String getUuid() {
+        return uuid;
     }
 
     public String getPlayer() {

@@ -20,6 +20,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import me.eccentric_nz.TARDIS.TARDIS;
 import org.bukkit.ChatColor;
@@ -40,6 +41,7 @@ public class TARDISSQLiteDatabaseUpdater {
     private final List<String> gravityupdates = new ArrayList<String>();
     private final List<String> prefsupdates = new ArrayList<String>();
     private final List<String> tardisupdates = new ArrayList<String>();
+    private final List<String> uuidUpdates = Arrays.asList("achievements", "ars", "player_prefs", "storage", "t_count", "tag", "tardis", "travellers");
     private final long now = System.currentTimeMillis();
     private final Statement statement;
     private final TARDIS plugin;
@@ -111,6 +113,15 @@ public class TARDISSQLiteDatabaseUpdater {
     public void updateTables() {
         int i = 0;
         try {
+            for (String u : uuidUpdates) {
+                String a_query = "SELECT sql FROM sqlite_master WHERE tbl_name = '" + u + "' AND sql LIKE '%uuid%'";
+                ResultSet rsu = statement.executeQuery(a_query);
+                if (!rsu.next()) {
+                    i++;
+                    String u_alter = "ALTER TABLE " + u + " ADD uuid TEXT DEFAULT ''";
+                    statement.executeUpdate(u_alter);
+                }
+            }
             for (String a : areaupdates) {
                 String[] asplit = a.split(" ");
                 String acheck = asplit[0] + " " + asplit[1].substring(0, 3);

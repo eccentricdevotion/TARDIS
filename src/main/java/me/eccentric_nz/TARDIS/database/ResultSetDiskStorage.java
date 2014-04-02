@@ -43,6 +43,7 @@ public class ResultSetDiskStorage {
     private final HashMap<String, Object> where;
     private int id;
     private int tardis_id;
+    private String uuid;
     private String owner;
     private String savesOne;
     private String savesTwo;
@@ -107,6 +108,10 @@ public class ResultSetDiskStorage {
                 while (rs.next()) {
                     this.id = rs.getInt("storage_id");
                     this.tardis_id = rs.getInt("tardis_id");
+                    this.uuid = rs.getString("uuid");
+                    if (rs.wasNull()) {
+                        this.uuid = "";
+                    }
                     this.owner = rs.getString("owner");
                     if (rs.wasNull()) {
                         this.owner = "";
@@ -179,6 +184,10 @@ public class ResultSetDiskStorage {
 
     public int getTardis_id() {
         return tardis_id;
+    }
+
+    public String getUuid() {
+        return uuid;
     }
 
     public String getOwner() {

@@ -51,7 +51,7 @@ public class TARDISMySQLDatabase {
             service.testConnection(connection);
             statement = connection.createStatement();
             // Table structure for table 'achievements'
-            String achievementsQuery = "CREATE TABLE IF NOT EXISTS achievements (a_id int(11) NOT NULL AUTO_INCREMENT, player varchar(32) DEFAULT '', `name` varchar(32) DEFAULT '', amount text, completed int(1) DEFAULT '0', PRIMARY KEY (a_id)) DEFAULT CHARSET=utf8 COLLATE utf8_general_ci";
+            String achievementsQuery = "CREATE TABLE IF NOT EXISTS achievements (a_id int(11) NOT NULL AUTO_INCREMENT, uuid varchar(48) DEFAULT '', player varchar(32) DEFAULT '', `name` varchar(32) DEFAULT '', amount text, completed int(1) DEFAULT '0', PRIMARY KEY (a_id)) DEFAULT CHARSET=utf8 COLLATE utf8_general_ci";
             statement.executeUpdate(achievementsQuery);
 
             // Table structure for table 'areas'
@@ -59,7 +59,7 @@ public class TARDISMySQLDatabase {
             statement.executeUpdate(areasQuery);
 
             // Table structure for table 'ars'
-            String arsQuery = "CREATE TABLE IF NOT EXISTS ars (ars_id int(11) NOT NULL AUTO_INCREMENT, tardis_id int(11) DEFAULT '0', player varchar(32) DEFAULT '', ars_x_east int(2) DEFAULT '2', ars_z_south int(2) DEFAULT '2', ars_y_layer int(1) DEFAULT '1', json text, PRIMARY KEY (ars_id)) DEFAULT CHARSET=utf8 COLLATE utf8_general_ci";
+            String arsQuery = "CREATE TABLE IF NOT EXISTS ars (ars_id int(11) NOT NULL AUTO_INCREMENT, tardis_id int(11) DEFAULT '0', uuid varchar(48) DEFAULT '', player varchar(32) DEFAULT '', ars_x_east int(2) DEFAULT '2', ars_z_south int(2) DEFAULT '2', ars_y_layer int(1) DEFAULT '1', json text, PRIMARY KEY (ars_id)) DEFAULT CHARSET=utf8 COLLATE utf8_general_ci";
             statement.executeUpdate(arsQuery);
 
             // Table structure for table 'back'
@@ -111,7 +111,7 @@ public class TARDISMySQLDatabase {
             statement.executeUpdate(nextQuery);
 
             // Table structure for table 'player_prefs'
-            String player_prefsQuery = "CREATE TABLE IF NOT EXISTS player_prefs (pp_id int(11) NOT NULL AUTO_INCREMENT, player varchar(32), `key_item` varchar(32) DEFAULT '', sfx_on int(1) DEFAULT '0', platform_on int(1) DEFAULT '0', quotes_on int(1) DEFAULT '0', artron_level int(11) DEFAULT '0', wall varchar(64) DEFAULT 'ORANGE_WOOL', floor varchar(64) DEFAULT 'LIGHT_GREY_WOOL', auto_on int(1) DEFAULT '0', beacon_on int(1) DEFAULT '1', hads_on int(1) DEFAULT '1', build_on int(1) DEFAULT '1', eps_on int(1) DEFAULT '0', eps_message text, lamp int(6) DEFAULT '0', language varchar(32) DEFAULT 'AUTO_DETECT', texture_on int(1) DEFAULT '0', texture_in varchar(512) DEFAULT '', texture_out varchar(512) DEFAULT 'default', submarine_on int(1) DEFAULT '0', dnd_on int(1) DEFAULT '0', minecart_on int(1) DEFAULT '0', renderer_on int(1) DEFAULT '1', wool_lights_on int(1) DEFAULT '0', PRIMARY KEY (pp_id)) DEFAULT CHARSET=utf8 COLLATE utf8_general_ci";
+            String player_prefsQuery = "CREATE TABLE IF NOT EXISTS player_prefs (pp_id int(11) NOT NULL AUTO_INCREMENT, uuid varchar(48) DEFAULT '', player varchar(32), `key_item` varchar(32) DEFAULT '', sfx_on int(1) DEFAULT '0', platform_on int(1) DEFAULT '0', quotes_on int(1) DEFAULT '0', artron_level int(11) DEFAULT '0', wall varchar(64) DEFAULT 'ORANGE_WOOL', floor varchar(64) DEFAULT 'LIGHT_GREY_WOOL', auto_on int(1) DEFAULT '0', beacon_on int(1) DEFAULT '1', hads_on int(1) DEFAULT '1', build_on int(1) DEFAULT '1', eps_on int(1) DEFAULT '0', eps_message text, lamp int(6) DEFAULT '0', language varchar(32) DEFAULT 'AUTO_DETECT', texture_on int(1) DEFAULT '0', texture_in varchar(512) DEFAULT '', texture_out varchar(512) DEFAULT 'default', submarine_on int(1) DEFAULT '0', dnd_on int(1) DEFAULT '0', minecart_on int(1) DEFAULT '0', renderer_on int(1) DEFAULT '1', wool_lights_on int(1) DEFAULT '0', PRIMARY KEY (pp_id)) DEFAULT CHARSET=utf8 COLLATE utf8_general_ci";
             statement.executeUpdate(player_prefsQuery);
 
             // drop storage table
@@ -127,23 +127,23 @@ public class TARDISMySQLDatabase {
             }
 
             // Table structure for table 'storage'
-            String storageQuery = "CREATE TABLE IF NOT EXISTS storage (storage_id int(11) NOT NULL AUTO_INCREMENT, tardis_id int(11) DEFAULT '0', owner varchar(32) DEFAULT '', saves_one text NULL, saves_two text NULL, areas text NULL, presets_one text NULL, presets_two text NULL, biomes_one text NULL, biomes_two text NULL, players text NULL, circuits text NULL, console text NULL, PRIMARY KEY (storage_id)) DEFAULT CHARSET=utf8 COLLATE utf8_general_ci";
+            String storageQuery = "CREATE TABLE IF NOT EXISTS storage (storage_id int(11) NOT NULL AUTO_INCREMENT, tardis_id int(11) DEFAULT '0', uuid varchar(48) DEFAULT '', owner varchar(32) DEFAULT '', saves_one text NULL, saves_two text NULL, areas text NULL, presets_one text NULL, presets_two text NULL, biomes_one text NULL, biomes_two text NULL, players text NULL, circuits text NULL, console text NULL, PRIMARY KEY (storage_id)) DEFAULT CHARSET=utf8 COLLATE utf8_general_ci";
             statement.executeUpdate(storageQuery);
 
             // Table structure for table 'tag'
-            String tagQuery = "CREATE TABLE IF NOT EXISTS tag (tag_id int(11) NOT NULL AUTO_INCREMENT, player varchar(32) DEFAULT '', `time` int(11) DEFAULT '0', PRIMARY KEY (tag_id)) DEFAULT CHARSET=utf8 COLLATE utf8_general_ci";
+            String tagQuery = "CREATE TABLE IF NOT EXISTS tag (tag_id int(11) NOT NULL AUTO_INCREMENT, uuid varchar(48) DEFAULT '', player varchar(32) DEFAULT '', `time` int(11) DEFAULT '0', PRIMARY KEY (tag_id)) DEFAULT CHARSET=utf8 COLLATE utf8_general_ci";
             statement.executeUpdate(tagQuery);
 
             // Table structure for table 'tardis'
-            String tardisQuery = "CREATE TABLE IF NOT EXISTS tardis (tardis_id int(11) NOT NULL AUTO_INCREMENT, `owner` varchar(32) DEFAULT '', chunk varchar(64) DEFAULT '', tips int(4) DEFAULT '0', size varchar(32) DEFAULT '', artron_level int(11) DEFAULT '0', replaced text NULL, companions text NULL, platform text NULL, chameleon varchar(512) DEFAULT '', handbrake_on int(1) DEFAULT '1', iso_on int(1) DEFAULT '0', hidden int(1) DEFAULT '0', recharging int(1) DEFAULT '0', tardis_init int(1) DEFAULT '0', adapti_on int(1) DEFAULT '0', chamele_on int(1) DEFAULT '0', chameleon_preset varchar(32) DEFAULT 'NEW', chameleon_demat varchar(32) DEFAULT 'NEW', chameleon_id int(6) DEFAULT '35', chameleon_data int(6) DEFAULT '11', middle_id int(6) DEFAULT '35', middle_data int(6) DEFAULT '1', save_sign varchar(512) DEFAULT '', creeper varchar(512) DEFAULT '', condenser varchar(512) DEFAULT '', scanner varchar(512) DEFAULT '', farm varchar(512) DEFAULT '', stable varchar(512) DEFAULT '', beacon varchar(512) DEFAULT '', eps varchar(512) DEFAULT '', rail varchar(512) DEFAULT '', village varchar(512) DEFAULT '', renderer varchar(512) DEFAULT '', zero varchar(512) DEFAULT '', lastuse bigint(20), PRIMARY KEY (tardis_id)) DEFAULT CHARSET=utf8 COLLATE utf8_general_ci";
+            String tardisQuery = "CREATE TABLE IF NOT EXISTS tardis (tardis_id int(11) NOT NULL AUTO_INCREMENT, uuid varchar(48) DEFAULT '', owner varchar(32) DEFAULT '', chunk varchar(64) DEFAULT '', tips int(4) DEFAULT '0', size varchar(32) DEFAULT '', artron_level int(11) DEFAULT '0', replaced text NULL, companions text NULL, platform text NULL, chameleon varchar(512) DEFAULT '', handbrake_on int(1) DEFAULT '1', iso_on int(1) DEFAULT '0', hidden int(1) DEFAULT '0', recharging int(1) DEFAULT '0', tardis_init int(1) DEFAULT '0', adapti_on int(1) DEFAULT '0', chamele_on int(1) DEFAULT '0', chameleon_preset varchar(32) DEFAULT 'NEW', chameleon_demat varchar(32) DEFAULT 'NEW', chameleon_id int(6) DEFAULT '35', chameleon_data int(6) DEFAULT '11', middle_id int(6) DEFAULT '35', middle_data int(6) DEFAULT '1', save_sign varchar(512) DEFAULT '', creeper varchar(512) DEFAULT '', condenser varchar(512) DEFAULT '', scanner varchar(512) DEFAULT '', farm varchar(512) DEFAULT '', stable varchar(512) DEFAULT '', beacon varchar(512) DEFAULT '', eps varchar(512) DEFAULT '', rail varchar(512) DEFAULT '', village varchar(512) DEFAULT '', renderer varchar(512) DEFAULT '', zero varchar(512) DEFAULT '', lastuse bigint(20), PRIMARY KEY (tardis_id)) DEFAULT CHARSET=utf8 COLLATE utf8_general_ci";
             statement.executeUpdate(tardisQuery);
 
             // Table structure for table 'travellers'
-            String travellersQuery = "CREATE TABLE IF NOT EXISTS travellers (traveller_id int(11) NOT NULL AUTO_INCREMENT, tardis_id int(11) DEFAULT '0', player varchar(32) DEFAULT '', PRIMARY KEY (traveller_id)) DEFAULT CHARSET=utf8 COLLATE utf8_general_ci";
+            String travellersQuery = "CREATE TABLE IF NOT EXISTS travellers (traveller_id int(11) NOT NULL AUTO_INCREMENT, tardis_id int(11) DEFAULT '0', uuid varchar(48) DEFAULT '', player varchar(32) DEFAULT '', PRIMARY KEY (traveller_id)) DEFAULT CHARSET=utf8 COLLATE utf8_general_ci";
             statement.executeUpdate(travellersQuery);
 
             // Table structure for table 't_count'
-            String t_countQuery = "CREATE TABLE IF NOT EXISTS t_count (t_id int(11) NOT NULL AUTO_INCREMENT, player varchar(32) DEFAULT '', count int(3) DEFAULT '0', PRIMARY KEY (t_id)) DEFAULT CHARSET=utf8 COLLATE utf8_general_ci";
+            String t_countQuery = "CREATE TABLE IF NOT EXISTS t_count (t_id int(11) NOT NULL AUTO_INCREMENT, uuid varchar(48) DEFAULT '', player varchar(32) DEFAULT '', count int(3) DEFAULT '0', PRIMARY KEY (t_id)) DEFAULT CHARSET=utf8 COLLATE utf8_general_ci";
             statement.executeUpdate(t_countQuery);
 
             // update tables

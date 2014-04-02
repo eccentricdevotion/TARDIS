@@ -71,7 +71,6 @@ public class ResultSetTag {
                     int columns = rsmd.getColumnCount();
                     for (int i = 1; i < columns + 1; i++) {
                         row.put(rsmd.getColumnName(i).toLowerCase(Locale.ENGLISH), rs.getString(i));
-
                     }
                     data.add(row);
                 }
@@ -79,7 +78,7 @@ public class ResultSetTag {
                 return false;
             }
         } catch (SQLException e) {
-            plugin.debug("ResultSet error for blocks table! " + e.getMessage());
+            plugin.debug("ResultSet error for tag table! " + e.getMessage());
             return false;
         } finally {
             try {
@@ -90,7 +89,7 @@ public class ResultSetTag {
                     statement.close();
                 }
             } catch (SQLException e) {
-                plugin.debug("Error closing blocks table! " + e.getMessage());
+                plugin.debug("Error closing tag table! " + e.getMessage());
             }
         }
         return true;

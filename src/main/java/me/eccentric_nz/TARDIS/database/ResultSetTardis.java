@@ -44,6 +44,7 @@ public class ResultSetTardis {
     private final String limit;
     private final boolean multiple;
     private int tardis_id;
+    private String uuid;
     private String owner;
     private String chunk;
     private int tips;
@@ -150,6 +151,7 @@ public class ResultSetTardis {
                         data.add(row);
                     }
                     this.tardis_id = rs.getInt("tardis_id");
+                    this.uuid = rs.getString("uuid");
                     this.owner = rs.getString("owner");
                     this.chunk = rs.getString("chunk");
                     this.tips = rs.getInt("tips");
@@ -218,6 +220,10 @@ public class ResultSetTardis {
 
     public int getTardis_id() {
         return tardis_id;
+    }
+
+    public String getUuid() {
+        return uuid;
     }
 
     public String getOwner() {

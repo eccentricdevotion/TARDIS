@@ -43,6 +43,7 @@ public class ResultSetARS {
     private final HashMap<String, Object> where;
     private int id;
     private int tardis_id;
+    private String uuid;
     private String player;
     private int east;
     private int south;
@@ -101,6 +102,7 @@ public class ResultSetARS {
                 while (rs.next()) {
                     this.id = rs.getInt("ars_id");
                     this.tardis_id = rs.getInt("tardis_id");
+                    this.uuid = rs.getString("uuid");
                     this.player = rs.getString("player");
                     this.east = rs.getInt("ars_x_east");
                     this.south = rs.getInt("ars_z_south");
@@ -137,6 +139,10 @@ public class ResultSetARS {
 
     public int getTardis_id() {
         return tardis_id;
+    }
+
+    public String getUuid() {
+        return uuid;
     }
 
     public String getPlayer() {
