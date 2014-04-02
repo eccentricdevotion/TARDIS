@@ -1,6 +1,7 @@
 # TODO
 
 ##Current version `2.8`
+1. Convert player persistence to UUIDs (started)
 
 These are all really boring!
 
