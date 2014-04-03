@@ -107,6 +107,7 @@ public class TARDISUpdateListener implements Listener {
     public void onUpdateInteract(PlayerInteractEvent event) {
         final Player player = event.getPlayer();
         final String playerNameStr = player.getName();
+        final String playerUUID = player.getUniqueId().toString();
         String blockName;
         boolean secondary = false;
         if (plugin.getTrackerKeeper().getTrackPlayers().containsKey(playerNameStr)) {
@@ -131,7 +132,7 @@ public class TARDISUpdateListener implements Listener {
                 blockData = block.getRelative(BlockFace.DOWN).getData();
             }
             HashMap<String, Object> where = new HashMap<String, Object>();
-            where.put("owner", playerNameStr);
+            where.put("uuid", playerUUID);
             ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);
             if (!rs.resultSet()) {
                 TARDISMessage.send(player, plugin.getPluginName() + MESSAGE.NO_TARDIS.getText());
@@ -175,7 +176,7 @@ public class TARDISUpdateListener implements Listener {
                 set.put("door_direction", d);
                 HashMap<String, Object> wheret = new HashMap<String, Object>();
                 wheret.put("tardis_id", id);
-                wheret.put("player", playerNameStr);
+                wheret.put("uuid", playerUUID);
                 ResultSetTravellers rst = new ResultSetTravellers(plugin, wheret, false);
                 int type;
                 if (rst.resultSet()) {
@@ -479,7 +480,7 @@ public class TARDISUpdateListener implements Listener {
 
                         HashMap<String, Object> seta = new HashMap<String, Object>();
                         seta.put("tardis_id", id);
-                        seta.put("player", playerNameStr);
+                        seta.put("uuid", playerUUID);
                         seta.put("json", json.toString());
                         qf.doInsert("ars", seta);
                     }
@@ -566,7 +567,7 @@ public class TARDISUpdateListener implements Listener {
                     set.put("location", blockLocStr);
                 }
                 // check if player has storage record, and update the tardis_id field
-                plugin.getUtils().updateStorageId(playerNameStr, id, qf);
+                plugin.getUtils().updateStorageId(playerUUID, id, qf);
             }
             if (blockName.equalsIgnoreCase("advanced") && blockType.equals(Material.JUKEBOX)) {
                 HashMap<String, Object> wherel = new HashMap<String, Object>();
@@ -581,7 +582,7 @@ public class TARDISUpdateListener implements Listener {
                     set.put("location", blockLocStr);
                 }
                 // check if player has storage record, and update the tardis_id field
-                plugin.getUtils().updateStorageId(playerNameStr, id, qf);
+                plugin.getUtils().updateStorageId(playerUUID, id, qf);
             }
             if (blockName.equalsIgnoreCase("zero") && (validBlocks.contains(blockType) || validSigns.contains(blockType))) {
                 HashMap<String, Object> wherez = new HashMap<String, Object>();
@@ -596,7 +597,7 @@ public class TARDISUpdateListener implements Listener {
                     set.put("location", blockLocStr);
                 }
                 // check if player has storage record, and update the tardis_id field
-                plugin.getUtils().updateStorageId(playerNameStr, id, qf);
+                plugin.getUtils().updateStorageId(playerUUID, id, qf);
             }
             if (set.size() > 0 || secondary) {
                 if (!secondary) {

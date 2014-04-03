@@ -58,7 +58,7 @@ public class TARDISJettisonCommand {
                 return true;
             }
             HashMap<String, Object> where = new HashMap<String, Object>();
-            where.put("owner", player.getName());
+            where.put("uuid", player.getUniqueId().toString());
             ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);
             if (!rs.resultSet()) {
                 TARDISMessage.send(player, plugin.getPluginName() + MESSAGE.NOT_A_TIMELORD.getText());
@@ -67,7 +67,7 @@ public class TARDISJettisonCommand {
             int id = rs.getTardis_id();
             // check they are in the tardis
             HashMap<String, Object> wheret = new HashMap<String, Object>();
-            wheret.put("player", player.getName());
+            wheret.put("uuid", player.getUniqueId().toString());
             wheret.put("tardis_id", id);
             ResultSetTravellers rst = new ResultSetTravellers(plugin, wheret, false);
             if (!rst.resultSet()) {

@@ -88,7 +88,7 @@ public class TARDISARSListener implements Listener {
             event.setCancelled(true);
             final Player player = (Player) event.getWhoClicked();
             String playerNameStr = player.getName();
-            ids.put(playerNameStr, getTardisId(playerNameStr, player.isOp()));
+            ids.put(playerNameStr, getTardisId(player.getUniqueId().toString(), player.isOp()));
             int slot = event.getRawSlot();
             if (slot != 10 && !hasLoadedMap.contains(playerNameStr)) {
                 TARDISMessage.send(player, plugin.getPluginName() + "You need to load the map first!");
@@ -258,7 +258,7 @@ public class TARDISARSListener implements Listener {
                                     }
                                 }
                                 if (plugin.getConfig().getBoolean("growth.rooms_require_blocks")) {
-                                    if (!hasCondensables(playerNameStr, room)) {
+                                    if (!hasCondensables(player.getUniqueId().toString(), room, ids.get(playerNameStr))) {
                                         setLore(inv, slot, "You haven't condensed enough blocks for this room!");
                                         break;
                                     }
@@ -552,7 +552,7 @@ public class TARDISARSListener implements Listener {
                     hasLoadedMap.remove(n);
                 }
                 if (map_data.containsKey(n)) {
-                    if (playerIsOwner(n, ids.get(n))) {
+                    if (playerIsOwner(p.getUniqueId().toString(), ids.get(n))) {
                         saveAll(n);
                         TARDISARSProcessor tap = new TARDISARSProcessor(plugin, ids.get(n));
                         boolean changed = tap.compare3DArray(save_map_data.get(n).getData(), map_data.get(n).getData());
@@ -762,18 +762,18 @@ public class TARDISARSListener implements Listener {
      * Checks whether a player has condensed the required blocks to grow the
      * room.
      *
-     * @param player the player to check for
+     * @param uuid the player to check for
      * @param room the room to check
      * @return true or false
      */
-    public boolean hasCondensables(String player, String room) {
+    public boolean hasCondensables(String uuid, String room, int id) {
         boolean hasRequired = true;
         HashMap<String, Integer> roomBlocks = plugin.getBuildKeeper().getRoomBlockCounts().get(room);
         String wall = "ORANGE_WOOL";
         String floor = "LIGHT_GREY_WOOL";
         HashMap<String, Object> wherepp = new HashMap<String, Object>();
         boolean hasPrefs = false;
-        wherepp.put("player", player);
+        wherepp.put("uuid", uuid);
         ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, wherepp);
         if (rsp.resultSet()) {
             hasPrefs = true;
@@ -803,7 +803,7 @@ public class TARDISARSListener implements Listener {
         }
         for (Map.Entry<Integer, Integer> map : item_counts.entrySet()) {
             HashMap<String, Object> wherec = new HashMap<String, Object>();
-            wherec.put("tardis_id", ids.get(player));
+            wherec.put("tardis_id", id);
             wherec.put("block_data", map.getKey());
             ResultSetCondenser rsc = new ResultSetCondenser(plugin, wherec, false);
             if (rsc.resultSet()) {
@@ -817,17 +817,17 @@ public class TARDISARSListener implements Listener {
         return hasRequired;
     }
 
-    private int getTardisId(String p, boolean isOP) {
+    private int getTardisId(String uuid, boolean isOP) {
         int id = 0;
         HashMap<String, Object> where = new HashMap<String, Object>();
         if (isOP) {
-            where.put("player", p);
+            where.put("uuid", uuid);
             ResultSetTravellers rs = new ResultSetTravellers(plugin, where, false);
             if (rs.resultSet()) {
                 id = rs.getTardis_id();
             }
         } else {
-            where.put("owner", p);
+            where.put("uuid", uuid);
             ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);
             if (rs.resultSet()) {
                 id = rs.getTardis_id();
@@ -851,10 +851,10 @@ public class TARDISARSListener implements Listener {
         return (consoleBlocks.contains(m));
     }
 
-    private boolean playerIsOwner(String player, int id) {
+    private boolean playerIsOwner(String uuid, int id) {
         HashMap<String, Object> where = new HashMap<String, Object>();
         where.put("tardis_id", id);
-        where.put("owner", player);
+        where.put("uuid", uuid);
         ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);
         return rs.resultSet();
     }

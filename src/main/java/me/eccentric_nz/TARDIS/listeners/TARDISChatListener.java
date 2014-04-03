@@ -16,6 +16,7 @@
  */
 package me.eccentric_nz.TARDIS.listeners;
 
+import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.travel.TARDISRescue;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
@@ -50,7 +51,7 @@ public class TARDISChatListener implements Listener {
      */
     @EventHandler(priority = EventPriority.MONITOR)
     public void onChat(AsyncPlayerChatEvent event) {
-        final String saved = event.getPlayer().getName();
+        final UUID saved = event.getPlayer().getUniqueId();
         String chat = event.getMessage();
         if (chat != null && chat.equalsIgnoreCase("tardis rescue accept")) {
             if (plugin.getTrackerKeeper().getTrackChat().containsKey(saved)) {

@@ -148,10 +148,9 @@ public class ResultSetAchievements {
         return uuid;
     }
 
-    public String getPlayer() {
-        return player;
-    }
-
+//    public String getPlayer() {
+//        return player;
+//    }
     public String getName() {
         return name;
     }

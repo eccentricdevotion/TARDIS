@@ -72,7 +72,7 @@ public class TARDISUpdateCommand {
                 return true;
             }
             HashMap<String, Object> where = new HashMap<String, Object>();
-            where.put("owner", player.getName());
+            where.put("uuid", player.getUniqueId().toString());
             ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);
             if (!rs.resultSet()) {
                 TARDISMessage.send(player, plugin.getPluginName() + MESSAGE.NOT_A_TIMELORD.getText());
@@ -118,7 +118,7 @@ public class TARDISUpdateCommand {
             }
             if (!tardis_block.equals("backdoor")) {
                 HashMap<String, Object> wheret = new HashMap<String, Object>();
-                wheret.put("player", player.getName());
+                wheret.put("uuid", player.getUniqueId().toString());
                 ResultSetTravellers rst = new ResultSetTravellers(plugin, wheret, false);
                 if (!rst.resultSet()) {
                     TARDISMessage.send(player, plugin.getPluginName() + MESSAGE.NOT_IN_TARDIS.getText());

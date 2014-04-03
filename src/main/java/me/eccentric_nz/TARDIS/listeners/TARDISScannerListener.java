@@ -110,7 +110,7 @@ public class TARDISScannerListener implements Listener {
                     if (data != null) {
                         boolean extrend = true;
                         HashMap<String, Object> wherer = new HashMap<String, Object>();
-                        wherer.put("player", player.getName());
+                        wherer.put("uuid", player.getUniqueId().toString());
                         ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, wherer);
                         if (rsp.resultSet()) {
                             extrend = rsp.isRendererOn();

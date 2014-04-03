@@ -41,6 +41,7 @@ public class TARDISEnterCommand {
         this.plugin = plugin;
     }
 
+    // TODO look up this player's UUID
     public boolean enterTARDIS(CommandSender sender, String[] args) {
         Player player = null;
         if (sender instanceof Player) {
@@ -131,7 +132,7 @@ public class TARDISEnterCommand {
                 QueryFactory qf = new QueryFactory(plugin);
                 HashMap<String, Object> set = new HashMap<String, Object>();
                 set.put("tardis_id", id);
-                set.put("player", player.getName());
+                set.put("uuid", player.getUniqueId().toString());
                 qf.doInsert("travellers", set);
                 return true;
             }

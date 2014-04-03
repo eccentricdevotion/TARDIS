@@ -60,10 +60,9 @@ public class TARDISAreaSignListener implements Listener {
             int slot = event.getRawSlot();
             final Player player = (Player) event.getWhoClicked();
             if (slot >= 0 && slot < 45) {
-                String playerNameStr = player.getName();
                 // get the TARDIS the player is in
                 HashMap<String, Object> wheres = new HashMap<String, Object>();
-                wheres.put("player", playerNameStr);
+                wheres.put("uuid", player.getUniqueId().toString());
                 ResultSetTravellers rst = new ResultSetTravellers(plugin, wheres, false);
                 if (rst.resultSet()) {
                     ItemStack is = inv.getItem(slot);
@@ -95,7 +94,7 @@ public class TARDISAreaSignListener implements Listener {
                     @Override
                     public void run() {
                         HashMap<String, Object> where = new HashMap<String, Object>();
-                        where.put("owner", player.getName());
+                        where.put("uuid", player.getUniqueId().toString());
                         ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);
                         if (rs.resultSet()) {
                             TARDISSaveSignInventory sst = new TARDISSaveSignInventory(plugin, rs.getTardis_id());

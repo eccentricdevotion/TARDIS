@@ -76,7 +76,7 @@ public class TARDISJettisonSeeder implements Listener {
             Material inhand = player.getItemInHand().getType();
             String key;
             HashMap<String, Object> where = new HashMap<String, Object>();
-            where.put("player", playerNameStr);
+            where.put("uuid", player.getUniqueId().toString());
             ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, where);
             if (rsp.resultSet()) {
                 key = (!rsp.getKey().isEmpty()) ? rsp.getKey() : plugin.getConfig().getString("preferences.key");
@@ -99,7 +99,7 @@ public class TARDISJettisonSeeder implements Listener {
                 Location l = block.getRelative(facing, 3).getLocation();
                 // get the TARDIS id
                 HashMap<String, Object> whereid = new HashMap<String, Object>();
-                whereid.put("owner", playerNameStr);
+                whereid.put("uuid", player.getUniqueId().toString());
                 ResultSetTardis rs = new ResultSetTardis(plugin, whereid, "", false);
                 if (rs.resultSet()) {
                     int id = rs.getTardis_id();
@@ -112,7 +112,7 @@ public class TARDISJettisonSeeder implements Listener {
                         int amount = Math.round((plugin.getArtronConfig().getInt("jettison") / 100F) * plugin.getRoomsConfig().getInt("rooms." + r + ".cost"));
                         QueryFactory qf = new QueryFactory(plugin);
                         HashMap<String, Object> set = new HashMap<String, Object>();
-                        set.put("owner", playerNameStr);
+                        set.put("uuid", player.getUniqueId().toString());
                         qf.alterEnergyLevel("tardis", amount, set, player);
                         // if it is a secondary console room remove the controls
                         if (r.equals("BAKER") || r.equals("WOOD")) {

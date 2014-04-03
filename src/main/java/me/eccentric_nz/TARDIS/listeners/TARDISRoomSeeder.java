@@ -91,7 +91,7 @@ public class TARDISRoomSeeder implements Listener {
             Material inhand = player.getItemInHand().getType();
             String key;
             HashMap<String, Object> where = new HashMap<String, Object>();
-            where.put("player", playerNameStr);
+            where.put("uuid", player.getUniqueId().toString());
             ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, where);
             if (rsp.resultSet()) {
                 key = (!rsp.getKey().isEmpty()) ? rsp.getKey() : plugin.getConfig().getString("preferences.key");
@@ -161,7 +161,7 @@ public class TARDISRoomSeeder implements Listener {
                     int amount = plugin.getRoomsConfig().getInt("rooms." + r + ".cost");
                     QueryFactory qf = new QueryFactory(plugin);
                     HashMap<String, Object> set = new HashMap<String, Object>();
-                    set.put("owner", playerNameStr);
+                    set.put("uuid", player.getUniqueId().toString());
                     qf.alterEnergyLevel("tardis", -amount, set, player);
                     // remove blocks from condenser table if rooms_require_blocks is true
                     if (plugin.getConfig().getBoolean("growth.rooms_require_blocks")) {

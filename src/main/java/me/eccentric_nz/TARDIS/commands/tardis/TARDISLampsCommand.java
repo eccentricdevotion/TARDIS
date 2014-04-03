@@ -59,7 +59,7 @@ public class TARDISLampsCommand {
             return false;
         }
         HashMap<String, Object> where = new HashMap<String, Object>();
-        where.put("owner", owner.getName());
+        where.put("uuid", owner.getUniqueId().toString());
         ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);
         if (rs.resultSet()) {
             int id = rs.getTardis_id();

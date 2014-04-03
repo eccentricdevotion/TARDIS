@@ -42,10 +42,9 @@ public class TARDISQuitListener implements Listener {
 
     @EventHandler(priority = EventPriority.MONITOR)
     public void onPlayerQuit(PlayerQuitEvent event) {
-        String playerNameStr = event.getPlayer().getName();
         // forget the players Police Box chunk
         HashMap<String, Object> wherep = new HashMap<String, Object>();
-        wherep.put("owner", playerNameStr);
+        wherep.put("uuid", event.getPlayer().getUniqueId().toString());
         ResultSetTardis rs = new ResultSetTardis(plugin, wherep, "", false);
         if (rs.resultSet()) {
             HashMap<String, Object> wherecl = new HashMap<String, Object>();

@@ -71,7 +71,7 @@ public class TARDISPrefsMenuListener implements Listener {
                     boolean bool = (lore.get(0).equals("ON"));
                     String value = (bool) ? "OFF" : "ON";
                     int b = (bool) ? 0 : 1;
-                    String p = ((Player) event.getWhoClicked()).getName();
+                    String uuid = ((Player) event.getWhoClicked()).getUniqueId().toString();
                     if (im.getDisplayName().equals("Companion Build")) {
                         String[] args = new String[2];
                         args[0] = "";
@@ -81,14 +81,14 @@ public class TARDISPrefsMenuListener implements Listener {
                         HashMap<String, Object> set = new HashMap<String, Object>();
                         set.put(lookup.get(im.getDisplayName()), b);
                         HashMap<String, Object> where = new HashMap<String, Object>();
-                        where.put("player", p);
+                        where.put("uuid", uuid);
                         new QueryFactory(plugin).doUpdate("player_prefs", set, where);
                     }
                     lore.set(0, value);
                     im.setLore(lore);
                     is.setItemMeta(im);
                     if (im.getDisplayName().equals("Beacon")) {
-                        new TARDISToggleOnOffCommand(plugin).toggleBeacon(p, !bool);
+                        new TARDISToggleOnOffCommand(plugin).toggleBeacon(uuid, !bool);
                     }
                 }
             }

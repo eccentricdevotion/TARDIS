@@ -41,7 +41,7 @@ public class TARDISOccupyCommand {
     public boolean toggleOccupancy(Player player) {
         if (player.hasPermission("tardis.timetravel")) {
             HashMap<String, Object> where = new HashMap<String, Object>();
-            where.put("owner", player.getName());
+            where.put("uuid", player.getUniqueId().toString());
             ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);
             if (!rs.resultSet()) {
                 TARDISMessage.send(player, plugin.getPluginName() + MESSAGE.NOT_A_TIMELORD.getText());
@@ -50,7 +50,7 @@ public class TARDISOccupyCommand {
             int id = rs.getTardis_id();
             HashMap<String, Object> wheret = new HashMap<String, Object>();
             //wheret.put("tardis_id", id);
-            wheret.put("player", player.getName());
+            wheret.put("uuid", player.getUniqueId().toString());
             ResultSetTravellers rst = new ResultSetTravellers(plugin, wheret, false);
             String occupied;
             QueryFactory qf = new QueryFactory(plugin);
@@ -58,7 +58,7 @@ public class TARDISOccupyCommand {
                 // only if they're not in the TARDIS world
                 if (!plugin.getUtils().inTARDISWorld(player)) {
                     HashMap<String, Object> whered = new HashMap<String, Object>();
-                    whered.put("player", player.getName());
+                    whered.put("uuid", player.getUniqueId().toString());
                     qf.doDelete("travellers", whered);
                     occupied = ChatColor.RED + "UNOCCUPIED";
                 } else {
@@ -69,7 +69,7 @@ public class TARDISOccupyCommand {
                 if (plugin.getUtils().inTARDISWorld(player)) {
                     HashMap<String, Object> wherei = new HashMap<String, Object>();
                     wherei.put("tardis_id", id);
-                    wherei.put("player", player.getName());
+                    wherei.put("uuid", player.getUniqueId().toString());
                     qf.doInsert("travellers", wherei);
                     occupied = ChatColor.GREEN + "OCCUPIED";
                 } else {

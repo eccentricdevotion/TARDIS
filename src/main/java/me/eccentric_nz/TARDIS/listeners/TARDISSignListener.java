@@ -79,7 +79,7 @@ public class TARDISSignListener implements Listener {
                 // check they are in the TARDIS
                 // get the TARDIS the player is in
                 HashMap<String, Object> wheres = new HashMap<String, Object>();
-                wheres.put("player", player.getName());
+                wheres.put("uuid", player.getUniqueId().toString());
                 ResultSetTravellers rst = new ResultSetTravellers(plugin, wheres, false);
                 if (!rst.resultSet()) {
                     return;

@@ -102,7 +102,7 @@ public class TARDISBookCommands implements CommandExecutor {
                     }
                     // check they have not already started the achievement
                     HashMap<String, Object> where = new HashMap<String, Object>();
-                    where.put("player", player.getName());
+                    where.put("uuid", player.getUniqueId().toString());
                     where.put("name", bookname);
                     ResultSetAchievements rsa = new ResultSetAchievements(plugin, where, false);
                     if (rsa.resultSet()) {
@@ -117,7 +117,7 @@ public class TARDISBookCommands implements CommandExecutor {
                         }
                     }
                     HashMap<String, Object> set = new HashMap<String, Object>();
-                    set.put("player", player.getName());
+                    set.put("uuid", player.getUniqueId().toString());
                     set.put("name", bookname);
                     QueryFactory qf = new QueryFactory(plugin);
                     qf.doInsert("achievements", set);

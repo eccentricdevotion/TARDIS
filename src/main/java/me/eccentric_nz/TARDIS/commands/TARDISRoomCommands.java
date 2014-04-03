@@ -121,7 +121,7 @@ public class TARDISRoomCommands implements CommandExecutor {
                     String floor = "LIGHT GREY WOOL";
                     if (sender instanceof Player) {
                         HashMap<String, Object> wherepp = new HashMap<String, Object>();
-                        wherepp.put("player", ((Player) sender).getName());
+                        wherepp.put("uuid", ((Player) sender).getUniqueId().toString());
                         ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, wherepp);
                         if (rsp.resultSet()) {
                             hasPrefs = true;
@@ -166,7 +166,7 @@ public class TARDISRoomCommands implements CommandExecutor {
                 String wall = "ORANGE_WOOL";
                 String floor = "LIGHT_GREY_WOOL";
                 HashMap<String, Object> wherepp = new HashMap<String, Object>();
-                wherepp.put("player", ((Player) sender).getName());
+                wherepp.put("uuid", ((Player) sender).getUniqueId().toString());
                 ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, wherepp);
                 if (rsp.resultSet()) {
                     hasPrefs = true;
@@ -175,7 +175,7 @@ public class TARDISRoomCommands implements CommandExecutor {
                 }
                 // get the TARDIS id
                 HashMap<String, Object> wheret = new HashMap<String, Object>();
-                wheret.put("owner", player.getName());
+                wheret.put("uuid", player.getUniqueId().toString());
                 ResultSetTardis rs = new ResultSetTardis(plugin, wheret, "", false);
                 if (rs.resultSet()) {
                     TARDISMessage.send(player, plugin.getPluginName() + "You need to condense the following blocks to grow a " + name + ":");

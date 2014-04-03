@@ -55,7 +55,7 @@ public class TARDISRechargerCommand {
         }
         // make sure they're not targeting their inner TARDIS beacon
         HashMap<String, Object> where = new HashMap<String, Object>();
-        where.put("player", player.getName());
+        where.put("uuid", player.getUniqueId().toString());
         ResultSetTravellers rst = new ResultSetTravellers(plugin, where, false);
         if (rst.resultSet()) {
             TARDISMessage.send(player, plugin.getPluginName() + "You cannot use the TARDIS BEACON to recharge!");

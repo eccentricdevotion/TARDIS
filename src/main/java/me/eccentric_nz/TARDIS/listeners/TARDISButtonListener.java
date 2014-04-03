@@ -21,6 +21,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
+import java.util.UUID;
 import me.eccentric_nz.TARDIS.ARS.TARDISARSInventory;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.advanced.TARDISCircuitChecker;
@@ -35,7 +36,6 @@ import me.eccentric_nz.TARDIS.database.ResultSetLamps;
 import me.eccentric_nz.TARDIS.database.ResultSetPlayerPrefs;
 import me.eccentric_nz.TARDIS.database.ResultSetRepeaters;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
-import me.eccentric_nz.TARDIS.database.ResultSetTravellers;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
 import me.eccentric_nz.TARDIS.enumeration.MESSAGE;
 import me.eccentric_nz.TARDIS.enumeration.STORAGE;
@@ -133,7 +133,7 @@ public class TARDISButtonListener implements Listener {
                             boolean hb = rs.isHandbrake_on();
                             boolean set_dest = false;
                             String comps = rs.getCompanions();
-                            String owner = rs.getOwner();
+                            UUID ownerUUID = rs.getUuid();
                             TARDISCircuitChecker tcc = null;
                             if (plugin.getConfig().getString("preferences.difficulty").equals("hard")) {
                                 tcc = new TARDISCircuitChecker(plugin, id);
@@ -238,17 +238,17 @@ public class TARDISButtonListener implements Listener {
                                                 if (comps != null && !comps.isEmpty()) {
                                                     String[] companions = comps.split(":");
                                                     for (String c : companions) {
-                                                        // are they online - AND are they travelling
-                                                        if (plugin.getServer().getPlayer(c) != null) {
-                                                            // are they travelling
-                                                            HashMap<String, Object> wherec = new HashMap<String, Object>();
-                                                            wherec.put("tardis_id", id);
-                                                            wherec.put("player", c);
-                                                            ResultSetTravellers rsv = new ResultSetTravellers(plugin, wherec, false);
-                                                            if (rsv.resultSet()) {
-                                                                TARDISMessage.send(plugin.getServer().getPlayer(c), plugin.getPluginName() + "Destination: " + dchat);
-                                                            }
-                                                        }
+//                                                        // are they online - AND are they travelling
+//                                                        if (plugin.getServer().getPlayer(c) != null) {
+//                                                            // are they travelling
+//                                                            HashMap<String, Object> wherec = new HashMap<String, Object>();
+//                                                            wherec.put("tardis_id", id);
+//                                                            wherec.put("player", c);
+//                                                            ResultSetTravellers rsv = new ResultSetTravellers(plugin, wherec, false);
+//                                                            if (rsv.resultSet()) {
+//                                                                TARDISMessage.send(plugin.getServer().getPlayer(c), plugin.getPluginName() + "Destination: " + dchat);
+//                                                            }
+//                                                        }
                                                         if (c.equalsIgnoreCase(player.getName())) {
                                                             isTL = false;
                                                         }
@@ -257,8 +257,8 @@ public class TARDISButtonListener implements Listener {
                                                 if (isTL == true) {
                                                     TARDISMessage.send(player, plugin.getPluginName() + "Destination: " + dchat);
                                                 } else {
-                                                    if (plugin.getServer().getPlayer(owner) != null) {
-                                                        TARDISMessage.send(plugin.getServer().getPlayer(owner), plugin.getPluginName() + "Destination: " + dchat);
+                                                    if (plugin.getServer().getPlayer(ownerUUID) != null) {
+                                                        TARDISMessage.send(plugin.getServer().getPlayer(ownerUUID), plugin.getPluginName() + "Destination: " + dchat);
                                                     }
                                                 }
                                             } else {
@@ -367,7 +367,7 @@ public class TARDISButtonListener implements Listener {
                                         }
                                     }
                                     HashMap<String, Object> wherepp = new HashMap<String, Object>();
-                                    wherepp.put("player", player.getName());
+                                    wherepp.put("uuid", player.getUniqueId().toString());
                                     ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, wherepp);
                                     boolean use_wool = false;
                                     if (rsp.resultSet()) {
@@ -400,15 +400,15 @@ public class TARDISButtonListener implements Listener {
                                     TARDISMessage.send(player, "§6> §fE§6xit");
                                     break;
                                 case 14: // Disk Storage
-                                    String name = player.getName();
+                                    UUID playerUUID = player.getUniqueId();
                                     // only the time lord of this tardis
-                                    if (!owner.equals(name)) {
+                                    if (!ownerUUID.equals(playerUUID)) {
                                         TARDISMessage.send(player, plugin.getPluginName() + MESSAGE.NOT_OWNER.getText());
                                         return;
                                     }
                                     // do they have a storage record?
                                     HashMap<String, Object> wherestore = new HashMap<String, Object>();
-                                    wherestore.put("owner", name);
+                                    wherestore.put("uuid", playerUUID);
                                     ResultSetDiskStorage rsstore = new ResultSetDiskStorage(plugin, wherestore);
                                     ItemStack[] stack = new ItemStack[54];
                                     if (rsstore.resultSet()) {
@@ -429,7 +429,7 @@ public class TARDISButtonListener implements Listener {
                                         }
                                         // make a record
                                         HashMap<String, Object> setstore = new HashMap<String, Object>();
-                                        setstore.put("owner", player.getName());
+                                        setstore.put("uuid", player.getUniqueId().toString());
                                         setstore.put("tardis_id", id);
                                         qf.doInsert("storage", setstore);
                                     }

@@ -49,7 +49,7 @@ public class TARDISHideCommand {
             int id;
             boolean cham = false;
             HashMap<String, Object> where = new HashMap<String, Object>();
-            where.put("owner", player.getName());
+            where.put("uuid", player.getUniqueId().toString());
             ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);
             if (!rs.resultSet()) {
                 TARDISMessage.send(player, plugin.getPluginName() + MESSAGE.NO_TARDIS.getText());
@@ -66,7 +66,7 @@ public class TARDISHideCommand {
                 return true;
             }
             HashMap<String, Object> wherein = new HashMap<String, Object>();
-            wherein.put("player", player.getName());
+            wherein.put("uuid", player.getUniqueId().toString());
             ResultSetTravellers rst = new ResultSetTravellers(plugin, wherein, false);
             if (rst.resultSet() && args[0].equalsIgnoreCase("rebuild") && plugin.getTrackerKeeper().getTrackHasDestination().containsKey(id)) {
                 TARDISMessage.send(player, plugin.getPluginName() + "You cannot rebuild the TARDIS right now! Try travelling first.");

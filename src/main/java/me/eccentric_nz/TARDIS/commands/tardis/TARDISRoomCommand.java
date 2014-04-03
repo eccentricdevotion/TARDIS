@@ -70,7 +70,7 @@ public class TARDISRoomCommand {
             return true;
         }
         HashMap<String, Object> where = new HashMap<String, Object>();
-        where.put("owner", player.getName());
+        where.put("uuid", player.getUniqueId().toString());
         ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);
         if (!rs.resultSet()) {
             TARDISMessage.send(player, plugin.getPluginName() + MESSAGE.NOT_A_TIMELORD.getText());
@@ -100,7 +100,7 @@ public class TARDISRoomCommand {
         int tips = rs.getTIPS();
         // check they are in the tardis
         HashMap<String, Object> wheret = new HashMap<String, Object>();
-        wheret.put("player", player.getName());
+        wheret.put("uuid", player.getUniqueId().toString());
         wheret.put("tardis_id", id);
         ResultSetTravellers rst = new ResultSetTravellers(plugin, wheret, false);
         if (!rst.resultSet()) {
@@ -120,7 +120,7 @@ public class TARDISRoomCommand {
             String floor = "LIGHT_GREY_WOOL";
             HashMap<String, Object> wherepp = new HashMap<String, Object>();
             boolean hasPrefs = false;
-            wherepp.put("player", player.getName());
+            wherepp.put("uuid", player.getUniqueId().toString());
             ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, wherepp);
             if (rsp.resultSet()) {
                 hasPrefs = true;

@@ -122,7 +122,7 @@ public class TARDISExteriorRenderer {
             int plusz = (location.getBlockZ() + 1);
             int minusz = (location.getBlockZ() - 1);
             TARDISChameleonColumn column = plugin.getPresets().getGlass(PRESET.RENDER, d);
-            addPlatform(location, d, p.getName(), id);
+            addPlatform(location, d, p.getUniqueId().toString(), id);
             int px, pz;
             int[][] ids = column.getId();
             byte[][] data = column.getData();
@@ -318,7 +318,7 @@ public class TARDISExteriorRenderer {
     }
 
     @SuppressWarnings("deprecation")
-    private void addPlatform(Location l, COMPASS d, String p, int id) {
+    private void addPlatform(Location l, COMPASS d, String uuid, int id) {
         int plusx, minusx, x, y, plusz, minusz, z;
         int platform_id = plugin.getConfig().getInt("police_box.platform_id");
         byte platform_data = (byte) plugin.getConfig().getInt("police_box.platform_data");
@@ -334,7 +334,7 @@ public class TARDISExteriorRenderer {
         if (plugin.getConfig().getBoolean("travel.platform")) {
             // check if user has platform pref
             HashMap<String, Object> wherep = new HashMap<String, Object>();
-            wherep.put("player", p);
+            wherep.put("uuid", uuid);
             ResultSetPlayerPrefs pp = new ResultSetPlayerPrefs(plugin, wherep);
             boolean userPlatform;
             if (pp.resultSet()) {

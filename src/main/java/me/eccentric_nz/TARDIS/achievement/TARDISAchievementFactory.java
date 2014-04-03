@@ -56,7 +56,7 @@ public class TARDISAchievementFactory {
         QueryFactory qf = new QueryFactory(plugin);
         // have they started the achievement?
         HashMap<String, Object> wherea = new HashMap<String, Object>();
-        wherea.put("player", player.getName());
+        wherea.put("uuid", player.getUniqueId().toString());
         wherea.put("name", name);
         wherea.put("completed", 0);
         ResultSetAchievements rsa = new ResultSetAchievements(plugin, wherea, false);
@@ -116,7 +116,7 @@ public class TARDISAchievementFactory {
             // is it an auto achievement?
             if (plugin.getAchievementConfig().getBoolean(name + ".auto")) {
                 // insert a new record
-                seta.put("player", player.getName());
+                seta.put("uuid", player.getUniqueId().toString());
                 seta.put("name", name);
                 seta.put("amount", obj);
                 seta.put("completed", 0);

@@ -147,10 +147,9 @@ public class TARDISStorageListener implements Listener {
             event.setCancelled(true);
         }
         final Player player = (Player) event.getWhoClicked();
-        String playerNameStr = player.getName();
         // get the storage record
         HashMap<String, Object> where = new HashMap<String, Object>();
-        where.put("owner", playerNameStr);
+        where.put("uuid", player.getUniqueId().toString());
         ResultSetDiskStorage rs = new ResultSetDiskStorage(plugin, where);
         if (rs.resultSet()) {
             // which inventory screen is it?
@@ -284,7 +283,7 @@ public class TARDISStorageListener implements Listener {
         HashMap<String, Object> set = new HashMap<String, Object>();
         set.put(column, serialized);
         HashMap<String, Object> where = new HashMap<String, Object>();
-        where.put("owner", p.getName());
+        where.put("uuid", p.getUniqueId().toString());
         new QueryFactory(plugin).doUpdate("storage", set, where);
     }
 

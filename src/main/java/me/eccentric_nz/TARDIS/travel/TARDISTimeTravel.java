@@ -206,7 +206,7 @@ public class TARDISTimeTravel {
                         if ((currentBlock.getRelative(BlockFace.DOWN).getTypeId() == 8 || currentBlock.getRelative(BlockFace.DOWN).getTypeId() == 9) && plugin.getConfig().getBoolean("travel.land_on_water") == false) {
                             // check if submarine is on
                             HashMap<String, Object> wheres = new HashMap<String, Object>();
-                            wheres.put("player", p.getName());
+                            wheres.put("uuid", p.getUniqueId().toString());
                             ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, wheres);
                             if (rsp.resultSet()) {
                                 if (rsp.isSubmarineOn() && plugin.getUtils().isOceanBiome(currentBlock.getBiome())) {
@@ -216,7 +216,7 @@ public class TARDISTimeTravel {
                                     if (underwater != null) {
                                         // get TARDIS id
                                         HashMap<String, Object> wherep = new HashMap<String, Object>();
-                                        wherep.put("player", p.getName());
+                                        wherep.put("uuid", p.getUniqueId().toString());
                                         ResultSetTravellers rst = new ResultSetTravellers(plugin, wherep, false);
                                         if (rst.resultSet()) {
                                             plugin.getTrackerKeeper().getTrackSubmarine().add(rst.getTardis_id());

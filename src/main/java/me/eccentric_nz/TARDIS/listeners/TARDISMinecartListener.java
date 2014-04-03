@@ -19,6 +19,7 @@ package me.eccentric_nz.TARDIS.listeners;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.ResultSetDoors;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
@@ -67,7 +68,7 @@ public class TARDISMinecartListener implements Listener {
                 Vehicle minecart = event.getVehicle();
                 ItemStack[] inv = ((StorageMinecart) minecart).getInventory().getContents();
                 String[] data = null;
-                String p = "";
+                UUID playerUUID = null;
                 int id = 0;
                 COMPASS d = COMPASS.SOUTH;
                 Location block_loc = b.getLocation();
@@ -93,7 +94,7 @@ public class TARDISMinecartListener implements Listener {
                             ResultSetTardis rs = new ResultSetTardis(plugin, whereid, "", false);
                             if (rs.resultSet() && !plugin.getTrackerKeeper().getTrackMinecart().contains(id)) {
                                 data = rs.getRail().split(":");
-                                p = rs.getOwner();
+                                playerUUID = rs.getUuid();
                                 plugin.getTrackerKeeper().getTrackMinecart().add(id);
                             }
                         }
@@ -104,7 +105,7 @@ public class TARDISMinecartListener implements Listener {
                         wherep.put("rail", db_loc);
                         ResultSetTardis rsp = new ResultSetTardis(plugin, wherep, "", false);
                         if (rsp.resultSet()) {
-                            p = rsp.getOwner();
+                            playerUUID = rsp.getUuid();
                             id = rsp.getTardis_id();
                             HashMap<String, Object> whereinner = new HashMap<String, Object>();
                             whereinner.put("tardis_id", id);
@@ -130,8 +131,8 @@ public class TARDISMinecartListener implements Listener {
                 if (data != null) {
                     if (plugin.getPM().isPluginEnabled("Multiverse-Inventories")) {
                         if (!plugin.getTMIChecker().checkMVI(bw, data[0])) {
-                            if (!p.isEmpty() && plugin.getServer().getPlayer(p).isOnline()) {
-                                TARDISMessage.send(plugin.getServer().getPlayer(p), plugin.getPluginName() + "You cannot use minecarts from " + bw + " to " + data[0] + ".");
+                            if (playerUUID != null && plugin.getServer().getPlayer(playerUUID).isOnline()) {
+                                TARDISMessage.send(plugin.getServer().getPlayer(playerUUID), plugin.getPluginName() + "You cannot use minecarts from " + bw + " to " + data[0] + ".");
                             }
                             plugin.getTrackerKeeper().getTrackMinecart().remove(Integer.valueOf(id));
                             return;

@@ -131,7 +131,7 @@ public class TARDISSQLiteDatabase {
             statement.executeUpdate(queryStorage);
 
             // Table structure for table 'tag'
-            String queryTag = "CREATE TABLE IF NOT EXISTS tag (tag_id INTEGER PRIMARY KEY NOT NULL, uuid TEXT DEFAULT '', player TEXT COLLATE NOCASE DEFAULT '', time INTEGER)";
+            String queryTag = "CREATE TABLE IF NOT EXISTS tag (tag_id INTEGER PRIMARY KEY NOT NULL, player TEXT COLLATE NOCASE DEFAULT '', time INTEGER)";
             statement.executeUpdate(queryTag);
 
             // Table structure for table 'tardis'

@@ -76,7 +76,7 @@ public class TARDISConsoleListener implements Listener {
                     int id = rsc.getTardis_id();
                     // determine key item
                     HashMap<String, Object> wherek = new HashMap<String, Object>();
-                    wherek.put("player", p.getName());
+                    wherek.put("uuid", p.getUniqueId().toString());
                     ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, wherek);
                     String key;
                     if (rsp.resultSet()) {
@@ -90,7 +90,7 @@ public class TARDISConsoleListener implements Listener {
                         // only the time lord of this tardis
                         HashMap<String, Object> wheret = new HashMap<String, Object>();
                         wheret.put("tardis_id", id);
-                        wheret.put("owner", p.getName());
+                        wheret.put("uuid", p.getUniqueId().toString());
                         ResultSetTardis rs = new ResultSetTardis(plugin, wheret, "", false);
                         if (!rs.resultSet()) {
                             TARDISMessage.send(p, plugin.getPluginName() + MESSAGE.NOT_OWNER.getText());
@@ -98,7 +98,7 @@ public class TARDISConsoleListener implements Listener {
                         }
                         Inventory inv = plugin.getServer().createInventory(p, 9, "§4TARDIS Console");
                         HashMap<String, Object> where = new HashMap<String, Object>();
-                        where.put("owner", p.getName());
+                        where.put("uuid", p.getUniqueId().toString());
                         ResultSetDiskStorage rsds = new ResultSetDiskStorage(plugin, where);
                         if (rsds.resultSet()) {
                             String console = rsds.getConsole();
@@ -113,7 +113,7 @@ public class TARDISConsoleListener implements Listener {
                         } else {
                             // create new storage record
                             HashMap<String, Object> setstore = new HashMap<String, Object>();
-                            setstore.put("owner", p.getName());
+                            setstore.put("uuid", p.getUniqueId().toString());
                             setstore.put("tardis_id", id);
                             new QueryFactory(plugin).doInsert("storage", setstore);
                         }

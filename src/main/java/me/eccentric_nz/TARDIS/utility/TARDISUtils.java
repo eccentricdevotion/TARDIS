@@ -614,17 +614,17 @@ public class TARDISUtils {
      * Checks if player has storage record, and update the tardis_id field if
      * they do.
      *
-     * @param player the payer's name
+     * @param uuid the player's UUID
      * @param id the player's TARDIS ID
      * @param qf an instance of the database QueyFactory
      */
-    public void updateStorageId(String player, int id, QueryFactory qf) {
+    public void updateStorageId(String uuid, int id, QueryFactory qf) {
         HashMap<String, Object> where = new HashMap<String, Object>();
-        where.put("owner", player);
+        where.put("uuid", uuid);
         ResultSetDiskStorage rss = new ResultSetDiskStorage(plugin, where);
         if (rss.resultSet()) {
             HashMap<String, Object> wherej = new HashMap<String, Object>();
-            wherej.put("owner", player);
+            wherej.put("uuid", uuid);
             HashMap<String, Object> setj = new HashMap<String, Object>();
             setj.put("tardis_id", id);
             qf.doUpdate("storage", setj, wherej);

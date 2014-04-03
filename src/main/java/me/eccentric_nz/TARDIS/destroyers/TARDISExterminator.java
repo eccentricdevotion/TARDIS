@@ -161,7 +161,7 @@ public class TARDISExterminator {
                 return false;
             }
         } else {
-            where.put("owner", playerNameStr);
+            where.put("uuid", player.getUniqueId().toString());
         }
         ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);
         if (rs.resultSet()) {

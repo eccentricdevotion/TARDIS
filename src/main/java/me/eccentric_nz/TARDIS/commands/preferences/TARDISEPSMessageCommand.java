@@ -49,7 +49,7 @@ public class TARDISEPSMessageCommand {
         HashMap<String, Object> sete = new HashMap<String, Object>();
         sete.put("eps_message", message);
         HashMap<String, Object> where = new HashMap<String, Object>();
-        where.put("player", player.getName());
+        where.put("uuid", player.getUniqueId().toString());
         qf.doUpdate("player_prefs", sete, where);
         TARDISMessage.send(player, plugin.getPluginName() + "The Emergency Program System message was set!");
         return true;

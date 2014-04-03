@@ -53,7 +53,6 @@ public class TARDISTemporalLocatorListener implements Listener {
         if (name.equals("§4Temporal Locator")) {
             event.setCancelled(true);
             final Player player = (Player) event.getWhoClicked();
-            String playerNameStr = player.getName();
             int slot = event.getRawSlot();
             if (slot >= 0 && slot < 27) {
                 ItemStack is = inv.getItem(slot);
@@ -61,7 +60,7 @@ public class TARDISTemporalLocatorListener implements Listener {
                     ItemMeta im = is.getItemMeta();
                     List<String> lore = im.getLore();
                     long time = getTime(lore);
-                    plugin.getTrackerKeeper().getTrackSetTime().put(playerNameStr, time);
+                    plugin.getTrackerKeeper().getTrackSetTime().put(player.getUniqueId(), time);
                     TARDISMessage.send(player, plugin.getPluginName() + "Your temporal location will be set to " + time + " ticks when exiting the TARDIS.");
                 }
                 close(player);

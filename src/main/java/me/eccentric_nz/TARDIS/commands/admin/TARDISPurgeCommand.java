@@ -34,6 +34,7 @@ public class TARDISPurgeCommand {
         this.plugin = plugin;
     }
 
+    // TODO look up this player's UUID
     public boolean clearAll(CommandSender sender, String[] args) {
         // get the player's TARDIS id
         HashMap<String, Object> where = new HashMap<String, Object>();

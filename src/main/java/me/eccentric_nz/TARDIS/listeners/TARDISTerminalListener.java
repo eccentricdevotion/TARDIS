@@ -85,7 +85,7 @@ public class TARDISTerminalListener implements Listener {
                 String playerNameStr = player.getName();
                 // get the TARDIS the player is in
                 HashMap<String, Object> where = new HashMap<String, Object>();
-                where.put("player", playerNameStr);
+                where.put("uuid", player.getUniqueId().toString());
                 ResultSetTravellers rst = new ResultSetTravellers(plugin, where, false);
                 if (rst.resultSet()) {
                     switch (slot) {
@@ -183,8 +183,9 @@ public class TARDISTerminalListener implements Listener {
         InventoryHolder holder = inv.getHolder();
         if (holder instanceof Player && inv.getName().equals("§4Destination Terminal")) {
             String name = ((Player) holder).getName();
+            String uuid = ((Player) holder).getUniqueId().toString();
             HashMap<String, Object> where = new HashMap<String, Object>();
-            where.put("player", name);
+            where.put("uuid", uuid);
             ResultSetTravellers rst = new ResultSetTravellers(plugin, where, false);
             if (rst.resultSet()) {
                 int id = rst.getTardis_id();
@@ -203,7 +204,7 @@ public class TARDISTerminalListener implements Listener {
                 }
             }
             HashMap<String, Object> wherepp = new HashMap<String, Object>();
-            wherepp.put("player", name);
+            wherepp.put("uuid", uuid);
             ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, wherepp);
             if (rsp.resultSet()) {
                 String sub = (rsp.isSubmarineOn()) ? "true" : "false";
@@ -338,7 +339,7 @@ public class TARDISTerminalListener implements Listener {
 
     private void toggleSubmarine(Inventory inv, Player p) {
         HashMap<String, Object> where = new HashMap<String, Object>();
-        where.put("player", p.getName());
+        where.put("uuid", p.getUniqueId().toString());
         ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, where);
         if (rsp.resultSet()) {
             String bool = (rsp.isSubmarineOn()) ? "false" : "true";

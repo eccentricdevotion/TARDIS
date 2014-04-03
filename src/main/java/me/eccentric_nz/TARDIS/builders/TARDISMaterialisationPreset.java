@@ -19,6 +19,7 @@ package me.eccentric_nz.TARDIS.builders;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Random;
+import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.chameleon.TARDISChameleonColumn;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
@@ -161,8 +162,8 @@ public class TARDISMaterialisationPreset implements Runnable {
                 QueryFactory qf = new QueryFactory(plugin);
                 // rescue player?
                 if (i == 10 && plugin.getTrackerKeeper().getTrackRescue().containsKey(tid)) {
-                    String name = plugin.getTrackerKeeper().getTrackRescue().get(tid);
-                    Player saved = plugin.getServer().getPlayer(name);
+                    UUID playerUUID = plugin.getTrackerKeeper().getTrackRescue().get(tid);
+                    Player saved = plugin.getServer().getPlayer(playerUUID);
                     if (saved != null) {
                         TARDISDoorLocation idl = plugin.getGeneralKeeper().getDoorListener().getDoor(1, tid);
                         Location l = idl.getL();
@@ -170,14 +171,14 @@ public class TARDISMaterialisationPreset implements Runnable {
                         // put player into travellers table
                         HashMap<String, Object> set = new HashMap<String, Object>();
                         set.put("tardis_id", tid);
-                        set.put("player", name);
+                        set.put("uuid", playerUUID.toString());
                         qf.doInsert("travellers", set);
                     }
                     plugin.getTrackerKeeper().getTrackRescue().remove(tid);
                 }
                 // first run - remember blocks
                 if (i == 1) {
-                    plugin.getPresetBuilder().addPlatform(location, false, d, player.getName(), tid);
+                    plugin.getPresetBuilder().addPlatform(location, false, d, player.getUniqueId().toString(), tid);
                     HashMap<String, Object> where = new HashMap<String, Object>();
                     where.put("tardis_id", tid);
                     if (outside) {
@@ -347,11 +348,12 @@ public class TARDISMaterialisationPreset implements Runnable {
                                             wheret.put("tardis_id", tid);
                                             ResultSetTardis rst = new ResultSetTardis(plugin, wheret, "", false);
                                             if (rst.resultSet()) {
+                                                String player_name = plugin.getServer().getOfflinePlayer(rst.getUuid()).getName();
                                                 String owner;
                                                 if (preset.equals(PRESET.GRAVESTONE) || preset.equals(PRESET.PUNKED) || preset.equals(PRESET.ROBOT)) {
-                                                    owner = (rst.getOwner().length() > 14) ? rst.getOwner().substring(0, 14) : rst.getOwner();
+                                                    owner = (player_name.length() > 14) ? player_name.substring(0, 14) : player_name;
                                                 } else {
-                                                    owner = (rst.getOwner().length() > 14) ? rst.getOwner().substring(0, 12) + "'s" : rst.getOwner() + "'s";
+                                                    owner = (player_name.length() > 14) ? player_name.substring(0, 12) + "'s" : player_name + "'s";
                                                 }
                                                 switch (preset) {
                                                     case GRAVESTONE:
@@ -600,8 +602,8 @@ public class TARDISMaterialisationPreset implements Runnable {
                 where.put("tardis_id", tid);
                 ResultSetTravellers rst = new ResultSetTravellers(plugin, where, true);
                 if (rst.resultSet()) {
-                    List<String> travellers = rst.getData();
-                    for (String s : travellers) {
+                    List<UUID> travellers = rst.getData();
+                    for (UUID s : travellers) {
                         Player p = plugin.getServer().getPlayer(s);
                         if (p != null) {
                             String message = (mal) ? "There was a malfunction and the emergency handbrake was engaged! Scan location before exit!" : "LEFT-click the handbrake to exit!";

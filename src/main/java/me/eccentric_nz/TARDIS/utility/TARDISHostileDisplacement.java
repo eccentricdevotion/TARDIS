@@ -20,6 +20,7 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
+import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.builders.TARDISMaterialisationData;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
@@ -61,10 +62,10 @@ public class TARDISHostileDisplacement {
         ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);
         if (rs.resultSet()) {
             //String current = rs.getCurrent();
-            String owner = rs.getOwner();
+            UUID ownerUUID = rs.getUuid();
             boolean cham = rs.isChamele_on();
             HashMap<String, Object> wherep = new HashMap<String, Object>();
-            wherep.put("player", owner);
+            wherep.put("uuid", ownerUUID.toString());
             ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, wherep);
             if (rsp.resultSet()) {
                 if (rsp.isHadsOn()) {
@@ -97,7 +98,7 @@ public class TARDISHostileDisplacement {
                         if (l.getBlock().getRelative(BlockFace.DOWN).isLiquid() && !plugin.getConfig().getBoolean("travel.land_on_water") && !rsc.isSubmarine()) {
                             bool = false;
                         }
-                        Player player = plugin.getServer().getPlayer(owner);
+                        Player player = plugin.getServer().getPlayer(ownerUUID);
                         if (bool) {
                             Location sub = null;
                             boolean safe;

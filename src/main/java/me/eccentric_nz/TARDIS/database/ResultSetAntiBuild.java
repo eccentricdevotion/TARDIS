@@ -33,7 +33,7 @@ public class ResultSetAntiBuild {
     private final TARDISDatabaseConnection service = TARDISDatabaseConnection.getInstance();
     private final Connection connection = service.getConnection();
     private final TARDIS plugin;
-    private final String player;
+    private final String uuid;
     private Integer tardis_id;
 
     /**
@@ -41,11 +41,11 @@ public class ResultSetAntiBuild {
      * from the tardis & travellers table.
      *
      * @param plugin an instance of the main class.
-     * @param player the player who is trying to build.
+     * @param uuid the uuid who is trying to build.
      */
-    public ResultSetAntiBuild(TARDIS plugin, String player) {
+    public ResultSetAntiBuild(TARDIS plugin, String uuid) {
         this.plugin = plugin;
-        this.player = player;
+        this.uuid = uuid;
     }
 
     /**
@@ -58,12 +58,12 @@ public class ResultSetAntiBuild {
     public boolean resultSet() {
         PreparedStatement statement = null;
         ResultSet rs = null;
-        String query = "SELECT tardis.tardis_id FROM tardis, travellers, player_prefs WHERE travellers.player = ? AND tardis.owner != ? AND player_prefs.build_on = 0 AND tardis.tardis_id = travellers.tardis_id AND tardis.owner = player_prefs.player";
+        String query = "SELECT tardis.tardis_id FROM tardis, travellers, player_prefs WHERE travellers.uuid = ? AND tardis.uuid != ? AND player_prefs.build_on = 0 AND tardis.tardis_id = travellers.tardis_id AND tardis.uuid = player_prefs.uuid";
         try {
             service.testConnection(connection);
             statement = connection.prepareStatement(query);
-            statement.setString(1, player);
-            statement.setString(2, player);
+            statement.setString(1, uuid);
+            statement.setString(2, uuid);
             rs = statement.executeQuery();
             if (rs.isBeforeFirst()) {
                 while (rs.next()) {

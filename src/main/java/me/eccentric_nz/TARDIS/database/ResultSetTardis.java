@@ -227,6 +227,7 @@ public class ResultSetTardis {
         return uuid;
     }
 
+    // TODO remove this method once WorldGuard supports UUIDs for regions
     public String getOwner() {
         return owner;
     }

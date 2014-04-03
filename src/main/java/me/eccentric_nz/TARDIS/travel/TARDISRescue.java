@@ -17,6 +17,7 @@
 package me.eccentric_nz.TARDIS.travel;
 
 import java.util.HashMap;
+import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetCurrentLocation;
@@ -58,7 +59,7 @@ public class TARDISRescue {
      * @param rescue whether to rescue the player
      * @return true or false
      */
-    public boolean rescue(Player player, String saved, int id, TARDISTimeTravel tt, COMPASS d, boolean rescue) {
+    public boolean rescue(Player player, UUID saved, int id, TARDISTimeTravel tt, COMPASS d, boolean rescue) {
         if (plugin.getServer().getPlayer(saved) == null) {
             TARDISMessage.send(player, plugin.getPluginName() + "That player is not online!");
             return (!rescue);
@@ -112,12 +113,12 @@ public class TARDISRescue {
      * @param saved The player to be rescued
      * @return true if rescue was successful
      */
-    public boolean tryRescue(Player player, String saved) {
+    public boolean tryRescue(Player player, UUID saved) {
         if (player.hasPermission("tardis.timetravel") && !(player.hasPermission("tardis.exile") && plugin.getConfig().getBoolean("travel.exile"))) {
             TARDISTimeTravel tt = new TARDISTimeTravel(plugin);
             // get tardis data
             HashMap<String, Object> where = new HashMap<String, Object>();
-            where.put("owner", player.getName());
+            where.put("uuid", player.getUniqueId().toString());
             ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);
             if (!rs.resultSet()) {
                 TARDISMessage.send(player, plugin.getPluginName() + MESSAGE.NO_TARDIS.getText());
@@ -129,7 +130,7 @@ public class TARDISRescue {
                 return false;
             }
             HashMap<String, Object> wheret = new HashMap<String, Object>();
-            wheret.put("player", player.getName());
+            wheret.put("uuid", player.getUniqueId().toString());
             ResultSetTravellers rst = new ResultSetTravellers(plugin, wheret, false);
             if (!rst.resultSet()) {
                 TARDISMessage.send(player, plugin.getPluginName() + MESSAGE.NOT_IN_TARDIS.getText());

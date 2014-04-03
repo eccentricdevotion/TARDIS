@@ -66,7 +66,7 @@ public class TARDISSaveSignListener implements Listener {
             String playerNameStr = player.getName();
             // get the TARDIS the player is in
             HashMap<String, Object> wheres = new HashMap<String, Object>();
-            wheres.put("player", playerNameStr);
+            wheres.put("uuid", player.getUniqueId().toString());
             ResultSetTravellers rst = new ResultSetTravellers(plugin, wheres, false);
             if (rst.resultSet()) {
                 int id = rst.getTardis_id();
@@ -170,7 +170,7 @@ public class TARDISSaveSignListener implements Listener {
                     // check it is this player's TARDIS
                     HashMap<String, Object> wherez = new HashMap<String, Object>();
                     wherez.put("tardis_id", id);
-                    wherez.put("owner", playerNameStr);
+                    wherez.put("uuid", player.getUniqueId().toString());
                     ResultSetTardis rs = new ResultSetTardis(plugin, wherez, "", false);
                     if (rs.resultSet()) {
                         if (!plugin.getTrackerKeeper().getTrackArrangers().contains(playerNameStr)) {
@@ -208,7 +208,7 @@ public class TARDISSaveSignListener implements Listener {
             String p = ((Player) event.getPlayer()).getName();
             // get the TARDIS the player is in
             HashMap<String, Object> wheres = new HashMap<String, Object>();
-            wheres.put("player", p);
+            wheres.put("uuid", event.getPlayer().getUniqueId().toString());
             ResultSetTravellers rst = new ResultSetTravellers(plugin, wheres, false);
             if (rst.resultSet()) {
                 int id = rst.getTardis_id();

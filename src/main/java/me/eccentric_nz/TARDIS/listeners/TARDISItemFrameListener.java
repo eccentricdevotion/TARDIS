@@ -17,6 +17,7 @@
 package me.eccentric_nz.TARDIS.listeners;
 
 import java.util.HashMap;
+import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetControls;
@@ -49,11 +50,12 @@ public class TARDISItemFrameListener implements Listener {
         final Player player = event.getPlayer();
         if (event.getRightClicked() instanceof ItemFrame) {
             String playerNameStr = player.getName();
+            UUID playerUUID = player.getUniqueId();
             // did they run the `/tardis update direction` command?
             if (plugin.getTrackerKeeper().getTrackPlayers().containsKey(playerNameStr) && plugin.getTrackerKeeper().getTrackPlayers().get(playerNameStr).equals("direction")) {
                 // check they have a TARDIS
                 HashMap<String, Object> wheret = new HashMap<String, Object>();
-                wheret.put("owner", playerNameStr);
+                wheret.put("uuid", playerUUID.toString());
                 ResultSetTardis rst = new ResultSetTardis(plugin, wheret, "", false);
                 if (!rst.resultSet()) {
                     TARDISMessage.send(player, plugin.getPluginName() + MESSAGE.NO_TARDIS.getText());
@@ -97,7 +99,7 @@ public class TARDISItemFrameListener implements Listener {
                 HashMap<String, Object> wherep = new HashMap<String, Object>();
                 wherep.put("tardis_id", id);
                 ResultSetTardis rso = new ResultSetTardis(plugin, wherep, "", false);
-                if (rso.resultSet() && !rso.getOwner().equals(playerNameStr)) {
+                if (rso.resultSet() && !rso.getUuid().equals(playerUUID)) {
                     event.setCancelled(true);
                     return;
                 }

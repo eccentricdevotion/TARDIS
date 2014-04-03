@@ -71,7 +71,7 @@ public class TARDISHorseListener implements Listener {
                     final Player p = (Player) passenger;
                     String pworld = p.getLocation().getWorld().getName();
                     HashMap<String, Object> wherep = new HashMap<String, Object>();
-                    wherep.put("player", p.getName());
+                    wherep.put("uuid", p.getUniqueId().toString());
                     ResultSetTravellers rst = new ResultSetTravellers(plugin, wherep, false);
                     if (rst.resultSet() && pworld.contains("TARDIS")) {
                         int id = rst.getTardis_id();
@@ -177,7 +177,7 @@ public class TARDISHorseListener implements Listener {
                             // teleport player and remove from travellers table
                             plugin.getGeneralKeeper().getDoorListener().movePlayer(p, l, true, p.getWorld(), false, 0, true);
                             HashMap<String, Object> where = new HashMap<String, Object>();
-                            where.put("player", p.getName());
+                            where.put("uuid", p.getUniqueId().toString());
                             new QueryFactory(plugin).doDelete("travellers", where);
                             // set player as passenger
                             plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {

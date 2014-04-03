@@ -91,13 +91,13 @@ public class TARDISPrefsCommands implements CommandExecutor {
                 if (player.hasPermission("tardis.timetravel")) {
                     // get the players preferences
                     HashMap<String, Object> wherepp = new HashMap<String, Object>();
-                    wherepp.put("player", player.getName());
+                    wherepp.put("uuid", player.getUniqueId().toString());
                     ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, wherepp);
                     QueryFactory qf = new QueryFactory(plugin);
                     HashMap<String, Object> set = new HashMap<String, Object>();
                     // if no prefs record found, make one
                     if (!rsp.resultSet()) {
-                        set.put("player", player.getName());
+                        set.put("uuid", player.getUniqueId().toString());
                         set.put("lamp", plugin.getConfig().getInt("police_box.tardis_lamp"));
                         qf.doInsert("player_prefs", set);
                     }

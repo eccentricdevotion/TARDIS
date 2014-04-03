@@ -122,7 +122,7 @@ public class TARDISStattenheimListener implements Listener {
                     }
                     // check they are a timelord
                     HashMap<String, Object> where = new HashMap<String, Object>();
-                    where.put("owner", player.getName());
+                    where.put("uuid", player.getUniqueId().toString());
                     ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);
                     if (!rs.resultSet()) {
                         TARDISMessage.send(player, plugin.getPluginName() + "You don't have a TARDIS!");
@@ -143,7 +143,7 @@ public class TARDISStattenheimListener implements Listener {
                     boolean cham = (plugin.getConfig().getBoolean("travel.chameleon") && rs.isChamele_on());
                     // check they are not in the tardis
                     HashMap<String, Object> wherettrav = new HashMap<String, Object>();
-                    wherettrav.put("player", player.getName());
+                    wherettrav.put("uuid", player.getUniqueId().toString());
                     wherettrav.put("tardis_id", id);
                     ResultSetTravellers rst = new ResultSetTravellers(plugin, wherettrav, false);
                     if (rst.resultSet()) {

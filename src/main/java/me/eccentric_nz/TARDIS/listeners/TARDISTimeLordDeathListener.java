@@ -18,6 +18,7 @@ package me.eccentric_nz.TARDIS.listeners;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.builders.TARDISMaterialisationData;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
@@ -64,9 +65,9 @@ public class TARDISTimeLordDeathListener implements Listener {
         if (plugin.getConfig().getBoolean("allow.autonomous")) {
             Player player = event.getEntity();
             if (player.hasPermission("tardis.autonomous")) {
-                String playerNameStr = player.getName();
+                UUID playerUUID = player.getUniqueId();
                 HashMap<String, Object> where = new HashMap<String, Object>();
-                where.put("owner", playerNameStr);
+                where.put("uuid", playerUUID.toString());
                 ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);
                 // are they a time lord?
                 if (rs.resultSet()) {
@@ -74,7 +75,7 @@ public class TARDISTimeLordDeathListener implements Listener {
                     String eps = rs.getEps();
                     String creeper = rs.getCreeper();
                     HashMap<String, Object> wherep = new HashMap<String, Object>();
-                    wherep.put("player", playerNameStr);
+                    wherep.put("uuid", playerUUID.toString());
                     ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, wherep);
                     if (rsp.resultSet()) {
                         // do they have the autonomous circuit on?
@@ -86,8 +87,8 @@ public class TARDISTimeLordDeathListener implements Listener {
                                 wherev.put("tardis_id", id);
                                 ResultSetTravellers rst = new ResultSetTravellers(plugin, wherev, true);
                                 if (rst.resultSet()) {
-                                    List data = rst.getData();
-                                    if (data.size() > 0 && !data.contains(playerNameStr)) {
+                                    List<UUID> data = rst.getData();
+                                    if (data.size() > 0 && !data.contains(playerUUID)) {
                                         // schedule the NPC to appear
                                         TARDISEPSRunnable EPS_runnable = new TARDISEPSRunnable(plugin, rsp.getEpsMessage(), player, data, id, eps, creeper);
                                         plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, EPS_runnable, 20L);

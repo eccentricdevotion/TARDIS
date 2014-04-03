@@ -54,7 +54,7 @@ public class TARDISSetKeyCommand {
         HashMap<String, Object> setk = new HashMap<String, Object>();
         setk.put(field, setMaterial);
         HashMap<String, Object> where = new HashMap<String, Object>();
-        where.put("player", player.getName());
+        where.put("uuid", player.getUniqueId().toString());
         qf.doUpdate("player_prefs", setk, where);
         TARDISMessage.send(player, plugin.getPluginName() + "Key preference saved.");
         return true;

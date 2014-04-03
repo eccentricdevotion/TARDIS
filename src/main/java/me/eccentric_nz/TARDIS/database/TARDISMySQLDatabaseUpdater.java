@@ -50,7 +50,6 @@ public class TARDISMySQLDatabaseUpdater {
         uuidUpdates.put("player_prefs", "pp_id");
         uuidUpdates.put("storage", "tardis_id");
         uuidUpdates.put("t_count", "t_id");
-        uuidUpdates.put("tag", "tag_id");
         uuidUpdates.put("tardis", "tardis_id");
         uuidUpdates.put("travellers", "tardis_id");
         tardisupdates.add("renderer varchar(512) DEFAULT ''");

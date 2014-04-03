@@ -146,10 +146,9 @@ public class ResultSetARS {
         return uuid;
     }
 
-    public String getPlayer() {
-        return player;
-    }
-
+//    public String getPlayer() {
+//        return player;
+//    }
     public int getEast() {
         return east;
     }

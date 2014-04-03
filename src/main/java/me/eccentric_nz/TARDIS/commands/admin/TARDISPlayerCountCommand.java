@@ -20,6 +20,7 @@ import java.util.HashMap;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetCount;
+import org.bukkit.OfflinePlayer;
 import org.bukkit.command.CommandSender;
 
 /**
@@ -36,8 +37,14 @@ public class TARDISPlayerCountCommand {
 
     public boolean countPlayers(CommandSender sender, String[] args) {
         int max_count = plugin.getConfig().getInt("creation.count");
+        OfflinePlayer player = plugin.getServer().getOfflinePlayer(args[1]);
+        if (player == null) {
+            sender.sendMessage(plugin.getPluginName() + "That player can not be found on this server.");
+            return true;
+        }
+        String uuid = player.getUniqueId().toString();
         HashMap<String, Object> where = new HashMap<String, Object>();
-        where.put("player", args[1]);
+        where.put("uuid", uuid);
         ResultSetCount rsc = new ResultSetCount(plugin, where, false);
         if (rsc.resultSet()) {
             if (args.length == 3) {
@@ -46,7 +53,7 @@ public class TARDISPlayerCountCommand {
                 HashMap<String, Object> setc = new HashMap<String, Object>();
                 setc.put("count", count);
                 HashMap<String, Object> wherec = new HashMap<String, Object>();
-                wherec.put("player", args[1]);
+                wherec.put("uuid", uuid);
                 QueryFactory qf = new QueryFactory(plugin);
                 qf.doUpdate("t_count", setc, wherec);
                 sender.sendMessage(plugin.getPluginName() + args[1] + "'s TARDIS count was set to: " + args[2] + " of " + max_count);

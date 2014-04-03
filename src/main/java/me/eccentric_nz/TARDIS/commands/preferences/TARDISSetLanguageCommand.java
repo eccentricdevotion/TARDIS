@@ -52,7 +52,7 @@ public class TARDISSetLanguageCommand {
         HashMap<String, Object> setl = new HashMap<String, Object>();
         setl.put(pref, lang.toString());
         HashMap<String, Object> where = new HashMap<String, Object>();
-        where.put("player", player.getName());
+        where.put("uuid", player.getUniqueId().toString());
         qf.doUpdate("player_prefs", setl, where);
         TARDISMessage.send(player, plugin.getPluginName() + ucfirst(pref) + " saved.");
         return true;

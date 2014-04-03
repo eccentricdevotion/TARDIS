@@ -67,7 +67,7 @@ public class TARDISDiskWriterCommand {
                     return false;
                 }
                 HashMap<String, Object> where = new HashMap<String, Object>();
-                where.put("owner", player.getName());
+                where.put("uuid", player.getUniqueId().toString());
                 ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);
                 if (!rs.resultSet()) {
                     TARDISMessage.send(player, plugin.getPluginName() + MESSAGE.NO_TARDIS.getText());
@@ -134,7 +134,7 @@ public class TARDISDiskWriterCommand {
                     return true;
                 }
                 HashMap<String, Object> where = new HashMap<String, Object>();
-                where.put("owner", player.getName());
+                where.put("uuid", player.getUniqueId().toString());
                 ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);
                 if (!rs.resultSet()) {
                     TARDISMessage.send(player, plugin.getPluginName() + MESSAGE.NO_TARDIS.getText());

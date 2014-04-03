@@ -59,16 +59,18 @@ public class TARDISSayCommand implements CommandExecutor {
             }
             String preferedLang = "AUTO_DETECT";
             HashMap<String, Object> where = new HashMap<String, Object>();
-            where.put("player", sender.getName());
-            ResultSetPlayerPrefs rs = new ResultSetPlayerPrefs(plugin, where);
-            if (rs.resultSet() && !rs.getLanguage().isEmpty()) {
-                preferedLang = rs.getLanguage();
+            if (sender instanceof Player) {
+                where.put("uuid", ((Player) sender).getUniqueId().toString());
+                ResultSetPlayerPrefs rs = new ResultSetPlayerPrefs(plugin, where);
+                if (rs.resultSet() && !rs.getLanguage().isEmpty()) {
+                    preferedLang = rs.getLanguage();
+                }
             }
             StringBuilder sb = new StringBuilder();
             for (int i = 1; i < args.length; i++) {
                 sb.append(" ").append(args[i]);
             }
-            String whatToTranslate = sb.substring(1).toString();
+            String whatToTranslate = sb.toString().substring(1);
             String lang = args[0].toUpperCase();
             try {
                 Language to = Language.valueOf(lang);

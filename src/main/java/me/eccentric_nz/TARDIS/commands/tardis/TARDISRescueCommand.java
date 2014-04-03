@@ -16,6 +16,7 @@
  */
 package me.eccentric_nz.TARDIS.commands.tardis;
 
+import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.enumeration.MESSAGE;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
@@ -46,14 +47,14 @@ public class TARDISRescueCommand {
                 TARDISMessage.send(player, plugin.getPluginName() + "That player is not online!");
                 return true;
             }
-            String playerNameStr = player.getName();
-            TARDISMessage.send(destPlayer, plugin.getPluginName() + playerNameStr + " wants to rescue you! Type: " + ChatColor.AQUA + "tardis rescue accept" + ChatColor.RESET + " in chat within 60 seconds to accept the rescue.");
-            plugin.getTrackerKeeper().getTrackChat().put(saved, playerNameStr);
+            final UUID savedUUID = destPlayer.getUniqueId();
+            TARDISMessage.send(destPlayer, plugin.getPluginName() + player.getName() + " wants to rescue you! Type: " + ChatColor.AQUA + "tardis rescue accept" + ChatColor.RESET + " in chat within 60 seconds to accept the rescue.");
+            plugin.getTrackerKeeper().getTrackChat().put(savedUUID, player.getUniqueId());
             plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
                 @Override
                 public void run() {
-                    if (plugin.getTrackerKeeper().getTrackChat().containsKey(saved)) {
-                        plugin.getTrackerKeeper().getTrackChat().remove(saved);
+                    if (plugin.getTrackerKeeper().getTrackChat().containsKey(savedUUID)) {
+                        plugin.getTrackerKeeper().getTrackChat().remove(savedUUID);
                         TARDISMessage.send(player, plugin.getPluginName() + saved + " didn't respond with 60 seconds, aborting rescue!");
                     }
                 }

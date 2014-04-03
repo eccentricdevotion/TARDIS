@@ -47,7 +47,7 @@ public class TARDISBuildCommand {
         String playerNameStr = player.getName();
         // get the player's TARDIS world
         HashMap<String, Object> where = new HashMap<String, Object>();
-        where.put("owner", playerNameStr);
+        where.put("uuid", player.getUniqueId().toString());
         ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);
         if (!rs.resultSet()) {
             TARDISMessage.send(player, plugin.getPluginName() + MESSAGE.NO_TARDIS.getText());
@@ -56,7 +56,7 @@ public class TARDISBuildCommand {
         Integer id = rs.getTardis_id();
         HashMap<String, Object> setp = new HashMap<String, Object>();
         HashMap<String, Object> wherep = new HashMap<String, Object>();
-        wherep.put("player", player.getName());
+        wherep.put("uuid", player.getUniqueId().toString());
         if (args[1].equalsIgnoreCase("on")) {
             setp.put("build_on", 1);
             plugin.getTrackerKeeper().getTrackAntiBuild().remove(id);

@@ -55,7 +55,7 @@ public class TARDISDeleteCommand {
             Player player = (Player) sender;
             if (player.getName().equals(args[1])) {
                 HashMap<String, Object> where = new HashMap<String, Object>();
-                where.put("player", player.getName());
+                where.put("uuid", player.getUniqueId().toString());
                 ResultSetTravellers rst = new ResultSetTravellers(plugin, where, false);
                 if (rst.resultSet()) {
                     sender.sendMessage(plugin.getPluginName() + "You cannot be in your TARDIS when you delete it!");
@@ -63,6 +63,7 @@ public class TARDISDeleteCommand {
                 }
             }
         }
+        // TODO look up this player's UUID
         HashMap<String, Object> where = new HashMap<String, Object>();
         where.put("owner", args[1]);
         ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);

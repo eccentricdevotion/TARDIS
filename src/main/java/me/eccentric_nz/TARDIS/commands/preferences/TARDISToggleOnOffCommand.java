@@ -62,19 +62,19 @@ public class TARDISToggleOnOffCommand {
         }
         HashMap<String, Object> setp = new HashMap<String, Object>();
         HashMap<String, Object> wherep = new HashMap<String, Object>();
-        wherep.put("player", player.getName());
+        wherep.put("uuid", player.getUniqueId().toString());
         String grammar = (was.contains(pref)) ? " was" : " were";
         if (args[1].equalsIgnoreCase("on")) {
             setp.put(pref + "_on", 1);
             if (pref.equals("beacon")) {
-                toggleBeacon(player.getName(), true);
+                toggleBeacon(player.getUniqueId().toString(), true);
             }
             TARDISMessage.send(player, plugin.getPluginName() + pref + grammar + " turned ON!");
         }
         if (args[1].equalsIgnoreCase("off")) {
             setp.put(pref + "_on", 0);
             if (pref.equals("beacon")) {
-                toggleBeacon(player.getName(), false);
+                toggleBeacon(player.getUniqueId().toString(), false);
             }
             TARDISMessage.send(player, plugin.getPluginName() + pref + grammar + " turned OFF.");
         }
@@ -82,9 +82,9 @@ public class TARDISToggleOnOffCommand {
         return true;
     }
 
-    public void toggleBeacon(String name, boolean on) {
+    public void toggleBeacon(String uuid, boolean on) {
         HashMap<String, Object> whereb = new HashMap<String, Object>();
-        whereb.put("owner", name);
+        whereb.put("uuid", uuid);
         ResultSetTardis rs = new ResultSetTardis(plugin, whereb, "", false);
         if (rs.resultSet()) {
             // toggle beacon

@@ -111,7 +111,7 @@ public class TARDISBlockPlaceListener implements Listener {
                 int player_count = 0;
                 if (max_count > 0) {
                     HashMap<String, Object> wherec = new HashMap<String, Object>();
-                    wherec.put("player", player.getName());
+                    wherec.put("uuid", player.getUniqueId().toString());
                     ResultSetCount rsc = new ResultSetCount(plugin, wherec, false);
                     if (rsc.resultSet()) {
                         player_count = rsc.getCount();
@@ -206,7 +206,7 @@ public class TARDISBlockPlaceListener implements Listener {
                     String playerNameStr = player.getName();
                     // check to see if they already have a TARDIS
                     HashMap<String, Object> where = new HashMap<String, Object>();
-                    where.put("owner", playerNameStr);
+                    where.put("uuid", player.getUniqueId().toString());
                     ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);
                     if (!rs.resultSet()) {
                         Chunk chunk = blockBottom.getChunk();
@@ -216,6 +216,7 @@ public class TARDISBlockPlaceListener implements Listener {
                         String cw;
                         World chunkworld;
                         boolean tips = false;
+                        // TODO name worlds without player name
                         if (plugin.getConfig().getBoolean("creation.create_worlds") && !plugin.getConfig().getBoolean("creation.default_world")) {
                             // create a new world to store this TARDIS
                             cw = "TARDIS_WORLD_" + playerNameStr;
@@ -254,6 +255,7 @@ public class TARDISBlockPlaceListener implements Listener {
                         String chun = cw + ":" + cx + ":" + cz;
                         QueryFactory qf = new QueryFactory(plugin);
                         HashMap<String, Object> set = new HashMap<String, Object>();
+                        set.put("uuid", player.getUniqueId().toString());
                         set.put("owner", playerNameStr);
                         set.put("chunk", chun);
                         set.put("size", schm.name());
@@ -283,14 +285,14 @@ public class TARDISBlockPlaceListener implements Listener {
                         int lastInsertId = qf.doSyncInsert("tardis", set);
                         // insert/update  player prefs
                         HashMap<String, Object> wherep = new HashMap<String, Object>();
-                        wherep.put("player", player.getName());
+                        wherep.put("uuid", player.getUniqueId().toString());
                         ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, wherep);
                         if (!rsp.resultSet()) {
-                            setpp.put("player", player.getName());
+                            setpp.put("uuid", player.getUniqueId().toString());
                             qf.doInsert("player_prefs", setpp);
                         } else {
                             HashMap<String, Object> wherepp = new HashMap<String, Object>();
-                            wherepp.put("player", player.getName());
+                            wherepp.put("uuid", player.getUniqueId().toString());
                             qf.doUpdate("player_prefs", setpp, wherepp);
                         }
                         // populate home, current, next and back tables
@@ -324,7 +326,7 @@ public class TARDISBlockPlaceListener implements Listener {
                             HashMap<String, Object> seta = new HashMap<String, Object>();
                             seta.put("completed", 1);
                             HashMap<String, Object> wherea = new HashMap<String, Object>();
-                            wherea.put("player", player.getName());
+                            wherea.put("uuid", player.getUniqueId().toString());
                             wherea.put("name", "tardis");
                             qf.doUpdate("achievements", seta, wherea);
                             TARDISMessage.send(player, ChatColor.YELLOW + "Achievement Get!");
@@ -337,11 +339,11 @@ public class TARDISBlockPlaceListener implements Listener {
                             if (player_count > 0) {
                                 // update the player's TARDIS count
                                 HashMap<String, Object> wheretc = new HashMap<String, Object>();
-                                wheretc.put("player", player.getName());
+                                wheretc.put("uuid", player.getUniqueId().toString());
                                 qf.doUpdate("t_count", setc, wheretc);
                             } else {
                                 // insert new TARDIS count record
-                                setc.put("player", player.getName());
+                                setc.put("uuid", player.getUniqueId().toString());
                                 qf.doInsert("t_count", setc);
                             }
                         }

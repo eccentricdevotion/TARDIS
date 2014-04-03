@@ -28,6 +28,7 @@ import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Properties;
 import java.util.Set;
+import java.util.UUID;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import me.eccentric_nz.TARDIS.api.TARDII;
@@ -532,7 +533,7 @@ public class TARDIS extends JavaPlugin {
      * Resets any player who is 'Temporally Located' back to normal time.
      */
     private void resetTime() {
-        for (String key : trackerKeeper.getTrackSetTime().keySet()) {
+        for (UUID key : trackerKeeper.getTrackSetTime().keySet()) {
             Player p = this.getServer().getPlayer(key);
             if (p != null) {
                 p.resetPlayerTime();

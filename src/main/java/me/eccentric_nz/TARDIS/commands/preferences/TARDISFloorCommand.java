@@ -71,7 +71,7 @@ public class TARDISFloorCommand {
         HashMap<String, Object> setw = new HashMap<String, Object>();
         setw.put(pref, wall_mat);
         HashMap<String, Object> where = new HashMap<String, Object>();
-        where.put("player", player.getName());
+        where.put("uuid", player.getUniqueId().toString());
         qf.doUpdate("player_prefs", setw, where);
         TARDISMessage.send(player, plugin.getPluginName() + ucfirst(pref) + " material saved.");
         return true;

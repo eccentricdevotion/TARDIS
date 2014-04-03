@@ -18,6 +18,7 @@ package me.eccentric_nz.TARDIS.travel;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.ResultSetDoors;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
@@ -42,12 +43,12 @@ public class TARDISEPSRunnable implements Runnable {
     private final TARDIS plugin;
     private final String message;
     private final Player tl;
-    private final List<String> players;
+    private final List<UUID> players;
     private final int id;
     private final String eps;
     private final String creeper;
 
-    public TARDISEPSRunnable(TARDIS plugin, String message, Player tl, List<String> players, int id, String eps, String creeper) {
+    public TARDISEPSRunnable(TARDIS plugin, String message, Player tl, List<UUID> players, int id, String eps, String creeper) {
         this.plugin = plugin;
         this.message = message;
         this.tl = tl;
@@ -85,7 +86,7 @@ public class TARDISEPSRunnable implements Runnable {
                     plugin.getServer().dispatchCommand(plugin.getConsole(), "npc lookclose");
                 }
                 plugin.getGeneralKeeper().getNpcIDs().add(npcid);
-                for (String p : players) {
+                for (UUID p : players) {
                     Player pp = plugin.getServer().getPlayer(p);
                     if (pp != null) {
                         TARDISMessage.send(pp, ChatColor.RED + "[Emergency Program One] " + ChatColor.RESET + message);

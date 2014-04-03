@@ -95,7 +95,7 @@ public class TARDISTravelCommands implements CommandExecutor {
                 TARDISTimeTravel tt = new TARDISTimeTravel(plugin);
                 // get tardis data
                 HashMap<String, Object> where = new HashMap<String, Object>();
-                where.put("owner", player.getName());
+                where.put("uuid", player.getUniqueId().toString());
                 ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);
                 if (!rs.resultSet()) {
                     TARDISMessage.send(player, plugin.getPluginName() + MESSAGE.NO_TARDIS.getText());
@@ -108,7 +108,7 @@ public class TARDISTravelCommands implements CommandExecutor {
                     return true;
                 }
                 HashMap<String, Object> wheret = new HashMap<String, Object>();
-                wheret.put("player", player.getName());
+                wheret.put("uuid", player.getUniqueId().toString());
                 ResultSetTravellers rst = new ResultSetTravellers(plugin, wheret, false);
                 if (!rst.resultSet()) {
                     TARDISMessage.send(player, plugin.getPluginName() + MESSAGE.NOT_IN_TARDIS.getText());
@@ -231,16 +231,22 @@ public class TARDISTravelCommands implements CommandExecutor {
                                     TARDISMessage.send(player, plugin.getPluginName() + MESSAGE.NO_CURRENT.getText());
                                     return true;
                                 }
+                                // check the player
+                                Player saved = plugin.getServer().getPlayer(args[0]);
+                                if (saved == null) {
+                                    TARDISMessage.send(player, plugin.getPluginName() + "That player is not online!");
+                                    return true;
+                                }
                                 // check the to player's DND status
                                 HashMap<String, Object> wherednd = new HashMap<String, Object>();
-                                wherednd.put("player", args[0].toLowerCase());
+                                wherednd.put("uuid", saved.getUniqueId().toString());
                                 ResultSetPlayerPrefs rspp = new ResultSetPlayerPrefs(plugin, wherednd);
                                 if (rspp.resultSet() && rspp.isDND()) {
                                     TARDISMessage.send(player, plugin.getPluginName() + args[0] + " does not want to be disturbed right now! Try again later.");
                                     return true;
                                 }
                                 TARDISRescue to_player = new TARDISRescue(plugin);
-                                return to_player.rescue(player, args[0], id, tt, rsc.getDirection(), false);
+                                return to_player.rescue(player, saved.getUniqueId(), id, tt, rsc.getDirection(), false);
                             } else {
                                 TARDISMessage.send(player, plugin.getPluginName() + "You do not have permission to time travel to a player!");
                                 return true;

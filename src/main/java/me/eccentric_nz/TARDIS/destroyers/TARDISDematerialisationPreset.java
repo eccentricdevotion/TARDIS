@@ -164,7 +164,7 @@ public class TARDISDematerialisationPreset implements Runnable {
                 // only play the sound if the player is outside the TARDIS
                 if (outside) {
                     HashMap<String, Object> wherep = new HashMap<String, Object>();
-                    wherep.put("player", player.getName());
+                    wherep.put("uuid", player.getUniqueId().toString());
                     ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, wherep);
                     boolean minecart = false;
                     if (rsp.resultSet()) {

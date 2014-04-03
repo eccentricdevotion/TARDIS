@@ -19,6 +19,7 @@ package me.eccentric_nz.TARDIS.listeners;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetDestinations;
@@ -89,7 +90,7 @@ public class TARDISBindListener implements Listener {
                     TARDISMessage.send(player, plugin.getPluginName() + "Save successfully bound to " + m.toString());
                 } else {
                     // is player travelling in TARDIS
-                    where.put("player", playerNameStr);
+                    where.put("uuid", player.getUniqueId().toString());
                     ResultSetTravellers rst = new ResultSetTravellers(plugin, where, false);
                     if (rst.resultSet()) {
                         int id = rst.getTardis_id();
@@ -97,8 +98,8 @@ public class TARDISBindListener implements Listener {
                         wheret.put("tardis_id", id);
                         ResultSetTardis rs = new ResultSetTardis(plugin, wheret, "", false);
                         if (rs.resultSet()) {
-                            String owner = rs.getOwner();
-                            if (rs.isIso_on() && !player.getName().equals(owner) && !event.isCancelled()) {
+                            UUID ownerUUID = rs.getUuid();
+                            if (rs.isIso_on() && !player.getUniqueId().equals(ownerUUID) && !event.isCancelled()) {
                                 TARDISMessage.send(player, plugin.getPluginName() + MESSAGE.ISO_ON.getText());
                                 return;
                             }

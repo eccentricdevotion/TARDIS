@@ -75,7 +75,7 @@ public class TARDISZeroRoomBuilder {
             int amount = plugin.getRoomsConfig().getInt("rooms.ZERO.cost");
             QueryFactory qf = new QueryFactory(plugin);
             HashMap<String, Object> set = new HashMap<String, Object>();
-            set.put("owner", playerNameStr);
+            set.put("uuid", p.getUniqueId().toString());
             qf.alterEnergyLevel("tardis", -amount, set, p);
             // remove blocks from condenser table if rooms_require_blocks is true
             if (plugin.getConfig().getBoolean("growth.rooms_require_blocks")) {

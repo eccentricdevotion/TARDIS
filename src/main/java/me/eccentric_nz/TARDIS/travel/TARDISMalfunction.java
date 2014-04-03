@@ -20,6 +20,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Random;
+import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.ResultSetCurrentLocation;
 import me.eccentric_nz.TARDIS.database.ResultSetLamps;
@@ -123,7 +124,7 @@ public class TARDISMalfunction {
             }
             // get player prefs
             HashMap<String, Object> wherep = new HashMap<String, Object>();
-            wherep.put("player", p.getName());
+            wherep.put("uuid", p.getUniqueId().toString());
             ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, wherep);
             if (rsp.resultSet()) {
                 if (plugin.getPM().isPluginEnabled("Citizens") && plugin.getConfig().getBoolean("allow.emergency_npc") && rsp.isEpsOn()) {
@@ -132,14 +133,14 @@ public class TARDISMalfunction {
                     HashMap<String, Object> wherev = new HashMap<String, Object>();
                     wherev.put("tardis_id", id);
                     ResultSetTravellers rst = new ResultSetTravellers(plugin, wherev, true);
-                    List<String> players;
+                    List<UUID> playerUUIDs;
                     if (rst.resultSet()) {
-                        players = rst.getData();
+                        playerUUIDs = rst.getData();
                     } else {
-                        players = new ArrayList<String>();
-                        players.add(p.getName());
+                        playerUUIDs = new ArrayList<UUID>();
+                        playerUUIDs.add(p.getUniqueId());
                     }
-                    TARDISEPSRunnable EPS_runnable = new TARDISEPSRunnable(plugin, message, p, players, id, eps, creeper);
+                    TARDISEPSRunnable EPS_runnable = new TARDISEPSRunnable(plugin, message, p, playerUUIDs, id, eps, creeper);
                     plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, EPS_runnable, 220L);
                 }
                 final long start = System.currentTimeMillis() + 10000;

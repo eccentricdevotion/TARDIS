@@ -18,6 +18,7 @@ package me.eccentric_nz.TARDIS.utility;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.ResultSetPlayerPrefs;
 import me.eccentric_nz.TARDIS.database.ResultSetTravellers;
@@ -46,10 +47,10 @@ public class TARDISSounds {
         if (TARDIS.plugin.getConfig().getBoolean("allow.sfx") == true) {
             ResultSetTravellers rs = new ResultSetTravellers(TARDIS.plugin, null, true);
             if (rs.resultSet()) {
-                List<String> data = rs.getData();
-                for (String s : data) {
+                List<UUID> data = rs.getData();
+                for (UUID u : data) {
                     HashMap<String, Object> where = new HashMap<String, Object>();
-                    where.put("player", s);
+                    where.put("uuid", u.toString());
                     ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(TARDIS.plugin, where);
                     boolean userSFX;
                     if (rsp.resultSet()) {
@@ -57,7 +58,7 @@ public class TARDISSounds {
                     } else {
                         userSFX = true;
                     }
-                    final Player player = Bukkit.getServer().getPlayer(s);
+                    final Player player = Bukkit.getServer().getPlayer(u);
                     if (player != null) {
                         if (userSFX) {
                             TARDIS.plugin.getUtils().playTARDISSound(player.getLocation(), player, "tardis_hum");

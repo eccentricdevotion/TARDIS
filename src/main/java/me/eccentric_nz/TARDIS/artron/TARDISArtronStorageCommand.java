@@ -91,11 +91,11 @@ public class TARDISArtronStorageCommand implements CommandExecutor {
                 return false;
             }
             // must be a timelord
-            String playerNameStr = player.getName();
+            String playerUUID = player.getUniqueId().toString();
             int current_level;
             HashMap<String, Object> wheret = new HashMap<String, Object>();
             if (which.equals("tardis")) {
-                wheret.put("owner", playerNameStr);
+                wheret.put("uuid", playerUUID);
                 ResultSetTardis rs = new ResultSetTardis(plugin, wheret, "", false);
                 if (!rs.resultSet()) {
                     TARDISMessage.send(player, plugin.getPluginName() + MESSAGE.NO_TARDIS.getText());
@@ -103,7 +103,7 @@ public class TARDISArtronStorageCommand implements CommandExecutor {
                 }
                 current_level = rs.getArtron_level();
             } else {
-                wheret.put("player", playerNameStr);
+                wheret.put("uuid", playerUUID);
                 ResultSetPlayerPrefs rs = new ResultSetPlayerPrefs(plugin, wheret);
                 if (!rs.resultSet()) {
                     TARDISMessage.send(player, plugin.getPluginName() + MESSAGE.NO_TARDIS.getText());
@@ -150,10 +150,10 @@ public class TARDISArtronStorageCommand implements CommandExecutor {
             HashMap<String, Object> where = new HashMap<String, Object>();
             String table;
             if (which.equals("tardis")) {
-                where.put("owner", playerNameStr);
+                where.put("uuid", playerUUID);
                 table = "tardis";
             } else {
-                where.put("player", playerNameStr);
+                where.put("uuid", playerUUID);
                 table = "player_prefs";
             }
             new QueryFactory(plugin).alterEnergyLevel(table, -amount, where, player);

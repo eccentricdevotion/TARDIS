@@ -62,7 +62,7 @@ public class TARDISConsoleSwitchListener implements Listener {
             final Player p = (Player) event.getWhoClicked();
             // check they're in the TARDIS
             HashMap<String, Object> wheret = new HashMap<String, Object>();
-            wheret.put("player", p.getName());
+            wheret.put("uuid", p.getUniqueId().toString());
             ResultSetTravellers rst = new ResultSetTravellers(plugin, wheret, false);
             if (!rst.resultSet()) {
                 event.setCancelled(true);
@@ -75,7 +75,7 @@ public class TARDISConsoleSwitchListener implements Listener {
                     final byte map = item.getData().getData();
                     if (gui_circuits.contains(map)) {
                         HashMap<String, Object> where = new HashMap<String, Object>();
-                        where.put("owner", p.getName());
+                        where.put("uuid", p.getUniqueId().toString());
                         final ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);
                         if (rs.resultSet()) {
                             plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {

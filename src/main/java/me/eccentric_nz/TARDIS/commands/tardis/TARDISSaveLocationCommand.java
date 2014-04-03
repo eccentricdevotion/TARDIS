@@ -42,7 +42,7 @@ public class TARDISSaveLocationCommand {
     public boolean doSave(Player player, String[] args) {
         if (player.hasPermission("tardis.save")) {
             HashMap<String, Object> where = new HashMap<String, Object>();
-            where.put("owner", player.getName());
+            where.put("uuid", player.getUniqueId().toString());
             ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);
             if (!rs.resultSet()) {
                 TARDISMessage.send(player, plugin.getPluginName() + MESSAGE.NO_TARDIS.getText());

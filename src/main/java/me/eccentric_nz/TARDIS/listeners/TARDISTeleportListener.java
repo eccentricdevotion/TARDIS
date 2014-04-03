@@ -55,9 +55,8 @@ public class TARDISTeleportListener implements Listener {
             String world_to = event.getTo().getWorld().getName();
             if (world_from.contains("TARDIS") && !world_to.contains("TARDIS")) {
                 Player p = event.getPlayer();
-                String playerNameStr = p.getName();
                 HashMap<String, Object> where = new HashMap<String, Object>();
-                where.put("player", playerNameStr);
+                where.put("uuid", p.getUniqueId().toString());
                 new QueryFactory(plugin).doDelete("travellers", where);
                 if (!cause.equals(TeleportCause.PLUGIN)) {
                     TARDISMessage.send(p, plugin.getPluginName() + "You left the TARDIS, setting OCCUPIED to false");

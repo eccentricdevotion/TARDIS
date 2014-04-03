@@ -62,7 +62,6 @@ public class TARDISLister {
                 a++;
             }
         }
-        String playerNameStr = p.getName();
         if (l.equals("areas")) {
             ResultSetAreas rsa = new ResultSetAreas(TARDIS.plugin, null, true);
             int a = 1;
@@ -81,7 +80,7 @@ public class TARDISLister {
             }
         } else {
             HashMap<String, Object> where = new HashMap<String, Object>();
-            where.put("owner", playerNameStr);
+            where.put("uuid", p.getUniqueId().toString());
             ResultSetTardis rst = new ResultSetTardis(TARDIS.plugin, where, "", false);
             if (rst.resultSet()) {
                 int id = rst.getTardis_id();

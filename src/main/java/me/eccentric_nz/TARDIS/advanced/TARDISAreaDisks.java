@@ -99,7 +99,7 @@ public class TARDISAreaDisks {
         String serialized = "";
         // get the player's storage record
         HashMap<String, Object> where = new HashMap<String, Object>();
-        where.put("owner", p.getName());
+        where.put("uuid", p.getUniqueId().toString());
         ResultSetDiskStorage rs = new ResultSetDiskStorage(plugin, where);
         if (rs.resultSet()) {
             List<String> player_has = new ArrayList<String>();

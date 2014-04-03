@@ -145,10 +145,9 @@ public class ResultSetCount {
         return uuid;
     }
 
-    public String getPlayer() {
-        return player;
-    }
-
+//    public String getPlayer() {
+//        return player;
+//    }
     public int getCount() {
         return count;
     }

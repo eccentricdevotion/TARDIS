@@ -22,6 +22,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.commands.admin.TARDISAdminMenuInventory;
@@ -217,7 +218,7 @@ public class TARDISSonicListener implements Listener {
                 }
                 if (action.equals(Action.RIGHT_CLICK_AIR) && player.isSneaking()) {
                     Inventory ppm = plugin.getServer().createInventory(player, 18, "§4Player Prefs Menu");
-                    ppm.setContents(new TARDISPrefsMenuInventory(plugin, player.getName()).getMenu());
+                    ppm.setContents(new TARDISPrefsMenuInventory(plugin, player.getUniqueId().toString()).getMenu());
                     player.openInventory(ppm);
                     return;
                 }
@@ -248,7 +249,8 @@ public class TARDISSonicListener implements Listener {
                                     wheren.put("tardis_id", id);
                                     ResultSetTardis rsn = new ResultSetTardis(plugin, wheren, "", false);
                                     if (rsn.resultSet()) {
-                                        TARDISMessage.send(player, plugin.getPluginName() + "This is " + rsn.getOwner() + "'s TARDIS");
+                                        String name = plugin.getServer().getPlayer(rsn.getUuid()).getName();
+                                        TARDISMessage.send(player, plugin.getPluginName() + "This is " + name + "'s TARDIS");
                                         int percent = Math.round((rsn.getArtron_level() * 100F) / plugin.getArtronConfig().getInt("full_charge"));
                                         TARDISMessage.send(player, plugin.getPluginName() + "The Artron Energy Capacitor is at " + percent + "%");
                                         HashMap<String, Object> whereb = new HashMap<String, Object>();
@@ -262,10 +264,10 @@ public class TARDISSonicListener implements Listener {
                                     whereid.put("tardis_id", id);
                                     ResultSetTravellers rst = new ResultSetTravellers(plugin, whereid, true);
                                     if (rst.resultSet()) {
-                                        List<String> data = rst.getData();
+                                        List<UUID> data = rst.getData();
                                         TARDISMessage.send(player, plugin.getPluginName() + "The players inside this TARDIS are:");
-                                        for (String s : data) {
-                                            TARDISMessage.send(player, s);
+                                        for (UUID s : data) {
+                                            TARDISMessage.send(player, plugin.getServer().getPlayer(s).getDisplayName());
                                         }
                                     } else {
                                         TARDISMessage.send(player, plugin.getPluginName() + "The TARDIS is unoccupied.");

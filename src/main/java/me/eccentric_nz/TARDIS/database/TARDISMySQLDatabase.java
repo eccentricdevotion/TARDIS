@@ -131,7 +131,7 @@ public class TARDISMySQLDatabase {
             statement.executeUpdate(storageQuery);
 
             // Table structure for table 'tag'
-            String tagQuery = "CREATE TABLE IF NOT EXISTS tag (tag_id int(11) NOT NULL AUTO_INCREMENT, uuid varchar(48) DEFAULT '', player varchar(32) DEFAULT '', `time` int(11) DEFAULT '0', PRIMARY KEY (tag_id)) DEFAULT CHARSET=utf8 COLLATE utf8_general_ci";
+            String tagQuery = "CREATE TABLE IF NOT EXISTS tag (tag_id int(11) NOT NULL AUTO_INCREMENT, player varchar(32) DEFAULT '', `time` int(11) DEFAULT '0', PRIMARY KEY (tag_id)) DEFAULT CHARSET=utf8 COLLATE utf8_general_ci";
             statement.executeUpdate(tagQuery);
 
             // Table structure for table 'tardis'

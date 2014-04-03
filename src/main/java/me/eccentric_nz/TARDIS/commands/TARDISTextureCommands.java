@@ -71,15 +71,15 @@ public class TARDISTextureCommands implements CommandExecutor {
             }
             if (player.hasPermission("tardis.texture")) {
                 // get the players preferences
-                String playerNameStr = player.getName();
+                String playerUUID = player.getUniqueId().toString();
                 HashMap<String, Object> wherepp = new HashMap<String, Object>();
-                wherepp.put("player", playerNameStr);
+                wherepp.put("uuid", playerUUID);
                 ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, wherepp);
                 QueryFactory qf = new QueryFactory(plugin);
                 HashMap<String, Object> set = new HashMap<String, Object>();
                 // if no prefs record found, make one
                 if (!rsp.resultSet()) {
-                    set.put("player", playerNameStr);
+                    set.put("uuid", playerUUID);
                     qf.doInsert("player_prefs", set);
                 }
                 HashMap<String, Object> upd = new HashMap<String, Object>();
@@ -112,7 +112,7 @@ public class TARDISTextureCommands implements CommandExecutor {
                 }
                 if (upd.size() > 0) {
                     HashMap<String, Object> where = new HashMap<String, Object>();
-                    where.put("player", playerNameStr);
+                    where.put("uuid", playerUUID);
                     qf.doUpdate("player_prefs", upd, where);
                     TARDISMessage.send(player, plugin.getPluginName() + "Your texture pack preference was set.");
                     return true;

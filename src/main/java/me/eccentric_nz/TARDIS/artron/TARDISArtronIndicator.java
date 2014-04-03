@@ -76,7 +76,7 @@ public class TARDISArtronIndicator {
                     max.setScore(fc);
                     Score timelord = objective.getScore(plugin.getServer().getOfflinePlayer(ChatColor.YELLOW + "Time Lord:"));
                     HashMap<String, Object> wherep = new HashMap<String, Object>();
-                    wherep.put("player", p.getName());
+                    wherep.put("uuid", p.getUniqueId().toString());
                     ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, wherep);
                     if (rsp.resultSet()) {
                         timelord.setScore(rsp.getArtronLevel());

@@ -113,7 +113,7 @@ public class TARDISPresetBuilderFactory {
             boolean minecart = false;
             boolean hidden = rs.isHidden();
             HashMap<String, Object> wherepp = new HashMap<String, Object>();
-            wherepp.put("player", pbd.getPlayer().getName());
+            wherepp.put("uuid", pbd.getPlayer().getUniqueId().toString());
             ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, wherepp);
             if (rsp.resultSet()) {
                 lamp = rsp.getLamp();
@@ -140,7 +140,7 @@ public class TARDISPresetBuilderFactory {
                     TARDISDeinstaPreset deinsta = new TARDISDeinstaPreset(plugin);
                     deinsta.instaDestroyPreset(pbd.getLocation(), pbd.getDirection(), pbd.getTardisID(), false, demat, pbd.isSubmarine());
                 }
-                final TARDISInstaPreset trp = new TARDISInstaPreset(plugin, pbd.getLocation(), preset, pbd.getTardisID(), pbd.getDirection(), pbd.getPlayer().getName(), pbd.isMalfunction(), lamp, pbd.isSubmarine(), cham_id, cham_data, true, minecart);
+                final TARDISInstaPreset trp = new TARDISInstaPreset(plugin, pbd.getLocation(), preset, pbd.getTardisID(), pbd.getDirection(), pbd.getPlayer().getUniqueId().toString(), pbd.isMalfunction(), lamp, pbd.isSubmarine(), cham_id, cham_data, true, minecart);
                 plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
                     @Override
                     public void run() {
@@ -155,7 +155,7 @@ public class TARDISPresetBuilderFactory {
                     runnable.setTask(taskID);
                 } else {
                     plugin.getTrackerKeeper().getTrackMaterialising().add(pbd.getTardisID());
-                    TARDISInstaPreset insta = new TARDISInstaPreset(plugin, pbd.getLocation(), preset, pbd.getTardisID(), pbd.getDirection(), pbd.getPlayer().getName(), pbd.isMalfunction(), lamp, pbd.isSubmarine(), cham_id, cham_data, false, minecart);
+                    TARDISInstaPreset insta = new TARDISInstaPreset(plugin, pbd.getLocation(), preset, pbd.getTardisID(), pbd.getDirection(), pbd.getPlayer().getUniqueId().toString(), pbd.isMalfunction(), lamp, pbd.isSubmarine(), cham_id, cham_data, false, minecart);
                     insta.buildPreset();
                 }
             }
@@ -169,7 +169,7 @@ public class TARDISPresetBuilderFactory {
     }
 
     @SuppressWarnings("deprecation")
-    public void addPlatform(Location l, boolean rebuild, COMPASS d, String p, int id) {
+    public void addPlatform(Location l, boolean rebuild, COMPASS d, String uuid, int id) {
         int plusx, minusx, x, y, plusz, minusz, z;
         int platform_id = plugin.getConfig().getInt("police_box.platform_id");
         byte platform_data = (byte) plugin.getConfig().getInt("police_box.platform_data");
@@ -190,7 +190,7 @@ public class TARDISPresetBuilderFactory {
         if (plugin.getConfig().getBoolean("travel.platform")) {
             // check if user has platform pref
             HashMap<String, Object> wherep = new HashMap<String, Object>();
-            wherep.put("player", p);
+            wherep.put("uuid", uuid);
             ResultSetPlayerPrefs pp = new ResultSetPlayerPrefs(plugin, wherep);
             boolean userPlatform;
             if (pp.resultSet()) {

@@ -111,7 +111,7 @@ public class TARDISArtronCapacitorListener implements Listener {
                             QueryFactory qf = new QueryFactory(plugin);
                             // determine key item
                             HashMap<String, Object> wherek = new HashMap<String, Object>();
-                            wherek.put("player", player.getName());
+                            wherek.put("uuid", player.getUniqueId().toString());
                             ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, wherek);
                             String key;
                             boolean hasPrefs = false;
@@ -226,7 +226,7 @@ public class TARDISArtronCapacitorListener implements Listener {
                                     return;
                                 }
                                 HashMap<String, Object> wherep = new HashMap<String, Object>();
-                                wherep.put("player", player.getName());
+                                wherep.put("uuid", player.getUniqueId().toString());
                                 if (hasPrefs) {
                                     int level = rsp.getArtronLevel();
                                     if (level < 1) {
@@ -238,7 +238,7 @@ public class TARDISArtronCapacitorListener implements Listener {
                                     HashMap<String, Object> set = new HashMap<String, Object>();
                                     set.put("artron_level", 0);
                                     HashMap<String, Object> wherel = new HashMap<String, Object>();
-                                    wherel.put("player", player.getName());
+                                    wherel.put("uuid", player.getUniqueId().toString());
                                     qf.doUpdate("player_prefs", set, wherel);
                                     // add player level to TARDIS level
                                     HashMap<String, Object> sett = new HashMap<String, Object>();

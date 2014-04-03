@@ -19,6 +19,7 @@ package me.eccentric_nz.TARDIS.commands.tardis;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.ResultSetPlayerPrefs;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
@@ -47,7 +48,7 @@ public class TARDISEmergencyProgrammeCommand {
                 return true;
             }
             HashMap<String, Object> where = new HashMap<String, Object>();
-            where.put("owner", p.getName());
+            where.put("uuid", p.getUniqueId().toString());
             ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);
             if (!rs.resultSet()) {
                 TARDISMessage.send(p, plugin.getPluginName() + MESSAGE.NOT_A_TIMELORD.getText());
@@ -57,7 +58,7 @@ public class TARDISEmergencyProgrammeCommand {
             String eps = rs.getEps();
             String creeper = rs.getCreeper();
             HashMap<String, Object> wherem = new HashMap<String, Object>();
-            wherem.put("player", p.getName());
+            wherem.put("uuid", p.getUniqueId().toString());
             ResultSetTravellers rsm = new ResultSetTravellers(plugin, wherem, true);
             if (!rsm.resultSet()) {
                 TARDISMessage.send(p, plugin.getPluginName() + MESSAGE.NOT_IN_TARDIS.getText());
@@ -69,7 +70,7 @@ public class TARDISEmergencyProgrammeCommand {
             }
             // get player prefs
             HashMap<String, Object> wherep = new HashMap<String, Object>();
-            wherep.put("player", p.getName());
+            wherep.put("uuid", p.getUniqueId().toString());
             ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, wherep);
             if (rsp.resultSet()) {
                 // schedule the NPC to appear
@@ -77,14 +78,14 @@ public class TARDISEmergencyProgrammeCommand {
                 HashMap<String, Object> wherev = new HashMap<String, Object>();
                 wherev.put("tardis_id", id);
                 ResultSetTravellers rst = new ResultSetTravellers(plugin, wherev, true);
-                List<String> players;
+                List<UUID> playerUUIDs;
                 if (rst.resultSet()) {
-                    players = rst.getData();
+                    playerUUIDs = rst.getData();
                 } else {
-                    players = new ArrayList<String>();
-                    players.add(p.getName());
+                    playerUUIDs = new ArrayList<UUID>();
+                    playerUUIDs.add(p.getUniqueId());
                 }
-                TARDISEPSRunnable EPS_runnable = new TARDISEPSRunnable(plugin, message, p, players, id, eps, creeper);
+                TARDISEPSRunnable EPS_runnable = new TARDISEPSRunnable(plugin, message, p, playerUUIDs, id, eps, creeper);
                 plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, EPS_runnable, 20L);
                 return true;
             }

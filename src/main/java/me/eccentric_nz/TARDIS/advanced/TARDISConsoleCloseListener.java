@@ -19,6 +19,7 @@ package me.eccentric_nz.TARDIS.advanced;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.builders.TARDISEmergencyRelocation;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
@@ -70,7 +71,7 @@ public class TARDISConsoleCloseListener implements Listener {
             Player p = ((Player) event.getPlayer());
             // get the TARDIS the player is in
             HashMap<String, Object> wheret = new HashMap<String, Object>();
-            wheret.put("player", p.getName());
+            wheret.put("uuid", p.getUniqueId().toString());
             ResultSetTravellers rst = new ResultSetTravellers(plugin, wheret, false);
             if (rst.resultSet()) {
                 int id = rst.getTardis_id();
@@ -87,7 +88,7 @@ public class TARDISConsoleCloseListener implements Listener {
                     }
                 }
                 // remember what was placed in the console
-                saveCurrentConsole(inv, p.getName());
+                saveCurrentConsole(inv, p.getUniqueId().toString());
                 if (plugin.getConfig().getString("preferences.difficulty").equals("hard")) {
                     // check circuits
                     TARDISCircuitChecker tcc = new TARDISCircuitChecker(plugin, id);
@@ -208,16 +209,23 @@ public class TARDISConsoleCloseListener implements Listener {
                                                     TARDISMessage.send(p, plugin.getPluginName() + "You cannot travel to yourself!");
                                                     continue;
                                                 }
+                                                // get the player
+                                                Player to = plugin.getServer().getPlayer(first);
+                                                if (to == null) {
+                                                    TARDISMessage.send(p, plugin.getPluginName() + "That player is not online!");
+                                                    continue;
+                                                }
+                                                UUID toUUID = to.getUniqueId();
                                                 // check the to player's DND status
                                                 HashMap<String, Object> wherednd = new HashMap<String, Object>();
-                                                wherednd.put("player", first.toLowerCase());
+                                                wherednd.put("uuid", toUUID.toString());
                                                 ResultSetPlayerPrefs rspp = new ResultSetPlayerPrefs(plugin, wherednd);
                                                 if (rspp.resultSet() && rspp.isDND()) {
                                                     TARDISMessage.send(p, plugin.getPluginName() + first + " does not want to be disturbed right now! Try again later.");
                                                     continue;
                                                 }
                                                 TARDISRescue to_player = new TARDISRescue(plugin);
-                                                to_player.rescue(p, first, id, tt, rsc.getDirection(), false);
+                                                to_player.rescue(p, toUUID, id, tt, rsc.getDirection(), false);
                                             } else {
                                                 TARDISMessage.send(p, plugin.getPluginName() + "You do not have permission to time travel to a player!");
                                                 continue;
@@ -285,12 +293,12 @@ public class TARDISConsoleCloseListener implements Listener {
         }
     }
 
-    private void saveCurrentConsole(Inventory inv, String p) {
+    private void saveCurrentConsole(Inventory inv, String uuid) {
         String serialized = TARDISSerializeInventory.itemStacksToString(inv.getContents());
         HashMap<String, Object> set = new HashMap<String, Object>();
         set.put("console", serialized);
         HashMap<String, Object> where = new HashMap<String, Object>();
-        where.put("owner", p);
+        where.put("uuid", uuid);
         new QueryFactory(plugin).doUpdate("storage", set, where);
     }
 }

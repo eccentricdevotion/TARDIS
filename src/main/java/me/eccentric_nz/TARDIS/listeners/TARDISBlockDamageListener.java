@@ -84,7 +84,7 @@ public class TARDISBlockDamageListener implements Listener {
             boolean isDoor = false;
             if (HADS && !plugin.getTrackerKeeper().getTrackInVortex().contains(id) && isOwnerOnline(id)) {
                 if (b.getTypeId() == 71) {
-                    if (isOwner(id, p.getName())) {
+                    if (isOwner(id, p.getUniqueId().toString())) {
                         isDoor = true;
                     }
                 }
@@ -105,10 +105,10 @@ public class TARDISBlockDamageListener implements Listener {
         }
     }
 
-    private boolean isOwner(int id, String p) {
+    private boolean isOwner(int id, String uuid) {
         HashMap<String, Object> where = new HashMap<String, Object>();
         where.put("tardis_id", id);
-        where.put("owner", p);
+        where.put("uuid", uuid);
         ResultSetTardis rst = new ResultSetTardis(plugin, where, "", false);
         return rst.resultSet();
     }
@@ -118,7 +118,7 @@ public class TARDISBlockDamageListener implements Listener {
         where.put("tardis_id", id);
         ResultSetTardis rst = new ResultSetTardis(plugin, where, "", false);
         if (rst.resultSet()) {
-            return plugin.getServer().getOfflinePlayer(rst.getOwner()).isOnline();
+            return plugin.getServer().getOfflinePlayer(rst.getUuid()).isOnline();
         } else {
             return false;
         }
@@ -129,7 +129,7 @@ public class TARDISBlockDamageListener implements Listener {
         where.put("tardis_id", id);
         ResultSetTardis rst = new ResultSetTardis(plugin, where, "", false);
         if (rst.resultSet() && rst.isHidden()) {
-            Player p = (Player) plugin.getServer().getOfflinePlayer(rst.getOwner());
+            Player p = (Player) plugin.getServer().getOfflinePlayer(rst.getUuid());
             // unhide this tardis
             boolean cham = false;
             if (plugin.getConfig().getBoolean("travel.chameleon")) {

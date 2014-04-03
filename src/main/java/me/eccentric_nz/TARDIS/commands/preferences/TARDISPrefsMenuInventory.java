@@ -35,12 +35,12 @@ import org.bukkit.inventory.meta.ItemMeta;
 public class TARDISPrefsMenuInventory {
 
     private final TARDIS plugin;
-    private final String player;
+    private final String uuid;
     private final ItemStack[] menu;
 
-    public TARDISPrefsMenuInventory(TARDIS plugin, String player) {
+    public TARDISPrefsMenuInventory(TARDIS plugin, String uuid) {
         this.plugin = plugin;
-        this.player = player;
+        this.uuid = uuid;
         this.menu = getItemStack();
     }
 
@@ -52,7 +52,7 @@ public class TARDISPrefsMenuInventory {
     @SuppressWarnings("deprecation")
     private ItemStack[] getItemStack() {
         HashMap<String, Object> where = new HashMap<String, Object>();
-        where.put("player", player);
+        where.put("uuid", uuid);
         ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, where);
         List<ItemStack> options = new ArrayList<ItemStack>();
         if (rsp.resultSet()) {

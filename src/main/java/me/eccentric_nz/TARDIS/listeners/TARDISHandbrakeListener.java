@@ -17,6 +17,7 @@
 package me.eccentric_nz.TARDIS.listeners;
 
 import java.util.HashMap;
+import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.achievement.TARDISAchievementFactory;
 import me.eccentric_nz.TARDIS.advanced.TARDISCircuitChecker;
@@ -109,8 +110,8 @@ public class TARDISHandbrakeListener implements Listener {
                     HashMap<String, Object> wheredoor = new HashMap<String, Object>();
                     if (rs.resultSet()) {
                         event.setCancelled(true);
-                        String owner = rs.getOwner();
-                        if (rs.isIso_on() && !player.getName().equals(owner) && event.isCancelled() && !player.hasPermission("tardis.skeletonkey")) { // check if cancelled so we don't get double messages from the bind listener
+                        UUID ownerUUID = rs.getUuid();
+                        if (rs.isIso_on() && !player.getUniqueId().equals(ownerUUID) && event.isCancelled() && !player.hasPermission("tardis.skeletonkey")) { // check if cancelled so we don't get double messages from the bind listener
                             TARDISMessage.send(player, plugin.getPluginName() + MESSAGE.ISO_ON.getText());
                             return;
                         }
@@ -130,7 +131,7 @@ public class TARDISHandbrakeListener implements Listener {
                             int dist = 0;
                             // should the beacon turn on
                             HashMap<String, Object> wherek = new HashMap<String, Object>();
-                            wherek.put("player", player.getName());
+                            wherek.put("uuid", player.getUniqueId().toString());
                             ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, wherek);
                             boolean beac_on = true;
                             boolean minecart = false;
@@ -367,8 +368,8 @@ public class TARDISHandbrakeListener implements Listener {
                                         HashMap<String, Object> wheret = new HashMap<String, Object>();
                                         wheret.put("tardis_id", id);
                                         qf.alterEnergyLevel("tardis", amount, wheret, player);
-                                        if (!player.getName().equals(owner)) {
-                                            Player ptl = plugin.getServer().getPlayer(owner);
+                                        if (!player.getUniqueId().equals(ownerUUID)) {
+                                            Player ptl = plugin.getServer().getPlayer(ownerUUID);
                                             if (ptl != null) {
                                                 new TARDISArtronIndicator(plugin).showArtronLevel(ptl, id, Math.abs(amount));
                                             }

@@ -18,6 +18,7 @@ package me.eccentric_nz.TARDIS.commands.tardis;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import me.eccentric_nz.TARDIS.database.ResultSetTravellers;
@@ -40,7 +41,7 @@ public class TARDISInsideCommand {
     public boolean whosInside(Player player, String[] args) {
         // check they are a timelord
         HashMap<String, Object> where = new HashMap<String, Object>();
-        where.put("owner", player.getName());
+        where.put("uuid", player.getUniqueId().toString());
         ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);
         if (!rs.resultSet()) {
             TARDISMessage.send(player, plugin.getPluginName() + MESSAGE.NOT_A_TIMELORD.getText());
@@ -51,10 +52,10 @@ public class TARDISInsideCommand {
         wheret.put("tardis_id", id);
         ResultSetTravellers rst = new ResultSetTravellers(plugin, wheret, true);
         if (rst.resultSet()) {
-            List<String> data = rst.getData();
+            List<UUID> data = rst.getData();
             TARDISMessage.send(player, plugin.getPluginName() + "The players inside your TARDIS are:");
-            for (String s : data) {
-                TARDISMessage.send(player, s);
+            for (UUID s : data) {
+                TARDISMessage.send(player, plugin.getServer().getPlayer(s).getDisplayName());
             }
         } else {
             TARDISMessage.send(player, plugin.getPluginName() + "Nobody is inside your TARDIS.");

@@ -59,7 +59,7 @@ public class TARDISRenderRoomListener implements Listener {
         TARDISMessage.send(p, plugin.getPluginName() + "Stand by for transmat...");
         // get the TARDIS the player is in
         HashMap<String, Object> wherep = new HashMap<String, Object>();
-        wherep.put("player", p.getName());
+        wherep.put("uuid", p.getUniqueId().toString());
         ResultSetTravellers rst = new ResultSetTravellers(plugin, wherep, false);
         if (rst.resultSet()) {
             int id = rst.getTardis_id();

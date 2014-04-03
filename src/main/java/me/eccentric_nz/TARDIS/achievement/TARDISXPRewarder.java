@@ -1,6 +1,7 @@
 package me.eccentric_nz.TARDIS.achievement;
 
 import java.util.Arrays;
+import java.util.UUID;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
@@ -85,7 +86,7 @@ public class TARDISXPRewarder {
         }
         return level;
     }
-    private final String playerName;
+    private final UUID playerUUID;
 
     /**
      * Create a new TARDISXPRewarder for the given player.
@@ -93,7 +94,7 @@ public class TARDISXPRewarder {
      * @param player The player for this TARDISXPRewarder object
      */
     public TARDISXPRewarder(Player player) {
-        this.playerName = player.getName();
+        this.playerUUID = player.getUniqueId();
         getPlayer(); // ensure it's a valid player name
     }
 
@@ -104,9 +105,9 @@ public class TARDISXPRewarder {
      * @throws IllegalStateException if the player is no longer online
      */
     private Player getPlayer() {
-        Player p = Bukkit.getPlayer(playerName);
+        Player p = Bukkit.getPlayer(playerUUID);
         if (p == null) {
-            throw new IllegalStateException("Player " + playerName + " is not online");
+            throw new IllegalStateException("Player with UUID: " + playerUUID + " is not online");
         }
         return p;
     }

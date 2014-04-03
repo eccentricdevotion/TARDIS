@@ -19,6 +19,7 @@ package me.eccentric_nz.TARDIS;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.UUID;
 import me.eccentric_nz.TARDIS.info.TARDISInfoMenu;
 import me.eccentric_nz.TARDIS.rooms.TARDISSeedData;
 import me.eccentric_nz.TARDIS.utility.TARDISAntiBuild;
@@ -34,16 +35,16 @@ public class TARDISTrackerInstanceKeeper {
     private final HashMap<Integer, Integer> trackDamage = new HashMap<Integer, Integer>();
     private final HashMap<Integer, Integer> trackHasDestination = new HashMap<Integer, Integer>();
     private final HashMap<Integer, String> trackRenderer = new HashMap<Integer, String>();
-    private final HashMap<Integer, String> trackRescue = new HashMap<Integer, String>();
+    private final HashMap<Integer, UUID> trackRescue = new HashMap<Integer, UUID>();
     private final HashMap<Integer, TARDISAntiBuild> trackAntiBuild = new HashMap<Integer, TARDISAntiBuild>();
     private final HashMap<String, Block> trackExterminate = new HashMap<String, Block>();
     private final HashMap<String, Block> trackLazarus = new HashMap<String, Block>();
     private final HashMap<String, Double[]> trackGravity = new HashMap<String, Double[]>();
     private final HashMap<String, Integer> trackBinder = new HashMap<String, Integer>();
-    private final HashMap<String, Long> trackSetTime = new HashMap<String, Long>();
+    private final HashMap<UUID, Long> trackSetTime = new HashMap<UUID, Long>();
     private final HashMap<String, Sign> trackSign = new HashMap<String, Sign>();
     private final HashMap<String, String> trackBlock = new HashMap<String, String>();
-    private final HashMap<String, String> trackChat = new HashMap<String, String>();
+    private final HashMap<UUID, UUID> trackChat = new HashMap<UUID, UUID>();
     private final HashMap<String, String> trackEnd = new HashMap<String, String>();
     private final HashMap<String, String> trackJettison = new HashMap<String, String>();
     private final HashMap<String, String> trackName = new HashMap<String, String>();
@@ -79,7 +80,7 @@ public class TARDISTrackerInstanceKeeper {
         return trackRenderer;
     }
 
-    public HashMap<Integer, String> getTrackRescue() {
+    public HashMap<Integer, UUID> getTrackRescue() {
         return trackRescue;
     }
 
@@ -103,7 +104,7 @@ public class TARDISTrackerInstanceKeeper {
         return trackBinder;
     }
 
-    public HashMap<String, Long> getTrackSetTime() {
+    public HashMap<UUID, Long> getTrackSetTime() {
         return trackSetTime;
     }
 
@@ -115,7 +116,7 @@ public class TARDISTrackerInstanceKeeper {
         return trackBlock;
     }
 
-    public HashMap<String, String> getTrackChat() {
+    public HashMap<UUID, UUID> getTrackChat() {
         return trackChat;
     }
 

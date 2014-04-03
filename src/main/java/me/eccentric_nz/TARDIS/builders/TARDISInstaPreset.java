@@ -20,6 +20,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Random;
+import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.chameleon.TARDISChameleonColumn;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
@@ -54,7 +55,7 @@ public class TARDISInstaPreset {
     private final COMPASS d;
     private final Location location;
     private final int tid;
-    private final String p;
+    private final String uuid;
     private final boolean mal;
     private final int lamp;
     private final boolean sub;
@@ -71,13 +72,13 @@ public class TARDISInstaPreset {
     private final ChatColor sign_colour;
     private final List<ProblemBlock> do_at_end = new ArrayList<ProblemBlock>();
 
-    public TARDISInstaPreset(TARDIS plugin, Location location, PRESET preset, int tid, COMPASS d, String p, boolean mal, int lamp, boolean sub, int cham_id, byte cham_data, boolean rebuild, boolean minecart) {
+    public TARDISInstaPreset(TARDIS plugin, Location location, PRESET preset, int tid, COMPASS d, String uuid, boolean mal, int lamp, boolean sub, int cham_id, byte cham_data, boolean rebuild, boolean minecart) {
         this.plugin = plugin;
         this.d = d;
         this.location = location;
         this.preset = preset;
         this.tid = tid;
-        this.p = p;
+        this.uuid = uuid;
         this.mal = mal;
         this.lamp = lamp;
         this.sub = sub;
@@ -118,8 +119,8 @@ public class TARDISInstaPreset {
         QueryFactory qf = new QueryFactory(plugin);
         // rescue player?
         if (plugin.getTrackerKeeper().getTrackRescue().containsKey(tid)) {
-            String name = plugin.getTrackerKeeper().getTrackRescue().get(tid);
-            Player saved = plugin.getServer().getPlayer(name);
+            UUID playerUUID = plugin.getTrackerKeeper().getTrackRescue().get(tid);
+            Player saved = plugin.getServer().getPlayer(playerUUID);
             if (saved != null) {
                 TARDISDoorLocation idl = plugin.getGeneralKeeper().getDoorListener().getDoor(1, tid);
                 Location l = idl.getL();
@@ -127,13 +128,13 @@ public class TARDISInstaPreset {
                 // put player into travellers table
                 HashMap<String, Object> set = new HashMap<String, Object>();
                 set.put("tardis_id", tid);
-                set.put("player", name);
+                set.put("uuid", playerUUID.toString());
                 qf.doInsert("travellers", set);
             }
             plugin.getTrackerKeeper().getTrackRescue().remove(tid);
         }
         // platform
-        plugin.getPresetBuilder().addPlatform(location, false, d, p, tid);
+        plugin.getPresetBuilder().addPlatform(location, false, d, uuid, tid);
         switch (d) {
             case SOUTH:
                 //if (yaw >= 315 || yaw < 45)
@@ -312,11 +313,12 @@ public class TARDISInstaPreset {
                                 wheret.put("tardis_id", tid);
                                 ResultSetTardis rst = new ResultSetTardis(plugin, wheret, "", false);
                                 if (rst.resultSet()) {
+                                    String player_name = plugin.getServer().getOfflinePlayer(rst.getUuid()).getName();
                                     String owner;
                                     if (preset.equals(PRESET.GRAVESTONE) || preset.equals(PRESET.PUNKED) || preset.equals(PRESET.ROBOT)) {
-                                        owner = (rst.getOwner().length() > 14) ? rst.getOwner().substring(0, 14) : rst.getOwner();
+                                        owner = (player_name.length() > 14) ? player_name.substring(0, 14) : player_name;
                                     } else {
-                                        owner = (rst.getOwner().length() > 14) ? rst.getOwner().substring(0, 12) + "'s" : rst.getOwner() + "'s";
+                                        owner = (player_name.length() > 14) ? player_name.substring(0, 12) + "'s" : player_name + "'s";
                                     }
                                     switch (preset) {
                                         case GRAVESTONE:
@@ -418,15 +420,15 @@ public class TARDISInstaPreset {
             where.put("tardis_id", tid);
             ResultSetTravellers rst = new ResultSetTravellers(plugin, where, true);
             if (rst.resultSet()) {
-                final List<String> travellers = rst.getData();
+                final List<UUID> travellers = rst.getData();
                 plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
                     @Override
                     public void run() {
-                        for (String s : travellers) {
-                            Player p = plugin.getServer().getPlayer(s);
-                            if (p != null) {
+                        for (UUID s : travellers) {
+                            Player trav = plugin.getServer().getPlayer(s);
+                            if (trav != null) {
                                 String message = (mal) ? "There was a malfunction and the emergency handbrake was engaged! Scan location before exit!" : "LEFT-click the handbrake to exit!";
-                                TARDISMessage.send(p, plugin.getPluginName() + message);
+                                TARDISMessage.send(trav, plugin.getPluginName() + message);
                             }
                         }
                     }

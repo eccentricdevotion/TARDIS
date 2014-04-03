@@ -66,10 +66,9 @@ public class TARDISChameleonListener implements Listener {
             if (slot >= 0 && slot < 54) {
                 ItemStack is = inv.getItem(slot);
                 if (is != null) {
-                    String playerNameStr = player.getName();
                     // get the TARDIS the player is in
                     HashMap<String, Object> wheres = new HashMap<String, Object>();
-                    wheres.put("player", playerNameStr);
+                    wheres.put("uuid", player.getUniqueId().toString());
                     ResultSetTravellers rst = new ResultSetTravellers(plugin, wheres, false);
                     if (rst.resultSet()) {
                         int id = rst.getTardis_id();

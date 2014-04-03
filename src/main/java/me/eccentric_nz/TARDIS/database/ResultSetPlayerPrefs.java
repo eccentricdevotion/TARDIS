@@ -178,10 +178,9 @@ public class ResultSetPlayerPrefs {
         return uuid;
     }
 
-    public String getPlayer() {
-        return player;
-    }
-
+//    public String getPlayer() {
+//        return player;
+//    }
     public String getKey() {
         return key;
     }
