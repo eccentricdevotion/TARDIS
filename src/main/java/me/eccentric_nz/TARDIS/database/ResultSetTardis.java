@@ -25,6 +25,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
+import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.enumeration.PRESET;
 import me.eccentric_nz.TARDIS.enumeration.SCHEMATIC;
@@ -44,7 +45,7 @@ public class ResultSetTardis {
     private final String limit;
     private final boolean multiple;
     private int tardis_id;
-    private String uuid;
+    private UUID uuid;
     private String owner;
     private String chunk;
     private int tips;
@@ -151,7 +152,7 @@ public class ResultSetTardis {
                         data.add(row);
                     }
                     this.tardis_id = rs.getInt("tardis_id");
-                    this.uuid = rs.getString("uuid");
+                    this.uuid = UUID.fromString(rs.getString("uuid"));
                     this.owner = rs.getString("owner");
                     this.chunk = rs.getString("chunk");
                     this.tips = rs.getInt("tips");
@@ -222,7 +223,7 @@ public class ResultSetTardis {
         return tardis_id;
     }
 
-    public String getUuid() {
+    public UUID getUuid() {
         return uuid;
     }
 

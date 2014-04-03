@@ -22,6 +22,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
 
 /**
@@ -37,7 +38,7 @@ public class ResultSetPlayerPrefs {
     private final TARDIS plugin;
     private final HashMap<String, Object> where;
     private int pp_id;
-    private String uuid;
+    private UUID uuid;
     private String player;
     private String key;
     private boolean sfxOn;
@@ -113,7 +114,7 @@ public class ResultSetPlayerPrefs {
             rs = statement.executeQuery();
             if (rs.next()) {
                 this.pp_id = rs.getInt("pp_id");
-                this.uuid = rs.getString("uuid");
+                this.uuid = UUID.fromString(rs.getString("uuid"));
                 this.player = rs.getString("player");
                 this.key = (plugin.getConfig().getString("storage.database").equals("sqlite")) ? rs.getString("key") : rs.getString("key_item");
                 this.sfxOn = rs.getBoolean("sfx_on");
@@ -173,7 +174,7 @@ public class ResultSetPlayerPrefs {
         return pp_id;
     }
 
-    public String getUuid() {
+    public UUID getUuid() {
         return uuid;
     }
 

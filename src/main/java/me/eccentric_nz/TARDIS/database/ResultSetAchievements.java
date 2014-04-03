@@ -25,6 +25,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
+import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
 
 /**
@@ -43,7 +44,7 @@ public class ResultSetAchievements {
     private final HashMap<String, Object> where;
     private final boolean multiple;
     private int a_id;
-    private String uuid;
+    private UUID uuid;
     private String player;
     private String name;
     private String amount;
@@ -110,7 +111,7 @@ public class ResultSetAchievements {
                     data.add(row);
                 }
                 this.a_id = rs.getInt("a_id");
-                this.uuid = rs.getString("uuid");
+                this.uuid = UUID.fromString(rs.getString("uuid"));
                 this.player = rs.getString("player");
                 this.name = rs.getString("name");
                 this.amount = rs.getString("amount");
@@ -143,7 +144,7 @@ public class ResultSetAchievements {
         return a_id;
     }
 
-    public String getUuid() {
+    public UUID getUuid() {
         return uuid;
     }
 

@@ -25,6 +25,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
+import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
 
 /**
@@ -43,7 +44,7 @@ public class ResultSetCount {
     private final HashMap<String, Object> where;
     private final boolean multiple;
     private int id;
-    private String uuid;
+    private UUID uuid;
     private String player;
     private int count;
     private final ArrayList<HashMap<String, String>> data = new ArrayList<HashMap<String, String>>();
@@ -111,7 +112,7 @@ public class ResultSetCount {
                         data.add(row);
                     }
                     this.id = rs.getInt("t_id");
-                    this.uuid = rs.getString("uuid");
+                    this.uuid = UUID.fromString(rs.getString("uuid"));
                     this.player = rs.getString("player");
                     this.count = rs.getInt("count");
                 }
@@ -140,7 +141,7 @@ public class ResultSetCount {
         return id;
     }
 
-    public String getUuid() {
+    public UUID getUuid() {
         return uuid;
     }
 

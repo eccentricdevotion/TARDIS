@@ -22,6 +22,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
 
 /**
@@ -43,7 +44,7 @@ public class ResultSetDiskStorage {
     private final HashMap<String, Object> where;
     private int id;
     private int tardis_id;
-    private String uuid;
+    private UUID uuid;
     private String owner;
     private String savesOne;
     private String savesTwo;
@@ -108,9 +109,9 @@ public class ResultSetDiskStorage {
                 while (rs.next()) {
                     this.id = rs.getInt("storage_id");
                     this.tardis_id = rs.getInt("tardis_id");
-                    this.uuid = rs.getString("uuid");
+                    this.uuid = UUID.fromString(rs.getString("uuid"));
                     if (rs.wasNull()) {
-                        this.uuid = "";
+                        this.uuid = UUID.randomUUID();
                     }
                     this.owner = rs.getString("owner");
                     if (rs.wasNull()) {
@@ -186,7 +187,7 @@ public class ResultSetDiskStorage {
         return tardis_id;
     }
 
-    public String getUuid() {
+    public UUID getUuid() {
         return uuid;
     }
 

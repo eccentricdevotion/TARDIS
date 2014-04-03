@@ -25,6 +25,7 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
 
 /**
@@ -46,7 +47,7 @@ public class ResultSetTravellers {
     private final boolean multiple;
     private int traveller_id;
     private int tardis_id;
-    private String uuid;
+    private UUID uuid;
     private String player;
     private final List<String> data = new ArrayList<String>();
 
@@ -108,7 +109,7 @@ public class ResultSetTravellers {
                     }
                     this.traveller_id = rs.getInt("traveller_id");
                     this.tardis_id = rs.getInt("tardis_id");
-                    this.uuid = rs.getString("uuid");
+                    this.uuid = UUID.fromString(rs.getString("uuid"));
                     this.player = rs.getString("player");
                 }
             } else {
@@ -140,7 +141,7 @@ public class ResultSetTravellers {
         return tardis_id;
     }
 
-    public String getUuid() {
+    public UUID getUuid() {
         return uuid;
     }
 
