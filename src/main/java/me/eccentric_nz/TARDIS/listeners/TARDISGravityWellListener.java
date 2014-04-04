@@ -25,6 +25,7 @@ import me.eccentric_nz.TARDIS.enumeration.MESSAGE;
 import me.eccentric_nz.TARDIS.rooms.TARDISGravityWellRunnable;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import org.bukkit.Location;
+import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Entity;
@@ -228,7 +229,7 @@ public class TARDISGravityWellListener implements Listener {
                                     break;
                             }
                             // set the block to light grey wool
-                            b.setTypeId(35);
+                            b.setType(Material.WOOL);
                             b.setData((byte) 8, true);
                             TARDISMessage.send(player, plugin.getPluginName() + "The gravity block was removed successfully");
                         }

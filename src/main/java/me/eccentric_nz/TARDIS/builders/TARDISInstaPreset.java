@@ -303,6 +303,7 @@ public class TARDISInstaPreset {
                         if (preset.equals(PRESET.APPERTURE)) {
                             plugin.getUtils().setUnderDoorBlock(world, xx, (y - 1), zz, platform_id, platform_data, tid);
                         }
+                        break;
                     case 68: // sign - if there is one
                         plugin.getUtils().setBlock(world, xx, (y + yy), zz, colids[yy], coldatas[yy]);
                         Block sign = world.getBlockAt(xx, (y + yy), zz);

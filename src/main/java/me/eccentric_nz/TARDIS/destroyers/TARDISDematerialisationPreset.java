@@ -158,6 +158,7 @@ public class TARDISDematerialisationPreset implements Runnable {
                         break;
                     case CAKE:
                         plugin.getPresetDestroyer().destroyLamp(location, preset);
+                        break;
                     default:
                         break;
                 }

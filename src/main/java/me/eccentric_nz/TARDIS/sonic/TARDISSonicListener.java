@@ -719,7 +719,7 @@ public class TARDISSonicListener implements Listener {
         if (b.getType().equals(Material.PISTON_STICKY_BASE)) {
             l.setData((byte) (b.getData() - 8));
         } else {
-            l.setData((byte) b.getData());
+            l.setData(b.getData());
         }
         PistonExtensionMaterial extension = (PistonExtensionMaterial) l.getState().getData();
         l.setData(extension.getData());
