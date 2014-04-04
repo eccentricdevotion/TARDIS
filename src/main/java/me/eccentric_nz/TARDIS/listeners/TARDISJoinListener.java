@@ -150,9 +150,13 @@ public class TARDISJoinListener implements Listener {
             }
             HashMap<String, Object> set = new HashMap<String, Object>();
             set.put("lastuse", now);
+            // TODO update the player's name as it may have changed
+            //set.put("owner", player.getName());
             HashMap<String, Object> wherel = new HashMap<String, Object>();
             wherel.put("tardis_id", id);
             qf.doUpdate("tardis", set, wherel);
+            // add TARDIS player to UUID cache
+            plugin.getGeneralKeeper().getUUIDCache().ensurePlayerUUID(player.getName());
         }
         plugin.getFilter().addPlayer(player);
     }

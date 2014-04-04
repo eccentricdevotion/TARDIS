@@ -59,6 +59,8 @@ public class TARDISQuitListener implements Listener {
                     }
                 }
             }
+            // remove player from the TARDIS UUID cache
+            plugin.getGeneralKeeper().getUUIDCache().getCache().remove(event.getPlayer().getName());
         }
     }
 }

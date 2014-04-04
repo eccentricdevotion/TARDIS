@@ -29,6 +29,7 @@ import me.eccentric_nz.TARDIS.listeners.TARDISRenderRoomListener;
 import me.eccentric_nz.TARDIS.listeners.TARDISScannerListener;
 import me.eccentric_nz.TARDIS.rooms.TARDISCondenserData;
 import me.eccentric_nz.TARDIS.sonic.TARDISSonicListener;
+import me.eccentric_nz.TARDIS.utility.TARDISUUIDCache;
 import org.bukkit.Chunk;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
@@ -50,6 +51,7 @@ public class TARDISGeneralInstanceKeeper {
     private TARDISScannerListener scannerListener;
     private TARDISSonicListener sonicListener;
     private TARDISTravelCommands tardisTravelCommand;
+    private TARDISUUIDCache UUIDCache;
     private final HashMap<String, Double[]> gravityEastList = new HashMap<String, Double[]>();
     private final HashMap<String, Double[]> gravityNorthList = new HashMap<String, Double[]>();
     private final HashMap<String, Double[]> gravitySouthList = new HashMap<String, Double[]>();
@@ -72,6 +74,7 @@ public class TARDISGeneralInstanceKeeper {
         this.plugin = plugin;
         this.roomArgs = buildRoomArgs();
         this.transparent = buildTransparent();
+        this.UUIDCache = new TARDISUUIDCache(plugin);
     }
 
     public List<String> getQuotes() {
@@ -196,6 +199,10 @@ public class TARDISGeneralInstanceKeeper {
 
     public void setTardisTravelCommand(TARDISTravelCommands tardisTravelCommand) {
         this.tardisTravelCommand = tardisTravelCommand;
+    }
+
+    public TARDISUUIDCache getUUIDCache() {
+        return UUIDCache;
     }
 
     public List<String> getRoomArgs() {
