@@ -17,6 +17,7 @@
 package me.eccentric_nz.TARDIS.commands.admin;
 
 import java.util.HashMap;
+import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
@@ -144,6 +145,7 @@ public class TARDISGiveCommand implements CommandExecutor {
         return false;
     }
 
+    @SuppressWarnings("deprecation")
     private boolean giveItem(CommandSender sender, String item, int amount, Player player) {
         if (amount > 64) {
             sender.sendMessage(plugin.getPluginName() + "You can only give a maximum of 64 items at once!");
@@ -165,6 +167,7 @@ public class TARDISGiveCommand implements CommandExecutor {
         return true;
     }
 
+    @SuppressWarnings("deprecation")
     private boolean giveItem(String item, Player player) {
         ItemStack result;
         if (plugin.getIncomposita().getShapelessRecipes().containsKey(item)) {
@@ -180,37 +183,43 @@ public class TARDISGiveCommand implements CommandExecutor {
         return true;
     }
 
-    // TODO look up this player's UUID
     private boolean giveArtron(CommandSender sender, String player, int amount) {
-        HashMap<String, Object> where = new HashMap<String, Object>();
-        where.put("owner", player);
-        ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);
-        if (rs.resultSet()) {
-            int id = rs.getTardis_id();
-            int level = rs.getArtron_level();
-            int set_level;
-            if (amount == 0) {
-                set_level = 0;
-            } else {
-                // always fill to full and no more
-                if (level >= full && amount > 0) {
-                    sender.sendMessage(plugin.getPluginName() + player + " already has a full Artron Energy Capacitor!");
-                    return true;
-                }
-                if ((full - level) < amount) {
-                    set_level = full;
+        // Look up this player's UUID
+        UUID uuid = plugin.getGeneralKeeper().getUUIDCache().getIdOptimistic(player);
+        if (uuid != null) {
+            HashMap<String, Object> where = new HashMap<String, Object>();
+            where.put("uuid", uuid.toString());
+            ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);
+            if (rs.resultSet()) {
+                int id = rs.getTardis_id();
+                int level = rs.getArtron_level();
+                int set_level;
+                if (amount == 0) {
+                    set_level = 0;
                 } else {
-                    set_level = level + amount;
+                    // always fill to full and no more
+                    if (level >= full && amount > 0) {
+                        sender.sendMessage(plugin.getPluginName() + player + " already has a full Artron Energy Capacitor!");
+                        return true;
+                    }
+                    if ((full - level) < amount) {
+                        set_level = full;
+                    } else {
+                        set_level = level + amount;
+                    }
                 }
+                QueryFactory qf = new QueryFactory(plugin);
+                HashMap<String, Object> set = new HashMap<String, Object>();
+                set.put("artron_level", set_level);
+                HashMap<String, Object> wheret = new HashMap<String, Object>();
+                wheret.put("tardis_id", id);
+                qf.doUpdate("tardis", set, wheret);
+                sender.sendMessage(plugin.getPluginName() + player + "'s Artron Energy Level was set to " + set_level);
             }
-            QueryFactory qf = new QueryFactory(plugin);
-            HashMap<String, Object> set = new HashMap<String, Object>();
-            set.put("artron_level", set_level);
-            HashMap<String, Object> wheret = new HashMap<String, Object>();
-            wheret.put("tardis_id", id);
-            qf.doUpdate("tardis", set, wheret);
-            sender.sendMessage(plugin.getPluginName() + player + "'s Artron Energy Level was set to " + set_level);
+            return true;
+        } else {
+            sender.sendMessage(plugin.getPluginName() + "Could not find UUID for player [" + player + "]!");
+            return true;
         }
-        return true;
     }
 }

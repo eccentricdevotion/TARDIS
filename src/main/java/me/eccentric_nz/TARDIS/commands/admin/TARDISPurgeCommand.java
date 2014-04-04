@@ -17,6 +17,7 @@
 package me.eccentric_nz.TARDIS.commands.admin;
 
 import java.util.HashMap;
+import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import me.eccentric_nz.TARDIS.destroyers.TARDISExterminator;
@@ -34,21 +35,27 @@ public class TARDISPurgeCommand {
         this.plugin = plugin;
     }
 
-    // TODO look up this player's UUID
     public boolean clearAll(CommandSender sender, String[] args) {
-        // get the player's TARDIS id
-        HashMap<String, Object> where = new HashMap<String, Object>();
-        where.put("owner", args[1]);
-        ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);
-        if (!rs.resultSet()) {
-            sender.sendMessage(plugin.getPluginName() + "Could not find a TARDIS record for player: " + args[1] + "!");
+        // Look up this player's UUID
+        UUID uuid = plugin.getGeneralKeeper().getUUIDCache().getIdOptimistic(args[1]);
+        if (uuid != null) {
+            // get the player's TARDIS id
+            HashMap<String, Object> where = new HashMap<String, Object>();
+            where.put("uuid", uuid.toString());
+            ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);
+            if (!rs.resultSet()) {
+                sender.sendMessage(plugin.getPluginName() + "Could not find a TARDIS record for player: " + args[1] + "!");
+                return true;
+            }
+            int id = rs.getTardis_id();
+            TARDISExterminator purger = new TARDISExterminator(plugin);
+            purger.cleanHashMaps(id);
+            purger.cleanDatabase(id);
+            sender.sendMessage(plugin.getPluginName() + "Database records for player: " + args[1] + "have been purged.");
+            return true;
+        } else {
+            sender.sendMessage(plugin.getPluginName() + "Could not find UUID for player [" + args[1] + "]!");
             return true;
         }
-        int id = rs.getTardis_id();
-        TARDISExterminator purger = new TARDISExterminator(plugin);
-        purger.cleanHashMaps(id);
-        purger.cleanDatabase(id);
-        sender.sendMessage(plugin.getPluginName() + "Database records for player: " + args[1] + "have been purged.");
-        return true;
     }
 }
