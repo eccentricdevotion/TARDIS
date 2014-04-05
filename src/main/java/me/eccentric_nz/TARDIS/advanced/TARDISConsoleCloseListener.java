@@ -63,7 +63,7 @@ public class TARDISConsoleCloseListener implements Listener {
         }
     }
 
-    @EventHandler(priority = EventPriority.MONITOR)
+    @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
     public void onInventoryClose(InventoryCloseEvent event) {
         final Inventory inv = event.getInventory();
         String inv_name = inv.getTitle();

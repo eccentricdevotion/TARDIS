@@ -42,7 +42,7 @@ public class TARDISRedstoneListener implements Listener {
         }
     }
 
-    @EventHandler
+    @EventHandler(ignoreCancelled = true)
     public void onPistonRetract(BlockPistonRetractEvent event) {
         final String block = event.getBlock().getLocation().toString();
         if (plugin.getGeneralKeeper().getSonicPistons().contains(block)) {

@@ -42,7 +42,7 @@ public class TARDISRecipeListener implements Listener {
         this.plugin = plugin;
     }
 
-    @EventHandler(priority = EventPriority.NORMAL)
+    @EventHandler(ignoreCancelled = true)
     public void onRecipeClick(InventoryClickEvent event) {
         Inventory top = event.getView().getTopInventory();
         InventoryType type = top.getType();
@@ -54,7 +54,7 @@ public class TARDISRecipeListener implements Listener {
         }
     }
 
-    @EventHandler(priority = EventPriority.NORMAL)
+    @EventHandler(ignoreCancelled = true)
     public void onRecipeClose(InventoryCloseEvent event) {
         Inventory top = event.getView().getTopInventory();
         InventoryType type = top.getType();

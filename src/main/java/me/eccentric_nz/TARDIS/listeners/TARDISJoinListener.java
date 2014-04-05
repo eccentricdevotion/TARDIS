@@ -58,7 +58,7 @@ public class TARDISJoinListener implements Listener {
      *
      * @param event a player joining the server
      */
-    @EventHandler(priority = EventPriority.MONITOR)
+    @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
     public void onJoin(PlayerJoinEvent event) {
         final Player player = event.getPlayer();
         String playerUUID = player.getUniqueId().toString();

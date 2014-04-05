@@ -54,7 +54,7 @@ public class TARDISEntityGriefListener implements Listener {
      *
      * @param event an entity affecting a block
      */
-    @EventHandler(priority = EventPriority.LOW)
+    @EventHandler(priority = EventPriority.LOW, ignoreCancelled = true)
     public void bossBlockBreak(EntityChangeBlockEvent event) {
         Block b = event.getBlock();
         String l = b.getLocation().toString();

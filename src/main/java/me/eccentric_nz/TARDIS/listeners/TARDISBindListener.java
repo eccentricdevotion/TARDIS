@@ -70,7 +70,7 @@ public class TARDISBindListener implements Listener {
      *
      * @param event a player clicking a block
      */
-    @EventHandler(priority = EventPriority.MONITOR)
+    @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
     public void onInteract(PlayerInteractEvent event) {
         Block b = event.getClickedBlock();
         if (b != null) {

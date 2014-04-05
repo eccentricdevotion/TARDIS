@@ -40,7 +40,7 @@ public class TARDISQuitListener implements Listener {
         this.plugin = plugin;
     }
 
-    @EventHandler(priority = EventPriority.MONITOR)
+    @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
     public void onPlayerQuit(PlayerQuitEvent event) {
         // forget the players Police Box chunk
         HashMap<String, Object> wherep = new HashMap<String, Object>();

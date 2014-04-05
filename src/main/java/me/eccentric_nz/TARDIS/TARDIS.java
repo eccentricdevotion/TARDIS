@@ -163,6 +163,7 @@ public class TARDIS extends JavaPlugin {
                     pm.disablePlugin(this);
                 } else {
                     getConfig().set("conversions.uuid_conversion_done", true);
+                    saveConfig();
                     console.sendMessage(pluginName + "UUID conversion successful :)");
                 }
             }
@@ -276,7 +277,7 @@ public class TARDIS extends JavaPlugin {
     }
 
     /**
-     * Closes the datardisAreabase.
+     * Closes the database.
      */
     private void closeDatabase() {
         try {

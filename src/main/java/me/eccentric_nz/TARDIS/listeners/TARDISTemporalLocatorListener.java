@@ -46,7 +46,7 @@ public class TARDISTemporalLocatorListener implements Listener {
      *
      * @param event a player clicking an inventory slot
      */
-    @EventHandler(priority = EventPriority.NORMAL)
+    @EventHandler(ignoreCancelled = true)
     public void onTemporalTerminalClick(InventoryClickEvent event) {
         Inventory inv = event.getInventory();
         String name = inv.getTitle();

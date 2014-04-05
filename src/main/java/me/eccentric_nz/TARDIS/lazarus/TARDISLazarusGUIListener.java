@@ -47,7 +47,6 @@ import org.bukkit.entity.Ocelot.Type;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Villager.Profession;
 import org.bukkit.event.EventHandler;
-import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryCloseEvent;
@@ -80,7 +79,7 @@ public class TARDISLazarusGUIListener implements Listener {
      *
      * @param event a player clicking an inventory slot
      */
-    @EventHandler(priority = EventPriority.NORMAL)
+    @EventHandler(ignoreCancelled = true)
     public void onLazarusClick(InventoryClickEvent event) {
         final Inventory inv = event.getInventory();
         String name = inv.getTitle();
@@ -336,7 +335,7 @@ public class TARDISLazarusGUIListener implements Listener {
         }
     }
 
-    @EventHandler
+    @EventHandler(ignoreCancelled = true)
     public void onLazarusClose(InventoryCloseEvent event) {
         String name = event.getInventory().getTitle();
         String playerNameStr = event.getPlayer().getName();

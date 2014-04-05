@@ -50,7 +50,7 @@ public class TARDISPerceptionFilterListener implements Listener {
     }
 
     @SuppressWarnings("deprecation")
-    @EventHandler
+    @EventHandler(ignoreCancelled = true)
     public void onPerceptionFilterClick(PlayerInteractEvent event) {
         final Player player = event.getPlayer();
         if (player.getItemInHand().getType().equals(filter) && event.getAction().equals(Action.RIGHT_CLICK_AIR)) {
@@ -78,7 +78,7 @@ public class TARDISPerceptionFilterListener implements Listener {
         }
     }
 
-    @EventHandler
+    @EventHandler(ignoreCancelled = true)
     public void onPerceptioFilterRemove(InventoryClickEvent event) {
         if (event.getInventory().getType().equals(InventoryType.CRAFTING)) {
             int slot = event.getRawSlot();

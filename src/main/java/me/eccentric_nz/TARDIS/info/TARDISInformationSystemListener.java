@@ -53,7 +53,7 @@ public class TARDISInformationSystemListener implements Listener {
      *
      * @param event a player typing in chat
      */
-    @EventHandler(priority = EventPriority.NORMAL)
+    @EventHandler(ignoreCancelled = true)
     public void onTISChat(AsyncPlayerChatEvent event) {
         Player p = event.getPlayer();
         String name = p.getName();

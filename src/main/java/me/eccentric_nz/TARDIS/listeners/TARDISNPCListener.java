@@ -47,7 +47,7 @@ public class TARDISNPCListener implements Listener {
      *
      * @param event a player clicking an inventory slot
      */
-    @EventHandler(priority = EventPriority.MONITOR)
+    @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
     public void onNPCInteract(NPCRightClickEvent event) {
         NPC npc = event.getNPC();
         Player p = event.getClicker();

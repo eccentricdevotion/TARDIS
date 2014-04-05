@@ -74,7 +74,7 @@ public class TARDISMakePresetListener implements Listener {
      *
      * @param event a player clicking a block
      */
-    @EventHandler(priority = EventPriority.MONITOR)
+    @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
     public void onAreaInteract(PlayerInteractEvent event) {
         final Player player = event.getPlayer();
         final String playerNameStr = player.getName();

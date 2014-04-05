@@ -78,7 +78,7 @@ public class TARDISStattenheimListener implements Listener {
     }
 
     @SuppressWarnings("deprecation")
-    @EventHandler(priority = EventPriority.MONITOR)
+    @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
     public void onStattenheimInteract(PlayerInteractEvent event) {
         Player player = event.getPlayer();
         ItemStack is = player.getItemInHand();

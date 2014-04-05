@@ -112,7 +112,7 @@ public class TARDISDoorListener implements Listener {
      * @param event a player clicking a block
      */
     @SuppressWarnings("deprecation")
-    @EventHandler(priority = EventPriority.NORMAL)
+    @EventHandler(ignoreCancelled = true)
     public void onDoorInteract(PlayerInteractEvent event) {
         QueryFactory qf = new QueryFactory(plugin);
         final Player player = event.getPlayer();

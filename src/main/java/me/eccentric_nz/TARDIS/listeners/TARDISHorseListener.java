@@ -59,7 +59,7 @@ public class TARDISHorseListener implements Listener {
         this.barding.add(Material.DIAMOND_BARDING);
     }
 
-    @EventHandler(priority = EventPriority.MONITOR)
+    @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
     public void onInteract(EntityInteractEvent event) {
         Entity e = event.getEntity();
         if (e instanceof Horse) {

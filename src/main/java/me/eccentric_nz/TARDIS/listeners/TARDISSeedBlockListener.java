@@ -65,7 +65,7 @@ public class TARDISSeedBlockListener implements Listener {
      *
      * @param event
      */
-    @EventHandler(priority = EventPriority.MONITOR)
+    @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
     public void onSeedBlockPlace(BlockPlaceEvent event) {
         final Player player = event.getPlayer();
         ItemStack is = player.getItemInHand();
@@ -104,7 +104,7 @@ public class TARDISSeedBlockListener implements Listener {
      *
      * @param event a block break event
      */
-    @EventHandler(priority = EventPriority.MONITOR)
+    @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
     @SuppressWarnings("deprecation")
     public void onSeedBlockBreak(BlockBreakEvent event) {
         Location l = event.getBlock().getLocation();
@@ -153,7 +153,7 @@ public class TARDISSeedBlockListener implements Listener {
      *
      * @param event a block interact event
      */
-    @EventHandler(priority = EventPriority.MONITOR)
+    @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
     public void onSeedInteract(PlayerInteractEvent event) {
         if (event.getClickedBlock() != null) {
             Location l = event.getClickedBlock().getLocation();

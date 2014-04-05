@@ -56,7 +56,7 @@ public class TARDISFireListener implements Listener {
      *
      * @param event a block catching fire
      */
-    @EventHandler(priority = EventPriority.LOWEST)
+    @EventHandler(priority = EventPriority.LOWEST, ignoreCancelled = true)
     public void onBlockIgnite(BlockIgniteEvent event) {
         Block b = event.getBlock();
         for (BlockFace bf : faces) {
@@ -69,7 +69,7 @@ public class TARDISFireListener implements Listener {
         }
     }
 
-    @EventHandler(priority = EventPriority.LOWEST)
+    @EventHandler(priority = EventPriority.LOWEST, ignoreCancelled = true)
     public void onBlockBurn(BlockBurnEvent event) {
         Block b = event.getBlock();
         String l = b.getLocation().toString();

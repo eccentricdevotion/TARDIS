@@ -57,7 +57,7 @@ public class TARDISConsoleListener implements Listener {
         }
     }
 
-    @EventHandler
+    @EventHandler(ignoreCancelled = true)
     public void onConsoleInteract(PlayerInteractEvent event) {
         final Player p = event.getPlayer();
         if (!p.hasPermission("tardis.advanced")) {

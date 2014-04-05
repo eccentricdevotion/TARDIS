@@ -103,7 +103,7 @@ public class TARDISTagListener implements Listener {
      *
      * @param event a player right-clicking another player
      */
-    @EventHandler
+    @EventHandler(ignoreCancelled = true)
     public void onPlayerInteractPlayer(PlayerInteractEntityEvent event) {
         if (event.getRightClicked() instanceof Player) {
             Player clicked = (Player) event.getRightClicked();

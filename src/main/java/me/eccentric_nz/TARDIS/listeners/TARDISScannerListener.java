@@ -74,7 +74,7 @@ public class TARDISScannerListener implements Listener {
      *
      * @param event a player clicking a block
      */
-    @EventHandler(priority = EventPriority.MONITOR)
+    @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
     public void onInteract(PlayerInteractEvent event) {
         final Player player = event.getPlayer();
         Block block = event.getClickedBlock();

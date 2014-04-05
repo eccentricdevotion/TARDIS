@@ -50,7 +50,7 @@ public class TARDISSonicEntityListener implements Listener {
         this.sonic = Material.valueOf(split[0]);
     }
 
-    @EventHandler(priority = EventPriority.MONITOR)
+    @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
     public void onInteract(PlayerInteractEntityEvent event) {
         final Player player = event.getPlayer();
         long now = System.currentTimeMillis();
@@ -117,7 +117,7 @@ public class TARDISSonicEntityListener implements Listener {
         return h + gh + m + gm + s + gs;
     }
 
-    @EventHandler
+    @EventHandler(ignoreCancelled = true)
     public void onPlayerInventoryViewClick(InventoryClickEvent event) {
         String title = event.getInventory().getTitle();
         if (title.startsWith("§4") && title.endsWith("'s Inventory")) {

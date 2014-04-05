@@ -51,7 +51,7 @@ public class TARDISDiskCraftListener implements Listener {
         actions.add(InventoryAction.SWAP_WITH_CURSOR);
     }
 
-    @EventHandler
+    @EventHandler(ignoreCancelled = true)
     public void onCraftBiomePresetDisk(InventoryClickEvent event) {
         final Player player = (Player) event.getWhoClicked();
         final Inventory inv = event.getInventory();

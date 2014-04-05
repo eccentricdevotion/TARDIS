@@ -60,7 +60,7 @@ public class TARDISBlockBreakListener implements Listener {
      *
      * @param event a player breaking a block
      */
-    @EventHandler(priority = EventPriority.LOW)
+    @EventHandler(priority = EventPriority.LOW, ignoreCancelled = true)
     public void onSignBreak(BlockBreakEvent event) {
         Player player = event.getPlayer();
         if (plugin.getTrackerKeeper().getTrackZeroRoomOccupants().contains(player.getName())) {

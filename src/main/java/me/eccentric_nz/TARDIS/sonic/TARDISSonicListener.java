@@ -139,7 +139,7 @@ public class TARDISSonicListener implements Listener {
     }
 
     @SuppressWarnings("deprecation")
-    @EventHandler(priority = EventPriority.MONITOR)
+    @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
     public void onInteract(PlayerInteractEvent event) {
         final Player player = event.getPlayer();
         long now = System.currentTimeMillis();
@@ -485,7 +485,7 @@ public class TARDISSonicListener implements Listener {
         return Math.abs(d.x * c.y - d.y * c.x) <= e.x * ad.y + e.y * ad.x + epsilon;
     }
 
-    @EventHandler
+    @EventHandler(ignoreCancelled = true)
     public void onPlayerFrozenMove(PlayerMoveEvent event) {
         if (frozenPlayers.contains(event.getPlayer().getName())) {
             event.setCancelled(true);

@@ -57,7 +57,7 @@ public class TARDISSaveSignListener implements Listener {
      *
      * @param event a player clicking an inventory slot
      */
-    @EventHandler(priority = EventPriority.NORMAL)
+    @EventHandler(ignoreCancelled = true)
     public void onSaveTerminalClick(InventoryClickEvent event) {
         Inventory inv = event.getInventory();
         String name = inv.getTitle();
@@ -200,7 +200,7 @@ public class TARDISSaveSignListener implements Listener {
         }
     }
 
-    @EventHandler(priority = EventPriority.NORMAL)
+    @EventHandler(ignoreCancelled = true)
     public void onSaveSignClose(InventoryCloseEvent event) {
         final Inventory inv = event.getInventory();
         String inv_name = inv.getTitle();

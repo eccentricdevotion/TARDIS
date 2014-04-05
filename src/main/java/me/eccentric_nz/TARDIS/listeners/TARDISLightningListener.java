@@ -53,7 +53,7 @@ public class TARDISLightningListener implements Listener {
      *
      * @param e a lightning strike
      */
-    @EventHandler(priority = EventPriority.LOW)
+    @EventHandler(priority = EventPriority.LOW, ignoreCancelled = true)
     public void onLightningStrike(LightningStrikeEvent e) {
         LightningStrike strike = e.getLightning();
         // only if a natural lightning strike

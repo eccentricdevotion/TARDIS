@@ -37,13 +37,13 @@ public class TARDISWorldResetListener implements Listener {
         this.plugin = plugin;
     }
 
-    @EventHandler(priority = EventPriority.MONITOR)
+    @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
     public void onMVAReset(MVAResetEvent event) {
         String world = event.getWorld();
         plugin.getTrackerKeeper().getTrackReset().add(world);
     }
 
-    @EventHandler(priority = EventPriority.MONITOR)
+    @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
     public void onMVAResetFinished(MVAResetFinishedEvent event) {
         String world = event.getWorld();
         plugin.getTrackerKeeper().getTrackReset().remove(world);

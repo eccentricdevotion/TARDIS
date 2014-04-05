@@ -52,11 +52,8 @@ public class TARDISConsoleSwitchListener implements Listener {
     }
 
     @SuppressWarnings("Deprecation")
-    @EventHandler
+    @EventHandler(ignoreCancelled = true)
     public void onConsoleInventoryClick(final InventoryClickEvent event) {
-        if (event.isCancelled()) {
-            return;
-        }
         Inventory inv = event.getInventory();
         if (inv.getTitle().equals("§4TARDIS Console")) {
             final Player p = (Player) event.getWhoClicked();

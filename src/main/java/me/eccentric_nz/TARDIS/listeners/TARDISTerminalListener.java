@@ -73,7 +73,7 @@ public class TARDISTerminalListener implements Listener {
      *
      * @param event a player clicking an inventory slot
      */
-    @EventHandler(priority = EventPriority.NORMAL)
+    @EventHandler(ignoreCancelled = true)
     public void onDestTerminalClick(InventoryClickEvent event) {
         Inventory inv = event.getInventory();
         String name = inv.getTitle();
@@ -177,7 +177,7 @@ public class TARDISTerminalListener implements Listener {
         }
     }
 
-    @EventHandler(priority = EventPriority.MONITOR)
+    @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
     public void onOpenTerminal(InventoryOpenEvent event) {
         Inventory inv = event.getInventory();
         InventoryHolder holder = inv.getHolder();

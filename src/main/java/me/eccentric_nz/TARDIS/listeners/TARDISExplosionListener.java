@@ -52,11 +52,8 @@ public class TARDISExplosionListener implements Listener {
      *
      * @param e an entity exploding
      */
-    @EventHandler(priority = EventPriority.LOW)
+    @EventHandler(priority = EventPriority.LOW, ignoreCancelled = true)
     public void onEntityExplode(EntityExplodeEvent e) {
-        if (e.isCancelled()) {
-            return;
-        }
         int idchk = 0;
         // get list of police box blocks from DB
         ResultSetBlocks rs = new ResultSetBlocks(plugin, null, true);

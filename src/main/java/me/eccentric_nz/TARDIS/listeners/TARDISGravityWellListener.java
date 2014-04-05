@@ -73,7 +73,7 @@ public class TARDISGravityWellListener implements Listener {
      *
      * @param event a player moving
      */
-    @EventHandler(priority = EventPriority.MONITOR)
+    @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
     public void onPlayerMove(PlayerMoveEvent event) {
         World world = event.getTo().getWorld();
         Location l = new Location(world, event.getTo().getBlockX(), event.getTo().getBlockY() - 1, event.getTo().getBlockZ(), 0.0F, 0.0F);
@@ -153,7 +153,7 @@ public class TARDISGravityWellListener implements Listener {
      *
      * @param e an entity taking damage
      */
-    @EventHandler
+    @EventHandler(ignoreCancelled = true)
     public void onEntityDamage(EntityDamageEvent e) {
         if (e.getCause() == EntityDamageEvent.DamageCause.FALL) {
             Entity ent = e.getEntity();
@@ -179,7 +179,7 @@ public class TARDISGravityWellListener implements Listener {
      *
      * @param event a player clicking a block
      */
-    @EventHandler(priority = EventPriority.MONITOR)
+    @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
     public void onWoolInteract(PlayerInteractEvent event) {
         final Player player = event.getPlayer();
         String playerNameStr = player.getName();

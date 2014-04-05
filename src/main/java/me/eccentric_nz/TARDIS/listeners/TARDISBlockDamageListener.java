@@ -59,7 +59,7 @@ public class TARDISBlockDamageListener implements Listener {
      * @param event a block being damaged
      */
     @SuppressWarnings("deprecation")
-    @EventHandler(priority = EventPriority.NORMAL)
+    @EventHandler(ignoreCancelled = true)
     public void onPoliceBoxDamage(BlockDamageEvent event) {
         Player p = event.getPlayer();
         Block b = event.getBlock();

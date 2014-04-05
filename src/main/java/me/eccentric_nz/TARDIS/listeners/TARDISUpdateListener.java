@@ -103,7 +103,7 @@ public class TARDISUpdateListener implements Listener {
      * @param event a player clicking on a block
      */
     @SuppressWarnings("deprecation")
-    @EventHandler(priority = EventPriority.MONITOR)
+    @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
     public void onUpdateInteract(PlayerInteractEvent event) {
         final Player player = event.getPlayer();
         final String playerNameStr = player.getName();

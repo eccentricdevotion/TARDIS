@@ -65,7 +65,7 @@ public class TARDISStorageListener implements Listener {
         }
     }
 
-    @EventHandler(priority = EventPriority.NORMAL)
+    @EventHandler(ignoreCancelled = true)
     public void onDiskStorageClose(InventoryCloseEvent event) {
         Inventory inv = event.getInventory();
         String title = inv.getTitle();

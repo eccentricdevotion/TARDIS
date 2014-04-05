@@ -56,7 +56,7 @@ public class TARDISPrefsMenuListener implements Listener {
         lookup.put("Wool For Lights Off", "wool_lights_on");
     }
 
-    @EventHandler(priority = EventPriority.NORMAL)
+    @EventHandler(ignoreCancelled = true)
     public void onPrefsMenuClick(InventoryClickEvent event) {
         Inventory inv = event.getInventory();
         String name = inv.getTitle();

@@ -46,7 +46,7 @@ public class TARDISIceMeltListener implements Listener {
      *
      * @param event ice melting
      */
-    @EventHandler(priority = EventPriority.NORMAL)
+    @EventHandler(ignoreCancelled = true)
     public void onIceMelt(BlockFadeEvent event) {
         Block b = event.getBlock();
         Material m = b.getType();

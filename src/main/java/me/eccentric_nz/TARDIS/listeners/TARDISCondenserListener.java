@@ -68,7 +68,7 @@ public class TARDISCondenserListener implements Listener {
      * @param event a chest closing
      */
     @SuppressWarnings("deprecation")
-    @EventHandler(priority = EventPriority.NORMAL)
+    @EventHandler(ignoreCancelled = true)
     public void onChestClose(InventoryCloseEvent event) {
         Inventory inv = event.getInventory();
         InventoryHolder holder = inv.getHolder();
@@ -164,7 +164,7 @@ public class TARDISCondenserListener implements Listener {
         }
     }
 
-    @EventHandler(priority = EventPriority.NORMAL)
+    @EventHandler(ignoreCancelled = true)
     public void onChestOpen(PlayerInteractEvent event) {
         Block b = event.getClickedBlock();
         if (b != null && b.getType().equals(Material.CHEST) && event.getAction().equals(Action.RIGHT_CLICK_BLOCK)) {

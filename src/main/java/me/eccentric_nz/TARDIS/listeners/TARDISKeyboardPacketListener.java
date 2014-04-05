@@ -75,7 +75,7 @@ public class TARDISKeyboardPacketListener implements Listener {
         humanAccessor.set(tileEntity, BukkitUnwrapper.getInstance().unwrapItem(player));
     }
 
-    @EventHandler(priority = EventPriority.NORMAL)
+    @EventHandler(ignoreCancelled = true)
     public void onKeyboardInteract(PlayerInteractEvent event) {
         Block b = event.getClickedBlock();
         if (b != null && (b.getType().equals(Material.SIGN_POST) || b.getType().equals(Material.WALL_SIGN))) {

@@ -60,7 +60,7 @@ public class TARDISTimeLordDeathListener implements Listener {
      *
      * @param event a player dying
      */
-    @EventHandler(priority = EventPriority.MONITOR)
+    @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
     public void onTimeLordDeath(PlayerDeathEvent event) {
         if (plugin.getConfig().getBoolean("allow.autonomous")) {
             Player player = event.getEntity();

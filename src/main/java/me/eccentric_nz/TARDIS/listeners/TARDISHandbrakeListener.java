@@ -73,7 +73,7 @@ public class TARDISHandbrakeListener implements Listener {
      *
      * @param event the player clicking the handbrake
      */
-    @EventHandler(priority = EventPriority.NORMAL)
+    @EventHandler(ignoreCancelled = true)
     public void onInteract(PlayerInteractEvent event) {
         final Player player = event.getPlayer();
         Block block = event.getClickedBlock();

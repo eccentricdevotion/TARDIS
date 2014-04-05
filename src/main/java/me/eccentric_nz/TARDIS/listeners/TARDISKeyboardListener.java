@@ -84,7 +84,7 @@ public class TARDISKeyboardListener implements Listener {
         }
     }
 
-    @EventHandler(priority = EventPriority.NORMAL)
+    @EventHandler(ignoreCancelled = true)
     public void onSignChange(SignChangeEvent event) {
         String loc = event.getBlock().getLocation().toString();
         if (!plugin.getTrackerKeeper().getTrackSign().containsKey(loc)) {

@@ -49,7 +49,7 @@ public class TARDISChatListener implements Listener {
      *
      * @param event a player typing in chat
      */
-    @EventHandler(priority = EventPriority.MONITOR)
+    @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
     public void onChat(AsyncPlayerChatEvent event) {
         final UUID saved = event.getPlayer().getUniqueId();
         String chat = event.getMessage();

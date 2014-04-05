@@ -59,7 +59,7 @@ public class TARDISMinecartListener implements Listener {
         this.rails.add(157);
     }
 
-    @EventHandler(priority = EventPriority.NORMAL)
+    @EventHandler(ignoreCancelled = true)
     public void onVehicleBlockCollision(VehicleBlockCollisionEvent event) {
         if (event.getVehicle() instanceof StorageMinecart) {
             Block b = event.getBlock();

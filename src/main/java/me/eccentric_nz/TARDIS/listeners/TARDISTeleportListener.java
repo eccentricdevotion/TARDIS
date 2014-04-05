@@ -47,7 +47,7 @@ public class TARDISTeleportListener implements Listener {
         causes.add(TeleportCause.UNKNOWN);
     }
 
-    @EventHandler(priority = EventPriority.MONITOR)
+    @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
     public void onTeleport(PlayerTeleportEvent event) {
         TeleportCause cause = event.getCause();
         if (causes.contains(cause)) {

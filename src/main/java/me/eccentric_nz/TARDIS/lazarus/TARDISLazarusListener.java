@@ -42,7 +42,7 @@ public class TARDISLazarusListener implements Listener {
         this.plugin = plugin;
     }
 
-    @EventHandler(priority = EventPriority.MONITOR)
+    @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
     public void onInteract(PlayerInteractEvent event) {
         Action a = event.getAction();
         if (a.equals(Action.PHYSICAL) && event.getClickedBlock().getType().equals(Material.WOOD_PLATE)) {
