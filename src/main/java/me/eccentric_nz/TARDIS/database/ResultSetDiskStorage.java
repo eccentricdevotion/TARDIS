@@ -109,9 +109,10 @@ public class ResultSetDiskStorage {
                 while (rs.next()) {
                     this.id = rs.getInt("storage_id");
                     this.tardis_id = rs.getInt("tardis_id");
-                    this.uuid = UUID.fromString(rs.getString("uuid"));
-                    if (rs.wasNull()) {
-                        this.uuid = UUID.randomUUID();
+                    if (!rs.wasNull()) {
+                        this.uuid = UUID.fromString(rs.getString("uuid"));
+                    } else {
+                        this.uuid = plugin.getGeneralKeeper().getUUIDCache().getZERO_UUID();
                     }
                     this.owner = rs.getString("owner");
                     if (rs.wasNull()) {

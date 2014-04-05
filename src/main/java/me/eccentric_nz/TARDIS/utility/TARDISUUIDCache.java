@@ -39,7 +39,7 @@ import org.apache.commons.lang.Validate;
 public class TARDISUUIDCache {
 
     private final TARDIS plugin;
-    private static final UUID ZERO_UUID = UUID.fromString("00000000-0000-0000-0000-000000000000");
+    private final UUID ZERO_UUID = UUID.fromString("00000000-0000-0000-0000-000000000000");
     private final Map<String, UUID> cache = new ConcurrentHashMap<String, UUID>();
     private final Map<UUID, String> nameCache = new ConcurrentHashMap<UUID, String>();
 
@@ -134,5 +134,9 @@ public class TARDISUUIDCache {
 
     public Map<UUID, String> getNameCache() {
         return nameCache;
+    }
+
+    public UUID getZERO_UUID() {
+        return ZERO_UUID;
     }
 }
