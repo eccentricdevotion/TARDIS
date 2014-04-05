@@ -180,7 +180,8 @@ public class TARDISFarmer {
                             horse.eject();
                             // don't farm other player's tamed horses
                             if (brokenin.isTamed()) {
-                                if (brokenin.getOwner() != null && !brokenin.getOwner().getName().equals(p.getName())) {
+                                Player owner = (Player) brokenin.getOwner();
+                                if (owner != null && !owner.getUniqueId().equals(p.getUniqueId())) {
                                     break;
                                 }
                             }
@@ -289,7 +290,7 @@ public class TARDISFarmer {
                         case WOLF:
                         case OCELOT:
                             Tameable tamed = (Tameable) e;
-                            if (tamed.isTamed() && tamed.getOwner().getName().equals(p.getName())) {
+                            if (tamed.isTamed() && ((Player) tamed.getOwner()).getUniqueId().equals(p.getUniqueId())) {
                                 TARDISMob pet = new TARDISMob();
                                 pet.setType(e.getType());
                                 pet.setName(((LivingEntity) e).getCustomName());
@@ -592,7 +593,7 @@ public class TARDISFarmer {
         for (Entity e : mobs) {
             if (e.getType().equals(EntityType.OCELOT) || e.getType().equals(EntityType.WOLF)) {
                 Tameable tamed = (Tameable) e;
-                if (tamed.isTamed() && tamed.getOwner().getName().equals(p.getName())) {
+                if (tamed.isTamed() && ((Player) tamed.getOwner()).getUniqueId().equals(p.getUniqueId())) {
                     TARDISMob pet = new TARDISMob();
                     pet.setType(e.getType());
                     String pet_name = ((LivingEntity) e).getCustomName();
