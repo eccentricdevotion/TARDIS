@@ -75,24 +75,89 @@ public class TARDISUUIDConverter {
         PreparedStatement ps_tco = null;
         PreparedStatement ps_tar = null;
         PreparedStatement ps_tra = null;
-        ResultSet rs = null;
-        String query = "SELECT owner FROM tardis";
-        String achievements_update = "UPDATE achievements SET uuid = ? WHERE player = ?";
-        String ars_update = "UPDATE ars SET uuid = ? WHERE player = ?";
-        String playerprefs_update = "UPDATE player_prefs SET uuid = ? WHERE player = ?";
-        String storage_update = "UPDATE storage SET uuid = ? WHERE owner = ?";
-        String tcount_update = "UPDATE t_count SET uuid = ? WHERE player = ?";
-        String tardis_update = "UPDATE tardis SET uuid = ? WHERE owner = ?";
-        String travellers_update = "UPDATE travellers SET uuid = ? WHERE player = ?";
+        ResultSet rsa = null;
+        ResultSet rsc = null;
+        ResultSet rsp = null;
+        ResultSet rsr = null;
+        ResultSet rss = null;
+        ResultSet rst = null;
+        ResultSet rsv = null;
+        String querya = "SELECT player FROM achievements";
+        String queryc = "SELECT player FROM t_count";
+        String queryp = "SELECT player FROM player_prefs";
+        String queryr = "SELECT player FROM ars";
+        String querys = "SELECT owner FROM storage";
+        String queryt = "SELECT owner FROM tardis";
+        String queryv = "SELECT player FROM travellers";
+        String a_update = "UPDATE achievements SET uuid = ? WHERE player = ?";
+        String c_update = "UPDATE t_count SET uuid = ? WHERE player = ?";
+        String p_update = "UPDATE player_prefs SET uuid = ? WHERE player = ?";
+        String r_update = "UPDATE ars SET uuid = ? WHERE player = ?";
+        String s_update = "UPDATE storage SET uuid = ? WHERE owner = ?";
+        String t_update = "UPDATE tardis SET uuid = ? WHERE owner = ?";
+        String v_update = "UPDATE travellers SET uuid = ? WHERE player = ?";
         int count = 0;
+        // we need to query all tables as there are potentially players in some table that aren't in others
         try {
             service.testConnection(connection);
             statement = connection.createStatement();
-            rs = statement.executeQuery(query);
-            if (rs.isBeforeFirst()) {
-                while (rs.next()) {
-                    timelords.add(rs.getString("owner"));
+            rst = statement.executeQuery(queryt);
+            if (rst.isBeforeFirst()) {
+                while (rst.next()) {
+                    timelords.add(rst.getString("owner"));
                 }
+            }
+            rsa = statement.executeQuery(querya);
+            if (rsa.isBeforeFirst()) {
+                while (rsa.next()) {
+                    // only add them if we haven't already
+                    if (!timelords.contains(rsa.getString("player"))) {
+                        timelords.add(rsa.getString("player"));
+                    }
+                }
+            }
+            rsc = statement.executeQuery(queryc);
+            if (rsc.isBeforeFirst()) {
+                while (rsc.next()) {
+                    if (!timelords.contains(rsc.getString("player"))) {
+                        timelords.add(rsc.getString("player"));
+                    }
+                }
+            }
+            rsp = statement.executeQuery(queryp);
+            if (rsp.isBeforeFirst()) {
+                while (rsp.next()) {
+                    if (!timelords.contains(rsp.getString("player"))) {
+                        timelords.add(rsp.getString("player"));
+                    }
+                }
+            }
+            rsr = statement.executeQuery(queryr);
+            if (rsr.isBeforeFirst()) {
+                while (rsr.next()) {
+                    if (!timelords.contains(rsr.getString("player"))) {
+                        timelords.add(rsr.getString("player"));
+                    }
+                }
+            }
+            rss = statement.executeQuery(querys);
+            if (rss.isBeforeFirst()) {
+                while (rss.next()) {
+                    if (!timelords.contains(rss.getString("owner"))) {
+                        timelords.add(rss.getString("owner"));
+                    }
+                }
+            }
+            rsv = statement.executeQuery(queryv);
+            if (rsv.isBeforeFirst()) {
+                while (rsv.next()) {
+                    if (!timelords.contains(rsv.getString("player"))) {
+                        timelords.add(rsv.getString("player"));
+                    }
+                }
+            }
+            // don't bother if the player list is empty
+            if (timelords.size() > 0) {
                 TARDISUUIDFetcher fetcher = new TARDISUUIDFetcher(timelords);
                 // get UUIDs
                 Map<String, UUID> response = null;
@@ -104,13 +169,13 @@ public class TARDISUUIDConverter {
                 }
                 if (response != null) {
                     // update all TARDIS owners to UUIDs
-                    ps_ach = connection.prepareStatement(achievements_update);
-                    ps_ars = connection.prepareStatement(ars_update);
-                    ps_sto = connection.prepareStatement(playerprefs_update);
-                    ps_pla = connection.prepareStatement(storage_update);
-                    ps_tco = connection.prepareStatement(tcount_update);
-                    ps_tar = connection.prepareStatement(tardis_update);
-                    ps_tra = connection.prepareStatement(travellers_update);
+                    ps_ach = connection.prepareStatement(a_update);
+                    ps_ars = connection.prepareStatement(r_update);
+                    ps_sto = connection.prepareStatement(p_update);
+                    ps_pla = connection.prepareStatement(s_update);
+                    ps_tco = connection.prepareStatement(c_update);
+                    ps_tar = connection.prepareStatement(t_update);
+                    ps_tra = connection.prepareStatement(v_update);
                     for (Map.Entry<String, UUID> map : response.entrySet()) {
                         ps_ach.setString(1, map.getValue().toString());
                         ps_ach.setString(2, map.getKey());
@@ -141,8 +206,26 @@ public class TARDISUUIDConverter {
             return false;
         } finally {
             try {
-                if (rs != null) {
-                    rs.close();
+                if (rsa != null) {
+                    rsa.close();
+                }
+                if (rsc != null) {
+                    rsc.close();
+                }
+                if (rsp != null) {
+                    rsp.close();
+                }
+                if (rsr != null) {
+                    rsr.close();
+                }
+                if (rss != null) {
+                    rss.close();
+                }
+                if (rst != null) {
+                    rst.close();
+                }
+                if (rsv != null) {
+                    rsv.close();
                 }
                 if (statement != null) {
                     statement.close();
