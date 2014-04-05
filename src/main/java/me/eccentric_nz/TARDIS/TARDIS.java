@@ -161,6 +161,7 @@ public class TARDIS extends JavaPlugin {
                     // conversion failed
                     console.sendMessage(pluginName + ChatColor.RED + "UUID conversion failed, disabling...");
                     pm.disablePlugin(this);
+                    return;
                 } else {
                     getConfig().set("conversions.uuid_conversion_done", true);
                     saveConfig();

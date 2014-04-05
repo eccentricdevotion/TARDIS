@@ -72,7 +72,6 @@ public class TARDISUUIDConverter {
         PreparedStatement ps_ars = null;
         PreparedStatement ps_pla = null;
         PreparedStatement ps_sto = null;
-        PreparedStatement ps_tag = null;
         PreparedStatement ps_tco = null;
         PreparedStatement ps_tar = null;
         PreparedStatement ps_tra = null;
@@ -82,7 +81,6 @@ public class TARDISUUIDConverter {
         String ars_update = "UPDATE ars SET uuid = ? WHERE player = ?";
         String playerprefs_update = "UPDATE player_prefs SET uuid = ? WHERE player = ?";
         String storage_update = "UPDATE storage SET uuid = ? WHERE owner = ?";
-        String tag_update = "UPDATE tag SET uuid = ? WHERE player = ?";
         String tcount_update = "UPDATE t_count SET uuid = ? WHERE player = ?";
         String tardis_update = "UPDATE tardis SET uuid = ? WHERE owner = ?";
         String travellers_update = "UPDATE travellers SET uuid = ? WHERE player = ?";
@@ -110,7 +108,6 @@ public class TARDISUUIDConverter {
                     ps_ars = connection.prepareStatement(ars_update);
                     ps_sto = connection.prepareStatement(playerprefs_update);
                     ps_pla = connection.prepareStatement(storage_update);
-                    ps_tag = connection.prepareStatement(tag_update);
                     ps_tco = connection.prepareStatement(tcount_update);
                     ps_tar = connection.prepareStatement(tardis_update);
                     ps_tra = connection.prepareStatement(travellers_update);
@@ -127,9 +124,6 @@ public class TARDISUUIDConverter {
                         ps_sto.setString(1, map.getValue().toString());
                         ps_sto.setString(2, map.getKey());
                         count += ps_sto.executeUpdate();
-                        ps_tag.setString(1, map.getValue().toString());
-                        ps_tag.setString(2, map.getKey());
-                        count += ps_tag.executeUpdate();
                         ps_tco.setString(1, map.getValue().toString());
                         ps_tco.setString(2, map.getKey());
                         count += ps_tco.executeUpdate();
@@ -164,9 +158,6 @@ public class TARDISUUIDConverter {
                 }
                 if (ps_sto != null) {
                     ps_sto.close();
-                }
-                if (ps_tag != null) {
-                    ps_tag.close();
                 }
                 if (ps_tco != null) {
                     ps_tco.close();
