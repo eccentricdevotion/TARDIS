@@ -61,7 +61,6 @@ import org.bukkit.entity.Tameable;
 import org.bukkit.entity.Wolf;
 import org.bukkit.event.Event;
 import org.bukkit.event.EventHandler;
-import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
@@ -429,8 +428,8 @@ public class TARDISDoorListener implements Listener {
                                                 COMPASS innerD = idl.getD();
                                                 // check for entities near the police box
                                                 List<TARDISMob> pets = null;
-                                                if (plugin.getConfig().getBoolean("allow.mob_farming") && player.hasPermission("tardis.farm") && !plugin.getTrackerKeeper().getTrackFarming().contains(player.getName())) {
-                                                    plugin.getTrackerKeeper().getTrackFarming().add(player.getName());
+                                                if (plugin.getConfig().getBoolean("allow.mob_farming") && player.hasPermission("tardis.farm") && !plugin.getTrackerKeeper().getTrackFarming().contains(player.getUniqueId())) {
+                                                    plugin.getTrackerKeeper().getTrackFarming().add(player.getUniqueId());
                                                     TARDISFarmer tf = new TARDISFarmer(plugin);
                                                     pets = tf.farmAnimals(block_loc, d, id, player, tmp_loc.getWorld().getName(), playerWorld.getName());
                                                 }

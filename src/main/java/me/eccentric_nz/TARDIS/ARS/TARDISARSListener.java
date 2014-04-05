@@ -22,6 +22,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.UUID;
 import me.eccentric_nz.TARDIS.JSON.JSONArray;
 import me.eccentric_nz.TARDIS.TARDIS;
 import static me.eccentric_nz.TARDIS.commands.preferences.TARDISPrefsCommands.ucfirst;
@@ -35,7 +36,6 @@ import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
-import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.Inventory;
@@ -57,15 +57,15 @@ public class TARDISARSListener implements Listener {
     private final TARDIS plugin;
     private int[] room_ids;
     private String[] room_names;
-    private final HashMap<String, Integer> scroll_start = new HashMap<String, Integer>();
-    private final HashMap<String, Integer> selected_slot = new HashMap<String, Integer>();
-    private final HashMap<String, TARDISARSSaveData> save_map_data = new HashMap<String, TARDISARSSaveData>();
-    private final HashMap<String, TARDISARSMapData> map_data = new HashMap<String, TARDISARSMapData>();
+    private final HashMap<UUID, Integer> scroll_start = new HashMap<UUID, Integer>();
+    private final HashMap<UUID, Integer> selected_slot = new HashMap<UUID, Integer>();
+    private final HashMap<UUID, TARDISARSSaveData> save_map_data = new HashMap<UUID, TARDISARSSaveData>();
+    private final HashMap<UUID, TARDISARSMapData> map_data = new HashMap<UUID, TARDISARSMapData>();
     private final String[] levels = new String[]{"Bottom level", "Main level", "Top level"};
     private final List<TARDISARS> notrooms;
     private final List<Material> consoleBlocks;
-    private final HashMap<String, Integer> ids = new HashMap<String, Integer>();
-    private final List<String> hasLoadedMap = new ArrayList<String>();
+    private final HashMap<UUID, Integer> ids = new HashMap<UUID, Integer>();
+    private final List<UUID> hasLoadedMap = new ArrayList<UUID>();
 
     public TARDISARSListener(TARDIS plugin) {
         this.plugin = plugin;
@@ -87,10 +87,10 @@ public class TARDISARSListener implements Listener {
         if (name.equals("§4Architectural Reconfiguration")) {
             event.setCancelled(true);
             final Player player = (Player) event.getWhoClicked();
-            String playerNameStr = player.getName();
-            ids.put(playerNameStr, getTardisId(player.getUniqueId().toString(), player.isOp()));
+            UUID uuid = player.getUniqueId();
+            ids.put(uuid, getTardisId(player.getUniqueId().toString(), player.isOp()));
             int slot = event.getRawSlot();
-            if (slot != 10 && !hasLoadedMap.contains(playerNameStr)) {
+            if (slot != 10 && !hasLoadedMap.contains(uuid)) {
                 TARDISMessage.send(player, plugin.getPluginName() + "You need to load the map first!");
                 return;
             }
@@ -101,7 +101,7 @@ public class TARDISARSListener implements Listener {
                     case 11:
                     case 19:
                         // up
-                        moveMap(playerNameStr, inv, slot);
+                        moveMap(uuid, inv, slot);
                         break;
                     case 4:
                     case 5:
@@ -130,12 +130,12 @@ public class TARDISARSListener implements Listener {
                     case 44:
                         if (!checkSlotForConsole(inv, slot)) {
                             // select slot
-                            selected_slot.put(playerNameStr, slot);
+                            selected_slot.put(uuid, slot);
                         }
                         break;
                     case 10:
                         // load map
-                        loadMap(inv, playerNameStr);
+                        loadMap(inv, uuid);
                         break;
                     case 12:
                         // reconfigure
@@ -145,10 +145,10 @@ public class TARDISARSListener implements Listener {
                     case 28:
                     case 29:
                         // top level
-                        if (map_data.containsKey(playerNameStr)) {
-                            switchLevel(inv, slot, playerNameStr);
-                            TARDISARSMapData md = map_data.get(playerNameStr);
-                            setMap(md.getY(), md.getE(), md.getS(), playerNameStr, inv);
+                        if (map_data.containsKey(uuid)) {
+                            switchLevel(inv, slot, uuid);
+                            TARDISARSMapData md = map_data.get(uuid);
+                            setMap(md.getY(), md.getE(), md.getS(), uuid, inv);
                             setLore(inv, slot, null);
                         } else {
                             setLore(inv, slot, "Load map data first!");
@@ -156,17 +156,17 @@ public class TARDISARSListener implements Listener {
                         break;
                     case 30:
                         // reset selected slot to empty
-                        if (selected_slot.containsKey(playerNameStr)) {
+                        if (selected_slot.containsKey(uuid)) {
                             // check whether original loaded slot was a room - as it will need to be jettisoned, not reset
-                            if (checkSavedGrid(playerNameStr, selected_slot.get(playerNameStr), 0)) {
+                            if (checkSavedGrid(uuid, selected_slot.get(uuid), 0)) {
                                 setLore(inv, slot, "You cannot reset the selected slot!");
                                 break;
                             } else {
-                                ItemStack stone = new ItemStack(1, 1);
+                                ItemStack stone = new ItemStack(Material.STONE, 1);
                                 ItemMeta s1 = stone.getItemMeta();
                                 s1.setDisplayName("Empty slot");
                                 stone.setItemMeta(s1);
-                                setSlot(inv, selected_slot.get(playerNameStr), stone, playerNameStr, true);
+                                setSlot(inv, selected_slot.get(uuid), stone, uuid, true);
                                 setLore(inv, slot, null);
                             }
                         } else {
@@ -177,46 +177,46 @@ public class TARDISARSListener implements Listener {
                         // scroll left
                         int startl;
                         int max = room_ids.length - 9;
-                        if (scroll_start.containsKey(playerNameStr)) {
-                            startl = scroll_start.get(playerNameStr) + 1;
+                        if (scroll_start.containsKey(uuid)) {
+                            startl = scroll_start.get(uuid) + 1;
                             if (startl >= max) {
                                 startl = max;
                             }
                         } else {
                             startl = 1;
                         }
-                        scroll_start.put(playerNameStr, startl);
+                        scroll_start.put(uuid, startl);
                         for (int i = 0; i < 9; i++) {
                             // setSlot(Inventory inv, int slot, int id, String room)
-                            setSlot(inv, (45 + i), room_ids[(startl + i)], room_names[(startl + i)], playerNameStr, false);
+                            setSlot(inv, (45 + i), room_ids[(startl + i)], room_names[(startl + i)], uuid, false);
                         }
                         break;
                     case 38:
                         // scroll right
                         int startr;
-                        if (scroll_start.containsKey(playerNameStr)) {
-                            startr = scroll_start.get(playerNameStr) - 1;
+                        if (scroll_start.containsKey(uuid)) {
+                            startr = scroll_start.get(uuid) - 1;
                             if (startr <= 0) {
                                 startr = 0;
                             }
                         } else {
                             startr = 0;
                         }
-                        scroll_start.put(playerNameStr, startr);
+                        scroll_start.put(uuid, startr);
                         for (int i = 0; i < 9; i++) {
                             // setSlot(Inventory inv, int slot, int id, String room)
-                            setSlot(inv, (45 + i), room_ids[(startr + i)], room_names[(startr + i)], playerNameStr, false);
+                            setSlot(inv, (45 + i), room_ids[(startr + i)], room_names[(startr + i)], uuid, false);
                         }
                         break;
                     case 39:
                         // jettison
-                        if (selected_slot.containsKey(playerNameStr)) {
+                        if (selected_slot.containsKey(uuid)) {
                             // need to check for gravity wells, and jettison both layers...
-                            ItemStack tnt = new ItemStack(46, 1);
+                            ItemStack tnt = new ItemStack(Material.TNT, 1);
                             ItemMeta j = tnt.getItemMeta();
                             j.setDisplayName("Jettison");
                             tnt.setItemMeta(j);
-                            setSlot(inv, selected_slot.get(playerNameStr), tnt, playerNameStr, true);
+                            setSlot(inv, selected_slot.get(uuid), tnt, uuid, true);
                             setLore(inv, slot, null);
                         } else {
                             setLore(inv, slot, "No slot selected!");
@@ -232,9 +232,9 @@ public class TARDISARSListener implements Listener {
                     case 52:
                     case 53:
                         // put room in selected slot
-                        if (selected_slot.containsKey(playerNameStr)) {
+                        if (selected_slot.containsKey(uuid)) {
                             // check whether original loaded slot was a room - as it will need to be jettisoned, not reset
-                            if (checkSavedGrid(playerNameStr, selected_slot.get(playerNameStr), 0)) {
+                            if (checkSavedGrid(uuid, selected_slot.get(uuid), 0)) {
                                 setLore(inv, slot, "Jettison existing room first!");
                                 break;
                             } else {
@@ -252,23 +252,23 @@ public class TARDISARSListener implements Listener {
                                 }
                                 if (room.equals("GRAVITY") || room.equals("ANTIGRAVITY")) {
                                     int updown = (room.equals("Gravity Well")) ? -1 : 1;
-                                    if (checkSavedGrid(playerNameStr, selected_slot.get(playerNameStr), updown)) {
+                                    if (checkSavedGrid(uuid, selected_slot.get(uuid), updown)) {
                                         setLore(inv, slot, "Using a gravity well here would overwrite an existing room!");
                                         break;
                                     }
                                 }
                                 if (plugin.getConfig().getBoolean("growth.rooms_require_blocks")) {
-                                    if (!hasCondensables(player.getUniqueId().toString(), room, ids.get(playerNameStr))) {
+                                    if (!hasCondensables(player.getUniqueId().toString(), room, ids.get(uuid))) {
                                         setLore(inv, slot, "You haven't condensed enough blocks for this room!");
                                         break;
                                     }
                                 }
-                                if (room.equals("RENDERER") && hasRenderer(playerNameStr)) {
+                                if (room.equals("RENDERER") && hasRenderer(uuid)) {
                                     setLore(inv, slot, "You already have one of these!");
                                     break;
                                 }
                                 // setSlot(Inventory inv, int slot, ItemStack is, String player, boolean update)
-                                setSlot(inv, selected_slot.get(playerNameStr), ris, playerNameStr, true);
+                                setSlot(inv, selected_slot.get(uuid), ris, uuid, true);
                                 setLore(inv, slot, null);
                             }
                         } else {
@@ -285,10 +285,10 @@ public class TARDISARSListener implements Listener {
     /**
      * Saves the current ARS data to the database.
      *
-     * @param p the player who is using the ARS GUI
+     * @param uuid the UUID of the player who is using the ARS GUI
      */
-    private void saveAll(String p) {
-        TARDISARSMapData md = map_data.get(p);
+    private void saveAll(UUID uuid) {
+        TARDISARSMapData md = map_data.get(uuid);
         JSONArray json = new JSONArray(md.getData());
         HashMap<String, Object> set = new HashMap<String, Object>();
         set.put("ars_x_east", md.getE());
@@ -303,10 +303,10 @@ public class TARDISARSListener implements Listener {
     /**
      * Saves the current ARS data to the database.
      *
-     * @param p the player who is using the ARS GUI
+     * @param uuid the UUID of the player who is using the ARS GUI
      */
-    private void revert(String p) {
-        TARDISARSSaveData sd = save_map_data.get(p);
+    private void revert(UUID uuid) {
+        TARDISARSSaveData sd = save_map_data.get(uuid);
         JSONArray json = new JSONArray(sd.getData());
         HashMap<String, Object> set = new HashMap<String, Object>();
         set.put("json", json.toString());
@@ -370,10 +370,10 @@ public class TARDISARSListener implements Listener {
      * @param slot the slot number to update
      * @param id the item id to set the item stack to
      * @param room the room type associated with the id
-     * @param p the player using the GUI
+     * @param uuid the player using the GUI
      * @param update whether to update the grid display
      */
-    private void setSlot(Inventory inv, int slot, int id, String room, String p, boolean update) {
+    private void setSlot(Inventory inv, int slot, int id, String room, UUID uuid, boolean update) {
         ItemStack is = new ItemStack(id, 1);
         ItemMeta im = is.getItemMeta();
         im.setDisplayName(room);
@@ -381,7 +381,7 @@ public class TARDISARSListener implements Listener {
         is.setItemMeta(im);
         inv.setItem(slot, is);
         if (update) {
-            updateGrid(p, slot, id);
+            updateGrid(uuid, slot, id);
         }
     }
 
@@ -391,15 +391,15 @@ public class TARDISARSListener implements Listener {
      * @param inv the inventory to update
      * @param slot the slot number to update
      * @param is the item stack to set
-     * @param p the player using the GUI
+     * @param uuid the player using the GUI
      * @param update whether to update the grid display
      */
     @SuppressWarnings("deprecation")
-    private void setSlot(Inventory inv, int slot, ItemStack is, String p, boolean update) {
+    private void setSlot(Inventory inv, int slot, ItemStack is, UUID uuid, boolean update) {
         inv.setItem(slot, is);
         int id = is.getTypeId();
         if (update) {
-            updateGrid(p, slot, id);
+            updateGrid(uuid, slot, id);
         }
     }
 
@@ -439,13 +439,13 @@ public class TARDISARSListener implements Listener {
     /**
      * Checks the saved map to see whether the selected slot can be reset.
      *
-     * @param p the player using the GUI
+     * @param uuid the UUID of the player using the GUI
      * @param slot the slot that was clicked
      * @param id the type id of the block in the slot
      */
-    private boolean checkSavedGrid(String p, int slot, int updown) {
-        TARDISARSMapData md = map_data.get(p);
-        TARDISARSSaveData sd = save_map_data.get(p);
+    private boolean checkSavedGrid(UUID uuid, int slot, int updown) {
+        TARDISARSMapData md = map_data.get(uuid);
+        TARDISARSSaveData sd = save_map_data.get(uuid);
         int[][][] grid = sd.getData();
         int yy = md.getY() + updown;
         // avoid ArrayIndexOutOfBoundsException if gravity well extends beyond ARS area
@@ -468,12 +468,12 @@ public class TARDISARSListener implements Listener {
      * Saves the current map to the TARDISARSMapData instance associated with
      * the player using the GUI.
      *
-     * @param p the player using the GUI
+     * @param uuid the UUID of the player using the GUI
      * @param slot the slot that was clicked
      * @param id the type id of the block in the slot
      */
-    private void updateGrid(String p, int slot, int id) {
-        TARDISARSMapData md = map_data.get(p);
+    private void updateGrid(UUID uuid, int slot, int id) {
+        TARDISARSMapData md = map_data.get(uuid);
         int[][][] grid = md.getData();
         int yy = md.getY();
         int[] coords = getCoords(slot, md);
@@ -490,7 +490,7 @@ public class TARDISARSListener implements Listener {
         }
         grid[yy][newx][newz] = id;
         md.setData(grid);
-        map_data.put(p, md);
+        map_data.put(uuid, md);
     }
 
     /**
@@ -513,22 +513,22 @@ public class TARDISARSListener implements Listener {
      *
      * @param inv the inventory to update
      * @param slot the slot to update
-     * @param p the player using the GUI
+     * @param uuid the UUID of the player using the GUI
      */
-    private void switchLevel(Inventory inv, int slot, String p) {
-        TARDISARSMapData md = map_data.get(p);
+    private void switchLevel(Inventory inv, int slot, UUID uuid) {
+        TARDISARSMapData md = map_data.get(uuid);
         for (int i = 27; i < 30; i++) {
             byte data = 0;
             if (i == slot) {
                 data = 4;
                 md.setY(i - 27);
-                map_data.put(p, md);
+                map_data.put(uuid, md);
             }
-            ItemStack is = new ItemStack(35, 1, data);
+            ItemStack is = new ItemStack(Material.WOOL, 1, data);
             ItemMeta im = is.getItemMeta();
             im.setDisplayName(levels[i - 27]);
             is.setItemMeta(im);
-            setSlot(inv, i, is, p, false);
+            setSlot(inv, i, is, uuid, false);
         }
     }
 
@@ -538,24 +538,24 @@ public class TARDISARSListener implements Listener {
      * @param p the player using the GUI
      */
     private void close(final Player p) {
-        final String n = p.getName();
+        final UUID uuid = p.getUniqueId();
         plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
             @Override
             public void run() {
-                if (scroll_start.containsKey(n)) {
-                    scroll_start.remove(n);
+                if (scroll_start.containsKey(uuid)) {
+                    scroll_start.remove(uuid);
                 }
-                if (selected_slot.containsKey(n)) {
-                    selected_slot.remove(n);
+                if (selected_slot.containsKey(uuid)) {
+                    selected_slot.remove(uuid);
                 }
-                if (hasLoadedMap.contains(n)) {
-                    hasLoadedMap.remove(n);
+                if (hasLoadedMap.contains(uuid)) {
+                    hasLoadedMap.remove(uuid);
                 }
-                if (map_data.containsKey(n)) {
-                    if (playerIsOwner(p.getUniqueId().toString(), ids.get(n))) {
-                        saveAll(n);
-                        TARDISARSProcessor tap = new TARDISARSProcessor(plugin, ids.get(n));
-                        boolean changed = tap.compare3DArray(save_map_data.get(n).getData(), map_data.get(n).getData());
+                if (map_data.containsKey(uuid)) {
+                    if (playerIsOwner(p.getUniqueId().toString(), ids.get(uuid))) {
+                        saveAll(uuid);
+                        TARDISARSProcessor tap = new TARDISARSProcessor(plugin, ids.get(uuid));
+                        boolean changed = tap.compare3DArray(save_map_data.get(uuid).getData(), map_data.get(uuid).getData());
                         if (changed && tap.checkCosts(tap.getChanged(), tap.getJettison())) {
                             TARDISMessage.send(p, plugin.getPluginName() + "Architectural reconfiguration starting...");
                             // do all jettisons first
@@ -563,7 +563,7 @@ public class TARDISARSListener implements Listener {
                                 TARDISMessage.send(p, plugin.getPluginName() + "Jettisoning " + tap.getJettison().size() + " rooms...");
                                 long del = 5L;
                                 for (Map.Entry<TARDISARSJettison, ARS> map : tap.getJettison().entrySet()) {
-                                    TARDISARSJettisonRunnable jr = new TARDISARSJettisonRunnable(plugin, map.getKey(), map.getValue(), ids.get(p.getName()), p);
+                                    TARDISARSJettisonRunnable jr = new TARDISARSJettisonRunnable(plugin, map.getKey(), map.getValue(), ids.get(uuid), p);
                                     plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, jr, del);
                                     del += 5L;
                                 }
@@ -572,21 +572,21 @@ public class TARDISARSListener implements Listener {
                             long period = 2400L * (Math.round(20 / plugin.getConfig().getDouble("growth.room_speed")));
                             long delay = 20L;
                             for (Map.Entry<TARDISARSSlot, ARS> map : tap.getChanged().entrySet()) {
-                                TARDISARSRunnable ar = new TARDISARSRunnable(plugin, map.getKey(), map.getValue(), p, ids.get(p.getName()));
+                                TARDISARSRunnable ar = new TARDISARSRunnable(plugin, map.getKey(), map.getValue(), p, ids.get(uuid));
                                 plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, ar, delay);
                                 delay += period;
                             }
                         } else {
                             TARDISMessage.send(p, plugin.getPluginName() + tap.getError());
                             // reset map to the previous version
-                            revert(n);
+                            revert(uuid);
                         }
                     } else {
                         TARDISMessage.send(p, plugin.getPluginName() + "Only the Timelord of this TARDIS can reconfigure rooms!");
-                        revert(n);
+                        revert(uuid);
                     }
-                    map_data.remove(n);
-                    save_map_data.remove(n);
+                    map_data.remove(uuid);
+                    save_map_data.remove(uuid);
                 }
                 p.closeInventory();
             }
@@ -597,16 +597,16 @@ public class TARDISARSListener implements Listener {
      * Loads the map from the database ready for use in the GUI.
      *
      * @param inv the inventory to load the map into
-     * @param p the player using the GUI
+     * @param p the UUID of the player using the GUI
      */
-    private void loadMap(Inventory inv, String player) {
+    private void loadMap(Inventory inv, UUID uuid) {
         if (inv.getItem(10).getItemMeta().hasLore()) {
             setLore(inv, 10, "Map already loaded!");
             return;
         }
         setLore(inv, 10, "Loading...");
         HashMap<String, Object> where = new HashMap<String, Object>();
-        where.put("tardis_id", ids.get(player));
+        where.put("tardis_id", ids.get(uuid));
         ResultSetARS rs = new ResultSetARS(plugin, where);
         if (rs.resultSet()) {
             TARDISARSSaveData sd = new TARDISARSSaveData();
@@ -620,18 +620,18 @@ public class TARDISARSListener implements Listener {
             md.setS(rs.getSouth());
             md.setY(rs.getLayer());
             md.setId(rs.getId());
-            save_map_data.put(player, sd);
-            map_data.put(player, md);
-            setMap(rs.getLayer(), rs.getEast(), rs.getSouth(), player, inv);
-            saveAll(player);
-            hasLoadedMap.add(player);
+            save_map_data.put(uuid, sd);
+            map_data.put(uuid, md);
+            setMap(rs.getLayer(), rs.getEast(), rs.getSouth(), uuid, inv);
+            saveAll(uuid);
+            hasLoadedMap.add(uuid);
             setLore(inv, 10, "Map LOADED");
-            switchLevel(inv, (27 + rs.getLayer()), player);
+            switchLevel(inv, (27 + rs.getLayer()), uuid);
         }
     }
 
-    private void setMap(int ul, int ue, int us, String player, Inventory inv) {
-        TARDISARSMapData data = map_data.get(player);
+    private void setMap(int ul, int ue, int us, UUID uuid, Inventory inv) {
+        TARDISARSMapData data = map_data.get(uuid);
         int[][][] grid = data.getData();
         int[][] layer = grid[ul];
         int[][] map = sliceGrid(layer, ue, us);
@@ -641,7 +641,7 @@ public class TARDISARSListener implements Listener {
                 int slot = i + (j * 9);
                 int id = map[indexx][indexz];
                 String name = TARDISARS.ARSFor(Integer.valueOf(id)).getDescriptiveName();
-                setSlot(inv, slot, id, name, player, false);
+                setSlot(inv, slot, id, name, uuid, false);
                 indexz++;
             }
             indexz = 0;
@@ -652,13 +652,13 @@ public class TARDISARSListener implements Listener {
     /**
      * Move the map to a new position.
      *
-     * @param p the player using the GUI
+     * @param uuid the UUID of the player using the GUI
      * @param inv the inventory to update
      * @param slot the slot number to update
      */
-    private void moveMap(String p, Inventory inv, int slot) {
-        if (map_data.containsKey(p)) {
-            TARDISARSMapData md = map_data.get(p);
+    private void moveMap(UUID uuid, Inventory inv, int slot) {
+        if (map_data.containsKey(uuid)) {
+            TARDISARSMapData md = map_data.get(uuid);
             int ue, us;
             switch (slot) {
                 case 1:
@@ -678,11 +678,11 @@ public class TARDISARSListener implements Listener {
                     us = ((md.getS() - 1) >= 0) ? md.getS() - 1 : md.getS();
                     break;
             }
-            setMap(md.getY(), ue, us, p, inv);
+            setMap(md.getY(), ue, us, uuid, inv);
             setLore(inv, slot, null);
             md.setE(ue);
             md.setS(us);
-            map_data.put(p, md);
+            map_data.put(uuid, md);
         } else {
             setLore(inv, slot, "Load map data first!");
         }
@@ -762,8 +762,9 @@ public class TARDISARSListener implements Listener {
      * Checks whether a player has condensed the required blocks to grow the
      * room.
      *
-     * @param uuid the player to check for
+     * @param uuid the UUID of the player to check for
      * @param room the room to check
+     * @param id the TARDIS id
      * @return true or false
      */
     public boolean hasCondensables(String uuid, String room, int id) {
@@ -836,9 +837,9 @@ public class TARDISARSListener implements Listener {
         return id;
     }
 
-    private boolean hasRenderer(String p) {
+    private boolean hasRenderer(UUID uuid) {
         HashMap<String, Object> where = new HashMap<String, Object>();
-        where.put("tardis_id", ids.get(p));
+        where.put("tardis_id", ids.get(uuid));
         ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);
         if (rs.resultSet()) {
             return !rs.getRenderer().isEmpty();

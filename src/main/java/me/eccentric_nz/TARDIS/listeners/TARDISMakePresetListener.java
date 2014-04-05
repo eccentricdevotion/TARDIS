@@ -22,6 +22,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import org.bukkit.Location;
@@ -77,11 +78,11 @@ public class TARDISMakePresetListener implements Listener {
     @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
     public void onAreaInteract(PlayerInteractEvent event) {
         final Player player = event.getPlayer();
-        final String playerNameStr = player.getName();
+        final UUID uuid = player.getUniqueId();
         Block block = event.getClickedBlock();
         if (block != null) {
-            if (plugin.getTrackerKeeper().getTrackPreset().containsKey(playerNameStr)) {
-                String[] split = plugin.getTrackerKeeper().getTrackPreset().get(playerNameStr).split(":");
+            if (plugin.getTrackerKeeper().getTrackPreset().containsKey(uuid)) {
+                String[] split = plugin.getTrackerKeeper().getTrackPreset().get(uuid).split(":");
                 String name = split[0];
                 String bool = split[1];
                 Location block_loc = block.getLocation();
@@ -229,7 +230,7 @@ public class TARDISMakePresetListener implements Listener {
                 } catch (IOException e) {
                     plugin.debug("Could not create and write to " + filename + "! " + e.getMessage());
                 }
-                plugin.getTrackerKeeper().getTrackPreset().remove(playerNameStr);
+                plugin.getTrackerKeeper().getTrackPreset().remove(uuid);
                 TARDISMessage.send(player, plugin.getPluginName() + "Scanning complete! " + filename + " written to the plugins/TARDIS folder.");
             }
         }

@@ -20,6 +20,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
 
 /**
@@ -43,9 +44,9 @@ public class ResultSetAntiBuild {
      * @param plugin an instance of the main class.
      * @param uuid the uuid who is trying to build.
      */
-    public ResultSetAntiBuild(TARDIS plugin, String uuid) {
+    public ResultSetAntiBuild(TARDIS plugin, UUID uuid) {
         this.plugin = plugin;
-        this.uuid = uuid;
+        this.uuid = uuid.toString();
     }
 
     /**

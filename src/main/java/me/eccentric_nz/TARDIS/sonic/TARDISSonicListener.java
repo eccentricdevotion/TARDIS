@@ -73,14 +73,14 @@ public class TARDISSonicListener implements Listener {
 
     private final TARDIS plugin;
     private final Material sonic;
-    private final HashMap<String, Long> timeout = new HashMap<String, Long>();
-    private final HashMap<String, Long> cooldown = new HashMap<String, Long>();
+    private final HashMap<UUID, Long> timeout = new HashMap<UUID, Long>();
+    private final HashMap<UUID, Long> cooldown = new HashMap<UUID, Long>();
     private final List<Material> diamond = new ArrayList<Material>();
     private final List<Material> distance = new ArrayList<Material>();
     private final List<Material> doors = new ArrayList<Material>();
     private final List<Material> interactables = new ArrayList<Material>();
     private final List<Material> redstone = new ArrayList<Material>();
-    private final List<String> frozenPlayers = new ArrayList<String>();
+    private final List<UUID> frozenPlayers = new ArrayList<UUID>();
     private final List<BlockFace> faces = new ArrayList<BlockFace>();
 
     public TARDISSonicListener(TARDIS plugin) {
@@ -165,8 +165,8 @@ public class TARDISSonicListener implements Listener {
                     }
                     if (player.hasPermission("tardis.sonic.freeze") && lore != null && lore.contains("Bio-scanner Upgrade")) {
                         long cool = System.currentTimeMillis();
-                        if ((!cooldown.containsKey(player.getName()) || cooldown.get(player.getName()) < cool)) {
-                            cooldown.put(player.getName(), cool + (plugin.getConfig().getInt("preferences.freeze_cooldown") * 1000L));
+                        if ((!cooldown.containsKey(player.getUniqueId()) || cooldown.get(player.getUniqueId()) < cool)) {
+                            cooldown.put(player.getUniqueId(), cool + (plugin.getConfig().getInt("preferences.freeze_cooldown") * 1000L));
                             plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
                                 @Override
                                 public void run() {
@@ -191,12 +191,12 @@ public class TARDISSonicListener implements Listener {
                                     // freeze the closest player
                                     if (hit != null) {
                                         TARDISMessage.send(hit, plugin.getPluginName() + player.getName() + " froze you with their Sonic Screwdriver!");
-                                        final String hitNme = hit.getName();
-                                        frozenPlayers.add(hitNme);
+                                        final UUID uuid = hit.getUniqueId();
+                                        frozenPlayers.add(uuid);
                                         plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
                                             @Override
                                             public void run() {
-                                                frozenPlayers.remove(hitNme);
+                                                frozenPlayers.remove(uuid);
                                             }
                                         }, 100L);
                                     } else {
@@ -419,11 +419,11 @@ public class TARDISSonicListener implements Listener {
     }
 
     public void playSonicSound(final Player player, long now, long cooldown, String sound) {
-        if ((!timeout.containsKey(player.getName()) || timeout.get(player.getName()) < now)) {
+        if ((!timeout.containsKey(player.getUniqueId()) || timeout.get(player.getUniqueId()) < now)) {
             ItemMeta im = player.getItemInHand().getItemMeta();
             im.addEnchant(Enchantment.DURABILITY, 1, true);
             player.getItemInHand().setItemMeta(im);
-            timeout.put(player.getName(), now + cooldown);
+            timeout.put(player.getUniqueId(), now + cooldown);
             plugin.getUtils().playTARDISSound(player.getLocation(), player, sound);
             plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
                 @Override
@@ -487,7 +487,7 @@ public class TARDISSonicListener implements Listener {
 
     @EventHandler(ignoreCancelled = true)
     public void onPlayerFrozenMove(PlayerMoveEvent event) {
-        if (frozenPlayers.contains(event.getPlayer().getName())) {
+        if (frozenPlayers.contains(event.getPlayer().getUniqueId())) {
             event.setCancelled(true);
         }
     }

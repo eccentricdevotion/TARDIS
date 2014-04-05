@@ -128,7 +128,7 @@ public class TARDISGravityCommands implements CommandExecutor {
                 } else {
                     values[2] = 0.5D;
                 }
-                plugin.getTrackerKeeper().getTrackGravity().put(player.getName(), values);
+                plugin.getTrackerKeeper().getTrackGravity().put(player.getUniqueId(), values);
                 String message = (dir.equals("remove")) ? "remove it from the database" : "save its position";
                 TARDISMessage.send(player, plugin.getPluginName() + "Click the wool block to " + message + ".");
                 return true;

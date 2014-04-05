@@ -117,9 +117,9 @@ public class TARDISPluginRespect {
         }
         if (plugin.getTardisArea().areaCheckLocPlayer(p, l)) {
             if (message) {
-                TARDISMessage.send(p, plugin.getPluginName() + "You do not have permission [" + plugin.getTrackerKeeper().getTrackPerm().get(p.getName()) + "] to bring the TARDIS to this location!");
+                TARDISMessage.send(p, plugin.getPluginName() + "You do not have permission [" + plugin.getTrackerKeeper().getTrackPerm().get(p.getUniqueId()) + "] to bring the TARDIS to this location!");
             }
-            plugin.getTrackerKeeper().getTrackPerm().remove(p.getName());
+            plugin.getTrackerKeeper().getTrackPerm().remove(p.getUniqueId());
             bool = false;
         }
         return bool;

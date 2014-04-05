@@ -95,7 +95,7 @@ public class TARDISSignListener implements Listener {
                 ResultSetTardisSign rs = new ResultSetTardisSign(plugin, signloc);
                 if (rs.resultSet()) {
                     event.setCancelled(true);
-                    if (rs.isIso_on() && !player.getName().equals(rs.getOwner()) && event.isCancelled() && !player.hasPermission("tardis.skeletonkey")) {
+                    if (rs.isIso_on() && !player.getUniqueId().equals(rs.getUuid()) && event.isCancelled() && !player.hasPermission("tardis.skeletonkey")) {
                         TARDISMessage.send(player, plugin.getPluginName() + MESSAGE.ISO_ON.getText());
                         return;
                     }

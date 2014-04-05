@@ -77,12 +77,12 @@ public class TARDISBindListener implements Listener {
             Material m = b.getType();
             if (validBlocks.contains(m)) {
                 final Player player = event.getPlayer();
-                String playerNameStr = player.getName();
+                UUID uuid = player.getUniqueId();
                 String l = b.getLocation().toString();
                 HashMap<String, Object> where = new HashMap<String, Object>();
-                if (plugin.getTrackerKeeper().getTrackBinder().containsKey(playerNameStr)) {
-                    where.put("dest_id", plugin.getTrackerKeeper().getTrackBinder().get(playerNameStr));
-                    plugin.getTrackerKeeper().getTrackBinder().remove(playerNameStr);
+                if (plugin.getTrackerKeeper().getTrackBinder().containsKey(uuid)) {
+                    where.put("dest_id", plugin.getTrackerKeeper().getTrackBinder().get(uuid));
+                    plugin.getTrackerKeeper().getTrackBinder().remove(uuid);
                     HashMap<String, Object> set = new HashMap<String, Object>();
                     set.put("bind", l);
                     QueryFactory qf = new QueryFactory(plugin);

@@ -157,6 +157,8 @@ public class TARDISJoinListener implements Listener {
             qf.doUpdate("tardis", set, wherel);
             // add TARDIS player to UUID cache
             plugin.getGeneralKeeper().getUUIDCache().ensurePlayerUUID(player.getName());
+            // also add reverse lookup
+            plugin.getGeneralKeeper().getUUIDCache().getNameCache().put(player.getUniqueId(), player.getName());
         }
         plugin.getFilter().addPlayer(player);
     }

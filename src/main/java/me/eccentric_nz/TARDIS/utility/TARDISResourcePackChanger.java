@@ -18,6 +18,7 @@ package me.eccentric_nz.TARDIS.utility;
 
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
 import org.bukkit.entity.Player;
 
@@ -47,8 +48,8 @@ public class TARDISResourcePackChanger {
         try {
             new URL(url);
             if (p.isOnline()) {
-                String player = p.getName();
-                plugin.getServer().getPlayer(player).setResourcePack(url);
+                UUID uuid = p.getUniqueId();
+                plugin.getServer().getPlayer(uuid).setResourcePack(url);
             }
         } catch (MalformedURLException e) {
             TARDISMessage.send(p, plugin.getPluginName() + "Could not access the URL! " + e.getMessage());

@@ -37,35 +37,35 @@ public class TARDISTrackerInstanceKeeper {
     private final HashMap<Integer, String> trackRenderer = new HashMap<Integer, String>();
     private final HashMap<Integer, UUID> trackRescue = new HashMap<Integer, UUID>();
     private final HashMap<Integer, TARDISAntiBuild> trackAntiBuild = new HashMap<Integer, TARDISAntiBuild>();
-    private final HashMap<String, Block> trackExterminate = new HashMap<String, Block>();
-    private final HashMap<String, Block> trackLazarus = new HashMap<String, Block>();
-    private final HashMap<String, Double[]> trackGravity = new HashMap<String, Double[]>();
-    private final HashMap<String, Integer> trackBinder = new HashMap<String, Integer>();
+    private final HashMap<UUID, Block> trackExterminate = new HashMap<UUID, Block>();
+    private final HashMap<UUID, Block> trackLazarus = new HashMap<UUID, Block>();
+    private final HashMap<UUID, Double[]> trackGravity = new HashMap<UUID, Double[]>();
+    private final HashMap<UUID, Integer> trackBinder = new HashMap<UUID, Integer>();
     private final HashMap<UUID, Long> trackSetTime = new HashMap<UUID, Long>();
     private final HashMap<String, Sign> trackSign = new HashMap<String, Sign>();
-    private final HashMap<String, String> trackBlock = new HashMap<String, String>();
+    private final HashMap<UUID, String> trackBlock = new HashMap<UUID, String>();
     private final HashMap<UUID, UUID> trackChat = new HashMap<UUID, UUID>();
-    private final HashMap<String, String> trackEnd = new HashMap<String, String>();
-    private final HashMap<String, String> trackJettison = new HashMap<String, String>();
-    private final HashMap<String, String> trackName = new HashMap<String, String>();
-    private final HashMap<String, String> trackPerm = new HashMap<String, String>();
-    private final HashMap<String, String> trackPlayers = new HashMap<String, String>();
-    private final HashMap<String, String> trackPreset = new HashMap<String, String>();
-    private final HashMap<String, String> trackSecondary = new HashMap<String, String>();
-    private final HashMap<String, TARDISInfoMenu> trackInfoMenu = new HashMap<String, TARDISInfoMenu>();
-    private final HashMap<String, TARDISSeedData> trackRoomSeed = new HashMap<String, TARDISSeedData>();
+    private final HashMap<UUID, String> trackEnd = new HashMap<UUID, String>();
+    private final HashMap<UUID, String> trackJettison = new HashMap<UUID, String>();
+    private final HashMap<UUID, String> trackUUID = new HashMap<UUID, String>();
+    private final HashMap<UUID, String> trackPerm = new HashMap<UUID, String>();
+    private final HashMap<UUID, String> trackPlayers = new HashMap<UUID, String>();
+    private final HashMap<UUID, String> trackPreset = new HashMap<UUID, String>();
+    private final HashMap<UUID, String> trackSecondary = new HashMap<UUID, String>();
+    private final HashMap<UUID, TARDISInfoMenu> trackInfoMenu = new HashMap<UUID, TARDISInfoMenu>();
+    private final HashMap<UUID, TARDISSeedData> trackRoomSeed = new HashMap<UUID, TARDISSeedData>();
     private final List<Integer> trackDematerialising = new ArrayList<Integer>();
     private final List<Integer> trackInVortex = new ArrayList<Integer>();
     private final List<Integer> trackMaterialising = new ArrayList<Integer>();
     private final List<Integer> trackMinecart = new ArrayList<Integer>();
     private final List<Integer> trackSubmarine = new ArrayList<Integer>();
-    private final List<String> trackArrangers = new ArrayList<String>();
-    private final List<String> trackFarming = new ArrayList<String>();
-    private final List<String> trackGeneticManipulation = new ArrayList<String>();
-    private final List<String> trackRecipeView = new ArrayList<String>();
+    private final List<UUID> trackArrangers = new ArrayList<UUID>();
+    private final List<UUID> trackFarming = new ArrayList<UUID>();
+    private final List<UUID> trackGeneticManipulation = new ArrayList<UUID>();
+    private final List<UUID> trackRecipeView = new ArrayList<UUID>();
     private final List<String> trackReset = new ArrayList<String>();
-    private final List<String> trackTransmat = new ArrayList<String>();
-    private final List<String> trackZeroRoomOccupants = new ArrayList<String>();
+    private final List<UUID> trackTransmat = new ArrayList<UUID>();
+    private final List<UUID> trackZeroRoomOccupants = new ArrayList<UUID>();
     private String trackImmortalityGate = "";
 
     public HashMap<Integer, Integer> getTrackDamage() {
@@ -88,19 +88,19 @@ public class TARDISTrackerInstanceKeeper {
         return trackAntiBuild;
     }
 
-    public HashMap<String, Block> getTrackExterminate() {
+    public HashMap<UUID, Block> getTrackExterminate() {
         return trackExterminate;
     }
 
-    public HashMap<String, Block> getTrackLazarus() {
+    public HashMap<UUID, Block> getTrackLazarus() {
         return trackLazarus;
     }
 
-    public HashMap<String, Double[]> getTrackGravity() {
+    public HashMap<UUID, Double[]> getTrackGravity() {
         return trackGravity;
     }
 
-    public HashMap<String, Integer> getTrackBinder() {
+    public HashMap<UUID, Integer> getTrackBinder() {
         return trackBinder;
     }
 
@@ -112,7 +112,7 @@ public class TARDISTrackerInstanceKeeper {
         return trackSign;
     }
 
-    public HashMap<String, String> getTrackBlock() {
+    public HashMap<UUID, String> getTrackBlock() {
         return trackBlock;
     }
 
@@ -120,39 +120,39 @@ public class TARDISTrackerInstanceKeeper {
         return trackChat;
     }
 
-    public HashMap<String, String> getTrackEnd() {
+    public HashMap<UUID, String> getTrackEnd() {
         return trackEnd;
     }
 
-    public HashMap<String, String> getTrackJettison() {
+    public HashMap<UUID, String> getTrackJettison() {
         return trackJettison;
     }
 
-    public HashMap<String, String> getTrackName() {
-        return trackName;
+    public HashMap<UUID, String> getTrackUUID() {
+        return trackUUID;
     }
 
-    public HashMap<String, String> getTrackPerm() {
+    public HashMap<UUID, String> getTrackPerm() {
         return trackPerm;
     }
 
-    public HashMap<String, String> getTrackPlayers() {
+    public HashMap<UUID, String> getTrackPlayers() {
         return trackPlayers;
     }
 
-    public HashMap<String, String> getTrackPreset() {
+    public HashMap<UUID, String> getTrackPreset() {
         return trackPreset;
     }
 
-    public HashMap<String, String> getTrackSecondary() {
+    public HashMap<UUID, String> getTrackSecondary() {
         return trackSecondary;
     }
 
-    public HashMap<String, TARDISInfoMenu> getTrackInfoMenu() {
+    public HashMap<UUID, TARDISInfoMenu> getTrackInfoMenu() {
         return trackInfoMenu;
     }
 
-    public HashMap<String, TARDISSeedData> getTrackRoomSeed() {
+    public HashMap<UUID, TARDISSeedData> getTrackRoomSeed() {
         return trackRoomSeed;
     }
 
@@ -176,19 +176,19 @@ public class TARDISTrackerInstanceKeeper {
         return trackSubmarine;
     }
 
-    public List<String> getTrackArrangers() {
+    public List<UUID> getTrackArrangers() {
         return trackArrangers;
     }
 
-    public List<String> getTrackFarming() {
+    public List<UUID> getTrackFarming() {
         return trackFarming;
     }
 
-    public List<String> getTrackGeneticManipulation() {
+    public List<UUID> getTrackGeneticManipulation() {
         return trackGeneticManipulation;
     }
 
-    public List<String> getTrackRecipeView() {
+    public List<UUID> getTrackRecipeView() {
         return trackRecipeView;
     }
 
@@ -196,11 +196,11 @@ public class TARDISTrackerInstanceKeeper {
         return trackReset;
     }
 
-    public List<String> getTrackTransmat() {
+    public List<UUID> getTrackTransmat() {
         return trackTransmat;
     }
 
-    public List<String> getTrackZeroRoomOccupants() {
+    public List<UUID> getTrackZeroRoomOccupants() {
         return trackZeroRoomOccupants;
     }
 

@@ -20,6 +20,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
+import java.util.UUID;
 import me.eccentric_nz.TARDIS.JSON.JSONArray;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
@@ -106,14 +107,14 @@ public class TARDISUpdateListener implements Listener {
     @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
     public void onUpdateInteract(PlayerInteractEvent event) {
         final Player player = event.getPlayer();
-        final String playerNameStr = player.getName();
-        final String playerUUID = player.getUniqueId().toString();
+        final UUID uuid = player.getUniqueId();
+        final String playerUUID = uuid.toString();
         String blockName;
         boolean secondary = false;
-        if (plugin.getTrackerKeeper().getTrackPlayers().containsKey(playerNameStr)) {
-            blockName = plugin.getTrackerKeeper().getTrackPlayers().get(playerNameStr);
-        } else if (plugin.getTrackerKeeper().getTrackSecondary().containsKey(playerNameStr)) {
-            blockName = plugin.getTrackerKeeper().getTrackSecondary().get(playerNameStr);
+        if (plugin.getTrackerKeeper().getTrackPlayers().containsKey(uuid)) {
+            blockName = plugin.getTrackerKeeper().getTrackPlayers().get(uuid);
+        } else if (plugin.getTrackerKeeper().getTrackSecondary().containsKey(uuid)) {
+            blockName = plugin.getTrackerKeeper().getTrackSecondary().get(uuid);
             secondary = true;
         } else {
             return;
@@ -156,9 +157,9 @@ public class TARDISUpdateListener implements Listener {
                 tid.put("secondary", 0);
             }
             if (secondary) {
-                plugin.getTrackerKeeper().getTrackSecondary().remove(playerNameStr);
+                plugin.getTrackerKeeper().getTrackSecondary().remove(uuid);
             } else {
-                plugin.getTrackerKeeper().getTrackPlayers().remove(playerNameStr);
+                plugin.getTrackerKeeper().getTrackPlayers().remove(uuid);
             }
             if (blockName.equalsIgnoreCase("door") && blockType == Material.IRON_DOOR_BLOCK && !secondary) {
                 // get door data this should let us determine the direction

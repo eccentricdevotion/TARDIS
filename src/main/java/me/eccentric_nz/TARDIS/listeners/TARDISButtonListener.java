@@ -387,7 +387,7 @@ public class TARDISButtonListener implements Listener {
                                     }
                                     break;
                                 case 13: // TIS
-                                    plugin.getTrackerKeeper().getTrackInfoMenu().put(player.getName(), TARDISInfoMenu.TIS);
+                                    plugin.getTrackerKeeper().getTrackInfoMenu().put(player.getUniqueId(), TARDISInfoMenu.TIS);
                                     TARDISMessage.send(player, ChatColor.GOLD + "-----------TARDIS Information System-----------");
                                     TARDISMessage.send(player, ChatColor.GOLD + "---*Please type a white letter in chat to proceed*---");
                                     TARDISMessage.send(player, "§6> TARDIS §fM§6anual");
@@ -452,7 +452,7 @@ public class TARDISButtonListener implements Listener {
                                                 new TARDISExteriorRenderer(plugin).transmat(player, COMPASS.SOUTH, zero);
                                             }
                                         }, 20L);
-                                        plugin.getTrackerKeeper().getTrackZeroRoomOccupants().add(player.getName());
+                                        plugin.getTrackerKeeper().getTrackZeroRoomOccupants().add(player.getUniqueId());
                                         HashMap<String, Object> wherez = new HashMap<String, Object>();
                                         wherez.put("tardis_id", id);
                                         qf.alterEnergyLevel("tardis", -zero_amount, wherez, player);
@@ -462,7 +462,7 @@ public class TARDISButtonListener implements Listener {
                                     break;
                                 case 17:
                                     // exit zero room
-                                    plugin.getTrackerKeeper().getTrackZeroRoomOccupants().remove(player.getName());
+                                    plugin.getTrackerKeeper().getTrackZeroRoomOccupants().remove(player.getUniqueId());
                                     plugin.getGeneralKeeper().getRendererListener().transmat(player);
                                     break;
                                 default:

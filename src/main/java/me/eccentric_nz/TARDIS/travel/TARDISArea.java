@@ -126,7 +126,7 @@ public class TARDISArea {
                 if (l.getX() <= maxx && l.getZ() <= maxz && l.getX() >= minx && l.getZ() >= minz) {
                     // does the player have permmission to travel here
                     if (!p.hasPermission("tardis.area." + n) || !p.isPermissionSet("tardis.area." + n)) {
-                        plugin.getTrackerKeeper().getTrackPerm().put(p.getName(), "tardis.area." + n);
+                        plugin.getTrackerKeeper().getTrackPerm().put(p.getUniqueId(), "tardis.area." + n);
                         chk = true;
                         break;
                     }

@@ -51,7 +51,7 @@ public class TARDISZeroRoomChatListener implements Listener {
     @EventHandler(priority = EventPriority.HIGH, ignoreCancelled = true)
     public void onChat(AsyncPlayerChatEvent event) {
         Player zero = event.getPlayer();
-        if (plugin.getTrackerKeeper().getTrackZeroRoomOccupants().contains(zero.getName())) {
+        if (plugin.getTrackerKeeper().getTrackZeroRoomOccupants().contains(zero.getUniqueId())) {
             event.setCancelled(true);
             TARDISMessage.send(zero, plugin.getPluginName() + MESSAGE.NOT_IN_ZERO.getText());
         } else {
@@ -67,7 +67,7 @@ public class TARDISZeroRoomChatListener implements Listener {
     @EventHandler(ignoreCancelled = true)
     public void onPlayerCommandPreprocessEvent(PlayerCommandPreprocessEvent event) {
         Player zero = event.getPlayer();
-        if (plugin.getTrackerKeeper().getTrackZeroRoomOccupants().contains(zero.getName())) {
+        if (plugin.getTrackerKeeper().getTrackZeroRoomOccupants().contains(zero.getUniqueId())) {
             event.setCancelled(true);
             TARDISMessage.send(zero, plugin.getPluginName() + MESSAGE.NOT_IN_ZERO.getText());
         }

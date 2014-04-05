@@ -179,7 +179,7 @@ public class TARDISRoomCommand {
             TARDISCondenserData c_data = new TARDISCondenserData();
             c_data.setBlockIDCount(blockIDCount);
             c_data.setTardis_id(id);
-            plugin.getGeneralKeeper().getRoomCondenserData().put(player.getName(), c_data);
+            plugin.getGeneralKeeper().getRoomCondenserData().put(player.getUniqueId(), c_data);
         }
         if (room.equals("ZERO")) {
             return new TARDISZeroRoomBuilder(plugin).build(player, tips, id);
@@ -196,7 +196,7 @@ public class TARDISRoomCommand {
         ResultSetControls rsc = new ResultSetControls(plugin, wherea, false);
         sd.setARS(rsc.resultSet());
         String message = "Place the " + room + " seed block (" + plugin.getRoomsConfig().getString("rooms." + room + ".seed") + ") in front of the pressure plate, then hit it with the TARDIS key to start growing your room!";
-        plugin.getTrackerKeeper().getTrackRoomSeed().put(player.getName(), sd);
+        plugin.getTrackerKeeper().getTrackRoomSeed().put(player.getUniqueId(), sd);
         TARDISMessage.send(player, plugin.getPluginName() + message);
         return true;
     }

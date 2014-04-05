@@ -19,6 +19,7 @@ package me.eccentric_nz.TARDIS.lazarus;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
+import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.libraryaddict.disguise.DisguiseAPI;
 import me.libraryaddict.disguise.disguisetypes.AnimalColor;
@@ -61,12 +62,12 @@ import org.bukkit.inventory.meta.ItemMeta;
 public class TARDISLazarusGUIListener implements Listener {
 
     private final TARDIS plugin;
-    private final HashMap<String, String> disguises = new HashMap<String, String>();
-    private final HashMap<String, Integer> horses = new HashMap<String, Integer>();
-    private final HashMap<String, Integer> sheep = new HashMap<String, Integer>();
-    private final HashMap<String, Integer> cats = new HashMap<String, Integer>();
-    private final HashMap<String, Integer> professions = new HashMap<String, Integer>();
-    private final HashMap<String, Integer> slimes = new HashMap<String, Integer>();
+    private final HashMap<UUID, String> disguises = new HashMap<UUID, String>();
+    private final HashMap<UUID, Integer> horses = new HashMap<UUID, Integer>();
+    private final HashMap<UUID, Integer> sheep = new HashMap<UUID, Integer>();
+    private final HashMap<UUID, Integer> cats = new HashMap<UUID, Integer>();
+    private final HashMap<UUID, Integer> professions = new HashMap<UUID, Integer>();
+    private final HashMap<UUID, Integer> slimes = new HashMap<UUID, Integer>();
     private final List<Integer> slimeSizes = Arrays.asList(1, 2, 4);
 
     public TARDISLazarusGUIListener(TARDIS plugin) {
@@ -87,8 +88,8 @@ public class TARDISLazarusGUIListener implements Listener {
             event.setCancelled(true);
             int slot = event.getRawSlot();
             final Player player = (Player) event.getWhoClicked();
-            final String playerNameStr = player.getName();
-            final Block b = plugin.getTrackerKeeper().getTrackLazarus().get(playerNameStr);
+            final UUID uuid = player.getUniqueId();
+            final Block b = plugin.getTrackerKeeper().getTrackLazarus().get(uuid);
             if (b == null) {
                 return;
             }
@@ -103,11 +104,11 @@ public class TARDISLazarusGUIListener implements Listener {
                         im.setLore(Arrays.asList("Genetic modification not available!"));
                         is.setItemMeta(im);
                     } else {
-                        disguises.put(playerNameStr, display);
-                        setSlotFourtyOne(inv, display, playerNameStr);
+                        disguises.put(uuid, display);
+                        setSlotFourtyOne(inv, display, uuid);
                     }
                 } else {
-                    disguises.put(playerNameStr, "PLAYER");
+                    disguises.put(uuid, "PLAYER");
                 }
             }
             if (slot == 37) { // The Master Switch : ON | OFF
@@ -133,8 +134,8 @@ public class TARDISLazarusGUIListener implements Listener {
                 is.setItemMeta(im);
             }
             if (slot == 41) { // type / colour
-                if (disguises.containsKey(playerNameStr)) {
-                    setSlotFourtyOne(inv, disguises.get(playerNameStr), playerNameStr);
+                if (disguises.containsKey(uuid)) {
+                    setSlotFourtyOne(inv, disguises.get(uuid), uuid);
                 }
             }
             if (slot == 43) { // Tamed / Flying / Blazing / Powered / Agressive : TRUE | FALSE
@@ -145,7 +146,7 @@ public class TARDISLazarusGUIListener implements Listener {
                 is.setItemMeta(im);
             }
             if (slot == 47) { //remove disguise
-                plugin.getTrackerKeeper().getTrackGeneticManipulation().add(playerNameStr);
+                plugin.getTrackerKeeper().getTrackGeneticManipulation().add(uuid);
                 close(player);
                 // animate the manipulator walls
                 plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, new TARDISLazarusRunnable(plugin, b), 6L, 6L);
@@ -178,12 +179,12 @@ public class TARDISLazarusGUIListener implements Listener {
                     @Override
                     public void run() {
                         openDoor(b);
-                        untrack(player.getName());
+                        untrack(player.getUniqueId());
                     }
                 }, 100L);
             }
             if (slot == 49) { // add disguise
-                plugin.getTrackerKeeper().getTrackGeneticManipulation().add(playerNameStr);
+                plugin.getTrackerKeeper().getTrackGeneticManipulation().add(uuid);
                 close(player);
                 // animate the manipulator walls
                 plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, new TARDISLazarusRunnable(plugin, b), 6L, 6L);
@@ -196,10 +197,10 @@ public class TARDISLazarusGUIListener implements Listener {
                             DisguiseAPI.undisguiseToAll(player);
                         }
                         if (isReversedPolarity(inv)) {
-                            plugin.getTrackerKeeper().setTrackImmortalityGate(playerNameStr);
-                            PlayerDisguise playerDisguise = new PlayerDisguise(playerNameStr);
+                            plugin.getTrackerKeeper().setTrackImmortalityGate(player.getName());
+                            PlayerDisguise playerDisguise = new PlayerDisguise(player.getName());
                             for (Player p : plugin.getServer().getOnlinePlayers()) {
-                                if (!p.getName().equals(playerNameStr)) {
+                                if (!p.getUniqueId().equals(uuid)) {
                                     DisguiseAPI.disguiseToAll(p, playerDisguise);
                                 }
                             }
@@ -218,8 +219,8 @@ public class TARDISLazarusGUIListener implements Listener {
                                 }
                             }, 3600L);
                         } else {
-                            if (disguises.containsKey(playerNameStr)) {
-                                String disguise = disguises.get(playerNameStr);
+                            if (disguises.containsKey(uuid)) {
+                                String disguise = disguises.get(uuid);
                                 if (disguise.equals("WEEPING ANGEL") || disguise.equals("CYBERMAN") || disguise.equals("ICE WARRIOR")) {
                                     if (disguise.equals("WEEPING ANGEL")) {
                                         player.performCommand("angeldisguise on");
@@ -324,7 +325,7 @@ public class TARDISLazarusGUIListener implements Listener {
                     @Override
                     public void run() {
                         openDoor(b);
-                        untrack(player.getName());
+                        untrack(player.getUniqueId());
                     }
                 }, 100L);
             }
@@ -338,14 +339,14 @@ public class TARDISLazarusGUIListener implements Listener {
     @EventHandler(ignoreCancelled = true)
     public void onLazarusClose(InventoryCloseEvent event) {
         String name = event.getInventory().getTitle();
-        String playerNameStr = event.getPlayer().getName();
-        if (name.equals("§4Genetic Manipulator") && !plugin.getTrackerKeeper().getTrackGeneticManipulation().contains(playerNameStr)) {
-            Block b = plugin.getTrackerKeeper().getTrackLazarus().get(event.getPlayer().getName());
+        UUID uuid = event.getPlayer().getUniqueId();
+        if (name.equals("§4Genetic Manipulator") && !plugin.getTrackerKeeper().getTrackGeneticManipulation().contains(uuid)) {
+            Block b = plugin.getTrackerKeeper().getTrackLazarus().get(event.getPlayer().getUniqueId());
             if (b.getRelative(BlockFace.SOUTH).getType().equals(Material.COBBLE_WALL)) {
                 b.getRelative(BlockFace.SOUTH).setType(Material.AIR);
                 b.getRelative(BlockFace.SOUTH).getRelative(BlockFace.UP).setType(Material.AIR);
             }
-            untrack(playerNameStr);
+            untrack(uuid);
         }
     }
 
@@ -355,7 +356,6 @@ public class TARDISLazarusGUIListener implements Listener {
      * @param p the player using the GUI
      */
     private void close(final Player p) {
-        final String n = p.getName();
         plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
             @Override
             public void run() {
@@ -364,31 +364,31 @@ public class TARDISLazarusGUIListener implements Listener {
         }, 1L);
     }
 
-    private void untrack(String n) {
+    private void untrack(UUID uuid) {
         // stop tracking player
-        if (plugin.getTrackerKeeper().getTrackLazarus().containsKey(n)) {
-            plugin.getTrackerKeeper().getTrackLazarus().remove(n);
+        if (plugin.getTrackerKeeper().getTrackLazarus().containsKey(uuid)) {
+            plugin.getTrackerKeeper().getTrackLazarus().remove(uuid);
         }
-        if (disguises.containsKey(n)) {
-            disguises.remove(n);
+        if (disguises.containsKey(uuid)) {
+            disguises.remove(uuid);
         }
-        if (sheep.containsKey(n)) {
-            sheep.remove(n);
+        if (sheep.containsKey(uuid)) {
+            sheep.remove(uuid);
         }
-        if (horses.containsKey(n)) {
-            horses.remove(n);
+        if (horses.containsKey(uuid)) {
+            horses.remove(uuid);
         }
-        if (cats.containsKey(n)) {
-            cats.remove(n);
+        if (cats.containsKey(uuid)) {
+            cats.remove(uuid);
         }
-        if (professions.containsKey(n)) {
-            professions.remove(n);
+        if (professions.containsKey(uuid)) {
+            professions.remove(uuid);
         }
-        if (slimes.containsKey(n)) {
-            slimes.remove(n);
+        if (slimes.containsKey(uuid)) {
+            slimes.remove(uuid);
         }
-        if (plugin.getTrackerKeeper().getTrackGeneticManipulation().contains(n)) {
-            plugin.getTrackerKeeper().getTrackGeneticManipulation().remove(n);
+        if (plugin.getTrackerKeeper().getTrackGeneticManipulation().contains(uuid)) {
+            plugin.getTrackerKeeper().getTrackGeneticManipulation().remove(uuid);
         }
     }
 
@@ -397,53 +397,53 @@ public class TARDISLazarusGUIListener implements Listener {
         b.getRelative(BlockFace.SOUTH).getRelative(BlockFace.UP).setType(Material.AIR);
     }
 
-    private void setSlotFourtyOne(Inventory i, String d, String p) {
+    private void setSlotFourtyOne(Inventory i, String d, UUID uuid) {
         String t = null;
         int o;
         if (d.equals("SHEEP") || d.equals("WOLF")) {
-            if (sheep.containsKey(p)) {
-                o = (sheep.get(p) + 1 < 16) ? sheep.get(p) + 1 : 0;
+            if (sheep.containsKey(uuid)) {
+                o = (sheep.get(uuid) + 1 < 16) ? sheep.get(uuid) + 1 : 0;
             } else {
                 o = 0;
             }
             t = DyeColor.values()[o].toString();
-            sheep.put(p, o);
+            sheep.put(uuid, o);
         }
         if (d.equals("HORSE")) {
-            if (horses.containsKey(p)) {
-                o = (horses.get(p) + 1 < 7) ? horses.get(p) + 1 : 0;
+            if (horses.containsKey(uuid)) {
+                o = (horses.get(uuid) + 1 < 7) ? horses.get(uuid) + 1 : 0;
             } else {
                 o = 0;
             }
             t = Color.values()[o].toString();
-            horses.put(p, o);
+            horses.put(uuid, o);
         }
         if (d.equals("OCELOT")) {
-            if (cats.containsKey(p)) {
-                o = (cats.get(p) + 1 < 4) ? cats.get(p) + 1 : 0;
+            if (cats.containsKey(uuid)) {
+                o = (cats.get(uuid) + 1 < 4) ? cats.get(uuid) + 1 : 0;
             } else {
                 o = 0;
             }
             t = Type.values()[o].toString();
-            cats.put(p, o);
+            cats.put(uuid, o);
         }
         if (d.equals("VILLAGER")) {
-            if (professions.containsKey(p)) {
-                o = (professions.get(p) + 1 < 5) ? professions.get(p) + 1 : 0;
+            if (professions.containsKey(uuid)) {
+                o = (professions.get(uuid) + 1 < 5) ? professions.get(uuid) + 1 : 0;
             } else {
                 o = 0;
             }
             t = Profession.values()[o].toString();
-            professions.put(p, o);
+            professions.put(uuid, o);
         }
         if (d.equals("SLIME") || d.equals("MAGMA_CUBE")) {
-            if (slimes.containsKey(p)) {
-                o = (slimes.get(p) + 1 < 3) ? slimes.get(p) + 1 : 0;
+            if (slimes.containsKey(uuid)) {
+                o = (slimes.get(uuid) + 1 < 3) ? slimes.get(uuid) + 1 : 0;
             } else {
                 o = 0;
             }
             t = slimeSizes.get(o).toString();
-            slimes.put(p, o);
+            slimes.put(uuid, o);
         }
         if (t != null) {
             ItemStack is = i.getItem(41);

@@ -17,6 +17,7 @@
 package me.eccentric_nz.TARDIS.listeners;
 
 import java.util.HashMap;
+import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetGravity;
@@ -182,9 +183,9 @@ public class TARDISGravityWellListener implements Listener {
     @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
     public void onWoolInteract(PlayerInteractEvent event) {
         final Player player = event.getPlayer();
-        String playerNameStr = player.getName();
-        if (plugin.getTrackerKeeper().getTrackGravity().containsKey(playerNameStr)) {
-            Double[] values = plugin.getTrackerKeeper().getTrackGravity().get(playerNameStr);
+        UUID uuid = player.getUniqueId();
+        if (plugin.getTrackerKeeper().getTrackGravity().containsKey(uuid)) {
+            Double[] values = plugin.getTrackerKeeper().getTrackGravity().get(uuid);
             Block b = event.getClickedBlock();
             if (b != null) {
                 // get tardis_id
@@ -282,7 +283,7 @@ public class TARDISGravityWellListener implements Listener {
                     TARDISMessage.send(player, plugin.getPluginName() + "The wool was set to a gravity " + dir + " block!");
                 }
             }
-            plugin.getTrackerKeeper().getTrackGravity().remove(playerNameStr);
+            plugin.getTrackerKeeper().getTrackGravity().remove(uuid);
         }
     }
 }

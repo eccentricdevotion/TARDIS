@@ -18,14 +18,13 @@ package me.eccentric_nz.TARDIS.info;
 
 import java.util.Locale;
 import java.util.Map;
+import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
-import static me.eccentric_nz.TARDIS.info.TARDISInfoMenu.L_CIRCUIT;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
-import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
 
@@ -56,8 +55,8 @@ public class TARDISInformationSystemListener implements Listener {
     @EventHandler(ignoreCancelled = true)
     public void onTISChat(AsyncPlayerChatEvent event) {
         Player p = event.getPlayer();
-        String name = p.getName();
-        if (plugin.getTrackerKeeper().getTrackInfoMenu().containsKey(name)) {
+        UUID uuid = p.getUniqueId();
+        if (plugin.getTrackerKeeper().getTrackInfoMenu().containsKey(uuid)) {
             event.setCancelled(true);
             String chat = event.getMessage();
             // always exit if 'e' is pressed
@@ -66,7 +65,7 @@ public class TARDISInformationSystemListener implements Listener {
                 return;
             }
             if (chat.length() == 1) {
-                switch (plugin.getTrackerKeeper().getTrackInfoMenu().get(name)) {
+                switch (plugin.getTrackerKeeper().getTrackInfoMenu().get(uuid)) {
                     // TOP level menu
                     case TIS:
                         if (chat.equalsIgnoreCase("M")) {
@@ -927,7 +926,7 @@ public class TARDISInformationSystemListener implements Listener {
      * @param item the parent menu item to get the children of
      */
     private void processKey(Player p, TARDISInfoMenu item) {
-        plugin.getTrackerKeeper().getTrackInfoMenu().put(p.getName(), item);
+        plugin.getTrackerKeeper().getTrackInfoMenu().put(p.getUniqueId(), item);
         TARDISMessage.send(p, "---");
         TARDISMessage.send(p, "[" + item.getName() + "]");
         for (Map.Entry<String, String> m : TARDISInfoMenu.getChildren(item.toString()).entrySet()) {
@@ -1016,7 +1015,7 @@ public class TARDISInformationSystemListener implements Listener {
      * @param p the player to exit
      */
     private void exit(Player p) {
-        plugin.getTrackerKeeper().getTrackInfoMenu().remove(p.getName());
+        plugin.getTrackerKeeper().getTrackInfoMenu().remove(p.getUniqueId());
         TARDISMessage.send(p, "§6---");
         TARDISMessage.send(p, "§4You have been logged out of the TARDIS Information System");
     }

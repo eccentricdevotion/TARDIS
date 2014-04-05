@@ -125,7 +125,7 @@ public class TARDISUpdateCommand {
                     return false;
                 }
             }
-            plugin.getTrackerKeeper().getTrackPlayers().put(player.getName(), tardis_block);
+            plugin.getTrackerKeeper().getTrackPlayers().put(player.getUniqueId(), tardis_block);
             TARDISMessage.send(player, plugin.getPluginName() + "Click the TARDIS " + tardis_block + " to update its position.");
             if (tardis_block.equals("direction")) {
                 TARDISMessage.send(player, plugin.getPluginName() + "Don't forget to place a TRIPWIRE HOOK in the Direction Frame to enable it.");

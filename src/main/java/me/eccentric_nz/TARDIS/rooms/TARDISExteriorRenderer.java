@@ -94,11 +94,13 @@ public class TARDISExteriorRenderer {
                             switch (eb.getTypeId()) {
                                 case 8:
                                 case 9:
-                                    ib.setTypeIdAndData(95, (byte) 3, true);
+                                    ib.setType(Material.STAINED_GLASS);
+                                    ib.setData((byte) 3, true);
                                     break;
                                 case 10:
                                 case 11:
-                                    ib.setTypeIdAndData(35, (byte) 1, true);
+                                    ib.setType(Material.WOOL);
+                                    ib.setData((byte) 1, true);
                                     break;
                                 default:
                                     ib.setTypeIdAndData(eb.getTypeId(), eb.getData(), true);
@@ -277,7 +279,7 @@ public class TARDISExteriorRenderer {
         where.put("tardis_id", id);
         new QueryFactory(plugin).alterEnergyLevel("tardis", -plugin.getArtronConfig().getInt("render"), where, p);
         // tp the player inside the room
-        plugin.getTrackerKeeper().getTrackTransmat().add(p.getName());
+        plugin.getTrackerKeeper().getTrackTransmat().add(p.getUniqueId());
         plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
             @Override
             public void run() {

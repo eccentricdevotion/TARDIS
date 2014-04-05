@@ -17,6 +17,7 @@
 package me.eccentric_nz.TARDIS.listeners;
 
 import java.util.HashMap;
+import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.enumeration.MESSAGE;
 import me.eccentric_nz.TARDIS.enumeration.PRESET;
@@ -63,7 +64,7 @@ public class TARDISBlockBreakListener implements Listener {
     @EventHandler(priority = EventPriority.LOW, ignoreCancelled = true)
     public void onSignBreak(BlockBreakEvent event) {
         Player player = event.getPlayer();
-        if (plugin.getTrackerKeeper().getTrackZeroRoomOccupants().contains(player.getName())) {
+        if (plugin.getTrackerKeeper().getTrackZeroRoomOccupants().contains(player.getUniqueId())) {
             event.setCancelled(true);
             TARDISMessage.send(player, plugin.getPluginName() + MESSAGE.NOT_IN_ZERO.getText());
             return;
@@ -75,20 +76,19 @@ public class TARDISBlockBreakListener implements Listener {
             Sign sign = (Sign) block.getState();
             String line1 = sign.getLine(1);
             String line2 = sign.getLine(2);
-//            if (line1.equals(ChatColor.WHITE + "POLICE") && line2.equals(ChatColor.WHITE + "BOX")) {
             if (sign_lookup.containsKey(line1) && line2.equals(sign_lookup.get(line1))) {
                 event.setCancelled(true);
                 sign.update();
                 if (player.hasPermission("tardis.exterminate")) {
-                    final String playerNameStr = player.getName();
+                    final UUID uuid = player.getUniqueId();
                     // check it is their TARDIS
-                    plugin.getTrackerKeeper().getTrackExterminate().put(playerNameStr, block);
+                    plugin.getTrackerKeeper().getTrackExterminate().put(uuid, block);
                     long timeout = plugin.getConfig().getLong("police_box.confirm_timeout");
                     TARDISMessage.send(player, plugin.getPluginName() + "Are you sure you want to delete the TARDIS? Type " + ChatColor.AQUA + "/tardis exterminate" + ChatColor.RESET + " within " + timeout + " seconds to proceed.");
                     plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
                         @Override
                         public void run() {
-                            plugin.getTrackerKeeper().getTrackExterminate().remove(playerNameStr);
+                            plugin.getTrackerKeeper().getTrackExterminate().remove(uuid);
                         }
                     }, timeout * 20);
                 } else {

@@ -17,6 +17,7 @@
 package me.eccentric_nz.TARDIS.listeners;
 
 import java.util.HashMap;
+import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
@@ -55,31 +56,31 @@ public class TARDISAreaListener implements Listener {
     @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
     public void onAreaInteract(PlayerInteractEvent event) {
         final Player player = event.getPlayer();
-        final String playerNameStr = player.getName();
+        final UUID uuid = player.getUniqueId();
         Block block = event.getClickedBlock();
         if (block != null) {
-            if (plugin.getTrackerKeeper().getTrackName().containsKey(playerNameStr) && !plugin.getTrackerKeeper().getTrackBlock().containsKey(playerNameStr)) {
+            if (plugin.getTrackerKeeper().getTrackUUID().containsKey(uuid) && !plugin.getTrackerKeeper().getTrackBlock().containsKey(uuid)) {
                 Location block_loc = block.getLocation();
                 // check if block is in an already defined area
                 if (plugin.getTardisArea().areaCheckInExisting(block_loc)) {
                     String locStr = block_loc.getWorld().getName() + ":" + block_loc.getBlockX() + ":" + block_loc.getBlockY() + ":" + block_loc.getBlockZ();
-                    plugin.getTrackerKeeper().getTrackBlock().put(playerNameStr, locStr);
+                    plugin.getTrackerKeeper().getTrackBlock().put(uuid, locStr);
                     TARDISMessage.send(player, plugin.getPluginName() + "You have 60 seconds to select the area end block - use the " + ChatColor.GREEN + "/tardisarea end" + ChatColor.RESET + " command.");
                     plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
                         @Override
                         public void run() {
-                            plugin.getTrackerKeeper().getTrackName().remove(playerNameStr);
-                            plugin.getTrackerKeeper().getTrackBlock().remove(playerNameStr);
+                            plugin.getTrackerKeeper().getTrackUUID().remove(uuid);
+                            plugin.getTrackerKeeper().getTrackBlock().remove(uuid);
                         }
                     }, 1200L);
                 } else {
                     TARDISMessage.send(player, plugin.getPluginName() + "That block is inside an already defined area! Try somewhere else.");
                 }
-            } else if (plugin.getTrackerKeeper().getTrackBlock().containsKey(playerNameStr) && plugin.getTrackerKeeper().getTrackEnd().containsKey(playerNameStr)) {
+            } else if (plugin.getTrackerKeeper().getTrackBlock().containsKey(uuid) && plugin.getTrackerKeeper().getTrackEnd().containsKey(uuid)) {
                 Location block_loc = block.getLocation();
                 // check if block is in an already defined area
                 if (plugin.getTardisArea().areaCheckInExisting(block_loc)) {
-                    String[] firstblock = plugin.getTrackerKeeper().getTrackBlock().get(playerNameStr).split(":");
+                    String[] firstblock = plugin.getTrackerKeeper().getTrackBlock().get(uuid).split(":");
                     if (!block_loc.getWorld().getName().equals(firstblock[0])) {
                         TARDISMessage.send(player, plugin.getPluginName() + ChatColor.RED + "Area start and end blocks must be in the same world! Try again");
                         return;
@@ -104,7 +105,7 @@ public class TARDISAreaListener implements Listener {
                         minz = block_loc.getBlockZ();
                         maxz = plugin.getUtils().parseInt(firstblock[3]);
                     }
-                    String n = plugin.getTrackerKeeper().getTrackName().get(playerNameStr);
+                    String n = plugin.getTrackerKeeper().getTrackUUID().get(uuid);
                     QueryFactory qf = new QueryFactory(plugin);
                     HashMap<String, Object> set = new HashMap<String, Object>();
                     set.put("area_name", n);
@@ -115,10 +116,10 @@ public class TARDISAreaListener implements Listener {
                     set.put("maxz", maxz);
                     set.put("y", y + 1);
                     qf.doInsert("areas", set);
-                    TARDISMessage.send(player, plugin.getPluginName() + "The area [" + plugin.getTrackerKeeper().getTrackName().get(playerNameStr) + "] was saved successfully");
-                    plugin.getTrackerKeeper().getTrackName().remove(playerNameStr);
-                    plugin.getTrackerKeeper().getTrackBlock().remove(playerNameStr);
-                    plugin.getTrackerKeeper().getTrackEnd().remove(playerNameStr);
+                    TARDISMessage.send(player, plugin.getPluginName() + "The area [" + plugin.getTrackerKeeper().getTrackUUID().get(uuid) + "] was saved successfully");
+                    plugin.getTrackerKeeper().getTrackUUID().remove(uuid);
+                    plugin.getTrackerKeeper().getTrackBlock().remove(uuid);
+                    plugin.getTrackerKeeper().getTrackEnd().remove(uuid);
                 } else {
                     TARDISMessage.send(player, plugin.getPluginName() + "That block is inside an already defined area! Try somewhere else.");
                 }

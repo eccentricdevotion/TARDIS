@@ -21,6 +21,7 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.UUID;
 import me.eccentric_nz.TARDIS.commands.TARDISTravelCommands;
 import me.eccentric_nz.TARDIS.commands.admin.TARDISAdminCommands;
 import me.eccentric_nz.TARDIS.listeners.TARDISButtonListener;
@@ -51,14 +52,14 @@ public class TARDISGeneralInstanceKeeper {
     private TARDISScannerListener scannerListener;
     private TARDISSonicListener sonicListener;
     private TARDISTravelCommands tardisTravelCommand;
-    private TARDISUUIDCache UUIDCache;
+    private final TARDISUUIDCache UUIDCache;
     private final HashMap<String, Double[]> gravityEastList = new HashMap<String, Double[]>();
     private final HashMap<String, Double[]> gravityNorthList = new HashMap<String, Double[]>();
     private final HashMap<String, Double[]> gravitySouthList = new HashMap<String, Double[]>();
     private final HashMap<String, Double[]> gravityUpList = new HashMap<String, Double[]>();
     private final HashMap<String, Double[]> gravityWestList = new HashMap<String, Double[]>();
     private final HashMap<String, Integer> protectBlockMap = new HashMap<String, Integer>();
-    private final HashMap<String, TARDISCondenserData> roomCondenserData = new HashMap<String, TARDISCondenserData>();
+    private final HashMap<UUID, TARDISCondenserData> roomCondenserData = new HashMap<UUID, TARDISCondenserData>();
     private final List<BlockFace> faces = Arrays.asList(BlockFace.NORTH, BlockFace.WEST, BlockFace.SOUTH, BlockFace.EAST);
     private final List<Chunk> roomChunkList = new ArrayList<Chunk>();
     private final List<Chunk> tardisChunkList = new ArrayList<Chunk>();
@@ -125,7 +126,7 @@ public class TARDISGeneralInstanceKeeper {
         return protectBlockMap;
     }
 
-    public HashMap<String, TARDISCondenserData> getRoomCondenserData() {
+    public HashMap<UUID, TARDISCondenserData> getRoomCondenserData() {
         return roomCondenserData;
     }
 

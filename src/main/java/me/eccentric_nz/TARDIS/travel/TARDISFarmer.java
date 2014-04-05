@@ -91,7 +91,7 @@ public class TARDISFarmer {
             boolean canfarm = plugin.getTMIChecker().checkMVI(from, to);
             if (!canfarm) {
                 TARDISMessage.send(p, plugin.getPluginName() + "You cannot farm mobs from this world.");
-                plugin.getTrackerKeeper().getTrackFarming().remove(p.getName());
+                plugin.getTrackerKeeper().getTrackFarming().remove(p.getUniqueId());
                 return null;
             }
         }
@@ -579,7 +579,7 @@ public class TARDISFarmer {
         plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
             @Override
             public void run() {
-                plugin.getTrackerKeeper().getTrackFarming().remove(p.getName());
+                plugin.getTrackerKeeper().getTrackFarming().remove(p.getUniqueId());
             }
         }, 20L);
         return old_macd_had_a_pet;

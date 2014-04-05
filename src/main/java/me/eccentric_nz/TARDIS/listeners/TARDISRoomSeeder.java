@@ -20,6 +20,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.achievement.TARDISAchievementFactory;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
@@ -80,9 +81,9 @@ public class TARDISRoomSeeder implements Listener {
     @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
     public void onSeedBlockInteract(PlayerInteractEvent event) {
         final Player player = event.getPlayer();
-        String playerNameStr = player.getName();
+        UUID uuid = player.getUniqueId();
         // check that player is in TARDIS
-        if (!plugin.getTrackerKeeper().getTrackRoomSeed().containsKey(playerNameStr)) {
+        if (!plugin.getTrackerKeeper().getTrackRoomSeed().containsKey(uuid)) {
             return;
         }
         Block block = event.getClickedBlock();
@@ -105,7 +106,7 @@ public class TARDISRoomSeeder implements Listener {
                 String name = world.getName();
                 ChunkGenerator gen = world.getGenerator();
                 boolean special = name.contains("TARDIS_TimeVortex") && (world.getWorldType().equals(WorldType.FLAT) || gen instanceof TARDISChunkGenerator);
-                if (!name.equals("TARDIS_WORLD_" + playerNameStr) && !special) {
+                if (!name.equals("TARDIS_WORLD_" + player.getName()) && !special) {
                     TARDISMessage.send(player, plugin.getPluginName() + "You must be in a TARDIS world to grow a room!");
                     return;
                 }
@@ -127,7 +128,7 @@ public class TARDISRoomSeeder implements Listener {
                     return;
                 }
                 // get seed data
-                TARDISSeedData sd = plugin.getTrackerKeeper().getTrackRoomSeed().get(playerNameStr);
+                TARDISSeedData sd = plugin.getTrackerKeeper().getTrackRoomSeed().get(uuid);
                 // check they are not in an ARS chunk
                 if (ars.contains(sd.getSchematic()) && sd.hasARS()) {
                     Chunk c = b.getWorld().getChunkAt(block.getRelative(BlockFace.valueOf(d.toString()), 4));
@@ -143,7 +144,7 @@ public class TARDISRoomSeeder implements Listener {
                 String r = plugin.getBuildKeeper().getSeeds().get(blockType);
                 // check that the blockType is the same as the one they ran the /tardis room [type] command for
                 if (!sd.getRoom().equals(r)) {
-                    TARDISMessage.send(player, plugin.getPluginName() + "That is not the correct seed block to grow a " + plugin.getTrackerKeeper().getTrackRoomSeed().get(playerNameStr).getRoom() + "!");
+                    TARDISMessage.send(player, plugin.getPluginName() + "That is not the correct seed block to grow a " + plugin.getTrackerKeeper().getTrackRoomSeed().get(uuid).getRoom() + "!");
                     return;
                 }
                 // adjust the location three/four blocks out
@@ -156,7 +157,7 @@ public class TARDISRoomSeeder implements Listener {
                     Block doorway = block.getRelative(facing, 2);
                     doorway.setType(Material.AIR);
                     doorway.getRelative(BlockFace.UP).setType(Material.AIR);
-                    plugin.getTrackerKeeper().getTrackRoomSeed().remove(playerNameStr);
+                    plugin.getTrackerKeeper().getTrackRoomSeed().remove(uuid);
                     // ok, room growing was successful, so take their energy!
                     int amount = plugin.getRoomsConfig().getInt("rooms." + r + ".cost");
                     QueryFactory qf = new QueryFactory(plugin);
@@ -165,14 +166,14 @@ public class TARDISRoomSeeder implements Listener {
                     qf.alterEnergyLevel("tardis", -amount, set, player);
                     // remove blocks from condenser table if rooms_require_blocks is true
                     if (plugin.getConfig().getBoolean("growth.rooms_require_blocks")) {
-                        TARDISCondenserData c_data = plugin.getGeneralKeeper().getRoomCondenserData().get(playerNameStr);
+                        TARDISCondenserData c_data = plugin.getGeneralKeeper().getRoomCondenserData().get(uuid);
                         for (Map.Entry<String, Integer> entry : c_data.getBlockIDCount().entrySet()) {
                             HashMap<String, Object> wherec = new HashMap<String, Object>();
                             wherec.put("tardis_id", c_data.getTardis_id());
                             wherec.put("block_data", entry.getKey());
                             qf.alterCondenserBlockCount(entry.getValue(), wherec);
                         }
-                        plugin.getGeneralKeeper().getRoomCondenserData().remove(playerNameStr);
+                        plugin.getGeneralKeeper().getRoomCondenserData().remove(uuid);
                     }
                     // are we doing an achievement?
                     if (plugin.getAchievementConfig().getBoolean("rooms.enabled")) {

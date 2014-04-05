@@ -88,7 +88,7 @@ public class TARDISBlockPlaceListener implements Listener {
     @EventHandler(ignoreCancelled = true)
     public void onPlayerBlockPlace(BlockPlaceEvent event) {
         Player player = event.getPlayer();
-        if (plugin.getTrackerKeeper().getTrackZeroRoomOccupants().contains(player.getName())) {
+        if (plugin.getTrackerKeeper().getTrackZeroRoomOccupants().contains(player.getUniqueId())) {
             event.setCancelled(true);
             TARDISMessage.send(player, plugin.getPluginName() + MESSAGE.NOT_IN_ZERO.getText());
             return;
@@ -305,9 +305,9 @@ public class TARDISBlockPlaceListener implements Listener {
                         setlocs.put("direction", d);
                         qf.insertLocations(setlocs);
                         // remove redstone torch/lapis and iron blocks
-                        block.setTypeId(0);
-                        blockBelow.setTypeId(0);
-                        blockBottom.setTypeId(0);
+                        block.setType(Material.AIR);
+                        blockBelow.setType(Material.AIR);
+                        blockBottom.setType(Material.AIR);
                         // turn the block stack into a TARDIS
                         final TARDISMaterialisationData pbd = new TARDISMaterialisationData();
                         pbd.setChameleon(false);

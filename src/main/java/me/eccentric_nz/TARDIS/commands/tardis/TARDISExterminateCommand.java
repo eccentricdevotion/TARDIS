@@ -40,11 +40,11 @@ public class TARDISExterminateCommand {
             sender.sendMessage(plugin.getPluginName() + MESSAGE.MUST_BE_PLAYER.getText());
             return false;
         }
-        if (!plugin.getTrackerKeeper().getTrackExterminate().containsKey(player.getName())) {
+        if (!plugin.getTrackerKeeper().getTrackExterminate().containsKey(player.getUniqueId())) {
             TARDISMessage.send(player, plugin.getPluginName() + "You must break the TARDIS Police Box sign first!");
             return false;
         }
         TARDISExterminator del = new TARDISExterminator(plugin);
-        return del.exterminate(player, plugin.getTrackerKeeper().getTrackExterminate().get(player.getName()));
+        return del.exterminate(player, plugin.getTrackerKeeper().getTrackExterminate().get(player.getUniqueId()));
     }
 }

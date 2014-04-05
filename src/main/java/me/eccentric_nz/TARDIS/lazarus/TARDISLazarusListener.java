@@ -47,7 +47,7 @@ public class TARDISLazarusListener implements Listener {
         Action a = event.getAction();
         if (a.equals(Action.PHYSICAL) && event.getClickedBlock().getType().equals(Material.WOOD_PLATE)) {
             final Player player = event.getPlayer();
-            if (plugin.getTrackerKeeper().getTrackLazarus().containsKey(player.getName())) {
+            if (plugin.getTrackerKeeper().getTrackLazarus().containsKey(player.getUniqueId())) {
                 return;
             }
             if (player.hasPermission("tardis.lazarus")) {
@@ -60,7 +60,7 @@ public class TARDISLazarusListener implements Listener {
                 ResultSetControls rsc = new ResultSetControls(plugin, where, false);
                 if (rsc.resultSet()) {
                     // track the block
-                    plugin.getTrackerKeeper().getTrackLazarus().put(player.getName(), b);
+                    plugin.getTrackerKeeper().getTrackLazarus().put(player.getUniqueId(), b);
                     // close the door
                     b.getRelative(BlockFace.SOUTH).setType(Material.COBBLE_WALL);
                     b.getRelative(BlockFace.SOUTH).getRelative(BlockFace.UP).setType(Material.COBBLE_WALL);

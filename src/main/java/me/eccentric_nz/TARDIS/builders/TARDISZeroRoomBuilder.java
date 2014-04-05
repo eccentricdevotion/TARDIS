@@ -18,6 +18,7 @@ package me.eccentric_nz.TARDIS.builders;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.achievement.TARDISAchievementFactory;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
@@ -70,7 +71,7 @@ public class TARDISZeroRoomBuilder {
         Location l = new Location(w, x, y, z);
         TARDISRoomBuilder builder = new TARDISRoomBuilder(plugin, "ZERO", l, COMPASS.SOUTH, p);
         if (builder.build()) {
-            String playerNameStr = p.getName();
+            UUID uuid = p.getUniqueId();
             // ok, room growing was successful, so take their energy!
             int amount = plugin.getRoomsConfig().getInt("rooms.ZERO.cost");
             QueryFactory qf = new QueryFactory(plugin);
@@ -79,14 +80,14 @@ public class TARDISZeroRoomBuilder {
             qf.alterEnergyLevel("tardis", -amount, set, p);
             // remove blocks from condenser table if rooms_require_blocks is true
             if (plugin.getConfig().getBoolean("growth.rooms_require_blocks")) {
-                TARDISCondenserData c_data = plugin.getGeneralKeeper().getRoomCondenserData().get(playerNameStr);
+                TARDISCondenserData c_data = plugin.getGeneralKeeper().getRoomCondenserData().get(uuid);
                 for (Map.Entry<String, Integer> entry : c_data.getBlockIDCount().entrySet()) {
                     HashMap<String, Object> wherec = new HashMap<String, Object>();
                     wherec.put("tardis_id", c_data.getTardis_id());
                     wherec.put("block_data", entry.getKey());
                     qf.alterCondenserBlockCount(entry.getValue(), wherec);
                 }
-                plugin.getGeneralKeeper().getRoomCondenserData().remove(playerNameStr);
+                plugin.getGeneralKeeper().getRoomCondenserData().remove(uuid);
             }
             // are we doing an achievement?
             if (plugin.getAchievementConfig().getBoolean("rooms.enabled")) {

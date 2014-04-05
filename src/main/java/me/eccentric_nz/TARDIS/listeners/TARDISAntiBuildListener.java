@@ -18,6 +18,7 @@ package me.eccentric_nz.TARDIS.listeners;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.ResultSetAntiBuild;
 import me.eccentric_nz.TARDIS.enumeration.MESSAGE;
@@ -86,7 +87,7 @@ public class TARDISAntiBuildListener implements Listener {
 
     @EventHandler(ignoreCancelled = true)
     public void onCompanionBuild(BlockPlaceEvent event) {
-        String uuid = event.getPlayer().getUniqueId().toString();
+        UUID uuid = event.getPlayer().getUniqueId();
         ResultSetAntiBuild rs = new ResultSetAntiBuild(plugin, uuid);
         if (!rs.resultSet() || !plugin.getTrackerKeeper().getTrackAntiBuild().containsKey(rs.getTardis_id())) {
             return;
@@ -101,7 +102,7 @@ public class TARDISAntiBuildListener implements Listener {
 
     @EventHandler(ignoreCancelled = true)
     public void onCompanionBreak(BlockBreakEvent event) {
-        String uuid = event.getPlayer().getUniqueId().toString();
+        UUID uuid = event.getPlayer().getUniqueId();
         ResultSetAntiBuild rs = new ResultSetAntiBuild(plugin, uuid);
         if (!rs.resultSet() || !plugin.getTrackerKeeper().getTrackAntiBuild().containsKey(rs.getTardis_id())) {
             return;
@@ -116,7 +117,7 @@ public class TARDISAntiBuildListener implements Listener {
 
     @EventHandler(ignoreCancelled = true)
     public void onCompanionPlace(PlayerInteractEvent event) {
-        String uuid = event.getPlayer().getUniqueId().toString();
+        UUID uuid = event.getPlayer().getUniqueId();
         ResultSetAntiBuild rs = new ResultSetAntiBuild(plugin, uuid);
         if (!rs.resultSet() || !plugin.getTrackerKeeper().getTrackAntiBuild().containsKey(rs.getTardis_id())) {
             return;
@@ -135,7 +136,7 @@ public class TARDISAntiBuildListener implements Listener {
 
     @EventHandler(ignoreCancelled = true)
     public void onCompanionEntityClick(PlayerInteractEntityEvent event) {
-        String uuid = event.getPlayer().getUniqueId().toString();
+        UUID uuid = event.getPlayer().getUniqueId();
         ResultSetAntiBuild rs = new ResultSetAntiBuild(plugin, uuid);
         if (!rs.resultSet() || !plugin.getTrackerKeeper().getTrackAntiBuild().containsKey(rs.getTardis_id())) {
             return;
@@ -152,7 +153,7 @@ public class TARDISAntiBuildListener implements Listener {
     public void onCompanionDamage(EntityDamageByEntityEvent event) {
         if (event.getDamager() instanceof Player) {
             Player p = (Player) event.getDamager();
-            ResultSetAntiBuild rs = new ResultSetAntiBuild(plugin, p.getName());
+            ResultSetAntiBuild rs = new ResultSetAntiBuild(plugin, p.getUniqueId());
             if (!rs.resultSet() || !plugin.getTrackerKeeper().getTrackAntiBuild().containsKey(rs.getTardis_id())) {
                 return;
             }
@@ -169,7 +170,7 @@ public class TARDISAntiBuildListener implements Listener {
     public void onCompanionPaint(HangingBreakByEntityEvent event) {
         if (event.getRemover() instanceof Player) {
             Player p = (Player) event.getRemover();
-            ResultSetAntiBuild rs = new ResultSetAntiBuild(plugin, p.getName());
+            ResultSetAntiBuild rs = new ResultSetAntiBuild(plugin, p.getUniqueId());
             if (!rs.resultSet() || !plugin.getTrackerKeeper().getTrackAntiBuild().containsKey(rs.getTardis_id())) {
                 return;
             }

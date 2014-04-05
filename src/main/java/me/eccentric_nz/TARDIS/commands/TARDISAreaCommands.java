@@ -24,6 +24,7 @@ import me.eccentric_nz.TARDIS.database.ResultSetAreas;
 import me.eccentric_nz.TARDIS.enumeration.MESSAGE;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import org.bukkit.ChatColor;
+import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
@@ -85,16 +86,16 @@ public class TARDISAreaCommands implements CommandExecutor {
                         }
                     }
                 }
-                plugin.getTrackerKeeper().getTrackName().put(player.getName(), args[1]);
+                plugin.getTrackerKeeper().getTrackUUID().put(player.getUniqueId(), args[1]);
                 TARDISMessage.send(player, plugin.getPluginName() + "Click the area start block to save its position.");
                 return true;
             }
             if (args[0].equals("end")) {
-                if (!plugin.getTrackerKeeper().getTrackBlock().containsKey(player.getName())) {
+                if (!plugin.getTrackerKeeper().getTrackBlock().containsKey(player.getUniqueId())) {
                     TARDISMessage.send(player, plugin.getPluginName() + ChatColor.RED + "You haven't selected an area start block!");
                     return false;
                 }
-                plugin.getTrackerKeeper().getTrackEnd().put(player.getName(), "end");
+                plugin.getTrackerKeeper().getTrackEnd().put(player.getUniqueId(), "end");
                 TARDISMessage.send(player, plugin.getPluginName() + "Click the area end block to complete the area.");
                 return true;
             }
@@ -128,13 +129,13 @@ public class TARDISAreaCommands implements CommandExecutor {
                 int maz = rsa.getMaxz();
                 World w = plugin.getServer().getWorld(rsa.getWorld());
                 final Block b1 = w.getHighestBlockAt(mix, miz).getRelative(BlockFace.UP);
-                b1.setTypeId(80);
+                b1.setType(Material.SNOW_BLOCK);
                 final Block b2 = w.getHighestBlockAt(mix, maz).getRelative(BlockFace.UP);
-                b2.setTypeId(80);
+                b2.setType(Material.SNOW_BLOCK);
                 final Block b3 = w.getHighestBlockAt(max, miz).getRelative(BlockFace.UP);
-                b3.setTypeId(80);
+                b3.setType(Material.SNOW_BLOCK);
                 final Block b4 = w.getHighestBlockAt(max, maz).getRelative(BlockFace.UP);
-                b4.setTypeId(80);
+                b4.setType(Material.SNOW_BLOCK);
                 plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new SetAir(b1, b2, b3, b4), 300L);
                 return true;
             }
@@ -158,10 +159,10 @@ public class TARDISAreaCommands implements CommandExecutor {
 
         @Override
         public void run() {
-            b1.setTypeId(0);
-            b2.setTypeId(0);
-            b3.setTypeId(0);
-            b4.setTypeId(0);
+            b1.setType(Material.AIR);
+            b2.setType(Material.AIR);
+            b3.setType(Material.AIR);
+            b4.setType(Material.AIR);
         }
     }
 }

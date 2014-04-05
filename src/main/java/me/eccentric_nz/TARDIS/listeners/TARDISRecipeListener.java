@@ -18,10 +18,10 @@ package me.eccentric_nz.TARDIS.listeners;
 
 //import java.util.HashMap;
 //import java.util.List;
+import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
-import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryCloseEvent;
@@ -48,7 +48,7 @@ public class TARDISRecipeListener implements Listener {
         InventoryType type = top.getType();
         if (type == InventoryType.WORKBENCH) {
             final Player player = (Player) event.getWhoClicked();
-            if (plugin.getTrackerKeeper().getTrackRecipeView().contains(player.getName())) {
+            if (plugin.getTrackerKeeper().getTrackRecipeView().contains(player.getUniqueId())) {
                 event.setCancelled(true);
             }
         }
@@ -60,9 +60,9 @@ public class TARDISRecipeListener implements Listener {
         InventoryType type = top.getType();
         if (type == InventoryType.WORKBENCH) {
             Player p = (Player) event.getPlayer();
-            String name = p.getName();
-            if (plugin.getTrackerKeeper().getTrackRecipeView().contains(name)) {
-                plugin.getTrackerKeeper().getTrackRecipeView().remove(name);
+            UUID uuid = p.getUniqueId();
+            if (plugin.getTrackerKeeper().getTrackRecipeView().contains(uuid)) {
+                plugin.getTrackerKeeper().getTrackRecipeView().remove(uuid);
                 event.getView().getTopInventory().clear();
                 p.updateInventory();
             }

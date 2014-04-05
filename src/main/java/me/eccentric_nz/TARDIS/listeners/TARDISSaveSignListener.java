@@ -18,6 +18,7 @@ package me.eccentric_nz.TARDIS.listeners;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetCurrentLocation;
@@ -31,7 +32,6 @@ import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
-import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryCloseEvent;
@@ -63,7 +63,7 @@ public class TARDISSaveSignListener implements Listener {
         String name = inv.getTitle();
         if (name.equals("§4TARDIS saves")) {
             final Player player = (Player) event.getWhoClicked();
-            String playerNameStr = player.getName();
+            UUID uuid = player.getUniqueId();
             // get the TARDIS the player is in
             HashMap<String, Object> wheres = new HashMap<String, Object>();
             wheres.put("uuid", player.getUniqueId().toString());
@@ -71,7 +71,7 @@ public class TARDISSaveSignListener implements Listener {
             if (rst.resultSet()) {
                 int id = rst.getTardis_id();
                 int slot = event.getRawSlot();
-                if (plugin.getTrackerKeeper().getTrackArrangers().contains(playerNameStr)) {
+                if (plugin.getTrackerKeeper().getTrackArrangers().contains(uuid)) {
                     //ClickType ct = event.getClick();
                     if (slot >= 1 && slot < 45) {
                         // allow
@@ -173,9 +173,9 @@ public class TARDISSaveSignListener implements Listener {
                     wherez.put("uuid", player.getUniqueId().toString());
                     ResultSetTardis rs = new ResultSetTardis(plugin, wherez, "", false);
                     if (rs.resultSet()) {
-                        if (!plugin.getTrackerKeeper().getTrackArrangers().contains(playerNameStr)) {
+                        if (!plugin.getTrackerKeeper().getTrackArrangers().contains(uuid)) {
                             // Only add one at a time
-                            plugin.getTrackerKeeper().getTrackArrangers().add(playerNameStr);
+                            plugin.getTrackerKeeper().getTrackArrangers().add(uuid);
                         }
                         TARDISMessage.send(player, plugin.getPluginName() + "Save rearrangement enabled");
                     } else {
@@ -205,10 +205,10 @@ public class TARDISSaveSignListener implements Listener {
         final Inventory inv = event.getInventory();
         String inv_name = inv.getTitle();
         if (inv_name.equals("§4TARDIS saves")) {
-            String p = ((Player) event.getPlayer()).getName();
+            UUID uuid = ((Player) event.getPlayer()).getUniqueId();
             // get the TARDIS the player is in
             HashMap<String, Object> wheres = new HashMap<String, Object>();
-            wheres.put("uuid", event.getPlayer().getUniqueId().toString());
+            wheres.put("uuid", uuid.toString());
             ResultSetTravellers rst = new ResultSetTravellers(plugin, wheres, false);
             if (rst.resultSet()) {
                 int id = rst.getTardis_id();
@@ -227,8 +227,8 @@ public class TARDISSaveSignListener implements Listener {
                     }
                 }
             }
-            if (plugin.getTrackerKeeper().getTrackArrangers().contains(p)) {
-                plugin.getTrackerKeeper().getTrackArrangers().remove(p);
+            if (plugin.getTrackerKeeper().getTrackArrangers().contains(uuid)) {
+                plugin.getTrackerKeeper().getTrackArrangers().remove(uuid);
             }
         }
     }

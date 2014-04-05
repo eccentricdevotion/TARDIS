@@ -21,7 +21,6 @@ import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
-import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
@@ -44,8 +43,8 @@ public class TARDISTemporalListener implements Listener {
         Material inhand = p.getItemInHand().getType();
         if (event.getAction().equals(Action.RIGHT_CLICK_AIR) && inhand.equals(Material.WATCH) && p.hasPermission("tardis.temporal")) {
             p.resetPlayerTime();
-            if (plugin.getTrackerKeeper().getTrackSetTime().containsKey(p.getName())) {
-                plugin.getTrackerKeeper().getTrackSetTime().remove(p.getName());
+            if (plugin.getTrackerKeeper().getTrackSetTime().containsKey(p.getUniqueId())) {
+                plugin.getTrackerKeeper().getTrackSetTime().remove(p.getUniqueId());
             }
             TARDISMessage.send(p, plugin.getPluginName() + "Temporal Location reset to server time.");
         }
