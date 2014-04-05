@@ -1,7 +1,7 @@
 # TODO
 
 ##Current version `2.8`
-1. Convert player persistence to UUIDs (started)
+1. Convert player persistence to UUIDs - TARDIS code is done, waiting on plugin dependencies to update (WorldGuard etc...)
 
 These are all really boring!
 
@@ -11,7 +11,7 @@ These are all really boring!
 3. `/tardisadmin` remote TARDIS commands
 
 ##Future version `2.9+`
-1. UHC flying mode
+1. UHC flying mode (started - have coded some test plugins)
 2. TARDIS invisiblity - 1.8 barrier blocks?
 
 ####I couldn't really be bothered
