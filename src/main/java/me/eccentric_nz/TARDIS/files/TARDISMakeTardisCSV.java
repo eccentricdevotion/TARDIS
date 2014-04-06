@@ -245,11 +245,6 @@ public class TARDISMakeTardisCSV {
      */
     public File copy(String filepath, InputStream in) {
         File file = new File(filepath);
-        // for now always delete recipes...
-//        if (file.exists() && filepath.contains("recipes")) {
-//            plugin.debug("Deleting recipes.yml so we have a fresh copy...");
-//            file.delete();
-//        }
         if (!file.exists()) {
             OutputStream out = null;
             try {
@@ -280,5 +275,18 @@ public class TARDISMakeTardisCSV {
             }
         }
         return file;
+    }
+
+    /**
+     * Copies the schematic file to the TARDIS plugin directory if it is not
+     * present.
+     *
+     * @param filename the name of the file to copy
+     * @return a File
+     */
+    public File copy(String filename) {
+        String filepath = plugin.getDataFolder() + File.separator + filename;
+        InputStream in = plugin.getResource(filename);
+        return copy(filepath, in);
     }
 }

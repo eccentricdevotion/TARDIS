@@ -293,14 +293,14 @@ public class TARDIS extends JavaPlugin {
      */
     private void loadCustomConfigs() {
         //TODO - change file copy method - just send the file name and process it there?
-        tardisCSV.copy(getDataFolder() + File.separator + "achievements.yml", getResource("achievements.yml"));
-        tardisCSV.copy(getDataFolder() + File.separator + "artron.yml", getResource("artron.yml"));
-        tardisCSV.copy(getDataFolder() + File.separator + "blocks.yml", getResource("blocks.yml"));
-        tardisCSV.copy(getDataFolder() + File.separator + "rooms.yml", getResource("rooms.yml"));
-        tardisCSV.copy(getDataFolder() + File.separator + "tag.yml", getResource("tag.yml"));
-        tardisCSV.copy(getDataFolder() + File.separator + "recipes.yml", getResource("recipes.yml"));
-        tardisCSV.copy(getDataFolder() + File.separator + "kits.yml", getResource("kits.yml"));
-        tardisCSV.copy(getDataFolder() + File.separator + "condensables.yml", getResource("condensables.yml"));
+        tardisCSV.copy("achievements.yml");
+        tardisCSV.copy("artron.yml");
+        tardisCSV.copy("blocks.yml");
+        tardisCSV.copy("rooms.yml");
+        tardisCSV.copy("tag.yml");
+        tardisCSV.copy("recipes.yml");
+        tardisCSV.copy("kits.yml");
+        tardisCSV.copy("condensables.yml");
         this.achievementConfig = YamlConfiguration.loadConfiguration(new File(getDataFolder(), "achievements.yml"));
         if (this.achievementConfig.getString("travel.message").equals("Life of the party!")) {
             this.achievementConfig.set("travel.message", "There and back again!");
@@ -326,7 +326,7 @@ public class TARDIS extends JavaPlugin {
     private void loadFiles() {
         tardisCSV.loadCSV();
         roomCSV.loadCSV();
-        quotesfile = tardisCSV.copy(getDataFolder() + File.separator + "quotes.txt", getResource("quotes.txt"));
+        quotesfile = tardisCSV.copy("quotes.txt");
     }
 
     /**
@@ -420,7 +420,7 @@ public class TARDIS extends JavaPlugin {
     private void loadPerms() {
         if (pm.getPlugin("GroupManager") != null || pm.getPlugin("bPermissions") != null || pm.getPlugin("PermissionsEx") != null) {
             // copy default permissions file if not present
-            tardisCSV.copy(getDataFolder() + File.separator + "permissions.txt", getResource("permissions.txt"));
+            tardisCSV.copy("permissions.txt");
             if (getConfig().getBoolean("creation.create_worlds")) {
                 console.sendMessage(pluginName + "World specific permissions plugin detected please edit plugins/TARDIS/permissions.txt");
             }

@@ -47,7 +47,7 @@ public class TARDISCustomPreset {
         // get the custom preset file and read the contents
         // ignore lines that start with a #
         String[] custom_data = new String[9];
-        File custom_file = TARDIS.plugin.getTardisCSV().copy(TARDIS.plugin.getDataFolder() + File.separator + "custom_preset.txt", TARDIS.plugin.getResource("custom_preset.txt"));
+        File custom_file = TARDIS.plugin.getTardisCSV().copy("custom_preset.txt");
         BufferedReader bufRdr = null;
         int i = 0;
         try {

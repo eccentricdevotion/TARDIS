@@ -31,9 +31,9 @@ import java.util.Map;
 import java.util.Properties;
 import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
-import static me.eccentric_nz.TARDIS.files.TARDISConfigConverter.copyFile;
 import me.eccentric_nz.TARDIS.utility.TARDISUUIDFetcher;
 import org.bukkit.ChatColor;
+import org.bukkit.util.FileUtil;
 
 /**
  *
@@ -60,12 +60,7 @@ public class TARDISUUIDConverter {
         plugin.getConsole().sendMessage(plugin.getPluginName() + "Backing up TARDIS database...");
         File oldFile = new File(plugin.getDataFolder() + File.separator + "TARDIS.db");
         File newFile = new File(plugin.getDataFolder() + File.separator + "TARDIS_" + System.currentTimeMillis() + ".db");
-        try {
-            copyFile(oldFile, newFile);
-        } catch (IOException ex) {
-            plugin.debug("Could not backup TARDIS.db! " + ex.getMessage());
-            return false;
-        }
+        FileUtil.copy(oldFile, newFile);
         // get all TARDIS owners from database
         Statement statement = null;
         PreparedStatement ps_ach = null;

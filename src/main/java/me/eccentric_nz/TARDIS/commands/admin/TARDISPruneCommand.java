@@ -17,11 +17,10 @@
 package me.eccentric_nz.TARDIS.commands.admin;
 
 import java.io.File;
-import java.io.IOException;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.destroyers.TARDISPruner;
-import static me.eccentric_nz.TARDIS.files.TARDISConfigConverter.copyFile;
 import org.bukkit.command.CommandSender;
+import org.bukkit.util.FileUtil;
 
 /**
  *
@@ -47,12 +46,7 @@ public class TARDISPruneCommand {
             File oldFile = new File(plugin.getDataFolder() + File.separator + "TARDIS.db");
             File newFile = new File(plugin.getDataFolder() + File.separator + "TARDIS_" + System.currentTimeMillis() + ".db");
             // back up the file
-            try {
-                copyFile(oldFile, newFile);
-            } catch (IOException ex) {
-                plugin.debug("Could not backup TARDIS.db! " + ex.getMessage());
-                return false;
-            }
+            FileUtil.copy(oldFile, newFile);
             int days = Integer.parseInt(args[1]);
             sender.sendMessage(plugin.getPluginName() + "Starting TARDIS prune...");
             pruner.prune(sender, days);
