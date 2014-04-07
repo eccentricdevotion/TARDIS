@@ -21,6 +21,7 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
 
 /**
@@ -68,7 +69,7 @@ public class TARDISSQLInsert implements Runnable {
             ps = connection.prepareStatement("INSERT INTO " + table + " (" + fields + ") VALUES (" + questions + ")");
             int i = 1;
             for (Map.Entry<String, Object> entry : data.entrySet()) {
-                if (entry.getValue().getClass().equals(String.class)) {
+                if (entry.getValue().getClass().equals(String.class) || entry.getValue().getClass().equals(UUID.class)) {
                     ps.setString(i, entry.getValue().toString());
                 } else {
                     if (entry.getValue().getClass().getName().contains("Double")) {

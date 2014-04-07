@@ -21,6 +21,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.artron.TARDISArtronIndicator;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
@@ -69,7 +70,7 @@ public class TARDISSQLAlterEnergy implements Runnable {
         StringBuilder sbw = new StringBuilder();
         for (Map.Entry<String, Object> entry : where.entrySet()) {
             sbw.append(entry.getKey()).append(" = ");
-            if (entry.getValue().getClass().equals(String.class)) {
+            if (entry.getValue().getClass().equals(String.class) || entry.getValue().getClass().equals(UUID.class)) {
                 sbw.append("'").append(entry.getValue()).append("' AND ");
             } else {
                 sbw.append(entry.getValue()).append(" AND ");

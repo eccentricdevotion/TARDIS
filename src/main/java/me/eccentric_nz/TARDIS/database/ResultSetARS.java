@@ -89,7 +89,7 @@ public class ResultSetARS {
             if (where != null) {
                 int s = 1;
                 for (Map.Entry<String, Object> entry : where.entrySet()) {
-                    if (entry.getValue().getClass().equals(String.class)) {
+                    if (entry.getValue().getClass().equals(String.class) || entry.getValue().getClass().equals(UUID.class)) {
                         statement.setString(s, entry.getValue().toString());
                     } else {
                         statement.setInt(s, plugin.getUtils().parseInt(entry.getValue().toString()));

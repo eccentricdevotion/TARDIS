@@ -23,6 +23,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
 import org.bukkit.entity.Player;
 
@@ -81,7 +82,7 @@ public class QueryFactory {
             ps = connection.prepareStatement("INSERT INTO " + table + " (" + fields + ") VALUES (" + questions + ")", PreparedStatement.RETURN_GENERATED_KEYS);
             int i = 1;
             for (Map.Entry<String, Object> entry : data.entrySet()) {
-                if (entry.getValue().getClass().equals(String.class)) {
+                if (entry.getValue().getClass().equals(String.class) || entry.getValue().getClass().equals(UUID.class)) {
                     ps.setString(i, entry.getValue().toString());
                 } else {
                     if (entry.getValue().getClass().getName().contains("Double")) {
@@ -159,7 +160,7 @@ public class QueryFactory {
         StringBuilder sbw = new StringBuilder();
         for (Map.Entry<String, Object> entry : where.entrySet()) {
             sbw.append(entry.getKey()).append(" = ");
-            if (entry.getValue().getClass().equals(String.class)) {
+            if (entry.getValue().getClass().equals(String.class) || entry.getValue().getClass().equals(UUID.class)) {
                 sbw.append("'").append(entry.getValue()).append("' AND ");
             } else {
                 sbw.append(entry.getValue()).append(" AND ");
