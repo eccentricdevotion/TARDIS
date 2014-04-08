@@ -350,6 +350,10 @@ public class TARDISMaterialisationPreset implements Runnable {
                                             ResultSetTardis rst = new ResultSetTardis(plugin, wheret, "", false);
                                             if (rst.resultSet()) {
                                                 String player_name = plugin.getGeneralKeeper().getUUIDCache().getNameCache().get(rst.getUuid());
+                                                if (player_name == null) {
+                                                    // cache lookup failed
+                                                    player_name = rst.getOwner();
+                                                }
                                                 String owner;
                                                 if (preset.equals(PRESET.GRAVESTONE) || preset.equals(PRESET.PUNKED) || preset.equals(PRESET.ROBOT)) {
                                                     owner = (player_name.length() > 14) ? player_name.substring(0, 14) : player_name;
