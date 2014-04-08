@@ -316,7 +316,7 @@ public class TARDISInstaPreset {
                                 if (rst.resultSet()) {
                                     String player_name = plugin.getGeneralKeeper().getUUIDCache().getNameCache().get(rst.getUuid());
                                     if (player_name == null) {
-                                        // cache lookup failed
+                                        // cache lookup failed, player may have disconnected
                                         player_name = rst.getOwner();
                                     }
                                     String owner;
