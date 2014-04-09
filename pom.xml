@@ -51,9 +51,13 @@
         <profile>
             <id>jenkins</id>
             <repositories>
-                <repository>
+                <!--<repository>
                     <id>macgeek</id>
                     <url>file:///Users/macgeek/maven/repo</url>
+                </repository>-->
+                <repository>
+                    <id>macgeek</id>
+                    <url>http://keetley.servegame.com:8888</url>
                 </repository>
             </repositories>
             <activation>
