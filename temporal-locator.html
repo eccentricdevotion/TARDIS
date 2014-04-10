@@ -1,0 +1,57 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="chrome=1">
+<title>TARDIS: Temporal Locator</title>
+<link rel="stylesheet" href="stylesheets/styles.css">
+<link rel="stylesheet" href="stylesheets/pygment_trac.css">
+<script src="javascripts/scale.fix.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+<!--[if lt IE 9]>
+<script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+<![endif]-->
+</head>
+<body>
+<div class="wrapper">
+	<header>
+		<h1>TARDIS</h1>
+		<p>A Bukkit plugin for all Doctor Who fans &mdash; create and use a TARDIS! It&rsquo;s bigger on the inside!</p>
+		<p class="view"><a href="https://github.com/eccentricdevotion/TARDIS">View the Project on GitHub <small>eccentricdevotion/TARDIS</small></a></p>
+		<ul>
+			<li><a href="/TARDIS/">Back <strong>home</strong></a></li>
+			<li><a href="contents.html"><strong>Contents</strong> page</a></li>
+		</ul>
+	</header>
+	<section>
+		<h1>Temporal Locator</h1>
+		<p>The Temporal Locator lets players set their time relative to the server time. The Temporal Locator is automatically added to new TARDISes. You can destroy and place it at a new location by using the <code>/tardis update temporal</code> command.</p>
+		<p>To use the Temporal Locator, right-click it to open the inventory based GUI. You will see a screen like the one below.</p>
+		<ul>
+			<li>Click a clock to set your time to the one displayed</li>
+			<li>Time is set when exiting the TARDIS and reset back to server time when re-entering the TARDIS</li>
+			<li>When players are temporally located, the perception filter is added to them</li>
+			<li>Player time can be reset at any time by right-clicking air with a clock</li>
+			<li>Players need <code>tardis.temporal</code> permission to use it</li>
+		</ul>
+		<p><img src="https://dl.dropboxusercontent.com/u/53758864/temporal1.png" alt="Temporal Locator" /></p>
+		<h3>Huh, what?</h3>
+		<p>This doesn&rsquo;t change the server time, that runs as normal, this just sets the player&rsquo;s time on the client, e.g.:</p>
+		<ul>
+			<li>server time is 7000 ticks (morning)</li>
+			<li><code>eccentric_nz</code> has Temporal Location of 20000 ticks he will see the world at night</li>
+			<li><code>eccentric_nz</code> will NOT see zombie&rsquo;s spawning because the server time is morning</li>
+			<li><code>thenosefairy</code> is standing next to <code>eccentric_nz</code> and is NOT temporally located</li>
+			<li><code>thenosefairy</code> will see the world in the same time as the server i.e. morning</li>
+		</ul>
+		<p><img src="https://dl.dropboxusercontent.com/u/53758864/temporal2.png" alt="Temporal Locator" /></p>
+	</section>
+</div>
+<footer>
+	<p>Project maintained by <a href="https://github.com/eccentricdevotion">eccentricdevotion</a></p>
+	<p>Hosted on GitHub Pages &mdash; Theme by <a href="https://github.com/orderedlist">orderedlist</a></p>
+</footer>
+<!--[if !IE]><script>fixScale(document);</script><![endif]-->
+
+</body>
+</html>
