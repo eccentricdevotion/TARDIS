@@ -27,6 +27,7 @@ import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import me.eccentric_nz.tardishorsespeed.TardisHorseSpeed;
 import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.OfflinePlayer;
 import org.bukkit.World;
 import org.bukkit.entity.Chicken;
 import org.bukkit.entity.Cow;
@@ -290,7 +291,7 @@ public class TARDISFarmer {
                         case WOLF:
                         case OCELOT:
                             Tameable tamed = (Tameable) e;
-                            if (tamed.isTamed() && ((Player) tamed.getOwner()).getUniqueId().equals(p.getUniqueId())) {
+                            if (tamed.isTamed() && ((OfflinePlayer) tamed.getOwner()).getUniqueId().equals(p.getUniqueId())) {
                                 TARDISMob pet = new TARDISMob();
                                 pet.setType(e.getType());
                                 pet.setName(((LivingEntity) e).getCustomName());
@@ -593,7 +594,7 @@ public class TARDISFarmer {
         for (Entity e : mobs) {
             if (e.getType().equals(EntityType.OCELOT) || e.getType().equals(EntityType.WOLF)) {
                 Tameable tamed = (Tameable) e;
-                if (tamed.isTamed() && ((Player) tamed.getOwner()).getUniqueId().equals(p.getUniqueId())) {
+                if (tamed.isTamed() && ((OfflinePlayer) tamed.getOwner()).getUniqueId().equals(p.getUniqueId())) {
                     TARDISMob pet = new TARDISMob();
                     pet.setType(e.getType());
                     String pet_name = ((LivingEntity) e).getCustomName();
