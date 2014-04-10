@@ -141,15 +141,12 @@ public class TARDISSonicListener implements Listener {
     @SuppressWarnings("deprecation")
     @EventHandler(priority = EventPriority.MONITOR)
     public void onInteract(PlayerInteractEvent event) {
-        plugin.debug("Action = " + event.getAction().toString());
         final Player player = event.getPlayer();
         long now = System.currentTimeMillis();
         final ItemStack is = player.getItemInHand();
         if (is.getType().equals(sonic) && is.hasItemMeta()) {
-            plugin.debug("Has a sonic material in hand, with ItemMeta...");
             ItemMeta im = player.getItemInHand().getItemMeta();
             if (im.getDisplayName().equals("Sonic Screwdriver")) {
-                plugin.debug("Display name is Sonic Screwdriver!");
                 List<String> lore = im.getLore();
                 Action action = event.getAction();
                 if (action.equals(Action.RIGHT_CLICK_AIR) && !player.isSneaking()) {
@@ -596,7 +593,6 @@ public class TARDISSonicListener implements Listener {
 
     @SuppressWarnings("deprecation")
     private void standardSonic(Player player) {
-        plugin.debug("Standard sonic");
         Block targetBlock = player.getTargetBlock(plugin.getGeneralKeeper().getTransparent(), 50).getLocation().getBlock();
         Material blockType = targetBlock.getType();
         if (distance.contains(blockType)) {
