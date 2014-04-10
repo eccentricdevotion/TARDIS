@@ -43,7 +43,7 @@ public class TARDISRenderRoomListener implements Listener {
         this.plugin = plugin;
     }
 
-    @EventHandler(ignoreCancelled = true)
+    @EventHandler
     public void onInteract(PlayerInteractEvent event) {
         final Player player = event.getPlayer();
         if (plugin.getTrackerKeeper().getTrackTransmat().contains(player.getUniqueId())) {

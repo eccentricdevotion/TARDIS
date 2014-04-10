@@ -50,7 +50,7 @@ public class TARDISPerceptionFilterListener implements Listener {
     }
 
     @SuppressWarnings("deprecation")
-    @EventHandler(ignoreCancelled = true)
+    @EventHandler
     public void onPerceptionFilterClick(PlayerInteractEvent event) {
         final Player player = event.getPlayer();
         if (player.getItemInHand().getType().equals(filter) && event.getAction().equals(Action.RIGHT_CLICK_AIR)) {

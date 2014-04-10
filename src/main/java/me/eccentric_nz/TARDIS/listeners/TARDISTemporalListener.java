@@ -37,7 +37,7 @@ public class TARDISTemporalListener implements Listener {
         this.plugin = plugin;
     }
 
-    @EventHandler(ignoreCancelled = true)
+    @EventHandler
     public void onPlayerInteract(PlayerInteractEvent event) {
         Player p = event.getPlayer();
         Material inhand = p.getItemInHand().getType();
