@@ -28,20 +28,31 @@
 		<h1>Installation</h1>
 		<p>Get the TARDIS plugin files from: <a href="http://dev.bukkit.org/bukkit-plugins/tardis">http://dev.bukkit.org/bukkit-plugins/tardis</a></p>
 		<hr />
-		<p>You install TARDIS just like you would any other Bukkit plugin, by dropping it into the Bukkit plugins folder and starting the server. The TARDIS database and configuration files will be created automatically.</p>
-		<p>Some versions of the TARDIS plugin are backwards compatible with previous versions of CraftBukkit (version 2.5.8 is <a href="tekkit.html">compatible with Tekkit Classic Server</a>), for the plugin to have full functionality and work correctly you should have CraftBukkit version <code>1.7.2-R0.2</code> or higher.</p>
-		<p><strong>Note:</strong> There is a bug with Spigot, Libigot, FTB Mindcrack and MCPC+ server variants that causes the TARDIS to be built with blocks missing &mdash; see this <a href="faqs.html#missing">FAQ for a solution</a>.</p>
+		<p>You install TARDIS just like you would any other Bukkit plugin, by dropping it into the Bukkit plugins folder and starting the server. The TARDIS database, configuration, schematic and map files will be created automatically.</p>
+		<p>Some versions of the TARDIS plugin are backwards compatible with previous versions of CraftBukkit (version 2.5.8 is <a href="tekkit.html">compatible with Tekkit Classic Server</a>), for the plugin to have full functionality and work correctly you should have CraftBukkit version <code>1.7.5-R0.1</code> or higher.</p>
+		<p>The TARDIS plugin has evolved into a complex beast, with configurable recipes, and other things that unexperienced server administrators may have trouble with. If you have difficulties, leave a message on the <a href="http://dev.bukkit.org/bukkit-plugins/tardis">plugin page</a>.</p>
 		<h3>Clean Installation:</h3>
 		<p>Place the following jar files in your plugins folder:</p>
 		<pre><code>TARDIS.jar
 TARDISChunkGenerator.jar
 TARDIS HorseSpeed.jar</code></pre>
+		<h4 style="color:#600;">Important!</h4>
+		<p>In order for some of the TARDIS item recipes to function properly, they require a series of Minecraft <code>map.dat</code> files to be placed into the data folder of the main word on the server. To do this, follow these steps:</p>
+		<ol>
+			<li>Start the server so that the map files are generated in the <em>plugins/TARDIS</em> folder.</li>
+			<li>Stop the server.</li>
+			<li>Open the server&rsquo;s <em>server.properties</em> file, and make a note of the world name specified under <code>level-name</code>. If you have never changed this property, it will be called <code>world</code>.</li>
+			<li>Move the map files in the <code>[level-name]/data</code> folder, where <code>[level-name]</code> is the world name you noted in step 3 &mdash; e.g. <code>world/data</code>. If you&rsquo;re totally unsure which folder, the TARDIS plugin will actually tell you with a message in the server log.</li>
+			<li>Start the server, and you&rsquo;re good to go.</li>
+		</ol>
+		<p>You will most probably need to run a permissions plugin for players to actually use the TARDIS (it&rsquo;s possible without one, but players will need to be opped!). As a minimum players will generally need the <code>tardis.use</code> permission to build a TARDIS, and <code>tardis.enter</code> to be a companion.</p>
+		<p>If this is your first time using the plugin, you may want to set the TARDIS difficulty mode to <em>easy</em>. To do this use the in-game command: <code>/tardisadmin difficulty easy</code>.</p>
 		<h3>Upgrade Installation:</h3>
 		<p><strong><em>Backup your TARDIS Folder!</em></strong></p>
 		<p>Place the upgraded jar files in the plugin folder.</p>
 		<h4>Upgrade notes:</h4>
 		<p>It is recommended to delete the TARDIS <code>schematics</code> folder and rooms.yml before an upgrade!</p>
-		<p>If you have trouble after an upgrade, please try a fresh install of the plugin by deleting your <code>TARDIS</code> Folder.</p>
+		<p>New configuration options and database fields will be added automatically, and if any major changes occur, TARDIS will backup the relevant files before attempting to upgrade them.</p>
 		<h2>Enhancing the TARDIS plugin</h2>
 		<p>While not essential to make the TARDIS plugin work, the following plugins will make your Time Travelling experience even better.</p>
 		<ol>
