@@ -26,11 +26,11 @@
     <section>
         <h1>TARDIS pruning</h1>
         <p><strong style="color:#c00;">Pruning is a potentially hazardous activity &mdash; make sure you have backed up your server BEFORE running this command!</strong></p>
-        <p>You can list and remove TARDISes that have not been used for an extended period using the <code>/tardisadmin prune</code> command.</p>
-        <p>Each time a player uses the TARDIS handbrake, their last use time is recorded in the database. You can use this data to determine if a TARDIS has been abandoned.</p>
+        <p>You can list and remove TARDISes that have not been used for an extended period using the <code>/tardisadmin [prunelist|prune]</code> commands.</p>
+        <p>Each time a player logs in to the server, their last use time is recorded in the database. You can use this data to determine if a TARDIS has been abandoned.</p>
         <h3>List</h3>
         <p>To list TARDISes that have not been used for a number of days, use the command:</p>
-        <pre><code>/tardisadmin prune list [days]</code></pre>
+        <pre><code>/tardisadmin prunelist [days]</code></pre>
         <p>Change <code>[days]</code> to the minimum number of days the TARDISes have been inactive for. The command will output to the screen/console and also save a text file called <em>TARDIS_Prune_List.txt</em> to the TARDIS folder.</p>
         <h3>Prune</h3>
         <p>If you are happy that the TARDISes in the list are OK to be pruned, use the command:</p>
