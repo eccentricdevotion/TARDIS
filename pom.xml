@@ -67,6 +67,7 @@
             </activation>
             <properties>
                 <project.build.number>${env.BUILD_NUMBER}</project.build.number>
+                <javadocExecutable>${java.home}/../bin/javadoc</javadocExecutable>
             </properties>
             <build>
                 <plugins>
