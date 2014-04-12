@@ -259,13 +259,13 @@
 				<td colspan="2">Sets the maximum number of times a player can build and destroy a TARDIS. If set to <code>0</code> there is NO maximum.</td>
 			</tr>
 			<tr class="coption">
-				<td class="noborder">&nbsp;&nbsp;&nbsp;&nbsp;<code>materialise</code></td>
-				<td class="noborder">boolean</td>
-				<td class="noborder"><code>true</code></td>
+				<td class="noborder">&nbsp;&nbsp;&nbsp;&nbsp;<code>tips_limit</code></td>
+				<td class="noborder">integer</td>
+				<td class="noborder"><code>400</code></td>
 			</tr>
 			<tr>
 				<td>&nbsp;</td>
-				<td colspan="2">Sets whether the TARDIS police box simulates &rsquo;de/re-materialising&rsquo; when travelling.</td>
+				<td colspan="2">Sets the number of T.I.P.S slots to use. Must be one of 400, 800, 1200 or 1600.</td>
 			</tr>
 			<tr>
 				<th colspan="3">police_box:</th>
@@ -324,6 +324,10 @@
 				<td>&nbsp;</td>
 				<td colspan="2">Sets the default damage value of the Police Box safety platform.</td>
 			</tr>
+			<tr>
+				<td>&nbsp;</td>
+				<td colspan="2">Sets whether the TARDIS police box simulates &rsquo;de/re-materialising&rsquo; when travelling.</td>
+			</tr>
 			<tr class="coption">
 				<td class="noborder">&nbsp;&nbsp;&nbsp;&nbsp;<code>confirm_timeout</code></td>
 				<td class="noborder">integer</td>
@@ -332,6 +336,15 @@
 			<tr>
 				<td>&nbsp;</td>
 				<td colspan="2">Sets the number of seconds the player has to type the <code>/tardis exterminate</code> command when destroying a TARDIS.</td>
+			</tr>
+			<tr class="coption">
+				<td class="noborder">&nbsp;&nbsp;&nbsp;&nbsp;<code>sign_colour</code></td>
+				<td class="noborder">string</td>
+				<td class="noborder"><code>WHITE</code></td>
+			</tr>
+			<tr>
+				<td>&nbsp;</td>
+				<td colspan="2">Sets the colour of the text on a TARDIS sign. Must be a valid ChatColor value, see <a href="http://jd.bukkit.org/rb/apidocs/org/bukkit/ChatColor.html">http://jd.bukkit.org/rb/apidocs/org/bukkit/ChatColor.html</a></td>
 			</tr>
 			<tr>
 				<th colspan="3">travel:</th>
@@ -481,8 +494,12 @@
 			</tr>
 			<tr class="coption">
 				<td class="noborder">&nbsp;&nbsp;&nbsp;&nbsp;<code>respect_worldguard</code></td>
-				<td class="noborder">boolean</td>
-				<td class="noborder"><code>true</code></td>
+				<td class="noborder">string</td>
+				<td class="noborder"><code>build</code></td>
+			</tr>
+			<tr>
+				<td>&nbsp;</td>
+				<td colspan="2">Sets whether time travelling respects protected WorldGuard regions. Valid values are <code>none</code>.</td>
 			</tr>
 			<tr class="coption">
 				<td class="noborder">&nbsp;&nbsp;&nbsp;&nbsp;<code>respect_towny</code></td>
