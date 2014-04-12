@@ -26,6 +26,71 @@
 	<section>
 		<h1>Change log</h1>
 		<h2>What&rsquo;s been changed?</h2>
+		<h3>v2.8-beta-3</h3>
+		<p style="color:#c00;">For CraftBukkit 1.7.8 only!</p>
+		<p>Please also read the change logs for v2.8-beta-1 and v2.8-beta-2 below.</p>
+		<h4>Additions</h4>
+		<ul>
+			<li>Added UUID support for Minecraft/CraftBukkit 1.7.8 changes due to the upcoming in-game name changing feature, more info here: <a href="http://dev.bukkit.org/bukkit-plugins/tardis/tickets/678-uuid-migration/">http://dev.bukkit.org/bukkit-plugins/tardis/tickets/678-uuid-migration/</a>
+				<ul>
+					<li>Server must be <code>online-mode=true</code> in server.properties as player UUIDs are different when the server is in offline mode</li>
+					<li>When you first install a UUID compatible version, the plugin will automatically backup and update the TARDIS database with the new UUID fields</li>
+					<li>After the database update, the current records will be queried for a list of player names</li>
+					<li>From this list, the plugin will connect to the Mojang Accounts database and retrieve UUIDs for all the players in the list - because this requires a connection to the web it may hold up the server startup process for a few seconds (it depends how many Time Lords there are - in a recent test on a database of 118 players, it took 18 seconds and updated 1343 records)</li>
+				</ul>
+			</li>
+			<li>Added a message to the player if the TARDIS <em>Zero</em>Room world has not been created and they try to grow a Zero room</li>
+			<li>Added the <code>wg_flag_set</code> and <code>external_gravity</code> options to the <code>/tardisadmin</code> command</li>
+			<li>Added compatibility with the Project Rassilon plugin when using the Sonic Screwdriver's bio-scanning feature</li>
+			<li>Added a black <code>wool_lights</code> preference - <code>/tardisprefs wool_lights [on|off]</code> to use wool instead of sponge when turning off the TARDIS lights and during malfunctions</li>
+			<li>Added ‘Flag’ support to TARDIS WorldGuard compatibility
+				<ul>
+					<li>The <code>respect_worldguard</code> setting is no longer true or false</li>
+					<li>Valid values are <code>none</code> (same as what was previously false) and any [[http://wiki.sk89q.com/wiki/WorldGuard/Regions/Flags#Flag_List|WorldGuard]] State flag</li>
+					<li>The default value is <code>build</code>, another common value will probably be <code>entry</code></li>
+				</ul>
+			</li>
+			<li>Added a config option to allow T.I.P.S to expand to a possible 1600 slots
+				<ul>
+					<li>The default is still 400, but can be changed in the config by setting <code>creation.tips_limit</code> to a multiple of 400 i.e. 800, 1200, 1600 - <code>/tardisadmin tips_limit [limit]</code></li>
+				</ul>
+			</li>
+		</ul>
+		<h4>Changes</h4>
+		<ul>
+			<li>TARDISHorseSpeed has been updated for CraftBukkit 1.7.8</li>
+			<li>The Artron Indicator only shows used, percent and remaining when travelling. To see the full charge and time lord levels, use the Artron Button on the console</li>
+			<li>When using Multiverse new TARDIS worlds are set to <code>animalrate: 0</code> and <code>monstersrate: 0</code> instead of <code>animals: false</code>, <code>monsters: false</code>. This prevents farmed from despawning
+				<ul>
+					<li>To update existing TARDIS worlds, use the command <code>/tardisadmin modify mv</code></li>
+				</ul>
+			</li>
+			<li>In conjunction with the above, we now add WorldGuard regions with a higher priority to the farm, stable and village rooms to allow mob spawning in them (except for nasty monsters of course)</li>
+			<li>Now properly getting and setting TARDIS mob names, and saddled pigs if necessary when farming</li>
+			<li>The horse's direction is now set correctly when exiting the TARDIS from the stable room</li>
+			<li>We are now using our own anti-build methods, as WorldGuard's do not achieve the desired result (this is relevant to the player 'build' preference - <code>/tardisprefs build [on|off]</code>)
+				<ul>
+					<li>To update existing TARDIS worlds, use the command <code>/tardisadmin modify wg</code></li>
+				</ul>
+			</li>
+			<li>Added 'Companion Build' preference to the Sonic Screwdriver Player Preferences GUI</li>
+			<li>Changed the messages when Advanced Console use is required</li>
+			<li>You no longer have to click the output slot to generate a biome or preset disk</li>
+			<li>Prevented the Emerald Sonic from scanning when clicking an intractable block (such as a door, button, chest etc)</li>
+		</ul>
+		<h4>Bug fixes</h4>
+		<ul>
+			<li>Fixed a bug where one of the TARDIS map files (<code>map_1966.dat</code>) was not copied to the TARDIS folder and consequently may be missing from the <em>server's main world/data</em> folder
+				<ul>
+					<li>if <code>map_1966.dat</code> is missing, remove all the map files from the <em>server's main world/data</em> folder so that TARDIS will regenerate the map files</li>
+					<li>copy the new map files back to the <em>server's main world/data</em> folder</li>
+				</ul>
+			</li>
+			<li>Fixed a bug where click-dragging in the Storage inventory upper slots allowed items to be stored there (that also became un-retrieveable)</li>
+			<li>Fixed the Save Sign GUI opening when the player was in the TARDIS, but didn't enter via the door</li>
+			<li>Fixed the custom TARDIS schematic not working</li>
+			<li>Fixed mis-named player disks in the lists generated by the <code>/tardisrecipe</code> and <code>/tardisgive</code> commands</li>
+		</ul>
 		<h3>v2.8-beta-2</h3>
 		<h4>Additions</h4>
 		<ul>
