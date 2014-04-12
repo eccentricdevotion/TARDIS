@@ -65,10 +65,27 @@
 				<td class="noborder">boolean</td>
 				<td class="noborder"><code>true</code></td>
 			</tr>
+			<tr>
+				<td>&nbsp;</td>
+				<td colspan="2">Sets whether the TARDIS interior becomes a protected WorldGuard region belonging to the player who created the TARDIS.</td>
+			</tr>
+			<tr class="coption">
+				<td class="noborder">&nbsp;&nbsp;&nbsp;&nbsp;<code>respect_worldguard</code></td>
+				<td class="noborder">string</td>
+				<td class="noborder"><code>build</code></td>
+			</tr>
+			<tr>
+				<td>&nbsp;</td>
+				<td colspan="2">Sets whether time travelling respects protected WorldGuard regions. Valid values are <code>none</code> &mdash; no checking is performed, and any <a href="http://wiki.sk89q.com/wiki/WorldGuard/Regions/Flags#Flag_List" target="_blank">WorldGuard state flag</a>, generally this will probably be <code>build</code> or <code>entry</code>.</td>
+			</tr>
 			<tr class="coption">
 				<td class="noborder">&nbsp;&nbsp;&nbsp;&nbsp;<code>respect_towny</code></td>
-				<td class="noborder">boolean</td>
-				<td class="noborder"><code>true</code></td>
+				<td class="noborder">string</td>
+				<td class="noborder"><code>nation</code></td>
+			</tr>
+			<tr>
+				<td>&nbsp;</td>
+				<td colspan="2">Sets whether time travelling respects protected Towny regions. Valid values are <code>none</code> &mdash; no checking is performed, <code>wilderness</code> &mdash; players can only land in wilderness,  <code>town</code> &mdash; players can also land in a town they are a resident of, <code>nation</code> &mdash; players can land in any town that is in the same nation as their own town.</td>
 			</tr>
 			<tr class="coption">
 				<td class="noborder">&nbsp;&nbsp;&nbsp;&nbsp;<code>respect_worldborder</code></td>
@@ -168,6 +185,15 @@
 			<tr>
 				<td>&nbsp;</td>
 				<td colspan="2">Sets whether to use the plugin settings for condenser values. If you want to set your own values, set this to <code>false</code> and edit <em>condensables.yml</em></td>
+			</tr>
+			<tr class="coption">
+				<td class="noborder">&nbsp;&nbsp;&nbsp;&nbsp;<code>heal_speed</code></td>
+				<td class="noborder">integer</td>
+				<td class="noborder"><code>200</code></td>
+			</tr>
+			<tr>
+				<td>&nbsp;</td>
+				<td colspan="2">Sets the heal speed in the Zero room. The default value of <code>200</code> means the player will gain half a heart every 200 ticks (10 seconds)</td>
 			</tr>
 		</table>
 		<p><a href="configuration.html">Back to main configuration page</a></p>

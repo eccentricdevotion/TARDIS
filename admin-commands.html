@@ -344,7 +344,7 @@
 			</tr>
 			<tr>
 				<td>&nbsp;</td>
-				<td colspan="2">Sets the colour of the text on a TARDIS sign. Must be a valid ChatColor value, see <a href="http://jd.bukkit.org/rb/apidocs/org/bukkit/ChatColor.html">http://jd.bukkit.org/rb/apidocs/org/bukkit/ChatColor.html</a></td>
+				<td colspan="2">Sets the colour of the text on a TARDIS sign. Must be a valid ChatColor value, see <a href="http://jd.bukkit.org/rb/apidocs/org/bukkit/ChatColor.html" target="_blank">http://jd.bukkit.org/rb/apidocs/org/bukkit/ChatColor.html</a></td>
 			</tr>
 			<tr>
 				<th colspan="3">travel:</th>
@@ -481,7 +481,7 @@
 			</tr>
 			<tr>
 				<td>&nbsp;</td>
-				<td colspan="2">Sets the TARDIS key item. You can use any valid Bukkit Material ENUM. A list can be found here: <a href="http://jd.bukkit.org/apidocs/org/bukkit/Material.html">http://jd.bukkit.org/apidocs/org/bukkit/Material.html</a></td>
+				<td colspan="2">Sets the TARDIS key item. You can use any valid Bukkit Material ENUM. A list can be found here: <a href="http://jd.bukkit.org/apidocs/org/bukkit/Material.html" target="_blank">http://jd.bukkit.org/apidocs/org/bukkit/Material.html</a></td>
 			</tr>
 			<tr class="coption">
 				<td class="noborder">&nbsp;&nbsp;&nbsp;&nbsp;<code>use_worldguard</code></td>
@@ -499,12 +499,16 @@
 			</tr>
 			<tr>
 				<td>&nbsp;</td>
-				<td colspan="2">Sets whether time travelling respects protected WorldGuard regions. Valid values are <code>none</code>.</td>
+				<td colspan="2">Sets whether time travelling respects protected WorldGuard regions. Valid values are <code>none</code> &mdash; no checking is performed, and any <a href="http://wiki.sk89q.com/wiki/WorldGuard/Regions/Flags#Flag_List" target="_blank">WorldGuard state flag</a>, generally this will probably be <code>build</code> or <code>entry</code>.</td>
 			</tr>
 			<tr class="coption">
 				<td class="noborder">&nbsp;&nbsp;&nbsp;&nbsp;<code>respect_towny</code></td>
-				<td class="noborder">boolean</td>
-				<td class="noborder"><code>true</code></td>
+				<td class="noborder">string</td>
+				<td class="noborder"><code>nation</code></td>
+			</tr>
+			<tr>
+				<td>&nbsp;</td>
+				<td colspan="2">Sets whether time travelling respects protected Towny regions. Valid values are <code>none</code> &mdash; no checking is performed, <code>wilderness</code> &mdash; players can only land in wilderness,  <code>town</code> &mdash; players can also land in a town they are a resident of, <code>nation</code> &mdash; players can land in any town that is in the same nation as their own town.</td>
 			</tr>
 			<tr class="coption">
 				<td class="noborder">&nbsp;&nbsp;&nbsp;&nbsp;<code>respect_worldborder</code></td>
@@ -605,6 +609,15 @@
 				<td>&nbsp;</td>
 				<td colspan="2">Sets whether to use the plugin settings for condenser values. If you want to set your own values, set this to <code>false</code> and edit <em>condensables.yml</em></td>
 			</tr>
+			<tr class="coption">
+				<td class="noborder">&nbsp;&nbsp;&nbsp;&nbsp;<code>heal_speed</code></td>
+				<td class="noborder">integer</td>
+				<td class="noborder"><code>200</code></td>
+			</tr>
+			<tr>
+				<td>&nbsp;</td>
+				<td colspan="2">Sets the heal speed in the Zero room. The default value of <code>200</code> means the player will gain half a heart every 200 ticks (10 seconds)</td>
+			</tr>
 			<tr>
 				<th colspan="3">allow:</th>
 			</tr>
@@ -696,7 +709,25 @@
 			</tr>
 			<tr>
 				<td>&nbsp;</td>
-				<td colspan="2">Sets whether players can set the build flag (allow, deny) in their TARDIS region.</td>
+				<td colspan="2">Sets whether sound effects are played in the TARDIS interior &mdash; this overrides user preferences if turned off.</td>
+			</tr>
+			<tr class="coption">
+				<td class="noborder">&nbsp;&nbsp;&nbsp;&nbsp;<code>zero_room</code></td>
+				<td class="noborder">boolean</td>
+				<td class="noborder"><code>false</code></td>
+			</tr>
+			<tr>
+				<td>&nbsp;</td>
+				<td colspan="2">Sets whether players can grow a Zero room. If this is set to true using the <code>/tardisadmin zero_room true</code> command, the plugin wil attempt to create the <code>TARDIS_Zero_Room</code> world if it doesn&rsquo;t yet exist.</td>
+			</tr>
+			<tr class="coption">
+				<td class="noborder">&nbsp;&nbsp;&nbsp;&nbsp;<code>external_gravity</code></td>
+				<td class="noborder">boolean</td>
+				<td class="noborder"><code>false</code></td>
+			</tr>
+			<tr>
+				<td>&nbsp;</td>
+				<td colspan="2">Sets whether players can use the <code>/tardisgravity</code> command outside of their TARDIS.</td>
 			</tr>
 			<tr>
 				<th colspan="3">growth:</th>
@@ -869,7 +900,7 @@
 			</tr>
 			<tr>
 				<td>&nbsp;</td>
-				<td colspan="2">Sets the jettison seed item. You can use any valid Bukkit Material ENUM. A list can be found here: <a href="http://jd.bukkit.org/apidocs/org/bukkit/Material.html">http://jd.bukkit.org/apidocs/org/bukkit/Material.html</a>.</td>
+				<td colspan="2">Sets the jettison seed item. You can use any valid Bukkit Material ENUM. A list can be found here: <a href="http://jd.bukkit.org/apidocs/org/bukkit/Material.html" target="_blank">http://jd.bukkit.org/apidocs/org/bukkit/Material.html</a>.</td>
 			</tr>
 			<tr class="coption">
 				<td class="noborder">&nbsp;&nbsp;&nbsp;&nbsp;<code>renderer</code></td>
@@ -879,6 +910,15 @@
 			<tr>
 				<td>&nbsp;</td>
 				<td colspan="2">Sets the cost to use the Exterior Renderer room.</td>
+			</tr>
+			<tr class="coption">
+				<td class="noborder">&nbsp;&nbsp;&nbsp;&nbsp;<code>zero</code></td>
+				<td class="noborder">integer</td>
+				<td class="noborder"><code>250</code></td>
+			</tr>
+			<tr>
+				<td>&nbsp;</td>
+				<td colspan="2">Sets the cost to enter the Zero room.</td>
 			</tr>
 		</table>
 		<h3>Reloading the config</h3>
@@ -900,7 +940,7 @@
 		<p>Remove a specified player&rsquo;s TARDIS.</p>
 		<pre><code>/tardisadmin delete [player]</code></pre>
 		<p>List TARDISes that haven&rsquo;t been used for an extended period.</p>
-		<pre><code>/tardisadmin prune list [number of days]</code></pre>
+		<pre><code>/tardisadmin prunelist [number of days]</code></pre>
 		<p>Remove TARDISes that haven&rsquo;t been used for an extended period. See the <a href="prune.html">Prune</a> page for more details.</p>
 		<pre><code>/tardisadmin prune [number of days]</code></pre>
 		<p>Check or set a player&rsquo;s TARDIS count.</p>
