@@ -9,78 +9,138 @@
 <script src="javascripts/scale.fix.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
 <!--[if lt IE 9]>
-    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
-    <![endif]-->
+<script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+<![endif]-->
 </head>
 <body>
 <div class="wrapper">
-    <header>
-        <h1>TARDIS</h1>
-        <p>A Bukkit plugin for all Doctor Who fans &mdash; create and use a TARDIS! It&rsquo;s bigger on the inside!</p>
-        <p class="view"><a href="https://github.com/eccentricdevotion/TARDIS">View the Project on GitHub <small>eccentricdevotion/TARDIS</small></a></p>
-        <ul>
-            <li><a href="/TARDIS/">Back <strong>home</strong></a></li>
-            <li><a href="contents.html"><strong>Contents</strong> page</a></li>
-        </ul>
-    </header>
-    <section>
-        <h1>Modifying the TARDIS interior</h1>
-        <p>While you can&rsquo;t modify the Police Box &mdash; as it gets recreated every time you travel to a new destination, it is possible to alter the interior of the TARDIS (aside from growing <a href="rooms.html">rooms</a>). However there are some blocks that the plugin expects to be in a certain position. These are:</p>
-        <ul>
-            <li>On the TARDIS console
-                <ul>
-                    <li>The repeaters</li>
-                    <li>The handbrake</li>
-                    <li>The random location button</li>
-                    <li>The Artron Energy button</li>
-                </ul>
-            </li>
-            <li>The Iron Door</li>
-            <li>The Chameleon Circuit sign</li>
-            <li>The Save sign</li>
-            <li>The Energy Condenser chest</li>
-            <li>The environment Scanner</li>
-            <li>The &lsquo;ketboard&rsquo;</li>
-        </ul>
-        <p>You can move these to wherever you want, but you must run the command:
-        <pre><code>/tardis update [the block to update]</code></pre>
-        <p>So that the TARDIS plugin will know of the new locations and your TARDIS will function correctly. Visit the <a href="tardis-commands.html">Commands</a> page for more detailed info on the command.</p>
-        <p>Anything else can be destroyed and changed.</p>
-        <p><strong>Note 1:</strong> The TARDIS expects the blocks for the controls to be a certain type. The table below shows which blocks you can use for each:</p>
-        <table>
-        <tr><th>TARDIS control</th><th>Valid blocks</th></tr>
-        <tr><td><code>world-repeater</code></td><td>Redstone Repeater</td></tr>
-        <tr><td><code>x-repeater</code></td><td>Redstone Repeater</td></tr>
-        <tr><td><code>y-repeater</code> (multiplier)</td><td>Redstone Repeater</td></tr>
-        <tr><td><code>z-repeater</code></td><td>Redstone Repeater</td></tr>
-        <tr><td><code>handbrake</code></td><td>Lever</td></tr>
-        <tr><td><code>button</code></td><td>Stone Button, Wood Button, Lever</td></tr>
-        <tr><td><code>artron</code></td><td>Stone Button, Wood Button, Lever</td></tr>
-        <tr><td><code>chameleon</code></td><td>Wall Sign, Sign Post</td></tr>
-        <tr><td><code>save-sign</code></td><td>Wall Sign, Sign Post</td></tr>
-        <tr><td><code>ARS</code></td><td>Wall Sign, Sign Post</td></tr>
-        <tr><td><code>TARDIS Info System</code></td><td>Wall Sign, Sign Post</td></tr>
-        <tr><td><code>Temporal Locator</code></td><td>Wall Sign, Sign Post</td></tr>
-        <tr><td><code>door</code></td><td>Iron Door</td></tr>
-        <tr><td><code>condenser</code></td><td>Single Chest</td></tr>
-        <tr><td><code>scanner</code></td><td>Stone Button, Wood Button, Lever</td></tr>
-        <tr><td><code>keyboard</code></td><td>Wall Sign, Sign Post</td></tr>
-        </table>
-        <p><strong>Note 2:</strong> If <code>create_worlds</code> is false in the TARDIS configuration file, the plugin only reserves and protects the initial chunks used to create the TARDIS in, which means that another player could potentially create a TARDIS that overlaps yours if you make it bigger.</p>
-        <p>See also: <a href="bind-commands.html">Binding desinations to blocks</a></p>
-        <h2>Changing room wall and floor blocks</h2>
-        <p>You can change the blocks that room walls and floors are grown with in two ways:</p>
-        <ul>
-            <li>Set the wall/floor block when crafting the TARDIS Seed Block &mdash; this sets the wall/floor block to the block you use in the seed</li>
-            <li>Set the wall block using the <code>/tardisprefs wall [material]</code> command. A list of valid materials can be found on the <a href="walls.html">Wall materials</a> page</li>
-            <li>Set the floor block using the <code>/tardisprefs floor [material]</code> command. A list of valid materials can be found on the <a href="walls.html">Wall materials</a> page</li>
-        </ul>
-        <p><img src="https://dl.dropboxusercontent.com/u/53758864/sandstonewalls.jpg" alt="Sandstone walls" /></p>
-    </section>
+	<header>
+		<h1>TARDIS</h1>
+		<p>A Bukkit plugin for all Doctor Who fans &mdash; create and use a TARDIS! It&rsquo;s bigger on the inside!</p>
+		<p class="view"><a href="https://github.com/eccentricdevotion/TARDIS">View the Project on GitHub <small>eccentricdevotion/TARDIS</small></a></p>
+		<ul>
+			<li><a href="/TARDIS/">Back <strong>home</strong></a></li>
+			<li><a href="contents.html"><strong>Contents</strong> page</a></li>
+		</ul>
+	</header>
+	<section>
+		<h1>Modifying the TARDIS interior</h1>
+		<p>While you can&rsquo;t modify the Police Box &mdash; as it gets recreated every time you travel to a new destination, it is possible to alter the interior of the TARDIS (aside from growing <a href="rooms.html">rooms</a>). However there are some blocks that the plugin expects to be in a certain position. These are:</p>
+		<ul>
+			<li>On the TARDIS console
+				<ul>
+					<li>The repeaters</li>
+					<li>The handbrake</li>
+					<li>The random location button</li>
+					<li>The Artron Energy button</li>
+				</ul>
+			</li>
+			<li>The Iron Door</li>
+			<li>The Chameleon Circuit sign</li>
+			<li>The Save Sign</li>
+			<li>The Energy Condenser chest</li>
+			<li>The environment Scanner</li>
+			<li>The TARDIS Information System</li>
+			<li>The Architectural Reconfiguration System sign</li>
+			<li>The Temporal Locator</li>
+			<li>The direction item frame</li>
+			<li>The &lsquo;keyboard&rsquo;</li>
+		</ul>
+		<p>You can move these to wherever you want, but you must run the command:
+		<pre><code>/tardis update [the block to update]</code></pre>
+		<p>So that the TARDIS plugin will know of the new locations and your TARDIS will function correctly. Visit the <a href="tardis-commands.html">Commands</a> page for more detailed info on the command.</p>
+		<p>Anything else can be destroyed and changed.</p>
+		<p><strong>Note 1:</strong> The TARDIS expects the blocks for the controls to be a certain type. The table below shows which blocks you can use for each:</p>
+		<table>
+			<tr>
+				<th>TARDIS control</th>
+				<th>Valid blocks</th>
+			</tr>
+			<tr>
+				<td><code>world-repeater</code></td>
+				<td>Redstone Repeater</td>
+			</tr>
+			<tr>
+				<td><code>x-repeater</code></td>
+				<td>Redstone Repeater</td>
+			</tr>
+			<tr>
+				<td><code>y-repeater</code> (multiplier)</td>
+				<td>Redstone Repeater</td>
+			</tr>
+			<tr>
+				<td><code>z-repeater</code></td>
+				<td>Redstone Repeater</td>
+			</tr>
+			<tr>
+				<td><code>handbrake</code></td>
+				<td>Lever</td>
+			</tr>
+			<tr>
+				<td><code>button</code></td>
+				<td>Stone Button, Wood Button, Lever</td>
+			</tr>
+			<tr>
+				<td><code>artron</code></td>
+				<td>Stone Button, Wood Button, Lever</td>
+			</tr>
+			<tr>
+				<td><code>chameleon</code></td>
+				<td>Wall Sign, Sign Post</td>
+			</tr>
+			<tr>
+				<td><code>save-sign</code></td>
+				<td>Wall Sign, Sign Post</td>
+			</tr>
+			<tr>
+				<td><code>ARS</code></td>
+				<td>Wall Sign, Sign Post</td>
+			</tr>
+			<tr>
+				<td><code>TARDIS Info System</code></td>
+				<td>Wall Sign, Sign Post</td>
+			</tr>
+			<tr>
+				<td><code>Temporal Locator</code></td>
+				<td>Wall Sign, Sign Post</td>
+			</tr>
+			<tr>
+				<td><code>door</code></td>
+				<td>Iron Door</td>
+			</tr>
+			<tr>
+				<td><code>condenser</code></td>
+				<td>Single Chest</td>
+			</tr>
+			<tr>
+				<td><code>scanner</code></td>
+				<td>Stone Button, Wood Button, Lever</td>
+			</tr>
+			<tr>
+				<td><code>direction</code></td>
+				<td>Item Frame</td>
+			</tr>
+			<tr>
+				<td><code>keyboard</code></td>
+				<td>Wall Sign, Sign Post</td>
+			</tr>
+		</table>
+		<p><strong>Note 2:</strong> If <code>create_worlds</code> is false in the TARDIS configuration file and you are using a TARDIS version prior to v2.7-beta-1, the plugin only reserves and protects the initial chunks used to create the TARDIS in, which means that another player could potentially create a TARDIS that overlaps yours if you make it bigger.</p>
+		<p>See also: <a href="bind-commands.html">Binding desinations to blocks</a></p>
+		<h2>Changing room wall and floor blocks</h2>
+		<p>Although you set the TARDIS interior wall and floor blocks when you make a TARDIS seed block, you are not limited to the choice you made at that time.</p>
+		<p>You can change the blocks that room walls and floors are grown with in two ways:</p>
+		<ul>
+			<li>Set the wall/floor block when crafting the TARDIS Seed Block &mdash; this sets the wall/floor block to the block you use in the seed</li>
+			<li>Set the wall block using the <code>/tardisprefs wall [material]</code> command. A list of valid materials can be found on the <a href="walls.html">Wall materials</a> page</li>
+			<li>Set the floor block using the <code>/tardisprefs floor [material]</code> command. A list of valid materials can be found on the <a href="walls.html">Wall materials</a> page</li>
+		</ul>
+		<p><img src="https://dl.dropboxusercontent.com/u/53758864/sandstonewalls.jpg" alt="Sandstone walls" /></p>
+	</section>
 </div>
 <footer>
-    <p>Project maintained by <a href="https://github.com/eccentricdevotion">eccentricdevotion</a></p>
-    <p>Hosted on GitHub Pages &mdash; Theme by <a href="https://github.com/orderedlist">orderedlist</a></p>
+	<p>Project maintained by <a href="https://github.com/eccentricdevotion">eccentricdevotion</a></p>
+	<p>Hosted on GitHub Pages &mdash; Theme by <a href="https://github.com/orderedlist">orderedlist</a></p>
 </footer>
 <!--[if !IE]><script>fixScale(document);</script><![endif]-->
 </body>
