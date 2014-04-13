@@ -102,6 +102,7 @@ public class TARDISSonicListener implements Listener {
         doors.add(Material.TRAP_DOOR);
         doors.add(Material.WOODEN_DOOR);
         interactables.add(Material.ANVIL);
+        interactables.add(Material.BED_BLOCK);
         interactables.add(Material.BEACON);
         interactables.add(Material.CHEST);
         interactables.add(Material.DIODE_BLOCK_OFF);
