@@ -172,7 +172,7 @@ public class TARDISDematerialisationPreset implements Runnable {
                         minecart = rsp.isMinecartOn();
                     }
                     if (!minecart) {
-                        plugin.getUtils().playTARDISSound(location, player, "tardis_takeoff");
+                        plugin.getUtils().playTARDISSoundNearby(location, "tardis_takeoff");
                     } else {
                         world.playSound(location, Sound.MINECART_INSIDE, 1.0F, 0.0F);
                     }
