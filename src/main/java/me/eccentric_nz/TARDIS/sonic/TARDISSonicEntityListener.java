@@ -85,7 +85,7 @@ public class TARDISSonicEntityListener implements Listener {
                                 float hunger = (scanned.getFoodLevel() / 20F) * 100;
                                 TARDISMessage.send(player, "Name: " + scanned.getName());
                                 if (plugin.isProjRassilonOnServer()) {
-                                    RassilonAPI ra = ((ProjectRassilon) plugin.getPM().getPlugin("ProjectRassilon")).getAPI();
+                                    RassilonAPI ra = ((ProjectRassilon) plugin.getPM().getPlugin("ProjectRassilon")).getAPI(plugin);
                                     if (ra != null) {
                                         TARDISMessage.send(player, "Timelord: " + ra.getTimelordStatus(scanned));
                                         TARDISMessage.send(player, "Regen count: " + ra.getRegenCount(scanned));
