@@ -72,9 +72,9 @@ public class TARDISArtronIndicator {
                 objective.setDisplaySlot(DisplaySlot.SIDEBAR);
                 objective.setDisplayName("Artron Energy");
                 if (used == 0) {
-                    Score max = objective.getScore(plugin.getServer().getOfflinePlayer(ChatColor.AQUA + "Maximum:"));
+                    Score max = objective.getScore(ChatColor.AQUA + "Maximum:");
                     max.setScore(fc);
-                    Score timelord = objective.getScore(plugin.getServer().getOfflinePlayer(ChatColor.YELLOW + "Time Lord:"));
+                    Score timelord = objective.getScore(ChatColor.YELLOW + "Time Lord:");
                     HashMap<String, Object> wherep = new HashMap<String, Object>();
                     wherep.put("uuid", p.getUniqueId().toString());
                     ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, wherep);
@@ -82,10 +82,10 @@ public class TARDISArtronIndicator {
                         timelord.setScore(rsp.getArtronLevel());
                     }
                 }
-                Score current = objective.getScore(plugin.getServer().getOfflinePlayer(ChatColor.GREEN + "Remaining:"));
-                Score percentage = objective.getScore(plugin.getServer().getOfflinePlayer(ChatColor.LIGHT_PURPLE + "Percent:"));
+                Score current = objective.getScore(ChatColor.GREEN + "Remaining:");
+                Score percentage = objective.getScore(ChatColor.LIGHT_PURPLE + "Percent:");
                 if (used > 0) {
-                    Score amount_used = objective.getScore(plugin.getServer().getOfflinePlayer(ChatColor.RED + "Used:"));
+                    Score amount_used = objective.getScore(ChatColor.RED + "Used:");
                     amount_used.setScore(used);
                 }
                 current.setScore(current_level);
