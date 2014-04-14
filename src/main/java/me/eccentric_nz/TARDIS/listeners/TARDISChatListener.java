@@ -59,11 +59,12 @@ public class TARDISChatListener implements Listener {
                 final TARDISRescue res = new TARDISRescue(plugin);
                 plugin.getTrackerKeeper().getTrackChat().remove(saved);
                 // delay it so the chat appears before the message
+                final String player = event.getPlayer().getName();
                 plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
                     @Override
                     public void run() {
                         if (res.tryRescue(rescuer, saved)) {
-                            TARDISMessage.send(rescuer, plugin.getPluginName() + "Release the handbrake to start rescuing " + saved);
+                            TARDISMessage.send(rescuer, plugin.getPluginName() + "Release the handbrake to start rescuing " + player);
                         }
                     }
                 }, 2L);
