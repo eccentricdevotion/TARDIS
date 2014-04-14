@@ -178,7 +178,7 @@
         <dependency>
             <groupId>com.sk89q</groupId>
             <artifactId>worldguard</artifactId>
-            <version>5.8.1-SNAPSHOT</version>
+            <version>5.9.1-SNAPSHOT</version>
             <type>jar</type>
             <exclusions>
                 <exclusion>
@@ -202,7 +202,7 @@
         <dependency>
             <groupId>com.sk89q</groupId>
             <artifactId>worldedit</artifactId>
-            <version>5.5.9-SNAPSHOT</version>
+            <version>6.0.0-SNAPSHOT</version>
             <type>jar</type>
             <exclusions>
                 <exclusion>
@@ -212,6 +212,14 @@
                 <exclusion>
                     <artifactId>truezip</artifactId>
                     <groupId>de.schlichtherle</groupId>
+                </exclusion>
+                <exclusion>
+                    <artifactId>guava</artifactId>
+                    <groupId>com.google.guava</groupId>
+                </exclusion>
+                <exclusion>
+                    <artifactId>jsr305</artifactId>
+                    <groupId>com.google.code.findbugs</groupId>
                 </exclusion>
             </exclusions>
         </dependency>
