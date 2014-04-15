@@ -115,7 +115,7 @@ public class TARDISFarmer {
         // spawn an entity at this location so we can get nearby entities - an egg will do
         World w = l.getWorld();
         Entity ent = w.spawnEntity(l, EntityType.EGG);
-        List<Entity> mobs = ent.getNearbyEntities(3.5D, 3.5D, 3.5D);
+        List<Entity> mobs = ent.getNearbyEntities(3.75D, 3.75D, 3.75D);
         if (mobs.size() > 0) {
             List<TARDISMob> old_macd_had_a_chicken = new ArrayList<TARDISMob>();
             List<TARDISMob> old_macd_had_a_cow = new ArrayList<TARDISMob>();
