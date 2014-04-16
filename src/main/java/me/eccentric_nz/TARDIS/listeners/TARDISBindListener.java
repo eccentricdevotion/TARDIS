@@ -99,15 +99,15 @@ public class TARDISBindListener implements Listener {
                         ResultSetTardis rs = new ResultSetTardis(plugin, wheret, "", false);
                         if (rs.resultSet()) {
                             UUID ownerUUID = rs.getUuid();
-                            if (rs.isIso_on() && !player.getUniqueId().equals(ownerUUID) && !event.isCancelled()) {
-                                TARDISMessage.send(player, plugin.getPluginName() + MESSAGE.ISO_ON.getText());
-                                return;
-                            }
                             HashMap<String, Object> whereb = new HashMap<String, Object>();
                             whereb.put("tardis_id", id);
                             whereb.put("bind", l);
                             ResultSetDestinations rsd = new ResultSetDestinations(plugin, whereb, false);
                             if (rsd.resultSet()) {
+                                if (rs.isIso_on() && !player.getUniqueId().equals(ownerUUID) && !event.isCancelled()) {
+                                    TARDISMessage.send(player, plugin.getPluginName() + MESSAGE.ISO_ON.getText());
+                                    return;
+                                }
                                 if (!rs.isHandbrake_on()) {
                                     TARDISMessage.send(player, plugin.getPluginName() + ChatColor.RED + MESSAGE.NOT_WHILE_TRAVELLING.getText());
                                     return;
