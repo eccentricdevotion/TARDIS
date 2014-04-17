@@ -307,7 +307,7 @@ public class TARDISButtonListener implements Listener {
                                         TARDISMessage.send(player, plugin.getPluginName() + ChatColor.RED + MESSAGE.NOT_WHILE_TRAVELLING.getText());
                                         return;
                                     }
-                                    if (level < plugin.getArtronConfig().getInt("random")) {
+                                    if (level < plugin.getArtronConfig().getInt("travel")) {
                                         TARDISMessage.send(player, plugin.getPluginName() + ChatColor.RED + MESSAGE.NOT_ENOUGH_ENERGY.getText());
                                         return;
                                     }
