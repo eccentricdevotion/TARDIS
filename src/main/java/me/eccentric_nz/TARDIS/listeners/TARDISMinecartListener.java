@@ -16,9 +16,7 @@
  */
 package me.eccentric_nz.TARDIS.listeners;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.ResultSetDoors;
@@ -48,14 +46,9 @@ import org.bukkit.util.Vector;
 public class TARDISMinecartListener implements Listener {
 
     private final TARDIS plugin;
-    private final List<Integer> rails = new ArrayList<Integer>();
 
     public TARDISMinecartListener(TARDIS plugin) {
         this.plugin = plugin;
-        this.rails.add(27);
-        this.rails.add(28);
-        this.rails.add(66);
-        this.rails.add(157);
     }
 
     @EventHandler(ignoreCancelled = true)
@@ -197,13 +190,12 @@ public class TARDISMinecartListener implements Listener {
         return null;
     }
 
-    @SuppressWarnings("deprecation")
     public boolean isTrack(Block block) {
-        return isTrack(block.getTypeId());
+        return isTrack(block.getType());
     }
 
-    public boolean isTrack(int id) {
-        return (rails.contains(id));
+    public boolean isTrack(Material mat) {
+        return (plugin.getGeneralKeeper().getRails().contains(mat));
     }
 
     private COMPASS getDirection(Location l) {

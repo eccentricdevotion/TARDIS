@@ -162,16 +162,19 @@ public class TARDISDeinstaPreset {
                 if (map.get("data") != null) {
                     bd = plugin.getUtils().parseByte(map.get("data"));
                 }
-                String locStr = map.get("location");
-                String[] loc_data = locStr.split(",");
-                // x, y, z - 1, 2, 3
-                String[] xStr = loc_data[1].split("=");
-                String[] yStr = loc_data[2].split("=");
-                String[] zStr = loc_data[3].split("=");
-                int rx = plugin.getUtils().parseInt(xStr[1].substring(0, (xStr[1].length() - 2)));
-                int ry = plugin.getUtils().parseInt(yStr[1].substring(0, (yStr[1].length() - 2)));
-                int rz = plugin.getUtils().parseInt(zStr[1].substring(0, (zStr[1].length() - 2)));
-                plugin.getUtils().setBlock(w, rx, ry, rz, bID, bd);
+                // if it wasn't AIR put it back
+                if (bID != 0) {
+                    String locStr = map.get("location");
+                    String[] loc_data = locStr.split(",");
+                    // x, y, z - 1, 2, 3
+                    String[] xStr = loc_data[1].split("=");
+                    String[] yStr = loc_data[2].split("=");
+                    String[] zStr = loc_data[3].split("=");
+                    int rx = plugin.getUtils().parseInt(xStr[1].substring(0, (xStr[1].length() - 2)));
+                    int ry = plugin.getUtils().parseInt(yStr[1].substring(0, (yStr[1].length() - 2)));
+                    int rz = plugin.getUtils().parseInt(zStr[1].substring(0, (zStr[1].length() - 2)));
+                    plugin.getUtils().setBlock(w, rx, ry, rz, bID, bd);
+                }
             }
         }
 

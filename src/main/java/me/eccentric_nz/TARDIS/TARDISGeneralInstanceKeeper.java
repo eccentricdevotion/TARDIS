@@ -32,6 +32,7 @@ import me.eccentric_nz.TARDIS.rooms.TARDISCondenserData;
 import me.eccentric_nz.TARDIS.sonic.TARDISSonicListener;
 import me.eccentric_nz.TARDIS.utility.TARDISUUIDCache;
 import org.bukkit.Chunk;
+import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 
@@ -52,7 +53,6 @@ public class TARDISGeneralInstanceKeeper {
     private TARDISScannerListener scannerListener;
     private TARDISSonicListener sonicListener;
     private TARDISTravelCommands tardisTravelCommand;
-    private final TARDISUUIDCache UUIDCache;
     private final HashMap<String, Double[]> gravityEastList = new HashMap<String, Double[]>();
     private final HashMap<String, Double[]> gravityNorthList = new HashMap<String, Double[]>();
     private final HashMap<String, Double[]> gravitySouthList = new HashMap<String, Double[]>();
@@ -63,6 +63,7 @@ public class TARDISGeneralInstanceKeeper {
     private final List<BlockFace> faces = Arrays.asList(BlockFace.NORTH, BlockFace.WEST, BlockFace.SOUTH, BlockFace.EAST);
     private final List<Chunk> roomChunkList = new ArrayList<Chunk>();
     private final List<Chunk> tardisChunkList = new ArrayList<Chunk>();
+    private final List<Material> rails = Arrays.asList(Material.POWERED_RAIL, Material.RAILS, Material.DETECTOR_RAIL, Material.ACTIVATOR_RAIL);
     private final List<String> gravityDownList = new ArrayList<String>();
     private final List<String> roomArgs;
     private final List<String> sonicLamps = new ArrayList<String>();
@@ -70,6 +71,7 @@ public class TARDISGeneralInstanceKeeper {
     private final List<String> sonicRails = new ArrayList<String>();
     private final List<String> sonicWires = new ArrayList<String>();
     private final TARDIS plugin;
+    private final TARDISUUIDCache UUIDCache;
 
     public TARDISGeneralInstanceKeeper(TARDIS plugin) {
         this.plugin = plugin;
@@ -96,6 +98,10 @@ public class TARDISGeneralInstanceKeeper {
 
     public List<Chunk> getRoomChunkList() {
         return roomChunkList;
+    }
+
+    public List<Material> getRails() {
+        return rails;
     }
 
     public HashMap<String, Double[]> getGravityUpList() {
