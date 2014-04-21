@@ -12,7 +12,8 @@ These are all really boring!
 
 ##Future version `2.9+`
 1. UHC flying mode (started - have coded some test plugins)
-2. TARDIS invisiblity - 1.8 barrier blocks?
+2. TARDIS invisibility - 1.8 barrier blocks?
+3. Biome textures
 
 ####I couldn't really be bothered
 1. HADS + explosions + fireballs + lava
@@ -22,7 +23,7 @@ These are all really boring!
 
 
 ##Resource Pack / TARDISWeepingAngels
-Reskin mobs for Resource pack, and add new mob sounds
+Re-skin mobs for Resource pack, and add new mob sounds
 
 * Skeletons -> Weeping Angels - __done__
 * Wither Skeletons -> Vashta Nerada
