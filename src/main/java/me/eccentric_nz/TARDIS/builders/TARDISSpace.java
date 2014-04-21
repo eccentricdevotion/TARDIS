@@ -80,7 +80,7 @@ public class TARDISSpace {
                 plugin.getServer().dispatchCommand(plugin.getConsole(), "mv modify set monstersrate 0 " + name);
                 plugin.getServer().dispatchCommand(plugin.getConsole(), "mv modify set hidden true " + name);
                 plugin.getServer().dispatchCommand(plugin.getConsole(), "mv modify set weather false " + name);
-                plugin.getServer().dispatchCommand(plugin.getConsole(), "mv modify set memory false " + name);
+                //plugin.getServer().dispatchCommand(plugin.getConsole(), "mv modify set memory false " + name);
                 plugin.getServer().dispatchCommand(plugin.getConsole(), "mv modify set portalform none " + name);
                 plugin.getServer().dispatchCommand(plugin.getConsole(), "mv modify set adjustspawn false " + name);
                 plugin.getServer().dispatchCommand(plugin.getConsole(), "mv modify set pvp false " + name);
