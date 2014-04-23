@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2013 eccentric_nz
+ * Copyright (C) 2014 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -21,6 +21,7 @@ import java.util.HashMap;
 import java.util.concurrent.TimeUnit;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.ResultSetTag;
+import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 
@@ -38,23 +39,23 @@ public class TARDISTagCommand {
 
     public boolean getStats(Player player) {
         ResultSetTag rs = new ResultSetTag(plugin);
-        player.sendMessage(plugin.pluginName + "Here are the stats:");
+        TARDISMessage.send(player, plugin.getPluginName() + "Here are the stats:");
         String who = (!plugin.getTagConfig().getString("it").equals("")) ? plugin.getTagConfig().getString("it") : "No one";
-        player.sendMessage(who + " is currently the " + ChatColor.RED + "'OOD'");
-        player.sendMessage("-----------");
-        player.sendMessage(ChatColor.GOLD + "Top 5 OODs");
-        player.sendMessage("-----------");
+        TARDISMessage.send(player, who + " is currently the " + ChatColor.RED + "'OOD'");
+        TARDISMessage.send(player, "-----------");
+        TARDISMessage.send(player, ChatColor.GOLD + "Top 5 OODs");
+        TARDISMessage.send(player, "-----------");
         if (rs.resultSet()) {
             ArrayList<HashMap<String, String>> data = rs.getData();
             for (HashMap<String, String> map : data) {
                 String p = map.get("player");
-                long t = plugin.utils.parseLong(map.get("time"));
-                player.sendMessage(p + ": " + ChatColor.GREEN + getHoursMinutesSeconds(t));
+                long t = plugin.getUtils().parseLong(map.get("time"));
+                TARDISMessage.send(player, p + ": " + ChatColor.GREEN + getHoursMinutesSeconds(t));
             }
         } else {
-            player.sendMessage("The are no stats yet :(");
+            TARDISMessage.send(player, "The are no stats yet :(");
         }
-        player.sendMessage("-----------");
+        TARDISMessage.send(player, "-----------");
         return true;
     }
 

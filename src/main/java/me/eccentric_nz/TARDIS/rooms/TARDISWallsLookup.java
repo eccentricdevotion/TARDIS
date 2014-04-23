@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2013 eccentric_nz
+ * Copyright (C) 2014 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -36,7 +36,7 @@ public class TARDISWallsLookup {
 
     private HashMap<String, String> getLookup() {
         HashMap<String, String> hmap = new HashMap<String, String>();
-        for (Map.Entry<String, int[]> entry : plugin.tw.blocks.entrySet()) {
+        for (Map.Entry<String, int[]> entry : plugin.getTardisWalls().blocks.entrySet()) {
             int[] value = entry.getValue();
             hmap.put(value[0] + ":" + value[1], entry.getKey());
         }

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2013 eccentric_nz
+ * Copyright (C) 2014 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -19,6 +19,7 @@ package me.eccentric_nz.TARDIS.commands.preferences;
 import java.util.HashMap;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
+import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import org.bukkit.entity.Player;
 
 /**
@@ -36,7 +37,7 @@ public class TARDISEPSMessageCommand {
     public boolean setMessage(Player player, String[] args, QueryFactory qf) {
         int count = args.length;
         if (count < 2) {
-            player.sendMessage(plugin.pluginName + "You need to specify an Emergency Program System message!");
+            TARDISMessage.send(player, plugin.getPluginName() + "You need to specify an Emergency Program System message!");
             return false;
         }
         StringBuilder buf = new StringBuilder();
@@ -48,9 +49,9 @@ public class TARDISEPSMessageCommand {
         HashMap<String, Object> sete = new HashMap<String, Object>();
         sete.put("eps_message", message);
         HashMap<String, Object> where = new HashMap<String, Object>();
-        where.put("player", player.getName());
+        where.put("uuid", player.getUniqueId().toString());
         qf.doUpdate("player_prefs", sete, where);
-        player.sendMessage(plugin.pluginName + "The Emergency Program System message was set!");
+        TARDISMessage.send(player, plugin.getPluginName() + "The Emergency Program System message was set!");
         return true;
     }
 }

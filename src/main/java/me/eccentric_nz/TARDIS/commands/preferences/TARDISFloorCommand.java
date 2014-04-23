@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2013 eccentric_nz
+ * Copyright (C) 2014 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -24,6 +24,7 @@ import java.util.Locale;
 import me.eccentric_nz.TARDIS.TARDIS;
 import static me.eccentric_nz.TARDIS.commands.preferences.TARDISPrefsCommands.ucfirst;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
+import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import org.bukkit.entity.Player;
 
 /**
@@ -41,7 +42,7 @@ public class TARDISFloorCommand {
     public boolean setFloorOrWallBlock(Player player, String[] args, QueryFactory qf) {
         String pref = args[0];
         if (args.length < 2) {
-            player.sendMessage(plugin.pluginName + "You need to specify a " + pref + " material!");
+            TARDISMessage.send(player, plugin.getPluginName() + "You need to specify a " + pref + " material!");
             return false;
         }
         String wall_mat;
@@ -57,22 +58,22 @@ public class TARDISFloorCommand {
         } else {
             wall_mat = args[1].toUpperCase(Locale.ENGLISH);
         }
-        if (!plugin.tw.blocks.containsKey(wall_mat)) {
+        if (!plugin.getTardisWalls().blocks.containsKey(wall_mat)) {
             String message = (wall_mat.equals("HELP")) ? "Here is a list of valid " + pref + " materials:" : "That is not a valid " + pref + " material! Try:";
-            player.sendMessage(plugin.pluginName + message);
-            List<String> sortedKeys = new ArrayList(plugin.tw.blocks.keySet());
+            TARDISMessage.send(player, plugin.getPluginName() + message);
+            List<String> sortedKeys = new ArrayList(plugin.getTardisWalls().blocks.keySet());
             Collections.sort(sortedKeys);
             for (String w : sortedKeys) {
-                player.sendMessage(w);
+                TARDISMessage.send(player, w);
             }
             return true;
         }
         HashMap<String, Object> setw = new HashMap<String, Object>();
         setw.put(pref, wall_mat);
         HashMap<String, Object> where = new HashMap<String, Object>();
-        where.put("player", player.getName());
+        where.put("uuid", player.getUniqueId().toString());
         qf.doUpdate("player_prefs", setw, where);
-        player.sendMessage(plugin.pluginName + ucfirst(pref) + " material saved.");
+        TARDISMessage.send(player, plugin.getPluginName() + ucfirst(pref) + " material saved.");
         return true;
     }
 }

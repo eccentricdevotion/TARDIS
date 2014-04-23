@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2013 eccentric_nz
+ * Copyright (C) 2014 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -20,6 +20,7 @@ import java.util.HashMap;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.ResultSetPlayerPrefs;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
+import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -48,7 +49,7 @@ public class TARDISArtronIndicator {
         this.filter = Material.valueOf(plugin.getRecipesConfig().getString("shaped.Perception Filter.result"));
     }
 
-    public void showArtronLevel(final Player p, int id, boolean hide, int used) {
+    public void showArtronLevel(final Player p, int id, int used) {
         // check if they have the perception filter on
         boolean isFiltered = false;
         ItemStack[] armour = p.getInventory().getArmorContents();
@@ -57,6 +58,7 @@ public class TARDISArtronIndicator {
                 isFiltered = true;
             }
         }
+        final Scoreboard currentScoreboard = (p.getScoreboard().getObjective("TARDIS") != null) ? manager.getMainScoreboard() : p.getScoreboard();
         // get Artron level
         HashMap<String, Object> where = new HashMap<String, Object>();
         where.put("tardis_id", id);
@@ -69,37 +71,37 @@ public class TARDISArtronIndicator {
                 Objective objective = board.registerNewObjective("TARDIS", "Artron");
                 objective.setDisplaySlot(DisplaySlot.SIDEBAR);
                 objective.setDisplayName("Artron Energy");
-                Score current = objective.getScore(plugin.getServer().getOfflinePlayer(ChatColor.GREEN + "Remaining:"));
-                Score max = objective.getScore(plugin.getServer().getOfflinePlayer(ChatColor.AQUA + "Maximum:"));
-                Score percentage = objective.getScore(plugin.getServer().getOfflinePlayer(ChatColor.LIGHT_PURPLE + "Percent:"));
-                Score timelord = objective.getScore(plugin.getServer().getOfflinePlayer(ChatColor.YELLOW + "Time Lord:"));
+                if (used == 0) {
+                    Score max = objective.getScore(ChatColor.AQUA + "Maximum:");
+                    max.setScore(fc);
+                    Score timelord = objective.getScore(ChatColor.YELLOW + "Time Lord:");
+                    HashMap<String, Object> wherep = new HashMap<String, Object>();
+                    wherep.put("uuid", p.getUniqueId().toString());
+                    ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, wherep);
+                    if (rsp.resultSet()) {
+                        timelord.setScore(rsp.getArtronLevel());
+                    }
+                }
+                Score current = objective.getScore(ChatColor.GREEN + "Remaining:");
+                Score percentage = objective.getScore(ChatColor.LIGHT_PURPLE + "Percent:");
                 if (used > 0) {
-                    Score amount_used = objective.getScore(plugin.getServer().getOfflinePlayer(ChatColor.RED + "Used:"));
+                    Score amount_used = objective.getScore(ChatColor.RED + "Used:");
                     amount_used.setScore(used);
                 }
                 current.setScore(current_level);
-                max.setScore(fc);
                 percentage.setScore(percent);
-                HashMap<String, Object> wherep = new HashMap<String, Object>();
-                wherep.put("player", p.getName());
-                ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, wherep);
-                if (rsp.resultSet()) {
-                    timelord.setScore(rsp.getArtronLevel());
-                }
                 p.setScoreboard(board);
-                if (hide) {
-                    plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
-                        @Override
-                        public void run() {
-                            p.setScoreboard(manager.getNewScoreboard());
-                        }
-                    }, 150L);
-                }
+                plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
+                    @Override
+                    public void run() {
+                        p.setScoreboard(currentScoreboard);
+                    }
+                }, 150L);
             } else {
                 if (used > 0) {
-                    p.sendMessage(plugin.pluginName + "You used " + used + " Artron Energy.");
+                    TARDISMessage.send(p, plugin.getPluginName() + "You used " + used + " Artron Energy.");
                 } else {
-                    p.sendMessage(plugin.pluginName + "The Artron Energy Capacitor is at " + percent + "%");
+                    TARDISMessage.send(p, plugin.getPluginName() + "The Artron Energy Capacitor is at " + percent + "%");
                 }
             }
         }

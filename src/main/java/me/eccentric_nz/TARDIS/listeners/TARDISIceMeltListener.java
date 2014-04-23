@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2013 eccentric_nz
+ * Copyright (C) 2014 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -20,7 +20,6 @@ import me.eccentric_nz.TARDIS.TARDIS;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.event.EventHandler;
-import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockFadeEvent;
 
@@ -46,13 +45,13 @@ public class TARDISIceMeltListener implements Listener {
      *
      * @param event ice melting
      */
-    @EventHandler(priority = EventPriority.NORMAL)
+    @EventHandler(ignoreCancelled = true)
     public void onIceMelt(BlockFadeEvent event) {
         Block b = event.getBlock();
         Material m = b.getType();
         if (m.equals(Material.ICE)) {
             String l = b.getLocation().toString();
-            if (plugin.protectBlockMap.containsKey(l)) {
+            if (plugin.getGeneralKeeper().getProtectBlockMap().containsKey(l)) {
                 event.setCancelled(true);
             }
         }

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2013 eccentric_nz
+ * Copyright (C) 2014 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -24,6 +24,7 @@ import java.util.Random;
 import java.util.concurrent.TimeUnit;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
+import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -62,13 +63,13 @@ public class TARDISTagListener implements Listener {
             if (eggcal.get(Calendar.MONTH) == 10 && eggcal.get(Calendar.DATE) == 23) { // zero based month
                 int age = ((eggcal.get(Calendar.YEAR)) - 1963);
                 String ordinal = getOrdinal(age);
-                event.getPlayer().sendMessage(plugin.pluginName + "Happy " + age + ordinal + " Birthday Doctor Who!");
+                TARDISMessage.send(event.getPlayer(), plugin.getPluginName() + "Happy " + age + ordinal + " Birthday Doctor Who!");
             }
-            event.getPlayer().sendMessage(plugin.pluginName + "Today, and today only, you can play 'Tag the OOD'!");
-            event.getPlayer().sendMessage(plugin.pluginName + "To see tag stats (and who is currently 'it'), use the command " + ChatColor.AQUA + "/tardis tagtheood");
+            TARDISMessage.send(event.getPlayer(), plugin.getPluginName() + "Today, and today only, you can play 'Tag the OOD'!");
+            TARDISMessage.send(event.getPlayer(), plugin.getPluginName() + "To see tag stats (and who is currently 'it'), use the command " + ChatColor.AQUA + "/tardis tagtheood");
             if (plugin.getTagConfig().get("it").equals("")) {
                 Player startit = getRandomPlayer();
-                plugin.getServer().broadcastMessage(plugin.pluginName + startit.getName() + " is now the " + ChatColor.RED + "'OOD'!");
+                plugin.getServer().broadcastMessage(plugin.getPluginName() + startit.getName() + " is now the " + ChatColor.RED + "'OOD'!");
                 setConfig(startit.getName());
                 setConfig(System.currentTimeMillis());
             }
@@ -87,11 +88,11 @@ public class TARDISTagListener implements Listener {
             if (p.equals(plugin.getTagConfig().getString("it"))) {
                 // find a new player to make it
                 Player newit = getRandomPlayer();
-                plugin.getServer().broadcastMessage(plugin.pluginName + newit.getName() + " is now the " + ChatColor.RED + "'OOD'!");
+                plugin.getServer().broadcastMessage(plugin.getPluginName() + newit.getName() + " is now the " + ChatColor.RED + "'OOD'!");
                 setConfig(newit.getName());
                 long now = System.currentTimeMillis();
                 long timewasit = now - plugin.getTagConfig().getLong("time");
-                plugin.getServer().broadcastMessage(plugin.pluginName + p + " was 'OOD' for " + getHoursMinutesSeconds(timewasit) + " seconds.");
+                plugin.getServer().broadcastMessage(plugin.getPluginName() + p + " was 'OOD' for " + getHoursMinutesSeconds(timewasit) + " seconds.");
                 setConfig(now);
                 updateTagStats(p, timewasit);
             }
@@ -102,18 +103,18 @@ public class TARDISTagListener implements Listener {
      *
      * @param event a player right-clicking another player
      */
-    @EventHandler
+    @EventHandler(ignoreCancelled = true)
     public void onPlayerInteractPlayer(PlayerInteractEntityEvent event) {
         if (event.getRightClicked() instanceof Player) {
             Player clicked = (Player) event.getRightClicked();
             String p = clicked.getName();
             if (clicked.getName().equals(plugin.getTagConfig().getString("it"))) {
                 Player newit = event.getPlayer();
-                plugin.getServer().broadcastMessage(plugin.pluginName + newit.getName() + " is now the " + ChatColor.RED + "'OOD'!");
+                plugin.getServer().broadcastMessage(plugin.getPluginName() + newit.getName() + " is now the " + ChatColor.RED + "'OOD'!");
                 setConfig(newit.getName());
                 long now = System.currentTimeMillis();
                 long timewasit = now - plugin.getTagConfig().getLong("time");
-                plugin.getServer().broadcastMessage(plugin.pluginName + p + " was 'OOD' for " + getHoursMinutesSeconds(timewasit) + " seconds.");
+                plugin.getServer().broadcastMessage(plugin.getPluginName() + p + " was 'OOD' for " + getHoursMinutesSeconds(timewasit) + " seconds.");
                 setConfig(now);
                 updateTagStats(p, timewasit);
             }

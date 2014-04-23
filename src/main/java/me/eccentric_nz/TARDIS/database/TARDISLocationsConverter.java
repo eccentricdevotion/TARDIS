@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2013 eccentric_nz
+ * Copyright (C) 2014 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -36,7 +36,7 @@ public class TARDISLocationsConverter {
     private final TARDISDatabaseConnection service = TARDISDatabaseConnection.getInstance();
     private final Connection connection = service.getConnection();
     private final TARDIS plugin;
-    private final List<String> directions = Arrays.asList(new String[]{"NORTH", "SOUTH", "EAST", "WEST"});
+    private final List<String> directions = Arrays.asList("NORTH", "SOUTH", "EAST", "WEST");
 
     ;
 
@@ -99,7 +99,7 @@ public class TARDISLocationsConverter {
             }
         }
         if (i > 0) {
-            plugin.console.sendMessage(plugin.pluginName + "Converted " + i + " TARDIS locations to new format");
+            plugin.getConsole().sendMessage(plugin.getPluginName() + "Converted " + i + " TARDIS locations to new format");
             plugin.getConfig().set("conversions.location_conversion_done", true);
             plugin.saveConfig();
         }
@@ -109,9 +109,9 @@ public class TARDISLocationsConverter {
         HashMap<String, Object> set = new HashMap<String, Object>();
         set.put("tardis_id", id);
         set.put("world", data[0]);
-        set.put("x", plugin.utils.parseInt(data[1]));
-        set.put("y", plugin.utils.parseInt(data[2]));
-        set.put("z", plugin.utils.parseInt(data[3]));
+        set.put("x", plugin.getUtils().parseInt(data[1]));
+        set.put("y", plugin.getUtils().parseInt(data[2]));
+        set.put("z", plugin.getUtils().parseInt(data[3]));
         int l = data.length;
         set.put("direction", (l > 4 && directions.contains(data[4])) ? data[4] : d);
         set.put("submarine", (l > 5 && data[5].equals("true")) ? 1 : 0);

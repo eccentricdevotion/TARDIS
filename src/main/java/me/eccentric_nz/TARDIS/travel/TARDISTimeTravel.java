@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2013 eccentric_nz
+ * Copyright (C) 2014 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -25,6 +25,7 @@ import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.ResultSetPlayerPrefs;
 import me.eccentric_nz.TARDIS.database.ResultSetTravellers;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
+import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
@@ -48,7 +49,6 @@ public class TARDISTimeTravel {
     private Location dest;
     private final TARDIS plugin;
     private final List<Material> goodMaterials = new ArrayList<Material>();
-    private final TARDISPluginRespect respect;
     private final int attempts;
 
     public TARDISTimeTravel(TARDIS plugin) {
@@ -63,7 +63,6 @@ public class TARDISTimeTravel {
         goodMaterials.add(Material.RED_MUSHROOM);
         goodMaterials.add(Material.SAPLING);
         goodMaterials.add(Material.SNOW);
-        respect = new TARDISPluginRespect(plugin);
         this.attempts = plugin.getConfig().getInt("travel.random_attempts");
     }
 
@@ -167,7 +166,7 @@ public class TARDISTimeTravel {
                 if (highest > 40) {
                     Block currentBlock = randworld.getBlockAt(wherex, highest, wherez);
                     Location chunk_loc = currentBlock.getLocation();
-                    if (respect.getRespect(p, chunk_loc, false)) {
+                    if (plugin.getPluginRespect().getRespect(p, chunk_loc, false)) {
                         while (!randworld.getChunkAt(chunk_loc).isLoaded()) {
                             randworld.getChunkAt(chunk_loc).load();
                         }
@@ -207,20 +206,20 @@ public class TARDISTimeTravel {
                         if ((currentBlock.getRelative(BlockFace.DOWN).getTypeId() == 8 || currentBlock.getRelative(BlockFace.DOWN).getTypeId() == 9) && plugin.getConfig().getBoolean("travel.land_on_water") == false) {
                             // check if submarine is on
                             HashMap<String, Object> wheres = new HashMap<String, Object>();
-                            wheres.put("player", p.getName());
+                            wheres.put("uuid", p.getUniqueId().toString());
                             ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, wheres);
                             if (rsp.resultSet()) {
-                                if (rsp.isSubmarineOn() && plugin.utils.isOceanBiome(currentBlock.getBiome())) {
+                                if (rsp.isSubmarineOn() && plugin.getUtils().isOceanBiome(currentBlock.getBiome())) {
                                     // get submarine location
-                                    p.sendMessage(plugin.pluginName + "Searching for underwater location...");
+                                    TARDISMessage.send(p, plugin.getPluginName() + "Searching for underwater location...");
                                     Location underwater = submarine(currentBlock, d);
                                     if (underwater != null) {
                                         // get TARDIS id
                                         HashMap<String, Object> wherep = new HashMap<String, Object>();
-                                        wherep.put("player", p.getName());
+                                        wherep.put("uuid", p.getUniqueId().toString());
                                         ResultSetTravellers rst = new ResultSetTravellers(plugin, wherep, false);
                                         if (rst.resultSet()) {
-                                            plugin.trackSubmarine.add(Integer.valueOf(rst.getTardis_id()));
+                                            plugin.getTrackerKeeper().getTrackSubmarine().add(rst.getTardis_id());
                                         }
                                         return underwater;
                                     } else {
@@ -237,7 +236,7 @@ public class TARDISTimeTravel {
                                 currentBlock = currentBlock.getRelative(BlockFace.DOWN);
                             }
                             Location chunk_loc = currentBlock.getLocation();
-                            if (respect.getRespect(p, chunk_loc, false)) {
+                            if (plugin.getPluginRespect().getRespect(p, chunk_loc, false)) {
                                 while (!randworld.getChunkAt(chunk_loc).isLoaded()) {
                                     randworld.getChunkAt(chunk_loc).load();
                                 }
@@ -260,7 +259,7 @@ public class TARDISTimeTravel {
                         break;
                     }
                 } else {
-                    if (!respect.getRespect(p, new Location(randworld, wherex, highest, wherez), false)) {
+                    if (!plugin.getPluginRespect().getRespect(p, new Location(randworld, wherex, highest, wherez), false)) {
                         return null;
                     } else {
                         highest = plugin.getConfig().getInt("travel.timeout_height");
@@ -360,25 +359,25 @@ public class TARDISTimeTravel {
         final int c = col;
         final int startx = sx;
         final int startz = sz;
-        plugin.utils.setBlock(w, startx, starty, startz, 80, (byte) 0);
-        plugin.utils.setBlock(w, startx, starty, startz + row, 80, (byte) 0);
-        plugin.utils.setBlock(w, startx + col, starty, startz, 80, (byte) 0);
-        plugin.utils.setBlock(w, startx + col, starty, startz + row, 80, (byte) 0);
-        plugin.utils.setBlock(w, startx, starty + 3, startz, 80, (byte) 0);
-        plugin.utils.setBlock(w, startx + col, starty + 3, startz, 80, (byte) 0);
-        plugin.utils.setBlock(w, startx, starty + 3, startz + row, 80, (byte) 0);
-        plugin.utils.setBlock(w, startx + col, starty + 3, startz + row, 80, (byte) 0);
+        plugin.getUtils().setBlock(w, startx, starty, startz, 80, (byte) 0);
+        plugin.getUtils().setBlock(w, startx, starty, startz + row, 80, (byte) 0);
+        plugin.getUtils().setBlock(w, startx + col, starty, startz, 80, (byte) 0);
+        plugin.getUtils().setBlock(w, startx + col, starty, startz + row, 80, (byte) 0);
+        plugin.getUtils().setBlock(w, startx, starty + 3, startz, 80, (byte) 0);
+        plugin.getUtils().setBlock(w, startx + col, starty + 3, startz, 80, (byte) 0);
+        plugin.getUtils().setBlock(w, startx, starty + 3, startz + row, 80, (byte) 0);
+        plugin.getUtils().setBlock(w, startx + col, starty + 3, startz + row, 80, (byte) 0);
         plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
             @Override
             public void run() {
-                plugin.utils.setBlock(w, startx, starty, startz, 0, (byte) 0);
-                plugin.utils.setBlock(w, startx, starty, startz + r, 0, (byte) 0);
-                plugin.utils.setBlock(w, startx + c, starty, startz, 0, (byte) 0);
-                plugin.utils.setBlock(w, startx + c, starty, startz + r, 0, (byte) 0);
-                plugin.utils.setBlock(w, startx, starty + 3, startz, 0, (byte) 0);
-                plugin.utils.setBlock(w, startx + c, starty + 3, startz, 0, (byte) 0);
-                plugin.utils.setBlock(w, startx, starty + 3, startz + r, 0, (byte) 0);
-                plugin.utils.setBlock(w, startx + c, starty + 3, startz + r, 0, (byte) 0);
+                plugin.getUtils().setBlock(w, startx, starty, startz, 0, (byte) 0);
+                plugin.getUtils().setBlock(w, startx, starty, startz + r, 0, (byte) 0);
+                plugin.getUtils().setBlock(w, startx + c, starty, startz, 0, (byte) 0);
+                plugin.getUtils().setBlock(w, startx + c, starty, startz + r, 0, (byte) 0);
+                plugin.getUtils().setBlock(w, startx, starty + 3, startz, 0, (byte) 0);
+                plugin.getUtils().setBlock(w, startx + c, starty + 3, startz, 0, (byte) 0);
+                plugin.getUtils().setBlock(w, startx, starty + 3, startz + r, 0, (byte) 0);
+                plugin.getUtils().setBlock(w, startx + c, starty + 3, startz + r, 0, (byte) 0);
             }
         }, 300L);
     }
@@ -457,7 +456,7 @@ public class TARDISTimeTravel {
             Location netherLocation = startBlock.getLocation();
             int netherLocY = netherLocation.getBlockY();
             netherLocation.setY(netherLocY + 1);
-            if (respect.getRespect(p, netherLocation, false)) {
+            if (plugin.getPluginRespect().getRespect(p, netherLocation, false)) {
                 // get start location for checking there is enough space
                 int gsl[] = getStartLocation(netherLocation, d);
                 startx = gsl[0];

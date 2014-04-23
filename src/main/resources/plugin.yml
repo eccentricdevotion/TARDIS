@@ -2,8 +2,8 @@ authors: [eccentric_nz]
 description: A plugin for all Doctor Who fans - create and use a TARDIS! Teleport to random destinations - it's bigger on the inside!
 main: me.eccentric_nz.TARDIS.TARDIS
 name: TARDIS
-startup: postworld
-softdepend: [Multiverse-Core,Multiverse-Adventure,Multiverse-Inventories,MultiWorld,My Worlds,WorldGuard,WorldBorder,Towny,Citizens]
+load: POSTWORLD
+softdepend: [Multiverse-Core,Multiverse-Adventure,Multiverse-Inventories,MultiWorld,My Worlds,WorldGuard,WorldBorder,Towny,Citizens,ProtocolLib,LibsDisguises,ProjectRassilon]
 website: http://dev.bukkit.org/bukkit-plugins/tardis/
 dev-url: http://dev.bukkit.org/bukkit-plugins/tardis/
 url: http://eccentricdevotion.github.io/TARDIS/
@@ -151,18 +151,20 @@ permissions:
       tardis.room.greenhouse: true
       tardis.room.harmony: true
       tardis.room.kitchen: true
+      tardis.room.lazarus: true
       tardis.room.library: true
       tardis.room.mushroom: true
       tardis.room.passage: true
       tardis.room.pool: true
       tardis.room.rail: true
+      tardis.room.renderer: true
       tardis.room.stable: true
       tardis.room.trenzalore: true
       tardis.room.vault: true
       tardis.room.village: true
       tardis.room.wood: true
       tardis.room.workshop: true
-      tardis.room.renderer: true
+      tardis.room.zero: true
     default: op
   tardis.gravity:
     description: Allow players to use the /tardisgravity command.
@@ -209,6 +211,9 @@ permissions:
   tardis.sonic.emerald:
     description: Allows the sonic screwdriver to be upgraded with Emerald Environment abilities.
     default: op
+  tardis.sonic.plant:
+    description: Allows the sonic screwdriver with Emerald Environment abilities to re-sow plants if the player has the appropriate seed items in their inventory.
+    default: op
   tardis.sonic.sort:
     description: Allows a player to use the chest sorting function of the sonic screwdriver.
     default: op
@@ -216,7 +221,16 @@ permissions:
     description: Allows the Artron Energy to be stored in an Artron Storage Cell.
     default: op
   tardis.filter:
-    description: Allows a player to use the TARDIS perception filter.
+    description: Allows a player to use the TARDIS Perception Filter.
+    default: op
+  tardis.translate:
+    description: Allows a player to use the TARDIS Universal Translator.
+    default: op
+  tardis.lazarus:
+    description: Allows a player to use the TARDIS Genetic Manipulator.
+    default: op
+  tardis.themaster:
+    description: Allows a player to reverse the polarity of the TARDIS Genetic Manipulator turning it into the Immortality Gate.
     default: op
 commands:
   tardis:
@@ -387,8 +401,8 @@ commands:
   tardisroom:
     aliases: troom
     description: Set TARDIS room configuration options, and add new rooms.
-    usage: /<command> add [name] or /<command> [name] [boolean|integer|string] or /<command> blocks [name|save]
-    permission: tardis.admin
+    usage: /<command> add [name] or /<command> [name] [boolean|integer|string] or /<command> blocks [name|save] or /<command> required [room]
+    permission: tardis.create
     permission-message: You don't have the permission <permission> to use this command
     add:
       description: Add a new custom room schematic.
@@ -541,4 +555,10 @@ commands:
     description: View TARDIS item recipes.
     usage: /<command> [a-circuit|ars-circuit|bio-circuit|biome-disk|blank|c-circuit|cell|d-circuit|e-circuit|filter|i-circuit|key|l-circuit|locator|m-circuit|mem-circuit|oscillator|player-disk|preset-disk|p-circuit|r-circuit|remote|s-circuit|save-disk|scan-circuit|sonic|t-circuit]
     permission: tardis.help
+    permission-message: You don't have the permission <permission> to use this command
+  tardissay:
+    aliases: [tsay, translate]
+    description: Say something in a different language via the TARDIS Universal Translator.
+    usage: /<command> [language] [message]
+    permission: tardis.translate
     permission-message: You don't have the permission <permission> to use this command

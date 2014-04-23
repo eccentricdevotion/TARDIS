@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2013 eccentric_nz
+ * Copyright (C) 2014 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -19,8 +19,10 @@ package me.eccentric_nz.TARDIS.sonic;
 import java.util.HashMap;
 import java.util.List;
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.utility.TARDISMessage;
+import net.pekkit.projectrassilon.ProjectRassilon;
+import net.pekkit.projectrassilon.api.RassilonAPI;
 import org.bukkit.Material;
-import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -30,7 +32,6 @@ import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.player.PlayerInteractEntityEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.PlayerInventory;
 import org.bukkit.inventory.meta.ItemMeta;
 
 /**
@@ -49,7 +50,7 @@ public class TARDISSonicEntityListener implements Listener {
         this.sonic = Material.valueOf(split[0]);
     }
 
-    @EventHandler(priority = EventPriority.MONITOR)
+    @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
     public void onInteract(PlayerInteractEntityEvent event) {
         final Player player = event.getPlayer();
         long now = System.currentTimeMillis();
@@ -61,75 +62,44 @@ public class TARDISSonicEntityListener implements Listener {
                 Entity ent = event.getRightClicked();
                 if (ent instanceof Player) {
                     final Player scanned = (Player) ent;
-                    playSonicSound(player, now);
-                    if (player.hasPermission("tardis.admin") && lore != null && lore.contains("Admin Upgrade")) {
-                        player.sendMessage(plugin.pluginName + "Opening player's inventory, please wait...");
+                    plugin.getGeneralKeeper().getSonicListener().playSonicSound(player, now, 3050L, "sonic_screwdriver");
+                    if (player.hasPermission("tardis.sonic.admin") && lore != null && lore.contains("Admin Upgrade")) {
+                        TARDISMessage.send(player, plugin.getPluginName() + "Opening player's inventory, please wait...");
                         plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
                             @Override
                             public void run() {
                                 Inventory pinv = scanned.getInventory();
                                 ItemStack[] items = pinv.getContents();
-                                plugin.debug("inventory size: " + pinv.getSize());
                                 Inventory menu = plugin.getServer().createInventory(player, pinv.getSize(), "§4" + scanned.getName() + "'s Inventory");
                                 menu.setContents(items);
                                 player.openInventory(menu);
                             }
                         }, 40L);
                     } else if (player.hasPermission("tardis.sonic.bio") && lore != null && lore.contains("Bio-scanner Upgrade")) {
-                        player.sendMessage(plugin.pluginName + "Scanning player...");
+                        TARDISMessage.send(player, plugin.getPluginName() + "Scanning player...");
                         plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
                             @Override
                             public void run() {
                                 // getHealth() / getMaxHealth() * getHealthScale()
                                 double health = scanned.getHealth() / scanned.getMaxHealth() * scanned.getHealthScale();
                                 float hunger = (scanned.getFoodLevel() / 20F) * 100;
-                                player.sendMessage("Name: " + scanned.getName());
-                                player.sendMessage("Has been alive for: " + convertTicksToTime(scanned.getTicksLived()));
-                                player.sendMessage("Health: " + health);
-                                player.sendMessage("Hunger: " + String.format("%.2f", hunger) + "%");
+                                TARDISMessage.send(player, "Name: " + scanned.getName());
+                                if (plugin.isProjRassilonOnServer()) {
+                                    RassilonAPI ra = ((ProjectRassilon) plugin.getPM().getPlugin("ProjectRassilon")).getAPI(plugin);
+                                    if (ra != null) {
+                                        TARDISMessage.send(player, "Timelord: " + ra.getTimelordStatus(scanned));
+                                        TARDISMessage.send(player, "Regen count: " + ra.getRegenCount(scanned));
+                                        TARDISMessage.send(player, "Regenerating: " + ra.getRegenStatus(scanned));
+                                        TARDISMessage.send(player, "Blocking regeneration: " + ra.getRegenBlock(scanned));
+                                    }
+                                }
+                                TARDISMessage.send(player, "Has been alive for: " + convertTicksToTime(scanned.getTicksLived()));
+                                TARDISMessage.send(player, "Health: " + health);
+                                TARDISMessage.send(player, "Hunger: " + String.format("%.2f", hunger) + "%");
                             }
                         }, 40L);
                     }
                 }
-            }
-        }
-    }
-
-    private void playSonicSound(final Player player, long now) {
-        if ((!timeout.containsKey(player.getName()) || timeout.get(player.getName()) < now)) {
-            ItemMeta im = player.getItemInHand().getItemMeta();
-            im.addEnchant(Enchantment.DURABILITY, 1, true);
-            player.getItemInHand().setItemMeta(im);
-            timeout.put(player.getName(), now + 3050);
-            plugin.utils.playTARDISSound(player.getLocation(), player, "sonic_screwdriver");
-            plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
-                @Override
-                public void run() {
-                    ItemStack hand = player.getItemInHand();
-                    if (hand.hasItemMeta()) {
-                        ItemMeta im = hand.getItemMeta();
-                        if (im.hasDisplayName() && im.getDisplayName().equals("Sonic Screwdriver")) {
-                            for (Enchantment e : player.getItemInHand().getEnchantments().keySet()) {
-                                player.getItemInHand().removeEnchantment(e);
-                            }
-                        } else {
-                            removeSonicEnchant(player);
-                        }
-                    } else {
-                        removeSonicEnchant(player);
-                    }
-                }
-            }, 60L);
-        }
-    }
-
-    private void removeSonicEnchant(Player player) {
-        // find the screwdriver in the player's inventory
-        PlayerInventory inv = player.getInventory();
-        ItemStack stack = inv.getItem(inv.first(sonic));
-        if (stack.containsEnchantment(Enchantment.DURABILITY)) {
-            for (Enchantment e : stack.getEnchantments().keySet()) {
-                stack.removeEnchantment(e);
             }
         }
     }
@@ -147,7 +117,7 @@ public class TARDISSonicEntityListener implements Listener {
         return h + gh + m + gm + s + gs;
     }
 
-    @EventHandler
+    @EventHandler(ignoreCancelled = true)
     public void onPlayerInventoryViewClick(InventoryClickEvent event) {
         String title = event.getInventory().getTitle();
         if (title.startsWith("§4") && title.endsWith("'s Inventory")) {

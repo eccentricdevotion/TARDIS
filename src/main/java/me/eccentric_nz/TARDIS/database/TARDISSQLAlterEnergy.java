@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2013 eccentric_nz
+ * Copyright (C) 2014 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -21,8 +21,10 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.artron.TARDISArtronIndicator;
+import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
 
@@ -68,7 +70,7 @@ public class TARDISSQLAlterEnergy implements Runnable {
         StringBuilder sbw = new StringBuilder();
         for (Map.Entry<String, Object> entry : where.entrySet()) {
             sbw.append(entry.getKey()).append(" = ");
-            if (entry.getValue().getClass().equals(String.class)) {
+            if (entry.getValue().getClass().equals(String.class) || entry.getValue().getClass().equals(UUID.class)) {
                 sbw.append("'").append(entry.getValue()).append("' AND ");
             } else {
                 sbw.append(entry.getValue()).append(" AND ");
@@ -87,9 +89,9 @@ public class TARDISSQLAlterEnergy implements Runnable {
                 @Override
                 public void run() {
                     if (id > 0) {
-                        new TARDISArtronIndicator(plugin).showArtronLevel(p, id, true, Math.abs(amount));
+                        new TARDISArtronIndicator(plugin).showArtronLevel(p, id, Math.abs(amount));
                     } else {
-                        p.sendMessage(plugin.pluginName + "You used " + Math.abs(amount) + " Artron Energy.");
+                        TARDISMessage.send(p, plugin.getPluginName() + "You used " + Math.abs(amount) + " Artron Energy.");
                     }
                 }
             }.runTask(plugin);

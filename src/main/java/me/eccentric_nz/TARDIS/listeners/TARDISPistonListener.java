@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2013 eccentric_nz
+ * Copyright (C) 2014 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -34,12 +34,12 @@ public class TARDISPistonListener implements Listener {
         this.plugin = plugin;
     }
 
-    @EventHandler
+    @EventHandler(ignoreCancelled = true)
     public void onPistonExtend(BlockPistonExtendEvent event) {
         Block b = event.getBlock();
-        if (plugin.pistons.contains(b)) {
+        if (plugin.getGeneralKeeper().getDoorPistons().contains(b)) {
             event.setCancelled(true);
-            plugin.pistons.remove(b);
+            plugin.getGeneralKeeper().getDoorPistons().remove(b);
         }
     }
 }

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2013 eccentric_nz
+ * Copyright (C) 2014 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -51,6 +51,7 @@ public class ResultSetDestinations {
     private String bind;
     private int type;
     private boolean submarine;
+    private int slot;
     private final ArrayList<HashMap<String, String>> data = new ArrayList<HashMap<String, String>>();
 
     /**
@@ -97,7 +98,7 @@ public class ResultSetDestinations {
                     if (entry.getValue().getClass().equals(String.class)) {
                         statement.setString(s, entry.getValue().toString());
                     } else {
-                        statement.setInt(s, plugin.utils.parseInt(entry.getValue().toString()));
+                        statement.setInt(s, plugin.getUtils().parseInt(entry.getValue().toString()));
                     }
                     s++;
                 }
@@ -126,6 +127,7 @@ public class ResultSetDestinations {
                     this.submarine = rs.getBoolean("submarine");
                     this.bind = rs.getString("bind");
                     this.type = rs.getInt("type");
+                    this.slot = rs.getInt("slot");
                 }
             } else {
                 return false;
@@ -190,6 +192,10 @@ public class ResultSetDestinations {
 
     public int getType() {
         return type;
+    }
+
+    public int getSlot() {
+        return slot;
     }
 
     public ArrayList<HashMap<String, String>> getData() {

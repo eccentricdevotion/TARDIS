@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2013 eccentric_nz
+ * Copyright (C) 2014 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public Lstainnse as published by
@@ -22,7 +22,9 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.block.Block;
@@ -73,14 +75,14 @@ public class TARDISMakePresetListener implements Listener {
      *
      * @param event a player clicking a block
      */
-    @EventHandler(priority = EventPriority.MONITOR)
+    @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
     public void onAreaInteract(PlayerInteractEvent event) {
         final Player player = event.getPlayer();
-        final String playerNameStr = player.getName();
+        final UUID uuid = player.getUniqueId();
         Block block = event.getClickedBlock();
         if (block != null) {
-            if (plugin.trackPreset.containsKey(playerNameStr)) {
-                String[] split = plugin.trackPreset.get(playerNameStr).split(":");
+            if (plugin.getTrackerKeeper().getTrackPreset().containsKey(uuid)) {
+                String[] split = plugin.getTrackerKeeper().getTrackPreset().get(uuid).split(":");
                 String name = split[0];
                 String bool = split[1];
                 Location block_loc = block.getLocation();
@@ -88,7 +90,7 @@ public class TARDISMakePresetListener implements Listener {
                 int fx = block_loc.getBlockX();
                 int fy = block_loc.getBlockY();
                 int fz = block_loc.getBlockZ();
-                player.sendMessage(plugin.pluginName + "Scanning 3 x 3 x 4 area...");
+                TARDISMessage.send(player, plugin.getPluginName() + "Scanning 3 x 3 x 4 area...");
                 StringBuilder sb_id = new StringBuilder("[");
                 StringBuilder sb_data = new StringBuilder("[");
                 StringBuilder sb_stain_id = new StringBuilder("[");
@@ -119,7 +121,7 @@ public class TARDISMakePresetListener implements Listener {
                                 sb_glass_data.append(data);
                             } else {
                                 sb_stain_id.append(95);
-                                byte colour = plugin.lookup.getStain().get(id);
+                                byte colour = plugin.getBuildKeeper().getStainedGlassLookup().getStain().get(id);
                                 if (colour == -1) {
                                     // use the same data as the original block
                                     colour = data;
@@ -138,7 +140,7 @@ public class TARDISMakePresetListener implements Listener {
                                 sb_glass_data.append(data).append(",");
                             } else {
                                 sb_stain_id.append(95).append(",");
-                                byte colour = plugin.lookup.getStain().get(id);
+                                byte colour = plugin.getBuildKeeper().getStainedGlassLookup().getStain().get(id);
                                 if (colour == -1) {
                                     // use the same data as the original block
                                     colour = data;
@@ -228,8 +230,8 @@ public class TARDISMakePresetListener implements Listener {
                 } catch (IOException e) {
                     plugin.debug("Could not create and write to " + filename + "! " + e.getMessage());
                 }
-                plugin.trackPreset.remove(playerNameStr);
-                player.sendMessage(plugin.pluginName + "Scanning complete! " + filename + " written to the plugins/TARDIS folder.");
+                plugin.getTrackerKeeper().getTrackPreset().remove(uuid);
+                TARDISMessage.send(player, plugin.getPluginName() + "Scanning complete! " + filename + " written to the plugins/TARDIS folder.");
             }
         }
     }

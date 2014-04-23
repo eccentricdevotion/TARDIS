@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2013 eccentric_nz
+ * Copyright (C) 2014 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -23,9 +23,11 @@ import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.achievement.TARDISAchievementFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
+import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import me.eccentric_nz.tardishorsespeed.TardisHorseSpeed;
 import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.OfflinePlayer;
 import org.bukkit.World;
 import org.bukkit.entity.Chicken;
 import org.bukkit.entity.Cow;
@@ -86,11 +88,11 @@ public class TARDISFarmer {
      */
     @SuppressWarnings("deprecation")
     public List<TARDISMob> farmAnimals(Location l, COMPASS d, int id, final Player p, String to, String from) {
-        if (plugin.pm.isPluginEnabled("Multiverse-Inventories")) {
-            boolean canfarm = plugin.tmic.checkMVI(from, to);
+        if (plugin.getPM().isPluginEnabled("Multiverse-Inventories")) {
+            boolean canfarm = plugin.getTMIChecker().checkMVI(from, to);
             if (!canfarm) {
-                p.sendMessage(plugin.pluginName + "You cannot farm mobs from this world.");
-                plugin.trackFarming.remove(p.getName());
+                TARDISMessage.send(p, plugin.getPluginName() + "You cannot farm mobs from this world.");
+                plugin.getTrackerKeeper().getTrackFarming().remove(p.getUniqueId());
                 return null;
             }
         }
@@ -113,18 +115,18 @@ public class TARDISFarmer {
         // spawn an entity at this location so we can get nearby entities - an egg will do
         World w = l.getWorld();
         Entity ent = w.spawnEntity(l, EntityType.EGG);
-        List<Entity> mobs = ent.getNearbyEntities(3.5D, 3.5D, 3.5D);
+        List<Entity> mobs = ent.getNearbyEntities(3.75D, 3.75D, 3.75D);
         if (mobs.size() > 0) {
             List<TARDISMob> old_macd_had_a_chicken = new ArrayList<TARDISMob>();
             List<TARDISMob> old_macd_had_a_cow = new ArrayList<TARDISMob>();
-            List<TARDISMob> old_macd_had_a_pig = new ArrayList<TARDISMob>();
+            List<TARDISPig> old_macd_had_a_pig = new ArrayList<TARDISPig>();
             List<TARDISMob> old_macd_had_a_sheep = new ArrayList<TARDISMob>();
             List<TARDISMob> old_macd_had_a_mooshroom = new ArrayList<TARDISMob>();
             List<TARDISHorse> old_macd_had_a_horse = new ArrayList<TARDISHorse>();
             List<TARDISVillager> old_macd_had_a_villager = new ArrayList<TARDISVillager>();
             // are we doing an achievement?
             TARDISAchievementFactory taf = null;
-            if (plugin.getAchivementConfig().getBoolean("farm.enabled")) {
+            if (plugin.getAchievementConfig().getBoolean("farm.enabled")) {
                 taf = new TARDISAchievementFactory(plugin, p, "farm", 5);
             }
             // count total farm mobs
@@ -148,6 +150,7 @@ public class TARDISFarmer {
                             TARDISMob tmchk = new TARDISMob();
                             tmchk.setAge(((Chicken) e).getAge());
                             tmchk.setBaby(!((Chicken) e).isAdult());
+                            tmchk.setName(((LivingEntity) e).getCustomName());
                             old_macd_had_a_chicken.add(tmchk);
                             if (!farm.isEmpty() || (farm.isEmpty() && plugin.getConfig().getBoolean("allow.spawn_eggs"))) {
                                 e.remove();
@@ -161,6 +164,7 @@ public class TARDISFarmer {
                             TARDISMob tmcow = new TARDISMob();
                             tmcow.setAge(((Cow) e).getAge());
                             tmcow.setBaby(!((Cow) e).isAdult());
+                            tmcow.setName(((LivingEntity) e).getCustomName());
                             old_macd_had_a_cow.add(tmcow);
                             if (!farm.isEmpty() || (farm.isEmpty() && plugin.getConfig().getBoolean("allow.spawn_eggs"))) {
                                 e.remove();
@@ -177,7 +181,8 @@ public class TARDISFarmer {
                             horse.eject();
                             // don't farm other player's tamed horses
                             if (brokenin.isTamed()) {
-                                if (brokenin.getOwner() != null && !brokenin.getOwner().getName().equals(p.getName())) {
+                                Player owner = (Player) brokenin.getOwner();
+                                if (owner != null && !owner.getUniqueId().equals(p.getUniqueId())) {
                                     break;
                                 }
                             }
@@ -197,11 +202,12 @@ public class TARDISFarmer {
                             if (horse.isCarryingChest()) {
                                 tmhor.setHasChest(true);
                             }
+                            tmhor.setName(((LivingEntity) horse).getCustomName());
                             tmhor.setHorseInventory(horse.getInventory().getContents());
                             tmhor.setDomesticity(horse.getDomestication());
                             tmhor.setJumpStrength(horse.getJumpStrength());
-                            if (plugin.pm.isPluginEnabled("TardisHorseSpeed")) {
-                                TardisHorseSpeed ths = (TardisHorseSpeed) plugin.pm.getPlugin("TardisHorseSpeed");
+                            if (plugin.isHorseSpeedOnServer()) {
+                                TardisHorseSpeed ths = (TardisHorseSpeed) plugin.getPM().getPlugin("TARDISHorseSpeed");
                                 double speed = ths.getHorseSpeed(horse);
                                 tmhor.setSpeed(speed);
                             }
@@ -223,9 +229,11 @@ public class TARDISFarmer {
                             horsetotal++;
                             break;
                         case PIG:
-                            TARDISMob tmpig = new TARDISMob();
+                            TARDISPig tmpig = new TARDISPig();
                             tmpig.setAge(((Pig) e).getAge());
                             tmpig.setBaby(!((Pig) e).isAdult());
+                            tmpig.setName(((LivingEntity) e).getCustomName());
+                            tmpig.setSaddled(((Pig) e).hasSaddle());
                             // eject any passengers
                             ((Pig) e).eject();
                             old_macd_had_a_pig.add(tmpig);
@@ -242,6 +250,7 @@ public class TARDISFarmer {
                             tmshp.setAge(((Sheep) e).getAge());
                             tmshp.setBaby(!((Sheep) e).isAdult());
                             tmshp.setColour(((Sheep) e).getColor());
+                            tmshp.setName(((LivingEntity) e).getCustomName());
                             old_macd_had_a_sheep.add(tmshp);
                             if (!farm.isEmpty() || (farm.isEmpty() && plugin.getConfig().getBoolean("allow.spawn_eggs"))) {
                                 e.remove();
@@ -255,6 +264,7 @@ public class TARDISFarmer {
                             TARDISMob tmshr = new TARDISMob();
                             tmshr.setAge(((MushroomCow) e).getAge());
                             tmshr.setBaby(!((MushroomCow) e).isAdult());
+                            tmshr.setName(((LivingEntity) e).getCustomName());
                             old_macd_had_a_mooshroom.add(tmshr);
                             if (!farm.isEmpty() || (farm.isEmpty() && plugin.getConfig().getBoolean("allow.spawn_eggs"))) {
                                 e.remove();
@@ -271,6 +281,7 @@ public class TARDISFarmer {
                             tv.setAge(v.getAge());
                             tv.setHealth(v.getHealth());
                             tv.setBaby(!v.isAdult());
+                            tv.setName(((LivingEntity) v).getCustomName());
                             old_macd_had_a_villager.add(tv);
                             if (!village.isEmpty() || (village.isEmpty() && plugin.getConfig().getBoolean("allow.spawn_eggs"))) {
                                 e.remove();
@@ -280,13 +291,10 @@ public class TARDISFarmer {
                         case WOLF:
                         case OCELOT:
                             Tameable tamed = (Tameable) e;
-                            if (tamed.isTamed() && tamed.getOwner().getName().equals(p.getName())) {
+                            if (tamed.isTamed() && ((OfflinePlayer) tamed.getOwner()).getUniqueId().equals(p.getUniqueId())) {
                                 TARDISMob pet = new TARDISMob();
                                 pet.setType(e.getType());
-                                String pet_name = ((LivingEntity) e).getCustomName();
-                                if (pet_name != null) {
-                                    pet.setName(pet_name);
-                                }
+                                pet.setName(((LivingEntity) e).getCustomName());
                                 double health;
                                 if (e.getType().equals(EntityType.WOLF)) {
                                     pet.setAge(((Wolf) e).getAge());
@@ -315,22 +323,27 @@ public class TARDISFarmer {
                     // get location of farm room
                     String[] data = farm.split(":");
                     World world = plugin.getServer().getWorld(data[0]);
-                    int x = plugin.utils.parseInt(data[1]);
-                    int y = plugin.utils.parseInt(data[2]) + 1;
-                    int z = plugin.utils.parseInt(data[3]);
+                    int x = plugin.getUtils().parseInt(data[1]);
+                    int y = plugin.getUtils().parseInt(data[2]) + 1;
+                    int z = plugin.getUtils().parseInt(data[3]);
                     if (old_macd_had_a_chicken.size() > 0) {
                         Location chicken_pen = new Location(world, x + 3, y, z - 3);
                         while (!world.getChunkAt(chicken_pen).isLoaded()) {
                             world.getChunkAt(chicken_pen).load();
                         }
                         for (TARDISMob e : old_macd_had_a_chicken) {
-                            plugin.myspawn = true;
+                            plugin.setMySpawn(true);
                             Entity chicken = world.spawnEntity(chicken_pen, EntityType.CHICKEN);
                             Chicken pecker = (Chicken) chicken;
                             pecker.setAge(e.getAge());
                             if (e.isBaby()) {
                                 pecker.setBaby();
                             }
+                            String name = e.getName();
+                            if (name != null && !name.isEmpty()) {
+                                pecker.setCustomName(name);
+                            }
+                            pecker.setRemoveWhenFarAway(false);
                         }
                     }
                     if (old_macd_had_a_cow.size() > 0) {
@@ -339,13 +352,18 @@ public class TARDISFarmer {
                             world.getChunkAt(cow_pen).load();
                         }
                         for (TARDISMob e : old_macd_had_a_cow) {
-                            plugin.myspawn = true;
+                            plugin.setMySpawn(true);
                             Entity cow = world.spawnEntity(cow_pen, EntityType.COW);
                             Cow moo = (Cow) cow;
                             moo.setAge(e.getAge());
                             if (e.isBaby()) {
                                 moo.setBaby();
                             }
+                            String name = e.getName();
+                            if (name != null && !name.isEmpty()) {
+                                moo.setCustomName(name);
+                            }
+                            moo.setRemoveWhenFarAway(false);
                         }
                     }
                     if (old_macd_had_a_pig.size() > 0) {
@@ -353,14 +371,20 @@ public class TARDISFarmer {
                         while (!world.getChunkAt(pig_pen).isLoaded()) {
                             world.getChunkAt(pig_pen).load();
                         }
-                        for (TARDISMob e : old_macd_had_a_pig) {
-                            plugin.myspawn = true;
+                        for (TARDISPig e : old_macd_had_a_pig) {
+                            plugin.setMySpawn(true);
                             Entity pig = world.spawnEntity(pig_pen, EntityType.PIG);
                             Pig oinker = (Pig) pig;
                             oinker.setAge(e.getAge());
                             if (e.isBaby()) {
                                 oinker.setBaby();
                             }
+                            String name = e.getName();
+                            if (name != null && !name.isEmpty()) {
+                                oinker.setCustomName(name);
+                            }
+                            oinker.setSaddle(e.isSaddled());
+                            oinker.setRemoveWhenFarAway(false);
                         }
                     }
                     if (old_macd_had_a_sheep.size() > 0) {
@@ -369,7 +393,7 @@ public class TARDISFarmer {
                             world.getChunkAt(sheep_pen).load();
                         }
                         for (TARDISMob e : old_macd_had_a_sheep) {
-                            plugin.myspawn = true;
+                            plugin.setMySpawn(true);
                             Entity sheep = world.spawnEntity(sheep_pen, EntityType.SHEEP);
                             Sheep baa = (Sheep) sheep;
                             baa.setAge(e.getAge());
@@ -377,6 +401,11 @@ public class TARDISFarmer {
                             if (e.isBaby()) {
                                 baa.setBaby();
                             }
+                            String name = e.getName();
+                            if (name != null && !name.isEmpty()) {
+                                baa.setCustomName(name);
+                            }
+                            baa.setRemoveWhenFarAway(false);
                         }
                     }
                     if (old_macd_had_a_mooshroom.size() > 0) {
@@ -385,13 +414,18 @@ public class TARDISFarmer {
                             world.getChunkAt(cow_pen).load();
                         }
                         for (TARDISMob e : old_macd_had_a_mooshroom) {
-                            plugin.myspawn = true;
+                            plugin.setMySpawn(true);
                             Entity mooshroom = world.spawnEntity(cow_pen, EntityType.MUSHROOM_COW);
                             MushroomCow fungi = (MushroomCow) mooshroom;
                             fungi.setAge(e.getAge());
                             if (e.isBaby()) {
                                 fungi.setBaby();
                             }
+                            String name = e.getName();
+                            if (name != null && !name.isEmpty()) {
+                                fungi.setCustomName(name);
+                            }
+                            fungi.setRemoveWhenFarAway(false);
                         }
                     }
                 } else {
@@ -420,23 +454,23 @@ public class TARDISFarmer {
                         }
                         p.updateInventory();
                     } else if (farmtotal > 0) {
-                        p.sendMessage(plugin.pluginName + "You need to grow a farm room before you can farm mobs!");
+                        TARDISMessage.send(p, plugin.getPluginName() + "You need to grow a farm room before you can farm mobs!");
                     }
                 }
                 if (!stable.isEmpty()) {
                     // get location of stable room
                     String[] data = stable.split(":");
                     World world = plugin.getServer().getWorld(data[0]);
-                    int x = plugin.utils.parseInt(data[1]);
-                    int y = plugin.utils.parseInt(data[2]) + 1;
-                    int z = plugin.utils.parseInt(data[3]);
+                    int x = plugin.getUtils().parseInt(data[1]);
+                    int y = plugin.getUtils().parseInt(data[2]) + 1;
+                    int z = plugin.getUtils().parseInt(data[3]);
                     if (old_macd_had_a_horse.size() > 0) {
                         Location horse_pen = new Location(world, x + 0.5F, y, z + 0.5F);
                         while (!world.getChunkAt(horse_pen).isLoaded()) {
                             world.getChunkAt(horse_pen).load();
                         }
                         for (TARDISHorse e : old_macd_had_a_horse) {
-                            plugin.myspawn = true;
+                            plugin.setMySpawn(true);
                             Entity horse = world.spawnEntity(horse_pen, EntityType.HORSE);
                             Horse equine = (Horse) horse;
                             equine.setAge(e.getAge());
@@ -447,6 +481,10 @@ public class TARDISFarmer {
                             equine.setVariant(e.getHorseVariant());
                             equine.setColor(e.getHorseColour());
                             equine.setStyle(e.getHorseStyle());
+                            String name = e.getName();
+                            if (name != null && !name.isEmpty()) {
+                                equine.setCustomName(name);
+                            }
                             Tameable tamed = (Tameable) equine;
                             if (e.isTamed()) {
                                 tamed.setTamed(true);
@@ -477,10 +515,11 @@ public class TARDISFarmer {
                                 pinv.addItem(leash);
                                 p.updateInventory();
                             }
-                            if (plugin.pm.isPluginEnabled("TardisHorseSpeed")) {
-                                TardisHorseSpeed ths = (TardisHorseSpeed) plugin.pm.getPlugin("TardisHorseSpeed");
+                            if (plugin.isHorseSpeedOnServer()) {
+                                TardisHorseSpeed ths = (TardisHorseSpeed) plugin.getPM().getPlugin("TARDISHorseSpeed");
                                 ths.setHorseSpeed(equine, e.getSpeed());
                             }
+                            equine.setRemoveWhenFarAway(false);
                         }
                     }
                 } else {
@@ -492,23 +531,23 @@ public class TARDISFarmer {
                             p.updateInventory();
                         }
                     } else if (horsetotal > 0) {
-                        p.sendMessage(plugin.pluginName + "You need to grow a stable room before you can farm horses!");
+                        TARDISMessage.send(p, plugin.getPluginName() + "You need to grow a stable room before you can farm horses!");
                     }
                 }
                 if (!village.isEmpty()) {
                     // get location of village room
                     String[] data = village.split(":");
                     World world = plugin.getServer().getWorld(data[0]);
-                    int x = plugin.utils.parseInt(data[1]);
-                    int y = plugin.utils.parseInt(data[2]) + 1;
-                    int z = plugin.utils.parseInt(data[3]);
+                    int x = plugin.getUtils().parseInt(data[1]);
+                    int y = plugin.getUtils().parseInt(data[2]) + 1;
+                    int z = plugin.getUtils().parseInt(data[3]);
                     if (old_macd_had_a_villager.size() > 0) {
                         Location v_room = new Location(world, x + 0.5F, y, z + 0.5F);
                         while (!world.getChunkAt(v_room).isLoaded()) {
                             world.getChunkAt(v_room).load();
                         }
                         for (TARDISVillager e : old_macd_had_a_villager) {
-                            plugin.myspawn = true;
+                            plugin.setMySpawn(true);
                             Entity vill = world.spawnEntity(v_room, EntityType.VILLAGER);
                             Villager npc = (Villager) vill;
                             npc.setProfession(e.getProfession());
@@ -517,6 +556,11 @@ public class TARDISFarmer {
                                 npc.setBaby();
                             }
                             npc.setHealth(e.getHealth());
+                            String name = e.getName();
+                            if (name != null && !name.isEmpty()) {
+                                npc.setCustomName(name);
+                            }
+                            npc.setRemoveWhenFarAway(false);
                         }
                     }
                 } else {
@@ -528,7 +572,7 @@ public class TARDISFarmer {
                             p.updateInventory();
                         }
                     } else if (villagertotal > 0) {
-                        p.sendMessage(plugin.pluginName + "You need to grow a village room before you can farm villagers!");
+                        TARDISMessage.send(p, plugin.getPluginName() + "You need to grow a village room before you can farm villagers!");
                     }
                 }
             }
@@ -537,7 +581,7 @@ public class TARDISFarmer {
         plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
             @Override
             public void run() {
-                plugin.trackFarming.remove(p.getName());
+                plugin.getTrackerKeeper().getTrackFarming().remove(p.getUniqueId());
             }
         }, 20L);
         return old_macd_had_a_pet;
@@ -548,39 +592,34 @@ public class TARDISFarmer {
         Entity ent = (Entity) p;
         List<Entity> mobs = ent.getNearbyEntities(3.5D, 3.5D, 3.5D);
         for (Entity e : mobs) {
-            switch (e.getType()) {
-                case WOLF:
-                case OCELOT:
-                    Tameable tamed = (Tameable) e;
-                    if (tamed.isTamed() && tamed.getOwner().getName().equals(p.getName())) {
-                        TARDISMob pet = new TARDISMob();
-                        pet.setType(e.getType());
-                        String pet_name = ((LivingEntity) e).getCustomName();
-                        if (pet_name != null) {
-                            pet.setName(pet_name);
-                        }
-                        double health;
-                        if (e.getType().equals(EntityType.WOLF)) {
-                            pet.setAge(((Wolf) e).getAge());
-                            pet.setSitting(((Wolf) e).isSitting());
-                            pet.setColour(((Wolf) e).getCollarColor());
-                            health = (((Wolf) e).getHealth() > 8D) ? 8D : ((Wolf) e).getHealth();
-                            pet.setHealth(health);
-                            pet.setBaby(!((Wolf) e).isAdult());
-                        } else {
-                            pet.setAge(((Ocelot) e).getAge());
-                            pet.setSitting(((Ocelot) e).isSitting());
-                            pet.setCatType(((Ocelot) e).getCatType());
-                            health = (((Ocelot) e).getHealth() > 8D) ? 8D : ((Ocelot) e).getHealth();
-                            pet.setHealth(health);
-                            pet.setBaby(!((Ocelot) e).isAdult());
-                        }
-                        old_macd_had_a_pet.add(pet);
-                        e.remove();
+            if (e.getType().equals(EntityType.OCELOT) || e.getType().equals(EntityType.WOLF)) {
+                Tameable tamed = (Tameable) e;
+                if (tamed.isTamed() && ((OfflinePlayer) tamed.getOwner()).getUniqueId().equals(p.getUniqueId())) {
+                    TARDISMob pet = new TARDISMob();
+                    pet.setType(e.getType());
+                    String pet_name = ((LivingEntity) e).getCustomName();
+                    if (pet_name != null) {
+                        pet.setName(pet_name);
                     }
-                    break;
-                default:
-                    break;
+                    double health;
+                    if (e.getType().equals(EntityType.WOLF)) {
+                        pet.setAge(((Wolf) e).getAge());
+                        pet.setSitting(((Wolf) e).isSitting());
+                        pet.setColour(((Wolf) e).getCollarColor());
+                        health = (((Wolf) e).getHealth() > 8D) ? 8D : ((Wolf) e).getHealth();
+                        pet.setHealth(health);
+                        pet.setBaby(!((Wolf) e).isAdult());
+                    } else {
+                        pet.setAge(((Ocelot) e).getAge());
+                        pet.setSitting(((Ocelot) e).isSitting());
+                        pet.setCatType(((Ocelot) e).getCatType());
+                        health = (((Ocelot) e).getHealth() > 8D) ? 8D : ((Ocelot) e).getHealth();
+                        pet.setHealth(health);
+                        pet.setBaby(!((Ocelot) e).isAdult());
+                    }
+                    old_macd_had_a_pet.add(pet);
+                    e.remove();
+                }
             }
         }
         return old_macd_had_a_pet;

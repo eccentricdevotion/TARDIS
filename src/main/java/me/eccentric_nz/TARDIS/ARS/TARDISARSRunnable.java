@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2013 eccentric_nz
+ * Copyright (C) 2014 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -17,6 +17,7 @@
 package me.eccentric_nz.TARDIS.ARS;
 
 import java.util.HashMap;
+import java.util.Map;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetPlayerPrefs;
@@ -24,6 +25,7 @@ import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
 import me.eccentric_nz.TARDIS.rooms.TARDISRoomData;
 import me.eccentric_nz.TARDIS.rooms.TARDISRoomRunnable;
+import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.entity.Player;
@@ -36,28 +38,30 @@ public class TARDISARSRunnable implements Runnable {
 
     private final TARDIS plugin;
     private final TARDISARSSlot slot;
-    private final TARDISARS room;
+    private final ARS room;
     private final Player p;
     private int id;
+    private final int tardis_id;
 
-    public TARDISARSRunnable(TARDIS plugin, TARDISARSSlot slot, TARDISARS room, Player p) {
+    public TARDISARSRunnable(TARDIS plugin, TARDISARSSlot slot, ARS room, Player p, int tardis_id) {
         this.plugin = plugin;
         this.slot = slot;
         this.room = room;
         this.p = p;
+        this.tardis_id = tardis_id;
     }
 
     @Override
     public void run() {
-        String whichroom = room.toString();
+        String whichroom = room.getActualName();
         HashMap<String, Object> where = new HashMap<String, Object>();
-        where.put("owner", p.getName());
+        where.put("uuid", p.getUniqueId().toString());
         ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);
         if (rs.resultSet()) {
             String[] chunk_data = rs.getChunk().split(":");
             World w = plugin.getServer().getWorld(chunk_data[0]);
             HashMap<String, Object> wherepp = new HashMap<String, Object>();
-            wherepp.put("player", p.getName());
+            wherepp.put("uuid", p.getUniqueId().toString());
             ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, wherepp);
             TARDISRoomData roomData = new TARDISRoomData();
             roomData.setTardis_id(rs.getTardis_id());
@@ -65,10 +69,10 @@ public class TARDISARSRunnable implements Runnable {
             int middle_id, floor_id;
             byte middle_data, floor_data;
             if (rsp.resultSet()) {
-                int[] wid_data = plugin.tw.blocks.get(rsp.getWall());
+                int[] wid_data = plugin.getTardisWalls().blocks.get(rsp.getWall());
                 middle_id = wid_data[0];
                 middle_data = (byte) wid_data[1];
-                int[] fid_data = plugin.tw.blocks.get(rsp.getFloor());
+                int[] fid_data = plugin.getTardisWalls().blocks.get(rsp.getFloor());
                 floor_id = fid_data[0];
                 floor_data = (byte) fid_data[1];
             } else {
@@ -84,32 +88,79 @@ public class TARDISARSRunnable implements Runnable {
             // get start locations
             Location l = new Location(w, slot.getX(), slot.getY(), slot.getZ());
             roomData.setDirection(COMPASS.SOUTH);
-            short[] dimensions = plugin.room_dimensions.get(whichroom);
+            short[] dimensions = plugin.getBuildKeeper().getRoomDimensions().get(whichroom);
             // set y offset - this needs to be how many blocks above ground 0 of the 16x16x16 chunk the room starts
-            l.setY(l.getY() + TARDISARS.valueOf(whichroom).getOffset());
+            l.setY(l.getY() + room.getOffset());
             roomData.setLocation(l);
             roomData.setX(1);
             roomData.setZ(1);
             roomData.setRoom(whichroom);
-            roomData.setSchematic(plugin.room_schematics.get(whichroom));
+            roomData.setSchematic(plugin.getBuildKeeper().getRoomSchematics().get(whichroom));
             roomData.setDimensions(dimensions);
             long delay = Math.round(20 / plugin.getConfig().getDouble("growth.room_speed"));
             TARDISRoomRunnable runnable = new TARDISRoomRunnable(plugin, roomData, p);
             int taskID = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, runnable, delay, delay);
             runnable.setTask(taskID);
+            QueryFactory qf = new QueryFactory(plugin);
+            // remove blocks from condenser table if rooms_require_blocks is true
+            if (plugin.getConfig().getBoolean("growth.rooms_require_blocks")) {
+                HashMap<Integer, Integer> roomBlockCounts = getRoomBlockCounts(whichroom, p.getUniqueId().toString());
+                for (Map.Entry<Integer, Integer> entry : roomBlockCounts.entrySet()) {
+                    HashMap<String, Object> wherec = new HashMap<String, Object>();
+                    wherec.put("tardis_id", tardis_id);
+                    wherec.put("block_data", entry.getKey());
+                    qf.alterCondenserBlockCount(entry.getValue(), wherec);
+                }
+            }
             // take their energy!
             int amount = plugin.getRoomsConfig().getInt("rooms." + whichroom + ".cost");
-            QueryFactory qf = new QueryFactory(plugin);
             HashMap<String, Object> set = new HashMap<String, Object>();
-            set.put("owner", p.getName());
+            set.put("uuid", p.getUniqueId().toString());
             qf.alterEnergyLevel("tardis", -amount, set, p);
             if (p.isOnline()) {
-                p.sendMessage(plugin.pluginName + "To cancel growing this [" + whichroom + "] room use the command /tardis abort " + taskID);
+                TARDISMessage.send(p, plugin.getPluginName() + "To cancel growing this [" + whichroom + "] room use the command /tardis abort " + taskID);
             }
         }
     }
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    private HashMap<Integer, Integer> getRoomBlockCounts(String room, String uuid) {
+        HashMap<Integer, Integer> blockIDCount = new HashMap<Integer, Integer>();
+        HashMap<String, Integer> roomBlocks = plugin.getBuildKeeper().getRoomBlockCounts().get(room);
+        String wall = "ORANGE_WOOL";
+        String floor = "LIGHT_GREY_WOOL";
+        HashMap<String, Object> wherepp = new HashMap<String, Object>();
+        boolean hasPrefs = false;
+        wherepp.put("uuid", uuid);
+        ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, wherepp);
+        if (rsp.resultSet()) {
+            hasPrefs = true;
+            wall = rsp.getWall();
+            floor = rsp.getFloor();
+        }
+        for (Map.Entry<String, Integer> entry : roomBlocks.entrySet()) {
+            String[] block_data = entry.getKey().split(":");
+            int bid = plugin.getUtils().parseInt(block_data[0]);
+            String mat;
+            int bdata;
+            if (hasPrefs && block_data.length == 2 && (block_data[1].equals("1") || block_data[1].equals("8"))) {
+                mat = (block_data[1].equals("1")) ? wall : floor;
+                int[] iddata = plugin.getTardisWalls().blocks.get(mat);
+                bdata = iddata[0];
+            } else {
+                bdata = bid;
+            }
+            int tmp = Math.round((entry.getValue() / 100.0F) * plugin.getConfig().getInt("growth.rooms_condenser_percent"));
+            int required = (tmp > 0) ? tmp : 1;
+            if (blockIDCount.containsKey(bdata)) {
+                blockIDCount.put(bdata, (blockIDCount.get(bdata) + required));
+            } else {
+                blockIDCount.put(bdata, required);
+            }
+        }
+        return blockIDCount;
     }
 }

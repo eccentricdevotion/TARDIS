@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2013 eccentric_nz
+ * Copyright (C) 2014 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -62,7 +62,7 @@ public class TARDISSchematic {
                 }
             }
         } catch (IOException io) {
-            TARDIS.plugin.console.sendMessage(TARDIS.plugin.pluginName + "Could not read csv file");
+            TARDIS.plugin.getConsole().sendMessage(TARDIS.plugin.getPluginName() + "Could not read csv file");
         } finally {
             try {
                 if (bufRdr != null) {

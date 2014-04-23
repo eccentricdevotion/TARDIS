@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2013 eccentric_nz
+ * Copyright (C) 2014 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -22,6 +22,7 @@ import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import me.eccentric_nz.TARDIS.database.ResultSetTravellers;
 import me.eccentric_nz.TARDIS.enumeration.MESSAGE;
+import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 
@@ -40,36 +41,46 @@ public class TARDISOccupyCommand {
     public boolean toggleOccupancy(Player player) {
         if (player.hasPermission("tardis.timetravel")) {
             HashMap<String, Object> where = new HashMap<String, Object>();
-            where.put("owner", player.getName());
+            where.put("uuid", player.getUniqueId().toString());
             ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);
             if (!rs.resultSet()) {
-                player.sendMessage(plugin.pluginName + " You must be the Timelord of the TARDIS to use this command!");
+                TARDISMessage.send(player, plugin.getPluginName() + MESSAGE.NOT_A_TIMELORD.getText());
                 return false;
             }
             int id = rs.getTardis_id();
             HashMap<String, Object> wheret = new HashMap<String, Object>();
             //wheret.put("tardis_id", id);
-            wheret.put("player", player.getName());
+            wheret.put("uuid", player.getUniqueId().toString());
             ResultSetTravellers rst = new ResultSetTravellers(plugin, wheret, false);
             String occupied;
             QueryFactory qf = new QueryFactory(plugin);
             if (rst.resultSet()) {
-                HashMap<String, Object> whered = new HashMap<String, Object>();
-                //whered.put("tardis_id", id);
-                whered.put("player", player.getName());
-                qf.doDelete("travellers", whered);
-                occupied = ChatColor.RED + "UNOCCUPIED";
+                // only if they're not in the TARDIS world
+                if (!plugin.getUtils().inTARDISWorld(player)) {
+                    HashMap<String, Object> whered = new HashMap<String, Object>();
+                    whered.put("uuid", player.getUniqueId().toString());
+                    qf.doDelete("travellers", whered);
+                    occupied = ChatColor.RED + "UNOCCUPIED";
+                } else {
+                    TARDISMessage.send(player, plugin.getPluginName() + "You cannot set occupancy to UNOCCUPIED unless you are outside the TARDIS!");
+                    return true;
+                }
             } else {
-                HashMap<String, Object> wherei = new HashMap<String, Object>();
-                wherei.put("tardis_id", id);
-                wherei.put("player", player.getName());
-                qf.doInsert("travellers", wherei);
-                occupied = ChatColor.GREEN + "OCCUPIED";
+                if (plugin.getUtils().inTARDISWorld(player)) {
+                    HashMap<String, Object> wherei = new HashMap<String, Object>();
+                    wherei.put("tardis_id", id);
+                    wherei.put("uuid", player.getUniqueId().toString());
+                    qf.doInsert("travellers", wherei);
+                    occupied = ChatColor.GREEN + "OCCUPIED";
+                } else {
+                    TARDISMessage.send(player, plugin.getPluginName() + "You cannot set occupancy to OCCUPIED unless you are inside the TARDIS!");
+                    return true;
+                }
             }
-            player.sendMessage(plugin.pluginName + " TARDIS occupation was set to: " + occupied);
+            TARDISMessage.send(player, plugin.getPluginName() + " TARDIS occupation was set to: " + occupied);
             return true;
         } else {
-            player.sendMessage(plugin.pluginName + MESSAGE.NO_PERMS.getText());
+            TARDISMessage.send(player, plugin.getPluginName() + MESSAGE.NO_PERMS.getText());
             return false;
         }
     }

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2013 eccentric_nz
+ * Copyright (C) 2014 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,7 +18,9 @@ package me.eccentric_nz.TARDIS.listeners;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.builders.TARDISMaterialisationData;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetAreas;
 import me.eccentric_nz.TARDIS.database.ResultSetCurrentLocation;
@@ -58,35 +60,35 @@ public class TARDISTimeLordDeathListener implements Listener {
      *
      * @param event a player dying
      */
-    @EventHandler(priority = EventPriority.MONITOR)
+    @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
     public void onTimeLordDeath(PlayerDeathEvent event) {
         if (plugin.getConfig().getBoolean("allow.autonomous")) {
-            final Player player = event.getEntity();
+            Player player = event.getEntity();
             if (player.hasPermission("tardis.autonomous")) {
-                String playerNameStr = player.getName();
+                UUID playerUUID = player.getUniqueId();
                 HashMap<String, Object> where = new HashMap<String, Object>();
-                where.put("owner", playerNameStr);
+                where.put("uuid", playerUUID.toString());
                 ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);
                 // are they a time lord?
                 if (rs.resultSet()) {
-                    final int id = rs.getTardis_id();
-                    final String eps = rs.getEps();
-                    final String creeper = rs.getCreeper();
+                    int id = rs.getTardis_id();
+                    String eps = rs.getEps();
+                    String creeper = rs.getCreeper();
                     HashMap<String, Object> wherep = new HashMap<String, Object>();
-                    wherep.put("player", playerNameStr);
+                    wherep.put("uuid", playerUUID.toString());
                     ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, wherep);
                     if (rsp.resultSet()) {
                         // do they have the autonomous circuit on?
                         if (rsp.isAutoOn()) {
                             Location death_loc = player.getLocation();
-                            if (plugin.pm.isPluginEnabled("Citizens") && plugin.getConfig().getBoolean("allow.emergency_npc") && rsp.isEpsOn()) {
+                            if (plugin.getPM().isPluginEnabled("Citizens") && plugin.getConfig().getBoolean("allow.emergency_npc") && rsp.isEpsOn()) {
                                 // check if there are players in the TARDIS
                                 HashMap<String, Object> wherev = new HashMap<String, Object>();
                                 wherev.put("tardis_id", id);
                                 ResultSetTravellers rst = new ResultSetTravellers(plugin, wherev, true);
                                 if (rst.resultSet()) {
-                                    List data = rst.getData();
-                                    if (data.size() > 0 && !data.contains(playerNameStr)) {
+                                    List<UUID> data = rst.getData();
+                                    if (data.size() > 0 && !data.contains(playerUUID)) {
                                         // schedule the NPC to appear
                                         TARDISEPSRunnable EPS_runnable = new TARDISEPSRunnable(plugin, rsp.getEpsMessage(), player, data, id, eps, creeper);
                                         plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, EPS_runnable, 20L);
@@ -115,7 +117,7 @@ public class TARDISTimeLordDeathListener implements Listener {
                             World hw = rsh.getWorld();
                             Location home_loc = new Location(hw, rsh.getX(), rsh.getY(), rsh.getZ());
                             COMPASS hd = rsh.getDirection();
-                            final boolean sub = rsh.isSubmarine();
+                            boolean sub = rsh.isSubmarine();
                             Location goto_loc;
                             boolean going_home = false;
                             // if home world is NOT the death world
@@ -146,25 +148,44 @@ public class TARDISTimeLordDeathListener implements Listener {
                             // if the TARDIS is already at the home location, do nothing
                             if (!compareCurrentToHome(rsc, rsh)) {
                                 QueryFactory qf = new QueryFactory(plugin);
-                                final boolean cham = rs.isChamele_on();
-                                final COMPASS fd = (going_home) ? hd : cd;
+                                boolean cham = rs.isChamele_on();
+                                COMPASS fd = (going_home) ? hd : cd;
                                 // destroy police box
+                                final TARDISMaterialisationData pdd = new TARDISMaterialisationData();
+                                pdd.setChameleon(cham);
+                                pdd.setDirection(cd);
+                                pdd.setLocation(sl);
+                                pdd.setDematerialise(plugin.getConfig().getBoolean("police_box.materialise"));
+                                pdd.setPlayer(player);
+                                pdd.setHide(false);
+                                pdd.setOutside(false);
+                                pdd.setSubmarine(rsc.isSubmarine());
+                                pdd.setTardisID(id);
                                 if (!rs.isHidden()) {
-                                    plugin.destroyerP.destroyPreset(sl, cd, id, false, plugin.getConfig().getBoolean("police_box.materialise"), cham, player, rsc.isSubmarine());
+                                    plugin.getPresetDestroyer().destroyPreset(pdd);
                                 } else {
-                                    plugin.destroyerP.removeBlockProtection(id, qf);
+                                    plugin.getPresetDestroyer().removeBlockProtection(id, qf);
                                     HashMap<String, Object> set = new HashMap<String, Object>();
                                     set.put("hidden", 0);
                                     HashMap<String, Object> tid = new HashMap<String, Object>();
                                     tid.put("tardis_id", id);
                                     qf.doUpdate("tardis", set, tid);
                                 }
-                                final Location auto_loc = goto_loc;
+                                final TARDISMaterialisationData pbd = new TARDISMaterialisationData();
+                                pbd.setChameleon(cham);
+                                pbd.setDirection(fd);
+                                pbd.setLocation(goto_loc);
+                                pbd.setMalfunction(false);
+                                pbd.setPlayer(player);
+                                pbd.setRebuild(false);
+                                pbd.setOutside(false);
+                                pbd.setSubmarine(sub);
+                                pbd.setTardisID(id);
                                 plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
                                     @Override
                                     public void run() {
                                         // rebuild police box - needs to be a delay
-                                        plugin.builderP.buildPreset(id, auto_loc, fd, cham, player, false, false, sub);
+                                        plugin.getPresetBuilder().buildPreset(pbd);
                                     }
                                 }, 200L);
                                 // set current
@@ -212,7 +233,7 @@ public class TARDISTimeLordDeathListener implements Listener {
             if (!player.hasPermission("tardis.area." + area) || !player.isPermissionSet("tardis.area." + area)) {
                 return null;
             }
-            l = plugin.ta.getNextSpot(rsa.getArea_name());
+            l = plugin.getTardisArea().getNextSpot(rsa.getArea_name());
         }
         return l;
     }

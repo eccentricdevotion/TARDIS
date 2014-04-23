@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2013 eccentric_nz
+ * Copyright (C) 2014 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -19,12 +19,14 @@ package me.eccentric_nz.TARDIS.listeners;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetDestinations;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import me.eccentric_nz.TARDIS.database.ResultSetTravellers;
 import me.eccentric_nz.TARDIS.enumeration.MESSAGE;
+import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
@@ -68,27 +70,27 @@ public class TARDISBindListener implements Listener {
      *
      * @param event a player clicking a block
      */
-    @EventHandler(priority = EventPriority.MONITOR)
+    @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
     public void onInteract(PlayerInteractEvent event) {
         Block b = event.getClickedBlock();
         if (b != null) {
             Material m = b.getType();
             if (validBlocks.contains(m)) {
                 final Player player = event.getPlayer();
-                String playerNameStr = player.getName();
+                UUID uuid = player.getUniqueId();
                 String l = b.getLocation().toString();
                 HashMap<String, Object> where = new HashMap<String, Object>();
-                if (plugin.trackBinder.containsKey(playerNameStr)) {
-                    where.put("dest_id", plugin.trackBinder.get(playerNameStr));
-                    plugin.trackBinder.remove(playerNameStr);
+                if (plugin.getTrackerKeeper().getTrackBinder().containsKey(uuid)) {
+                    where.put("dest_id", plugin.getTrackerKeeper().getTrackBinder().get(uuid));
+                    plugin.getTrackerKeeper().getTrackBinder().remove(uuid);
                     HashMap<String, Object> set = new HashMap<String, Object>();
                     set.put("bind", l);
                     QueryFactory qf = new QueryFactory(plugin);
                     qf.doUpdate("destinations", set, where);
-                    player.sendMessage(plugin.pluginName + "Save successfully bound to " + m.toString());
+                    TARDISMessage.send(player, plugin.getPluginName() + "Save successfully bound to " + m.toString());
                 } else {
                     // is player travelling in TARDIS
-                    where.put("player", playerNameStr);
+                    where.put("uuid", player.getUniqueId().toString());
                     ResultSetTravellers rst = new ResultSetTravellers(plugin, where, false);
                     if (rst.resultSet()) {
                         int id = rst.getTardis_id();
@@ -96,18 +98,18 @@ public class TARDISBindListener implements Listener {
                         wheret.put("tardis_id", id);
                         ResultSetTardis rs = new ResultSetTardis(plugin, wheret, "", false);
                         if (rs.resultSet()) {
-                            String owner = rs.getOwner();
-                            if (rs.isIso_on() && !player.getName().equals(owner) && !event.isCancelled()) {
-                                player.sendMessage(plugin.pluginName + "The isomorphic security lockout has been engaged... Hands off the controls!");
-                                return;
-                            }
+                            UUID ownerUUID = rs.getUuid();
                             HashMap<String, Object> whereb = new HashMap<String, Object>();
                             whereb.put("tardis_id", id);
                             whereb.put("bind", l);
                             ResultSetDestinations rsd = new ResultSetDestinations(plugin, whereb, false);
                             if (rsd.resultSet()) {
+                                if (rs.isIso_on() && !player.getUniqueId().equals(ownerUUID) && !event.isCancelled()) {
+                                    TARDISMessage.send(player, plugin.getPluginName() + MESSAGE.ISO_ON.getText());
+                                    return;
+                                }
                                 if (!rs.isHandbrake_on()) {
-                                    player.sendMessage(plugin.pluginName + ChatColor.RED + MESSAGE.NOT_WHILE_TRAVELLING.getText());
+                                    TARDISMessage.send(player, plugin.getPluginName() + ChatColor.RED + MESSAGE.NOT_WHILE_TRAVELLING.getText());
                                     return;
                                 }
                                 // what bind type is it?
@@ -117,36 +119,36 @@ public class TARDISBindListener implements Listener {
                                     case 1: // command
                                         if (dest_name.equals("rebuild")) {
                                             player.performCommand("tardis rebuild");
-                                            plugin.console.sendMessage(player.getName() + " issued server command: /tardis rebuild");
+                                            plugin.getConsole().sendMessage(player.getName() + " issued server command: /tardis rebuild");
                                         }
                                         if (dest_name.equals("hide")) {
                                             player.performCommand("tardis hide");
-                                            plugin.console.sendMessage(player.getName() + " issued server command: /tardis hide");
+                                            plugin.getConsole().sendMessage(player.getName() + " issued server command: /tardis hide");
                                         }
                                         if (dest_name.equals("home")) {
                                             player.performCommand("tardistravel home");
-                                            plugin.console.sendMessage(player.getName() + " issued server command: /tardistravel home");
+                                            plugin.getConsole().sendMessage(player.getName() + " issued server command: /tardistravel home");
                                         }
                                         if (dest_name.equals("cave")) {
                                             player.performCommand("tardistravel cave");
-                                            plugin.console.sendMessage(player.getName() + " issued server command: /tardistravel cave");
+                                            plugin.getConsole().sendMessage(player.getName() + " issued server command: /tardistravel cave");
                                         }
                                         break;
                                     case 2: // player
                                         player.performCommand("tardistravel " + dest_name);
-                                        plugin.console.sendMessage(player.getName() + " issued server command: /tardistravel " + dest_name);
+                                        plugin.getConsole().sendMessage(player.getName() + " issued server command: /tardistravel " + dest_name);
                                         break;
                                     case 3: // area
                                         player.performCommand("tardistravel area " + dest_name);
-                                        plugin.console.sendMessage(player.getName() + " issued server command: /tardistravel area " + dest_name);
+                                        plugin.getConsole().sendMessage(player.getName() + " issued server command: /tardistravel area " + dest_name);
                                         break;
                                     case 4: // biome
                                         player.performCommand("tardistravel biome " + dest_name);
-                                        plugin.console.sendMessage(player.getName() + " issued server command: /tardistravel biome " + dest_name);
+                                        plugin.getConsole().sendMessage(player.getName() + " issued server command: /tardistravel biome " + dest_name);
                                         break;
                                     default: // (0) save
                                         player.performCommand("tardistravel dest " + dest_name);
-                                        plugin.console.sendMessage(player.getName() + " issued server command: /tardistravel dest " + dest_name);
+                                        plugin.getConsole().sendMessage(player.getName() + " issued server command: /tardistravel dest " + dest_name);
                                 }
                             }
                         }

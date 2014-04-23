@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2013 eccentric_nz
+ * Copyright (C) 2014 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,6 +18,7 @@ package me.eccentric_nz.TARDIS.listeners;
 
 import java.util.HashMap;
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -63,7 +64,7 @@ public class TARDISAnvilListener implements Listener {
                 if (is != null && is.hasItemMeta()) {
                     ItemMeta im = is.getItemMeta();
                     if (im.hasDisplayName() && disallow.containsKey(im.getDisplayName()) && is.getType() == disallow.get(im.getDisplayName())) {
-                        player.sendMessage(plugin.pluginName + "You cannot name the item that!");
+                        TARDISMessage.send(player, plugin.getPluginName() + "You cannot name the item that!");
                         event.setCancelled(true);
                     }
                 }

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2013 eccentric_nz
+ * Copyright (C) 2014 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -17,12 +17,16 @@
 package me.eccentric_nz.TARDIS.listeners;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.advanced.TARDISCircuitChecker;
 import me.eccentric_nz.TARDIS.chameleon.TARDISChameleonInventory;
 import me.eccentric_nz.TARDIS.database.ResultSetTardisSign;
+import me.eccentric_nz.TARDIS.database.ResultSetTravellers;
+import me.eccentric_nz.TARDIS.enumeration.MESSAGE;
 import me.eccentric_nz.TARDIS.travel.TARDISSaveSignInventory;
+import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
@@ -63,7 +67,7 @@ public class TARDISSignListener implements Listener {
      *
      * @param event the player clicking a sign
      */
-    @EventHandler(priority = EventPriority.MONITOR)
+    @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
     public void onSignInteract(PlayerInteractEvent event) {
         final Player player = event.getPlayer();
         Block block = event.getClickedBlock();
@@ -72,6 +76,14 @@ public class TARDISSignListener implements Listener {
             Action action = event.getAction();
             // only proceed if they are right-clicking a valid sign block!
             if (action == Action.RIGHT_CLICK_BLOCK && validSigns.contains(blockType)) {
+                // check they are in the TARDIS
+                // get the TARDIS the player is in
+                HashMap<String, Object> wheres = new HashMap<String, Object>();
+                wheres.put("uuid", player.getUniqueId().toString());
+                ResultSetTravellers rst = new ResultSetTravellers(plugin, wheres, false);
+                if (!rst.resultSet()) {
+                    return;
+                }
                 // get clicked block location
                 Location b = block.getLocation();
                 String bw = b.getWorld().getName();
@@ -83,8 +95,8 @@ public class TARDISSignListener implements Listener {
                 ResultSetTardisSign rs = new ResultSetTardisSign(plugin, signloc);
                 if (rs.resultSet()) {
                     event.setCancelled(true);
-                    if (rs.isIso_on() && !player.getName().equals(rs.getOwner()) && event.isCancelled() && !player.hasPermission("tardis.skeletonkey")) {
-                        player.sendMessage(plugin.pluginName + "The isomorphic security lockout has been engaged... Hands off the controls!");
+                    if (rs.isIso_on() && !player.getUniqueId().equals(rs.getUuid()) && event.isCancelled() && !player.hasPermission("tardis.skeletonkey")) {
+                        TARDISMessage.send(player, plugin.getPluginName() + MESSAGE.ISO_ON.getText());
                         return;
                     }
                     String line1;
@@ -101,7 +113,7 @@ public class TARDISSignListener implements Listener {
                     }
                     if (line1.equals("Chameleon")) {
                         if (tcc != null && !tcc.hasChameleon()) {
-                            player.sendMessage(plugin.pluginName + "The Chameleon Circuit is missing from the console!");
+                            TARDISMessage.send(player, plugin.getPluginName() + "The Chameleon Circuit is missing from the console!");
                             return;
                         }
                         // open Chameleon Circuit GUI
@@ -112,7 +124,7 @@ public class TARDISSignListener implements Listener {
                     } else {
                         if (event.getAction().equals(Action.RIGHT_CLICK_BLOCK)) {
                             if (tcc != null && !tcc.hasMemory()) {
-                                player.sendMessage(plugin.pluginName + "The Memory Circuit is missing from the console!");
+                                TARDISMessage.send(player, plugin.getPluginName() + MESSAGE.NO_MEM_CIRCUIT.getText());
                                 return;
                             }
                             TARDISSaveSignInventory sst = new TARDISSaveSignInventory(plugin, rs.getTardis_id());

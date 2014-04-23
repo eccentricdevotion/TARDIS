@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2013 eccentric_nz
+ * Copyright (C) 2014 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -45,7 +45,7 @@ public class TARDISConfigCommand {
 
     public boolean showConfigOptions(CommandSender sender, String[] args) {
         String section = args[1].toLowerCase();
-        sender.sendMessage(plugin.pluginName + ChatColor.RED + " Here are the current plugin options!");
+        sender.sendMessage(plugin.getPluginName() + ChatColor.RED + " Here are the current plugin options!");
         if (sections.contains(section)) {
             sender.sendMessage(ChatColor.AQUA + section + ":" + ChatColor.RESET);
             Set<String> options = plugin.getConfig().getConfigurationSection(section).getKeys(false);

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2013 eccentric_nz
+ * Copyright (C) 2014 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -72,56 +72,40 @@ public class TARDISInteriorSchematicReader {
             short width = (Short) getChildTag(tagCollection, "Width", ShortTag.class).getValue();
             short height = (Short) getChildTag(tagCollection, "Height", ShortTag.class).getValue();
             short length = (Short) getChildTag(tagCollection, "Length", ShortTag.class).getValue();
+            short[] shorty = new short[3];
+            shorty[0] = height;
+            shorty[1] = width;
+            shorty[2] = length;
             switch (s) {
                 case ARS:
-                    plugin.arsdimensions[0] = height;
-                    plugin.arsdimensions[1] = width;
-                    plugin.arsdimensions[2] = length;
+                    plugin.getBuildKeeper().setARSDimensions(shorty);
                     break;
                 case BUDGET:
-                    plugin.budgetdimensions[0] = height;
-                    plugin.budgetdimensions[1] = width;
-                    plugin.budgetdimensions[2] = length;
+                    plugin.getBuildKeeper().setBudgetDimensions(shorty);
                     break;
                 case BIGGER:
-                    plugin.biggerdimensions[0] = height;
-                    plugin.biggerdimensions[1] = width;
-                    plugin.biggerdimensions[2] = length;
+                    plugin.getBuildKeeper().setBiggerDimensions(shorty);
                     break;
                 case DELUXE:
-                    plugin.deluxedimensions[0] = height;
-                    plugin.deluxedimensions[1] = width;
-                    plugin.deluxedimensions[2] = length;
+                    plugin.getBuildKeeper().setDeluxeDimensions(shorty);
                     break;
                 case ELEVENTH:
-                    plugin.eleventhdimensions[0] = height;
-                    plugin.eleventhdimensions[1] = width;
-                    plugin.eleventhdimensions[2] = length;
+                    plugin.getBuildKeeper().setEleventhDimensions(shorty);
                     break;
                 case REDSTONE:
-                    plugin.redstonedimensions[0] = height;
-                    plugin.redstonedimensions[1] = width;
-                    plugin.redstonedimensions[2] = length;
+                    plugin.getBuildKeeper().setRedstoneDimensions(shorty);
                     break;
                 case STEAMPUNK:
-                    plugin.steampunkdimensions[0] = height;
-                    plugin.steampunkdimensions[1] = width;
-                    plugin.steampunkdimensions[2] = length;
+                    plugin.getBuildKeeper().setSteampunkDimensions(shorty);
                     break;
                 case PLANK:
-                    plugin.plankdimensions[0] = height;
-                    plugin.plankdimensions[1] = width;
-                    plugin.plankdimensions[2] = length;
+                    plugin.getBuildKeeper().setPlankDimensions(shorty);
                     break;
                 case TOM:
-                    plugin.tomdimensions[0] = height;
-                    plugin.tomdimensions[1] = width;
-                    plugin.tomdimensions[2] = length;
+                    plugin.getBuildKeeper().setTomDimensions(shorty);
                     break;
                 case CUSTOM:
-                    plugin.customdimensions[0] = height;
-                    plugin.customdimensions[1] = width;
-                    plugin.customdimensions[2] = length;
+                    plugin.getBuildKeeper().setCustomDimensions(shorty);
                     break;
             }
 
@@ -166,10 +150,10 @@ public class TARDISInteriorSchematicReader {
                 }
                 bw.close();
             } catch (IOException io) {
-                plugin.console.sendMessage(plugin.pluginName + "Could not save the TARDIS csv file!");
+                plugin.getConsole().sendMessage(plugin.getPluginName() + "Could not save the TARDIS csv file!");
             }
         } catch (IOException e) {
-            plugin.console.sendMessage(plugin.pluginName + "Schematic read error: " + e);
+            plugin.getConsole().sendMessage(plugin.getPluginName() + "Schematic read error: " + e);
         } finally {
             if (fis != null) {
                 try {

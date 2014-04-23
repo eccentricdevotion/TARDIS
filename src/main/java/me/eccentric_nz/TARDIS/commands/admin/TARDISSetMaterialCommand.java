@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2013 eccentric_nz
+ * Copyright (C) 2014 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -21,6 +21,7 @@ import java.io.IOException;
 import java.util.Arrays;
 import java.util.Locale;
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.enumeration.MESSAGE;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.command.CommandSender;
@@ -41,12 +42,12 @@ public class TARDISSetMaterialCommand {
         String first = (section.isEmpty()) ? args[0].toLowerCase() : section + "." + args[0].toLowerCase();
         String setMaterial = args[1].toUpperCase(Locale.ENGLISH);
         if (!checkMaterial(setMaterial)) {
-            sender.sendMessage(plugin.pluginName + ChatColor.RED + "That is not a valid Material! Try checking http://jd.bukkit.org/apidocs/org/bukkit/Material.html");
+            sender.sendMessage(plugin.getPluginName() + ChatColor.RED + MESSAGE.NOT_VALID_MATERIAL.getText());
             return false;
         } else {
             plugin.getConfig().set(first, setMaterial);
             plugin.saveConfig();
-            sender.sendMessage(plugin.pluginName + "The config was updated!");
+            sender.sendMessage(plugin.getPluginName() + MESSAGE.CONFIG_UPDATED.getText());
             return true;
         }
     }
@@ -55,7 +56,7 @@ public class TARDISSetMaterialCommand {
         String first = args[0].toLowerCase();
         String setMaterial = args[1].toUpperCase(Locale.ENGLISH);
         if (!checkMaterial(setMaterial)) {
-            sender.sendMessage(plugin.pluginName + ChatColor.RED + "That is not a valid Material! Try checking http://jd.bukkit.org/apidocs/org/bukkit/Material.html");
+            sender.sendMessage(plugin.getPluginName() + ChatColor.RED + MESSAGE.NOT_VALID_MATERIAL.getText());
             return false;
         } else {
             plugin.getArtronConfig().set(first, setMaterial);
@@ -64,7 +65,7 @@ public class TARDISSetMaterialCommand {
             } catch (IOException io) {
                 plugin.debug("Could not save artron.yml, " + io);
             }
-            sender.sendMessage(plugin.pluginName + "The config was updated!");
+            sender.sendMessage(plugin.getPluginName() + MESSAGE.CONFIG_UPDATED.getText());
             return true;
         }
     }

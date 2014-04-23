@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2013 eccentric_nz
+ * Copyright (C) 2014 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -37,15 +37,15 @@ public class TARDISWorldResetListener implements Listener {
         this.plugin = plugin;
     }
 
-    @EventHandler(priority = EventPriority.MONITOR)
+    @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
     public void onMVAReset(MVAResetEvent event) {
         String world = event.getWorld();
-        plugin.trackReset.add(world);
+        plugin.getTrackerKeeper().getTrackReset().add(world);
     }
 
-    @EventHandler(priority = EventPriority.MONITOR)
+    @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
     public void onMVAResetFinished(MVAResetFinishedEvent event) {
         String world = event.getWorld();
-        plugin.trackReset.remove(world);
+        plugin.getTrackerKeeper().getTrackReset().remove(world);
     }
 }

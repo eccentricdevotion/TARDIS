@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2013 eccentric_nz
+ * Copyright (C) 2014 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -16,13 +16,13 @@
  */
 package me.eccentric_nz.TARDIS.listeners;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
+import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.ResultSetDoors;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
+import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import org.bukkit.Chunk;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -34,7 +34,6 @@ import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Vehicle;
 import org.bukkit.entity.minecart.StorageMinecart;
 import org.bukkit.event.EventHandler;
-import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.vehicle.VehicleBlockCollisionEvent;
 import org.bukkit.inventory.ItemStack;
@@ -47,22 +46,12 @@ import org.bukkit.util.Vector;
 public class TARDISMinecartListener implements Listener {
 
     private final TARDIS plugin;
-    private final List<Integer> rails = new ArrayList<Integer>();
-    private final List<BlockFace> faces = new ArrayList<BlockFace>();
 
     public TARDISMinecartListener(TARDIS plugin) {
         this.plugin = plugin;
-        this.rails.add(27);
-        this.rails.add(28);
-        this.rails.add(66);
-        this.rails.add(157);
-        this.faces.add(BlockFace.NORTH);
-        this.faces.add(BlockFace.SOUTH);
-        this.faces.add(BlockFace.EAST);
-        this.faces.add(BlockFace.WEST);
     }
 
-    @EventHandler(priority = EventPriority.NORMAL)
+    @EventHandler(ignoreCancelled = true)
     public void onVehicleBlockCollision(VehicleBlockCollisionEvent event) {
         if (event.getVehicle() instanceof StorageMinecart) {
             Block b = event.getBlock();
@@ -71,7 +60,7 @@ public class TARDISMinecartListener implements Listener {
                 Vehicle minecart = event.getVehicle();
                 ItemStack[] inv = ((StorageMinecart) minecart).getInventory().getContents();
                 String[] data = null;
-                String p = "";
+                UUID playerUUID = null;
                 int id = 0;
                 COMPASS d = COMPASS.SOUTH;
                 Location block_loc = b.getLocation();
@@ -95,10 +84,10 @@ public class TARDISMinecartListener implements Listener {
                             HashMap<String, Object> whereid = new HashMap<String, Object>();
                             whereid.put("tardis_id", id);
                             ResultSetTardis rs = new ResultSetTardis(plugin, whereid, "", false);
-                            if (rs.resultSet() && !plugin.trackMinecart.contains(Integer.valueOf(id))) {
+                            if (rs.resultSet() && !plugin.getTrackerKeeper().getTrackMinecart().contains(id)) {
                                 data = rs.getRail().split(":");
-                                p = rs.getOwner();
-                                plugin.trackMinecart.add(Integer.valueOf(id));
+                                playerUUID = rs.getUuid();
+                                plugin.getTrackerKeeper().getTrackMinecart().add(id);
                             }
                         }
                         break;
@@ -108,7 +97,7 @@ public class TARDISMinecartListener implements Listener {
                         wherep.put("rail", db_loc);
                         ResultSetTardis rsp = new ResultSetTardis(plugin, wherep, "", false);
                         if (rsp.resultSet()) {
-                            p = rsp.getOwner();
+                            playerUUID = rsp.getUuid();
                             id = rsp.getTardis_id();
                             HashMap<String, Object> whereinner = new HashMap<String, Object>();
                             whereinner.put("tardis_id", id);
@@ -124,7 +113,7 @@ public class TARDISMinecartListener implements Listener {
                             if (rspb.resultSet()) {
                                 data = rspb.getDoor_location().split(":");
                                 d = switchDirection(rspb.getDoor_direction());
-                                plugin.trackMinecart.remove(Integer.valueOf(id));
+                                plugin.getTrackerKeeper().getTrackMinecart().remove(Integer.valueOf(id));
                             }
                         }
                         break;
@@ -132,19 +121,19 @@ public class TARDISMinecartListener implements Listener {
                         break;
                 }
                 if (data != null) {
-                    if (plugin.pm.isPluginEnabled("Multiverse-Inventories")) {
-                        if (!plugin.tmic.checkMVI(bw, data[0])) {
-                            if (!p.isEmpty() && plugin.getServer().getPlayer(p).isOnline()) {
-                                plugin.getServer().getPlayer(p).sendMessage(plugin.pluginName + "You cannot use minecarts from " + bw + " to " + data[0] + ".");
+                    if (plugin.getPM().isPluginEnabled("Multiverse-Inventories")) {
+                        if (!plugin.getTMIChecker().checkMVI(bw, data[0])) {
+                            if (playerUUID != null && plugin.getServer().getPlayer(playerUUID).isOnline()) {
+                                TARDISMessage.send(plugin.getServer().getPlayer(playerUUID), plugin.getPluginName() + "You cannot use minecarts from " + bw + " to " + data[0] + ".");
                             }
-                            plugin.trackMinecart.remove(Integer.valueOf(id));
+                            plugin.getTrackerKeeper().getTrackMinecart().remove(Integer.valueOf(id));
                             return;
                         }
                     }
                     World w = plugin.getServer().getWorld(data[0]);
-                    int x = plugin.utils.parseInt(data[1]);
-                    int y = plugin.utils.parseInt(data[2]);
-                    int z = plugin.utils.parseInt(data[3]);
+                    int x = plugin.getUtils().parseInt(data[1]);
+                    int y = plugin.getUtils().parseInt(data[2]);
+                    int z = plugin.getUtils().parseInt(data[3]);
                     Location in_out = new Location(w, x, y, z);
                     if (mat.equals(Material.IRON_DOOR_BLOCK)) {
                         d = getDirection(in_out);
@@ -169,7 +158,6 @@ public class TARDISMinecartListener implements Listener {
             thisChunk.load();
         }
         minecart.remove();
-        //trackLocation.setY(trackLocation.getY() - 1);
         Entity e = trackLocation.getWorld().spawnEntity(trackLocation, EntityType.MINECART_CHEST);
         StorageMinecart smc = (StorageMinecart) e;
         smc.getInventory().setContents(inv);
@@ -193,7 +181,7 @@ public class TARDISMinecartListener implements Listener {
     public Location findTrack(Location center) {
         Block centerBlock = center.getBlock();
         Block block;
-        for (BlockFace f : faces) {
+        for (BlockFace f : plugin.getGeneralKeeper().getFaces()) {
             block = centerBlock.getRelative(f);
             if (isTrack(block)) {
                 return block.getLocation();
@@ -202,20 +190,18 @@ public class TARDISMinecartListener implements Listener {
         return null;
     }
 
-    @SuppressWarnings("deprecation")
     public boolean isTrack(Block block) {
-        return isTrack(block.getTypeId());
+        return isTrack(block.getType());
     }
 
-    public boolean isTrack(int id) {
-        return (rails.contains(Integer.valueOf(id)));
+    public boolean isTrack(Material mat) {
+        return (plugin.getGeneralKeeper().getRails().contains(mat));
     }
 
     private COMPASS getDirection(Location l) {
-//        COMPASS d = COMPASS.SOUTH;
         Block centerBlock = l.getBlock();
         Block block;
-        for (BlockFace f : faces) {
+        for (BlockFace f : plugin.getGeneralKeeper().getFaces()) {
             block = centerBlock.getRelative(f);
             if (isTrack(block)) {
                 return COMPASS.valueOf(f.toString());

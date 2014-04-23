@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2013 eccentric_nz
+ * Copyright (C) 2014 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -22,6 +22,7 @@ import me.eccentric_nz.TARDIS.achievement.TARDISAchievementFactory;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetPlayerPrefs;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
+import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import org.bukkit.entity.Creeper;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
@@ -60,32 +61,32 @@ public class TARDISCreeperDeathListener implements Listener {
             if (c.isPowered()) {
                 Player p = c.getKiller();
                 if (p != null) {
-                    String killer = p.getName();
+                    String killerUUID = p.getUniqueId().toString();
                     // is the killer a timelord?
                     HashMap<String, Object> where = new HashMap<String, Object>();
-                    where.put("owner", killer);
+                    where.put("uuid", killerUUID);
                     ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);
                     if (rs.resultSet()) {
                         HashMap<String, Object> wherep = new HashMap<String, Object>();
-                        wherep.put("player", killer);
+                        wherep.put("uuid", killerUUID);
                         ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, wherep);
                         QueryFactory qf = new QueryFactory(plugin);
                         HashMap<String, Object> set = new HashMap<String, Object>();
                         int amount = plugin.getArtronConfig().getInt("creeper_recharge");
                         if (!rsp.resultSet()) {
-                            set.put("player", killer);
+                            set.put("uuid", killerUUID);
                             set.put("artron_level", amount);
                             qf.doInsert("player_prefs", set);
                         } else {
                             int level = rsp.getArtronLevel() + amount;
                             HashMap<String, Object> wherea = new HashMap<String, Object>();
-                            wherea.put("player", killer);
+                            wherea.put("uuid", killerUUID);
                             set.put("artron_level", level);
                             qf.doUpdate("player_prefs", set, wherea);
                         }
-                        p.sendMessage(plugin.pluginName + "You received " + amount + " Artron Energy for killing a charged creeper!");
+                        TARDISMessage.send(p, plugin.getPluginName() + "You received " + amount + " Artron Energy for killing a charged creeper!");
                         // are we doing an achievement?
-                        if (plugin.getAchivementConfig().getBoolean("kill.enabled")) {
+                        if (plugin.getAchievementConfig().getBoolean("kill.enabled")) {
                             TARDISAchievementFactory taf = new TARDISAchievementFactory(plugin, p, "kill", 1);
                             taf.doAchievement(1);
                         }

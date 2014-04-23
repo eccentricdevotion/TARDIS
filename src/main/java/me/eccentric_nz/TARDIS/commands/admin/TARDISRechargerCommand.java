@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2013 eccentric_nz
+ * Copyright (C) 2014 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -19,6 +19,8 @@ package me.eccentric_nz.TARDIS.commands.admin;
 import java.util.HashMap;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.ResultSetTravellers;
+import me.eccentric_nz.TARDIS.enumeration.MESSAGE;
+import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
@@ -43,20 +45,20 @@ public class TARDISRechargerCommand {
             player = (Player) sender;
         }
         if (player == null) {
-            sender.sendMessage(plugin.pluginName + "You can't set a recharger location from the console!");
+            sender.sendMessage(plugin.getPluginName() + "You can't set a recharger location from the console!");
             return true;
         }
-        Block b = player.getTargetBlock(plugin.tardisCommand.transparent, 50);
+        Block b = player.getTargetBlock(plugin.getGeneralKeeper().getTransparent(), 50);
         if (!b.getType().equals(Material.BEACON)) {
-            player.sendMessage(plugin.pluginName + "You must be targeting a BEACON block!");
+            TARDISMessage.send(player, plugin.getPluginName() + "You must be targeting a BEACON block!");
             return true;
         }
         // make sure they're not targeting their inner TARDIS beacon
         HashMap<String, Object> where = new HashMap<String, Object>();
-        where.put("player", player.getName());
+        where.put("uuid", player.getUniqueId().toString());
         ResultSetTravellers rst = new ResultSetTravellers(plugin, where, false);
         if (rst.resultSet()) {
-            player.sendMessage(plugin.pluginName + "You cannot use the TARDIS BEACON to recharge!");
+            TARDISMessage.send(player, plugin.getPluginName() + "You cannot use the TARDIS BEACON to recharge!");
             return true;
         }
         Location l = b.getLocation();
@@ -65,17 +67,17 @@ public class TARDISRechargerCommand {
         plugin.getConfig().set("rechargers." + args[1] + ".y", l.getBlockY());
         plugin.getConfig().set("rechargers." + args[1] + ".z", l.getBlockZ());
         // if worldguard is on the server, protect a 3x3x3 area around beacon
-        if (plugin.worldGuardOnServer && plugin.getConfig().getBoolean("preferences.use_worldguard")) {
+        if (plugin.isWorldGuardOnServer() && plugin.getConfig().getBoolean("preferences.use_worldguard")) {
             int minx = l.getBlockX() - 2;
             int maxx = l.getBlockX() + 2;
             int minz = l.getBlockZ() - 2;
             int maxz = l.getBlockZ() + 2;
             Location wg1 = new Location(l.getWorld(), minx, l.getBlockY() + 2, minz);
             Location wg2 = new Location(l.getWorld(), maxx, l.getBlockY() - 2, maxz);
-            plugin.wgutils.addRechargerProtection(player, args[1], wg1, wg2);
+            plugin.getWorldGuardUtils().addRechargerProtection(player, args[1], wg1, wg2);
         }
         plugin.saveConfig();
-        sender.sendMessage(plugin.pluginName + "The config was updated!");
+        sender.sendMessage(plugin.getPluginName() + MESSAGE.CONFIG_UPDATED.getText());
         return true;
     }
 }

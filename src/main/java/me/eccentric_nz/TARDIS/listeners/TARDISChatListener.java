@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2013 eccentric_nz
+ * Copyright (C) 2014 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -16,8 +16,10 @@
  */
 package me.eccentric_nz.TARDIS.listeners;
 
+import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.travel.TARDISRescue;
+import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -47,25 +49,27 @@ public class TARDISChatListener implements Listener {
      *
      * @param event a player typing in chat
      */
-    @EventHandler(priority = EventPriority.MONITOR)
+    @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
     public void onChat(AsyncPlayerChatEvent event) {
-        final String saved = event.getPlayer().getName();
+        final UUID saved = event.getPlayer().getUniqueId();
         String chat = event.getMessage();
         if (chat != null && chat.equalsIgnoreCase("tardis rescue accept")) {
-            if (plugin.trackChat.containsKey(saved)) {
-                final Player rescuer = plugin.getServer().getPlayer(plugin.trackChat.get(saved));
+            if (plugin.getTrackerKeeper().getTrackChat().containsKey(saved)) {
+                final Player rescuer = plugin.getServer().getPlayer(plugin.getTrackerKeeper().getTrackChat().get(saved));
                 final TARDISRescue res = new TARDISRescue(plugin);
-                plugin.trackChat.remove(saved);
+                plugin.getTrackerKeeper().getTrackChat().remove(saved);
                 // delay it so the chat appears before the message
+                final String player = event.getPlayer().getName();
                 plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
                     @Override
                     public void run() {
-                        res.tryRescue(rescuer, saved);
-                        rescuer.sendMessage(plugin.pluginName + "Release the handbrake to start rescuing " + saved);
+                        if (res.tryRescue(rescuer, saved)) {
+                            TARDISMessage.send(rescuer, plugin.getPluginName() + "Release the handbrake to start rescuing " + player);
+                        }
                     }
                 }, 2L);
             } else {
-                event.getPlayer().sendMessage(plugin.pluginName + "Rescue request timed out! You need to respond within 60 seconds.");
+                TARDISMessage.send(event.getPlayer(), plugin.getPluginName() + "Rescue request timed out! You need to respond within 60 seconds.");
             }
         }
     }

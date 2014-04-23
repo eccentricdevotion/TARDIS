@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2013 eccentric_nz
+ * Copyright (C) 2014 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -21,6 +21,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
 
 /**
@@ -57,7 +58,7 @@ public class TARDISSQLDelete implements Runnable {
         StringBuilder sbw = new StringBuilder();
         for (Map.Entry<String, Object> entry : where.entrySet()) {
             sbw.append(entry.getKey()).append(" = ");
-            if (entry.getValue().getClass().equals(String.class)) {
+            if (entry.getValue().getClass().equals(String.class) || entry.getValue().getClass().equals(UUID.class)) {
                 sbw.append("'").append(entry.getValue()).append("' AND ");
             } else {
                 sbw.append(entry.getValue()).append(" AND ");

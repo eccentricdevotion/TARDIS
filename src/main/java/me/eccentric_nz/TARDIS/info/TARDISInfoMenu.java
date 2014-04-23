@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2013 eccentric_nz
+ * Copyright (C) 2014 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -66,7 +66,7 @@ public enum TARDISInfoMenu {
     S_CIRCUIT("TIS|Components|Stattenheim Circuit", "COMPONENTS", "S"),
     S_CIRCUIT_INFO("TIS|Components|Stattenheim Circuit|Info", "S_CIRCUIT", "I"),
     S_CIRCUIT_RECIPE("TIS|Components|Stattenheim Circuit|Recipe", "S_CIRCUIT", "R"),
-    A_CIRCUIT("TIS|Components|ARS Circuit", "COMPONENTS", "A"),
+    A_CIRCUIT("TIS|Components|Admin Circuit", "COMPONENTS", "A"),
     A_CIRCUIT_INFO("TIS|Components|ARS Circuit|Info", "A_CIRCUIT", "I"),
     A_CIRCUIT_RECIPE("TIS|Components|ARS Circuit|Recipe", "A_CIRCUIT", "R"),
     BIO_CIRCUIT("TIS|Components|Bio-scanner Circuit", "COMPONENTS", "B"),
@@ -81,12 +81,12 @@ public enum TARDISInfoMenu {
     E_CIRCUIT("TIS|Components|Emerald Environment Circuit", "COMPONENTS", "E"),
     E_CIRCUIT_INFO("TIS|Components|Emerald Environment Circuit|Info", "E_CIRCUIT", "I"),
     E_CIRCUIT_RECIPE("TIS|Components|Emerald Environment Circuit|Recipe", "E_CIRCUIT", "R"),
-    ARS_CIRCUIT("TIS|Components|Architectural Recofiguration Circuit", "COMPONENTS", "h"),
+    ARS_CIRCUIT("TIS|Components|Architectural Reconfiguration System (ARS) Circuit", "COMPONENTS", "h"),
     ARS_CIRCUIT_INFO("TIS|Components|Emerald Environment Circuit|Info", "ARS_CIRCUIT", "I"),
     ARS_CIRCUIT_RECIPE("TIS|Components|Emerald Environment Circuit|Recipe", "ARS_CIRCUIT", "R"),
     CELL("TIS|Items|Artron Storage Cell", "ITEMS", "A"),
-    CELL_INFO("TIS|Items|Artron Storage Cell|Info", "FILTER", "I"),
-    CELL_RECIPE("TIS|Items|Artron Storage Cell|Recipe", "FILTER", "R"),
+    CELL_INFO("TIS|Items|Artron Storage Cell|Info", "CELL", "I"),
+    CELL_RECIPE("TIS|Items|Artron Storage Cell|Recipe", "CELL", "R"),
     FILTER("TIS|Items|Perception Filter", "ITEMS", "F"),
     FILTER_INFO("TIS|Items|Perception Filter|Info", "FILTER", "I"),
     FILTER_RECIPE("TIS|Items|Perception Filter|Recipe", "FILTER", "R"),
@@ -102,12 +102,12 @@ public enum TARDISInfoMenu {
     T_CIRCUIT("TIS|Components|Temporal Circuit", "COMPONENTS", "T"),
     T_CIRCUIT_INFO("TIS|Components|Temporal Circuit|Info", "T_CIRCUIT", "I"),
     T_CIRCUIT_RECIPE("TIS|Components|Temporal Circuit|Recipe", "T_CIRCUIT", "R"),
-    MEM_CIRCUIT("TIS|Components|Memory Circuit", "COMPONENTS", "y"),
-    MEM_CIRCUIT_INFO("TIS|Components|Memory Circuit|Info", "MEM_CIRCUIT", "I"),
-    MEM_CIRCUIT_RECIPE("TIS|Components|Memory Circuit|Recipe", "MEM_CIRCUIT", "R"),
-    SCAN_CIRCUIT("TIS|Components|Scanner Circuit", "COMPONENTS", "n"),
-    SCAN_CIRCUIT_INFO("TIS|Components|Scanner Circuit|Info", "SCAN_CIRCUIT", "I"),
-    SCAN_CIRCUIT_RECIPE("TIS|Components|Scanner Circuit|Recipe", "SCAN_CIRCUIT", "R"),
+    MEMORY_CIRCUIT("TIS|Components|Memory Circuit", "COMPONENTS", "y"),
+    MEMORY_CIRCUIT_INFO("TIS|Components|Memory Circuit|Info", "MEMORY_CIRCUIT", "I"),
+    MEMORY_CIRCUIT_RECIPE("TIS|Components|Memory Circuit|Recipe", "MEMORY_CIRCUIT", "R"),
+    SCANNER_CIRCUIT("TIS|Components|Scanner Circuit", "COMPONENTS", "n"),
+    SCANNER_CIRCUIT_INFO("TIS|Components|Scanner Circuit|Info", "SCANNER_CIRCUIT", "I"),
+    SCANNER_CIRCUIT_RECIPE("TIS|Components|Scanner Circuit|Recipe", "SCANNER_CIRCUIT", "R"),
     DISKS("TIS|TARDIS Disks", "TIS", "D"),
     AREA_DISK("TIS|TARDIS Disks|Area Storage Disk", "DISKS", "A"),
     BLANK("TIS|TARDIS Disks|Blank Storage Disk", "DISKS", "B"),
@@ -119,7 +119,7 @@ public enum TARDISInfoMenu {
     PLAYER_DISK("TIS|TARDIS Disks|Player Storage Disk", "DISKS", "P"),
     PLAYER_DISK_INFO("TIS|TARDIS Disks|Player Storage Disk|Info", "PLAYER_DISK", "I"),
     PLAYER_DISK_RECIPE("TIS|TARDIS Disks|Player Storage Disk|Recipe", "PLAYER_DISK", "R"),
-    PRESET_DISK("TIS|TARDIS Disks|Preset Storage Disk", "DISKS", "R"),
+    PRESET_DISK("TIS|TARDIS Disks|Preset Storage Disk", "DISKS", "r"),
     PRESET_DISK_INFO("TIS|TARDIS Disks|Preset Storage Disk|Info", "PRESET_DISK", "I"),
     PRESET_DISK_RECIPE("TIS|TARDIS Disks|Preset Storage Disk|Recipe", "PRESET_DISK", "R"),
     SAVE_DISK("TIS|TARDIS Disks|Save Storage Disk", "DISKS", "S"),
@@ -241,8 +241,8 @@ public enum TARDISInfoMenu {
     CONSOLE_BLOCKS("TIS|Manual|Console Blocks", "MANUAL", "C"),
     CONSOLE_BLOCKS_2("TIS|Manual|Console Blocks 2", "MANUAL", "o"),
     CONSOLE_ARS("TIS|Manual|Console Blocks|ARS", "CONSOLE_BLOCKS", "A"), //A
-    ADVANCED("TIS|Manual|Console Blocks|Advanced Console", "CONSOLE_BLOCKS", "d"), //r
-    STORAGE("TIS|Manual|Console Blocks|Disk Storage", "CONSOLE_BLOCKS", "S"), //c
+    ADVANCED("TIS|Manual|Console Blocks|Advanced Console", "CONSOLE_BLOCKS", "v"), //v
+    STORAGE("TIS|Manual|Console Blocks|Disk Storage", "CONSOLE_BLOCKS", "S"), //S
     ARTRON("TIS|Manual|Console Blocks|Artron Energy Capacitor", "CONSOLE_BLOCKS", "r"), //r
     BACKDOOR("TIS|Manual|Console Blocks|Backdoor", "CONSOLE_BLOCKS", "B"), //B
     BUTTON("TIS|Manual|Console Blocks|Button", "CONSOLE_BLOCKS", "u"), //u
@@ -252,9 +252,9 @@ public enum TARDISInfoMenu {
     DOOR("TIS|Manual|Console Blocks|Door", "CONSOLE_BLOCKS", "D"), //D
     EPS("TIS|Manual|Console Blocks|EPS", "CONSOLE_BLOCKS", "P"), //P
     CONSOLE_FARM("TIS|Manual|Console Blocks|Farm", "CONSOLE_BLOCKS", "m"), //m
-    HANDBRAKE("TIS|Manual|Console Blocks|Handbrake", "CONSOLE_BLOCKS", "b"), //a
-    INFO("TIS|Manual|Console Blocks|Information System", "CONSOLE_BLOCKS", "I"), //I
-    KEYBOARD("TIS|Manual|Console Blocks|Keyboard", "CONSOLE_BLOCKS", "K"), //K
+    HANDBRAKE("TIS|Manual|Console Blocks|Handbrake", "CONSOLE_BLOCKS", "k"), //k
+    INFO("TIS|Manual|Console Blocks|Information System", "CONSOLE_BLOCKS_2", "I"), //I
+    KEYBOARD("TIS|Manual|Console Blocks|Keyboard", "CONSOLE_BLOCKS_2", "K"), //K
     LIGHT("TIS|Manual|Console Blocks 2|Light", "CONSOLE_BLOCKS_2", "L"), //L
     CONSOLE_RAIL("TIS|Manual|Console Blocks 2|Rails", "CONSOLE_BLOCKS_2", "R"), //R
     SAVE_SIGN("TIS|Manual|Console Blocks 2|Save Sign", "CONSOLE_BLOCKS_2", "S"), //S
@@ -267,7 +267,7 @@ public enum TARDISInfoMenu {
     Y_REPEATER("TIS|Manual|Console Blocks 2|Y Repeater", "CONSOLE_BLOCKS_2", "Y"), //Y
     Z_REPEATER("TIS|Manual|Console Blocks 2|Z Repeater", "CONSOLE_BLOCKS_2", "Z"), //Z
     TARDIS_CONTROLS("TIS|Manual|TARDIS Controls", "MANUAL", "S"),
-    MALFUNCTIONS("TIS|Manual|TARDIS Controls", "TARDIS_CONTROLS", "M"),
+    MALFUNCTIONS("TIS|Manual|TARDIS Controls|Malfunctions", "TARDIS_CONTROLS", "M"),
     ALT_CONTROLS("TIS|Manual|TARDIS Controls|Alternative Controls", "TARDIS_CONTROLS", "l"),;
     private final String name;
     private final String parent;

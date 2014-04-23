@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2013 eccentric_nz
+ * Copyright (C) 2014 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -22,6 +22,7 @@ import java.util.List;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.enumeration.MESSAGE;
 import me.eccentric_nz.TARDIS.rooms.TARDISWallsLookup;
+import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import org.bukkit.DyeColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -86,7 +87,7 @@ public class TARDISCraftListener implements Listener {
      * @param event the player clicking the crafting result slot.
      */
     @SuppressWarnings("deprecation")
-    @EventHandler(priority = EventPriority.MONITOR)
+    @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
     public void onSeedBlockCraft(final InventoryClickEvent event) {
         final Inventory inv = event.getInventory();
         int slot = event.getRawSlot();
@@ -118,7 +119,7 @@ public class TARDISCraftListener implements Listener {
                                         lore.add("Chameleon block: " + DyeColor.getByWoolData(inv.getItem(8).getData().getData()) + " " + m8.toString());
                                         break;
                                     default:
-                                        lore.add("Chameleon block: " + plugin.utils.getWoodType(m8, inv.getItem(8).getData().getData()) + " " + m8.toString());
+                                        lore.add("Chameleon block: " + plugin.getUtils().getWoodType(m8, inv.getItem(8).getData().getData()) + " " + m8.toString());
                                 }
                             } else {
                                 lore.add("Chameleon block: " + m8.toString());
@@ -128,11 +129,11 @@ public class TARDISCraftListener implements Listener {
                             is.setItemMeta(im);
                             Player player = (Player) event.getWhoClicked();
                             if (checkPerms(player, m7)) {
-                                player.sendMessage(plugin.pluginName + "Valid seed block :)");
+                                TARDISMessage.send(player, plugin.getPluginName() + "Valid seed block :)");
                                 inv.setItem(0, is);
                                 player.updateInventory();
                             } else {
-                                player.sendMessage(plugin.pluginName + MESSAGE.NO_PERMS.getText());
+                                TARDISMessage.send(player, plugin.getPluginName() + MESSAGE.NO_PERMS.getText());
                             }
                         }
                     }
@@ -146,7 +147,7 @@ public class TARDISCraftListener implements Listener {
      * TARDIS Seed block.
      *
      * @param inv
-     * @return
+     * @return whether it is a valid seed block
      */
     @SuppressWarnings("deprecation")
     private boolean checkSlots(Inventory inv) {

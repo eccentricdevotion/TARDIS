@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2013 eccentric_nz
+ * Copyright (C) 2014 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -20,6 +20,7 @@ import java.util.HashMap;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
+import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import org.bukkit.entity.Player;
 
 /**
@@ -36,7 +37,7 @@ public class TARDISIsomorphicCommand {
 
     public boolean toggleIsomorphicControls(Player player, String[] args, QueryFactory qf) {
         HashMap<String, Object> where = new HashMap<String, Object>();
-        where.put("owner", player.getName());
+        where.put("uuid", player.getUniqueId().toString());
         ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);
         // does the player have a TARDIS
         if (rs.resultSet()) {
@@ -48,10 +49,10 @@ public class TARDISIsomorphicCommand {
             HashMap<String, Object> wheret = new HashMap<String, Object>();
             wheret.put("tardis_id", id);
             qf.doUpdate("tardis", seti, wheret);
-            player.sendMessage(plugin.pluginName + "Isomorphic controls were turned " + onoff + "!");
+            TARDISMessage.send(player, plugin.getPluginName() + "Isomorphic controls were turned " + onoff + "!");
             return true;
         } else {
-            player.sendMessage(plugin.pluginName + "You don't have a TARDIS yet!");
+            TARDISMessage.send(player, plugin.getPluginName() + "You don't have a TARDIS yet!");
             return true;
         }
     }

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2013 eccentric_nz
+ * Copyright (C) 2014 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -31,9 +31,9 @@ public class TARDISWorldBorderChecker {
 
     private WorldBorder border;
 
-    public TARDISWorldBorderChecker(TARDIS plugin) {
-        if (plugin.borderOnServer) {
-            border = (WorldBorder) plugin.pm.getPlugin("WorldBorder");
+    public TARDISWorldBorderChecker(TARDIS plugin, boolean onServer) {
+        if (onServer) {
+            border = (WorldBorder) plugin.getPM().getPlugin("WorldBorder");
         }
     }
 

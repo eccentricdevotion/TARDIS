@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2013 eccentric_nz
+ * Copyright (C) 2014 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -66,14 +66,17 @@ public class TARDISConfiguration {
         boolOptions.put("allow.all_blocks", false);
         boolOptions.put("allow.autonomous", true);
         boolOptions.put("allow.emergency_npc", true);
+        boolOptions.put("allow.external_gravity", false);
         boolOptions.put("allow.hads", true);
         boolOptions.put("allow.mob_farming", true);
         boolOptions.put("allow.sfx", true);
         boolOptions.put("allow.spawn_eggs", true);
         boolOptions.put("allow.tp_switch", true);
         boolOptions.put("allow.wg_flag_set", true);
+        boolOptions.put("allow.zero_room", false);
         boolOptions.put("conversions.conversion_done", false);
         boolOptions.put("conversions.location_conversion_done", false);
+        boolOptions.put("conversions.uuid_conversion_done", false);
         boolOptions.put("creation.add_perms", true);
         boolOptions.put("creation.create_worlds", true);
         boolOptions.put("creation.create_worlds_with_perms", false);
@@ -86,11 +89,9 @@ public class TARDISConfiguration {
         boolOptions.put("police_box.materialise", true);
         boolOptions.put("police_box.name_tardis", false);
         boolOptions.put("preferences.respect_factions", true);
-        boolOptions.put("preferences.respect_towny", true);
         boolOptions.put("preferences.respect_worldborder", true);
         boolOptions.put("preferences.respect_worldguard", true);
         boolOptions.put("preferences.strike_lightning", true);
-        boolOptions.put("preferences.use_worldguard", true);
         boolOptions.put("preferences.use_default_condensables", true);
         boolOptions.put("growth.return_room_seed", true);
         boolOptions.put("growth.rooms_require_blocks", false);
@@ -123,6 +124,8 @@ public class TARDISConfiguration {
         roomBoolOptions.put("rooms.HARMONY.user", false);
         roomBoolOptions.put("rooms.KITCHEN.enabled", true);
         roomBoolOptions.put("rooms.KITCHEN.user", false);
+        roomBoolOptions.put("rooms.LAZARUS.enabled", true);
+        roomBoolOptions.put("rooms.LAZARUS.user", false);
         roomBoolOptions.put("rooms.LIBRARY.enabled", true);
         roomBoolOptions.put("rooms.LIBRARY.user", false);
         roomBoolOptions.put("rooms.MUSHROOM.enabled", true);
@@ -147,6 +150,8 @@ public class TARDISConfiguration {
         roomBoolOptions.put("rooms.WOOD.user", false);
         roomBoolOptions.put("rooms.WORKSHOP.enabled", true);
         roomBoolOptions.put("rooms.WORKSHOP.user", false);
+        roomBoolOptions.put("rooms.ZERO.enabled", true);
+        roomBoolOptions.put("rooms.ZERO.user", false);
         // integer
         artronIntOptions.put("autonomous", 100);
         artronIntOptions.put("backdoor", 100);
@@ -163,10 +168,12 @@ public class TARDISConfiguration {
         artronIntOptions.put("render", 250);
         artronIntOptions.put("the_end_min", 5500);
         artronIntOptions.put("travel", 100);
+        artronIntOptions.put("zero", 250);
         intOptions.put("creation.border_radius", 256);
         intOptions.put("creation.count", 0);
         intOptions.put("creation.custom_creeper_id", 138);
         intOptions.put("creation.inventory_group", 0);
+        intOptions.put("creation.tips_limit", 400);
         intOptions.put("police_box.confirm_timeout", 15);
         intOptions.put("police_box.platform_data", 8);
         intOptions.put("police_box.platform_id", 35);
@@ -176,6 +183,7 @@ public class TARDISConfiguration {
         intOptions.put("preferences.freeze_cooldown", 60);
         intOptions.put("preferences.hads_damage", 10);
         intOptions.put("preferences.hads_distance", 10);
+        intOptions.put("preferences.heal_speed", 200);
         intOptions.put("preferences.malfunction", 3);
         intOptions.put("preferences.malfunction_end", 3);
         intOptions.put("preferences.malfunction_nether", 3);
@@ -190,55 +198,62 @@ public class TARDISConfiguration {
         intOptions.put("travel.timeout_height", 135);
         intOptions.put("travel.tp_radius", 256);
         roomIntOptions.put("rooms.ANTIGRAVITY.cost", 625);
-        roomIntOptions.put("rooms.ANTIGRAVITY.offset", -3);
+        roomIntOptions.put("rooms.ANTIGRAVITY.offset", -4);
         roomIntOptions.put("rooms.ARBORETUM.cost", 325);
         roomIntOptions.put("rooms.ARBORETUM.offset", -4);
         roomIntOptions.put("rooms.BAKER.cost", 350);
-        roomIntOptions.put("rooms.BAKER.offset", -3);
+        roomIntOptions.put("rooms.BAKER.offset", -4);
         roomIntOptions.put("rooms.BEDROOM.cost", 475);
-        roomIntOptions.put("rooms.BEDROOM.offset", -3);
+        roomIntOptions.put("rooms.BEDROOM.offset", -4);
         roomIntOptions.put("rooms.EMPTY.cost", 250);
-        roomIntOptions.put("rooms.EMPTY.offset", -3);
+        roomIntOptions.put("rooms.EMPTY.offset", -4);
         roomIntOptions.put("rooms.FARM.cost", 350);
-        roomIntOptions.put("rooms.FARM.offset", -3);
+        roomIntOptions.put("rooms.FARM.offset", -4);
         roomIntOptions.put("rooms.GRAVITY.cost", 625);
-        roomIntOptions.put("rooms.GRAVITY.offset", -19);
+        roomIntOptions.put("rooms.GRAVITY.offset", -20);
         roomIntOptions.put("rooms.GREENHOUSE.cost", 450);
-        roomIntOptions.put("rooms.GREENHOUSE.offset", -3);
+        roomIntOptions.put("rooms.GREENHOUSE.offset", -4);
         roomIntOptions.put("rooms.HARMONY.cost", 450);
-        roomIntOptions.put("rooms.HARMONY.offset", -3);
+        roomIntOptions.put("rooms.HARMONY.offset", -4);
         roomIntOptions.put("rooms.KITCHEN.cost", 450);
-        roomIntOptions.put("rooms.KITCHEN.offset", -3);
+        roomIntOptions.put("rooms.KITCHEN.offset", -4);
+        roomIntOptions.put("rooms.LAZARUS.cost", 750);
+        roomIntOptions.put("rooms.LAZARUS.offset", -4);
         roomIntOptions.put("rooms.LIBRARY.cost", 550);
-        roomIntOptions.put("rooms.LIBRARY.offset", -3);
+        roomIntOptions.put("rooms.LIBRARY.offset", -4);
         roomIntOptions.put("rooms.MUSHROOM.cost", 350);
-        roomIntOptions.put("rooms.MUSHROOM.offset", -3);
+        roomIntOptions.put("rooms.MUSHROOM.offset", -4);
         roomIntOptions.put("rooms.PASSAGE.cost", 200);
-        roomIntOptions.put("rooms.PASSAGE.offset", -3);
+        roomIntOptions.put("rooms.PASSAGE.offset", -4);
         roomIntOptions.put("rooms.POOL.cost", 450);
-        roomIntOptions.put("rooms.POOL.offset", -3);
+        roomIntOptions.put("rooms.POOL.offset", -4);
         roomIntOptions.put("rooms.RAIL.cost", 650);
-        roomIntOptions.put("rooms.RAIL.offset", -3);
+        roomIntOptions.put("rooms.RAIL.offset", -4);
         roomIntOptions.put("rooms.RENDERER.cost", 650);
-        roomIntOptions.put("rooms.RENDERER.offset", -3);
+        roomIntOptions.put("rooms.RENDERER.offset", -4);
         roomIntOptions.put("rooms.STABLE.cost", 350);
-        roomIntOptions.put("rooms.STABLE.offset", -3);
+        roomIntOptions.put("rooms.STABLE.offset", -4);
         roomIntOptions.put("rooms.TRENZALORE.cost", 550);
-        roomIntOptions.put("rooms.TRENZALORE.offset", -3);
+        roomIntOptions.put("rooms.TRENZALORE.offset", -4);
         roomIntOptions.put("rooms.VAULT.cost", 350);
-        roomIntOptions.put("rooms.VAULT.offset", -3);
+        roomIntOptions.put("rooms.VAULT.offset", -4);
         roomIntOptions.put("rooms.VILLAGE.cost", 550);
-        roomIntOptions.put("rooms.VILLAGE.offset", -3);
+        roomIntOptions.put("rooms.VILLAGE.offset", -4);
         roomIntOptions.put("rooms.WOOD.cost", 350);
-        roomIntOptions.put("rooms.WOOD.offset", -3);
+        roomIntOptions.put("rooms.WOOD.offset", -4);
         roomIntOptions.put("rooms.WORKSHOP.cost", 400);
-        roomIntOptions.put("rooms.WORKSHOP.offset", -3);
+        roomIntOptions.put("rooms.WORKSHOP.offset", -4);
+        roomIntOptions.put("rooms.ZERO.cost", 650);
+        roomIntOptions.put("rooms.ZERO.offset", -4);
         // string
         strOptions.put("creation.custom_schematic_seed", "OBSIDIAN");
         strOptions.put("creation.default_world_name", "myridiculouslylongworldnameiscalledcuthbert");
         strOptions.put("creation.gamemode", "survival");
+        strOptions.put("police_box.sign_colour", "WHITE");
         strOptions.put("preferences.difficulty", "hard");
         strOptions.put("preferences.key", "GOLD_NUGGET");
+        strOptions.put("preferences.respect_towny", "nation");
+        strOptions.put("preferences.use_worldguard", "build");
         strOptions.put("storage.database", "sqlite");
         strOptions.put("storage.mysql.password", "mysecurepassword");
         strOptions.put("storage.mysql.url", "mysql://localhost:3306/TARDIS");
@@ -255,6 +270,7 @@ public class TARDISConfiguration {
         roomStrOptions.put("rooms.GREENHOUSE.seed", "MELON_BLOCK");
         roomStrOptions.put("rooms.HARMONY.seed", "BRICK_STAIRS");
         roomStrOptions.put("rooms.KITCHEN.seed", "PUMPKIN");
+        roomStrOptions.put("rooms.LAZARUS.seed", "FURNACE");
         roomStrOptions.put("rooms.LIBRARY.seed", "BOOKSHELF");
         roomStrOptions.put("rooms.MUSHROOM.seed", "GRAVEL");
         roomStrOptions.put("rooms.PASSAGE.seed", "CLAY");
@@ -267,6 +283,7 @@ public class TARDISConfiguration {
         roomStrOptions.put("rooms.VILLAGE.seed", "LOG");
         roomStrOptions.put("rooms.WOOD.seed", "WOOD");
         roomStrOptions.put("rooms.WORKSHOP.seed", "NETHER_BRICK");
+        roomStrOptions.put("rooms.ZERO.seed", "WOOD_BUTTON");
     }
 
     /**
@@ -280,6 +297,18 @@ public class TARDISConfiguration {
             new TARDISConfigConverter(plugin).convert();
         } else {
             int i = 0;
+            if (config.contains("preferences.respect_towny")) {
+                if (plugin.getConfig().getString("preferences.respect_towny").equals("true") || plugin.getConfig().getString("preferences.respect_towny").equals("false")) {
+                    String towny = (plugin.getConfig().getBoolean("preferences.respect_towny")) ? "nation" : "none";
+                    plugin.getConfig().set("preferences.respect_towny", towny);
+                }
+            }
+            if (config.contains("preferences.respect_worldguard")) {
+                if (plugin.getConfig().getString("preferences.respect_worldguard").equals("true") || plugin.getConfig().getString("preferences.respect_worldguard").equals("false")) {
+                    String guard = (plugin.getConfig().getBoolean("preferences.respect_worldguard")) ? "build" : "none";
+                    plugin.getConfig().set("preferences.respect_worldguard", guard);
+                }
+            }
             // boolean values
             for (Map.Entry<String, Boolean> entry : boolOptions.entrySet()) {
                 if (!config.contains(entry.getKey())) {
@@ -317,7 +346,7 @@ public class TARDISConfiguration {
                 plugin.getConfig().set("difficulty", "hard");
             }
             if (i > 0) {
-                plugin.console.sendMessage(plugin.pluginName + "Added " + ChatColor.AQUA + i + ChatColor.RESET + " new items to config");
+                plugin.getConsole().sendMessage(plugin.getPluginName() + "Added " + ChatColor.AQUA + i + ChatColor.RESET + " new items to config");
             }
         }
         // worlds
@@ -334,7 +363,7 @@ public class TARDISConfiguration {
             String worldname = "worlds." + w.getName();
             if (!config.contains(worldname)) {
                 plugin.getConfig().set(worldname, true);
-                plugin.console.sendMessage(plugin.pluginName + "Added '" + w.getName() + "' to config. To exclude this world run: /tardisadmin exclude " + w.getName());
+                plugin.getConsole().sendMessage(plugin.getPluginName() + "Added '" + w.getName() + "' to config. To exclude this world run: /tardisadmin exclude " + w.getName());
             }
         }
         plugin.saveConfig();
@@ -343,7 +372,7 @@ public class TARDISConfiguration {
         for (String cw : cWorlds) {
             if (plugin.getServer().getWorld(cw) == null) {
                 plugin.getConfig().set("worlds." + cw, null);
-                plugin.console.sendMessage(plugin.pluginName + "Removed '" + cw + " from config.yml");
+                plugin.getConsole().sendMessage(plugin.getPluginName() + "Removed '" + cw + " from config.yml");
             }
         }
     }
@@ -391,7 +420,7 @@ public class TARDISConfiguration {
         try {
             rooms_config.save(new File(plugin.getDataFolder(), "rooms.yml"));
             if (i > 0) {
-                plugin.console.sendMessage(plugin.pluginName + "Added " + ChatColor.AQUA + i + ChatColor.RESET + " new items to rooms.yml");
+                plugin.getConsole().sendMessage(plugin.getPluginName() + "Added " + ChatColor.AQUA + i + ChatColor.RESET + " new items to rooms.yml");
             }
         } catch (IOException io) {
             plugin.debug("Could not save rooms.yml, " + io);
@@ -407,7 +436,7 @@ public class TARDISConfiguration {
                 // remove old tardis_blocks section
                 plugin.getConfig().set("tardis_blocks", null);
             } else {
-                MIDDLE_BLOCKS = Arrays.asList(new String[]{"COBBLESTONE", "MOSSY_COBBLESTONE", "LOG", "LOG_2", "STONE", "DIRT", "WOOD", "SANDSTONE", "WOOL", "BRICK", "NETHERRACK", "SOUL_SAND", "SMOOTH_BRICK", "HUGE_MUSHROOM_1", "HUGE_MUSHROOM_2", "ENDER_STONE", "QUARTZ_BLOCK", "CLAY", "STAINED_CLAY", "HAY_BLOCK", "HARD_CLAY", "PACKED_ICE"});
+                MIDDLE_BLOCKS = Arrays.asList("COBBLESTONE", "MOSSY_COBBLESTONE", "LOG", "LOG_2", "STONE", "DIRT", "WOOD", "SANDSTONE", "WOOL", "BRICK", "NETHERRACK", "SOUL_SAND", "SMOOTH_BRICK", "HUGE_MUSHROOM_1", "HUGE_MUSHROOM_2", "ENDER_STONE", "QUARTZ_BLOCK", "CLAY", "STAINED_CLAY", "HAY_BLOCK", "HARD_CLAY", "PACKED_ICE");
             }
             blocks_config.set("tardis_blocks", MIDDLE_BLOCKS);
             i++;
@@ -435,7 +464,7 @@ public class TARDISConfiguration {
             }
         }
         if (!blocks_config.contains("chameleon_blocks")) {
-            List<Integer> CHAM_BLOCKS = Arrays.asList(new Integer[]{1, 3, 4, 5, 7, 14, 15, 16, 17, 18, 19, 20, 21, 22, 24, 25, 35, 41, 42, 43, 45, 46, 47, 48, 49, 56, 57, 58, 73, 74, 79, 80, 82, 84, 86, 87, 88, 89, 91, 98, 99, 100, 103, 110, 112, 121, 123, 124, 129, 133, 155, 159, 161, 162, 170, 172, 173, 174});
+            List<Integer> CHAM_BLOCKS = Arrays.asList(1, 3, 4, 5, 7, 14, 15, 16, 17, 18, 19, 20, 21, 22, 24, 25, 35, 41, 42, 43, 45, 46, 47, 48, 49, 56, 57, 58, 73, 74, 79, 80, 82, 84, 86, 87, 88, 89, 91, 98, 99, 100, 103, 110, 112, 121, 123, 124, 129, 133, 155, 159, 161, 162, 170, 172, 173, 174);
             blocks_config.set("chameleon_blocks", CHAM_BLOCKS);
             i++;
         } else {
@@ -458,12 +487,12 @@ public class TARDISConfiguration {
         }
         // add lamp blocks
         if (!blocks_config.contains("lamp_blocks")) {
-            List<Integer> LAMP_BLOCKS = Arrays.asList(new Integer[]{50, 76, 89, 91, 123});
+            List<Integer> LAMP_BLOCKS = Arrays.asList(50, 76, 89, 91, 123);
             blocks_config.set("lamp_blocks", LAMP_BLOCKS);
             i++;
         }
         if (!blocks_config.contains("under_door_blocks")) {
-            List<Integer> UNDER_BLOCKS = Arrays.asList(new Integer[]{0, 6, 8, 9, 10, 11, 18, 20, 26, 27, 28, 29, 30, 31, 32, 33, 34, 37, 38, 39, 40, 44, 46, 50, 51, 53, 54, 55, 58, 59, 60, 61, 62, 63, 64, 65, 66, 67, 68, 69, 70, 71, 72, 75, 76, 77, 78, 79, 81, 83, 85, 89, 92, 93, 94, 96, 101, 102, 104, 105, 106, 107, 108, 109, 111, 113, 114, 115, 116, 117, 118, 119, 120, 122, 126, 128, 130, 131, 132, 134, 135, 136, 161, 171});
+            List<Integer> UNDER_BLOCKS = Arrays.asList(0, 6, 8, 9, 10, 11, 18, 20, 26, 27, 28, 29, 30, 31, 32, 33, 34, 37, 38, 39, 40, 44, 46, 50, 51, 53, 54, 55, 58, 59, 60, 61, 62, 63, 64, 65, 66, 67, 68, 69, 70, 71, 72, 75, 76, 77, 78, 79, 81, 83, 85, 89, 92, 93, 94, 96, 101, 102, 104, 105, 106, 107, 108, 109, 111, 113, 114, 115, 116, 117, 118, 119, 120, 122, 126, 128, 130, 131, 132, 134, 135, 136, 161, 171);
             blocks_config.set("under_door_blocks", UNDER_BLOCKS);
             i++;
         } else {
@@ -486,7 +515,7 @@ public class TARDISConfiguration {
         try {
             blocks_config.save(new File(plugin.getDataFolder(), "blocks.yml"));
             if (i > 0) {
-                plugin.console.sendMessage(plugin.pluginName + "Added " + ChatColor.AQUA + i + ChatColor.RESET + " new items to blocks.yml");
+                plugin.getConsole().sendMessage(plugin.getPluginName() + "Added " + ChatColor.AQUA + i + ChatColor.RESET + " new items to blocks.yml");
             }
         } catch (IOException io) {
             plugin.debug("Could not save blocks.yml, " + io);
@@ -522,7 +551,7 @@ public class TARDISConfiguration {
         try {
             artron_config.save(new File(plugin.getDataFolder(), "artron.yml"));
             if (i > 0) {
-                plugin.console.sendMessage(plugin.pluginName + "Added " + ChatColor.AQUA + i + ChatColor.RESET + " new items to artron.yml");
+                plugin.getConsole().sendMessage(plugin.getPluginName() + "Added " + ChatColor.AQUA + i + ChatColor.RESET + " new items to artron.yml");
             }
         } catch (IOException io) {
             plugin.debug("Could not save artron.yml, " + io);

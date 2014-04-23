@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2013 eccentric_nz
+ * Copyright (C) 2014 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -20,6 +20,8 @@ import java.util.HashMap;
 import java.util.Locale;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
+import me.eccentric_nz.TARDIS.enumeration.MESSAGE;
+import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -38,23 +40,23 @@ public class TARDISSetKeyCommand {
 
     public boolean setKeyPref(Player player, String[] args, QueryFactory qf) {
         if (args.length < 2) {
-            player.sendMessage(plugin.pluginName + "You need to specify a key item!");
+            TARDISMessage.send(player, plugin.getPluginName() + "You need to specify a key item!");
             return false;
         }
         String setMaterial = args[1].toUpperCase(Locale.ENGLISH);
         try {
             Material go = Material.valueOf(setMaterial);
         } catch (IllegalArgumentException e) {
-            player.sendMessage(plugin.pluginName + ChatColor.RED + "That is not a valid Material! Try checking http://jd.bukkit.org/apidocs/org/bukkit/Material.html");
+            TARDISMessage.send(player, plugin.getPluginName() + ChatColor.RED + MESSAGE.NOT_VALID_MATERIAL.getText());
             return false;
         }
         String field = (plugin.getConfig().getString("storage.database").equals("sqlite")) ? "key" : "key_item";
         HashMap<String, Object> setk = new HashMap<String, Object>();
         setk.put(field, setMaterial);
         HashMap<String, Object> where = new HashMap<String, Object>();
-        where.put("player", player.getName());
+        where.put("uuid", player.getUniqueId().toString());
         qf.doUpdate("player_prefs", setk, where);
-        player.sendMessage(plugin.pluginName + "Key preference saved.");
+        TARDISMessage.send(player, plugin.getPluginName() + "Key preference saved.");
         return true;
     }
 }

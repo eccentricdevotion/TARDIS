@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2013 eccentric_nz
+ * Copyright (C) 2014 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -21,19 +21,21 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
+import java.util.Set;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetDiskStorage;
 import me.eccentric_nz.TARDIS.enumeration.DISK_CIRCUIT;
 import me.eccentric_nz.TARDIS.enumeration.STORAGE;
+import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
-import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryCloseEvent;
+import org.bukkit.event.inventory.InventoryDragEvent;
 import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.event.player.PlayerDropItemEvent;
 import org.bukkit.inventory.Inventory;
@@ -62,11 +64,28 @@ public class TARDISStorageListener implements Listener {
         }
     }
 
-    @EventHandler(priority = EventPriority.NORMAL)
+    @EventHandler(ignoreCancelled = true)
     public void onDiskStorageClose(InventoryCloseEvent event) {
         Inventory inv = event.getInventory();
         String title = inv.getTitle();
         if (titles.contains(title)) {
+            // TODO *** remove this next section for release ***
+
+            // scan the upper slots for misplaced disks
+            for (int i = 0; i < 27; i++) {
+                ItemStack stack = inv.getItem(i);
+                if (stack != null && stack.getType().isRecord() && stack.hasItemMeta()) {
+                    ItemMeta ims = stack.getItemMeta();
+                    if (ims.hasDisplayName() && ims.getDisplayName().contains("Disk")) {
+                        Player p = (Player) event.getPlayer();
+                        Location loc = p.getLocation();
+                        loc.getWorld().dropItemNaturally(loc, stack);
+                        inv.setItem(i, new ItemStack(Material.AIR));
+                    }
+                }
+            }
+            // *** end section ***
+
             // which inventory screen is it?
             String[] split = title.split(" ");
             String tmp = split[0].toUpperCase(Locale.ENGLISH);
@@ -93,29 +112,43 @@ public class TARDISStorageListener implements Listener {
                         Location loc = p.getLocation();
                         loc.getWorld().dropItemNaturally(loc, stack);
                         inv.setItem(i, new ItemStack(Material.AIR));
-                        p.sendMessage(plugin.pluginName + "You cannot store Area Storage Disks here!");
+                        TARDISMessage.send(p, plugin.getPluginName() + "You cannot store Area Storage Disks here!");
                     }
                 }
             }
         }
     }
 
-    @EventHandler(priority = EventPriority.MONITOR)
+    @EventHandler(ignoreCancelled = true)
+    public void onDiskStorageInteract(InventoryDragEvent event) {
+        Inventory inv = event.getInventory();
+        String title = inv.getTitle();
+        if (!titles.contains(title)) {
+            return;
+        }
+        Set<Integer> slots = event.getRawSlots();
+        for (Integer slot : slots) {
+            if ((slot >= 0 && slot < 27)) {
+                event.setCancelled(true);
+            }
+        }
+    }
+
+    @EventHandler(ignoreCancelled = true)
     public void onDiskStorageInteract(InventoryClickEvent event) {
         Inventory inv = event.getInventory();
         String title = inv.getTitle();
-        if (!titles.contains(title) || event.isCancelled()) {
+        if (!titles.contains(title)) {
             return;
         }
         int slot = event.getRawSlot();
-        if (slot >= 0 && slot < 27 || event.isShiftClick()) {
+        if ((slot >= 0 && slot < 27) || event.isShiftClick()) {
             event.setCancelled(true);
         }
         final Player player = (Player) event.getWhoClicked();
-        String playerNameStr = player.getName();
         // get the storage record
         HashMap<String, Object> where = new HashMap<String, Object>();
-        where.put("owner", playerNameStr);
+        where.put("uuid", player.getUniqueId().toString());
         ResultSetDiskStorage rs = new ResultSetDiskStorage(plugin, where);
         if (rs.resultSet()) {
             // which inventory screen is it?
@@ -229,7 +262,7 @@ public class TARDISStorageListener implements Listener {
             if (ims.hasDisplayName() && ims.getDisplayName().equals("Area Storage Disk")) {
                 event.setCancelled(true);
                 Player p = event.getPlayer();
-                p.sendMessage(plugin.pluginName + "You cannot drop Area Storage Disks!");
+                TARDISMessage.send(p, plugin.getPluginName() + "You cannot drop Area Storage Disks!");
             }
         }
     }
@@ -249,7 +282,7 @@ public class TARDISStorageListener implements Listener {
         HashMap<String, Object> set = new HashMap<String, Object>();
         set.put(column, serialized);
         HashMap<String, Object> where = new HashMap<String, Object>();
-        where.put("owner", p.getName());
+        where.put("uuid", p.getUniqueId().toString());
         new QueryFactory(plugin).doUpdate("storage", set, where);
     }
 

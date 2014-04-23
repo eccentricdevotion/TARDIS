@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2013 eccentric_nz
+ * Copyright (C) 2014 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -48,9 +48,10 @@ public class TARDISInteriorPostioning {
      * @return the first vacant slot
      */
     public int getFreeSlot() {
+        int limit = plugin.getConfig().getInt("creation.tips_limit");
         List<Integer> usedSlots = makeUsedSlotList();
         int slot = -1;
-        for (int i = 0; i < 400; i++) {
+        for (int i = 0; i < limit; i++) {
             if (!usedSlots.contains(i)) {
                 slot = i;
                 break;
@@ -68,14 +69,30 @@ public class TARDISInteriorPostioning {
      */
     public TARDISTIPSData getTIPSData(int slot) {
         TARDISTIPSData data = new TARDISTIPSData();
-        int row = slot / 20;
-        int col = slot % 20;
-        data.setMinX(row * 1024);
-        data.setCentreX(row * 1024 + 496);
-        data.setMaxX(row * 1024 + 1023);
-        data.setMinZ(col * 1024);
-        data.setCentreZ(col * 1024 + 496);
-        data.setMaxZ(col * 1024 + 1023);
+        int factorX = 0;
+        int factorZ = 0;
+        int subtract = 0;
+        if (slot > 399 && slot < 800) {
+            factorX = 20480;
+            subtract = 400;
+        }
+        if (slot > 799 && slot < 1200) {
+            factorZ = 20480;
+            subtract = 800;
+        }
+        if (slot > 1199 && slot < 1600) {
+            factorX = 20480;
+            factorZ = 20480;
+            subtract = 1200;
+        }
+        int row = (slot - subtract) / 20;
+        int col = (slot - subtract) % 20;
+        data.setMinX((row * 1024) + factorX);
+        data.setCentreX((row * 1024 + 496) + factorX);
+        data.setMaxX((row * 1024 + 1023) + factorX);
+        data.setMinZ((col * 1024) + factorZ);
+        data.setCentreZ((col * 1024 + 496) + factorZ);
+        data.setMaxZ((col * 1024 + 1023) + factorZ);
         data.setSlot(slot);
         return data;
     }

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2013 eccentric_nz
+ * Copyright (C) 2014 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -26,6 +26,7 @@ import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import me.eccentric_nz.TARDIS.database.TARDISDatabaseConnection;
 import me.eccentric_nz.TARDIS.enumeration.MESSAGE;
+import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
@@ -43,15 +44,15 @@ public class TARDISGravityConverterCommand {
 
     public boolean convertGravity(CommandSender sender, Player player, String[] args) {
         if (player == null) {
-            sender.sendMessage(plugin.pluginName + "Must be a player");
+            sender.sendMessage(plugin.getPluginName() + "Must be a player");
             return false;
         }
         // get the players TARDIS id
         HashMap<String, Object> where = new HashMap<String, Object>();
-        where.put("owner", player.getName());
+        where.put("uuid", player.getUniqueId().toString());
         ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);
         if (!rs.resultSet()) {
-            sender.sendMessage(plugin.pluginName + MESSAGE.NO_TARDIS.getText());
+            TARDISMessage.send(player, plugin.getPluginName() + MESSAGE.NO_TARDIS.getText());
             return false;
         }
         int id = rs.getTardis_id();
@@ -67,9 +68,9 @@ public class TARDISGravityConverterCommand {
                 values[0] = 1D;
                 values[1] = 11D;
                 values[2] = 0.5D;
-                plugin.gravityUpList.put(up, values);
+                plugin.getGeneralKeeper().getGravityUpList().put(up, values);
                 String down = "Location{world=" + rsg.getString("world") + ",x=" + rsg.getFloat("downx") + ",y=10.0,z=" + rsg.getFloat("downz") + ",pitch=0.0,yaw=0.0}";
-                plugin.gravityDownList.add(down);
+                plugin.getGeneralKeeper().getGravityDownList().add(down);
                 HashMap<String, Object> setu = new HashMap<String, Object>();
                 setu.put("tardis_id", id);
                 setu.put("location", up);
@@ -85,7 +86,7 @@ public class TARDISGravityConverterCommand {
                 QueryFactory qf = new QueryFactory(plugin);
                 qf.doInsert("gravity_well", setu);
                 qf.doInsert("gravity_well", setd);
-                player.sendMessage(plugin.pluginName + "Gravity well converted successfully.");
+                TARDISMessage.send(player, plugin.getPluginName() + "Gravity well converted successfully.");
                 return true;
             }
         } catch (SQLException e) {

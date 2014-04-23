@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2013 eccentric_nz
+ * Copyright (C) 2014 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -19,6 +19,7 @@ package me.eccentric_nz.TARDIS.destroyers;
 import java.util.Collections;
 import java.util.HashMap;
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.builders.TARDISMaterialisationData;
 import me.eccentric_nz.TARDIS.chameleon.TARDISChameleonCircuit;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetDoors;
@@ -31,7 +32,6 @@ import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
-import org.bukkit.entity.Player;
 
 /**
  * Destroy the TARDIS Police Box.
@@ -49,41 +49,45 @@ public class TARDISPresetDestroyerFactory {
         this.plugin = plugin;
     }
 
-    public void destroyPreset(Location l, COMPASS d, int id, boolean hide, boolean dematerialise, boolean c, Player player, boolean sub) {
+    public void destroyPreset(TARDISMaterialisationData pdd) {
         HashMap<String, Object> where = new HashMap<String, Object>();
-        where.put("tardis_id", id);
+        where.put("tardis_id", pdd.getTardisID());
         ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);
         if (rs.resultSet()) {
             PRESET demat = rs.getDemat();
-            if (dematerialise && !hide) {
+            // load the chunk if unloaded
+            if (!pdd.getLocation().getWorld().isChunkLoaded(pdd.getLocation().getChunk())) {
+                pdd.getLocation().getWorld().loadChunk(pdd.getLocation().getChunk());
+            }
+            if (pdd.isDematerialise() && !pdd.isHide()) {
                 int cham_id = rs.getChameleon_id();
                 byte cham_data = rs.getChameleon_data();
-                if (c && (demat.equals(PRESET.NEW) || demat.equals(PRESET.OLD) || demat.equals(PRESET.SUBMERGED))) {
+                if (pdd.isChameleon() && (demat.equals(PRESET.NEW) || demat.equals(PRESET.OLD) || demat.equals(PRESET.SUBMERGED))) {
                     Block chameleonBlock;
                     // chameleon circuit is on - get block under TARDIS
-                    if (l.getBlock().getType() == Material.SNOW) {
-                        chameleonBlock = l.getBlock();
+                    if (pdd.getLocation().getBlock().getType() == Material.SNOW) {
+                        chameleonBlock = pdd.getLocation().getBlock();
                     } else {
-                        chameleonBlock = l.getBlock().getRelative(BlockFace.DOWN);
+                        chameleonBlock = pdd.getLocation().getBlock().getRelative(BlockFace.DOWN);
                     }
                     // determine cham_id
                     TARDISChameleonCircuit tcc = new TARDISChameleonCircuit(plugin);
-                    int[] b_data = tcc.getChameleonBlock(chameleonBlock, player, false);
+                    int[] b_data = tcc.getChameleonBlock(chameleonBlock, pdd.getPlayer(), false);
                     cham_id = b_data[0];
                     cham_data = (byte) b_data[1];
                 }
                 int lamp = plugin.getConfig().getInt("police_box.tardis_lamp");
                 HashMap<String, Object> wherepp = new HashMap<String, Object>();
-                wherepp.put("player", player.getName());
+                wherepp.put("uuid", pdd.getPlayer().getUniqueId().toString());
                 ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, wherepp);
                 if (rsp.resultSet()) {
                     lamp = rsp.getLamp();
                 }
-                TARDISDematerialisationPreset runnable = new TARDISDematerialisationPreset(plugin, l, demat, lamp, id, d, cham_id, cham_data, player, sub);
+                TARDISDematerialisationPreset runnable = new TARDISDematerialisationPreset(plugin, pdd.getLocation(), demat, lamp, pdd.getTardisID(), pdd.getDirection(), cham_id, cham_data, pdd.getPlayer(), pdd.isSubmarine(), pdd.isOutside());
                 int taskID = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, runnable, 10L, 20L);
                 runnable.setTask(taskID);
             } else {
-                new TARDISDeinstaPreset(plugin).instaDestroyPreset(l, d, id, hide, demat, sub);
+                new TARDISDeinstaPreset(plugin).instaDestroyPreset(pdd.getLocation(), pdd.getDirection(), pdd.getTardisID(), pdd.isHide(), demat, pdd.isSubmarine());
             }
         }
     }
@@ -96,7 +100,7 @@ public class TARDISPresetDestroyerFactory {
         if (rsd.resultSet()) {
             String dl = rsd.getDoor_location();
             float f = 0.0F;
-            Block b = plugin.utils.getLocationFromDB(dl, f, f).getBlock();
+            Block b = plugin.getUtils().getLocationFromDB(dl, f, f).getBlock();
             b.setType(Material.AIR);
             b.getRelative(BlockFace.UP).setType(Material.AIR);
         }
@@ -212,9 +216,9 @@ public class TARDISPresetDestroyerFactory {
                 signy = 2;
                 break;
         }
-        plugin.utils.setBlock(w, l.getBlockX() + signx, l.getBlockY() + signy, l.getBlockZ() + signz, 0, (byte) 0);
+        plugin.getUtils().setBlock(w, l.getBlockX() + signx, l.getBlockY() + signy, l.getBlockZ() + signz, 0, (byte) 0);
         if (p.equals(PRESET.SWAMP)) {
-            plugin.utils.setBlock(w, l.getBlockX() + signx, l.getBlockY(), l.getBlockZ() + signz, 0, (byte) 0);
+            plugin.getUtils().setBlock(w, l.getBlockX() + signx, l.getBlockY(), l.getBlockZ() + signz, 0, (byte) 0);
         }
     }
 
@@ -226,11 +230,11 @@ public class TARDISPresetDestroyerFactory {
         if (p.equals(PRESET.CAKE)) {
             for (int i = (tx - 1); i < (tx + 2); i++) {
                 for (int j = (tz - 1); j < (tz + 2); j++) {
-                    plugin.utils.setBlock(w, i, ty, j, 0, (byte) 0);
+                    plugin.getUtils().setBlock(w, i, ty, j, 0, (byte) 0);
                 }
             }
         } else {
-            plugin.utils.setBlock(w, tx, ty, tz, 0, (byte) 0);
+            plugin.getUtils().setBlock(w, tx, ty, tz, 0, (byte) 0);
         }
     }
 
@@ -264,8 +268,8 @@ public class TARDISPresetDestroyerFactory {
                 rightz = l.getBlockZ() + 1;
                 break;
         }
-        plugin.utils.setBlock(w, leftx, eyey, leftz, 0, (byte) 0);
-        plugin.utils.setBlock(w, rightx, eyey, rightz, 0, (byte) 0);
+        plugin.getUtils().setBlock(w, leftx, eyey, leftz, 0, (byte) 0);
+        plugin.getUtils().setBlock(w, rightx, eyey, rightz, 0, (byte) 0);
     }
 
     public void destroyMineshaftTorches(Location l, COMPASS d) {
@@ -287,8 +291,8 @@ public class TARDISPresetDestroyerFactory {
                 rightz = l.getBlockZ() + 1;
                 break;
         }
-        plugin.utils.setBlock(w, leftx, eyey, leftz, 0, (byte) 0);
-        plugin.utils.setBlock(w, rightx, eyey, rightz, 0, (byte) 0);
+        plugin.getUtils().setBlock(w, leftx, eyey, leftz, 0, (byte) 0);
+        plugin.getUtils().setBlock(w, rightx, eyey, rightz, 0, (byte) 0);
     }
 
     public void removeBlockProtection(int id, QueryFactory qf) {
@@ -296,7 +300,7 @@ public class TARDISPresetDestroyerFactory {
         whereb.put("tardis_id", id);
         whereb.put("police_box", 1);
         qf.doDelete("blocks", whereb);
-        // remove from protectBlockMap - remove(Integer.valueOf(id)) would only remove the first one
-        plugin.protectBlockMap.values().removeAll(Collections.singleton(Integer.valueOf(id)));
+        // remove from protectBlockMap - remove(id) would only remove the first one
+        plugin.getGeneralKeeper().getProtectBlockMap().values().removeAll(Collections.singleton(id));
     }
 }

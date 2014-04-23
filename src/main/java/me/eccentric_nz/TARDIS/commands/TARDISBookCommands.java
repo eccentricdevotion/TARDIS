@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2013 eccentric_nz
+ * Copyright (C) 2014 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -25,7 +25,8 @@ import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.achievement.TARDISBook;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetAchievements;
-import org.bukkit.ChatColor;
+import me.eccentric_nz.TARDIS.enumeration.MESSAGE;
+import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -63,7 +64,7 @@ public class TARDISBookCommands implements CommandExecutor {
                 String first = args[0].toLowerCase(Locale.ENGLISH);
                 if (first.equals("list")) {
                     int b = 1;
-                    sender.sendMessage(TARDIS.plugin.pluginName + "The books of Rassilon");
+                    sender.sendMessage(TARDIS.plugin.getPluginName() + "The books of Rassilon");
                     for (Map.Entry<String, String> entry : books.entrySet()) {
                         sender.sendMessage(b + ". [" + entry.getKey() + "] - " + entry.getValue());
                         b++;
@@ -75,16 +76,16 @@ public class TARDISBookCommands implements CommandExecutor {
                     player = (Player) sender;
                 }
                 if (player == null) {
-                    sender.sendMessage(plugin.pluginName + ChatColor.RED + " This command can only be run by a player");
+                    sender.sendMessage(plugin.getPluginName() + MESSAGE.MUST_BE_PLAYER.getText());
                     return true;
                 }
                 if (args.length < 2) {
-                    sender.sendMessage(plugin.pluginName + "You need to specify a book name!");
+                    TARDISMessage.send(player, plugin.getPluginName() + "You need to specify a book name!");
                     return false;
                 }
                 String bookname = args[1].toLowerCase(Locale.ENGLISH);
                 if (!books.containsKey(bookname)) {
-                    sender.sendMessage(plugin.pluginName + "Could not find that book!");
+                    TARDISMessage.send(player, plugin.getPluginName() + "Could not find that book!");
                     return true;
                 }
                 if (first.equals("get")) {
@@ -95,32 +96,32 @@ public class TARDISBookCommands implements CommandExecutor {
                     return true;
                 }
                 if (first.equals("start")) {
-                    if (plugin.getAchivementConfig().getBoolean(bookname + ".auto")) {
-                        sender.sendMessage(plugin.pluginName + "This achievement is awarded automatically!");
+                    if (plugin.getAchievementConfig().getBoolean(bookname + ".auto")) {
+                        TARDISMessage.send(player, plugin.getPluginName() + "This achievement is awarded automatically!");
                         return true;
                     }
                     // check they have not already started the achievement
                     HashMap<String, Object> where = new HashMap<String, Object>();
-                    where.put("player", player.getName());
+                    where.put("uuid", player.getUniqueId().toString());
                     where.put("name", bookname);
                     ResultSetAchievements rsa = new ResultSetAchievements(plugin, where, false);
                     if (rsa.resultSet()) {
                         if (rsa.isCompleted()) {
-                            if (!plugin.getAchivementConfig().getBoolean(bookname + ".repeatable")) {
-                                sender.sendMessage(plugin.pluginName + "This achievement can only be gained once!");
+                            if (!plugin.getAchievementConfig().getBoolean(bookname + ".repeatable")) {
+                                TARDISMessage.send(player, plugin.getPluginName() + "This achievement can only be gained once!");
                                 return true;
                             }
                         } else {
-                            sender.sendMessage(plugin.pluginName + "You have already started this achievement!");
+                            TARDISMessage.send(player, plugin.getPluginName() + "You have already started this achievement!");
                             return true;
                         }
                     }
                     HashMap<String, Object> set = new HashMap<String, Object>();
-                    set.put("player", player.getName());
+                    set.put("uuid", player.getUniqueId().toString());
                     set.put("name", bookname);
                     QueryFactory qf = new QueryFactory(plugin);
                     qf.doInsert("achievements", set);
-                    sender.sendMessage(plugin.pluginName + "Achievement '" + bookname + "' started!");
+                    TARDISMessage.send(player, plugin.getPluginName() + "Achievement '" + bookname + "' started!");
                     return true;
                 }
             }
@@ -130,10 +131,10 @@ public class TARDISBookCommands implements CommandExecutor {
 
     private LinkedHashMap<String, String> getAchievements() {
         LinkedHashMap<String, String> map = new LinkedHashMap<String, String>();
-        Set<String> aset = plugin.getAchivementConfig().getRoot().getKeys(false);
+        Set<String> aset = plugin.getAchievementConfig().getRoot().getKeys(false);
         for (String a : aset) {
-            if (plugin.getAchivementConfig().getBoolean(a + ".enabled")) {
-                String title_reward = plugin.getAchivementConfig().getString(a + ".name") + " - " + plugin.getAchivementConfig().getString(a + ".reward_type") + ":" + plugin.getAchivementConfig().getString(a + ".reward_amount");
+            if (plugin.getAchievementConfig().getBoolean(a + ".enabled")) {
+                String title_reward = plugin.getAchievementConfig().getString(a + ".name") + " - " + plugin.getAchievementConfig().getString(a + ".reward_type") + ":" + plugin.getAchievementConfig().getString(a + ".reward_amount");
                 map.put(a, title_reward);
             }
         }

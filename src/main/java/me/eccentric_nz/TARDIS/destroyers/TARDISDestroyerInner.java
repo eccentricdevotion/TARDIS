@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2013 eccentric_nz
+ * Copyright (C) 2014 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -19,10 +19,10 @@ package me.eccentric_nz.TARDIS.destroyers;
 import java.util.Collections;
 import java.util.HashMap;
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.enumeration.SCHEMATIC;
 import me.eccentric_nz.TARDIS.builders.TARDISInteriorPostioning;
 import me.eccentric_nz.TARDIS.builders.TARDISTIPSData;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
+import me.eccentric_nz.TARDIS.enumeration.SCHEMATIC;
 import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.block.Block;
@@ -65,34 +65,34 @@ public class TARDISDestroyerInner {
         short[] d;
         switch (schm) {
             case BIGGER:
-                d = plugin.biggerdimensions;
+                d = plugin.getBuildKeeper().getBiggerDimensions();
                 break;
             case DELUXE:
-                d = plugin.deluxedimensions;
+                d = plugin.getBuildKeeper().getDeluxeDimensions();
                 break;
             case ELEVENTH:
-                d = plugin.eleventhdimensions;
+                d = plugin.getBuildKeeper().getEleventhDimensions();
                 break;
             case REDSTONE:
-                d = plugin.redstonedimensions;
+                d = plugin.getBuildKeeper().getRedstoneDimensions();
                 break;
             case STEAMPUNK:
-                d = plugin.steampunkdimensions;
+                d = plugin.getBuildKeeper().getSteampunkDimensions();
                 break;
             case PLANK:
-                d = plugin.plankdimensions;
+                d = plugin.getBuildKeeper().getPlankDimensions();
                 break;
             case TOM:
-                d = plugin.tomdimensions;
+                d = plugin.getBuildKeeper().getTomDimensions();
                 break;
             case ARS:
-                d = plugin.arsdimensions;
+                d = plugin.getBuildKeeper().getARSDimensions();
                 break;
             case CUSTOM:
-                d = plugin.customdimensions;
+                d = plugin.getBuildKeeper().getCustomDimensions();
                 break;
             default:
-                d = plugin.budgetdimensions;
+                d = plugin.getBuildKeeper().getBudgetDimensions();
                 break;
         }
         short h = d[0];
@@ -103,7 +103,7 @@ public class TARDISDestroyerInner {
         if (below) {
             int level, row, col, startx, startz, starty, resetx, resetz;
             // calculate startx, starty, startz
-            int gsl[] = plugin.utils.getStartLocation(id);
+            int gsl[] = plugin.getUtils().getStartLocation(id);
             startx = gsl[0];
             resetx = gsl[1];
             starty = 14 + h;
@@ -136,7 +136,7 @@ public class TARDISDestroyerInner {
                         }
                         if (!m.equals(Material.CHEST)) {
                             if (w.getBlockAt(startx, starty, startz).getTypeId() != i) {
-                                plugin.utils.setBlock(w, startx, starty, startz, i, (byte) 0);
+                                plugin.getUtils().setBlock(w, startx, starty, startz, i, (byte) 0);
                             }
                         }
                         startx += 1;
@@ -157,10 +157,10 @@ public class TARDISDestroyerInner {
         HashMap<String, Object> where = new HashMap<String, Object>();
         where.put("tardis_id", id);
         qf.doDelete("blocks", where);
-        // remove from protectBlockMap - remove(Integer.valueOf(id)) would only remove the first one
-        plugin.protectBlockMap.values().removeAll(Collections.singleton(Integer.valueOf(id)));
-        if (plugin.worldGuardOnServer) {
-            plugin.wgutils.removeRegion(w, p);
+        // remove from protectBlockMap - remove(id) would only remove the first one
+        plugin.getGeneralKeeper().getProtectBlockMap().values().removeAll(Collections.singleton(id));
+        if (plugin.isWorldGuardOnServer()) {
+            plugin.getWorldGuardUtils().removeRegion(w, p);
         }
     }
     //Originally stolen from Babarix. Thank you :)

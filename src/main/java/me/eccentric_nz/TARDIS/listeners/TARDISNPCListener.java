@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2013 eccentric_nz
+ * Copyright (C) 2014 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -17,9 +17,11 @@
 package me.eccentric_nz.TARDIS.listeners;
 
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import net.citizensnpcs.api.event.NPCRightClickEvent;
 import net.citizensnpcs.api.npc.NPC;
 import org.bukkit.ChatColor;
+import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
@@ -45,14 +47,15 @@ public class TARDISNPCListener implements Listener {
      *
      * @param event a player clicking an inventory slot
      */
-    @EventHandler(priority = EventPriority.MONITOR)
+    @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
     public void onNPCInteract(NPCRightClickEvent event) {
         NPC npc = event.getNPC();
-        Integer id = Integer.valueOf(npc.getId());
-        if (plugin.npcIDs.contains(id)) {
+        Player p = event.getClicker();
+        Integer id = npc.getId();
+        if (plugin.getGeneralKeeper().getNpcIDs().contains(id) || (npc.getName().equals(p.getName()) && plugin.getUtils().inTARDISWorld(p))) {
             npc.destroy();
-            event.getClicker().sendMessage(ChatColor.RED + "[Emergency Program One] " + ChatColor.RESET + "Bye!");
-            plugin.npcIDs.remove(id);
+            TARDISMessage.send(event.getClicker(), ChatColor.RED + "[Emergency Program One] " + ChatColor.RESET + "Bye!");
+            plugin.getGeneralKeeper().getNpcIDs().remove(id);
         }
     }
 }

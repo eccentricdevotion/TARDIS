@@ -13,6 +13,7 @@ creation:
     create_worlds_with_perms: false
     default_world: false
     default_world_name: myridiculouslylongworldnameiscalledcuthbert
+    tips_limit: 400
     border_radius: 256
     gamemode: survival
     keep_night: true
@@ -34,6 +35,7 @@ police_box:
     platform_data: 8
     materialise: true
     confirm_timeout: 15
+    sign_colour: WHITE
 # travel settings
 travel:
     include_default_world: false
@@ -55,7 +57,7 @@ preferences:
     key: GOLD_NUGGET
     use_worldguard: true
     respect_worldguard: true
-    respect_towny: true
+    respect_towny: nation
     respect_worldborder: true
     respect_factions: true
     sfx_volume: 10;
@@ -68,6 +70,7 @@ preferences:
     malfunction_end: 3
     malfunction_nether: 3
     use_default_condensables: true
+    heal_speed: 200
 # restrictions
 allow:
     mob_farming: true
@@ -80,6 +83,8 @@ allow:
     all_blocks: false
     sfx: true
     wg_flag_set: true
+    zero_room: false
+    external_gravity: false
 # room related
 growth:
     gravity_max_distance: 15
@@ -92,3 +97,4 @@ growth:
 conversions:
     conversion_done: true
     location_conversion_done: true
+    uuid_conversion_done: true

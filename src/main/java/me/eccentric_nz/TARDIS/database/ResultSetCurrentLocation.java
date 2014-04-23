@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2013 eccentric_nz
+ * Copyright (C) 2014 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -88,7 +88,7 @@ public class ResultSetCurrentLocation {
                     if (entry.getValue().getClass().equals(String.class)) {
                         statement.setString(s, entry.getValue().toString());
                     } else {
-                        statement.setInt(s, plugin.utils.parseInt(entry.getValue().toString()));
+                        statement.setInt(s, plugin.getUtils().parseInt(entry.getValue().toString()));
                     }
                     s++;
                 }

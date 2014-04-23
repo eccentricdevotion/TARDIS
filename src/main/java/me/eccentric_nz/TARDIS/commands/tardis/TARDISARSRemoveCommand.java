@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2013 eccentric_nz
+ * Copyright (C) 2014 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -21,6 +21,9 @@ import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetControls;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
+import me.eccentric_nz.TARDIS.enumeration.MESSAGE;
+import me.eccentric_nz.TARDIS.utility.TARDISMessage;
+import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.block.Sign;
 import org.bukkit.entity.Player;
@@ -40,10 +43,10 @@ public class TARDISARSRemoveCommand {
     public boolean resetARS(Player player) {
         // check they are a timelord
         HashMap<String, Object> where = new HashMap<String, Object>();
-        where.put("owner", player.getName());
+        where.put("uuid", player.getUniqueId().toString());
         ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);
         if (!rs.resultSet()) {
-            player.sendMessage(plugin.pluginName + "You must be the Timelord of a TARDIS to use this command!");
+            TARDISMessage.send(player, plugin.getPluginName() + MESSAGE.NOT_A_TIMELORD.getText());
             return true;
         }
         int id = rs.getTardis_id();
@@ -53,20 +56,22 @@ public class TARDISARSRemoveCommand {
         wheres.put("type", 10);
         ResultSetControls rsc = new ResultSetControls(plugin, wheres, false);
         if (rsc.resultSet()) {
-            Block b = plugin.utils.getLocationFromBukkitString(rsc.getLocation()).getBlock();
-            Sign sign = (Sign) b.getState();
-            for (int i = 0; i < 4; i++) {
-                sign.setLine(i, "");
+            Block b = plugin.getUtils().getLocationFromBukkitString(rsc.getLocation()).getBlock();
+            if (b.getType().equals(Material.WALL_SIGN) || b.getType().equals(Material.SIGN_POST)) {
+                Sign sign = (Sign) b.getState();
+                for (int i = 0; i < 4; i++) {
+                    sign.setLine(i, "");
+                }
+                sign.update();
             }
-            sign.update();
             HashMap<String, Object> del = new HashMap<String, Object>();
             del.put("tardis_id", id);
             del.put("type", 10);
             new QueryFactory(plugin).doDelete("controls", del);
-            player.sendMessage(plugin.pluginName + "Architectural Reconfiguration System GUI removed successfully");
+            TARDISMessage.send(player, plugin.getPluginName() + "Architectural Reconfiguration System GUI removed successfully");
             return true;
         } else {
-            player.sendMessage(plugin.pluginName + "You don't have an Architectural Reconfiguration System GUI!");
+            TARDISMessage.send(player, plugin.getPluginName() + "You don't have an Architectural Reconfiguration System GUI!");
             return true;
         }
     }

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2013 eccentric_nz
+ * Copyright (C) 2014 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -22,6 +22,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
 
 /**
@@ -43,6 +44,7 @@ public class ResultSetARS {
     private final HashMap<String, Object> where;
     private int id;
     private int tardis_id;
+    private UUID uuid;
     private String player;
     private int east;
     private int south;
@@ -87,10 +89,10 @@ public class ResultSetARS {
             if (where != null) {
                 int s = 1;
                 for (Map.Entry<String, Object> entry : where.entrySet()) {
-                    if (entry.getValue().getClass().equals(String.class)) {
+                    if (entry.getValue().getClass().equals(String.class) || entry.getValue().getClass().equals(UUID.class)) {
                         statement.setString(s, entry.getValue().toString());
                     } else {
-                        statement.setInt(s, plugin.utils.parseInt(entry.getValue().toString()));
+                        statement.setInt(s, plugin.getUtils().parseInt(entry.getValue().toString()));
                     }
                     s++;
                 }
@@ -101,6 +103,7 @@ public class ResultSetARS {
                 while (rs.next()) {
                     this.id = rs.getInt("ars_id");
                     this.tardis_id = rs.getInt("tardis_id");
+                    this.uuid = UUID.fromString(rs.getString("uuid"));
                     this.player = rs.getString("player");
                     this.east = rs.getInt("ars_x_east");
                     this.south = rs.getInt("ars_z_south");
@@ -139,10 +142,13 @@ public class ResultSetARS {
         return tardis_id;
     }
 
-    public String getPlayer() {
-        return player;
+    public UUID getUuid() {
+        return uuid;
     }
 
+//    public String getPlayer() {
+//        return player;
+//    }
     public int getEast() {
         return east;
     }

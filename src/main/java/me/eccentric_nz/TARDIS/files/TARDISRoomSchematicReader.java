@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2013 eccentric_nz
+ * Copyright (C) 2014 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -115,14 +115,14 @@ public class TARDISRoomSchematicReader {
 
             // check the room is square - should never fail on plugin enable as schematics are checked when added
             if (width != length) {
-                plugin.console.sendMessage(plugin.pluginName + "Load failed - schematic had unequal length sides!");
+                plugin.getConsole().sendMessage(plugin.getPluginName() + "Load failed - schematic had unequal length sides!");
                 square = false;
             } else {
                 short[] dimensions = new short[3];
                 dimensions[0] = height;
                 dimensions[1] = width;
                 dimensions[2] = length;
-                plugin.room_dimensions.put(s, dimensions);
+                plugin.getBuildKeeper().getRoomDimensions().put(s, dimensions);
 
                 byte[] blocks = (byte[]) getChildTag(tagCollection, "Blocks", ByteArrayTag.class).getValue();
                 byte[] data = (byte[]) getChildTag(tagCollection, "Data", ByteArrayTag.class).getValue();
@@ -158,7 +158,7 @@ public class TARDISRoomSchematicReader {
                     blockdata[i] = b + ":" + data[i];
                     i++;
                 }
-                plugin.roomBlockCounts.put(s, blockIDs);
+                plugin.getBuildKeeper().getRoomBlockCounts().put(s, blockIDs);
                 int j = 0;
                 List<String[][]> layers = new ArrayList<String[][]>();
                 for (int h = 0; h < height; h++) {
@@ -193,11 +193,11 @@ public class TARDISRoomSchematicReader {
                     bw.close();
 
                 } catch (IOException io) {
-                    plugin.console.sendMessage(plugin.pluginName + "Could not save the room csv file!");
+                    plugin.getConsole().sendMessage(plugin.getPluginName() + "Could not save the room csv file!");
                 }
             }
         } catch (IOException e) {
-            plugin.console.sendMessage(plugin.pluginName + "Schematic read error: " + e);
+            plugin.getConsole().sendMessage(plugin.getPluginName() + "Schematic read error: " + e);
         } finally {
             if (fis != null) {
                 try {

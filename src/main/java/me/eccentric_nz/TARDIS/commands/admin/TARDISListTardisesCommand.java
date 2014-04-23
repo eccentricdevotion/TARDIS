@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2013 eccentric_nz
+ * Copyright (C) 2014 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -50,10 +50,10 @@ public class TARDISListTardisesCommand {
                     BufferedWriter bw = new BufferedWriter(new FileWriter(file, false));
                     for (HashMap<String, String> map : data) {
                         HashMap<String, Object> wherecl = new HashMap<String, Object>();
-                        wherecl.put("tardis_id", plugin.utils.parseInt(map.get("tardis_id")));
+                        wherecl.put("tardis_id", plugin.getUtils().parseInt(map.get("tardis_id")));
                         ResultSetCurrentLocation rsc = new ResultSetCurrentLocation(plugin, wherecl);
                         if (!rsc.resultSet()) {
-                            sender.sendMessage(plugin.pluginName + MESSAGE.NO_CURRENT.getText());
+                            sender.sendMessage(plugin.getPluginName() + MESSAGE.NO_CURRENT.getText());
                             return true;
                         }
                         String line = "Timelord: " + map.get("owner") + ", Location: " + rsc.getWorld().getName() + ":" + rsc.getX() + ":" + rsc.getY() + ":" + rsc.getZ();
@@ -65,34 +65,34 @@ public class TARDISListTardisesCommand {
                     plugin.debug("Could not create and write to TARDIS_list.txt! " + e.getMessage());
                 }
             }
-            sender.sendMessage(plugin.pluginName + "File saved to 'plugins/TARDIS/TARDIS_list.txt'");
+            sender.sendMessage(plugin.getPluginName() + "File saved to 'plugins/TARDIS/TARDIS_list.txt'");
             return true;
         } else {
             // get all tardis positions - max 18
             int start = 0, end = 18;
             if (args.length > 1) {
-                int tmp = plugin.utils.parseInt(args[1]);
+                int tmp = plugin.getUtils().parseInt(args[1]);
                 start = (tmp * 18) - 18;
                 end = tmp * 18;
             }
             String limit = start + ", " + end;
             ResultSetTardis rsl = new ResultSetTardis(plugin, null, limit, true);
             if (rsl.resultSet()) {
-                sender.sendMessage(plugin.pluginName + "TARDIS locations.");
+                sender.sendMessage(plugin.getPluginName() + "TARDIS locations.");
                 ArrayList<HashMap<String, String>> data = rsl.getData();
                 for (HashMap<String, String> map : data) {
                     HashMap<String, Object> wherecl = new HashMap<String, Object>();
-                    wherecl.put("tardis_id", plugin.utils.parseInt(map.get("tardis_id")));
+                    wherecl.put("tardis_id", plugin.getUtils().parseInt(map.get("tardis_id")));
                     ResultSetCurrentLocation rsc = new ResultSetCurrentLocation(plugin, wherecl);
                     if (!rsc.resultSet()) {
-                        sender.sendMessage(plugin.pluginName + MESSAGE.NO_CURRENT.getText());
+                        sender.sendMessage(plugin.getPluginName() + MESSAGE.NO_CURRENT.getText());
                         return true;
                     }
                     sender.sendMessage("Timelord: " + map.get("owner") + ", Location: " + rsc.getWorld().getName() + ":" + rsc.getX() + ":" + rsc.getY() + ":" + rsc.getZ());
                 }
-                sender.sendMessage(plugin.pluginName + "To see more locations, type: /tardisadmin list 2,  /tardisadmin list 3 etc.");
+                sender.sendMessage(plugin.getPluginName() + "To see more locations, type: /tardisadmin list 2,  /tardisadmin list 3 etc.");
             } else {
-                sender.sendMessage(plugin.pluginName + "There are no more records to display.");
+                sender.sendMessage(plugin.getPluginName() + "There are no more records to display.");
             }
             return true;
         }

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2013 eccentric_nz
+ * Copyright (C) 2014 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,10 +18,10 @@ package me.eccentric_nz.TARDIS.listeners;
 
 //import java.util.HashMap;
 //import java.util.List;
+import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
-import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryCloseEvent;
@@ -42,27 +42,27 @@ public class TARDISRecipeListener implements Listener {
         this.plugin = plugin;
     }
 
-    @EventHandler(priority = EventPriority.NORMAL)
+    @EventHandler(ignoreCancelled = true)
     public void onRecipeClick(InventoryClickEvent event) {
         Inventory top = event.getView().getTopInventory();
         InventoryType type = top.getType();
         if (type == InventoryType.WORKBENCH) {
             final Player player = (Player) event.getWhoClicked();
-            if (plugin.trackRecipeView.contains(player.getName())) {
+            if (plugin.getTrackerKeeper().getTrackRecipeView().contains(player.getUniqueId())) {
                 event.setCancelled(true);
             }
         }
     }
 
-    @EventHandler(priority = EventPriority.NORMAL)
+    @EventHandler(ignoreCancelled = true)
     public void onRecipeClose(InventoryCloseEvent event) {
         Inventory top = event.getView().getTopInventory();
         InventoryType type = top.getType();
         if (type == InventoryType.WORKBENCH) {
             Player p = (Player) event.getPlayer();
-            String name = p.getName();
-            if (plugin.trackRecipeView.contains(name)) {
-                plugin.trackRecipeView.remove(name);
+            UUID uuid = p.getUniqueId();
+            if (plugin.getTrackerKeeper().getTrackRecipeView().contains(uuid)) {
+                plugin.getTrackerKeeper().getTrackRecipeView().remove(uuid);
                 event.getView().getTopInventory().clear();
                 p.updateInventory();
             }

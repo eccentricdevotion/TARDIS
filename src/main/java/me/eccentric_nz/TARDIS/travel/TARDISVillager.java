@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2013 eccentric_nz
+ * Copyright (C) 2014 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -28,6 +28,7 @@ public class TARDISVillager {
     private int age;
     private double health;
     private boolean baby;
+    private String name;
 
     /**
      * Data storage class for TARDIS villagers.
@@ -65,5 +66,13 @@ public class TARDISVillager {
 
     public void setBaby(boolean baby) {
         this.baby = baby;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 }

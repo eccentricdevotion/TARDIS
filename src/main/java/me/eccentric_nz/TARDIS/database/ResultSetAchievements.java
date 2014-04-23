@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2013 eccentric_nz
+ * Copyright (C) 2014 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -25,6 +25,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
+import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
 
 /**
@@ -43,6 +44,7 @@ public class ResultSetAchievements {
     private final HashMap<String, Object> where;
     private final boolean multiple;
     private int a_id;
+    private UUID uuid;
     private String player;
     private String name;
     private String amount;
@@ -88,10 +90,10 @@ public class ResultSetAchievements {
             if (where != null) {
                 int s = 1;
                 for (Map.Entry<String, Object> entry : where.entrySet()) {
-                    if (entry.getValue().getClass().equals(String.class)) {
+                    if (entry.getValue().getClass().equals(String.class) || entry.getValue().getClass().equals(UUID.class)) {
                         statement.setString(s, entry.getValue().toString());
                     } else {
-                        statement.setInt(s, plugin.utils.parseInt(entry.getValue().toString()));
+                        statement.setInt(s, plugin.getUtils().parseInt(entry.getValue().toString()));
                     }
                     s++;
                 }
@@ -109,6 +111,7 @@ public class ResultSetAchievements {
                     data.add(row);
                 }
                 this.a_id = rs.getInt("a_id");
+                this.uuid = UUID.fromString(rs.getString("uuid"));
                 this.player = rs.getString("player");
                 this.name = rs.getString("name");
                 this.amount = rs.getString("amount");
@@ -141,10 +144,13 @@ public class ResultSetAchievements {
         return a_id;
     }
 
-    public String getPlayer() {
-        return player;
+    public UUID getUuid() {
+        return uuid;
     }
 
+//    public String getPlayer() {
+//        return player;
+//    }
     public String getName() {
         return name;
     }

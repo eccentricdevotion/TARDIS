@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2013 eccentric_nz
+ * Copyright (C) 2014 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -17,6 +17,7 @@
 package me.eccentric_nz.TARDIS.commands.admin;
 
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.enumeration.MESSAGE;
 import org.apache.commons.lang.StringUtils;
 import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
@@ -47,7 +48,7 @@ public class TARDISSetWorldInclusionCommand {
         String nodots = StringUtils.replace(t, ".", "_");
         // check the world actually exists!
         if (plugin.getServer().getWorld(nodots) == null) {
-            sender.sendMessage(plugin.pluginName + ChatColor.RED + "World does not exist!");
+            sender.sendMessage(plugin.getPluginName() + ChatColor.RED + "World does not exist!");
             return false;
         }
         if (first.equals("include")) {
@@ -56,7 +57,7 @@ public class TARDISSetWorldInclusionCommand {
             plugin.getConfig().set("worlds." + nodots, false);
         }
         plugin.saveConfig();
-        sender.sendMessage(plugin.pluginName + "The config was updated!");
+        sender.sendMessage(plugin.getPluginName() + MESSAGE.CONFIG_UPDATED.getText());
         return true;
     }
 }

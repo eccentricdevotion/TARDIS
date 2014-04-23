@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2013 eccentric_nz
+ * Copyright (C) 2014 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -23,6 +23,7 @@ import java.util.Map;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.enumeration.MAP;
 import me.eccentric_nz.TARDIS.enumeration.MESSAGE;
+import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import org.bukkit.Material;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -65,7 +66,7 @@ public class TARDISRecipeCommands implements CommandExecutor {
         firstArgs.add("l-circuit"); // Locator Circuit
         firstArgs.add("locator"); // TARDIS Locator
         firstArgs.add("m-circuit"); // Materialisation Circuit
-        firstArgs.add("mem-circuit"); // Memory Circuit
+        firstArgs.add("memory-circuit"); // Memory Circuit
         firstArgs.add("oscillator"); // Sonic Oscillator
         firstArgs.add("p-circuit"); // Perception Circuit
         firstArgs.add("player-disk"); // Player Storage Disk
@@ -74,7 +75,7 @@ public class TARDISRecipeCommands implements CommandExecutor {
         firstArgs.add("remote"); // Stattenheim Remote
         firstArgs.add("s-circuit"); // Stattenheim Circuit
         firstArgs.add("save-disk"); // Save Storage Disk
-        firstArgs.add("scan-circuit"); // Scanner Circuit
+        firstArgs.add("scanner-circuit"); // Scanner Circuit
         firstArgs.add("sonic"); // Sonic Screwdriver
         firstArgs.add("t-circuit"); // Temporal Circuit
     }
@@ -82,8 +83,8 @@ public class TARDISRecipeCommands implements CommandExecutor {
     @Override
     public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
         if (cmd.getName().equalsIgnoreCase("tardisrecipe")) {
-            if (!sender.hasPermission("tardis.create")) {
-                sender.sendMessage(plugin.pluginName + MESSAGE.NO_PERMS.getText());
+            if (!sender.hasPermission("tardis.help")) {
+                sender.sendMessage(plugin.getPluginName() + MESSAGE.NO_PERMS.getText());
                 return false;
             }
             Player player = null;
@@ -91,15 +92,19 @@ public class TARDISRecipeCommands implements CommandExecutor {
                 player = (Player) sender;
             }
             if (player == null) {
-                sender.sendMessage(plugin.pluginName + "You must be a player to run this command!");
-                return false;
+                if (args.length == 0 || !firstArgs.contains(args[0].toLowerCase(Locale.ENGLISH))) {
+                    new TARDISRecipeLister(plugin, sender).list();
+                } else {
+                    sender.sendMessage(plugin.getPluginName() + MESSAGE.MUST_BE_PLAYER.getText());
+                }
+                return true;
             }
             if (args.length < 1) {
-                sender.sendMessage(plugin.pluginName + "Too few command arguments!");
+                TARDISMessage.send(player, plugin.getPluginName() + MESSAGE.TOO_FEW_ARGS.getText());
                 return false;
             }
             if (!firstArgs.contains(args[0].toLowerCase(Locale.ENGLISH))) {
-                sender.sendMessage(plugin.pluginName + "That is not a valid recipe name! Try one of: a-circuit|ars-circuit|bio-circuit|biome-disk|blank|c-circuit|cell|d-circuit|e-circuit|filter|i-circuit|key|l-circuit|locator|m-circuit|mem-circuit|oscillator|player-disk|preset-disk|p-circuit|r-circuit|remote|s-circuit|save-disk|scan-circuit|sonic|t-circuit");
+                new TARDISRecipeLister(plugin, sender).list();
                 return true;
             }
             if (args[0].equalsIgnoreCase("a-circuit")) {
@@ -162,7 +167,7 @@ public class TARDISRecipeCommands implements CommandExecutor {
                 this.showShapedRecipe(player, "TARDIS Materialisation Circuit");
                 return true;
             }
-            if (args[0].equalsIgnoreCase("mem-circuit")) {
+            if (args[0].equalsIgnoreCase("memory-circuit")) {
                 this.showShapedRecipe(player, "TARDIS Memory Circuit");
                 return true;
             }
@@ -198,7 +203,7 @@ public class TARDISRecipeCommands implements CommandExecutor {
                 this.showShapelessRecipe(player, "Save Storage Disk");
                 return true;
             }
-            if (args[0].equalsIgnoreCase("scan-circuit")) {
+            if (args[0].equalsIgnoreCase("scanner-circuit")) {
                 this.showShapedRecipe(player, "TARDIS Scanner Circuit");
                 return true;
             }
@@ -215,9 +220,9 @@ public class TARDISRecipeCommands implements CommandExecutor {
     }
 
     public void showShapedRecipe(Player p, String str) {
-        ShapedRecipe recipe = plugin.figura.getShapedRecipes().get(str);
+        ShapedRecipe recipe = plugin.getFigura().getShapedRecipes().get(str);
         p.closeInventory();
-        plugin.trackRecipeView.add(p.getName());
+        plugin.getTrackerKeeper().getTrackRecipeView().add(p.getUniqueId());
         final InventoryView view = p.openWorkbench(null, true);
         final String[] recipeShape = recipe.getShape();
         final Map<Character, ItemStack> ingredientMap = recipe.getIngredientMap();
@@ -239,9 +244,9 @@ public class TARDISRecipeCommands implements CommandExecutor {
     }
 
     public void showShapelessRecipe(Player player, String str) {
-        ShapelessRecipe recipe = plugin.incomposita.getShapelessRecipes().get(str);
+        ShapelessRecipe recipe = plugin.getIncomposita().getShapelessRecipes().get(str);
         final List<ItemStack> ingredients = recipe.getIngredientList();
-        plugin.trackRecipeView.add(player.getName());
+        plugin.getTrackerKeeper().getTrackRecipeView().add(player.getUniqueId());
         final InventoryView view = player.openWorkbench(null, true);
         for (int i = 0; i < ingredients.size(); i++) {
             if (ingredients.get(i).getType().equals(Material.MAP)) {

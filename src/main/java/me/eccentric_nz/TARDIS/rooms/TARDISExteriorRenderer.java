@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2013 eccentric_nz
+ * Copyright (C) 2014 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -26,12 +26,15 @@ import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetPlayerPrefs;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
 import me.eccentric_nz.TARDIS.enumeration.PRESET;
+import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.Sound;
 import org.bukkit.World;
 import org.bukkit.block.Biome;
 import org.bukkit.block.Block;
+import org.bukkit.entity.Entity;
+import org.bukkit.entity.Item;
 import org.bukkit.entity.Player;
 
 /**
@@ -56,14 +59,14 @@ public class TARDISExteriorRenderer {
         String isRendered = ew.getName() + ":" + epbx + ":" + epby + ":" + epbz;
         String[] idata = interior.split(":");
         World iw = plugin.getServer().getWorld(idata[0]);
-        int ipbx = plugin.utils.parseInt(idata[1]);
-        int ipby = plugin.utils.parseInt(idata[2]) + 2;
-        int ipbz = plugin.utils.parseInt(idata[3]);
+        int ipbx = plugin.getUtils().parseInt(idata[1]);
+        int ipby = plugin.getUtils().parseInt(idata[2]) + 2;
+        int ipbz = plugin.getUtils().parseInt(idata[3]);
         final Location location = new Location(iw, ipbx, ipby, ipbz);
-        if (plugin.trackRenderer.containsKey(id) && plugin.trackRenderer.get(id).equals(isRendered)) {
-            p.sendMessage(plugin.pluginName + "Destination unchanged, no rendering needed, stand by for transmat...");
+        if (plugin.getTrackerKeeper().getTrackRenderer().containsKey(id) && plugin.getTrackerKeeper().getTrackRenderer().get(id).equals(isRendered)) {
+            TARDISMessage.send(p, plugin.getPluginName() + "Destination unchanged, no rendering needed, stand by for transmat...");
         } else {
-            p.sendMessage(plugin.pluginName + "Starting exterior rendering, please wait...");
+            TARDISMessage.send(p, plugin.getPluginName() + "Starting exterior rendering, please wait...");
             int isx, isy, isz, esx, esy, esz, xx = 0, yy = 0, zz = 0;
             // get interior coords
             isx = ipbx - 6;
@@ -91,11 +94,13 @@ public class TARDISExteriorRenderer {
                             switch (eb.getTypeId()) {
                                 case 8:
                                 case 9:
-                                    ib.setTypeIdAndData(95, (byte) 3, true);
+                                    ib.setType(Material.STAINED_GLASS);
+                                    ib.setData((byte) 3, true);
                                     break;
                                 case 10:
                                 case 11:
-                                    ib.setTypeIdAndData(35, (byte) 1, true);
+                                    ib.setType(Material.WOOL);
+                                    ib.setData((byte) 1, true);
                                     break;
                                 default:
                                     ib.setTypeIdAndData(eb.getTypeId(), eb.getData(), true);
@@ -118,8 +123,8 @@ public class TARDISExteriorRenderer {
             int z = (location.getBlockZ());
             int plusz = (location.getBlockZ() + 1);
             int minusz = (location.getBlockZ() - 1);
-            TARDISChameleonColumn column = plugin.presets.getGlass(PRESET.RENDER, d);
-            addPlatform(location, d, p.getName(), id);
+            TARDISChameleonColumn column = plugin.getPresets().getGlass(PRESET.RENDER, d);
+            addPlatform(location, d, p.getUniqueId().toString(), id);
             int px, pz;
             int[][] ids = column.getId();
             byte[][] data = column.getData();
@@ -165,7 +170,7 @@ public class TARDISExteriorRenderer {
                         break;
                 }
                 for (int py = 0; py < 4; py++) {
-                    plugin.utils.setBlock(iw, px, (y + py), pz, colids[py], coldatas[py]);
+                    plugin.getUtils().setBlock(iw, px, (y + py), pz, colids[py], coldatas[py]);
                 }
             }
             // change the black/blue/green wool to blue/black/ to reflect time of day and environment
@@ -260,28 +265,32 @@ public class TARDISExteriorRenderer {
                     }
                 }
             }
-            plugin.trackRenderer.put(id, isRendered);
-            p.sendMessage(plugin.pluginName + "Rendering complete, stand by for transmat...");
+            plugin.getTrackerKeeper().getTrackRenderer().put(id, isRendered);
+            TARDISMessage.send(p, plugin.getPluginName() + "Rendering complete, stand by for transmat...");
+            // remove dropped items
+            for (Entity e : location.getChunk().getEntities()) {
+                if (e instanceof Item) {
+                    e.remove();
+                }
+            }
         }
         // charge artron energy for the render
         HashMap<String, Object> where = new HashMap<String, Object>();
         where.put("tardis_id", id);
         new QueryFactory(plugin).alterEnergyLevel("tardis", -plugin.getArtronConfig().getInt("render"), where, p);
         // tp the player inside the room
-        plugin.trackTransmat.add(p.getName());
-        plugin.getServer()
-                .getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
-                    @Override
-                    public void run() {
-                        transmat(p, d, location);
-                        p.playSound(location, Sound.ENDERMAN_TELEPORT, 1.0f, 1.0f);
-                        p.sendMessage(plugin.pluginName + "Right-click to exit.");
-                    }
-                },
-                10L);
+        plugin.getTrackerKeeper().getTrackTransmat().add(p.getUniqueId());
+        plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
+            @Override
+            public void run() {
+                transmat(p, d, location);
+                p.playSound(location, Sound.ENDERMAN_TELEPORT, 1.0f, 1.0f);
+                TARDISMessage.send(p, plugin.getPluginName() + "Right-click to exit.");
+            }
+        }, 10L);
     }
 
-    private void transmat(Player player, COMPASS d, Location loc) {
+    public void transmat(Player player, COMPASS d, Location loc) {
         float yaw = player.getLocation().getYaw();
         float pitch = player.getLocation().getPitch();
         loc.setPitch(pitch);
@@ -311,7 +320,7 @@ public class TARDISExteriorRenderer {
     }
 
     @SuppressWarnings("deprecation")
-    private void addPlatform(Location l, COMPASS d, String p, int id) {
+    private void addPlatform(Location l, COMPASS d, String uuid, int id) {
         int plusx, minusx, x, y, plusz, minusz, z;
         int platform_id = plugin.getConfig().getInt("police_box.platform_id");
         byte platform_data = (byte) plugin.getConfig().getInt("police_box.platform_data");
@@ -327,7 +336,7 @@ public class TARDISExteriorRenderer {
         if (plugin.getConfig().getBoolean("travel.platform")) {
             // check if user has platform pref
             HashMap<String, Object> wherep = new HashMap<String, Object>();
-            wherep.put("player", p);
+            wherep.put("uuid", uuid);
             ResultSetPlayerPrefs pp = new ResultSetPlayerPrefs(plugin, wherep);
             boolean userPlatform;
             if (pp.resultSet()) {
@@ -354,7 +363,7 @@ public class TARDISExteriorRenderer {
                 for (Block pb : platform_blocks) {
                     int matint = pb.getTypeId();
                     if (TARDISConstants.PLATFORM_BLOCKS.contains(matint)) {
-                        plugin.utils.setBlock(world, pb.getX(), pb.getY(), pb.getZ(), platform_id, platform_data);
+                        plugin.getUtils().setBlock(world, pb.getX(), pb.getY(), pb.getZ(), platform_id, platform_data);
                     }
                 }
             }

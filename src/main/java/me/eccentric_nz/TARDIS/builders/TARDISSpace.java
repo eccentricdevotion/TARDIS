@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2013 eccentric_nz
+ * Copyright (C) 2014 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -56,14 +56,14 @@ public class TARDISSpace {
     public World getTardisWorld(String name) {
         if (tardisWorld == null) {
             String gm = plugin.getConfig().getString("creation.gamemode").toLowerCase(Locale.ENGLISH);
-            if (plugin.pm.isPluginEnabled("MultiWorld")) {
-                plugin.getServer().dispatchCommand(plugin.console, "mw create " + name + " plugin:TARDISChunkGenerator");
-                plugin.getServer().dispatchCommand(plugin.console, "mw load " + name);
-                plugin.getServer().dispatchCommand(plugin.console, "mw setflag " + name + " SpawnMonster false");
-                plugin.getServer().dispatchCommand(plugin.console, "mw setflag " + name + " SpawnAnimal false");
-                plugin.getServer().dispatchCommand(plugin.console, "mw setflag " + name + " PvP false");
+            if (plugin.getPM().isPluginEnabled("MultiWorld")) {
+                plugin.getServer().dispatchCommand(plugin.getConsole(), "mw create " + name + " plugin:TARDISChunkGenerator");
+                plugin.getServer().dispatchCommand(plugin.getConsole(), "mw load " + name);
+                plugin.getServer().dispatchCommand(plugin.getConsole(), "mw setflag " + name + " SpawnMonster false");
+                plugin.getServer().dispatchCommand(plugin.getConsole(), "mw setflag " + name + " SpawnAnimal false");
+                plugin.getServer().dispatchCommand(plugin.getConsole(), "mw setflag " + name + " PvP false");
                 if (gm.equalsIgnoreCase("creative")) {
-                    plugin.getServer().dispatchCommand(plugin.console, "mw setflag " + name + " CreativeWorld true");
+                    plugin.getServer().dispatchCommand(plugin.getConsole(), "mw setflag " + name + " CreativeWorld true");
                 }
                 tardisWorld = plugin.getServer().getWorld(name);
             } else {
@@ -74,55 +74,55 @@ public class TARDISSpace {
             // add world to config, but disabled by default
             plugin.getConfig().set("worlds." + name, false);
             plugin.saveConfig();
-            if (plugin.pm.isPluginEnabled("Multiverse-Core")) {
-                plugin.getServer().dispatchCommand(plugin.console, "mv import " + name + " normal -g TARDISChunkGenerator -n");
-                plugin.getServer().dispatchCommand(plugin.console, "mv modify set animals false " + name);
-                plugin.getServer().dispatchCommand(plugin.console, "mv modify set monsters false " + name);
-                plugin.getServer().dispatchCommand(plugin.console, "mv modify set hidden true " + name);
-                plugin.getServer().dispatchCommand(plugin.console, "mv modify set weather false " + name);
-                plugin.getServer().dispatchCommand(plugin.console, "mv modify set memory false " + name);
-                plugin.getServer().dispatchCommand(plugin.console, "mv modify set portalform none " + name);
-                plugin.getServer().dispatchCommand(plugin.console, "mv modify set adjustspawn false " + name);
-                plugin.getServer().dispatchCommand(plugin.console, "mv modify set pvp false " + name);
-                plugin.getServer().dispatchCommand(plugin.console, "mv modify set mode " + gm + " " + name);
+            if (plugin.getPM().isPluginEnabled("Multiverse-Core")) {
+                plugin.getServer().dispatchCommand(plugin.getConsole(), "mv import " + name + " normal -g TARDISChunkGenerator -n");
+                plugin.getServer().dispatchCommand(plugin.getConsole(), "mv modify set animalsrate 0 " + name);
+                plugin.getServer().dispatchCommand(plugin.getConsole(), "mv modify set monstersrate 0 " + name);
+                plugin.getServer().dispatchCommand(plugin.getConsole(), "mv modify set hidden true " + name);
+                plugin.getServer().dispatchCommand(plugin.getConsole(), "mv modify set weather false " + name);
+                //plugin.getServer().dispatchCommand(plugin.getConsole(), "mv modify set memory false " + name);
+                plugin.getServer().dispatchCommand(plugin.getConsole(), "mv modify set portalform none " + name);
+                plugin.getServer().dispatchCommand(plugin.getConsole(), "mv modify set adjustspawn false " + name);
+                plugin.getServer().dispatchCommand(plugin.getConsole(), "mv modify set pvp false " + name);
+                plugin.getServer().dispatchCommand(plugin.getConsole(), "mv modify set mode " + gm + " " + name);
             }
             String inventory_group = plugin.getConfig().getString("creation.inventory_group");
-            if (plugin.pm.isPluginEnabled("My Worlds")) {
-                plugin.getServer().dispatchCommand(plugin.console, "myworlds load " + name + ":TARDISChunkGenerator");
-                plugin.getServer().dispatchCommand(plugin.console, "myworlds denyspawn all " + name);
-                plugin.getServer().dispatchCommand(plugin.console, "myworlds weather always sunny " + name);
-                plugin.getServer().dispatchCommand(plugin.console, "myworlds gamemode " + gm + " " + name);
+            if (plugin.getPM().isPluginEnabled("My Worlds")) {
+                plugin.getServer().dispatchCommand(plugin.getConsole(), "myworlds load " + name + ":TARDISChunkGenerator");
+                plugin.getServer().dispatchCommand(plugin.getConsole(), "myworlds denyspawn all " + name);
+                plugin.getServer().dispatchCommand(plugin.getConsole(), "myworlds weather always sunny " + name);
+                plugin.getServer().dispatchCommand(plugin.getConsole(), "myworlds gamemode " + gm + " " + name);
                 if (plugin.getConfig().getBoolean("creation.keep_night")) {
-                    plugin.getServer().dispatchCommand(plugin.console, "myworlds time always night " + name);
+                    plugin.getServer().dispatchCommand(plugin.getConsole(), "myworlds time always night " + name);
                 }
                 if (!inventory_group.equals("0")) {
-                    plugin.getServer().dispatchCommand(plugin.console, "world inventory merge " + name + " " + inventory_group);
+                    plugin.getServer().dispatchCommand(plugin.getConsole(), "world inventory merge " + name + " " + inventory_group);
                 }
-                plugin.getServer().dispatchCommand(plugin.console, "world config save");
+                plugin.getServer().dispatchCommand(plugin.getConsole(), "world config save");
             }
-            if (plugin.pm.isPluginEnabled("Multiverse-Inventories")) {
+            if (plugin.getPM().isPluginEnabled("Multiverse-Inventories")) {
                 if (!inventory_group.equals("0")) {
-                    MultiverseInventories mi = (MultiverseInventories) plugin.pm.getPlugin("Multiverse-Inventories");
+                    MultiverseInventories mi = (MultiverseInventories) plugin.getPM().getPlugin("Multiverse-Inventories");
                     WorldGroupProfile wgp = mi.getGroupManager().getGroup(inventory_group);
                     wgp.addWorld(name);
                 }
             }
-            if (plugin.pm.isPluginEnabled("WorldBorder")) {
+            if (plugin.getPM().isPluginEnabled("WorldBorder")) {
                 // wb <world> set <radius> <x> <z>
-                plugin.getServer().dispatchCommand(plugin.console, "wb " + name + " set " + plugin.getConfig().getInt("creation.border_radius") + " 0 0");
+                plugin.getServer().dispatchCommand(plugin.getConsole(), "wb " + name + " set " + plugin.getConfig().getInt("creation.border_radius") + " 0 0");
             }
             if (plugin.getConfig().getBoolean("creation.add_perms")) {
-                if (plugin.pm.isPluginEnabled("GroupManager")) {
+                if (plugin.getPM().isPluginEnabled("GroupManager")) {
                     TARDISGroupManagerHandler tgmh = new TARDISGroupManagerHandler(plugin);
                     String player = name.substring(13);
                     tgmh.addPerms(player);
                 }
-                if (plugin.pm.isPluginEnabled("bPermissions")) {
+                if (plugin.getPM().isPluginEnabled("bPermissions")) {
                     TARDISbPermissionsHandler tbph = new TARDISbPermissionsHandler(plugin);
                     String player = name.substring(13);
                     tbph.addPerms(player);
                 }
-                if (plugin.pm.isPluginEnabled("PermissionsEx")) {
+                if (plugin.getPM().isPluginEnabled("PermissionsEx")) {
                     TARDISPermissionsExHandler tpesxh = new TARDISPermissionsExHandler(plugin);
                     String player = name.substring(13);
                     tpesxh.addPerms(player);
@@ -157,40 +157,40 @@ public class TARDISSpace {
     }
 
     public void createDefaultWorld(String name) {
-        if (plugin.pm.isPluginEnabled("MultiWorld")) {
-            plugin.getServer().dispatchCommand(plugin.console, "mw create " + name + " plugin:TARDISChunkGenerator");
-            plugin.getServer().dispatchCommand(plugin.console, "mw setflag " + name + " SpawnMonster false");
-            plugin.getServer().dispatchCommand(plugin.console, "mw setflag " + name + " SpawnAnimal false");
-            plugin.getServer().dispatchCommand(plugin.console, "mw setflag " + name + " PvP false");
+        if (plugin.getPM().isPluginEnabled("MultiWorld")) {
+            plugin.getServer().dispatchCommand(plugin.getConsole(), "mw create " + name + " plugin:TARDISChunkGenerator");
+            plugin.getServer().dispatchCommand(plugin.getConsole(), "mw setflag " + name + " SpawnMonster false");
+            plugin.getServer().dispatchCommand(plugin.getConsole(), "mw setflag " + name + " SpawnAnimal false");
+            plugin.getServer().dispatchCommand(plugin.getConsole(), "mw setflag " + name + " PvP false");
         } else {
             WorldCreator.name(name).type(WorldType.FLAT).environment(World.Environment.NORMAL).generator(new TARDISChunkGenerator()).createWorld();
         }
         // add world to config, but disabled by default
         plugin.getConfig().set("worlds." + name, false);
         plugin.saveConfig();
-        if (plugin.pm.isPluginEnabled("Multiverse-Core")) {
-            plugin.getServer().dispatchCommand(plugin.console, "mv import " + name + " normal -g TARDISChunkGenerator -n");
-            plugin.getServer().dispatchCommand(plugin.console, "mv modify set animals false " + name);
-            plugin.getServer().dispatchCommand(plugin.console, "mv modify set monsters false " + name);
-            plugin.getServer().dispatchCommand(plugin.console, "mv modify set hidden true " + name);
-            plugin.getServer().dispatchCommand(plugin.console, "mv modify set weather false " + name);
-            plugin.getServer().dispatchCommand(plugin.console, "mv modify set memory false " + name);
-            plugin.getServer().dispatchCommand(plugin.console, "mv modify set portalform none " + name);
-            plugin.getServer().dispatchCommand(plugin.console, "mv modify set adjustspawn false " + name);
-            plugin.getServer().dispatchCommand(plugin.console, "mv modify set pvp false " + name);
+        if (plugin.getPM().isPluginEnabled("Multiverse-Core")) {
+            plugin.getServer().dispatchCommand(plugin.getConsole(), "mv import " + name + " normal -g TARDISChunkGenerator -n");
+            plugin.getServer().dispatchCommand(plugin.getConsole(), "mv modify set animalsrate 0 " + name);
+            plugin.getServer().dispatchCommand(plugin.getConsole(), "mv modify set monstersrate 0 " + name);
+            plugin.getServer().dispatchCommand(plugin.getConsole(), "mv modify set hidden true " + name);
+            plugin.getServer().dispatchCommand(plugin.getConsole(), "mv modify set weather false " + name);
+            plugin.getServer().dispatchCommand(plugin.getConsole(), "mv modify set memory false " + name);
+            plugin.getServer().dispatchCommand(plugin.getConsole(), "mv modify set portalform none " + name);
+            plugin.getServer().dispatchCommand(plugin.getConsole(), "mv modify set adjustspawn false " + name);
+            plugin.getServer().dispatchCommand(plugin.getConsole(), "mv modify set pvp false " + name);
         }
         String inventory_group = plugin.getConfig().getString("creation.inventory_group");
-        if (plugin.pm.isPluginEnabled("My Worlds")) {
-            plugin.getServer().dispatchCommand(plugin.console, "myworlds load " + name + ":TARDISChunkGenerator");
-            plugin.getServer().dispatchCommand(plugin.console, "myworlds denyspawn all " + name);
-            plugin.getServer().dispatchCommand(plugin.console, "myworlds weather always sunny " + name);
+        if (plugin.getPM().isPluginEnabled("My Worlds")) {
+            plugin.getServer().dispatchCommand(plugin.getConsole(), "myworlds load " + name + ":TARDISChunkGenerator");
+            plugin.getServer().dispatchCommand(plugin.getConsole(), "myworlds denyspawn all " + name);
+            plugin.getServer().dispatchCommand(plugin.getConsole(), "myworlds weather always sunny " + name);
             if (plugin.getConfig().getBoolean("creation.keep_night")) {
-                plugin.getServer().dispatchCommand(plugin.console, "myworlds time always night " + name);
+                plugin.getServer().dispatchCommand(plugin.getConsole(), "myworlds time always night " + name);
             }
             if (!inventory_group.equals("0")) {
-                plugin.getServer().dispatchCommand(plugin.console, "world inventory merge " + name + " " + inventory_group);
+                plugin.getServer().dispatchCommand(plugin.getConsole(), "world inventory merge " + name + " " + inventory_group);
             }
-            plugin.getServer().dispatchCommand(plugin.console, "world config save");
+            plugin.getServer().dispatchCommand(plugin.getConsole(), "world config save");
         }
     }
 }

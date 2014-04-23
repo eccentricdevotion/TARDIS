@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2013 eccentric_nz
+ * Copyright (C) 2014 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -25,6 +25,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
+import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
 
 /**
@@ -43,6 +44,7 @@ public class ResultSetCount {
     private final HashMap<String, Object> where;
     private final boolean multiple;
     private int id;
+    private UUID uuid;
     private String player;
     private int count;
     private final ArrayList<HashMap<String, String>> data = new ArrayList<HashMap<String, String>>();
@@ -88,10 +90,10 @@ public class ResultSetCount {
             if (where != null) {
                 int s = 1;
                 for (Map.Entry<String, Object> entry : where.entrySet()) {
-                    if (entry.getValue().getClass().equals(String.class)) {
+                    if (entry.getValue().getClass().equals(String.class) || entry.getValue().getClass().equals(UUID.class)) {
                         statement.setString(s, entry.getValue().toString());
                     } else {
-                        statement.setInt(s, plugin.utils.parseInt(entry.getValue().toString()));
+                        statement.setInt(s, plugin.getUtils().parseInt(entry.getValue().toString()));
                     }
                     s++;
                 }
@@ -110,6 +112,7 @@ public class ResultSetCount {
                         data.add(row);
                     }
                     this.id = rs.getInt("t_id");
+                    this.uuid = UUID.fromString(rs.getString("uuid"));
                     this.player = rs.getString("player");
                     this.count = rs.getInt("count");
                 }
@@ -138,10 +141,13 @@ public class ResultSetCount {
         return id;
     }
 
-    public String getPlayer() {
-        return player;
+    public UUID getUuid() {
+        return uuid;
     }
 
+//    public String getPlayer() {
+//        return player;
+//    }
     public int getCount() {
         return count;
     }

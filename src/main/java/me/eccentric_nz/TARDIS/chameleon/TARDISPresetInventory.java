@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2013 eccentric_nz
+ * Copyright (C) 2014 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -56,7 +56,7 @@ public class TARDISPresetInventory {
         ing.setDisplayName("Circuit");
         String on_off = (bool) ? ChatColor.GREEN + "ON" : ChatColor.RED + "OFF";
         String to_engage = (bool) ? "OFF" : "ON";
-        ing.setLore(Arrays.asList(new String[]{on_off, "Click to turn " + to_engage}));
+        ing.setLore(Arrays.asList(on_off, "Click to turn " + to_engage));
         con.setItemMeta(ing);
         // Apply preset
         ItemStack apply = new ItemStack(Material.BOOKSHELF, 1);
@@ -186,7 +186,7 @@ public class TARDISPresetInventory {
         me.setDisplayName("Biome Adaption");
         String biome = (adapt) ? ChatColor.GREEN + "ON" : ChatColor.RED + "OFF";
         String to_turn = (adapt) ? "OFF" : "ON";
-        me.setLore(Arrays.asList(new String[]{biome, "Click to turn " + to_turn}));
+        me.setLore(Arrays.asList(biome, "Click to turn " + to_turn));
         bio.setItemMeta(me);
         // Cancel / close
         ItemStack close = new ItemStack(Material.WOOL, 1, (short) 15);

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2013 eccentric_nz
+ * Copyright (C) 2014 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -19,14 +19,9 @@ package me.eccentric_nz.TARDIS.commands.admin;
 import java.util.Arrays;
 import java.util.List;
 import me.eccentric_nz.TARDIS.TARDIS;
-import org.bukkit.Material;
-import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
-import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
-import org.bukkit.event.block.Action;
 import org.bukkit.event.inventory.InventoryClickEvent;
-import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -49,21 +44,7 @@ public class TARDISAdminMenuListener implements Listener {
         this.plugin = plugin;
     }
 
-    // TODO move this somewhere more appropriate?
-    @EventHandler(priority = EventPriority.NORMAL)
-    public void onPlayerInteract(PlayerInteractEvent event) {
-        Player p = event.getPlayer();
-        Material inhand = p.getItemInHand().getType();
-        if (event.getAction().equals(Action.RIGHT_CLICK_AIR) && inhand.equals(Material.WATCH) && p.hasPermission("tardis.temporal")) {
-            p.resetPlayerTime();
-            if (plugin.trackSetTime.containsKey(p.getName())) {
-                plugin.trackSetTime.remove(p.getName());
-            }
-            p.sendMessage(plugin.pluginName + "Temporal Location reset to server time.");
-        }
-    }
-
-    @EventHandler(priority = EventPriority.NORMAL)
+    @EventHandler(ignoreCancelled = true)
     public void onAdminMenuClick(InventoryClickEvent event) {
         Inventory inv = event.getInventory();
         String name = inv.getTitle();
@@ -94,7 +75,7 @@ public class TARDISAdminMenuListener implements Listener {
     }
 
     private void setLore(Inventory inv, int slot, String str) {
-        List<String> lore = (str != null) ? Arrays.asList(new String[]{str}) : null;
+        List<String> lore = (str != null) ? Arrays.asList(str) : null;
         ItemStack is = inv.getItem(slot);
         ItemMeta im = is.getItemMeta();
         im.setLore(lore);

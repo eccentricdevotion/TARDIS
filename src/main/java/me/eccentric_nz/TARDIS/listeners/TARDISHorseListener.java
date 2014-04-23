@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2013 eccentric_nz
+ * Copyright (C) 2014 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -25,6 +25,7 @@ import me.eccentric_nz.TARDIS.database.ResultSetDoors;
 import me.eccentric_nz.TARDIS.database.ResultSetTravellers;
 import me.eccentric_nz.TARDIS.travel.TARDISDoorLocation;
 import me.eccentric_nz.TARDIS.travel.TARDISHorse;
+import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import me.eccentric_nz.tardishorsespeed.TardisHorseSpeed;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -32,6 +33,7 @@ import org.bukkit.World;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Horse;
+import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Tameable;
 import org.bukkit.event.EventHandler;
@@ -57,7 +59,7 @@ public class TARDISHorseListener implements Listener {
         this.barding.add(Material.DIAMOND_BARDING);
     }
 
-    @EventHandler(priority = EventPriority.MONITOR)
+    @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
     public void onInteract(EntityInteractEvent event) {
         Entity e = event.getEntity();
         if (e instanceof Horse) {
@@ -69,7 +71,7 @@ public class TARDISHorseListener implements Listener {
                     final Player p = (Player) passenger;
                     String pworld = p.getLocation().getWorld().getName();
                     HashMap<String, Object> wherep = new HashMap<String, Object>();
-                    wherep.put("player", p.getName());
+                    wherep.put("uuid", p.getUniqueId().toString());
                     ResultSetTravellers rst = new ResultSetTravellers(plugin, wherep, false);
                     if (rst.resultSet() && pworld.contains("TARDIS")) {
                         int id = rst.getTardis_id();
@@ -78,24 +80,29 @@ public class TARDISHorseListener implements Listener {
                         whered.put("door_type", 1);
                         ResultSetDoors rsd = new ResultSetDoors(plugin, whered, false);
                         if (rsd.resultSet() && rsd.isLocked()) {
-                            p.sendMessage(plugin.pluginName + "You need to unlock the door!");
+                            TARDISMessage.send(p, plugin.getPluginName() + "You need to unlock the door!");
                             return;
                         }
                         // get spawn location
-                        TARDISDoorLocation dl = plugin.doorListener.getDoor(0, id);
+                        TARDISDoorLocation dl = plugin.getGeneralKeeper().getDoorListener().getDoor(0, id);
                         Location l = dl.getL();
+                        // set the horse's direction as you would for a player when exiting
                         switch (dl.getD()) {
                             case NORTH:
                                 l.setZ(l.getZ() + 5);
+                                l.setYaw(0.0f);
                                 break;
                             case WEST:
                                 l.setX(l.getX() + 5);
+                                l.setYaw(270.0f);
                                 break;
                             case SOUTH:
                                 l.setZ(l.getZ() - 5);
+                                l.setYaw(180.0f);
                                 break;
                             default:
                                 l.setX(l.getX() - 5);
+                                l.setYaw(90.0f);
                                 break;
                         }
                         // save horse
@@ -105,6 +112,7 @@ public class TARDISHorseListener implements Listener {
                         tmhor.setHorseColour(h.getColor());
                         tmhor.setHorseStyle(h.getStyle());
                         tmhor.setHorseVariant(h.getVariant());
+                        tmhor.setName(((LivingEntity) h).getCustomName());
                         tmhor.setTamed(true);
                         if (h.isCarryingChest()) {
                             tmhor.setHasChest(true);
@@ -113,10 +121,9 @@ public class TARDISHorseListener implements Listener {
                         tmhor.setDomesticity(h.getDomestication());
                         tmhor.setJumpStrength(h.getJumpStrength());
                         tmhor.setHealth(h.getHealth());
-                        if (plugin.pm.isPluginEnabled("TardisHorseSpeed")) {
-                            TardisHorseSpeed ths = (TardisHorseSpeed) plugin.pm.getPlugin("TardisHorseSpeed");
-                            double speed = ths.getHorseSpeed(h);
-                            tmhor.setSpeed(speed);
+                        if (plugin.isHorseSpeedOnServer()) {
+                            TardisHorseSpeed ths = (TardisHorseSpeed) plugin.getPM().getPlugin("TARDISHorseSpeed");
+                            tmhor.setSpeed(ths.getHorseSpeed(h));
                         }
                         // eject player
                         // if (p.leaveVehicle()) {
@@ -138,9 +145,9 @@ public class TARDISHorseListener implements Listener {
                             equine.setDomestication(tmhor.getDomesticity());
                             equine.setJumpStrength(tmhor.getJumpStrength());
                             equine.setHealth(tmhor.getHealth());
-                            if (plugin.pm.isPluginEnabled("TardisHorseSpeed")) {
-                                TardisHorseSpeed ths = (TardisHorseSpeed) plugin.pm.getPlugin("TardisHorseSpeed");
-                                ths.setHorseSpeed(equine, tmhor.getSpeed());
+                            String name = tmhor.getName();
+                            if (name != null && !name.isEmpty()) {
+                                equine.setCustomName(name);
                             }
                             if (tmhor.hasChest()) {
                                 equine.setCarryingChest(true);
@@ -160,8 +167,8 @@ public class TARDISHorseListener implements Listener {
                                     equine.getInventory().setArmor(bard);
                                 }
                             }
-                            if (plugin.pm.isPluginEnabled("TardisHorseSpeed")) {
-                                TardisHorseSpeed ths = (TardisHorseSpeed) plugin.pm.getPlugin("TardisHorseSpeed");
+                            if (plugin.isHorseSpeedOnServer()) {
+                                TardisHorseSpeed ths = (TardisHorseSpeed) plugin.getPM().getPlugin("TARDISHorseSpeed");
                                 ths.setHorseSpeed(equine, tmhor.getSpeed());
                             }
                             Tameable tamed = (Tameable) equine;
@@ -169,9 +176,9 @@ public class TARDISHorseListener implements Listener {
                             tamed.setOwner(p);
 
                             // teleport player and remove from travellers table
-                            plugin.doorListener.movePlayer(p, l, true, p.getWorld(), false, 0, true);
+                            plugin.getGeneralKeeper().getDoorListener().movePlayer(p, l, true, p.getWorld(), false, 0, true);
                             HashMap<String, Object> where = new HashMap<String, Object>();
-                            where.put("player", p.getName());
+                            where.put("uuid", p.getUniqueId().toString());
                             new QueryFactory(plugin).doDelete("travellers", where);
                             // set player as passenger
                             plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {

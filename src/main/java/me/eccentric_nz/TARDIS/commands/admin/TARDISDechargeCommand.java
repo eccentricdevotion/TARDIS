@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2013 eccentric_nz
+ * Copyright (C) 2014 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -17,6 +17,7 @@
 package me.eccentric_nz.TARDIS.commands.admin;
 
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.enumeration.MESSAGE;
 import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
 
@@ -34,15 +35,15 @@ public class TARDISDechargeCommand {
 
     public boolean removeChragerStatus(CommandSender sender, String[] args) {
         if (!plugin.getConfig().contains("rechargers." + args[1])) {
-            sender.sendMessage(plugin.pluginName + "Could not find a recharger with that name! Try using " + ChatColor.AQUA + "/tardis list rechargers" + ChatColor.RESET + " first.");
+            sender.sendMessage(plugin.getPluginName() + "Could not find a recharger with that name! Try using " + ChatColor.AQUA + "/tardis list rechargers" + ChatColor.RESET + " first.");
             return true;
         }
-        if (plugin.worldGuardOnServer && plugin.getConfig().getBoolean("preferences.use_worldguard")) {
-            plugin.wgutils.removeRechargerRegion(args[1]);
+        if (plugin.isWorldGuardOnServer() && plugin.getConfig().getBoolean("preferences.use_worldguard")) {
+            plugin.getWorldGuardUtils().removeRechargerRegion(args[1]);
         }
         plugin.getConfig().set("rechargers." + args[1], null);
         plugin.saveConfig();
-        sender.sendMessage(plugin.pluginName + "The config was updated!");
+        sender.sendMessage(plugin.getPluginName() + MESSAGE.CONFIG_UPDATED.getText());
         return true;
     }
 }

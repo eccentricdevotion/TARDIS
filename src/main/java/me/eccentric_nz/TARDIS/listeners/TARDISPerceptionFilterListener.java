@@ -18,6 +18,7 @@ package me.eccentric_nz.TARDIS.listeners;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.enumeration.MESSAGE;
+import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -58,21 +59,26 @@ public class TARDISPerceptionFilterListener implements Listener {
                 ItemMeta im = is.getItemMeta();
                 if (im.hasDisplayName() && im.getDisplayName().equals("Perception Filter")) {
                     if (player.hasPermission("tardis.filter")) {
-                        // equip the chest slot with the perception filter
-                        player.getInventory().setChestplate(is);
-                        player.updateInventory();
-                        player.setItemInHand(new ItemStack(Material.AIR));
-                        // make the player invisible
-                        plugin.filter.addPerceptionFilter(player);
+                        ItemStack chestplate = player.getInventory().getChestplate();
+                        if (chestplate == null) {
+                            // equip the chest slot with the perception filter
+                            player.getInventory().setChestplate(is);
+                            player.updateInventory();
+                            player.setItemInHand(new ItemStack(Material.AIR));
+                            // make the player invisible
+                            plugin.getFilter().addPerceptionFilter(player);
+                        } else {
+                            TARDISMessage.send(player, plugin.getPluginName() + "You need to remove your chestplate armour first!");
+                        }
                     } else {
-                        player.sendMessage(plugin.pluginName + MESSAGE.NO_PERMS.getText());
+                        TARDISMessage.send(player, plugin.getPluginName() + MESSAGE.NO_PERMS.getText());
                     }
                 }
             }
         }
     }
 
-    @EventHandler
+    @EventHandler(ignoreCancelled = true)
     public void onPerceptioFilterRemove(InventoryClickEvent event) {
         if (event.getInventory().getType().equals(InventoryType.CRAFTING)) {
             int slot = event.getRawSlot();
@@ -83,7 +89,7 @@ public class TARDISPerceptionFilterListener implements Listener {
                         ItemMeta im = is.getItemMeta();
                         if (im.hasDisplayName() && im.getDisplayName().equals("Perception Filter")) {
                             if (event.getAction().equals(InventoryAction.PICKUP_ALL)) {
-                                plugin.filter.removePerceptionFilter((Player) event.getWhoClicked());
+                                plugin.getFilter().removePerceptionFilter((Player) event.getWhoClicked());
                             }
                         }
                     }

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2013 eccentric_nz
+ * Copyright (C) 2014 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -42,7 +42,7 @@ public class TARDISHotbarListener implements Listener {
     }
 
     @SuppressWarnings("deprecation")
-    @EventHandler(priority = EventPriority.MONITOR)
+    @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
     public void onSelectLocator(PlayerItemHeldEvent event) {
         Player player = event.getPlayer();
         PlayerInventory inv = player.getInventory();
@@ -51,7 +51,7 @@ public class TARDISHotbarListener implements Listener {
             if (is.hasItemMeta() && is.getItemMeta().hasDisplayName() && is.getItemMeta().getDisplayName().equals("TARDIS Locator")) {
                 // get TARDIS location
                 HashMap<String, Object> where = new HashMap<String, Object>();
-                where.put("owner", player.getName());
+                where.put("uuid", player.getUniqueId().toString());
                 ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);
                 if (rs.resultSet()) {
                     HashMap<String, Object> wherecl = new HashMap<String, Object>();

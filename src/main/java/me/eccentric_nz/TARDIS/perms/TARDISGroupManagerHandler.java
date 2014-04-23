@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2013 eccentric_nz
+ * Copyright (C) 2014 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -71,20 +71,20 @@ public class TARDISGroupManagerHandler {
                 }
             }
         }
-        plugin.getServer().dispatchCommand(plugin.console, "manselect TARDIS_WORLD_" + player);
+        plugin.getServer().dispatchCommand(plugin.getConsole(), "manselect TARDIS_WORLD_" + player);
         int i = 0;
         for (Map.Entry<String, List<String>> entry : permgroups.entrySet()) {
             String grpstr = entry.getKey();
             List<String> perms = entry.getValue();
-            plugin.getServer().dispatchCommand(plugin.console, "mangadd " + grpstr);
+            plugin.getServer().dispatchCommand(plugin.getConsole(), "mangadd " + grpstr);
             for (String p : perms) {
-                plugin.getServer().dispatchCommand(plugin.console, "mangaddp " + grpstr + " " + p);
+                plugin.getServer().dispatchCommand(plugin.getConsole(), "mangaddp " + grpstr + " " + p);
             }
             if (i == 0) {
-                plugin.getServer().dispatchCommand(plugin.console, "manuadd " + player + " " + grpstr);
+                plugin.getServer().dispatchCommand(plugin.getConsole(), "manuadd " + player + " " + grpstr);
             }
             i++;
         }
-        plugin.getServer().dispatchCommand(plugin.console, "mansave");
+        plugin.getServer().dispatchCommand(plugin.getConsole(), "mansave");
     }
 }

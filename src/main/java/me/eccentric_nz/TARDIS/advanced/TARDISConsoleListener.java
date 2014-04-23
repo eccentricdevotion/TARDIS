@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2013 eccentric_nz
+ * Copyright (C) 2014 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -28,6 +28,7 @@ import me.eccentric_nz.TARDIS.database.ResultSetPlayerPrefs;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import me.eccentric_nz.TARDIS.enumeration.DISK_CIRCUIT;
 import me.eccentric_nz.TARDIS.enumeration.MESSAGE;
+import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
@@ -46,19 +47,17 @@ public class TARDISConsoleListener implements Listener {
 
     private final TARDIS plugin;
     private final List<Material> onlythese = new ArrayList<Material>();
-    private final List<String> metanames = new ArrayList<String>();
 
     public TARDISConsoleListener(TARDIS plugin) {
         this.plugin = plugin;
         for (DISK_CIRCUIT dc : DISK_CIRCUIT.values()) {
-            metanames.add(dc.getName());
             if (!onlythese.contains(dc.getMaterial())) {
                 onlythese.add(dc.getMaterial());
             }
         }
     }
 
-    @EventHandler
+    @EventHandler(ignoreCancelled = true)
     public void onConsoleInteract(PlayerInteractEvent event) {
         final Player p = event.getPlayer();
         if (!p.hasPermission("tardis.advanced")) {
@@ -77,7 +76,7 @@ public class TARDISConsoleListener implements Listener {
                     int id = rsc.getTardis_id();
                     // determine key item
                     HashMap<String, Object> wherek = new HashMap<String, Object>();
-                    wherek.put("player", p.getName());
+                    wherek.put("uuid", p.getUniqueId().toString());
                     ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, wherek);
                     String key;
                     if (rsp.resultSet()) {
@@ -91,15 +90,15 @@ public class TARDISConsoleListener implements Listener {
                         // only the time lord of this tardis
                         HashMap<String, Object> wheret = new HashMap<String, Object>();
                         wheret.put("tardis_id", id);
-                        wheret.put("owner", p.getName());
+                        wheret.put("uuid", p.getUniqueId().toString());
                         ResultSetTardis rs = new ResultSetTardis(plugin, wheret, "", false);
                         if (!rs.resultSet()) {
-                            p.sendMessage(plugin.pluginName + MESSAGE.NOT_OWNER.getText());
+                            TARDISMessage.send(p, plugin.getPluginName() + MESSAGE.NOT_OWNER.getText());
                             return;
                         }
                         Inventory inv = plugin.getServer().createInventory(p, 9, "§4TARDIS Console");
                         HashMap<String, Object> where = new HashMap<String, Object>();
-                        where.put("owner", p.getName());
+                        where.put("uuid", p.getUniqueId().toString());
                         ResultSetDiskStorage rsds = new ResultSetDiskStorage(plugin, where);
                         if (rsds.resultSet()) {
                             String console = rsds.getConsole();
@@ -114,14 +113,14 @@ public class TARDISConsoleListener implements Listener {
                         } else {
                             // create new storage record
                             HashMap<String, Object> setstore = new HashMap<String, Object>();
-                            setstore.put("owner", p.getName());
+                            setstore.put("uuid", p.getUniqueId().toString());
                             setstore.put("tardis_id", id);
                             new QueryFactory(plugin).doInsert("storage", setstore);
                         }
                         // open gui
                         p.openInventory(inv);
                     } else {
-                        p.sendMessage(plugin.pluginName + "You can only open the Advanced Console with the TARDIS key, a sonic screwdriver, a circuit or a disk.");
+                        TARDISMessage.send(p, plugin.getPluginName() + "You can only open the Advanced Console with the TARDIS key, a sonic screwdriver, a circuit or a disk.");
                     }
                 }
             }

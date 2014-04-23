@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2013 eccentric_nz
+ * Copyright (C) 2014 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -102,14 +102,14 @@ public class ResultSetRepeaters {
 
     public byte[] getRepeaters() {
         // get repeater settings
-        diodes[0] = plugin.utils.getLocationFromDB(str[0], 0, 0).getBlock().getData();
-        diodes[1] = plugin.utils.getLocationFromDB(str[1], 0, 0).getBlock().getData();
-        diodes[2] = plugin.utils.getLocationFromDB(str[2], 0, 0).getBlock().getData();
+        diodes[0] = plugin.getUtils().getLocationFromDB(str[0], 0, 0).getBlock().getData();
+        diodes[1] = plugin.getUtils().getLocationFromDB(str[1], 0, 0).getBlock().getData();
+        diodes[2] = plugin.getUtils().getLocationFromDB(str[2], 0, 0).getBlock().getData();
         // temporary fix for NPE on Castrovalva - someone is missing a y-repeater record
         if (str[3] != null) {
-            diodes[3] = plugin.utils.getLocationFromDB(str[3], 0, 0).getBlock().getData();
+            diodes[3] = plugin.getUtils().getLocationFromDB(str[3], 0, 0).getBlock().getData();
         } else {
-            diodes[3] = plugin.utils.getLocationFromDB(str[2], 0, 0).getBlock().getData();
+            diodes[3] = plugin.getUtils().getLocationFromDB(str[2], 0, 0).getBlock().getData();
         }
         return diodes;
     }

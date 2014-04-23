@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2013 eccentric_nz
+ * Copyright (C) 2014 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -40,12 +40,11 @@ public class TARDISQuitListener implements Listener {
         this.plugin = plugin;
     }
 
-    @EventHandler(priority = EventPriority.MONITOR)
+    @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
     public void onPlayerQuit(PlayerQuitEvent event) {
-        String playerNameStr = event.getPlayer().getName();
         // forget the players Police Box chunk
         HashMap<String, Object> wherep = new HashMap<String, Object>();
-        wherep.put("owner", playerNameStr);
+        wherep.put("uuid", event.getPlayer().getUniqueId().toString());
         ResultSetTardis rs = new ResultSetTardis(plugin, wherep, "", false);
         if (rs.resultSet()) {
             HashMap<String, Object> wherecl = new HashMap<String, Object>();
@@ -55,11 +54,14 @@ public class TARDISQuitListener implements Listener {
                 World w = rsc.getWorld();
                 if (w != null) {
                     Chunk chunk = w.getChunkAt(new Location(w, rsc.getX(), rsc.getY(), rsc.getZ()));
-                    if (plugin.tardisChunkList.contains(chunk)) {
-                        plugin.tardisChunkList.remove(chunk);
+                    if (plugin.getGeneralKeeper().getTardisChunkList().contains(chunk)) {
+                        plugin.getGeneralKeeper().getTardisChunkList().remove(chunk);
                     }
                 }
             }
+            // remove player from the TARDIS UUID cache
+            plugin.getGeneralKeeper().getUUIDCache().getCache().remove(event.getPlayer().getName());
+            plugin.getGeneralKeeper().getUUIDCache().getNameCache().remove(event.getPlayer().getUniqueId());
         }
     }
 }

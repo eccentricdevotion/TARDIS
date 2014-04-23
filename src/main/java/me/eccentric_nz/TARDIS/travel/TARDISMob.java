@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2013 eccentric_nz
+ * Copyright (C) 2014 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -26,6 +26,8 @@ import org.bukkit.entity.Ocelot.Type;
  * When referring to entities, it is used for sentient and non-sentient organic
  * creatures, as well as robots.
  *
+ * Data storage class for TARDIS mobs.
+ *
  * @author eccentric_nz
  */
 public class TARDISMob {
@@ -39,12 +41,6 @@ public class TARDISMob {
     private boolean tamed;
     private DyeColor colour;
     private String name;
-
-    /**
-     * Data storage class for TARDIS mobs.
-     */
-    public TARDISMob() {
-    }
 
     public EntityType getType() {
         return type;

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2013 eccentric_nz
+ * Copyright (C) 2014 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -19,7 +19,6 @@ package me.eccentric_nz.TARDIS.listeners;
 import me.eccentric_nz.TARDIS.TARDIS;
 import org.bukkit.Chunk;
 import org.bukkit.event.EventHandler;
-import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.world.ChunkUnloadEvent;
 
@@ -46,10 +45,10 @@ public class TARDISChunkListener implements Listener {
      *
      * @param event a chunk unloading
      */
-    @EventHandler(priority = EventPriority.NORMAL, ignoreCancelled = true)
+    @EventHandler(ignoreCancelled = true)
     public void onChunkUnload(ChunkUnloadEvent event) {
         Chunk c = event.getChunk();
-        if (plugin.tardisChunkList.contains(c) || plugin.roomChunkList.contains(c)) {
+        if (plugin.getGeneralKeeper().getTardisChunkList().contains(c) || plugin.getGeneralKeeper().getRoomChunkList().contains(c)) {
             event.setCancelled(true);
         }
     }

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2013 eccentric_nz
+ * Copyright (C) 2014 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -21,6 +21,7 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
 
 /**
@@ -68,13 +69,13 @@ public class TARDISSQLInsert implements Runnable {
             ps = connection.prepareStatement("INSERT INTO " + table + " (" + fields + ") VALUES (" + questions + ")");
             int i = 1;
             for (Map.Entry<String, Object> entry : data.entrySet()) {
-                if (entry.getValue().getClass().equals(String.class)) {
+                if (entry.getValue().getClass().equals(String.class) || entry.getValue().getClass().equals(UUID.class)) {
                     ps.setString(i, entry.getValue().toString());
                 } else {
                     if (entry.getValue().getClass().getName().contains("Double")) {
-                        ps.setDouble(i, plugin.utils.parseDouble(entry.getValue().toString()));
+                        ps.setDouble(i, plugin.getUtils().parseDouble(entry.getValue().toString()));
                     } else {
-                        ps.setInt(i, plugin.utils.parseInt(entry.getValue().toString()));
+                        ps.setInt(i, plugin.getUtils().parseInt(entry.getValue().toString()));
                     }
                 }
                 i++;

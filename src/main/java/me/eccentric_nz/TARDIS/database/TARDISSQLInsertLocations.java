@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2013 eccentric_nz
+ * Copyright (C) 2014 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -70,7 +70,7 @@ public class TARDISSQLInsertLocations implements Runnable {
                     if (entry.getValue().getClass().equals(String.class)) {
                         ps.setString(i, entry.getValue().toString());
                     } else {
-                        ps.setInt(i, plugin.utils.parseInt(entry.getValue().toString()));
+                        ps.setInt(i, plugin.getUtils().parseInt(entry.getValue().toString()));
                     }
                     i++;
                 }

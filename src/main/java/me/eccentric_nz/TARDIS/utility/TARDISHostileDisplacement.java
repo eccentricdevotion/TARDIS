@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2013 eccentric_nz
+ * Copyright (C) 2014 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -20,13 +20,14 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
+import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.enumeration.COMPASS;
+import me.eccentric_nz.TARDIS.builders.TARDISMaterialisationData;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetCurrentLocation;
 import me.eccentric_nz.TARDIS.database.ResultSetPlayerPrefs;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
-import me.eccentric_nz.TARDIS.travel.TARDISPluginRespect;
+import me.eccentric_nz.TARDIS.enumeration.COMPASS;
 import me.eccentric_nz.TARDIS.travel.TARDISTimeTravel;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
@@ -51,7 +52,7 @@ public class TARDISHostileDisplacement {
     private final List<Integer> angles;
 
     public TARDISHostileDisplacement(TARDIS plugin) {
-        this.angles = Arrays.asList(new Integer[]{0, 45, 90, 135, 180, 225, 270, 315});
+        this.angles = Arrays.asList(0, 45, 90, 135, 180, 225, 270, 315);
         this.plugin = plugin;
     }
 
@@ -61,10 +62,10 @@ public class TARDISHostileDisplacement {
         ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);
         if (rs.resultSet()) {
             //String current = rs.getCurrent();
-            String owner = rs.getOwner();
-            final boolean cham = rs.isChamele_on();
+            UUID ownerUUID = rs.getUuid();
+            boolean cham = rs.isChamele_on();
             HashMap<String, Object> wherep = new HashMap<String, Object>();
-            wherep.put("player", owner);
+            wherep.put("uuid", ownerUUID.toString());
             ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, wherep);
             if (rsp.resultSet()) {
                 if (rsp.isHadsOn()) {
@@ -72,12 +73,12 @@ public class TARDISHostileDisplacement {
                     int r = plugin.getConfig().getInt("preferences.hads_distance");
                     HashMap<String, Object> wherecl = new HashMap<String, Object>();
                     wherecl.put("tardis_id", id);
-                    final ResultSetCurrentLocation rsc = new ResultSetCurrentLocation(plugin, wherecl);
+                    ResultSetCurrentLocation rsc = new ResultSetCurrentLocation(plugin, wherecl);
                     if (!rsc.resultSet()) {
                         plugin.debug("Could not get current TARDIS location for HADS!");
                     }
-                    final Location loc = new Location(rsc.getWorld(), rsc.getX(), rsc.getY(), rsc.getZ());
-                    final COMPASS d = rsc.getDirection();
+                    Location loc = new Location(rsc.getWorld(), rsc.getX(), rsc.getY(), rsc.getZ());
+                    COMPASS d = rsc.getDirection();
                     Location l = loc.clone();
                     // randomise the direction
                     Collections.shuffle(angles);
@@ -97,7 +98,7 @@ public class TARDISHostileDisplacement {
                         if (l.getBlock().getRelative(BlockFace.DOWN).isLiquid() && !plugin.getConfig().getBoolean("travel.land_on_water") && !rsc.isSubmarine()) {
                             bool = false;
                         }
-                        final Player player = plugin.getServer().getPlayer(owner);
+                        Player player = plugin.getServer().getPlayer(ownerUUID);
                         if (bool) {
                             Location sub = null;
                             boolean safe;
@@ -109,9 +110,8 @@ public class TARDISHostileDisplacement {
                                 safe = (tt.safeLocation(start[0], y, start[2], start[1], start[3], l.getWorld(), d) < 1);
                             }
                             if (safe) {
-                                final Location fl = (rsc.isSubmarine()) ? sub : l;
-                                TARDISPluginRespect pr = new TARDISPluginRespect(plugin);
-                                if (pr.getRespect(player, fl, false)) {
+                                Location fl = (rsc.isSubmarine()) ? sub : l;
+                                if (plugin.getPluginRespect().getRespect(player, fl, false)) {
                                     // set current
                                     QueryFactory qf = new QueryFactory(plugin);
                                     HashMap<String, Object> tid = new HashMap<String, Object>();
@@ -123,45 +123,65 @@ public class TARDISHostileDisplacement {
                                     set.put("z", fl.getBlockZ());
                                     set.put("submarine", (rsc.isSubmarine()) ? 1 : 0);
                                     qf.doUpdate("current", set, tid);
-                                    plugin.trackDamage.remove(Integer.valueOf(id));
-                                    final boolean mat = plugin.getConfig().getBoolean("police_box.materialise");
+                                    plugin.getTrackerKeeper().getTrackDamage().remove(id);
+                                    boolean mat = plugin.getConfig().getBoolean("police_box.materialise");
                                     long delay = (mat) ? 1L : 180L;
                                     // move TARDIS
-                                    plugin.inVortex.add(Integer.valueOf(id));
+                                    plugin.getTrackerKeeper().getTrackInVortex().add(id);
+                                    final TARDISMaterialisationData pdd = new TARDISMaterialisationData();
+                                    pdd.setChameleon(cham);
+                                    pdd.setDirection(d);
+                                    pdd.setLocation(loc);
+                                    pdd.setDematerialise(mat);
+                                    pdd.setPlayer(player);
+                                    pdd.setHide(false);
+                                    pdd.setOutside(true);
+                                    pdd.setSubmarine(rsc.isSubmarine());
+                                    pdd.setTardisID(id);
                                     plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
                                         @Override
                                         public void run() {
-                                            plugin.tardisDematerialising.add(Integer.valueOf(id));
-                                            plugin.destroyerP.destroyPreset(loc, d, id, false, mat, cham, player, rsc.isSubmarine());
+                                            plugin.getTrackerKeeper().getTrackDematerialising().add(id);
+                                            plugin.getPresetDestroyer().destroyPreset(pdd);
                                         }
                                     }, delay);
+                                    final TARDISMaterialisationData pbd = new TARDISMaterialisationData();
+                                    pbd.setChameleon(cham);
+                                    pbd.setDirection(d);
+                                    pbd.setLocation(fl);
+                                    pbd.setMalfunction(false);
+                                    pbd.setOutside(true);
+                                    pbd.setPlayer(player);
+                                    pbd.setRebuild(false);
+                                    pbd.setSubmarine(rsc.isSubmarine());
+                                    pbd.setTardisID(id);
                                     plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
                                         @Override
                                         public void run() {
-                                            plugin.builderP.buildPreset(id, fl, d, cham, player, false, false, rsc.isSubmarine());
+                                            plugin.getPresetBuilder().buildPreset(pbd);
                                         }
                                     }, delay * 2);
                                     // message time lord
-                                    String message = plugin.pluginName + ChatColor.RED + "H" + ChatColor.RESET + "ostile " + ChatColor.RED + "A" + ChatColor.RESET + "ction " + ChatColor.RED + "D" + ChatColor.RESET + "isplacement " + ChatColor.RED + "S" + ChatColor.RESET + "ystem engaged, moving TARDIS!";
-                                    player.sendMessage(message);
+                                    String message = plugin.getPluginName() + ChatColor.RED + "H" + ChatColor.RESET + "ostile " + ChatColor.RED + "A" + ChatColor.RESET + "ction " + ChatColor.RED + "D" + ChatColor.RESET + "isplacement " + ChatColor.RED + "S" + ChatColor.RESET + "ystem engaged, moving TARDIS!";
+                                    TARDISMessage.send(player, message);
                                     String hads = fl.getWorld().getName() + ":" + fl.getBlockX() + ":" + fl.getBlockY() + ":" + fl.getBlockZ();
-                                    player.sendMessage(plugin.pluginName + "TARDIS moved to " + hads);
+                                    TARDISMessage.send(player, plugin.getPluginName() + "TARDIS moved to " + hads);
                                     if (player != hostile) {
-                                        hostile.sendMessage(message);
+                                        TARDISMessage.send(hostile, message);
                                     }
                                     break;
                                 } else {
-                                    player.sendMessage(plugin.pluginName + "HADS could not be engaged because the area is protected!");
+                                    TARDISMessage.send(player, plugin.getPluginName() + "HADS could not be engaged because the area is protected!");
                                     if (player != hostile) {
-                                        hostile.sendMessage(plugin.pluginName + "HADS could not be engaged because the area is protected!");
+                                        TARDISMessage.send(hostile, plugin.getPluginName() + "HADS could not be engaged because the area is protected!");
                                     }
                                 }
                             } else {
-                                player.sendMessage(plugin.pluginName + "HADS could not be engaged because the we couldn't find a safe area!");
+                                TARDISMessage.send(player, plugin.getPluginName() + "HADS could not be engaged because the it couldn't find a safe area!");
                             }
                         } else {
-                            plugin.trackDamage.remove(Integer.valueOf(id));
-                            player.sendMessage(plugin.pluginName + "HADS could not be engaged because the TARDIS cannot land on water!");
+                            plugin.getTrackerKeeper().getTrackDamage().remove(id);
+                            TARDISMessage.send(player, plugin.getPluginName() + "HADS could not be engaged because the TARDIS cannot land on water!");
                         }
                     }
                 }

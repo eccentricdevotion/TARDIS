@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2013 eccentric_nz
+ * Copyright (C) 2014 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -17,8 +17,11 @@
 package me.eccentric_nz.TARDIS.listeners;
 
 import java.util.HashMap;
+import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.enumeration.MESSAGE;
 import me.eccentric_nz.TARDIS.enumeration.PRESET;
+import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
@@ -46,7 +49,7 @@ public class TARDISBlockBreakListener implements Listener {
         int i = 0;
         for (PRESET p : PRESET.values()) {
             if (!p.getFirstLine().isEmpty() && !sign_lookup.containsKey(p.getFirstLine())) {
-                sign_lookup.put(ChatColor.WHITE + p.getFirstLine(), ChatColor.WHITE + p.getSecondLine());
+                sign_lookup.put(getSignColour() + p.getFirstLine(), getSignColour() + p.getSecondLine());
             }
         }
     }
@@ -58,8 +61,14 @@ public class TARDISBlockBreakListener implements Listener {
      *
      * @param event a player breaking a block
      */
-    @EventHandler(priority = EventPriority.LOW)
+    @EventHandler(priority = EventPriority.LOW, ignoreCancelled = true)
     public void onSignBreak(BlockBreakEvent event) {
+        Player player = event.getPlayer();
+        if (plugin.getTrackerKeeper().getTrackZeroRoomOccupants().contains(player.getUniqueId())) {
+            event.setCancelled(true);
+            TARDISMessage.send(player, plugin.getPluginName() + MESSAGE.NOT_IN_ZERO.getText());
+            return;
+        }
         Block block = event.getBlock();
         Material blockType = block.getType();
         if (blockType == Material.WALL_SIGN) {
@@ -67,27 +76,36 @@ public class TARDISBlockBreakListener implements Listener {
             Sign sign = (Sign) block.getState();
             String line1 = sign.getLine(1);
             String line2 = sign.getLine(2);
-//            if (line1.equals(ChatColor.WHITE + "POLICE") && line2.equals(ChatColor.WHITE + "BOX")) {
             if (sign_lookup.containsKey(line1) && line2.equals(sign_lookup.get(line1))) {
                 event.setCancelled(true);
                 sign.update();
-                Player player = event.getPlayer();
                 if (player.hasPermission("tardis.exterminate")) {
-                    final String playerNameStr = player.getName();
+                    final UUID uuid = player.getUniqueId();
                     // check it is their TARDIS
-                    plugin.trackExterminate.put(playerNameStr, block);
+                    plugin.getTrackerKeeper().getTrackExterminate().put(uuid, block);
                     long timeout = plugin.getConfig().getLong("police_box.confirm_timeout");
-                    player.sendMessage(plugin.pluginName + "Are you sure you want to delete the TARDIS? Type " + ChatColor.AQUA + "/tardis exterminate" + ChatColor.RESET + " within " + timeout + " seconds to proceed.");
+                    TARDISMessage.send(player, plugin.getPluginName() + "Are you sure you want to delete the TARDIS? Type " + ChatColor.AQUA + "/tardis exterminate" + ChatColor.RESET + " within " + timeout + " seconds to proceed.");
                     plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
                         @Override
                         public void run() {
-                            plugin.trackExterminate.remove(playerNameStr);
+                            plugin.getTrackerKeeper().getTrackExterminate().remove(uuid);
                         }
                     }, timeout * 20);
                 } else {
-                    player.sendMessage(plugin.pluginName + "You do not have permission to delete a TARDIS!");
+                    TARDISMessage.send(player, plugin.getPluginName() + "You do not have permission to delete a TARDIS!");
                 }
             }
         }
+    }
+
+    private ChatColor getSignColour() {
+        ChatColor colour;
+        String cc = plugin.getConfig().getString("police_box.sign_colour");
+        try {
+            colour = ChatColor.valueOf(cc);
+        } catch (IllegalArgumentException e) {
+            colour = ChatColor.WHITE;
+        }
+        return colour;
     }
 }

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2013 eccentric_nz
+ * Copyright (C) 2014 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -25,7 +25,8 @@ import java.util.Locale;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetPlayerPrefs;
-import org.bukkit.ChatColor;
+import me.eccentric_nz.TARDIS.enumeration.MESSAGE;
+import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -65,20 +66,20 @@ public class TARDISTextureCommands implements CommandExecutor {
                 return false;
             }
             if (player == null) {
-                sender.sendMessage(plugin.pluginName + ChatColor.RED + " This command can only be run by a player");
+                sender.sendMessage(plugin.getPluginName() + MESSAGE.MUST_BE_PLAYER.getText());
                 return false;
             }
             if (player.hasPermission("tardis.texture")) {
                 // get the players preferences
-                String playerNameStr = player.getName();
+                String playerUUID = player.getUniqueId().toString();
                 HashMap<String, Object> wherepp = new HashMap<String, Object>();
-                wherepp.put("player", playerNameStr);
+                wherepp.put("uuid", playerUUID);
                 ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, wherepp);
                 QueryFactory qf = new QueryFactory(plugin);
                 HashMap<String, Object> set = new HashMap<String, Object>();
                 // if no prefs record found, make one
                 if (!rsp.resultSet()) {
-                    set.put("player", playerNameStr);
+                    set.put("uuid", playerUUID);
                     qf.doInsert("player_prefs", set);
                 }
                 HashMap<String, Object> upd = new HashMap<String, Object>();
@@ -104,16 +105,16 @@ public class TARDISTextureCommands implements CommandExecutor {
                                 upd.put("texture_out", args[1]);
                             }
                         } catch (MalformedURLException e) {
-                            player.sendMessage(plugin.pluginName + "Not a valid URL! " + e.getMessage());
+                            TARDISMessage.send(player, plugin.getPluginName() + "Not a valid URL! " + e.getMessage());
                             return true;
                         }
                     }
                 }
                 if (upd.size() > 0) {
                     HashMap<String, Object> where = new HashMap<String, Object>();
-                    where.put("player", playerNameStr);
+                    where.put("uuid", playerUUID);
                     qf.doUpdate("player_prefs", upd, where);
-                    player.sendMessage(plugin.pluginName + "Your texture pack preference was set.");
+                    TARDISMessage.send(player, plugin.getPluginName() + "Your texture pack preference was set.");
                     return true;
                 }
             }

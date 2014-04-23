@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2013 eccentric_nz
+ * Copyright (C) 2014 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -17,13 +17,13 @@
 package me.eccentric_nz.TARDIS.commands.tardis;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.advanced.TARDISDiskWriterCommand;
 import me.eccentric_nz.TARDIS.enumeration.CMDS;
-import me.eccentric_nz.TARDIS.travel.TARDISPluginRespect;
+import me.eccentric_nz.TARDIS.enumeration.MESSAGE;
+import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -42,23 +42,10 @@ import org.bukkit.inventory.ItemStack;
 public class TARDISCommands implements CommandExecutor {
 
     private final TARDIS plugin;
-    private TARDISPluginRespect respect;
-    public HashSet<Byte> transparent = new HashSet<Byte>();
     private final List<String> firstArgs = new ArrayList<String>();
-    public List<String> roomArgs = new ArrayList<String>();
 
     public TARDISCommands(TARDIS plugin) {
         this.plugin = plugin;
-        // add transparent blocks
-        transparent.add((byte) 0); // AIR
-        transparent.add((byte) 8); // WATER
-        transparent.add((byte) 9); // STATIONARY_WATER
-        transparent.add((byte) 31); // LONG_GRASS
-        transparent.add((byte) 32); // DEAD_BUSH
-        transparent.add((byte) 55); // REDSTONE_WIRE
-        transparent.add((byte) 78); // SNOW
-        transparent.add((byte) 101); // IRON_FENCE
-        transparent.add((byte) 106); // VINE
         // add first arguments
         firstArgs.add("abort");
         firstArgs.add("add");
@@ -93,12 +80,6 @@ public class TARDISCommands implements CommandExecutor {
         firstArgs.add("tagtheood");
         firstArgs.add("update");
         firstArgs.add("version");
-        // rooms - only add if enabled in the config
-        for (String r : plugin.getRoomsConfig().getConfigurationSection("rooms").getKeys(false)) {
-            if (plugin.getRoomsConfig().getBoolean("rooms." + r + ".enabled")) {
-                roomArgs.add(r);
-            }
-        }
     }
 
     @Override
@@ -117,7 +98,7 @@ public class TARDISCommands implements CommandExecutor {
             }
             // the command list - first argument MUST appear here!
             if (!firstArgs.contains(args[0].toLowerCase(Locale.ENGLISH))) {
-                sender.sendMessage(plugin.pluginName + "That command wasn't recognised type " + ChatColor.GREEN + "/tardis help" + ChatColor.RESET + " to see the commands");
+                sender.sendMessage(plugin.getPluginName() + "That command wasn't recognised type " + ChatColor.GREEN + "/tardis help" + ChatColor.RESET + " to see the commands");
                 return false;
             }
             // delete the TARDIS
@@ -132,7 +113,7 @@ public class TARDISCommands implements CommandExecutor {
                 return new TARDISVersionCommand(plugin).displayVersion(sender, player);
             }
             if (player == null) {
-                sender.sendMessage(plugin.pluginName + ChatColor.RED + " This command can only be run by a player");
+                sender.sendMessage(plugin.getPluginName() + MESSAGE.MUST_BE_PLAYER.getText());
                 return false;
             } else {
                 if (args[0].equalsIgnoreCase("arsremove")) {
@@ -197,6 +178,10 @@ public class TARDISCommands implements CommandExecutor {
                 }
                 if (args[0].equalsIgnoreCase("save")) {
                     ItemStack is = player.getItemInHand();
+                    if (plugin.getConfig().getString("preferences.difficulty").equals("hard") && heldDiskIsWrong(is)) {
+                        TARDISMessage.send(player, plugin.getPluginName() + "You must be holding a Save Storage Disk in your hand!");
+                        return true;
+                    }
                     if (is != null && is.hasItemMeta() && is.getItemMeta().hasDisplayName() && is.getItemMeta().getDisplayName().equals("Save Storage Disk")) {
                         return new TARDISDiskWriterCommand(plugin).writeSave(player, args);
                     } else {
@@ -208,7 +193,7 @@ public class TARDISCommands implements CommandExecutor {
                     if (is != null && is.hasItemMeta() && is.getItemMeta().hasDisplayName() && is.getItemMeta().getDisplayName().equals("Player Storage Disk")) {
                         return new TARDISDiskWriterCommand(plugin).writePlayer(player, args);
                     } else {
-                        sender.sendMessage(plugin.pluginName + "You must be holding a Player Storage Disk in your hand!");
+                        TARDISMessage.send(player, plugin.getPluginName() + "You must be holding a Player Storage Disk in your hand!");
                         return true;
                     }
                 }
@@ -240,5 +225,25 @@ public class TARDISCommands implements CommandExecutor {
         }
         // If the above has happened the function will break and return true. If this hasn't happened then value of false will be returned.
         return false;
+    }
+
+    private boolean heldDiskIsWrong(ItemStack is) {
+        boolean complexBool = false;
+        if (is == null) {
+            complexBool = true;
+        } else {
+            if (!is.hasItemMeta()) {
+                complexBool = true;
+            } else {
+                if (!is.getItemMeta().hasDisplayName()) {
+                    complexBool = true;
+                } else {
+                    if (!is.getItemMeta().getDisplayName().equals("Save Storage Disk")) {
+                        complexBool = true;
+                    }
+                }
+            }
+        }
+        return complexBool;
     }
 }

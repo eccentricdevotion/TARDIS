@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2013 eccentric_nz
+ * Copyright (C) 2014 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -19,11 +19,13 @@ package me.eccentric_nz.TARDIS.listeners;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.achievement.TARDISAchievementFactory;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetCondenser;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
+import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import org.bukkit.Effect;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -32,7 +34,6 @@ import org.bukkit.block.Block;
 import org.bukkit.block.Chest;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
-import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.inventory.InventoryCloseEvent;
@@ -66,7 +67,7 @@ public class TARDISCondenserListener implements Listener {
      * @param event a chest closing
      */
     @SuppressWarnings("deprecation")
-    @EventHandler(priority = EventPriority.NORMAL)
+    @EventHandler(ignoreCancelled = true)
     public void onChestClose(InventoryCloseEvent event) {
         Inventory inv = event.getInventory();
         InventoryHolder holder = inv.getHolder();
@@ -88,6 +89,7 @@ public class TARDISCondenserListener implements Listener {
                 QueryFactory qf = new QueryFactory(plugin);
                 int amount = 0;
                 // get the stacks in the inventory
+                HashMap<Integer, Integer> item_counts = new HashMap<Integer, Integer>();
                 for (ItemStack is : inv.getContents()) {
                     if (is != null) {
                         String item = is.getType().name();
@@ -97,27 +99,38 @@ public class TARDISCondenserListener implements Listener {
                                 amount += stack_size * plugin.getCondensables().get(item);
                             }
                             int block_data = is.getTypeId();
-                            inv.remove(is);
                             if (plugin.getConfig().getBoolean("growth.rooms_require_blocks")) {
-                                // check if the tardis has condensed this material before
-                                HashMap<String, Object> wherec = new HashMap<String, Object>();
-                                wherec.put("tardis_id", rs.getTardis_id());
-                                wherec.put("block_data", block_data);
-                                ResultSetCondenser rsc = new ResultSetCondenser(plugin, wherec, false);
-                                HashMap<String, Object> setc = new HashMap<String, Object>();
-                                if (rsc.resultSet()) {
-                                    int new_stack_size = stack_size + rsc.getBlock_count();
-                                    qf.updateCondensedBlockCount(new_stack_size, rs.getTardis_id(), block_data);
+                                if (item_counts.containsKey(block_data)) {
+                                    Integer add_this = (item_counts.get(Integer.valueOf(block_data)) + stack_size);
+                                    item_counts.put(block_data, add_this);
                                 } else {
-                                    setc.put("tardis_id", rs.getTardis_id());
-                                    setc.put("block_data", block_data);
-                                    setc.put("block_count", stack_size);
-                                    qf.doInsert("condenser", setc);
+                                    item_counts.put(block_data, stack_size);
                                 }
                             }
+                            inv.remove(is);
                         } else {
                             // return items that can't be condensed
                             player.getInventory().addItem(is);
+                        }
+                    }
+                }
+                // process item_counts
+                if (plugin.getConfig().getBoolean("growth.rooms_require_blocks")) {
+                    for (Map.Entry<Integer, Integer> map : item_counts.entrySet()) {
+                        // check if the tardis has condensed this material before
+                        HashMap<String, Object> wherec = new HashMap<String, Object>();
+                        wherec.put("tardis_id", rs.getTardis_id());
+                        wherec.put("block_data", (int) map.getKey());
+                        ResultSetCondenser rsc = new ResultSetCondenser(plugin, wherec, false);
+                        HashMap<String, Object> setc = new HashMap<String, Object>();
+                        if (rsc.resultSet()) {
+                            int new_stack_size = (int) map.getValue() + rsc.getBlock_count();
+                            qf.updateCondensedBlockCount(new_stack_size, rs.getTardis_id(), (int) map.getKey());
+                        } else {
+                            setc.put("tardis_id", rs.getTardis_id());
+                            setc.put("block_data", (int) map.getKey());
+                            setc.put("block_count", (int) map.getValue());
+                            qf.doInsert("condenser", setc);
                         }
                     }
                 }
@@ -130,13 +143,13 @@ public class TARDISCondenserListener implements Listener {
                 if (amount > 0) {
                     message = "You condensed the molecules of the universe itself into " + amount + " artron energy!";
                     // are we doing an achievement?
-                    if (plugin.getAchivementConfig().getBoolean("energy.enabled")) {
+                    if (plugin.getAchievementConfig().getBoolean("energy.enabled")) {
                         // determine the current percentage
                         int current_level = rs.getArtron_level() + amount;
                         int fc = plugin.getArtronConfig().getInt("full_charge");
                         int percent = Math.round((current_level * 100F) / fc);
                         TARDISAchievementFactory taf = new TARDISAchievementFactory(plugin, player, "energy", 1);
-                        if (percent >= plugin.getAchivementConfig().getInt("energy.required")) {
+                        if (percent >= plugin.getAchievementConfig().getInt("energy.required")) {
                             taf.doAchievement(percent);
                         } else {
                             taf.doAchievement(Math.round((amount * 100F) / fc));
@@ -145,12 +158,12 @@ public class TARDISCondenserListener implements Listener {
                 } else {
                     message = "There were no valid materials to condense!";
                 }
-                player.sendMessage(plugin.pluginName + message);
+                TARDISMessage.send(player, plugin.getPluginName() + message);
             }
         }
     }
 
-    @EventHandler(priority = EventPriority.NORMAL)
+    @EventHandler(ignoreCancelled = true)
     public void onChestOpen(PlayerInteractEvent event) {
         Block b = event.getClickedBlock();
         if (b != null && b.getType().equals(Material.CHEST) && event.getAction().equals(Action.RIGHT_CLICK_BLOCK)) {

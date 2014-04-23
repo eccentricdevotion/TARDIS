@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2013 eccentric_nz
+ * Copyright (C) 2014 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -22,6 +22,7 @@ import java.util.List;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
+import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.block.Block;
@@ -38,36 +39,52 @@ public class TARDISToggleOnOffCommand {
 
     public TARDISToggleOnOffCommand(TARDIS plugin) {
         this.plugin = plugin;
-        this.was = Arrays.asList(new String[]{"auto", "beacon", "dnd", "platform", "eps", "hads", "minecart", "plain", "renderer", "submarine"});
+        this.was = Arrays.asList("auto", "beacon", "dnd", "platform", "eps", "hads", "minecart", "plain", "renderer", "submarine");
     }
 
-    public boolean doAbort(Player player, String[] args, QueryFactory qf) {
+    public boolean toggle(Player player, String[] args, QueryFactory qf) {
         String pref = args[0];
+        if (pref.equals("auto") && !plugin.getConfig().getBoolean("allow.autonomous")) {
+            TARDISMessage.send(player, plugin.getPluginName() + "Autonomous homing is disabled on this server!");
+            return true;
+        }
+        if (pref.equals("platform") && !plugin.getConfig().getBoolean("travel.platform")) {
+            TARDISMessage.send(player, plugin.getPluginName() + "Safety platforms are disabled on this server!");
+            return true;
+        }
+        if (pref.equals("eps") && !plugin.getConfig().getBoolean("allow.emergency_npc")) {
+            TARDISMessage.send(player, plugin.getPluginName() + "Emergency Programme One is disabled on this server!");
+            return true;
+        }
+        if (pref.equals("hads") && !plugin.getConfig().getBoolean("allow.hads")) {
+            TARDISMessage.send(player, plugin.getPluginName() + "The Hostile Action Displacement System is disabled on this server!");
+            return true;
+        }
         HashMap<String, Object> setp = new HashMap<String, Object>();
         HashMap<String, Object> wherep = new HashMap<String, Object>();
-        wherep.put("player", player.getName());
+        wherep.put("uuid", player.getUniqueId().toString());
         String grammar = (was.contains(pref)) ? " was" : " were";
         if (args[1].equalsIgnoreCase("on")) {
             setp.put(pref + "_on", 1);
             if (pref.equals("beacon")) {
-                toggleBeacon(player.getName(), true);
+                toggleBeacon(player.getUniqueId().toString(), true);
             }
-            player.sendMessage(plugin.pluginName + pref + grammar + " turned ON!");
+            TARDISMessage.send(player, plugin.getPluginName() + pref + grammar + " turned ON!");
         }
         if (args[1].equalsIgnoreCase("off")) {
             setp.put(pref + "_on", 0);
             if (pref.equals("beacon")) {
-                toggleBeacon(player.getName(), false);
+                toggleBeacon(player.getUniqueId().toString(), false);
             }
-            player.sendMessage(plugin.pluginName + pref + grammar + " turned OFF.");
+            TARDISMessage.send(player, plugin.getPluginName() + pref + grammar + " turned OFF.");
         }
         qf.doUpdate("player_prefs", setp, wherep);
         return true;
     }
 
-    public void toggleBeacon(String name, boolean on) {
+    public void toggleBeacon(String uuid, boolean on) {
         HashMap<String, Object> whereb = new HashMap<String, Object>();
-        whereb.put("owner", name);
+        whereb.put("uuid", uuid);
         ResultSetTardis rs = new ResultSetTardis(plugin, whereb, "", false);
         if (rs.resultSet()) {
             // toggle beacon
@@ -100,9 +117,9 @@ public class TARDISToggleOnOffCommand {
                 beaconData = beacon.split(":");
             }
             World w = plugin.getServer().getWorld(beaconData[0]);
-            int bx = plugin.utils.parseInt(beaconData[1]);
-            int by = plugin.utils.parseInt(beaconData[2]) + plusy;
-            int bz = plugin.utils.parseInt(beaconData[3]);
+            int bx = plugin.getUtils().parseInt(beaconData[1]);
+            int by = plugin.getUtils().parseInt(beaconData[2]) + plusy;
+            int bz = plugin.getUtils().parseInt(beaconData[3]);
             if (beacon.isEmpty()) {
                 // update the tardis table so we don't have to do this again
                 String beacon_loc = beaconData[0] + ":" + beaconData[1] + ":" + by + ":" + beaconData[3];

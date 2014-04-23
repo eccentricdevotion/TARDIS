@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2013 eccentric_nz
+ * Copyright (C) 2014 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -20,6 +20,7 @@ import java.util.List;
 import me.eccentric_nz.TARDIS.TARDIS;
 import org.bukkit.Effect;
 import org.bukkit.Location;
+import org.bukkit.Material;
 import org.bukkit.block.Block;
 
 /**
@@ -33,13 +34,17 @@ public class TARDISLampsRunnable implements Runnable {
     private final TARDIS plugin;
     private final List<Block> lamps;
     private final long start;
+    private final boolean use_wool;
+    private final boolean lights_on;
     private int task;
     private Location handbrake_loc;
 
-    public TARDISLampsRunnable(TARDIS plugin, List<Block> lamps, long start) {
+    public TARDISLampsRunnable(TARDIS plugin, List<Block> lamps, long start, boolean use_wool) {
         this.plugin = plugin;
         this.lamps = lamps;
         this.start = start;
+        this.use_wool = use_wool;
+        this.lights_on = (lamps.get(0).getType().equals(Material.REDSTONE_LAMP_ON));
     }
 
     @SuppressWarnings("deprecation")
@@ -50,17 +55,35 @@ public class TARDISLampsRunnable implements Runnable {
             handbrake_loc.getWorld().playEffect(handbrake_loc, Effect.SMOKE, j);
         }
         for (Block b : lamps) {
-            if (b.getTypeId() == 124) {
-                b.setTypeId(19);
-            } else if (b.getTypeId() == 19) {
-                b.setTypeId(124);
+            if (b.getType().equals(Material.REDSTONE_LAMP_ON)) {
+                if (use_wool) {
+                    b.setType(Material.WOOL);
+                    b.setData((byte) 15);
+                } else {
+                    b.setType(Material.SPONGE);
+                }
+            } else if (b.getType().equals(Material.SPONGE) || (b.getType().equals(Material.WOOL) && b.getData() == (byte) 15)) {
+                b.setType(Material.REDSTONE_LAMP_ON);
             }
         }
         if (System.currentTimeMillis() > start) {
-            // set all lamps back to on
-            for (Block b : lamps) {
-                if (b.getTypeId() == 19) {
-                    b.setTypeId(124);
+            // set all lamps back to whatever they were when the malfunction happened
+            if (lights_on) {
+                for (Block b : lamps) {
+                    if (b.getType().equals(Material.SPONGE) || (b.getType().equals(Material.WOOL) && b.getData() == (byte) 15)) {
+                        b.setType(Material.REDSTONE_LAMP_ON);
+                    }
+                }
+            } else {
+                for (Block b : lamps) {
+                    if (b.getType().equals(Material.REDSTONE_LAMP_ON)) {
+                        if (use_wool) {
+                            b.setType(Material.WOOL);
+                            b.setData((byte) 15);
+                        } else {
+                            b.setType(Material.SPONGE);
+                        }
+                    }
                 }
             }
             plugin.getServer().getScheduler().cancelTask(task);

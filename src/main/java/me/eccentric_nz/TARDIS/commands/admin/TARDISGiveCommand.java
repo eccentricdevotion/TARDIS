@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2013 eccentric_nz
+ * Copyright (C) 2014 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -17,10 +17,12 @@
 package me.eccentric_nz.TARDIS.commands.admin;
 
 import java.util.HashMap;
+import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import me.eccentric_nz.TARDIS.enumeration.MESSAGE;
+import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -45,6 +47,7 @@ public class TARDISGiveCommand implements CommandExecutor {
         this.full = this.plugin.getArtronConfig().getInt("full_charge");
         items.put("artron", "");
         items.put("a-circuit", "Server Admin Circuit");
+        items.put("ars-circuit", "TARDIS ARS Circuit");
         items.put("bio-circuit", "Bio-scanner Circuit");
         items.put("biome-disk", "Biome Storage Disk");
         items.put("blank", "Blank Storage Disk");
@@ -53,6 +56,7 @@ public class TARDISGiveCommand implements CommandExecutor {
         items.put("d-circuit", "Diamond Disruptor Circuit");
         items.put("e-circuit", "Emerald Environment Circuit");
         items.put("filter", "Perception Filter");
+        items.put("i-circuit", "TARDIS Input Circuit");
         items.put("key", "TARDIS Key");
         items.put("kit", "TARDIS Item Kit");
         items.put("l-circuit", "TARDIS Locator Circuit");
@@ -69,6 +73,7 @@ public class TARDISGiveCommand implements CommandExecutor {
         items.put("scanner-circuit", "TARDIS Scanner Circuit");
         items.put("save-disk", "Save Storage Disk");
         items.put("sonic", "Sonic Screwdriver");
+        items.put("t-circuit", "TARDIS Temporal Circuit");
     }
 
     @Override
@@ -76,29 +81,33 @@ public class TARDISGiveCommand implements CommandExecutor {
         // If the player typed /tardisgive then do the following...
         if (cmd.getName().equalsIgnoreCase("tardisgive")) {
             if (sender instanceof ConsoleCommandSender || sender.hasPermission("tardis.admin")) {
+                if (args.length == 1 && args[0].equalsIgnoreCase("list")) {
+                    new TARDISGiveLister(plugin, sender).list();
+                    return true;
+                }
                 if (args.length < 3) {
-                    sender.sendMessage(plugin.pluginName + "Too few command arguments! /tardisgive [player] [item] [amount]");
+                    sender.sendMessage(plugin.getPluginName() + MESSAGE.TOO_FEW_ARGS.getText() + " /tardisgive [player] [item] [amount]");
                     return true;
                 }
                 String item = args[1].toLowerCase();
                 if (!items.containsKey(item)) {
-                    sender.sendMessage(plugin.pluginName + "Unknown item! Try one of: artron|kit|a-circuit|bio-circuit|biome-disk|blank|c-circuit|d-circuit|e-circuit|filter|key|l-circuit|locator|m-circuit|memory-circuit|oscillator|p-circuit|player-disk|preset-disk|r-circuit|remote|s-circuit|scanner-circuit|save-disk|sonic");
+                    new TARDISGiveLister(plugin, sender).list();
                     return true;
                 }
                 if (item.equals("kit")) {
                     Player p = plugin.getServer().getPlayer(args[0]);
                     if (p == null) { // player must be online
-                        sender.sendMessage(plugin.pluginName + "Could not find a player with that name!");
+                        sender.sendMessage(plugin.getPluginName() + MESSAGE.COULD_NOT_FIND_NAME.getText());
                         return true;
                     }
                     if (!plugin.getKitsConfig().contains("kits." + args[2])) {
-                        sender.sendMessage(plugin.pluginName + "Could not find a kit with that name!");
+                        sender.sendMessage(plugin.getPluginName() + "Could not find a kit with that name!");
                         return true;
                     }
                     for (String k : plugin.getKitsConfig().getStringList("kits." + args[2])) {
                         this.giveItem(k, p);
                     }
-                    p.sendMessage(plugin.pluginName + sender.getName() + " just gave you the TARDIS Item Kit " + args[2]);
+                    TARDISMessage.send(p, plugin.getPluginName() + sender.getName() + " just gave you the TARDIS Item Kit " + args[2]);
                     return true;
                 }
                 int amount;
@@ -110,60 +119,62 @@ public class TARDISGiveCommand implements CommandExecutor {
                     try {
                         amount = Integer.parseInt(args[2]);
                     } catch (NumberFormatException nfe) {
-                        sender.sendMessage(plugin.pluginName + "Amount must be a number, 'full' or 'empty'! /tardisgive [player] [item] [amount]");
+                        sender.sendMessage(plugin.getPluginName() + "Amount must be a number, 'full' or 'empty'! /tardisgive [player] [item] [amount]");
                         return true;
                     }
                 }
                 if (item.equals("artron")) {
                     if (plugin.getServer().getOfflinePlayer(args[0]) == null) {
-                        sender.sendMessage(plugin.pluginName + "Could not find a player with that name!");
+                        sender.sendMessage(plugin.getPluginName() + MESSAGE.COULD_NOT_FIND_NAME.getText());
                         return true;
                     }
                     return this.giveArtron(sender, args[0], amount);
                 } else {
                     Player p = plugin.getServer().getPlayer(args[0]);
                     if (p == null) { // player must be online
-                        sender.sendMessage(plugin.pluginName + "Could not find a player with that name!");
+                        sender.sendMessage(plugin.getPluginName() + MESSAGE.COULD_NOT_FIND_NAME.getText());
                         return true;
                     }
                     return this.giveItem(sender, item, amount, p);
                 }
             } else {
-                sender.sendMessage(plugin.pluginName + MESSAGE.NO_PERMS.getText());
+                sender.sendMessage(plugin.getPluginName() + MESSAGE.NO_PERMS.getText());
                 return true;
             }
         }
         return false;
     }
 
+    @SuppressWarnings("deprecation")
     private boolean giveItem(CommandSender sender, String item, int amount, Player player) {
         if (amount > 64) {
-            sender.sendMessage(plugin.pluginName + "You can only give a maximum of 64 items at once!");
+            sender.sendMessage(plugin.getPluginName() + "You can only give a maximum of 64 items at once!");
             return true;
         }
         String item_to_give = items.get(item);
         ItemStack result;
         if (item.equals("save-disk") || item.equals("preset-disk") || item.equals("biome-disk") || item.equals("player-disk")) {
-            ShapelessRecipe recipe = plugin.incomposita.getShapelessRecipes().get(item_to_give);
+            ShapelessRecipe recipe = plugin.getIncomposita().getShapelessRecipes().get(item_to_give);
             result = recipe.getResult();
         } else {
-            ShapedRecipe recipe = plugin.figura.getShapedRecipes().get(item_to_give);
+            ShapedRecipe recipe = plugin.getFigura().getShapedRecipes().get(item_to_give);
             result = recipe.getResult();
         }
         result.setAmount(amount);
         player.getInventory().addItem(result);
         player.updateInventory();
-        player.sendMessage(plugin.pluginName + sender.getName() + " just gave you " + amount + " " + item_to_give);
+        TARDISMessage.send(player, plugin.getPluginName() + sender.getName() + " just gave you " + amount + " " + item_to_give);
         return true;
     }
 
+    @SuppressWarnings("deprecation")
     private boolean giveItem(String item, Player player) {
         ItemStack result;
-        if (plugin.incomposita.getShapelessRecipes().containsKey(item)) {
-            ShapelessRecipe recipe = plugin.incomposita.getShapelessRecipes().get(item);
+        if (plugin.getIncomposita().getShapelessRecipes().containsKey(item)) {
+            ShapelessRecipe recipe = plugin.getIncomposita().getShapelessRecipes().get(item);
             result = recipe.getResult();
         } else {
-            ShapedRecipe recipe = plugin.figura.getShapedRecipes().get(item);
+            ShapedRecipe recipe = plugin.getFigura().getShapedRecipes().get(item);
             result = recipe.getResult();
         }
         result.setAmount(1);
@@ -173,35 +184,42 @@ public class TARDISGiveCommand implements CommandExecutor {
     }
 
     private boolean giveArtron(CommandSender sender, String player, int amount) {
-        HashMap<String, Object> where = new HashMap<String, Object>();
-        where.put("owner", player);
-        ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);
-        if (rs.resultSet()) {
-            int id = rs.getTardis_id();
-            int level = rs.getArtron_level();
-            int set_level;
-            if (amount == 0) {
-                set_level = 0;
-            } else {
-                // always fill to full and no more
-                if (level >= full && amount > 0) {
-                    sender.sendMessage(plugin.pluginName + player + " already has a full Artron Energy Capacitor!");
-                    return true;
-                }
-                if ((full - level) < amount) {
-                    set_level = full;
+        // Look up this player's UUID
+        UUID uuid = plugin.getGeneralKeeper().getUUIDCache().getIdOptimistic(player);
+        if (uuid != null) {
+            HashMap<String, Object> where = new HashMap<String, Object>();
+            where.put("uuid", uuid.toString());
+            ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);
+            if (rs.resultSet()) {
+                int id = rs.getTardis_id();
+                int level = rs.getArtron_level();
+                int set_level;
+                if (amount == 0) {
+                    set_level = 0;
                 } else {
-                    set_level = level + amount;
+                    // always fill to full and no more
+                    if (level >= full && amount > 0) {
+                        sender.sendMessage(plugin.getPluginName() + player + " already has a full Artron Energy Capacitor!");
+                        return true;
+                    }
+                    if ((full - level) < amount) {
+                        set_level = full;
+                    } else {
+                        set_level = level + amount;
+                    }
                 }
+                QueryFactory qf = new QueryFactory(plugin);
+                HashMap<String, Object> set = new HashMap<String, Object>();
+                set.put("artron_level", set_level);
+                HashMap<String, Object> wheret = new HashMap<String, Object>();
+                wheret.put("tardis_id", id);
+                qf.doUpdate("tardis", set, wheret);
+                sender.sendMessage(plugin.getPluginName() + player + "'s Artron Energy Level was set to " + set_level);
             }
-            QueryFactory qf = new QueryFactory(plugin);
-            HashMap<String, Object> set = new HashMap<String, Object>();
-            set.put("artron", set_level);
-            HashMap<String, Object> wheret = new HashMap<String, Object>();
-            wheret.put("tardis_id", id);
-            qf.doUpdate("tardis", set, wheret);
-            sender.sendMessage(plugin.pluginName + player + "'s Artron Energy Level was set to " + set_level);
+            return true;
+        } else {
+            sender.sendMessage(plugin.getPluginName() + "Could not find UUID for player [" + player + "]!");
+            return true;
         }
-        return true;
     }
 }

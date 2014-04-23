@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2013 eccentric_nz
+ * Copyright (C) 2014 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -21,6 +21,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.utility.TARDISWorldGuardFlag;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabCompleter;
@@ -35,7 +36,11 @@ public class TARDISAdminTabComplete implements TabCompleter {
     private final ImmutableList<String> DIFFICULTY_SUBS = ImmutableList.of("easy", "hard");
     private final ImmutableList<String> BOOL_SUBS = ImmutableList.of("true", "false");
     private final ImmutableList<String> DB_SUBS = ImmutableList.of("mysql", "sqlite");
+    private final ImmutableList<String> TIPS_SUBS = ImmutableList.of("400", "800", "1200", "1600");
+    private final ImmutableList<String> TOWNY_SUBS = ImmutableList.of("none", "wilderness", "town", "nation");
+    private final ImmutableList<String> FLAG_SUBS = ImmutableList.copyOf(TARDISWorldGuardFlag.getFLAG_LOOKUP().keySet());
     private final ImmutableList<String> CONFIG_SUBS = ImmutableList.of("worlds", "rechargers", "storage", "creation", "police_box", "travel", "preferences", "allow", "growth", "rooms");
+    private final ImmutableList<String> COLOURS = ImmutableList.of("AQUA", "BLACK", "BLUE", "DARK_AQUA", "DARK_BLUE", "DARK_GRAY", "DARK_GREEN", "DARK_PURPLE", "DARK_RED", "GOLD", "GRAY", "GREEN", "LIGHT_PURPLE", "RED", "WHITE", "YELLOW");
 
     public TARDISAdminTabComplete(TARDIS plugin) {
         this.plugin = plugin;
@@ -54,8 +59,20 @@ public class TARDISAdminTabComplete implements TabCompleter {
             if (sub.equals("difficulty")) {
                 return partial(lastArg, DIFFICULTY_SUBS);
             }
+            if (sub.equals("respect_towny")) {
+                return partial(lastArg, TOWNY_SUBS);
+            }
+            if (sub.equals("respect_worldguard")) {
+                return partial(lastArg, FLAG_SUBS);
+            }
+            if (sub.equals("sign_colour")) {
+                return partial(lastArg, COLOURS);
+            }
             if (sub.equals("database")) {
                 return partial(lastArg, DB_SUBS);
+            }
+            if (sub.equals("tips_limit")) {
+                return partial(lastArg, TIPS_SUBS);
             }
             if (sub.equals("delete") || sub.equals("enter") || sub.equals("purge")) { // return null to default to online player name matching
                 return null;
@@ -71,12 +88,12 @@ public class TARDISAdminTabComplete implements TabCompleter {
     }
 
     private List<String> combineLists() {
-        List<String> newList = new ArrayList<String>(plugin.tardisAdminCommand.firstsStr.size() + plugin.tardisAdminCommand.firstsBool.size() + plugin.tardisAdminCommand.firstsInt.size() + plugin.tardisAdminCommand.firstsStrArtron.size() + plugin.tardisAdminCommand.firstsIntArtron.size());
-        newList.addAll(plugin.tardisAdminCommand.firstsStr.keySet());
-        newList.addAll(plugin.tardisAdminCommand.firstsBool.keySet());
-        newList.addAll(plugin.tardisAdminCommand.firstsInt.keySet());
-        newList.addAll(plugin.tardisAdminCommand.firstsStrArtron);
-        newList.addAll(plugin.tardisAdminCommand.firstsIntArtron);
+        List<String> newList = new ArrayList<String>(plugin.getGeneralKeeper().getTardisAdminCommand().firstsStr.size() + plugin.getGeneralKeeper().getTardisAdminCommand().firstsBool.size() + plugin.getGeneralKeeper().getTardisAdminCommand().firstsInt.size() + plugin.getGeneralKeeper().getTardisAdminCommand().firstsStrArtron.size() + plugin.getGeneralKeeper().getTardisAdminCommand().firstsIntArtron.size());
+        newList.addAll(plugin.getGeneralKeeper().getTardisAdminCommand().firstsStr.keySet());
+        newList.addAll(plugin.getGeneralKeeper().getTardisAdminCommand().firstsBool.keySet());
+        newList.addAll(plugin.getGeneralKeeper().getTardisAdminCommand().firstsInt.keySet());
+        newList.addAll(plugin.getGeneralKeeper().getTardisAdminCommand().firstsStrArtron);
+        newList.addAll(plugin.getGeneralKeeper().getTardisAdminCommand().firstsIntArtron);
         return newList;
     }
 }

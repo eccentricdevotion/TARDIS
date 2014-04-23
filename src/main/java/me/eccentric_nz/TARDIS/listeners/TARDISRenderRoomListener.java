@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2013 eccentric_nz
+ * Copyright (C) 2014 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -21,6 +21,7 @@ import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.ResultSetDoors;
 import me.eccentric_nz.TARDIS.database.ResultSetTravellers;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
+import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import org.bukkit.Location;
 import org.bukkit.Sound;
 import org.bukkit.World;
@@ -45,7 +46,7 @@ public class TARDISRenderRoomListener implements Listener {
     @EventHandler
     public void onInteract(PlayerInteractEvent event) {
         final Player player = event.getPlayer();
-        if (plugin.trackTransmat.contains(player.getName())) {
+        if (plugin.getTrackerKeeper().getTrackTransmat().contains(player.getUniqueId())) {
             event.setCancelled(true);
             if (event.getAction().equals(Action.RIGHT_CLICK_BLOCK) || event.getAction().equals(Action.RIGHT_CLICK_AIR)) {
                 // tp the player back to the TARDIS console
@@ -54,11 +55,11 @@ public class TARDISRenderRoomListener implements Listener {
         }
     }
 
-    private void transmat(final Player p) {
-        p.sendMessage(plugin.pluginName + "Stand by for transmat...");
+    public void transmat(final Player p) {
+        TARDISMessage.send(p, plugin.getPluginName() + "Stand by for transmat...");
         // get the TARDIS the player is in
         HashMap<String, Object> wherep = new HashMap<String, Object>();
-        wherep.put("player", p.getName());
+        wherep.put("uuid", p.getUniqueId().toString());
         ResultSetTravellers rst = new ResultSetTravellers(plugin, wherep, false);
         if (rst.resultSet()) {
             int id = rst.getTardis_id();
@@ -71,9 +72,9 @@ public class TARDISRenderRoomListener implements Listener {
                 String doorLocStr = rsd.getDoor_location();
                 String[] split = doorLocStr.split(":");
                 World cw = plugin.getServer().getWorld(split[0]);
-                int cx = plugin.utils.parseInt(split[1]);
-                int cy = plugin.utils.parseInt(split[2]);
-                int cz = plugin.utils.parseInt(split[3]);
+                int cx = plugin.getUtils().parseInt(split[1]);
+                int cy = plugin.getUtils().parseInt(split[2]);
+                int cz = plugin.getUtils().parseInt(split[3]);
                 Location tmp_loc = new Location(cw, cx, cy, cz);
                 int getx = tmp_loc.getBlockX();
                 int getz = tmp_loc.getBlockZ();
@@ -107,14 +108,14 @@ public class TARDISRenderRoomListener implements Listener {
                     public void run() {
                         p.playSound(tp_loc, Sound.ENDERMAN_TELEPORT, 1.0f, 1.0f);
                         p.teleport(tp_loc);
-                        plugin.trackTransmat.remove(p.getName());
+                        plugin.getTrackerKeeper().getTrackTransmat().remove(p.getUniqueId());
                     }
                 }, 10L);
             } else {
-                p.sendMessage(plugin.pluginName + "The Transmat device couldn't find the TARDIS console!");
+                TARDISMessage.send(p, plugin.getPluginName() + "The Transmat device couldn't find the TARDIS console!");
             }
         } else {
-            p.sendMessage(plugin.pluginName + "The Transmat device couldn't determine which TARDIS you are in!");
+            TARDISMessage.send(p, plugin.getPluginName() + "The Transmat device couldn't determine which TARDIS you are in!");
         }
     }
 }

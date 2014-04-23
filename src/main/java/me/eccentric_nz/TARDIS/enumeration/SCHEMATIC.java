@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2013 eccentric_nz
+ * Copyright (C) 2014 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -38,6 +38,7 @@ public enum SCHEMATIC {
     GREENHOUSE("greenhouse.schematic"),
     HARMONY("harmony.schematic"),
     KITCHEN("kitchen.schematic"),
+    LAZARUS("lazarus.schematic"),
     LIBRARY("library.schematic"),
     MUSHROOM("mushroom.schematic"),
     PASSAGE("passage.schematic"),
@@ -53,7 +54,8 @@ public enum SCHEMATIC {
     VAULT("vault.schematic"),
     VILLAGE("village.schematic"),
     WOOD("wood.schematic"),
-    WORKSHOP("workshop.schematic");
+    WORKSHOP("workshop.schematic"),
+    ZERO("zero.schematic");
 
     String file;
 

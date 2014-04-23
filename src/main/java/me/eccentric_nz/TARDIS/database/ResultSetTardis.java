@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2013 eccentric_nz
+ * Copyright (C) 2014 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -25,6 +25,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
+import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.enumeration.PRESET;
 import me.eccentric_nz.TARDIS.enumeration.SCHEMATIC;
@@ -44,6 +45,7 @@ public class ResultSetTardis {
     private final String limit;
     private final boolean multiple;
     private int tardis_id;
+    private UUID uuid;
     private String owner;
     private String chunk;
     private int tips;
@@ -78,6 +80,7 @@ public class ResultSetTardis {
     private String rail;
     private String village;
     private String renderer;
+    private String zero;
     private final ArrayList<HashMap<String, String>> data = new ArrayList<HashMap<String, String>>();
 
     /**
@@ -127,10 +130,10 @@ public class ResultSetTardis {
             if (where != null) {
                 int s = 1;
                 for (Map.Entry<String, Object> entry : where.entrySet()) {
-                    if (entry.getValue().getClass().equals(String.class)) {
+                    if (entry.getValue().getClass().equals(String.class) || entry.getValue().getClass().equals(UUID.class)) {
                         statement.setString(s, entry.getValue().toString());
                     } else {
-                        statement.setInt(s, plugin.utils.parseInt(entry.getValue().toString()));
+                        statement.setInt(s, plugin.getUtils().parseInt(entry.getValue().toString()));
                     }
                     s++;
                 }
@@ -149,6 +152,7 @@ public class ResultSetTardis {
                         data.add(row);
                     }
                     this.tardis_id = rs.getInt("tardis_id");
+                    this.uuid = UUID.fromString(rs.getString("uuid"));
                     this.owner = rs.getString("owner");
                     this.chunk = rs.getString("chunk");
                     this.tips = rs.getInt("tips");
@@ -192,6 +196,7 @@ public class ResultSetTardis {
                     this.rail = rs.getString("rail");
                     this.village = rs.getString("village");
                     this.renderer = rs.getString("renderer");
+                    this.zero = rs.getString("zero");
                 }
             } else {
                 return false;
@@ -218,6 +223,11 @@ public class ResultSetTardis {
         return tardis_id;
     }
 
+    public UUID getUuid() {
+        return uuid;
+    }
+
+    // TODO remove this method once WorldGuard supports UUIDs for regions
     public String getOwner() {
         return owner;
     }
@@ -352,6 +362,10 @@ public class ResultSetTardis {
 
     public String getRenderer() {
         return renderer;
+    }
+
+    public String getZero() {
+        return zero;
     }
 
     public ArrayList<HashMap<String, String>> getData() {

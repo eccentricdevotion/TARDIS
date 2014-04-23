@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2013 eccentric_nz
+ * Copyright (C) 2014 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -22,6 +22,7 @@ import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import me.eccentric_nz.TARDIS.enumeration.MESSAGE;
+import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import org.bukkit.ChatColor;
 import org.bukkit.World;
 import org.bukkit.entity.Player;
@@ -41,29 +42,29 @@ public class TARDISRemoveCompanionCommand {
     public boolean doRemoveCompanion(Player player, String[] args) {
         if (player.hasPermission("tardis.add")) {
             HashMap<String, Object> where = new HashMap<String, Object>();
-            where.put("owner", player.getName());
+            where.put("uuid", player.getUniqueId().toString());
             ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);
             String comps;
             int id;
             String[] data;
             if (!rs.resultSet()) {
-                player.sendMessage(plugin.pluginName + MESSAGE.NO_TARDIS.getText());
+                TARDISMessage.send(player, plugin.getPluginName() + MESSAGE.NO_TARDIS.getText());
                 return false;
             } else {
                 comps = rs.getCompanions();
                 if (comps == null || comps.isEmpty()) {
-                    player.sendMessage(plugin.pluginName + "You have not added any TARDIS companions yet!");
+                    TARDISMessage.send(player, plugin.getPluginName() + "You have not added any TARDIS companions yet!");
                     return true;
                 }
                 id = rs.getTardis_id();
                 data = rs.getChunk().split(":");
             }
             if (args.length < 2) {
-                player.sendMessage(plugin.pluginName + "Too few command arguments!");
+                TARDISMessage.send(player, plugin.getPluginName() + MESSAGE.TOO_FEW_ARGS.getText());
                 return false;
             }
             if (!args[1].matches("[A-Za-z0-9_]{2,16}")) {
-                player.sendMessage(plugin.pluginName + "That doesn't appear to be a valid username");
+                TARDISMessage.send(player, plugin.getPluginName() + MESSAGE.NOT_VALID_NAME.getText());
                 return false;
             } else {
                 String newList = "";
@@ -93,17 +94,17 @@ public class TARDISRemoveCompanionCommand {
                 QueryFactory qf = new QueryFactory(plugin);
                 qf.doUpdate("tardis", set, tid);
                 // if using WorldGuard, remove them from the region membership
-                if (plugin.worldGuardOnServer && plugin.getConfig().getBoolean("preferences.use_worldguard")) {
+                if (plugin.isWorldGuardOnServer() && plugin.getConfig().getBoolean("preferences.use_worldguard")) {
                     World w = plugin.getServer().getWorld(data[0]);
                     if (w != null) {
-                        plugin.wgutils.removeMemberFromRegion(w, player.getName(), args[1].toLowerCase(Locale.ENGLISH));
+                        plugin.getWorldGuardUtils().removeMemberFromRegion(w, player.getName(), args[1].toLowerCase(Locale.ENGLISH));
                     }
                 }
-                player.sendMessage(plugin.pluginName + message);
+                TARDISMessage.send(player, plugin.getPluginName() + message);
                 return true;
             }
         } else {
-            player.sendMessage(plugin.pluginName + MESSAGE.NO_PERMS.getText());
+            TARDISMessage.send(player, plugin.getPluginName() + MESSAGE.NO_PERMS.getText());
             return false;
         }
     }

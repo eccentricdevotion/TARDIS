@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2013 eccentric_nz
+ * Copyright (C) 2014 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -21,6 +21,7 @@ import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.ResultSetCurrentLocation;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import me.eccentric_nz.TARDIS.enumeration.MESSAGE;
+import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 
@@ -40,28 +41,28 @@ public class TARDISFindCommand {
         if (plugin.getConfig().getString("preferences.difficulty").equalsIgnoreCase("easy")) {
             if (player.hasPermission("tardis.find")) {
                 HashMap<String, Object> where = new HashMap<String, Object>();
-                where.put("owner", player.getName());
+                where.put("uuid", player.getUniqueId().toString());
                 ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);
                 if (!rs.resultSet()) {
-                    player.sendMessage(plugin.pluginName + MESSAGE.NO_TARDIS.getText());
+                    TARDISMessage.send(player, plugin.getPluginName() + MESSAGE.NO_TARDIS.getText());
                     return false;
                 }
                 HashMap<String, Object> wherecl = new HashMap<String, Object>();
                 wherecl.put("tardis_id", rs.getTardis_id());
                 ResultSetCurrentLocation rsc = new ResultSetCurrentLocation(plugin, wherecl);
                 if (rsc.resultSet()) {
-                    player.sendMessage(plugin.pluginName + "TARDIS was left at " + rsc.getWorld().getName() + " at x: " + rsc.getX() + " y: " + rsc.getY() + " z: " + rsc.getZ());
+                    TARDISMessage.send(player, plugin.getPluginName() + "TARDIS was left at " + rsc.getWorld().getName() + " at x: " + rsc.getX() + " y: " + rsc.getY() + " z: " + rsc.getZ());
                     return true;
                 } else {
-                    player.sendMessage(plugin.pluginName + MESSAGE.NO_CURRENT.getText());
+                    TARDISMessage.send(player, plugin.getPluginName() + MESSAGE.NO_CURRENT.getText());
                     return true;
                 }
             } else {
-                player.sendMessage(plugin.pluginName + MESSAGE.NO_PERMS.getText());
+                TARDISMessage.send(player, plugin.getPluginName() + MESSAGE.NO_PERMS.getText());
                 return false;
             }
         } else {
-            player.sendMessage(plugin.pluginName + "You need to craft a TARDIS Locator! Type " + ChatColor.AQUA + "/tardisrecipe locator" + ChatColor.RESET + " to see how to make it.");
+            TARDISMessage.send(player, plugin.getPluginName() + "You need to craft a TARDIS Locator! Type " + ChatColor.AQUA + "/tardisrecipe locator" + ChatColor.RESET + " to see how to make it.");
             return true;
         }
     }

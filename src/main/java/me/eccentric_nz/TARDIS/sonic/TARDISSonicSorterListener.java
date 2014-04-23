@@ -25,6 +25,7 @@ import com.griefcraft.lwc.LWC;
 import com.griefcraft.lwc.LWCPlugin;
 import java.util.Arrays;
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
@@ -54,11 +55,8 @@ public class TARDISSonicSorterListener implements Listener {
         this.plugin = plugin;
     }
 
-    @EventHandler
+    @EventHandler(ignoreCancelled = true)
     public void onPlayerInteract(PlayerInteractEvent event) {
-        if (event.isCancelled()) {
-            return;
-        }
         Player player = event.getPlayer();
         if (event.getAction() == Action.LEFT_CLICK_BLOCK && player.hasPermission("tardis.sonic.sort")) {
             ItemStack is = player.getItemInHand();
@@ -70,14 +68,14 @@ public class TARDISSonicSorterListener implements Listener {
                         Inventory inventory = ((InventoryHolder) block.getState()).getInventory();
                         boolean allow = true;
                         // is Lockette or LWC on the server?
-                        if (plugin.pm.isPluginEnabled("Lockette")) {
-                            Lockette Lockette = (Lockette) plugin.pm.getPlugin("Lockette");
+                        if (plugin.getPM().isPluginEnabled("Lockette")) {
+                            Lockette Lockette = (Lockette) plugin.getPM().getPlugin("Lockette");
                             if (Lockette.isProtected(block)) {
                                 allow = false;
                             }
                         }
-                        if (plugin.pm.isPluginEnabled("LWC")) {
-                            LWCPlugin lwcplug = (LWCPlugin) plugin.pm.getPlugin("LWC");
+                        if (plugin.getPM().isPluginEnabled("LWC")) {
+                            LWCPlugin lwcplug = (LWCPlugin) plugin.getPM().getPlugin("LWC");
                             LWC lwc = lwcplug.getLWC();
                             if (!lwc.canAccessProtection(player, block)) {
                                 allow = false;
@@ -85,7 +83,7 @@ public class TARDISSonicSorterListener implements Listener {
                         }
                         if (allow) {
                             sortInventory(inventory, 0, inventory.getSize());
-                            player.sendMessage(plugin.pluginName + "Chest sonically sorted!");
+                            TARDISMessage.send(player, plugin.getPluginName() + "Chest sonically sorted!");
                         }
                     }
                 }

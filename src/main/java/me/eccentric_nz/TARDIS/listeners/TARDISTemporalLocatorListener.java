@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2013 eccentric_nz
+ * Copyright (C) 2014 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,9 +18,9 @@ package me.eccentric_nz.TARDIS.listeners;
 
 import java.util.List;
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
-import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.Inventory;
@@ -45,14 +45,13 @@ public class TARDISTemporalLocatorListener implements Listener {
      *
      * @param event a player clicking an inventory slot
      */
-    @EventHandler(priority = EventPriority.NORMAL)
+    @EventHandler(ignoreCancelled = true)
     public void onTemporalTerminalClick(InventoryClickEvent event) {
         Inventory inv = event.getInventory();
         String name = inv.getTitle();
         if (name.equals("§4Temporal Locator")) {
             event.setCancelled(true);
             final Player player = (Player) event.getWhoClicked();
-            String playerNameStr = player.getName();
             int slot = event.getRawSlot();
             if (slot >= 0 && slot < 27) {
                 ItemStack is = inv.getItem(slot);
@@ -60,8 +59,8 @@ public class TARDISTemporalLocatorListener implements Listener {
                     ItemMeta im = is.getItemMeta();
                     List<String> lore = im.getLore();
                     long time = getTime(lore);
-                    plugin.trackSetTime.put(playerNameStr, time);
-                    player.sendMessage(plugin.pluginName + "Your temporal location will be set to " + time + " ticks when exiting the TARDIS.");
+                    plugin.getTrackerKeeper().getTrackSetTime().put(player.getUniqueId(), time);
+                    TARDISMessage.send(player, plugin.getPluginName() + "Your temporal location will be set to " + time + " ticks when exiting the TARDIS.");
                 }
                 close(player);
             }
@@ -77,7 +76,7 @@ public class TARDISTemporalLocatorListener implements Listener {
      */
     private long getTime(List<String> lore) {
         String[] data = lore.get(0).split(" ");
-        return plugin.utils.parseLong(data[0]);
+        return plugin.getUtils().parseLong(data[0]);
     }
 
     /**

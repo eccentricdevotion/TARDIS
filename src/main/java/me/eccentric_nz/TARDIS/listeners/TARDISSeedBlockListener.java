@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2013 eccentric_nz
+ * Copyright (C) 2014 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -21,11 +21,12 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.enumeration.SCHEMATIC;
 import me.eccentric_nz.TARDIS.builders.TARDISBuildData;
 import me.eccentric_nz.TARDIS.builders.TARDISSeedBlockProcessor;
 import me.eccentric_nz.TARDIS.database.ResultSetPlayerPrefs;
+import me.eccentric_nz.TARDIS.enumeration.SCHEMATIC;
 import me.eccentric_nz.TARDIS.rooms.TARDISWallsLookup;
+import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import org.bukkit.DyeColor;
 import org.bukkit.GameMode;
 import org.bukkit.Location;
@@ -55,7 +56,7 @@ public class TARDISSeedBlockListener implements Listener {
     public TARDISSeedBlockListener(TARDIS plugin) {
         this.plugin = plugin;
         twl = new TARDISWallsLookup(plugin);
-        hasColour.addAll(Arrays.asList(new Integer[]{5, 17, 35, 95, 159, 162}));
+        hasColour.addAll(Arrays.asList(5, 17, 35, 95, 159, 162));
     }
 
     /**
@@ -64,7 +65,7 @@ public class TARDISSeedBlockListener implements Listener {
      *
      * @param event
      */
-    @EventHandler(priority = EventPriority.MONITOR)
+    @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
     public void onSeedBlockPlace(BlockPlaceEvent event) {
         final Player player = event.getPlayer();
         ItemStack is = player.getItemInHand();
@@ -93,7 +94,7 @@ public class TARDISSeedBlockListener implements Listener {
             seed.setLamp(lamp_data.getId());
             Location l = event.getBlockPlaced().getLocation();
             trackTARDISSeed.put(l, seed);
-            player.sendMessage(plugin.pluginName + "You placed a TARDIS seed block!");
+            TARDISMessage.send(player, plugin.getPluginName() + "You placed a TARDIS seed block!");
             // now the player has to click the block with the TARDIS key
         }
     }
@@ -103,7 +104,7 @@ public class TARDISSeedBlockListener implements Listener {
      *
      * @param event a block break event
      */
-    @EventHandler(priority = EventPriority.MONITOR)
+    @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
     @SuppressWarnings("deprecation")
     public void onSeedBlockBreak(BlockBreakEvent event) {
         Location l = event.getBlock().getLocation();
@@ -130,7 +131,7 @@ public class TARDISSeedBlockListener implements Listener {
                             lore.add("Chameleon block: " + DyeColor.getByWoolData(data.getBox_data()) + " " + Material.getMaterial(data.getBox_id()).toString());
                             break;
                         default:
-                            lore.add("Chameleon block: " + plugin.utils.getWoodType(Material.getMaterial(data.getBox_id()), data.getBox_data()) + " " + Material.getMaterial(data.getBox_id()).toString());
+                            lore.add("Chameleon block: " + plugin.getUtils().getWoodType(Material.getMaterial(data.getBox_id()), data.getBox_data()) + " " + Material.getMaterial(data.getBox_id()).toString());
                     }
                 } else {
                     lore.add("Chameleon block: " + Material.getMaterial(data.getBox_id()).toString());
@@ -152,7 +153,7 @@ public class TARDISSeedBlockListener implements Listener {
      *
      * @param event a block interact event
      */
-    @EventHandler(priority = EventPriority.MONITOR)
+    @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
     public void onSeedInteract(PlayerInteractEvent event) {
         if (event.getClickedBlock() != null) {
             Location l = event.getClickedBlock().getLocation();
@@ -160,7 +161,7 @@ public class TARDISSeedBlockListener implements Listener {
                 Player player = event.getPlayer();
                 String key;
                 HashMap<String, Object> where = new HashMap<String, Object>();
-                where.put("player", player.getName());
+                where.put("uuid", player.getUniqueId().toString());
                 ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, where);
                 if (rsp.resultSet()) {
                     key = (!rsp.getKey().isEmpty()) ? rsp.getKey() : plugin.getConfig().getString("preferences.key");
@@ -168,6 +169,10 @@ public class TARDISSeedBlockListener implements Listener {
                     key = plugin.getConfig().getString("preferences.key");
                 }
                 if (player.getItemInHand().getType().equals(Material.getMaterial(key))) {
+                    if (!plugin.getConfig().getBoolean("worlds." + l.getWorld().getName())) {
+                        TARDISMessage.send(player, plugin.getPluginName() + "You cannot create a TARDIS in this world!");
+                        return;
+                    }
                     // grow a TARDIS
                     TARDISBuildData seed = trackTARDISSeed.get(l);
                     // process seed data
@@ -218,7 +223,7 @@ public class TARDISSeedBlockListener implements Listener {
     private TwoValues getValuesFromWallString(String str) {
         TwoValues data = new TwoValues();
         String[] split = str.split(": ");
-        int[] values = plugin.tw.blocks.get(split[1]);
+        int[] values = plugin.getTardisWalls().blocks.get(split[1]);
         data.setId(values[0]);
         data.setData((byte) values[1]);
         return data;

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2013 eccentric_nz
+ * Copyright (C) 2014 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -62,9 +62,9 @@ public class TARDISPruner {
             try {
                 BufferedWriter bw = new BufferedWriter(new FileWriter(file, false));
                 if (rs.isBeforeFirst()) {
-                    sender.sendMessage(plugin.pluginName + "Prune List:");
+                    sender.sendMessage(plugin.getPluginName() + "Prune List:");
                 } else {
-                    sender.sendMessage(plugin.pluginName + "No TARDISes to prune");
+                    sender.sendMessage(plugin.getPluginName() + "No TARDISes to prune");
                 }
                 while (rs.next()) {
                     HashMap<String, Object> wherecl = new HashMap<String, Object>();

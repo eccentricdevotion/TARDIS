@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2013 eccentric_nz
+ * Copyright (C) 2014 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -33,9 +33,9 @@ public class TARDISChunksCommand {
     }
 
     public boolean listChunks(CommandSender sender) {
-        if (plugin.tardisChunkList.size() > 0) {
-            for (Chunk c : plugin.tardisChunkList) {
-                sender.sendMessage(plugin.pluginName + c.getWorld().getName() + ": " + c);
+        if (plugin.getGeneralKeeper().getTardisChunkList().size() > 0) {
+            for (Chunk c : plugin.getGeneralKeeper().getTardisChunkList()) {
+                sender.sendMessage(plugin.getPluginName() + c.getWorld().getName() + ": " + c);
             }
         } else {
             sender.sendMessage("No chunks in list!");

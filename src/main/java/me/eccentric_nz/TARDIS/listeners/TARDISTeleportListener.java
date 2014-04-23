@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2013 eccentric_nz
+ * Copyright (C) 2014 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -21,6 +21,7 @@ import java.util.HashMap;
 import java.util.List;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
+import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -46,7 +47,7 @@ public class TARDISTeleportListener implements Listener {
         causes.add(TeleportCause.UNKNOWN);
     }
 
-    @EventHandler(priority = EventPriority.MONITOR)
+    @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
     public void onTeleport(PlayerTeleportEvent event) {
         TeleportCause cause = event.getCause();
         if (causes.contains(cause)) {
@@ -54,12 +55,11 @@ public class TARDISTeleportListener implements Listener {
             String world_to = event.getTo().getWorld().getName();
             if (world_from.contains("TARDIS") && !world_to.contains("TARDIS")) {
                 Player p = event.getPlayer();
-                String playerNameStr = p.getName();
                 HashMap<String, Object> where = new HashMap<String, Object>();
-                where.put("player", playerNameStr);
+                where.put("uuid", p.getUniqueId().toString());
                 new QueryFactory(plugin).doDelete("travellers", where);
                 if (!cause.equals(TeleportCause.PLUGIN)) {
-                    p.sendMessage(plugin.pluginName + "You left the TARDIS, setting OCCUPIED to false");
+                    TARDISMessage.send(p, plugin.getPluginName() + "You left the TARDIS, setting OCCUPIED to false");
                 }
             }
         }

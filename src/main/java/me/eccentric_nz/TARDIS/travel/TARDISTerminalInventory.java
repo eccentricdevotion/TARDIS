@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2013 eccentric_nz
+ * Copyright (C) 2014 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -80,19 +80,19 @@ public class TARDISTerminalInventory {
         ItemStack x = new ItemStack(Material.WOOL, 1, (byte) 3);
         ItemMeta xim = x.getItemMeta();
         xim.setDisplayName("X");
-        xim.setLore(Arrays.asList(new String[]{"0"}));
+        xim.setLore(Arrays.asList("0"));
         x.setItemMeta(xim);
         // z
         ItemStack z = new ItemStack(Material.WOOL, 1, (byte) 4);
         ItemMeta zim = z.getItemMeta();
         zim.setDisplayName("Z");
-        zim.setLore(Arrays.asList(new String[]{"0"}));
+        zim.setLore(Arrays.asList("0"));
         z.setItemMeta(zim);
         // multiplier
         ItemStack m = new ItemStack(Material.WOOL, 1, (byte) 10);
         ItemMeta mim = m.getItemMeta();
         mim.setDisplayName("Multiplier");
-        mim.setLore(Arrays.asList(new String[]{"x1"}));
+        mim.setLore(Arrays.asList("x1"));
         m.setItemMeta(mim);
         // environments
         // current

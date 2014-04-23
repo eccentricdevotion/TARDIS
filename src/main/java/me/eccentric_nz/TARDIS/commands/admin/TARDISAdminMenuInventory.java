@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2013 eccentric_nz
+ * Copyright (C) 2014 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -58,7 +58,7 @@ public class TARDISAdminMenuInventory {
                 ItemStack is = new ItemStack(TARDISConstants.GUI_ITEMS.get(i), 1);
                 ItemMeta im = is.getItemMeta();
                 im.setDisplayName(c);
-                im.setLore(Arrays.asList(new String[]{value}));
+                im.setLore(Arrays.asList(value));
                 is.setItemMeta(im);
                 options.add(is);
                 i++;

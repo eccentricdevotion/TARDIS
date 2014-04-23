@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2013 eccentric_nz
+ * Copyright (C) 2014 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -17,6 +17,7 @@
 package me.eccentric_nz.TARDIS.commands.admin;
 
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.enumeration.MESSAGE;
 import org.apache.commons.lang.StringUtils;
 import org.bukkit.command.CommandSender;
 
@@ -45,7 +46,7 @@ public class TARDISDefaultWorldNameCommand {
         String nodots = StringUtils.replace(t, ".", "_");
         plugin.getConfig().set("creation.default_world_name", nodots);
         plugin.saveConfig();
-        sender.sendMessage(plugin.pluginName + "The config was updated!");
+        sender.sendMessage(plugin.getPluginName() + MESSAGE.CONFIG_UPDATED.getText());
         return true;
     }
 }

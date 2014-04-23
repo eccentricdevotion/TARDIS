@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2013 eccentric_nz
+ * Copyright (C) 2014 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,8 +18,10 @@ package me.eccentric_nz.TARDIS.travel;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.ResultSetDoors;
+import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import net.citizensnpcs.api.CitizensAPI;
 import net.citizensnpcs.api.npc.NPC;
 import net.citizensnpcs.api.npc.NPCRegistry;
@@ -41,12 +43,12 @@ public class TARDISEPSRunnable implements Runnable {
     private final TARDIS plugin;
     private final String message;
     private final Player tl;
-    private final List<String> players;
+    private final List<UUID> players;
     private final int id;
     private final String eps;
     private final String creeper;
 
-    public TARDISEPSRunnable(TARDIS plugin, String message, Player tl, List<String> players, int id, String eps, String creeper) {
+    public TARDISEPSRunnable(TARDIS plugin, String message, Player tl, List<UUID> players, int id, String eps, String creeper) {
         this.plugin = plugin;
         this.message = message;
         this.tl = tl;
@@ -62,14 +64,14 @@ public class TARDISEPSRunnable implements Runnable {
         plugin.debug("Location:" + l);
         if (l != null) {
             try {
-                plugin.myspawn = true;
+                plugin.setMySpawn(true);
                 l.setX(l.getX() + 0.5F);
                 l.setZ(l.getZ() + 1.5F);
                 // set yaw if npc spawn location has been changed
                 if (!eps.isEmpty()) {
                     String[] creep = creeper.split(":");
-                    double cx = plugin.utils.parseDouble(creep[1]);
-                    double cz = plugin.utils.parseDouble(creep[3]);
+                    double cx = plugin.getUtils().parseDouble(creep[1]);
+                    double cz = plugin.getUtils().parseDouble(creep[3]);
                     float yaw = getCorrectYaw(cx, cz, l.getX(), l.getZ());
                     l.setYaw(yaw);
                 }
@@ -80,15 +82,15 @@ public class TARDISEPSRunnable implements Runnable {
                 int npcid = npc.getId();
                 if (npc.isSpawned()) {
                     // set the lookclose trait
-                    plugin.getServer().dispatchCommand(plugin.console, "npc select " + npcid);
-                    plugin.getServer().dispatchCommand(plugin.console, "npc lookclose");
+                    plugin.getServer().dispatchCommand(plugin.getConsole(), "npc select " + npcid);
+                    plugin.getServer().dispatchCommand(plugin.getConsole(), "npc lookclose");
                 }
-                plugin.npcIDs.add(npcid);
-                for (String p : players) {
+                plugin.getGeneralKeeper().getNpcIDs().add(npcid);
+                for (UUID p : players) {
                     Player pp = plugin.getServer().getPlayer(p);
                     if (pp != null) {
-                        pp.sendMessage(ChatColor.RED + "[Emergency Program One] " + ChatColor.RESET + message);
-                        pp.sendMessage(ChatColor.RED + "[Emergency Program One] " + ChatColor.RESET + "Right-click me to make me go away.");
+                        TARDISMessage.send(pp, ChatColor.RED + "[Emergency Program One] " + ChatColor.RESET + message);
+                        TARDISMessage.send(pp, ChatColor.RED + "[Emergency Program One] " + ChatColor.RESET + "Right-click me to make me go away.");
                     }
                 }
             } catch (CommandException e) {
@@ -106,9 +108,9 @@ public class TARDISEPSRunnable implements Runnable {
         if (!eps.isEmpty()) {
             String[] npc = eps.split(":");
             World w = plugin.getServer().getWorld(npc[0]);
-            int x = plugin.utils.parseInt(npc[1]);
-            int y = plugin.utils.parseInt(npc[2]);
-            int z = plugin.utils.parseInt(npc[3]);
+            int x = plugin.getUtils().parseInt(npc[1]);
+            int y = plugin.getUtils().parseInt(npc[2]);
+            int z = plugin.getUtils().parseInt(npc[3]);
             return new Location(w, x, y, z);
         } else {
             if (plugin.getConfig().getBoolean("creation.create_worlds")) {
@@ -122,9 +124,9 @@ public class TARDISEPSRunnable implements Runnable {
                 if (rsd.resultSet()) {
                     String[] door = rsd.getDoor_location().split(":");
                     World w = plugin.getServer().getWorld(door[0]);
-                    int x = plugin.utils.parseInt(door[1]);
-                    int y = plugin.utils.parseInt(door[2]);
-                    int z = plugin.utils.parseInt(door[3]);
+                    int x = plugin.getUtils().parseInt(door[1]);
+                    int y = plugin.getUtils().parseInt(door[2]);
+                    int z = plugin.getUtils().parseInt(door[3]);
                     switch (rsd.getDoor_direction()) {
                         case NORTH:
                             z -= 2;

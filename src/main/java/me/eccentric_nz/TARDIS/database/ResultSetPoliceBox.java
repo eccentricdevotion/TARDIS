@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2013 eccentric_nz
+ * Copyright (C) 2014 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -65,8 +65,8 @@ public class ResultSetPoliceBox {
                     World w = plugin.getServer().getWorld(rs.getString("world"));
                     if (w != null) {
                         Chunk c = w.getChunkAt(new Location(w, rs.getInt("x"), rs.getInt("y"), rs.getInt("z")));
-                        if (!plugin.tardisChunkList.contains(c)) {
-                            plugin.tardisChunkList.add(c);
+                        if (!plugin.getGeneralKeeper().getTardisChunkList().contains(c)) {
+                            plugin.getGeneralKeeper().getTardisChunkList().add(c);
                             c.load();
                         }
                     }

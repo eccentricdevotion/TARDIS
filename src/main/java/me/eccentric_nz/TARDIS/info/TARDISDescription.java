@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2013 eccentric_nz
+ * Copyright (C) 2014 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -48,13 +48,13 @@ public enum TARDISDescription {
     A_CIRCUIT_INFO("The Server Admin Circuit is used to upgrade the Sonic Screwdriver."),
     C_CIRCUIT_INFO("The Chamelon Circuit is used in crafting the Preset Storage Disks and is a component of the TARDIS Advanced Console."),
     I_CIRCUIT_INFO("The Input Circuit is a component of the TARDIS Advanced Console and is required to use the Destination Terminal and the TARDIS Keyboard."),
-    MEM_CIRCUIT_INFO("The Memory Circuit is a component of the TARDIS Advanced Console and is required to use the Save Sign."),
+    MEMORY_CIRCUIT_INFO("The Memory Circuit is a component of the TARDIS Advanced Console and is required to use the Save Sign."),
     T_CIRCUIT_INFO("The Temporal Circuit is a component of the TARDIS Advanced Console and is required to use the Temporal Locator."),
     ARS_CIRCUIT_INFO("The ARS Circuit is a component of the TARDIS Advanced Console and is required to use the Architectural Reconfiguration System."),
-    SCAN_CIRCUIT_INFO("The Scanner Circuit is a component of the TARDIS Advanced Console and is required to use the TARDIS Scanner and Exterior Rendering room."),
+    SCANNER_CIRCUIT_INFO("The Scanner Circuit is a component of the TARDIS Advanced Console and is required to use the TARDIS Scanner and Exterior Rendering room."),
     P_CIRCUIT_INFO("The Perception Circuit is used in crafting the Perception Filter."),
     FILTER_INFO("The Perception Filter is used to make yourself less noticeable."),
-    AREA_DISK("An Area Storage Disk lets you travel to a TARDIS Area. These disks are not craftable."),
+    AREA_DISK("An Area Storage Disk lets you travel to a TARDIS Area. These disks are not craftable, but are stored automatically in the Disk Storage Container for the areas you have permission to travel to."),
     BLANK_INFO("A Blank Storage Disk is a craftable disk that is the base disk for crafting into another sort of TARDIS disk."),
     BIOME_DISK_INFO("A Biome Storage Disk is a craftable disk that lets you travel to specific biomes."),
     PLAYER_DISK_INFO("A Player Storage Disk is a craftable disk that lets you travel to players."),
@@ -93,7 +93,8 @@ public enum TARDISDescription {
     VILLAGE("A home for the weary trader."),
     WOOD("A secondary console room made of wood."),
     WORKSHOP("Craft, smelt, brew, enchant and repair."),
-    MALFUNCTIONS("When the TARDIS travels, there is a chance of a malfunctioning happening that deposits the TARDIS in an unexpected location."),
+    ALT_CONTROLS("Please refer to the Advanced Console, the Save Sign,  the Keyboard, the Destination Terminal and the travel commands."),
+    MALFUNCTIONS("When the TARDIS travels, there is a chance of a malfunction happening that deposits the TARDIS in an unexpected location."),
     CONSOLE_ARS(" INFO: The Architectural Reconfiguration System allows the player to add and remove rooms in the TARDIS\n"
             + "USAGE: Right-click.\n"
             + "UPDATING: /tardis update ARS\n"

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2013 eccentric_nz
+ * Copyright (C) 2014 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -23,6 +23,7 @@ import me.eccentric_nz.TARDIS.advanced.TARDISCircuitChecker;
 import me.eccentric_nz.TARDIS.database.ResultSetAreas;
 import me.eccentric_nz.TARDIS.database.ResultSetControls;
 import me.eccentric_nz.TARDIS.database.ResultSetDestinations;
+import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import org.bukkit.GameMode;
 import org.bukkit.Material;
 import org.bukkit.block.Biome;
@@ -65,45 +66,50 @@ public class TARDISKeyboardListener implements Listener {
         where.put("location", loc_str);
         ResultSetControls rsc = new ResultSetControls(plugin, where, false);
         if (rsc.resultSet()) {
+            if (plugin.getPM().isPluginEnabled("ProtocolLib")) {
+                event.setCancelled(true);
+            }
             TARDISCircuitChecker tcc = null;
             if (plugin.getConfig().getString("preferences.difficulty").equals("hard")) {
                 tcc = new TARDISCircuitChecker(plugin, rsc.getTardis_id());
                 tcc.getCircuits();
             }
             if (tcc != null && !tcc.hasInput()) {
-                event.getPlayer().sendMessage(plugin.pluginName + "The Input Circuit is missing from the console!");
+                TARDISMessage.send(event.getPlayer(), plugin.getPluginName() + "The Input Circuit is missing from the console!");
                 return;
             }
             Sign keyboard = (Sign) against.getState();
             // track this sign
-            plugin.trackSign.put(block.getLocation().toString(), keyboard);
+            plugin.getTrackerKeeper().getTrackSign().put(block.getLocation().toString(), keyboard);
         }
     }
 
-    @EventHandler(priority = EventPriority.NORMAL)
+    @EventHandler(ignoreCancelled = true)
     public void onSignChange(SignChangeEvent event) {
         String loc = event.getBlock().getLocation().toString();
-        if (!plugin.trackSign.containsKey(loc)) {
+        if (!plugin.getTrackerKeeper().getTrackSign().containsKey(loc)) {
             return;
         }
-        Sign keyboard = plugin.trackSign.get(loc);
-        int i = 0;
-        for (String l : event.getLines()) {
-            keyboard.setLine(i, l);
-            i++;
-        }
-        keyboard.update();
+        Sign keyboard = plugin.getTrackerKeeper().getTrackSign().get(loc);
         Player p = event.getPlayer();
-        plugin.trackSign.remove(loc);
-        // cancel the edit and give the sign back to the player
-        event.setCancelled(true);
-        event.getBlock().setType(Material.AIR);
-        if (p.getGameMode() != GameMode.CREATIVE) {
-            ItemStack itemInHand = p.getItemInHand();
-            if ((itemInHand == null) || (itemInHand.getType() == Material.AIR)) {
-                p.setItemInHand(new ItemStack(Material.SIGN, 1));
-            } else {
-                itemInHand.setAmount(itemInHand.getAmount() + 1);
+        if (!plugin.getPM().isPluginEnabled("ProtocolLib")) {
+            int i = 0;
+            for (String l : event.getLines()) {
+                keyboard.setLine(i, l);
+                i++;
+            }
+            keyboard.update();
+            plugin.getTrackerKeeper().getTrackSign().remove(loc);
+            // cancel the edit and give the sign back to the player
+            event.setCancelled(true);
+            event.getBlock().setType(Material.AIR);
+            if (p.getGameMode() != GameMode.CREATIVE) {
+                ItemStack itemInHand = p.getItemInHand();
+                if ((itemInHand == null) || (itemInHand.getType() == Material.AIR)) {
+                    p.setItemInHand(new ItemStack(Material.SIGN, 1));
+                } else {
+                    itemInHand.setAmount(itemInHand.getAmount() + 1);
+                }
             }
         }
         // process the lines...
@@ -111,7 +117,7 @@ public class TARDISKeyboardListener implements Listener {
         if (plugin.getServer().getPlayer(event.getLine(0)) != null) {
             // set location player
             p.performCommand("tardistravel " + event.getLine(0));
-            plugin.console.sendMessage(p.getName() + " issued server command: /tardistravel " + event.getLine(0));
+            plugin.getConsole().sendMessage(p.getName() + " issued server command: /tardistravel " + event.getLine(0));
             return;
         }
         // location?
@@ -119,13 +125,13 @@ public class TARDISKeyboardListener implements Listener {
             // set location to coords
             String command = event.getLine(0) + " " + event.getLine(1) + " " + event.getLine(2) + " " + event.getLine(3);
             p.performCommand("tardistravel " + command);
-            plugin.console.sendMessage(p.getName() + " issued server command: /tardistravel " + command);
+            plugin.getConsole().sendMessage(p.getName() + " issued server command: /tardistravel " + command);
             return;
         }
         // home?
         if (event.getLine(0).equalsIgnoreCase("home")) {
             p.performCommand("tardistravel home");
-            plugin.console.sendMessage(p.getName() + " issued server command: /tardistravel home");
+            plugin.getConsole().sendMessage(p.getName() + " issued server command: /tardistravel home");
             return;
         }
         // biome ?
@@ -134,7 +140,7 @@ public class TARDISKeyboardListener implements Listener {
             Biome biome = Biome.valueOf(upper);
             if (!upper.equals("HELL") && !upper.equals("SKY")) {
                 p.performCommand("tardistravel biome " + upper);
-                plugin.console.sendMessage(p.getName() + " issued server command: /tardistravel biome " + upper);
+                plugin.getConsole().sendMessage(p.getName() + " issued server command: /tardistravel biome " + upper);
                 return;
             }
         } catch (IllegalArgumentException iae) {
@@ -146,7 +152,7 @@ public class TARDISKeyboardListener implements Listener {
         ResultSetDestinations rsd = new ResultSetDestinations(plugin, whered, false);
         if (rsd.resultSet()) {
             p.performCommand("tardistravel dest " + event.getLine(0));
-            plugin.console.sendMessage(p.getName() + " issued server command: /tardistravel dest " + event.getLine(0));
+            plugin.getConsole().sendMessage(p.getName() + " issued server command: /tardistravel dest " + event.getLine(0));
             return;
         }
         // area?
@@ -155,9 +161,9 @@ public class TARDISKeyboardListener implements Listener {
         ResultSetAreas rsa = new ResultSetAreas(plugin, wherea, false);
         if (rsa.resultSet()) {
             p.performCommand("tardistravel area " + event.getLine(0));
-            plugin.console.sendMessage(p.getName() + " issued server command: /tardistravel area " + event.getLine(0));
+            plugin.getConsole().sendMessage(p.getName() + " issued server command: /tardistravel area " + event.getLine(0));
             return;
         }
-        p.sendMessage(plugin.pluginName + "Keyboard not responding, press any key to continue.");
+        TARDISMessage.send(p, plugin.getPluginName() + "Keyboard not responding, press any key to continue.");
     }
 }

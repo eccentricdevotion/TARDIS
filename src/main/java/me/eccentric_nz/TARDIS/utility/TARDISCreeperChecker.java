@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2013 eccentric_nz
+ * Copyright (C) 2014 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -68,11 +68,11 @@ public class TARDISCreeperChecker {
                         String[] creeperData = map.get("creeper").split(":");
                         World w = plugin.getServer().getWorld(creeperData[0]);
                         if (w != null) {
-                            float cx = plugin.utils.parseFloat(creeperData[1]);
-                            float cy = plugin.utils.parseFloat(creeperData[2]) + 1;
-                            float cz = plugin.utils.parseFloat(creeperData[3]);
+                            float cx = plugin.getUtils().parseFloat(creeperData[1]);
+                            float cy = plugin.getUtils().parseFloat(creeperData[2]) + 1;
+                            float cz = plugin.getUtils().parseFloat(creeperData[3]);
                             Location l = new Location(w, cx, cy, cz);
-                            plugin.myspawn = true;
+                            plugin.setMySpawn(true);
                             Entity e = w.spawnEntity(l, EntityType.CREEPER);
                             // if there is a creeper there already get rid of it!
                             for (Entity k : e.getNearbyEntities(1d, 1d, 1d)) {

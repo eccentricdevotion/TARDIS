@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2013 eccentric_nz
+ * Copyright (C) 2014 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -37,7 +37,7 @@ public class TARDISMultiverseInventoriesChecker {
     }
 
     public boolean checkMVI(String from, String to) {
-        MultiverseInventories mvi = (MultiverseInventories) plugin.pm.getPlugin("Multiverse-Inventories");
+        MultiverseInventories mvi = (MultiverseInventories) plugin.getPM().getPlugin("Multiverse-Inventories");
         GroupManager gm = mvi.getGroupManager();
         if (gm.hasGroup(from)) {
             List<WorldGroupProfile> profiles = gm.getGroupsForWorld(from);

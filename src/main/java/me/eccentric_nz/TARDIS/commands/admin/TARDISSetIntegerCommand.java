@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2013 eccentric_nz
+ * Copyright (C) 2014 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,7 +18,10 @@ package me.eccentric_nz.TARDIS.commands.admin;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.Arrays;
+import java.util.List;
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.enumeration.MESSAGE;
 import me.eccentric_nz.TARDIS.travel.TARDISTerminalInventory;
 import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
@@ -30,6 +33,7 @@ import org.bukkit.command.CommandSender;
 public class TARDISSetIntegerCommand {
 
     private final TARDIS plugin;
+    private final List<String> TIPS_SUBS = Arrays.asList("400", "800", "1200", "1600");
 
     public TARDISSetIntegerCommand(TARDIS plugin) {
         this.plugin = plugin;
@@ -38,21 +42,25 @@ public class TARDISSetIntegerCommand {
     public boolean setConfigInt(CommandSender sender, String[] args, String section) {
         String first = (section.isEmpty()) ? args[0].toLowerCase() : section + "." + args[0].toLowerCase();
         String a = args[1];
+        if (args[0].toLowerCase().equals("tips_limit") && !TIPS_SUBS.contains(a)) {
+            sender.sendMessage(plugin.getPluginName() + ChatColor.RED + " The last argument must be '400', '800', '1200' or '1600'!");
+            return false;
+        }
         int val;
         try {
             val = Integer.parseInt(a);
         } catch (NumberFormatException nfe) {
             // not a number
-            sender.sendMessage(plugin.pluginName + ChatColor.RED + " The last argument must be a number!");
+            sender.sendMessage(plugin.getPluginName() + ChatColor.RED + " The last argument must be a number!");
             return false;
         }
         plugin.getConfig().set(first, val);
         if (first.equals("terminal_step")) {
             // reset the terminal inventory
-            plugin.buttonListener.items = new TARDISTerminalInventory().getTerminal();
+            plugin.getGeneralKeeper().getButtonListener().items = new TARDISTerminalInventory().getTerminal();
         }
         plugin.saveConfig();
-        sender.sendMessage(plugin.pluginName + "The config was updated!");
+        sender.sendMessage(plugin.getPluginName() + MESSAGE.CONFIG_UPDATED.getText());
         return true;
     }
 
@@ -64,7 +72,7 @@ public class TARDISSetIntegerCommand {
             val = Integer.parseInt(a);
         } catch (NumberFormatException nfe) {
             // not a number
-            sender.sendMessage(plugin.pluginName + ChatColor.RED + " The last argument must be a number!");
+            sender.sendMessage(plugin.getPluginName() + ChatColor.RED + " The last argument must be a number!");
             return false;
         }
         plugin.getArtronConfig().set(first, val);
@@ -73,7 +81,7 @@ public class TARDISSetIntegerCommand {
         } catch (IOException io) {
             plugin.debug("Could not save artron.yml, " + io);
         }
-        sender.sendMessage(plugin.pluginName + "The config was updated!");
+        sender.sendMessage(plugin.getPluginName() + MESSAGE.CONFIG_UPDATED.getText());
         return true;
     }
 }

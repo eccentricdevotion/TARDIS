@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2013 eccentric_nz
+ * Copyright (C) 2014 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -20,9 +20,11 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
+import java.util.UUID;
 import me.eccentric_nz.TARDIS.JSON.JSONArray;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
+import me.eccentric_nz.TARDIS.database.ResultSetARS;
 import me.eccentric_nz.TARDIS.database.ResultSetControls;
 import me.eccentric_nz.TARDIS.database.ResultSetCurrentLocation;
 import me.eccentric_nz.TARDIS.database.ResultSetDoors;
@@ -30,6 +32,7 @@ import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import me.eccentric_nz.TARDIS.database.ResultSetTravellers;
 import me.eccentric_nz.TARDIS.enumeration.MESSAGE;
 import me.eccentric_nz.TARDIS.enumeration.SCHEMATIC;
+import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -77,6 +80,10 @@ public class TARDISUpdateListener implements Listener {
         controls.put("info", 13);
         controls.put("storage", 14);
         controls.put("advanced", 15);
+        controls.put("zero", 16); // enter control
+        // zero room exit control = 17
+        // direction item frame = 18
+        // lazarus plate = 19
         validBlocks.add(Material.LEVER);
         validBlocks.add(Material.REDSTONE_COMPARATOR_OFF);
         validBlocks.add(Material.REDSTONE_COMPARATOR_ON);
@@ -97,16 +104,17 @@ public class TARDISUpdateListener implements Listener {
      * @param event a player clicking on a block
      */
     @SuppressWarnings("deprecation")
-    @EventHandler(priority = EventPriority.MONITOR)
+    @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
     public void onUpdateInteract(PlayerInteractEvent event) {
         final Player player = event.getPlayer();
-        final String playerNameStr = player.getName();
+        final UUID uuid = player.getUniqueId();
+        final String playerUUID = uuid.toString();
         String blockName;
         boolean secondary = false;
-        if (plugin.trackPlayers.containsKey(playerNameStr)) {
-            blockName = plugin.trackPlayers.get(playerNameStr);
-        } else if (plugin.trackSecondary.containsKey(playerNameStr)) {
-            blockName = plugin.trackSecondary.get(playerNameStr);
+        if (plugin.getTrackerKeeper().getTrackPlayers().containsKey(uuid)) {
+            blockName = plugin.getTrackerKeeper().getTrackPlayers().get(uuid);
+        } else if (plugin.getTrackerKeeper().getTrackSecondary().containsKey(uuid)) {
+            blockName = plugin.getTrackerKeeper().getTrackSecondary().get(uuid);
             secondary = true;
         } else {
             return;
@@ -125,10 +133,10 @@ public class TARDISUpdateListener implements Listener {
                 blockData = block.getRelative(BlockFace.DOWN).getData();
             }
             HashMap<String, Object> where = new HashMap<String, Object>();
-            where.put("owner", playerNameStr);
+            where.put("uuid", playerUUID);
             ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);
             if (!rs.resultSet()) {
-                player.sendMessage(plugin.pluginName + MESSAGE.NO_TARDIS.getText());
+                TARDISMessage.send(player, plugin.getPluginName() + MESSAGE.NO_TARDIS.getText());
                 return;
             }
             int id = rs.getTardis_id();
@@ -149,9 +157,9 @@ public class TARDISUpdateListener implements Listener {
                 tid.put("secondary", 0);
             }
             if (secondary) {
-                plugin.trackSecondary.remove(playerNameStr);
+                plugin.getTrackerKeeper().getTrackSecondary().remove(uuid);
             } else {
-                plugin.trackPlayers.remove(playerNameStr);
+                plugin.getTrackerKeeper().getTrackPlayers().remove(uuid);
             }
             if (blockName.equalsIgnoreCase("door") && blockType == Material.IRON_DOOR_BLOCK && !secondary) {
                 // get door data this should let us determine the direction
@@ -163,22 +171,26 @@ public class TARDISUpdateListener implements Listener {
             }
             if ((blockName.equalsIgnoreCase("backdoor") || (blockName.equalsIgnoreCase("door") && secondary)) && blockType == Material.IRON_DOOR_BLOCK) {
                 // get door data - this should let us determine the direction
-                String d = plugin.utils.getPlayersDirection(player, true);
+                String d = plugin.getUtils().getPlayersDirection(player, true);
                 table = "doors";
                 set.put("door_location", blockLocStr);
                 set.put("door_direction", d);
                 HashMap<String, Object> wheret = new HashMap<String, Object>();
                 wheret.put("tardis_id", id);
-                wheret.put("player", playerNameStr);
+                wheret.put("uuid", playerUUID);
                 ResultSetTravellers rst = new ResultSetTravellers(plugin, wheret, false);
                 int type;
                 if (rst.resultSet()) {
                     type = (secondary) ? 4 : 3;
+                    // check the world
+                    if (!plugin.getUtils().inTARDISWorld(player)) {
+                        TARDISMessage.send(player, plugin.getPluginName() + MESSAGE.NOT_IN_TARDIS.getText());
+                        return;
+                    }
                 } else {
                     type = 2;
-                    // check the world
-                    if (!plugin.utils.inTARDISWorld(player)) {
-                        player.sendMessage(plugin.pluginName + "You didn't enter the TARDIS by the regular door, aborting...");
+                    if (plugin.getUtils().inTARDISWorld(player)) {
+                        TARDISMessage.send(player, plugin.getPluginName() + "You should be outside of the TARDIS!");
                         return;
                     }
                 }
@@ -199,8 +211,8 @@ public class TARDISUpdateListener implements Listener {
                 }
             }
             // check they are still in the TARDIS world
-            if (!blockName.equals("backdoor") && !plugin.utils.inTARDISWorld(player)) {
-                player.sendMessage(plugin.pluginName + "You must be in a TARDIS world to update this block!");
+            if (!blockName.equals("backdoor") && !plugin.getUtils().inTARDISWorld(player)) {
+                TARDISMessage.send(player, plugin.getPluginName() + "You must be in a TARDIS world to update this block!");
                 return;
             }
             if (blockName.equalsIgnoreCase("button") && validBlocks.contains(blockType)) {
@@ -250,17 +262,6 @@ public class TARDISUpdateListener implements Listener {
             if (blockName.equalsIgnoreCase("world-repeater") && (blockType == Material.DIODE_BLOCK_OFF || blockType == Material.DIODE_BLOCK_ON)) {
                 HashMap<String, Object> wherec = new HashMap<String, Object>();
                 wherec.put("tardis_id", id);
-                wherec.put("type", 5);
-                ResultSetControls rsc = new ResultSetControls(plugin, wherec, false);
-                if (secondary || !rsc.resultSet()) {
-                    qf.insertControl(id, 5, blockLocStr, 1);
-                } else {
-                    set.put("location", blockLocStr);
-                }
-            }
-            if (blockName.equalsIgnoreCase("x-repeater") && (blockType == Material.DIODE_BLOCK_OFF || blockType == Material.DIODE_BLOCK_ON)) {
-                HashMap<String, Object> wherec = new HashMap<String, Object>();
-                wherec.put("tardis_id", id);
                 wherec.put("type", 2);
                 ResultSetControls rsc = new ResultSetControls(plugin, wherec, false);
                 if (secondary || !rsc.resultSet()) {
@@ -269,7 +270,7 @@ public class TARDISUpdateListener implements Listener {
                     set.put("location", blockLocStr);
                 }
             }
-            if (blockName.equalsIgnoreCase("z-repeater") && (blockType == Material.DIODE_BLOCK_OFF || blockType == Material.DIODE_BLOCK_ON)) {
+            if (blockName.equalsIgnoreCase("x-repeater") && (blockType == Material.DIODE_BLOCK_OFF || blockType == Material.DIODE_BLOCK_ON)) {
                 HashMap<String, Object> wherec = new HashMap<String, Object>();
                 wherec.put("tardis_id", id);
                 wherec.put("type", 3);
@@ -280,13 +281,24 @@ public class TARDISUpdateListener implements Listener {
                     set.put("location", blockLocStr);
                 }
             }
-            if (blockName.equalsIgnoreCase("y-repeater") && (blockType == Material.DIODE_BLOCK_OFF || blockType == Material.DIODE_BLOCK_ON)) {
+            if (blockName.equalsIgnoreCase("z-repeater") && (blockType == Material.DIODE_BLOCK_OFF || blockType == Material.DIODE_BLOCK_ON)) {
                 HashMap<String, Object> wherec = new HashMap<String, Object>();
                 wherec.put("tardis_id", id);
                 wherec.put("type", 4);
                 ResultSetControls rsc = new ResultSetControls(plugin, wherec, false);
                 if (secondary || !rsc.resultSet()) {
                     qf.insertControl(id, 4, blockLocStr, 1);
+                } else {
+                    set.put("location", blockLocStr);
+                }
+            }
+            if (blockName.equalsIgnoreCase("y-repeater") && (blockType == Material.DIODE_BLOCK_OFF || blockType == Material.DIODE_BLOCK_ON)) {
+                HashMap<String, Object> wherec = new HashMap<String, Object>();
+                wherec.put("tardis_id", id);
+                wherec.put("type", 5);
+                ResultSetControls rsc = new ResultSetControls(plugin, wherec, false);
+                if (secondary || !rsc.resultSet()) {
+                    qf.insertControl(id, 5, blockLocStr, 1);
                 } else {
                     set.put("location", blockLocStr);
                 }
@@ -401,72 +413,78 @@ public class TARDISUpdateListener implements Listener {
                 if (!rsc.resultSet()) {
                     // insert control
                     qf.insertControl(id, 10, blockLocStr, 0);
-                    // create default json
-                    int[][][] empty = new int[3][9][9];
-                    for (int y = 0; y < 3; y++) {
-                        for (int x = 0; x < 9; x++) {
-                            for (int z = 0; z < 9; z++) {
-                                empty[y][x][z] = 1;
+                    // check if they already have an ARS record (they may have used `/tardis arsremove`)
+                    HashMap<String, Object> wherer = new HashMap<String, Object>();
+                    wherer.put("tardis_id", id);
+                    ResultSetARS rsa = new ResultSetARS(plugin, where);
+                    if (!rsa.resultSet()) {
+                        // create default json
+                        int[][][] empty = new int[3][9][9];
+                        for (int y = 0; y < 3; y++) {
+                            for (int x = 0; x < 9; x++) {
+                                for (int z = 0; z < 9; z++) {
+                                    empty[y][x][z] = 1;
+                                }
                             }
                         }
-                    }
-                    int control = 42;
-                    switch (schm) {
-                        case DELUXE:
-                            control = 57;
-                            empty[0][4][4] = control;
-                            empty[0][4][5] = control;
-                            empty[0][5][4] = control;
-                            empty[0][5][5] = control;
-                            empty[1][4][5] = control;
-                            empty[1][5][4] = control;
-                            empty[1][5][5] = control;
-                            break;
-                        case ELEVENTH:
-                            control = 133;
-                            empty[0][4][4] = control;
-                            empty[0][4][5] = control;
-                            empty[0][5][4] = control;
-                            empty[0][5][5] = control;
-                            empty[1][4][5] = control;
-                            empty[1][5][4] = control;
-                            empty[1][5][5] = control;
-                            break;
-                        case BIGGER:
-                            control = 41;
-                            empty[1][4][5] = control;
-                            empty[1][5][4] = control;
-                            empty[1][5][5] = control;
-                            break;
-                        case REDSTONE:
-                            control = 152;
-                            empty[1][4][5] = control;
-                            empty[1][5][4] = control;
-                            empty[1][5][5] = control;
-                            break;
-                        case STEAMPUNK:
-                            control = 173;
-                            break;
-                        case ARS:
-                            control = 159;
-                            break;
-                        case PLANK:
-                            control = 22;
-                            break;
-                        case TOM:
-                            control = 155;
-                            break;
-                        default:
-                            break;
-                    }
-                    empty[1][4][4] = control;
-                    JSONArray json = new JSONArray(empty);
+                        int control = 42;
+                        switch (schm) {
+                            case DELUXE:
+                                control = 57;
+                                empty[0][4][4] = control;
+                                empty[0][4][5] = control;
+                                empty[0][5][4] = control;
+                                empty[0][5][5] = control;
+                                empty[1][4][5] = control;
+                                empty[1][5][4] = control;
+                                empty[1][5][5] = control;
+                                break;
+                            case ELEVENTH:
+                                control = 133;
+                                empty[0][4][4] = control;
+                                empty[0][4][5] = control;
+                                empty[0][5][4] = control;
+                                empty[0][5][5] = control;
+                                empty[1][4][5] = control;
+                                empty[1][5][4] = control;
+                                empty[1][5][5] = control;
+                                break;
+                            case BIGGER:
+                                control = 41;
+                                empty[1][4][5] = control;
+                                empty[1][5][4] = control;
+                                empty[1][5][5] = control;
+                                break;
+                            case REDSTONE:
+                                control = 152;
+                                empty[1][4][5] = control;
+                                empty[1][5][4] = control;
+                                empty[1][5][5] = control;
+                                break;
+                            case STEAMPUNK:
+                                control = 173;
+                                break;
+                            case ARS:
+                                control = 159;
+                                break;
+                            case PLANK:
+                                control = 22;
+                                break;
+                            case TOM:
+                                control = 155;
+                                break;
+                            default:
+                                break;
+                        }
+                        empty[1][4][4] = control;
+                        JSONArray json = new JSONArray(empty);
 
-                    HashMap<String, Object> seta = new HashMap<String, Object>();
-                    seta.put("tardis_id", id);
-                    seta.put("player", playerNameStr);
-                    seta.put("json", json.toString());
-                    qf.doInsert("ars", seta);
+                        HashMap<String, Object> seta = new HashMap<String, Object>();
+                        seta.put("tardis_id", id);
+                        seta.put("uuid", playerUUID);
+                        seta.put("json", json.toString());
+                        qf.doInsert("ars", seta);
+                    }
                     secondary = true;
                 } else {
                     set.put("location", blockLocStr);
@@ -550,7 +568,7 @@ public class TARDISUpdateListener implements Listener {
                     set.put("location", blockLocStr);
                 }
                 // check if player has storage record, and update the tardis_id field
-                plugin.utils.updateStorageId(playerNameStr, id, qf);
+                plugin.getUtils().updateStorageId(playerUUID, id, qf);
             }
             if (blockName.equalsIgnoreCase("advanced") && blockType.equals(Material.JUKEBOX)) {
                 HashMap<String, Object> wherel = new HashMap<String, Object>();
@@ -565,15 +583,30 @@ public class TARDISUpdateListener implements Listener {
                     set.put("location", blockLocStr);
                 }
                 // check if player has storage record, and update the tardis_id field
-                plugin.utils.updateStorageId(playerNameStr, id, qf);
+                plugin.getUtils().updateStorageId(playerUUID, id, qf);
+            }
+            if (blockName.equalsIgnoreCase("zero") && (validBlocks.contains(blockType) || validSigns.contains(blockType))) {
+                HashMap<String, Object> wherez = new HashMap<String, Object>();
+                wherez.put("tardis_id", id);
+                wherez.put("type", 16);
+                ResultSetControls rsc = new ResultSetControls(plugin, wherez, false);
+                if (!rsc.resultSet()) {
+                    // insert control
+                    qf.insertControl(id, 16, blockLocStr, 0);
+                    secondary = true;
+                } else {
+                    set.put("location", blockLocStr);
+                }
+                // check if player has storage record, and update the tardis_id field
+                plugin.getUtils().updateStorageId(playerUUID, id, qf);
             }
             if (set.size() > 0 || secondary) {
                 if (!secondary) {
                     qf.doUpdate(table, set, tid);
                 }
-                player.sendMessage(plugin.pluginName + "The position of the TARDIS " + blockName + " was updated successfully.");
+                TARDISMessage.send(player, plugin.getPluginName() + "The position of the TARDIS " + blockName + " was updated successfully.");
             } else {
-                player.sendMessage(plugin.pluginName + "You didn't click the correct type of block for the " + blockName + "! Try the command again.");
+                TARDISMessage.send(player, plugin.getPluginName() + "You didn't click the correct type of block for the " + blockName + "! Try the command again.");
             }
         }
     }

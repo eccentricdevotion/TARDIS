@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2013 eccentric_nz
+ * Copyright (C) 2014 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -30,7 +30,7 @@ import org.bukkit.util.StringUtil;
  */
 public class TARDISRecipeTabComplete implements TabCompleter {
 
-    private final List<String> ROOT_SUBS = ImmutableList.of("a-circuit", "ars-circuit", "bio-circuit", "biome-disk", "blank", "c-circuit", "cell", "d-circuit", "e-circuit", "filter", "i-circuit", "key", "l-circuit", "locator", "m-circuit", "mem-circuit", "oscillator", "player-disk", "preset-disk", "p-circuit", "r-circuit", "remote", "s-circuit", "save-disk", "scan-circuit", "sonic", "t-circuit");
+    private final List<String> ROOT_SUBS = ImmutableList.of("a-circuit", "ars-circuit", "bio-circuit", "biome-disk", "blank", "c-circuit", "cell", "d-circuit", "e-circuit", "filter", "i-circuit", "key", "l-circuit", "locator", "m-circuit", "memory-circuit", "oscillator", "player-disk", "preset-disk", "p-circuit", "r-circuit", "remote", "s-circuit", "save-disk", "scanner-circuit", "sonic", "t-circuit");
 
     public TARDISRecipeTabComplete() {
     }

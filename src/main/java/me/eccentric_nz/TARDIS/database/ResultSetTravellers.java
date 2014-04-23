@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2013 eccentric_nz
+ * Copyright (C) 2014 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -25,6 +25,7 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
 
 /**
@@ -46,8 +47,9 @@ public class ResultSetTravellers {
     private final boolean multiple;
     private int traveller_id;
     private int tardis_id;
+    private UUID uuid;
     private String player;
-    private final List<String> data = new ArrayList<String>();
+    private final List<UUID> data = new ArrayList<UUID>();
 
     /**
      * Creates a class instance that can be used to retrieve an SQL ResultSet
@@ -90,10 +92,10 @@ public class ResultSetTravellers {
             if (where != null) {
                 int s = 1;
                 for (Map.Entry<String, Object> entry : where.entrySet()) {
-                    if (entry.getValue().getClass().equals(String.class)) {
+                    if (entry.getValue().getClass().equals(String.class) || entry.getValue().getClass().equals(UUID.class)) {
                         statement.setString(s, entry.getValue().toString());
                     } else {
-                        statement.setInt(s, plugin.utils.parseInt(entry.getValue().toString()));
+                        statement.setInt(s, plugin.getUtils().parseInt(entry.getValue().toString()));
                     }
                     s++;
                 }
@@ -103,10 +105,11 @@ public class ResultSetTravellers {
             if (rs.isBeforeFirst()) {
                 while (rs.next()) {
                     if (multiple) {
-                        data.add(rs.getString("player"));
+                        data.add(UUID.fromString(rs.getString("uuid")));
                     }
                     this.traveller_id = rs.getInt("traveller_id");
                     this.tardis_id = rs.getInt("tardis_id");
+                    this.uuid = UUID.fromString(rs.getString("uuid"));
                     this.player = rs.getString("player");
                 }
             } else {
@@ -138,11 +141,14 @@ public class ResultSetTravellers {
         return tardis_id;
     }
 
-    public String getPlayer() {
-        return player;
+    public UUID getUuid() {
+        return uuid;
     }
 
-    public List<String> getData() {
+//    public String getPlayer() {
+//        return player;
+//    }
+    public List<UUID> getData() {
         return Collections.unmodifiableList(data);
     }
 }

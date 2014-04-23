@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2013 eccentric_nz
+ * Copyright (C) 2014 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -19,6 +19,7 @@ package me.eccentric_nz.TARDIS.ARS;
 import java.util.HashMap;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
+import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
@@ -33,11 +34,11 @@ public class TARDISARSJettisonRunnable implements Runnable {
 
     private final TARDIS plugin;
     private final TARDISARSJettison slot;
-    private final TARDISARS room;
+    private final ARS room;
     private final int id;
     private final Player p;
 
-    public TARDISARSJettisonRunnable(TARDIS plugin, TARDISARSJettison slot, TARDISARS room, int id, Player p) {
+    public TARDISARSJettisonRunnable(TARDIS plugin, TARDISARSJettison slot, ARS room, int id, Player p) {
         this.plugin = plugin;
         this.slot = slot;
         this.room = room;
@@ -48,7 +49,7 @@ public class TARDISARSJettisonRunnable implements Runnable {
     @Override
     public void run() {
         QueryFactory qf = new QueryFactory(plugin);
-        String r = room.toString();
+        String r = room.getActualName();
         // remove the room
         World w = slot.getChunk().getWorld();
         int x = slot.getX();
@@ -80,7 +81,7 @@ public class TARDISARSJettisonRunnable implements Runnable {
             set.put("tardis_id", id);
             qf.alterEnergyLevel("tardis", amount, set, null);
             if (p.isOnline()) {
-                p.sendMessage(plugin.pluginName + amount + " Artron Energy recovered.");
+                TARDISMessage.send(p, plugin.getPluginName() + amount + " Artron Energy recovered.");
             }
             // if it is a secondary console room remove the controls
             if (r.equals("BAKER") || r.equals("WOOD")) {
@@ -99,7 +100,7 @@ public class TARDISARSJettisonRunnable implements Runnable {
                 where.put("tardis_id", id);
                 qf.doUpdate("tardis", setd, where);
                 // remove WorldGuard protection
-                plugin.wgutils.removeRendererRegion(w, p.getName());
+                plugin.getWorldGuardUtils().removeRoomRegion(w, p.getName(), "renderer");
             }
         }
     }

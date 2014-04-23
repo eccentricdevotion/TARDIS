@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2013 eccentric_nz
+ * Copyright (C) 2014 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -23,6 +23,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
 import org.bukkit.entity.Player;
 
@@ -61,7 +62,7 @@ public class QueryFactory {
      * @param table the database table name to insert the data into.
      * @param data a HashMap<String, Object> of table fields and values to
      * insert.
-     * @return the number of records that were inserted
+     * @return the primary key of the record that was inserted
      */
     public int doSyncInsert(String table, HashMap<String, Object> data) {
         PreparedStatement ps = null;
@@ -81,16 +82,16 @@ public class QueryFactory {
             ps = connection.prepareStatement("INSERT INTO " + table + " (" + fields + ") VALUES (" + questions + ")", PreparedStatement.RETURN_GENERATED_KEYS);
             int i = 1;
             for (Map.Entry<String, Object> entry : data.entrySet()) {
-                if (entry.getValue().getClass().equals(String.class)) {
+                if (entry.getValue().getClass().equals(String.class) || entry.getValue().getClass().equals(UUID.class)) {
                     ps.setString(i, entry.getValue().toString());
                 } else {
                     if (entry.getValue().getClass().getName().contains("Double")) {
-                        ps.setDouble(i, plugin.utils.parseDouble(entry.getValue().toString()));
+                        ps.setDouble(i, plugin.getUtils().parseDouble(entry.getValue().toString()));
                     }
                     if (entry.getValue().getClass().getName().contains("Long")) {
-                        ps.setLong(i, plugin.utils.parseLong(entry.getValue().toString()));
+                        ps.setLong(i, plugin.getUtils().parseLong(entry.getValue().toString()));
                     } else {
-                        ps.setInt(i, plugin.utils.parseInt(entry.getValue().toString()));
+                        ps.setInt(i, plugin.getUtils().parseInt(entry.getValue().toString()));
                     }
                 }
                 i++;
@@ -159,7 +160,7 @@ public class QueryFactory {
         StringBuilder sbw = new StringBuilder();
         for (Map.Entry<String, Object> entry : where.entrySet()) {
             sbw.append(entry.getKey()).append(" = ");
-            if (entry.getValue().getClass().equals(String.class)) {
+            if (entry.getValue().getClass().equals(String.class) || entry.getValue().getClass().equals(UUID.class)) {
                 sbw.append("'").append(entry.getValue()).append("' AND ");
             } else {
                 sbw.append(entry.getValue()).append(" AND ");

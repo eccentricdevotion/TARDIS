@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2013 eccentric_nz
+ * Copyright (C) 2014 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -33,6 +33,7 @@ import org.bukkit.WorldType;
 import org.bukkit.block.Biome;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Entity;
+import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.generator.ChunkGenerator;
 
@@ -110,7 +111,7 @@ public class TARDISUtils {
         set.put("data", data);
         set.put("police_box", 1);
         qf.doInsert("blocks", set);
-        plugin.protectBlockMap.put(l, id);
+        plugin.getGeneralKeeper().getProtectBlockMap().put(l, id);
         // set the block
         b.setTypeId(m);
         b.setData(d, true);
@@ -135,8 +136,6 @@ public class TARDISUtils {
         Block b = w.getBlockAt(x, y, z);
         int bid = b.getTypeId();
         if (ids.contains(bid)) {
-            b.setTypeId(m);
-            b.setData(d, true);
             // remember replaced block location, TypeId and Data so we can restore it later
             String l = b.getLocation().toString();
             QueryFactory qf = new QueryFactory(plugin);
@@ -147,7 +146,10 @@ public class TARDISUtils {
             set.put("data", b.getData());
             set.put("police_box", 1);
             qf.doInsert("blocks", set);
-            plugin.protectBlockMap.put(l, id);
+            plugin.getGeneralKeeper().getProtectBlockMap().put(l, id);
+            // set the block
+            b.setTypeId(m);
+            b.setData(d, true);
         }
     }
 
@@ -217,34 +219,34 @@ public class TARDISUtils {
         short[] d;
         switch (schm) {
             case BIGGER:
-                d = plugin.biggerdimensions;
+                d = plugin.getBuildKeeper().getBiggerDimensions();
                 break;
             case DELUXE:
-                d = plugin.deluxedimensions;
+                d = plugin.getBuildKeeper().getDeluxeDimensions();
                 break;
             case ELEVENTH:
-                d = plugin.eleventhdimensions;
+                d = plugin.getBuildKeeper().getEleventhDimensions();
                 break;
             case REDSTONE:
-                d = plugin.redstonedimensions;
+                d = plugin.getBuildKeeper().getRedstoneDimensions();
                 break;
             case STEAMPUNK:
-                d = plugin.steampunkdimensions;
+                d = plugin.getBuildKeeper().getSteampunkDimensions();
                 break;
             case PLANK:
-                d = plugin.plankdimensions;
+                d = plugin.getBuildKeeper().getPlankDimensions();
                 break;
             case TOM:
-                d = plugin.tomdimensions;
+                d = plugin.getBuildKeeper().getTomDimensions();
                 break;
             case ARS:
-                d = plugin.arsdimensions;
+                d = plugin.getBuildKeeper().getARSDimensions();
                 break;
             case CUSTOM:
-                d = plugin.customdimensions;
+                d = plugin.getBuildKeeper().getCustomDimensions();
                 break;
             default:
-                d = plugin.budgetdimensions;
+                d = plugin.getBuildKeeper().getBudgetDimensions();
                 break;
         }
         int cw = roundUp(d[1], 16);
@@ -450,20 +452,50 @@ public class TARDISUtils {
         String[] yStr = loc_data[2].split("=");
         String[] zStr = loc_data[3].split("=");
         World w = plugin.getServer().getWorld(wStr[2].substring(0, (wStr[2].length() - 1)));
-        int x = plugin.utils.parseInt(xStr[1].substring(0, (xStr[1].length() - 2)));
-        int y = plugin.utils.parseInt(yStr[1].substring(0, (yStr[1].length() - 2)));
-        int z = plugin.utils.parseInt(zStr[1].substring(0, (zStr[1].length() - 2)));
+        double x = parseDouble(xStr[1]);
+        double y = parseDouble(yStr[1]);
+        double z = parseDouble(zStr[1]);
         return new Location(w, x, y, z);
     }
 
+    /**
+     * Plays a TARDIS sound for the player and surrounding players at the
+     * current location.
+     *
+     * @param l The location
+     * @param p The player who initiated the sound playing, i.e. released the
+     * handbrake
+     * @param s The sound to play
+     */
     public void playTARDISSound(Location l, Player p, String s) {
         p.playSound(l, s, volume, 1.0F);
-        for (Entity e : p.getNearbyEntities(5.0D, 5.0D, 5.0D)) {
-            if (e instanceof Player) {
+        for (Entity e : p.getNearbyEntities(10.0d, 10.0d, 10.0d)) {
+            if (e instanceof Player && !((Player) e).equals(p)) {
                 Player pp = (Player) e;
-                pp.playSound(pp.getLocation(), s, volume, 1.0F);
+                pp.playSound(pp.getLocation(), s, volume, 1.0f);
             }
         }
+    }
+
+    /**
+     * Attempts to play a TARDIS sound at an external location. Generally the
+     * location is outside the TARDIS, so this will attempt to find rescued
+     * players and players nearby to the TARDIS as it re-materialises.
+     *
+     * @param l The location to play the sound
+     * @param s The sound to play
+     */
+    public void playTARDISSoundNearby(Location l, String s) {
+        // spawn an entity at the location - an egg will do
+        Entity egg = l.getWorld().spawnEntity(l, EntityType.EGG);
+        for (Entity e : egg.getNearbyEntities(16.0d, 16.0d, 16.0d)) {
+            if (e instanceof Player) {
+                Player pp = (Player) e;
+                pp.playSound(pp.getLocation(), s, volume, 1.0f);
+            }
+        }
+        // remove entity
+        egg.remove();
     }
 
     public String getWoodType(Material m, byte d) {
@@ -582,17 +614,17 @@ public class TARDISUtils {
      * Checks if player has storage record, and update the tardis_id field if
      * they do.
      *
-     * @param player the payer's name
+     * @param uuid the player's UUID
      * @param id the player's TARDIS ID
      * @param qf an instance of the database QueyFactory
      */
-    public void updateStorageId(String player, int id, QueryFactory qf) {
+    public void updateStorageId(String uuid, int id, QueryFactory qf) {
         HashMap<String, Object> where = new HashMap<String, Object>();
-        where.put("owner", player);
+        where.put("uuid", uuid);
         ResultSetDiskStorage rss = new ResultSetDiskStorage(plugin, where);
         if (rss.resultSet()) {
             HashMap<String, Object> wherej = new HashMap<String, Object>();
-            wherej.put("owner", player);
+            wherej.put("uuid", uuid);
             HashMap<String, Object> setj = new HashMap<String, Object>();
             setj.put("tardis_id", id);
             qf.doUpdate("storage", setj, wherej);

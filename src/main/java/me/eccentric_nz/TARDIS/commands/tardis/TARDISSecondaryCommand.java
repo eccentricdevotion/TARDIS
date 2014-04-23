@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2013 eccentric_nz
+ * Copyright (C) 2014 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -23,6 +23,7 @@ import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import me.eccentric_nz.TARDIS.database.ResultSetTravellers;
 import me.eccentric_nz.TARDIS.enumeration.MESSAGE;
+import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import org.bukkit.entity.Player;
 
 /**
@@ -41,33 +42,33 @@ public class TARDISSecondaryCommand {
         if (player.hasPermission("tardis.update")) {
             String[] validBlockNames = {"button", "world-repeater", "x-repeater", "z-repeater", "y-repeater", "artron", "handbrake", "door", "back"};
             if (args.length < 2) {
-                player.sendMessage(plugin.pluginName + "Too few command arguments!");
+                TARDISMessage.send(player, plugin.getPluginName() + MESSAGE.TOO_FEW_ARGS.getText());
                 return false;
             }
             String tardis_block = args[1].toLowerCase(Locale.ENGLISH);
             if (!Arrays.asList(validBlockNames).contains(tardis_block)) {
-                player.sendMessage(plugin.pluginName + "That is not a valid TARDIS block name! Try one of : button|world-repeater|x-repeater|z-repeater|y-repeater|artron|handbrake|door|back");
+                TARDISMessage.send(player, plugin.getPluginName() + "That is not a valid TARDIS block name! Try one of : button|world-repeater|x-repeater|z-repeater|y-repeater|artron|handbrake|door|back");
                 return false;
             }
             HashMap<String, Object> where = new HashMap<String, Object>();
-            where.put("owner", player.getName());
+            where.put("uuid", player.getUniqueId().toString());
             ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);
             if (!rs.resultSet()) {
-                player.sendMessage(plugin.pluginName + "You are not a Timelord. You need to create a TARDIS first before using this command!");
+                TARDISMessage.send(player, plugin.getPluginName() + MESSAGE.NOT_A_TIMELORD.getText());
                 return false;
             }
             HashMap<String, Object> wheret = new HashMap<String, Object>();
-            wheret.put("player", player.getName());
+            wheret.put("uuid", player.getUniqueId().toString());
             ResultSetTravellers rst = new ResultSetTravellers(plugin, wheret, false);
             if (!rst.resultSet()) {
-                player.sendMessage(plugin.pluginName + MESSAGE.NOT_IN_TARDIS.getText());
+                TARDISMessage.send(player, plugin.getPluginName() + MESSAGE.NOT_IN_TARDIS.getText());
                 return false;
             }
-            plugin.trackSecondary.put(player.getName(), tardis_block);
-            player.sendMessage(plugin.pluginName + "Click the TARDIS " + tardis_block + " to update its position.");
+            plugin.getTrackerKeeper().getTrackSecondary().put(player.getUniqueId(), tardis_block);
+            TARDISMessage.send(player, plugin.getPluginName() + "Click the TARDIS " + tardis_block + " to update its position.");
             return true;
         } else {
-            player.sendMessage(plugin.pluginName + MESSAGE.NO_PERMS.getText());
+            TARDISMessage.send(player, plugin.getPluginName() + MESSAGE.NO_PERMS.getText());
             return false;
         }
     }

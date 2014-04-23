@@ -22,7 +22,6 @@ import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
-import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.Inventory;
@@ -52,9 +51,11 @@ public class TARDISPrefsMenuListener implements Listener {
         lookup.put("Interior SFX", "sfx_on");
         lookup.put("Submarine Mode", "submarine_on");
         lookup.put("Resource Pack Switching", "texture_on");
+        lookup.put("Companion Build", "build_on");
+        lookup.put("Wool For Lights Off", "wool_lights_on");
     }
 
-    @EventHandler(priority = EventPriority.NORMAL)
+    @EventHandler(ignoreCancelled = true)
     public void onPrefsMenuClick(InventoryClickEvent event) {
         Inventory inv = event.getInventory();
         String name = inv.getTitle();
@@ -69,17 +70,24 @@ public class TARDISPrefsMenuListener implements Listener {
                     boolean bool = (lore.get(0).equals("ON"));
                     String value = (bool) ? "OFF" : "ON";
                     int b = (bool) ? 0 : 1;
-                    HashMap<String, Object> set = new HashMap<String, Object>();
-                    set.put(lookup.get(im.getDisplayName()), b);
-                    HashMap<String, Object> where = new HashMap<String, Object>();
-                    String p = ((Player) event.getWhoClicked()).getName();
-                    where.put("player", p);
-                    new QueryFactory(plugin).doUpdate("player_prefs", set, where);
+                    String uuid = ((Player) event.getWhoClicked()).getUniqueId().toString();
+                    if (im.getDisplayName().equals("Companion Build")) {
+                        String[] args = new String[2];
+                        args[0] = "";
+                        args[1] = value;
+                        new TARDISBuildCommand(plugin).toggleCompanionBuilding(((Player) event.getWhoClicked()), args);
+                    } else {
+                        HashMap<String, Object> set = new HashMap<String, Object>();
+                        set.put(lookup.get(im.getDisplayName()), b);
+                        HashMap<String, Object> where = new HashMap<String, Object>();
+                        where.put("uuid", uuid);
+                        new QueryFactory(plugin).doUpdate("player_prefs", set, where);
+                    }
                     lore.set(0, value);
                     im.setLore(lore);
                     is.setItemMeta(im);
                     if (im.getDisplayName().equals("Beacon")) {
-                        new TARDISToggleOnOffCommand(plugin).toggleBeacon(p, !bool);
+                        new TARDISToggleOnOffCommand(plugin).toggleBeacon(uuid, !bool);
                     }
                 }
             }

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2013 eccentric_nz
+ * Copyright (C) 2014 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -56,24 +56,24 @@ public class TARDISFireListener implements Listener {
      *
      * @param event a block catching fire
      */
-    @EventHandler(priority = EventPriority.LOWEST)
+    @EventHandler(priority = EventPriority.LOWEST, ignoreCancelled = true)
     public void onBlockIgnite(BlockIgniteEvent event) {
         Block b = event.getBlock();
         for (BlockFace bf : faces) {
             Block chkBlock = b.getRelative(bf);
             String l = chkBlock.getLocation().toString();
-            if (plugin.protectBlockMap.containsKey(l) && !chkBlock.getType().equals(Material.BEDROCK)) {
+            if (plugin.getGeneralKeeper().getProtectBlockMap().containsKey(l) && !chkBlock.getType().equals(Material.BEDROCK)) {
                 event.setCancelled(true);
                 break;
             }
         }
     }
 
-    @EventHandler(priority = EventPriority.LOWEST)
+    @EventHandler(priority = EventPriority.LOWEST, ignoreCancelled = true)
     public void onBlockBurn(BlockBurnEvent event) {
         Block b = event.getBlock();
         String l = b.getLocation().toString();
-        if (plugin.protectBlockMap.containsKey(l)) {
+        if (plugin.getGeneralKeeper().getProtectBlockMap().containsKey(l)) {
             event.setCancelled(true);
         }
     }

@@ -1,5 +1,5 @@
-/*
- * Copyright (C) 2013 eccentric_nz
+ /*
+ * Copyright (C) 2014 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -27,6 +27,7 @@ import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
 import me.eccentric_nz.TARDIS.enumeration.ROOM;
+import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import org.bukkit.Chunk;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -121,13 +122,13 @@ public class TARDISRoomRunnable implements Runnable {
             if (room.equals("GRAVITY") || room.equals("ANTIGRAVITY")) {
                 grammar += " WELL";
             }
-            p.sendMessage(plugin.pluginName + "Started growing " + grammar + "...");
+            TARDISMessage.send(p, plugin.getPluginName() + "Started growing " + grammar + "...");
         }
         String tmp;
         if (level == h && row == w && col == (c - 1)) {
             // the entire schematic has been read :)
             if (iceblocks.size() > 0) {
-                p.sendMessage(plugin.pluginName + "Melting the ice!");
+                TARDISMessage.send(p, plugin.getPluginName() + "Melting the ice!");
                 // set all the ice to water
                 for (Block ice : iceblocks) {
                     ice.setTypeId(9);
@@ -164,7 +165,7 @@ public class TARDISRoomRunnable implements Runnable {
                 doorblocks.clear();
             }
             // update lamp block states
-            p.sendMessage(plugin.pluginName + "Turning on the power!");
+            TARDISMessage.send(p, plugin.getPluginName() + "Turning on the power!");
             for (Block lamp : lampblocks) {
                 lamp.setType(Material.REDSTONE_LAMP_ON);
             }
@@ -184,20 +185,20 @@ public class TARDISRoomRunnable implements Runnable {
             // remove the chunks, so they can unload as normal again
             if (chunkList.size() > 0) {
                 for (Chunk ch : chunkList) {
-                    plugin.roomChunkList.remove(ch);
+                    plugin.getGeneralKeeper().getRoomChunkList().remove(ch);
                 }
             }
             // cancel the task
             plugin.getServer().getScheduler().cancelTask(task);
             task = 0;
             String rname = (room.equals("GRAVITY") || room.equals("ANTIGRAVITY")) ? room + " WELL" : room;
-            p.sendMessage(plugin.pluginName + "Finished growing the " + rname + "!");
+            TARDISMessage.send(p, plugin.getPluginName() + "Finished growing the " + rname + "!");
         } else {
             // place one block
             tmp = s[level][row][col];
             String[] iddata = tmp.split(":");
-            id = plugin.utils.parseInt(iddata[0]);
-            data = plugin.utils.parseByte(iddata[1]);
+            id = plugin.getUtils().parseInt(iddata[0]);
+            data = plugin.getUtils().parseByte(iddata[1]);
             if (id == 158 || id == -98) {
                 byte bit = data;
                 switch (bit) {
@@ -264,9 +265,20 @@ public class TARDISRoomRunnable implements Runnable {
                 // replace with floor material
                 id = (floor_id == 35 && floor_data == 8 && plugin.getConfig().getBoolean("creation.use_clay")) ? 159 : floor_id;
                 data = floor_data;
+                // add WorldGuard region that allows spawn eggs
+                if (plugin.isWorldGuardOnServer() && plugin.getConfig().getBoolean("preferences.use_worldguard")) {
+                    Location one = new Location(world, startx - 6, starty, startz - 6);
+                    Location two = new Location(world, startx + 6, starty + 8, startz + 6);
+                    plugin.getWorldGuardUtils().addAllowSpawning(p.getName(), "farm", one, two);
+                }
+            }
+            // set lazarus
+            if (id == 72 && room.equals("LAZARUS")) {
+                String plate = (new Location(world, startx, starty, startz)).toString();
+                qf.insertControl(tardis_id, 19, plate, 0);
             }
             // set stable
-            if (id == 88 && (room.equals("STABLE") || room.equals("VILLAGE") || room.equals("RENDERER"))) {
+            if (id == 88 && (room.equals("STABLE") || room.equals("VILLAGE") || room.equals("RENDERER") || room.equals("ZERO"))) {
                 HashMap<String, Object> sets = new HashMap<String, Object>();
                 sets.put(room.toLowerCase(Locale.ENGLISH), world.getName() + ":" + startx + ":" + starty + ":" + startz);
                 HashMap<String, Object> wheres = new HashMap<String, Object>();
@@ -277,19 +289,35 @@ public class TARDISRoomRunnable implements Runnable {
                     case VILLAGE:
                         id = 4;
                         data = 0;
+                        // add WorldGuard region that allows spawn eggs
+                        if (plugin.isWorldGuardOnServer() && plugin.getConfig().getBoolean("preferences.use_worldguard")) {
+                            Location one = new Location(world, startx - 6, starty, startz - 6);
+                            Location two = new Location(world, startx + 6, starty + 8, startz + 6);
+                            plugin.getWorldGuardUtils().addAllowSpawning(p.getName(), "village", one, two);
+                        }
                         break;
                     case STABLE:
                         id = 2;
                         data = 0;
+                        // add WorldGuard region that allows spawn eggs
+                        if (plugin.isWorldGuardOnServer() && plugin.getConfig().getBoolean("preferences.use_worldguard")) {
+                            Location one = new Location(world, startx - 6, starty, startz - 6);
+                            Location two = new Location(world, startx + 6, starty + 8, startz + 6);
+                            plugin.getWorldGuardUtils().addAllowSpawning(p.getName(), "stable", one, two);
+                        }
+                        break;
+                    case ZERO:
+                        id = 171;
+                        data = 6;
                         break;
                     default:
                         id = 35;
                         data = 15;
                         // add WorldGuard region
-                        if (plugin.worldGuardOnServer && plugin.getConfig().getBoolean("preferences.use_worldguard")) {
+                        if (plugin.isWorldGuardOnServer() && plugin.getConfig().getBoolean("preferences.use_worldguard")) {
                             Location one = new Location(world, startx - 6, starty, startz - 6);
                             Location two = new Location(world, startx + 6, starty + 8, startz + 6);
-                            plugin.wgutils.addRendererProtection(p.getName(), one, two);
+                            plugin.getWorldGuardUtils().addRendererProtection(p.getName(), one, two);
                         }
                         break;
                 }
@@ -390,15 +418,15 @@ public class TARDISRoomRunnable implements Runnable {
             }
 
             Chunk thisChunk = world.getChunkAt(world.getBlockAt(startx, starty, startz));
-            if (!plugin.roomChunkList.contains(thisChunk)) {
-                plugin.roomChunkList.add(thisChunk);
+            if (!plugin.getGeneralKeeper().getRoomChunkList().contains(thisChunk)) {
+                plugin.getGeneralKeeper().getRoomChunkList().add(thisChunk);
                 chunkList.add(thisChunk);
             }
             if (id != 83 && id != 127 && id != 64 && id != 50 && id != 76 && id != 34 && !(id == 100 && data == (byte) 15)) {
                 if (id == 9) {
-                    plugin.utils.setBlock(world, startx, starty, startz, 79, (byte) 0);
+                    plugin.getUtils().setBlock(world, startx, starty, startz, 79, (byte) 0);
                 } else {
-                    plugin.utils.setBlock(world, startx, starty, startz, id, data);
+                    plugin.getUtils().setBlock(world, startx, starty, startz, id, data);
                 }
             }
             // remember ice blocks
@@ -423,7 +451,7 @@ public class TARDISRoomRunnable implements Runnable {
                     setd.put("distance", 0);
                     setd.put("velocity", 0);
                     qf.doInsert("gravity_well", setd);
-                    plugin.gravityDownList.add(loc);
+                    plugin.getGeneralKeeper().getGravityDownList().add(loc);
                 }
                 if (id == 35 && data == 5) {
                     // light green wool - gravity well up
@@ -435,8 +463,8 @@ public class TARDISRoomRunnable implements Runnable {
                     setu.put("distance", 16);
                     setu.put("velocity", 0.5);
                     qf.doInsert("gravity_well", setu);
-                    Double[] values = new Double[]{1D, 16D, 0.5D};
-                    plugin.gravityUpList.put(loc, values);
+                    Double[] values = {1D, 16D, 0.5D};
+                    plugin.getGeneralKeeper().getGravityUpList().put(loc, values);
                 }
             }
             if (room.equals("BAKER") || room.equals("WOOD")) {
@@ -445,12 +473,12 @@ public class TARDISRoomRunnable implements Runnable {
                 int r = 2;
                 int type;
                 String loc_str;
-                List<Integer> controls = Arrays.asList(new Integer[]{69, 77, 100, 143, -113});
-                if (controls.contains(Integer.valueOf(id))) {
+                List<Integer> controls = Arrays.asList(69, 77, 100, 143, -113);
+                if (controls.contains(id)) {
                     switch (id) {
                         case 77: // stone button - random
                             type = 1;
-                            loc_str = plugin.utils.makeLocationStr(world, startx, starty, startz);
+                            loc_str = plugin.getUtils().makeLocationStr(world, startx, starty, startz);
                             break;
                         case 100: // repeater
                             type = r;
@@ -462,13 +490,21 @@ public class TARDISRoomRunnable implements Runnable {
                         case -113: // wood button - artron
                         case 143:
                             type = 6;
-                            loc_str = plugin.utils.makeLocationStr(world, startx, starty, startz);
+                            loc_str = plugin.getUtils().makeLocationStr(world, startx, starty, startz);
                             break;
                         default: // cake - handbrake
                             type = 0;
-                            loc_str = plugin.utils.makeLocationStr(world, startx, starty, startz);
+                            loc_str = plugin.getUtils().makeLocationStr(world, startx, starty, startz);
                     }
                     qf.insertControl(tardis_id, type, loc_str, secondary);
+                }
+            }
+            if (room.equals("ZERO")) {
+                // remember the button
+                String loc_str;
+                if (id == -113 || id == 143) {
+                    loc_str = plugin.getUtils().makeLocationStr(world, startx, starty, startz);
+                    qf.insertControl(tardis_id, 17, loc_str, 0);
                 }
             }
             startx += x;

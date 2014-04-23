@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2013 eccentric_nz
+ * Copyright (C) 2014 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -22,6 +22,7 @@ import java.util.List;
 import java.util.Locale;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.enumeration.CMDS;
+import me.eccentric_nz.TARDIS.enumeration.MESSAGE;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -68,12 +69,16 @@ public class TARDISAdminCommands implements CommandExecutor {
         firstsStr.put("key", "preferences");
         firstsStr.put("list", "");
         firstsStr.put("make_preset", "");
+        firstsStr.put("modify", "");
         firstsStr.put("playercount", "");
         firstsStr.put("prune", "");
         firstsStr.put("prunelist", "");
         firstsStr.put("purge", "");
         firstsStr.put("recharger", "");
         firstsStr.put("reload", "");
+        firstsStr.put("respect_towny", "preferences");
+        firstsStr.put("respect_worldguard", "preferences");
+        firstsStr.put("sign_colour", "police_box");
         firstsStrArtron.add("full_charge_item");
         firstsStrArtron.add("jettison_seed");
         // boolean
@@ -91,6 +96,7 @@ public class TARDISAdminCommands implements CommandExecutor {
         firstsBool.put("debug", "");
         firstsBool.put("default_world", "creation");
         firstsBool.put("emergency_npc", "allow");
+        firstsBool.put("external_gravity", "allow");
         firstsBool.put("exile", "travel");
         firstsBool.put("give_key", "travel");
         firstsBool.put("include_default_world", "travel");
@@ -102,9 +108,7 @@ public class TARDISAdminCommands implements CommandExecutor {
         firstsBool.put("per_world_perms", "travel");
         firstsBool.put("platform", "travel");
         firstsBool.put("respect_factions", "preferences");
-        firstsBool.put("respect_towny", "preferences");
         firstsBool.put("respect_worldborder", "preferences");
-        firstsBool.put("respect_worldguard", "preferences");
         firstsBool.put("return_room_seed", "growth");
         firstsBool.put("rooms_require_blocks", "growth");
         firstsBool.put("sfx", "allow");
@@ -114,6 +118,8 @@ public class TARDISAdminCommands implements CommandExecutor {
         firstsBool.put("use_block_stack", "creation");
         firstsBool.put("use_clay", "creation");
         firstsBool.put("use_worldguard", "preferences");
+        firstsBool.put("wg_flag_set", "allow");
+        firstsBool.put("zero_room", "allow");
         // integer
         firstsInt.put("border_radius", "creation");
         firstsInt.put("confirm_timeout", "police_box");
@@ -123,6 +129,7 @@ public class TARDISAdminCommands implements CommandExecutor {
         firstsInt.put("gravity_max_velocity", "growth");
         firstsInt.put("hads_damage", "preferences");
         firstsInt.put("hads_distance", "preferences");
+        firstsInt.put("heal_speed", "preferences");
         firstsInt.put("malfunction", "preferences");
         firstsInt.put("malfunction_end", "preferences");
         firstsInt.put("malfunction_nether", "preferences");
@@ -135,6 +142,7 @@ public class TARDISAdminCommands implements CommandExecutor {
         firstsInt.put("terminal_step", "travel");
         firstsInt.put("timeout", "travel");
         firstsInt.put("timeout_height", "travel");
+        firstsInt.put("tips_limit", "creation");
         firstsInt.put("tp_radius", "travel");
         firstsInt.put("wall_id", "police_box");
         firstsInt.put("wall_data", "police_box");
@@ -166,7 +174,7 @@ public class TARDISAdminCommands implements CommandExecutor {
                 }
                 String first = args[0].toLowerCase(Locale.ENGLISH);
                 if (!firstsStr.containsKey(first) && !firstsBool.containsKey(first) && !firstsInt.containsKey(first) && !firstsIntArtron.contains(first) && !firstsStrArtron.contains(first)) {
-                    sender.sendMessage(plugin.pluginName + "TARDIS does not recognise that command argument!");
+                    sender.sendMessage(plugin.getPluginName() + "TARDIS does not recognise that command argument!");
                     return false;
                 }
                 if (args.length == 1) {
@@ -180,8 +188,11 @@ public class TARDISAdminCommands implements CommandExecutor {
                 if (first.equals("list")) {
                     return new TARDISListTardisesCommand(plugin).listTardises(sender, args);
                 }
+                if (first.equals("modify")) {
+                    return new TARDISModifyCommand(plugin).alterConfig(sender, args);
+                }
                 if (args.length < 2) {
-                    sender.sendMessage(plugin.pluginName + "Too few command arguments!");
+                    sender.sendMessage(plugin.getPluginName() + MESSAGE.TOO_FEW_ARGS.getText());
                     return false;
                 }
                 if (first.equals("config")) {
@@ -190,10 +201,13 @@ public class TARDISAdminCommands implements CommandExecutor {
                 if (first.equals("database")) {
                     String dbtype = args[1].toLowerCase(Locale.ENGLISH);
                     if (!dbtype.equals("mysql") && !dbtype.equals("sqlite")) {
-                        sender.sendMessage(plugin.pluginName + "TARDIS database type must be one of 'mysql' or 'sqlite'!");
+                        sender.sendMessage(plugin.getPluginName() + "TARDIS database type must be one of 'mysql' or 'sqlite'!");
                         return true;
                     }
                     plugin.getConfig().set("database", dbtype);
+                }
+                if (first.equals("sign_colour")) {
+                    return new TARDISSignColourCommand(plugin).setColour(sender, args);
                 }
                 if (first.equals("make_preset")) {
                     return new TARDISMakePresetCommand(plugin).scanBlocks(sender, args);
@@ -231,16 +245,22 @@ public class TARDISAdminCommands implements CommandExecutor {
                 if (first.equals("default_world_name")) {
                     return new TARDISDefaultWorldNameCommand(plugin).setName(sender, args);
                 }
+                if (first.equals("respect_towny")) {
+                    return new TARDISSetRespectCommand(plugin).setRegion(sender, args);
+                }
+                if (first.equals("respect_worldguard")) {
+                    return new TARDISSetRespectCommand(plugin).setFlag(sender, args);
+                }
                 if (first.equals("difficulty")) {
                     if (!args[1].equalsIgnoreCase("easy") && !args[1].equalsIgnoreCase("hard")) {
-                        sender.sendMessage(plugin.pluginName + ChatColor.RED + "Difficulty must be easy or hard!");
+                        sender.sendMessage(plugin.getPluginName() + ChatColor.RED + "Difficulty must be easy or hard!");
                         return true;
                     }
                     plugin.getConfig().set("preferences.difficulty", args[1].toLowerCase(Locale.ENGLISH));
                 }
                 if (first.equals("gamemode")) {
                     if (!args[1].equalsIgnoreCase("creative") && !args[1].equalsIgnoreCase("survival")) {
-                        sender.sendMessage(plugin.pluginName + ChatColor.RED + "Gamemode must be creative or survival!");
+                        sender.sendMessage(plugin.getPluginName() + ChatColor.RED + "Gamemode must be creative or survival!");
                         return true;
                     }
                     plugin.getConfig().set("creation.gamemode", args[1].toLowerCase(Locale.ENGLISH));
@@ -253,7 +273,11 @@ public class TARDISAdminCommands implements CommandExecutor {
                 }
                 // checks if its a boolean config option
                 if (firstsBool.containsKey(first)) {
-                    return new TARDISSetBooleanCommand(plugin).setConfigBool(sender, args, firstsBool.get(first));
+                    if (first.equals("zero_room")) {
+                        return new TARDISSetZeroRoomCommand(plugin).setConfigZero(sender, args);
+                    } else {
+                        return new TARDISSetBooleanCommand(plugin).setConfigBool(sender, args, firstsBool.get(first));
+                    }
                 }
                 // checks if its a number config option
                 if (firstsInt.containsKey(first)) {
@@ -263,10 +287,10 @@ public class TARDISAdminCommands implements CommandExecutor {
                     return new TARDISSetIntegerCommand(plugin).setConfigInt(sender, args);
                 }
                 plugin.saveConfig();
-                sender.sendMessage(plugin.pluginName + "The config was updated!");
+                sender.sendMessage(plugin.getPluginName() + MESSAGE.CONFIG_UPDATED.getText());
                 return true;
             } else {
-                sender.sendMessage(plugin.pluginName + ChatColor.RED + " You must be an Admin to run this command.");
+                sender.sendMessage(plugin.getPluginName() + ChatColor.RED + " You must be an Admin to run this command.");
                 return false;
             }
         }

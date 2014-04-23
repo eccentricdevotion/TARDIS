@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2013 eccentric_nz
+ * Copyright (C) 2014 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -78,28 +78,28 @@ public class TARDISTemporalLocatorInventory {
         ItemStack morn = new ItemStack(Material.WATCH, 1);
         ItemMeta ing = morn.getItemMeta();
         ing.setDisplayName("Morning");
-        ing.setLore(Arrays.asList(new String[]{"0 ticks", "6 AM"}));
+        ing.setLore(Arrays.asList("0 ticks", "6 AM"));
         morn.setItemMeta(ing);
         clocks[0] = morn;
         // add midday
         ItemStack mid = new ItemStack(Material.WATCH, 1);
         ItemMeta day = mid.getItemMeta();
         day.setDisplayName("Midday");
-        day.setLore(Arrays.asList(new String[]{"6000 ticks", "12 Noon"}));
+        day.setLore(Arrays.asList("6000 ticks", "12 Noon"));
         mid.setItemMeta(day);
         clocks[1] = mid;
         // add night
         ItemStack nig = new ItemStack(Material.WATCH, 1);
         ItemMeta ht = nig.getItemMeta();
         ht.setDisplayName("Night");
-        ht.setLore(Arrays.asList(new String[]{"12000 ticks", "6 PM"}));
+        ht.setLore(Arrays.asList("12000 ticks", "6 PM"));
         nig.setItemMeta(ht);
         clocks[2] = nig;
         // add midnight
         ItemStack zero = new ItemStack(Material.WATCH, 1);
         ItemMeta hrs = zero.getItemMeta();
         hrs.setDisplayName("Midnight");
-        hrs.setLore(Arrays.asList(new String[]{"18000 ticks", "12 PM"}));
+        hrs.setLore(Arrays.asList("18000 ticks", "12 PM"));
         zero.setItemMeta(hrs);
         clocks[3] = zero;
 

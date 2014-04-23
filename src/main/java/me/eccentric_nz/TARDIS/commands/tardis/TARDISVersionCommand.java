@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2013 eccentric_nz
+ * Copyright (C) 2014 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -37,10 +37,10 @@ public class TARDISVersionCommand {
     }
 
     public boolean displayVersion(CommandSender sender, Player player) {
-        FileConfiguration pluginYml = YamlConfiguration.loadConfiguration(plugin.pm.getPlugin("TARDIS").getResource("plugin.yml"));
+        FileConfiguration pluginYml = YamlConfiguration.loadConfiguration(plugin.getPM().getPlugin("TARDIS").getResource("plugin.yml"));
         String version = pluginYml.getString("version");
         String cb = Bukkit.getVersion();
-        sender.sendMessage(plugin.pluginName + "You are running TARDIS version: " + ChatColor.AQUA + version + ChatColor.RESET + " with CraftBukkit " + cb);
+        sender.sendMessage(plugin.getPluginName() + "You are running TARDIS version: " + ChatColor.AQUA + version + ChatColor.RESET + " with CraftBukkit " + cb);
         return true;
     }
 }

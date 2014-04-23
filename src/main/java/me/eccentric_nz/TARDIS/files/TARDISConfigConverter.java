@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2013 eccentric_nz
+ * Copyright (C) 2014 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -17,16 +17,14 @@
 package me.eccentric_nz.TARDIS.files;
 
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
 import java.io.IOException;
-import java.nio.channels.FileChannel;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 import me.eccentric_nz.TARDIS.TARDIS;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
+import org.bukkit.util.FileUtil;
 
 /**
  *
@@ -123,12 +121,7 @@ public class TARDISConfigConverter {
         File oldFile = new File(plugin.getDataFolder() + File.separator + "config.yml");
         File newFile = new File(plugin.getDataFolder() + File.separator + "config.backup.yml");
         // back up the file
-        try {
-            copyFile(oldFile, newFile);
-        } catch (IOException ex) {
-            plugin.debug("Could not backup config.yml! " + ex.getMessage());
-            return false;
-        }
+        FileUtil.copy(oldFile, newFile);
         // load config from backup
         this.config = YamlConfiguration.loadConfiguration(newFile);
         // copy the new config to the old config file
@@ -169,28 +162,8 @@ public class TARDISConfigConverter {
             plugin.debug("Could not save config.yml, " + io);
             return false;
         }
-        plugin.console.sendMessage(plugin.pluginName + "Config file successfully updated to new format!");
+        plugin.getConsole().sendMessage(plugin.getPluginName() + "Config file successfully updated to new format!");
         plugin.reloadConfig();
         return true;
-    }
-
-    public static void copyFile(File sourceFile, File destFile) throws IOException {
-        if (!destFile.exists()) {
-            destFile.createNewFile();
-        }
-        FileChannel source = null;
-        FileChannel destination = null;
-        try {
-            source = new FileInputStream(sourceFile).getChannel();
-            destination = new FileOutputStream(destFile).getChannel();
-            destination.transferFrom(source, 0, source.size());
-        } finally {
-            if (source != null) {
-                source.close();
-            }
-            if (destination != null) {
-                destination.close();
-            }
-        }
     }
 }

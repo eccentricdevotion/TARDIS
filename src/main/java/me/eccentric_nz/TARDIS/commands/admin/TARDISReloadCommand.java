@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2013 eccentric_nz
+ * Copyright (C) 2014 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -38,7 +38,7 @@ public class TARDISReloadCommand {
         TARDISConfiguration tc = new TARDISConfiguration(plugin);
         tc.doWorlds();
         plugin.saveConfig();
-        sender.sendMessage(plugin.pluginName + "TARDIS config reloaded.");
+        sender.sendMessage(plugin.getPluginName() + "TARDIS config reloaded.");
         return true;
     }
 }

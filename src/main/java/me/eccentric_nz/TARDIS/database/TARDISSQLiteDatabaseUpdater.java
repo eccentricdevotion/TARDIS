@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2013 eccentric_nz
+ * Copyright (C) 2014 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -20,6 +20,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import me.eccentric_nz.TARDIS.TARDIS;
 import org.bukkit.ChatColor;
@@ -40,6 +41,7 @@ public class TARDISSQLiteDatabaseUpdater {
     private final List<String> gravityupdates = new ArrayList<String>();
     private final List<String> prefsupdates = new ArrayList<String>();
     private final List<String> tardisupdates = new ArrayList<String>();
+    private final List<String> uuidUpdates = Arrays.asList("achievements", "ars", "player_prefs", "storage", "t_count", "tardis", "travellers");
     private final long now = System.currentTimeMillis();
     private final Statement statement;
     private final TARDIS plugin;
@@ -53,12 +55,14 @@ public class TARDISSQLiteDatabaseUpdater {
         destupdates.add("type INTEGER DEFAULT 0");
         destupdates.add("direction TEXT DEFAULT ''");
         destupdates.add("submarine INTEGER DEFAULT 0");
+        destupdates.add("slot INTEGER DEFAULT '-1'");
         doorupdates.add("locked INTEGER DEFAULT 0");
         gravityupdates.add("distance INTEGER DEFAULT 11");
         gravityupdates.add("velocity REAL DEFAULT 0.5");
         prefsupdates.add("artron_level INTEGER DEFAULT 0");
         prefsupdates.add("auto_on INTEGER DEFAULT 0");
         prefsupdates.add("beacon_on INTEGER DEFAULT 1");
+        prefsupdates.add("build_on INTEGER DEFAULT 1");
         prefsupdates.add("dnd_on INTEGER DEFAULT 0");
         prefsupdates.add("eps_message TEXT DEFAULT ''");
         prefsupdates.add("eps_on INTEGER DEFAULT 0");
@@ -66,6 +70,7 @@ public class TARDISSQLiteDatabaseUpdater {
         prefsupdates.add("hads_on INTEGER DEFAULT 1");
         prefsupdates.add("key TEXT DEFAULT ''");
         prefsupdates.add("lamp INTEGER");
+        prefsupdates.add("language TEXT DEFAULT 'AUTO_DETECT'");
         prefsupdates.add("minecart_on INTEGER DEFAULT 0");
         prefsupdates.add("renderer_on INTEGER DEFAULT 1");
         prefsupdates.add("submarine_on INTEGER DEFAULT 0");
@@ -73,6 +78,7 @@ public class TARDISSQLiteDatabaseUpdater {
         prefsupdates.add("texture_on INTEGER DEFAULT 0");
         prefsupdates.add("texture_out TEXT DEFAULT 'default'");
         prefsupdates.add("wall TEXT DEFAULT 'ORANGE_WOOL'");
+        prefsupdates.add("wool_lights_on INTEGER DEFAULT 0");
         tardisupdates.add("adapti_on INTEGER DEFAULT 0");
         tardisupdates.add("artron_level INTEGER DEFAULT 0");
         tardisupdates.add("beacon TEXT DEFAULT ''");
@@ -98,6 +104,7 @@ public class TARDISSQLiteDatabaseUpdater {
         tardisupdates.add("tardis_init INTEGER DEFAULT 0");
         tardisupdates.add("tips INTEGER DEFAULT '-1'");
         tardisupdates.add("village TEXT DEFAULT ''");
+        tardisupdates.add("zero TEXT DEFAULT ''");
     }
 
     /**
@@ -106,6 +113,15 @@ public class TARDISSQLiteDatabaseUpdater {
     public void updateTables() {
         int i = 0;
         try {
+            for (String u : uuidUpdates) {
+                String a_query = "SELECT sql FROM sqlite_master WHERE tbl_name = '" + u + "' AND sql LIKE '%uuid%'";
+                ResultSet rsu = statement.executeQuery(a_query);
+                if (!rsu.next()) {
+                    i++;
+                    String u_alter = "ALTER TABLE " + u + " ADD uuid TEXT DEFAULT ''";
+                    statement.executeUpdate(u_alter);
+                }
+            }
             for (String a : areaupdates) {
                 String[] asplit = a.split(" ");
                 String acheck = asplit[0] + " " + asplit[1].substring(0, 3);
@@ -182,7 +198,7 @@ public class TARDISSQLiteDatabaseUpdater {
             plugin.debug("SQLite database add fields error: " + e.getMessage() + e.getErrorCode());
         }
         if (i > 0) {
-            plugin.console.sendMessage(TARDIS.plugin.pluginName + "Added " + ChatColor.AQUA + i + ChatColor.RESET + " fields to the SQLite database!");
+            plugin.getConsole().sendMessage(TARDIS.plugin.getPluginName() + "Added " + ChatColor.AQUA + i + ChatColor.RESET + " fields to the SQLite database!");
         }
     }
 }

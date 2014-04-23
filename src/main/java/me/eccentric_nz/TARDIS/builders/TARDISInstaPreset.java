@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2013 eccentric_nz
+ * Copyright (C) 2014 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -20,6 +20,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Random;
+import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.chameleon.TARDISChameleonColumn;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
@@ -29,6 +30,7 @@ import me.eccentric_nz.TARDIS.database.ResultSetTravellers;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
 import me.eccentric_nz.TARDIS.enumeration.PRESET;
 import me.eccentric_nz.TARDIS.travel.TARDISDoorLocation;
+import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -53,7 +55,7 @@ public class TARDISInstaPreset {
     private final COMPASS d;
     private final Location location;
     private final int tid;
-    private final String p;
+    private final String uuid;
     private final boolean mal;
     private final int lamp;
     private final boolean sub;
@@ -67,15 +69,16 @@ public class TARDISInstaPreset {
     private final byte[] colours;
     private final Random rand;
     private final byte random_colour;
+    private final ChatColor sign_colour;
     private final List<ProblemBlock> do_at_end = new ArrayList<ProblemBlock>();
 
-    public TARDISInstaPreset(TARDIS plugin, Location location, PRESET preset, int tid, COMPASS d, String p, boolean mal, int lamp, boolean sub, int cham_id, byte cham_data, boolean rebuild, boolean minecart) {
+    public TARDISInstaPreset(TARDIS plugin, Location location, PRESET preset, int tid, COMPASS d, String uuid, boolean mal, int lamp, boolean sub, int cham_id, byte cham_data, boolean rebuild, boolean minecart) {
         this.plugin = plugin;
         this.d = d;
         this.location = location;
         this.preset = preset;
         this.tid = tid;
-        this.p = p;
+        this.uuid = uuid;
         this.mal = mal;
         this.lamp = lamp;
         this.sub = sub;
@@ -86,6 +89,7 @@ public class TARDISInstaPreset {
         colours = new byte[]{0, 1, 2, 3, 4, 5, 6, 9, 10, 11, 12, 13, 14};
         rand = new Random();
         random_colour = colours[rand.nextInt(13)];
+        this.sign_colour = getSignColour();
     }
 
     /**
@@ -93,9 +97,9 @@ public class TARDISInstaPreset {
      */
     public void buildPreset() {
         if (preset.equals(PRESET.ANGEL)) {
-            plugin.presets.setR(rand.nextInt(2));
+            plugin.getPresets().setR(rand.nextInt(2));
         }
-        column = plugin.presets.getColumn(preset, d);
+        column = plugin.getPresets().getColumn(preset, d);
         int plusx, minusx, x, plusz, y, minusz, z, platform_id = plugin.getConfig().getInt("police_box.platform_id");
         byte platform_data = (byte) plugin.getConfig().getInt("police_box.platform_data");
         // get relative locations
@@ -114,23 +118,23 @@ public class TARDISInstaPreset {
         int signx = 0, signz = 0;
         QueryFactory qf = new QueryFactory(plugin);
         // rescue player?
-        if (plugin.trackRescue.containsKey(tid)) {
-            String name = plugin.trackRescue.get(tid);
-            Player saved = plugin.getServer().getPlayer(name);
+        if (plugin.getTrackerKeeper().getTrackRescue().containsKey(tid)) {
+            UUID playerUUID = plugin.getTrackerKeeper().getTrackRescue().get(tid);
+            Player saved = plugin.getServer().getPlayer(playerUUID);
             if (saved != null) {
-                TARDISDoorLocation idl = plugin.doorListener.getDoor(1, tid);
+                TARDISDoorLocation idl = plugin.getGeneralKeeper().getDoorListener().getDoor(1, tid);
                 Location l = idl.getL();
-                plugin.doorListener.movePlayer(saved, l, false, world, false, 0, minecart);
+                plugin.getGeneralKeeper().getDoorListener().movePlayer(saved, l, false, world, false, 0, minecart);
                 // put player into travellers table
                 HashMap<String, Object> set = new HashMap<String, Object>();
                 set.put("tardis_id", tid);
-                set.put("player", name);
+                set.put("uuid", playerUUID.toString());
                 qf.doInsert("travellers", set);
             }
-            plugin.trackRescue.remove(tid);
+            plugin.getTrackerKeeper().getTrackRescue().remove(tid);
         }
         // platform
-        plugin.builderP.addPlatform(location, false, d, p, tid);
+        plugin.getPresetBuilder().addPlatform(location, false, d, uuid, tid);
         switch (d) {
             case SOUTH:
                 //if (yaw >= 315 || yaw < 45)
@@ -207,7 +211,7 @@ public class TARDISInstaPreset {
                     Block rail = world.getBlockAt(xx, y, zz);
                     if (rail.getType().equals(Material.RAILS) || rail.getType().equals(Material.POWERED_RAIL)) {
                         change = false;
-                        plugin.utils.setBlockAndRemember(world, xx, y, zz, rail.getTypeId(), rail.getData(), tid);
+                        plugin.getUtils().setBlockAndRemember(world, xx, y, zz, rail.getTypeId(), rail.getData(), tid);
                     }
                 }
                 switch (colids[yy]) {
@@ -215,14 +219,14 @@ public class TARDISInstaPreset {
                     case 3:
                         int subi = (preset.equals(PRESET.SUBMERGED)) ? cham_id : colids[yy];
                         byte subd = (preset.equals(PRESET.SUBMERGED)) ? cham_data : coldatas[yy];
-                        plugin.utils.setBlockAndRemember(world, xx, (y + yy), zz, subi, subd, tid);
+                        plugin.getUtils().setBlockAndRemember(world, xx, (y + yy), zz, subi, subd, tid);
                         break;
                     case 7:
                         if (preset.equals(PRESET.THEEND)) {
-                            plugin.utils.setBlockAndRemember(world, xx, (y + yy), zz, 7, (byte) 5, tid);
+                            plugin.getUtils().setBlockAndRemember(world, xx, (y + yy), zz, 7, (byte) 5, tid);
                             world.getBlockAt(xx, (y + yy + 1), zz).setType(Material.FIRE);
                         } else {
-                            plugin.utils.setBlockAndRemember(world, xx, (y + yy), zz, colids[yy], coldatas[yy], tid);
+                            plugin.getUtils().setBlockAndRemember(world, xx, (y + yy), zz, colids[yy], coldatas[yy], tid);
                         }
                         break;
                     case 35:
@@ -231,7 +235,7 @@ public class TARDISInstaPreset {
                         if (preset.equals(PRESET.PARTY) || (preset.equals(PRESET.FLOWER) && coldatas[yy] == 0)) {
                             chad = random_colour;
                         }
-                        plugin.utils.setBlockAndRemember(world, xx, (y + yy), zz, chai, chad, tid);
+                        plugin.getUtils().setBlockAndRemember(world, xx, (y + yy), zz, chai, chad, tid);
                         break;
                     case 50: // lamps, glowstone and torches
                     case 89:
@@ -248,7 +252,7 @@ public class TARDISInstaPreset {
                         if (colids[yy] == 50) {
                             do_at_end.add(new ProblemBlock(new Location(world, xx, (y + yy), zz), light, ld));
                         } else {
-                            plugin.utils.setBlockAndRemember(world, xx, (y + yy), zz, light, ld, tid);
+                            plugin.getUtils().setBlockAndRemember(world, xx, (y + yy), zz, light, ld, tid);
                         }
                         break;
                     case 64: // wood, iron & trap doors, rails
@@ -279,28 +283,29 @@ public class TARDISInstaPreset {
                             }
                             // place block under door if block is in list of blocks an iron door cannot go on
                             if (yy == 0) {
-                                if (sub && plugin.worldGuardOnServer) {
+                                if (sub && plugin.isWorldGuardOnServer()) {
                                     int sy = y - 1;
-                                    plugin.utils.setBlockAndRemember(world, xx, sy, zz, 19, (byte) 0, tid);
+                                    plugin.getUtils().setBlockAndRemember(world, xx, sy, zz, 19, (byte) 0, tid);
                                     sponge = world.getBlockAt(xx, sy, zz);
-                                    plugin.wgutils.sponge(sponge, true);
-                                } else if (!plugin.builderP.no_block_under_door.contains(preset)) {
-                                    plugin.utils.setUnderDoorBlock(world, xx, (y - 1), zz, platform_id, platform_data, tid);
+                                    plugin.getWorldGuardUtils().sponge(sponge, true);
+                                } else if (!plugin.getPresetBuilder().no_block_under_door.contains(preset)) {
+                                    plugin.getUtils().setUnderDoorBlock(world, xx, (y - 1), zz, platform_id, platform_data, tid);
                                 }
                             }
                         }
                         if (colids[yy] == 66) {
                             do_at_end.add(new ProblemBlock(new Location(world, xx, (y + yy), zz), colids[yy], coldatas[yy]));
                         } else {
-                            plugin.utils.setBlockAndRemember(world, xx, (y + yy), zz, colids[yy], coldatas[yy], tid);
+                            plugin.getUtils().setBlockAndRemember(world, xx, (y + yy), zz, colids[yy], coldatas[yy], tid);
                         }
                         break;
                     case 63:
                         if (preset.equals(PRESET.APPERTURE)) {
-                            plugin.utils.setUnderDoorBlock(world, xx, (y - 1), zz, platform_id, platform_data, tid);
+                            plugin.getUtils().setUnderDoorBlock(world, xx, (y - 1), zz, platform_id, platform_data, tid);
                         }
+                        break;
                     case 68: // sign - if there is one
-                        plugin.utils.setBlock(world, xx, (y + yy), zz, colids[yy], coldatas[yy]);
+                        plugin.getUtils().setBlock(world, xx, (y + yy), zz, colids[yy], coldatas[yy]);
                         Block sign = world.getBlockAt(xx, (y + yy), zz);
                         if (sign.getType().equals(Material.WALL_SIGN) || sign.getType().equals(Material.SIGN_POST)) {
                             Sign s = (Sign) sign.getState();
@@ -309,11 +314,16 @@ public class TARDISInstaPreset {
                                 wheret.put("tardis_id", tid);
                                 ResultSetTardis rst = new ResultSetTardis(plugin, wheret, "", false);
                                 if (rst.resultSet()) {
+                                    String player_name = plugin.getGeneralKeeper().getUUIDCache().getNameCache().get(rst.getUuid());
+                                    if (player_name == null) {
+                                        // cache lookup failed, player may have disconnected
+                                        player_name = rst.getOwner();
+                                    }
                                     String owner;
                                     if (preset.equals(PRESET.GRAVESTONE) || preset.equals(PRESET.PUNKED) || preset.equals(PRESET.ROBOT)) {
-                                        owner = (rst.getOwner().length() > 14) ? rst.getOwner().substring(0, 14) : rst.getOwner();
+                                        owner = (player_name.length() > 14) ? player_name.substring(0, 14) : player_name;
                                     } else {
-                                        owner = (rst.getOwner().length() > 14) ? rst.getOwner().substring(0, 12) + "'s" : rst.getOwner() + "'s";
+                                        owner = (player_name.length() > 14) ? player_name.substring(0, 12) + "'s" : player_name + "'s";
                                     }
                                     switch (preset) {
                                         case GRAVESTONE:
@@ -332,68 +342,66 @@ public class TARDISInstaPreset {
                             String line1;
                             String line2;
                             if (preset.equals(PRESET.CUSTOM)) {
-                                line1 = plugin.presets.custom.getFirstLine();
-                                line2 = plugin.presets.custom.getSecondLine();
+                                line1 = plugin.getPresets().custom.getFirstLine();
+                                line2 = plugin.getPresets().custom.getSecondLine();
                             } else {
                                 line1 = preset.getFirstLine();
                                 line2 = preset.getSecondLine();
                             }
                             switch (preset) {
                                 case ANGEL:
-                                    s.setLine(0, ChatColor.WHITE + line1);
-                                    s.setLine(1, ChatColor.WHITE + line2);
-                                    s.setLine(3, ChatColor.WHITE + "TARDIS");
+                                    s.setLine(0, sign_colour + line1);
+                                    s.setLine(1, sign_colour + line2);
+                                    s.setLine(3, sign_colour + "TARDIS");
                                     break;
                                 case APPERTURE:
-                                    s.setLine(1, ChatColor.WHITE + line1);
-                                    s.setLine(2, ChatColor.WHITE + line2);
-                                    s.setLine(3, ChatColor.WHITE + "LAB");
+                                    s.setLine(1, sign_colour + line1);
+                                    s.setLine(2, sign_colour + line2);
+                                    s.setLine(3, sign_colour + "LAB");
                                     break;
                                 case JAIL:
-                                    s.setLine(0, ChatColor.WHITE + line1);
-                                    s.setLine(1, ChatColor.WHITE + line2);
-                                    s.setLine(3, ChatColor.WHITE + "CAPTURE");
+                                    s.setLine(0, sign_colour + line1);
+                                    s.setLine(1, sign_colour + line2);
+                                    s.setLine(3, sign_colour + "CAPTURE");
                                     break;
                                 case THEEND:
-                                    s.setLine(1, ChatColor.WHITE + line1);
-                                    s.setLine(2, ChatColor.WHITE + line2);
-                                    s.setLine(3, ChatColor.WHITE + "HOT ROD");
-                                    break;
-                                case CUSTOM:
+                                    s.setLine(1, sign_colour + line1);
+                                    s.setLine(2, sign_colour + line2);
+                                    s.setLine(3, sign_colour + "HOT ROD");
                                     break;
                                 default:
-                                    s.setLine(1, ChatColor.WHITE + line1);
-                                    s.setLine(2, ChatColor.WHITE + line2);
+                                    s.setLine(1, sign_colour + line1);
+                                    s.setLine(2, sign_colour + line2);
                                     break;
                             }
                             s.update();
                         }
                         break;
                     case 87:
-                        plugin.utils.setBlockAndRemember(world, xx, (y + yy), zz, colids[yy], coldatas[yy], tid);
+                        plugin.getUtils().setBlockAndRemember(world, xx, (y + yy), zz, colids[yy], coldatas[yy], tid);
                         if (preset.equals(PRESET.TORCH)) {
                             world.getBlockAt(xx, (y + yy + 1), zz).setType(Material.FIRE);
                         }
                         break;
                     case 90:
-                        plugin.utils.setBlockAndRemember(world, xx, (y + yy + 1), zz, 49, (byte) 0, tid);
-                        plugin.utils.setBlockAndRemember(world, xx, (y + yy), zz, colids[yy], coldatas[yy], tid);
+                        plugin.getUtils().setBlockAndRemember(world, xx, (y + yy + 1), zz, 49, (byte) 0, tid);
+                        plugin.getUtils().setBlockAndRemember(world, xx, (y + yy), zz, colids[yy], coldatas[yy], tid);
                         break;
                     case 144:
                         if (sub) {
-                            plugin.utils.setBlock(world, xx, (y + yy), zz, 89, (byte) 0);
+                            plugin.getUtils().setBlock(world, xx, (y + yy), zz, 89, (byte) 0);
                         } else {
-                            plugin.utils.setBlockAndRemember(world, xx, (y + yy), zz, colids[yy], coldatas[yy], tid);
+                            plugin.getUtils().setBlockAndRemember(world, xx, (y + yy), zz, colids[yy], coldatas[yy], tid);
                             Skull skull = (Skull) world.getBlockAt(xx, (y + yy), zz).getState();
-                            skull.setRotation(plugin.builderP.getSkullDirection(d));
+                            skull.setRotation(plugin.getPresetBuilder().getSkullDirection(d));
                             skull.update();
                         }
                         break;
                     case 152:
                         if (lamp != 123 && (preset.equals(PRESET.NEW) || preset.equals(PRESET.OLD))) {
-                            plugin.utils.setBlockAndRemember(world, xx, (y + yy), zz, cham_id, cham_data, tid);
+                            plugin.getUtils().setBlockAndRemember(world, xx, (y + yy), zz, cham_id, cham_data, tid);
                         } else {
-                            plugin.utils.setBlockAndRemember(world, xx, (y + yy), zz, colids[yy], coldatas[yy], tid);
+                            plugin.getUtils().setBlockAndRemember(world, xx, (y + yy), zz, colids[yy], coldatas[yy], tid);
                         }
                         break;
                     default: // everything else
@@ -401,7 +409,7 @@ public class TARDISInstaPreset {
                             if (colids[yy] == 69 || colids[yy] == 77 || colids[yy] == 143) {
                                 do_at_end.add(new ProblemBlock(new Location(world, xx, (y + yy), zz), colids[yy], coldatas[yy]));
                             } else {
-                                plugin.utils.setBlockAndRemember(world, xx, (y + yy), zz, colids[yy], coldatas[yy], tid);
+                                plugin.getUtils().setBlockAndRemember(world, xx, (y + yy), zz, colids[yy], coldatas[yy], tid);
                             }
                         }
                         break;
@@ -409,7 +417,7 @@ public class TARDISInstaPreset {
             }
         }
         for (ProblemBlock pb : do_at_end) {
-            plugin.utils.setBlockAndRemember(pb.getL().getWorld(), pb.getL().getBlockX(), pb.getL().getBlockY(), pb.getL().getBlockZ(), pb.getId(), pb.getData(), tid);
+            plugin.getUtils().setBlockAndRemember(pb.getL().getWorld(), pb.getL().getBlockX(), pb.getL().getBlockY(), pb.getL().getBlockZ(), pb.getId(), pb.getData(), tid);
         }
         if (!rebuild) {
             // message travellers in tardis
@@ -417,23 +425,23 @@ public class TARDISInstaPreset {
             where.put("tardis_id", tid);
             ResultSetTravellers rst = new ResultSetTravellers(plugin, where, true);
             if (rst.resultSet()) {
-                final List<String> travellers = rst.getData();
+                final List<UUID> travellers = rst.getData();
                 plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
                     @Override
                     public void run() {
-                        for (String s : travellers) {
-                            Player p = plugin.getServer().getPlayer(s);
-                            if (p != null) {
+                        for (UUID s : travellers) {
+                            Player trav = plugin.getServer().getPlayer(s);
+                            if (trav != null) {
                                 String message = (mal) ? "There was a malfunction and the emergency handbrake was engaged! Scan location before exit!" : "LEFT-click the handbrake to exit!";
-                                p.sendMessage(plugin.pluginName + message);
+                                TARDISMessage.send(trav, plugin.getPluginName() + message);
                             }
                         }
                     }
                 }, 30L);
             }
         }
-        plugin.tardisMaterialising.remove(Integer.valueOf(tid));
-        plugin.inVortex.remove(Integer.valueOf(tid));
+        plugin.getTrackerKeeper().getTrackMaterialising().remove(Integer.valueOf(tid));
+        plugin.getTrackerKeeper().getTrackInVortex().remove(Integer.valueOf(tid));
     }
 
     private class ProblemBlock {
@@ -459,5 +467,16 @@ public class TARDISInstaPreset {
         public byte getData() {
             return data;
         }
+    }
+
+    private ChatColor getSignColour() {
+        ChatColor colour;
+        String cc = plugin.getConfig().getString("police_box.sign_colour");
+        try {
+            colour = ChatColor.valueOf(cc);
+        } catch (IllegalArgumentException e) {
+            colour = ChatColor.WHITE;
+        }
+        return colour;
     }
 }

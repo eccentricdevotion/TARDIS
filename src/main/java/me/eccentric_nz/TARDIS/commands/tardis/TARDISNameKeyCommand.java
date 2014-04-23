@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2013 eccentric_nz
+ * Copyright (C) 2014 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -20,6 +20,7 @@ import java.util.HashMap;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.ResultSetPlayerPrefs;
 import me.eccentric_nz.TARDIS.utility.TARDISItemRenamer;
+import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
@@ -40,7 +41,7 @@ public class TARDISNameKeyCommand {
         // determine key item
         String key;
         HashMap<String, Object> where = new HashMap<String, Object>();
-        where.put("player", player.getName());
+        where.put("uuid", player.getUniqueId().toString());
         ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, where);
         if (rsp.resultSet()) {
             key = (!rsp.getKey().isEmpty()) ? rsp.getKey() : plugin.getConfig().getString("preferences.key");
@@ -49,12 +50,12 @@ public class TARDISNameKeyCommand {
         }
         Material m = Material.getMaterial(key);
         if (m.equals(Material.AIR)) {
-            player.sendMessage(plugin.pluginName + "You cannot rename AIR!");
+            TARDISMessage.send(player, plugin.getPluginName() + "You cannot rename AIR!");
             return true;
         }
         ItemStack is = player.getItemInHand();
         if (!is.getType().equals(m)) {
-            player.sendMessage(plugin.pluginName + "You can only rename the TARDIS key!");
+            TARDISMessage.send(player, plugin.getPluginName() + "You can only rename the TARDIS key!");
             return true;
         }
         int count = args.length;
@@ -69,7 +70,7 @@ public class TARDISNameKeyCommand {
         if (!tmp.isEmpty()) {
             TARDISItemRenamer ir = new TARDISItemRenamer(is);
             ir.setName(tmp, false);
-            player.sendMessage(plugin.pluginName + "TARDIS key renamed to '" + tmp + "'");
+            TARDISMessage.send(player, plugin.getPluginName() + "TARDIS key renamed to '" + tmp + "'");
             return true;
         } else {
             return false;

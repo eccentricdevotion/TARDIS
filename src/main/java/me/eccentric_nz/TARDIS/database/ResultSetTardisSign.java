@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2013 eccentric_nz
+ * Copyright (C) 2014 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -20,6 +20,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
 
 /**
@@ -35,6 +36,7 @@ public class ResultSetTardisSign {
     private final TARDIS plugin;
     private final String where;
     private int tardis_id;
+    private UUID uuid;
     private String owner;
     private String save_sign;
     private String chameleon;
@@ -73,6 +75,7 @@ public class ResultSetTardisSign {
             rs = statement.executeQuery();
             if (rs.next()) {
                 this.tardis_id = rs.getInt("tardis_id");
+                this.uuid = UUID.fromString(rs.getString("uuid"));
                 this.owner = rs.getString("owner");
                 this.save_sign = rs.getString("save_sign");
                 this.chameleon = rs.getString("chameleon");
@@ -102,6 +105,10 @@ public class ResultSetTardisSign {
 
     public int getTardis_id() {
         return tardis_id;
+    }
+
+    public UUID getUuid() {
+        return uuid;
     }
 
     public String getOwner() {

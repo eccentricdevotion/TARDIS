@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2013 eccentric_nz
+ * Copyright (C) 2014 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -22,6 +22,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
 
 /**
@@ -37,6 +38,7 @@ public class ResultSetPlayerPrefs {
     private final TARDIS plugin;
     private final HashMap<String, Object> where;
     private int pp_id;
+    private UUID uuid;
     private String player;
     private String key;
     private boolean sfxOn;
@@ -48,8 +50,10 @@ public class ResultSetPlayerPrefs {
     private boolean submarineOn;
     private int artronLevel;
     private int lamp;
+    private String language;
     private String wall;
     private String floor;
+    private boolean buildOn;
     private boolean epsOn;
     private String epsMessage;
     private boolean textureOn;
@@ -58,6 +62,7 @@ public class ResultSetPlayerPrefs {
     private boolean DND;
     private boolean minecartOn;
     private boolean rendererOn;
+    private boolean woolLightsOn;
 
     /**
      * Creates a class instance that can be used to retrieve an SQL ResultSet
@@ -97,10 +102,10 @@ public class ResultSetPlayerPrefs {
             if (where != null) {
                 int s = 1;
                 for (Map.Entry<String, Object> entry : where.entrySet()) {
-                    if (entry.getValue().getClass().equals(String.class)) {
+                    if (entry.getValue().getClass().equals(String.class) || entry.getValue().getClass().equals(UUID.class)) {
                         statement.setString(s, entry.getValue().toString());
                     } else {
-                        statement.setInt(s, plugin.utils.parseInt(entry.getValue().toString()));
+                        statement.setInt(s, plugin.getUtils().parseInt(entry.getValue().toString()));
                     }
                     s++;
                 }
@@ -109,6 +114,7 @@ public class ResultSetPlayerPrefs {
             rs = statement.executeQuery();
             if (rs.next()) {
                 this.pp_id = rs.getInt("pp_id");
+                this.uuid = UUID.fromString(rs.getString("uuid"));
                 this.player = rs.getString("player");
                 this.key = (plugin.getConfig().getString("storage.database").equals("sqlite")) ? rs.getString("key") : rs.getString("key_item");
                 this.sfxOn = rs.getBoolean("sfx_on");
@@ -120,11 +126,13 @@ public class ResultSetPlayerPrefs {
                 this.submarineOn = rs.getBoolean("submarine_on");
                 this.artronLevel = rs.getInt("artron_level");
                 this.lamp = rs.getInt("lamp");
+                this.language = rs.getString("language");
                 if (rs.wasNull()) {
                     this.lamp = plugin.getConfig().getInt("police_box.tardis_lamp");
                 }
                 this.wall = rs.getString("wall");
                 this.floor = rs.getString("floor");
+                this.buildOn = rs.getBoolean("build_on");
                 this.epsOn = rs.getBoolean("eps_on");
                 // if empty use default
                 String message = rs.getString("eps_message");
@@ -136,10 +144,11 @@ public class ResultSetPlayerPrefs {
                 this.textureOn = rs.getBoolean("texture_on");
                 this.textureIn = rs.getString("texture_in");
                 String tp_out = rs.getString("texture_out");
-                this.textureOut = (tp_out.equals("default")) ? plugin.tp : tp_out;
+                this.textureOut = (tp_out.equals("default")) ? plugin.getResourcePack() : tp_out;
                 this.DND = rs.getBoolean("dnd_on");
                 this.minecartOn = rs.getBoolean("minecart_on");
                 this.rendererOn = rs.getBoolean("renderer_on");
+                this.woolLightsOn = rs.getBoolean("wool_lights_on");
             } else {
                 return false;
             }
@@ -165,10 +174,13 @@ public class ResultSetPlayerPrefs {
         return pp_id;
     }
 
-    public String getPlayer() {
-        return player;
+    public UUID getUuid() {
+        return uuid;
     }
 
+//    public String getPlayer() {
+//        return player;
+//    }
     public String getKey() {
         return key;
     }
@@ -209,6 +221,10 @@ public class ResultSetPlayerPrefs {
         return floor;
     }
 
+    public boolean isBuildOn() {
+        return buildOn;
+    }
+
     public boolean isEpsOn() {
         return epsOn;
     }
@@ -233,6 +249,10 @@ public class ResultSetPlayerPrefs {
         return lamp;
     }
 
+    public String getLanguage() {
+        return language;
+    }
+
     public boolean isSubmarineOn() {
         return submarineOn;
     }
@@ -247,5 +267,9 @@ public class ResultSetPlayerPrefs {
 
     public boolean isRendererOn() {
         return rendererOn;
+    }
+
+    public boolean isWoolLightsOn() {
+        return woolLightsOn;
     }
 }

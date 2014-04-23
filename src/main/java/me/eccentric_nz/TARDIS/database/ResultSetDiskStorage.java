@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2013 eccentric_nz
+ * Copyright (C) 2014 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -22,6 +22,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
 
 /**
@@ -43,6 +44,7 @@ public class ResultSetDiskStorage {
     private final HashMap<String, Object> where;
     private int id;
     private int tardis_id;
+    private UUID uuid;
     private String owner;
     private String savesOne;
     private String savesTwo;
@@ -93,10 +95,10 @@ public class ResultSetDiskStorage {
             if (where != null) {
                 int s = 1;
                 for (Map.Entry<String, Object> entry : where.entrySet()) {
-                    if (entry.getValue().getClass().equals(String.class)) {
+                    if (entry.getValue().getClass().equals(String.class) || entry.getValue().getClass().equals(UUID.class)) {
                         statement.setString(s, entry.getValue().toString());
                     } else {
-                        statement.setInt(s, plugin.utils.parseInt(entry.getValue().toString()));
+                        statement.setInt(s, plugin.getUtils().parseInt(entry.getValue().toString()));
                     }
                     s++;
                 }
@@ -107,6 +109,11 @@ public class ResultSetDiskStorage {
                 while (rs.next()) {
                     this.id = rs.getInt("storage_id");
                     this.tardis_id = rs.getInt("tardis_id");
+                    if (!rs.wasNull()) {
+                        this.uuid = UUID.fromString(rs.getString("uuid"));
+                    } else {
+                        this.uuid = plugin.getGeneralKeeper().getUUIDCache().getZERO_UUID();
+                    }
                     this.owner = rs.getString("owner");
                     if (rs.wasNull()) {
                         this.owner = "";
@@ -181,10 +188,13 @@ public class ResultSetDiskStorage {
         return tardis_id;
     }
 
-    public String getOwner() {
-        return owner;
+    public UUID getUuid() {
+        return uuid;
     }
 
+//    public String getOwner() {
+//        return owner;
+//    }
     public String getSavesOne() {
         return savesOne;
     }

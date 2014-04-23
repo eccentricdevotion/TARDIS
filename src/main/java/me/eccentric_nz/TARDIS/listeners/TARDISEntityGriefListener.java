@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2013 eccentric_nz
+ * Copyright (C) 2014 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -54,7 +54,7 @@ public class TARDISEntityGriefListener implements Listener {
      *
      * @param event an entity affecting a block
      */
-    @EventHandler(priority = EventPriority.LOW)
+    @EventHandler(priority = EventPriority.LOW, ignoreCancelled = true)
     public void bossBlockBreak(EntityChangeBlockEvent event) {
         Block b = event.getBlock();
         String l = b.getLocation().toString();
@@ -65,7 +65,7 @@ public class TARDISEntityGriefListener implements Listener {
             eType = null;
         }
         if (eType != null && ents.contains(eType)) {
-            if (plugin.protectBlockMap.containsKey(l)) {
+            if (plugin.getGeneralKeeper().getProtectBlockMap().containsKey(l)) {
                 event.setCancelled(true);
             }
         }

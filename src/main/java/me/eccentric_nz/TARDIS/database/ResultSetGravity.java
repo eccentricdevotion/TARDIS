@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2013 eccentric_nz
+ * Copyright (C) 2014 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -93,9 +93,9 @@ public class ResultSetGravity {
                         statement.setString(s, entry.getValue().toString());
                     } else {
                         if (entry.getValue().getClass().getName().contains("Double")) {
-                            statement.setDouble(s, plugin.utils.parseDouble(entry.getValue().toString()));
+                            statement.setDouble(s, plugin.getUtils().parseDouble(entry.getValue().toString()));
                         } else {
-                            statement.setInt(s, plugin.utils.parseInt(entry.getValue().toString()));
+                            statement.setInt(s, plugin.getUtils().parseInt(entry.getValue().toString()));
                         }
                     }
                     s++;

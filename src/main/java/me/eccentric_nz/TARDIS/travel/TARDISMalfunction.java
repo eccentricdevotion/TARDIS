@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2013 eccentric_nz
+ * Copyright (C) 2014 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -20,6 +20,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Random;
+import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.ResultSetCurrentLocation;
 import me.eccentric_nz.TARDIS.database.ResultSetLamps;
@@ -67,8 +68,8 @@ public class TARDISMalfunction {
             int chance = 100 - plugin.getConfig().getInt("preferences.malfunction");
             if (rand.nextInt(100) > chance) {
                 mal = true;
-                if (plugin.trackRescue.containsKey(Integer.valueOf(id))) {
-                    plugin.trackRescue.remove(Integer.valueOf(id));
+                if (plugin.getTrackerKeeper().getTrackRescue().containsKey(id)) {
+                    plugin.getTrackerKeeper().getTrackRescue().remove(id);
                 }
             }
         }
@@ -118,36 +119,36 @@ public class TARDISMalfunction {
             // flicker lights
             ArrayList<HashMap<String, String>> data = rsl.getData();
             for (HashMap<String, String> map : data) {
-                Location loc = plugin.utils.getLocationFromDB(map.get("location"), 0.0F, 0.0F);
+                Location loc = plugin.getUtils().getLocationFromDB(map.get("location"), 0.0F, 0.0F);
                 lamps.add(loc.getBlock());
             }
-            if (plugin.pm.isPluginEnabled("Citizens") && plugin.getConfig().getBoolean("allow.emergency_npc")) {
-                // get player prefs
-                HashMap<String, Object> wherep = new HashMap<String, Object>();
-                wherep.put("player", p.getName());
-                ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, wherep);
-                if (rsp.resultSet() && rsp.isEpsOn()) {
+            // get player prefs
+            HashMap<String, Object> wherep = new HashMap<String, Object>();
+            wherep.put("uuid", p.getUniqueId().toString());
+            ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, wherep);
+            if (rsp.resultSet()) {
+                if (plugin.getPM().isPluginEnabled("Citizens") && plugin.getConfig().getBoolean("allow.emergency_npc") && rsp.isEpsOn()) {
                     // schedule the NPC to appear
                     String message = "This is Emergency Programme One. Now listen, this is important. If this message is activated, then it can only mean one thing: we must be in danger, and I mean fatal. You're about to die any second with no chance of escape.";
                     HashMap<String, Object> wherev = new HashMap<String, Object>();
                     wherev.put("tardis_id", id);
                     ResultSetTravellers rst = new ResultSetTravellers(plugin, wherev, true);
-                    List<String> players;
+                    List<UUID> playerUUIDs;
                     if (rst.resultSet()) {
-                        players = rst.getData();
+                        playerUUIDs = rst.getData();
                     } else {
-                        players = new ArrayList<String>();
-                        players.add(p.getName());
+                        playerUUIDs = new ArrayList<UUID>();
+                        playerUUIDs.add(p.getUniqueId());
                     }
-                    TARDISEPSRunnable EPS_runnable = new TARDISEPSRunnable(plugin, message, p, players, id, eps, creeper);
+                    TARDISEPSRunnable EPS_runnable = new TARDISEPSRunnable(plugin, message, p, playerUUIDs, id, eps, creeper);
                     plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, EPS_runnable, 220L);
                 }
+                final long start = System.currentTimeMillis() + 10000;
+                TARDISLampsRunnable runnable = new TARDISLampsRunnable(plugin, lamps, start, rsp.isWoolLightsOn());
+                runnable.setHandbrake(handbrake_loc);
+                int taskID = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, runnable, 10L, 10L);
+                runnable.setTask(taskID);
             }
-            final long start = System.currentTimeMillis() + 10000;
-            TARDISLampsRunnable runnable = new TARDISLampsRunnable(plugin, lamps, start);
-            runnable.setHandbrake(handbrake_loc);
-            int taskID = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, runnable, 10L, 10L);
-            runnable.setTask(taskID);
         }
     }
 }

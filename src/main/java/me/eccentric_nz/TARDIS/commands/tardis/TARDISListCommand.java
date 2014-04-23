@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2013 eccentric_nz
+ * Copyright (C) 2014 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -21,6 +21,7 @@ import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import me.eccentric_nz.TARDIS.enumeration.MESSAGE;
 import me.eccentric_nz.TARDIS.utility.TARDISLister;
+import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import org.bukkit.entity.Player;
 
 /**
@@ -38,20 +39,20 @@ public class TARDISListCommand {
     public boolean doList(Player player, String[] args) {
         if (player.hasPermission("tardis.list")) {
             HashMap<String, Object> where = new HashMap<String, Object>();
-            where.put("owner", player.getName());
+            where.put("uuid", player.getUniqueId().toString());
             ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);
             if (!rs.resultSet()) {
-                player.sendMessage(plugin.pluginName + MESSAGE.NO_TARDIS.getText());
+                TARDISMessage.send(player, plugin.getPluginName() + MESSAGE.NO_TARDIS.getText());
                 return false;
             }
             if (args.length < 2 || (!args[1].equalsIgnoreCase("saves") && !args[1].equalsIgnoreCase("companions") && !args[1].equalsIgnoreCase("areas") && !args[1].equalsIgnoreCase("rechargers"))) {
-                player.sendMessage(plugin.pluginName + "You need to specify which TARDIS list you want to view! [saves|companions|areas|rechargers]");
+                TARDISMessage.send(player, plugin.getPluginName() + "You need to specify which TARDIS list you want to view! [saves|companions|areas|rechargers]");
                 return false;
             }
             TARDISLister.list(player, args[1]);
             return true;
         } else {
-            player.sendMessage(plugin.pluginName + MESSAGE.NO_PERMS.getText());
+            TARDISMessage.send(player, plugin.getPluginName() + MESSAGE.NO_PERMS.getText());
             return false;
         }
     }

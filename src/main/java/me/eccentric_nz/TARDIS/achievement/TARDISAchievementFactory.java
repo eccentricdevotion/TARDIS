@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2013 eccentric_nz
+ * Copyright (C) 2014 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -23,6 +23,7 @@ import java.util.Map;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetAchievements;
+import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -55,7 +56,7 @@ public class TARDISAchievementFactory {
         QueryFactory qf = new QueryFactory(plugin);
         // have they started the achievement?
         HashMap<String, Object> wherea = new HashMap<String, Object>();
-        wherea.put("player", player.getName());
+        wherea.put("uuid", player.getUniqueId().toString());
         wherea.put("name", name);
         wherea.put("completed", 0);
         ResultSetAchievements rsa = new ResultSetAchievements(plugin, wherea, false);
@@ -73,8 +74,8 @@ public class TARDISAchievementFactory {
                     achieved = true;
                 }
             } else {
-                int req = plugin.getAchivementConfig().getInt(name + ".required");
-                int have = plugin.utils.parseInt(rsa.getAmount());
+                int req = plugin.getAchievementConfig().getInt(name + ".required");
+                int have = plugin.getUtils().parseInt(rsa.getAmount());
                 int sum = have + (Integer) obj;
                 if (sum >= req) {
                     achieved = true;
@@ -82,11 +83,11 @@ public class TARDISAchievementFactory {
             }
             if (achieved) {
                 // award achievement!
-                int reward_amount = plugin.getAchivementConfig().getInt(name + ".reward_amount");
-                String reward_type = plugin.getAchivementConfig().getString(name + ".reward_type");
+                int reward_amount = plugin.getAchievementConfig().getInt(name + ".reward_amount");
+                String reward_type = plugin.getAchievementConfig().getString(name + ".reward_type");
                 // TODO display a proper achievement
-                player.sendMessage(ChatColor.YELLOW + "Achievement Get!");
-                player.sendMessage(ChatColor.WHITE + plugin.getAchivementConfig().getString(name + ".message"));
+                TARDISMessage.send(player, ChatColor.YELLOW + "Achievement Get!");
+                TARDISMessage.send(player, ChatColor.WHITE + plugin.getAchievementConfig().getString(name + ".message"));
                 if (reward_type.equalsIgnoreCase("XP")) {
                     new TARDISXPRewarder(player).changeExp(reward_amount);
                 } else {
@@ -107,15 +108,15 @@ public class TARDISAchievementFactory {
                         qf.doUpdate("achievements", seta, wherem);
                     }
                 } else {
-                    seta.put("amount", plugin.utils.parseInt(rsa.getAmount()) + (Integer) obj);
+                    seta.put("amount", plugin.getUtils().parseInt(rsa.getAmount()) + (Integer) obj);
                     qf.doUpdate("achievements", seta, wherem);
                 }
             }
         } else {
             // is it an auto achievement?
-            if (plugin.getAchivementConfig().getBoolean(name + ".auto")) {
+            if (plugin.getAchievementConfig().getBoolean(name + ".auto")) {
                 // insert a new record
-                seta.put("player", player.getName());
+                seta.put("uuid", player.getUniqueId().toString());
                 seta.put("name", name);
                 seta.put("amount", obj);
                 seta.put("completed", 0);

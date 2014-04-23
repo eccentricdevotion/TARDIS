@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2013 eccentric_nz
+ * Copyright (C) 2014 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -58,10 +58,10 @@ public class TARDISArea {
         if (rsa.resultSet()) {
             ArrayList<HashMap<String, String>> data = rsa.getData();
             for (HashMap<String, String> map : data) {
-                int minx = plugin.utils.parseInt(map.get("minx"));
-                int minz = plugin.utils.parseInt(map.get("minz"));
-                int maxx = plugin.utils.parseInt(map.get("maxx"));
-                int maxz = plugin.utils.parseInt(map.get("maxz"));
+                int minx = plugin.getUtils().parseInt(map.get("minx"));
+                int minz = plugin.getUtils().parseInt(map.get("minz"));
+                int maxx = plugin.getUtils().parseInt(map.get("maxx"));
+                int maxz = plugin.getUtils().parseInt(map.get("maxz"));
                 // is clicked block within a defined TARDIS area?
                 if (l.getX() <= maxx && l.getZ() <= maxz && l.getX() >= minx && l.getZ() >= minz) {
                     chk = false;
@@ -118,15 +118,15 @@ public class TARDISArea {
             ArrayList<HashMap<String, String>> data = rsa.getData();
             for (HashMap<String, String> map : data) {
                 String n = map.get("area_name");
-                int minx = plugin.utils.parseInt(map.get("minx"));
-                int minz = plugin.utils.parseInt(map.get("minz"));
-                int maxx = plugin.utils.parseInt(map.get("maxx"));
-                int maxz = plugin.utils.parseInt(map.get("maxz"));
+                int minx = plugin.getUtils().parseInt(map.get("minx"));
+                int minz = plugin.getUtils().parseInt(map.get("minz"));
+                int maxx = plugin.getUtils().parseInt(map.get("maxx"));
+                int maxz = plugin.getUtils().parseInt(map.get("maxz"));
                 // is time travel destination within a defined TARDIS area?
                 if (l.getX() <= maxx && l.getZ() <= maxz && l.getX() >= minx && l.getZ() >= minz) {
                     // does the player have permmission to travel here
                     if (!p.hasPermission("tardis.area." + n) || !p.isPermissionSet("tardis.area." + n)) {
-                        plugin.trackPerm.put(p.getName(), "tardis.area." + n);
+                        plugin.getTrackerKeeper().getTrackPerm().put(p.getUniqueId(), "tardis.area." + n);
                         chk = true;
                         break;
                     }

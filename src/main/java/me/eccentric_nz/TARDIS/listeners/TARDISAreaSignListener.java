@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2013 eccentric_nz
+ * Copyright (C) 2014 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -20,11 +20,12 @@ import java.util.HashMap;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import me.eccentric_nz.TARDIS.database.ResultSetTravellers;
+import me.eccentric_nz.TARDIS.enumeration.MESSAGE;
 import me.eccentric_nz.TARDIS.travel.TARDISSaveSignInventory;
+import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
-import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.Inventory;
@@ -49,7 +50,7 @@ public class TARDISAreaSignListener implements Listener {
      *
      * @param event a player clicking an inventory slot
      */
-    @EventHandler(priority = EventPriority.NORMAL)
+    @EventHandler(ignoreCancelled = true)
     public void onAreaTerminalClick(InventoryClickEvent event) {
         Inventory inv = event.getInventory();
         String name = inv.getTitle();
@@ -58,25 +59,24 @@ public class TARDISAreaSignListener implements Listener {
             int slot = event.getRawSlot();
             final Player player = (Player) event.getWhoClicked();
             if (slot >= 0 && slot < 45) {
-                String playerNameStr = player.getName();
                 // get the TARDIS the player is in
                 HashMap<String, Object> wheres = new HashMap<String, Object>();
-                wheres.put("player", playerNameStr);
+                wheres.put("uuid", player.getUniqueId().toString());
                 ResultSetTravellers rst = new ResultSetTravellers(plugin, wheres, false);
                 if (rst.resultSet()) {
                     ItemStack is = inv.getItem(slot);
                     if (is != null) {
                         ItemMeta im = is.getItemMeta();
                         String area = im.getDisplayName();
-                        Location l = plugin.ta.getNextSpot(area);
+                        Location l = plugin.getTardisArea().getNextSpot(area);
                         if (l == null) {
-                            player.sendMessage(plugin.pluginName + "All available parking spots are taken in this area!");
+                            TARDISMessage.send(player, plugin.getPluginName() + MESSAGE.NO_MORE_SPOTS.getText());
                             close(player);
                             return;
                         }
                         // check the player is not already in the area!
-                        if (plugin.ta.areaCheckInExisting(l)) {
-                            player.sendMessage(plugin.pluginName + "You are already in this area!");
+                        if (plugin.getTardisArea().areaCheckInExisting(l)) {
+                            TARDISMessage.send(player, plugin.getPluginName() + "You are already in this area!");
                             close(player);
                             return;
                         }
@@ -93,7 +93,7 @@ public class TARDISAreaSignListener implements Listener {
                     @Override
                     public void run() {
                         HashMap<String, Object> where = new HashMap<String, Object>();
-                        where.put("owner", player.getName());
+                        where.put("uuid", player.getUniqueId().toString());
                         ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);
                         if (rs.resultSet()) {
                             TARDISSaveSignInventory sst = new TARDISSaveSignInventory(plugin, rs.getTardis_id());
@@ -114,7 +114,6 @@ public class TARDISAreaSignListener implements Listener {
      * @param p the player using the GUI
      */
     private void close(final Player p) {
-//        final String n = p.getName();
         plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
             @Override
             public void run() {

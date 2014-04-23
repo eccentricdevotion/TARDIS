@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2013 eccentric_nz
+ * Copyright (C) 2014 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,9 +18,12 @@ package me.eccentric_nz.TARDIS.commands.tardis;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import me.eccentric_nz.TARDIS.database.ResultSetTravellers;
+import me.eccentric_nz.TARDIS.enumeration.MESSAGE;
+import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import org.bukkit.entity.Player;
 
 /**
@@ -38,10 +41,10 @@ public class TARDISInsideCommand {
     public boolean whosInside(Player player, String[] args) {
         // check they are a timelord
         HashMap<String, Object> where = new HashMap<String, Object>();
-        where.put("owner", player.getName());
+        where.put("uuid", player.getUniqueId().toString());
         ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);
         if (!rs.resultSet()) {
-            player.sendMessage(plugin.pluginName + "You must be the Timelord of a TARDIS to use this command!");
+            TARDISMessage.send(player, plugin.getPluginName() + MESSAGE.NOT_A_TIMELORD.getText());
             return true;
         }
         int id = rs.getTardis_id();
@@ -49,13 +52,13 @@ public class TARDISInsideCommand {
         wheret.put("tardis_id", id);
         ResultSetTravellers rst = new ResultSetTravellers(plugin, wheret, true);
         if (rst.resultSet()) {
-            List<String> data = rst.getData();
-            player.sendMessage(plugin.pluginName + "The players inside your TARDIS are:");
-            for (String s : data) {
-                player.sendMessage(s);
+            List<UUID> data = rst.getData();
+            TARDISMessage.send(player, plugin.getPluginName() + "The players inside your TARDIS are:");
+            for (UUID s : data) {
+                TARDISMessage.send(player, plugin.getServer().getPlayer(s).getDisplayName());
             }
         } else {
-            player.sendMessage(plugin.pluginName + "Nobody is inside your TARDIS.");
+            TARDISMessage.send(player, plugin.getPluginName() + "Nobody is inside your TARDIS.");
         }
         return true;
     }
