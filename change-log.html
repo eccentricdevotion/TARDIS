@@ -26,6 +26,27 @@
 	<section>
 		<h1>Change log</h1>
 		<h2>What&rsquo;s been changed?</h2>
+		<h3>v2.8</h3>
+		<p>For CraftBukkit 1.7.9 or higher only!</p>
+		<p>Please also read the change log for v2.8-beta-1, v2.8-beta-2 and v2.8-beta-3 below. There are some big changes that you need to be aware of!</p>
+		<h4>Additions</h4>
+		<ul>
+			<li>Added bed blocks to those the Emerald Sonic should ignore</li>
+		</ul>
+		<h4>Changes</h4>
+		<ul>
+			<li>Scoreboards no longer need OfflinePlayers (a Bukkit API change) - this means the plugin requires CraftBukkit 1.7.8 build #3049 or higher!</li>
+			<li>Increased TARDIS mob farming range so that players will always teleport inside the TARDIS when riding a horse and clicking the door</li>
+			<li>The plugin no longer sets <code>keepSpawnInMemory: false</code> in the Multiverse config for TARDIS worlds, as it sometimes prevents redstone doors from working - you will need to manually update your Multiverse settings if you have this problem</li>
+		</ul>
+		<h4>Bug fixes</h4>
+		<ul>
+			<li>Fixed dematerialisation sound playing when it shouldn't</li>
+			<li>Fixed the plugin outputting the player's UUID instead of name in the rescue message</li>
+			<li>Fixed an isomorphic control message appearing when it shouldn't</li>
+			<li>Fixed the wrong amount being checked for sufficient Artron Energy when using the Destination Terminal</li>
+			<li>Fixed rails in front of door (for the RAIL room) disappearing at the end of dematerialisation</li>
+		</ul>
 		<h3>v2.8-beta-3</h3>
 		<p style="color:#c00;">For CraftBukkit 1.7.8/9 only!</p>
 		<p>Please also read the change logs for v2.8-beta-1 and v2.8-beta-2 below.</p>
