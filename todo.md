@@ -1,26 +1,21 @@
 # TODO
 
-##Current version `2.8`
-1. Convert player persistence to UUIDs - TARDIS code is done, waiting on plugin dependencies to update (WorldGuard etc...)
+##Current version `2.9-beta-1`
 
-These are all really boring!
+1. Localisation
+2. `/tardisadmin` remote TARDIS commands
+3. UHC flying mode (started - have coded some test plugins)
+4. TARDIS invisibility - 1.8 barrier blocks?
+5. Biome textures
 
-####Stuff I'll get round to (but I'm not rushing to code):
-1. Videos
-2. Localisation
-3. `/tardisadmin` remote TARDIS commands
-
-##Future version `2.9+`
-1. UHC flying mode (started - have coded some test plugins)
-2. TARDIS invisibility - 1.8 barrier blocks?
-3. Biome textures
+##Future version `3.0+`
+?
 
 ####I couldn't really be bothered
 1. HADS + explosions + fireballs + lava
 2. Put farmland, crops, buttons, ladders, levers and signs on last when growing rooms
 3. TARDIS Information System
     * auto log out?
-
 
 ##Resource Pack / TARDISWeepingAngels
 Re-skin mobs for Resource pack, and add new mob sounds
