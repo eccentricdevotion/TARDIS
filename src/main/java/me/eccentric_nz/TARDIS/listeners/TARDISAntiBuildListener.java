@@ -25,6 +25,8 @@ import me.eccentric_nz.TARDIS.enumeration.MESSAGE;
 import me.eccentric_nz.TARDIS.utility.TARDISAntiBuild;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import org.bukkit.Material;
+import org.bukkit.block.Block;
+import org.bukkit.block.BlockFace;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Event.Result;
 import org.bukkit.event.EventHandler;
@@ -115,6 +117,7 @@ public class TARDISAntiBuildListener implements Listener {
         }
     }
 
+    @SuppressWarnings("deprecation")
     @EventHandler(ignoreCancelled = true)
     public void onCompanionPlace(PlayerInteractEvent event) {
         UUID uuid = event.getPlayer().getUniqueId();
@@ -130,6 +133,16 @@ public class TARDISAntiBuildListener implements Listener {
         if (event.getClickedBlock().getType().equals(Material.FLOWER_POT) && no_flower_pot.contains(event.getPlayer().getItemInHand().getType())) {
             event.setUseItemInHand(Result.DENY);
             event.setCancelled(true);
+            Block b = event.getClickedBlock();
+            b.getState().update();
+            for (BlockFace f : plugin.getGeneralKeeper().getFaces()) {
+                if (b.getRelative(f).getType().equals(Material.AIR)) {
+                    plugin.debug("face " + f.toString());
+                    b.getRelative(f).setTypeIdAndData(20, (byte) 0, true);
+                    b.getRelative(f).setTypeIdAndData(0, (byte) 0, true);
+                    break;
+                }
+            }
             TARDISMessage.send(event.getPlayer(), plugin.getPluginName() + MESSAGE.ANTIBUILD.getText());
         }
     }
