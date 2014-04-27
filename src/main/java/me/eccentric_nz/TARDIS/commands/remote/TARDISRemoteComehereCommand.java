@@ -79,7 +79,7 @@ public class TARDISRemoteComehereCommand {
         where.put("uuid", uuid.toString());
         ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);
         if (!rs.resultSet()) {
-            TARDISMessage.send(player, plugin.getPluginName() + "The specified player does noy have a TARDIS!");
+            TARDISMessage.send(player, plugin.getPluginName() + "The specified player does not have a TARDIS!");
             return true;
         }
         final int id = rs.getTardis_id();
