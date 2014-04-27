@@ -111,11 +111,13 @@ public class TARDISRemoteCommands implements CommandExecutor {
                             case CHAMELEON:
                                 // toggle the chameleon circuit on/off
                                 int cham = (chameleon) ? 0 : 1;
+                                String onoff = (chameleon) ? "OFF" : "ON";
                                 HashMap<String, Object> setc = new HashMap<String, Object>();
                                 setc.put("chamele_on", cham);
                                 HashMap<String, Object> wherec = new HashMap<String, Object>();
                                 wherec.put("tardis_id", id);
                                 new QueryFactory(plugin).doUpdate("tardis", setc, wherec);
+                                sendMessage(sender, plugin.getPluginName() + "Chameleon circuit set to: " + onoff);
                                 return true;
                             case HIDE:
                                 // if it's a non-admin player or command block running the command
