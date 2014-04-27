@@ -159,10 +159,10 @@ public class TARDISCommands implements CommandExecutor {
                     return new TARDISSecondaryCommand(plugin).startSecondary(player, args);
                 }
                 if (args[0].equalsIgnoreCase("rebuild")) {
-                    return new TARDISRebuildCommand(plugin).rebuildPreset(player, args);
+                    return new TARDISRebuildCommand(plugin).rebuildPreset(player);
                 }
                 if (args[0].equalsIgnoreCase("hide")) {
-                    return new TARDISHideCommand(plugin).hide(player, args);
+                    return new TARDISHideCommand(plugin).hide(player);
                 }
                 if (args[0].equalsIgnoreCase("list")) {
                     return new TARDISListCommand(plugin).doList(player, args);
