@@ -21,9 +21,9 @@ import java.util.List;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
+import org.bukkit.OfflinePlayer;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
-import org.bukkit.entity.Player;
 
 /**
  * The Chameleon Circuit controls the exterior shell's Cloaking Device. The
@@ -42,7 +42,7 @@ public class TARDISChameleonCircuit {
     }
 
     @SuppressWarnings("deprecation")
-    public int[] getChameleonBlock(Block b, Player p, boolean short_out) {
+    public int[] getChameleonBlock(Block b, OfflinePlayer p, boolean short_out) {
         int[] data = new int[2];
         int chameleonType = b.getTypeId();
         int wall_block = 35;
@@ -54,7 +54,7 @@ public class TARDISChameleonCircuit {
         }
         if (TARDISConstants.CHAMELEON_BLOCKS_BAD.contains((Integer) chameleonType)) {
             String message = (short_out) ? "You cannot short out the Chameleon Circuit with that kind of block!" : "Bummer, the TARDIS could not engage the Chameleon Circuit!";
-            TARDISMessage.send(p, plugin.getPluginName() + message);
+            TARDISMessage.send(p.getPlayer(), plugin.getPluginName() + message);
         }
         if (TARDISConstants.CHAMELEON_BLOCKS_CHANGE.contains((Integer) chameleonType)) {
             wall_block = swapId(chameleonType);

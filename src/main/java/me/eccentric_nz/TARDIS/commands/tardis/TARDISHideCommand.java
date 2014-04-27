@@ -29,7 +29,6 @@ import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.OfflinePlayer;
-import org.bukkit.World;
 
 /**
  *
@@ -45,9 +44,7 @@ public class TARDISHideCommand {
 
     public boolean hide(OfflinePlayer player) {
         if (player.getPlayer().hasPermission("tardis.rebuild")) {
-            World w;
             int id;
-            boolean cham = false;
             HashMap<String, Object> where = new HashMap<String, Object>();
             where.put("uuid", player.getUniqueId().toString());
             ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);
@@ -76,9 +73,6 @@ public class TARDISHideCommand {
             if (plugin.getTrackerKeeper().getTrackInVortex().contains(id)) {
                 TARDISMessage.send(player.getPlayer(), plugin.getPluginName() + MESSAGE.NOT_WHILE_MAT.getText());
                 return true;
-            }
-            if (plugin.getConfig().getBoolean("travel.chameleon")) {
-                cham = rs.isChamele_on();
             }
             HashMap<String, Object> wherecl = new HashMap<String, Object>();
             wherecl.put("tardis_id", rs.getTardis_id());

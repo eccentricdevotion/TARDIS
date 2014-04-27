@@ -33,6 +33,7 @@ import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.OfflinePlayer;
 import org.bukkit.Sound;
 import org.bukkit.World;
 import org.bukkit.block.Block;
@@ -57,7 +58,7 @@ public class TARDISMaterialisationPreset implements Runnable {
     private final int tid;
     public int task;
     private int i;
-    private final Player player;
+    private final OfflinePlayer player;
     private final boolean mal;
     private final int lamp;
     private final boolean sub;
@@ -97,7 +98,7 @@ public class TARDISMaterialisationPreset implements Runnable {
      * @param outside whether the player is outside the TARDIS (and the
      * materialisation sound should be played)
      */
-    public TARDISMaterialisationPreset(TARDIS plugin, Location location, PRESET preset, int tid, COMPASS d, Player player, boolean mal, int lamp, boolean sub, int cham_id, byte cham_data, boolean minecart, boolean outside) {
+    public TARDISMaterialisationPreset(TARDIS plugin, Location location, PRESET preset, int tid, COMPASS d, OfflinePlayer player, boolean mal, int lamp, boolean sub, int cham_id, byte cham_data, boolean minecart, boolean outside) {
         this.plugin = plugin;
         this.d = d;
         this.loops = 18;
@@ -183,7 +184,7 @@ public class TARDISMaterialisationPreset implements Runnable {
                     where.put("tardis_id", tid);
                     if (outside) {
                         if (!minecart) {
-                            plugin.getUtils().playTARDISSound(location, player, "tardis_land");
+                            plugin.getUtils().playTARDISSound(location, player.getPlayer(), "tardis_land");
                         } else {
                             world.playSound(location, Sound.MINECART_INSIDE, 1.0F, 0.0F);
                         }

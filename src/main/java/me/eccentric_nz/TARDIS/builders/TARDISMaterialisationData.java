@@ -18,7 +18,7 @@ package me.eccentric_nz.TARDIS.builders;
 
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
 import org.bukkit.Location;
-import org.bukkit.entity.Player;
+import org.bukkit.OfflinePlayer;
 
 /**
  * Data class for building the TARDIS exterior.
@@ -29,7 +29,7 @@ public class TARDISMaterialisationData {
 
     private COMPASS direction;
     private Location location;
-    private Player player;
+    private OfflinePlayer player;
     private boolean chameleon;
     private boolean dematerialise;
     private boolean hide;
@@ -55,11 +55,11 @@ public class TARDISMaterialisationData {
         this.location = location;
     }
 
-    public Player getPlayer() {
+    public OfflinePlayer getPlayer() {
         return player;
     }
 
-    public void setPlayer(Player player) {
+    public void setPlayer(OfflinePlayer player) {
         this.player = player;
     }
 
