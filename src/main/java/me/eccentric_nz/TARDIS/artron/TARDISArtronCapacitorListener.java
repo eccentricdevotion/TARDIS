@@ -54,6 +54,7 @@ public class TARDISArtronCapacitorListener implements Listener {
 
     private final TARDIS plugin;
     List<Material> validBlocks = new ArrayList<Material>();
+    List<SpawnReason> goodspawns = new ArrayList<SpawnReason>();
 
     public TARDISArtronCapacitorListener(TARDIS plugin) {
         this.plugin = plugin;
@@ -62,6 +63,8 @@ public class TARDISArtronCapacitorListener implements Listener {
         validBlocks.add(Material.REDSTONE_COMPARATOR_ON);
         validBlocks.add(Material.STONE_BUTTON);
         validBlocks.add(Material.LEVER);
+        goodspawns.add(SpawnReason.BREEDING);
+        goodspawns.add(SpawnReason.SPAWNER_EGG);
     }
 
     /**
@@ -269,8 +272,8 @@ public class TARDISArtronCapacitorListener implements Listener {
      */
     @EventHandler(priority = EventPriority.HIGHEST)
     public void onEntitySpawn(CreatureSpawnEvent event) {
-        boolean isTardisWorldBreeding = (event.getLocation().getWorld().getName().contains("TARDIS") && (event.getSpawnReason().equals(SpawnReason.BREEDING)));
-        if (isTardisWorldBreeding || plugin.isMySpawn()) {
+        boolean isTardisWorldSpawn = (event.getLocation().getWorld().getName().contains("TARDIS") && goodspawns.contains(event.getSpawnReason()));
+        if (isTardisWorldSpawn || plugin.isMySpawn()) {
             event.setCancelled(false);
             if (plugin.isMySpawn()) {
                 plugin.setMySpawn(false);

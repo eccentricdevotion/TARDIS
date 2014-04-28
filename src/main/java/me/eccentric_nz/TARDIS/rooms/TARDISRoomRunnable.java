@@ -266,11 +266,11 @@ public class TARDISRoomRunnable implements Runnable {
                 id = (floor_id == 35 && floor_data == 8 && plugin.getConfig().getBoolean("creation.use_clay")) ? 159 : floor_id;
                 data = floor_data;
                 // add WorldGuard region that allows spawn eggs
-                if (plugin.isWorldGuardOnServer() && plugin.getConfig().getBoolean("preferences.use_worldguard")) {
-                    Location one = new Location(world, startx - 6, starty, startz - 6);
-                    Location two = new Location(world, startx + 6, starty + 8, startz + 6);
-                    plugin.getWorldGuardUtils().addAllowSpawning(p.getName(), "farm", one, two);
-                }
+//                if (plugin.isWorldGuardOnServer() && plugin.getConfig().getBoolean("preferences.use_worldguard")) {
+//                    Location one = new Location(world, startx - 6, starty, startz - 6);
+//                    Location two = new Location(world, startx + 6, starty + 8, startz + 6);
+//                    plugin.getWorldGuardUtils().addAllowSpawning(p.getName(), "farm", one, two);
+//                }
             }
             // set lazarus
             if (id == 72 && room.equals("LAZARUS")) {
@@ -290,21 +290,21 @@ public class TARDISRoomRunnable implements Runnable {
                         id = 4;
                         data = 0;
                         // add WorldGuard region that allows spawn eggs
-                        if (plugin.isWorldGuardOnServer() && plugin.getConfig().getBoolean("preferences.use_worldguard")) {
-                            Location one = new Location(world, startx - 6, starty, startz - 6);
-                            Location two = new Location(world, startx + 6, starty + 8, startz + 6);
-                            plugin.getWorldGuardUtils().addAllowSpawning(p.getName(), "village", one, two);
-                        }
+//                        if (plugin.isWorldGuardOnServer() && plugin.getConfig().getBoolean("preferences.use_worldguard")) {
+//                            Location one = new Location(world, startx - 6, starty, startz - 6);
+//                            Location two = new Location(world, startx + 6, starty + 8, startz + 6);
+//                            plugin.getWorldGuardUtils().addAllowSpawning(p.getName(), "village", one, two);
+//                        }
                         break;
                     case STABLE:
                         id = 2;
                         data = 0;
                         // add WorldGuard region that allows spawn eggs
-                        if (plugin.isWorldGuardOnServer() && plugin.getConfig().getBoolean("preferences.use_worldguard")) {
-                            Location one = new Location(world, startx - 6, starty, startz - 6);
-                            Location two = new Location(world, startx + 6, starty + 8, startz + 6);
-                            plugin.getWorldGuardUtils().addAllowSpawning(p.getName(), "stable", one, two);
-                        }
+//                        if (plugin.isWorldGuardOnServer() && plugin.getConfig().getBoolean("preferences.use_worldguard")) {
+//                            Location one = new Location(world, startx - 6, starty, startz - 6);
+//                            Location two = new Location(world, startx + 6, starty + 8, startz + 6);
+//                            plugin.getWorldGuardUtils().addAllowSpawning(p.getName(), "stable", one, two);
+//                        }
                         break;
                     case ZERO:
                         id = 171;

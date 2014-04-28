@@ -269,33 +269,33 @@ public class TARDISWorldGuardUtils {
         }
     }
 
-    /**
-     * Adds a WorldGuard region that allows mobs spawning in the specified room.
-     *
-     * @param name the name of the recharger
-     * @param room the name of the room the region is for
-     * @param one a start location of a cuboid region
-     * @param two an end location of a cuboid region
-     */
-    public void addAllowSpawning(String name, String room, Location one, Location two) {
-        RegionManager rm = wg.getRegionManager(one.getWorld());
-        BlockVector b1;
-        BlockVector b2;
-        b1 = makeBlockVector(one);
-        b2 = makeBlockVector(two);
-        ProtectedCuboidRegion region = new ProtectedCuboidRegion(room + "_" + name, b1, b2);
-        HashMap<Flag<?>, Object> flags = new HashMap<Flag<?>, Object>();
-        flags.put(DefaultFlag.MOB_SPAWNING, State.ALLOW);
-        region.setFlags(flags);
-        region.setPriority(10);
-        rm.addRegion(region);
-        try {
-            rm.save();
-        } catch (ProtectionDatabaseException e) {
-            plugin.getConsole().sendMessage(plugin.getPluginName() + "Could not allow WorldGuard mob spawning for " + room + " room! " + e.getMessage());
-        }
-    }
-
+//    /**
+//     * Adds a WorldGuard region that allows mobs spawning in the specified room.
+//     *
+//     * @param name the name of the recharger
+//     * @param room the name of the room the region is for
+//     * @param one a start location of a cuboid region
+//     * @param two an end location of a cuboid region
+//     */
+//    public void addAllowSpawning(String name, String room, Location one, Location two) {
+//        RegionManager rm = wg.getRegionManager(one.getWorld());
+//        BlockVector b1;
+//        BlockVector b2;
+//        b1 = makeBlockVector(one);
+//        b2 = makeBlockVector(two);
+//        ProtectedCuboidRegion region = new ProtectedCuboidRegion(room + "_" + name, b1, b2);
+//        HashMap<Flag<?>, Object> flags = new HashMap<Flag<?>, Object>();
+//        flags.put(DefaultFlag.MOB_SPAWNING, State.ALLOW);
+//        region.setFlags(flags);
+//        region.setPriority(10);
+//        rm.addRegion(region);
+//        try {
+//            rm.save();
+//        } catch (ProtectionDatabaseException e) {
+//            plugin.getConsole().sendMessage(plugin.getPluginName() + "Could not allow WorldGuard mob spawning for " + room + " room! " + e.getMessage());
+//        }
+//    }
+//
     /**
      * Removes the WorldGuard region when the TARDIS is deleted.
      *
