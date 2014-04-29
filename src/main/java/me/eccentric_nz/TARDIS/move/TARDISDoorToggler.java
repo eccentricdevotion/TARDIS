@@ -38,14 +38,16 @@ public class TARDISDoorToggler {
     private final Player player;
     private final boolean minecart;
     private final boolean playsound;
+    private final int doortype;
 
-    public TARDISDoorToggler(TARDIS plugin, Block block, COMPASS dd, Player player, boolean minecart, boolean playsound) {
+    public TARDISDoorToggler(TARDIS plugin, Block block, COMPASS dd, Player player, boolean minecart, boolean playsound, int doortype) {
         this.plugin = plugin;
         this.block = block;
         this.dd = dd;
         this.player = player;
         this.minecart = minecart;
         this.playsound = playsound;
+        this.doortype = doortype;
     }
 
     /**
@@ -93,14 +95,18 @@ public class TARDISDoorToggler {
                     }
                     break;
             }
-            if (open) {
-                // only add them if they're not there already!
-                if (!plugin.getTrackerKeeper().getTrackMover().contains(player.getUniqueId())) {
-                    plugin.getTrackerKeeper().getTrackMover().add(player.getUniqueId());
-                }
-            } else {
-                if (plugin.getTrackerKeeper().getTrackMover().contains(player.getUniqueId())) {
-                    plugin.getTrackerKeeper().getTrackMover().remove(player.getUniqueId());
+            if (playsound) {
+                if (open) {
+                    if (doortype == 0 || (doortype == 1 && !checkForSpace(door_bottom))) {
+                        // only add them if they're not there already!
+                        if (!plugin.getTrackerKeeper().getTrackMover().contains(player.getUniqueId())) {
+                            plugin.getTrackerKeeper().getTrackMover().add(player.getUniqueId());
+                        }
+                    }
+                } else {
+                    if (plugin.getTrackerKeeper().getTrackMover().contains(player.getUniqueId())) {
+                        plugin.getTrackerKeeper().getTrackMover().remove(player.getUniqueId());
+                    }
                 }
             }
             if (playsound) {
@@ -136,5 +142,10 @@ public class TARDISDoorToggler {
 
     private boolean isTogglable(Block b) {
         return block.getType().equals(Material.IRON_DOOR_BLOCK) || block.getType().equals(Material.WOODEN_DOOR);
+    }
+
+    private boolean checkForSpace(Block b) {
+        return (b.getRelative(BlockFace.NORTH).getType().equals(Material.AIR)
+                && b.getRelative(BlockFace.NORTH).getRelative(BlockFace.UP).getType().equals(Material.AIR));
     }
 }
