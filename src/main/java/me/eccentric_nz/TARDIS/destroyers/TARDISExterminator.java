@@ -325,10 +325,10 @@ public class TARDISExterminator {
         // remove world guard region protection
         if (plugin.isWorldGuardOnServer() && plugin.getConfig().getBoolean("preferences.use_worldguard")) {
             plugin.getWorldGuardUtils().removeRegion(w, owner);
-            plugin.getWorldGuardUtils().removeRoomRegion(w, owner, "farm");
+//            plugin.getWorldGuardUtils().removeRoomRegion(w, owner, "farm");
             plugin.getWorldGuardUtils().removeRoomRegion(w, owner, "renderer");
-            plugin.getWorldGuardUtils().removeRoomRegion(w, owner, "stable");
-            plugin.getWorldGuardUtils().removeRoomRegion(w, owner, "village");
+//            plugin.getWorldGuardUtils().removeRoomRegion(w, owner, "stable");
+//            plugin.getWorldGuardUtils().removeRoomRegion(w, owner, "village");
         }
         // unload and remove the world if it's a TARDIS_WORLD_ world
         if (w.getName().contains("TARDIS_WORLD_")) {

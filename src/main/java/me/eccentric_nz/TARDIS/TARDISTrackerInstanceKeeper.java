@@ -21,10 +21,12 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.UUID;
 import me.eccentric_nz.TARDIS.info.TARDISInfoMenu;
+import me.eccentric_nz.TARDIS.move.TARDISMoveSession;
 import me.eccentric_nz.TARDIS.rooms.TARDISSeedData;
 import me.eccentric_nz.TARDIS.utility.TARDISAntiBuild;
 import org.bukkit.block.Block;
 import org.bukkit.block.Sign;
+import org.bukkit.entity.Player;
 
 /**
  *
@@ -32,41 +34,43 @@ import org.bukkit.block.Sign;
  */
 public class TARDISTrackerInstanceKeeper {
 
+    private String trackImmortalityGate = "";
     private final HashMap<Integer, Integer> trackDamage = new HashMap<Integer, Integer>();
     private final HashMap<Integer, Integer> trackHasDestination = new HashMap<Integer, Integer>();
     private final HashMap<Integer, String> trackRenderer = new HashMap<Integer, String>();
-    private final HashMap<Integer, UUID> trackRescue = new HashMap<Integer, UUID>();
     private final HashMap<Integer, TARDISAntiBuild> trackAntiBuild = new HashMap<Integer, TARDISAntiBuild>();
+    private final HashMap<Integer, UUID> trackRescue = new HashMap<Integer, UUID>();
+    private final HashMap<String, Sign> trackSign = new HashMap<String, Sign>();
     private final HashMap<UUID, Block> trackExterminate = new HashMap<UUID, Block>();
     private final HashMap<UUID, Block> trackLazarus = new HashMap<UUID, Block>();
     private final HashMap<UUID, Double[]> trackGravity = new HashMap<UUID, Double[]>();
     private final HashMap<UUID, Integer> trackBinder = new HashMap<UUID, Integer>();
     private final HashMap<UUID, Long> trackSetTime = new HashMap<UUID, Long>();
-    private final HashMap<String, Sign> trackSign = new HashMap<String, Sign>();
     private final HashMap<UUID, String> trackBlock = new HashMap<UUID, String>();
-    private final HashMap<UUID, UUID> trackChat = new HashMap<UUID, UUID>();
     private final HashMap<UUID, String> trackEnd = new HashMap<UUID, String>();
     private final HashMap<UUID, String> trackJettison = new HashMap<UUID, String>();
-    private final HashMap<UUID, String> trackUUID = new HashMap<UUID, String>();
     private final HashMap<UUID, String> trackPerm = new HashMap<UUID, String>();
     private final HashMap<UUID, String> trackPlayers = new HashMap<UUID, String>();
     private final HashMap<UUID, String> trackPreset = new HashMap<UUID, String>();
     private final HashMap<UUID, String> trackSecondary = new HashMap<UUID, String>();
+    private final HashMap<UUID, String> trackUUID = new HashMap<UUID, String>();
     private final HashMap<UUID, TARDISInfoMenu> trackInfoMenu = new HashMap<UUID, TARDISInfoMenu>();
+    private final HashMap<UUID, TARDISMoveSession> trackMoveSessions = new HashMap<UUID, TARDISMoveSession>();
     private final HashMap<UUID, TARDISSeedData> trackRoomSeed = new HashMap<UUID, TARDISSeedData>();
+    private final HashMap<UUID, UUID> trackChat = new HashMap<UUID, UUID>();
     private final List<Integer> trackDematerialising = new ArrayList<Integer>();
     private final List<Integer> trackInVortex = new ArrayList<Integer>();
     private final List<Integer> trackMaterialising = new ArrayList<Integer>();
     private final List<Integer> trackMinecart = new ArrayList<Integer>();
     private final List<Integer> trackSubmarine = new ArrayList<Integer>();
+    private final List<String> trackReset = new ArrayList<String>();
     private final List<UUID> trackArrangers = new ArrayList<UUID>();
     private final List<UUID> trackFarming = new ArrayList<UUID>();
     private final List<UUID> trackGeneticManipulation = new ArrayList<UUID>();
+    private final List<UUID> trackMover = new ArrayList<UUID>();
     private final List<UUID> trackRecipeView = new ArrayList<UUID>();
-    private final List<String> trackReset = new ArrayList<String>();
     private final List<UUID> trackTransmat = new ArrayList<UUID>();
     private final List<UUID> trackZeroRoomOccupants = new ArrayList<UUID>();
-    private String trackImmortalityGate = "";
 
     public HashMap<Integer, Integer> getTrackDamage() {
         return trackDamage;
@@ -152,6 +156,15 @@ public class TARDISTrackerInstanceKeeper {
         return trackInfoMenu;
     }
 
+    public TARDISMoveSession getTARDISMoveSession(Player p) {
+        if (this.trackMoveSessions.containsKey(p.getUniqueId())) {
+            return this.trackMoveSessions.get(p.getUniqueId());
+        }
+        TARDISMoveSession session = new TARDISMoveSession(p);
+        this.trackMoveSessions.put(p.getUniqueId(), session);
+        return session;
+    }
+
     public HashMap<UUID, TARDISSeedData> getTrackRoomSeed() {
         return trackRoomSeed;
     }
@@ -186,6 +199,10 @@ public class TARDISTrackerInstanceKeeper {
 
     public List<UUID> getTrackGeneticManipulation() {
         return trackGeneticManipulation;
+    }
+
+    public List<UUID> getTrackMover() {
+        return trackMover;
     }
 
     public List<UUID> getTrackRecipeView() {

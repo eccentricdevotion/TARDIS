@@ -14,7 +14,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package me.eccentric_nz.TARDIS.travel;
+package me.eccentric_nz.TARDIS.mobfarming;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -189,6 +189,7 @@ public class TARDISFarmer {
                             TARDISHorse tmhor = new TARDISHorse();
                             tmhor.setAge(horse.getAge());
                             tmhor.setBaby(!horse.isAdult());
+                            tmhor.setHorseHealth(horse.getMaxHealth());
                             tmhor.setHealth(horse.getHealth());
                             // get horse colour, style and variant
                             tmhor.setHorseColour(horse.getColor());
@@ -477,6 +478,7 @@ public class TARDISFarmer {
                             if (e.isBaby()) {
                                 equine.setBaby();
                             }
+                            equine.setMaxHealth(e.getHorseHealth());
                             equine.setHealth(e.getHealth());
                             equine.setVariant(e.getHorseVariant());
                             equine.setColor(e.getHorseColour());

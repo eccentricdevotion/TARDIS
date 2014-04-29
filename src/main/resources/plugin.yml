@@ -18,6 +18,9 @@ permissions:
   tardis.skeletonkey:
     description: Allow players to enter any TARDIS.
     default: false
+  tardis.remote:
+    description: Allow players to remote control a TARDIS.
+    default: op
   tardis.use:
     description: Allow players to create & delete a TARDIS, and teleport to destinations.
     children:
@@ -561,4 +564,10 @@ commands:
     description: Say something in a different language via the TARDIS Universal Translator.
     usage: /<command> [language] [message]
     permission: tardis.translate
+    permission-message: You don't have the permission <permission> to use this command
+  tardisremote:
+    aliases: [tremote, trem]
+    description: Remote control a TARDIS.
+    usage: /<command> [player] [travel|comehere|chameleon|hide|rebuild] [home|area|coords]
+    permission: tardis.remote
     permission-message: You don't have the permission <permission> to use this command

@@ -23,8 +23,8 @@ import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetDoors;
 import me.eccentric_nz.TARDIS.database.ResultSetTravellers;
+import me.eccentric_nz.TARDIS.mobfarming.TARDISHorse;
 import me.eccentric_nz.TARDIS.travel.TARDISDoorLocation;
-import me.eccentric_nz.TARDIS.travel.TARDISHorse;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import me.eccentric_nz.tardishorsespeed.TardisHorseSpeed;
 import org.bukkit.Location;
@@ -120,6 +120,7 @@ public class TARDISHorseListener implements Listener {
                         tmhor.setHorseInventory(h.getInventory().getContents());
                         tmhor.setDomesticity(h.getDomestication());
                         tmhor.setJumpStrength(h.getJumpStrength());
+                        tmhor.setHorseHealth(h.getMaxHealth());
                         tmhor.setHealth(h.getHealth());
                         if (plugin.isHorseSpeedOnServer()) {
                             TardisHorseSpeed ths = (TardisHorseSpeed) plugin.getPM().getPlugin("TARDISHorseSpeed");
@@ -152,6 +153,7 @@ public class TARDISHorseListener implements Listener {
                             if (tmhor.hasChest()) {
                                 equine.setCarryingChest(true);
                             }
+                            equine.setMaxHealth(tmhor.getHorseHealth());
                             equine.setHealth(tmhor.getHealth());
                             Inventory inv = equine.getInventory();
                             inv.setContents(tmhor.getHorseinventory());

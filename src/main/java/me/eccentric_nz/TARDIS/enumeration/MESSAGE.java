@@ -40,6 +40,7 @@ public enum MESSAGE {
     NOT_OWNER("You are not the Timelord for this TARDIS!"),
     NOT_VALID_MATERIAL("That is not a valid Material! Try checking http://jd.bukkit.org/apidocs/org/bukkit/Material.html"),
     NOT_VALID_NAME("That doesn't appear to be a valid username."),
+    NOT_VALID_ARG("That doesn't appear to be a valid command argument."),
     NOT_WHILE_MAT("You cannot do that while the TARDIS is materialising!"),
     NOT_WHILE_TRAVELLING("You cannot set a destination while the TARDIS is travelling!"),
     NO_CURRENT("Could not get current TARDIS location!"),

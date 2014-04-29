@@ -14,7 +14,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package me.eccentric_nz.TARDIS.utility;
+package me.eccentric_nz.TARDIS.move;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
@@ -92,6 +92,13 @@ public class TARDISDoorToggler {
                         open = false;
                     }
                     break;
+            }
+            if (open) {
+                plugin.getTrackerKeeper().getTrackMover().add(player.getUniqueId());
+            } else {
+                if (plugin.getTrackerKeeper().getTrackMover().contains(player.getUniqueId())) {
+                    plugin.getTrackerKeeper().getTrackMover().remove(player.getUniqueId());
+                }
             }
             if (playsound) {
                 playDoorSound(player, open, block.getLocation(), minecart);

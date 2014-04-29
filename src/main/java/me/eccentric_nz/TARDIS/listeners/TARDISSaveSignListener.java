@@ -29,6 +29,7 @@ import me.eccentric_nz.TARDIS.travel.TARDISAreasInventory;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
+import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -228,6 +229,7 @@ public class TARDISSaveSignListener implements Listener {
                 }
             }
             if (plugin.getTrackerKeeper().getTrackArrangers().contains(uuid)) {
+                event.getPlayer().setItemOnCursor(new ItemStack(Material.AIR));
                 plugin.getTrackerKeeper().getTrackArrangers().remove(uuid);
             }
         }

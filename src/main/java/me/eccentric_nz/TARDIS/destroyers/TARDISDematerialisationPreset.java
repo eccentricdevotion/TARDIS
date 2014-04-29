@@ -25,11 +25,11 @@ import me.eccentric_nz.TARDIS.enumeration.COMPASS;
 import me.eccentric_nz.TARDIS.enumeration.PRESET;
 import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.OfflinePlayer;
 import org.bukkit.Sound;
 import org.bukkit.World;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
-import org.bukkit.entity.Player;
 
 /**
  * A dematerialisation circuit was an essential part of a Type 40 TARDIS which
@@ -51,7 +51,7 @@ public class TARDISDematerialisationPreset implements Runnable {
     private final int lamp;
     private final int cham_id;
     private final byte cham_data;
-    private final Player player;
+    private final OfflinePlayer player;
     private final boolean sub;
     private final boolean outside;
     private final TARDISChameleonColumn column;
@@ -78,7 +78,7 @@ public class TARDISDematerialisationPreset implements Runnable {
      * @param outside whether the player is outside the TARDIS (and the
      * materialisation sound should be played)
      */
-    public TARDISDematerialisationPreset(TARDIS plugin, Location location, PRESET preset, int lamp, int tid, COMPASS d, int cham_id, byte cham_data, Player player, boolean sub, boolean outside) {
+    public TARDISDematerialisationPreset(TARDIS plugin, Location location, PRESET preset, int lamp, int tid, COMPASS d, int cham_id, byte cham_data, OfflinePlayer player, boolean sub, boolean outside) {
         this.plugin = plugin;
         this.d = d;
         this.loops = 18;

@@ -14,9 +14,8 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package me.eccentric_nz.TARDIS.travel;
+package me.eccentric_nz.TARDIS.mobfarming;
 
-import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Horse.Color;
 import org.bukkit.entity.Horse.Style;
 import org.bukkit.entity.Horse.Variant;
@@ -30,14 +29,8 @@ import org.bukkit.inventory.ItemStack;
  *
  * @author eccentric_nz
  */
-public class TARDISHorse {
+public class TARDISHorse extends TARDISMob {
 
-    private EntityType type;
-    private int age;
-    private double health;
-    private boolean baby;
-    private boolean tamed;
-    private String name;
     private Color horsecolor;
     private Style horsestyle;
     private Variant horsevariant;
@@ -47,59 +40,12 @@ public class TARDISHorse {
     private int domesticity;
     private double jumpstrength;
     private double speed;
+    private double horseHealth;
 
     /**
      * Data storage class for TARDIS mobs.
      */
     public TARDISHorse() {
-    }
-
-    public EntityType getType() {
-        return type;
-    }
-
-    public void setType(EntityType type) {
-        this.type = type;
-    }
-
-    public int getAge() {
-        return age;
-    }
-
-    public void setAge(int age) {
-        this.age = age;
-    }
-
-    public double getHealth() {
-        return health;
-    }
-
-    public void setHealth(double health) {
-        this.health = health;
-    }
-
-    public boolean isBaby() {
-        return baby;
-    }
-
-    public void setBaby(boolean baby) {
-        this.baby = baby;
-    }
-
-    public boolean isTamed() {
-        return tamed;
-    }
-
-    public void setTamed(boolean tamed) {
-        this.tamed = tamed;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
     }
 
     public Color getHorseColour() {
@@ -172,5 +118,13 @@ public class TARDISHorse {
 
     public void setSpeed(double speed) {
         this.speed = speed;
+    }
+
+    public double getHorseHealth() {
+        return horseHealth;
+    }
+
+    public void setHorseHealth(double horseHealth) {
+        this.horseHealth = horseHealth;
     }
 }

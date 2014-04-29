@@ -14,34 +14,48 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package me.eccentric_nz.TARDIS.travel;
+package me.eccentric_nz.TARDIS.mobfarming;
 
-import org.bukkit.entity.Villager.Profession;
+import org.bukkit.DyeColor;
+import org.bukkit.entity.EntityType;
+import org.bukkit.entity.Ocelot.Type;
 
 /**
+ * Alien is a broad, subjective term. It can be applied as a noun or an
+ * adjective for any entity, object, place or practice which is not familiar.
+ * When referring to entities, it is used for sentient and non-sentient organic
+ * creatures, as well as robots.
+ *
+ * Data storage class for TARDIS mobs.
  *
  * @author eccentric_nz
  */
-public class TARDISVillager {
+public class TARDISMob {
 
-    private Profession profession;
+    private EntityType type;
+    private Type catType;
     private int age;
     private double health;
+    private boolean sitting;
     private boolean baby;
+    private boolean tamed;
+    private DyeColor colour;
     private String name;
 
-    /**
-     * Data storage class for TARDIS villagers.
-     */
-    public TARDISVillager() {
+    public EntityType getType() {
+        return type;
     }
 
-    public Profession getProfession() {
-        return profession;
+    public void setType(EntityType type) {
+        this.type = type;
     }
 
-    public void setProfession(Profession profession) {
-        this.profession = profession;
+    public Type getCatType() {
+        return catType;
+    }
+
+    public void setCatType(Type catType) {
+        this.catType = catType;
     }
 
     public int getAge() {
@@ -60,12 +74,36 @@ public class TARDISVillager {
         this.health = health;
     }
 
+    public boolean getSitting() {
+        return sitting;
+    }
+
+    public void setSitting(boolean sitting) {
+        this.sitting = sitting;
+    }
+
     public boolean isBaby() {
         return baby;
     }
 
     public void setBaby(boolean baby) {
         this.baby = baby;
+    }
+
+    public boolean isTamed() {
+        return tamed;
+    }
+
+    public void setTamed(boolean tamed) {
+        this.tamed = tamed;
+    }
+
+    public DyeColor getColour() {
+        return colour;
+    }
+
+    public void setColour(DyeColor collar) {
+        this.colour = collar;
     }
 
     public String getName() {

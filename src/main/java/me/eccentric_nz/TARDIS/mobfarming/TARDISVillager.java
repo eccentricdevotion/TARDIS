@@ -14,27 +14,29 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package me.eccentric_nz.TARDIS.travel;
+package me.eccentric_nz.TARDIS.mobfarming;
+
+import org.bukkit.entity.Villager.Profession;
 
 /**
- * Alien is a broad, subjective term. It can be applied as a noun or an
- * adjective for any entity, object, place or practice which is not familiar.
- * When referring to entities, it is used for sentient and non-sentient organic
- * creatures, as well as robots.
- *
- * Data storage class for TARDIS pig.
  *
  * @author eccentric_nz
  */
-public class TARDISPig extends TARDISMob {
+public class TARDISVillager extends TARDISMob {
 
-    private boolean saddled;
+    private Profession profession;
 
-    public boolean isSaddled() {
-        return saddled;
+    /**
+     * Data storage class for TARDIS villagers.
+     */
+    public TARDISVillager() {
     }
 
-    public void setSaddled(boolean saddled) {
-        this.saddled = saddled;
+    public Profession getProfession() {
+        return profession;
+    }
+
+    public void setProfession(Profession profession) {
+        this.profession = profession;
     }
 }

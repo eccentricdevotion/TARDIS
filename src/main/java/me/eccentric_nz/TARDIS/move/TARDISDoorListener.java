@@ -14,7 +14,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package me.eccentric_nz.TARDIS.listeners;
+package me.eccentric_nz.TARDIS.move;
 
 import com.onarandombox.MultiverseCore.MultiverseCore;
 import com.onarandombox.MultiverseCore.api.MultiverseWorld;
@@ -33,10 +33,9 @@ import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
 import me.eccentric_nz.TARDIS.enumeration.MESSAGE;
 import me.eccentric_nz.TARDIS.enumeration.PRESET;
+import me.eccentric_nz.TARDIS.mobfarming.TARDISFarmer;
+import me.eccentric_nz.TARDIS.mobfarming.TARDISMob;
 import me.eccentric_nz.TARDIS.travel.TARDISDoorLocation;
-import me.eccentric_nz.TARDIS.travel.TARDISFarmer;
-import me.eccentric_nz.TARDIS.travel.TARDISMob;
-import me.eccentric_nz.TARDIS.utility.TARDISDoorToggler;
 import me.eccentric_nz.TARDIS.utility.TARDISItemRenamer;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import me.eccentric_nz.TARDIS.utility.TARDISResourcePackChanger;
@@ -288,7 +287,6 @@ public class TARDISDoorListener implements Listener {
                                     int required = plugin.getArtronConfig().getInt("backdoor");
                                     UUID tlUUID = rs.getUuid();
                                     PRESET preset = rs.getPreset();
-                                    //String current = rs.getCurrent();
                                     float yaw = player.getLocation().getYaw();
                                     float pitch = player.getLocation().getPitch();
                                     String companions = rs.getCompanions();
@@ -577,11 +575,7 @@ public class TARDISDoorListener implements Listener {
      * @param m whether to play the resource pack sound
      */
     @SuppressWarnings("deprecation")
-    public void movePlayer(final Player p, Location l, final boolean exit,
-            final World from,
-            boolean q, final int sound,
-            final boolean m
-    ) {
+    public void movePlayer(final Player p, Location l, final boolean exit, final World from, boolean q, final int sound, final boolean m) {
 
         final int i = r.nextInt(plugin.getGeneralKeeper().getQuotes().size());
         final Location theLocation = l;
@@ -589,7 +583,6 @@ public class TARDISDoorListener implements Listener {
         final boolean allowFlight = p.getAllowFlight();
         final boolean crossWorlds = (from != to);
         final boolean quotes = q;
-        final String name = p.getName();
         final boolean isSurvival = checkSurvival(to);
 
         Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
@@ -769,7 +762,7 @@ public class TARDISDoorListener implements Listener {
      * @param d2 the direction the second door is facing
      * @return the angle needed to correct the yaw
      */
-    private float adjustYaw(COMPASS d1, COMPASS d2) {
+    public float adjustYaw(COMPASS d1, COMPASS d2) {
         switch (d1) {
             case EAST:
                 return adjustYaw[0][d2.ordinal()];
@@ -939,7 +932,7 @@ public class TARDISDoorListener implements Listener {
      *
      * @param p the player to remove
      */
-    private void removeTraveller(UUID u) {
+    public void removeTraveller(UUID u) {
         HashMap<String, Object> where = new HashMap<String, Object>();
         where.put("uuid", u.toString());
         new QueryFactory(plugin).doSyncDelete("travellers", where);

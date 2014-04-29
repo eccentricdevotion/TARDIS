@@ -121,7 +121,7 @@ public class TARDISPresetBuilderFactory {
             }
             if (pbd.isSubmarine() && notSubmarinePresets.contains(preset)) {
                 preset = PRESET.YELLOW;
-                TARDISMessage.send(pbd.getPlayer(), plugin.getPluginName() + "Selected preset unsuitable for submarine mode - changed to Yellow Submarine.");
+                TARDISMessage.send(pbd.getPlayer().getPlayer(), plugin.getPluginName() + "Selected preset unsuitable for submarine mode - changed to Yellow Submarine.");
             }
             // keep the chunk this Police box is in loaded
             Chunk thisChunk = pbd.getLocation().getChunk();
