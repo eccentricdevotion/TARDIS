@@ -3,11 +3,13 @@
 ##Current version `2.9-beta-1`
 
 1. Localisation
-2. `/tardisremote` commands 
+2. `/tardisremote` commands (started)
 3. UHC flying mode (started - have coded some test plugins)
 4. TARDIS invisibility - 1.8 barrier blocks?
-5. Biome textures
+5. Biome textures (started - have coded a test plugin)
 6. TARDIS remote/comehere should check player's direction
+7. Retire the TARDIS safety platform!
+8. Walk in to the TARDIS if door is open (started)
 
 ##Future version `3.0+`
 ?
