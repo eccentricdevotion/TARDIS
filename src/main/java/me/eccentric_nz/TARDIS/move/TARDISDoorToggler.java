@@ -94,7 +94,10 @@ public class TARDISDoorToggler {
                     break;
             }
             if (open) {
-                plugin.getTrackerKeeper().getTrackMover().add(player.getUniqueId());
+                // only add them if they're not there already!
+                if (!plugin.getTrackerKeeper().getTrackMover().contains(player.getUniqueId())) {
+                    plugin.getTrackerKeeper().getTrackMover().add(player.getUniqueId());
+                }
             } else {
                 if (plugin.getTrackerKeeper().getTrackMover().contains(player.getUniqueId())) {
                     plugin.getTrackerKeeper().getTrackMover().remove(player.getUniqueId());
