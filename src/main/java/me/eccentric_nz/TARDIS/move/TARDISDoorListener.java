@@ -206,7 +206,7 @@ public class TARDISDoorListener implements Listener {
                                     // toogle the door open/closed
                                     if (blockType.equals(Material.IRON_DOOR_BLOCK) || blockType.equals(Material.WOODEN_DOOR)) {
                                         // toggle the door
-                                        new TARDISDoorToggler(plugin, block, dd, player, minecart, true).toggleDoor();
+                                        new TARDISDoorToggler(plugin, block, dd, player, minecart, true, doortype).toggleDoor();
                                         if (doortype == 0 || doortype == 1) {
                                             // also toggle the other door
                                             HashMap<String, Object> whered = new HashMap<String, Object>();
@@ -216,7 +216,7 @@ public class TARDISDoorListener implements Listener {
                                             } else {
                                                 whered.put("door_type", 0);
                                             }
-                                            ResultSetDoors rsod = new ResultSetDoors(plugin, whered, false);
+                                            final ResultSetDoors rsod = new ResultSetDoors(plugin, whered, false);
                                             if (rsod.resultSet()) {
                                                 final Block opposite = plugin.getUtils().getLocationFromDB(rsod.getDoor_location(), 0.0f, 0.0f).getBlock();
                                                 final COMPASS od = rsod.getDoor_direction();
@@ -226,7 +226,7 @@ public class TARDISDoorListener implements Listener {
                                                 plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
                                                     @Override
                                                     public void run() {
-                                                        new TARDISDoorToggler(plugin, opposite, od, player, minecart, false).toggleDoor();
+                                                        new TARDISDoorToggler(plugin, opposite, od, player, minecart, false, rsod.getDoor_type()).toggleDoor();
                                                     }
                                                 }, 5L);
                                             }

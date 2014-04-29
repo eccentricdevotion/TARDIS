@@ -40,6 +40,7 @@ import me.eccentric_nz.TARDIS.enumeration.COMPASS;
 import me.eccentric_nz.TARDIS.enumeration.MESSAGE;
 import me.eccentric_nz.TARDIS.enumeration.STORAGE;
 import me.eccentric_nz.TARDIS.info.TARDISInfoMenu;
+import me.eccentric_nz.TARDIS.move.TARDISBlackWoolToggler;
 import me.eccentric_nz.TARDIS.rooms.TARDISExteriorRenderer;
 import me.eccentric_nz.TARDIS.travel.TARDISTemporalLocatorInventory;
 import me.eccentric_nz.TARDIS.travel.TARDISTerminalInventory;
@@ -70,7 +71,7 @@ public class TARDISButtonListener implements Listener {
 
     private final TARDIS plugin;
     private final List<Material> validBlocks = new ArrayList<Material>();
-    private final List<Integer> onlythese = Arrays.asList(1, 8, 9, 10, 11, 12, 13, 14, 16, 17);
+    private final List<Integer> onlythese = Arrays.asList(1, 8, 9, 10, 11, 12, 13, 14, 16, 17, 20);
     public ItemStack[] items;
     private final ItemStack[] tars;
     private final ItemStack[] clocks;
@@ -464,6 +465,10 @@ public class TARDISButtonListener implements Listener {
                                     // exit zero room
                                     plugin.getTrackerKeeper().getTrackZeroRoomOccupants().remove(player.getUniqueId());
                                     plugin.getGeneralKeeper().getRendererListener().transmat(player);
+                                    break;
+                                case 20:
+                                    // toggle black wool blocks behind door
+                                    new TARDISBlackWoolToggler(plugin).toggleBlocks(id);
                                     break;
                                 default:
                                     break;

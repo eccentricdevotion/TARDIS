@@ -91,7 +91,7 @@ public class TARDISMoveListener implements Listener {
         HashMap<String, Object> wherec = new HashMap<String, Object>();
         wherec.put("world", l.getWorld().getName());
         wherec.put("x", l.getBlockX());
-        wherec.put("y", l.getBlockY()); // may need to check 1 block down...
+        wherec.put("y", l.getBlockY());
         wherec.put("z", l.getBlockZ());
         ResultSetCurrentLocation rsc = new ResultSetCurrentLocation(plugin, wherec);
         if (rsc.resultSet()) {

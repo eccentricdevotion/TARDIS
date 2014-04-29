@@ -133,6 +133,9 @@ public class TARDISInformationSystemListener implements Listener {
                         }
                         break;
                     case CONSOLE_BLOCKS_2:
+                        if (chat.equalsIgnoreCase("D")) {
+                            showInfo(p, TARDISInfoMenu.TOGGLE);
+                        }
                         if (chat.equalsIgnoreCase("I")) {
                             showInfo(p, TARDISInfoMenu.INFO);
                         }

@@ -84,6 +84,7 @@ public class TARDISUpdateListener implements Listener {
         // zero room exit control = 17
         // direction item frame = 18
         // lazarus plate = 19
+        controls.put("toggle", 20);
         validBlocks.add(Material.LEVER);
         validBlocks.add(Material.REDSTONE_COMPARATOR_OFF);
         validBlocks.add(Material.REDSTONE_COMPARATOR_ON);
@@ -215,9 +216,9 @@ public class TARDISUpdateListener implements Listener {
                 TARDISMessage.send(player, plugin.getPluginName() + "You must be in a TARDIS world to update this block!");
                 return;
             }
-            if (blockName.equalsIgnoreCase("button") && validBlocks.contains(blockType)) {
+            if ((blockName.equalsIgnoreCase("button") || blockName.equalsIgnoreCase("artron")) && validBlocks.contains(blockType)) {
                 if (secondary) {
-                    qf.insertControl(id, 1, blockLocStr, 1);
+                    qf.insertControl(id, controls.get(blockName), blockLocStr, 1);
                 } else {
                     set.put("location", blockLocStr);
                 }
@@ -299,13 +300,6 @@ public class TARDISUpdateListener implements Listener {
                 ResultSetControls rsc = new ResultSetControls(plugin, wherec, false);
                 if (secondary || !rsc.resultSet()) {
                     qf.insertControl(id, 5, blockLocStr, 1);
-                } else {
-                    set.put("location", blockLocStr);
-                }
-            }
-            if (blockName.equalsIgnoreCase("artron") && validBlocks.contains(blockType)) {
-                if (secondary) {
-                    qf.insertControl(id, 6, blockLocStr, 1);
                 } else {
                     set.put("location", blockLocStr);
                 }
@@ -521,19 +515,6 @@ public class TARDISUpdateListener implements Listener {
                     s.update();
                 }
             }
-            if (blockName.equalsIgnoreCase("light") && validBlocks.contains(blockType)) {
-                HashMap<String, Object> wherel = new HashMap<String, Object>();
-                wherel.put("tardis_id", id);
-                wherel.put("type", 12);
-                ResultSetControls rsc = new ResultSetControls(plugin, wherel, false);
-                if (!rsc.resultSet()) {
-                    // insert control
-                    qf.insertControl(id, 12, blockLocStr, 0);
-                    secondary = true;
-                } else {
-                    set.put("location", blockLocStr);
-                }
-            }
             if (blockName.equalsIgnoreCase("info") && validSigns.contains(blockType)) {
                 HashMap<String, Object> wherec = new HashMap<String, Object>();
                 wherec.put("tardis_id", id);
@@ -599,6 +580,19 @@ public class TARDISUpdateListener implements Listener {
                 }
                 // check if player has storage record, and update the tardis_id field
                 plugin.getUtils().updateStorageId(playerUUID, id, qf);
+            }
+            if ((blockName.equalsIgnoreCase("light") || blockName.equalsIgnoreCase("toggle")) && validBlocks.contains(blockType)) {
+                HashMap<String, Object> wherel = new HashMap<String, Object>();
+                wherel.put("tardis_id", id);
+                wherel.put("type", controls.get(blockName));
+                ResultSetControls rsc = new ResultSetControls(plugin, wherel, false);
+                if (!rsc.resultSet()) {
+                    // insert control
+                    qf.insertControl(id, controls.get(blockName), blockLocStr, 0);
+                    secondary = true;
+                } else {
+                    set.put("location", blockLocStr);
+                }
             }
             if (set.size() > 0 || secondary) {
                 if (!secondary) {
