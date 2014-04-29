@@ -133,8 +133,6 @@ public class TARDISInstaPreset {
             }
             plugin.getTrackerKeeper().getTrackRescue().remove(tid);
         }
-        // platform
-        plugin.getPresetBuilder().addPlatform(location, false, d, uuid, tid);
         switch (d) {
             case SOUTH:
                 //if (yaw >= 315 || yaw < 45)

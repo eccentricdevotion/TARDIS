@@ -434,9 +434,6 @@ commands:
     quotes:
       description: Toggle the TARDIS quotes on and off.
       usage: /<command> quotes [on|off]
-    platform:
-      description: Toggle the TARDIS platform on and off.
-      usage: /<command> platform [on|off]
     key:
       description: Set the TARDIS key item.
       usage: /<command> key [material]

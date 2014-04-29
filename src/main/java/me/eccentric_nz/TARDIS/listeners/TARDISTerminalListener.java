@@ -474,7 +474,7 @@ public class TARDISTerminalListener implements Listener {
                             Location loc = new Location(w, slotx, 0, slotz);
                             int[] start = tt.getStartLocation(loc, d);
                             int starty = w.getHighestBlockYAt(slotx, slotz);
-                            // allow room for under door block / platform if necessary
+                            // allow room for under door block
                             if (starty <= 0) {
                                 starty = 1;
                             }

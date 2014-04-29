@@ -179,7 +179,6 @@ public class TARDISMaterialisationPreset implements Runnable {
                 }
                 // first run - remember blocks
                 if (i == 1) {
-                    plugin.getPresetBuilder().addPlatform(location, false, d, player.getUniqueId().toString(), tid);
                     HashMap<String, Object> where = new HashMap<String, Object>();
                     where.put("tardis_id", tid);
                     if (outside) {

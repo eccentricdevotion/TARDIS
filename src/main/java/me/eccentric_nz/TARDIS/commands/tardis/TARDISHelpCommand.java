@@ -91,9 +91,6 @@ public class TARDISHelpCommand {
                 case SFX:
                     TARDISMessage.send(player, CMDS.SFX.getHelp());
                     break;
-                case PLATFORM:
-                    TARDISMessage.send(player, CMDS.PLATFORM.getHelp());
-                    break;
                 case SETDEST:
                     TARDISMessage.send(player, CMDS.SETDEST.getHelp());
                     break;

@@ -768,9 +768,6 @@ public class TARDISInformationSystemListener implements Listener {
                         if (chat.equalsIgnoreCase("n")) {
                             showCommand(p, TARDISInfoMenu.TARDISPREFS_PLAIN);
                         }
-                        if (chat.equalsIgnoreCase("t")) {
-                            showCommand(p, TARDISInfoMenu.TARDISPREFS_PLATFORM);
-                        }
                         if (chat.equalsIgnoreCase("q")) {
                             showCommand(p, TARDISInfoMenu.TARDISPREFS_QUOTES);
                         }

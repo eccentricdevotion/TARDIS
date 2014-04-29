@@ -39,17 +39,13 @@ public class TARDISToggleOnOffCommand {
 
     public TARDISToggleOnOffCommand(TARDIS plugin) {
         this.plugin = plugin;
-        this.was = Arrays.asList("auto", "beacon", "dnd", "platform", "eps", "hads", "minecart", "plain", "renderer", "submarine");
+        this.was = Arrays.asList("auto", "beacon", "dnd", "eps", "hads", "minecart", "plain", "renderer", "submarine");
     }
 
     public boolean toggle(Player player, String[] args, QueryFactory qf) {
         String pref = args[0];
         if (pref.equals("auto") && !plugin.getConfig().getBoolean("allow.autonomous")) {
             TARDISMessage.send(player, plugin.getPluginName() + "Autonomous homing is disabled on this server!");
-            return true;
-        }
-        if (pref.equals("platform") && !plugin.getConfig().getBoolean("travel.platform")) {
-            TARDISMessage.send(player, plugin.getPluginName() + "Safety platforms are disabled on this server!");
             return true;
         }
         if (pref.equals("eps") && !plugin.getConfig().getBoolean("allow.emergency_npc")) {

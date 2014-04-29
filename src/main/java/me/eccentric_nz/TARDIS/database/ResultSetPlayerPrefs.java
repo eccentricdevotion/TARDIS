@@ -42,7 +42,6 @@ public class ResultSetPlayerPrefs {
     private String player;
     private String key;
     private boolean sfxOn;
-    private boolean platformOn;
     private boolean quotesOn;
     private boolean autoOn;
     private boolean beaconOn;
@@ -118,7 +117,6 @@ public class ResultSetPlayerPrefs {
                 this.player = rs.getString("player");
                 this.key = (plugin.getConfig().getString("storage.database").equals("sqlite")) ? rs.getString("key") : rs.getString("key_item");
                 this.sfxOn = rs.getBoolean("sfx_on");
-                this.platformOn = rs.getBoolean("platform_on");
                 this.quotesOn = rs.getBoolean("quotes_on");
                 this.autoOn = rs.getBoolean("auto_on");
                 this.beaconOn = rs.getBoolean("beacon_on");
@@ -187,10 +185,6 @@ public class ResultSetPlayerPrefs {
 
     public boolean isSfxOn() {
         return sfxOn;
-    }
-
-    public boolean isPlatformOn() {
-        return platformOn;
     }
 
     public boolean isQuotesOn() {

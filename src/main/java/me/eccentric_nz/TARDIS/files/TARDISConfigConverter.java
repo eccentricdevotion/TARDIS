@@ -67,7 +67,6 @@ public class TARDISConfigConverter {
         sectionsBool.put("name_tardis", "police_box.name_tardis");
         sectionsBool.put("nether", "travel.nether");
         sectionsBool.put("per_world_perms", "travel.per_world_perms");
-        sectionsBool.put("platform", "travel.platform");
         sectionsBool.put("respect_factions", "preferences.respect_factions");
         sectionsBool.put("respect_towny", "preferences.respect_towny");
         sectionsBool.put("respect_worldborder", "preferences.respect_worldborder");

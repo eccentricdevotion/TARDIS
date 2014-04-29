@@ -17,12 +17,10 @@
 package me.eccentric_nz.TARDIS.builders;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Random;
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.chameleon.TARDISChameleonCircuit;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetPlayerPrefs;
@@ -32,9 +30,7 @@ import me.eccentric_nz.TARDIS.enumeration.COMPASS;
 import me.eccentric_nz.TARDIS.enumeration.PRESET;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import org.bukkit.Chunk;
-import org.bukkit.Location;
 import org.bukkit.Material;
-import org.bukkit.World;
 import org.bukkit.block.Biome;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
@@ -165,62 +161,6 @@ public class TARDISPresetBuilderFactory {
             HashMap<String, Object> set = new HashMap<String, Object>();
             set.put("chameleon_demat", preset.toString());
             new QueryFactory(plugin).doUpdate("tardis", set, whered);
-        }
-    }
-
-    @SuppressWarnings("deprecation")
-    public void addPlatform(Location l, boolean rebuild, COMPASS d, String uuid, int id) {
-        int plusx, minusx, x, y, plusz, minusz, z;
-        int platform_id = plugin.getConfig().getInt("police_box.platform_id");
-        byte platform_data = (byte) plugin.getConfig().getInt("police_box.platform_data");
-        // add platform if configured and necessary
-        World world = l.getWorld();
-        x = l.getBlockX();
-        plusx = (l.getBlockX() + 1);
-        minusx = (l.getBlockX() - 1);
-        if (plugin.getConfig().getBoolean("police_box.materialise") && rebuild == false) {
-            y = (l.getBlockY() - 1);
-        } else {
-            y = (l.getBlockY() - 3);
-        }
-        z = (l.getBlockZ());
-        plusz = (l.getBlockZ() + 1);
-        minusz = (l.getBlockZ() - 1);
-        QueryFactory qf = new QueryFactory(plugin);
-        if (plugin.getConfig().getBoolean("travel.platform")) {
-            // check if user has platform pref
-            HashMap<String, Object> wherep = new HashMap<String, Object>();
-            wherep.put("uuid", uuid);
-            ResultSetPlayerPrefs pp = new ResultSetPlayerPrefs(plugin, wherep);
-            boolean userPlatform;
-            if (pp.resultSet()) {
-                userPlatform = pp.isPlatformOn();
-            } else {
-                userPlatform = true;
-            }
-            if (userPlatform) {
-                List<Block> platform_blocks;
-                switch (d) {
-                    case SOUTH:
-                        platform_blocks = Arrays.asList(world.getBlockAt(x - 1, y, minusz - 1), world.getBlockAt(x, y, minusz - 1), world.getBlockAt(x + 1, y, minusz - 1), world.getBlockAt(x - 1, y, minusz - 2), world.getBlockAt(x, y, minusz - 2), world.getBlockAt(x + 1, y, minusz - 2));
-                        break;
-                    case EAST:
-                        platform_blocks = Arrays.asList(world.getBlockAt(minusx - 1, y, z - 1), world.getBlockAt(minusx - 1, y, z), world.getBlockAt(minusx - 1, y, z + 1), world.getBlockAt(minusx - 2, y, z - 1), world.getBlockAt(minusx - 2, y, z), world.getBlockAt(minusx - 2, y, z + 1));
-                        break;
-                    case NORTH:
-                        platform_blocks = Arrays.asList(world.getBlockAt(x + 1, y, plusz + 1), world.getBlockAt(x, y, plusz + 1), world.getBlockAt(x - 1, y, plusz + 1), world.getBlockAt(x + 1, y, plusz + 2), world.getBlockAt(x, y, plusz + 2), world.getBlockAt(x - 1, y, plusz + 2));
-                        break;
-                    default:
-                        platform_blocks = Arrays.asList(world.getBlockAt(plusx + 1, y, z + 1), world.getBlockAt(plusx + 1, y, z), world.getBlockAt(plusx + 1, y, z - 1), world.getBlockAt(plusx + 2, y, z + 1), world.getBlockAt(plusx + 2, y, z), world.getBlockAt(plusx + 2, y, z - 1));
-                        break;
-                }
-                for (Block pb : platform_blocks) {
-                    int matint = pb.getTypeId();
-                    if (TARDISConstants.PLATFORM_BLOCKS.contains(matint)) {
-                        plugin.getUtils().setBlockAndRemember(world, pb.getX(), pb.getY(), pb.getZ(), platform_id, platform_data, id);
-                    }
-                }
-            }
         }
     }
 

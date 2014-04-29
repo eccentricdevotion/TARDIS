@@ -40,7 +40,6 @@ police_box:
 travel:
     include_default_world: false
     tp_radius: 500
-    platform: false
     chameleon: true
     give_key: false
     the_end: false

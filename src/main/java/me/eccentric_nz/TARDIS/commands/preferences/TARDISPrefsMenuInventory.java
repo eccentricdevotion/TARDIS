@@ -104,14 +104,6 @@ public class TARDISPrefsMenuInventory {
             m_im.setLore(Arrays.asList(m_value));
             mine.setItemMeta(m_im);
             options.add(mine);
-            // platform
-            ItemStack plat = new ItemStack(TARDISConstants.GUI_ITEMS.get(6), 1);
-            ItemMeta p_im = plat.getItemMeta();
-            p_im.setDisplayName("Safety Platform");
-            String p_value = (rsp.isPlatformOn()) ? "ON" : "OFF";
-            p_im.setLore(Arrays.asList(p_value));
-            plat.setItemMeta(p_im);
-            options.add(plat);
             // quotes
             ItemStack quotes = new ItemStack(TARDISConstants.GUI_ITEMS.get(7), 1);
             ItemMeta q_im = quotes.getItemMeta();
