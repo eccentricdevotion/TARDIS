@@ -36,6 +36,7 @@ import me.eccentric_nz.TARDIS.database.ResultSetLamps;
 import me.eccentric_nz.TARDIS.database.ResultSetPlayerPrefs;
 import me.eccentric_nz.TARDIS.database.ResultSetRepeaters;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
+import me.eccentric_nz.TARDIS.database.ResultSetTravellers;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
 import me.eccentric_nz.TARDIS.enumeration.MESSAGE;
 import me.eccentric_nz.TARDIS.enumeration.STORAGE;
@@ -239,17 +240,18 @@ public class TARDISButtonListener implements Listener {
                                                 if (comps != null && !comps.isEmpty()) {
                                                     String[] companions = comps.split(":");
                                                     for (String c : companions) {
-//                                                        // are they online - AND are they travelling
-//                                                        if (plugin.getServer().getPlayer(c) != null) {
-//                                                            // are they travelling
-//                                                            HashMap<String, Object> wherec = new HashMap<String, Object>();
-//                                                            wherec.put("tardis_id", id);
-//                                                            wherec.put("player", c);
-//                                                            ResultSetTravellers rsv = new ResultSetTravellers(plugin, wherec, false);
-//                                                            if (rsv.resultSet()) {
-//                                                                TARDISMessage.send(plugin.getServer().getPlayer(c), plugin.getPluginName() + "Destination: " + dchat);
-//                                                            }
-//                                                        }
+                                                        // are they online - AND are they travelling
+                                                        UUID cuuid = UUID.fromString(c);
+                                                        if (plugin.getServer().getPlayer(cuuid) != null) {
+                                                            // are they travelling
+                                                            HashMap<String, Object> wherec = new HashMap<String, Object>();
+                                                            wherec.put("tardis_id", id);
+                                                            wherec.put("uuid", c);
+                                                            ResultSetTravellers rsv = new ResultSetTravellers(plugin, wherec, false);
+                                                            if (rsv.resultSet()) {
+                                                                TARDISMessage.send(plugin.getServer().getPlayer(cuuid), plugin.getPluginName() + "Destination: " + dchat);
+                                                            }
+                                                        }
                                                         if (c.equalsIgnoreCase(player.getName())) {
                                                             isTL = false;
                                                         }

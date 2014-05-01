@@ -19,6 +19,7 @@ package me.eccentric_nz.TARDIS.utility;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Set;
+import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.ResultSetAreas;
 import me.eccentric_nz.TARDIS.database.ResultSetDestinations;
@@ -35,6 +36,12 @@ import org.bukkit.entity.Player;
  */
 public class TARDISLister {
 
+    private final TARDIS plugin;
+
+    public TARDISLister(TARDIS plugin) {
+        this.plugin = plugin;
+    }
+
     /**
      * Retrieves various lists from the database.
      *
@@ -42,7 +49,7 @@ public class TARDISLister {
      * @param l is the String name of the list type to retrieve. Possible values
      * are areas, saves, rechargers and companions.
      */
-    public static void list(Player p, String l) {
+    public void list(Player p, String l) {
         if (l.equals("rechargers")) {
             Set<String> therechargers = TARDIS.plugin.getConfig().getConfigurationSection("rechargers").getKeys(false);
             if (therechargers.size() < 1) {
@@ -120,7 +127,8 @@ public class TARDISLister {
                         String[] companionData = comps.split(":");
                         TARDISMessage.send(p, ChatColor.AQUA + "Your TARDIS companions are:");
                         for (String c : companionData) {
-                            TARDISMessage.send(p, ChatColor.AQUA + c);
+                            String com = plugin.getServer().getOfflinePlayer(UUID.fromString(c)).getName();
+                            TARDISMessage.send(p, ChatColor.AQUA + com);
                         }
                     } else {
                         TARDISMessage.send(p, ChatColor.DARK_BLUE + "You don't have any TARDIS companions yet." + ChatColor.RESET + " Use " + ChatColor.GREEN + "/tardis add [player]" + ChatColor.RESET + " to add some");
@@ -128,8 +136,5 @@ public class TARDISLister {
                 }
             }
         }
-    }
-
-    private TARDISLister() {
     }
 }

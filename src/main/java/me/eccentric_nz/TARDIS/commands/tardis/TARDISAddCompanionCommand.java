@@ -18,6 +18,7 @@ package me.eccentric_nz.TARDIS.commands.tardis;
 
 import java.util.HashMap;
 import java.util.Locale;
+import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.achievement.TARDISAchievementFactory;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
@@ -50,7 +51,7 @@ public class TARDISAddCompanionCommand {
             String[] data;
             if (!rs.resultSet()) {
                 TARDISMessage.send(player, plugin.getPluginName() + MESSAGE.NO_TARDIS.getText());
-                return false;
+                return true;
             } else {
                 id = rs.getTardis_id();
                 comps = rs.getCompanions();
@@ -62,40 +63,49 @@ public class TARDISAddCompanionCommand {
             }
             if (!args[1].matches("[A-Za-z0-9_]{2,16}")) {
                 TARDISMessage.send(player, plugin.getPluginName() + MESSAGE.NOT_VALID_NAME.getText());
-                return false;
-            } else {
-                QueryFactory qf = new QueryFactory(plugin);
-                HashMap<String, Object> tid = new HashMap<String, Object>();
-                HashMap<String, Object> set = new HashMap<String, Object>();
-                tid.put("tardis_id", id);
-                if (comps != null && !comps.isEmpty()) {
-                    // add to the list
-                    String newList = comps + ":" + args[1].toLowerCase(Locale.ENGLISH);
-                    set.put("companions", newList);
-                } else {
-                    // make a list
-                    set.put("companions", args[1].toLowerCase(Locale.ENGLISH));
-                }
-                qf.doUpdate("tardis", set, tid);
-                TARDISMessage.send(player, plugin.getPluginName() + "You added " + ChatColor.GREEN + args[1] + ChatColor.RESET + " as a TARDIS companion.");
-                // are we doing an achievement?
-                if (plugin.getAchievementConfig().getBoolean("friends.enabled")) {
-                    TARDISAchievementFactory taf = new TARDISAchievementFactory(plugin, player, "friends", 1);
-                    taf.doAchievement(1);
-                }
-                // if using WorldGuard, add them to the region membership
-                if (plugin.isWorldGuardOnServer() && plugin.getConfig().getBoolean("preferences.use_worldguard")) {
-                    //plugin.getServer().dispatchCommand(plugin.getConsole(), "rg addmember tardis_" + player.getName() + " " + args[1].toLowerCase(Locale.ENGLISH) + " -w " + data[0]);
-                    World w = plugin.getServer().getWorld(data[0]);
-                    if (w != null) {
-                        plugin.getWorldGuardUtils().addMemberToRegion(w, player.getName(), args[1].toLowerCase(Locale.ENGLISH));
-                    }
-                }
                 return true;
+            } else {
+                UUID oluuid = plugin.getServer().getOfflinePlayer(args[1]).getUniqueId();
+                if (oluuid == null) {
+                    oluuid = plugin.getGeneralKeeper().getUUIDCache().getIdOptimistic(args[1]);
+                    plugin.getGeneralKeeper().getUUIDCache().getId(args[1]);
+                }
+                if (oluuid != null) {
+                    QueryFactory qf = new QueryFactory(plugin);
+                    HashMap<String, Object> tid = new HashMap<String, Object>();
+                    HashMap<String, Object> set = new HashMap<String, Object>();
+                    tid.put("tardis_id", id);
+                    if (comps != null && !comps.isEmpty()) {
+                        // add to the list
+                        String newList = comps + ":" + oluuid.toString();
+                        set.put("companions", newList);
+                    } else {
+                        // make a list
+                        set.put("companions", oluuid.toString());
+                    }
+                    qf.doUpdate("tardis", set, tid);
+                    TARDISMessage.send(player, plugin.getPluginName() + "You added " + ChatColor.GREEN + args[1] + ChatColor.RESET + " as a TARDIS companion.");
+                    // are we doing an achievement?
+                    if (plugin.getAchievementConfig().getBoolean("friends.enabled")) {
+                        TARDISAchievementFactory taf = new TARDISAchievementFactory(plugin, player, "friends", 1);
+                        taf.doAchievement(1);
+                    }
+                    // if using WorldGuard, add them to the region membership
+                    if (plugin.isWorldGuardOnServer() && plugin.getConfig().getBoolean("preferences.use_worldguard")) {
+                        World w = plugin.getServer().getWorld(data[0]);
+                        if (w != null) {
+                            plugin.getWorldGuardUtils().addMemberToRegion(w, player.getName(), args[1].toLowerCase(Locale.ENGLISH));
+                        }
+                    }
+                    return true;
+                } else {
+                    TARDISMessage.send(player, plugin.getPluginName() + MESSAGE.COULD_NOT_FIND_NAME.getText());
+                    return true;
+                }
             }
         } else {
             TARDISMessage.send(player, plugin.getPluginName() + MESSAGE.NO_PERMS.getText());
-            return false;
+            return true;
         }
     }
 }

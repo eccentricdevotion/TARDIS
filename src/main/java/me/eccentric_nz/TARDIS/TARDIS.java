@@ -38,6 +38,7 @@ import me.eccentric_nz.TARDIS.builders.TARDISPresetBuilderFactory;
 import me.eccentric_nz.TARDIS.builders.TARDISSpace;
 import me.eccentric_nz.TARDIS.chameleon.TARDISChameleonPreset;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
+import me.eccentric_nz.TARDIS.database.TARDISCompanionClearer;
 import me.eccentric_nz.TARDIS.database.TARDISControlsConverter;
 import me.eccentric_nz.TARDIS.database.TARDISDatabaseConnection;
 import me.eccentric_nz.TARDIS.database.TARDISLocationsConverter;
@@ -160,12 +161,28 @@ public class TARDIS extends JavaPlugin {
                 if (!uc.convert()) {
                     // conversion failed
                     console.sendMessage(pluginName + ChatColor.RED + "UUID conversion failed, disabling...");
+                    hasVersion = false;
                     pm.disablePlugin(this);
                     return;
                 } else {
                     getConfig().set("conversions.uuid_conversion_done", true);
                     saveConfig();
                     console.sendMessage(pluginName + "UUID conversion successful :)");
+                }
+            }
+            // update database clear companions to UUIDs
+            if (!getConfig().getBoolean("conversions.companion_clearing_done")) {
+                TARDISCompanionClearer cc = new TARDISCompanionClearer(this);
+                if (!cc.clear()) {
+                    // clearing failed
+                    console.sendMessage(pluginName + ChatColor.RED + "Companion clearing failed, disabling...");
+                    hasVersion = false;
+                    pm.disablePlugin(this);
+                    return;
+                } else {
+                    getConfig().set("conversions.companion_clearing_done", true);
+                    saveConfig();
+                    console.sendMessage(pluginName + "Cleared companion lists as they now use UUIDs!");
                 }
             }
             checkTCG();

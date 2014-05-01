@@ -49,7 +49,7 @@ public class TARDISListCommand {
                 TARDISMessage.send(player, plugin.getPluginName() + "You need to specify which TARDIS list you want to view! [saves|companions|areas|rechargers]");
                 return false;
             }
-            TARDISLister.list(player, args[1]);
+            new TARDISLister(plugin).list(player, args[1]);
             return true;
         } else {
             TARDISMessage.send(player, plugin.getPluginName() + MESSAGE.NO_PERMS.getText());

@@ -24,6 +24,7 @@ import me.eccentric_nz.TARDIS.info.TARDISInfoMenu;
 import me.eccentric_nz.TARDIS.move.TARDISMoveSession;
 import me.eccentric_nz.TARDIS.rooms.TARDISSeedData;
 import me.eccentric_nz.TARDIS.utility.TARDISAntiBuild;
+import org.bukkit.Location;
 import org.bukkit.block.Block;
 import org.bukkit.block.Sign;
 import org.bukkit.entity.Player;
@@ -40,6 +41,7 @@ public class TARDISTrackerInstanceKeeper {
     private final HashMap<Integer, String> trackRenderer = new HashMap<Integer, String>();
     private final HashMap<Integer, TARDISAntiBuild> trackAntiBuild = new HashMap<Integer, TARDISAntiBuild>();
     private final HashMap<Integer, UUID> trackRescue = new HashMap<Integer, UUID>();
+    private final HashMap<String, Location> trackPortals = new HashMap<String, Location>();
     private final HashMap<String, Sign> trackSign = new HashMap<String, Sign>();
     private final HashMap<UUID, Block> trackExterminate = new HashMap<UUID, Block>();
     private final HashMap<UUID, Block> trackLazarus = new HashMap<UUID, Block>();
@@ -86,6 +88,10 @@ public class TARDISTrackerInstanceKeeper {
 
     public HashMap<Integer, UUID> getTrackRescue() {
         return trackRescue;
+    }
+
+    public HashMap<String, Location> getTrackPortals() {
+        return trackPortals;
     }
 
     public HashMap<Integer, TARDISAntiBuild> getTrackAntiBuild() {

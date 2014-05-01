@@ -411,7 +411,7 @@ public class TARDISDoorListener implements Listener {
                                                     // is the player in the comapnion list
                                                     String[] companionData = companions.split(":");
                                                     for (String c : companionData) {
-                                                        if (c.equalsIgnoreCase(player.getName())) {
+                                                        if (c.equalsIgnoreCase(player.getUniqueId().toString())) {
                                                             chkCompanion = true;
                                                             break;
                                                         }
@@ -930,7 +930,7 @@ public class TARDISDoorListener implements Listener {
     /**
      * Remove player from the travellers table.
      *
-     * @param p the player to remove
+     * @param u the UUID of the player to remove
      */
     public void removeTraveller(UUID u) {
         HashMap<String, Object> where = new HashMap<String, Object>();
