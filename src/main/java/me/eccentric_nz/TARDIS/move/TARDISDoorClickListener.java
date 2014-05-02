@@ -75,13 +75,13 @@ import org.bukkit.material.Door;
  *
  * @author eccentric_nz
  */
-public class TARDISDoorListener implements Listener {
+public class TARDISDoorClickListener implements Listener {
 
     private final TARDIS plugin;
     public float[][] adjustYaw = new float[4][4];
     Random r = new Random();
 
-    public TARDISDoorListener(TARDIS plugin) {
+    public TARDISDoorClickListener(TARDIS plugin) {
         this.plugin = plugin;
         // yaw adjustments if inner and outer door directions are different
         adjustYaw[0][0] = 0;
@@ -112,16 +112,16 @@ public class TARDISDoorListener implements Listener {
     @SuppressWarnings("deprecation")
     @EventHandler(ignoreCancelled = true)
     public void onDoorInteract(PlayerInteractEvent event) {
-        QueryFactory qf = new QueryFactory(plugin);
-        final Player player = event.getPlayer();
-        final UUID playerUUID = player.getUniqueId();
         Block block = event.getClickedBlock();
         if (block != null) {
             Material blockType = block.getType();
-            Action action = event.getAction();
             // only proceed if they are clicking an iron door with a TARDIS key!
             if (blockType.equals(Material.IRON_DOOR_BLOCK) || blockType.equals(Material.WOODEN_DOOR) || blockType.equals(Material.TRAP_DOOR)) {
+                QueryFactory qf = new QueryFactory(plugin);
+                final Player player = event.getPlayer();
                 if (player.hasPermission("tardis.enter")) {
+                    Action action = event.getAction();
+                    final UUID playerUUID = player.getUniqueId();
                     World playerWorld = player.getLocation().getWorld();
                     Location block_loc = block.getLocation();
                     byte doorData = block.getData();
@@ -192,7 +192,6 @@ public class TARDISDoorListener implements Listener {
                                     HashMap<String, Object> wherel = new HashMap<String, Object>();
                                     wherel.put("tardis_id", rsd.getTardis_id());
                                     // always lock / unlock both doors?
-                                    //wherel.put("door_type", rsd.getDoor_type());
                                     qf.doUpdate("doors", setl, wherel);
                                     TARDISMessage.send(player, plugin.getPluginName() + "The door was " + message);
                                 }

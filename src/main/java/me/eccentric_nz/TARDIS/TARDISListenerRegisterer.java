@@ -45,7 +45,7 @@ import me.eccentric_nz.TARDIS.listeners.TARDISChunkListener;
 import me.eccentric_nz.TARDIS.listeners.TARDISCondenserListener;
 import me.eccentric_nz.TARDIS.listeners.TARDISCraftListener;
 import me.eccentric_nz.TARDIS.listeners.TARDISCreeperDeathListener;
-import me.eccentric_nz.TARDIS.move.TARDISDoorListener;
+import me.eccentric_nz.TARDIS.move.TARDISDoorClickListener;
 import me.eccentric_nz.TARDIS.listeners.TARDISEntityGriefListener;
 import me.eccentric_nz.TARDIS.listeners.TARDISExplosionListener;
 import me.eccentric_nz.TARDIS.listeners.TARDISFireListener;
@@ -113,7 +113,7 @@ public class TARDISListenerRegisterer {
             plugin.getPM().registerEvents(new TARDISBlockPlaceListener(plugin), plugin);
         }
         plugin.getPM().registerEvents(new TARDISBlockBreakListener(plugin), plugin);
-        TARDISDoorListener doorListener = new TARDISDoorListener(plugin);
+        TARDISDoorClickListener doorListener = new TARDISDoorClickListener(plugin);
         plugin.getPM().registerEvents(doorListener, plugin);
         plugin.getGeneralKeeper().setDoorListener(doorListener);
         plugin.getPM().registerEvents(new TARDISMoveListener(plugin), plugin);
