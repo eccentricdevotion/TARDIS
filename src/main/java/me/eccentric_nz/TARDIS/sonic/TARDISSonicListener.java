@@ -147,7 +147,7 @@ public class TARDISSonicListener implements Listener {
         final ItemStack is = player.getItemInHand();
         if (is.getType().equals(sonic) && is.hasItemMeta()) {
             ItemMeta im = player.getItemInHand().getItemMeta();
-            if (im.getDisplayName().equals("Sonic Screwdriver")) {
+            if (im.getDisplayName().endsWith("Sonic Screwdriver")) {
                 List<String> lore = im.getLore();
                 Action action = event.getAction();
                 if (action.equals(Action.RIGHT_CLICK_AIR) && !player.isSneaking()) {
@@ -432,7 +432,7 @@ public class TARDISSonicListener implements Listener {
                     ItemStack is = player.getItemInHand();
                     if (is.hasItemMeta()) {
                         ItemMeta im = is.getItemMeta();
-                        if (im.hasDisplayName() && im.getDisplayName().equals("Sonic Screwdriver")) {
+                        if (im.hasDisplayName() && im.getDisplayName().endsWith("Sonic Screwdriver")) {
                             for (Enchantment e : player.getItemInHand().getEnchantments().keySet()) {
                                 player.getItemInHand().removeEnchantment(e);
                             }

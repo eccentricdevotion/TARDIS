@@ -62,7 +62,7 @@ public class TARDISSonicSorterListener implements Listener {
             ItemStack is = player.getItemInHand();
             if (is.hasItemMeta()) {
                 ItemMeta im = is.getItemMeta();
-                if (im.hasDisplayName() && im.getDisplayName().equals("Sonic Screwdriver")) {
+                if (im.hasDisplayName() && im.getDisplayName().endsWith("Sonic Screwdriver")) {
                     Block block = event.getClickedBlock();
                     if (block != null && (block.getType() == Material.CHEST || block.getType() == Material.TRAPPED_CHEST)) {
                         Inventory inventory = ((InventoryHolder) block.getState()).getInventory();

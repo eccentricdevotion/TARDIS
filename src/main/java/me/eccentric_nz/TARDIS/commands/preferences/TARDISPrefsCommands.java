@@ -24,11 +24,14 @@ import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetPlayerPrefs;
 import me.eccentric_nz.TARDIS.enumeration.MESSAGE;
+import me.eccentric_nz.TARDIS.sonic.TARDISSonicMenuInventory;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.Inventory;
+import org.bukkit.inventory.ItemStack;
 
 /**
  * Command /tardisprefs [arguments].
@@ -64,6 +67,7 @@ public class TARDISPrefsCommands implements CommandExecutor {
         firstArgs.add("quotes");
         firstArgs.add("renderer");
         firstArgs.add("sfx");
+        firstArgs.add("sonic");
         firstArgs.add("submarine");
         firstArgs.add("wall");
         firstArgs.add("wool_lights");
@@ -88,6 +92,14 @@ public class TARDISPrefsCommands implements CommandExecutor {
             String pref = args[0].toLowerCase(Locale.ENGLISH);
             if (firstArgs.contains(pref)) {
                 if (player.hasPermission("tardis.timetravel")) {
+                    if (pref.equals("sonic")) {
+                        // open sonic prefs menu
+                        ItemStack[] sonics = new TARDISSonicMenuInventory(plugin).getMenu();
+                        Inventory sim = plugin.getServer().createInventory(player, 18, "§4Sonic Prefs Menu");
+                        sim.setContents(sonics);
+                        player.openInventory(sim);
+                        return true;
+                    }
                     // get the players preferences
                     HashMap<String, Object> wherepp = new HashMap<String, Object>();
                     wherepp.put("uuid", player.getUniqueId().toString());

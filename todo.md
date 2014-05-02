@@ -7,6 +7,7 @@
 3. UHC flying mode (started - have coded some test plugins)
 4. TARDIS invisibility - 1.8 barrier blocks?
 5. Walk in to the TARDIS if door is open (started)
+6. Sonic prefs menu
 
 ##Future version `3.0+`
 ?
