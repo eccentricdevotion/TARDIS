@@ -121,8 +121,10 @@ public class TARDISInstaPreset {
         QueryFactory qf = new QueryFactory(plugin);
         // if configured and it's a Police Box preset set biome
         if (plugin.getConfig().getBoolean("police_box.set_biome") && (preset.equals(PRESET.NEW) || preset.equals(PRESET.OLD))) {
-            // load the chunk
+            List<Chunk> chunks = new ArrayList<Chunk>();
             Chunk chunk = location.getChunk();
+            chunks.add(chunk);
+            // load the chunk
             while (!chunk.isLoaded()) {
                 world.loadChunk(chunk);
             }
@@ -130,10 +132,16 @@ public class TARDISInstaPreset {
             for (int c = -1; c < 2; c++) {
                 for (int r = -1; r < 2; r++) {
                     world.setBiome(x + c, z + r, Biome.SKY);
+                    Chunk tmp_chunk = world.getChunkAt(new Location(world, x + c, 64, z + r));
+                    if (!chunks.contains(tmp_chunk)) {
+                        chunks.add(tmp_chunk);
+                    }
                 }
             }
-            // refresh the chunk
-            world.refreshChunk(chunk.getX(), chunk.getZ());
+            // refresh the chunks
+            for (Chunk c : chunks) {
+                world.refreshChunk(c.getX(), c.getZ());
+            }
         }
         // rescue player?
         if (plugin.getTrackerKeeper().getTrackRescue().containsKey(tid)) {
