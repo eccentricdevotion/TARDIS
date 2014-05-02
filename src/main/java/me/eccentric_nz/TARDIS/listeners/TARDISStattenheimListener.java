@@ -162,18 +162,19 @@ public class TARDISStattenheimListener implements Listener {
                         hidden = true;
                     }
                     COMPASS d = rsc.getDirection();
+                    COMPASS player_d = COMPASS.valueOf(plugin.getUtils().getPlayersDirection(player, false));
                     TARDISTimeTravel tt = new TARDISTimeTravel(plugin);
                     int count;
                     boolean sub = false;
                     if (b.getRelative(BlockFace.UP).getTypeId() == 8 || b.getRelative(BlockFace.UP).getTypeId() == 9) {
-                        count = (tt.isSafeSubmarine(remoteLocation, d)) ? 0 : 1;
+                        count = (tt.isSafeSubmarine(remoteLocation, player_d)) ? 0 : 1;
                         if (count == 0) {
                             sub = true;
                         }
                     } else {
-                        int[] start_loc = tt.getStartLocation(remoteLocation, d);
-                        // safeLocation(int startx, int starty, int startz, int resetx, int resetz, World w, COMPASS d)
-                        count = tt.safeLocation(start_loc[0], remoteLocation.getBlockY(), start_loc[2], start_loc[1], start_loc[3], remoteLocation.getWorld(), d);
+                        int[] start_loc = tt.getStartLocation(remoteLocation, player_d);
+                        // safeLocation(int startx, int starty, int startz, int resetx, int resetz, World w, COMPASS player_d)
+                        count = tt.safeLocation(start_loc[0], remoteLocation.getBlockY(), start_loc[2], start_loc[1], start_loc[3], remoteLocation.getWorld(), player_d);
                     }
                     if (count > 0) {
                         TARDISMessage.send(player, plugin.getPluginName() + "That location would grief existing blocks! Try somewhere else!");
@@ -196,7 +197,7 @@ public class TARDISStattenheimListener implements Listener {
                         bset.put("x", rsc.getX());
                         bset.put("y", rsc.getY());
                         bset.put("z", rsc.getZ());
-                        bset.put("direction", rsc.getDirection().toString());
+                        bset.put("direction", d.toString());
                         bset.put("submarine", rsc.isSubmarine());
                     } else {
                         // set fast return location
@@ -216,6 +217,7 @@ public class TARDISStattenheimListener implements Listener {
                     cset.put("x", remoteLocation.getBlockX());
                     cset.put("y", remoteLocation.getBlockY());
                     cset.put("z", remoteLocation.getBlockZ());
+                    cset.put("direction", player_d.toString());
                     cset.put("submarine", (sub) ? 1 : 0);
                     qf.doUpdate("current", cset, cid);
                     // update tardis
@@ -255,7 +257,7 @@ public class TARDISStattenheimListener implements Listener {
                     }, delay);
                     final TARDISMaterialisationData pbd = new TARDISMaterialisationData();
                     pbd.setChameleon(cham);
-                    pbd.setDirection(d);
+                    pbd.setDirection(player_d);
                     pbd.setLocation(remoteLocation);
                     pbd.setMalfunction(false);
                     pbd.setOutside(true);

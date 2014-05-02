@@ -289,6 +289,7 @@ public class TARDISInstaPreset {
                                 ResultSetDoors rsd = new ResultSetDoors(plugin, whered, false);
                                 HashMap<String, Object> setd = new HashMap<String, Object>();
                                 setd.put("door_location", doorloc);
+                                setd.put("door_direction", d.toString());
                                 if (rsd.resultSet()) {
                                     HashMap<String, Object> whereid = new HashMap<String, Object>();
                                     whereid.put("door_id", rsd.getDoor_id());
@@ -296,7 +297,6 @@ public class TARDISInstaPreset {
                                 } else {
                                     setd.put("tardis_id", tid);
                                     setd.put("door_type", 0);
-                                    setd.put("door_direction", d.toString());
                                     qf.doInsert("doors", setd);
                                 }
                             }
