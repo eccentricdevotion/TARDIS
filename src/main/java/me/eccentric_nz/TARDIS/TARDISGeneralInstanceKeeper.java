@@ -25,9 +25,10 @@ import java.util.UUID;
 import me.eccentric_nz.TARDIS.commands.TARDISTravelCommands;
 import me.eccentric_nz.TARDIS.commands.admin.TARDISAdminCommands;
 import me.eccentric_nz.TARDIS.listeners.TARDISButtonListener;
-import me.eccentric_nz.TARDIS.move.TARDISDoorClickListener;
 import me.eccentric_nz.TARDIS.listeners.TARDISRenderRoomListener;
 import me.eccentric_nz.TARDIS.listeners.TARDISScannerListener;
+import me.eccentric_nz.TARDIS.move.TARDISDoorClickListener;
+import me.eccentric_nz.TARDIS.move.TARDISDoorListener;
 import me.eccentric_nz.TARDIS.rooms.TARDISCondenserData;
 import me.eccentric_nz.TARDIS.sonic.TARDISSonicListener;
 import me.eccentric_nz.TARDIS.utility.TARDISUUIDCache;
@@ -48,7 +49,7 @@ public class TARDISGeneralInstanceKeeper {
     private List<String> quotes = new ArrayList<String>();
     private TARDISAdminCommands tardisAdminCommand;
     private TARDISButtonListener buttonListener;
-    private TARDISDoorClickListener doorListener;
+    private TARDISDoorListener doorListener;
     private TARDISRenderRoomListener rendererListener;
     private TARDISScannerListener scannerListener;
     private TARDISSonicListener sonicListener;
@@ -78,6 +79,7 @@ public class TARDISGeneralInstanceKeeper {
         this.roomArgs = buildRoomArgs();
         this.transparent = buildTransparent();
         this.UUIDCache = new TARDISUUIDCache(plugin);
+        this.doorListener = new TARDISDoorListener(plugin);
     }
 
     public List<String> getQuotes() {
@@ -168,7 +170,7 @@ public class TARDISGeneralInstanceKeeper {
         this.buttonListener = buttonListener;
     }
 
-    public TARDISDoorClickListener getDoorListener() {
+    public TARDISDoorListener getDoorListener() {
         return doorListener;
     }
 

@@ -6,9 +6,7 @@
 2. `/tardisremote` commands (started)
 3. UHC flying mode (started - have coded some test plugins)
 4. TARDIS invisibility - 1.8 barrier blocks?
-5. Walk in to the TARDIS if door is open (started) 
-    * add config option
-    * swap right-click and shift-right-click behaviours (load appropriate door listener depending on config)
+5. Walk in to the TARDIS if door is open (started)
 
 ##Future version `3.0+`
 ?

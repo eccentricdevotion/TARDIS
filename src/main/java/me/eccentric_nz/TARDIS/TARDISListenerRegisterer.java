@@ -45,7 +45,6 @@ import me.eccentric_nz.TARDIS.listeners.TARDISChunkListener;
 import me.eccentric_nz.TARDIS.listeners.TARDISCondenserListener;
 import me.eccentric_nz.TARDIS.listeners.TARDISCraftListener;
 import me.eccentric_nz.TARDIS.listeners.TARDISCreeperDeathListener;
-import me.eccentric_nz.TARDIS.move.TARDISDoorClickListener;
 import me.eccentric_nz.TARDIS.listeners.TARDISEntityGriefListener;
 import me.eccentric_nz.TARDIS.listeners.TARDISExplosionListener;
 import me.eccentric_nz.TARDIS.listeners.TARDISFireListener;
@@ -85,6 +84,8 @@ import me.eccentric_nz.TARDIS.listeners.TARDISUpdateListener;
 import me.eccentric_nz.TARDIS.listeners.TARDISWorldResetListener;
 import me.eccentric_nz.TARDIS.listeners.TARDISZeroRoomChatListener;
 import me.eccentric_nz.TARDIS.listeners.TARDISZeroRoomPacketListener;
+import me.eccentric_nz.TARDIS.move.TARDISDoorClickListener;
+import me.eccentric_nz.TARDIS.move.TARDISDoorWalkListener;
 import me.eccentric_nz.TARDIS.move.TARDISMoveListener;
 import me.eccentric_nz.TARDIS.sonic.TARDISFarmBlockListener;
 import me.eccentric_nz.TARDIS.sonic.TARDISSonicEntityListener;
@@ -113,10 +114,12 @@ public class TARDISListenerRegisterer {
             plugin.getPM().registerEvents(new TARDISBlockPlaceListener(plugin), plugin);
         }
         plugin.getPM().registerEvents(new TARDISBlockBreakListener(plugin), plugin);
-        TARDISDoorClickListener doorListener = new TARDISDoorClickListener(plugin);
-        plugin.getPM().registerEvents(doorListener, plugin);
-        plugin.getGeneralKeeper().setDoorListener(doorListener);
-        plugin.getPM().registerEvents(new TARDISMoveListener(plugin), plugin);
+        if (plugin.getConfig().getBoolean("preferences.walk_in_tardis")) {
+            plugin.getPM().registerEvents(new TARDISDoorWalkListener(plugin), plugin);
+            plugin.getPM().registerEvents(new TARDISMoveListener(plugin), plugin);
+        } else {
+            plugin.getPM().registerEvents(new TARDISDoorClickListener(plugin), plugin);
+        }
         TARDISButtonListener buttonListener = new TARDISButtonListener(plugin);
         plugin.getPM().registerEvents(buttonListener, plugin);
         plugin.getGeneralKeeper().setButtonListener(buttonListener);
@@ -215,14 +218,18 @@ public class TARDISListenerRegisterer {
     }
 
     private boolean getNPCManager() {
-        if (plugin.getPM().getPlugin("Citizens") != null && plugin.getPM().getPlugin("Citizens").isEnabled() && plugin.getConfig().getBoolean("allow.emergency_npc")) {
-            plugin.debug("Enabling Emergency Program One!");
+        if (plugin.getPM().getPlugin("Citizens") != null && plugin.getPM().getPlugin("Citizens").isEnabled()) {
+            if (plugin.getConfig().getBoolean("allow.emergency_npc")) {
+                plugin.debug("Enabling Emergency Program One!");
+            }
             return true;
         } else {
+            if (plugin.getConfig().getBoolean("allow.emergency_npc")) {
+                plugin.debug("Emergency Program One was disabled as it requires the Citizens plugin!");
+            }
             // set emergency_npc false as Citizens not found
             plugin.getConfig().set("allow.emergency_npc", false);
             plugin.saveConfig();
-            plugin.debug("Emergency Program One was disabled as it requires the Citizens plugin!");
             return false;
         }
     }
