@@ -470,7 +470,7 @@ public class TARDISButtonListener implements Listener {
                                     break;
                                 case 20:
                                     // toggle black wool blocks behind door
-                                    new TARDISBlackWoolToggler(plugin).toggleBlocks(id);
+                                    new TARDISBlackWoolToggler(plugin).toggleBlocks(id, player);
                                     break;
                                 default:
                                     break;
