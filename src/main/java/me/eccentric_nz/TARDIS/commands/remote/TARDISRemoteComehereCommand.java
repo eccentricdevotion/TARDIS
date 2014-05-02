@@ -110,20 +110,21 @@ public class TARDISRemoteComehereCommand {
             hidden = true;
         }
         COMPASS d = rsc.getDirection();
+        COMPASS player_d = COMPASS.valueOf(plugin.getUtils().getPlayersDirection(player, false));
         Biome biome = rsc.getBiome();
         TARDISTimeTravel tt = new TARDISTimeTravel(plugin);
         int count;
         boolean sub = false;
         Block b = eyeLocation.getBlock();
         if (b.getRelative(BlockFace.UP).getTypeId() == 8 || b.getRelative(BlockFace.UP).getTypeId() == 9) {
-            count = (tt.isSafeSubmarine(eyeLocation, d)) ? 0 : 1;
+            count = (tt.isSafeSubmarine(eyeLocation, player_d)) ? 0 : 1;
             if (count == 0) {
                 sub = true;
             }
         } else {
-            int[] start_loc = tt.getStartLocation(eyeLocation, d);
-            // safeLocation(int startx, int starty, int startz, int resetx, int resetz, World w, COMPASS d)
-            count = tt.safeLocation(start_loc[0], eyeLocation.getBlockY(), start_loc[2], start_loc[1], start_loc[3], eyeLocation.getWorld(), d);
+            int[] start_loc = tt.getStartLocation(eyeLocation, player_d);
+            // safeLocation(int startx, int starty, int startz, int resetx, int resetz, World w, COMPASS player_d)
+            count = tt.safeLocation(start_loc[0], eyeLocation.getBlockY(), start_loc[2], start_loc[1], start_loc[3], eyeLocation.getWorld(), player_d);
         }
         if (count > 0) {
             TARDISMessage.send(player, plugin.getPluginName() + "That location would grief existing blocks! Try somewhere else!");
@@ -199,7 +200,7 @@ public class TARDISRemoteComehereCommand {
         }, delay);
         final TARDISMaterialisationData pbd = new TARDISMaterialisationData();
         pbd.setChameleon(cham);
-        pbd.setDirection(d);
+        pbd.setDirection(player_d);
         pbd.setLocation(eyeLocation);
         pbd.setMalfunction(false);
         pbd.setOutside(true);
