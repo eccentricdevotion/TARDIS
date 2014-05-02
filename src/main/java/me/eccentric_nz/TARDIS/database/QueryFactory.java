@@ -306,4 +306,32 @@ public class QueryFactory {
             }
         }
     }
+
+    /**
+     * Save the biome the Police Box lands in to the current table so that it
+     * can be restored after it leaves. This is only done if
+     * `police_box.set_biome: true` is set in the config.
+     *
+     * @param id the TARDIS to update
+     * @param biome the biome to save
+     */
+    public void saveBiome(int id, String biome) {
+        Statement statement = null;
+        String query = "UPDATE current SET biome = '" + biome + "' WHERE tardis_id = " + id;
+        try {
+            service.testConnection(connection);
+            statement = connection.createStatement();
+            statement.executeUpdate(query);
+        } catch (SQLException e) {
+            plugin.debug("Update error for saving biome to current! " + e.getMessage());
+        } finally {
+            try {
+                if (statement != null) {
+                    statement.close();
+                }
+            } catch (SQLException e) {
+                plugin.debug("Error closing statement! " + e.getMessage());
+            }
+        }
+    }
 }

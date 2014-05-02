@@ -36,6 +36,7 @@ police_box:
     materialise: true
     confirm_timeout: 15
     sign_colour: WHITE
+    set_biome: true
 # travel settings
 travel:
     include_default_world: false

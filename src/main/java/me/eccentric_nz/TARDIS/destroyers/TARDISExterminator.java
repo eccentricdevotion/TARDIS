@@ -88,6 +88,7 @@ public class TARDISExterminator {
                 pdd.setOutside(false);
                 pdd.setSubmarine(rsc.isSubmarine());
                 pdd.setTardisID(id);
+                pdd.setBiome(rsc.getBiome());
                 if (!hid) {
                     plugin.getPresetDestroyer().destroyPreset(pdd);
                 }
@@ -221,6 +222,7 @@ public class TARDISExterminator {
             pdd.setOutside(false);
             pdd.setSubmarine(rsc.isSubmarine());
             pdd.setTardisID(id);
+            pdd.setBiome(rsc.getBiome());
             if (sign_loc.getBlockX() == bb_loc.getBlockX() + signx && sign_loc.getBlockY() + signy == bb_loc.getBlockY() && sign_loc.getBlockZ() == bb_loc.getBlockZ() + signz) {
                 if (!rs.isHidden()) {
                     // remove Police Box

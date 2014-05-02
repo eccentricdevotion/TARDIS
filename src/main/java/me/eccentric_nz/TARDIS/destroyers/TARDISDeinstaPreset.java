@@ -27,6 +27,8 @@ import org.bukkit.Chunk;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
+import org.bukkit.World.Environment;
+import org.bukkit.block.Biome;
 import org.bukkit.block.Block;
 
 /**
@@ -56,9 +58,10 @@ public class TARDISDeinstaPreset {
      * Box blocks.
      * @param preset the preset to destroy
      * @param sub whether the next location is submarine
+     * @param biome the biome to restore to the location (if it was changed)
      */
     @SuppressWarnings("deprecation")
-    public void instaDestroyPreset(Location l, COMPASS d, final int id, boolean hide, PRESET preset, boolean sub) {
+    public void instaDestroyPreset(Location l, COMPASS d, final int id, boolean hide, PRESET preset, boolean sub, Biome biome) {
         final World w = l.getWorld();
         // make sure chunk is loaded
         Chunk chunk = w.getChunkAt(l);
@@ -73,8 +76,19 @@ public class TARDISDeinstaPreset {
             sby = l.getBlockY();
         }
         final int sbz = l.getBlockZ() - 1;
+        // unset biome if configured and it's a Police Box preset and it's not The End
+        if (plugin.getConfig().getBoolean("police_box.set_biome") && l.getBlock().getBiome().equals(Biome.SKY) && (preset.equals(PRESET.NEW) || preset.equals(PRESET.OLD)) && !l.getWorld().getEnvironment().equals(Environment.THE_END) && biome != null) {
+            // get the biome
+            // set the biome
+            for (int c = 0; c < 3; c++) {
+                for (int r = 0; r < 3; r++) {
+                    w.setBiome(sbx + c, sbz + r, biome);
+                }
+            }
+            // refresh the chunk
+            w.refreshChunk(chunk.getX(), chunk.getZ());
+        }
         // remove problem blocks first
-
         switch (preset) {
             case GRAVESTONE:
                 // remove flower

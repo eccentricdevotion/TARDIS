@@ -107,6 +107,14 @@ public class TARDISMySQLDatabaseUpdater {
                     statement.executeUpdate(d_alter);
                 }
             }
+            // add biome to current location
+            String bio_query = "SHOW COLUMNS FROM current LIKE 'biome'";
+            ResultSet rsbio = statement.executeQuery(bio_query);
+            if (!rsbio.next()) {
+                i++;
+                String bio_alter = "ALTER TABLE current ADD biome varchar(64) DEFAULT ''";
+                statement.executeUpdate(bio_alter);
+            }
         } catch (SQLException e) {
             plugin.debug("MySQL database add fields error: " + e.getMessage() + e.getErrorCode());
         }

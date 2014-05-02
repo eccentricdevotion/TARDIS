@@ -304,6 +304,11 @@ public class TARDISBlockPlaceListener implements Listener {
                         setlocs.put("z", block_loc.getBlockZ());
                         setlocs.put("direction", d);
                         qf.insertLocations(setlocs);
+                        // set the biome if necessary
+                        if (plugin.getConfig().getBoolean("police_box.set_biome")) {
+                            // remember the current biome
+                            qf.saveBiome(lastInsertId, block_loc.getBlock().getBiome().toString());
+                        }
                         // remove redstone torch/lapis and iron blocks
                         block.setType(Material.AIR);
                         blockBelow.setType(Material.AIR);

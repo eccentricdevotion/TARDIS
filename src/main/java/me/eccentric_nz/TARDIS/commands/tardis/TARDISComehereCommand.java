@@ -33,6 +33,7 @@ import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
+import org.bukkit.block.Biome;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 import org.bukkit.entity.Player;
@@ -128,6 +129,7 @@ public class TARDISComehereCommand {
                     hidden = true;
                 }
                 COMPASS d = rsc.getDirection();
+                Biome biome = rsc.getBiome();
                 TARDISTimeTravel tt = new TARDISTimeTravel(plugin);
                 int count;
                 boolean sub = false;
@@ -207,6 +209,7 @@ public class TARDISComehereCommand {
                 pdd.setOutside(true);
                 pdd.setSubmarine(rsc.isSubmarine());
                 pdd.setTardisID(id);
+                pdd.setBiome(biome);
                 Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
                     @Override
                     public void run() {

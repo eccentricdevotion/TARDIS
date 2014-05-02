@@ -100,6 +100,7 @@ public class TARDISHideCommand {
             pdd.setOutside(false);
             pdd.setSubmarine(rsc.isSubmarine());
             pdd.setTardisID(id);
+            pdd.setBiome(rsc.getBiome());
             plugin.getPresetDestroyer().destroyPreset(pdd);
             TARDISMessage.send(player.getPlayer(), plugin.getPluginName() + "The TARDIS Police Box was hidden! Use " + ChatColor.GREEN + " /tardis rebuild " + ChatColor.RESET + " to show it again.");
             qf.alterEnergyLevel("tardis", -hide, wheret, player.getPlayer());

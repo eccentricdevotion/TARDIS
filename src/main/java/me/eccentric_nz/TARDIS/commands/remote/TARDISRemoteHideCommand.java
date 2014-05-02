@@ -58,6 +58,7 @@ public class TARDISRemoteHideCommand {
         pdd.setOutside(false);
         pdd.setSubmarine(rsc.isSubmarine());
         pdd.setTardisID(id);
+        pdd.setBiome(rsc.getBiome());
         plugin.getPresetDestroyer().destroyPreset(pdd);
         sender.sendMessage(plugin.getPluginName() + "The TARDIS Police Box was hidden!");
         // set hidden to true

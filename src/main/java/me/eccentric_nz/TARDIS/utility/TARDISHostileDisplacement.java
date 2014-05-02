@@ -138,6 +138,7 @@ public class TARDISHostileDisplacement {
                                     pdd.setOutside(true);
                                     pdd.setSubmarine(rsc.isSubmarine());
                                     pdd.setTardisID(id);
+                                    pdd.setBiome(rsc.getBiome());
                                     plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
                                         @Override
                                         public void run() {

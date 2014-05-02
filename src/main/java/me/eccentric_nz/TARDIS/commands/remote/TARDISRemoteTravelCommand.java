@@ -26,6 +26,7 @@ import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
 import org.bukkit.Location;
 import org.bukkit.OfflinePlayer;
+import org.bukkit.block.Biome;
 import org.bukkit.command.BlockCommandSender;
 import org.bukkit.command.CommandSender;
 
@@ -60,6 +61,7 @@ public class TARDISRemoteTravelCommand {
                 l = new Location(rscl.getWorld(), rscl.getX(), rscl.getY(), rscl.getZ());
             }
             COMPASS cd = rscl.getDirection();
+            Biome biome = rscl.getBiome();
             boolean sub = rscl.isSubmarine();
             HashMap<String, Object> wherenl = new HashMap<String, Object>();
             wherenl.put("tardis_id", id);
@@ -87,6 +89,7 @@ public class TARDISRemoteTravelCommand {
             pdd.setOutside(false);
             pdd.setSubmarine(sub);
             pdd.setTardisID(id);
+            pdd.setBiome(biome);
             HashMap<String, Object> set = new HashMap<String, Object>();
             if (!hidden && !plugin.getTrackerKeeper().getTrackReset().contains(resetw)) {
                 plugin.getTrackerKeeper().getTrackDematerialising().add(id);

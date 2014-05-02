@@ -161,6 +161,7 @@ public class TARDISTimeLordDeathListener implements Listener {
                                 pdd.setOutside(false);
                                 pdd.setSubmarine(rsc.isSubmarine());
                                 pdd.setTardisID(id);
+                                pdd.setBiome(rsc.getBiome());
                                 if (!rs.isHidden()) {
                                     plugin.getPresetDestroyer().destroyPreset(pdd);
                                 } else {

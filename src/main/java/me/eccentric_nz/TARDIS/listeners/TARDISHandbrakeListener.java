@@ -39,6 +39,7 @@ import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.Sound;
 import org.bukkit.World;
+import org.bukkit.block.Biome;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockState;
 import org.bukkit.entity.Player;
@@ -163,6 +164,7 @@ public class TARDISHandbrakeListener implements Listener {
                                         }
                                         COMPASS cd = rscl.getDirection();
                                         boolean sub = rscl.isSubmarine();
+                                        Biome biome = rscl.getBiome();
                                         COMPASS sd = cd;
                                         boolean malfunction = false;
                                         boolean is_next_sub = false;
@@ -251,6 +253,7 @@ public class TARDISHandbrakeListener implements Listener {
                                             pdd.setOutside(false);
                                             pdd.setSubmarine(sub);
                                             pdd.setTardisID(id);
+                                            pdd.setBiome(biome);
                                             if (!hidden && !plugin.getTrackerKeeper().getTrackReset().contains(resetw)) {
                                                 plugin.getTrackerKeeper().getTrackDematerialising().add(id);
                                                 plugin.getPresetDestroyer().destroyPreset(pdd);

@@ -25,6 +25,7 @@ import java.util.Map;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
 import org.bukkit.World;
+import org.bukkit.block.Biome;
 
 /**
  * Many facts, figures, and formulas are contained within the Matrix,
@@ -46,6 +47,7 @@ public class ResultSetCurrentLocation {
     private int z;
     private COMPASS direction;
     private boolean submarine;
+    private Biome biome;
 
     /**
      * Creates a class instance that can be used to retrieve an SQL ResultSet
@@ -105,6 +107,11 @@ public class ResultSetCurrentLocation {
                     this.z = rs.getInt("z");
                     this.direction = COMPASS.valueOf(rs.getString("direction"));
                     this.submarine = rs.getBoolean("submarine");
+                    try {
+                        this.biome = Biome.valueOf(rs.getString("biome"));
+                    } catch (IllegalArgumentException e) {
+                        this.biome = null;
+                    }
                 }
             } else {
                 return false;
@@ -157,5 +164,9 @@ public class ResultSetCurrentLocation {
 
     public boolean isSubmarine() {
         return submarine;
+    }
+
+    public Biome getBiome() {
+        return biome;
     }
 }

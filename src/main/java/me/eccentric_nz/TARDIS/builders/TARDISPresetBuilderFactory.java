@@ -83,8 +83,12 @@ public class TARDISPresetBuilderFactory {
         ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);
         if (rs.resultSet()) {
             PRESET preset = rs.getPreset();
+            Biome biome = pbd.getLocation().getWorld().getBiome(pbd.getLocation().getBlockX(), pbd.getLocation().getBlockZ());
+            if (plugin.getConfig().getBoolean("police_box.set_biome") && !pbd.isRebuild()) {
+                // remember the current biome (unless rebuilding)
+                new QueryFactory(plugin).saveBiome(rs.getTardis_id(), biome.toString());
+            }
             if (rs.isAdapti_on()) {
-                Biome biome = pbd.getLocation().getWorld().getBiome(pbd.getLocation().getBlockX(), pbd.getLocation().getBlockZ());
                 preset = adapt(biome, preset);
             }
             PRESET demat = rs.getDemat();
@@ -134,7 +138,7 @@ public class TARDISPresetBuilderFactory {
                 // always destroy it first as the player may just be switching presets
                 if (!hidden) {
                     TARDISDeinstaPreset deinsta = new TARDISDeinstaPreset(plugin);
-                    deinsta.instaDestroyPreset(pbd.getLocation(), pbd.getDirection(), pbd.getTardisID(), false, demat, pbd.isSubmarine());
+                    deinsta.instaDestroyPreset(pbd.getLocation(), pbd.getDirection(), pbd.getTardisID(), false, demat, pbd.isSubmarine(), pbd.getBiome());
                 }
                 final TARDISInstaPreset trp = new TARDISInstaPreset(plugin, pbd.getLocation(), preset, pbd.getTardisID(), pbd.getDirection(), pbd.getPlayer().getUniqueId().toString(), pbd.isMalfunction(), lamp, pbd.isSubmarine(), cham_id, cham_data, true, minecart);
                 plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {

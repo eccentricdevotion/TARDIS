@@ -28,6 +28,7 @@ import org.bukkit.Material;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.Sound;
 import org.bukkit.World;
+import org.bukkit.block.Biome;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 
@@ -54,6 +55,7 @@ public class TARDISDematerialisationPreset implements Runnable {
     private final OfflinePlayer player;
     private final boolean sub;
     private final boolean outside;
+    private final Biome biome;
     private final TARDISChameleonColumn column;
     private final TARDISChameleonColumn stained_column;
     private final TARDISChameleonColumn glass_column;
@@ -77,8 +79,9 @@ public class TARDISDematerialisationPreset implements Runnable {
      * @param sub whether the location is submarine
      * @param outside whether the player is outside the TARDIS (and the
      * materialisation sound should be played)
+     * @param biome the biome to restore to the location (if it was changed)
      */
-    public TARDISDematerialisationPreset(TARDIS plugin, Location location, PRESET preset, int lamp, int tid, COMPASS d, int cham_id, byte cham_data, OfflinePlayer player, boolean sub, boolean outside) {
+    public TARDISDematerialisationPreset(TARDIS plugin, Location location, PRESET preset, int lamp, int tid, COMPASS d, int cham_id, byte cham_data, OfflinePlayer player, boolean sub, boolean outside, Biome biome) {
         this.plugin = plugin;
         this.d = d;
         this.loops = 18;
@@ -92,6 +95,7 @@ public class TARDISDematerialisationPreset implements Runnable {
         this.player = player;
         this.sub = sub;
         this.outside = outside;
+        this.biome = biome;
         column = plugin.getPresets().getColumn(preset, d);
         stained_column = plugin.getPresets().getStained(preset, d);
         glass_column = plugin.getPresets().getGlass(preset, d);
@@ -288,12 +292,13 @@ public class TARDISDematerialisationPreset implements Runnable {
                 }
             }
         } else {
-            new TARDISDeinstaPreset(plugin).instaDestroyPreset(location, d, tid, false, preset, sub);
+            new TARDISDeinstaPreset(plugin).instaDestroyPreset(location, d, tid, false, preset, sub, biome);
             plugin.getServer().getScheduler().cancelTask(task);
             task = 0;
         }
     }
 
+    @SuppressWarnings("deprecation")
     private byte getWoolColour(int id, PRESET p) {
         HashMap<String, Object> where = new HashMap<String, Object>();
         where.put("tardis_id", id);

@@ -31,11 +31,13 @@ import me.eccentric_nz.TARDIS.enumeration.PRESET;
 import me.eccentric_nz.TARDIS.travel.TARDISDoorLocation;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import org.bukkit.ChatColor;
+import org.bukkit.Chunk;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.Sound;
 import org.bukkit.World;
+import org.bukkit.block.Biome;
 import org.bukkit.block.Block;
 import org.bukkit.block.Sign;
 import org.bukkit.block.Skull;
@@ -179,6 +181,22 @@ public class TARDISMaterialisationPreset implements Runnable {
                 }
                 // first run - remember blocks
                 if (i == 1) {
+                    // if configured and it's a Police Box preset set biome
+                    if (plugin.getConfig().getBoolean("police_box.set_biome") && (preset.equals(PRESET.NEW) || preset.equals(PRESET.OLD))) {
+                        // load the chunk
+                        Chunk chunk = location.getChunk();
+                        while (!chunk.isLoaded()) {
+                            world.loadChunk(chunk);
+                        }
+                        // set the biome
+                        for (int c = -1; c < 2; c++) {
+                            for (int r = -1; r < 2; r++) {
+                                world.setBiome(x + c, z + r, Biome.SKY);
+                            }
+                        }
+                        // refresh the chunk
+                        world.refreshChunk(chunk.getX(), chunk.getZ());
+                    }
                     HashMap<String, Object> where = new HashMap<String, Object>();
                     where.put("tardis_id", tid);
                     if (outside) {

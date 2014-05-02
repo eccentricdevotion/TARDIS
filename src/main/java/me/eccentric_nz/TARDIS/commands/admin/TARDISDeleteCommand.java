@@ -35,6 +35,7 @@ import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.World.Environment;
 import org.bukkit.WorldType;
+import org.bukkit.block.Biome;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
@@ -96,12 +97,14 @@ public class TARDISDeleteCommand {
                 // get the current location
                 Location bb_loc = null;
                 COMPASS d = COMPASS.EAST;
+                Biome biome = null;
                 HashMap<String, Object> wherecl = new HashMap<String, Object>();
                 wherecl.put("tardis_id", id);
                 ResultSetCurrentLocation rsc = new ResultSetCurrentLocation(plugin, wherecl);
                 if (rsc.resultSet()) {
                     bb_loc = new Location(rsc.getWorld(), rsc.getX(), rsc.getY(), rsc.getZ());
                     d = rsc.getDirection();
+                    biome = rsc.getBiome();
                 }
                 if (bb_loc == null) {
                     sender.sendMessage(plugin.getPluginName() + MESSAGE.NO_CURRENT.getText());
@@ -143,6 +146,7 @@ public class TARDISDeleteCommand {
                     pdd.setOutside(false);
                     pdd.setSubmarine(rsc.isSubmarine());
                     pdd.setTardisID(id);
+                    pdd.setBiome(biome);
                     plugin.getPresetDestroyer().destroyPreset(pdd);
                 }
                 // delete the TARDIS from the db

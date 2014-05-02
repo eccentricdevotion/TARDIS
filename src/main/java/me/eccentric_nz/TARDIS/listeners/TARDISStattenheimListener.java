@@ -241,6 +241,7 @@ public class TARDISStattenheimListener implements Listener {
                     pdd.setOutside(true);
                     pdd.setSubmarine(rsc.isSubmarine());
                     pdd.setTardisID(id);
+                    pdd.setBiome(rsc.getBiome());
                     Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
                         @Override
                         public void run() {
