@@ -55,6 +55,7 @@ travel:
 # general preferences
 preferences:
     key: GOLD_NUGGET
+    walk_in_tardis: true
     use_worldguard: true
     respect_worldguard: true
     respect_towny: nation

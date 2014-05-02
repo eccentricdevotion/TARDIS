@@ -95,6 +95,7 @@ public class TARDISConfiguration {
         boolOptions.put("preferences.respect_worldguard", true);
         boolOptions.put("preferences.strike_lightning", true);
         boolOptions.put("preferences.use_default_condensables", true);
+        boolOptions.put("preferences.walk_in_tardis", true);
         boolOptions.put("growth.return_room_seed", true);
         boolOptions.put("growth.rooms_require_blocks", false);
         boolOptions.put("travel.chameleon", true);
