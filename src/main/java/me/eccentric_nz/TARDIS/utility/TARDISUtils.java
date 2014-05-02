@@ -65,6 +65,7 @@ public class TARDISUtils {
      * @param m the typeId to set the block to.
      * @param d the data bit to set the block to.
      */
+    @SuppressWarnings("deprecation")
     public void setBlock(World w, int x, int y, int z, int m, byte d) {
         final Block b = w.getBlockAt(x, y, z);
         if (m < 0) {

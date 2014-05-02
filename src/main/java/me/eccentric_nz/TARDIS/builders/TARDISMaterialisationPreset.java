@@ -284,6 +284,9 @@ public class TARDISMaterialisationPreset implements Runnable {
                                     plugin.getUtils().setBlockAndRemember(world, xx, y, zz, rail.getTypeId(), rail.getData(), tid);
                                 }
                             }
+                            if (yy == 0 && n == 8 && !plugin.getPresetBuilder().no_block_under_door.contains(preset)) {
+                                plugin.getUtils().setUnderDoorBlock(world, xx, (y - 1), zz, platform_id, platform_data, tid);
+                            }
                             switch (colids[yy]) {
                                 case 2:
                                 case 3:
