@@ -16,7 +16,12 @@
  */
 package me.eccentric_nz.TARDIS.move;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -39,8 +44,9 @@ public class TARDISDoorToggler {
     private final boolean minecart;
     private final boolean playsound;
     private final int doortype;
+    private final int id;
 
-    public TARDISDoorToggler(TARDIS plugin, Block block, COMPASS dd, Player player, boolean minecart, boolean playsound, int doortype) {
+    public TARDISDoorToggler(TARDIS plugin, Block block, COMPASS dd, Player player, boolean minecart, boolean playsound, int doortype, int id) {
         this.plugin = plugin;
         this.block = block;
         this.dd = dd;
@@ -48,6 +54,7 @@ public class TARDISDoorToggler {
         this.minecart = minecart;
         this.playsound = playsound;
         this.doortype = doortype;
+        this.id = id;
     }
 
     /**
@@ -96,16 +103,34 @@ public class TARDISDoorToggler {
                     break;
             }
             if (playsound) {
+                // get all companion UUIDs as well
+                List<UUID> uuids = new ArrayList<UUID>();
+                uuids.add(player.getUniqueId());
+                HashMap<String, Object> where = new HashMap<String, Object>();
+                where.put("tardis_id", id);
+                ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);
+                if (rs.resultSet()) {
+                    String[] companions = rs.getCompanions().split(":");
+                    for (String c : companions) {
+                        if (!c.isEmpty()) {
+                            uuids.add(UUID.fromString(c));
+                        }
+                    }
+                }
                 if (open) {
                     if (doortype == 0 || (doortype == 1 && !checkForSpace(door_bottom))) {
                         // only add them if they're not there already!
-                        if (!plugin.getTrackerKeeper().getTrackMover().contains(player.getUniqueId())) {
-                            plugin.getTrackerKeeper().getTrackMover().add(player.getUniqueId());
+                        for (UUID uuid : uuids) {
+                            if (!plugin.getTrackerKeeper().getTrackMover().contains(uuid)) {
+                                plugin.getTrackerKeeper().getTrackMover().add(uuid);
+                            }
                         }
                     }
                 } else {
-                    if (plugin.getTrackerKeeper().getTrackMover().contains(player.getUniqueId())) {
-                        plugin.getTrackerKeeper().getTrackMover().remove(player.getUniqueId());
+                    for (UUID uuid : uuids) {
+                        if (plugin.getTrackerKeeper().getTrackMover().contains(uuid)) {
+                            plugin.getTrackerKeeper().getTrackMover().remove(uuid);
+                        }
                     }
                 }
             }

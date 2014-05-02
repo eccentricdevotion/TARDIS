@@ -38,7 +38,7 @@ public class TARDISBlackWoolToggler {
     }
 
     @SuppressWarnings("deprecation")
-    public void toggleBlocks(int id, final Player player) {
+    public void toggleBlocks(final int id, final Player player) {
         HashMap<String, Object> where = new HashMap<String, Object>();
         where.put("tardis_id", id);
         where.put("door_type", 1);
@@ -60,7 +60,7 @@ public class TARDISBlackWoolToggler {
             b.getRelative(BlockFace.UP).setData(data);
             if (mat.equals(Material.WOOL)) {
                 // toggle door shut
-                new TARDISDoorToggler(plugin, b.getRelative(BlockFace.SOUTH), rsd.getDoor_direction(), player, false, true, 1).toggleDoor();
+                new TARDISDoorToggler(plugin, b.getRelative(BlockFace.SOUTH), rsd.getDoor_direction(), player, false, true, 1, id).toggleDoor();
                 // also toggle the other door
                 HashMap<String, Object> whered = new HashMap<String, Object>();
                 whered.put("tardis_id", rsd.getTardis_id());
@@ -75,7 +75,7 @@ public class TARDISBlackWoolToggler {
                     plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
                         @Override
                         public void run() {
-                            new TARDISDoorToggler(plugin, opposite, od, player, false, false, rsod.getDoor_type()).toggleDoor();
+                            new TARDISDoorToggler(plugin, opposite, od, player, false, false, rsod.getDoor_type(), id).toggleDoor();
                         }
                     }, 5L);
                 }

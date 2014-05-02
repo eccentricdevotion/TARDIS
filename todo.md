@@ -6,14 +6,9 @@
 2. `/tardisremote` commands (started)
 3. UHC flying mode (started - have coded some test plugins)
 4. TARDIS invisibility - 1.8 barrier blocks?
-5. Biome textures (started - have coded a test plugin)
-6. TARDIS remote/comehere should check player's direction
-7. Walk in to the TARDIS if door is open (started)8. 
+5. Walk in to the TARDIS if door is open (started) 
     * add config option
-    * toggling black wool behind door should close the door if open
-    * everyone should be able to enter
     * swap right-click and shift-right-click behaviours (load appropriate door listener depending on config)
-    * extend underdoor block into centre of police box
 
 ##Future version `3.0+`
 ?
