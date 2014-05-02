@@ -67,55 +67,58 @@ public class TARDISConsoleSwitchListener implements Listener {
             }
             if (event.getClick().equals(ClickType.SHIFT_RIGHT)) {
                 event.setCancelled(true);
-                final ItemStack item = inv.getItem(event.getRawSlot());
-                if (item != null && item.getType().equals(Material.MAP)) {
-                    final byte map = item.getData().getData();
-                    if (gui_circuits.contains(map)) {
-                        HashMap<String, Object> where = new HashMap<String, Object>();
-                        where.put("uuid", p.getUniqueId().toString());
-                        final ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);
-                        if (rs.resultSet()) {
-                            plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
-                                @Override
-                                public void run() {
-                                    ItemStack[] stack = null;
-                                    Inventory new_inv = null;
-                                    switch (map) {
-                                        case (byte) 1966: // Chameleon circuit
-                                            new_inv = plugin.getServer().createInventory(p, 54, "§4Chameleon Circuit");
-                                            stack = new TARDISChameleonInventory(rs.isChamele_on(), rs.isAdapti_on()).getTerminal();
-                                            break;
-                                        case (byte) 1973: // ARS circuit
-                                            new_inv = plugin.getServer().createInventory(p, 54, "§4Architectural Reconfiguration");
-                                            stack = new TARDISARSInventory().getTerminal();
-                                            break;
-                                        case (byte) 1974: // Temporal circuit
-                                            new_inv = plugin.getServer().createInventory(p, 27, "§4Temporal Locator");
-                                            stack = new TARDISTemporalLocatorInventory().getTerminal();
-                                            break;
-                                        case (byte) 1975: // Memory circuit (saves/areas)
-                                            new_inv = plugin.getServer().createInventory(p, 54, "§4TARDIS saves");
-                                            stack = new TARDISSaveSignInventory(plugin, rs.getTardis_id()).getTerminal();
-                                            break;
-                                        case (byte) 1976: // Input circuit (terminal)
-                                            new_inv = plugin.getServer().createInventory(p, 54, "§4Destination Terminal");
-                                            stack = new TARDISTerminalInventory().getTerminal();
-                                            break;
-                                        default: // scanner circuit
-                                            plugin.getGeneralKeeper().getScannerListener().scan(p, rs.getTardis_id(), plugin.getServer().getScheduler());
-                                            break;
+                int slot = event.getRawSlot();
+                if (slot >= 0 && slot < 9) {
+                    final ItemStack item = inv.getItem(slot);
+                    if (item != null && item.getType().equals(Material.MAP)) {
+                        final byte map = item.getData().getData();
+                        if (gui_circuits.contains(map)) {
+                            HashMap<String, Object> where = new HashMap<String, Object>();
+                            where.put("uuid", p.getUniqueId().toString());
+                            final ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);
+                            if (rs.resultSet()) {
+                                plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        ItemStack[] stack = null;
+                                        Inventory new_inv = null;
+                                        switch (map) {
+                                            case (byte) 1966: // Chameleon circuit
+                                                new_inv = plugin.getServer().createInventory(p, 54, "§4Chameleon Circuit");
+                                                stack = new TARDISChameleonInventory(rs.isChamele_on(), rs.isAdapti_on()).getTerminal();
+                                                break;
+                                            case (byte) 1973: // ARS circuit
+                                                new_inv = plugin.getServer().createInventory(p, 54, "§4Architectural Reconfiguration");
+                                                stack = new TARDISARSInventory().getTerminal();
+                                                break;
+                                            case (byte) 1974: // Temporal circuit
+                                                new_inv = plugin.getServer().createInventory(p, 27, "§4Temporal Locator");
+                                                stack = new TARDISTemporalLocatorInventory().getTerminal();
+                                                break;
+                                            case (byte) 1975: // Memory circuit (saves/areas)
+                                                new_inv = plugin.getServer().createInventory(p, 54, "§4TARDIS saves");
+                                                stack = new TARDISSaveSignInventory(plugin, rs.getTardis_id()).getTerminal();
+                                                break;
+                                            case (byte) 1976: // Input circuit (terminal)
+                                                new_inv = plugin.getServer().createInventory(p, 54, "§4Destination Terminal");
+                                                stack = new TARDISTerminalInventory().getTerminal();
+                                                break;
+                                            default: // scanner circuit
+                                                plugin.getGeneralKeeper().getScannerListener().scan(p, rs.getTardis_id(), plugin.getServer().getScheduler());
+                                                break;
+                                        }
+                                        // close inventory
+                                        p.closeInventory();
+                                        if (new_inv != null && stack != null) {
+                                            // open new inventory
+                                            new_inv.setContents(stack);
+                                            p.openInventory(new_inv);
+                                        }
                                     }
-                                    // close inventory
-                                    p.closeInventory();
-                                    if (new_inv != null && stack != null) {
-                                        // open new inventory
-                                        new_inv.setContents(stack);
-                                        p.openInventory(new_inv);
-                                    }
-                                }
-                            }, 1L);
-                        } else {
-                            TARDISMessage.send(p, plugin.getPluginName() + MESSAGE.NO_TARDIS.getText());
+                                }, 1L);
+                            } else {
+                                TARDISMessage.send(p, plugin.getPluginName() + MESSAGE.NO_TARDIS.getText());
+                            }
                         }
                     }
                 }
