@@ -575,11 +575,9 @@ public class TARDISDoorClickListener implements Listener {
      * @param m whether to play the resource pack sound
      */
     @SuppressWarnings("deprecation")
-    public void movePlayer(final Player p, Location l, final boolean exit, final World from, boolean q, final int sound, final boolean m) {
-
+    public void movePlayer(final Player p, final Location l, final boolean exit, final World from, boolean q, final int sound, final boolean m) {
         final int i = r.nextInt(plugin.getGeneralKeeper().getQuotes().size());
-        final Location theLocation = l;
-        final World to = theLocation.getWorld();
+        final World to = l.getWorld();
         final boolean allowFlight = p.getAllowFlight();
         final boolean crossWorlds = (from != to);
         final boolean quotes = q;
@@ -588,14 +586,14 @@ public class TARDISDoorClickListener implements Listener {
         Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
             @Override
             public void run() {
-                p.teleport(theLocation);
-                playDoorSound(p, sound, theLocation, m);
+                p.teleport(l);
+                playDoorSound(p, sound, l, m);
             }
         }, 5L);
         Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
             @Override
             public void run() {
-                p.teleport(theLocation);
+                p.teleport(l);
                 if (p.getGameMode() == GameMode.CREATIVE || (allowFlight && crossWorlds && !isSurvival)) {
                     p.setAllowFlight(true);
                 }

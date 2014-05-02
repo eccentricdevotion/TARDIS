@@ -41,7 +41,7 @@ public class TARDISTrackerInstanceKeeper {
     private final HashMap<Integer, String> trackRenderer = new HashMap<Integer, String>();
     private final HashMap<Integer, TARDISAntiBuild> trackAntiBuild = new HashMap<Integer, TARDISAntiBuild>();
     private final HashMap<Integer, UUID> trackRescue = new HashMap<Integer, UUID>();
-    private final HashMap<String, Location> trackPortals = new HashMap<String, Location>();
+    private final HashMap<Location, Location> trackPortals = new HashMap<Location, Location>();
     private final HashMap<String, Sign> trackSign = new HashMap<String, Sign>();
     private final HashMap<UUID, Block> trackExterminate = new HashMap<UUID, Block>();
     private final HashMap<UUID, Block> trackLazarus = new HashMap<UUID, Block>();
@@ -90,7 +90,7 @@ public class TARDISTrackerInstanceKeeper {
         return trackRescue;
     }
 
-    public HashMap<String, Location> getTrackPortals() {
+    public HashMap<Location, Location> getTrackPortals() {
         return trackPortals;
     }
 

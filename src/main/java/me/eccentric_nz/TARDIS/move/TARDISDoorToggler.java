@@ -21,6 +21,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.database.ResultSetCurrentLocation;
+import me.eccentric_nz.TARDIS.database.ResultSetDoors;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
 import org.bukkit.Location;
@@ -103,7 +105,7 @@ public class TARDISDoorToggler {
                     break;
             }
             if (playsound) {
-                // get all companion UUIDs as well
+                // get all companion UUIDs
                 List<UUID> uuids = new ArrayList<UUID>();
                 uuids.add(player.getUniqueId());
                 HashMap<String, Object> where = new HashMap<String, Object>();
@@ -117,21 +119,86 @@ public class TARDISDoorToggler {
                         }
                     }
                 }
+                // get locations
+                // exterior portal (from current location)
+                HashMap<String, Object> where_exportal = new HashMap<String, Object>();
+                where_exportal.put("tardis_id", id);
+                ResultSetCurrentLocation rsc = new ResultSetCurrentLocation(plugin, where_exportal);
+                rsc.resultSet();
+                Location exportal = new Location(rsc.getWorld(), rsc.getX(), rsc.getY(), rsc.getZ());
+                // interior teleport location
+                Location indoor = null;
+                // exterior teleport location
+                Location exdoor = null;
+                // interior portal
+                Location inportal = null;
+                HashMap<String, Object> where_doors = new HashMap<String, Object>();
+                where_doors.put("tardis_id", id);
+                ResultSetDoors rsd = new ResultSetDoors(plugin, where_doors, true);
+                rsd.resultSet();
+                for (HashMap<String, String> map : rsd.getData()) {
+                    Location tmp_loc = plugin.getUtils().getLocationFromDB(map.get("door_location"), 0.0f, 0.0f);
+                    if (map.get("door_type").equals("1")) {
+                        // clone it because we're going to change it!
+                        inportal = tmp_loc.clone();
+                        // adjust for teleport
+                        int getx = tmp_loc.getBlockX();
+                        int getz = tmp_loc.getBlockZ();
+                        switch (COMPASS.valueOf(map.get("door_direction"))) {
+                            case NORTH:
+                                // z -ve
+                                tmp_loc.setX(getx + 0.5);
+                                tmp_loc.setZ(getz - 0.5);
+                                break;
+                            case EAST:
+                                // x +ve
+                                tmp_loc.setX(getx + 1.5);
+                                tmp_loc.setZ(getz + 0.5);
+                                break;
+                            case SOUTH:
+                                // z +ve
+                                tmp_loc.setX(getx + 0.5);
+                                tmp_loc.setZ(getz + 1.5);
+                                break;
+                            case WEST:
+                                // x -ve
+                                tmp_loc.setX(getx - 0.5);
+                                tmp_loc.setZ(getz + 0.5);
+                                break;
+                        }
+                        indoor = tmp_loc;
+                    } else {
+                        exdoor = tmp_loc.clone();
+                        // adjust for teleport
+                        exdoor.setX(exdoor.getX() + 0.5);
+                        exdoor.setZ(exdoor.getZ() + 0.5);
+                    }
+                }
                 if (open) {
                     if (doortype == 0 || (doortype == 1 && !checkForSpace(door_bottom))) {
-                        // only add them if they're not there already!
+                        // set trackers
+                        // players
                         for (UUID uuid : uuids) {
+                            // only add them if they're not there already!
                             if (!plugin.getTrackerKeeper().getTrackMover().contains(uuid)) {
                                 plugin.getTrackerKeeper().getTrackMover().add(uuid);
                             }
                         }
+                        // locations
+                        plugin.getTrackerKeeper().getTrackPortals().put(exportal, indoor);
+                        plugin.getTrackerKeeper().getTrackPortals().put(inportal, exdoor);
                     }
                 } else {
+                    // unset trackers
+                    // players
                     for (UUID uuid : uuids) {
                         if (plugin.getTrackerKeeper().getTrackMover().contains(uuid)) {
                             plugin.getTrackerKeeper().getTrackMover().remove(uuid);
                         }
                     }
+                    // locations
+                    plugin.getTrackerKeeper().getTrackPortals().remove(exportal);
+                    plugin.getTrackerKeeper().getTrackPortals().remove(inportal);
                 }
             }
             if (playsound) {
