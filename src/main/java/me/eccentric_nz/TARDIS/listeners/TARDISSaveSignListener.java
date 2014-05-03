@@ -34,6 +34,7 @@ import org.bukkit.World;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.inventory.ClickType;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.inventory.Inventory;
@@ -73,8 +74,11 @@ public class TARDISSaveSignListener implements Listener {
                 int id = rst.getTardis_id();
                 int slot = event.getRawSlot();
                 if (plugin.getTrackerKeeper().getTrackArrangers().contains(uuid)) {
-                    //ClickType ct = event.getClick();
                     if (slot >= 1 && slot < 45) {
+                        if (event.getClick().equals(ClickType.SHIFT_LEFT) || event.getClick().equals(ClickType.SHIFT_RIGHT)) {
+                            event.setCancelled(true);
+                            return;
+                        }
                         // allow
                     } else {
                         event.setCancelled(true);
