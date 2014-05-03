@@ -48,31 +48,25 @@ public class TARDISSonicMenuInventory {
     @SuppressWarnings("deprecation")
     private ItemStack[] getItemStack() {
         // italic \u00a7o
-        // tennant
-        ItemStack markone = new ItemStack(Material.BLAZE_ROD, 1);
-        ItemMeta markone_im = markone.getItemMeta();
-        markone_im.setDisplayName(ChatColor.AQUA + "Sonic Screwdriver");
-        markone_im.setLore(Arrays.asList("Mark I"));
-        markone.setItemMeta(markone_im);
-        // tennant
+        // mark II
         ItemStack marktwo = new ItemStack(Material.BLAZE_ROD, 1);
         ItemMeta marktwo_im = marktwo.getItemMeta();
         marktwo_im.setDisplayName(ChatColor.YELLOW + "Sonic Screwdriver");
         marktwo_im.setLore(Arrays.asList("Mark II"));
         marktwo.setItemMeta(marktwo_im);
-        // tennant
+        // mark III
         ItemStack markthree = new ItemStack(Material.BLAZE_ROD, 1);
         ItemMeta markthree_im = markthree.getItemMeta();
         markthree_im.setDisplayName(ChatColor.DARK_PURPLE + "Sonic Screwdriver");
         markthree_im.setLore(Arrays.asList("Mark III"));
         markthree.setItemMeta(markthree_im);
-        // tennant
+        // mark IV
         ItemStack markfour = new ItemStack(Material.BLAZE_ROD, 1);
         ItemMeta markfour_im = markfour.getItemMeta();
         markfour_im.setDisplayName(ChatColor.GRAY + "Sonic Screwdriver");
         markfour_im.setLore(Arrays.asList("Mark IV"));
         markfour.setItemMeta(markfour_im);
-        // tennant
+        // mcgann
         ItemStack mcgann = new ItemStack(Material.BLAZE_ROD, 1);
         ItemMeta mcgann_im = mcgann.getItemMeta();
         mcgann_im.setDisplayName(ChatColor.BLUE + "Sonic Screwdriver");
@@ -90,6 +84,12 @@ public class TARDISSonicMenuInventory {
         smith_im.setDisplayName("Sonic Screwdriver");
         smith_im.setLore(Arrays.asList("Smith"));
         smith.setItemMeta(smith_im);
+        // smith open
+        ItemStack smith_open = new ItemStack(Material.BLAZE_ROD, 1);
+        ItemMeta markone_im = smith_open.getItemMeta();
+        markone_im.setDisplayName(ChatColor.GREEN + "Sonic Screwdriver");
+        markone_im.setLore(Arrays.asList("Mark I"));
+        smith_open.setItemMeta(markone_im);
         // song
         ItemStack song = new ItemStack(Material.BLAZE_ROD, 1);
         ItemMeta song_im = song.getItemMeta();
@@ -115,7 +115,7 @@ public class TARDISSonicMenuInventory {
         close_im.setDisplayName("Close");
         close.setItemMeta(close_im);
 
-        ItemStack[] stack = {markone, marktwo, markthree, markfour, mcgann, tennant, smith, song, hurt,
+        ItemStack[] stack = {marktwo, markthree, markfour, mcgann, tennant, smith, smith_open, song, hurt,
             null, null, null, null, info, null, null, null, close};
         return stack;
     }
