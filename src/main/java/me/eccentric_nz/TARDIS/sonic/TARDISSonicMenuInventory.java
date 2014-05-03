@@ -47,7 +47,7 @@ public class TARDISSonicMenuInventory {
      */
     @SuppressWarnings("deprecation")
     private ItemStack[] getItemStack() {
-        // italic \u00a7o
+        // \u00a7 = § (ChatColor code)
         // mark II
         ItemStack marktwo = new ItemStack(Material.BLAZE_ROD, 1);
         ItemMeta marktwo_im = marktwo.getItemMeta();

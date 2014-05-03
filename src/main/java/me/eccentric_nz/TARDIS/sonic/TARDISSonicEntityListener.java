@@ -22,6 +22,7 @@ import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import net.pekkit.projectrassilon.ProjectRassilon;
 import net.pekkit.projectrassilon.api.RassilonAPI;
+import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
@@ -57,7 +58,7 @@ public class TARDISSonicEntityListener implements Listener {
         final ItemStack is = player.getItemInHand();
         if (is.getType().equals(sonic) && is.hasItemMeta()) {
             ItemMeta im = player.getItemInHand().getItemMeta();
-            if (im.getDisplayName().endsWith("Sonic Screwdriver")) {
+            if (ChatColor.stripColor(im.getDisplayName()).equals("Sonic Screwdriver")) {
                 List<String> lore = im.getLore();
                 Entity ent = event.getRightClicked();
                 if (ent instanceof Player) {

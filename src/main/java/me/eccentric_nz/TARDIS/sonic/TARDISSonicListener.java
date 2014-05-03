@@ -34,6 +34,7 @@ import me.eccentric_nz.TARDIS.database.ResultSetTravellers;
 import static me.eccentric_nz.TARDIS.listeners.TARDISScannerListener.getNearbyEntities;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import me.eccentric_nz.TARDIS.utility.TARDISVector3D;
+import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.Sound;
@@ -147,7 +148,7 @@ public class TARDISSonicListener implements Listener {
         final ItemStack is = player.getItemInHand();
         if (is.getType().equals(sonic) && is.hasItemMeta()) {
             ItemMeta im = player.getItemInHand().getItemMeta();
-            if (im.getDisplayName().endsWith("Sonic Screwdriver")) {
+            if (ChatColor.stripColor(im.getDisplayName()).equals("Sonic Screwdriver")) {
                 List<String> lore = im.getLore();
                 Action action = event.getAction();
                 if (action.equals(Action.RIGHT_CLICK_AIR) && !player.isSneaking()) {
@@ -432,7 +433,7 @@ public class TARDISSonicListener implements Listener {
                     ItemStack is = player.getItemInHand();
                     if (is.hasItemMeta()) {
                         ItemMeta im = is.getItemMeta();
-                        if (im.hasDisplayName() && im.getDisplayName().endsWith("Sonic Screwdriver")) {
+                        if (im.hasDisplayName() && ChatColor.stripColor(im.getDisplayName()).equals("Sonic Screwdriver")) {
                             for (Enchantment e : player.getItemInHand().getEnchantments().keySet()) {
                                 player.getItemInHand().removeEnchantment(e);
                             }

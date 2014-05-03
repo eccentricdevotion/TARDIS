@@ -26,6 +26,7 @@ import com.griefcraft.lwc.LWCPlugin;
 import java.util.Arrays;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
+import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
@@ -62,7 +63,7 @@ public class TARDISSonicSorterListener implements Listener {
             ItemStack is = player.getItemInHand();
             if (is.hasItemMeta()) {
                 ItemMeta im = is.getItemMeta();
-                if (im.hasDisplayName() && im.getDisplayName().endsWith("Sonic Screwdriver")) {
+                if (im.hasDisplayName() && ChatColor.stripColor(im.getDisplayName()).equals("Sonic Screwdriver")) {
                     Block block = event.getClickedBlock();
                     if (block != null && (block.getType() == Material.CHEST || block.getType() == Material.TRAPPED_CHEST)) {
                         Inventory inventory = ((InventoryHolder) block.getState()).getInventory();

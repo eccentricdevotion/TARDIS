@@ -1,6 +1,7 @@
 package me.eccentric_nz.TARDIS.sonic;
 
 import me.eccentric_nz.TARDIS.TARDIS;
+import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
@@ -42,7 +43,7 @@ public class TARDISFarmBlockListener implements Listener {
         ItemStack stack = player.getItemInHand();
         if (stack.getType().equals(sonic) && stack.hasItemMeta()) {
             ItemMeta im = player.getItemInHand().getItemMeta();
-            if (im.hasDisplayName() && im.getDisplayName().endsWith("Sonic Screwdriver") && im.hasLore() && im.getLore().contains("Emerald Upgrade")) {
+            if (im.hasDisplayName() && ChatColor.stripColor(im.getDisplayName()).equals("Sonic Screwdriver") && im.hasLore() && im.getLore().contains("Emerald Upgrade")) {
                 Block block = event.getBlock();
                 Material type = block.getType();
                 Byte data = block.getData();
