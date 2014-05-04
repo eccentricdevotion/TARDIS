@@ -144,7 +144,7 @@ public class TARDISRemoteComehereCommand {
             bset.put("x", rsc.getX());
             bset.put("y", rsc.getY());
             bset.put("z", rsc.getZ());
-            bset.put("direction", rsc.getDirection().toString());
+            bset.put("direction", d.toString());
             bset.put("submarine", rsc.isSubmarine());
         } else {
             // set fast return location
@@ -162,6 +162,7 @@ public class TARDISRemoteComehereCommand {
         set.put("x", eyeLocation.getBlockX());
         set.put("y", eyeLocation.getBlockY());
         set.put("z", eyeLocation.getBlockZ());
+        set.put("direction", player_d.toString());
         set.put("submarine", (sub) ? 1 : 0);
         if (hidden) {
             HashMap<String, Object> sett = new HashMap<String, Object>();
