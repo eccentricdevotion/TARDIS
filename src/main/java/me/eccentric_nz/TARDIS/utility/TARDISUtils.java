@@ -23,6 +23,7 @@ import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetChunks;
 import me.eccentric_nz.TARDIS.database.ResultSetDiskStorage;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
+import me.eccentric_nz.TARDIS.enumeration.COMPASS;
 import me.eccentric_nz.TARDIS.enumeration.SCHEMATIC;
 import me.eccentric_nz.tardischunkgenerator.TARDISChunkGenerator;
 import org.bukkit.Chunk;
@@ -631,4 +632,40 @@ public class TARDISUtils {
             qf.doUpdate("storage", setj, wherej);
         }
     }
+
+    /**
+     * Checks whether a door is open.
+     *
+     * @param door_bottom the bottom door block
+     * @param dd the direction the door is facing
+     * @return true or false
+     */
+    @SuppressWarnings("deprecation")
+    public boolean isOpen(Block door_bottom, COMPASS dd) {
+        byte door_data = door_bottom.getData();
+        switch (dd) {
+            case NORTH:
+                if (door_data == 7) {
+                    return true;
+                }
+                break;
+            case WEST:
+                if (door_data == 6) {
+                    return true;
+                }
+                break;
+            case SOUTH:
+                if (door_data == 5) {
+                    return true;
+                }
+                break;
+            default:
+                if (door_data == 4) {
+                    return true;
+                }
+                break;
+        }
+        return false;
+    }
+
 }

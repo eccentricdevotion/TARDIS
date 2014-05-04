@@ -18,8 +18,7 @@ package me.eccentric_nz.TARDIS.move;
 
 import java.util.HashMap;
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.database.ResultSetDoors;
-import me.eccentric_nz.TARDIS.enumeration.COMPASS;
+import me.eccentric_nz.TARDIS.database.ResultSetDoorBlocks;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
@@ -42,9 +41,9 @@ public class TARDISBlackWoolToggler {
         HashMap<String, Object> where = new HashMap<String, Object>();
         where.put("tardis_id", id);
         where.put("door_type", 1);
-        ResultSetDoors rsd = new ResultSetDoors(plugin, where, false);
-        if (rsd.resultSet()) {
-            Block b = plugin.getUtils().getLocationFromDB(rsd.getDoor_location(), 0.0f, 0.0f).getBlock().getRelative(BlockFace.NORTH);
+        ResultSetDoorBlocks rsd = new ResultSetDoorBlocks(plugin, id);
+        if (rsd.resultset()) {
+            Block b = rsd.getInnerBlock().getRelative(BlockFace.NORTH);
             Material mat;
             byte data;
             if (isAir(b)) {
@@ -58,27 +57,9 @@ public class TARDISBlackWoolToggler {
             b.setData(data);
             b.getRelative(BlockFace.UP).setType(mat);
             b.getRelative(BlockFace.UP).setData(data);
-            if (mat.equals(Material.WOOL)) {
-                // toggle door shut
-                new TARDISDoorToggler(plugin, b.getRelative(BlockFace.SOUTH), rsd.getDoor_direction(), player, false, true, 1, id).toggleDoor();
-                // also toggle the other door
-                HashMap<String, Object> whered = new HashMap<String, Object>();
-                whered.put("tardis_id", rsd.getTardis_id());
-                whered.put("door_type", 0);
-                final ResultSetDoors rsod = new ResultSetDoors(plugin, whered, false);
-                if (rsod.resultSet()) {
-                    final Block opposite = plugin.getUtils().getLocationFromDB(rsod.getDoor_location(), 0.0f, 0.0f).getBlock();
-                    final COMPASS od = rsod.getDoor_direction();
-                    if (!opposite.getChunk().isLoaded()) {
-                        opposite.getChunk().load();
-                    }
-                    plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
-                        @Override
-                        public void run() {
-                            new TARDISDoorToggler(plugin, opposite, od, player, false, false, rsod.getDoor_type(), id).toggleDoor();
-                        }
-                    }, 5L);
-                }
+            if (plugin.getUtils().isOpen(b.getRelative(BlockFace.SOUTH), rsd.getInnerDirection())) {
+                // toggle doors shut
+                new TARDISDoorToggler(plugin, b.getRelative(BlockFace.SOUTH), rsd.getInnerDirection(), player, false, id).toggleDoors();
             }
         }
     }
