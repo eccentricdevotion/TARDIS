@@ -168,31 +168,9 @@ public class TARDISDoorWalkListener extends TARDISDoorListener implements Listen
                                 if (!rsd.isLocked()) {
                                     // toogle the door open/closed
                                     if (blockType.equals(Material.IRON_DOOR_BLOCK) || blockType.equals(Material.WOODEN_DOOR)) {
-                                        // toggle the door
-                                        new TARDISDoorToggler(plugin, block, dd, player, minecart, true, doortype, id).toggleDoor();
                                         if (doortype == 0 || doortype == 1) {
-                                            // also toggle the other door
-                                            HashMap<String, Object> whered = new HashMap<String, Object>();
-                                            whered.put("tardis_id", rsd.getTardis_id());
-                                            if (doortype == 0) {
-                                                whered.put("door_type", 1);
-                                            } else {
-                                                whered.put("door_type", 0);
-                                            }
-                                            final ResultSetDoors rsod = new ResultSetDoors(plugin, whered, false);
-                                            if (rsod.resultSet()) {
-                                                final Block opposite = plugin.getUtils().getLocationFromDB(rsod.getDoor_location(), 0.0f, 0.0f).getBlock();
-                                                final COMPASS od = rsod.getDoor_direction();
-                                                if (!opposite.getChunk().isLoaded()) {
-                                                    opposite.getChunk().load();
-                                                }
-                                                plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
-                                                    @Override
-                                                    public void run() {
-                                                        new TARDISDoorToggler(plugin, opposite, od, player, minecart, false, rsod.getDoor_type(), id).toggleDoor();
-                                                    }
-                                                }, 5L);
-                                            }
+                                            // toggle the door
+                                            new TARDISDoorToggler(plugin, block, dd, player, minecart, id).toggleDoors();
                                         }
                                     } else if (blockType.equals(Material.TRAP_DOOR)) {
                                         int open = 1;
