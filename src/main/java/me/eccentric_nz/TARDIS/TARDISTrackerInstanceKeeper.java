@@ -22,6 +22,7 @@ import java.util.List;
 import java.util.UUID;
 import me.eccentric_nz.TARDIS.info.TARDISInfoMenu;
 import me.eccentric_nz.TARDIS.move.TARDISMoveSession;
+import me.eccentric_nz.TARDIS.move.TARDISTeleportLocation;
 import me.eccentric_nz.TARDIS.rooms.TARDISSeedData;
 import me.eccentric_nz.TARDIS.utility.TARDISAntiBuild;
 import org.bukkit.Location;
@@ -41,7 +42,7 @@ public class TARDISTrackerInstanceKeeper {
     private final HashMap<Integer, String> trackRenderer = new HashMap<Integer, String>();
     private final HashMap<Integer, TARDISAntiBuild> trackAntiBuild = new HashMap<Integer, TARDISAntiBuild>();
     private final HashMap<Integer, UUID> trackRescue = new HashMap<Integer, UUID>();
-    private final HashMap<Location, Location> trackPortals = new HashMap<Location, Location>();
+    private final HashMap<Location, TARDISTeleportLocation> trackPortals = new HashMap<Location, TARDISTeleportLocation>();
     private final HashMap<String, Sign> trackSign = new HashMap<String, Sign>();
     private final HashMap<UUID, Block> trackExterminate = new HashMap<UUID, Block>();
     private final HashMap<UUID, Block> trackLazarus = new HashMap<UUID, Block>();
@@ -90,7 +91,7 @@ public class TARDISTrackerInstanceKeeper {
         return trackRescue;
     }
 
-    public HashMap<Location, Location> getTrackPortals() {
+    public HashMap<Location, TARDISTeleportLocation> getTrackPortals() {
         return trackPortals;
     }
 

@@ -17,7 +17,9 @@
 package me.eccentric_nz.TARDIS.move;
 
 import java.util.HashMap;
+import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetPlayerPrefs;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import org.bukkit.Location;
@@ -63,16 +65,34 @@ public class TARDISMoveListener implements Listener {
         }
         // check the block they're on
         if (plugin.getTrackerKeeper().getTrackPortals().containsKey(l)) {
-            Location to = plugin.getTrackerKeeper().getTrackPortals().get(l);
+            TARDISTeleportLocation tpl = plugin.getTrackerKeeper().getTrackPortals().get(l);
+            Location to = tpl.getLocation();
+            UUID uuid = p.getUniqueId();
             HashMap<String, Object> wherepp = new HashMap<String, Object>();
-            wherepp.put("uuid", p.getUniqueId().toString());
+            wherepp.put("uuid", uuid.toString());
             ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, wherepp);
             boolean hasPrefs = rsp.resultSet();
             boolean minecart = (hasPrefs) ? rsp.isMinecartOn() : false;
             boolean userQuotes = (hasPrefs) ? rsp.isQuotesOn() : false;
+            boolean exit = !(to.getWorld().getName().contains("TARDIS"));
+            // set travelling status
+            QueryFactory qf = new QueryFactory(plugin);
+            if (exit) {
+                // unoccupied
+                plugin.getGeneralKeeper().getDoorListener().removeTraveller(uuid);
+            } else {
+                // occupied
+                plugin.getGeneralKeeper().getDoorListener().removeTraveller(uuid);
+                HashMap<String, Object> set = new HashMap<String, Object>();
+                set.put("tardis_id", tpl.getTardisId());
+                set.put("uuid", uuid.toString());
+                qf.doSyncInsert("travellers", set);
+            }
             // tp player
-            plugin.getGeneralKeeper().getDoorListener().movePlayer(p, to, !(to.getWorld().getName().contains("TARDIS")), l.getWorld(), userQuotes, 0, minecart);
-            TARDISMessage.send(p, plugin.getPluginName() + "Don't forget to close the door!");
+            plugin.getGeneralKeeper().getDoorListener().movePlayer(p, to, exit, l.getWorld(), userQuotes, 0, minecart);
+            if (userQuotes) {
+                TARDISMessage.send(p, plugin.getPluginName() + "Don't forget to close the door!");
+            }
         }
     }
 }
