@@ -22,6 +22,7 @@ import me.eccentric_nz.TARDIS.advanced.TARDISCircuitChecker;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import me.eccentric_nz.TARDIS.database.ResultSetTravellers;
+import me.eccentric_nz.TARDIS.enumeration.COMPASS;
 import me.eccentric_nz.TARDIS.enumeration.MESSAGE;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import org.bukkit.ChatColor;
@@ -45,6 +46,7 @@ public class TARDISHomeCommand {
     public boolean setHome(Player player, String[] args) {
         if (player.hasPermission("tardis.timetravel")) {
             Location eyeLocation = player.getTargetBlock(plugin.getGeneralKeeper().getTransparent(), 50).getLocation();
+            COMPASS player_d = COMPASS.valueOf(plugin.getUtils().getPlayersDirection(player, false));
             if (!plugin.getConfig().getBoolean("travel.include_default_world") && plugin.getConfig().getBoolean("creation.default_world") && eyeLocation.getWorld().getName().equals(plugin.getConfig().getString("creation.default_world_name"))) {
                 TARDISMessage.send(player, plugin.getPluginName() + "The server admin will not allow you to set the TARDIS home in this world!");
                 return true;
@@ -101,6 +103,7 @@ public class TARDISHomeCommand {
             set.put("x", eyeLocation.getBlockX());
             set.put("y", eyeLocation.getBlockY());
             set.put("z", eyeLocation.getBlockZ());
+            set.put("direction", player_d.toString());
             set.put("submarine", isSub(eyeLocation) ? 1 : 0);
             qf.doUpdate("homes", set, tid);
             TARDISMessage.send(player, plugin.getPluginName() + "The new TARDIS home was set!");
