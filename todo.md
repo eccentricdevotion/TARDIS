@@ -7,7 +7,8 @@
 3. UHC flying mode (started - have coded some test plugins)
 4. TARDIS invisibility - 1.8 barrier blocks?
 5. Walk in to the TARDIS if door is open (started)
-6. Sonic prefs menu
+6. Add Eccelston, open Tennant, Mark I and Master to Sonic prefs menu
+7. Sonic door toggling should only open/close your own TARDIS door
 
 ##Future version `3.0+`
 ?
@@ -20,6 +21,8 @@
 
 ##Resource Pack / TARDISWeepingAngels
 1. MCPatcher Custom Item Textures :)
+   * Mark I sonic screwdriver
+   * Master's laser screwdriver
 
 Re-skin mobs for Resource pack, and add new mob sounds
 

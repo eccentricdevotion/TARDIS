@@ -95,7 +95,8 @@ public class TARDISHideCommand {
             pdd.setDirection(rsc.getDirection());
             pdd.setLocation(l);
             pdd.setDematerialise(false);
-            pdd.setPlayer(null);
+//            pdd.setPlayer(null);
+            pdd.setPlayer(player.getPlayer());
             pdd.setHide(false);
             pdd.setOutside(false);
             pdd.setSubmarine(rsc.isSubmarine());
