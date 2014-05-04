@@ -19,10 +19,12 @@ package me.eccentric_nz.TARDIS.destroyers;
 import java.util.ArrayList;
 import java.util.HashMap;
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.builders.TARDISMaterialisationData;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetBlocks;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
 import me.eccentric_nz.TARDIS.enumeration.PRESET;
+import me.eccentric_nz.TARDIS.move.TARDISDoorCloser;
 import org.bukkit.Chunk;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -51,17 +53,26 @@ public class TARDISDeinstaPreset {
     /**
      * Destroys the TARDIS Police Box. A 3 x 3 x 3 block area.
      *
-     * @param l the location of the TARDIS Police Box (bottom centre).
-     * @param d the direction the Police Box is facing.
-     * @param id the unique key of the record for this TARDIS in the database.
+     * @param tmd the TARDISMaterialisationData
      * @param hide boolean determining whether to forget the protected Police
      * Box blocks.
      * @param preset the preset to destroy
-     * @param sub whether the next location is submarine
-     * @param biome the biome to restore to the location (if it was changed)
      */
     @SuppressWarnings("deprecation")
-    public void instaDestroyPreset(Location l, COMPASS d, final int id, boolean hide, PRESET preset, boolean sub, Biome biome) {
+    public void instaDestroyPreset(TARDISMaterialisationData tmd, boolean hide, PRESET preset) {
+        Location l = tmd.getLocation();
+        COMPASS d = tmd.getDirection();
+        final int id = tmd.getTardisID();
+        boolean sub = tmd.isSubmarine();
+        Biome biome = tmd.getBiome();
+        if (plugin.getConfig().getBoolean("preferences.walk_in_tardis")) {
+            // always remove the portal
+            if (plugin.getTrackerKeeper().getTrackPortals().containsKey(l)) {
+                plugin.getTrackerKeeper().getTrackPortals().remove(l);
+            }
+            // toggle the doors if neccessary
+            new TARDISDoorCloser(plugin, tmd.getPlayer().getUniqueId(), id).closeDoors();
+        }
         final World w = l.getWorld();
         // make sure chunk is loaded
         Chunk chunk = w.getChunkAt(l);

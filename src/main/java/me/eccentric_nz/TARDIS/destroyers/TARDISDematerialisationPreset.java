@@ -18,17 +18,14 @@ package me.eccentric_nz.TARDIS.destroyers;
 
 import java.util.HashMap;
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.builders.TARDISMaterialisationData;
 import me.eccentric_nz.TARDIS.chameleon.TARDISChameleonColumn;
 import me.eccentric_nz.TARDIS.database.ResultSetDoors;
 import me.eccentric_nz.TARDIS.database.ResultSetPlayerPrefs;
-import me.eccentric_nz.TARDIS.enumeration.COMPASS;
 import me.eccentric_nz.TARDIS.enumeration.PRESET;
-import org.bukkit.Location;
 import org.bukkit.Material;
-import org.bukkit.OfflinePlayer;
 import org.bukkit.Sound;
 import org.bukkit.World;
-import org.bukkit.block.Biome;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 
@@ -42,20 +39,14 @@ import org.bukkit.block.BlockFace;
 public class TARDISDematerialisationPreset implements Runnable {
 
     private final TARDIS plugin;
-    private final COMPASS d;
+    private final TARDISMaterialisationData tmd;
     private final int loops;
-    private final Location location;
     private final PRESET preset;
-    private final int tid;
     public int task;
     private int i;
     private final int lamp;
     private final int cham_id;
     private final byte cham_data;
-    private final OfflinePlayer player;
-    private final boolean sub;
-    private final boolean outside;
-    private final Biome biome;
     private final TARDISChameleonColumn column;
     private final TARDISChameleonColumn stained_column;
     private final TARDISChameleonColumn glass_column;
@@ -68,37 +59,24 @@ public class TARDISDematerialisationPreset implements Runnable {
      * material).
      *
      * @param plugin instance of the TARDIS plugin
-     * @param location the location to build the Police Box at
+     * @param tmd the TARDISMaterialisationData
      * @param preset the Chameleon preset currently in use by the TARDIS
      * @param lamp the id of the lamp block
-     * @param tid the tardis_id this Police Box belongs to
-     * @param d the COMPASS direction the Police Box is facing
      * @param cham_id the chameleon block id for the police box
      * @param cham_data the chameleon block data for the police box
-     * @param player the player to play the sound to
-     * @param sub whether the location is submarine
-     * @param outside whether the player is outside the TARDIS (and the
-     * materialisation sound should be played)
-     * @param biome the biome to restore to the location (if it was changed)
      */
-    public TARDISDematerialisationPreset(TARDIS plugin, Location location, PRESET preset, int lamp, int tid, COMPASS d, int cham_id, byte cham_data, OfflinePlayer player, boolean sub, boolean outside, Biome biome) {
+    public TARDISDematerialisationPreset(TARDIS plugin, TARDISMaterialisationData tmd, PRESET preset, int lamp, int cham_id, byte cham_data) {
         this.plugin = plugin;
-        this.d = d;
+        this.tmd = tmd;
         this.loops = 18;
-        this.location = location;
         this.preset = preset;
         this.i = 0;
-        this.tid = tid;
         this.lamp = lamp;
         this.cham_id = cham_id;
         this.cham_data = cham_data;
-        this.player = player;
-        this.sub = sub;
-        this.outside = outside;
-        this.biome = biome;
-        column = plugin.getPresets().getColumn(preset, d);
-        stained_column = plugin.getPresets().getStained(preset, d);
-        glass_column = plugin.getPresets().getGlass(preset, d);
+        column = plugin.getPresets().getColumn(preset, tmd.getDirection());
+        stained_column = plugin.getPresets().getStained(preset, tmd.getDirection());
+        glass_column = plugin.getPresets().getGlass(preset, tmd.getDirection());
     }
 
     @Override
@@ -106,15 +84,15 @@ public class TARDISDematerialisationPreset implements Runnable {
         int[][] ids;
         byte[][] datas;
         // get relative locations
-        int x = location.getBlockX(), plusx = location.getBlockX() + 1, minusx = location.getBlockX() - 1;
+        int x = tmd.getLocation().getBlockX(), plusx = tmd.getLocation().getBlockX() + 1, minusx = tmd.getLocation().getBlockX() - 1;
         int y;
         if (preset.equals(PRESET.SUBMERGED)) {
-            y = location.getBlockY() - 1;
+            y = tmd.getLocation().getBlockY() - 1;
         } else {
-            y = location.getBlockY();
+            y = tmd.getLocation().getBlockY();
         }
-        int z = location.getBlockZ(), plusz = location.getBlockZ() + 1, minusz = location.getBlockZ() - 1;
-        World world = location.getWorld();
+        int z = tmd.getLocation().getBlockZ(), plusz = tmd.getLocation().getBlockZ() + 1, minusz = tmd.getLocation().getBlockZ() - 1;
+        World world = tmd.getLocation().getWorld();
         if (i < loops) {
             i++;
             // expand placed blocks to a police box
@@ -138,50 +116,50 @@ public class TARDISDematerialisationPreset implements Runnable {
                     case GRAVESTONE:
                         // remove flower
                         int flowerx;
-                        int flowery = (location.getBlockY() + 1);
+                        int flowery = (tmd.getLocation().getBlockY() + 1);
                         int flowerz;
-                        switch (d) {
+                        switch (tmd.getDirection()) {
                             case NORTH:
-                                flowerx = location.getBlockX();
-                                flowerz = location.getBlockZ() + 1;
+                                flowerx = tmd.getLocation().getBlockX();
+                                flowerz = tmd.getLocation().getBlockZ() + 1;
                                 break;
                             case WEST:
-                                flowerx = location.getBlockX() + 1;
-                                flowerz = location.getBlockZ();
+                                flowerx = tmd.getLocation().getBlockX() + 1;
+                                flowerz = tmd.getLocation().getBlockZ();
                                 break;
                             case SOUTH:
-                                flowerx = location.getBlockX();
-                                flowerz = location.getBlockZ() - 1;
+                                flowerx = tmd.getLocation().getBlockX();
+                                flowerz = tmd.getLocation().getBlockZ() - 1;
                                 break;
                             default:
-                                flowerx = location.getBlockX() - 1;
-                                flowerz = location.getBlockZ();
+                                flowerx = tmd.getLocation().getBlockX() - 1;
+                                flowerz = tmd.getLocation().getBlockZ();
                                 break;
                         }
                         plugin.getUtils().setBlock(world, flowerx, flowery, flowerz, 0, (byte) 0);
                         break;
                     case CAKE:
-                        plugin.getPresetDestroyer().destroyLamp(location, preset);
+                        plugin.getPresetDestroyer().destroyLamp(tmd.getLocation(), preset);
                         break;
                     default:
                         break;
                 }
                 // only play the sound if the player is outside the TARDIS
-                if (outside) {
+                if (tmd.isOutside()) {
                     HashMap<String, Object> wherep = new HashMap<String, Object>();
-                    wherep.put("uuid", player.getUniqueId().toString());
+                    wherep.put("uuid", tmd.getPlayer().getUniqueId().toString());
                     ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, wherep);
                     boolean minecart = false;
                     if (rsp.resultSet()) {
                         minecart = rsp.isMinecartOn();
                     }
                     if (!minecart) {
-                        plugin.getUtils().playTARDISSoundNearby(location, "tardis_takeoff");
+                        plugin.getUtils().playTARDISSoundNearby(tmd.getLocation(), "tardis_takeoff");
                     } else {
-                        world.playSound(location, Sound.MINECART_INSIDE, 1.0F, 0.0F);
+                        world.playSound(tmd.getLocation(), Sound.MINECART_INSIDE, 1.0F, 0.0F);
                     }
                 }
-                the_colour = getWoolColour(tid, preset);
+                the_colour = getWoolColour(tmd.getTardisID(), preset);
             } else {
                 // just change the walls
                 int xx, zz;
@@ -292,7 +270,7 @@ public class TARDISDematerialisationPreset implements Runnable {
                 }
             }
         } else {
-            new TARDISDeinstaPreset(plugin).instaDestroyPreset(location, d, tid, false, preset, sub, biome);
+            new TARDISDeinstaPreset(plugin).instaDestroyPreset(tmd, false, preset);
             plugin.getServer().getScheduler().cancelTask(task);
             task = 0;
         }

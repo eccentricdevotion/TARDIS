@@ -138,7 +138,7 @@ public class TARDISPresetBuilderFactory {
                 // always destroy it first as the player may just be switching presets
                 if (!hidden) {
                     TARDISDeinstaPreset deinsta = new TARDISDeinstaPreset(plugin);
-                    deinsta.instaDestroyPreset(pbd.getLocation(), pbd.getDirection(), pbd.getTardisID(), false, demat, pbd.isSubmarine(), pbd.getBiome());
+                    deinsta.instaDestroyPreset(pbd, false, demat);
                 }
                 final TARDISInstaPreset trp = new TARDISInstaPreset(plugin, pbd.getLocation(), preset, pbd.getTardisID(), pbd.getDirection(), pbd.getPlayer().getUniqueId().toString(), pbd.isMalfunction(), lamp, pbd.isSubmarine(), cham_id, cham_data, true, minecart);
                 plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {

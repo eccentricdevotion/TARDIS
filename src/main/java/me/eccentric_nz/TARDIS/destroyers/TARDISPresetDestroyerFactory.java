@@ -83,11 +83,11 @@ public class TARDISPresetDestroyerFactory {
                 if (rsp.resultSet()) {
                     lamp = rsp.getLamp();
                 }
-                TARDISDematerialisationPreset runnable = new TARDISDematerialisationPreset(plugin, pdd.getLocation(), demat, lamp, pdd.getTardisID(), pdd.getDirection(), cham_id, cham_data, pdd.getPlayer(), pdd.isSubmarine(), pdd.isOutside(), pdd.getBiome());
+                TARDISDematerialisationPreset runnable = new TARDISDematerialisationPreset(plugin, pdd, demat, lamp, cham_id, cham_data);
                 int taskID = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, runnable, 10L, 20L);
                 runnable.setTask(taskID);
             } else {
-                new TARDISDeinstaPreset(plugin).instaDestroyPreset(pdd.getLocation(), pdd.getDirection(), pdd.getTardisID(), pdd.isHide(), demat, pdd.isSubmarine(), pdd.getBiome());
+                new TARDISDeinstaPreset(plugin).instaDestroyPreset(pdd, pdd.isHide(), demat);
             }
         }
     }
