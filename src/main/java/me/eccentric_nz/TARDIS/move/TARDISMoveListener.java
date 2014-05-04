@@ -23,6 +23,7 @@ import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetCompanions;
 import me.eccentric_nz.TARDIS.database.ResultSetPlayerPrefs;
+import me.eccentric_nz.TARDIS.enumeration.COMPASS;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
@@ -74,13 +75,20 @@ public class TARDISMoveListener implements Listener {
             List<UUID> companions = new ResultSetCompanions(plugin, id).getCompanions();
             if (companions.contains(uuid)) {
                 Location to = tpl.getLocation();
+                boolean exit = !(to.getWorld().getName().contains("TARDIS"));
+                // adjust player yaw for to
+                float yaw = (exit) ? p.getLocation().getYaw() + 180.0f : p.getLocation().getYaw();
+                COMPASS d = COMPASS.valueOf(plugin.getUtils().getPlayersDirection(p, false));
+                if (!tpl.getDirection().equals(d)) {
+                    yaw += plugin.getGeneralKeeper().getDoorListener().adjustYaw(d, tpl.getDirection());
+                }
+                to.setYaw(yaw);
                 HashMap<String, Object> wherepp = new HashMap<String, Object>();
                 wherepp.put("uuid", uuid.toString());
                 ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, wherepp);
                 boolean hasPrefs = rsp.resultSet();
                 boolean minecart = (hasPrefs) ? rsp.isMinecartOn() : false;
                 boolean userQuotes = (hasPrefs) ? rsp.isQuotesOn() : false;
-                boolean exit = !(to.getWorld().getName().contains("TARDIS"));
                 // set travelling status
                 QueryFactory qf = new QueryFactory(plugin);
                 if (exit) {

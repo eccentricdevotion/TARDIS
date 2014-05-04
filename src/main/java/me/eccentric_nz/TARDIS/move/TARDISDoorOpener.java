@@ -119,17 +119,21 @@ public class TARDISDoorOpener {
                 Location exportal = new Location(rsc.getWorld(), rsc.getX(), rsc.getY(), rsc.getZ());
                 // interior teleport location
                 Location indoor = null;
+                COMPASS indirection = COMPASS.SOUTH;
                 // exterior teleport location
                 Location exdoor = null;
+                COMPASS exdirection = COMPASS.SOUTH;
                 // interior portal
                 Location inportal = null;
                 ResultSetPortals rsp = new ResultSetPortals(plugin, id);
                 rsp.resultSet();
                 for (HashMap<String, String> map : rsp.getData()) {
                     Location tmp_loc = plugin.getUtils().getLocationFromDB(map.get("door_location"), 0.0f, 0.0f);
+                    COMPASS tmp_direction = COMPASS.valueOf(map.get("door_direction"));
                     if (map.get("door_type").equals("1")) {
                         // clone it because we're going to change it!
                         inportal = tmp_loc.clone();
+                        indirection = tmp_direction;
                         // adjust for teleport
                         int getx = tmp_loc.getBlockX();
                         int getz = tmp_loc.getBlockZ();
@@ -158,6 +162,7 @@ public class TARDISDoorOpener {
                         indoor = tmp_loc;
                     } else {
                         exdoor = tmp_loc.clone();
+                        exdirection = COMPASS.valueOf(map.get("door_direction"));
                         // adjust for teleport
                         exdoor.setX(exdoor.getX() + 0.5);
                         exdoor.setZ(exdoor.getZ() + 0.5);
@@ -168,9 +173,11 @@ public class TARDISDoorOpener {
                     TARDISTeleportLocation tp_in = new TARDISTeleportLocation();
                     tp_in.setLocation(indoor);
                     tp_in.setTardisId(id);
+                    tp_in.setDirection(indirection);
                     TARDISTeleportLocation tp_out = new TARDISTeleportLocation();
                     tp_out.setLocation(exdoor);
                     tp_out.setTardisId(id);
+                    tp_out.setDirection(exdirection);
                     // players
                     for (UUID u : uuids) {
                         // only add them if they're not there already!

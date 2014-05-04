@@ -16,6 +16,7 @@
  */
 package me.eccentric_nz.TARDIS.move;
 
+import me.eccentric_nz.TARDIS.enumeration.COMPASS;
 import org.bukkit.Location;
 
 /**
@@ -26,6 +27,7 @@ public class TARDISTeleportLocation {
 
     private Location location;
     private int tardisId;
+    private COMPASS direction;
 
     public Location getLocation() {
         return location;
@@ -41,5 +43,13 @@ public class TARDISTeleportLocation {
 
     public void setTardisId(int tardisId) {
         this.tardisId = tardisId;
+    }
+
+    public COMPASS getDirection() {
+        return direction;
+    }
+
+    public void setDirection(COMPASS direction) {
+        this.direction = direction;
     }
 }
