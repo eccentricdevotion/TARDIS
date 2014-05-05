@@ -98,7 +98,7 @@ public class TARDISDoorCloser {
                     }
                     break;
             }
-            if (remove) {
+            if (remove && plugin.getConfig().getBoolean("preferences.walk_in_tardis")) {
                 // get all companion UUIDs
                 List<UUID> uuids = new ArrayList<UUID>();
                 uuids.add(uuid);
