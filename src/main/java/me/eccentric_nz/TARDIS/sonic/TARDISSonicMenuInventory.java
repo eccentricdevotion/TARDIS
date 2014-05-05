@@ -18,25 +18,23 @@ package me.eccentric_nz.TARDIS.sonic;
 
 import java.util.Arrays;
 import java.util.List;
-import me.eccentric_nz.TARDIS.TARDIS;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
 /**
- * The Administrator of Solos is the Earth Empire's civilian overseer for that
- * planet.
+ * Oh, yes. Harmless is just the word. That's why I like it! Doesn't kill,
+ * doesn't wound, doesn't maim. But I'll tell you what it does do. It is very
+ * good at opening doors!
  *
  * @author eccentric_nz
  */
 public class TARDISSonicMenuInventory {
 
-    private final TARDIS plugin;
     private final ItemStack[] menu;
 
-    public TARDISSonicMenuInventory(TARDIS plugin) {
-        this.plugin = plugin;
+    public TARDISSonicMenuInventory() {
         this.menu = getItemStack();
     }
 
