@@ -27,6 +27,7 @@ import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetARS;
 import me.eccentric_nz.TARDIS.database.ResultSetControls;
 import me.eccentric_nz.TARDIS.database.ResultSetCurrentLocation;
+import me.eccentric_nz.TARDIS.database.ResultSetDoorBlocks;
 import me.eccentric_nz.TARDIS.database.ResultSetDoors;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import me.eccentric_nz.TARDIS.database.ResultSetTravellers;
@@ -163,6 +164,13 @@ public class TARDISUpdateListener implements Listener {
                 plugin.getTrackerKeeper().getTrackPlayers().remove(uuid);
             }
             if (blockName.equalsIgnoreCase("door") && blockType == Material.IRON_DOOR_BLOCK && !secondary) {
+                // if portals are on, remove the current portal first
+                if (plugin.getConfig().getBoolean("preferences.walk_in_tardis")) {
+                    ResultSetDoorBlocks rsdb = new ResultSetDoorBlocks(plugin, id);
+                    if (rsdb.resultSet()) {
+                        plugin.getTrackerKeeper().getTrackPortals().remove(rsdb.getInnerBlock().getLocation());
+                    }
+                }
                 // get door data this should let us determine the direction
                 String d = getDirection(blockData);
                 table = "doors";

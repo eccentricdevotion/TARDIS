@@ -42,7 +42,7 @@ public class TARDISBlackWoolToggler {
         where.put("tardis_id", id);
         where.put("door_type", 1);
         ResultSetDoorBlocks rsd = new ResultSetDoorBlocks(plugin, id);
-        if (rsd.resultset()) {
+        if (rsd.resultSet()) {
             Block b = rsd.getInnerBlock().getRelative(BlockFace.NORTH);
             Material mat;
             byte data;

@@ -60,7 +60,7 @@ public class ResultSetDoorBlocks {
      *
      * @return the door block.
      */
-    public boolean resultset() {
+    public boolean resultSet() {
         PreparedStatement statement = null;
         ResultSet rs = null;
         String query = "SELECT * FROM doors WHERE door_type IN (0,1) AND tardis_id =" + id;

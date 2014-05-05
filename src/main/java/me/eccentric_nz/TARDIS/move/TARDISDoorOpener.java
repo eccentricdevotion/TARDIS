@@ -51,7 +51,7 @@ public class TARDISDoorOpener {
         // get door locations
         // inner
         final ResultSetDoorBlocks rs = new ResultSetDoorBlocks(plugin, id);
-        if (rs.resultset()) {
+        if (rs.resultSet()) {
             open(rs.getInnerBlock(), true, rs.getInnerDirection());
             // outer
             if (!rs.getOuterBlock().getChunk().isLoaded()) {
