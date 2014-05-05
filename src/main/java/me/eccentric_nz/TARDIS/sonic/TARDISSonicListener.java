@@ -643,21 +643,8 @@ public class TARDISSonicListener implements Listener {
                         if (rsc.getCompanions().contains(player.getUniqueId())) {
                             int type = rs.getDoor_type();
                             if (!rs.isLocked() && (type == 0 || type == 1)) { // only preset doors
-                                // yes and it is not deadlocked
+                                // yes, yes and it is not deadlocked
                                 new TARDISDoorToggler(plugin, lowerdoor, dd, player, false, id).toggleDoors();
-//                                HashMap<String, Object> opposite = new HashMap<String, Object>();
-//                                opposite.put("door_type", (type == 0) ? 1 : 0);
-//                                opposite.put("tardis_id", rs.getTardis_id());
-//                                ResultSetDoors rsd = new ResultSetDoors(plugin, opposite, false);
-//                                if (rsd.resultSet()) {
-//                                    // update the state of the opposite door as well
-//                                    Block opp_block = plugin.getUtils().getLocationFromDB(rsd.getDoor_location(), 0.0f, 0.0f).getBlock();
-//                                    BlockState bsopp = opp_block.getState();
-//                                    Door opp_door = (Door) bsopp.getData();
-//                                    opp_door.setOpen(!opp_door.isOpen());
-//                                    bsopp.setData(opp_door);
-//                                    bsopp.update(true);
-//                                }
                                 return;
                             } else {
                                 TARDISMessage.send(player, plugin.getPluginName() + "The door is deadlocked!");
