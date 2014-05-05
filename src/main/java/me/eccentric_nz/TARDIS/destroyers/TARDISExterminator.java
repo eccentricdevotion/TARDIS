@@ -21,6 +21,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
+import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.builders.TARDISInteriorPostioning;
 import me.eccentric_nz.TARDIS.builders.TARDISMaterialisationData;
@@ -68,6 +69,7 @@ public class TARDISExterminator {
                 boolean hid = rs.isHidden();
                 String chunkLoc = rs.getChunk();
                 String owner = rs.getOwner();
+                UUID uuid = rs.getUuid();
                 int tips = rs.getTIPS();
                 boolean hasZero = (!rs.getZero().isEmpty());
                 SCHEMATIC schm = rs.getSchematic();
@@ -83,7 +85,7 @@ public class TARDISExterminator {
                 pdd.setDirection(rsc.getDirection());
                 pdd.setLocation(bb_loc);
                 pdd.setDematerialise(false);
-                pdd.setPlayer(null);
+                pdd.setPlayer(plugin.getServer().getOfflinePlayer(uuid));
                 pdd.setHide(false);
                 pdd.setOutside(false);
                 pdd.setSubmarine(rsc.isSubmarine());
@@ -217,7 +219,7 @@ public class TARDISExterminator {
             pdd.setDirection(d);
             pdd.setLocation(bb_loc);
             pdd.setDematerialise(false);
-            pdd.setPlayer(null);
+            pdd.setPlayer(player);
             pdd.setHide(false);
             pdd.setOutside(false);
             pdd.setSubmarine(rsc.isSubmarine());
