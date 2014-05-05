@@ -32,6 +32,9 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
 /**
+ * Oh, yes. Harmless is just the word. That's why I like it! Doesn't kill,
+ * doesn't wound, doesn't maim. But I'll tell you what it does do. It is very
+ * good at opening doors!
  *
  * @author eccentric_nz
  */
