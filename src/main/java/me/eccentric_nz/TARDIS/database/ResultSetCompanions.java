@@ -67,7 +67,8 @@ public class ResultSetCompanions {
             if (rs.isBeforeFirst()) {
                 // always add the time lord of the TARDIS
                 companions.add(UUID.fromString(rs.getString("uuid")));
-                if (!rs.getString("companions").isEmpty()) {
+                String comps = rs.getString("companions");
+                if (!rs.wasNull() && !comps.isEmpty()) {
                     // add companions
                     for (String c : rs.getString("companions").split(":")) {
                         companions.add(UUID.fromString(c));
