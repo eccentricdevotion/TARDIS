@@ -95,7 +95,7 @@ public class TARDISPrefsCommands implements CommandExecutor {
                     if (pref.equals("sonic")) {
                         // open sonic prefs menu
                         ItemStack[] sonics = new TARDISSonicMenuInventory().getMenu();
-                        Inventory sim = plugin.getServer().createInventory(player, 18, "§4Sonic Prefs Menu");
+                        Inventory sim = plugin.getServer().createInventory(player, 27, "§4Sonic Prefs Menu");
                         sim.setContents(sonics);
                         player.openInventory(sim);
                         return true;

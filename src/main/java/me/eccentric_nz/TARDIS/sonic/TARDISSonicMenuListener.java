@@ -64,9 +64,15 @@ public class TARDISSonicMenuListener implements Listener {
                     case 6:
                     case 7:
                     case 8:
+                    case 10:
+                    case 11:
+                    case 12:
+                    case 14:
+                    case 15:
+                    case 16:
                         event.setCancelled(true);
-                        // set display name of sonic in slot 9
-                        ItemStack sonic = inv.getItem(9);
+                        // set display name of sonic in slot 18
+                        ItemStack sonic = inv.getItem(18);
                         if (sonic == null || !sonic.getType().equals(Material.BLAZE_ROD) || !sonic.hasItemMeta()) {
                             return;
                         }
@@ -78,9 +84,9 @@ public class TARDISSonicMenuListener implements Listener {
                         sonic_im.setDisplayName(choice_name);
                         sonic.setItemMeta(sonic_im);
                         break;
-                    case 9:
+                    case 18:
                         break;
-                    case 17:
+                    case 26:
                         // close
                         event.setCancelled(true);
                         close(p);
