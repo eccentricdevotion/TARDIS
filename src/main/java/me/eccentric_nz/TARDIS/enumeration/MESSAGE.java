@@ -51,6 +51,7 @@ public enum MESSAGE {
     NO_PB_IN_WORLD("You cannot bring the TARDIS Police Box to this world"),
     NO_PERMS("You do not have permission to do that!"),
     NO_TARDIS("You have not created a TARDIS yet!"),
+    RESTART("Restart the server for changes to take effect!"),
     TOO_FEW_ARGS("Too few command arguments!");
 
     String text;

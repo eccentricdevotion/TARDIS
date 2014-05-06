@@ -16,42 +16,34 @@
  */
 package me.eccentric_nz.TARDIS.commands.admin;
 
-import java.util.Arrays;
-import java.util.List;
-import java.util.Locale;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.enumeration.MESSAGE;
-import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
 
 /**
  *
  * @author eccentric_nz
  */
-public class TARDISSetBooleanCommand {
+public class TARDISDefaultSonicCommand {
 
     private final TARDIS plugin;
-    private final List<String> require_restart = Arrays.asList("use_block_stack", "use_worldguard", "wg_flag_set", "walk_in_tardis", "zero_room");
 
-    public TARDISSetBooleanCommand(TARDIS plugin) {
+    public TARDISDefaultSonicCommand(TARDIS plugin) {
         this.plugin = plugin;
     }
 
-    public boolean setConfigBool(CommandSender sender, String[] args, String section) {
-        String tolower = args[0].toLowerCase();
-        String first = (section.isEmpty()) ? tolower : section + "." + tolower;
-        // check they typed true of false
-        String tf = args[1].toLowerCase(Locale.ENGLISH);
-        if (!tf.equals("true") && !tf.equals("false")) {
-            sender.sendMessage(plugin.getPluginName() + ChatColor.RED + "The last argument must be true or false!");
-            return false;
+    public boolean setSonic(CommandSender sender, String[] args) {
+        int count = args.length;
+        StringBuilder buf = new StringBuilder();
+        for (int i = 1; i < count; i++) {
+            buf.append(args[i]).append("_");
         }
-        plugin.getConfig().set(first, Boolean.valueOf(tf));
+        String tmp = buf.toString();
+        String sonic = tmp.substring(0, tmp.length() - 1);
+        plugin.getConfig().set("preferences.default_sonic", sonic);
         plugin.saveConfig();
         sender.sendMessage(plugin.getPluginName() + MESSAGE.CONFIG_UPDATED.getText());
-        if (require_restart.contains(tolower)) {
-            sender.sendMessage(plugin.getPluginName() + MESSAGE.RESTART.getText());
-        }
+        sender.sendMessage(plugin.getPluginName() + MESSAGE.RESTART.getText());
         return true;
     }
 }

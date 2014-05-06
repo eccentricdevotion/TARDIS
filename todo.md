@@ -6,9 +6,10 @@
 2. `/tardisremote` commands (started)
 3. UHC flying mode (started - have coded some test plugins)
 4. TARDIS invisibility - 1.8 barrier blocks?
-5. Walk in to the TARDIS if door is open (started)
-6. Add Eccelston, open Tennant, Mark I and Master to Sonic prefs menu
-7. Sonic door toggling should only open/close your own TARDIS door
+5. Walk in to the TARDIS if door is open (started, grrrr)
+6. Set TARDIS worlds as SKY biome (The End world type) as default + add orange wool, note blocks (disk storage), and jukebox textures (advanced console) to MCPatcher resource pack
+7. Config option for default sonic texture
+8. Bugs, bugs, bugs
 
 ##Future version `3.0+`
 ?
@@ -21,8 +22,9 @@
 
 ##Resource Pack / TARDISWeepingAngels
 1. MCPatcher Custom Item Textures :)
-   * Mark I sonic screwdriver
-   * Master's laser screwdriver
+   * Disk Storage Container
+   * Advanced Console
+   * Orange Wool
 
 Re-skin mobs for Resource pack, and add new mob sounds
 

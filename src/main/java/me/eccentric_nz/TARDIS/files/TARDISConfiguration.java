@@ -252,6 +252,7 @@ public class TARDISConfiguration {
         strOptions.put("creation.default_world_name", "myridiculouslylongworldnameiscalledcuthbert");
         strOptions.put("creation.gamemode", "survival");
         strOptions.put("police_box.sign_colour", "WHITE");
+        strOptions.put("preferences.default_sonic", "eleventh");
         strOptions.put("preferences.difficulty", "hard");
         strOptions.put("preferences.key", "GOLD_NUGGET");
         strOptions.put("preferences.respect_towny", "nation");

@@ -21,13 +21,31 @@ public class TARDISShapedRecipe {
 
     private final TARDIS plugin;
     private final HashMap<String, ShapedRecipe> shapedRecipes;
+    private ChatColor sonicDisplay;
+    private final HashMap<String, ChatColor> colour_lookup = new HashMap<String, ChatColor>();
 
     public TARDISShapedRecipe(TARDIS plugin) {
         this.plugin = plugin;
         this.shapedRecipes = new HashMap<String, ShapedRecipe>();
+        this.colour_lookup.put("mark_1", ChatColor.DARK_GRAY);
+        this.colour_lookup.put("mark_2", ChatColor.YELLOW);
+        this.colour_lookup.put("mark_3", ChatColor.DARK_PURPLE);
+        this.colour_lookup.put("mark_4", ChatColor.GRAY);
+        this.colour_lookup.put("eighth", ChatColor.BLUE);
+        this.colour_lookup.put("ninth", ChatColor.GREEN);
+        this.colour_lookup.put("ninth_open", ChatColor.DARK_GREEN);
+        this.colour_lookup.put("tenth", ChatColor.AQUA);
+        this.colour_lookup.put("tenth_open", ChatColor.DARK_AQUA);
+        this.colour_lookup.put("eleventh", null);
+        this.colour_lookup.put("eleventh_open", ChatColor.LIGHT_PURPLE);
+        this.colour_lookup.put("master", ChatColor.DARK_BLUE);
+        this.colour_lookup.put("sarah_jane", ChatColor.RED);
+        this.colour_lookup.put("river_song", ChatColor.GOLD);
+        this.colour_lookup.put("war", ChatColor.DARK_RED);
     }
 
     public void addShapedRecipes() {
+        sonicDisplay = colour_lookup.get(plugin.getConfig().getString("preferences.default_sonic").toLowerCase());
         Set<String> shaped = plugin.getRecipesConfig().getConfigurationSection("shaped").getKeys(false);
         for (String s : shaped) {
             plugin.getServer().addRecipe(makeRecipe(s));
@@ -59,7 +77,11 @@ public class TARDISShapedRecipe {
             is = new ItemStack(mat, amount);
         }
         ItemMeta im = is.getItemMeta();
-        im.setDisplayName(s);
+        if (s.equals("Sonic Screwdriver") && sonicDisplay != null) {
+            im.setDisplayName(sonicDisplay + s);
+        } else {
+            im.setDisplayName(s);
+        }
         if (!plugin.getRecipesConfig().getString("shaped." + s + ".lore").equals("")) {
             im.setLore(Arrays.asList(plugin.getRecipesConfig().getString("shaped." + s + ".lore").split("\n")));
         }
