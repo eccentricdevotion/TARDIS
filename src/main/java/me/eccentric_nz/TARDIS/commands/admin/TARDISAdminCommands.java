@@ -75,6 +75,7 @@ public class TARDISAdminCommands implements CommandExecutor {
         firstsStr.put("prune", "");
         firstsStr.put("prunelist", "");
         firstsStr.put("purge", "");
+        firstsStr.put("purge_portals", "");
         firstsStr.put("recharger", "");
         firstsStr.put("reload", "");
         firstsStr.put("respect_towny", "preferences");
@@ -193,6 +194,9 @@ public class TARDISAdminCommands implements CommandExecutor {
                 }
                 if (first.equals("modify")) {
                     return new TARDISModifyCommand(plugin).alterConfig(sender, args);
+                }
+                if (first.equals("purge_portals")) {
+                    return new TARDISPortalCommand(plugin).clearAll(sender);
                 }
                 if (args.length < 2) {
                     sender.sendMessage(plugin.getPluginName() + MESSAGE.TOO_FEW_ARGS.getText());
