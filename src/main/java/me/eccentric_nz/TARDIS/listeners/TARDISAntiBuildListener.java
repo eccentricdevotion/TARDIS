@@ -54,6 +54,7 @@ public class TARDISAntiBuildListener implements Listener {
         this.plugin = plugin;
         this.no_place.add(Material.BOAT);
         this.no_place.add(Material.BUCKET);
+        this.no_place.add(Material.EGG);
         this.no_place.add(Material.EXPLOSIVE_MINECART);
         this.no_place.add(Material.FLINT_AND_STEEL);
         this.no_place.add(Material.HOPPER_MINECART);

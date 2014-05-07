@@ -64,6 +64,9 @@ public class TARDISArtronCapacitorListener implements Listener {
         validBlocks.add(Material.STONE_BUTTON);
         validBlocks.add(Material.LEVER);
         goodspawns.add(SpawnReason.BREEDING);
+        goodspawns.add(SpawnReason.BUILD_IRONGOLEM);
+        goodspawns.add(SpawnReason.BUILD_SNOWMAN);
+        goodspawns.add(SpawnReason.EGG);
         goodspawns.add(SpawnReason.SPAWNER_EGG);
     }
 
