@@ -108,6 +108,7 @@ public class TARDISAdminCommands implements CommandExecutor {
         firstsBool.put("nether", "travel");
         firstsBool.put("per_world_perms", "travel");
         firstsBool.put("respect_factions", "preferences");
+        firstsBool.put("respect_grief_prevention", "preferences");
         firstsBool.put("respect_worldborder", "preferences");
         firstsBool.put("return_room_seed", "growth");
         firstsBool.put("rooms_require_blocks", "growth");

@@ -61,6 +61,7 @@ preferences:
     respect_towny: nation
     respect_worldborder: true
     respect_factions: true
+    respect_grief_prevention: true
     sfx_volume: 10;
     difficulty: hard
     strike_lightning: true

@@ -18,6 +18,7 @@ package me.eccentric_nz.TARDIS.travel;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.utility.TARDISFactionsChecker;
+import me.eccentric_nz.TARDIS.utility.TARDISGriefPreventionChecker;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import me.eccentric_nz.TARDIS.utility.TARDISTownyChecker;
 import me.eccentric_nz.TARDIS.utility.TARDISWorldBorderChecker;
@@ -38,9 +39,11 @@ public class TARDISPluginRespect {
     private TARDISTownyChecker tychk;
     private TARDISWorldBorderChecker borderchk;
     private TARDISFactionsChecker factionschk;
+    private TARDISGriefPreventionChecker griefchk;
     public boolean townyOnServer = false;
     public boolean borderOnServer = false;
     public boolean factionsOnServer = false;
+    public boolean griefPreventionOnServer = false;
 
     public TARDISPluginRespect(TARDIS plugin) {
         this.plugin = plugin;
@@ -115,6 +118,12 @@ public class TARDISPluginRespect {
             }
             bool = false;
         }
+        if (griefPreventionOnServer && plugin.getConfig().getBoolean("preferences.respect_grief_prevention") && !griefchk.isInClaim(p, l)) {
+            if (message) {
+                TARDISMessage.send(p, plugin.getPluginName() + "That location is in another faction's claim!");
+            }
+            bool = false;
+        }
         if (plugin.getTardisArea().areaCheckLocPlayer(p, l)) {
             if (message) {
                 TARDISMessage.send(p, plugin.getPluginName() + "You do not have permission [" + plugin.getTrackerKeeper().getTrackPerm().get(p.getUniqueId()) + "] to bring the TARDIS to this location!");
@@ -161,4 +170,17 @@ public class TARDISPluginRespect {
             }
         }
     }
+
+    /**
+     * Checks if the GriefPrevention plugin is available, and loads support if
+     * it is.
+     */
+    private void loadGriefPrevention() {
+        if (plugin.getPM().getPlugin("GriefPrevention") != null) {
+            plugin.debug("Hooking into GriefPrevention!");
+            griefPreventionOnServer = true;
+            griefchk = new TARDISGriefPreventionChecker(plugin, griefPreventionOnServer);
+        }
+    }
+
 }
