@@ -101,7 +101,7 @@ public class QueryFactory {
             idRS = ps.getGeneratedKeys();
             return (idRS.next()) ? idRS.getInt(1) : -1;
         } catch (SQLException e) {
-            plugin.debug("Update error for " + table + "! " + e.getMessage());
+            plugin.debug("Insert error for " + table + "! " + e.getMessage());
             return -1;
         } finally {
             try {

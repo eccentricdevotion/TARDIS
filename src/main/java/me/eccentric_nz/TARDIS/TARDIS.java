@@ -51,6 +51,7 @@ import me.eccentric_nz.TARDIS.files.TARDISBlockLoader;
 import me.eccentric_nz.TARDIS.files.TARDISConfiguration;
 import me.eccentric_nz.TARDIS.files.TARDISMakeRoomCSV;
 import me.eccentric_nz.TARDIS.files.TARDISMakeTardisCSV;
+import me.eccentric_nz.TARDIS.move.TARDISPortalPersister;
 import me.eccentric_nz.TARDIS.recipes.TARDISShapedRecipe;
 import me.eccentric_nz.TARDIS.recipes.TARDISShapelessRecipe;
 import me.eccentric_nz.TARDIS.rooms.TARDISWalls;
@@ -237,6 +238,9 @@ public class TARDIS extends JavaPlugin {
             if (pm.isPluginEnabled("Multiverse-Inventories")) {
                 TMIChecker = new TARDISMultiverseInventoriesChecker(this);
             }
+            if (getConfig().getBoolean("preferences.walk_in_tardis")) {
+                new TARDISPortalPersister(this).load();
+            }
             setDates();
             filter = new TARDISPerceptionFilter(this);
             filter.createPerceptionFilter();
@@ -265,6 +269,9 @@ public class TARDIS extends JavaPlugin {
     @Override
     public void onDisable() {
         if (hasVersion) {
+            if (getConfig().getBoolean("preferences.walk_in_tardis")) {
+                new TARDISPortalPersister(this).save();
+            }
             updateTagStats();
             saveConfig();
             closeDatabase();
