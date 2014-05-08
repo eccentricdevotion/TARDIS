@@ -34,6 +34,7 @@ import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.WorldType;
+import org.bukkit.block.Biome;
 import org.bukkit.block.Block;
 import org.bukkit.block.Sign;
 import org.bukkit.entity.Player;
@@ -79,7 +80,7 @@ public class TARDISBuilderInner {
     public void buildInner(SCHEMATIC schm, World world, int dbID, Player p, int middle_id, byte middle_data, int floor_id, byte floor_data, boolean tips) {
         String[][][] s;
         short[] d;
-        int level, row, col, id, x, z, startx, startz, resetx, resetz, j = 2;
+        int level, row, col, id, startx, startz, resetx, resetz, j = 2;
         boolean below = (!plugin.getConfig().getBoolean("creation.create_worlds") && !plugin.getConfig().getBoolean("creation.default_world"));
         int starty;
         if (below) {
@@ -221,6 +222,10 @@ public class TARDISBuilderInner {
             for (row = 0; row < w; row++) {
                 for (col = 0; col < l; col++) {
                     tmp = s[level][row][col];
+                    // if we're setting the biome to sky, do it now
+                    if (plugin.getConfig().getBoolean("creation.sky_biome") && level == 0 && !below) {
+                        world.setBiome(startx, startz, Biome.SKY);
+                    }
                     if (!tmp.equals("-")) {
                         if (tmp.contains(":")) {
                             String[] iddata = tmp.split(":");

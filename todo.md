@@ -9,6 +9,7 @@
 5. Walk in to the TARDIS if door is open (started)
 6. Allow mobs to spawn through the open door
 7. Set TARDIS consoles as SKY biome (The End world type?, configurable / player preference) + add orange wool, note blocks (disk storage), and jukebox textures (advanced console) to MCPatcher resource pack
+8. Player preference for time lock
 8. Bugs, bugs, bugs
 
 ##Future version `3.0+`

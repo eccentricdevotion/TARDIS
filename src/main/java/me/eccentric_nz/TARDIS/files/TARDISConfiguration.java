@@ -84,6 +84,7 @@ public class TARDISConfiguration {
         boolOptions.put("creation.custom_schematic", false);
         boolOptions.put("creation.default_world", false);
         boolOptions.put("creation.keep_night", true);
+        boolOptions.put("creation.sky_biome", true);
         boolOptions.put("creation.use_block_stack", false);
         boolOptions.put("creation.use_clay", false);
         boolOptions.put("debug", false);

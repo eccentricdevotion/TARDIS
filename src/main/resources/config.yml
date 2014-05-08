@@ -25,6 +25,7 @@ creation:
     use_block_stack: false
     use_clay: false
     count: 0
+    sky_biome: true
 # outer TARDIS
 police_box:
     name_tardis: false
