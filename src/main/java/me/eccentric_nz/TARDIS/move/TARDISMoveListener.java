@@ -24,6 +24,8 @@ import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetCompanions;
 import me.eccentric_nz.TARDIS.database.ResultSetPlayerPrefs;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
+import me.eccentric_nz.TARDIS.mobfarming.TARDISFarmer;
+import me.eccentric_nz.TARDIS.mobfarming.TARDISMob;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
@@ -89,6 +91,13 @@ public class TARDISMoveListener implements Listener {
                 boolean hasPrefs = rsp.resultSet();
                 boolean minecart = (hasPrefs) ? rsp.isMinecartOn() : false;
                 boolean userQuotes = (hasPrefs) ? rsp.isQuotesOn() : false;
+                // check for entities near the police box
+                List<TARDISMob> pets = null;
+                if (plugin.getConfig().getBoolean("allow.mob_farming") && p.hasPermission("tardis.farm") && !plugin.getTrackerKeeper().getTrackFarming().contains(uuid)) {
+                    plugin.getTrackerKeeper().getTrackFarming().add(uuid);
+                    TARDISFarmer tf = new TARDISFarmer(plugin);
+                    pets = tf.farmAnimals(l, d, id, p, tpl.getLocation().getWorld().getName(), l.getWorld().getName());
+                }
                 // set travelling status
                 QueryFactory qf = new QueryFactory(plugin);
                 if (exit) {
@@ -104,6 +113,9 @@ public class TARDISMoveListener implements Listener {
                 }
                 // tp player
                 plugin.getGeneralKeeper().getDoorListener().movePlayer(p, to, exit, l.getWorld(), userQuotes, 0, minecart);
+                if (pets != null && pets.size() > 0) {
+                    plugin.getGeneralKeeper().getDoorListener().movePets(pets, tpl.getLocation(), p, d, true);
+                }
                 if (userQuotes) {
                     TARDISMessage.send(p, plugin.getPluginName() + "Don't forget to close the door!");
                 }
