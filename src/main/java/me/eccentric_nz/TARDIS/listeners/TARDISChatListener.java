@@ -44,8 +44,8 @@ public class TARDISChatListener implements Listener {
 
     /**
      * Listens for player typing "tardis rescue accept". If the player types it
-     * within 60 seconds of a Timelord sending a rescue request, a player rescue
-     * attempt is made.
+     * within 60 seconds of a Time Lord sending a rescue request, a player
+     * rescue attempt is made.
      *
      * @param event a player typing in chat
      */

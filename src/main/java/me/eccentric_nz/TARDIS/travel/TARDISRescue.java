@@ -51,7 +51,7 @@ public class TARDISRescue {
      * Move the Police Box to a player's location, and potentially rescue the
      * player.
      *
-     * @param player The Timelord
+     * @param player The Time Lord
      * @param saved The player to be rescued
      * @param id The TARDIS unique ID
      * @param tt an instance of the TARDISTimeTravel class
@@ -107,9 +107,9 @@ public class TARDISRescue {
     }
 
     /**
-     * Check whether a Timelord can rescue a player, and then rescue them.
+     * Check whether a Time Lord can rescue a player, and then rescue them.
      *
-     * @param player The Timelord
+     * @param player The Time Lord
      * @param saved The player to be rescued
      * @return true if rescue was successful
      */
@@ -138,7 +138,7 @@ public class TARDISRescue {
             }
             int tardis_id = rst.getTardis_id();
             if (tardis_id != id) {
-                TARDISMessage.send(player, plugin.getPluginName() + "You can only run this command if you are the Timelord of " + ChatColor.LIGHT_PURPLE + "this" + ChatColor.RESET + " TARDIS!");
+                TARDISMessage.send(player, plugin.getPluginName() + "You can only run this command if you are the Time Lord of " + ChatColor.LIGHT_PURPLE + "this" + ChatColor.RESET + " TARDIS!");
                 return false;
             }
             int level = rs.getArtron_level();

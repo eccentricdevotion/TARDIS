@@ -116,7 +116,7 @@ public class TARDISTravelCommands implements CommandExecutor {
                 }
                 int tardis_id = rst.getTardis_id();
                 if (tardis_id != id) {
-                    TARDISMessage.send(player, plugin.getPluginName() + "You can only run this command if you are the Timelord of " + ChatColor.LIGHT_PURPLE + "this" + ChatColor.RESET + " TARDIS!");
+                    TARDISMessage.send(player, plugin.getPluginName() + "You can only run this command if you are the Time Lord of " + ChatColor.LIGHT_PURPLE + "this" + ChatColor.RESET + " TARDIS!");
                     return true;
                 }
                 int travel = plugin.getArtronConfig().getInt("travel");

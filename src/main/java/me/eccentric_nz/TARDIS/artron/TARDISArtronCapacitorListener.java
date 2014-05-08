@@ -228,7 +228,7 @@ public class TARDISArtronCapacitorListener implements Listener {
                                 // transfer player artron energy into the capacitor
                                 int ten_percent = Math.round(fc * 0.1F);
                                 if (current_level >= ten_percent && plugin.getConfig().getBoolean("creation.create_worlds")) {
-                                    TARDISMessage.send(player, plugin.getPluginName() + "You can only transfer Timelord Artron Energy when the capacitor is below 10%");
+                                    TARDISMessage.send(player, plugin.getPluginName() + "You can only transfer Time Lord Artron Energy when the capacitor is below 10%");
                                     return;
                                 }
                                 HashMap<String, Object> wherep = new HashMap<String, Object>();

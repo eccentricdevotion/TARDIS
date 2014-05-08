@@ -85,7 +85,7 @@ public class TARDISRemoteCommands implements CommandExecutor {
                         }
                         int tardis_id = rst.getTardis_id();
                         if (tardis_id != id) {
-                            sendMessage(sender, plugin.getPluginName() + "You can only run this command if you are the Timelord of the " + ChatColor.LIGHT_PURPLE + "remote" + ChatColor.RESET + " TARDIS!");
+                            sendMessage(sender, plugin.getPluginName() + "You can only run this command if you are the Time Lord of the " + ChatColor.LIGHT_PURPLE + "remote" + ChatColor.RESET + " TARDIS!");
                             return true;
                         }
                         // must have circuits

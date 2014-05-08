@@ -120,7 +120,7 @@ public class TARDISStattenheimListener implements Listener {
                         TARDISMessage.send(player, plugin.getPluginName() + MESSAGE.NO_PB_IN_WORLD.getText());
                         return;
                     }
-                    // check they are a timelord
+                    // check they are a Time Lord
                     HashMap<String, Object> where = new HashMap<String, Object>();
                     where.put("uuid", player.getUniqueId().toString());
                     ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);

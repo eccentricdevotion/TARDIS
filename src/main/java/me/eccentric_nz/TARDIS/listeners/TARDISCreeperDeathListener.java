@@ -62,7 +62,7 @@ public class TARDISCreeperDeathListener implements Listener {
                 Player p = c.getKiller();
                 if (p != null) {
                     String killerUUID = p.getUniqueId().toString();
-                    // is the killer a timelord?
+                    // is the killer a Time Lord?
                     HashMap<String, Object> where = new HashMap<String, Object>();
                     where.put("uuid", killerUUID);
                     ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);

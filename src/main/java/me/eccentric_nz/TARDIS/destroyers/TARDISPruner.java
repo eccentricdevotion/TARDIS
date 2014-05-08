@@ -74,7 +74,7 @@ public class TARDISPruner {
                         // double check that this is an unused TARDIS
                         Timestamp lastuse = new Timestamp(rs.getLong("lastuse"));
                         if (lastuse.before(prune)) {
-                            String line = "Timelord: " + rs.getString("owner") + ", Location: " + rsc.getWorld().getName() + ":" + rsc.getX() + ":" + rsc.getY() + ":" + rsc.getZ();
+                            String line = "Time Lord: " + rs.getString("owner") + ", Location: " + rsc.getWorld().getName() + ":" + rsc.getX() + ":" + rsc.getY() + ":" + rsc.getZ();
                             // write line to file
                             bw.write(line);
                             bw.newLine();

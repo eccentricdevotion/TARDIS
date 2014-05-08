@@ -582,7 +582,7 @@ public class TARDISARSListener implements Listener {
                             revert(uuid);
                         }
                     } else {
-                        TARDISMessage.send(p, plugin.getPluginName() + "Only the Timelord of this TARDIS can reconfigure rooms!");
+                        TARDISMessage.send(p, plugin.getPluginName() + "Only the Time Lord of this TARDIS can reconfigure rooms!");
                         revert(uuid);
                     }
                     map_data.remove(uuid);

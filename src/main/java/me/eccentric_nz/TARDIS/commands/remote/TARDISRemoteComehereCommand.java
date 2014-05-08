@@ -75,7 +75,7 @@ public class TARDISRemoteComehereCommand {
             TARDISMessage.send(player, plugin.getPluginName() + MESSAGE.NO_PB_IN_WORLD.getText());
             return true;
         }
-        // check the remote player is a timelord
+        // check the remote player is a Time Lord
         HashMap<String, Object> where = new HashMap<String, Object>();
         where.put("uuid", uuid.toString());
         ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);

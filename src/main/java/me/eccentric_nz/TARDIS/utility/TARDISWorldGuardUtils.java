@@ -417,7 +417,7 @@ public class TARDISWorldGuardUtils {
      * Gets a TARDIS WorldGuard region.
      *
      * @param world the world the region is in
-     * @param p the Timelord whose region it is
+     * @param p the Time Lord whose region it is
      * @return the protected region
      */
     public ProtectedRegion getRegion(String world, String p) {

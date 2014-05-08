@@ -65,7 +65,7 @@ public class ResultSetCompanions {
             statement = connection.prepareStatement(query);
             rs = statement.executeQuery();
             if (rs.isBeforeFirst()) {
-                // always add the time lord of the TARDIS
+                // always add the Time Lord of the TARDIS
                 companions.add(UUID.fromString(rs.getString("uuid")));
                 String comps = rs.getString("companions");
                 if (!rs.wasNull() && !comps.isEmpty()) {

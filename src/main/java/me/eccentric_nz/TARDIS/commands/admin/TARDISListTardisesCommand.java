@@ -56,7 +56,7 @@ public class TARDISListTardisesCommand {
                             sender.sendMessage(plugin.getPluginName() + MESSAGE.NO_CURRENT.getText());
                             return true;
                         }
-                        String line = "Timelord: " + map.get("owner") + ", Location: " + rsc.getWorld().getName() + ":" + rsc.getX() + ":" + rsc.getY() + ":" + rsc.getZ();
+                        String line = "Time Lord: " + map.get("owner") + ", Location: " + rsc.getWorld().getName() + ":" + rsc.getX() + ":" + rsc.getY() + ":" + rsc.getZ();
                         bw.write(line);
                         bw.newLine();
                     }
@@ -88,7 +88,7 @@ public class TARDISListTardisesCommand {
                         sender.sendMessage(plugin.getPluginName() + MESSAGE.NO_CURRENT.getText());
                         return true;
                     }
-                    sender.sendMessage("Timelord: " + map.get("owner") + ", Location: " + rsc.getWorld().getName() + ":" + rsc.getX() + ":" + rsc.getY() + ":" + rsc.getZ());
+                    sender.sendMessage("Time Lord: " + map.get("owner") + ", Location: " + rsc.getWorld().getName() + ":" + rsc.getX() + ":" + rsc.getY() + ":" + rsc.getZ());
                 }
                 sender.sendMessage(plugin.getPluginName() + "To see more locations, type: /tardisadmin list 2,  /tardisadmin list 3 etc.");
             } else {

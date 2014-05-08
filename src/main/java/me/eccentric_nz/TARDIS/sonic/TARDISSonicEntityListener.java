@@ -88,7 +88,7 @@ public class TARDISSonicEntityListener implements Listener {
                                 if (plugin.isProjRassilonOnServer()) {
                                     RassilonAPI ra = ((ProjectRassilon) plugin.getPM().getPlugin("ProjectRassilon")).getAPI(plugin);
                                     if (ra != null) {
-                                        TARDISMessage.send(player, "Timelord: " + ra.getTimelordStatus(scanned));
+                                        TARDISMessage.send(player, "Time Lord: " + ra.getTimelordStatus(scanned));
                                         TARDISMessage.send(player, "Regen count: " + ra.getRegenCount(scanned));
                                         TARDISMessage.send(player, "Regenerating: " + ra.getRegenStatus(scanned));
                                         TARDISMessage.send(player, "Blocking regeneration: " + ra.getRegenBlock(scanned));
