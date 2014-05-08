@@ -651,7 +651,6 @@ public class TARDISSonicListener implements Listener {
                                 return;
                             }
                         } else {
-                            TARDISMessage.send(player, plugin.getPluginName() + "The door is deadlocked!");
                             return;
                         }
                     }

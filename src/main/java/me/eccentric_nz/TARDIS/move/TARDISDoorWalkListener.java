@@ -23,6 +23,7 @@ import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.builders.TARDISEmergencyRelocation;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
+import me.eccentric_nz.TARDIS.database.ResultSetCompanions;
 import me.eccentric_nz.TARDIS.database.ResultSetCurrentLocation;
 import me.eccentric_nz.TARDIS.database.ResultSetDoors;
 import me.eccentric_nz.TARDIS.database.ResultSetPlayerPrefs;
@@ -153,8 +154,7 @@ public class TARDISDoorWalkListener extends TARDISDoorListener implements Listen
                                     setl.put("locked", locked);
                                     HashMap<String, Object> wherel = new HashMap<String, Object>();
                                     wherel.put("tardis_id", rsd.getTardis_id());
-                                    // always lock / unlock both doors?
-                                    //wherel.put("door_type", rsd.getDoor_type());
+                                    // always lock / unlock both doors
                                     qf.doUpdate("doors", setl, wherel);
                                     TARDISMessage.send(player, plugin.getPluginName() + "The door was " + message);
                                 }
@@ -165,54 +165,58 @@ public class TARDISDoorWalkListener extends TARDISDoorListener implements Listen
                                     TARDISMessage.send(player, plugin.getPluginName() + MESSAGE.NOT_WHILE_MAT.getText());
                                     return;
                                 }
-                                if (!rsd.isLocked()) {
-                                    // toogle the door open/closed
-                                    if (blockType.equals(Material.IRON_DOOR_BLOCK) || blockType.equals(Material.WOODEN_DOOR)) {
-                                        if (doortype == 0 || doortype == 1) {
-                                            // toggle the door
-                                            new TARDISDoorToggler(plugin, block, dd, player, minecart, id).toggleDoors();
+                                // must be Time Lord or companion
+                                ResultSetCompanions rsc = new ResultSetCompanions(plugin, id);
+                                if (rsc.getCompanions().contains(playerUUID)) {
+                                    if (!rsd.isLocked()) {
+                                        // toogle the door open/closed
+                                        if (blockType.equals(Material.IRON_DOOR_BLOCK) || blockType.equals(Material.WOODEN_DOOR)) {
+                                            if (doortype == 0 || doortype == 1) {
+                                                // toggle the door
+                                                new TARDISDoorToggler(plugin, block, dd, player, minecart, id).toggleDoors();
+                                            }
+                                        } else if (blockType.equals(Material.TRAP_DOOR)) {
+                                            int open = 1;
+                                            byte door_data = block.getData();
+                                            switch (dd) {
+                                                case NORTH:
+                                                    if (door_data == 1) {
+                                                        block.setData((byte) 5, false);
+                                                    } else {
+                                                        block.setData((byte) 1, false);
+                                                        open = 2;
+                                                    }
+                                                    break;
+                                                case WEST:
+                                                    if (door_data == 3) {
+                                                        block.setData((byte) 7, false);
+                                                    } else {
+                                                        block.setData((byte) 3, false);
+                                                        open = 2;
+                                                    }
+                                                    break;
+                                                case SOUTH:
+                                                    if (door_data == 0) {
+                                                        block.setData((byte) 4, false);
+                                                    } else {
+                                                        block.setData((byte) 0, false);
+                                                        open = 2;
+                                                    }
+                                                    break;
+                                                default:
+                                                    if (door_data == 2) {
+                                                        block.setData((byte) 6, false);
+                                                    } else {
+                                                        block.setData((byte) 2, false);
+                                                        open = 2;
+                                                    }
+                                                    break;
+                                            }
+                                            playDoorSound(player, open, player.getLocation(), minecart);
                                         }
-                                    } else if (blockType.equals(Material.TRAP_DOOR)) {
-                                        int open = 1;
-                                        byte door_data = block.getData();
-                                        switch (dd) {
-                                            case NORTH:
-                                                if (door_data == 1) {
-                                                    block.setData((byte) 5, false);
-                                                } else {
-                                                    block.setData((byte) 1, false);
-                                                    open = 2;
-                                                }
-                                                break;
-                                            case WEST:
-                                                if (door_data == 3) {
-                                                    block.setData((byte) 7, false);
-                                                } else {
-                                                    block.setData((byte) 3, false);
-                                                    open = 2;
-                                                }
-                                                break;
-                                            case SOUTH:
-                                                if (door_data == 0) {
-                                                    block.setData((byte) 4, false);
-                                                } else {
-                                                    block.setData((byte) 0, false);
-                                                    open = 2;
-                                                }
-                                                break;
-                                            default:
-                                                if (door_data == 2) {
-                                                    block.setData((byte) 6, false);
-                                                } else {
-                                                    block.setData((byte) 2, false);
-                                                    open = 2;
-                                                }
-                                                break;
-                                        }
-                                        playDoorSound(player, open, player.getLocation(), minecart);
+                                    } else {
+                                        TARDISMessage.send(player, plugin.getPluginName() + "You need to unlock the door!");
                                     }
-                                } else {
-                                    TARDISMessage.send(player, plugin.getPluginName() + "You need to unlock the door!");
                                 }
                             } else if (action == Action.RIGHT_CLICK_BLOCK && player.isSneaking()) {
                                 if (rsd.isLocked()) {
