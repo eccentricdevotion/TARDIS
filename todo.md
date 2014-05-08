@@ -6,7 +6,7 @@
 2. `/tardisremote` commands (started)
 3. UHC flying mode (started - have coded some test plugins)
 4. TARDIS invisibility - 1.8 barrier blocks?
-5. Walk in to the TARDIS if door is open (started, grrrr)
+5. Walk in to the TARDIS if door is open (started)
 6. Allow mobs to spawn through the open door
 7. Set TARDIS consoles as SKY biome (The End world type?, configurable / player preference) + add orange wool, note blocks (disk storage), and jukebox textures (advanced console) to MCPatcher resource pack
 8. Bugs, bugs, bugs
