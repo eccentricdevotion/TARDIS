@@ -147,6 +147,10 @@ public class TARDISRemoteCommands implements CommandExecutor {
                                     return true;
                                 }
                             default: // TRAVEL
+                                if (args.length < 3) {
+                                    sendMessage(sender, plugin.getPluginName() + "Too few command arguments for remote travel!");
+                                    return false;
+                                }
                                 // already travelling
                                 if (!handbrake) {
                                     sendMessage(sender, plugin.getPluginName() + ChatColor.RED + MESSAGE.NOT_WHILE_TRAVELLING.getText());
