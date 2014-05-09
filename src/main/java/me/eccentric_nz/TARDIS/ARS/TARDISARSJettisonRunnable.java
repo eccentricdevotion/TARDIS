@@ -77,6 +77,10 @@ public class TARDISARSJettisonRunnable implements Runnable {
         // give them their energy!
         if (room != TARDISARS.SLOT) {
             int amount = Math.round((plugin.getArtronConfig().getInt("jettison") / 100F) * plugin.getRoomsConfig().getInt("rooms." + r + ".cost"));
+            if (r.equals("GRAVITY") || r.equals("ANTIGRAVITY")) {
+                // halve it because they have to jettison top and bottom
+                amount /= 2;
+            }
             HashMap<String, Object> set = new HashMap<String, Object>();
             set.put("tardis_id", id);
             qf.alterEnergyLevel("tardis", amount, set, null);

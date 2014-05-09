@@ -18,10 +18,7 @@ package me.eccentric_nz.TARDIS.ARS;
 
 import java.util.HashMap;
 import java.util.Map;
-import me.eccentric_nz.TARDIS.JSON.JSONArray;
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.database.QueryFactory;
-import me.eccentric_nz.TARDIS.database.ResultSetARS;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import org.bukkit.Chunk;
 import org.bukkit.World;
@@ -52,57 +49,13 @@ public class TARDISARSProcessor {
                 for (int z = 0; z < 9; z++) {
                     if (start[l][x][z] != end[l][x][z]) {
                         if (end[l][x][z] == 46) {
-                            plugin.debug("Found TNT in this slot");
-                            if (start[l][x][z] == 48) {
-                                plugin.debug("Found a gravity room here previously");
-                                if (l == 0 || (l > 0 && start[l - 1][x][z] == 48)) {
-                                    plugin.debug("Found a gravity slot below this one");
-                                    // set both layers of the gravity well
-                                    TARDISARSJettison slot = new TARDISARSJettison();
-                                    slot.setChunk(c);
-                                    slot.setY(l);
-                                    slot.setX(x);
-                                    slot.setZ(z);
-                                    jettison.put(slot, TARDISARS.ARSFor(start[l][x][z]));
-                                    TARDISARSJettison slot2 = new TARDISARSJettison();
-                                    slot2.setChunk(c);
-                                    slot2.setY(l - 1);
-                                    slot2.setX(x);
-                                    slot2.setZ(z);
-                                    jettison.put(slot2, TARDISARS.SLOT);
-                                    // need to update the slot in the DB
-                                    resetSlot(l, x, z);
-                                    resetSlot(l - 1, x, z);
-                                }
-                            } else if (start[l][x][z] == 24) {
-                                plugin.debug("Found an anti-gravity room here previously");
-                                if (l == 2 || (l < 2 && start[l + 1][x][z] == 24)) {
-                                    plugin.debug("Found an anti-gravity slot above this one");
-                                    // set both layers of the gravity well
-                                    TARDISARSJettison slot = new TARDISARSJettison();
-                                    slot.setChunk(c);
-                                    slot.setY(l);
-                                    slot.setX(x);
-                                    slot.setZ(z);
-                                    jettison.put(slot, TARDISARS.ARSFor(start[l][x][z]));
-                                    TARDISARSJettison slot2 = new TARDISARSJettison();
-                                    slot2.setChunk(c);
-                                    slot2.setY(l + 1);
-                                    slot2.setX(x);
-                                    slot2.setZ(z);
-                                    jettison.put(slot2, TARDISARS.SLOT);
-                                    // need to update the slot in the DB
-                                    resetSlot(l, x, z);
-                                    resetSlot(l + 1, x, z);
-                                }
-                            } else {
-                                TARDISARSJettison slot = new TARDISARSJettison();
-                                slot.setChunk(c);
-                                slot.setY(l);
-                                slot.setX(x);
-                                slot.setZ(z);
-                                jettison.put(slot, TARDISARS.ARSFor(start[l][x][z]));
-                            }
+                            // found TNT in this slot
+                            TARDISARSJettison slot = new TARDISARSJettison();
+                            slot.setChunk(c);
+                            slot.setY(l);
+                            slot.setX(x);
+                            slot.setZ(z);
+                            jettison.put(slot, TARDISARS.ARSFor(start[l][x][z]));
                         } else {
                             if (end[l][x][z] == 48) {
                                 if (l == 2 || ((l + 1) < 3 && end[l + 1][x][z] == 48)) {
@@ -116,7 +69,7 @@ public class TARDISARSProcessor {
                                 }
                             } else if (end[l][x][z] == 24) {
                                 if (l == 0 || ((l - 1) > 0 && end[l - 1][x][z] == 24)) {
-                                    // only remember the bottom slot of a gravity well
+                                    // only remember the top slot of a gravity well
                                     TARDISARSSlot slot = new TARDISARSSlot();
                                     slot.setChunk(c);
                                     slot.setY(l - 1);
@@ -193,35 +146,5 @@ public class TARDISARSProcessor {
             return w.getChunkAt(cx, cz);
         }
         return null;
-    }
-
-    private void resetSlot(int l, int x, int z) {
-        HashMap<String, Object> where = new HashMap<String, Object>();
-        where.put("tardis_id", id);
-        ResultSetARS rs = new ResultSetARS(plugin, where);
-        if (rs.resultSet()) {
-            int[][][] grid = new int[3][9][9];
-            JSONArray json = new JSONArray(rs.getJson());
-            for (int yy = 0; yy < 3; yy++) {
-                JSONArray jsonx = json.getJSONArray(yy);
-                for (int xx = 0; xx < 9; xx++) {
-                    JSONArray jsonz = jsonx.getJSONArray(xx);
-                    for (int zz = 0; zz < 9; zz++) {
-                        if (jsonz.getInt(zz) == 46) {
-                            grid[yy][xx][zz] = 1;
-                        } else {
-                            grid[yy][xx][zz] = jsonz.getInt(zz);
-                        }
-                    }
-                }
-            }
-            grid[l][x][z] = 1;
-            JSONArray newJSON = new JSONArray(grid);
-            HashMap<String, Object> set = new HashMap<String, Object>();
-            set.put("json", newJSON.toString());
-            HashMap<String, Object> wherea = new HashMap<String, Object>();
-            wherea.put("tardis_id", id);
-            new QueryFactory(plugin).doUpdate("ars", set, wherea);
-        }
     }
 }
