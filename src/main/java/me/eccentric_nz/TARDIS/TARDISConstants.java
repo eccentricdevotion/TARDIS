@@ -19,6 +19,7 @@ package me.eccentric_nz.TARDIS;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
+import org.bukkit.Material;
 import org.bukkit.entity.EntityType;
 
 /**
@@ -30,9 +31,9 @@ import org.bukkit.entity.EntityType;
  */
 public class TARDISConstants {
 
-    // GUI ids
-    public static final List<Integer> GUI_IDS = Arrays.asList(1, 2, 5, 7, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 29, 35, 41, 42, 45, 46, 47, 48, 49, 52, 56, 57, 58, 61, 73, 79, 80, 81, 82, 84, 86, 87, 88, 89, 98, 99, 100, 103, 110, 112, 118, 121, 123, 129, 133, 153, 155);
-    public static final List<Integer> GUI_ITEMS = Arrays.asList(6, 37, 38, 39, 40, 50, 131, 260, 262, 266, 280, 281, 287, 288, 289, 291, 295, 296, 297, 318, 320, 321, 322, 323, 326, 328, 331, 332, 334, 336, 337, 338, 339, 340, 341, 344, 345, 347, 349, 352, 355, 357, 358, 359, 360, 364, 365, 368, 385, 386, 390, 393, 2262);
+    // GUI materials
+    public static final List<Material> GUI_IDS = Arrays.asList(Material.STONE, Material.GRASS, Material.WOOD, Material.BEDROCK, Material.SAND, Material.GRAVEL, Material.GOLD_ORE, Material.IRON_ORE, Material.COAL_ORE, Material.LOG, Material.LEAVES, Material.SPONGE, Material.GLASS, Material.LAPIS_ORE, Material.LAPIS_BLOCK, Material.DISPENSER, Material.SANDSTONE, Material.PISTON_STICKY_BASE, Material.WOOL, Material.GOLD_BLOCK, Material.IRON_BLOCK, Material.BRICK, Material.TNT, Material.BOOKSHELF, Material.MOSSY_COBBLESTONE, Material.OBSIDIAN, Material.MOB_SPAWNER, Material.DIAMOND_ORE, Material.DIAMOND_BLOCK, Material.WORKBENCH, Material.FURNACE, Material.REDSTONE_ORE, Material.ICE, Material.SNOW_BLOCK, Material.CACTUS, Material.CLAY, Material.JUKEBOX, Material.PUMPKIN, Material.NETHERRACK, Material.SOUL_SAND, Material.GLOWSTONE, Material.SMOOTH_BRICK, Material.HUGE_MUSHROOM_1, Material.HUGE_MUSHROOM_2, Material.MELON, Material.MYCEL, Material.NETHER_BRICK, Material.CAULDRON, Material.ENDER_STONE, Material.REDSTONE_LAMP_OFF, Material.EMERALD_ORE, Material.EMERALD_BLOCK, Material.QUARTZ_ORE, Material.QUARTZ_BLOCK);
+    public static final List<Material> GUI_ITEMS = Arrays.asList(Material.SAPLING, Material.YELLOW_FLOWER, Material.RED_ROSE, Material.BROWN_MUSHROOM, Material.RED_MUSHROOM, Material.TORCH, Material.APPLE, Material.ARROW, Material.GOLD_INGOT, Material.STICK, Material.BOWL, Material.STRING, Material.FEATHER, Material.SULPHUR, Material.SEEDS, Material.BREAD);
     // underdoor blocks
     public static final List<Integer> UNDERDOOR_BLOCKS = Arrays.asList(0, 6, 9, 8, 31, 32, 37, 38, 39, 40, 78, 89, 106, 3019, 3020);
     // chameleon blocks
