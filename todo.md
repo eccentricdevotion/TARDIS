@@ -14,7 +14,8 @@
 10. Bugs, bugs, bugs
 
 ##Future version `3.0+`
-1. Console modes
+1. Console modes?
+2. ARS room limit - can only reconfigure x rooms at a time (and cannot open ARS until reconfiguration is complete) - configurable option
 
 ####I couldn't really be bothered
 1. HADS + explosions + fireballs + lava
