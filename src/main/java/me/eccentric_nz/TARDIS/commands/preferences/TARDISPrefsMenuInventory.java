@@ -23,6 +23,7 @@ import java.util.List;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.database.ResultSetPlayerPrefs;
+import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
@@ -51,6 +52,12 @@ public class TARDISPrefsMenuInventory {
      */
     @SuppressWarnings("deprecation")
     private ItemStack[] getItemStack() {
+        // map
+        ItemStack tt = new ItemStack(Material.COMPASS, 1);
+        ItemMeta map = tt.getItemMeta();
+        map.setDisplayName("TARDIS Map");
+        tt.setItemMeta(map);
+        // get player prefs
         HashMap<String, Object> where = new HashMap<String, Object>();
         where.put("uuid", uuid);
         ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, where);
@@ -162,13 +169,14 @@ public class TARDISPrefsMenuInventory {
             options.add(wool);
         }
         ItemStack[] stack = new ItemStack[18];
-        for (int s = 0; s < 18; s++) {
+        for (int s = 0; s < 17; s++) {
             if (s < options.size()) {
                 stack[s] = options.get(s);
             } else {
                 stack[s] = null;
             }
         }
+        stack[17] = tt;
         return stack;
     }
 

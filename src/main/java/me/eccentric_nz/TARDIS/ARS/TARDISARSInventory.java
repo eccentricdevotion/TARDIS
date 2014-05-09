@@ -78,10 +78,10 @@ public class TARDISARSInventory {
         bot.setDisplayName("Bottom level");
         level_bot.setItemMeta(bot);
         // stone
-        ItemStack stone = new ItemStack(Material.WOOL, 1, (byte) 15);
-        ItemMeta s1 = stone.getItemMeta();
-        s1.setDisplayName("Empty slot");
-        stone.setItemMeta(s1);
+        ItemStack black = new ItemStack(Material.WOOL, 1, (byte) 15);
+        ItemMeta wool = black.getItemMeta();
+        wool.setDisplayName("Load the map!");
+        black.setItemMeta(wool);
         // scroll left
         ItemStack scroll_left = new ItemStack(Material.WOOL, 1, (byte) 14);
         ItemMeta nim = scroll_left.getItemMeta();
@@ -159,11 +159,11 @@ public class TARDISARSInventory {
         map.setItemMeta(load);
 
         ItemStack[] is = {
-            null, pad_up, null, null, stone, stone, stone, stone, stone,
-            pad_left, map, pad_right, s, stone, stone, stone, stone, stone,
-            null, pad_down, null, null, stone, stone, stone, stone, stone,
-            level_bot, level_sel, level_top, reset, stone, stone, stone, stone, stone,
-            scroll_left, null, scroll_right, jettison, stone, stone, stone, stone, stone,
+            null, pad_up, null, null, black, black, black, black, black,
+            pad_left, map, pad_right, s, black, black, black, black, black,
+            null, pad_down, null, null, black, black, black, black, black,
+            level_bot, level_sel, level_top, reset, black, black, black, black, black,
+            scroll_left, null, scroll_right, jettison, black, black, black, black, black,
             passage, arboretum, bedroom, kitchen, library, pool, vault, workshop, empty
         };
         return is;

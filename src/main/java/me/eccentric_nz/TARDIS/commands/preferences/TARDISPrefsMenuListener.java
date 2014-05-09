@@ -18,8 +18,12 @@ package me.eccentric_nz.TARDIS.commands.preferences;
 
 import java.util.HashMap;
 import java.util.List;
+import me.eccentric_nz.TARDIS.ARS.TARDISARSMap;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
+import me.eccentric_nz.TARDIS.database.ResultSetTravellers;
+import me.eccentric_nz.TARDIS.enumeration.MESSAGE;
+import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -55,7 +59,7 @@ public class TARDISPrefsMenuListener implements Listener {
     }
 
     @EventHandler(ignoreCancelled = true)
-    public void onPrefsMenuClick(InventoryClickEvent event) {
+    public void onPrefsMenuClick(final InventoryClickEvent event) {
         Inventory inv = event.getInventory();
         String name = inv.getTitle();
         if (name.equals("§4Player Prefs Menu")) {
@@ -64,12 +68,36 @@ public class TARDISPrefsMenuListener implements Listener {
             if (slot >= 0 && slot < 18) {
                 ItemStack is = inv.getItem(slot);
                 if (is != null) {
+                    final Player p = (Player) event.getWhoClicked();
+                    String uuid = p.getUniqueId().toString();
                     ItemMeta im = is.getItemMeta();
+                    if (slot == 17 && im.getDisplayName().equals("TARDIS Map")) {
+                        // must be in the TARDIS
+                        HashMap<String, Object> where = new HashMap<String, Object>();
+                        where.put("uuid", uuid);
+                        ResultSetTravellers rs = new ResultSetTravellers(plugin, where, false);
+                        if (rs.resultSet()) {
+                            // close this gui and load the TARDIS map
+                            plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
+                                @Override
+                                public void run() {
+                                    Inventory new_inv = plugin.getServer().createInventory(p, 54, "§4TARDIS Map");
+                                    // close inventory
+                                    p.closeInventory();
+                                    // open new inventory
+                                    new_inv.setContents(new TARDISARSMap().getMap());
+                                    p.openInventory(new_inv);
+                                }
+                            }, 1L);
+                        } else {
+                            TARDISMessage.send(p, plugin.getPluginName() + MESSAGE.NOT_IN_TARDIS.getText());
+                        }
+                        return;
+                    }
                     List<String> lore = im.getLore();
                     boolean bool = (lore.get(0).equals("ON"));
                     String value = (bool) ? "OFF" : "ON";
                     int b = (bool) ? 0 : 1;
-                    String uuid = ((Player) event.getWhoClicked()).getUniqueId().toString();
                     if (im.getDisplayName().equals("Companion Build")) {
                         String[] args = new String[2];
                         args[0] = "";

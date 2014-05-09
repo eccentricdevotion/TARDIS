@@ -10,10 +10,11 @@
 6. Allow mobs to spawn through the open door
 7. Player preference for time lock?
 8. Artron button powers on/off TARDIS (after initialisation)
-9. Bugs, bugs, bugs
+9. TARDIS map (started)
+10. Bugs, bugs, bugs
 
 ##Future version `3.0+`
-?
+1. Console modes
 
 ####I couldn't really be bothered
 1. HADS + explosions + fireballs + lava
