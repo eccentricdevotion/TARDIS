@@ -24,6 +24,8 @@
 
 ##Resource Pack / TARDISWeepingAngels
 
+1. Add custom items for the admin / player prefs GUI / ARS rooms etc
+
 Re-skin mobs for Resource pack, and add new mob sounds
 
 * Skeletons -> Weeping Angels - __done__

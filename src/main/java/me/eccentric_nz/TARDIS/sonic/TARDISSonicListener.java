@@ -129,6 +129,7 @@ public class TARDISSonicListener implements Listener {
         interactables.add(Material.WOOD_BUTTON);
         interactables.add(Material.WORKBENCH);
         redstone.add(Material.DETECTOR_RAIL);
+        redstone.add(Material.IRON_DOOR_BLOCK);
         redstone.add(Material.PISTON_BASE);
         redstone.add(Material.PISTON_STICKY_BASE);
         redstone.add(Material.POWERED_RAIL);
@@ -302,6 +303,40 @@ public class TARDISSonicListener implements Listener {
                                     plugin.getGeneralKeeper().getSonicRails().add(b.getLocation().toString());
                                     drail.setPressed(true);
                                     b.setData((byte) (drail.getData() + 8));
+                                }
+                                break;
+                            case IRON_DOOR_BLOCK:
+                                // get bottom door block
+                                Block door_bottom = b;
+                                if (b.getData() >= 8) {
+                                    door_bottom = b.getRelative(BlockFace.DOWN);
+                                }
+                                byte door_data = door_bottom.getData();
+                                switch (door_data) {
+                                    case (byte) 0:
+                                        door_bottom.setData((byte) 4, false);
+                                        break;
+                                    case (byte) 1:
+                                        door_bottom.setData((byte) 5, false);
+                                        break;
+                                    case (byte) 2:
+                                        door_bottom.setData((byte) 6, false);
+                                        break;
+                                    case (byte) 3:
+                                        door_bottom.setData((byte) 7, false);
+                                        break;
+                                    case (byte) 4:
+                                        door_bottom.setData((byte) 0, false);
+                                        break;
+                                    case (byte) 5:
+                                        door_bottom.setData((byte) 1, false);
+                                        break;
+                                    case (byte) 6:
+                                        door_bottom.setData((byte) 2, false);
+                                        break;
+                                    default:
+                                        door_bottom.setData((byte) 3, false);
+                                        break;
                                 }
                                 break;
                             case POWERED_RAIL:
