@@ -53,7 +53,7 @@ public class TARDISSonicMenuListener implements Listener {
         if (name.equals("§4Sonic Prefs Menu")) {
             Player p = (Player) event.getWhoClicked();
             int slot = event.getRawSlot();
-            if (slot >= 0 && slot < 18) {
+            if (slot >= 0 && slot < 27) {
                 switch (slot) {
                     case 0:
                     case 1:
