@@ -92,6 +92,7 @@ public class TARDISSeedBlockProcessor {
                             TARDISMessage.send(player, plugin.getPluginName() + "You don't have permission to create the server's custom' TARDIS!");
                             return false;
                         }
+                        break;
                     case BIGGER:
                         if (!player.hasPermission("tardis.bigger")) {
                             TARDISMessage.send(player, plugin.getPluginName() + "You don't have permission to create a 'bigger' TARDIS!");
