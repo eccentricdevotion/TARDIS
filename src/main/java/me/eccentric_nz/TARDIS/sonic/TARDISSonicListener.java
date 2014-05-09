@@ -307,11 +307,12 @@ public class TARDISSonicListener implements Listener {
                                 break;
                             case IRON_DOOR_BLOCK:
                                 // get bottom door block
-                                Block door_bottom = b;
+                                Block tmp = b;
                                 if (b.getData() >= 8) {
-                                    door_bottom = b.getRelative(BlockFace.DOWN);
+                                    tmp = b.getRelative(BlockFace.DOWN);
                                 }
-                                byte door_data = door_bottom.getData();
+                                final Block door_bottom = tmp;
+                                final byte door_data = door_bottom.getData();
                                 switch (door_data) {
                                     case (byte) 0:
                                         door_bottom.setData((byte) 4, false);
@@ -338,6 +339,13 @@ public class TARDISSonicListener implements Listener {
                                         door_bottom.setData((byte) 3, false);
                                         break;
                                 }
+                                // return the door to its previous state after 3 seconds
+                                plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        door_bottom.setData(door_data, false);
+                                    }
+                                }, 60L);
                                 break;
                             case POWERED_RAIL:
                                 PoweredRail rail = (PoweredRail) bs.getData();
