@@ -24,11 +24,13 @@ import me.eccentric_nz.TARDIS.builders.TARDISTIPSData;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import org.bukkit.Location;
+import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.Inventory;
+import org.bukkit.inventory.ItemStack;
 
 /**
  * The architectural reconfiguration system is a component of the Doctor's
@@ -132,6 +134,11 @@ public class TARDISARSMapListener extends TARDISARSMethods implements Listener {
             int col = (int) (4 + (Math.floor((px - tx) / 16.0d)));
 //            plugin.debug("col: " + col);
             int row = (int) (4 + (Math.floor((pz - tz) / 16.0d)));
+            if (col < 0 || col > 8 || row < 0 || row > 8) {
+                // outside ARS grid
+                setLore(inv, 47, "You are outside of the ARS grid!");
+                return;
+            }
 //            plugin.debug("row: " + row);
             int east = getOffset(col);
 //            plugin.debug("east: " + east);
@@ -158,6 +165,8 @@ public class TARDISARSMapListener extends TARDISARSMethods implements Listener {
             // get itemstack to enchant and change lore
             int slot = ((row - south) * 9) + 4 + (col - east);
 //            plugin.debug("slot: " + slot);
+            ItemStack is = inv.getItem(slot);
+            is.setType(Material.ARROW);
             setLore(inv, slot, "You are here!");
         }
     }
