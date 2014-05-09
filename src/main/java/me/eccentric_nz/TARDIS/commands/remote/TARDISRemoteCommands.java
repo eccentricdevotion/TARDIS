@@ -57,6 +57,9 @@ public class TARDISRemoteCommands implements CommandExecutor {
     public boolean onCommand(final CommandSender sender, Command cmd, String label, String[] args) {
         // If the player/console typed /tardisremote then do the following...
         if (cmd.getName().equalsIgnoreCase("tardisremote") && sender.hasPermission("tardis.remote")) {
+            if (args.length < 2) {
+                return false;
+            }
             UUID oluuid = plugin.getServer().getOfflinePlayer(args[0]).getUniqueId();
             if (oluuid == null) {
                 oluuid = plugin.getGeneralKeeper().getUUIDCache().getIdOptimistic(args[0]);
