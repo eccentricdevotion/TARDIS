@@ -34,6 +34,7 @@ public class TARDISMonster extends TARDISMob {
     private ItemStack itemInHand;
     private EntityEquipment equipment;
     private MaterialData carried;
+    private int size;
 
     public boolean isAggressive() {
         return aggressive;
@@ -89,5 +90,13 @@ public class TARDISMonster extends TARDISMob {
 
     public void setCarried(MaterialData carried) {
         this.carried = carried;
+    }
+
+    public int getSize() {
+        return size;
+    }
+
+    public void setSize(int size) {
+        this.size = size;
     }
 }

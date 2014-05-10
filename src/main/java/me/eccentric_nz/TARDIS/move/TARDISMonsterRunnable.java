@@ -17,15 +17,27 @@
 package me.eccentric_nz.TARDIS.move;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.database.ResultSetCompanions;
+import me.eccentric_nz.TARDIS.database.ResultSetTardis;
+import me.eccentric_nz.TARDIS.database.ResultSetTravellers;
+import me.eccentric_nz.TARDIS.utility.TARDISMessage;
+import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.entity.Creeper;
 import org.bukkit.entity.Enderman;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
+import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.PigZombie;
+import org.bukkit.entity.Player;
+import org.bukkit.entity.Skeleton;
+import org.bukkit.entity.Slime;
+import org.bukkit.entity.Zombie;
+import org.bukkit.inventory.EntityEquipment;
 
 /**
  *
@@ -52,6 +64,7 @@ public class TARDISMonsterRunnable implements Runnable {
 
     @Override
     public void run() {
+        plugin.getServer().broadcastMessage(ChatColor.AQUA + "[TARDIS] Checking for monsters");
         // get open portals
         for (Map.Entry<Location, TARDISTeleportLocation> map : plugin.getTrackerKeeper().getPortals().entrySet()) {
             // only portals in police box worlds
@@ -59,55 +72,131 @@ public class TARDISMonsterRunnable implements Runnable {
                 Entity ent = map.getKey().getWorld().spawnEntity(map.getKey(), EntityType.EXPERIENCE_ORB);
                 List<Entity> entities = ent.getNearbyEntities(16, 16, 16);
                 ent.remove();
+                // check if a Time Lord or companion is near
+                boolean take_action = true;
                 for (Entity e : entities) {
-                    EntityType type = e.getType();
-                    TARDISMonster tm = new TARDISMonster();
-                    if (monsters.contains(type)) {
-                        switch (type) {
-                            case CAVE_SPIDER:
-
-                                break;
-                            case CREEPER:
-                                Creeper creeper = (Creeper) e;
-                                if (creeper.isPowered()) {
-                                    tm.setCharged(true);
-                                }
-                                break;
-                            case ENDERMAN:
-                                Enderman enderman = (Enderman) e;
-                                if (enderman.getCanPickupItems() && enderman.getCarriedMaterial() != null) {
+                    if (e instanceof Player && isTimelord(map.getValue(), e)) {
+                        take_action = false;
+                        break;
+                    }
+                }
+                // nobody there so continue
+                if (take_action) {
+                    for (Entity e : entities) {
+                        EntityType type = e.getType();
+                        TARDISMonster tm = new TARDISMonster();
+                        if (monsters.contains(type)) {
+                            switch (type) {
+                                case CREEPER:
+                                    Creeper creeper = (Creeper) e;
+                                    tm.setCharged(creeper.isPowered());
+                                    break;
+                                case ENDERMAN:
+                                    Enderman enderman = (Enderman) e;
                                     tm.setCarried(enderman.getCarriedMaterial());
-                                }
-                                break;
-                            case PIG_ZOMBIE:
-                                PigZombie pigzombie = (PigZombie) e;
-                                if (pigzombie.isAngry()) {
-                                    tm.setAggressive(true);
+                                    break;
+                                case PIG_ZOMBIE:
+                                    PigZombie pigzombie = (PigZombie) e;
+                                    tm.setAggressive(pigzombie.isAngry());
                                     tm.setAnger(pigzombie.getAnger());
-                                }
-                                break;
-                            case SILVERFISH:
-
-                                break;
-                            case SKELETON:
-
-                                break;
-                            case SLIME:
-
-                                break;
-                            case SPIDER:
-
-                                break;
-                            case WITCH:
-
-                                break;
-                            case ZOMBIE:
-
-                                break;
+                                    tm.setEquipment(pigzombie.getEquipment());
+                                    break;
+                                case SKELETON:
+                                    Skeleton skeleton = (Skeleton) e;
+                                    tm.setEquipment(skeleton.getEquipment());
+                                    break;
+                                case SLIME:
+                                    Slime slime = (Slime) e;
+                                    tm.setSize(slime.getSize());
+                                    break;
+                                case ZOMBIE:
+                                    Zombie zombie = (Zombie) e;
+                                    tm.setVillager(zombie.isVillager());
+                                    tm.setBaby(zombie.isBaby());
+                                    tm.setEquipment(zombie.getEquipment());
+                                    break;
+                            }
+                            tm.setType(type);
+                            tm.setAge(e.getTicksLived());
+                            tm.setHealth(((LivingEntity) e).getHealth());
+                            tm.setName(((LivingEntity) e).getCustomName());
+                            moveMonster(map.getValue(), tm, e);
                         }
                     }
                 }
             }
         }
+    }
+
+    private void moveMonster(TARDISTeleportLocation tpl, TARDISMonster m, Entity e) {
+        // remove the entity
+        e.remove();
+        // spawn a monster in the TARDIS
+        Location l = tpl.getLocation();
+        // adjust location so they're not right in the door?
+        plugin.setMySpawn(true);
+        Entity ent = l.getWorld().spawnEntity(l, m.getType());
+        switch (m.getType()) {
+            case CREEPER:
+                Creeper creeper = (Creeper) ent;
+                creeper.setPowered(m.isCharged());
+                break;
+            case ENDERMAN:
+                Enderman enderman = (Enderman) ent;
+                enderman.setCarriedMaterial(enderman.getCarriedMaterial());
+                break;
+            case PIG_ZOMBIE:
+                PigZombie pigzombie = (PigZombie) ent;
+                pigzombie.setAngry(m.isAggressive());
+                pigzombie.setAnger(m.getAnger());
+                EntityEquipment ep = pigzombie.getEquipment();
+                ep.setArmorContents(m.getEquipment().getArmorContents());
+                ep.setItemInHand(m.getEquipment().getItemInHand());
+                break;
+            case SKELETON:
+                Skeleton skeleton = (Skeleton) ent;
+                EntityEquipment es = skeleton.getEquipment();
+                es.setArmorContents(m.getEquipment().getArmorContents());
+                es.setItemInHand(m.getEquipment().getItemInHand());
+                break;
+            case SLIME:
+                Slime slime = (Slime) ent;
+                slime.setSize(m.getSize());
+                break;
+            case ZOMBIE:
+                Zombie zombie = (Zombie) ent;
+                zombie.setVillager(m.isVillager());
+                zombie.setBaby(m.isBaby());
+                EntityEquipment ez = zombie.getEquipment();
+                ez.setArmorContents(m.getEquipment().getArmorContents());
+                ez.setItemInHand(m.getEquipment().getItemInHand());
+                break;
+        }
+        ((LivingEntity) ent).setTicksLived(m.getAge());
+        ((LivingEntity) ent).setHealth(m.getHealth());
+        ((LivingEntity) ent).setCustomName(m.getName());
+        // if there are players in the TARDIS sound the cloister bell
+        HashMap<String, Object> where = new HashMap<String, Object>();
+        where.put("tardis_id", tpl.getTardisId());
+        ResultSetTravellers rs = new ResultSetTravellers(plugin, where, false);
+        if (rs.resultSet()) {
+            plugin.getUtils().playTARDISSoundNearby(l, "tardis_cloister_bell");
+        } else {
+            // else message the Time Lord
+            HashMap<String, Object> wheret = new HashMap<String, Object>();
+            wheret.put("tardis_id", tpl.getTardisId());
+            ResultSetTardis rst = new ResultSetTardis(plugin, wheret, "", false);
+            if (rst.resultSet()) {
+                Player p = plugin.getServer().getPlayer(rst.getUuid());
+                if (p != null) {
+                    TARDISMessage.send(p, plugin.getPluginName() + "A " + m.getType().toString() + " entered the TARDIS!");
+                }
+            }
+        }
+    }
+
+    private boolean isTimelord(TARDISTeleportLocation tpl, Entity e) {
+        ResultSetCompanions rsc = new ResultSetCompanions(plugin, tpl.getTardisId());
+        return (rsc.getCompanions().contains(((Player) e).getUniqueId()));
     }
 }
