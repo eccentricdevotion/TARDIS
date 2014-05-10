@@ -36,6 +36,7 @@ import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Biome;
 import org.bukkit.block.Block;
+import org.bukkit.block.BlockFace;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
@@ -215,7 +216,27 @@ public class TARDISScannerListener implements Listener {
             }
         }, 20L);
         // get biome
-        final Biome biome = scan_loc.getBlock().getBiome();
+        Biome tmb;
+        if (whereisit.equals("current location")) {
+            // adjsut for current location as it will always return SKY if set_biome is true
+            switch (tardisDirection) {
+                case NORTH:
+                    tmb = scan_loc.getBlock().getRelative(BlockFace.SOUTH, 2).getBiome();
+                    break;
+                case WEST:
+                    tmb = scan_loc.getBlock().getRelative(BlockFace.EAST, 2).getBiome();
+                    break;
+                case SOUTH:
+                    tmb = scan_loc.getBlock().getRelative(BlockFace.NORTH, 2).getBiome();
+                    break;
+                default:
+                    tmb = scan_loc.getBlock().getRelative(BlockFace.WEST, 2).getBiome();
+                    break;
+            }
+        } else {
+            tmb = scan_loc.getBlock().getBiome();
+        }
+        final Biome biome = tmb;
         data.setBiome(biome);
         bsched.scheduleSyncDelayedTask(plugin, new Runnable() {
             @Override
