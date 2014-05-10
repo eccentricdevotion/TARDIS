@@ -184,8 +184,8 @@ public class TARDISGravityWellListener implements Listener {
     public void onWoolInteract(PlayerInteractEvent event) {
         final Player player = event.getPlayer();
         UUID uuid = player.getUniqueId();
-        if (plugin.getTrackerKeeper().getTrackGravity().containsKey(uuid)) {
-            Double[] values = plugin.getTrackerKeeper().getTrackGravity().get(uuid);
+        if (plugin.getTrackerKeeper().getGravity().containsKey(uuid)) {
+            Double[] values = plugin.getTrackerKeeper().getGravity().get(uuid);
             Block b = event.getClickedBlock();
             if (b != null) {
                 // get tardis_id
@@ -283,7 +283,7 @@ public class TARDISGravityWellListener implements Listener {
                     TARDISMessage.send(player, plugin.getPluginName() + "The wool was set to a gravity " + dir + " block!");
                 }
             }
-            plugin.getTrackerKeeper().getTrackGravity().remove(uuid);
+            plugin.getTrackerKeeper().getGravity().remove(uuid);
         }
     }
 }

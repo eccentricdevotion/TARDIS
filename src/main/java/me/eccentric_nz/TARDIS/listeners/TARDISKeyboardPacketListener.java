@@ -95,7 +95,7 @@ public class TARDISKeyboardPacketListener implements Listener {
                     return;
                 }
                 Sign sign = (Sign) b.getState();
-                plugin.getTrackerKeeper().getTrackSign().put(loc, sign);
+                plugin.getTrackerKeeper().getSign().put(loc, sign);
                 displaySignEditor(player, b);
             }
         }

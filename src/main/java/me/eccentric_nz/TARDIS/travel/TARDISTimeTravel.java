@@ -219,7 +219,7 @@ public class TARDISTimeTravel {
                                         wherep.put("uuid", p.getUniqueId().toString());
                                         ResultSetTravellers rst = new ResultSetTravellers(plugin, wherep, false);
                                         if (rst.resultSet()) {
-                                            plugin.getTrackerKeeper().getTrackSubmarine().add(rst.getTardis_id());
+                                            plugin.getTrackerKeeper().getSubmarine().add(rst.getTardis_id());
                                         }
                                         return underwater;
                                     } else {

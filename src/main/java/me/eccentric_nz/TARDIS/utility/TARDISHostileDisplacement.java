@@ -123,11 +123,11 @@ public class TARDISHostileDisplacement {
                                     set.put("z", fl.getBlockZ());
                                     set.put("submarine", (rsc.isSubmarine()) ? 1 : 0);
                                     qf.doUpdate("current", set, tid);
-                                    plugin.getTrackerKeeper().getTrackDamage().remove(id);
+                                    plugin.getTrackerKeeper().getDamage().remove(id);
                                     boolean mat = plugin.getConfig().getBoolean("police_box.materialise");
                                     long delay = (mat) ? 1L : 180L;
                                     // move TARDIS
-                                    plugin.getTrackerKeeper().getTrackInVortex().add(id);
+                                    plugin.getTrackerKeeper().getInVortex().add(id);
                                     final TARDISMaterialisationData pdd = new TARDISMaterialisationData();
                                     pdd.setChameleon(cham);
                                     pdd.setDirection(d);
@@ -142,7 +142,7 @@ public class TARDISHostileDisplacement {
                                     plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
                                         @Override
                                         public void run() {
-                                            plugin.getTrackerKeeper().getTrackDematerialising().add(id);
+                                            plugin.getTrackerKeeper().getDematerialising().add(id);
                                             plugin.getPresetDestroyer().destroyPreset(pdd);
                                         }
                                     }, delay);
@@ -181,7 +181,7 @@ public class TARDISHostileDisplacement {
                                 TARDISMessage.send(player, plugin.getPluginName() + "HADS could not be engaged because the it couldn't find a safe area!");
                             }
                         } else {
-                            plugin.getTrackerKeeper().getTrackDamage().remove(id);
+                            plugin.getTrackerKeeper().getDamage().remove(id);
                             TARDISMessage.send(player, plugin.getPluginName() + "HADS could not be engaged because the TARDIS cannot land on water!");
                         }
                     }

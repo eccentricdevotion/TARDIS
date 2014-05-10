@@ -53,7 +53,7 @@ public class TARDISMonsterRunnable implements Runnable {
     @Override
     public void run() {
         // get open portals
-        for (Map.Entry<Location, TARDISTeleportLocation> map : plugin.getTrackerKeeper().getTrackPortals().entrySet()) {
+        for (Map.Entry<Location, TARDISTeleportLocation> map : plugin.getTrackerKeeper().getPortals().entrySet()) {
             // only portals in police box worlds
             if (!map.getKey().getWorld().getName().contains("TARDIS")) {
                 Entity ent = map.getKey().getWorld().spawnEntity(map.getKey(), EntityType.EXPERIENCE_ORB);

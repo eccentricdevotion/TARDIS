@@ -59,7 +59,7 @@ public class TARDISExteriorRenderer {
         int ipby = plugin.getUtils().parseInt(idata[2]) + 2;
         int ipbz = plugin.getUtils().parseInt(idata[3]);
         final Location location = new Location(iw, ipbx, ipby, ipbz);
-        if (plugin.getTrackerKeeper().getTrackRenderer().containsKey(id) && plugin.getTrackerKeeper().getTrackRenderer().get(id).equals(isRendered)) {
+        if (plugin.getTrackerKeeper().getRenderer().containsKey(id) && plugin.getTrackerKeeper().getRenderer().get(id).equals(isRendered)) {
             TARDISMessage.send(p, plugin.getPluginName() + "Destination unchanged, no rendering needed, stand by for transmat...");
         } else {
             TARDISMessage.send(p, plugin.getPluginName() + "Starting exterior rendering, please wait...");
@@ -260,7 +260,7 @@ public class TARDISExteriorRenderer {
                     }
                 }
             }
-            plugin.getTrackerKeeper().getTrackRenderer().put(id, isRendered);
+            plugin.getTrackerKeeper().getRenderer().put(id, isRendered);
             TARDISMessage.send(p, plugin.getPluginName() + "Rendering complete, stand by for transmat...");
             // remove dropped items
             for (Entity e : location.getChunk().getEntities()) {
@@ -274,7 +274,7 @@ public class TARDISExteriorRenderer {
         where.put("tardis_id", id);
         new QueryFactory(plugin).alterEnergyLevel("tardis", -plugin.getArtronConfig().getInt("render"), where, p);
         // tp the player inside the room
-        plugin.getTrackerKeeper().getTrackTransmat().add(p.getUniqueId());
+        plugin.getTrackerKeeper().getTransmat().add(p.getUniqueId());
         plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
             @Override
             public void run() {

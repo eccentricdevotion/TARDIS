@@ -56,7 +56,7 @@ public class TARDISInformationSystemListener implements Listener {
     public void onTISChat(AsyncPlayerChatEvent event) {
         Player p = event.getPlayer();
         UUID uuid = p.getUniqueId();
-        if (plugin.getTrackerKeeper().getTrackInfoMenu().containsKey(uuid)) {
+        if (plugin.getTrackerKeeper().getInfoMenu().containsKey(uuid)) {
             event.setCancelled(true);
             String chat = event.getMessage();
             // always exit if 'e' is pressed
@@ -65,7 +65,7 @@ public class TARDISInformationSystemListener implements Listener {
                 return;
             }
             if (chat.length() == 1) {
-                switch (plugin.getTrackerKeeper().getTrackInfoMenu().get(uuid)) {
+                switch (plugin.getTrackerKeeper().getInfoMenu().get(uuid)) {
                     // TOP level menu
                     case TIS:
                         if (chat.equalsIgnoreCase("M")) {
@@ -926,7 +926,7 @@ public class TARDISInformationSystemListener implements Listener {
      * @param item the parent menu item to get the children of
      */
     private void processKey(Player p, TARDISInfoMenu item) {
-        plugin.getTrackerKeeper().getTrackInfoMenu().put(p.getUniqueId(), item);
+        plugin.getTrackerKeeper().getInfoMenu().put(p.getUniqueId(), item);
         TARDISMessage.send(p, "---");
         TARDISMessage.send(p, "[" + item.getName() + "]");
         for (Map.Entry<String, String> m : TARDISInfoMenu.getChildren(item.toString()).entrySet()) {
@@ -1015,7 +1015,7 @@ public class TARDISInformationSystemListener implements Listener {
      * @param p the player to exit
      */
     private void exit(Player p) {
-        plugin.getTrackerKeeper().getTrackInfoMenu().remove(p.getUniqueId());
+        plugin.getTrackerKeeper().getInfoMenu().remove(p.getUniqueId());
         TARDISMessage.send(p, "§6---");
         TARDISMessage.send(p, "§4You have been logged out of the TARDIS Information System");
     }

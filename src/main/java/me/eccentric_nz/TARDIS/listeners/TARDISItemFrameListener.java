@@ -51,7 +51,7 @@ public class TARDISItemFrameListener implements Listener {
         if (event.getRightClicked() instanceof ItemFrame) {
             UUID uuid = player.getUniqueId();
             // did they run the `/tardis update direction` command?
-            if (plugin.getTrackerKeeper().getTrackPlayers().containsKey(uuid) && plugin.getTrackerKeeper().getTrackPlayers().get(uuid).equals("direction")) {
+            if (plugin.getTrackerKeeper().getPlayers().containsKey(uuid) && plugin.getTrackerKeeper().getPlayers().get(uuid).equals("direction")) {
                 // check they have a TARDIS
                 HashMap<String, Object> wheret = new HashMap<String, Object>();
                 wheret.put("uuid", uuid.toString());
@@ -79,7 +79,7 @@ public class TARDISItemFrameListener implements Listener {
                     // add control
                     new QueryFactory(plugin).insertControl(id, 18, l, 0);
                 }
-                plugin.getTrackerKeeper().getTrackPlayers().remove(uuid);
+                plugin.getTrackerKeeper().getPlayers().remove(uuid);
                 TARDISMessage.send(player, plugin.getPluginName() + "The position of the TARDIS Direction Frame was updated successfully.");
                 return;
             }

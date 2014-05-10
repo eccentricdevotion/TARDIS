@@ -49,7 +49,7 @@ public class TARDISMoveListener implements Listener {
     @EventHandler(priority = EventPriority.MONITOR)
     public void onPlayerMoveToFromTARDIS(PlayerMoveEvent event) {
         Player p = event.getPlayer();
-        if (!plugin.getTrackerKeeper().getTrackMover().contains(p.getUniqueId())) {
+        if (!plugin.getTrackerKeeper().getMover().contains(p.getUniqueId())) {
             return;
         }
         Location l = new Location(event.getTo().getWorld(), event.getTo().getBlockX(), event.getTo().getBlockY(), event.getTo().getBlockZ(), 0.0f, 0.0f);
@@ -69,8 +69,8 @@ public class TARDISMoveListener implements Listener {
             return;
         }
         // check the block they're on
-        if (plugin.getTrackerKeeper().getTrackPortals().containsKey(l)) {
-            TARDISTeleportLocation tpl = plugin.getTrackerKeeper().getTrackPortals().get(l);
+        if (plugin.getTrackerKeeper().getPortals().containsKey(l)) {
+            TARDISTeleportLocation tpl = plugin.getTrackerKeeper().getPortals().get(l);
             UUID uuid = p.getUniqueId();
             int id = tpl.getTardisId();
             // are they a companion of this TARDIS?
@@ -93,8 +93,8 @@ public class TARDISMoveListener implements Listener {
                 boolean userQuotes = (hasPrefs) ? rsp.isQuotesOn() : false;
                 // check for entities near the police box
                 List<TARDISMob> pets = null;
-                if (plugin.getConfig().getBoolean("allow.mob_farming") && p.hasPermission("tardis.farm") && !plugin.getTrackerKeeper().getTrackFarming().contains(uuid)) {
-                    plugin.getTrackerKeeper().getTrackFarming().add(uuid);
+                if (plugin.getConfig().getBoolean("allow.mob_farming") && p.hasPermission("tardis.farm") && !plugin.getTrackerKeeper().getFarming().contains(uuid)) {
+                    plugin.getTrackerKeeper().getFarming().add(uuid);
                     TARDISFarmer tf = new TARDISFarmer(plugin);
                     pets = tf.farmAnimals(l, d, id, p, tpl.getLocation().getWorld().getName(), l.getWorld().getName());
                 }

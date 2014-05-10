@@ -559,7 +559,7 @@ public class TARDIS extends JavaPlugin {
      * Resets any player who is 'Temporally Located' back to normal time.
      */
     private void resetTime() {
-        for (UUID key : trackerKeeper.getTrackSetTime().keySet()) {
+        for (UUID key : trackerKeeper.getSetTime().keySet()) {
             Player p = this.getServer().getPlayer(key);
             if (p != null) {
                 p.resetPlayerTime();

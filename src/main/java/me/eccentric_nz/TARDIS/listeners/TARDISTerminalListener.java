@@ -153,9 +153,9 @@ public class TARDISTerminalListener implements Listener {
                                 HashMap<String, Object> wheret = new HashMap<String, Object>();
                                 wheret.put("tardis_id", terminalIDs.get(uuid));
                                 new QueryFactory(plugin).doUpdate("next", set, wheret);
-                                plugin.getTrackerKeeper().getTrackHasDestination().put(terminalIDs.get(uuid), plugin.getArtronConfig().getInt("travel"));
-                                if (plugin.getTrackerKeeper().getTrackRescue().containsKey(terminalIDs.get(uuid))) {
-                                    plugin.getTrackerKeeper().getTrackRescue().remove(terminalIDs.get(uuid));
+                                plugin.getTrackerKeeper().getHasDestination().put(terminalIDs.get(uuid), plugin.getArtronConfig().getInt("travel"));
+                                if (plugin.getTrackerKeeper().getRescue().containsKey(terminalIDs.get(uuid))) {
+                                    plugin.getTrackerKeeper().getRescue().remove(terminalIDs.get(uuid));
                                 }
                                 close(player);
                                 TARDISMessage.send(player, plugin.getPluginName() + "Destination set. Please release the handbrake!");

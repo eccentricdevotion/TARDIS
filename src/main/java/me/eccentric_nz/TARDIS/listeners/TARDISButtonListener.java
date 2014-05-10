@@ -232,9 +232,9 @@ public class TARDISButtonListener implements Listener {
                                                 set.put("y", rand.getBlockY());
                                                 set.put("z", rand.getBlockZ());
                                                 set.put("direction", dir.toString());
-                                                set.put("submarine", (plugin.getTrackerKeeper().getTrackSubmarine().contains(id)) ? 1 : 0);
+                                                set.put("submarine", (plugin.getTrackerKeeper().getSubmarine().contains(id)) ? 1 : 0);
                                                 set_dest = true;
-                                                plugin.getTrackerKeeper().getTrackSubmarine().remove(Integer.valueOf(id));
+                                                plugin.getTrackerKeeper().getSubmarine().remove(Integer.valueOf(id));
                                                 String dchat = rand.getWorld().getName() + " at x: " + rand.getBlockX() + " y: " + rand.getBlockY() + " z: " + rand.getBlockZ();
                                                 boolean isTL = true;
                                                 if (comps != null && !comps.isEmpty()) {
@@ -390,7 +390,7 @@ public class TARDISButtonListener implements Listener {
                                     }
                                     break;
                                 case 13: // TIS
-                                    plugin.getTrackerKeeper().getTrackInfoMenu().put(player.getUniqueId(), TARDISInfoMenu.TIS);
+                                    plugin.getTrackerKeeper().getInfoMenu().put(player.getUniqueId(), TARDISInfoMenu.TIS);
                                     TARDISMessage.send(player, ChatColor.GOLD + "-----------TARDIS Information System-----------");
                                     TARDISMessage.send(player, ChatColor.GOLD + "---*Please type a white letter in chat to proceed*---");
                                     TARDISMessage.send(player, "§6> TARDIS §fM§6anual");
@@ -455,7 +455,7 @@ public class TARDISButtonListener implements Listener {
                                                 new TARDISExteriorRenderer(plugin).transmat(player, COMPASS.SOUTH, zero);
                                             }
                                         }, 20L);
-                                        plugin.getTrackerKeeper().getTrackZeroRoomOccupants().add(player.getUniqueId());
+                                        plugin.getTrackerKeeper().getZeroRoomOccupants().add(player.getUniqueId());
                                         HashMap<String, Object> wherez = new HashMap<String, Object>();
                                         wherez.put("tardis_id", id);
                                         qf.alterEnergyLevel("tardis", -zero_amount, wherez, player);
@@ -465,7 +465,7 @@ public class TARDISButtonListener implements Listener {
                                     break;
                                 case 17:
                                     // exit zero room
-                                    plugin.getTrackerKeeper().getTrackZeroRoomOccupants().remove(player.getUniqueId());
+                                    plugin.getTrackerKeeper().getZeroRoomOccupants().remove(player.getUniqueId());
                                     plugin.getGeneralKeeper().getRendererListener().transmat(player);
                                     break;
                                 case 20:
@@ -479,9 +479,9 @@ public class TARDISButtonListener implements Listener {
                                 HashMap<String, Object> wherel = new HashMap<String, Object>();
                                 wherel.put("tardis_id", id);
                                 qf.doUpdate("next", set, wherel);
-                                plugin.getTrackerKeeper().getTrackHasDestination().put(id, cost);
-                                if (plugin.getTrackerKeeper().getTrackRescue().containsKey(id)) {
-                                    plugin.getTrackerKeeper().getTrackRescue().remove(id);
+                                plugin.getTrackerKeeper().getHasDestination().put(id, cost);
+                                if (plugin.getTrackerKeeper().getRescue().containsKey(id)) {
+                                    plugin.getTrackerKeeper().getRescue().remove(id);
                                 }
                             }
                         }

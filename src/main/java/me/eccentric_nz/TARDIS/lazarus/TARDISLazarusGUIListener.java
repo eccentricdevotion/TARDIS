@@ -89,7 +89,7 @@ public class TARDISLazarusGUIListener implements Listener {
             int slot = event.getRawSlot();
             final Player player = (Player) event.getWhoClicked();
             final UUID uuid = player.getUniqueId();
-            final Block b = plugin.getTrackerKeeper().getTrackLazarus().get(uuid);
+            final Block b = plugin.getTrackerKeeper().getLazarus().get(uuid);
             if (b == null) {
                 return;
             }
@@ -115,11 +115,11 @@ public class TARDISLazarusGUIListener implements Listener {
                 ItemStack is = inv.getItem(slot);
                 ItemMeta im = is.getItemMeta();
                 if (player.hasPermission("tardis.themaster")) {
-                    if (plugin.getTrackerKeeper().getTrackImmortalityGate().equals("")) {
+                    if (plugin.getTrackerKeeper().getImmortalityGate().equals("")) {
                         String onoff = (im.getLore().get(0).equals("OFF")) ? "ON" : "OFF";
                         im.setLore(Arrays.asList(onoff));
                     } else {
-                        im.setLore(Arrays.asList("The Master Race is already", " set to " + plugin.getTrackerKeeper().getTrackImmortalityGate() + "!", "Try again later."));
+                        im.setLore(Arrays.asList("The Master Race is already", " set to " + plugin.getTrackerKeeper().getImmortalityGate() + "!", "Try again later."));
                     }
                 } else {
                     im.setLore(Arrays.asList("You do not have permission", "to be The Master!"));
@@ -146,7 +146,7 @@ public class TARDISLazarusGUIListener implements Listener {
                 is.setItemMeta(im);
             }
             if (slot == 47) { //remove disguise
-                plugin.getTrackerKeeper().getTrackGeneticManipulation().add(uuid);
+                plugin.getTrackerKeeper().getGeneticManipulation().add(uuid);
                 close(player);
                 // animate the manipulator walls
                 plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, new TARDISLazarusRunnable(plugin, b), 6L, 6L);
@@ -184,7 +184,7 @@ public class TARDISLazarusGUIListener implements Listener {
                 }, 100L);
             }
             if (slot == 49) { // add disguise
-                plugin.getTrackerKeeper().getTrackGeneticManipulation().add(uuid);
+                plugin.getTrackerKeeper().getGeneticManipulation().add(uuid);
                 close(player);
                 // animate the manipulator walls
                 plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, new TARDISLazarusRunnable(plugin, b), 6L, 6L);
@@ -197,7 +197,7 @@ public class TARDISLazarusGUIListener implements Listener {
                             DisguiseAPI.undisguiseToAll(player);
                         }
                         if (isReversedPolarity(inv)) {
-                            plugin.getTrackerKeeper().setTrackImmortalityGate(player.getName());
+                            plugin.getTrackerKeeper().setImmortalityGate(player.getName());
                             PlayerDisguise playerDisguise = new PlayerDisguise(player.getName());
                             for (Player p : plugin.getServer().getOnlinePlayers()) {
                                 if (!p.getUniqueId().equals(uuid)) {
@@ -215,7 +215,7 @@ public class TARDISLazarusGUIListener implements Listener {
                                         }
                                     }
                                     plugin.getServer().broadcastMessage(plugin.getPluginName() + "Lord Rassilon has reset the Master Race back to human form.");
-                                    plugin.getTrackerKeeper().setTrackImmortalityGate("");
+                                    plugin.getTrackerKeeper().setImmortalityGate("");
                                 }
                             }, 3600L);
                         } else {
@@ -340,8 +340,8 @@ public class TARDISLazarusGUIListener implements Listener {
     public void onLazarusClose(InventoryCloseEvent event) {
         String name = event.getInventory().getTitle();
         UUID uuid = event.getPlayer().getUniqueId();
-        if (name.equals("§4Genetic Manipulator") && !plugin.getTrackerKeeper().getTrackGeneticManipulation().contains(uuid)) {
-            Block b = plugin.getTrackerKeeper().getTrackLazarus().get(event.getPlayer().getUniqueId());
+        if (name.equals("§4Genetic Manipulator") && !plugin.getTrackerKeeper().getGeneticManipulation().contains(uuid)) {
+            Block b = plugin.getTrackerKeeper().getLazarus().get(event.getPlayer().getUniqueId());
             if (b.getRelative(BlockFace.SOUTH).getType().equals(Material.COBBLE_WALL)) {
                 b.getRelative(BlockFace.SOUTH).setType(Material.AIR);
                 b.getRelative(BlockFace.SOUTH).getRelative(BlockFace.UP).setType(Material.AIR);
@@ -366,8 +366,8 @@ public class TARDISLazarusGUIListener implements Listener {
 
     private void untrack(UUID uuid) {
         // stop tracking player
-        if (plugin.getTrackerKeeper().getTrackLazarus().containsKey(uuid)) {
-            plugin.getTrackerKeeper().getTrackLazarus().remove(uuid);
+        if (plugin.getTrackerKeeper().getLazarus().containsKey(uuid)) {
+            plugin.getTrackerKeeper().getLazarus().remove(uuid);
         }
         if (disguises.containsKey(uuid)) {
             disguises.remove(uuid);
@@ -387,8 +387,8 @@ public class TARDISLazarusGUIListener implements Listener {
         if (slimes.containsKey(uuid)) {
             slimes.remove(uuid);
         }
-        if (plugin.getTrackerKeeper().getTrackGeneticManipulation().contains(uuid)) {
-            plugin.getTrackerKeeper().getTrackGeneticManipulation().remove(uuid);
+        if (plugin.getTrackerKeeper().getGeneticManipulation().contains(uuid)) {
+            plugin.getTrackerKeeper().getGeneticManipulation().remove(uuid);
         }
     }
 

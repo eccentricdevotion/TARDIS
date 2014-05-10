@@ -74,7 +74,7 @@ public final class TARDISZeroRoomPacketListener implements Listener {
                                             }
                                         }
                                     }
-                                    if (send == false && instance.getTrackerKeeper().getTrackZeroRoomOccupants().contains(event.getPlayer().getUniqueId())) {
+                                    if (send == false && instance.getTrackerKeeper().getZeroRoomOccupants().contains(event.getPlayer().getUniqueId())) {
                                         event.setCancelled(true);
                                     }
                                 }

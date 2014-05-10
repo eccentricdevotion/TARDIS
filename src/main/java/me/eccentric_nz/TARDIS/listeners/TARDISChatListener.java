@@ -54,10 +54,10 @@ public class TARDISChatListener implements Listener {
         final UUID saved = event.getPlayer().getUniqueId();
         String chat = event.getMessage();
         if (chat != null && chat.equalsIgnoreCase("tardis rescue accept")) {
-            if (plugin.getTrackerKeeper().getTrackChat().containsKey(saved)) {
-                final Player rescuer = plugin.getServer().getPlayer(plugin.getTrackerKeeper().getTrackChat().get(saved));
+            if (plugin.getTrackerKeeper().getChat().containsKey(saved)) {
+                final Player rescuer = plugin.getServer().getPlayer(plugin.getTrackerKeeper().getChat().get(saved));
                 final TARDISRescue res = new TARDISRescue(plugin);
-                plugin.getTrackerKeeper().getTrackChat().remove(saved);
+                plugin.getTrackerKeeper().getChat().remove(saved);
                 // delay it so the chat appears before the message
                 final String player = event.getPlayer().getName();
                 plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {

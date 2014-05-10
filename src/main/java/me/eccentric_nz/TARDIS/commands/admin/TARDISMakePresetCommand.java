@@ -64,7 +64,7 @@ public class TARDISMakePresetCommand {
             bool = "true";
         }
         TARDISMessage.send(player, plugin.getPluginName() + "Please right-click the lower left block of the preset with your TARDIS key. If there is no block there, place some sponge instead.");
-        plugin.getTrackerKeeper().getTrackPreset().put(player.getUniqueId(), args[1] + ":" + bool);
+        plugin.getTrackerKeeper().getPreset().put(player.getUniqueId(), args[1] + ":" + bool);
         return true;
     }
 }

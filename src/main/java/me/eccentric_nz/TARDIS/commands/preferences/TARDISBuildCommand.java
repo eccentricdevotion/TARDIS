@@ -59,7 +59,7 @@ public class TARDISBuildCommand {
         wherep.put("uuid", player.getUniqueId().toString());
         if (args[1].equalsIgnoreCase("on")) {
             setp.put("build_on", 1);
-            plugin.getTrackerKeeper().getTrackAntiBuild().remove(id);
+            plugin.getTrackerKeeper().getAntiBuild().remove(id);
             TARDISMessage.send(player, plugin.getPluginName() + "Companion building was turned ON!");
         }
         if (args[1].equalsIgnoreCase("off")) {
@@ -76,7 +76,7 @@ public class TARDISBuildCommand {
             tab.setMin(min);
             tab.setMax(max);
             tab.setTimelord(playerNameStr);
-            plugin.getTrackerKeeper().getTrackAntiBuild().put(id, tab);
+            plugin.getTrackerKeeper().getAntiBuild().put(id, tab);
             TARDISMessage.send(player, plugin.getPluginName() + "Companion building was turned OFF.");
         }
         new QueryFactory(plugin).doUpdate("player_prefs", setp, wherep);

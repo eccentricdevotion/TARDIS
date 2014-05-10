@@ -196,7 +196,7 @@ public class TARDISRoomCommand {
         ResultSetControls rsc = new ResultSetControls(plugin, wherea, false);
         sd.setARS(rsc.resultSet());
         String message = "Place the " + room + " seed block (" + plugin.getRoomsConfig().getString("rooms." + room + ".seed") + ") in front of the pressure plate, then hit it with the TARDIS key to start growing your room!";
-        plugin.getTrackerKeeper().getTrackRoomSeed().put(player.getUniqueId(), sd);
+        plugin.getTrackerKeeper().getRoomSeed().put(player.getUniqueId(), sd);
         TARDISMessage.send(player, plugin.getPluginName() + message);
         return true;
     }

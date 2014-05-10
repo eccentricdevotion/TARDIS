@@ -128,9 +128,9 @@ public class TARDISDoorListener {
                     where.put("uuid", uuid.toString());
                     int player_artron = plugin.getArtronConfig().getInt("player");
                     qf.alterEnergyLevel("player_prefs", player_artron, where, p);
-                    if (plugin.getTrackerKeeper().getTrackSetTime().containsKey(uuid)) {
-                        setTemporalLocation(p, plugin.getTrackerKeeper().getTrackSetTime().get(uuid));
-                        plugin.getTrackerKeeper().getTrackSetTime().remove(uuid);
+                    if (plugin.getTrackerKeeper().getSetTime().containsKey(uuid)) {
+                        setTemporalLocation(p, plugin.getTrackerKeeper().getSetTime().get(uuid));
+                        plugin.getTrackerKeeper().getSetTime().remove(uuid);
                     }
                 } else {
                     if (p.isPlayerTimeRelative()) {

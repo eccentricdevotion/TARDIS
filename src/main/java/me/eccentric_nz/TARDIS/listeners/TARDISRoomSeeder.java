@@ -83,7 +83,7 @@ public class TARDISRoomSeeder implements Listener {
         final Player player = event.getPlayer();
         UUID uuid = player.getUniqueId();
         // check that player is in TARDIS
-        if (!plugin.getTrackerKeeper().getTrackRoomSeed().containsKey(uuid)) {
+        if (!plugin.getTrackerKeeper().getRoomSeed().containsKey(uuid)) {
             return;
         }
         Block block = event.getClickedBlock();
@@ -128,7 +128,7 @@ public class TARDISRoomSeeder implements Listener {
                     return;
                 }
                 // get seed data
-                TARDISSeedData sd = plugin.getTrackerKeeper().getTrackRoomSeed().get(uuid);
+                TARDISSeedData sd = plugin.getTrackerKeeper().getRoomSeed().get(uuid);
                 // check they are not in an ARS chunk
                 if (ars.contains(sd.getSchematic()) && sd.hasARS()) {
                     Chunk c = b.getWorld().getChunkAt(block.getRelative(BlockFace.valueOf(d.toString()), 4));
@@ -144,7 +144,7 @@ public class TARDISRoomSeeder implements Listener {
                 String r = plugin.getBuildKeeper().getSeeds().get(blockType);
                 // check that the blockType is the same as the one they ran the /tardis room [type] command for
                 if (!sd.getRoom().equals(r)) {
-                    TARDISMessage.send(player, plugin.getPluginName() + "That is not the correct seed block to grow a " + plugin.getTrackerKeeper().getTrackRoomSeed().get(uuid).getRoom() + "!");
+                    TARDISMessage.send(player, plugin.getPluginName() + "That is not the correct seed block to grow a " + plugin.getTrackerKeeper().getRoomSeed().get(uuid).getRoom() + "!");
                     return;
                 }
                 // adjust the location three/four blocks out
@@ -157,7 +157,7 @@ public class TARDISRoomSeeder implements Listener {
                     Block doorway = block.getRelative(facing, 2);
                     doorway.setType(Material.AIR);
                     doorway.getRelative(BlockFace.UP).setType(Material.AIR);
-                    plugin.getTrackerKeeper().getTrackRoomSeed().remove(uuid);
+                    plugin.getTrackerKeeper().getRoomSeed().remove(uuid);
                     // ok, room growing was successful, so take their energy!
                     int amount = plugin.getRoomsConfig().getInt("rooms." + r + ".cost");
                     QueryFactory qf = new QueryFactory(plugin);

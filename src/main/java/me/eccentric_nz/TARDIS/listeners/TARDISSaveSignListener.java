@@ -73,7 +73,7 @@ public class TARDISSaveSignListener implements Listener {
             if (rst.resultSet()) {
                 int id = rst.getTardis_id();
                 int slot = event.getRawSlot();
-                if (plugin.getTrackerKeeper().getTrackArrangers().contains(uuid)) {
+                if (plugin.getTrackerKeeper().getArrangers().contains(uuid)) {
                     if (slot >= 1 && slot < 45) {
                         if (event.getClick().equals(ClickType.SHIFT_LEFT) || event.getClick().equals(ClickType.SHIFT_RIGHT)) {
                             event.setCancelled(true);
@@ -153,9 +153,9 @@ public class TARDISSaveSignListener implements Listener {
                                     HashMap<String, Object> wheret = new HashMap<String, Object>();
                                     wheret.put("tardis_id", id);
                                     new QueryFactory(plugin).doUpdate("next", set, wheret);
-                                    plugin.getTrackerKeeper().getTrackHasDestination().put(id, travel);
-                                    if (plugin.getTrackerKeeper().getTrackRescue().containsKey(id)) {
-                                        plugin.getTrackerKeeper().getTrackRescue().remove(id);
+                                    plugin.getTrackerKeeper().getHasDestination().put(id, travel);
+                                    if (plugin.getTrackerKeeper().getRescue().containsKey(id)) {
+                                        plugin.getTrackerKeeper().getRescue().remove(id);
                                     }
                                     close(player);
                                     TARDISMessage.send(player, plugin.getPluginName() + im.getDisplayName() + " destination set. Please release the handbrake!");
@@ -178,9 +178,9 @@ public class TARDISSaveSignListener implements Listener {
                     wherez.put("uuid", player.getUniqueId().toString());
                     ResultSetTardis rs = new ResultSetTardis(plugin, wherez, "", false);
                     if (rs.resultSet()) {
-                        if (!plugin.getTrackerKeeper().getTrackArrangers().contains(uuid)) {
+                        if (!plugin.getTrackerKeeper().getArrangers().contains(uuid)) {
                             // Only add one at a time
-                            plugin.getTrackerKeeper().getTrackArrangers().add(uuid);
+                            plugin.getTrackerKeeper().getArrangers().add(uuid);
                         }
                         TARDISMessage.send(player, plugin.getPluginName() + "Save rearrangement enabled");
                     } else {
@@ -232,9 +232,9 @@ public class TARDISSaveSignListener implements Listener {
                     }
                 }
             }
-            if (plugin.getTrackerKeeper().getTrackArrangers().contains(uuid)) {
+            if (plugin.getTrackerKeeper().getArrangers().contains(uuid)) {
                 event.getPlayer().setItemOnCursor(new ItemStack(Material.AIR));
-                plugin.getTrackerKeeper().getTrackArrangers().remove(uuid);
+                plugin.getTrackerKeeper().getArrangers().remove(uuid);
             }
         }
     }

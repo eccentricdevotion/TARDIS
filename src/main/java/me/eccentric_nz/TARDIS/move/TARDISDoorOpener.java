@@ -181,13 +181,13 @@ public class TARDISDoorOpener {
                     // players
                     for (UUID u : uuids) {
                         // only add them if they're not there already!
-                        if (!plugin.getTrackerKeeper().getTrackMover().contains(u)) {
-                            plugin.getTrackerKeeper().getTrackMover().add(u);
+                        if (!plugin.getTrackerKeeper().getMover().contains(u)) {
+                            plugin.getTrackerKeeper().getMover().add(u);
                         }
                     }
                     // locations
-                    plugin.getTrackerKeeper().getTrackPortals().put(exportal, tp_in);
-                    plugin.getTrackerKeeper().getTrackPortals().put(inportal, tp_out);
+                    plugin.getTrackerKeeper().getPortals().put(exportal, tp_in);
+                    plugin.getTrackerKeeper().getPortals().put(inportal, tp_out);
                 }
             }
         }

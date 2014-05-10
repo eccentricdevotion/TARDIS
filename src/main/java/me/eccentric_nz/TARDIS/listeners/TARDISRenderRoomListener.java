@@ -46,7 +46,7 @@ public class TARDISRenderRoomListener implements Listener {
     @EventHandler
     public void onInteract(PlayerInteractEvent event) {
         final Player player = event.getPlayer();
-        if (plugin.getTrackerKeeper().getTrackTransmat().contains(player.getUniqueId())) {
+        if (plugin.getTrackerKeeper().getTransmat().contains(player.getUniqueId())) {
             event.setCancelled(true);
             if (event.getAction().equals(Action.RIGHT_CLICK_BLOCK) || event.getAction().equals(Action.RIGHT_CLICK_AIR)) {
                 // tp the player back to the TARDIS console
@@ -108,7 +108,7 @@ public class TARDISRenderRoomListener implements Listener {
                     public void run() {
                         p.playSound(tp_loc, Sound.ENDERMAN_TELEPORT, 1.0f, 1.0f);
                         p.teleport(tp_loc);
-                        plugin.getTrackerKeeper().getTrackTransmat().remove(p.getUniqueId());
+                        plugin.getTrackerKeeper().getTransmat().remove(p.getUniqueId());
                     }
                 }, 10L);
             } else {

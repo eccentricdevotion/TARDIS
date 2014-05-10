@@ -111,7 +111,7 @@ public class TARDISComehereCommand {
                     TARDISMessage.send(player, plugin.getPluginName() + MESSAGE.NO_PB_IN_TARDIS.getText());
                     return true;
                 }
-                if (plugin.getTrackerKeeper().getTrackInVortex().contains(id)) {
+                if (plugin.getTrackerKeeper().getInVortex().contains(id)) {
                     TARDISMessage.send(player, plugin.getPluginName() + MESSAGE.NOT_WHILE_MAT.getText());
                     return true;
                 }
@@ -199,7 +199,7 @@ public class TARDISComehereCommand {
                 TARDISMessage.send(player, plugin.getPluginName() + "The TARDIS is coming...");
                 boolean mat = plugin.getConfig().getBoolean("police_box.materialise");
                 long delay = (mat) ? 1L : 180L;
-                plugin.getTrackerKeeper().getTrackInVortex().add(id);
+                plugin.getTrackerKeeper().getInVortex().add(id);
                 final boolean hid = hidden;
                 final TARDISMaterialisationData pdd = new TARDISMaterialisationData();
                 pdd.setChameleon(cham);
@@ -216,7 +216,7 @@ public class TARDISComehereCommand {
                     @Override
                     public void run() {
                         if (!hid) {
-                            plugin.getTrackerKeeper().getTrackDematerialising().add(id);
+                            plugin.getTrackerKeeper().getDematerialising().add(id);
                             plugin.getPresetDestroyer().destroyPreset(pdd);
                         } else {
                             plugin.getPresetDestroyer().removeBlockProtection(id, qf);
@@ -243,9 +243,9 @@ public class TARDISComehereCommand {
                 HashMap<String, Object> wheret = new HashMap<String, Object>();
                 wheret.put("tardis_id", id);
                 qf.alterEnergyLevel("tardis", -ch, wheret, player);
-                plugin.getTrackerKeeper().getTrackHasDestination().remove(id);
-                if (plugin.getTrackerKeeper().getTrackRescue().containsKey(id)) {
-                    plugin.getTrackerKeeper().getTrackRescue().remove(id);
+                plugin.getTrackerKeeper().getHasDestination().remove(id);
+                if (plugin.getTrackerKeeper().getRescue().containsKey(id)) {
+                    plugin.getTrackerKeeper().getRescue().remove(id);
                 }
                 return true;
             } else {

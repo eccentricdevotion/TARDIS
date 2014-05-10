@@ -88,7 +88,7 @@ public class TARDISBlockPlaceListener implements Listener {
     @EventHandler(ignoreCancelled = true)
     public void onPlayerBlockPlace(BlockPlaceEvent event) {
         Player player = event.getPlayer();
-        if (plugin.getTrackerKeeper().getTrackZeroRoomOccupants().contains(player.getUniqueId())) {
+        if (plugin.getTrackerKeeper().getZeroRoomOccupants().contains(player.getUniqueId())) {
             event.setCancelled(true);
             TARDISMessage.send(player, plugin.getPluginName() + MESSAGE.NOT_IN_ZERO.getText());
             return;

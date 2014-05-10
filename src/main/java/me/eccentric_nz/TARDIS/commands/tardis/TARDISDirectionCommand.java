@@ -77,7 +77,7 @@ public class TARDISDirectionCommand {
                 TARDISMessage.send(player, plugin.getPluginName() + "The TARDIS does not have enough Artron Energy to change the Police Box direction!");
                 return true;
             }
-            if (plugin.getTrackerKeeper().getTrackInVortex().contains(id)) {
+            if (plugin.getTrackerKeeper().getInVortex().contains(id)) {
                 TARDISMessage.send(player, plugin.getPluginName() + MESSAGE.NOT_WHILE_MAT.getText());
                 return true;
             }

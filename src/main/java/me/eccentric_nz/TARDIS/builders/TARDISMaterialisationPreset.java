@@ -131,7 +131,7 @@ public class TARDISMaterialisationPreset implements Runnable {
 
     @Override
     public void run() {
-        if (!plugin.getTrackerKeeper().getTrackDematerialising().contains(tid)) {
+        if (!plugin.getTrackerKeeper().getDematerialising().contains(tid)) {
             int[][] ids;
             byte[][] datas;
             // get relative locations
@@ -165,8 +165,8 @@ public class TARDISMaterialisationPreset implements Runnable {
                 }
                 QueryFactory qf = new QueryFactory(plugin);
                 // rescue player?
-                if (i == 10 && plugin.getTrackerKeeper().getTrackRescue().containsKey(tid)) {
-                    UUID playerUUID = plugin.getTrackerKeeper().getTrackRescue().get(tid);
+                if (i == 10 && plugin.getTrackerKeeper().getRescue().containsKey(tid)) {
+                    UUID playerUUID = plugin.getTrackerKeeper().getRescue().get(tid);
                     Player saved = plugin.getServer().getPlayer(playerUUID);
                     if (saved != null) {
                         TARDISDoorLocation idl = plugin.getGeneralKeeper().getDoorListener().getDoor(1, tid);
@@ -178,7 +178,7 @@ public class TARDISMaterialisationPreset implements Runnable {
                         set.put("uuid", playerUUID.toString());
                         qf.doInsert("travellers", set);
                     }
-                    plugin.getTrackerKeeper().getTrackRescue().remove(tid);
+                    plugin.getTrackerKeeper().getRescue().remove(tid);
                 }
                 // first run - remember blocks
                 if (i == 1) {
@@ -624,13 +624,13 @@ public class TARDISMaterialisationPreset implements Runnable {
                 }
             } else {
                 // set sheild if submarine
-                plugin.getTrackerKeeper().getTrackMaterialising().remove(Integer.valueOf(tid));
-                plugin.getTrackerKeeper().getTrackInVortex().remove(Integer.valueOf(tid));
+                plugin.getTrackerKeeper().getMaterialising().remove(Integer.valueOf(tid));
+                plugin.getTrackerKeeper().getInVortex().remove(Integer.valueOf(tid));
                 plugin.getServer().getScheduler().cancelTask(task);
                 task = 0;
                 // tardis has moved so remove HADS damage count
-                if (plugin.getTrackerKeeper().getTrackDamage().containsKey(tid)) {
-                    plugin.getTrackerKeeper().getTrackDamage().remove(tid);
+                if (plugin.getTrackerKeeper().getDamage().containsKey(tid)) {
+                    plugin.getTrackerKeeper().getDamage().remove(tid);
                 }
                 // message travellers in tardis
                 HashMap<String, Object> where = new HashMap<String, Object>();

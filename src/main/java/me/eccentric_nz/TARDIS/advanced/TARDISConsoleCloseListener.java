@@ -153,7 +153,7 @@ public class TARDISConsoleCloseListener implements Listener {
                                             set_next.put("z", l.getBlockZ());
                                             set_next.put("submarine", 0);
                                             TARDISMessage.send(p, plugin.getPluginName() + "Your TARDIS was approved for parking in [" + first + "]!");
-                                            plugin.getTrackerKeeper().getTrackHasDestination().put(id, plugin.getArtronConfig().getInt("travel"));
+                                            plugin.getTrackerKeeper().getHasDestination().put(id, plugin.getArtronConfig().getInt("travel"));
                                             break;
                                         case GREEN_RECORD: // biome
                                             // find a biome location
@@ -270,15 +270,15 @@ public class TARDISConsoleCloseListener implements Listener {
                                         // update next
                                         where_next.put("tardis_id", id);
                                         qf.doUpdate("next", set_next, where_next);
-                                        plugin.getTrackerKeeper().getTrackHasDestination().put(id, plugin.getArtronConfig().getInt("travel"));
+                                        plugin.getTrackerKeeper().getHasDestination().put(id, plugin.getArtronConfig().getInt("travel"));
                                     }
                                     if (set_tardis.size() > 0) {
                                         // update tardis
                                         where_tardis.put("tardis_id", id);
                                         qf.doUpdate("tardis", set_tardis, where_tardis);
                                     }
-                                    if (plugin.getTrackerKeeper().getTrackRescue().containsKey(id)) {
-                                        plugin.getTrackerKeeper().getTrackRescue().remove(id);
+                                    if (plugin.getTrackerKeeper().getRescue().containsKey(id)) {
+                                        plugin.getTrackerKeeper().getRescue().remove(id);
                                     }
                                 } else {
                                     TARDISMessage.send(p, plugin.getPluginName() + "The console cannot process blank disks!");

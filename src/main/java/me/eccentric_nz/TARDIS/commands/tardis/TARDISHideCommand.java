@@ -65,12 +65,12 @@ public class TARDISHideCommand {
             HashMap<String, Object> wherein = new HashMap<String, Object>();
             wherein.put("uuid", player.getUniqueId().toString());
             ResultSetTravellers rst = new ResultSetTravellers(plugin, wherein, false);
-            if (rst.resultSet() && plugin.getTrackerKeeper().getTrackHasDestination().containsKey(id)) {
+            if (rst.resultSet() && plugin.getTrackerKeeper().getHasDestination().containsKey(id)) {
                 TARDISMessage.send(player.getPlayer(), plugin.getPluginName() + "You cannot rebuild the TARDIS right now! Try travelling first.");
                 return true;
             }
             int level = rs.getArtron_level();
-            if (plugin.getTrackerKeeper().getTrackInVortex().contains(id)) {
+            if (plugin.getTrackerKeeper().getInVortex().contains(id)) {
                 TARDISMessage.send(player.getPlayer(), plugin.getPluginName() + MESSAGE.NOT_WHILE_MAT.getText());
                 return true;
             }

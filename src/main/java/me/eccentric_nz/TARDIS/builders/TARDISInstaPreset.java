@@ -144,8 +144,8 @@ public class TARDISInstaPreset {
             }
         }
         // rescue player?
-        if (plugin.getTrackerKeeper().getTrackRescue().containsKey(tid)) {
-            UUID playerUUID = plugin.getTrackerKeeper().getTrackRescue().get(tid);
+        if (plugin.getTrackerKeeper().getRescue().containsKey(tid)) {
+            UUID playerUUID = plugin.getTrackerKeeper().getRescue().get(tid);
             Player saved = plugin.getServer().getPlayer(playerUUID);
             if (saved != null) {
                 TARDISDoorLocation idl = plugin.getGeneralKeeper().getDoorListener().getDoor(1, tid);
@@ -157,7 +157,7 @@ public class TARDISInstaPreset {
                 set.put("uuid", playerUUID.toString());
                 qf.doInsert("travellers", set);
             }
-            plugin.getTrackerKeeper().getTrackRescue().remove(tid);
+            plugin.getTrackerKeeper().getRescue().remove(tid);
         }
         switch (d) {
             case SOUTH:
@@ -467,8 +467,8 @@ public class TARDISInstaPreset {
                 }, 30L);
             }
         }
-        plugin.getTrackerKeeper().getTrackMaterialising().remove(Integer.valueOf(tid));
-        plugin.getTrackerKeeper().getTrackInVortex().remove(Integer.valueOf(tid));
+        plugin.getTrackerKeeper().getMaterialising().remove(Integer.valueOf(tid));
+        plugin.getTrackerKeeper().getInVortex().remove(Integer.valueOf(tid));
     }
 
     private class ProblemBlock {

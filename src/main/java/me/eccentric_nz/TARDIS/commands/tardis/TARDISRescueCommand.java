@@ -49,12 +49,12 @@ public class TARDISRescueCommand {
             }
             final UUID savedUUID = destPlayer.getUniqueId();
             TARDISMessage.send(destPlayer, plugin.getPluginName() + player.getName() + " wants to rescue you! Type: " + ChatColor.AQUA + "tardis rescue accept" + ChatColor.RESET + " in chat within 60 seconds to accept the rescue.");
-            plugin.getTrackerKeeper().getTrackChat().put(savedUUID, player.getUniqueId());
+            plugin.getTrackerKeeper().getChat().put(savedUUID, player.getUniqueId());
             plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
                 @Override
                 public void run() {
-                    if (plugin.getTrackerKeeper().getTrackChat().containsKey(savedUUID)) {
-                        plugin.getTrackerKeeper().getTrackChat().remove(savedUUID);
+                    if (plugin.getTrackerKeeper().getChat().containsKey(savedUUID)) {
+                        plugin.getTrackerKeeper().getChat().remove(savedUUID);
                         TARDISMessage.send(player, plugin.getPluginName() + saved + " didn't respond with 60 seconds, aborting rescue!");
                     }
                 }

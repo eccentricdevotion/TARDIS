@@ -80,17 +80,17 @@ public class TARDISKeyboardListener implements Listener {
             }
             Sign keyboard = (Sign) against.getState();
             // track this sign
-            plugin.getTrackerKeeper().getTrackSign().put(block.getLocation().toString(), keyboard);
+            plugin.getTrackerKeeper().getSign().put(block.getLocation().toString(), keyboard);
         }
     }
 
     @EventHandler(ignoreCancelled = true)
     public void onSignChange(SignChangeEvent event) {
         String loc = event.getBlock().getLocation().toString();
-        if (!plugin.getTrackerKeeper().getTrackSign().containsKey(loc)) {
+        if (!plugin.getTrackerKeeper().getSign().containsKey(loc)) {
             return;
         }
-        Sign keyboard = plugin.getTrackerKeeper().getTrackSign().get(loc);
+        Sign keyboard = plugin.getTrackerKeeper().getSign().get(loc);
         Player p = event.getPlayer();
         if (!plugin.getPM().isPluginEnabled("ProtocolLib")) {
             int i = 0;
@@ -99,7 +99,7 @@ public class TARDISKeyboardListener implements Listener {
                 i++;
             }
             keyboard.update();
-            plugin.getTrackerKeeper().getTrackSign().remove(loc);
+            plugin.getTrackerKeeper().getSign().remove(loc);
             // cancel the edit and give the sign back to the player
             event.setCancelled(true);
             event.getBlock().setType(Material.AIR);

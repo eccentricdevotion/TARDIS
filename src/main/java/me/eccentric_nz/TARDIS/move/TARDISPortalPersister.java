@@ -48,7 +48,7 @@ public class TARDISPortalPersister {
         try {
             // save the portals
             ps = connection.prepareStatement("INSERT INTO portals (portal, teleport, direction, tardis_id) VALUES (?,?,?,?)");
-            for (Map.Entry<Location, TARDISTeleportLocation> map : plugin.getTrackerKeeper().getTrackPortals().entrySet()) {
+            for (Map.Entry<Location, TARDISTeleportLocation> map : plugin.getTrackerKeeper().getPortals().entrySet()) {
                 TARDISTeleportLocation ttpl = map.getValue();
                 ps.setString(1, map.getKey().toString());
                 ps.setString(2, ttpl.getLocation().toString());
@@ -59,7 +59,7 @@ public class TARDISPortalPersister {
             plugin.getConsole().sendMessage(plugin.getPluginName() + "Saved " + count + " portals.");
             // save the players
             ps = connection.prepareStatement("INSERT INTO movers (uuid) VALUES (?)");
-            for (UUID uuid : plugin.getTrackerKeeper().getTrackMover()) {
+            for (UUID uuid : plugin.getTrackerKeeper().getMover()) {
                 ps.setString(1, uuid.toString());
                 ps.executeUpdate();
             }
@@ -89,7 +89,7 @@ public class TARDISPortalPersister {
                     ttpl.setLocation(teleport);
                     ttpl.setDirection(direction);
                     ttpl.setTardisId(rs.getInt("tardis_id"));
-                    plugin.getTrackerKeeper().getTrackPortals().put(portal, ttpl);
+                    plugin.getTrackerKeeper().getPortals().put(portal, ttpl);
                     count++;
                 }
             }
@@ -102,7 +102,7 @@ public class TARDISPortalPersister {
             rs = ps.executeQuery();
             if (rs.isBeforeFirst()) {
                 while (rs.next()) {
-                    plugin.getTrackerKeeper().getTrackMover().add(UUID.fromString(rs.getString("uuid")));
+                    plugin.getTrackerKeeper().getMover().add(UUID.fromString(rs.getString("uuid")));
                 }
             }
             // clear the movers table so we don't get any duplicates when saving them

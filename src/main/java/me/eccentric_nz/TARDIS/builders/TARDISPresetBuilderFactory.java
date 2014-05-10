@@ -149,12 +149,12 @@ public class TARDISPresetBuilderFactory {
                 }, 10L);
             } else {
                 if (plugin.getConfig().getBoolean("police_box.materialise")) {
-                    plugin.getTrackerKeeper().getTrackMaterialising().add(pbd.getTardisID());
+                    plugin.getTrackerKeeper().getMaterialising().add(pbd.getTardisID());
                     TARDISMaterialisationPreset runnable = new TARDISMaterialisationPreset(plugin, pbd.getLocation(), preset, pbd.getTardisID(), pbd.getDirection(), pbd.getPlayer(), pbd.isMalfunction(), lamp, pbd.isSubmarine(), cham_id, cham_data, minecart, pbd.isOutside());
                     int taskID = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, runnable, 10L, 20L);
                     runnable.setTask(taskID);
                 } else {
-                    plugin.getTrackerKeeper().getTrackMaterialising().add(pbd.getTardisID());
+                    plugin.getTrackerKeeper().getMaterialising().add(pbd.getTardisID());
                     TARDISInstaPreset insta = new TARDISInstaPreset(plugin, pbd.getLocation(), preset, pbd.getTardisID(), pbd.getDirection(), pbd.getPlayer().getUniqueId().toString(), pbd.isMalfunction(), lamp, pbd.isSubmarine(), cham_id, cham_data, false, minecart);
                     insta.buildPreset();
                 }

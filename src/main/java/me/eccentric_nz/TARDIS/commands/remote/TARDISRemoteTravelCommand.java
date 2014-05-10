@@ -78,7 +78,7 @@ public class TARDISRemoteTravelCommand {
                 exit.getWorld().loadChunk(exit.getChunk());
             }
             boolean mat = plugin.getConfig().getBoolean("police_box.materialise");
-            plugin.getTrackerKeeper().getTrackInVortex().add(id);
+            plugin.getTrackerKeeper().getInVortex().add(id);
             final TARDISMaterialisationData pdd = new TARDISMaterialisationData();
             pdd.setChameleon(cham);
             pdd.setDirection(cd);
@@ -91,8 +91,8 @@ public class TARDISRemoteTravelCommand {
             pdd.setTardisID(id);
             pdd.setBiome(biome);
             HashMap<String, Object> set = new HashMap<String, Object>();
-            if (!hidden && !plugin.getTrackerKeeper().getTrackReset().contains(resetw)) {
-                plugin.getTrackerKeeper().getTrackDematerialising().add(id);
+            if (!hidden && !plugin.getTrackerKeeper().getReset().contains(resetw)) {
+                plugin.getTrackerKeeper().getDematerialising().add(id);
                 plugin.getPresetDestroyer().destroyPreset(pdd);
             } else {
                 // set hidden false!
@@ -117,8 +117,8 @@ public class TARDISRemoteTravelCommand {
                     plugin.getUtils().playTARDISSoundNearby(pbd.getLocation(), "tardis_land");
                 }
             }, delay);
-            if (plugin.getTrackerKeeper().getTrackDamage().containsKey(id)) {
-                plugin.getTrackerKeeper().getTrackDamage().remove(id);
+            if (plugin.getTrackerKeeper().getDamage().containsKey(id)) {
+                plugin.getTrackerKeeper().getDamage().remove(id);
             }
             // current
             HashMap<String, Object> setcurrent = new HashMap<String, Object>();

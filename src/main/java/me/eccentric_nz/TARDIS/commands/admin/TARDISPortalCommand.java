@@ -33,9 +33,9 @@ public class TARDISPortalCommand {
 
     public boolean clearAll(CommandSender sender) {
         // clear all portals on the server
-        plugin.getTrackerKeeper().getTrackPortals().clear();
+        plugin.getTrackerKeeper().getPortals().clear();
         // stop tracking players
-        plugin.getTrackerKeeper().getTrackMover().clear();
+        plugin.getTrackerKeeper().getMover().clear();
         sender.sendMessage(plugin.getPluginName() + "Removed all portals, and stopped tracking players!");
         return true;
     }

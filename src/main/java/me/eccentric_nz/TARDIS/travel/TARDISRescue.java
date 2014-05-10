@@ -99,9 +99,9 @@ public class TARDISRescue {
         if (!rescue) {
             TARDISMessage.send(player, plugin.getPluginName() + "The player location was saved successfully. Please release the handbrake!");
         }
-        plugin.getTrackerKeeper().getTrackHasDestination().put(id, plugin.getArtronConfig().getInt("travel"));
+        plugin.getTrackerKeeper().getHasDestination().put(id, plugin.getArtronConfig().getInt("travel"));
         if (rescue) {
-            plugin.getTrackerKeeper().getTrackRescue().put(id, saved);
+            plugin.getTrackerKeeper().getRescue().put(id, saved);
         }
         return true;
     }

@@ -161,7 +161,7 @@ public class TARDISDoorWalkListener extends TARDISDoorListener implements Listen
                             }
                             if (action == Action.RIGHT_CLICK_BLOCK && !player.isSneaking()) {
                                 final int id = rsd.getTardis_id();
-                                if (plugin.getTrackerKeeper().getTrackInVortex().contains(id)) {
+                                if (plugin.getTrackerKeeper().getInVortex().contains(id)) {
                                     TARDISMessage.send(player, plugin.getPluginName() + MESSAGE.NOT_WHILE_MAT.getText());
                                     return;
                                 }
@@ -286,7 +286,7 @@ public class TARDISDoorWalkListener extends TARDISDoorListener implements Listen
                                         case 1:
                                         case 4:
                                             // is the TARDIS materialising?
-                                            if (plugin.getTrackerKeeper().getTrackInVortex().contains(id)) {
+                                            if (plugin.getTrackerKeeper().getInVortex().contains(id)) {
                                                 TARDISMessage.send(player, plugin.getPluginName() + MESSAGE.LOST_IN_VORTEX.getText());
                                                 return;
                                             }
@@ -360,7 +360,7 @@ public class TARDISDoorWalkListener extends TARDISDoorListener implements Listen
                                             break;
                                         case 0:
                                             // is the TARDIS materialising?
-                                            if (plugin.getTrackerKeeper().getTrackInVortex().contains(id)) {
+                                            if (plugin.getTrackerKeeper().getInVortex().contains(id)) {
                                                 TARDISMessage.send(player, plugin.getPluginName() + MESSAGE.LOST_IN_VORTEX.getText());
                                                 return;
                                             }
@@ -385,8 +385,8 @@ public class TARDISDoorWalkListener extends TARDISDoorListener implements Listen
                                                 COMPASS innerD = idl.getD();
                                                 // check for entities near the police box
                                                 List<TARDISMob> pets = null;
-                                                if (plugin.getConfig().getBoolean("allow.mob_farming") && player.hasPermission("tardis.farm") && !plugin.getTrackerKeeper().getTrackFarming().contains(player.getUniqueId())) {
-                                                    plugin.getTrackerKeeper().getTrackFarming().add(player.getUniqueId());
+                                                if (plugin.getConfig().getBoolean("allow.mob_farming") && player.hasPermission("tardis.farm") && !plugin.getTrackerKeeper().getFarming().contains(player.getUniqueId())) {
+                                                    plugin.getTrackerKeeper().getFarming().add(player.getUniqueId());
                                                     TARDISFarmer tf = new TARDISFarmer(plugin);
                                                     pets = tf.farmAnimals(block_loc, d, id, player, tmp_loc.getWorld().getName(), playerWorld.getName());
                                                 }

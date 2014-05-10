@@ -64,7 +64,7 @@ public class TARDISSecondaryCommand {
                 TARDISMessage.send(player, plugin.getPluginName() + MESSAGE.NOT_IN_TARDIS.getText());
                 return false;
             }
-            plugin.getTrackerKeeper().getTrackSecondary().put(player.getUniqueId(), tardis_block);
+            plugin.getTrackerKeeper().getSecondary().put(player.getUniqueId(), tardis_block);
             TARDISMessage.send(player, plugin.getPluginName() + "Click the TARDIS " + tardis_block + " to update its position.");
             return true;
         } else {

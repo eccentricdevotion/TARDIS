@@ -67,8 +67,8 @@ public class TARDISDeinstaPreset {
         Biome biome = tmd.getBiome();
         if (plugin.getConfig().getBoolean("preferences.walk_in_tardis")) {
             // always remove the portal
-            if (plugin.getTrackerKeeper().getTrackPortals().containsKey(l)) {
-                plugin.getTrackerKeeper().getTrackPortals().remove(l);
+            if (plugin.getTrackerKeeper().getPortals().containsKey(l)) {
+                plugin.getTrackerKeeper().getPortals().remove(l);
             }
             // toggle the doors if neccessary
             new TARDISDoorCloser(plugin, tmd.getPlayer().getUniqueId(), id).closeDoors();
@@ -134,7 +134,7 @@ public class TARDISDeinstaPreset {
             default:
                 break;
         }
-        plugin.getTrackerKeeper().getTrackDematerialising().remove(Integer.valueOf(id));
+        plugin.getTrackerKeeper().getDematerialising().remove(Integer.valueOf(id));
         plugin.getGeneralKeeper().getTardisChunkList().remove(l.getChunk());
         // remove door
         plugin.getPresetDestroyer().destroyDoor(id);

@@ -86,16 +86,16 @@ public class TARDISAreaCommands implements CommandExecutor {
                         }
                     }
                 }
-                plugin.getTrackerKeeper().getTrackUUID().put(player.getUniqueId(), args[1]);
+                plugin.getTrackerKeeper().getArea().put(player.getUniqueId(), args[1]);
                 TARDISMessage.send(player, plugin.getPluginName() + "Click the area start block to save its position.");
                 return true;
             }
             if (args[0].equals("end")) {
-                if (!plugin.getTrackerKeeper().getTrackBlock().containsKey(player.getUniqueId())) {
+                if (!plugin.getTrackerKeeper().getBlock().containsKey(player.getUniqueId())) {
                     TARDISMessage.send(player, plugin.getPluginName() + ChatColor.RED + "You haven't selected an area start block!");
                     return false;
                 }
-                plugin.getTrackerKeeper().getTrackEnd().put(player.getUniqueId(), "end");
+                plugin.getTrackerKeeper().getEnd().put(player.getUniqueId(), "end");
                 TARDISMessage.send(player, plugin.getPluginName() + "Click the area end block to complete the area.");
                 return true;
             }

@@ -143,9 +143,9 @@ public class TARDISTravelCommands implements CommandExecutor {
                     set.put("submarine", 0);
                     qf.doUpdate("next", set, tid);
                     TARDISMessage.send(player, plugin.getPluginName() + "Your TARDIS was approved for parking in [" + permArea + "]!");
-                    plugin.getTrackerKeeper().getTrackHasDestination().put(id, travel);
-                    if (plugin.getTrackerKeeper().getTrackRescue().containsKey(id)) {
-                        plugin.getTrackerKeeper().getTrackRescue().remove(id);
+                    plugin.getTrackerKeeper().getHasDestination().put(id, travel);
+                    if (plugin.getTrackerKeeper().getRescue().containsKey(id)) {
+                        plugin.getTrackerKeeper().getRescue().remove(id);
                     }
                     return true;
                 } else {
@@ -209,9 +209,9 @@ public class TARDISTravelCommands implements CommandExecutor {
                             }
                             qf.doUpdate("next", set, tid);
                             TARDISMessage.send(player, plugin.getPluginName() + which + " location loaded succesfully. Please release the handbrake!");
-                            plugin.getTrackerKeeper().getTrackHasDestination().put(id, travel);
-                            if (plugin.getTrackerKeeper().getTrackRescue().containsKey(id)) {
-                                plugin.getTrackerKeeper().getTrackRescue().remove(id);
+                            plugin.getTrackerKeeper().getHasDestination().put(id, travel);
+                            if (plugin.getTrackerKeeper().getRescue().containsKey(id)) {
+                                plugin.getTrackerKeeper().getRescue().remove(id);
                             }
                             return true;
                         } else {
@@ -314,9 +314,9 @@ public class TARDISTravelCommands implements CommandExecutor {
                                     set.put("submarine", 0);
                                     qf.doUpdate("next", set, tid);
                                     TARDISMessage.send(player, plugin.getPluginName() + "The biome was set succesfully. Please release the handbrake!");
-                                    plugin.getTrackerKeeper().getTrackHasDestination().put(id, travel);
-                                    if (plugin.getTrackerKeeper().getTrackRescue().containsKey(id)) {
-                                        plugin.getTrackerKeeper().getTrackRescue().remove(id);
+                                    plugin.getTrackerKeeper().getHasDestination().put(id, travel);
+                                    if (plugin.getTrackerKeeper().getRescue().containsKey(id)) {
+                                        plugin.getTrackerKeeper().getRescue().remove(id);
                                     }
                                 }
                             } catch (IllegalArgumentException iae) {
@@ -380,9 +380,9 @@ public class TARDISTravelCommands implements CommandExecutor {
                                 set.put("submarine", (rsd.isSubmarine()) ? 1 : 0);
                                 qf.doUpdate("next", set, tid);
                                 TARDISMessage.send(player, plugin.getPluginName() + "The specified location was set succesfully. Please release the handbrake!");
-                                plugin.getTrackerKeeper().getTrackHasDestination().put(id, travel);
-                                if (plugin.getTrackerKeeper().getTrackRescue().containsKey(id)) {
-                                    plugin.getTrackerKeeper().getTrackRescue().remove(id);
+                                plugin.getTrackerKeeper().getHasDestination().put(id, travel);
+                                if (plugin.getTrackerKeeper().getRescue().containsKey(id)) {
+                                    plugin.getTrackerKeeper().getRescue().remove(id);
                                 }
                                 return true;
                             } else {
@@ -423,9 +423,9 @@ public class TARDISTravelCommands implements CommandExecutor {
                         set.put("submarine", 0);
                         qf.doUpdate("next", set, tid);
                         TARDISMessage.send(player, plugin.getPluginName() + "Your TARDIS was approved for parking in [" + args[1] + "]!");
-                        plugin.getTrackerKeeper().getTrackHasDestination().put(id, travel);
-                        if (plugin.getTrackerKeeper().getTrackRescue().containsKey(id)) {
-                            plugin.getTrackerKeeper().getTrackRescue().remove(id);
+                        plugin.getTrackerKeeper().getHasDestination().put(id, travel);
+                        if (plugin.getTrackerKeeper().getRescue().containsKey(id)) {
+                            plugin.getTrackerKeeper().getRescue().remove(id);
                         }
                         return true;
                     }
@@ -469,9 +469,9 @@ public class TARDISTravelCommands implements CommandExecutor {
                             set.put("submarine", 0);
                             qf.doUpdate("next", set, tid);
                             TARDISMessage.send(player, plugin.getPluginName() + "The specified location was saved succesfully. Please release the handbrake!");
-                            plugin.getTrackerKeeper().getTrackHasDestination().put(id, travel);
-                            if (plugin.getTrackerKeeper().getTrackRescue().containsKey(id)) {
-                                plugin.getTrackerKeeper().getTrackRescue().remove(id);
+                            plugin.getTrackerKeeper().getHasDestination().put(id, travel);
+                            if (plugin.getTrackerKeeper().getRescue().containsKey(id)) {
+                                plugin.getTrackerKeeper().getRescue().remove(id);
                             }
                             return true;
                         }
@@ -521,9 +521,9 @@ public class TARDISTravelCommands implements CommandExecutor {
                             set.put("submarine", 0);
                             qf.doUpdate("next", set, tid);
                             TARDISMessage.send(player, plugin.getPluginName() + "The specified location was saved succesfully. Please release the handbrake!");
-                            plugin.getTrackerKeeper().getTrackHasDestination().put(id, travel);
-                            if (plugin.getTrackerKeeper().getTrackRescue().containsKey(id)) {
-                                plugin.getTrackerKeeper().getTrackRescue().remove(id);
+                            plugin.getTrackerKeeper().getHasDestination().put(id, travel);
+                            if (plugin.getTrackerKeeper().getRescue().containsKey(id)) {
+                                plugin.getTrackerKeeper().getRescue().remove(id);
                             }
                             return true;
                         }

@@ -69,7 +69,7 @@ public class TARDISJettisonSeeder implements Listener {
         String playerNameStr = player.getName();
         UUID uuid = player.getUniqueId();
         // check that player is in TARDIS
-        if (!plugin.getTrackerKeeper().getTrackJettison().containsKey(uuid)) {
+        if (!plugin.getTrackerKeeper().getJettison().containsKey(uuid)) {
             return;
         }
         Block block = event.getClickedBlock();
@@ -87,7 +87,7 @@ public class TARDISJettisonSeeder implements Listener {
             }
             // only proceed if they are clicking a seed block with the TARDIS key!
             if (blockType.equals(Material.getMaterial(plugin.getArtronConfig().getString("jettison_seed"))) && inhand.equals(Material.getMaterial(key))) {
-                String r = plugin.getTrackerKeeper().getTrackJettison().get(uuid);
+                String r = plugin.getTrackerKeeper().getJettison().get(uuid);
                 // get jettison direction
                 TARDISRoomDirection trd = new TARDISRoomDirection(block);
                 trd.getDirection();
@@ -107,7 +107,7 @@ public class TARDISJettisonSeeder implements Listener {
                     int id = rs.getTardis_id();
                     TARDISRoomRemover remover = new TARDISRoomRemover(plugin, r, l, d, id);
                     if (remover.remove()) {
-                        plugin.getTrackerKeeper().getTrackJettison().remove(uuid);
+                        plugin.getTrackerKeeper().getJettison().remove(uuid);
                         block.setType(Material.AIR);
                         l.getWorld().playEffect(l, Effect.POTION_BREAK, 9);
                         // ok they clicked it, so give them their energy!

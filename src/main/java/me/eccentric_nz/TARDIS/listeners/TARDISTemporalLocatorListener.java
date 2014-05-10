@@ -59,7 +59,7 @@ public class TARDISTemporalLocatorListener implements Listener {
                     ItemMeta im = is.getItemMeta();
                     List<String> lore = im.getLore();
                     long time = getTime(lore);
-                    plugin.getTrackerKeeper().getTrackSetTime().put(player.getUniqueId(), time);
+                    plugin.getTrackerKeeper().getSetTime().put(player.getUniqueId(), time);
                     TARDISMessage.send(player, plugin.getPluginName() + "Your temporal location will be set to " + time + " ticks when exiting the TARDIS.");
                 }
                 close(player);

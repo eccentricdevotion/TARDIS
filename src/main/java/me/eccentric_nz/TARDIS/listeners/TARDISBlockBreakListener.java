@@ -64,7 +64,7 @@ public class TARDISBlockBreakListener implements Listener {
     @EventHandler(priority = EventPriority.LOW, ignoreCancelled = true)
     public void onSignBreak(BlockBreakEvent event) {
         Player player = event.getPlayer();
-        if (plugin.getTrackerKeeper().getTrackZeroRoomOccupants().contains(player.getUniqueId())) {
+        if (plugin.getTrackerKeeper().getZeroRoomOccupants().contains(player.getUniqueId())) {
             event.setCancelled(true);
             TARDISMessage.send(player, plugin.getPluginName() + MESSAGE.NOT_IN_ZERO.getText());
             return;
@@ -82,13 +82,13 @@ public class TARDISBlockBreakListener implements Listener {
                 if (player.hasPermission("tardis.exterminate")) {
                     final UUID uuid = player.getUniqueId();
                     // check it is their TARDIS
-                    plugin.getTrackerKeeper().getTrackExterminate().put(uuid, block);
+                    plugin.getTrackerKeeper().getExterminate().put(uuid, block);
                     long timeout = plugin.getConfig().getLong("police_box.confirm_timeout");
                     TARDISMessage.send(player, plugin.getPluginName() + "Are you sure you want to delete the TARDIS? Type " + ChatColor.AQUA + "/tardis exterminate" + ChatColor.RESET + " within " + timeout + " seconds to proceed.");
                     plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
                         @Override
                         public void run() {
-                            plugin.getTrackerKeeper().getTrackExterminate().remove(uuid);
+                            plugin.getTrackerKeeper().getExterminate().remove(uuid);
                         }
                     }, timeout * 20);
                 } else {

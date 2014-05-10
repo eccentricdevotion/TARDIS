@@ -219,7 +219,7 @@ public class TARDISBindCommands implements CommandExecutor {
                     }
                 }
                 if (did != 0) {
-                    plugin.getTrackerKeeper().getTrackBinder().put(player.getUniqueId(), did);
+                    plugin.getTrackerKeeper().getBinder().put(player.getUniqueId(), did);
                     TARDISMessage.send(player, plugin.getPluginName() + "Click the block you want to bind to this save location.");
                     return true;
                 }

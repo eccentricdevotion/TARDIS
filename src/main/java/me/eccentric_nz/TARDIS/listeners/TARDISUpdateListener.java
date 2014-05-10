@@ -113,10 +113,10 @@ public class TARDISUpdateListener implements Listener {
         final String playerUUID = uuid.toString();
         String blockName;
         boolean secondary = false;
-        if (plugin.getTrackerKeeper().getTrackPlayers().containsKey(uuid)) {
-            blockName = plugin.getTrackerKeeper().getTrackPlayers().get(uuid);
-        } else if (plugin.getTrackerKeeper().getTrackSecondary().containsKey(uuid)) {
-            blockName = plugin.getTrackerKeeper().getTrackSecondary().get(uuid);
+        if (plugin.getTrackerKeeper().getPlayers().containsKey(uuid)) {
+            blockName = plugin.getTrackerKeeper().getPlayers().get(uuid);
+        } else if (plugin.getTrackerKeeper().getSecondary().containsKey(uuid)) {
+            blockName = plugin.getTrackerKeeper().getSecondary().get(uuid);
             secondary = true;
         } else {
             return;
@@ -159,16 +159,16 @@ public class TARDISUpdateListener implements Listener {
                 tid.put("secondary", 0);
             }
             if (secondary) {
-                plugin.getTrackerKeeper().getTrackSecondary().remove(uuid);
+                plugin.getTrackerKeeper().getSecondary().remove(uuid);
             } else {
-                plugin.getTrackerKeeper().getTrackPlayers().remove(uuid);
+                plugin.getTrackerKeeper().getPlayers().remove(uuid);
             }
             if (blockName.equalsIgnoreCase("door") && blockType == Material.IRON_DOOR_BLOCK && !secondary) {
                 // if portals are on, remove the current portal first
                 if (plugin.getConfig().getBoolean("preferences.walk_in_tardis")) {
                     ResultSetDoorBlocks rsdb = new ResultSetDoorBlocks(plugin, id);
                     if (rsdb.resultSet()) {
-                        plugin.getTrackerKeeper().getTrackPortals().remove(rsdb.getInnerBlock().getLocation());
+                        plugin.getTrackerKeeper().getPortals().remove(rsdb.getInnerBlock().getLocation());
                     }
                 }
                 // get door data this should let us determine the direction

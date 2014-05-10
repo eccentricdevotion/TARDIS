@@ -122,13 +122,13 @@ public class TARDISDoorCloser {
             // unset trackers
             // players
             for (UUID u : uuids) {
-                if (plugin.getTrackerKeeper().getTrackMover().contains(u)) {
-                    plugin.getTrackerKeeper().getTrackMover().remove(u);
+                if (plugin.getTrackerKeeper().getMover().contains(u)) {
+                    plugin.getTrackerKeeper().getMover().remove(u);
                 }
             }
             // locations
-            plugin.getTrackerKeeper().getTrackPortals().remove(exportal);
-            plugin.getTrackerKeeper().getTrackPortals().remove(inportal);
+            plugin.getTrackerKeeper().getPortals().remove(exportal);
+            plugin.getTrackerKeeper().getPortals().remove(inportal);
         }
     }
 }
