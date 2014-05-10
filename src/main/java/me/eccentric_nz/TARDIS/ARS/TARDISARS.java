@@ -50,21 +50,19 @@ public enum TARDISARS implements ARS {
     STABLE(170, "STABLE", "Horse Stable", 1),
     JETTISON(46, "JETTISON", "Jettison", 0),
     SLOT(1, "SLOT", "Empty slot", 0),
-    ARS(159, "ARS", "ARS Console", 0),
+    ARS(155, "ARS", "ARS Console", 0),
     BUDGET(42, "BUDGET", "Default Console", 0),
     DELUXE(57, "DELUXE", "Supersized Deluxe Console", 0),
     ELEVENTH(133, "ELEVENTH", "11th Doctor's Console", 0),
     REDSTONE(152, "REDSTONE", "Redstone Console", 0),
     BIGGER(41, "BIGGER", "A Bigger Console", 0),
-    PLANK(22, "PLANK", "Wood Console", 0),
+    PLANK(47, "PLANK", "Wood Console", 0),
     STEAMPUNK(173, "STEAMPUNK", "Steampunk Console", 0),
-    TOM(155, "TOM", "4th Doctor's Console", 0);
+    TOM(22, "TOM", "4th Doctor's Console", 0);
     private final int id;
     private final String name;
     private final String descriptiveName;
     private final int offset;
-//    private final static HashMap<Integer, TARDISARS> BY_ID = new HashMap<Integer, TARDISARS>();
-//    private final static HashMap<String, TARDISARS> BY_NAME = new HashMap<String, TARDISARS>();
     private final static HashMap<Integer, ARS> EXTENDED_ID = new HashMap<Integer, ARS>();
     private final static HashMap<String, ARS> EXTENDED_NAME = new HashMap<String, ARS>();
 
