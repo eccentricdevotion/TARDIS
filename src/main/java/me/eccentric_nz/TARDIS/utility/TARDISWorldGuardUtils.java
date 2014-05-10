@@ -144,6 +144,7 @@ public class TARDISWorldGuardUtils {
         HashMap<Flag<?>, Object> flags = new HashMap<Flag<?>, Object>();
         flags.put(DefaultFlag.TNT, State.DENY);
         flags.put(DefaultFlag.CREEPER_EXPLOSION, State.DENY);
+        flags.put(DefaultFlag.ENDER_BUILD, State.DENY);
         flags.put(DefaultFlag.FIRE_SPREAD, State.DENY);
         flags.put(DefaultFlag.LAVA_FIRE, State.DENY);
         flags.put(DefaultFlag.LAVA_FLOW, State.DENY);
