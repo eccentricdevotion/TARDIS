@@ -25,7 +25,6 @@ import me.eccentric_nz.TARDIS.database.ResultSetCompanions;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import me.eccentric_nz.TARDIS.database.ResultSetTravellers;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
-import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.entity.Creeper;
 import org.bukkit.entity.Enderman;
@@ -64,7 +63,6 @@ public class TARDISMonsterRunnable implements Runnable {
 
     @Override
     public void run() {
-        plugin.getServer().broadcastMessage(ChatColor.AQUA + "[TARDIS] Checking for monsters");
         // get open portals
         for (Map.Entry<Location, TARDISTeleportLocation> map : plugin.getTrackerKeeper().getPortals().entrySet()) {
             // only portals in police box worlds
