@@ -88,7 +88,8 @@ public class TARDISDeinstaPreset {
         }
         final int sbz = l.getBlockZ() - 1;
         // unset biome if configured and it's not The End
-        if (plugin.getConfig().getBoolean("police_box.set_biome") && l.getBlock().getBiome().equals(Biome.SKY) && !l.getWorld().getEnvironment().equals(Environment.THE_END) && biome != null) {
+        if (l.getBlock().getBiome().equals(Biome.SKY) && !l.getWorld().getEnvironment().equals(Environment.THE_END) && biome != null) {
+//        if (plugin.getConfig().getBoolean("police_box.set_biome") && l.getBlock().getBiome().equals(Biome.SKY) && !l.getWorld().getEnvironment().equals(Environment.THE_END) && biome != null) {
             // set the biome
             for (int c = 0; c < 3; c++) {
                 for (int r = 0; r < 3; r++) {
