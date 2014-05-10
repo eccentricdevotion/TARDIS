@@ -187,4 +187,20 @@ public class TARDISARSMapListener extends TARDISARSMethods implements Listener {
         }
         return offset;
     }
+
+    @Override
+    public void close(final Player p) {
+        final UUID uuid = p.getUniqueId();
+        plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
+            @Override
+            public void run() {
+                if (hasLoadedMap.contains(uuid)) {
+                    hasLoadedMap.remove(uuid);
+                }
+                map_data.remove(uuid);
+                ids.remove(uuid);
+                p.closeInventory();
+            }
+        }, 1L);
+    }
 }

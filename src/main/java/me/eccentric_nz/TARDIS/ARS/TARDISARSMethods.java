@@ -376,6 +376,7 @@ public class TARDISARSMethods {
                     }
                     map_data.remove(uuid);
                     save_map_data.remove(uuid);
+                    ids.remove(uuid);
                 }
                 p.closeInventory();
             }
