@@ -28,13 +28,10 @@ import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.commands.admin.TARDISAdminMenuInventory;
 import me.eccentric_nz.TARDIS.commands.preferences.TARDISPrefsMenuInventory;
 import me.eccentric_nz.TARDIS.database.ResultSetBackLocation;
-import me.eccentric_nz.TARDIS.database.ResultSetCompanions;
 import me.eccentric_nz.TARDIS.database.ResultSetDoors;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import me.eccentric_nz.TARDIS.database.ResultSetTravellers;
-import me.eccentric_nz.TARDIS.enumeration.COMPASS;
 import static me.eccentric_nz.TARDIS.listeners.TARDISScannerListener.getNearbyEntities;
-import me.eccentric_nz.TARDIS.move.TARDISDoorToggler;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import me.eccentric_nz.TARDIS.utility.TARDISVector3D;
 import org.bukkit.ChatColor;
@@ -311,41 +308,55 @@ public class TARDISSonicListener implements Listener {
                                 if (b.getData() >= 8) {
                                     tmp = b.getRelative(BlockFace.DOWN);
                                 }
-                                final Block door_bottom = tmp;
-                                final byte door_data = door_bottom.getData();
-                                switch (door_data) {
-                                    case (byte) 0:
-                                        door_bottom.setData((byte) 4, false);
-                                        break;
-                                    case (byte) 1:
-                                        door_bottom.setData((byte) 5, false);
-                                        break;
-                                    case (byte) 2:
-                                        door_bottom.setData((byte) 6, false);
-                                        break;
-                                    case (byte) 3:
-                                        door_bottom.setData((byte) 7, false);
-                                        break;
-                                    case (byte) 4:
-                                        door_bottom.setData((byte) 0, false);
-                                        break;
-                                    case (byte) 5:
-                                        door_bottom.setData((byte) 1, false);
-                                        break;
-                                    case (byte) 6:
-                                        door_bottom.setData((byte) 2, false);
-                                        break;
-                                    default:
-                                        door_bottom.setData((byte) 3, false);
-                                        break;
+                                // not TARDIS doors!
+                                String doorloc = tmp.getLocation().getWorld().getName() + ":" + tmp.getLocation().getBlockX() + ":" + tmp.getLocation().getBlockY() + ":" + tmp.getLocation().getBlockZ();
+                                HashMap<String, Object> wheredoor = new HashMap<String, Object>();
+                                wheredoor.put("door_location", doorloc);
+                                ResultSetDoors rsd = new ResultSetDoors(plugin, wheredoor, false);
+                                if (rsd.resultSet()) {
+                                    return;
                                 }
-                                // return the door to its previous state after 3 seconds
-                                plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
-                                    @Override
-                                    public void run() {
-                                        door_bottom.setData(door_data, false);
+                                if (!plugin.getTrackerKeeper().getSonicDoors().contains(player.getUniqueId())) {
+                                    plugin.getTrackerKeeper().getSonicDoors().add(player.getUniqueId());
+                                    final Block door_bottom = tmp;
+                                    final byte door_data = door_bottom.getData();
+                                    switch (door_data) {
+                                        case (byte) 0:
+                                            door_bottom.setData((byte) 4, false);
+                                            break;
+                                        case (byte) 1:
+                                            door_bottom.setData((byte) 5, false);
+                                            break;
+                                        case (byte) 2:
+                                            door_bottom.setData((byte) 6, false);
+                                            break;
+                                        case (byte) 3:
+                                            door_bottom.setData((byte) 7, false);
+                                            break;
+                                        case (byte) 4:
+                                            door_bottom.setData((byte) 0, false);
+                                            break;
+                                        case (byte) 5:
+                                            door_bottom.setData((byte) 1, false);
+                                            break;
+                                        case (byte) 6:
+                                            door_bottom.setData((byte) 2, false);
+                                            break;
+                                        default:
+                                            door_bottom.setData((byte) 3, false);
+                                            break;
                                     }
-                                }, 60L);
+                                    // return the door to its previous state after 3 seconds
+                                    plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
+                                        @Override
+                                        public void run() {
+                                            if (door_bottom.getData() != door_data) {
+                                                door_bottom.setData(door_data, false);
+                                            }
+                                            plugin.getTrackerKeeper().getSonicDoors().remove(player.getUniqueId());
+                                        }
+                                    }, 60L);
+                                }
                                 break;
                             case POWERED_RAIL:
                                 PoweredRail rail = (PoweredRail) bs.getData();
@@ -671,31 +682,27 @@ public class TARDISSonicListener implements Listener {
                     }
                     // is it a TARDIS door?
                     HashMap<String, Object> where = new HashMap<String, Object>();
-                    String bw = lowerdoor.getLocation().getWorld().getName();
-                    int bx = lowerdoor.getLocation().getBlockX();
-                    int by = lowerdoor.getLocation().getBlockY();
-                    int bz = lowerdoor.getLocation().getBlockZ();
-                    String doorloc = bw + ":" + bx + ":" + by + ":" + bz;
+                    String doorloc = lowerdoor.getLocation().getWorld().getName() + ":" + lowerdoor.getLocation().getBlockX() + ":" + lowerdoor.getLocation().getBlockY() + ":" + lowerdoor.getLocation().getBlockZ();
                     where.put("door_location", doorloc);
                     ResultSetDoors rs = new ResultSetDoors(plugin, where, false);
                     if (rs.resultSet()) {
-                        COMPASS dd = rs.getDoor_direction();
-                        int id = rs.getTardis_id();
-                        // is it the time lords or a companions door?
-                        ResultSetCompanions rsc = new ResultSetCompanions(plugin, id);
-                        if (rsc.getCompanions().contains(player.getUniqueId())) {
-                            int type = rs.getDoor_type();
-                            if (!rs.isLocked() && (type == 0 || type == 1)) { // only preset doors
-                                // yes, yes and it is not deadlocked
-                                new TARDISDoorToggler(plugin, lowerdoor, dd, player, false, id).toggleDoors();
-                                return;
-                            } else {
-                                TARDISMessage.send(player, plugin.getPluginName() + "The door is deadlocked!");
-                                return;
-                            }
-                        } else {
-                            return;
-                        }
+//                        COMPASS dd = rs.getDoor_direction();
+//                        int id = rs.getTardis_id();
+//                        // is it the time lords or a companions door?
+//                        ResultSetCompanions rsc = new ResultSetCompanions(plugin, id);
+//                        if (rsc.getCompanions().contains(player.getUniqueId())) {
+//                            int type = rs.getDoor_type();
+//                            if (!rs.isLocked() && (type == 0 || type == 1)) { // only preset doors
+//                                // yes, yes and it is not deadlocked
+//                                new TARDISDoorToggler(plugin, lowerdoor, dd, player, false, id).toggleDoors();
+//                                return;
+//                            } else {
+//                                TARDISMessage.send(player, plugin.getPluginName() + "The door is deadlocked!");
+//                                return;
+//                            }
+//                        } else {
+                        return;
+//                        }
                     }
                     if (allow) {
                         BlockState bsl = lowerdoor.getState();
