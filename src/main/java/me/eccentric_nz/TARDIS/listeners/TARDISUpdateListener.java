@@ -85,7 +85,7 @@ public class TARDISUpdateListener implements Listener {
         // zero room exit control = 17
         // direction item frame = 18
         // lazarus plate = 19
-        controls.put("toggle", 20);
+        controls.put("toggle_wool", 20);
         validBlocks.add(Material.LEVER);
         validBlocks.add(Material.REDSTONE_COMPARATOR_OFF);
         validBlocks.add(Material.REDSTONE_COMPARATOR_ON);
@@ -589,7 +589,7 @@ public class TARDISUpdateListener implements Listener {
                 // check if player has storage record, and update the tardis_id field
                 plugin.getUtils().updateStorageId(playerUUID, id, qf);
             }
-            if ((blockName.equalsIgnoreCase("light") || blockName.equalsIgnoreCase("toggle")) && validBlocks.contains(blockType)) {
+            if ((blockName.equalsIgnoreCase("light") || blockName.equalsIgnoreCase("toggle_wool")) && validBlocks.contains(blockType)) {
                 HashMap<String, Object> wherel = new HashMap<String, Object>();
                 wherel.put("tardis_id", id);
                 wherel.put("type", controls.get(blockName));

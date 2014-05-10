@@ -165,7 +165,7 @@ public enum TARDISDescription {
             + "BLOCK: LEVER, STONE_BUTTON or WOOD_BUTTON"),
     TOGGLE(" INFO: When pressed, the black wool blocks behind the TARDIS interior door are toggled AIR/WOOL to provide access to the Vortex.\n"
             + "USAGE: Right-click.\n"
-            + "UPDATING: /tardis update toggle\n"
+            + "UPDATING: /tardis update toggle_wool\n"
             + "BLOCK: LEVER, STONE_BUTTON or WOOD_BUTTON"),
     CONSOLE_RAIL(" INFO: Updates the block that storage minecarts spawn on when entering the TARDIS.\n"
             + "USAGE: Attach a minetrack to the front of the TARDIS and have a Minecart with Chest run into the TARDIS door.\n"
