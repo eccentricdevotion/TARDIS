@@ -20,11 +20,14 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.ResultSetBlocks;
+import me.eccentric_nz.TARDIS.database.ResultSetCreeper;
 import me.eccentric_nz.TARDIS.database.ResultSetDoors;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
+import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
+import org.bukkit.entity.Creeper;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
@@ -54,73 +57,86 @@ public class TARDISExplosionListener implements Listener {
      */
     @EventHandler(priority = EventPriority.LOW, ignoreCancelled = true)
     public void onEntityExplode(EntityExplodeEvent e) {
-        int idchk = 0;
-        // get list of police box blocks from DB
-        ResultSetBlocks rs = new ResultSetBlocks(plugin, null, true);
-        if (rs.resultSet()) {
-            ArrayList<HashMap<String, String>> data = rs.getData();
-            for (HashMap<String, String> map : data) {
-                String location = map.get("location");
-                int id = plugin.getUtils().parseInt(map.get("tardis_id"));
-                String[] loc_tmp = location.split(",");
-                String[] wStr = loc_tmp[0].split("=");
-                String world = wStr[2].substring(0, wStr[2].length() - 1);
-                World w = plugin.getServer().getWorld(world);
-                if (w != null) {
-                    String[] xStr = loc_tmp[1].split("=");
-                    String[] yStr = loc_tmp[2].split("=");
-                    String[] zStr = loc_tmp[3].split("=");
-                    int x = plugin.getUtils().parseInt(xStr[1].substring(0, (xStr[1].length() - 2)));
-                    int y = plugin.getUtils().parseInt(yStr[1].substring(0, (yStr[1].length() - 2)));
-                    int z = plugin.getUtils().parseInt(zStr[1].substring(0, (zStr[1].length() - 2)));
-                    Block block = w.getBlockAt(x, y, z);
-                    // if the block is a TARDIS block then remove it
-                    if (e.blockList().contains(block)) {
-                        e.blockList().remove(block);
-                    }
-                    if (id != idchk) {
-                        HashMap<String, Object> where = new HashMap<String, Object>();
-                        where.put("tardis_id", id);
-                        ResultSetDoors rsd = new ResultSetDoors(plugin, where, true);
-                        if (rsd.resultSet()) {
-                            String doorLoc[] = rsd.getDoor_location().split(":");
-                            COMPASS d = rsd.getDoor_direction();
-                            int dx = plugin.getUtils().parseInt(doorLoc[1]);
-                            int dy = plugin.getUtils().parseInt(doorLoc[2]);
-                            int dz = plugin.getUtils().parseInt(doorLoc[3]);
-                            Block door_bottom = w.getBlockAt(dx, dy, dz);
-                            Block door_under = door_bottom.getRelative(BlockFace.DOWN);
-                            Block door_top = door_bottom.getRelative(BlockFace.UP);
-                            BlockFace bf;
-                            switch (d) {
-                                case NORTH:
-                                    bf = BlockFace.WEST;
-                                    break;
-                                case WEST:
-                                    bf = BlockFace.SOUTH;
-                                    break;
-                                case SOUTH:
-                                    bf = BlockFace.EAST;
-                                    break;
-                                default:
-                                    bf = BlockFace.NORTH;
-                                    break;
-                            }
-                            Block sign = door_top.getRelative(BlockFace.UP).getRelative(bf);
-                            if (e.blockList().contains(sign)) {
-                                e.blockList().remove(sign);
-                            }
-                            if (e.blockList().contains(door_under)) {
-                                e.blockList().remove(door_under);
-                            }
-                            if (e.blockList().contains(door_bottom)) {
-                                e.blockList().remove(door_bottom);
-                            }
-                            if (e.blockList().contains(door_top)) {
-                                e.blockList().remove(door_top);
-                            }
+        Location explode = e.getLocation();
+        // check if the explosion is in a TARDIS world
+        if (explode.getWorld().getName().contains("TARDIS") && e.getEntity() instanceof Creeper) {
+            e.setCancelled(true);
+            // check it is not the Artron creeper
+            String loc_chk = explode.getWorld().getName() + ":" + (explode.getBlockX() + 0.5f) + ":" + (explode.getBlockY()) + ":" + (explode.getBlockZ() + 0.5f);
+            plugin.debug("Explode location: " + loc_chk);
+            if (new ResultSetCreeper(plugin, loc_chk).resultSet()) {
+                // create a new explosion that doesn't destroy blocks or set fire
+                explode.getWorld().createExplosion(explode.getX(), explode.getY(), explode.getZ(), 4.0f, false, false);
+            }
+        } else {
+            int idchk = 0;
+            // get list of police box blocks from DB
+            ResultSetBlocks rs = new ResultSetBlocks(plugin, null, true);
+            if (rs.resultSet()) {
+                ArrayList<HashMap<String, String>> data = rs.getData();
+                for (HashMap<String, String> map : data) {
+                    String location = map.get("location");
+                    int id = plugin.getUtils().parseInt(map.get("tardis_id"));
+                    String[] loc_tmp = location.split(",");
+                    String[] wStr = loc_tmp[0].split("=");
+                    String world = wStr[2].substring(0, wStr[2].length() - 1);
+                    World w = plugin.getServer().getWorld(world);
+                    if (w != null) {
+                        String[] xStr = loc_tmp[1].split("=");
+                        String[] yStr = loc_tmp[2].split("=");
+                        String[] zStr = loc_tmp[3].split("=");
+                        int x = plugin.getUtils().parseInt(xStr[1].substring(0, (xStr[1].length() - 2)));
+                        int y = plugin.getUtils().parseInt(yStr[1].substring(0, (yStr[1].length() - 2)));
+                        int z = plugin.getUtils().parseInt(zStr[1].substring(0, (zStr[1].length() - 2)));
+                        Block block = w.getBlockAt(x, y, z);
+                        // if the block is a TARDIS block then remove it
+                        if (e.blockList().contains(block)) {
+                            e.blockList().remove(block);
                         }
-                        idchk = id;
+                        if (id != idchk) {
+                            HashMap<String, Object> where = new HashMap<String, Object>();
+                            where.put("tardis_id", id);
+                            ResultSetDoors rsd = new ResultSetDoors(plugin, where, true);
+                            if (rsd.resultSet()) {
+                                String doorLoc[] = rsd.getDoor_location().split(":");
+                                COMPASS d = rsd.getDoor_direction();
+                                int dx = plugin.getUtils().parseInt(doorLoc[1]);
+                                int dy = plugin.getUtils().parseInt(doorLoc[2]);
+                                int dz = plugin.getUtils().parseInt(doorLoc[3]);
+                                Block door_bottom = w.getBlockAt(dx, dy, dz);
+                                Block door_under = door_bottom.getRelative(BlockFace.DOWN);
+                                Block door_top = door_bottom.getRelative(BlockFace.UP);
+                                BlockFace bf;
+                                switch (d) {
+                                    case NORTH:
+                                        bf = BlockFace.WEST;
+                                        break;
+                                    case WEST:
+                                        bf = BlockFace.SOUTH;
+                                        break;
+                                    case SOUTH:
+                                        bf = BlockFace.EAST;
+                                        break;
+                                    default:
+                                        bf = BlockFace.NORTH;
+                                        break;
+                                }
+                                Block sign = door_top.getRelative(BlockFace.UP).getRelative(bf);
+                                if (e.blockList().contains(sign)) {
+                                    e.blockList().remove(sign);
+                                }
+                                if (e.blockList().contains(door_under)) {
+                                    e.blockList().remove(door_under);
+                                }
+                                if (e.blockList().contains(door_bottom)) {
+                                    e.blockList().remove(door_bottom);
+                                }
+                                if (e.blockList().contains(door_top)) {
+                                    e.blockList().remove(door_top);
+                                }
+                            }
+                            idchk = id;
+                        }
                     }
                 }
             }

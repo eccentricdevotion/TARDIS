@@ -131,6 +131,10 @@ public class TARDISMonsterRunnable implements Runnable {
         e.remove();
         // spawn a monster in the TARDIS
         Location l = tpl.getLocation();
+        // load the chunk
+        while (!l.getChunk().isLoaded()) {
+            l.getChunk().load();
+        }
         // adjust location so they're not right in the door?
         plugin.setMySpawn(true);
         Entity ent = l.getWorld().spawnEntity(l, m.getType());
