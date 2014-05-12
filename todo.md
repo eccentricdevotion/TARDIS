@@ -4,14 +4,16 @@
 
 1. Localisation
 2. `/tardisremote` commands (started)
+   * add `/tardisremote [player] back`
 3. UHC flying mode (started - have coded some test plugins)
 4. TARDIS invisibility - 1.8 barrier blocks?
 5. Walk in to the TARDIS if door is open (started)
-6. Allow mobs to spawn through the open door
-7. Player preference for time lock?
-8. Artron button powers on/off TARDIS (after initialisation)
-9. TARDIS map (started)
-10. Bugs, bugs, bugs
+   * inner door can be opened and closed with any item in hand
+6. Allow mobs to spawn through the open door (started)
+   * move interior spawn point if no-one is in the TARDIS
+7. Artron button powers on/off TARDIS (after initialisation)
+8. TARDIS map (started)
+9. Bugs, bugs, bugs
 
 ##Future version `3.0+`
 1. Console modes?

@@ -57,10 +57,12 @@ public class TARDISUUIDConverter {
             return false;
         }
         // backup database
-        plugin.getConsole().sendMessage(plugin.getPluginName() + "Backing up TARDIS database...");
-        File oldFile = new File(plugin.getDataFolder() + File.separator + "TARDIS.db");
-        File newFile = new File(plugin.getDataFolder() + File.separator + "TARDIS_" + System.currentTimeMillis() + ".db");
-        FileUtil.copy(oldFile, newFile);
+        if (plugin.getConfig().getString("storage.database").equalsIgnoreCase("sqlite")) {
+            plugin.getConsole().sendMessage(plugin.getPluginName() + "Backing up TARDIS database...");
+            File oldFile = new File(plugin.getDataFolder() + File.separator + "TARDIS.db");
+            File newFile = new File(plugin.getDataFolder() + File.separator + "TARDIS_" + System.currentTimeMillis() + ".db");
+            FileUtil.copy(oldFile, newFile);
+        }
         // get all TARDIS owners from database
         Statement statement = null;
         PreparedStatement ps_ach = null;
