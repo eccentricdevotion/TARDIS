@@ -548,10 +548,10 @@ public class TARDISMaterialisationPreset implements Runnable {
                                     if (preset.equals(PRESET.PARTY) || (preset.equals(PRESET.FLOWER) && coldatas[yy] == 0)) {
                                         chad = random_colour;
                                     }
-                                    if (ctm && i == plugin.getUtils().getCol(d) && yy == 1 && cham_id == 35 && (cham_data == (byte) 11 || cham_data == (byte) 3) && (preset.equals(PRESET.NEW) || preset.equals(PRESET.OLD)) && plugin.getConfig().getBoolean("police_box.set_biome")) {
+                                    if (ctm && n == plugin.getUtils().getCol(d) && yy == 1 && cham_id == 35 && (cham_data == (byte) 11 || cham_data == (byte) 3) && (preset.equals(PRESET.NEW) || preset.equals(PRESET.OLD)) && plugin.getConfig().getBoolean("police_box.set_biome")) {
                                         // set a quartz pillar block instead
                                         byte pillar = (d.equals(COMPASS.EAST) || d.equals(COMPASS.WEST)) ? (byte) 3 : (byte) 4;
-                                        plugin.getUtils().setBlockAndRemember(world, xx, (y + yy), zz, 155, pillar, tid);
+                                        plugin.getUtils().setBlock(world, xx, (y + yy), zz, 155, pillar);
                                     } else {
                                         plugin.getUtils().setBlock(world, xx, (y + yy), zz, chai, chad);
                                     }
