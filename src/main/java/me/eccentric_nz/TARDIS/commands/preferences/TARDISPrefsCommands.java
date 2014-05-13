@@ -53,6 +53,7 @@ public class TARDISPrefsCommands implements CommandExecutor {
         firstArgs.add("auto");
         firstArgs.add("beacon");
         firstArgs.add("build");
+        firstArgs.add("ctm");
         firstArgs.add("dnd");
         firstArgs.add("eps");
         firstArgs.add("eps_message");

@@ -26,6 +26,7 @@ import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
 import me.eccentric_nz.TARDIS.enumeration.SCHEMATIC;
 import me.eccentric_nz.tardischunkgenerator.TARDISChunkGenerator;
+import org.bukkit.ChatColor;
 import org.bukkit.Chunk;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -668,4 +669,39 @@ public class TARDISUtils {
         return false;
     }
 
+    /**
+     * Gets the chat colour to use on the Ploice Box sign.
+     *
+     * @return the configured chat colour
+     */
+    public ChatColor getSignColour() {
+        ChatColor colour;
+        String cc = plugin.getConfig().getString("police_box.sign_colour");
+        try {
+            colour = ChatColor.valueOf(cc);
+        } catch (IllegalArgumentException e) {
+            colour = ChatColor.WHITE;
+        }
+        return colour;
+    }
+
+    /**
+     * Gets the column to set the Police box sign in if CTM is on in the
+     * player's preferences.
+     *
+     * @param d the direction of the Police Box
+     * @return the column
+     */
+    public int getCol(COMPASS d) {
+        switch (d) {
+            case NORTH:
+                return 6;
+            case WEST:
+                return 4;
+            case SOUTH:
+                return 2;
+            default:
+                return 0;
+        }
+    }
 }

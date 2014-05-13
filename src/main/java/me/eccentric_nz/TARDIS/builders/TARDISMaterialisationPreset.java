@@ -67,6 +67,7 @@ public class TARDISMaterialisationPreset implements Runnable {
     private final boolean sub;
     private final boolean minecart;
     private final boolean outside;
+    private final boolean ctm;
     private final int cham_id;
     private final byte cham_data;
     private Block sponge;
@@ -101,7 +102,7 @@ public class TARDISMaterialisationPreset implements Runnable {
      * @param outside whether the player is outside the TARDIS (and the
      * materialisation sound should be played)
      */
-    public TARDISMaterialisationPreset(TARDIS plugin, Location location, PRESET preset, int tid, COMPASS d, OfflinePlayer player, boolean mal, int lamp, boolean sub, int cham_id, byte cham_data, boolean minecart, boolean outside) {
+    public TARDISMaterialisationPreset(TARDIS plugin, Location location, PRESET preset, int tid, COMPASS d, OfflinePlayer player, boolean mal, int lamp, boolean sub, int cham_id, byte cham_data, boolean minecart, boolean outside, boolean ctm) {
         this.plugin = plugin;
         this.d = d;
         this.loops = 18;
@@ -117,6 +118,7 @@ public class TARDISMaterialisationPreset implements Runnable {
         this.cham_id = cham_id;
         this.cham_data = cham_data;
         this.minecart = minecart;
+        this.ctm = ctm;
         rand = new Random();
         if (preset.equals(PRESET.ANGEL)) {
             plugin.getPresets().setR(rand.nextInt(2));
@@ -126,7 +128,7 @@ public class TARDISMaterialisationPreset implements Runnable {
         glass_column = plugin.getPresets().getGlass(preset, d);
         colours = new byte[]{0, 1, 2, 3, 4, 5, 6, 9, 10, 11, 12, 13, 14};
         random_colour = colours[rand.nextInt(13)];
-        this.sign_colour = getSignColour();
+        this.sign_colour = plugin.getUtils().getSignColour();
     }
 
     @Override
@@ -194,7 +196,11 @@ public class TARDISMaterialisationPreset implements Runnable {
                         // set the biome
                         for (int c = -1; c < 2; c++) {
                             for (int r = -1; r < 2; r++) {
-                                world.setBiome(x + c, z + r, Biome.SKY);
+                                if (c == 0 && r == 0) {
+                                    world.setBiome(x + c, z + r, Biome.DEEP_OCEAN);
+                                } else {
+                                    world.setBiome(x + c, z + r, Biome.SKY);
+                                }
                                 Chunk tmp_chunk = world.getChunkAt(new Location(world, x + c, 64, z + r));
                                 if (!chunks.contains(tmp_chunk)) {
                                     chunks.add(tmp_chunk);
@@ -542,7 +548,13 @@ public class TARDISMaterialisationPreset implements Runnable {
                                     if (preset.equals(PRESET.PARTY) || (preset.equals(PRESET.FLOWER) && coldatas[yy] == 0)) {
                                         chad = random_colour;
                                     }
-                                    plugin.getUtils().setBlock(world, xx, (y + yy), zz, chai, chad);
+                                    if (ctm && i == plugin.getUtils().getCol(d) && yy == 1 && cham_id == 35 && (cham_data == (byte) 11 || cham_data == (byte) 3) && (preset.equals(PRESET.NEW) || preset.equals(PRESET.OLD)) && plugin.getConfig().getBoolean("police_box.set_biome")) {
+                                        // set a quartz pillar block instead
+                                        byte pillar = (d.equals(COMPASS.EAST) || d.equals(COMPASS.WEST)) ? (byte) 3 : (byte) 4;
+                                        plugin.getUtils().setBlockAndRemember(world, xx, (y + yy), zz, 155, pillar, tid);
+                                    } else {
+                                        plugin.getUtils().setBlock(world, xx, (y + yy), zz, chai, chad);
+                                    }
                                     break;
                                 case 38:
                                     if (i == loops && preset.equals(PRESET.GRAVESTONE)) {
@@ -652,16 +664,5 @@ public class TARDISMaterialisationPreset implements Runnable {
 
     public void setTask(int task) {
         this.task = task;
-    }
-
-    private ChatColor getSignColour() {
-        ChatColor colour;
-        String cc = plugin.getConfig().getString("police_box.sign_colour");
-        try {
-            colour = ChatColor.valueOf(cc);
-        } catch (IllegalArgumentException e) {
-            colour = ChatColor.WHITE;
-        }
-        return colour;
     }
 }

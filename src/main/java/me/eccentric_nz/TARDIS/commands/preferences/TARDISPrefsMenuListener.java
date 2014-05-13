@@ -56,6 +56,7 @@ public class TARDISPrefsMenuListener implements Listener {
         lookup.put("Resource Pack Switching", "texture_on");
         lookup.put("Companion Build", "build_on");
         lookup.put("Wool For Lights Off", "wool_lights_on");
+        lookup.put("Connected Textures", "ctm_on");
     }
 
     @EventHandler(ignoreCancelled = true)
