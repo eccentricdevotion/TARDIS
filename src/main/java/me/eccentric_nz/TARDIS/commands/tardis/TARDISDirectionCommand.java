@@ -131,6 +131,7 @@ public class TARDISDirectionCommand {
                 pbd.setRebuild(true);
                 pbd.setSubmarine(rsc.isSubmarine());
                 pbd.setTardisID(id);
+                pbd.setBiome(rsc.getBiome());
                 plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
                     @Override
                     public void run() {
