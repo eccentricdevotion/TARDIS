@@ -16,7 +16,9 @@
  */
 package me.eccentric_nz.TARDIS.commands.preferences;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Locale;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
@@ -33,9 +35,16 @@ import org.bukkit.entity.Player;
 public class TARDISSetKeyCommand {
 
     private final TARDIS plugin;
+    private final List<Material> keys = new ArrayList<Material>();
 
     public TARDISSetKeyCommand(TARDIS plugin) {
         this.plugin = plugin;
+        for (String m : plugin.getBlocksConfig().getStringList("keys")) {
+            try {
+                keys.add(Material.valueOf(m));
+            } catch (IllegalArgumentException e) {
+            }
+        }
     }
 
     public boolean setKeyPref(Player player, String[] args, QueryFactory qf) {
@@ -44,11 +53,20 @@ public class TARDISSetKeyCommand {
             return false;
         }
         String setMaterial = args[1].toUpperCase(Locale.ENGLISH);
+        Material go;
         try {
-            Material go = Material.valueOf(setMaterial);
+            go = Material.valueOf(setMaterial);
         } catch (IllegalArgumentException e) {
             TARDISMessage.send(player, plugin.getPluginName() + ChatColor.RED + MESSAGE.NOT_VALID_MATERIAL.getText());
             return false;
+        }
+        if (go.isBlock()) {
+            TARDISMessage.send(player, plugin.getPluginName() + ChatColor.RED + "The key cannot be a block!");
+            return true;
+        }
+        if (plugin.getConfig().getBoolean("travel.give_key") && !plugin.getConfig().getBoolean("allow.all_blocks") && !keys.contains(go)) {
+            TARDISMessage.send(player, plugin.getPluginName() + ChatColor.RED + MESSAGE.NOT_VALID_MATERIAL.getText());
+            return true;
         }
         String field = (plugin.getConfig().getString("storage.database").equals("sqlite")) ? "key" : "key_item";
         HashMap<String, Object> setk = new HashMap<String, Object>();

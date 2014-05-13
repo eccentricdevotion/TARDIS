@@ -431,6 +431,11 @@ public class TARDISConfiguration {
 
     private void checkBlocksConfig() {
         int i = 0;
+        if (!blocks_config.contains("keys")) {
+            List<String> KEYS = Arrays.asList("GOLD_NUGGET", "STICK");
+            blocks_config.set("keys", KEYS);
+            i++;
+        }
         if (!blocks_config.contains("tardis_blocks")) {
             List<String> MIDDLE_BLOCKS;
             if (config.contains("tardis_blocks")) {
