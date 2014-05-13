@@ -186,6 +186,10 @@ public class TARDISRoomRunnable implements Runnable {
             // remove the chunks, so they can unload as normal again
             if (chunkList.size() > 0) {
                 for (Chunk ch : chunkList) {
+                    if (plugin.getConfig().getBoolean("creation.sky_biome")) {
+                        // refesh the cunk so ctm textures show
+                        world.refreshChunk(ch.getX(), ch.getZ());
+                    }
                     plugin.getGeneralKeeper().getRoomChunkList().remove(ch);
                 }
             }
