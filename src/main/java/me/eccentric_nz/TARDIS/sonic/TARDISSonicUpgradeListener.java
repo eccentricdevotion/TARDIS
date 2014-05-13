@@ -101,6 +101,7 @@ public class TARDISSonicUpgradeListener implements Listener {
                     ci.setResult(null);
                 } else {
                     ItemMeta sim = sonic.getItemMeta();
+                    String dn = sim.getDisplayName();
                     List<String> lore;
                     if (sim.hasLore()) {
                         // get the current sonic's upgrades
@@ -112,7 +113,7 @@ public class TARDISSonicUpgradeListener implements Listener {
                     }
                     // if they don't already have the upgrade
                     if (!lore.contains(upgrade)) {
-                        im.setDisplayName("Sonic Screwdriver");
+                        im.setDisplayName(dn);
                         lore.add(upgrade);
                         im.setLore(lore);
                         is.setItemMeta(im);
