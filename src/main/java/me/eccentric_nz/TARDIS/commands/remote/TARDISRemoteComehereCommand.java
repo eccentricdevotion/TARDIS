@@ -32,7 +32,6 @@ import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
-import org.bukkit.World;
 import org.bukkit.block.Biome;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
@@ -131,14 +130,13 @@ public class TARDISRemoteComehereCommand {
             return true;
         }
         boolean cham = chamtmp;
-        World w = rsc.getWorld();
         final QueryFactory qf = new QueryFactory(plugin);
         Location oldSave = null;
         HashMap<String, Object> bid = new HashMap<String, Object>();
         bid.put("tardis_id", id);
         HashMap<String, Object> bset = new HashMap<String, Object>();
-        if (w != null) {
-            oldSave = new Location(w, rsc.getX(), rsc.getY(), rsc.getZ());
+        if (rsc.getWorld() != null) {
+            oldSave = new Location(rsc.getWorld(), rsc.getX(), rsc.getY(), rsc.getZ());
             // set fast return location
             bset.put("world", rsc.getWorld().getName());
             bset.put("x", rsc.getX());

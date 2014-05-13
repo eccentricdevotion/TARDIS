@@ -38,6 +38,7 @@ import org.bukkit.command.BlockCommandSender;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
+import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.entity.Player;
 
 /**
@@ -142,6 +143,18 @@ public class TARDISRemoteCommands implements CommandExecutor {
                                 // NOT non-admin players, command blocks or the console
                                 if (sender instanceof Player && sender.hasPermission("tardis.admin")) {
                                     return new TARDISRemoteComehereCommand(plugin).doRemoteComeHere((Player) sender, uuid);
+                                } else {
+                                    sendMessage(sender, plugin.getPluginName() + "You must be player with the tardis.admin permission!");
+                                    return true;
+                                }
+                            case BACK:
+                                // NOT non-admin players or command blocks
+                                if ((sender instanceof Player && sender.hasPermission("tardis.admin")) || sender instanceof ConsoleCommandSender) {
+                                    if (!handbrake) {
+                                        sendMessage(sender, plugin.getPluginName() + ChatColor.RED + MESSAGE.NOT_WHILE_TRAVELLING.getText());
+                                        return true;
+                                    }
+                                    return new TARDISRemoteBackCommand(plugin).sendBack(sender, id, p);
                                 } else {
                                     sendMessage(sender, plugin.getPluginName() + "You must be player with the tardis.admin permission!");
                                     return true;

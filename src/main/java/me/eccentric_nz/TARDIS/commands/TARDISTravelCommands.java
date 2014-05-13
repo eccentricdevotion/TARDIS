@@ -329,10 +329,6 @@ public class TARDISTravelCommands implements CommandExecutor {
                     if (args.length == 2 && args[0].equalsIgnoreCase("dest")) {
                         // we're thinking this is a saved destination name
                         if (player.hasPermission("tardis.save")) {
-//                            if (plugin.getConfig().getString("preferences.difficulty").equals("hard") && mustUseAdvanced.contains(args[0].toLowerCase())) {
-//                                TARDISMessage.send(player, plugin.getPluginName() + "The TARDIS difficulty level on this server requires you to use the Advanced Console! See the " + ChatColor.AQUA + "TARDIS Information System" + ChatColor.RESET + " for help with using Save Disks, or type " + ChatColor.AQUA + "/tardisrecipe save-disk" + ChatColor.RESET + " to see how to craft a Save Storage Disk.");
-//                                return true;
-//                            }
                             HashMap<String, Object> whered = new HashMap<String, Object>();
                             whered.put("dest_name", args[1]);
                             whered.put("tardis_id", id);
