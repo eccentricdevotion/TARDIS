@@ -270,9 +270,9 @@ public class TARDISDematerialisationPreset implements Runnable {
                 }
             }
         } else {
-            new TARDISDeinstaPreset(plugin).instaDestroyPreset(tmd, false, preset);
             plugin.getServer().getScheduler().cancelTask(task);
             task = 0;
+            new TARDISDeinstaPreset(plugin).instaDestroyPreset(tmd, false, preset);
         }
     }
 

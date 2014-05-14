@@ -11,7 +11,8 @@
 7. Artron button powers on/off TARDIS after initialisation
 8. TARDIS map (started)
 9. Bring back the `/tardisprefs sign [on|off]`?
-
+10. Check presets - make sure portals are disabled if there is no door to walk into / out of
+11. Check angel preset head / skull
 
 ##Future version `3.0+`
 1. Console modes?
