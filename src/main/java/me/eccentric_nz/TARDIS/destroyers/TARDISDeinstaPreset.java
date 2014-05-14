@@ -90,12 +90,16 @@ public class TARDISDeinstaPreset {
         // reset biome and it's not The End
         if (l.getBlock().getBiome().equals(Biome.DEEP_OCEAN) || (l.getBlock().getBiome().equals(Biome.SKY) && !l.getWorld().getEnvironment().equals(Environment.THE_END)) && biome != null) {
             // reset the biome
+            boolean run = true;
             for (int c = 0; c < 3; c++) {
                 for (int r = 0; r < 3; r++) {
-                    try {
-                        w.setBiome(sbx + c, sbz + r, biome);
-                    } catch (NullPointerException e) {
-                        e.printStackTrace();
+                    if (run) {
+                        try {
+                            w.setBiome(sbx + c, sbz + r, biome);
+                        } catch (NullPointerException e) {
+                            e.printStackTrace();
+                            run = false;
+                        }
                     }
                 }
             }
