@@ -11,9 +11,7 @@
 7. Artron button powers on/off TARDIS after initialisation
 8. TARDIS map (started)
 9. Bring back the `/tardisprefs sign [on|off]`?
-10. Sonic screwdrivers
-    * Iron doors opened with Sonic from a distance should close after 3 seconds
-    * Alter Admin sonic behaviour
+
 
 ##Future version `3.0+`
 1. Console modes?

@@ -20,6 +20,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
+import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.ResultSetPlayerPrefs;
 import org.bukkit.Material;
@@ -35,10 +36,10 @@ import org.bukkit.inventory.meta.ItemMeta;
 public class TARDISPrefsMenuInventory {
 
     private final TARDIS plugin;
-    private final String uuid;
+    private final UUID uuid;
     private final ItemStack[] menu;
 
-    public TARDISPrefsMenuInventory(TARDIS plugin, String uuid) {
+    public TARDISPrefsMenuInventory(TARDIS plugin, UUID uuid) {
         this.plugin = plugin;
         this.uuid = uuid;
         this.menu = getItemStack();
@@ -58,7 +59,7 @@ public class TARDISPrefsMenuInventory {
         tt.setItemMeta(map);
         // get player prefs
         HashMap<String, Object> where = new HashMap<String, Object>();
-        where.put("uuid", uuid);
+        where.put("uuid", uuid.toString());
         ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, where);
         List<ItemStack> options = new ArrayList<ItemStack>();
         if (rsp.resultSet()) {
@@ -176,14 +177,25 @@ public class TARDISPrefsMenuInventory {
             options.add(ctm);
         }
         ItemStack[] stack = new ItemStack[18];
-        for (int s = 0; s < 17; s++) {
+        for (int s = 0; s < 16; s++) {
             if (s < options.size()) {
                 stack[s] = options.get(s);
             } else {
                 stack[s] = null;
             }
         }
-        stack[17] = tt;
+        if (plugin.getServer().getPlayer(uuid).hasPermission("tardis.admin")) {
+            stack[16] = tt;
+            // admin
+            ItemStack ad = new ItemStack(Material.NETHER_STAR, 1);
+            ItemMeta min = ad.getItemMeta();
+            min.setDisplayName("Admin Menu");
+            ad.setItemMeta(min);
+            stack[17] = ad;
+        } else {
+            stack[16] = null;
+            stack[17] = tt;
+        }
         return stack;
     }
 

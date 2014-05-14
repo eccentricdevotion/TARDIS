@@ -25,7 +25,6 @@ import java.util.Map;
 import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
-import me.eccentric_nz.TARDIS.commands.admin.TARDISAdminMenuInventory;
 import me.eccentric_nz.TARDIS.commands.preferences.TARDISPrefsMenuInventory;
 import me.eccentric_nz.TARDIS.database.ResultSetBackLocation;
 import me.eccentric_nz.TARDIS.database.ResultSetDoors;
@@ -154,18 +153,6 @@ public class TARDISSonicListener implements Listener {
                 Action action = event.getAction();
                 if (action.equals(Action.RIGHT_CLICK_AIR) && !player.isSneaking()) {
                     playSonicSound(player, now, 3050L, "sonic_screwdriver");
-                    if (player.hasPermission("tardis.admin") && lore != null && lore.contains("Admin Upgrade")) {
-                        plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
-                            @Override
-                            public void run() {
-                                ItemStack[] items = new TARDISAdminMenuInventory(plugin).getMenu();
-                                Inventory menu = plugin.getServer().createInventory(player, 54, "§4Admin Menu");
-                                menu.setContents(items);
-                                player.openInventory(menu);
-                            }
-                        }, 35L);
-                        return;
-                    }
                     if (player.hasPermission("tardis.sonic.freeze") && lore != null && lore.contains("Bio-scanner Upgrade")) {
                         long cool = System.currentTimeMillis();
                         if ((!cooldown.containsKey(player.getUniqueId()) || cooldown.get(player.getUniqueId()) < cool)) {
@@ -221,14 +208,14 @@ public class TARDISSonicListener implements Listener {
                 }
                 if (action.equals(Action.RIGHT_CLICK_AIR) && player.isSneaking()) {
                     Inventory ppm = plugin.getServer().createInventory(player, 18, "§4Player Prefs Menu");
-                    ppm.setContents(new TARDISPrefsMenuInventory(plugin, player.getUniqueId().toString()).getMenu());
+                    ppm.setContents(new TARDISPrefsMenuInventory(plugin, player.getUniqueId()).getMenu());
                     player.openInventory(ppm);
                     return;
                 }
                 if (action.equals(Action.RIGHT_CLICK_BLOCK)) {
                     final Block b = event.getClickedBlock();
                     if (doors.contains(b.getType()) && player.hasPermission("tardis.admin") && lore != null && lore.contains("Admin Upgrade")) {
-                        playSonicSound(player, now, 3050L, "sonic_screwdriver");
+                        playSonicSound(player, now, 600L, "sonic_short");
                         plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
                             @Override
                             public void run() {
@@ -252,7 +239,7 @@ public class TARDISSonicListener implements Listener {
                                     wheren.put("tardis_id", id);
                                     ResultSetTardis rsn = new ResultSetTardis(plugin, wheren, "", false);
                                     if (rsn.resultSet()) {
-                                        String name = plugin.getServer().getPlayer(rsn.getUuid()).getName();
+                                        String name = plugin.getServer().getOfflinePlayer(rsn.getUuid()).getName();
                                         TARDISMessage.send(player, plugin.getPluginName() + "This is " + name + "'s TARDIS");
                                         int percent = Math.round((rsn.getArtron_level() * 100F) / plugin.getArtronConfig().getInt("full_charge"));
                                         TARDISMessage.send(player, plugin.getPluginName() + "The Artron Energy Capacitor is at " + percent + "%");
@@ -438,7 +425,6 @@ public class TARDISSonicListener implements Listener {
                             }
                         }
                         playSonicSound(player, now, 600L, "sonic_short");
-
                         // drop appropriate material
                         if (player.hasPermission("tardis.sonic.silktouch")) {
                             Location l = b.getLocation();
@@ -651,7 +637,7 @@ public class TARDISSonicListener implements Listener {
     }
 
     @SuppressWarnings("deprecation")
-    private void standardSonic(Player player) {
+    private void standardSonic(final Player player) {
         Block targetBlock = player.getTargetBlock(plugin.getGeneralKeeper().getTransparent(), 50).getLocation().getBlock();
         Material blockType = targetBlock.getType();
         if (distance.contains(blockType)) {
@@ -659,7 +645,7 @@ public class TARDISSonicListener implements Listener {
             switch (blockType) {
                 case IRON_DOOR_BLOCK:
                 case WOODEN_DOOR:
-                    Block lowerdoor;
+                    final Block lowerdoor;
                     if (targetBlock.getData() >= 8) {
                         lowerdoor = targetBlock.getRelative(BlockFace.DOWN);
                     } else {
@@ -686,30 +672,30 @@ public class TARDISSonicListener implements Listener {
                     where.put("door_location", doorloc);
                     ResultSetDoors rs = new ResultSetDoors(plugin, where, false);
                     if (rs.resultSet()) {
-//                        COMPASS dd = rs.getDoor_direction();
-//                        int id = rs.getTardis_id();
-//                        // is it the time lords or a companions door?
-//                        ResultSetCompanions rsc = new ResultSetCompanions(plugin, id);
-//                        if (rsc.getCompanions().contains(player.getUniqueId())) {
-//                            int type = rs.getDoor_type();
-//                            if (!rs.isLocked() && (type == 0 || type == 1)) { // only preset doors
-//                                // yes, yes and it is not deadlocked
-//                                new TARDISDoorToggler(plugin, lowerdoor, dd, player, false, id).toggleDoors();
-//                                return;
-//                            } else {
-//                                TARDISMessage.send(player, plugin.getPluginName() + "The door is deadlocked!");
-//                                return;
-//                            }
-//                        } else {
                         return;
-//                        }
                     }
                     if (allow) {
-                        BlockState bsl = lowerdoor.getState();
-                        Door door = (Door) bsl.getData();
-                        door.setOpen(!door.isOpen());
-                        bsl.setData(door);
-                        bsl.update(true);
+                        if (!plugin.getTrackerKeeper().getSonicDoors().contains(player.getUniqueId())) {
+                            final BlockState bsl = lowerdoor.getState();
+                            final byte door_data = lowerdoor.getData();
+                            Door door = (Door) bsl.getData();
+                            door.setOpen(!door.isOpen());
+                            bsl.setData(door);
+                            bsl.update(true);
+                            if (blockType.equals(Material.IRON_DOOR_BLOCK)) {
+                                plugin.getTrackerKeeper().getSonicDoors().add(player.getUniqueId());
+                                // return the door to its previous state after 3 seconds
+                                plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        if (lowerdoor.getData() != door_data) {
+                                            lowerdoor.setData(door_data, false);
+                                        }
+                                        plugin.getTrackerKeeper().getSonicDoors().remove(player.getUniqueId());
+                                    }
+                                }, 60L);
+                            }
+                        }
                     }
                     break;
                 case LEVER:

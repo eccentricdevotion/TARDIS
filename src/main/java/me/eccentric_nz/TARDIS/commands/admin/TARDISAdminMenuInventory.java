@@ -66,13 +66,19 @@ public class TARDISAdminMenuInventory {
             }
         }
         ItemStack[] stack = new ItemStack[54];
-        for (int s = 0; s < 54; s++) {
+        for (int s = 0; s < 53; s++) {
             if (s < options.size()) {
                 stack[s] = options.get(s);
             } else {
                 stack[s] = null;
             }
         }
+        // player prefs
+        ItemStack play = new ItemStack(Material.NETHER_STAR, 1);
+        ItemMeta prefs = play.getItemMeta();
+        prefs.setDisplayName("Player Preferences");
+        play.setItemMeta(prefs);
+        stack[53] = play;
         return stack;
     }
 

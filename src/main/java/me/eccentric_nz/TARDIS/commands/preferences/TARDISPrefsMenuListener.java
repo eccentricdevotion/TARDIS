@@ -20,6 +20,7 @@ import java.util.HashMap;
 import java.util.List;
 import me.eccentric_nz.TARDIS.ARS.TARDISARSMap;
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.commands.admin.TARDISAdminMenuInventory;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetTravellers;
 import me.eccentric_nz.TARDIS.enumeration.MESSAGE;
@@ -72,7 +73,7 @@ public class TARDISPrefsMenuListener implements Listener {
                     final Player p = (Player) event.getWhoClicked();
                     String uuid = p.getUniqueId().toString();
                     ItemMeta im = is.getItemMeta();
-                    if (slot == 17 && im.getDisplayName().equals("TARDIS Map")) {
+                    if ((slot == 16 || slot == 17) && im.getDisplayName().equals("TARDIS Map")) {
                         // must be in the TARDIS
                         HashMap<String, Object> where = new HashMap<String, Object>();
                         where.put("uuid", uuid);
@@ -93,6 +94,18 @@ public class TARDISPrefsMenuListener implements Listener {
                         } else {
                             TARDISMessage.send(p, plugin.getPluginName() + MESSAGE.NOT_IN_TARDIS.getText());
                         }
+                        return;
+                    }
+                    if (slot == 17 && im.getDisplayName().equals("Admin Menu")) {
+                        // close this gui and load the Admin Menu
+                        plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
+                            @Override
+                            public void run() {
+                                Inventory menu = plugin.getServer().createInventory(p, 54, "§4Admin Menu");
+                                menu.setContents(new TARDISAdminMenuInventory(plugin).getMenu());
+                                p.openInventory(menu);
+                            }
+                        }, 1L);
                         return;
                     }
                     List<String> lore = im.getLore();
