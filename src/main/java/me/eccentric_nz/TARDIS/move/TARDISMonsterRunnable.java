@@ -193,6 +193,7 @@ public class TARDISMonsterRunnable implements Runnable {
             HashMap<String, Object> wherer = new HashMap<String, Object>();
             wherer.put("tardis_id", rst.getTardis_id());
             wherer.put("type", 5);
+            wherer.put("secondary", 0);
             ResultSetControls rsc = new ResultSetControls(plugin, wherer, false);
             if (rsc.resultSet()) {
                 // move the location to the y-repeater
