@@ -245,9 +245,15 @@ public class TARDISMonsterRunnable implements Runnable {
                 ez.setItemInHand(m.getEquipment().getItemInHand());
                 break;
         }
-        ((LivingEntity) ent).setTicksLived(m.getAge());
-        ((LivingEntity) ent).setHealth(m.getHealth());
-        ((LivingEntity) ent).setCustomName(m.getName());
+        if (m.getAge() > 0) {
+            ((LivingEntity) ent).setTicksLived(m.getAge());
+        }
+        if (m.getHealth() > 0) {
+            ((LivingEntity) ent).setHealth(m.getHealth());
+        }
+        if (m.getName() != null && !m.getName().isEmpty()) {
+            ((LivingEntity) ent).setCustomName(m.getName());
+        }
     }
 
     private boolean isTimelord(TARDISTeleportLocation tpl, Entity e) {
