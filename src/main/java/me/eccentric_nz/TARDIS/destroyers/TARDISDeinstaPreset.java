@@ -92,7 +92,11 @@ public class TARDISDeinstaPreset {
             // reset the biome
             for (int c = 0; c < 3; c++) {
                 for (int r = 0; r < 3; r++) {
-                    w.setBiome(sbx + c, sbz + r, biome);
+                    try {
+                        w.setBiome(sbx + c, sbz + r, biome);
+                    } catch (NullPointerException e) {
+                        e.printStackTrace();
+                    }
                 }
             }
             // refresh the chunk
