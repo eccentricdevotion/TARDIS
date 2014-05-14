@@ -193,7 +193,9 @@ public class TARDISMonsterRunnable implements Runnable {
                 break;
             case ENDERMAN:
                 Enderman enderman = (Enderman) ent;
-                enderman.setCarriedMaterial(m.getCarried());
+                if (m.getCarried() != null) {
+                    enderman.setCarriedMaterial(m.getCarried());
+                }
                 break;
             case PIG_ZOMBIE:
                 PigZombie pigzombie = (PigZombie) ent;
