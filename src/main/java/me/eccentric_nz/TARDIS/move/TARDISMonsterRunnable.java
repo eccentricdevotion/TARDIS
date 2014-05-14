@@ -28,7 +28,9 @@ import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import me.eccentric_nz.TARDIS.database.ResultSetTravellers;
 import me.eccentric_nz.TARDIS.enumeration.SCHEMATIC;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
+import org.bukkit.Difficulty;
 import org.bukkit.Location;
+import org.bukkit.block.Biome;
 import org.bukkit.entity.Creeper;
 import org.bukkit.entity.Enderman;
 import org.bukkit.entity.Entity;
@@ -134,8 +136,8 @@ public class TARDISMonsterRunnable implements Runnable {
                 } else {
                     // spawn a random mob inside TARDIS?
                     Random r = new Random();
-                    // 25% chance
-                    if (r.nextInt(4) == 0) {
+                    // 25% chance + must not be peaceful, a Mooshroom biome or WG mob-spawning: deny
+                    if (r.nextInt(4) == 0 && canSpawn(map.getKey(), r)) {
                         TARDISMonster rtm = new TARDISMonster();
                         // choose a random monster
                         rtm.setType(monsters.get(r.nextInt(monsters.size())));
@@ -144,6 +146,20 @@ public class TARDISMonsterRunnable implements Runnable {
                 }
             }
         }
+    }
+
+    private boolean canSpawn(Location l, Random r) {
+        // get biome
+        Biome biome = l.getBlock().getRelative(plugin.getGeneralKeeper().getFaces().get(r.nextInt(4)), 2).getBiome();
+        if (biome.equals(Biome.MUSHROOM_ISLAND) || biome.equals(Biome.MUSHROOM_SHORE)) {
+            return false;
+        }
+        // worldguard
+        if (plugin.isWorldGuardOnServer() && !plugin.getWorldGuardUtils().mobsCanSpawnAtLocation(l)) {
+            return false;
+        }
+        // difficulty
+        return !l.getWorld().getDifficulty().equals(Difficulty.PEACEFUL);
     }
 
     private void moveMonster(TARDISTeleportLocation tpl, TARDISMonster m, Entity e) {
