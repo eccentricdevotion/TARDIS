@@ -82,6 +82,7 @@ public class TARDISMonsterRunnable implements Runnable {
                 Entity ent = map.getKey().getWorld().spawnEntity(map.getKey(), EntityType.EXPERIENCE_ORB);
                 List<Entity> entities = ent.getNearbyEntities(16, 16, 16);
                 ent.remove();
+                boolean found = false;
                 if (entities.size() > 0) {
                     // check if a Time Lord or companion is near
                     boolean take_action = true;
@@ -98,6 +99,7 @@ public class TARDISMonsterRunnable implements Runnable {
                             EntityType type = e.getType();
                             TARDISMonster tm = new TARDISMonster();
                             if (monsters.contains(type)) {
+                                found = true;
                                 switch (type) {
                                     case CREEPER:
                                         Creeper creeper = (Creeper) e;
@@ -136,11 +138,12 @@ public class TARDISMonsterRunnable implements Runnable {
                             }
                         }
                     }
-                } else {
+                }
+                if (found == false) {
                     // spawn a random mob inside TARDIS?
                     Random r = new Random();
                     // 25% chance + must not be peaceful, a Mooshroom biome or WG mob-spawning: deny
-                    if (r.nextInt(4) == 0 && canSpawn(map.getKey(), r)) {
+                    if (r.nextInt(4) == 0 && canSpawn(map.getKey(), r.nextInt(4))) {
                         plugin.debug("Spawning a random mob!");
                         TARDISMonster rtm = new TARDISMonster();
                         // choose a random monster
@@ -152,9 +155,9 @@ public class TARDISMonsterRunnable implements Runnable {
         }
     }
 
-    private boolean canSpawn(Location l, Random r) {
+    private boolean canSpawn(Location l, int r) {
         // get biome
-        Biome biome = l.getBlock().getRelative(plugin.getGeneralKeeper().getFaces().get(r.nextInt(4)), 2).getBiome();
+        Biome biome = l.getBlock().getRelative(plugin.getGeneralKeeper().getFaces().get(r), 2).getBiome();
         if (biome.equals(Biome.MUSHROOM_ISLAND) || biome.equals(Biome.MUSHROOM_SHORE)) {
             return false;
         }
