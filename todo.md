@@ -13,7 +13,6 @@
 9. Bring back the `/tardisprefs sign [on|off]`?
 10. Check interior SFX don't play in the TARDIS of the player whose preference is off
 11. Fix the NPE when trying to set biome on final demat
-12. Deny monster spawning in the Police Box DEEP_OCEAN biome
 
 ##Future version `3.0+`
 1. Console modes?

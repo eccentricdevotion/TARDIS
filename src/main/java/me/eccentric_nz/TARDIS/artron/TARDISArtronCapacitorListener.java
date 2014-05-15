@@ -38,8 +38,6 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
-import org.bukkit.event.entity.CreatureSpawnEvent;
-import org.bukkit.event.entity.CreatureSpawnEvent.SpawnReason;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -54,7 +52,6 @@ public class TARDISArtronCapacitorListener implements Listener {
 
     private final TARDIS plugin;
     List<Material> validBlocks = new ArrayList<Material>();
-    List<SpawnReason> goodspawns = new ArrayList<SpawnReason>();
 
     public TARDISArtronCapacitorListener(TARDIS plugin) {
         this.plugin = plugin;
@@ -63,11 +60,6 @@ public class TARDISArtronCapacitorListener implements Listener {
         validBlocks.add(Material.REDSTONE_COMPARATOR_ON);
         validBlocks.add(Material.STONE_BUTTON);
         validBlocks.add(Material.LEVER);
-        goodspawns.add(SpawnReason.BREEDING);
-        goodspawns.add(SpawnReason.BUILD_IRONGOLEM);
-        goodspawns.add(SpawnReason.BUILD_SNOWMAN);
-        goodspawns.add(SpawnReason.EGG);
-        goodspawns.add(SpawnReason.SPAWNER_EGG);
     }
 
     /**
@@ -262,24 +254,6 @@ public class TARDISArtronCapacitorListener implements Listener {
                         }
                     }
                 }
-            }
-        }
-    }
-
-    /**
-     * Listens for entity spawn events. If WorldGuard is enabled it blocks
-     * mob-spawning inside the TARDIS, so this checks to see if we are doing the
-     * spawning and un-cancels WorldGuard's setCancelled(true).
-     *
-     * @param event
-     */
-    @EventHandler(priority = EventPriority.HIGHEST)
-    public void onEntitySpawn(CreatureSpawnEvent event) {
-        boolean isTardisWorldSpawn = (event.getLocation().getWorld().getName().contains("TARDIS") && goodspawns.contains(event.getSpawnReason()));
-        if (isTardisWorldSpawn || plugin.isMySpawn()) {
-            event.setCancelled(false);
-            if (plugin.isMySpawn()) {
-                plugin.setMySpawn(false);
             }
         }
     }
