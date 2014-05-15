@@ -196,11 +196,7 @@ public class TARDISMaterialisationPreset implements Runnable {
                         // set the biome
                         for (int c = -1; c < 2; c++) {
                             for (int r = -1; r < 2; r++) {
-                                if (c == 0 && r == 0) {
-                                    world.setBiome(x + c, z + r, Biome.DEEP_OCEAN);
-                                } else {
-                                    world.setBiome(x + c, z + r, Biome.SKY);
-                                }
+                                world.setBiome(x + c, z + r, Biome.DEEP_OCEAN);
                                 Chunk tmp_chunk = world.getChunkAt(new Location(world, x + c, 64, z + r));
                                 if (!chunks.contains(tmp_chunk)) {
                                     chunks.add(tmp_chunk);
