@@ -77,6 +77,7 @@ public class TARDISGiveCommand implements CommandExecutor {
     }
 
     @Override
+    @SuppressWarnings("deprecation")
     public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
         // If the player typed /tardisgive then do the following...
         if (cmd.getName().equalsIgnoreCase("tardisgive")) {
@@ -183,9 +184,14 @@ public class TARDISGiveCommand implements CommandExecutor {
         return true;
     }
 
+    @SuppressWarnings("deprecation")
     private boolean giveArtron(CommandSender sender, String player, int amount) {
         // Look up this player's UUID
-        UUID uuid = plugin.getGeneralKeeper().getUUIDCache().getIdOptimistic(player);
+        UUID uuid = plugin.getServer().getOfflinePlayer(player).getUniqueId();
+        if (uuid == null) {
+            uuid = plugin.getGeneralKeeper().getUUIDCache().getIdOptimistic(player);
+            plugin.getGeneralKeeper().getUUIDCache().getId(player);
+        }
         if (uuid != null) {
             HashMap<String, Object> where = new HashMap<String, Object>();
             where.put("uuid", uuid.toString());
