@@ -184,8 +184,8 @@ public class TARDISMaterialisationPreset implements Runnable {
                 }
                 // first run - remember blocks
                 if (i == 1) {
-                    // if configured and it's a Police Box preset set biome
-                    if (plugin.getConfig().getBoolean("police_box.set_biome") && (preset.equals(PRESET.NEW) || preset.equals(PRESET.OLD))) {
+                    // if configured and it's a Whovian preset set biome
+                    if (plugin.getConfig().getBoolean("police_box.set_biome") && (preset.equals(PRESET.NEW) || preset.equals(PRESET.OLD) || preset.equals(PRESET.PANDORICA))) {
                         List<Chunk> chunks = new ArrayList<Chunk>();
                         Chunk chunk = location.getChunk();
                         chunks.add(chunk);
