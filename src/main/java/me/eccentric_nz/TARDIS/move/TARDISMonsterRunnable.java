@@ -71,7 +71,7 @@ public class TARDISMonsterRunnable implements Runnable {
         // get open portals
         for (Map.Entry<Location, TARDISTeleportLocation> map : plugin.getTrackerKeeper().getPortals().entrySet()) {
             // only portals in police box worlds
-            if (!map.getKey().getWorld().getName().contains("TARDIS")) {
+            if (!map.getKey().getWorld().getName().contains("TARDIS") && new ResultSetHidden(plugin, map.getValue().getTardisId()).isVisible()) {
                 Entity ent = map.getKey().getWorld().spawnEntity(map.getKey(), EntityType.EXPERIENCE_ORB);
                 List<Entity> entities = ent.getNearbyEntities(16, 16, 16);
                 ent.remove();
@@ -148,10 +148,6 @@ public class TARDISMonsterRunnable implements Runnable {
     }
 
     private boolean canSpawn(Location l, int r, int id) {
-        // check if TARDIS is visible
-        if (!new ResultSetHidden(plugin, id).isVisible()) {
-            return false;
-        }
         // get biome
         Biome biome = l.getBlock().getRelative(plugin.getGeneralKeeper().getFaces().get(r), 2).getBiome();
         if (biome.equals(Biome.MUSHROOM_ISLAND) || biome.equals(Biome.MUSHROOM_SHORE)) {
