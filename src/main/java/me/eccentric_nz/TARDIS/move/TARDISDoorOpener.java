@@ -26,6 +26,7 @@ import me.eccentric_nz.TARDIS.database.ResultSetDoorBlocks;
 import me.eccentric_nz.TARDIS.database.ResultSetPortals;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
+import me.eccentric_nz.TARDIS.enumeration.PRESET;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
@@ -102,7 +103,9 @@ public class TARDISDoorOpener {
                 HashMap<String, Object> where = new HashMap<String, Object>();
                 where.put("tardis_id", id);
                 ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);
+                PRESET preset = null;
                 if (rs.resultSet()) {
+                    preset = rs.getPreset();
                     String[] companions = rs.getCompanions().split(":");
                     for (String c : companions) {
                         if (!c.isEmpty()) {
@@ -186,7 +189,9 @@ public class TARDISDoorOpener {
                         }
                     }
                     // locations
-                    plugin.getTrackerKeeper().getPortals().put(exportal, tp_in);
+                    if (preset != null && preset.hasPortal()) {
+                        plugin.getTrackerKeeper().getPortals().put(exportal, tp_in);
+                    }
                     plugin.getTrackerKeeper().getPortals().put(inportal, tp_out);
                 }
             }

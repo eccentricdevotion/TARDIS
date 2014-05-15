@@ -78,7 +78,7 @@ public class TARDISDoorWalkListener extends TARDISDoorListener implements Listen
         Block block = event.getClickedBlock();
         if (block != null) {
             Material blockType = block.getType();
-            // only proceed if they are clicking an iron door with a TARDIS key!
+            // only proceed if they are clicking a door!
             if (blockType.equals(Material.IRON_DOOR_BLOCK) || blockType.equals(Material.WOODEN_DOOR) || blockType.equals(Material.TRAP_DOOR)) {
                 final Player player = event.getPlayer();
                 if (player.hasPermission("tardis.enter")) {
@@ -103,7 +103,6 @@ public class TARDISDoorWalkListener extends TARDISDoorListener implements Listen
                         event.setUseInteractedBlock(Event.Result.DENY);
                         event.setUseItemInHand(Event.Result.DENY);
                         event.setCancelled(true);
-//                        if (material.equals(m)) {
                         COMPASS dd = rsd.getDoor_direction();
                         int doortype = rsd.getDoor_type();
                         int end_doortype;
