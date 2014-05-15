@@ -12,7 +12,8 @@
 8. TARDIS map (started)
 9. Bring back the `/tardisprefs sign [on|off]`?
 10. Check presets - make sure portals are disabled if there is no door to walk into / out of
-11. Check interior SFX don't play if preference is off
+11. Check interior SFX don't play in the TARDIS of the player whose preference is off
+12. Fix the NPE when trying to set biome on final demat
 
 ##Future version `3.0+`
 1. Console modes?
@@ -21,8 +22,7 @@
 ####I couldn't really be bothered
 1. HADS + explosions + fireballs + lava
 2. Put farmland, crops, buttons, ladders, levers and signs on last when growing rooms
-3. TARDIS Information System
-    * auto log out?
+3. TARDIS Information System auto log out?
 
 ##Resource Pack / TARDISWeepingAngels
 

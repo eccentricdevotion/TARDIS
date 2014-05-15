@@ -24,6 +24,7 @@ import java.util.Random;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.ResultSetCompanions;
 import me.eccentric_nz.TARDIS.database.ResultSetControls;
+import me.eccentric_nz.TARDIS.database.ResultSetHidden;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import me.eccentric_nz.TARDIS.database.ResultSetTravellers;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
@@ -134,7 +135,7 @@ public class TARDISMonsterRunnable implements Runnable {
                     // spawn a random mob inside TARDIS?
                     Random r = new Random();
                     // 25% chance + must not be peaceful, a Mooshroom biome or WG mob-spawning: deny
-                    if (r.nextInt(4) == 0 && canSpawn(map.getKey(), r.nextInt(4))) {
+                    if (r.nextInt(4) == 0 && canSpawn(map.getKey(), r.nextInt(4), map.getValue().getTardisId())) {
                         TARDISMonster rtm = new TARDISMonster();
                         // choose a random monster
                         rtm.setType(monsters.get(r.nextInt(monsters.size())));
@@ -146,7 +147,11 @@ public class TARDISMonsterRunnable implements Runnable {
         }
     }
 
-    private boolean canSpawn(Location l, int r) {
+    private boolean canSpawn(Location l, int r, int id) {
+        // check if TARDIS is visible
+        if (!new ResultSetHidden(plugin, id).isVisible()) {
+            return false;
+        }
         // get biome
         Biome biome = l.getBlock().getRelative(plugin.getGeneralKeeper().getFaces().get(r), 2).getBiome();
         if (biome.equals(Biome.MUSHROOM_ISLAND) || biome.equals(Biome.MUSHROOM_SHORE)) {
