@@ -26,7 +26,6 @@ import me.eccentric_nz.TARDIS.database.ResultSetCompanions;
 import me.eccentric_nz.TARDIS.database.ResultSetControls;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import me.eccentric_nz.TARDIS.database.ResultSetTravellers;
-import me.eccentric_nz.TARDIS.enumeration.SCHEMATIC;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import org.bukkit.Difficulty;
 import org.bukkit.Location;
@@ -51,7 +50,6 @@ public class TARDISMonsterRunnable implements Runnable {
 
     private final TARDIS plugin;
     private final List<EntityType> monsters = new ArrayList<EntityType>();
-    private final List<SCHEMATIC> tardii = new ArrayList<SCHEMATIC>();
 
     public TARDISMonsterRunnable(TARDIS plugin) {
         this.plugin = plugin;
@@ -65,20 +63,14 @@ public class TARDISMonsterRunnable implements Runnable {
         monsters.add(EntityType.SPIDER);
         monsters.add(EntityType.WITCH);
         monsters.add(EntityType.ZOMBIE);
-        tardii.add(SCHEMATIC.BIGGER);
-        tardii.add(SCHEMATIC.DELUXE);
-        tardii.add(SCHEMATIC.ELEVENTH);
-        tardii.add(SCHEMATIC.REDSTONE);
     }
 
     @Override
     public void run() {
-        plugin.debug("Checking for open doors...");
         // get open portals
         for (Map.Entry<Location, TARDISTeleportLocation> map : plugin.getTrackerKeeper().getPortals().entrySet()) {
             // only portals in police box worlds
             if (!map.getKey().getWorld().getName().contains("TARDIS")) {
-                plugin.debug("Outer door open!");
                 Entity ent = map.getKey().getWorld().spawnEntity(map.getKey(), EntityType.EXPERIENCE_ORB);
                 List<Entity> entities = ent.getNearbyEntities(16, 16, 16);
                 ent.remove();
@@ -94,7 +86,6 @@ public class TARDISMonsterRunnable implements Runnable {
                     }
                     // nobody there so continue
                     if (take_action) {
-                        plugin.debug("Attempting to find nearby monsters...");
                         for (Entity e : entities) {
                             EntityType type = e.getType();
                             TARDISMonster tm = new TARDISMonster();
@@ -144,10 +135,10 @@ public class TARDISMonsterRunnable implements Runnable {
                     Random r = new Random();
                     // 25% chance + must not be peaceful, a Mooshroom biome or WG mob-spawning: deny
                     if (r.nextInt(4) == 0 && canSpawn(map.getKey(), r.nextInt(4))) {
-                        plugin.debug("Spawning a random mob!");
                         TARDISMonster rtm = new TARDISMonster();
                         // choose a random monster
                         rtm.setType(monsters.get(r.nextInt(monsters.size())));
+                        plugin.debug("Spawning a random mob! " + rtm.getType().toString());
                         moveMonster(map.getValue(), rtm, null);
                     }
                 }
@@ -172,7 +163,6 @@ public class TARDISMonsterRunnable implements Runnable {
     private void moveMonster(TARDISTeleportLocation tpl, TARDISMonster m, Entity e) {
         // remove the entity
         if (e != null) {
-            plugin.debug("Found a monster :)");
             e.remove();
         }
         Location l = tpl.getLocation();
@@ -227,14 +217,22 @@ public class TARDISMonsterRunnable implements Runnable {
                 pigzombie.setAngry(m.isAggressive());
                 pigzombie.setAnger(m.getAnger());
                 EntityEquipment ep = pigzombie.getEquipment();
-                ep.setArmorContents(m.getEquipment().getArmorContents());
-                ep.setItemInHand(m.getEquipment().getItemInHand());
+                if (m.getEquipment().getArmorContents() != null) {
+                    ep.setArmorContents(m.getEquipment().getArmorContents());
+                }
+                if (m.getEquipment().getItemInHand() != null) {
+                    ep.setItemInHand(m.getEquipment().getItemInHand());
+                }
                 break;
             case SKELETON:
                 Skeleton skeleton = (Skeleton) ent;
                 EntityEquipment es = skeleton.getEquipment();
-                es.setArmorContents(m.getEquipment().getArmorContents());
-                es.setItemInHand(m.getEquipment().getItemInHand());
+                if (m.getEquipment().getArmorContents() != null) {
+                    es.setArmorContents(m.getEquipment().getArmorContents());
+                }
+                if (m.getEquipment().getItemInHand() != null) {
+                    es.setItemInHand(m.getEquipment().getItemInHand());
+                }
                 break;
             case SLIME:
                 Slime slime = (Slime) ent;
