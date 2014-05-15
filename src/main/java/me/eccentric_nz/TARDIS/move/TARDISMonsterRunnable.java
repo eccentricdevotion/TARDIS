@@ -217,20 +217,16 @@ public class TARDISMonsterRunnable implements Runnable {
                 pigzombie.setAngry(m.isAggressive());
                 pigzombie.setAnger(m.getAnger());
                 EntityEquipment ep = pigzombie.getEquipment();
-                if (m.getEquipment().getArmorContents() != null) {
+                if (m.getEquipment() != null) {
                     ep.setArmorContents(m.getEquipment().getArmorContents());
-                }
-                if (m.getEquipment().getItemInHand() != null) {
                     ep.setItemInHand(m.getEquipment().getItemInHand());
                 }
                 break;
             case SKELETON:
                 Skeleton skeleton = (Skeleton) ent;
                 EntityEquipment es = skeleton.getEquipment();
-                if (m.getEquipment().getArmorContents() != null) {
+                if (m.getEquipment() != null) {
                     es.setArmorContents(m.getEquipment().getArmorContents());
-                }
-                if (m.getEquipment().getItemInHand() != null) {
                     es.setItemInHand(m.getEquipment().getItemInHand());
                 }
                 break;
@@ -243,10 +239,8 @@ public class TARDISMonsterRunnable implements Runnable {
                 zombie.setVillager(m.isVillager());
                 zombie.setBaby(m.isBaby());
                 EntityEquipment ez = zombie.getEquipment();
-                if (m.getEquipment().getArmorContents() != null) {
+                if (m.getEquipment() != null) {
                     ez.setArmorContents(m.getEquipment().getArmorContents());
-                }
-                if (m.getEquipment().getItemInHand() != null) {
                     ez.setItemInHand(m.getEquipment().getItemInHand());
                 }
                 break;
