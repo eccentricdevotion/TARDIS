@@ -243,8 +243,12 @@ public class TARDISMonsterRunnable implements Runnable {
                 zombie.setVillager(m.isVillager());
                 zombie.setBaby(m.isBaby());
                 EntityEquipment ez = zombie.getEquipment();
-                ez.setArmorContents(m.getEquipment().getArmorContents());
-                ez.setItemInHand(m.getEquipment().getItemInHand());
+                if (m.getEquipment().getArmorContents() != null) {
+                    ez.setArmorContents(m.getEquipment().getArmorContents());
+                }
+                if (m.getEquipment().getItemInHand() != null) {
+                    ez.setItemInHand(m.getEquipment().getItemInHand());
+                }
                 break;
         }
         if (m.getAge() > 0) {
