@@ -25,6 +25,8 @@ import me.eccentric_nz.TARDIS.database.ResultSetTravellers;
 import me.eccentric_nz.TARDIS.enumeration.MESSAGE;
 import me.eccentric_nz.TARDIS.enumeration.SCHEMATIC;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
+import org.bukkit.Material;
+import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
 
 /**
@@ -39,9 +41,10 @@ public class TARDISUpdateCommand {
         this.plugin = plugin;
     }
 
+    @SuppressWarnings("deprecation")
     public boolean startUpdate(Player player, String[] args) {
         if (player.hasPermission("tardis.update")) {
-            String[] validBlockNames = {"advanced", "ars", "artron", "back", "backdoor", "button", "chameleon", "condenser", "creeper", "direction", "door", "eps", "farm", "handbrake", "info", "keyboard", "light", "rail", "save-sign", "scanner", "stable", "storage", "temporal", "terminal", "toggle_wool", "village", "world-repeater", "x-repeater", "y-repeater", "z-repeater", "zero"};
+            String[] validBlockNames = {"advanced", "ars", "artron", "back", "backdoor", "button", "chameleon", "condenser", "creeper", "direction", "door", "eps", "farm", "handbrake", "hinge", "info", "keyboard", "light", "rail", "save-sign", "scanner", "stable", "storage", "temporal", "terminal", "toggle_wool", "village", "world-repeater", "x-repeater", "y-repeater", "z-repeater", "zero"};
             if (args.length < 2) {
                 TARDISMessage.send(player, plugin.getPluginName() + MESSAGE.TOO_FEW_ARGS.getText());
                 return false;
@@ -49,6 +52,18 @@ public class TARDISUpdateCommand {
             String tardis_block = args[1].toLowerCase(Locale.ENGLISH);
             if (!Arrays.asList(validBlockNames).contains(tardis_block)) {
                 new TARDISUpdateLister(plugin, player).list();
+                return true;
+            }
+            if (tardis_block.equals("hinge")) {
+                Block block = player.getTargetBlock(null, 10);
+                if (block.getType().equals(Material.IRON_DOOR_BLOCK)) {
+                    byte blockData = block.getData();
+                    if (blockData == 8) {
+                        block.setData((byte) 9, true);
+                    } else {
+                        block.setData((byte) 8, true);
+                    }
+                }
                 return true;
             }
             if (tardis_block.equals("advanced") && !player.hasPermission("tardis.advanced")) {
