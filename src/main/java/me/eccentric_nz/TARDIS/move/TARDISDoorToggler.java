@@ -22,9 +22,7 @@ import me.eccentric_nz.TARDIS.enumeration.COMPASS;
 import org.bukkit.Location;
 import org.bukkit.Sound;
 import org.bukkit.block.Block;
-import org.bukkit.block.BlockFace;
 import org.bukkit.entity.Player;
-import org.bukkit.material.Door;
 
 /**
  *
@@ -37,14 +35,16 @@ public class TARDISDoorToggler {
     private final COMPASS dd;
     private final Player player;
     private final boolean minecart;
+    private final boolean open;
     private final int id;
 
-    public TARDISDoorToggler(TARDIS plugin, Block block, COMPASS dd, Player player, boolean minecart, int id) {
+    public TARDISDoorToggler(TARDIS plugin, Block block, COMPASS dd, Player player, boolean minecart, boolean open, int id) {
         this.plugin = plugin;
         this.block = block;
         this.dd = dd;
         this.player = player;
         this.minecart = minecart;
+        this.open = open;
         this.id = id;
     }
 
@@ -54,39 +54,39 @@ public class TARDISDoorToggler {
     @SuppressWarnings("deprecation")
     public void toggleDoors() {
         UUID uuid = player.getUniqueId();
-        // get bottom door block
-        Block door_bottom;
-        Door door = (Door) block.getState().getData();
-        door_bottom = (door.isTopHalf()) ? block.getRelative(BlockFace.DOWN) : block;
-        // is door open?
-        boolean open = plugin.getUtils().isOpen(door_bottom, dd);
+//        // get bottom door block
+//        Block door_bottom;
+//        Door door = (Door) block.getState().getData();
+//        door_bottom = (door.isTopHalf()) ? block.getRelative(BlockFace.DOWN) : block;
+//        // is door open?
+//        boolean open = plugin.getUtils().isOpen(door_bottom, dd);
         if (open) {
             new TARDISDoorCloser(plugin, uuid, id).closeDoors();
         } else {
             new TARDISDoorOpener(plugin, uuid, id).openDoors();
         }
-        playDoorSound(player, !open, block.getLocation(), minecart);
+        playDoorSound(player, open, block.getLocation(), minecart);
     }
 
     /**
      * Plays a door sound when the iron door is clicked.
      *
      * @param p a player to play the sound for
-     * @param sound which sound to play, open (true), close (false)
+     * @param open which sound to play, open (true), close (false)
      * @param l a location to play the sound at
      * @param m whether to play the custom sound (false) or the Minecraft one
      * (true)
      */
-    private void playDoorSound(Player p, boolean sound, Location l, boolean m) {
-        if (sound) {
+    private void playDoorSound(Player p, boolean open, Location l, boolean m) {
+        if (open) {
             if (!m) {
-                plugin.getUtils().playTARDISSound(l, p, "tardis_door_open");
+                plugin.getUtils().playTARDISSound(l, p, "tardis_door_close");
             } else {
-                p.playSound(p.getLocation(), Sound.DOOR_OPEN, 1.0F, 1.0F);
+                p.playSound(p.getLocation(), Sound.DOOR_CLOSE, 1.0F, 1.0F);
             }
         } else {
             if (!m) {
-                plugin.getUtils().playTARDISSound(l, p, "tardis_door_close");
+                plugin.getUtils().playTARDISSound(l, p, "tardis_door_open");
             } else {
                 p.playSound(p.getLocation(), Sound.DOOR_OPEN, 1.0F, 1.0F);
             }

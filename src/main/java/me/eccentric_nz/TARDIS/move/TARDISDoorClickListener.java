@@ -94,6 +94,7 @@ public class TARDISDoorClickListener extends TARDISDoorListener implements Liste
                     int bz = block_loc.getBlockZ();
                     if (doorData >= 8 && !blockType.equals(Material.TRAP_DOOR)) {
                         by = (by - 1);
+                        block = block.getRelative(BlockFace.DOWN);
                     }
                     String doorloc = bw + ":" + bx + ":" + by + ":" + bz;
                     ItemStack stack = player.getItemInHand();
@@ -181,8 +182,9 @@ public class TARDISDoorClickListener extends TARDISDoorListener implements Liste
                                             // toogle the door open/closed
                                             if (blockType.equals(Material.IRON_DOOR_BLOCK) || blockType.equals(Material.WOODEN_DOOR)) {
                                                 if (doortype == 0 || doortype == 1) {
+                                                    boolean open = plugin.getUtils().isOpen(block, dd);
                                                     // toggle the doors
-                                                    new TARDISDoorToggler(plugin, block, dd, player, minecart, id).toggleDoors();
+                                                    new TARDISDoorToggler(plugin, block, dd, player, minecart, open, id).toggleDoors();
                                                 }
                                             } else if (blockType.equals(Material.TRAP_DOOR)) {
                                                 int open = 1;

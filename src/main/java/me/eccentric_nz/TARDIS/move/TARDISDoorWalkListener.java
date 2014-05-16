@@ -93,6 +93,7 @@ public class TARDISDoorWalkListener extends TARDISDoorListener implements Listen
                     int bz = block_loc.getBlockZ();
                     if (doorData >= 8 && !blockType.equals(Material.TRAP_DOOR)) {
                         by = (by - 1);
+                        block = block.getRelative(BlockFace.DOWN);
                     }
                     String doorloc = bw + ":" + bx + ":" + by + ":" + bz;
                     HashMap<String, Object> where = new HashMap<String, Object>();
@@ -162,21 +163,6 @@ public class TARDISDoorWalkListener extends TARDISDoorListener implements Listen
                             }
                         }
                         if (action == Action.RIGHT_CLICK_BLOCK && !player.isSneaking()) {
-                            if (!material.equals(m) && doortype == 0) {
-                                // must use key to open and close the outer door
-                                String[] split = plugin.getRecipesConfig().getString("shaped.Sonic Screwdriver.result").split(":");
-                                Material sonic = Material.valueOf(split[0]);
-                                if (!material.equals(sonic) || !player.hasPermission("tardis.sonic.admin")) {
-                                    String grammar;
-                                    if (!material.equals(Material.AIR)) {
-                                        grammar = (TARDISConstants.vowels.contains(material.toString().substring(0, 1))) ? "an " + material : "a " + material;
-                                    } else {
-                                        grammar = "nothing";
-                                    }
-                                    TARDISMessage.send(player, plugin.getPluginName() + "The TARDIS key is a " + key + ". You have " + grammar + " in your hand!");
-                                }
-                                return;
-                            }
                             final int id = rsd.getTardis_id();
                             if (plugin.getTrackerKeeper().getInVortex().contains(id)) {
                                 TARDISMessage.send(player, plugin.getPluginName() + MESSAGE.NOT_WHILE_MAT.getText());
@@ -198,8 +184,24 @@ public class TARDISDoorWalkListener extends TARDISDoorListener implements Listen
                                         // toogle the door open/closed
                                         if (blockType.equals(Material.IRON_DOOR_BLOCK) || blockType.equals(Material.WOODEN_DOOR)) {
                                             if (doortype == 0 || doortype == 1) {
+                                                boolean open = plugin.getUtils().isOpen(block, dd);
+                                                if (!material.equals(m) && doortype == 0 && !open) {
+                                                    // must use key to open the outer door
+                                                    String[] split = plugin.getRecipesConfig().getString("shaped.Sonic Screwdriver.result").split(":");
+                                                    Material sonic = Material.valueOf(split[0]);
+                                                    if (!material.equals(sonic) || !player.hasPermission("tardis.sonic.admin")) {
+                                                        String grammar;
+                                                        if (!material.equals(Material.AIR)) {
+                                                            grammar = (TARDISConstants.vowels.contains(material.toString().substring(0, 1))) ? "an " + material : "a " + material;
+                                                        } else {
+                                                            grammar = "nothing";
+                                                        }
+                                                        TARDISMessage.send(player, plugin.getPluginName() + "The TARDIS key is a " + key + ". You have " + grammar + " in your hand!");
+                                                    }
+                                                    return;
+                                                }
                                                 // toggle the door
-                                                new TARDISDoorToggler(plugin, block, dd, player, minecart, id).toggleDoors();
+                                                new TARDISDoorToggler(plugin, block, dd, player, minecart, open, id).toggleDoors();
                                             }
                                         } else if (blockType.equals(Material.TRAP_DOOR)) {
                                             int open = 1;
