@@ -57,11 +57,16 @@ public class TARDISUpdateCommand {
             if (tardis_block.equals("hinge")) {
                 Block block = player.getTargetBlock(null, 10);
                 if (block.getType().equals(Material.IRON_DOOR_BLOCK)) {
-                    byte blockData = block.getData();
-                    if (blockData == 8) {
-                        block.setData((byte) 9, true);
+                    if (args.length == 3) {
+                        byte b = plugin.getUtils().parseByte(args[2]);
+                        block.setData(b, true);
                     } else {
-                        block.setData((byte) 8, true);
+                        byte blockData = block.getData();
+                        if (blockData == 8) {
+                            block.setData((byte) 9, true);
+                        } else {
+                            block.setData((byte) 8, true);
+                        }
                     }
                 }
                 return true;

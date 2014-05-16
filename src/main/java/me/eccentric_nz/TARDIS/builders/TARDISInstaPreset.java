@@ -330,10 +330,14 @@ public class TARDISInstaPreset {
                                 }
                             }
                         }
-                        if (colids[yy] == 66) {
-                            do_at_end.add(new ProblemBlock(new Location(world, xx, (y + yy), zz), colids[yy], coldatas[yy]));
+                        if (colids[yy] == 71 && coldatas[yy] > 8) {
+                            plugin.getUtils().setBlockAndRemember(world, xx, (y + yy), zz, colids[yy], d.getUpperData(), tid);
                         } else {
-                            plugin.getUtils().setBlockAndRemember(world, xx, (y + yy), zz, colids[yy], coldatas[yy], tid);
+                            if (colids[yy] == 66) {
+                                do_at_end.add(new ProblemBlock(new Location(world, xx, (y + yy), zz), colids[yy], coldatas[yy]));
+                            } else {
+                                plugin.getUtils().setBlockAndRemember(world, xx, (y + yy), zz, colids[yy], coldatas[yy], tid);
+                            }
                         }
                         break;
                     case 63:

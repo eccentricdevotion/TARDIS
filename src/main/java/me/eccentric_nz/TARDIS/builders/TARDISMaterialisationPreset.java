@@ -369,7 +369,11 @@ public class TARDISMaterialisationPreset implements Runnable {
                                             plugin.getUtils().setUnderDoorBlock(world, xx, (y - 1), zz, platform_id, platform_data, tid);
                                         }
                                     }
-                                    plugin.getUtils().setBlockAndRemember(world, xx, (y + yy), zz, colids[yy], coldatas[yy], tid);
+                                    if (colids[yy] == 71 && coldatas[yy] > 8) {
+                                        plugin.getUtils().setBlockAndRemember(world, xx, (y + yy), zz, colids[yy], d.getUpperData(), tid);
+                                    } else {
+                                        plugin.getUtils().setBlockAndRemember(world, xx, (y + yy), zz, colids[yy], coldatas[yy], tid);
+                                    }
                                     break;
                                 case 63:
                                     if (preset.equals(PRESET.APPERTURE)) {

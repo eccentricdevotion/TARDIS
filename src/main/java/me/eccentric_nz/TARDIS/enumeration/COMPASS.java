@@ -22,8 +22,18 @@ package me.eccentric_nz.TARDIS.enumeration;
  */
 public enum COMPASS {
 
-    EAST,
-    SOUTH,
-    WEST,
-    NORTH;
+    EAST((byte) 15),
+    SOUTH((byte) 9),
+    WEST((byte) 13),
+    NORTH((byte) 11);
+
+    public byte upperData;
+
+    private COMPASS(byte upperData) {
+        this.upperData = upperData;
+    }
+
+    public byte getUpperData() {
+        return upperData;
+    }
 }
