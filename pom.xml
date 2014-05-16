@@ -59,11 +59,11 @@
                 <!--<repository>
                     <id>macgeek</id>
                     <url>file:///Users/macgeek/maven/repo</url>
-                </repository>-->
+                </repository>
                 <repository>
                     <id>macgeek</id>
                     <url>http://keetley.servegame.com:8888</url>
-                </repository>
+                </repository>-->
             </repositories>
             <activation>
                 <property>
