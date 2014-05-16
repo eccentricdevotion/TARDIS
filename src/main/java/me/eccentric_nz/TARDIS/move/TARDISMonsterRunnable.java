@@ -233,7 +233,9 @@ public class TARDISMonsterRunnable implements Runnable {
                 break;
             case SLIME:
                 Slime slime = (Slime) ent;
-                slime.setSize(m.getSize());
+                if (m.getSize() > 0) {
+                    slime.setSize(m.getSize());
+                }
                 break;
             case ZOMBIE:
                 Zombie zombie = (Zombie) ent;
