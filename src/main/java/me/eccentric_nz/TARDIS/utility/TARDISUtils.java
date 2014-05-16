@@ -470,12 +470,15 @@ public class TARDISUtils {
      * handbrake
      * @param s The sound to play
      */
+    @SuppressWarnings("deprecation")
     public void playTARDISSound(Location l, Player p, String s) {
-        p.playSound(l, s, volume, 1.0F);
-        for (Entity e : p.getNearbyEntities(10.0d, 10.0d, 10.0d)) {
-            if (e instanceof Player && !((Player) e).equals(p)) {
-                Player pp = (Player) e;
-                pp.playSound(pp.getLocation(), s, volume, 1.0f);
+        if (p != null) {
+            p.playSound(l, s, volume, 1.0F);
+            for (Entity e : p.getNearbyEntities(10.0d, 10.0d, 10.0d)) {
+                if (e instanceof Player && !((Player) e).equals(p)) {
+                    Player pp = (Player) e;
+                    pp.playSound(pp.getLocation(), s, volume, 1.0f);
+                }
             }
         }
     }
