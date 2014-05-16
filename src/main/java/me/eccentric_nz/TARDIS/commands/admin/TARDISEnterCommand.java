@@ -56,7 +56,11 @@ public class TARDISEnterCommand {
             return true;
         }
         // Look up this player's UUID
-        UUID uuid = plugin.getGeneralKeeper().getUUIDCache().getIdOptimistic(args[1]);
+        UUID uuid = plugin.getServer().getOfflinePlayer(args[1]).getUniqueId();
+        if (uuid == null) {
+            uuid = plugin.getGeneralKeeper().getUUIDCache().getIdOptimistic(args[1]);
+            plugin.getGeneralKeeper().getUUIDCache().getId(args[1]);
+        }
         if (uuid != null) {
             HashMap<String, Object> where = new HashMap<String, Object>();
             where.put("uuid", uuid.toString());
