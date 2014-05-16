@@ -10,9 +10,7 @@
 6. Allow mobs to spawn through the open door (started)
 7. Artron button powers on/off TARDIS after initialisation
 8. TARDIS map (started)
-9. Bring back the `/tardisprefs sign [on|off]`?
-10. Check interior SFX don't play in the TARDIS of the player whose preference is off
-11. Fix the NPE when trying to set biome on final demat
+9. Fix the NPE when trying to set biome on final demat
 
 ##Future version `3.0+`
 1. Console modes?
@@ -22,6 +20,7 @@
 1. HADS + explosions + fireballs + lava
 2. Put farmland, crops, buttons, ladders, levers and signs on last when growing rooms
 3. TARDIS Information System auto log out?
+4. Check interior SFX don't play in the TARDIS of the player whose preference is off
 
 ##Resource Pack / TARDISWeepingAngels
 

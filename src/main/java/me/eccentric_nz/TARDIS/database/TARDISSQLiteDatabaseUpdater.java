@@ -74,6 +74,7 @@ public class TARDISSQLiteDatabaseUpdater {
         prefsupdates.add("language TEXT DEFAULT 'AUTO_DETECT'");
         prefsupdates.add("minecart_on INTEGER DEFAULT 0");
         prefsupdates.add("renderer_on INTEGER DEFAULT 1");
+        prefsupdates.add("sign_on INTEGER DEFAULT 1");
         prefsupdates.add("submarine_on INTEGER DEFAULT 0");
         prefsupdates.add("texture_in TEXT DEFAULT ''");
         prefsupdates.add("texture_on INTEGER DEFAULT 0");

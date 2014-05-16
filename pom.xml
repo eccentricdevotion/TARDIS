@@ -31,11 +31,11 @@
             <id>onarandombox</id>
             <url>http://repo.onarandombox.com/content/groups/public</url>
         </repository>
-        <repository>
+        <!--<repository>
             <id>comphenix-rep</id>
             <name>Comphenix Repository</name>
             <url>http://repo.comphenix.net/content/groups/public</url>
-        </repository>
+        </repository>-->
     </repositories>
     <scm>
         <connection>scm:git:ssh://github.com/eccentricdevotion/TARDIS</connection>
@@ -371,7 +371,7 @@
         <dependency>
             <groupId>LibsDisguises</groupId>
             <artifactId>LibsDisguises</artifactId>
-            <version>8.0.9-SNAPSHOT</version>
+            <version>8.0.10-SNAPSHOT</version>
             <exclusions>
                 <exclusion>
                     <artifactId>spigot-api</artifactId>

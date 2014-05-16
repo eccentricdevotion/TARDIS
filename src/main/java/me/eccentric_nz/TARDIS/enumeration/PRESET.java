@@ -49,7 +49,7 @@ public enum PRESET {
     NETHER(Material.NETHERRACK, "", "", true, true),
     NEW(Material.STEP, "POLICE", "BOX", true, true),
     OLD(Material.WOOL, "POLICE", "BOX", true, true),
-    PANDORICA(Material.COAL, "", "", false, false),
+    PANDORICA(Material.COAL, "PANDORICA", "", false, false),
     PARTY(Material.FIREWORK, "PARTY", "TENT", true, true),
     PEANUT(Material.HARD_CLAY, "JAR OF", "PEANUT BUTTER", true, false),
     PINE(Material.LEAVES, "PINE", "TREE", false, false),

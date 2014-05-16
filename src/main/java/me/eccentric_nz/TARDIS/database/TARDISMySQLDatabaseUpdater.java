@@ -59,6 +59,7 @@ public class TARDISMySQLDatabaseUpdater {
         prefsupdates.add("ctm_on int(1) DEFAULT '0'");
         prefsupdates.add("minecart_on int(1) DEFAULT '0'");
         prefsupdates.add("renderer_on int(1) DEFAULT '1'");
+        prefsupdates.add("sign_on int(1) DEFAULT '1'");
         prefsupdates.add("wool_lights_on int(1) DEFAULT '0'");
         destsupdates.add("slot int(1) DEFAULT '-1'");
     }

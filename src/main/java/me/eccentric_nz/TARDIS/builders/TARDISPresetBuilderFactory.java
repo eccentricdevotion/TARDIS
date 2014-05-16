@@ -112,6 +112,7 @@ public class TARDISPresetBuilderFactory {
             int lamp = plugin.getConfig().getInt("police_box.tardis_lamp");
             boolean minecart = false;
             boolean ctm = false;
+            boolean add_sign = true;
             boolean hidden = rs.isHidden();
             HashMap<String, Object> wherepp = new HashMap<String, Object>();
             wherepp.put("uuid", pbd.getPlayer().getUniqueId().toString());
@@ -120,6 +121,7 @@ public class TARDISPresetBuilderFactory {
                 lamp = rsp.getLamp();
                 minecart = rsp.isMinecartOn();
                 ctm = rsp.isCtmOn();
+                add_sign = rsp.isSignOn();
             }
             if (pbd.isSubmarine() && notSubmarinePresets.contains(preset)) {
                 preset = PRESET.YELLOW;
@@ -142,7 +144,7 @@ public class TARDISPresetBuilderFactory {
                     TARDISDeinstaPreset deinsta = new TARDISDeinstaPreset(plugin);
                     deinsta.instaDestroyPreset(pbd, false, demat);
                 }
-                final TARDISInstaPreset trp = new TARDISInstaPreset(plugin, pbd.getLocation(), preset, pbd.getTardisID(), pbd.getDirection(), pbd.getPlayer().getUniqueId().toString(), pbd.isMalfunction(), lamp, pbd.isSubmarine(), cham_id, cham_data, true, minecart, ctm);
+                final TARDISInstaPreset trp = new TARDISInstaPreset(plugin, pbd.getLocation(), preset, pbd.getTardisID(), pbd.getDirection(), pbd.getPlayer().getUniqueId().toString(), pbd.isMalfunction(), lamp, pbd.isSubmarine(), cham_id, cham_data, true, minecart, ctm, add_sign);
                 plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
                     @Override
                     public void run() {
@@ -152,12 +154,12 @@ public class TARDISPresetBuilderFactory {
             } else {
                 if (plugin.getConfig().getBoolean("police_box.materialise")) {
                     plugin.getTrackerKeeper().getMaterialising().add(pbd.getTardisID());
-                    TARDISMaterialisationPreset runnable = new TARDISMaterialisationPreset(plugin, pbd.getLocation(), preset, pbd.getTardisID(), pbd.getDirection(), pbd.getPlayer(), pbd.isMalfunction(), lamp, pbd.isSubmarine(), cham_id, cham_data, minecart, pbd.isOutside(), ctm);
+                    TARDISMaterialisationPreset runnable = new TARDISMaterialisationPreset(plugin, pbd.getLocation(), preset, pbd.getTardisID(), pbd.getDirection(), pbd.getPlayer(), pbd.isMalfunction(), lamp, pbd.isSubmarine(), cham_id, cham_data, minecart, pbd.isOutside(), ctm, add_sign);
                     int taskID = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, runnable, 10L, 20L);
                     runnable.setTask(taskID);
                 } else {
                     plugin.getTrackerKeeper().getMaterialising().add(pbd.getTardisID());
-                    TARDISInstaPreset insta = new TARDISInstaPreset(plugin, pbd.getLocation(), preset, pbd.getTardisID(), pbd.getDirection(), pbd.getPlayer().getUniqueId().toString(), pbd.isMalfunction(), lamp, pbd.isSubmarine(), cham_id, cham_data, false, minecart, ctm);
+                    TARDISInstaPreset insta = new TARDISInstaPreset(plugin, pbd.getLocation(), preset, pbd.getTardisID(), pbd.getDirection(), pbd.getPlayer().getUniqueId().toString(), pbd.isMalfunction(), lamp, pbd.isSubmarine(), cham_id, cham_data, false, minecart, ctm, add_sign);
                     insta.buildPreset();
                 }
             }

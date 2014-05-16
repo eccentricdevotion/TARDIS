@@ -167,14 +167,22 @@ public class TARDISPrefsMenuInventory {
             lights.setLore(Arrays.asList(wl_value));
             wool.setItemMeta(lights);
             options.add(wool);
-            // wool_lights
+            // connected textures
             ItemStack ctm = new ItemStack(Material.DIODE, 1);
-            ItemMeta sign = ctm.getItemMeta();
-            sign.setDisplayName("Connected Textures");
+            ItemMeta ctm_im = ctm.getItemMeta();
+            ctm_im.setDisplayName("Connected Textures");
             String ctm_value = (rsp.isCtmOn()) ? "ON" : "OFF";
-            sign.setLore(Arrays.asList(ctm_value));
-            ctm.setItemMeta(sign);
+            ctm_im.setLore(Arrays.asList(ctm_value));
+            ctm.setItemMeta(ctm_im);
             options.add(ctm);
+            // preset sign
+            ItemStack pre = new ItemStack(Material.DIODE, 1);
+            ItemMeta sign = pre.getItemMeta();
+            sign.setDisplayName("Preset Sign");
+            String pre_value = (rsp.isSignOn()) ? "ON" : "OFF";
+            sign.setLore(Arrays.asList(pre_value));
+            pre.setItemMeta(sign);
+            options.add(pre);
         }
         ItemStack[] stack = new ItemStack[18];
         for (int s = 0; s < 16; s++) {

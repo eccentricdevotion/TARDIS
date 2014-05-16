@@ -39,7 +39,6 @@ public class ResultSetPlayerPrefs {
     private final HashMap<String, Object> where;
     private int pp_id;
     private UUID uuid;
-    private String player;
     private String key;
     private boolean sfxOn;
     private boolean quotesOn;
@@ -63,6 +62,7 @@ public class ResultSetPlayerPrefs {
     private boolean rendererOn;
     private boolean woolLightsOn;
     private boolean ctmOn;
+    private boolean signOn;
 
     /**
      * Creates a class instance that can be used to retrieve an SQL ResultSet
@@ -115,7 +115,6 @@ public class ResultSetPlayerPrefs {
             if (rs.next()) {
                 this.pp_id = rs.getInt("pp_id");
                 this.uuid = UUID.fromString(rs.getString("uuid"));
-                this.player = rs.getString("player");
                 this.key = (plugin.getConfig().getString("storage.database").equals("sqlite")) ? rs.getString("key") : rs.getString("key_item");
                 this.sfxOn = rs.getBoolean("sfx_on");
                 this.quotesOn = rs.getBoolean("quotes_on");
@@ -149,6 +148,7 @@ public class ResultSetPlayerPrefs {
                 this.rendererOn = rs.getBoolean("renderer_on");
                 this.woolLightsOn = rs.getBoolean("wool_lights_on");
                 this.ctmOn = rs.getBoolean("ctm_on");
+                this.signOn = rs.getBoolean("sign_on");
             } else {
                 return false;
             }
@@ -268,5 +268,9 @@ public class ResultSetPlayerPrefs {
 
     public boolean isCtmOn() {
         return ctmOn;
+    }
+
+    public boolean isSignOn() {
+        return signOn;
     }
 }

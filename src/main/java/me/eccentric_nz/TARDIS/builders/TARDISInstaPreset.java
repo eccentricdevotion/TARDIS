@@ -66,6 +66,7 @@ public class TARDISInstaPreset {
     private final boolean rebuild;
     private final boolean minecart;
     private final boolean ctm;
+    private final boolean add_sign;
     private Block sponge;
     private final PRESET preset;
     private TARDISChameleonColumn column;
@@ -75,7 +76,7 @@ public class TARDISInstaPreset {
     private final ChatColor sign_colour;
     private final List<ProblemBlock> do_at_end = new ArrayList<ProblemBlock>();
 
-    public TARDISInstaPreset(TARDIS plugin, Location location, PRESET preset, int tid, COMPASS d, String uuid, boolean mal, int lamp, boolean sub, int cham_id, byte cham_data, boolean rebuild, boolean minecart, boolean ctm) {
+    public TARDISInstaPreset(TARDIS plugin, Location location, PRESET preset, int tid, COMPASS d, String uuid, boolean mal, int lamp, boolean sub, int cham_id, byte cham_data, boolean rebuild, boolean minecart, boolean ctm, boolean add_sign) {
         this.plugin = plugin;
         this.d = d;
         this.location = location;
@@ -90,6 +91,7 @@ public class TARDISInstaPreset {
         this.rebuild = rebuild;
         this.minecart = minecart;
         this.ctm = ctm;
+        this.add_sign = add_sign;
         colours = new byte[]{0, 1, 2, 3, 4, 5, 6, 9, 10, 11, 12, 13, 14};
         rand = new Random();
         random_colour = colours[rand.nextInt(13)];
@@ -340,76 +342,78 @@ public class TARDISInstaPreset {
                         }
                         break;
                     case 68: // sign - if there is one
-                        plugin.getUtils().setBlock(world, xx, (y + yy), zz, colids[yy], coldatas[yy]);
-                        Block sign = world.getBlockAt(xx, (y + yy), zz);
-                        if (sign.getType().equals(Material.WALL_SIGN) || sign.getType().equals(Material.SIGN_POST)) {
-                            Sign s = (Sign) sign.getState();
-                            if (plugin.getConfig().getBoolean("police_box.name_tardis")) {
-                                HashMap<String, Object> wheret = new HashMap<String, Object>();
-                                wheret.put("tardis_id", tid);
-                                ResultSetTardis rst = new ResultSetTardis(plugin, wheret, "", false);
-                                if (rst.resultSet()) {
-                                    String player_name = plugin.getGeneralKeeper().getUUIDCache().getNameCache().get(rst.getUuid());
-                                    if (player_name == null) {
-                                        // cache lookup failed, player may have disconnected
-                                        player_name = rst.getOwner();
-                                    }
-                                    String owner;
-                                    if (preset.equals(PRESET.GRAVESTONE) || preset.equals(PRESET.PUNKED) || preset.equals(PRESET.ROBOT)) {
-                                        owner = (player_name.length() > 14) ? player_name.substring(0, 14) : player_name;
-                                    } else {
-                                        owner = (player_name.length() > 14) ? player_name.substring(0, 12) + "'s" : player_name + "'s";
-                                    }
-                                    switch (preset) {
-                                        case GRAVESTONE:
-                                            s.setLine(3, owner);
-                                            break;
-                                        case ANGEL:
-                                        case JAIL:
-                                            s.setLine(2, owner);
-                                            break;
-                                        default:
-                                            s.setLine(0, owner);
-                                            break;
+                        if (add_sign) {
+                            plugin.getUtils().setBlock(world, xx, (y + yy), zz, colids[yy], coldatas[yy]);
+                            Block sign = world.getBlockAt(xx, (y + yy), zz);
+                            if (sign.getType().equals(Material.WALL_SIGN) || sign.getType().equals(Material.SIGN_POST)) {
+                                Sign s = (Sign) sign.getState();
+                                if (plugin.getConfig().getBoolean("police_box.name_tardis")) {
+                                    HashMap<String, Object> wheret = new HashMap<String, Object>();
+                                    wheret.put("tardis_id", tid);
+                                    ResultSetTardis rst = new ResultSetTardis(plugin, wheret, "", false);
+                                    if (rst.resultSet()) {
+                                        String player_name = plugin.getGeneralKeeper().getUUIDCache().getNameCache().get(rst.getUuid());
+                                        if (player_name == null) {
+                                            // cache lookup failed, player may have disconnected
+                                            player_name = rst.getOwner();
+                                        }
+                                        String owner;
+                                        if (preset.equals(PRESET.GRAVESTONE) || preset.equals(PRESET.PUNKED) || preset.equals(PRESET.ROBOT)) {
+                                            owner = (player_name.length() > 14) ? player_name.substring(0, 14) : player_name;
+                                        } else {
+                                            owner = (player_name.length() > 14) ? player_name.substring(0, 12) + "'s" : player_name + "'s";
+                                        }
+                                        switch (preset) {
+                                            case GRAVESTONE:
+                                                s.setLine(3, owner);
+                                                break;
+                                            case ANGEL:
+                                            case JAIL:
+                                                s.setLine(2, owner);
+                                                break;
+                                            default:
+                                                s.setLine(0, owner);
+                                                break;
+                                        }
                                     }
                                 }
+                                String line1;
+                                String line2;
+                                if (preset.equals(PRESET.CUSTOM)) {
+                                    line1 = plugin.getPresets().custom.getFirstLine();
+                                    line2 = plugin.getPresets().custom.getSecondLine();
+                                } else {
+                                    line1 = preset.getFirstLine();
+                                    line2 = preset.getSecondLine();
+                                }
+                                switch (preset) {
+                                    case ANGEL:
+                                        s.setLine(0, sign_colour + line1);
+                                        s.setLine(1, sign_colour + line2);
+                                        s.setLine(3, sign_colour + "TARDIS");
+                                        break;
+                                    case APPERTURE:
+                                        s.setLine(1, sign_colour + line1);
+                                        s.setLine(2, sign_colour + line2);
+                                        s.setLine(3, sign_colour + "LAB");
+                                        break;
+                                    case JAIL:
+                                        s.setLine(0, sign_colour + line1);
+                                        s.setLine(1, sign_colour + line2);
+                                        s.setLine(3, sign_colour + "CAPTURE");
+                                        break;
+                                    case THEEND:
+                                        s.setLine(1, sign_colour + line1);
+                                        s.setLine(2, sign_colour + line2);
+                                        s.setLine(3, sign_colour + "HOT ROD");
+                                        break;
+                                    default:
+                                        s.setLine(1, sign_colour + line1);
+                                        s.setLine(2, sign_colour + line2);
+                                        break;
+                                }
+                                s.update();
                             }
-                            String line1;
-                            String line2;
-                            if (preset.equals(PRESET.CUSTOM)) {
-                                line1 = plugin.getPresets().custom.getFirstLine();
-                                line2 = plugin.getPresets().custom.getSecondLine();
-                            } else {
-                                line1 = preset.getFirstLine();
-                                line2 = preset.getSecondLine();
-                            }
-                            switch (preset) {
-                                case ANGEL:
-                                    s.setLine(0, sign_colour + line1);
-                                    s.setLine(1, sign_colour + line2);
-                                    s.setLine(3, sign_colour + "TARDIS");
-                                    break;
-                                case APPERTURE:
-                                    s.setLine(1, sign_colour + line1);
-                                    s.setLine(2, sign_colour + line2);
-                                    s.setLine(3, sign_colour + "LAB");
-                                    break;
-                                case JAIL:
-                                    s.setLine(0, sign_colour + line1);
-                                    s.setLine(1, sign_colour + line2);
-                                    s.setLine(3, sign_colour + "CAPTURE");
-                                    break;
-                                case THEEND:
-                                    s.setLine(1, sign_colour + line1);
-                                    s.setLine(2, sign_colour + line2);
-                                    s.setLine(3, sign_colour + "HOT ROD");
-                                    break;
-                                default:
-                                    s.setLine(1, sign_colour + line1);
-                                    s.setLine(2, sign_colour + line2);
-                                    break;
-                            }
-                            s.update();
                         }
                         break;
                     case 87:
