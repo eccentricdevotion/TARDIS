@@ -36,6 +36,11 @@
             <name>Comphenix Repository</name>
             <url>http://repo.comphenix.net/content/groups/public</url>
         </repository>-->
+        <repository>
+            <id>comphenix-repo</id>
+            <name>Comphenix Repository</name>
+            <url>http://minor.royaldev.org:8081/nexus/content/repositories/comphenix-repo</url>
+        </repository>
     </repositories>
     <scm>
         <connection>scm:git:ssh://github.com/eccentricdevotion/TARDIS</connection>
@@ -356,7 +361,7 @@
         <dependency>
             <groupId>com.comphenix.protocol</groupId>
             <artifactId>ProtocolLib</artifactId>
-            <version>3.3.1</version>
+            <version>3.4.0-SNAPSHOT</version>
             <exclusions>
                 <exclusion>
                     <artifactId>BukkitExecutors</artifactId>
