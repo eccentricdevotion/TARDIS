@@ -196,6 +196,7 @@ public class TARDISConfiguration {
         intOptions.put("growth.gravity_max_velocity", 5);
         intOptions.put("growth.room_speed", 4);
         intOptions.put("growth.rooms_condenser_percent", 100);
+        intOptions.put("travel.manual_flight_delay", 60);
         intOptions.put("travel.random_attempts", 30);
         intOptions.put("travel.terminal_step", 1);
         intOptions.put("travel.timeout", 5);

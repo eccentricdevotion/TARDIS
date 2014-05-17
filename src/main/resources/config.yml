@@ -53,6 +53,7 @@ travel:
     exile: false
     per_world_perms: false
     terminal_step: 1
+    manual_flight_delay: 60
 # general preferences
 preferences:
     key: GOLD_NUGGET
