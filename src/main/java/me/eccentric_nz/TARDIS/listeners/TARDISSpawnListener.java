@@ -37,6 +37,7 @@ public class TARDISSpawnListener implements Listener {
 
     private final TARDIS plugin;
     List<SpawnReason> good_spawns = new ArrayList<SpawnReason>();
+    List<Biome> biomes = new ArrayList<Biome>();
 
     public TARDISSpawnListener(TARDIS plugin) {
         this.plugin = plugin;
@@ -45,6 +46,9 @@ public class TARDISSpawnListener implements Listener {
         good_spawns.add(SpawnReason.BUILD_SNOWMAN);
         good_spawns.add(SpawnReason.EGG);
         good_spawns.add(SpawnReason.SPAWNER_EGG);
+        biomes.add(Biome.DEEP_OCEAN);
+        biomes.add(Biome.MUSHROOM_ISLAND);
+        biomes.add(Biome.MUSHROOM_SHORE);
     }
 
     /**
@@ -78,12 +82,17 @@ public class TARDISSpawnListener implements Listener {
         if (!event.getSpawnReason().equals(SpawnReason.NATURAL)) {
             return;
         }
-        // only in DEEP_OCEAN
-        if (!l.getBlock().getBiome().equals(Biome.DEEP_OCEAN)) {
+        // only in DEEP_OCEAN, MUSHROOM_ISLAND and MUSHROOM_SHORE
+        if (!biomes.contains(l.getBlock().getBiome())) {
             return;
         }
         // only monsters
         if (!TARDISConstants.MONSTER_TYPES.contains(event.getEntity().getType())) {
+            return;
+        }
+        // always deny MUSHROOM biomes
+        if (l.getBlock().getBiome().equals(Biome.MUSHROOM_ISLAND) || l.getBlock().getBiome().equals(Biome.MUSHROOM_SHORE)) {
+            event.setCancelled(true);
             return;
         }
         // only TARDIS locations

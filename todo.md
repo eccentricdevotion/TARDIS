@@ -11,7 +11,7 @@
 7. Artron button powers on/off TARDIS after initialisation
 8. TARDIS map (started)
 9. Fix the NPE when trying to set biome on final demat
-10. Mob / Rain preventer for Police Box biomes
+10. Rain preventer for Police Box biomes
 
 ##Future version `3.0+`
 1. Console modes?
