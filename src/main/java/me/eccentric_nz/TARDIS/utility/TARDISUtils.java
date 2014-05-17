@@ -34,6 +34,7 @@ import org.bukkit.World;
 import org.bukkit.WorldType;
 import org.bukkit.block.Biome;
 import org.bukkit.block.Block;
+import org.bukkit.block.BlockFace;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
@@ -706,5 +707,24 @@ public class TARDISUtils {
             default:
                 return 0;
         }
+    }
+
+    @SuppressWarnings("deprecation")
+    public int getHighestNetherBlock(World w, int wherex, int wherez) {
+        int y = 100;
+        Block startBlock = w.getBlockAt(wherex, y, wherez);
+        while (startBlock.getTypeId() != 0) {
+            startBlock = startBlock.getRelative(BlockFace.DOWN);
+        }
+        int air = 0;
+        while (startBlock.getTypeId() == 0 && startBlock.getLocation().getBlockY() > 30) {
+            startBlock = startBlock.getRelative(BlockFace.DOWN);
+            air++;
+        }
+        int id = startBlock.getTypeId();
+        if ((id == 87 || id == 88 || id == 89 || id == 112 || id == 113 || id == 114) && air >= 4) {
+            y = startBlock.getLocation().getBlockY() + 1;
+        }
+        return y;
     }
 }
