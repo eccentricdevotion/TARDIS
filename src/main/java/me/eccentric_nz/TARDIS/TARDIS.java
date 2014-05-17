@@ -318,7 +318,6 @@ public class TARDIS extends JavaPlugin {
      * Loads the custom configuration files.
      */
     private void loadCustomConfigs() {
-        //TODO - change file copy method - just send the file name and process it there?
         tardisCSV.copy("achievements.yml");
         tardisCSV.copy("artron.yml");
         tardisCSV.copy("blocks.yml");

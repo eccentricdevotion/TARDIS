@@ -448,11 +448,12 @@ public class TARDISChameleonPreset {
                                     switch (data[col][block]) {
                                         case 1:
                                             data[col][block] = (byte) 3;
+                                            break;
                                         default:
                                             data[col][block] = (byte) 1;
                                     }
-                                    break;
                             }
+                            break;
                         case 91: // Jack-o-lantern
                             switch (d) {
                                 case SOUTH:
