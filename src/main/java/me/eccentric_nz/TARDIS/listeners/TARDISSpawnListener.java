@@ -97,27 +97,44 @@ public class TARDISSpawnListener implements Listener {
     }
 
     private boolean isTARDISBiome(Location l) {
-        /* looping through all the TARDISes on the server and checking
+        /*
+         * Looping through all the TARDISes on the server and checking
          * a 3x3 area around their location is too expensive, instead
          * we'll check the specific area around the location and if a 3x3
          * DEEP_OCEAN biome is found then we'll deny the spawn.
          */
-        int found = 0;
+        int found = 0, three_by_three = 0;
         int x = l.getBlockX();
         int z = l.getBlockZ();
         World w = l.getWorld();
-        /* a 7x7 block area is sure to encapsulate a 3x3 one if the mob
-         * spawns anywhere in the 3x3 square
+        /*
+         * A 7x7 block area is sure to encapsulate a 3x3 one if the mob
+         * spawns anywhere in the 3x3 square. Caveat: This relies on the
+         * premise that there is at least 1 block between TARDISes.
          */
         for (int col = -3; col < 4; col++) {
             for (int row = -3; row < 4; row++) {
-                if (w.getBlockAt(x + col, 64, z + row).getBiome().equals(Biome.DEEP_OCEAN)) {
+                Biome b = w.getBlockAt(x + col, 64, z + row).getBiome();
+                if (b.equals(Biome.DEEP_OCEAN)) {
                     found++;
                 }
+                if (found < 3 && !b.equals(Biome.DEEP_OCEAN)) {
+                    // reset count - not three in a row
+                    found = 0;
+                }
+                if (found == 3 && !b.equals(Biome.DEEP_OCEAN)) {
+                    // found 3 consecutive blocks in a row, increment 3x3 row count
+                    three_by_three++;
+                    // reset count
+                    found = 0;
+                    // skip the rest of the row
+                    break;
+                }
             }
+
         }
-        plugin.debug("found: " + found);
+        plugin.debug("found: " + three_by_three);
         // check if location is in region
-        return found == 9;
+        return three_by_three == 3;
     }
 }
