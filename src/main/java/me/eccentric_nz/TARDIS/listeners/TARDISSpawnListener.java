@@ -48,7 +48,6 @@ public class TARDISSpawnListener implements Listener {
         good_spawns.add(SpawnReason.SPAWNER_EGG);
         biomes.add(Biome.DEEP_OCEAN);
         biomes.add(Biome.MUSHROOM_ISLAND);
-        biomes.add(Biome.MUSHROOM_SHORE);
     }
 
     /**
@@ -82,7 +81,7 @@ public class TARDISSpawnListener implements Listener {
         if (!event.getSpawnReason().equals(SpawnReason.NATURAL)) {
             return;
         }
-        // only in DEEP_OCEAN, MUSHROOM_ISLAND and MUSHROOM_SHORE
+        // only in DEEP_OCEAN, MUSHROOM_ISLAND
         if (!biomes.contains(l.getBlock().getBiome())) {
             return;
         }
@@ -91,7 +90,7 @@ public class TARDISSpawnListener implements Listener {
             return;
         }
         // always deny MUSHROOM biomes
-        if (l.getBlock().getBiome().equals(Biome.MUSHROOM_ISLAND) || l.getBlock().getBiome().equals(Biome.MUSHROOM_SHORE)) {
+        if (l.getBlock().getBiome().equals(Biome.MUSHROOM_ISLAND)) {
             event.setCancelled(true);
             return;
         }
