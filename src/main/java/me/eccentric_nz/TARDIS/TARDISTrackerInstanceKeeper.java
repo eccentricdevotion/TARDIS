@@ -61,6 +61,11 @@ public class TARDISTrackerInstanceKeeper {
     private final HashMap<UUID, TARDISMoveSession> moveSessions = new HashMap<UUID, TARDISMoveSession>();
     private final HashMap<UUID, TARDISSeedData> roomSeed = new HashMap<UUID, TARDISSeedData>();
     private final HashMap<UUID, UUID> chat = new HashMap<UUID, UUID>();
+    // TODO tidy up
+    private final HashMap<UUID, String> command = new HashMap<UUID, String>();
+    private final HashMap<UUID, String> flight = new HashMap<UUID, String>();
+    private final HashMap<UUID, Integer> count = new HashMap<UUID, Integer>();
+    //
     private final List<Integer> dematerialising = new ArrayList<Integer>();
     private final List<Integer> inVortex = new ArrayList<Integer>();
     private final List<Integer> materialising = new ArrayList<Integer>();
@@ -130,6 +135,18 @@ public class TARDISTrackerInstanceKeeper {
 
     public HashMap<UUID, UUID> getChat() {
         return chat;
+    }
+
+    public HashMap<UUID, String> getCommand() {
+        return command;
+    }
+
+    public HashMap<UUID, String> getFlight() {
+        return flight;
+    }
+
+    public HashMap<UUID, Integer> getCount() {
+        return count;
     }
 
     public HashMap<UUID, String> getEnd() {
