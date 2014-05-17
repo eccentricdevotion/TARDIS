@@ -582,6 +582,10 @@ public class TARDISMaterialisationPreset implements Runnable {
                                     }
                                     plugin.getUtils().setBlock(world, xx, (y + yy), zz, light, ld);
                                     break;
+                                case 64:
+                                case 71:
+                                    // don't change the door
+                                    break;
                                 case 87:
                                     plugin.getUtils().setBlock(world, xx, (y + yy), zz, colids[yy], coldatas[yy]);
                                     if (preset.equals(PRESET.TORCH) && i == loops) {

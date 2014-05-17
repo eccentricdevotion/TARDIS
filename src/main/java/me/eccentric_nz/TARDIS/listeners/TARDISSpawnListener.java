@@ -75,23 +75,19 @@ public class TARDISSpawnListener implements Listener {
             return;
         }
         // only natural spawning
-        plugin.debug("spwan reason: " + event.getSpawnReason().toString());
         if (!event.getSpawnReason().equals(SpawnReason.NATURAL)) {
             return;
         }
         // only in DEEP_OCEAN
-        plugin.debug("spawn biome: " + l.getBlock().getBiome().toString());
         if (!l.getBlock().getBiome().equals(Biome.DEEP_OCEAN)) {
             return;
         }
         // only monsters
-        plugin.debug("spawn type: " + event.getEntity().getType().toString());
         if (!TARDISConstants.MONSTER_TYPES.contains(event.getEntity().getType())) {
             return;
         }
         // only TARDIS locations
         if (isTARDISBiome(l)) {
-            plugin.debug("denying spawn!");
             event.setCancelled(true);
         }
     }
@@ -133,7 +129,6 @@ public class TARDISSpawnListener implements Listener {
             }
 
         }
-        plugin.debug("found: " + three_by_three);
         // check if location is in region
         return three_by_three == 3;
     }

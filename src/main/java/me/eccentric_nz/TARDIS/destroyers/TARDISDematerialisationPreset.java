@@ -235,7 +235,9 @@ public class TARDISDematerialisationPreset implements Runnable {
                                 int light = (preset.equals(PRESET.NEW) || preset.equals(PRESET.OLD)) ? lamp : colids[yy];
                                 plugin.getUtils().setBlock(world, xx, (y + yy), zz, light, coldatas[yy]);
                                 break;
-                            case 68: // except the sign
+                            case 64:
+                            case 68: // except the sign and doors
+                            case 71:
                                 break;
                             case 95:
                                 if (coldatas[yy] == -1) {

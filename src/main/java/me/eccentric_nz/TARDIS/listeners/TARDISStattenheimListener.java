@@ -208,7 +208,6 @@ public class TARDISStattenheimListener implements Listener {
                         bset.put("submarine", (sub) ? 1 : 0);
                     }
                     qf.doUpdate("back", bset, bid);
-
                     // set current location
                     HashMap<String, Object> cid = new HashMap<String, Object>();
                     cid.put("tardis_id", id);
