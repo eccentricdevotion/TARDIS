@@ -72,6 +72,7 @@ public class TARDISManualFlightRunnable implements Runnable {
             plugin.getServer().getScheduler().cancelTask(taskID);
             taskID = 0;
             plugin.getTrackerKeeper().getCount().remove(player.getUniqueId());
+            plugin.getTrackerKeeper().getFlight().remove(uuid);
             // adjust location
             if (blocks != 0) {
                 Location adjusted = new TARDISFlightAdjustment(plugin).getLocation(plugin.getTrackerKeeper().getFlightData().get(uuid), blocks);

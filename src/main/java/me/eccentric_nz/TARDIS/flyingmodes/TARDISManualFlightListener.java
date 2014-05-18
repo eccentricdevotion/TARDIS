@@ -60,13 +60,13 @@ public class TARDISManualFlightListener implements Listener {
                         plugin.getTrackerKeeper().getCount().put(uuid, 1);
                     }
                     event.setCancelled(true);
-                } else {
-                    // if it is a TARDIS repeater cancel the event
-                    if (plugin.getTrackerKeeper().getRepeaters().get(uuid).contains(loc)) {
-                        event.setCancelled(true);
-                    }
                 }
                 plugin.getTrackerKeeper().getFlight().remove(uuid);
+            } else {
+                // if it is a TARDIS repeater cancel the event
+                if (plugin.getTrackerKeeper().getRepeaters().get(uuid).contains(loc)) {
+                    event.setCancelled(true);
+                }
             }
         }
     }
