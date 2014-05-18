@@ -63,7 +63,7 @@ public class ResultSetPlayerPrefs {
     private boolean woolLightsOn;
     private boolean ctmOn;
     private boolean signOn;
-    private int flyingMode;
+    private int flightMode;
 
     /**
      * Creates a class instance that can be used to retrieve an SQL ResultSet
@@ -150,7 +150,7 @@ public class ResultSetPlayerPrefs {
                 this.woolLightsOn = rs.getBoolean("wool_lights_on");
                 this.ctmOn = rs.getBoolean("ctm_on");
                 this.signOn = rs.getBoolean("sign_on");
-                this.flyingMode = rs.getInt("flying_mode");
+                this.flightMode = rs.getInt("flying_mode");
             } else {
                 return false;
             }
@@ -276,7 +276,7 @@ public class ResultSetPlayerPrefs {
         return signOn;
     }
 
-    public int getFlyingMode() {
-        return flyingMode;
+    public int getFlightMode() {
+        return flightMode;
     }
 }

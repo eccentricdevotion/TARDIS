@@ -57,6 +57,7 @@ public class TARDISPrefsCommands implements CommandExecutor {
         firstArgs.add("dnd");
         firstArgs.add("eps");
         firstArgs.add("eps_message");
+        firstArgs.add("flight");
         firstArgs.add("floor");
         firstArgs.add("hads");
         firstArgs.add("isomorphic");
@@ -131,6 +132,9 @@ public class TARDISPrefsCommands implements CommandExecutor {
                     }
                     if (pref.equals("wall") || pref.equals("floor")) {
                         return new TARDISFloorCommand(plugin).setFloorOrWallBlock(player, args, qf);
+                    }
+                    if (pref.equals("flight")) {
+                        return new TARDISSetFlightCommand(plugin).setMode(player, args, qf);
                     }
                     if (args.length < 2 || (!args[1].equalsIgnoreCase("on") && !args[1].equalsIgnoreCase("off"))) {
                         TARDISMessage.send(player, plugin.getPluginName() + "You need to specify if " + pref + " should be on or off!");

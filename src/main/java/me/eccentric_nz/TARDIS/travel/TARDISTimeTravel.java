@@ -383,7 +383,7 @@ public class TARDISTimeTravel {
     }
 
     /**
-     * Checks if a block to see whether it is clear. Blocks include AIR,
+     * Checks a block to see whether it is clear. Blocks include AIR,
      * LONG_GRASS, MUSHROOMS, SNOW etc.
      *
      * @param id the block typeId to check.
