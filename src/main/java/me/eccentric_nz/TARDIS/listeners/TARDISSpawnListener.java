@@ -48,8 +48,9 @@ public class TARDISSpawnListener implements Listener {
         good_spawns.add(SpawnReason.EGG);
         good_spawns.add(SpawnReason.SPAWNER_EGG);
         biomes.add(Biome.DEEP_OCEAN);
-        biomes.add(Biome.MUSHROOM_ISLAND);
         biomes.add(Biome.HELL);
+        biomes.add(Biome.MUSHROOM_ISLAND);
+        biomes.add(Biome.MUSHROOM_SHORE);
         biomes.add(Biome.SKY);
     }
 
@@ -100,6 +101,12 @@ public class TARDISSpawnListener implements Listener {
                 return;
             case SKY:
                 if (!event.getEntity().getType().equals(EntityType.ENDERMAN)) {
+                    event.setCancelled(true);
+                    return;
+                }
+                break;
+            case MUSHROOM_SHORE:
+                if (!event.getEntity().getType().equals(EntityType.SQUID)) {
                     event.setCancelled(true);
                     return;
                 }
