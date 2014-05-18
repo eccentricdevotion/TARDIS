@@ -54,6 +54,7 @@ public class TARDISManualFlightRunnable implements Runnable {
         this.id = id;
         target = getRepeaterList(id);
         this.uuid = player.getUniqueId();
+        plugin.getTrackerKeeper().getRepeaters().put(uuid, target);
     }
 
     @Override

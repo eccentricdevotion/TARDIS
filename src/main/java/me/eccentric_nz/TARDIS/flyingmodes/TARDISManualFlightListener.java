@@ -18,6 +18,8 @@ package me.eccentric_nz.TARDIS.flyingmodes;
 
 import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
+import org.bukkit.Location;
+import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -47,14 +49,21 @@ public class TARDISManualFlightListener implements Listener {
         final Player player = event.getPlayer();
         UUID uuid = player.getUniqueId();
         Block b = event.getClickedBlock();
-        if (b != null) {
-            String loc = b.getLocation().toString();
+        // only repeaters
+        if (b != null && (b.getType().equals(Material.DIODE_BLOCK_OFF) || b.getType().equals(Material.DIODE_BLOCK_ON))) {
+            Location loc = b.getLocation();
             if (plugin.getTrackerKeeper().getFlight().containsKey(uuid)) {
-                if (loc.equals(plugin.getTrackerKeeper().getFlight().get(uuid))) {
+                if (loc.toString().equals(plugin.getTrackerKeeper().getFlight().get(uuid))) {
                     if (plugin.getTrackerKeeper().getCount().containsKey(uuid)) {
                         plugin.getTrackerKeeper().getCount().put(uuid, plugin.getTrackerKeeper().getCount().get(uuid) + 1);
                     } else {
                         plugin.getTrackerKeeper().getCount().put(uuid, 1);
+                    }
+                    event.setCancelled(true);
+                } else {
+                    // if it is a TARDIS repeater cancel the event
+                    if (plugin.getTrackerKeeper().getRepeaters().get(uuid).contains(loc)) {
+                        event.setCancelled(true);
                     }
                 }
                 plugin.getTrackerKeeper().getFlight().remove(uuid);
