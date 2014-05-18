@@ -2,16 +2,19 @@
 
 ##Current version `2.9-beta-1`
 
-1. Localisation
-2. `/tardisremote` commands (started)
-3. UHC flying mode (started - have coded some test plugins)
-4. TARDIS invisibility - 1.8 barrier blocks?
-5. Walk in to the TARDIS if door is open (started)
-6. Allow mobs to spawn through the open door (started)
-7. Artron button powers on/off TARDIS after initialisation
-8. TARDIS map (started)
-9. Fix the NPE when trying to set biome on final demat
-10. Rain preventer for Police Box biomes?
+1. Artron button powers on/off TARDIS after initialisation
+2. TARDIS invisibility - 1.8 barrier blocks?
+3. Localisation - this one is a HUGE job
+4. Remove books and achievements
+
+###In progress
+4. `/tardisremote` commands
+5. UHC flying mode
+6. Walk in to the TARDIS if door is open
+7. Allow mobs to spawn through the open door
+8. TARDIS map
+9. MCPatcher texture support
+10. Fix the NPE when trying to set biome on final demat
 
 ##Future version `3.0+`
 1. Console modes?
@@ -24,8 +27,6 @@
 4. Check interior SFX don't play in the TARDIS of the player whose preference is off
 
 ##Resource Pack / TARDISWeepingAngels
-
-1. Add custom items for the admin / player prefs GUI / ARS rooms etc
 
 Re-skin mobs for Resource pack, and add new mob sounds
 
