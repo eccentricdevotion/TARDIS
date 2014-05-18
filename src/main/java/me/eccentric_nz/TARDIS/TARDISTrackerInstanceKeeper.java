@@ -20,6 +20,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.UUID;
+import me.eccentric_nz.TARDIS.builders.TARDISMaterialisationData;
+import me.eccentric_nz.TARDIS.flyingmodes.TARDISRegulatorRunnable;
 import me.eccentric_nz.TARDIS.info.TARDISInfoMenu;
 import me.eccentric_nz.TARDIS.move.TARDISMoveSession;
 import me.eccentric_nz.TARDIS.move.TARDISTeleportLocation;
@@ -48,24 +50,23 @@ public class TARDISTrackerInstanceKeeper {
     private final HashMap<UUID, Block> lazarus = new HashMap<UUID, Block>();
     private final HashMap<UUID, Double[]> gravity = new HashMap<UUID, Double[]>();
     private final HashMap<UUID, Integer> binder = new HashMap<UUID, Integer>();
+    private final HashMap<UUID, Integer> count = new HashMap<UUID, Integer>();
     private final HashMap<UUID, Long> setTime = new HashMap<UUID, Long>();
+    private final HashMap<UUID, String> area = new HashMap<UUID, String>();
     private final HashMap<UUID, String> block = new HashMap<UUID, String>();
     private final HashMap<UUID, String> end = new HashMap<UUID, String>();
+    private final HashMap<UUID, String> flight = new HashMap<UUID, String>();
     private final HashMap<UUID, String> jettison = new HashMap<UUID, String>();
     private final HashMap<UUID, String> perm = new HashMap<UUID, String>();
     private final HashMap<UUID, String> players = new HashMap<UUID, String>();
     private final HashMap<UUID, String> preset = new HashMap<UUID, String>();
     private final HashMap<UUID, String> secondary = new HashMap<UUID, String>();
-    private final HashMap<UUID, String> area = new HashMap<UUID, String>();
     private final HashMap<UUID, TARDISInfoMenu> infoMenu = new HashMap<UUID, TARDISInfoMenu>();
+    private final HashMap<UUID, TARDISMaterialisationData> flightData = new HashMap<UUID, TARDISMaterialisationData>();
     private final HashMap<UUID, TARDISMoveSession> moveSessions = new HashMap<UUID, TARDISMoveSession>();
+    private final HashMap<UUID, TARDISRegulatorRunnable> regulating = new HashMap<UUID, TARDISRegulatorRunnable>();
     private final HashMap<UUID, TARDISSeedData> roomSeed = new HashMap<UUID, TARDISSeedData>();
     private final HashMap<UUID, UUID> chat = new HashMap<UUID, UUID>();
-    // TODO tidy up
-    private final HashMap<UUID, String> command = new HashMap<UUID, String>();
-    private final HashMap<UUID, String> flight = new HashMap<UUID, String>();
-    private final HashMap<UUID, Integer> count = new HashMap<UUID, Integer>();
-    //
     private final List<Integer> dematerialising = new ArrayList<Integer>();
     private final List<Integer> inVortex = new ArrayList<Integer>();
     private final List<Integer> materialising = new ArrayList<Integer>();
@@ -137,16 +138,20 @@ public class TARDISTrackerInstanceKeeper {
         return chat;
     }
 
-    public HashMap<UUID, String> getCommand() {
-        return command;
-    }
-
     public HashMap<UUID, String> getFlight() {
         return flight;
     }
 
     public HashMap<UUID, Integer> getCount() {
         return count;
+    }
+
+    public HashMap<UUID, TARDISRegulatorRunnable> getRegulating() {
+        return regulating;
+    }
+
+    public HashMap<UUID, TARDISMaterialisationData> getFlightData() {
+        return flightData;
     }
 
     public HashMap<UUID, String> getEnd() {

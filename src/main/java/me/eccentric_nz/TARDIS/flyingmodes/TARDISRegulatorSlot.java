@@ -1,5 +1,18 @@
 /*
- *  Copyright 2014 eccentric_nz.
+ * Copyright (C) 2014 eccentric_nz
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 package me.eccentric_nz.TARDIS.flyingmodes;
 
@@ -10,10 +23,13 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
 /**
+ * Using data collected from the Interstitial Antenna, the Mean Free Path
+ * Tracker shows a TARDIS' planned path through the Space-Time Vortex. It allows
+ * the operator to spot approaching turbulence in a TARDIS' flight path.
  *
  * @author eccentric_nz
  */
-public class TARDISWobblerSlot {
+public class TARDISRegulatorSlot {
 
     public final List<Integer> bounds = Arrays.asList(new Integer[]{
         0, 1, 2, 3, 4,
@@ -25,10 +41,10 @@ public class TARDISWobblerSlot {
     public final ItemStack box;
     public final ItemStack vortex;
 
-    public TARDISWobblerSlot() {
+    public TARDISRegulatorSlot() {
         this.box = new ItemStack(Material.WOOL, 1, (byte) 11);
         ItemMeta ler = this.box.getItemMeta();
-        ler.setDisplayName("Wobbler");
+        ler.setDisplayName("Regulator");
         this.box.setItemMeta(ler);
         this.vortex = new ItemStack(Material.STAINED_GLASS_PANE, 1, (byte) 15);
     }

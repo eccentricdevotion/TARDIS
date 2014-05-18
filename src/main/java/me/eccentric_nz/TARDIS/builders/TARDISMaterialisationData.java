@@ -40,6 +40,10 @@ public class TARDISMaterialisationData {
     private boolean submarine;
     private int tardisID;
     private Biome biome;
+    // TODO may remove these later?
+    private int distance;
+    private String resetWorld;
+    private Location fromLocation;
 
     public COMPASS getDirection() {
         return direction;
@@ -136,4 +140,30 @@ public class TARDISMaterialisationData {
     public void setBiome(Biome biome) {
         this.biome = biome;
     }
+
+    // may remove
+    public int getDistance() {
+        return distance;
+    }
+
+    public void setDistance(int distance) {
+        this.distance = distance;
+    }
+
+    public String getResetWorld() {
+        return resetWorld;
+    }
+
+    public void setResetWorld(String resetWorld) {
+        this.resetWorld = resetWorld;
+    }
+
+    public Location getFromLocation() {
+        return fromLocation;
+    }
+
+    public void setFromLocation(Location fromLocation) {
+        this.fromLocation = fromLocation;
+    }
+
 }

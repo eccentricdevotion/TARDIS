@@ -1,3 +1,19 @@
+/*
+ * Copyright (C) 2014 eccentric_nz
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program. If not, see <http://www.gnu.org/licenses/>.
+ */
 package me.eccentric_nz.TARDIS.flyingmodes;
 
 import java.util.UUID;
@@ -9,6 +25,15 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerInteractEvent;
 
+/**
+ * The Absolute Tesseractulator is responsible for keeping track of a TARDIS's
+ * dimensional location. It uses the Interstitial Antenna to collect data from
+ * the Vortex. A TARDIS knows where it's going by using digitally-modeled
+ * time-cone isometry parallel-bussed into the image translator, with local
+ * motion being mapped over every refresh-cycle.
+ *
+ * @author eccentric_nz
+ */
 public class TARDISManualFlightListener implements Listener {
 
     private final TARDIS plugin;
@@ -24,19 +49,10 @@ public class TARDISManualFlightListener implements Listener {
         Block b = event.getClickedBlock();
         if (b != null) {
             String loc = b.getLocation().toString();
-            if (plugin.getTrackerKeeper().getCommand().containsKey(uuid)) {
-                String which = plugin.getTrackerKeeper().getCommand().get(uuid);
-                plugin.getConfig().set(which, loc);
-                plugin.getTrackerKeeper().getCommand().remove(uuid);
-                player.sendMessage(plugin.getPluginName() + which + " set!");
-                plugin.saveConfig();
-            }
             if (plugin.getTrackerKeeper().getFlight().containsKey(uuid)) {
-                String which = plugin.getConfig().getString(plugin.getTrackerKeeper().getFlight().get(uuid));
-                if (loc.equals(which)) {
+                if (loc.equals(plugin.getTrackerKeeper().getFlight().get(uuid))) {
                     if (plugin.getTrackerKeeper().getCount().containsKey(uuid)) {
-                        int increment = plugin.getTrackerKeeper().getCount().get(uuid) + 1;
-                        plugin.getTrackerKeeper().getCount().put(uuid, increment);
+                        plugin.getTrackerKeeper().getCount().put(uuid, plugin.getTrackerKeeper().getCount().get(uuid) + 1);
                     } else {
                         plugin.getTrackerKeeper().getCount().put(uuid, 1);
                     }

@@ -28,6 +28,8 @@ import me.eccentric_nz.TARDIS.chameleon.TARDISChameleonListener;
 import me.eccentric_nz.TARDIS.chameleon.TARDISPresetListener;
 import me.eccentric_nz.TARDIS.commands.admin.TARDISAdminMenuListener;
 import me.eccentric_nz.TARDIS.commands.preferences.TARDISPrefsMenuListener;
+import me.eccentric_nz.TARDIS.flyingmodes.TARDISManualFlightListener;
+import me.eccentric_nz.TARDIS.flyingmodes.TARDISRegulatorListener;
 import me.eccentric_nz.TARDIS.info.TARDISInformationSystemListener;
 import me.eccentric_nz.TARDIS.lazarus.TARDISLazarusGUIListener;
 import me.eccentric_nz.TARDIS.lazarus.TARDISLazarusListener;
@@ -170,6 +172,7 @@ public class TARDISListenerRegisterer {
         plugin.getPM().registerEvents(new TARDISKeyboardListener(plugin), plugin);
         plugin.getPM().registerEvents(new TARDISLightningListener(plugin), plugin);
         plugin.getPM().registerEvents(new TARDISMakePresetListener(plugin), plugin);
+        plugin.getPM().registerEvents(new TARDISManualFlightListener(plugin), plugin);
         plugin.getPM().registerEvents(new TARDISMinecartListener(plugin), plugin);
         plugin.getPM().registerEvents(new TARDISPerceptionFilterListener(plugin), plugin);
         plugin.getPM().registerEvents(new TARDISPistonListener(plugin), plugin);
@@ -177,6 +180,7 @@ public class TARDISListenerRegisterer {
         plugin.getPM().registerEvents(new TARDISPresetListener(plugin), plugin);
         plugin.getPM().registerEvents(new TARDISQuitListener(plugin), plugin);
         plugin.getPM().registerEvents(new TARDISRecipeListener(plugin), plugin);
+        plugin.getPM().registerEvents(new TARDISRegulatorListener(plugin), plugin);
         plugin.getPM().registerEvents(new TARDISRedstoneListener(plugin), plugin);
         plugin.getPM().registerEvents(new TARDISRoomSeeder(plugin), plugin);
         plugin.getPM().registerEvents(new TARDISSaveSignListener(plugin), plugin);

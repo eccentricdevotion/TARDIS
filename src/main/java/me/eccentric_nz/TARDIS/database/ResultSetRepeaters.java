@@ -20,6 +20,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 import me.eccentric_nz.TARDIS.TARDIS;
 
 /**
@@ -40,7 +42,7 @@ public class ResultSetRepeaters {
     private final int id;
     private final int secondary;
     private final byte[] diodes = new byte[4];
-    String[] str = new String[4];
+    List<String> locations = new ArrayList<String>();
 
     /**
      * Creates a class instance that can be used to retrieve an SQL ResultSet
@@ -76,8 +78,7 @@ public class ResultSetRepeaters {
             rs = statement.executeQuery();
             if (rs.isBeforeFirst()) {
                 while (rs.next()) {
-                    str[i] = rs.getString("location");
-                    i++;
+                    locations.add(rs.getString("location"));
                 }
             } else {
                 return false;
@@ -102,15 +103,19 @@ public class ResultSetRepeaters {
 
     public byte[] getRepeaters() {
         // get repeater settings
-        diodes[0] = plugin.getUtils().getLocationFromDB(str[0], 0, 0).getBlock().getData();
-        diodes[1] = plugin.getUtils().getLocationFromDB(str[1], 0, 0).getBlock().getData();
-        diodes[2] = plugin.getUtils().getLocationFromDB(str[2], 0, 0).getBlock().getData();
+        diodes[0] = plugin.getUtils().getLocationFromDB(locations.get(0), 0, 0).getBlock().getData();
+        diodes[1] = plugin.getUtils().getLocationFromDB(locations.get(1), 0, 0).getBlock().getData();
+        diodes[2] = plugin.getUtils().getLocationFromDB(locations.get(2), 0, 0).getBlock().getData();
         // temporary fix for NPE on Castrovalva - someone is missing a y-repeater record
-        if (str[3] != null) {
-            diodes[3] = plugin.getUtils().getLocationFromDB(str[3], 0, 0).getBlock().getData();
+        if (locations.get(3) != null) {
+            diodes[3] = plugin.getUtils().getLocationFromDB(locations.get(3), 0, 0).getBlock().getData();
         } else {
-            diodes[3] = plugin.getUtils().getLocationFromDB(str[2], 0, 0).getBlock().getData();
+            diodes[3] = plugin.getUtils().getLocationFromDB(locations.get(2), 0, 0).getBlock().getData();
         }
         return diodes;
+    }
+
+    public List<String> getLocations() {
+        return locations;
     }
 }

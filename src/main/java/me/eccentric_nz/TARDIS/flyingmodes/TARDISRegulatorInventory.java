@@ -1,5 +1,18 @@
 /*
- *  Copyright 2014 eccentric_nz.
+ * Copyright (C) 2014 eccentric_nz
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 package me.eccentric_nz.TARDIS.flyingmodes;
 
@@ -8,15 +21,20 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
 /**
+ * The Directional Unit is part of the Main Time Mechanism. It takes the
+ * Space-Time Coordinates for departure and arrival and converts them into
+ * Epsilon Coordinates for travel through the Space-Time Vortex. For this reason
+ * it is essential to accurately know your current location to ensure a
+ * successful flight.
  *
  * @author eccentric_nz
  */
-public class TARDISWobblerInventory {
+public class TARDISRegulatorInventory {
 
-    private final ItemStack[] terminal;
+    private final ItemStack[] regulator;
 
-    public TARDISWobblerInventory() {
-        this.terminal = getItemStack();
+    public TARDISRegulatorInventory() {
+        this.regulator = getItemStack();
     }
 
     private ItemStack[] getItemStack() {
@@ -35,10 +53,10 @@ public class TARDISWobblerInventory {
         up.setDisplayName("Up");
         pad_up.setItemMeta(up);
         is[16] = pad_up;
-        // wobbler
+        // regulator
         ItemStack wobb = new ItemStack(Material.WOOL, 1, (byte) 11);
         ItemMeta ler = wobb.getItemMeta();
-        ler.setDisplayName("Wobbler");
+        ler.setDisplayName("Regulator");
         wobb.setItemMeta(ler);
         is[20] = wobb;
         // direction pad left
@@ -63,7 +81,7 @@ public class TARDISWobblerInventory {
         return is;
     }
 
-    public ItemStack[] getTerminal() {
-        return terminal;
+    public ItemStack[] getRegulator() {
+        return regulator;
     }
 }
