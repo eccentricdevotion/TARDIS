@@ -23,6 +23,7 @@ import me.eccentric_nz.TARDIS.TARDISConstants;
 import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.block.Biome;
+import org.bukkit.entity.EntityType;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
@@ -48,6 +49,8 @@ public class TARDISSpawnListener implements Listener {
         good_spawns.add(SpawnReason.SPAWNER_EGG);
         biomes.add(Biome.DEEP_OCEAN);
         biomes.add(Biome.MUSHROOM_ISLAND);
+        biomes.add(Biome.HELL);
+        biomes.add(Biome.SKY);
     }
 
     /**
@@ -89,10 +92,20 @@ public class TARDISSpawnListener implements Listener {
         if (!TARDISConstants.MONSTER_TYPES.contains(event.getEntity().getType())) {
             return;
         }
-        // always deny MUSHROOM biomes
-        if (l.getBlock().getBiome().equals(Biome.MUSHROOM_ISLAND)) {
-            event.setCancelled(true);
-            return;
+        // always deny MUSHROOM, HELL and SKY biomes
+        switch (l.getBlock().getBiome()) {
+            case MUSHROOM_ISLAND:
+            case HELL:
+                event.setCancelled(true);
+                return;
+            case SKY:
+                if (!event.getEntity().getType().equals(EntityType.ENDERMAN)) {
+                    event.setCancelled(true);
+                    return;
+                }
+                break;
+            default:
+                break;
         }
         // only TARDIS locations
         if (isTARDISBiome(l)) {

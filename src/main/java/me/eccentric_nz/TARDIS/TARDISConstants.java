@@ -46,7 +46,7 @@ public class TARDISConstants {
     public static final List<Integer> CHAMELEON_BLOCKS_PRECIOUS = Arrays.asList(41, 42, 46, 57, 133, 152, 173);
     public static final List<String> vowels = Arrays.asList("A", "E", "I", "O", "U");
     public static final List<EntityType> ENTITY_TYPES = Arrays.asList(EntityType.BAT, EntityType.BLAZE, EntityType.CAVE_SPIDER, EntityType.CHICKEN, EntityType.COW, EntityType.CREEPER, EntityType.ENDER_DRAGON, EntityType.ENDERMAN, EntityType.GIANT, EntityType.GHAST, EntityType.HORSE, EntityType.IRON_GOLEM, EntityType.MAGMA_CUBE, EntityType.MUSHROOM_COW, EntityType.OCELOT, EntityType.PIG, EntityType.PIG_ZOMBIE, EntityType.PLAYER, EntityType.SHEEP, EntityType.SILVERFISH, EntityType.SKELETON, EntityType.SLIME, EntityType.SNOWMAN, EntityType.SPIDER, EntityType.SQUID, EntityType.VILLAGER, EntityType.WITCH, EntityType.WITHER, EntityType.WOLF, EntityType.ZOMBIE);
-    public static final List<EntityType> MONSTER_TYPES = Arrays.asList(EntityType.BLAZE, EntityType.CAVE_SPIDER, EntityType.CREEPER, EntityType.ENDERMAN, EntityType.GHAST, EntityType.MAGMA_CUBE, EntityType.PIG_ZOMBIE, EntityType.SILVERFISH, EntityType.SKELETON, EntityType.SLIME, EntityType.SPIDER, EntityType.SQUID, EntityType.WITCH, EntityType.ZOMBIE);
+    public static final List<EntityType> MONSTER_TYPES = Arrays.asList(EntityType.BLAZE, EntityType.CAVE_SPIDER, EntityType.CREEPER, EntityType.ENDERMAN, EntityType.SILVERFISH, EntityType.SKELETON, EntityType.SLIME, EntityType.SPIDER, EntityType.SQUID, EntityType.WITCH, EntityType.ZOMBIE);
 
     /**
      * Creates a HashMap from two arrays. The resulting map is used by the
