@@ -204,7 +204,6 @@ public class TARDISDeinstaPreset {
                 plugin.getUtils().setBlock(w, rx, ry, rz, bID, bd);
             }
         }
-
         // if just hiding don't remove block protection
         if (!hide) {
             plugin.getPresetDestroyer().removeBlockProtection(id, new QueryFactory(plugin));
