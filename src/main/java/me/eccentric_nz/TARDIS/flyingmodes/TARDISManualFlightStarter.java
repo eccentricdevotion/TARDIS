@@ -48,6 +48,7 @@ public class TARDISManualFlightStarter implements Runnable {
         TARDISManualFlightRunnable mfr = new TARDISManualFlightRunnable(plugin, player, id);
         int taskid = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, mfr, 10L, delay);
         mfr.setTaskID(taskid);
-        // TODO start inflight sound
+        // play inflight sound
+        plugin.getUtils().playTARDISSound(player.getLocation(), player, "interior_flight");
     }
 }

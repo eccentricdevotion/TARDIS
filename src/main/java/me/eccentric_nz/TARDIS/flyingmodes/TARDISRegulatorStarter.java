@@ -45,6 +45,7 @@ public class TARDISRegulatorStarter implements Runnable {
         Inventory inv = plugin.getServer().createInventory(player, 54, "Helmic Regulator");
         inv.setContents(items);
         player.openInventory(inv);
-        // TODO start inflight sound
+        // play inflight sound
+        plugin.getUtils().playTARDISSound(player.getLocation(), player, "interior_flight");
     }
 }
