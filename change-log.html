@@ -26,6 +26,137 @@
 	<section>
 		<h1>Change log</h1>
 		<h2>What&rsquo;s been changed?</h2>
+		<h3>v2.9-beta-1</h3>
+		<p>As always, some big changes to TARDIS entry mechanics &mdash; please read carefully.</p>
+		<h4>Additions</h4>
+		<ul>
+			<li>Added a <code>/tardisremote</code> command
+				<ul>
+					<li>permission <code>tardis.remote</code> default: op</li>
+					<li>actions currently supported: travel, comehere, chameleon, hide, rebuild, back</li>
+					<li>arguments: <code>/tardisremote [player] [action] [travel options]</code></li>
+					<li>if action = travel, <code>travel options</code> are: <code>home</code>, <code>area [area name]</code>, and coords e.g. <code>world x y z</code></li>
+					<li>can be run from command blocks, but the specified player must be online</li>
+					<li>if the player who is running the command does <strong>NOT</strong> have <code>tardis.admin</code> permission, then the normal checks are performed (energy/permissions/circuits/plugin respect etc for the specified player)</li>
+					<li>use via Command Block will fail silently if above checks fail, as we can&rsquo;t message a command block...</li>
+					<li>if player has <code>tardis.admin</code> permission then no energy is used / only basic checks performed (so we&rsquo;re not griefing anything)</li>
+					<li><code>comehere</code> comes to the currently targeted block (only available to TARDIS admin players)</li>
+					<li><a href="https://www.youtube.com/watch?v=VypqSYls1QM">https://www.youtube.com/watch?v=VypqSYls1QM</a></li>
+				</ul>
+			</li>
+			<li>Added the ability to walk in and out of the TARDIS if the door is open (instead of clicking the door) <a href="https://www.youtube.com/watch?v=xyrJyzxmtz8">https://www.youtube.com/watch?v=xyrJyzxmtz8</a>
+				<ul>
+					<li>to use the new method, enable it with <code>/tardisadmin walk_in_tardis true</code> and restart the server</li>
+					<li>when enabled, RIGHT-clicking the door opens it, SHIFT_RIGHT-clicking teleports (the old behaviour)</li>
+					<li>Not all TARDIS presets support walking in!</li>
+					<li>The exterior door can be opened and entered by the Time lord of the TARDIS and any companion, but only the Time Lord can deadlock the door. The exterior door must be opened with the TARDIS key</li>
+					<li>Both doors can be closed using any item or empty hand</li>
+					<li>If you leave the door open (and the Police Box is visible), any monsters within a 16 block radius can enter the TARDIS (unless a player is also within range). If there are no monsters nearby outside there will be a 25% percent chance that a random monster will spawn inside the TARDIS. A check is made every 2 minutes the door is left open</li>
+					<li>Due to the fact that Endermen can enter the TARDIS, you may want to set <code>enderman-grief: deny</code> in your WorldGuard region config</li>
+					<li>Added a <code>/tardisadmin purge_portals</code> command to clear all data associated with walking into the TARDIS (they&rsquo;ll still work, just toggle open the door again)</li>
+				</ul>
+			</li>
+			<li>Added a &lsquo;black wool behind door&rsquo; toggle switch
+				<ul>
+					<li>This allows access to the outside of the TARDIS (useful if you have built a nice view)</li>
+					<li><code>/tardis update toggle_wool</code></li>
+				</ul>
+			</li>
+			<li>Added MCPatcher texture support and made a new <a href="https://github.com/eccentricdevotion/TARDIS-MCP">TARDIS Resource Pack</a> &mdash; <strong>Note:</strong> things may look a little odd until you rebuild the TARDIS
+				<ul>
+					<li><a href="http://dev.bukkit.org/bukkit-plugins/tardis/tickets/688-tardis-mcpatcher-texture-support/">http://dev.bukkit.org/bukkit-plugins/tardis/tickets/688-tardis-mcpatcher-texture-support/</a></li>
+					<li>If using an MCPatcher modded client with the Connected Textures and Custom Item Textures mods installed the TARDIS uses biome specific textures for the Police Box and TARDIS interior, and custom textures for all TARDIS items</li>
+					<li>to make the Police Box use the custom textures you need to enable it in the config (it is on by default) &mdash; <code>/tardisadmin set_biome true</code></li>
+					<li>to make the TARDIS interior use the custom textures you need to enable it in the config (it is on by default) &mdash; <code>/tardisadmin sky_biome true</code></li>
+					<li>the Police Box 3x3 block area is set to DEEP_OCEAN biome, the TARDIS interior is set to SKY biome</li>
+					<li>only new interiors and rooms are set, to change existing consoles and rooms, you will need to use the WorldEdit <code>//setbiome</code> command</li>
+					<li>you can now choose from 15 different Sonic Screwdriver textures (see more info below)</li>
+					<li>Added a <code>/tardisprefs ctm [on|off]</code> command &mdash; if <code>on</code> the plugin replaces the left front wool block in the Police box with a
+						quartz pillar textured on ends with the TARDIS door sign</li>
+				</ul>
+			</li>
+			<li>Addeed a Sonic Screwdriver preferences menu &mdash; <code>/tardisprefs sonic</code>
+				<ul>
+					<li>Requires MCPatcher to see the new textures!</li>
+					<li>In the GUI, place your sonic in the lower left slot and then select the screwdriver of your choice</li>
+					<li>You can set the default screwdriver type &mdash; <code>/tardisadmin default_sonic [type]</code> &mdash; use tab completion to see a list of types</li>
+				</ul>
+			</li>
+			<li>Added rudimentary GriefProtection claim compatibility</li>
+			<li>Added a TARDIS (ARS) Map
+				<ul>
+					<li>accessed via the Sonic player preferences menu (SHIFT-RIGHT-click air with a sonic) &mdash; click the map item to open the GUI</li>
+					<li>click &lsquo;Where am I?&rsquo; to locate yourself on the ARS map</li>
+				</ul>
+			</li>
+			<li>Added a <code>keys</code> list to the blocks.yml config
+				<ul>
+					<li>if <code>all_blocks</code> is set to <code>false</code> in the main config, the key can only be set to the items in the keys list</li>
+				</ul>
+			</li>
+			<li>Added a <code>/tardisprefs sign [on|off]</code> command / preference to determine if the Police Box has the &lsquo;name&rsquo; sign on front</li>
+			<li>Added TARDIS flight modes
+				<ul>
+					<li>use the <code>/tardisprefs flight [mode]</code> command to set the flight mode</li>
+					<li>modes are:
+						<ul>
+							<li><code>normal</code> &mdash; the default, what we&rsquo;re all currently used to</li>
+							<li><code>regulator</code> &mdash; use the Helmic Regulator to correct the TARDIS&rsquo; flight path, a GUI will open automatically &mdash; use the direction blocks to keep the regulator in the centre</li>
+							<li><code>manual</code> &mdash; run round like crazy clicking the correct console repeater when told to do so</li>
+						</ul>
+					</li>
+					<li>In manual flight mode the repeaters are called:
+						<ul>
+							<li><code>world</code>: Helmic Regulator</li>
+							<li><code>x</code>: Astrosextant Rectifier</li>
+							<li><code>z</code>: Gravitic Anomaliser</li>
+							<li><code>y</code>: Absolute Tesseractulator</li>
+							<li>A visual effect has been added to help show which one to click :)</li>
+						</ul>
+					</li>
+					<li>in manual flight mode you can set the delay between having to click the repeaters in the config: <code>/tardisadmin manual_flight_delay [ticks]</code> &mdash; default is 60 (3 seconds)</li>
+					<li>in regulator flight mode, the further away from the centre the regulator block is, the further from your desired location you will land</li>
+					<li>in manual flight mode, the more repeaters you miss hitting, the further from your desired location you will land</li>
+					<li>currently if the destination is inside a building, the adjusted location will most probably end up on the roof (even if there is room inside the building)</li>
+				</ul>
+			</li>
+		</ul>
+		<h4>Changes</h4>
+		<ul>
+			<li>Improvements to anti-flower pot placement when <code>/tardisprefs build off</code></li>
+			<li>A message is now sent when switching the Chameleon Circuit on/off by command</li>
+			<li>TARDIS now controls both breeding, spawn eggs, eggs and mob building in TARDIS worlds (previously used WorldGuard)</li>
+			<li>The TARDIS safety platform has been retired &mdash; open the door before exiting</li>
+			<li>The companion list now uses UUIDs
+				<ul>
+					<li>no changes to the commands</li>
+					<li>the companion lists are cleared of old data the first time you run this version &mdash; players will need to re-add their friends</li>
+				</ul>
+			</li>
+			<li><code>/tardis comehere</code>, <code>/tardis home</code> and the Stattenheim Remote now use the player&rsquo;s yaw to set the direction the TARDIS is facing</li>
+			<li>You can no longer toggle TARDIS doors with the Sonic Screwdriver</li>
+			<li>Iron doors opened from a distance with the Sonic Screwdriver will close again after three seconds</li>
+			<li>The redstone sonic upgrade now allows you to open iron doors up close &mdash; they  also will close again after three seconds</li>
+			<li>The <code>enderman-grief: deny</code> flag is now set by default in TARDIS WorldGuard regions</li>
+			<li>Setting the TARDIS key preference is now restricted to using items only (no blocks)</li>
+			<li>The sonic Admin menu GUI is now opened from the Player Prefs menu</li>
+			<li>Updated to latest UUIDFetcher code</li>
+		</ul>
+		<h4>Bug fixes</h4>
+		<ul>
+			<li>Fixed gravity well jettisoning &mdash; you must now put TNT in both upper and lower slots</li>
+			<li>Added <code>BURNING_FURNACE</code> and <code>JUKEBOX</code> to the emerald sonic interactable blocks</li>
+			<li>Horse health is now set correctly</li>
+			<li>Fixed save-sign item duplication when closing GUI with item on cursor, or shift-clicking</li>
+			<li>Fixed an error loading the plugin if WorldGuard was not on the server (WorldGuard is <em>NOT</em> required for the plugin to run)</li>
+			<li>Fixed the platform and under-door block being left behind</li>
+			<li>Fixed an <code>ArrayIndexOutOfBoundsException</code> when shift-right-clicking in the advanced console</li>
+			<li>Added <code>GLOWSTONE</code> to underdoor blocks</li>
+			<li>Fixed incorrect seed block IDs</li>
+			<li>Fixed UUID conversion failing if a blank name was found in the database</li>
+			<li>Fixed some problems with commands not getting the UUID for offline players</li>
+			<li>Fixed an incorrect table name in the MySQL updater class</li>
+		</ul>
 		<h3>v2.8</h3>
 		<p>For CraftBukkit 1.7.9 or higher only!</p>
 		<p>Please also read the change log for v2.8-beta-1, v2.8-beta-2 and v2.8-beta-3 below. There are some big changes that you need to be aware of!</p>
@@ -35,15 +166,15 @@
 		</ul>
 		<h4>Changes</h4>
 		<ul>
-			<li>Scoreboards no longer need OfflinePlayers (a Bukkit API change) - this means the plugin requires CraftBukkit 1.7.8 build #3049 or higher!</li>
+			<li>Scoreboards no longer need OfflinePlayers (a Bukkit API change) &mdash; this means the plugin requires CraftBukkit 1.7.8 build #3049 or higher!</li>
 			<li>Increased TARDIS mob farming range so that players will always teleport inside the TARDIS when riding a horse and clicking the door</li>
-			<li>The plugin no longer sets <code>keepSpawnInMemory: false</code> in the Multiverse config for TARDIS worlds, as it sometimes prevents redstone doors from working - you will need to manually update your Multiverse settings if you have this problem</li>
+			<li>The plugin no longer sets <code>keepSpawnInMemory: false</code> in the Multiverse config for TARDIS worlds, as it sometimes prevents redstone doors from working &mdash; you will need to manually update your Multiverse settings if you have this problem</li>
 		</ul>
 		<h4>Bug fixes</h4>
 		<ul>
-			<li>Fixed dematerialisation sound playing when it shouldn't</li>
-			<li>Fixed the plugin outputting the player's UUID instead of name in the rescue message</li>
-			<li>Fixed an isomorphic control message appearing when it shouldn't</li>
+			<li>Fixed dematerialisation sound playing when it shouldn&rsquo;t</li>
+			<li>Fixed the plugin outputting the player&rsquo;s UUID instead of name in the rescue message</li>
+			<li>Fixed an isomorphic control message appearing when it shouldn&rsquo;t</li>
 			<li>Fixed the wrong amount being checked for sufficient Artron Energy when using the Destination Terminal</li>
 			<li>Fixed rails in front of door (for the RAIL room) disappearing at the end of dematerialisation</li>
 		</ul>
@@ -57,13 +188,13 @@
 					<li>Server must be <code>online-mode=true</code> in server.properties as player UUIDs are different when the server is in offline mode</li>
 					<li>When you first install a UUID compatible version, the plugin will automatically backup and update the TARDIS database with the new UUID fields</li>
 					<li>After the database update, the current records will be queried for a list of player names</li>
-					<li>From this list, the plugin will connect to the Mojang Accounts database and retrieve UUIDs for all the players in the list - because this requires a connection to the web it may hold up the server startup process for a few seconds (it depends how many Time Lords there are - in a recent test on a database of 118 players, it took 18 seconds and updated 1343 records)</li>
+					<li>From this list, the plugin will connect to the Mojang Accounts database and retrieve UUIDs for all the players in the list &mdash; because this requires a connection to the web it may hold up the server startup process for a few seconds (it depends how many Time Lords there are &mdash; in a recent test on a database of 118 players, it took 18 seconds and updated 1343 records)</li>
 				</ul>
 			</li>
 			<li>Added a message to the player if the TARDIS <em>Zero</em>Room world has not been created and they try to grow a Zero room</li>
 			<li>Added the <code>wg_flag_set</code> and <code>external_gravity</code> options to the <code>/tardisadmin</code> command</li>
-			<li>Added compatibility with the Project Rassilon plugin when using the Sonic Screwdriver's bio-scanning feature</li>
-			<li>Added a black <code>wool_lights</code> preference - <code>/tardisprefs wool_lights [on|off]</code> to use wool instead of sponge when turning off the TARDIS lights and during malfunctions</li>
+			<li>Added compatibility with the Project Rassilon plugin when using the Sonic Screwdriver&rsquo;s bio-scanning feature</li>
+			<li>Added a black <code>wool_lights</code> preference &mdash; <code>/tardisprefs wool_lights [on|off]</code> to use wool instead of sponge when turning off the TARDIS lights and during malfunctions</li>
 			<li>Added ‘Flag’ support to TARDIS WorldGuard compatibility
 				<ul>
 					<li>The <code>respect_worldguard</code> setting is no longer true or false</li>
@@ -73,7 +204,7 @@
 			</li>
 			<li>Added a config option to allow T.I.P.S to expand to a possible 1600 slots
 				<ul>
-					<li>The default is still 400, but can be changed in the config by setting <code>creation.tips_limit</code> to a multiple of 400 i.e. 800, 1200, 1600 - <code>/tardisadmin tips_limit [limit]</code></li>
+					<li>The default is still 400, but can be changed in the config by setting <code>creation.tips_limit</code> to a multiple of 400 i.e. 800, 1200, 1600 &mdash; <code>/tardisadmin tips_limit [limit]</code></li>
 				</ul>
 			</li>
 		</ul>
@@ -88,27 +219,27 @@
 			</li>
 			<li>In conjunction with the above, we now add WorldGuard regions with a higher priority to the farm, stable and village rooms to allow mob spawning in them (except for nasty monsters of course)</li>
 			<li>Now properly getting and setting TARDIS mob names, and saddled pigs if necessary when farming</li>
-			<li>The horse's direction is now set correctly when exiting the TARDIS from the stable room</li>
-			<li>We are now using our own anti-build methods, as WorldGuard's do not achieve the desired result (this is relevant to the player 'build' preference - <code>/tardisprefs build [on|off]</code>)
+			<li>The horse&rsquo;s direction is now set correctly when exiting the TARDIS from the stable room</li>
+			<li>We are now using our own anti-build methods, as WorldGuard&rsquo;s do not achieve the desired result (this is relevant to the player &lsquo;build&rsquo; preference &mdash; <code>/tardisprefs build [on|off]</code>)
 				<ul>
 					<li>To update existing TARDIS worlds, use the command <code>/tardisadmin modify wg</code></li>
 				</ul>
 			</li>
-			<li>Added 'Companion Build' preference to the Sonic Screwdriver Player Preferences GUI</li>
+			<li>Added &lsquo;Companion Build&rsquo; preference to the Sonic Screwdriver Player Preferences GUI</li>
 			<li>Changed the messages when Advanced Console use is required</li>
 			<li>You no longer have to click the output slot to generate a biome or preset disk</li>
 			<li>Prevented the Emerald Sonic from scanning when clicking an interactable block (such as a door, button, chest etc)</li>
 		</ul>
 		<h4>Bug fixes</h4>
 		<ul>
-			<li>Fixed a bug where one of the TARDIS map files (<code>map_1966.dat</code>) was not copied to the TARDIS folder and consequently may be missing from the <em>server's main world/data</em> folder
+			<li>Fixed a bug where one of the TARDIS map files (<code>map_1966.dat</code>) was not copied to the TARDIS folder and consequently may be missing from the <em>server&rsquo;s main world/data</em> folder
 				<ul>
-					<li>if <code>map_1966.dat</code> is missing, remove all the map files from the <em>server's main world/data</em> folder so that TARDIS will regenerate the map files</li>
-					<li>copy the new map files back to the <em>server's main world/data</em> folder</li>
+					<li>if <code>map_1966.dat</code> is missing, remove all the map files from the <em>server&rsquo;s main world/data</em> folder so that TARDIS will regenerate the map files</li>
+					<li>copy the new map files back to the <em>server&rsquo;s main world/data</em> folder</li>
 				</ul>
 			</li>
 			<li>Fixed a bug where click-dragging in the Storage inventory upper slots allowed items to be stored there (that also became un-retrieveable)</li>
-			<li>Fixed the Save Sign GUI opening when the player was in the TARDIS, but didn't enter via the door</li>
+			<li>Fixed the Save Sign GUI opening when the player was in the TARDIS, but didn&rsquo;t enter via the door</li>
 			<li>Fixed the custom TARDIS schematic not working</li>
 			<li>Fixed mis-named player disks in the lists generated by the <code>/tardisrecipe</code> and <code>/tardisgive</code> commands</li>
 		</ul>
