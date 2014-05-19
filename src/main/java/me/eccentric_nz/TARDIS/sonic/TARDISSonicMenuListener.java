@@ -126,12 +126,12 @@ public class TARDISSonicMenuListener implements Listener {
         if (!title.equals("§4Sonic Prefs Menu")) {
             return;
         }
-        ItemStack sonic = inv.getItem(9);
+        ItemStack sonic = inv.getItem(18);
         if (sonic != null) {
             Player p = (Player) event.getPlayer();
             Location loc = p.getLocation();
             loc.getWorld().dropItemNaturally(loc, sonic);
-            inv.setItem(9, new ItemStack(Material.AIR));
+            inv.setItem(18, new ItemStack(Material.AIR));
         }
     }
 
