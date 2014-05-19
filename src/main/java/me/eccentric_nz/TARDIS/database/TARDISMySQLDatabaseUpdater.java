@@ -106,7 +106,7 @@ public class TARDISMySQLDatabaseUpdater {
                 ResultSet rsd = statement.executeQuery(d_query);
                 if (!rsd.next()) {
                     i++;
-                    String d_alter = "ALTER TABLE player_prefs ADD " + d;
+                    String d_alter = "ALTER TABLE destinations ADD " + d;
                     statement.executeUpdate(d_alter);
                 }
             }
