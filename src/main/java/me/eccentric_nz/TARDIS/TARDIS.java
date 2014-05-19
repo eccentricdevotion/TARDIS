@@ -283,7 +283,7 @@ public class TARDIS extends JavaPlugin {
     }
 
     /**
-     * Sets up the datardisAreabase.
+     * Sets up the database.
      */
     private void loadDatabase() {
         String dbtype = getConfig().getString("storage.database");

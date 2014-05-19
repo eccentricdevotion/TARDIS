@@ -173,14 +173,14 @@ public class TARDISSQLiteDatabase {
             statement.executeUpdate(queryRaisedDemat);
 
         } catch (SQLException e) {
-            plugin.getConsole().sendMessage(TARDIS.plugin.getPluginName() + "SQLite create table error: " + e);
+            plugin.getConsole().sendMessage(plugin.getPluginName() + "SQLite create table error: " + e);
         } finally {
             try {
                 if (statement != null) {
                     statement.close();
                 }
             } catch (SQLException e) {
-                plugin.getConsole().sendMessage(TARDIS.plugin.getPluginName() + "SQLite close statement error: " + e);
+                plugin.getConsole().sendMessage(plugin.getPluginName() + "SQLite close statement error: " + e);
             }
         }
     }

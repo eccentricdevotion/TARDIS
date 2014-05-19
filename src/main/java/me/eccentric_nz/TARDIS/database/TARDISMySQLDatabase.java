@@ -159,14 +159,14 @@ public class TARDISMySQLDatabase {
             dbu.updateTables();
 
         } catch (SQLException e) {
-            plugin.getConsole().sendMessage(TARDIS.plugin.getPluginName() + "MySQL create table error: " + e);
+            plugin.getConsole().sendMessage(plugin.getPluginName() + "MySQL create table error: " + e);
         } finally {
             try {
                 if (statement != null) {
                     statement.close();
                 }
             } catch (SQLException e) {
-                plugin.getConsole().sendMessage(TARDIS.plugin.getPluginName() + "MySQL close statement error: " + e);
+                plugin.getConsole().sendMessage(plugin.getPluginName() + "MySQL close statement error: " + e);
             }
         }
     }

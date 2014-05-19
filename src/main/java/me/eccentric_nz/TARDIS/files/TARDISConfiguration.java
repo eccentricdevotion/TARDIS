@@ -261,9 +261,9 @@ public class TARDISConfiguration {
         strOptions.put("preferences.respect_towny", "nation");
         strOptions.put("preferences.use_worldguard", "build");
         strOptions.put("storage.database", "sqlite");
-        strOptions.put("storage.mysql.password", "mysecurepassword");
         strOptions.put("storage.mysql.url", "mysql://localhost:3306/TARDIS");
         strOptions.put("storage.mysql.user", "bukkit");
+        strOptions.put("storage.mysql.password", "mysecurepassword");
         artronStrOptions.put("jettison_seed", "TNT");
         artronStrOptions.put("full_charge_item", "NETHER_STAR");
         roomStrOptions.put("rooms.ARBORETUM.seed", "LEAVES");
