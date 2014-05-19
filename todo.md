@@ -1,11 +1,11 @@
 # TODO
 
-##Current version `2.9-beta-1`
+##Current version `2.9-beta-2`
 
 1. Artron button powers on/off TARDIS after initialisation
 2. TARDIS invisibility - 1.8 barrier blocks?
 3. Localisation - this one is a HUGE job
-4. Remove books and achievements
+4. Remove books and achievements?
 
 ###In progress
 4. `/tardisremote` commands
