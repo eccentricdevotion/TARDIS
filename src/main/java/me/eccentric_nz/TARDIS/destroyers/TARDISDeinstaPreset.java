@@ -96,6 +96,7 @@ public class TARDISDeinstaPreset {
                     try {
                         w.setBiome(sbx + c, sbz + r, biome);
                     } catch (NullPointerException e) {
+                        plugin.debug(plugin.getPluginName() + "Couldn't set biome!\nWorld = " + w.toString() + "\nsbx = " + sbx + "\nsbz = " + sbz + "\nbiome = " + biome.toString());
                         e.printStackTrace();
                         run = false;
                     }
