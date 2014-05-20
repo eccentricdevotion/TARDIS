@@ -66,6 +66,7 @@ preferences:
     respect_grief_prevention: true
     sfx_volume: 10;
     difficulty: hard
+    force_disk_use: true
     strike_lightning: true
     freeze_cooldown: 60
     hads_damage: 10

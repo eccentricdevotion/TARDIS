@@ -178,7 +178,7 @@ public class TARDISCommands implements CommandExecutor {
                 }
                 if (args[0].equalsIgnoreCase("save")) {
                     ItemStack is = player.getItemInHand();
-                    if (plugin.getConfig().getString("preferences.difficulty").equals("hard") && heldDiskIsWrong(is)) {
+                    if (plugin.getConfig().getBoolean("preferences.force_disk_use") == (true) && heldDiskIsWrong(is)) {
                         TARDISMessage.send(player, plugin.getPluginName() + "You must be holding a Save Storage Disk in your hand!");
                         return true;
                     }
