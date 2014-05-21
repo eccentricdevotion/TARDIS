@@ -118,7 +118,7 @@ public class TARDIS extends JavaPlugin {
     private TARDISWalls tardisWalls;
     private TARDISWorldGuardUtils worldGuardUtils;
     private boolean hasVersion = false;
-    private boolean mySpawn = false;
+    private boolean tardisSpawn = false;
     private boolean worldGuardOnServer;
     private boolean horseSpeedOnServer;
     private boolean projRassilonOnServer;
@@ -743,12 +743,12 @@ public class TARDIS extends JavaPlugin {
         return resourcePack;
     }
 
-    public boolean isMySpawn() {
-        return mySpawn;
+    public boolean isTardisSpawn() {
+        return tardisSpawn;
     }
 
-    public void setMySpawn(boolean mySpawn) {
-        this.mySpawn = mySpawn;
+    public void setTardisSpawn(boolean tardisSpawn) {
+        this.tardisSpawn = tardisSpawn;
     }
 
     public boolean isWorldGuardOnServer() {

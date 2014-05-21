@@ -64,7 +64,7 @@ public class TARDISEPSRunnable implements Runnable {
         plugin.debug("Location:" + l);
         if (l != null) {
             try {
-                plugin.setMySpawn(true);
+                plugin.setTardisSpawn(true);
                 l.setX(l.getX() + 0.5F);
                 l.setZ(l.getZ() + 1.5F);
                 // set yaw if npc spawn location has been changed

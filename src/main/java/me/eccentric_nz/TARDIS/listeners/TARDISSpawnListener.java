@@ -63,60 +63,74 @@ public class TARDISSpawnListener implements Listener {
      *
      * @param event
      */
-    @EventHandler(priority = EventPriority.HIGHEST)
+    @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
     public void onEntitySpawn(CreatureSpawnEvent event) {
         Location l = event.getLocation();
-        // override allowable TARDIS spawns
-        if (event.isCancelled()) {
-            boolean isTardisWorldSpawn = (l.getWorld().getName().contains("TARDIS") && good_spawns.contains(event.getSpawnReason()));
-            if (isTardisWorldSpawn || plugin.isMySpawn()) {
-                event.setCancelled(false);
-                if (plugin.isMySpawn()) {
-                    plugin.setMySpawn(false);
-                }
-            }
-            return;
-        }
-        // only if configured
-        if (!plugin.getConfig().getBoolean("police_box.set_biome")) {
-            return;
-        }
-        // only natural spawning
-        if (!event.getSpawnReason().equals(SpawnReason.NATURAL)) {
-            return;
-        }
-        // only in DEEP_OCEAN, MUSHROOM_ISLAND
-        if (!biomes.contains(l.getBlock().getBiome())) {
-            return;
-        }
-        // only monsters
-        if (!TARDISConstants.MONSTER_TYPES.contains(event.getEntity().getType())) {
-            return;
-        }
-        // always deny MUSHROOM, HELL and SKY biomes
-        switch (l.getBlock().getBiome()) {
-            case MUSHROOM_ISLAND:
-            case HELL:
-                event.setCancelled(true);
+        if (l.getWorld().getName().contains("TARDIS")) {
+            if (plugin.isTardisSpawn()) {
+                plugin.setTardisSpawn(false);
                 return;
-            case SKY:
-                if (!event.getEntity().getType().equals(EntityType.ENDERMAN)) {
+            }
+            // if not an allowable TARDIS spawn reason, cancel
+            if (!good_spawns.contains(event.getSpawnReason())) {
+                plugin.debug("Cancelled TARDIS world spawn event");
+                event.setCancelled(true);
+            }
+            // otherwise deny all mob spawning
+
+//        // override allowable TARDIS spawns
+//        if (event.isCancelled()) {
+//            boolean isTardisWorldSpawn = (l.getWorld().getName().contains("TARDIS") && good_spawns.contains(event.getSpawnReason()));
+//            if (isTardisWorldSpawn || plugin.isMySpawn()) {
+//                event.setCancelled(false);
+//                if (plugin.isMySpawn()) {
+//                    plugin.setMySpawn(false);
+//                }
+//            }
+//            return;
+//        }
+        } else {
+            // only if configured
+            if (!plugin.getConfig().getBoolean("police_box.set_biome")) {
+                return;
+            }
+            // only natural spawning
+            if (!event.getSpawnReason().equals(SpawnReason.NATURAL)) {
+                return;
+            }
+            // only in DEEP_OCEAN, MUSHROOM_ISLAND
+            if (!biomes.contains(l.getBlock().getBiome())) {
+                return;
+            }
+            // only monsters
+            if (!TARDISConstants.MONSTER_TYPES.contains(event.getEntity().getType())) {
+                return;
+            }
+            // always deny MUSHROOM, HELL and SKY biomes
+            switch (l.getBlock().getBiome()) {
+                case MUSHROOM_ISLAND:
+                case HELL:
                     event.setCancelled(true);
                     return;
-                }
-                break;
-            case MUSHROOM_SHORE:
-                if (!event.getEntity().getType().equals(EntityType.SQUID)) {
-                    event.setCancelled(true);
-                    return;
-                }
-                break;
-            default:
-                break;
-        }
-        // only TARDIS locations
-        if (isTARDISBiome(l)) {
-            event.setCancelled(true);
+                case SKY:
+                    if (!event.getEntity().getType().equals(EntityType.ENDERMAN)) {
+                        event.setCancelled(true);
+                        return;
+                    }
+                    break;
+                case MUSHROOM_SHORE:
+                    if (!event.getEntity().getType().equals(EntityType.SQUID)) {
+                        event.setCancelled(true);
+                        return;
+                    }
+                    break;
+                default:
+                    break;
+            }
+            // only TARDIS locations
+            if (isTARDISBiome(l)) {
+                event.setCancelled(true);
+            }
         }
     }
 

@@ -200,7 +200,7 @@ public class TARDISMonsterRunnable implements Runnable {
             l.getChunk().load();
         }
         // spawn a monster in the TARDIS
-        plugin.setMySpawn(true);
+        plugin.setTardisSpawn(true);
         Entity ent = l.getWorld().spawnEntity(l, m.getType());
         switch (m.getType()) {
             case CREEPER:

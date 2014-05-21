@@ -193,7 +193,7 @@ public class TARDISArtronCapacitorListener implements Listener {
                                             bz = plugin.getUtils().parseInt(beaconData[3]);
                                         }
                                         Location cl = new Location(w, cx, cy, cz);
-                                        plugin.setMySpawn(true);
+                                        plugin.setTardisSpawn(true);
                                         Entity e = w.spawnEntity(cl, EntityType.CREEPER);
                                         Creeper c = (Creeper) e;
                                         c.setPowered(true);
