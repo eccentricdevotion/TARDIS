@@ -127,6 +127,7 @@ public class TARDISInstaPreset {
             for (int c = -1; c < 2; c++) {
                 for (int r = -1; r < 2; r++) {
                     world.setBiome(x + c, z + r, Biome.DEEP_OCEAN);
+                    // TODO check re-adding umbrella if rebuilding
                     if (TARDISConstants.NO_RAIN.contains(tmd.getBiome())) {
                         // add a glass roof
                         plugin.getUtils().setBlockAndRemember(world, x + c, 255, z + r, 20, (byte) 0, tmd.getTardisID());

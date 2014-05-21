@@ -73,22 +73,8 @@ public class TARDISSpawnListener implements Listener {
             }
             // if not an allowable TARDIS spawn reason, cancel
             if (!good_spawns.contains(event.getSpawnReason())) {
-                plugin.debug("Cancelled TARDIS world spawn event");
                 event.setCancelled(true);
             }
-            // otherwise deny all mob spawning
-
-//        // override allowable TARDIS spawns
-//        if (event.isCancelled()) {
-//            boolean isTardisWorldSpawn = (l.getWorld().getName().contains("TARDIS") && good_spawns.contains(event.getSpawnReason()));
-//            if (isTardisWorldSpawn || plugin.isMySpawn()) {
-//                event.setCancelled(false);
-//                if (plugin.isMySpawn()) {
-//                    plugin.setMySpawn(false);
-//                }
-//            }
-//            return;
-//        }
         } else {
             // only if configured
             if (!plugin.getConfig().getBoolean("police_box.set_biome")) {

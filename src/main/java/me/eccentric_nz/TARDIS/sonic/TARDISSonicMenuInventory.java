@@ -140,7 +140,7 @@ public class TARDISSonicMenuInventory {
         ItemStack info = new ItemStack(Material.BOOK, 1);
         ItemMeta info_im = info.getItemMeta();
         info_im.setDisplayName("Instructions");
-        List<String> lore = Arrays.asList(new String[]{"Put your Sonic Screwdriver", "in the left most slot", "and then click on the", "Sonic of your choice."});
+        List<String> lore = Arrays.asList(new String[]{"Put your Sonic Screwdriver", "in the bottom left most slot", "and then click on the", "Sonic of your choice."});
         info_im.setLore(lore);
         info.setItemMeta(info_im);
         // close

@@ -113,7 +113,7 @@ public class TARDISSonicMenuListener implements Listener {
         }
         Set<Integer> slots = event.getRawSlots();
         for (Integer slot : slots) {
-            if ((slot >= 0 && slot < 18)) {
+            if ((slot >= 0 && slot < 27)) {
                 event.setCancelled(true);
             }
         }
