@@ -126,8 +126,11 @@ public class TARDISDoorListener {
                     HashMap<String, Object> where = new HashMap<String, Object>();
                     UUID uuid = p.getUniqueId();
                     where.put("uuid", uuid.toString());
-                    int player_artron = plugin.getArtronConfig().getInt("player");
-                    qf.alterEnergyLevel("player_prefs", player_artron, where, p);
+                    if (plugin.getTrackerKeeper().getHasTravelled().contains(uuid)) {
+                        int player_artron = plugin.getArtronConfig().getInt("player");
+                        qf.alterEnergyLevel("player_prefs", player_artron, where, p);
+                        plugin.getTrackerKeeper().getHasTravelled().remove(uuid);
+                    }
                     if (plugin.getTrackerKeeper().getSetTime().containsKey(uuid)) {
                         setTemporalLocation(p, plugin.getTrackerKeeper().getSetTime().get(uuid));
                         plugin.getTrackerKeeper().getSetTime().remove(uuid);

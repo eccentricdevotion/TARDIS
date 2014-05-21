@@ -472,6 +472,10 @@ public class TARDISInstaPreset {
                             if (trav != null) {
                                 String message = (tmd.isMalfunction()) ? "There was a malfunction and the emergency handbrake was engaged! Scan location before exit!" : "LEFT-click the handbrake to exit!";
                                 TARDISMessage.send(trav, plugin.getPluginName() + message);
+                                // TARDIS has travelled so add players to list so they can receive Artron on exit
+                                if (!plugin.getTrackerKeeper().getHasTravelled().contains(s)) {
+                                    plugin.getTrackerKeeper().getHasTravelled().add(s);
+                                }
                             }
                         }
                     }
