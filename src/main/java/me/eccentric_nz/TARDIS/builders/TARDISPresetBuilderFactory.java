@@ -83,7 +83,12 @@ public class TARDISPresetBuilderFactory {
         ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);
         if (rs.resultSet()) {
             PRESET preset = rs.getPreset();
-            Biome biome = pbd.getLocation().getWorld().getBiome(pbd.getLocation().getBlockX(), pbd.getLocation().getBlockZ());
+            Biome biome;
+            if (pbd.isRebuild()) {
+                biome = pbd.getLocation().getWorld().getBlockAt(pbd.getLocation()).getRelative(getOppositeFace(pbd.getDirection()), 2).getBiome();
+            } else {
+                biome = pbd.getLocation().getWorld().getBiome(pbd.getLocation().getBlockX(), pbd.getLocation().getBlockZ());
+            }
             pbd.setBiome(biome);
             if (plugin.getConfig().getBoolean("police_box.set_biome") && !pbd.isRebuild()) {
                 // remember the current biome (unless rebuilding)
@@ -204,5 +209,18 @@ public class TARDISPresetBuilderFactory {
     public BlockFace getSkullDirection(COMPASS d) {
         BlockFace[] faces = face_map.get(d);
         return faces[rand.nextInt(5)];
+    }
+
+    private BlockFace getOppositeFace(COMPASS d) {
+        switch (d) {
+            case SOUTH:
+                return BlockFace.NORTH;
+            case WEST:
+                return BlockFace.EAST;
+            case NORTH:
+                return BlockFace.SOUTH;
+            default:
+                return BlockFace.WEST;
+        }
     }
 }
