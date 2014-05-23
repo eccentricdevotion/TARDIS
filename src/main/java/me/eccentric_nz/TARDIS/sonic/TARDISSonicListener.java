@@ -197,7 +197,7 @@ public class TARDISSonicListener implements Listener {
                                 }
                             }, 20L);
                         } else {
-                            TARDISMessage.send(player, plugin.getPluginName() + player.getName() + " You cannot freeze another player yet!");
+                            TARDISMessage.send(player, plugin.getPluginName() + "You cannot freeze another player yet!");
                         }
                         return;
                     }

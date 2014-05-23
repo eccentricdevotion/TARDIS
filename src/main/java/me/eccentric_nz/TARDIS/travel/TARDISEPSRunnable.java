@@ -89,8 +89,8 @@ public class TARDISEPSRunnable implements Runnable {
                 for (UUID p : players) {
                     Player pp = plugin.getServer().getPlayer(p);
                     if (pp != null) {
-                        TARDISMessage.send(pp, ChatColor.RED + "[Emergency Program One] " + ChatColor.RESET + message);
-                        TARDISMessage.send(pp, ChatColor.RED + "[Emergency Program One] " + ChatColor.RESET + "Right-click me to make me go away.");
+                        TARDISMessage.send(pp, ChatColor.RED + "[Emergency Programme One] " + ChatColor.RESET + message);
+                        TARDISMessage.send(pp, ChatColor.RED + "[Emergency Programme One] " + ChatColor.RESET + "Right-click me to make me go away.");
                     }
                 }
             } catch (CommandException e) {

@@ -25,6 +25,7 @@ import me.eccentric_nz.TARDIS.database.ResultSetCurrentLocation;
 import me.eccentric_nz.TARDIS.database.ResultSetPlayerPrefs;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
+import me.eccentric_nz.TARDIS.enumeration.MESSAGE;
 import me.eccentric_nz.TARDIS.enumeration.SCHEMATIC;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import org.bukkit.ChatColor;
@@ -89,55 +90,55 @@ public class TARDISSeedBlockProcessor {
                             TARDISMessage.send(player, plugin.getPluginName() + "The custom TARDIS schematic is not enabled on this server!");
                             return false;
                         } else if (!player.hasPermission("tardis.custom")) {
-                            TARDISMessage.send(player, plugin.getPluginName() + "You don't have permission to create the server's custom' TARDIS!");
+                            TARDISMessage.send(player, plugin.getPluginName() + String.format(MESSAGE.NO_PERM_TARDIS.getText(), "custom"));
                             return false;
                         }
                         break;
                     case BIGGER:
                         if (!player.hasPermission("tardis.bigger")) {
-                            TARDISMessage.send(player, plugin.getPluginName() + "You don't have permission to create a 'bigger' TARDIS!");
+                            TARDISMessage.send(player, plugin.getPluginName() + String.format(MESSAGE.NO_PERM_TARDIS.getText(), "bigger"));
                             return false;
                         }
                         break;
                     case DELUXE:
                         if (!player.hasPermission("tardis.deluxe")) {
-                            TARDISMessage.send(player, plugin.getPluginName() + "You don't have permission to create a 'deluxe' TARDIS!");
+                            TARDISMessage.send(player, plugin.getPluginName() + String.format(MESSAGE.NO_PERM_TARDIS.getText(), "deluxe"));
                             return false;
                         }
                         break;
                     case ELEVENTH:
                         if (!player.hasPermission("tardis.eleventh")) {
-                            TARDISMessage.send(player, plugin.getPluginName() + "You don't have permission to create an 'eleventh Doctor's' TARDIS!");
+                            TARDISMessage.send(player, plugin.getPluginName() + String.format(MESSAGE.NO_PERM_TARDIS.getText(), "eleventh"));
                             return false;
                         }
                         break;
                     case REDSTONE:
                         if (!player.hasPermission("tardis.redstone")) {
-                            TARDISMessage.send(player, plugin.getPluginName() + "You don't have permission to create a 'redstone' TARDIS!");
+                            TARDISMessage.send(player, plugin.getPluginName() + String.format(MESSAGE.NO_PERM_TARDIS.getText(), "redstone"));
                             return false;
                         }
                         break;
                     case STEAMPUNK:
                         if (!player.hasPermission("tardis.steampunk")) {
-                            TARDISMessage.send(player, plugin.getPluginName() + "You don't have permission to create a 'steampunk' TARDIS!");
+                            TARDISMessage.send(player, plugin.getPluginName() + String.format(MESSAGE.NO_PERM_TARDIS.getText(), "steampunk"));
                             return false;
                         }
                         break;
                     case TOM:
                         if (!player.hasPermission("tardis.tom")) {
-                            TARDISMessage.send(player, plugin.getPluginName() + "You don't have permission to create a '4th Doctor's' TARDIS!");
+                            TARDISMessage.send(player, plugin.getPluginName() + String.format(MESSAGE.NO_PERM_TARDIS.getText(), "tom"));
                             return false;
                         }
                         break;
                     case PLANK:
                         if (!player.hasPermission("tardis.plank")) {
-                            TARDISMessage.send(player, plugin.getPluginName() + "You don't have permission to create a 'wood' TARDIS!");
+                            TARDISMessage.send(player, plugin.getPluginName() + String.format(MESSAGE.NO_PERM_TARDIS.getText(), "wood"));
                             return false;
                         }
                         break;
                     case ARS:
                         if (!player.hasPermission("tardis.ars")) {
-                            TARDISMessage.send(player, plugin.getPluginName() + "You don't have permission to create an 'ARS' TARDIS!");
+                            TARDISMessage.send(player, plugin.getPluginName() + String.format(MESSAGE.NO_PERM_TARDIS.getText(), "ARS"));
                             return false;
                         }
                         break;
@@ -293,7 +294,7 @@ public class TARDISSeedBlockProcessor {
                 if (rsc.resultSet()) {
                     TARDISMessage.send(player, plugin.getPluginName() + "You already have a TARDIS, you left it in " + rsc.getWorld().getName() + " at x:" + rsc.getX() + " y:" + rsc.getY() + " z:" + rsc.getZ());
                 } else {
-                    TARDISMessage.send(player, plugin.getPluginName() + "You already have a TARDIS, but we couldn't find it! Try calling it to you.");
+                    TARDISMessage.send(player, plugin.getPluginName() + MESSAGE.HAVE_TARDIS.getText());
                 }
                 return false;
             }

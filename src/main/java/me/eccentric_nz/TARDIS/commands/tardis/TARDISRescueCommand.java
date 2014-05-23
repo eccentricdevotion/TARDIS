@@ -44,7 +44,7 @@ public class TARDISRescueCommand {
             final String saved = args[1];
             Player destPlayer = plugin.getServer().getPlayer(saved);
             if (destPlayer == null) {
-                TARDISMessage.send(player, plugin.getPluginName() + "That player is not online!");
+                TARDISMessage.send(player, plugin.getPluginName() + MESSAGE.NOT_ONLINE.getText());
                 return true;
             }
             final UUID savedUUID = destPlayer.getUniqueId();
@@ -60,7 +60,7 @@ public class TARDISRescueCommand {
                 }
             }, 1200L);
         } else {
-            TARDISMessage.send(player, plugin.getPluginName() + "You do not have permission to time travel to a player!");
+            TARDISMessage.send(player, plugin.getPluginName() + MESSAGE.NO_PERM_PLAYER.getText());
             return true;
         }
         return false;

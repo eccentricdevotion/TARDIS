@@ -135,11 +135,11 @@ public class TARDISConsoleCloseListener implements Listener {
                                             wherea.put("area_name", first);
                                             ResultSetAreas rsa = new ResultSetAreas(plugin, wherea, false);
                                             if (!rsa.resultSet()) {
-                                                TARDISMessage.send(p, plugin.getPluginName() + "Could not find an area with that name! try using " + ChatColor.GREEN + "/tardis list areas" + ChatColor.RESET + " first.");
+                                                TARDISMessage.send(p, plugin.getPluginName() + String.format(MESSAGE.AREA_NOT_FOUND.getText(), ChatColor.GREEN + "/tardis list areas" + ChatColor.RESET));
                                                 continue;
                                             }
                                             if ((!p.hasPermission("tardis.area." + first) && !p.hasPermission("tardis.area.*")) || (!p.isPermissionSet("tardis.area." + first) && !p.isPermissionSet("tardis.area.*"))) {
-                                                TARDISMessage.send(p, plugin.getPluginName() + "You do not have permission [tardis.area." + first + "] to send the TARDIS to this location!");
+                                                TARDISMessage.send(p, plugin.getPluginName() + String.format(MESSAGE.TRAVEL_NO_AREA_PERM.getText(), first));
                                                 continue;
                                             }
                                             Location l = plugin.getTardisArea().getNextSpot(rsa.getArea_name());
@@ -152,7 +152,7 @@ public class TARDISConsoleCloseListener implements Listener {
                                             set_next.put("y", l.getBlockY());
                                             set_next.put("z", l.getBlockZ());
                                             set_next.put("submarine", 0);
-                                            TARDISMessage.send(p, plugin.getPluginName() + "Your TARDIS was approved for parking in [" + first + "]!");
+                                            TARDISMessage.send(p, plugin.getPluginName() + String.format(MESSAGE.TRAVEL_APPROVED.getText(), first));
                                             plugin.getTrackerKeeper().getHasDestination().put(id, plugin.getArtronConfig().getInt("travel"));
                                             break;
                                         case GREEN_RECORD: // biome
@@ -195,10 +195,10 @@ public class TARDISConsoleCloseListener implements Listener {
                                                     set_next.put("z", nsob.getBlockZ());
                                                     set_next.put("direction", rsc.getDirection().toString());
                                                     set_next.put("submarine", 0);
-                                                    TARDISMessage.send(p, plugin.getPluginName() + "The biome was set succesfully. Please release the handbrake!");
+                                                    TARDISMessage.send(p, plugin.getPluginName() + MESSAGE.BIOME_SET.getText() + " " + MESSAGE.HANDBRAKE_RELEASE.getText());
                                                 }
                                             } catch (IllegalArgumentException iae) {
-                                                TARDISMessage.send(p, plugin.getPluginName() + "Biome type not valid!");
+                                                TARDISMessage.send(p, plugin.getPluginName() + MESSAGE.BIOME_NOT_VALID.getText());
                                                 continue;
                                             }
                                             break;
@@ -212,7 +212,7 @@ public class TARDISConsoleCloseListener implements Listener {
                                                 // get the player
                                                 Player to = plugin.getServer().getPlayer(first);
                                                 if (to == null) {
-                                                    TARDISMessage.send(p, plugin.getPluginName() + "That player is not online!");
+                                                    TARDISMessage.send(p, plugin.getPluginName() + MESSAGE.NOT_ONLINE.getText());
                                                     continue;
                                                 }
                                                 UUID toUUID = to.getUniqueId();
@@ -221,13 +221,13 @@ public class TARDISConsoleCloseListener implements Listener {
                                                 wherednd.put("uuid", toUUID.toString());
                                                 ResultSetPlayerPrefs rspp = new ResultSetPlayerPrefs(plugin, wherednd);
                                                 if (rspp.resultSet() && rspp.isDND()) {
-                                                    TARDISMessage.send(p, plugin.getPluginName() + first + " does not want to be disturbed right now! Try again later.");
+                                                    TARDISMessage.send(p, plugin.getPluginName() + String.format(MESSAGE.DND.getText(), first));
                                                     continue;
                                                 }
                                                 TARDISRescue to_player = new TARDISRescue(plugin);
                                                 to_player.rescue(p, toUUID, id, tt, rsc.getDirection(), false);
                                             } else {
-                                                TARDISMessage.send(p, plugin.getPluginName() + "You do not have permission to time travel to a player!");
+                                                TARDISMessage.send(p, plugin.getPluginName() + MESSAGE.NO_PERM_PLAYER.getText());
                                                 continue;
                                             }
                                             break;
@@ -256,7 +256,7 @@ public class TARDISConsoleCloseListener implements Listener {
                                                 boolean sub = Boolean.valueOf(lore.get(7));
                                                 set_next.put("submarine", (sub) ? 1 : 0);
                                                 set_tardis.put("chameleon_preset", lore.get(5));
-                                                TARDISMessage.send(p, plugin.getPluginName() + "The specified location was set succesfully. Please release the handbrake!");
+                                                TARDISMessage.send(p, plugin.getPluginName() + MESSAGE.LOC_SET.getText() + " " + MESSAGE.HANDBRAKE_RELEASE.getText());
                                             } else {
                                                 TARDISMessage.send(p, plugin.getPluginName() + "You do not have permission to time travel to a save!");
                                                 continue;

@@ -29,6 +29,7 @@ import me.eccentric_nz.TARDIS.database.ResultSetDoors;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import me.eccentric_nz.TARDIS.database.ResultSetTravellers;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
+import me.eccentric_nz.TARDIS.enumeration.MESSAGE;
 import me.eccentric_nz.TARDIS.enumeration.PRESET;
 import me.eccentric_nz.TARDIS.travel.TARDISDoorLocation;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
@@ -471,7 +472,7 @@ public class TARDISInstaPreset {
                         for (UUID s : travellers) {
                             Player trav = plugin.getServer().getPlayer(s);
                             if (trav != null) {
-                                String message = (tmd.isMalfunction()) ? "There was a malfunction and the emergency handbrake was engaged! Scan location before exit!" : "LEFT-click the handbrake to exit!";
+                                String message = (tmd.isMalfunction()) ? MESSAGE.MALFUNCTION.getText() : MESSAGE.HANDBRAKE_LEFT_CLICK.getText();
                                 TARDISMessage.send(trav, plugin.getPluginName() + message);
                                 // TARDIS has travelled so add players to list so they can receive Artron on exit
                                 if (!plugin.getTrackerKeeper().getHasTravelled().contains(s)) {

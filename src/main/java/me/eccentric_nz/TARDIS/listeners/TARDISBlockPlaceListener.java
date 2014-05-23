@@ -129,7 +129,7 @@ public class TARDISBlockPlaceListener implements Listener {
                         if (player.hasPermission("tardis.bigger")) {
                             schm = SCHEMATIC.BIGGER;
                         } else {
-                            TARDISMessage.send(player, plugin.getPluginName() + "You don't have permission to create a 'bigger' TARDIS!");
+                            TARDISMessage.send(player, plugin.getPluginName() + String.format(MESSAGE.NO_PERM_TARDIS.getText(), "bigger"));
                             return;
                         }
                         break;
@@ -137,7 +137,7 @@ public class TARDISBlockPlaceListener implements Listener {
                         if (player.hasPermission("tardis.deluxe")) {
                             schm = SCHEMATIC.DELUXE;
                         } else {
-                            TARDISMessage.send(player, plugin.getPluginName() + "You don't have permission to create a 'deluxe' TARDIS!");
+                            TARDISMessage.send(player, plugin.getPluginName() + String.format(MESSAGE.NO_PERM_TARDIS.getText(), "deluxe"));
                             return;
                         }
                         break;
@@ -145,7 +145,7 @@ public class TARDISBlockPlaceListener implements Listener {
                         if (player.hasPermission("tardis.eleventh")) {
                             schm = SCHEMATIC.ELEVENTH;
                         } else {
-                            TARDISMessage.send(player, plugin.getPluginName() + "You don't have permission to create an 'eleventh Doctor's' TARDIS!");
+                            TARDISMessage.send(player, plugin.getPluginName() + String.format(MESSAGE.NO_PERM_TARDIS.getText(), "eleventh Doctor's"));
                             return;
                         }
                         break;
@@ -153,7 +153,7 @@ public class TARDISBlockPlaceListener implements Listener {
                         if (player.hasPermission("tardis.redstone")) {
                             schm = SCHEMATIC.REDSTONE;
                         } else {
-                            TARDISMessage.send(player, plugin.getPluginName() + "You don't have permission to create a 'redstone' TARDIS!");
+                            TARDISMessage.send(player, plugin.getPluginName() + String.format(MESSAGE.NO_PERM_TARDIS.getText(), "redstone"));
                             return;
                         }
                         break;
@@ -161,7 +161,7 @@ public class TARDISBlockPlaceListener implements Listener {
                         if (player.hasPermission("tardis.steampunk")) {
                             schm = SCHEMATIC.STEAMPUNK;
                         } else {
-                            TARDISMessage.send(player, plugin.getPluginName() + "You don't have permission to create a 'steampunk' TARDIS!");
+                            TARDISMessage.send(player, plugin.getPluginName() + String.format(MESSAGE.NO_PERM_TARDIS.getText(), "steampunk"));
                             return;
                         }
                         break;
@@ -169,7 +169,7 @@ public class TARDISBlockPlaceListener implements Listener {
                         if (player.hasPermission("tardis.tom")) {
                             schm = SCHEMATIC.TOM;
                         } else {
-                            TARDISMessage.send(player, plugin.getPluginName() + "You don't have permission to create a '4th Doctor's' TARDIS!");
+                            TARDISMessage.send(player, plugin.getPluginName() + String.format(MESSAGE.NO_PERM_TARDIS.getText(), "4th Doctor's"));
                             return;
                         }
                         break;
@@ -177,7 +177,7 @@ public class TARDISBlockPlaceListener implements Listener {
                         if (player.hasPermission("tardis.plank")) {
                             schm = SCHEMATIC.PLANK;
                         } else {
-                            TARDISMessage.send(player, plugin.getPluginName() + "You don't have permission to create a 'wood' TARDIS!");
+                            TARDISMessage.send(player, plugin.getPluginName() + String.format(MESSAGE.NO_PERM_TARDIS.getText(), "wood"));
                             return;
                         }
                         break;
@@ -185,7 +185,7 @@ public class TARDISBlockPlaceListener implements Listener {
                         if (player.hasPermission("tardis.ars")) {
                             schm = SCHEMATIC.ARS;
                         } else {
-                            TARDISMessage.send(player, plugin.getPluginName() + "You don't have permission to create an 'ARS' TARDIS!");
+                            TARDISMessage.send(player, plugin.getPluginName() + String.format(MESSAGE.NO_PERM_TARDIS.getText(), "ARS"));
                             return;
                         }
                         break;
@@ -194,7 +194,7 @@ public class TARDISBlockPlaceListener implements Listener {
                             if (player.hasPermission("tardis.custom") && blockBottom.getType().equals(custom)) {
                                 schm = SCHEMATIC.CUSTOM;
                             } else {
-                                TARDISMessage.send(player, plugin.getPluginName() + "You don't have permission to create the server's custom' TARDIS!");
+                                TARDISMessage.send(player, plugin.getPluginName() + String.format(MESSAGE.NO_PERM_TARDIS.getText(), "custom"));
                                 return;
                             }
                         } else {
@@ -359,7 +359,7 @@ public class TARDISBlockPlaceListener implements Listener {
                         if (rsc.resultSet()) {
                             TARDISMessage.send(player, plugin.getPluginName() + "You already have a TARDIS, you left it in " + rsc.getWorld().getName() + " at x:" + rsc.getX() + " y:" + rsc.getY() + " z:" + rsc.getZ());
                         } else {
-                            TARDISMessage.send(player, plugin.getPluginName() + "You already have a TARDIS, but we couldn't find it! Try calling it to you.");
+                            TARDISMessage.send(player, plugin.getPluginName() + MESSAGE.HAVE_TARDIS.getText());
                         }
                     }
                 } else {

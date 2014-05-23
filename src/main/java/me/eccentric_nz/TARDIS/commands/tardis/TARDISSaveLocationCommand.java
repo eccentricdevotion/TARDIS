@@ -81,7 +81,7 @@ public class TARDISSaveLocationCommand {
                 wherecl.put("tardis_id", rs.getTardis_id());
                 ResultSetCurrentLocation rsc = new ResultSetCurrentLocation(plugin, wherecl);
                 if (!rsc.resultSet()) {
-                    TARDISMessage.send(player, plugin.getPluginName() + MESSAGE.NO_CURRENT.getText());
+                    TARDISMessage.send(player, plugin.getPluginName() + MESSAGE.CURRENT_NOT_FOUND.getText());
                     return true;
                 }
                 QueryFactory qf = new QueryFactory(plugin);

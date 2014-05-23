@@ -53,7 +53,7 @@ public class TARDISRemoteComehereCommand {
     public boolean doRemoteComeHere(Player player, UUID uuid) {
         Location eyeLocation = player.getTargetBlock(plugin.getGeneralKeeper().getTransparent(), 50).getLocation();
         if (!plugin.getConfig().getBoolean("travel.include_default_world") && plugin.getConfig().getBoolean("creation.default_world") && eyeLocation.getWorld().getName().equals(plugin.getConfig().getString("creation.default_world_name"))) {
-            TARDISMessage.send(player, plugin.getPluginName() + "The server admin will not allow you to bring the TARDIS to this world!");
+            TARDISMessage.send(player, plugin.getPluginName() + MESSAGE.NO_WORLD_TRAVEL.getText());
             return true;
         }
         if (!plugin.getPluginRespect().getRespect(player, eyeLocation, true)) {
@@ -126,7 +126,7 @@ public class TARDISRemoteComehereCommand {
             count = tt.safeLocation(start_loc[0], eyeLocation.getBlockY(), start_loc[2], start_loc[1], start_loc[3], eyeLocation.getWorld(), player_d);
         }
         if (count > 0) {
-            TARDISMessage.send(player, plugin.getPluginName() + "That location would grief existing blocks! Try somewhere else!");
+            TARDISMessage.send(player, plugin.getPluginName() + MESSAGE.WOULD_GRIEF_BLOCKS.getText());
             return true;
         }
         boolean cham = chamtmp;
@@ -170,7 +170,7 @@ public class TARDISRemoteComehereCommand {
             qf.doUpdate("tardis", sett, ttid);
         }
         qf.doUpdate("current", set, tid);
-        TARDISMessage.send(player, plugin.getPluginName() + "The TARDIS is coming...");
+        TARDISMessage.send(player, plugin.getPluginName() + MESSAGE.TARDIS_COMING.getText());
         boolean mat = plugin.getConfig().getBoolean("police_box.materialise");
         long delay = (mat) ? 1L : 180L;
         plugin.getTrackerKeeper().getInVortex().add(id);

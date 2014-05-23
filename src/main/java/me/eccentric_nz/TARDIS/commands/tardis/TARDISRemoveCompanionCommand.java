@@ -54,7 +54,7 @@ public class TARDISRemoveCompanionCommand {
             } else {
                 comps = rs.getCompanions();
                 if (comps == null || comps.isEmpty()) {
-                    TARDISMessage.send(player, plugin.getPluginName() + "You have not added any TARDIS companions yet!");
+                    TARDISMessage.send(player, plugin.getPluginName() + MESSAGE.COMPANIONS_NONE.getText());
                     return true;
                 }
                 id = rs.getTardis_id();
@@ -65,7 +65,7 @@ public class TARDISRemoveCompanionCommand {
                 return false;
             }
             if (!args[1].matches("[A-Za-z0-9_]{2,16}")) {
-                TARDISMessage.send(player, plugin.getPluginName() + MESSAGE.NOT_VALID_NAME.getText());
+                TARDISMessage.send(player, plugin.getPluginName() + MESSAGE.PLAYER_NOT_VALID.getText());
                 return true;
             } else {
                 String newList = "";

@@ -23,6 +23,7 @@ import me.eccentric_nz.TARDIS.database.ResultSetDestinations;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import me.eccentric_nz.TARDIS.enumeration.MESSAGE;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
+import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 
 /**
@@ -56,7 +57,7 @@ public class TARDISRemoveSavedLocationCommand {
             whered.put("tardis_id", id);
             ResultSetDestinations rsd = new ResultSetDestinations(plugin, whered, false);
             if (!rsd.resultSet()) {
-                TARDISMessage.send(player, plugin.getPluginName() + "Could not find a saved destination with that name!");
+                TARDISMessage.send(player, plugin.getPluginName() + String.format(MESSAGE.SAVE_NOT_FOUND.getText(), ChatColor.GREEN + "/TARDIS list saves" + ChatColor.RESET));
                 return false;
             }
             int destID = rsd.getDest_id();

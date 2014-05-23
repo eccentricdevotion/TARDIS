@@ -200,7 +200,7 @@ public class TARDISRemoteCommands implements CommandExecutor {
                                     wherea.put("area_name", args[3]);
                                     ResultSetAreas rsa = new ResultSetAreas(plugin, wherea, false);
                                     if (!rsa.resultSet()) {
-                                        sendMessage(sender, plugin.getPluginName() + "Could not find an area with that name! try using " + ChatColor.GREEN + " /tardis list areas " + ChatColor.RESET + " first.");
+                                        sendMessage(sender, plugin.getPluginName() + String.format(MESSAGE.AREA_NOT_FOUND.getText(), ChatColor.GREEN + "/tardis list areas" + ChatColor.RESET));
                                         return true;
                                     }
                                     if ((sender instanceof Player && !sender.hasPermission("tardis.admin")) || sender instanceof BlockCommandSender) {
@@ -212,7 +212,7 @@ public class TARDISRemoteCommands implements CommandExecutor {
                                         // check permission
                                         String perm = "tardis.area." + args[3];
                                         if ((!p.getPlayer().hasPermission(perm) && !p.getPlayer().hasPermission("tardis.area.*"))) {
-                                            sendMessage(sender, plugin.getPluginName() + "You do not have permission [tardis.area." + args[3] + "] to send the TARDIS to this location!");
+                                            sendMessage(sender, plugin.getPluginName() + String.format(MESSAGE.TRAVEL_NO_AREA_PERM.getText(), args[3]));
                                             return true;
                                         }
                                     }
@@ -247,11 +247,11 @@ public class TARDISRemoteCommands implements CommandExecutor {
                                         return true;
                                     }
                                     if (!plugin.getConfig().getBoolean("worlds." + w.getName())) {
-                                        sendMessage(sender, plugin.getPluginName() + "The server does not allow time travel to this world!");
+                                        sendMessage(sender, plugin.getPluginName() + MESSAGE.NO_WORLD_TRAVEL.getText());
                                         return true;
                                     }
                                     if (!plugin.getConfig().getBoolean("travel.include_default_world") && plugin.getConfig().getBoolean("creation.default_world") && args[2].equals(plugin.getConfig().getString("creation.default_world_name"))) {
-                                        sendMessage(sender, plugin.getPluginName() + "The server does not allow time travel to this world!");
+                                        sendMessage(sender, plugin.getPluginName() + MESSAGE.NO_WORLD_TRAVEL.getText());
                                         return true;
                                     }
                                     x = plugin.getUtils().parseInt(args[args.length - 3]);
@@ -277,7 +277,7 @@ public class TARDISRemoteCommands implements CommandExecutor {
                                     wherecl.put("tardis_id", id);
                                     ResultSetCurrentLocation rsc = new ResultSetCurrentLocation(plugin, wherecl);
                                     if (!rsc.resultSet()) {
-                                        sendMessage(sender, plugin.getPluginName() + MESSAGE.NO_CURRENT.getText());
+                                        sendMessage(sender, plugin.getPluginName() + MESSAGE.CURRENT_NOT_FOUND.getText());
                                         return true;
                                     }
                                     // check location
@@ -285,7 +285,7 @@ public class TARDISRemoteCommands implements CommandExecutor {
                                     int[] start_loc = tt.getStartLocation(location, rsc.getDirection());
                                     int count = tt.safeLocation(start_loc[0], location.getBlockY(), start_loc[2], start_loc[1], start_loc[3], location.getWorld(), rsc.getDirection());
                                     if (count > 0) {
-                                        sendMessage(sender, plugin.getPluginName() + "The specified location would not be safe! Please try another.");
+                                        sendMessage(sender, plugin.getPluginName() + MESSAGE.NOT_SAFE.getText());
                                         return true;
                                     } else {
                                         set.put("world", location.getWorld().getName());
@@ -309,12 +309,12 @@ public class TARDISRemoteCommands implements CommandExecutor {
                                 return true;
                         }
                     } catch (IllegalArgumentException e) {
-                        sendMessage(sender, plugin.getPluginName() + MESSAGE.NOT_VALID_ARG.getText());
+                        sendMessage(sender, plugin.getPluginName() + MESSAGE.CMD_NOT_VALID.getText());
                         return false;
                     }
                 }
             } else {
-                sendMessage(sender, plugin.getPluginName() + "Could not get specified player's UUID. If the player is offline we need to lookup the UUID from the Mojang Authentication server. Try the command again shortly.");
+                sendMessage(sender, plugin.getPluginName() + MESSAGE.UUID.getText());
                 return true;
             }
         }

@@ -81,7 +81,7 @@ public class TARDISRebuildCommand {
             wherecl.put("tardis_id", rs.getTardis_id());
             ResultSetCurrentLocation rsc = new ResultSetCurrentLocation(plugin, wherecl);
             if (!rsc.resultSet()) {
-                TARDISMessage.send(player.getPlayer(), plugin.getPluginName() + MESSAGE.NO_CURRENT.getText());
+                TARDISMessage.send(player.getPlayer(), plugin.getPluginName() + MESSAGE.CURRENT_NOT_FOUND.getText());
                 TARDISMessage.send(player.getPlayer(), "Try using the Stattenheim Remote, or the /tardis comehere command.");
                 return true;
             }

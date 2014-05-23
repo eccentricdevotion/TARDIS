@@ -90,7 +90,7 @@ public class TARDISEmergencyProgrammeCommand {
                 return true;
             }
         } else {
-            TARDISMessage.send(p, plugin.getPluginName() + "Emergency Programme One is not available on this server.");
+            TARDISMessage.send(p, plugin.getPluginName() + MESSAGE.EP1_DISABLED.getText());
             return true;
         }
         return false;

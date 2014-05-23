@@ -69,7 +69,7 @@ public class TARDISChameleonCommand {
                 circ_chk.getCircuits();
             }
             if (circ_chk != null && !circ_chk.hasChameleon()) {
-                TARDISMessage.send(player, plugin.getPluginName() + "The Chameleon Circuit is missing from the console!");
+                TARDISMessage.send(player, plugin.getPluginName() + MESSAGE.CHAM_MISSING.getText());
                 return true;
             }
             String chamStr = rs.getChameleon();

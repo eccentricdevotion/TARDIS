@@ -23,6 +23,7 @@ import me.eccentric_nz.TARDIS.advanced.TARDISCircuitChecker;
 import me.eccentric_nz.TARDIS.database.ResultSetAreas;
 import me.eccentric_nz.TARDIS.database.ResultSetControls;
 import me.eccentric_nz.TARDIS.database.ResultSetDestinations;
+import me.eccentric_nz.TARDIS.enumeration.MESSAGE;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import org.bukkit.GameMode;
 import org.bukkit.Material;
@@ -75,7 +76,7 @@ public class TARDISKeyboardListener implements Listener {
                 tcc.getCircuits();
             }
             if (tcc != null && !tcc.hasInput()) {
-                TARDISMessage.send(event.getPlayer(), plugin.getPluginName() + "The Input Circuit is missing from the console!");
+                TARDISMessage.send(event.getPlayer(), plugin.getPluginName() + MESSAGE.INPUT_MISSING.getText());
                 return;
             }
             Sign keyboard = (Sign) against.getState();
@@ -144,7 +145,7 @@ public class TARDISKeyboardListener implements Listener {
                 return;
             }
         } catch (IllegalArgumentException iae) {
-            plugin.debug("Biome type not valid!");
+            plugin.debug(MESSAGE.BIOME_NOT_VALID.getText());
         }
         // dest?
         HashMap<String, Object> whered = new HashMap<String, Object>();

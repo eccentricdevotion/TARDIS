@@ -75,7 +75,7 @@ public class TARDISBindCommands implements CommandExecutor {
                 player = (Player) sender;
             }
             if (player == null) {
-                sender.sendMessage(plugin.getPluginName() + MESSAGE.MUST_BE_PLAYER.getText());
+                sender.sendMessage(plugin.getPluginName() + MESSAGE.CMD_PLAYER.getText());
                 return false;
             }
             if (args.length < 1) {
@@ -124,7 +124,7 @@ public class TARDISBindCommands implements CommandExecutor {
                 whered.put("dest_name", args[1].toLowerCase(Locale.ENGLISH));
                 ResultSetDestinations rsd = new ResultSetDestinations(plugin, whered, false);
                 if (!rsd.resultSet()) {
-                    TARDISMessage.send(player, plugin.getPluginName() + "Could not find a save with that name! Try using " + ChatColor.AQUA + "/tardis list saves" + ChatColor.RESET + " first.");
+                    TARDISMessage.send(player, plugin.getPluginName() + String.format(MESSAGE.SAVE_NOT_FOUND.getText(), ChatColor.GREEN + "/TARDIS list saves" + ChatColor.RESET));
                     return true;
                 }
                 if (rsd.getBind().isEmpty()) {
@@ -155,7 +155,7 @@ public class TARDISBindCommands implements CommandExecutor {
                     whered.put("dest_name", args[1]);
                     ResultSetDestinations rsd = new ResultSetDestinations(plugin, whered, false);
                     if (!rsd.resultSet()) {
-                        TARDISMessage.send(player, plugin.getPluginName() + "Could not find a save with that name! Try using " + ChatColor.AQUA + "/tardis list saves" + ChatColor.RESET + " first.");
+                        TARDISMessage.send(player, plugin.getPluginName() + String.format(MESSAGE.SAVE_NOT_FOUND.getText(), ChatColor.GREEN + "/TARDIS list saves" + ChatColor.RESET));
                         return true;
                     } else {
                         did = rsd.getDest_id();
@@ -192,7 +192,7 @@ public class TARDISBindCommands implements CommandExecutor {
                     wherea.put("area_name", args[1]);
                     ResultSetAreas rsa = new ResultSetAreas(plugin, wherea, false);
                     if (!rsa.resultSet()) {
-                        TARDISMessage.send(player, plugin.getPluginName() + "Could not find an area with that name! try using " + ChatColor.AQUA + "/tardis list areas" + ChatColor.RESET + " first.");
+                        TARDISMessage.send(player, plugin.getPluginName() + String.format(MESSAGE.AREA_NOT_FOUND.getText(), ChatColor.GREEN + "/tardis list areas" + ChatColor.RESET));
                         return true;
                     }
                     if (!player.hasPermission("tardis.area." + args[1]) || !player.isPermissionSet("tardis.area." + args[1])) {
@@ -214,7 +214,7 @@ public class TARDISBindCommands implements CommandExecutor {
                             did = qf.doSyncInsert("destinations", set);
                         }
                     } catch (IllegalArgumentException iae) {
-                        TARDISMessage.send(player, plugin.getPluginName() + "Biome type not valid!");
+                        TARDISMessage.send(player, plugin.getPluginName() + MESSAGE.BIOME_NOT_VALID.getText());
                         return true;
                     }
                 }

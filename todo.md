@@ -4,10 +4,11 @@
 
 1. Artron button powers on/off TARDIS after initialisation
 2. TARDIS invisibility - 1.8 barrier blocks?
-3. Localisation - this one is a HUGE job
-4. Remove books and achievements?
+3. Remove books and achievements?
 
 ###In progress
+
+3. Localisation - this one is a HUGE job
 4. `/tardisremote` commands
 5. UHC flying mode
 6. Walk in to the TARDIS if door is open
@@ -19,6 +20,7 @@
 ##Future version `3.0+`
 1. Console modes?
 2. ARS room limit - can only reconfigure x rooms at a time (and cannot open ARS until reconfiguration is complete) - configurable option
+3. Slimmer TARDIS option?
 
 ####I couldn't really be bothered
 1. HADS + explosions + fireballs + lava

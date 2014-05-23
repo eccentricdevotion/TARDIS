@@ -144,7 +144,7 @@ public class TARDISEnterCommand {
                     return true;
                 }
             }
-            TARDISMessage.send(player, plugin.getPluginName() + args[1] + " has not created a TARDIS yet!");
+            TARDISMessage.send(player, plugin.getPluginName() + MESSAGE.PLAYER_NO_TARDIS.getText());
             return true;
         } else {
             sender.sendMessage(plugin.getPluginName() + "Could not find UUID for player [" + args[1] + "]!");

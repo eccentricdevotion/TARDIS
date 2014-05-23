@@ -93,7 +93,7 @@ public class TARDISStattenheimListener implements Listener {
                 if (player.hasPermission("tardis.timetravel")) {
                     Location remoteLocation = b.getLocation();
                     if (!plugin.getConfig().getBoolean("travel.include_default_world") && plugin.getConfig().getBoolean("creation.default_world") && remoteLocation.getWorld().getName().equals(plugin.getConfig().getString("creation.default_world_name"))) {
-                        TARDISMessage.send(player, plugin.getPluginName() + "The server admin will not allow you to bring the TARDIS to this world!");
+                        TARDISMessage.send(player, plugin.getPluginName() + MESSAGE.NO_WORLD_TRAVEL.getText());
                         return;
                     }
                     if (!plugin.getPluginRespect().getRespect(player, remoteLocation, true)) {
@@ -125,7 +125,7 @@ public class TARDISStattenheimListener implements Listener {
                     where.put("uuid", player.getUniqueId().toString());
                     ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);
                     if (!rs.resultSet()) {
-                        TARDISMessage.send(player, plugin.getPluginName() + "You don't have a TARDIS!");
+                        TARDISMessage.send(player, plugin.getPluginName() + MESSAGE.NO_TARDIS.getText());
                         return;
                     }
                     final int id = rs.getTardis_id();
@@ -177,7 +177,7 @@ public class TARDISStattenheimListener implements Listener {
                         count = tt.safeLocation(start_loc[0], remoteLocation.getBlockY(), start_loc[2], start_loc[1], start_loc[3], remoteLocation.getWorld(), player_d);
                     }
                     if (count > 0) {
-                        TARDISMessage.send(player, plugin.getPluginName() + "That location would grief existing blocks! Try somewhere else!");
+                        TARDISMessage.send(player, plugin.getPluginName() + MESSAGE.WOULD_GRIEF_BLOCKS.getText());
                         return;
                     }
                     int ch = plugin.getArtronConfig().getInt("comehere");
@@ -227,7 +227,7 @@ public class TARDISStattenheimListener implements Listener {
                         tid.put("tardis_id", id);
                         qf.doUpdate("tardis", set, tid);
                     }
-                    TARDISMessage.send(player, plugin.getPluginName() + "The TARDIS is coming...");
+                    TARDISMessage.send(player, plugin.getPluginName() + MESSAGE.TARDIS_COMING.getText());
                     boolean mat = plugin.getConfig().getBoolean("police_box.materialise");
                     long delay = (mat) ? 10L : 180L;
                     plugin.getTrackerKeeper().getInVortex().add(id);

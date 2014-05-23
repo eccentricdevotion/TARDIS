@@ -66,7 +66,7 @@ public class TARDISTextureCommands implements CommandExecutor {
                 return false;
             }
             if (player == null) {
-                sender.sendMessage(plugin.getPluginName() + MESSAGE.MUST_BE_PLAYER.getText());
+                sender.sendMessage(plugin.getPluginName() + MESSAGE.CMD_PLAYER.getText());
                 return false;
             }
             if (player.hasPermission("tardis.texture")) {
@@ -105,7 +105,7 @@ public class TARDISTextureCommands implements CommandExecutor {
                                 upd.put("texture_out", args[1]);
                             }
                         } catch (MalformedURLException e) {
-                            TARDISMessage.send(player, plugin.getPluginName() + "Not a valid URL! " + e.getMessage());
+                            TARDISMessage.send(player, plugin.getPluginName() + String.format(MESSAGE.URL.getText(), e.getMessage()));
                             return true;
                         }
                     }

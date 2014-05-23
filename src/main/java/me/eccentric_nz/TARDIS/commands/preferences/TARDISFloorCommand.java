@@ -24,6 +24,7 @@ import java.util.Locale;
 import me.eccentric_nz.TARDIS.TARDIS;
 import static me.eccentric_nz.TARDIS.commands.preferences.TARDISPrefsCommands.ucfirst;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
+import me.eccentric_nz.TARDIS.enumeration.MESSAGE;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import org.bukkit.entity.Player;
 
@@ -59,7 +60,7 @@ public class TARDISFloorCommand {
             wall_mat = args[1].toUpperCase(Locale.ENGLISH);
         }
         if (!plugin.getTardisWalls().blocks.containsKey(wall_mat)) {
-            String message = (wall_mat.equals("HELP")) ? "Here is a list of valid " + pref + " materials:" : "That is not a valid " + pref + " material! Try:";
+            String message = (wall_mat.equals("HELP")) ? String.format(MESSAGE.WALL_LIST.getText(), pref) : String.format(MESSAGE.WALL_NOT_VALID.getText(), pref);
             TARDISMessage.send(player, plugin.getPluginName() + message);
             List<String> sortedKeys = new ArrayList<String>(plugin.getTardisWalls().blocks.keySet());
             Collections.sort(sortedKeys);

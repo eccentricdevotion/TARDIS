@@ -90,7 +90,7 @@ public class TARDISDiskWriterCommand {
                     wherecl.put("tardis_id", rs.getTardis_id());
                     ResultSetCurrentLocation rsc = new ResultSetCurrentLocation(plugin, wherecl);
                     if (!rsc.resultSet()) {
-                        TARDISMessage.send(player, plugin.getPluginName() + MESSAGE.NO_CURRENT.getText());
+                        TARDISMessage.send(player, plugin.getPluginName() + MESSAGE.CURRENT_NOT_FOUND.getText());
                         return true;
                     }
                     lore.set(0, args[1]);
@@ -126,7 +126,7 @@ public class TARDISDiskWriterCommand {
                     return false;
                 }
                 if (!args[1].matches("[A-Za-z0-9_]{2,16}")) {
-                    TARDISMessage.send(player, plugin.getPluginName() + MESSAGE.NOT_VALID_NAME.getText());
+                    TARDISMessage.send(player, plugin.getPluginName() + MESSAGE.PLAYER_NOT_VALID.getText());
                     return false;
                 }
                 if (player.getName().equalsIgnoreCase(args[1])) {

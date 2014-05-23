@@ -158,7 +158,7 @@ public class TARDISSaveSignListener implements Listener {
                                         plugin.getTrackerKeeper().getRescue().remove(id);
                                     }
                                     close(player);
-                                    TARDISMessage.send(player, plugin.getPluginName() + im.getDisplayName() + " destination set. Please release the handbrake!");
+                                    TARDISMessage.send(player, plugin.getPluginName() + im.getDisplayName() + " destination set. " + MESSAGE.HANDBRAKE_RELEASE.getText());
                                 } else if (!lore.contains("§6Current location")) {
                                     lore.add("§6Current location");
                                     im.setLore(lore);

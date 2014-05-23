@@ -61,7 +61,7 @@ public class TARDISRescue {
      */
     public boolean rescue(Player player, UUID saved, int id, TARDISTimeTravel tt, COMPASS d, boolean rescue) {
         if (plugin.getServer().getPlayer(saved) == null) {
-            TARDISMessage.send(player, plugin.getPluginName() + "That player is not online!");
+            TARDISMessage.send(player, plugin.getPluginName() + MESSAGE.NOT_ONLINE.getText());
             return (!rescue);
         }
         Player destPlayer = plugin.getServer().getPlayer(saved);
@@ -74,7 +74,7 @@ public class TARDISRescue {
             return (!rescue);
         }
         if (!plugin.getConfig().getBoolean("worlds." + player_loc.getWorld().getName())) {
-            TARDISMessage.send(player, plugin.getPluginName() + "The server does not allow time travel to this world!");
+            TARDISMessage.send(player, plugin.getPluginName() + MESSAGE.NO_WORLD_TRAVEL.getText());
             return (!rescue);
         }
         World w = player_loc.getWorld();
@@ -97,7 +97,7 @@ public class TARDISRescue {
         QueryFactory qf = new QueryFactory(plugin);
         qf.doUpdate("next", set, where);
         if (!rescue) {
-            TARDISMessage.send(player, plugin.getPluginName() + "The player location was saved successfully. Please release the handbrake!");
+            TARDISMessage.send(player, plugin.getPluginName() + "The player location was saved successfully. " + MESSAGE.HANDBRAKE_RELEASE.getText());
         }
         plugin.getTrackerKeeper().getHasDestination().put(id, plugin.getArtronConfig().getInt("travel"));
         if (rescue) {
@@ -152,7 +152,7 @@ public class TARDISRescue {
             wherecl.put("tardis_id", id);
             ResultSetCurrentLocation rsc = new ResultSetCurrentLocation(plugin, wherecl);
             if (!rsc.resultSet()) {
-                TARDISMessage.send(player, plugin.getPluginName() + ChatColor.RED + MESSAGE.NO_CURRENT.getText());
+                TARDISMessage.send(player, plugin.getPluginName() + ChatColor.RED + MESSAGE.CURRENT_NOT_FOUND.getText());
                 return false;
             }
             return rescue(player, saved, id, tt, rsc.getDirection(), true);

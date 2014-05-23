@@ -76,7 +76,7 @@ public class TARDISGravityCommands implements CommandExecutor {
                 player = (Player) sender;
             }
             if (player == null) {
-                sender.sendMessage(plugin.getPluginName() + ChatColor.RED + MESSAGE.MUST_BE_PLAYER.getText());
+                sender.sendMessage(plugin.getPluginName() + ChatColor.RED + MESSAGE.CMD_PLAYER.getText());
                 return false;
             }
             if (!player.hasPermission("tardis.gravity")) {
@@ -113,7 +113,7 @@ public class TARDISGravityCommands implements CommandExecutor {
                             return true;
                         }
                     } catch (NumberFormatException e) {
-                        TARDISMessage.send(player, plugin.getPluginName() + "Second argument must be a number!");
+                        TARDISMessage.send(player, plugin.getPluginName() + MESSAGE.ARG_SEC_NUMBER.getText());
                         return false;
                     }
                 } else {

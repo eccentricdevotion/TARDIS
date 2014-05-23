@@ -42,7 +42,7 @@ public class TARDISSetMaterialCommand {
         String first = (section.isEmpty()) ? args[0].toLowerCase() : section + "." + args[0].toLowerCase();
         String setMaterial = args[1].toUpperCase(Locale.ENGLISH);
         if (!checkMaterial(setMaterial)) {
-            sender.sendMessage(plugin.getPluginName() + ChatColor.RED + MESSAGE.NOT_VALID_MATERIAL.getText());
+            sender.sendMessage(plugin.getPluginName() + ChatColor.RED + MESSAGE.MATERIAL_NOT_VALID.getText());
             return false;
         } else {
             plugin.getConfig().set(first, setMaterial);
@@ -56,7 +56,7 @@ public class TARDISSetMaterialCommand {
         String first = args[0].toLowerCase();
         String setMaterial = args[1].toUpperCase(Locale.ENGLISH);
         if (!checkMaterial(setMaterial)) {
-            sender.sendMessage(plugin.getPluginName() + ChatColor.RED + MESSAGE.NOT_VALID_MATERIAL.getText());
+            sender.sendMessage(plugin.getPluginName() + ChatColor.RED + MESSAGE.MATERIAL_NOT_VALID.getText());
             return false;
         } else {
             plugin.getArtronConfig().set(first, setMaterial);

@@ -328,7 +328,7 @@ public class TARDISRoomCommands implements CommandExecutor {
                         try {
                             Material go = Material.valueOf(setMaterial);
                         } catch (IllegalArgumentException e) {
-                            sender.sendMessage(plugin.getPluginName() + ChatColor.RED + MESSAGE.NOT_VALID_MATERIAL.getText());
+                            sender.sendMessage(plugin.getPluginName() + ChatColor.RED + MESSAGE.MATERIAL_NOT_VALID.getText());
                             return false;
                         }
                         // check seed material is not already in use

@@ -22,6 +22,7 @@ import java.util.List;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
+import me.eccentric_nz.TARDIS.enumeration.MESSAGE;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import org.bukkit.Location;
 import org.bukkit.World;
@@ -49,7 +50,7 @@ public class TARDISToggleOnOffCommand {
             return true;
         }
         if (pref.equals("eps") && !plugin.getConfig().getBoolean("allow.emergency_npc")) {
-            TARDISMessage.send(player, plugin.getPluginName() + "Emergency Programme One is disabled on this server!");
+            TARDISMessage.send(player, plugin.getPluginName() + MESSAGE.EP1_DISABLED.getText());
             return true;
         }
         if (pref.equals("hads") && !plugin.getConfig().getBoolean("allow.hads")) {

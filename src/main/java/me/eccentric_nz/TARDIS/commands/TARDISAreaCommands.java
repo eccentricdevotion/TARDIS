@@ -67,7 +67,7 @@ public class TARDISAreaCommands implements CommandExecutor {
                 return false;
             }
             if (player == null) {
-                sender.sendMessage(plugin.getPluginName() + ChatColor.RED + MESSAGE.MUST_BE_PLAYER.getText());
+                sender.sendMessage(plugin.getPluginName() + ChatColor.RED + MESSAGE.CMD_PLAYER.getText());
                 return false;
             }
             if (args[0].equals("start")) {
@@ -120,7 +120,7 @@ public class TARDISAreaCommands implements CommandExecutor {
                 where.put("area_name", args[1]);
                 ResultSetAreas rsa = new ResultSetAreas(plugin, where, false);
                 if (!rsa.resultSet()) {
-                    TARDISMessage.send(player, plugin.getPluginName() + "Could not find area [" + args[1] + "]! Did you type the name correctly?");
+                    TARDISMessage.send(player, plugin.getPluginName() + String.format(MESSAGE.AREA_NOT_FOUND.getText(), ChatColor.GREEN + "/tardis list areas" + ChatColor.RESET));
                     return false;
                 }
                 int mix = rsa.getMinx();

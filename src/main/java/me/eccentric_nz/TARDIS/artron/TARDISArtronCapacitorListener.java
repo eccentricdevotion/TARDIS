@@ -24,6 +24,7 @@ import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetControls;
 import me.eccentric_nz.TARDIS.database.ResultSetPlayerPrefs;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
+import me.eccentric_nz.TARDIS.enumeration.MESSAGE;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -121,7 +122,7 @@ public class TARDISArtronCapacitorListener implements Listener {
                             }
                             if (item.equals(full) || item.equals(cell)) {
                                 if (!init) {
-                                    TARDISMessage.send(player, plugin.getPluginName() + "You haven't initialised the Artron Energy capacitor yet!");
+                                    TARDISMessage.send(player, plugin.getPluginName() + MESSAGE.ENERGY_NO_INIT.getText());
                                     return;
                                 }
                                 int amount = 0;
@@ -214,7 +215,7 @@ public class TARDISArtronCapacitorListener implements Listener {
                                 }
                             } else if (player.isSneaking()) {
                                 if (!init) {
-                                    TARDISMessage.send(player, plugin.getPluginName() + "You haven't initialised the Artron Energy capacitor yet!");
+                                    TARDISMessage.send(player, plugin.getPluginName() + MESSAGE.ENERGY_NO_INIT.getText());
                                     return;
                                 }
                                 // transfer player artron energy into the capacitor

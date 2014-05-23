@@ -18,6 +18,7 @@ import java.util.concurrent.ConcurrentMap;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.advanced.TARDISCircuitChecker;
 import me.eccentric_nz.TARDIS.database.ResultSetControls;
+import me.eccentric_nz.TARDIS.enumeration.MESSAGE;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -91,7 +92,7 @@ public class TARDISKeyboardPacketListener implements Listener {
                     tcc.getCircuits();
                 }
                 if (tcc != null && !tcc.hasInput()) {
-                    TARDISMessage.send(player, plugin.getPluginName() + "The Input Circuit is missing from the console!");
+                    TARDISMessage.send(player, plugin.getPluginName() + MESSAGE.INPUT_MISSING.getText());
                     return;
                 }
                 Sign sign = (Sign) b.getState();

@@ -54,7 +54,7 @@ public class TARDISFindCommand {
                     TARDISMessage.send(player, plugin.getPluginName() + "TARDIS was left at " + rsc.getWorld().getName() + " at x: " + rsc.getX() + " y: " + rsc.getY() + " z: " + rsc.getZ());
                     return true;
                 } else {
-                    TARDISMessage.send(player, plugin.getPluginName() + MESSAGE.NO_CURRENT.getText());
+                    TARDISMessage.send(player, plugin.getPluginName() + MESSAGE.CURRENT_NOT_FOUND.getText());
                     return true;
                 }
             } else {

@@ -37,7 +37,7 @@ public class TARDISExterminateCommand {
 
     public boolean doExterminate(CommandSender sender, Player player) {
         if (player == null) {
-            sender.sendMessage(plugin.getPluginName() + MESSAGE.MUST_BE_PLAYER.getText());
+            sender.sendMessage(plugin.getPluginName() + MESSAGE.CMD_PLAYER.getText());
             return false;
         }
         if (!plugin.getTrackerKeeper().getExterminate().containsKey(player.getUniqueId())) {

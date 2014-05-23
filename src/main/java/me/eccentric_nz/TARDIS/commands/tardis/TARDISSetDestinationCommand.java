@@ -90,7 +90,7 @@ public class TARDISSetDestinationCommand {
                 }
                 String world = l.getWorld().getName();
                 if (!plugin.getConfig().getBoolean("travel.include_default_world") && plugin.getConfig().getBoolean("creation.default_world") && world.equals(plugin.getConfig().getString("creation.default_world_name"))) {
-                    TARDISMessage.send(player, plugin.getPluginName() + "The server admin will not allow you to set the TARDIS destination to this world!");
+                    TARDISMessage.send(player, plugin.getPluginName() + MESSAGE.NO_WORLD_TRAVEL.getText());
                     return true;
                 }
                 // check the world is not excluded

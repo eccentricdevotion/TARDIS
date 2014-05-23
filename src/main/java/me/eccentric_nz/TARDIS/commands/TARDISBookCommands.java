@@ -76,7 +76,7 @@ public class TARDISBookCommands implements CommandExecutor {
                     player = (Player) sender;
                 }
                 if (player == null) {
-                    sender.sendMessage(plugin.getPluginName() + MESSAGE.MUST_BE_PLAYER.getText());
+                    sender.sendMessage(plugin.getPluginName() + MESSAGE.CMD_PLAYER.getText());
                     return true;
                 }
                 if (args.length < 2) {

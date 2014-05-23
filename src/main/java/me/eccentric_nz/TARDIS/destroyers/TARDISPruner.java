@@ -82,7 +82,7 @@ public class TARDISPruner {
                             sender.sendMessage(line);
                         }
                     } else {
-                        plugin.debug(MESSAGE.NO_CURRENT.getText());
+                        plugin.debug(MESSAGE.CURRENT_NOT_FOUND.getText());
                     }
                 }
                 bw.close();

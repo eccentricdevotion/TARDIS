@@ -116,7 +116,7 @@ public class TARDISCaveFinder {
                 TARDISMessage.send(p, plugin.getPluginName() + "You cannot travel to a cave in the " + w.getEnvironment().toString() + "!");
             }
         } else {
-            TARDISMessage.send(p, plugin.getPluginName() + MESSAGE.NO_CURRENT.getText());
+            TARDISMessage.send(p, plugin.getPluginName() + MESSAGE.CURRENT_NOT_FOUND.getText());
         }
         return l;
     }

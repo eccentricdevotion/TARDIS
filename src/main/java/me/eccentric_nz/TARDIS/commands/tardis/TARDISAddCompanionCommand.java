@@ -62,7 +62,7 @@ public class TARDISAddCompanionCommand {
                 return false;
             }
             if (!args[1].matches("[A-Za-z0-9_]{2,16}")) {
-                TARDISMessage.send(player, plugin.getPluginName() + MESSAGE.NOT_VALID_NAME.getText());
+                TARDISMessage.send(player, plugin.getPluginName() + MESSAGE.PLAYER_NOT_VALID.getText());
                 return true;
             } else {
                 UUID oluuid = plugin.getServer().getOfflinePlayer(args[1]).getUniqueId();

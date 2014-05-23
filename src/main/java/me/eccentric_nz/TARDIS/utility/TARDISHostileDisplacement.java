@@ -28,6 +28,7 @@ import me.eccentric_nz.TARDIS.database.ResultSetCurrentLocation;
 import me.eccentric_nz.TARDIS.database.ResultSetPlayerPrefs;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
+import me.eccentric_nz.TARDIS.enumeration.MESSAGE;
 import me.eccentric_nz.TARDIS.travel.TARDISTimeTravel;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
@@ -170,9 +171,9 @@ public class TARDISHostileDisplacement {
                                     }
                                     break;
                                 } else {
-                                    TARDISMessage.send(player, plugin.getPluginName() + "HADS could not be engaged because the area is protected!");
+                                    TARDISMessage.send(player, plugin.getPluginName() + MESSAGE.HADS_PROTECTED.getText());
                                     if (player != hostile) {
-                                        TARDISMessage.send(hostile, plugin.getPluginName() + "HADS could not be engaged because the area is protected!");
+                                        TARDISMessage.send(hostile, plugin.getPluginName() + MESSAGE.HADS_PROTECTED.getText());
                                     }
                                 }
                             } else {

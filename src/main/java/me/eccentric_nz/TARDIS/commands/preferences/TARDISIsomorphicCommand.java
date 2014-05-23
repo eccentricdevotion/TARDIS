@@ -20,6 +20,7 @@ import java.util.HashMap;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
+import me.eccentric_nz.TARDIS.enumeration.MESSAGE;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import org.bukkit.entity.Player;
 
@@ -52,7 +53,7 @@ public class TARDISIsomorphicCommand {
             TARDISMessage.send(player, plugin.getPluginName() + "Isomorphic controls were turned " + onoff + "!");
             return true;
         } else {
-            TARDISMessage.send(player, plugin.getPluginName() + "You don't have a TARDIS yet!");
+            TARDISMessage.send(player, plugin.getPluginName() + MESSAGE.NO_TARDIS.getText());
             return true;
         }
     }

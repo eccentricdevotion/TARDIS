@@ -172,7 +172,7 @@ public class TARDISScannerListener implements Listener {
         } else {
             ResultSetCurrentLocation rsc = new ResultSetCurrentLocation(plugin, wherenl);
             if (!rsc.resultSet()) {
-                TARDISMessage.send(player, plugin.getPluginName() + MESSAGE.NO_CURRENT.getText());
+                TARDISMessage.send(player, plugin.getPluginName() + MESSAGE.CURRENT_NOT_FOUND.getText());
                 return null;
             }
             scan_loc = new Location(rsc.getWorld(), rsc.getX(), rsc.getY(), rsc.getZ());

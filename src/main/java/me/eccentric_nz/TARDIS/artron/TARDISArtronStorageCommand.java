@@ -67,7 +67,7 @@ public class TARDISArtronStorageCommand implements CommandExecutor {
                 player = (Player) sender;
             }
             if (player == null) {
-                sender.sendMessage(plugin.getPluginName() + ChatColor.RED + MESSAGE.MUST_BE_PLAYER.getText());
+                sender.sendMessage(plugin.getPluginName() + ChatColor.RED + MESSAGE.CMD_PLAYER.getText());
                 return true;
             }
             ItemStack is = player.getItemInHand();
@@ -119,7 +119,7 @@ public class TARDISArtronStorageCommand implements CommandExecutor {
                     return true;
                 }
             } catch (NumberFormatException n) {
-                TARDISMessage.send(player, plugin.getPluginName() + "The second command argument must be a number!");
+                TARDISMessage.send(player, plugin.getPluginName() + MESSAGE.ARG_SEC_NUMBER.getText());
                 return false;
             }
             // must have sufficient energy

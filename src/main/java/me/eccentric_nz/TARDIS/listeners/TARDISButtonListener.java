@@ -128,7 +128,7 @@ public class TARDISButtonListener implements Listener {
                         if (rs.resultSet()) {
                             // check they initialised
                             if (!rs.isTardis_init()) {
-                                TARDISMessage.send(player, plugin.getPluginName() + ChatColor.RED + "The TARDIS Artron Energy Capacitor has not been initialised!");
+                                TARDISMessage.send(player, plugin.getPluginName() + ChatColor.RED + MESSAGE.ENERGY_NO_INIT.getText());
                                 return;
                             }
                             int level = rs.getArtron_level();
@@ -179,7 +179,7 @@ public class TARDISButtonListener implements Listener {
                                             set.put("z", l.getBlockZ());
                                             set.put("direction", dir.toString());
                                             set.put("submarine", 0);
-                                            TARDISMessage.send(player, plugin.getPluginName() + "Your TARDIS was approved for parking in [" + permArea + "]!");
+                                            TARDISMessage.send(player, plugin.getPluginName() + String.format(MESSAGE.TRAVEL_APPROVED.getText(), permArea));
                                             set_dest = true;
                                         }
                                     } else {
@@ -200,12 +200,12 @@ public class TARDISButtonListener implements Listener {
                                                     // check they have enough artron energy to travel to the NETHER
                                                     if (level < nether_min) {
                                                         environment = "NORMAL";
-                                                        TARDISMessage.send(player, plugin.getPluginName() + "You need at least " + nether_min + " Artron Energy to travel to the Nether! Overworld selected.");
+                                                        TARDISMessage.send(player, plugin.getPluginName() + String.format(MESSAGE.NOT_ENOUGH_TRAVEL_ENERGY.getText(), nether_min, "Nether"));
                                                     } else {
                                                         environment = "NETHER";
                                                     }
                                                 } else {
-                                                    String message = (player.hasPermission("tardis.nether")) ? "The ancient, dusty senators of Gallifrey have disabled time travel to the Nether" : "You do not have permission to time travel to the Nether";
+                                                    String message = (player.hasPermission("tardis.nether")) ? String.format(MESSAGE.ANCIENT.getText(), "Nether") : String.format(MESSAGE.NO_PERM_TRAVEL.getText(), "Nether");
                                                     TARDISMessage.send(player, plugin.getPluginName() + message);
                                                 }
                                             }
@@ -214,12 +214,12 @@ public class TARDISButtonListener implements Listener {
                                                     // check they have enough artron energy to travel to THE_END
                                                     if (level < the_end_min) {
                                                         environment = "NORMAL";
-                                                        TARDISMessage.send(player, plugin.getPluginName() + "You need at least " + the_end_min + " Artron Energy to travel to The End! Overworld selected.");
+                                                        TARDISMessage.send(player, plugin.getPluginName() + String.format(MESSAGE.NOT_ENOUGH_TRAVEL_ENERGY.getText(), the_end_min, "End"));
                                                     } else {
                                                         environment = "THE_END";
                                                     }
                                                 } else {
-                                                    String message = (player.hasPermission("tardis.end")) ? "The ancient, dusty senators of Gallifrey have disabled time travel to The End" : "You do not have permission to time travel to The End";
+                                                    String message = (player.hasPermission("tardis.end")) ? String.format(MESSAGE.ANCIENT.getText(), "End") : String.format(MESSAGE.NO_PERM_TRAVEL.getText(), "End");
                                                     TARDISMessage.send(player, plugin.getPluginName() + message);
                                                 }
                                             }
@@ -296,13 +296,13 @@ public class TARDISButtonListener implements Listener {
                                                 set.put("direction", rsb.getDirection().toString());
                                                 set.put("submarine", (rsb.isSubmarine()) ? 1 : 0);
                                                 set_dest = true;
-                                                TARDISMessage.send(player, plugin.getPluginName() + "Previous location selected. Please release the handbrake!");
+                                                TARDISMessage.send(player, plugin.getPluginName() + "Previous location selected. " + MESSAGE.HANDBRAKE_RELEASE.getText());
                                             } else {
                                                 TARDISMessage.send(player, plugin.getPluginName() + "You are already at the previous location. You need to travel somewhere else first!");
                                             }
                                         }
                                     } else {
-                                        TARDISMessage.send(player, plugin.getPluginName() + "Could not get the previous location!");
+                                        TARDISMessage.send(player, plugin.getPluginName() + MESSAGE.PREV_NOT_FOUND.getText());
                                     }
                                     break;
                                 case 9: // terminal sign
@@ -315,7 +315,7 @@ public class TARDISButtonListener implements Listener {
                                         return;
                                     }
                                     if (tcc != null && !tcc.hasInput()) {
-                                        TARDISMessage.send(player, plugin.getPluginName() + "The Input Circuit is missing from the console!");
+                                        TARDISMessage.send(player, plugin.getPluginName() + MESSAGE.INPUT_MISSING.getText());
                                         return;
                                     }
                                     Inventory aec = plugin.getServer().createInventory(player, 54, "§4Destination Terminal");

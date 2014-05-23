@@ -57,7 +57,7 @@ public class TARDISSetKeyCommand {
         try {
             go = Material.valueOf(setMaterial);
         } catch (IllegalArgumentException e) {
-            TARDISMessage.send(player, plugin.getPluginName() + ChatColor.RED + MESSAGE.NOT_VALID_MATERIAL.getText());
+            TARDISMessage.send(player, plugin.getPluginName() + ChatColor.RED + MESSAGE.MATERIAL_NOT_VALID.getText());
             return false;
         }
         if (go.isBlock()) {
@@ -65,7 +65,7 @@ public class TARDISSetKeyCommand {
             return true;
         }
         if (plugin.getConfig().getBoolean("travel.give_key") && !plugin.getConfig().getBoolean("allow.all_blocks") && !keys.contains(go)) {
-            TARDISMessage.send(player, plugin.getPluginName() + ChatColor.RED + MESSAGE.NOT_VALID_MATERIAL.getText());
+            TARDISMessage.send(player, plugin.getPluginName() + ChatColor.RED + MESSAGE.MATERIAL_NOT_VALID.getText());
             return true;
         }
         String field = (plugin.getConfig().getString("storage.database").equals("sqlite")) ? "key" : "key_item";

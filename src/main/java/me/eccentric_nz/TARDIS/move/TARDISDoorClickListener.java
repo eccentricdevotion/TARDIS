@@ -146,7 +146,7 @@ public class TARDISDoorClickListener extends TARDISDoorListener implements Liste
                                 ResultSetTardis rs = new ResultSetTardis(plugin, oid, "", false);
                                 if (rs.resultSet()) {
                                     if (rs.getTardis_id() != id) {
-                                        TARDISMessage.send(player, plugin.getPluginName() + "You can only lock or unlock your own door!");
+                                        TARDISMessage.send(player, plugin.getPluginName() + MESSAGE.DOOR_LOCK_UNLOCK.getText());
                                         return;
                                     }
                                     int locked = (rsd.isLocked()) ? 0 : 1;
@@ -172,7 +172,7 @@ public class TARDISDoorClickListener extends TARDISDoorListener implements Liste
                                 ResultSetTardis rs = new ResultSetTardis(plugin, tid, "", false);
                                 if (rs.resultSet()) {
                                     if (!rs.isHandbrake_on()) {
-                                        TARDISMessage.send(player, plugin.getPluginName() + "You need to engage the handbrake!");
+                                        TARDISMessage.send(player, plugin.getPluginName() + MESSAGE.HANDBRAKE_ENGAGE.getText());
                                         return;
                                     }
                                     // must be Time Lord or companion
@@ -227,16 +227,16 @@ public class TARDISDoorClickListener extends TARDISDoorListener implements Liste
                                             }
                                         } else {
                                             if (rs.getUuid() != playerUUID) {
-                                                TARDISMessage.send(player, plugin.getPluginName() + "The door is deadlocked!");
+                                                TARDISMessage.send(player, plugin.getPluginName() + MESSAGE.DOOR_DEADLOCKED.getText());
                                             } else {
-                                                TARDISMessage.send(player, plugin.getPluginName() + "You need to unlock the door!");
+                                                TARDISMessage.send(player, plugin.getPluginName() + MESSAGE.DOOR_UNLOCK.getText());
                                             }
                                         }
                                     }
                                 }
                             } else if (action == Action.RIGHT_CLICK_BLOCK && !player.isSneaking()) {
                                 if (rsd.isLocked()) {
-                                    TARDISMessage.send(player, plugin.getPluginName() + "The door is deadlocked!");
+                                    TARDISMessage.send(player, plugin.getPluginName() + MESSAGE.DOOR_DEADLOCKED.getText());
                                     return;
                                 }
                                 int id = rsd.getTardis_id();
@@ -421,7 +421,7 @@ public class TARDISDoorClickListener extends TARDISDoorListener implements Liste
                                             break;
                                         case 2:
                                             if (artron < required) {
-                                                TARDISMessage.send(player, plugin.getPluginName() + "You don't have enough Artron Energy to use the back door!");
+                                                TARDISMessage.send(player, plugin.getPluginName() + MESSAGE.NOT_ENOUGH_DOOR_ENERGY.getText());
                                                 return;
                                             }
                                             // always enter by the back door
@@ -458,7 +458,7 @@ public class TARDISDoorClickListener extends TARDISDoorListener implements Liste
                                             break;
                                         case 3:
                                             if (artron < required) {
-                                                TARDISMessage.send(player, plugin.getPluginName() + "You don't have enough Artron Energy to use the back door!");
+                                                TARDISMessage.send(player, plugin.getPluginName() + MESSAGE.NOT_ENOUGH_DOOR_ENERGY.getText());
                                                 return;
                                             }
                                             // always exit to outer back door
@@ -469,12 +469,12 @@ public class TARDISDoorClickListener extends TARDISDoorListener implements Liste
                                                 return;
                                             }
                                             if (obd_loc.getWorld().getEnvironment().equals(Environment.THE_END) && (!player.hasPermission("tardis.end") || !plugin.getConfig().getBoolean("travel.the_end"))) {
-                                                String message = (!player.hasPermission("tardis.end")) ? "You don't have permission to use a back door to The End!" : "TARDIS travel to The End is disabled!";
+                                                String message = (!player.hasPermission("tardis.end")) ? "You don't have permission to use a back door to The End!" : String.format(MESSAGE.NO_PERM_TRAVEL.getText(), "End");
                                                 TARDISMessage.send(player, plugin.getPluginName() + message);
                                                 return;
                                             }
                                             if (obd_loc.getWorld().getEnvironment().equals(Environment.NETHER) && (!player.hasPermission("tardis.nether") || !plugin.getConfig().getBoolean("travel.nether"))) {
-                                                String message = (!player.hasPermission("tardis.end")) ? "You don't have permission to use a back door to the Nether!" : "TARDIS travel to the Nether is disabled!";
+                                                String message = (!player.hasPermission("tardis.end")) ? "You don't have permission to use a back door to the Nether!" : String.format(MESSAGE.NO_PERM_TRAVEL.getText(), "Nether");
                                                 TARDISMessage.send(player, plugin.getPluginName() + message);
                                                 return;
                                             }
@@ -514,7 +514,7 @@ public class TARDISDoorClickListener extends TARDISDoorListener implements Liste
                                 } else {
                                     grammar = "nothing";
                                 }
-                                TARDISMessage.send(player, plugin.getPluginName() + "The TARDIS key is a " + key + ". You have " + grammar + " in your hand!");
+                                TARDISMessage.send(player, plugin.getPluginName() + String.format(MESSAGE.NOT_KEY.getText(), key, grammar));
                             }
                         }
                     }

@@ -112,7 +112,7 @@ public class TARDISDeleteCommand {
                     biome = rsc.getBiome();
                 }
                 if (bb_loc == null) {
-                    sender.sendMessage(plugin.getPluginName() + MESSAGE.NO_CURRENT.getText());
+                    sender.sendMessage(plugin.getPluginName() + MESSAGE.CURRENT_NOT_FOUND.getText());
                     return true;
                 }
                 // destroy the TARDIS

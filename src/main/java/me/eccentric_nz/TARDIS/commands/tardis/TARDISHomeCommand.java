@@ -48,7 +48,7 @@ public class TARDISHomeCommand {
             Location eyeLocation = player.getTargetBlock(plugin.getGeneralKeeper().getTransparent(), 50).getLocation();
             COMPASS player_d = COMPASS.valueOf(plugin.getUtils().getPlayersDirection(player, false));
             if (!plugin.getConfig().getBoolean("travel.include_default_world") && plugin.getConfig().getBoolean("creation.default_world") && eyeLocation.getWorld().getName().equals(plugin.getConfig().getString("creation.default_world_name"))) {
-                TARDISMessage.send(player, plugin.getPluginName() + "The server admin will not allow you to set the TARDIS home in this world!");
+                TARDISMessage.send(player, plugin.getPluginName() + MESSAGE.NO_WORLD_TRAVEL.getText());
                 return true;
             }
             if (!plugin.getTardisArea().areaCheckInExisting(eyeLocation)) {
@@ -66,7 +66,7 @@ public class TARDISHomeCommand {
             // check the world is not excluded
             String world = eyeLocation.getWorld().getName();
             if (!plugin.getConfig().getBoolean("worlds." + world)) {
-                TARDISMessage.send(player, plugin.getPluginName() + "You cannot set the TARDIS home location to this world");
+                TARDISMessage.send(player, plugin.getPluginName() + MESSAGE.NO_WORLD_TRAVEL.getText());
                 return true;
             }
             HashMap<String, Object> where = new HashMap<String, Object>();

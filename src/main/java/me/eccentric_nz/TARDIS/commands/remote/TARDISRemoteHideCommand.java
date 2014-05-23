@@ -45,7 +45,7 @@ public class TARDISRemoteHideCommand {
         wherecl.put("tardis_id", id);
         ResultSetCurrentLocation rsc = new ResultSetCurrentLocation(plugin, wherecl);
         if (!rsc.resultSet()) {
-            sender.sendMessage(plugin.getPluginName() + MESSAGE.NO_CURRENT.getText());
+            sender.sendMessage(plugin.getPluginName() + MESSAGE.CURRENT_NOT_FOUND.getText());
             return true;
         }
         OfflinePlayer olp = null;

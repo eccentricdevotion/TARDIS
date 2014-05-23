@@ -113,7 +113,7 @@ public class TARDISCommands implements CommandExecutor {
                 return new TARDISVersionCommand(plugin).displayVersion(sender, player);
             }
             if (player == null) {
-                sender.sendMessage(plugin.getPluginName() + MESSAGE.MUST_BE_PLAYER.getText());
+                sender.sendMessage(plugin.getPluginName() + MESSAGE.CMD_PLAYER.getText());
                 return false;
             } else {
                 if (args[0].equalsIgnoreCase("arsremove")) {

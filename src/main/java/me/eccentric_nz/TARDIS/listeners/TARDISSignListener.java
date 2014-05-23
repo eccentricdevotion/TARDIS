@@ -113,7 +113,7 @@ public class TARDISSignListener implements Listener {
                     }
                     if (line1.equals("Chameleon")) {
                         if (tcc != null && !tcc.hasChameleon()) {
-                            TARDISMessage.send(player, plugin.getPluginName() + "The Chameleon Circuit is missing from the console!");
+                            TARDISMessage.send(player, plugin.getPluginName() + MESSAGE.CHAM_MISSING.getText());
                             return;
                         }
                         // open Chameleon Circuit GUI

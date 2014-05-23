@@ -17,6 +17,7 @@
 package me.eccentric_nz.TARDIS.travel;
 
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.enumeration.MESSAGE;
 import me.eccentric_nz.TARDIS.utility.TARDISFactionsChecker;
 import me.eccentric_nz.TARDIS.utility.TARDISGriefPreventionChecker;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
@@ -72,25 +73,25 @@ public class TARDISPluginRespect {
         }
         if (!plugin.getConfig().getBoolean("travel.nether") && l.getWorld().getEnvironment().equals(Environment.NETHER)) {
             if (message) {
-                TARDISMessage.send(p, plugin.getPluginName() + "Time travel to the Nether is disabled!");
+                TARDISMessage.send(p, plugin.getPluginName() + String.format(MESSAGE.TRAVEL_DISABLED.getText(), "Nether"));
             }
             bool = false;
         }
         if (!p.hasPermission("tardis.nether") && l.getWorld().getEnvironment().equals(Environment.NETHER)) {
             if (message) {
-                TARDISMessage.send(p, plugin.getPluginName() + "You do not have permission to time travel to the Nether!");
+                TARDISMessage.send(p, plugin.getPluginName() + String.format(MESSAGE.NO_PERM_TRAVEL.getText(), "Nether"));
             }
             bool = false;
         }
         if (!plugin.getConfig().getBoolean("travel.the_end") && l.getWorld().getEnvironment().equals(Environment.THE_END)) {
             if (message) {
-                TARDISMessage.send(p, plugin.getPluginName() + "Time travel to the The End is disabled!");
+                TARDISMessage.send(p, plugin.getPluginName() + String.format(MESSAGE.TRAVEL_DISABLED.getText(), "End"));
             }
             bool = false;
         }
         if (!p.hasPermission("tardis.end") && l.getWorld().getEnvironment().equals(Environment.THE_END)) {
             if (message) {
-                TARDISMessage.send(p, plugin.getPluginName() + "You do not have permission to time travel to The End!");
+                TARDISMessage.send(p, plugin.getPluginName() + String.format(MESSAGE.NO_PERM_TRAVEL.getText(), "End"));
             }
             bool = false;
         }
