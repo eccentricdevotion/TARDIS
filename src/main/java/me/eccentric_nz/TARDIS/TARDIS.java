@@ -47,6 +47,7 @@ import me.eccentric_nz.TARDIS.database.TARDISSQLiteDatabase;
 import me.eccentric_nz.TARDIS.database.TARDISUUIDConverter;
 import me.eccentric_nz.TARDIS.destroyers.TARDISDestroyerInner;
 import me.eccentric_nz.TARDIS.destroyers.TARDISPresetDestroyerFactory;
+import me.eccentric_nz.TARDIS.enumeration.LANGUAGE;
 import me.eccentric_nz.TARDIS.files.TARDISBlockLoader;
 import me.eccentric_nz.TARDIS.files.TARDISConfiguration;
 import me.eccentric_nz.TARDIS.files.TARDISMakeRoomCSV;
@@ -320,7 +321,7 @@ public class TARDIS extends JavaPlugin {
      * Loads the configured language file.
      */
     private void loadLanguage() {
-        // copy book files
+        // copy language files
         File langDir = new File(getDataFolder() + File.separator + "language");
         if (!langDir.exists()) {
             boolean result = langDir.mkdir();
@@ -329,9 +330,9 @@ public class TARDIS extends JavaPlugin {
                 langDir.setExecutable(true);
                 console.sendMessage(pluginName + "Created language directory.");
             }
-            // copy English default
-            tardisCSV.copy(getDataFolder() + File.separator + "language" + File.separator + "en.yml", getResource("en.yml"));
         }
+        // always copy English default
+        tardisCSV.copy(getDataFolder() + File.separator + "language" + File.separator + "en.yml", getResource("en.yml"));
         // get configured language
         String lang = getConfig().getString("preferences.language");
         // check file exists
@@ -342,6 +343,7 @@ public class TARDIS extends JavaPlugin {
             file = new File(getDataFolder() + File.separator + "language" + File.separator + "en.yml");
         }
         // load the language
+        this.console.sendMessage(pluginName + "Loading language: " + LANGUAGE.valueOf(lang).getLang());
         this.language = YamlConfiguration.loadConfiguration(file);
     }
 

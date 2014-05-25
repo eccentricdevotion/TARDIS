@@ -16,11 +16,11 @@
  */
 package me.eccentric_nz.TARDIS.commands.admin;
 
-import com.memetix.mst.Language;
 import java.io.File;
 import java.util.Arrays;
 import java.util.List;
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.enumeration.LANGUAGE;
 import org.bukkit.command.CommandSender;
 import org.bukkit.configuration.file.YamlConfiguration;
 
@@ -31,7 +31,7 @@ import org.bukkit.configuration.file.YamlConfiguration;
 public class TARDISLanguageCommand {
 
     private final TARDIS plugin;
-    private final List<String> codes = Arrays.asList("ar", "bg", "ca", "zh-CHS", "zh-CHT", "cs", "da", "nl", "en", "et", "fi", "fr", "de", "el", "ht", "he", "hi", "mww", "hu", "id", "it", "ja", "ko", "lv", "lt", "ms", "no", "fa", "pl", "pt", "ro", "ru", "sk", "sl", "es", "sv", "th", "tr", "uk", "ur", "vi");
+    private final List<String> codes = Arrays.asList("ar", "bg", "ca", "zh", "cs", "da", "nl", "en", "et", "fi", "fr", "de", "el", "ht", "he", "hi", "mww", "hu", "id", "it", "ja", "ko", "lv", "lt", "ms", "no", "fa", "pl", "pt", "ro", "ru", "sk", "sl", "es", "sv", "th", "tr", "uk", "ur", "vi");
 
     public TARDISLanguageCommand(TARDIS plugin) {
         this.plugin = plugin;
@@ -52,7 +52,7 @@ public class TARDISLanguageCommand {
         }
         // load the language
         plugin.setLanguage(YamlConfiguration.loadConfiguration(file));
-        sender.sendMessage(plugin.getPluginName() + String.format(plugin.getLanguage().getString("LANG_SET"), Language.fromString(args[1]).toString()));
+        sender.sendMessage(plugin.getPluginName() + String.format(plugin.getLanguage().getString("LANG_SET"), LANGUAGE.valueOf(args[1]).getLang()));
         return true;
     }
 }
