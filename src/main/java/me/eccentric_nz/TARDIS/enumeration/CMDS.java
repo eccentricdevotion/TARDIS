@@ -18,7 +18,9 @@ package me.eccentric_nz.TARDIS.enumeration;
 
 import java.util.Locale;
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.utility.TARDISChatPaginator;
 import org.bukkit.ChatColor;
+import org.bukkit.entity.Player;
 
 /**
  *
@@ -75,4 +77,12 @@ public enum CMDS {
         return null;
     }
 
+    public static void send(Player p, String message) {
+        if (message.length() > TARDISChatPaginator.GUARANTEED_NO_WRAP_CHAT_PAGE_WIDTH) {
+            String[] multiline = TARDISChatPaginator.wordWrap(message, TARDISChatPaginator.GUARANTEED_NO_WRAP_CHAT_PAGE_WIDTH);
+            p.sendMessage(multiline);
+        } else {
+            p.sendMessage(message);
+        }
+    }
 }

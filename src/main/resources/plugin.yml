@@ -447,10 +447,10 @@ commands:
       description: Toggle the TARDIS Autonomous Homing feature on and off.
       usage: /<command> auto [on|off]
     eps:
-      description: Toggle Emergency Program One on and off.
+      description: Toggle Emergency Programme One on and off.
       usage: /<command> eps [on|off]
     message:
-      description: Set the Emergency Program One message.
+      description: Set the Emergency Programme One message.
       usage: /<command> eps_message [message]
     hads:
       description: Toggle HADS on and off.

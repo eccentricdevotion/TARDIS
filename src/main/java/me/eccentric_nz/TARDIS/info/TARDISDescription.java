@@ -133,7 +133,7 @@ public enum TARDISDescription {
             + "USAGE: Right-click with the TARDIS key.\n"
             + "UPDATING: /tardis update door\n"
             + "BLOCK: IRON_DOOR"),
-    EPS(" INFO: Updates the block that the Emergency Program One appears on when enacted.\n"
+    EPS(" INFO: Updates the block that the Emergency Programme One appears on when enacted.\n"
             + "USAGE: Right-click the block to update\n"
             + "UPDATING: /tardis update EPS\n"
             + "BLOCK: any"),

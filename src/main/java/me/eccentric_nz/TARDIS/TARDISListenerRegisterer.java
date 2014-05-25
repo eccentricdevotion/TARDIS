@@ -230,12 +230,12 @@ public class TARDISListenerRegisterer {
     private boolean getNPCManager() {
         if (plugin.getPM().getPlugin("Citizens") != null && plugin.getPM().getPlugin("Citizens").isEnabled()) {
             if (plugin.getConfig().getBoolean("allow.emergency_npc")) {
-                plugin.debug("Enabling Emergency Program One!");
+                plugin.debug("Enabling Emergency Programme One!");
             }
             return true;
         } else {
             if (plugin.getConfig().getBoolean("allow.emergency_npc")) {
-                plugin.debug("Emergency Program One was disabled as it requires the Citizens plugin!");
+                plugin.debug("Emergency Programme One was disabled as it requires the Citizens plugin!");
             }
             // set emergency_npc false as Citizens not found
             plugin.getConfig().set("allow.emergency_npc", false);
