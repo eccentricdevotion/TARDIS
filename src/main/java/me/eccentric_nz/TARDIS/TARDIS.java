@@ -101,6 +101,7 @@ public class TARDIS extends JavaPlugin {
     private FileConfiguration blocksConfig;
     private FileConfiguration condensablesConfig;
     private FileConfiguration kitsConfig;
+    private FileConfiguration language;
     private FileConfiguration recipesConfig;
     private FileConfiguration roomsConfig;
     private FileConfiguration tagConfig;
@@ -156,6 +157,7 @@ public class TARDIS extends JavaPlugin {
             loadCustomConfigs();
             TARDISConfiguration tc = new TARDISConfiguration(this);
             tc.checkConfig();
+            loadLanguage();
             loadDatabase();
             // update database add and populate uuid fields
             if (!getConfig().getBoolean("conversions.uuid_conversion_done")) {
@@ -312,6 +314,35 @@ public class TARDIS extends JavaPlugin {
         } catch (SQLException e) {
             console.sendMessage(pluginName + "Could not close database connection: " + e);
         }
+    }
+
+    /**
+     * Loads the configured language file.
+     */
+    private void loadLanguage() {
+        // copy book files
+        File langDir = new File(getDataFolder() + File.separator + "language");
+        if (!langDir.exists()) {
+            boolean result = langDir.mkdir();
+            if (result) {
+                langDir.setWritable(true);
+                langDir.setExecutable(true);
+                console.sendMessage(pluginName + "Created language directory.");
+            }
+            // copy English default
+            tardisCSV.copy(getDataFolder() + File.separator + "language" + File.separator + "en.yml", getResource("en.yml"));
+        }
+        // get configured language
+        String lang = getConfig().getString("preferences.language");
+        // check file exists
+        File file;
+        file = new File(getDataFolder() + File.separator + "language" + File.separator + lang + ".yml");
+        if (!file.isFile()) {
+            // load English
+            file = new File(getDataFolder() + File.separator + "language" + File.separator + "en.yml");
+        }
+        // load the language
+        this.language = YamlConfiguration.loadConfiguration(file);
     }
 
     /**
@@ -649,6 +680,14 @@ public class TARDIS extends JavaPlugin {
 
     public FileConfiguration getCondensablesConfig() {
         return condensablesConfig;
+    }
+
+    public FileConfiguration getLanguage() {
+        return language;
+    }
+
+    public void setLanguage(FileConfiguration language) {
+        this.language = language;
     }
 
     public TARDISUtils getUtils() {
