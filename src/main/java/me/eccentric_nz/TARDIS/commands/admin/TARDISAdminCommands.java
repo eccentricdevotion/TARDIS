@@ -22,8 +22,7 @@ import java.util.List;
 import java.util.Locale;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.enumeration.CMDS;
-import me.eccentric_nz.TARDIS.enumeration.MESSAGE;
-import org.bukkit.ChatColor;
+import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -68,6 +67,7 @@ public class TARDISAdminCommands implements CommandExecutor {
         firstsStr.put("include", "");
         firstsStr.put("inventory_group", "creation");
         firstsStr.put("key", "preferences");
+        firstsStr.put("language", "preferences");
         firstsStr.put("list", "");
         firstsStr.put("make_preset", "");
         firstsStr.put("modify", "");
@@ -179,7 +179,7 @@ public class TARDISAdminCommands implements CommandExecutor {
                 }
                 String first = args[0].toLowerCase(Locale.ENGLISH);
                 if (!firstsStr.containsKey(first) && !firstsBool.containsKey(first) && !firstsInt.containsKey(first) && !firstsIntArtron.contains(first) && !firstsStrArtron.contains(first)) {
-                    sender.sendMessage(plugin.getPluginName() + "TARDIS does not recognise that command argument!");
+                    TARDISMessage.send(sender, "ARG_NOT_VALID");
                     return false;
                 }
                 if (args.length == 1) {
@@ -200,16 +200,19 @@ public class TARDISAdminCommands implements CommandExecutor {
                     return new TARDISPortalCommand(plugin).clearAll(sender);
                 }
                 if (args.length < 2) {
-                    sender.sendMessage(plugin.getPluginName() + MESSAGE.TOO_FEW_ARGS.getText());
+                    TARDISMessage.send(sender, "TOO_FEW_ARGS");
                     return false;
                 }
                 if (first.equals("config")) {
                     return new TARDISConfigCommand(plugin).showConfigOptions(sender, args);
                 }
+                if (first.equals("language")) {
+                    return new TARDISLanguageCommand(plugin).setLanguage(sender, args);
+                }
                 if (first.equals("database")) {
                     String dbtype = args[1].toLowerCase(Locale.ENGLISH);
                     if (!dbtype.equals("mysql") && !dbtype.equals("sqlite")) {
-                        sender.sendMessage(plugin.getPluginName() + "TARDIS database type must be one of 'mysql' or 'sqlite'!");
+                        TARDISMessage.send(sender, "ARG_DB");
                         return true;
                     }
                     plugin.getConfig().set("database", dbtype);
@@ -264,14 +267,14 @@ public class TARDISAdminCommands implements CommandExecutor {
                 }
                 if (first.equals("difficulty")) {
                     if (!args[1].equalsIgnoreCase("easy") && !args[1].equalsIgnoreCase("hard")) {
-                        sender.sendMessage(plugin.getPluginName() + ChatColor.RED + "Difficulty must be easy or hard!");
+                        TARDISMessage.send(sender, "ARG_DIFF");
                         return true;
                     }
                     plugin.getConfig().set("preferences.difficulty", args[1].toLowerCase(Locale.ENGLISH));
                 }
                 if (first.equals("gamemode")) {
                     if (!args[1].equalsIgnoreCase("creative") && !args[1].equalsIgnoreCase("survival")) {
-                        sender.sendMessage(plugin.getPluginName() + ChatColor.RED + "Gamemode must be creative or survival!");
+                        TARDISMessage.send(sender, "ARG_GAMEMODE");
                         return true;
                     }
                     plugin.getConfig().set("creation.gamemode", args[1].toLowerCase(Locale.ENGLISH));
@@ -298,10 +301,10 @@ public class TARDISAdminCommands implements CommandExecutor {
                     return new TARDISSetIntegerCommand(plugin).setConfigInt(sender, args);
                 }
                 plugin.saveConfig();
-                sender.sendMessage(plugin.getPluginName() + MESSAGE.CONFIG_UPDATED.getText());
+                TARDISMessage.send(sender, "CONFIG_UPDATED");
                 return true;
             } else {
-                sender.sendMessage(plugin.getPluginName() + ChatColor.RED + " You must be an Admin to run this command.");
+                TARDISMessage.send(sender, "CMD_ADMIN");
                 return false;
             }
         }
