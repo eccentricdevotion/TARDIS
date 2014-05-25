@@ -376,7 +376,7 @@
         <dependency>
             <groupId>LibsDisguises</groupId>
             <artifactId>LibsDisguises</artifactId>
-            <version>8.0.9-SNAPSHOT</version>
+            <version>8.2.2-SNAPSHOT</version>
             <exclusions>
                 <exclusion>
                     <artifactId>spigot-api</artifactId>
@@ -385,6 +385,10 @@
                 <exclusion>
                     <artifactId>craftbukkit</artifactId>
                     <groupId>org.bukkit</groupId>
+                </exclusion>
+                <exclusion>
+                    <artifactId>spigot</artifactId>
+                    <groupId>org.spigotmc</groupId>
                 </exclusion>
             </exclusions>
         </dependency>
