@@ -20,8 +20,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.enumeration.MESSAGE;
-import org.bukkit.ChatColor;
+import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import org.bukkit.command.CommandSender;
 
 /**
@@ -43,14 +42,14 @@ public class TARDISSetBooleanCommand {
         // check they typed true of false
         String tf = args[1].toLowerCase(Locale.ENGLISH);
         if (!tf.equals("true") && !tf.equals("false")) {
-            sender.sendMessage(plugin.getPluginName() + ChatColor.RED + "The last argument must be true or false!");
+            TARDISMessage.send(sender, "TRUE_FALSE");
             return false;
         }
         plugin.getConfig().set(first, Boolean.valueOf(tf));
         plugin.saveConfig();
-        sender.sendMessage(plugin.getPluginName() + MESSAGE.CONFIG_UPDATED.getText());
+        TARDISMessage.send(sender, "CONFIG_UPDATED");
         if (require_restart.contains(tolower)) {
-            sender.sendMessage(plugin.getPluginName() + MESSAGE.RESTART.getText());
+            TARDISMessage.send(sender, "RESTART");
         }
         return true;
     }

@@ -27,7 +27,6 @@ import me.eccentric_nz.TARDIS.database.ResultSetAreas;
 import me.eccentric_nz.TARDIS.database.ResultSetCurrentLocation;
 import me.eccentric_nz.TARDIS.database.ResultSetHomeLocation;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
-import me.eccentric_nz.TARDIS.enumeration.MESSAGE;
 import me.eccentric_nz.TARDIS.enumeration.REMOTE;
 import me.eccentric_nz.TARDIS.travel.TARDISTimeTravel;
 import org.bukkit.ChatColor;
@@ -84,7 +83,7 @@ public class TARDISRemoteCommands implements CommandExecutor {
                         wheret.put("uuid", ((Player) sender).getUniqueId().toString());
                         ResultSetTardis rst = new ResultSetTardis(plugin, wheret, "", false);
                         if (!rst.resultSet()) {
-                            sendMessage(sender, plugin.getPluginName() + MESSAGE.NOT_A_TIMELORD.getText());
+                            sendMessage(sender, plugin.getPluginName() + plugin.getLanguage().getString("NOT_A_TIMELORD"));
                             return true;
                         }
                         int tardis_id = rst.getTardis_id();
@@ -99,7 +98,7 @@ public class TARDISRemoteCommands implements CommandExecutor {
                             tcc.getCircuits();
                         }
                         if (tcc != null && !tcc.hasMaterialisation()) {
-                            sendMessage(sender, plugin.getPluginName() + MESSAGE.NO_MAT_CIRCUIT.getText());
+                            sendMessage(sender, plugin.getPluginName() + plugin.getLanguage().getString("NO_MAT_CIRCUIT."));
                             return true;
                         }
                     }
@@ -151,7 +150,7 @@ public class TARDISRemoteCommands implements CommandExecutor {
                                 // NOT non-admin players or command blocks
                                 if ((sender instanceof Player && sender.hasPermission("tardis.admin")) || sender instanceof ConsoleCommandSender) {
                                     if (!handbrake) {
-                                        sendMessage(sender, plugin.getPluginName() + ChatColor.RED + MESSAGE.NOT_WHILE_TRAVELLING.getText());
+                                        sendMessage(sender, plugin.getPluginName() + ChatColor.RED + plugin.getLanguage().getString("NOT_WHILE_TRAVELLING"));
                                         return true;
                                     }
                                     return new TARDISRemoteBackCommand(plugin).sendBack(sender, id, p);
@@ -166,14 +165,14 @@ public class TARDISRemoteCommands implements CommandExecutor {
                                 }
                                 // already travelling
                                 if (!handbrake) {
-                                    sendMessage(sender, plugin.getPluginName() + ChatColor.RED + MESSAGE.NOT_WHILE_TRAVELLING.getText());
+                                    sendMessage(sender, plugin.getPluginName() + ChatColor.RED + plugin.getLanguage().getString("NOT_WHILE_TRAVELLING"));
                                     return true;
                                 }
                                 // check artron energy if not admin
                                 if ((sender instanceof Player && !sender.hasPermission("tardis.admin")) || sender instanceof BlockCommandSender) {
                                     int travel = plugin.getArtronConfig().getInt("travel");
                                     if (level < travel) {
-                                        sendMessage(sender, plugin.getPluginName() + ChatColor.RED + MESSAGE.NOT_ENOUGH_ENERGY.getText());
+                                        sendMessage(sender, plugin.getPluginName() + ChatColor.RED + plugin.getLanguage().getString("NOT_ENOUGH_ENERGY"));
                                         return true;
                                     }
                                 }
@@ -200,7 +199,7 @@ public class TARDISRemoteCommands implements CommandExecutor {
                                     wherea.put("area_name", args[3]);
                                     ResultSetAreas rsa = new ResultSetAreas(plugin, wherea, false);
                                     if (!rsa.resultSet()) {
-                                        sendMessage(sender, plugin.getPluginName() + String.format(MESSAGE.AREA_NOT_FOUND.getText(), ChatColor.GREEN + "/tardis list areas" + ChatColor.RESET));
+                                        sendMessage(sender, plugin.getPluginName() + String.format(plugin.getLanguage().getString("AREA_NOT_FOUND"), ChatColor.GREEN + "/tardis list areas" + ChatColor.RESET));
                                         return true;
                                     }
                                     if ((sender instanceof Player && !sender.hasPermission("tardis.admin")) || sender instanceof BlockCommandSender) {
@@ -212,7 +211,7 @@ public class TARDISRemoteCommands implements CommandExecutor {
                                         // check permission
                                         String perm = "tardis.area." + args[3];
                                         if ((!p.getPlayer().hasPermission(perm) && !p.getPlayer().hasPermission("tardis.area.*"))) {
-                                            sendMessage(sender, plugin.getPluginName() + String.format(MESSAGE.TRAVEL_NO_AREA_PERM.getText(), args[3]));
+                                            sendMessage(sender, plugin.getPluginName() + String.format(plugin.getLanguage().getString("TRAVEL_NO_AREA_PERM"), args[3]));
                                             return true;
                                         }
                                     }
@@ -220,7 +219,7 @@ public class TARDISRemoteCommands implements CommandExecutor {
                                     Location l = plugin.getTardisArea().getNextSpot(rsa.getArea_name());
                                     // returns null if full!
                                     if (l == null) {
-                                        sendMessage(sender, plugin.getPluginName() + MESSAGE.NO_MORE_SPOTS.getText());
+                                        sendMessage(sender, plugin.getPluginName() + plugin.getLanguage().getString("NO_MORE_SPOTS"));
                                         return true;
                                     }
                                     set.put("world", l.getWorld().getName());
@@ -236,7 +235,7 @@ public class TARDISRemoteCommands implements CommandExecutor {
                                     }
                                     if ((sender instanceof Player && !sender.hasPermission("tardis.admin")) || sender instanceof BlockCommandSender) {
                                         if (!p.getPlayer().hasPermission("tardis.timetravel.location")) {
-                                            sendMessage(sender, plugin.getPluginName() + MESSAGE.NO_PERMS.getText());
+                                            sendMessage(sender, plugin.getPluginName() + plugin.getLanguage().getString("NO_PERMS"));
                                             return true;
                                         }
                                     }
@@ -247,11 +246,11 @@ public class TARDISRemoteCommands implements CommandExecutor {
                                         return true;
                                     }
                                     if (!plugin.getConfig().getBoolean("worlds." + w.getName())) {
-                                        sendMessage(sender, plugin.getPluginName() + MESSAGE.NO_WORLD_TRAVEL.getText());
+                                        sendMessage(sender, plugin.getPluginName() + plugin.getLanguage().getString("NO_WORLD_TRAVEL"));
                                         return true;
                                     }
                                     if (!plugin.getConfig().getBoolean("travel.include_default_world") && plugin.getConfig().getBoolean("creation.default_world") && args[2].equals(plugin.getConfig().getString("creation.default_world_name"))) {
-                                        sendMessage(sender, plugin.getPluginName() + MESSAGE.NO_WORLD_TRAVEL.getText());
+                                        sendMessage(sender, plugin.getPluginName() + plugin.getLanguage().getString("NO_WORLD_TRAVEL"));
                                         return true;
                                     }
                                     x = plugin.getUtils().parseInt(args[args.length - 3]);
@@ -277,7 +276,7 @@ public class TARDISRemoteCommands implements CommandExecutor {
                                     wherecl.put("tardis_id", id);
                                     ResultSetCurrentLocation rsc = new ResultSetCurrentLocation(plugin, wherecl);
                                     if (!rsc.resultSet()) {
-                                        sendMessage(sender, plugin.getPluginName() + MESSAGE.CURRENT_NOT_FOUND.getText());
+                                        sendMessage(sender, plugin.getPluginName() + plugin.getLanguage().getString("CURRENT_NOT_FOUND"));
                                         return true;
                                     }
                                     // check location
@@ -285,7 +284,7 @@ public class TARDISRemoteCommands implements CommandExecutor {
                                     int[] start_loc = tt.getStartLocation(location, rsc.getDirection());
                                     int count = tt.safeLocation(start_loc[0], location.getBlockY(), start_loc[2], start_loc[1], start_loc[3], location.getWorld(), rsc.getDirection());
                                     if (count > 0) {
-                                        sendMessage(sender, plugin.getPluginName() + MESSAGE.NOT_SAFE.getText());
+                                        sendMessage(sender, plugin.getPluginName() + plugin.getLanguage().getString("NOT_SAFE"));
                                         return true;
                                     } else {
                                         set.put("world", location.getWorld().getName());
@@ -309,12 +308,12 @@ public class TARDISRemoteCommands implements CommandExecutor {
                                 return true;
                         }
                     } catch (IllegalArgumentException e) {
-                        sendMessage(sender, plugin.getPluginName() + MESSAGE.CMD_NOT_VALID.getText());
+                        sendMessage(sender, plugin.getPluginName() + plugin.getLanguage().getString("CMD_NOT_VALID"));
                         return false;
                     }
                 }
             } else {
-                sendMessage(sender, plugin.getPluginName() + MESSAGE.UUID.getText());
+                sendMessage(sender, plugin.getPluginName() + plugin.getLanguage().getString("UUID"));
                 return true;
             }
         }

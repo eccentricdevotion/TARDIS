@@ -53,6 +53,7 @@ public class TARDISBook {
      * @param name The name of the text file
      * @param p The player who will receive the book
      */
+    @SuppressWarnings("deprecation")
     public void writeBook(String title_reward, String author, String name, Player p) {
         // read the file
         File file = new File(plugin.getDataFolder() + File.separator + "books" + File.separator + name + ".txt");
@@ -87,6 +88,6 @@ public class TARDISBook {
         Inventory inv = p.getInventory();
         inv.addItem(book);
         p.updateInventory();
-        TARDISMessage.send(p, plugin.getPluginName() + "You just recieved the book of " + name + "!");
+        TARDISMessage.send(p, "BOOK_RECEIVE", name);
     }
 }

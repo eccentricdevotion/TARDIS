@@ -28,8 +28,8 @@ import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import me.eccentric_nz.TARDIS.database.ResultSetTravellers;
 import static me.eccentric_nz.TARDIS.destroyers.TARDISExterminator.deleteFolder;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
-import me.eccentric_nz.TARDIS.enumeration.MESSAGE;
 import me.eccentric_nz.TARDIS.enumeration.SCHEMATIC;
+import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import me.eccentric_nz.tardischunkgenerator.TARDISChunkGenerator;
 import org.bukkit.Location;
 import org.bukkit.World;
@@ -61,7 +61,7 @@ public class TARDISDeleteCommand {
                 where.put("uuid", player.getUniqueId().toString());
                 ResultSetTravellers rst = new ResultSetTravellers(plugin, where, false);
                 if (rst.resultSet()) {
-                    sender.sendMessage(plugin.getPluginName() + "You cannot be in your TARDIS when you delete it!");
+                    TARDISMessage.send(sender, "TARDIS_DELETE_NO");
                     return true;
                 }
             }
@@ -85,7 +85,7 @@ public class TARDISDeleteCommand {
                 String name = cdata[0];
                 World cw = plugin.getServer().getWorld(name);
                 if (cw == null) {
-                    sender.sendMessage(plugin.getPluginName() + "The server could not find the TARDIS world, has it been deleted?");
+                    TARDISMessage.send(sender, "WORLD_DELETED");
                     return true;
                 }
                 int restore = getRestore(cw);
@@ -112,7 +112,7 @@ public class TARDISDeleteCommand {
                     biome = rsc.getBiome();
                 }
                 if (bb_loc == null) {
-                    sender.sendMessage(plugin.getPluginName() + MESSAGE.CURRENT_NOT_FOUND.getText());
+                    TARDISMessage.send(sender, "CURRENT_NOT_FOUND");
                     return true;
                 }
                 // destroy the TARDIS
@@ -176,13 +176,13 @@ public class TARDISDeleteCommand {
                 HashMap<String, Object> wheres = new HashMap<String, Object>();
                 wheres.put("tardis_id", id);
                 qf.doDelete("destinations", wheres);
-                sender.sendMessage(plugin.getPluginName() + "The TARDIS was removed from the world and database successfully.");
+                TARDISMessage.send(sender, "TARDIS_EXTERMINATED");
             } else {
-                sender.sendMessage(plugin.getPluginName() + "Could not find player [" + args[1] + "] in the database!");
+                TARDISMessage.send(sender, "PLAYER_NOT_FOUND_DB", args[1]);
                 return true;
             }
         } else {
-            sender.sendMessage(plugin.getPluginName() + "Could not find UUID for player [" + args[1] + "]!");
+            TARDISMessage.send(sender, "UUID_NOT_FOUND", args[1]);
             return true;
         }
         return true;

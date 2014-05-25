@@ -44,7 +44,7 @@ public class TARDISCompanionClearer {
 
     public boolean clear() {
         // backup database
-        plugin.getConsole().sendMessage(plugin.getPluginName() + "Backing up TARDIS database...");
+        plugin.getConsole().sendMessage(plugin.getPluginName() + plugin.getLanguage().getString("BACKUP_DB"));
         File oldFile = new File(plugin.getDataFolder() + File.separator + "TARDIS.db");
         File newFile = new File(plugin.getDataFolder() + File.separator + "TARDIS_" + System.currentTimeMillis() + ".db");
         FileUtil.copy(oldFile, newFile);

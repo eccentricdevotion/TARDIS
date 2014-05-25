@@ -17,7 +17,7 @@
 package me.eccentric_nz.TARDIS.commands.admin;
 
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.enumeration.MESSAGE;
+import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import org.bukkit.command.CommandSender;
 
 /**
@@ -42,8 +42,8 @@ public class TARDISDefaultSonicCommand {
         String sonic = tmp.substring(0, tmp.length() - 1);
         plugin.getConfig().set("preferences.default_sonic", sonic);
         plugin.saveConfig();
-        sender.sendMessage(plugin.getPluginName() + MESSAGE.CONFIG_UPDATED.getText());
-        sender.sendMessage(plugin.getPluginName() + MESSAGE.RESTART.getText());
+        TARDISMessage.send(sender, "CONFIG_UPDATED");
+        TARDISMessage.send(sender, "RESTART");
         return true;
     }
 }

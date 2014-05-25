@@ -124,7 +124,7 @@ public class TARDISMinecartListener implements Listener {
                     if (plugin.getPM().isPluginEnabled("Multiverse-Inventories")) {
                         if (!plugin.getTMIChecker().checkMVI(bw, data[0])) {
                             if (playerUUID != null && plugin.getServer().getPlayer(playerUUID).isOnline()) {
-                                TARDISMessage.send(plugin.getServer().getPlayer(playerUUID), plugin.getPluginName() + "You cannot use minecarts from " + bw + " to " + data[0] + ".");
+                                TARDISMessage.send(plugin.getServer().getPlayer(playerUUID), "WORLD_NO_CART", bw, data[0]);
                             }
                             plugin.getTrackerKeeper().getMinecart().remove(Integer.valueOf(id));
                             return;

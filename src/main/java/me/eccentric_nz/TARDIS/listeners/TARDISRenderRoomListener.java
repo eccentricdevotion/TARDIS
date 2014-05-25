@@ -56,7 +56,7 @@ public class TARDISRenderRoomListener implements Listener {
     }
 
     public void transmat(final Player p) {
-        TARDISMessage.send(p, plugin.getPluginName() + "Stand by for transmat...");
+        TARDISMessage.send(p, "TRANSMAT");
         // get the TARDIS the player is in
         HashMap<String, Object> wherep = new HashMap<String, Object>();
         wherep.put("uuid", p.getUniqueId().toString());
@@ -112,10 +112,10 @@ public class TARDISRenderRoomListener implements Listener {
                     }
                 }, 10L);
             } else {
-                TARDISMessage.send(p, plugin.getPluginName() + "The Transmat device couldn't find the TARDIS console!");
+                TARDISMessage.send(p, "TRANSMAT_NO_CONSOLE");
             }
         } else {
-            TARDISMessage.send(p, plugin.getPluginName() + "The Transmat device couldn't determine which TARDIS you are in!");
+            TARDISMessage.send(p, "TRANSMAT_NO_TARDIS");
         }
     }
 }

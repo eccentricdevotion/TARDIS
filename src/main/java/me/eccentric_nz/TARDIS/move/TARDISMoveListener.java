@@ -117,7 +117,7 @@ public class TARDISMoveListener implements Listener {
                     plugin.getGeneralKeeper().getDoorListener().movePets(pets, tpl.getLocation(), p, d, true);
                 }
                 if (userQuotes) {
-                    TARDISMessage.send(p, plugin.getPluginName() + "Don't forget to close the door!");
+                    TARDISMessage.send(p, "DOOR_REMIND");
                 }
             }
         }

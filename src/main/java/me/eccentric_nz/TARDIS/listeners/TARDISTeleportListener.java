@@ -59,7 +59,7 @@ public class TARDISTeleportListener implements Listener {
                 where.put("uuid", p.getUniqueId().toString());
                 new QueryFactory(plugin).doDelete("travellers", where);
                 if (!cause.equals(TeleportCause.PLUGIN)) {
-                    TARDISMessage.send(p, plugin.getPluginName() + "You left the TARDIS, setting OCCUPIED to false");
+                    TARDISMessage.send(p, "OCCUPY_AUTO");
                 }
             }
         }

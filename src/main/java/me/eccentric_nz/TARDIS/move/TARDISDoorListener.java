@@ -117,7 +117,7 @@ public class TARDISDoorListener {
                     p.setAllowFlight(true);
                 }
                 if (quotes) {
-                    TARDISMessage.send(p, plugin.getPluginName() + plugin.getGeneralKeeper().getQuotes().get(i));
+                    p.sendMessage(plugin.getPluginName() + plugin.getGeneralKeeper().getQuotes().get(i));
                 }
                 if (exit) {
                     // give some artron energy
@@ -272,7 +272,7 @@ public class TARDISDoorListener {
                 ir.setName("TARDIS Key", true);
                 inv.addItem(is);
                 p.updateInventory();
-                TARDISMessage.send(p, plugin.getPluginName() + "Don't forget your TARDIS key!");
+                TARDISMessage.send(p, "KEY_REMIND");
             }
         }
     }

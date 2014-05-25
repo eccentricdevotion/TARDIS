@@ -19,7 +19,6 @@ package me.eccentric_nz.TARDIS.listeners;
 import java.util.HashMap;
 import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.enumeration.MESSAGE;
 import me.eccentric_nz.TARDIS.enumeration.PRESET;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import org.bukkit.ChatColor;
@@ -66,7 +65,7 @@ public class TARDISBlockBreakListener implements Listener {
         Player player = event.getPlayer();
         if (plugin.getTrackerKeeper().getZeroRoomOccupants().contains(player.getUniqueId())) {
             event.setCancelled(true);
-            TARDISMessage.send(player, plugin.getPluginName() + MESSAGE.NOT_IN_ZERO.getText());
+            TARDISMessage.send(player, "NOT_IN_ZERO");
             return;
         }
         Block block = event.getBlock();
@@ -84,7 +83,7 @@ public class TARDISBlockBreakListener implements Listener {
                     // check it is their TARDIS
                     plugin.getTrackerKeeper().getExterminate().put(uuid, block);
                     long timeout = plugin.getConfig().getLong("police_box.confirm_timeout");
-                    TARDISMessage.send(player, plugin.getPluginName() + "Are you sure you want to delete the TARDIS? Type " + ChatColor.AQUA + "/tardis exterminate" + ChatColor.RESET + " within " + timeout + " seconds to proceed.");
+                    TARDISMessage.send(player, "Q_DELETE", ChatColor.AQUA + "/tardis exterminate" + ChatColor.RESET, String.format("%d", timeout));
                     plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
                         @Override
                         public void run() {
@@ -92,7 +91,7 @@ public class TARDISBlockBreakListener implements Listener {
                         }
                     }, timeout * 20);
                 } else {
-                    TARDISMessage.send(player, plugin.getPluginName() + "You do not have permission to delete a TARDIS!");
+                    TARDISMessage.send(player, "NO_PERM_DELETE");
                 }
             }
         }

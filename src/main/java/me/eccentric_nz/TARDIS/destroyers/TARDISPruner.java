@@ -29,7 +29,7 @@ import java.util.HashMap;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.ResultSetCurrentLocation;
 import me.eccentric_nz.TARDIS.database.TARDISDatabaseConnection;
-import me.eccentric_nz.TARDIS.enumeration.MESSAGE;
+import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import org.bukkit.command.CommandSender;
 
 /**
@@ -64,7 +64,7 @@ public class TARDISPruner {
                 if (rs.isBeforeFirst()) {
                     sender.sendMessage(plugin.getPluginName() + "Prune List:");
                 } else {
-                    sender.sendMessage(plugin.getPluginName() + "No TARDISes to prune");
+                    TARDISMessage.send(sender, "PRUNE_NONE");
                 }
                 while (rs.next()) {
                     HashMap<String, Object> wherecl = new HashMap<String, Object>();
@@ -82,7 +82,7 @@ public class TARDISPruner {
                             sender.sendMessage(line);
                         }
                     } else {
-                        plugin.debug(MESSAGE.CURRENT_NOT_FOUND.getText());
+                        plugin.debug(plugin.getLanguage().getString("CURRENT_NOT_FOUND"));
                     }
                 }
                 bw.close();

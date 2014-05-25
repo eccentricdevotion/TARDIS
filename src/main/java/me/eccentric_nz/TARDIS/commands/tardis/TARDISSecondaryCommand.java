@@ -22,7 +22,6 @@ import java.util.Locale;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import me.eccentric_nz.TARDIS.database.ResultSetTravellers;
-import me.eccentric_nz.TARDIS.enumeration.MESSAGE;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import org.bukkit.entity.Player;
 
@@ -42,33 +41,33 @@ public class TARDISSecondaryCommand {
         if (player.hasPermission("tardis.update")) {
             String[] validBlockNames = {"button", "world-repeater", "x-repeater", "z-repeater", "y-repeater", "artron", "handbrake", "door", "back"};
             if (args.length < 2) {
-                TARDISMessage.send(player, plugin.getPluginName() + MESSAGE.TOO_FEW_ARGS.getText());
+                TARDISMessage.send(player, "TOO_FEW_ARGS");
                 return false;
             }
             String tardis_block = args[1].toLowerCase(Locale.ENGLISH);
             if (!Arrays.asList(validBlockNames).contains(tardis_block)) {
-                TARDISMessage.send(player, plugin.getPluginName() + "That is not a valid TARDIS block name! Try one of : button|world-repeater|x-repeater|z-repeater|y-repeater|artron|handbrake|door|back");
+                TARDISMessage.send(player, "UPDATE_NOT_VALID");
                 return false;
             }
             HashMap<String, Object> where = new HashMap<String, Object>();
             where.put("uuid", player.getUniqueId().toString());
             ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);
             if (!rs.resultSet()) {
-                TARDISMessage.send(player, plugin.getPluginName() + MESSAGE.NOT_A_TIMELORD.getText());
+                TARDISMessage.send(player, "NOT_A_TIMELORD");
                 return false;
             }
             HashMap<String, Object> wheret = new HashMap<String, Object>();
             wheret.put("uuid", player.getUniqueId().toString());
             ResultSetTravellers rst = new ResultSetTravellers(plugin, wheret, false);
             if (!rst.resultSet()) {
-                TARDISMessage.send(player, plugin.getPluginName() + MESSAGE.NOT_IN_TARDIS.getText());
+                TARDISMessage.send(player, "NOT_IN_TARDIS");
                 return false;
             }
             plugin.getTrackerKeeper().getSecondary().put(player.getUniqueId(), tardis_block);
-            TARDISMessage.send(player, plugin.getPluginName() + "Click the TARDIS " + tardis_block + " to update its position.");
+            TARDISMessage.send(player, "UPDATE_CLICK", tardis_block);
             return true;
         } else {
-            TARDISMessage.send(player, plugin.getPluginName() + MESSAGE.NO_PERMS.getText());
+            TARDISMessage.send(player, "NO_PERMS");
             return false;
         }
     }

@@ -23,7 +23,6 @@ import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.commands.admin.TARDISAdminMenuInventory;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetTravellers;
-import me.eccentric_nz.TARDIS.enumeration.MESSAGE;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -47,7 +46,7 @@ public class TARDISPrefsMenuListener implements Listener {
         lookup.put("Autonomous", "auto_on");
         lookup.put("Beacon", "beacon_on");
         lookup.put("Do Not Disturb", "dnd_on");
-        lookup.put("Emergency Program One", "eps_on");
+        lookup.put("Emergency Programme One", "eps_on");
         lookup.put("Hostile Action Displacement System", "hads_on");
         lookup.put("Minecart Sounds", "minecart_on");
         lookup.put("Who Quotes", "quotes_on");
@@ -93,7 +92,7 @@ public class TARDISPrefsMenuListener implements Listener {
                                 }
                             }, 1L);
                         } else {
-                            TARDISMessage.send(p, plugin.getPluginName() + MESSAGE.NOT_IN_TARDIS.getText());
+                            TARDISMessage.send(p, "NOT_IN_TARDIS");
                         }
                         return;
                     }

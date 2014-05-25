@@ -31,7 +31,6 @@ import me.eccentric_nz.TARDIS.database.ResultSetDoorBlocks;
 import me.eccentric_nz.TARDIS.database.ResultSetDoors;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import me.eccentric_nz.TARDIS.database.ResultSetTravellers;
-import me.eccentric_nz.TARDIS.enumeration.MESSAGE;
 import me.eccentric_nz.TARDIS.enumeration.SCHEMATIC;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import org.bukkit.ChatColor;
@@ -138,7 +137,7 @@ public class TARDISUpdateListener implements Listener {
             where.put("uuid", playerUUID);
             ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);
             if (!rs.resultSet()) {
-                TARDISMessage.send(player, plugin.getPluginName() + MESSAGE.NO_TARDIS.getText());
+                TARDISMessage.send(player, "NO_TARDIS");
                 return;
             }
             int id = rs.getTardis_id();
@@ -193,13 +192,13 @@ public class TARDISUpdateListener implements Listener {
                     type = (secondary) ? 4 : 3;
                     // check the world
                     if (!plugin.getUtils().inTARDISWorld(player)) {
-                        TARDISMessage.send(player, plugin.getPluginName() + MESSAGE.NOT_IN_TARDIS.getText());
+                        TARDISMessage.send(player, "NOT_IN_TARDIS");
                         return;
                     }
                 } else {
                     type = 2;
                     if (plugin.getUtils().inTARDISWorld(player)) {
-                        TARDISMessage.send(player, plugin.getPluginName() + "You should be outside of the TARDIS!");
+                        TARDISMessage.send(player, "TARDIS_OUTSIDE");
                         return;
                     }
                 }
@@ -221,7 +220,7 @@ public class TARDISUpdateListener implements Listener {
             }
             // check they are still in the TARDIS world
             if (!blockName.equals("backdoor") && !plugin.getUtils().inTARDISWorld(player)) {
-                TARDISMessage.send(player, plugin.getPluginName() + "You must be in a TARDIS world to update this block!");
+                TARDISMessage.send(player, "UPDATE_IN_WORLD");
                 return;
             }
             if ((blockName.equalsIgnoreCase("button") || blockName.equalsIgnoreCase("artron")) && validBlocks.contains(blockType)) {
@@ -606,9 +605,9 @@ public class TARDISUpdateListener implements Listener {
                 if (!secondary) {
                     qf.doUpdate(table, set, tid);
                 }
-                TARDISMessage.send(player, plugin.getPluginName() + "The position of the TARDIS " + blockName + " was updated successfully.");
+                TARDISMessage.send(player, "UPDATE_SET", blockName);
             } else {
-                TARDISMessage.send(player, plugin.getPluginName() + "You didn't click the correct type of block for the " + blockName + "! Try the command again.");
+                TARDISMessage.send(player, "UPDATE_BAD_CLICK", blockName);
             }
         }
     }

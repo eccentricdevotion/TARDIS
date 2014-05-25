@@ -123,13 +123,13 @@ public class TARDISRoomRunnable implements Runnable {
             if (room.equals("GRAVITY") || room.equals("ANTIGRAVITY")) {
                 grammar += " WELL";
             }
-            TARDISMessage.send(p, plugin.getPluginName() + "Started growing " + grammar + "...");
+            TARDISMessage.send(p, "ROOM_START", grammar);
         }
         String tmp;
         if (level == h && row == w && col == (c - 1)) {
             // the entire schematic has been read :)
             if (iceblocks.size() > 0) {
-                TARDISMessage.send(p, plugin.getPluginName() + "Melting the ice!");
+                TARDISMessage.send(p, "ICE");
                 // set all the ice to water
                 for (Block ice : iceblocks) {
                     ice.setTypeId(9);
@@ -166,7 +166,7 @@ public class TARDISRoomRunnable implements Runnable {
                 doorblocks.clear();
             }
             // update lamp block states
-            TARDISMessage.send(p, plugin.getPluginName() + "Turning on the power!");
+            TARDISMessage.send(p, "ROOM_POWER");
             for (Block lamp : lampblocks) {
                 lamp.setType(Material.REDSTONE_LAMP_ON);
             }
@@ -197,7 +197,7 @@ public class TARDISRoomRunnable implements Runnable {
             plugin.getServer().getScheduler().cancelTask(task);
             task = 0;
             String rname = (room.equals("GRAVITY") || room.equals("ANTIGRAVITY")) ? room + " WELL" : room;
-            TARDISMessage.send(p, plugin.getPluginName() + "Finished growing the " + rname + "!");
+            TARDISMessage.send(p, "ROOM_FINISHED", rname);
         } else {
             // place one block
             tmp = s[level][row][col];

@@ -18,7 +18,6 @@ package me.eccentric_nz.TARDIS.listeners;
 
 import java.util.List;
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.enumeration.MESSAGE;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -53,7 +52,7 @@ public class TARDISZeroRoomChatListener implements Listener {
         Player zero = event.getPlayer();
         if (plugin.getTrackerKeeper().getZeroRoomOccupants().contains(zero.getUniqueId())) {
             event.setCancelled(true);
-            TARDISMessage.send(zero, plugin.getPluginName() + MESSAGE.NOT_IN_ZERO.getText());
+            TARDISMessage.send(zero, "NOT_IN_ZERO");
         } else {
             if (plugin.getServer().getWorld("TARDIS_Zero_Room") != null) {
                 List<Player> inZeroRoom = plugin.getServer().getWorld("TARDIS_Zero_Room").getPlayers();
@@ -69,7 +68,7 @@ public class TARDISZeroRoomChatListener implements Listener {
         Player zero = event.getPlayer();
         if (plugin.getTrackerKeeper().getZeroRoomOccupants().contains(zero.getUniqueId())) {
             event.setCancelled(true);
-            TARDISMessage.send(zero, plugin.getPluginName() + MESSAGE.NOT_IN_ZERO.getText());
+            TARDISMessage.send(zero, "NOT_IN_ZERO");
         }
     }
 }

@@ -23,7 +23,6 @@ import java.util.Locale;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetPlayerPrefs;
-import me.eccentric_nz.TARDIS.enumeration.MESSAGE;
 import me.eccentric_nz.TARDIS.sonic.TARDISSonicMenuInventory;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import org.bukkit.command.Command;
@@ -89,7 +88,7 @@ public class TARDISPrefsCommands implements CommandExecutor {
                 return false;
             }
             if (player == null) {
-                sender.sendMessage(plugin.getPluginName() + MESSAGE.CMD_PLAYER.getText());
+                sender.sendMessage(plugin.getPluginName() + plugin.getLanguage().getString("CMD_PLAYER"));
                 return true;
             }
             String pref = args[0].toLowerCase(Locale.ENGLISH);
@@ -137,7 +136,7 @@ public class TARDISPrefsCommands implements CommandExecutor {
                         return new TARDISSetFlightCommand(plugin).setMode(player, args, qf);
                     }
                     if (args.length < 2 || (!args[1].equalsIgnoreCase("on") && !args[1].equalsIgnoreCase("off"))) {
-                        TARDISMessage.send(player, plugin.getPluginName() + "You need to specify if " + pref + " should be on or off!");
+                        TARDISMessage.send(player, "PREF_ON_OFF", pref);
                         return false;
                     }
                     if (pref.equals("build")) {
@@ -146,11 +145,11 @@ public class TARDISPrefsCommands implements CommandExecutor {
                         return new TARDISToggleOnOffCommand(plugin).toggle(player, args, qf);
                     }
                 } else {
-                    TARDISMessage.send(player, plugin.getPluginName() + MESSAGE.NO_PERMS.getText());
+                    TARDISMessage.send(player, "NO_PERMS");
                     return false;
                 }
             } else {
-                TARDISMessage.send(player, plugin.getPluginName() + "That is not a valid TARDIS player preference!");
+                TARDISMessage.send(player, "PREF_NOT_VALID");
             }
         }
         return false;

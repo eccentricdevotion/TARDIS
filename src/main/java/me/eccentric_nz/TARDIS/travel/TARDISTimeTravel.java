@@ -211,7 +211,7 @@ public class TARDISTimeTravel {
                             if (rsp.resultSet()) {
                                 if (rsp.isSubmarineOn() && plugin.getUtils().isOceanBiome(currentBlock.getBiome())) {
                                     // get submarine location
-                                    TARDISMessage.send(p, plugin.getPluginName() + "Searching for underwater location...");
+                                    TARDISMessage.send(p, "SUB_SEARCH");
                                     Location underwater = submarine(currentBlock, d);
                                     if (underwater != null) {
                                         // get TARDIS id

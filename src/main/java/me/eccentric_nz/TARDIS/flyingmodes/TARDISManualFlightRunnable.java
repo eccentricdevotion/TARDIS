@@ -23,6 +23,7 @@ import java.util.Random;
 import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.ResultSetRepeaters;
+import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import org.bukkit.Effect;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
@@ -62,7 +63,7 @@ public class TARDISManualFlightRunnable implements Runnable {
         if (i < loops) {
             int r = random.nextInt(4);
             Location loc = target.get(r);
-            player.sendMessage("Click the " + controls.get(r));
+            TARDISMessage.send(player, plugin.getLanguage().getString("FLIGHT_CLICK"), controls.get(r));
             loc.getWorld().playEffect(loc, Effect.STEP_SOUND, 152);
             plugin.getTrackerKeeper().getFlight().put(player.getUniqueId(), loc.toString());
             i++;

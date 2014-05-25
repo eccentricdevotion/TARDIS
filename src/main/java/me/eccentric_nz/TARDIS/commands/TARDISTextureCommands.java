@@ -25,7 +25,6 @@ import java.util.Locale;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetPlayerPrefs;
-import me.eccentric_nz.TARDIS.enumeration.MESSAGE;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -66,7 +65,7 @@ public class TARDISTextureCommands implements CommandExecutor {
                 return false;
             }
             if (player == null) {
-                sender.sendMessage(plugin.getPluginName() + MESSAGE.CMD_PLAYER.getText());
+                sender.sendMessage(plugin.getPluginName() + plugin.getLanguage().getString("CMD_PLAYER"));
                 return false;
             }
             if (player.hasPermission("tardis.texture")) {
@@ -105,7 +104,7 @@ public class TARDISTextureCommands implements CommandExecutor {
                                 upd.put("texture_out", args[1]);
                             }
                         } catch (MalformedURLException e) {
-                            TARDISMessage.send(player, plugin.getPluginName() + String.format(MESSAGE.URL.getText(), e.getMessage()));
+                            TARDISMessage.send(player, "URL", e.getMessage());
                             return true;
                         }
                     }
@@ -114,7 +113,7 @@ public class TARDISTextureCommands implements CommandExecutor {
                     HashMap<String, Object> where = new HashMap<String, Object>();
                     where.put("uuid", playerUUID);
                     qf.doUpdate("player_prefs", upd, where);
-                    TARDISMessage.send(player, plugin.getPluginName() + "Your texture pack preference was set.");
+                    TARDISMessage.send(player, "PREF_TEXTURE");
                     return true;
                 }
             }

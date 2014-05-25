@@ -25,7 +25,6 @@ import me.eccentric_nz.TARDIS.database.ResultSetCurrentLocation;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import me.eccentric_nz.TARDIS.database.ResultSetTravellers;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
-import me.eccentric_nz.TARDIS.enumeration.MESSAGE;
 import me.eccentric_nz.TARDIS.travel.TARDISTimeTravel;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import org.bukkit.Bukkit;
@@ -56,7 +55,7 @@ public class TARDISComehereCommand {
             if (player.hasPermission("tardis.timetravel")) {
                 Location eyeLocation = player.getTargetBlock(plugin.getGeneralKeeper().getTransparent(), 50).getLocation();
                 if (!plugin.getConfig().getBoolean("travel.include_default_world") && plugin.getConfig().getBoolean("creation.default_world") && eyeLocation.getWorld().getName().equals(plugin.getConfig().getString("creation.default_world_name"))) {
-                    TARDISMessage.send(player, plugin.getPluginName() + MESSAGE.NO_WORLD_TRAVEL.getText());
+                    TARDISMessage.send(player, "NO_WORLD_TRAVEL");
                     return true;
                 }
                 if (!plugin.getPluginRespect().getRespect(player, eyeLocation, true)) {
@@ -65,12 +64,12 @@ public class TARDISComehereCommand {
                 if (player.hasPermission("tardis.exile") && plugin.getConfig().getBoolean("travel.exile")) {
                     String areaPerm = plugin.getTardisArea().getExileArea(player);
                     if (plugin.getTardisArea().areaCheckInExile(areaPerm, eyeLocation)) {
-                        TARDISMessage.send(player, plugin.getPluginName() + "You exile status does not allow you to bring the TARDIS to this location!");
+                        TARDISMessage.send(player, "EXILE_NO_TRAVEL");
                         return true;
                     }
                 }
                 if (!plugin.getTardisArea().areaCheckInExisting(eyeLocation)) {
-                    TARDISMessage.send(player, plugin.getPluginName() + "You cannot use /tardis comehere to bring the Police Box to a TARDIS area! Please use " + ChatColor.AQUA + "/tardistravel area [area name]");
+                    TARDISMessage.send(player, "AREA_NO_COMEHERE", ChatColor.AQUA + "/tardistravel area [area name]");
                     return true;
                 }
                 Material m = player.getTargetBlock(plugin.getGeneralKeeper().getTransparent(), 50).getType();
@@ -81,7 +80,7 @@ public class TARDISComehereCommand {
                 // check the world is not excluded
                 String world = eyeLocation.getWorld().getName();
                 if (!plugin.getConfig().getBoolean("worlds." + world)) {
-                    TARDISMessage.send(player, plugin.getPluginName() + MESSAGE.NO_PB_IN_WORLD.getText());
+                    TARDISMessage.send(player, "NO_PB_IN_WORLD");
                     return true;
                 }
                 // check they are a timelord
@@ -89,7 +88,7 @@ public class TARDISComehereCommand {
                 where.put("uuid", player.getUniqueId().toString());
                 ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);
                 if (!rs.resultSet()) {
-                    TARDISMessage.send(player, plugin.getPluginName() + MESSAGE.NOT_A_TIMELORD.getText());
+                    TARDISMessage.send(player, "NOT_A_TIMELORD");
                     return true;
                 }
                 final int id = rs.getTardis_id();
@@ -99,7 +98,7 @@ public class TARDISComehereCommand {
                     tcc.getCircuits();
                 }
                 if (tcc != null && !tcc.hasMaterialisation()) {
-                    TARDISMessage.send(player, plugin.getPluginName() + MESSAGE.NO_MAT_CIRCUIT.getText());
+                    TARDISMessage.send(player, "NO_MAT_CIRCUIT");
                     return true;
                 }
                 // check they are not in the tardis
@@ -108,11 +107,11 @@ public class TARDISComehereCommand {
                 wherettrav.put("tardis_id", id);
                 ResultSetTravellers rst = new ResultSetTravellers(plugin, wherettrav, false);
                 if (rst.resultSet()) {
-                    TARDISMessage.send(player, plugin.getPluginName() + MESSAGE.NO_PB_IN_TARDIS.getText());
+                    TARDISMessage.send(player, "NO_PB_IN_TARDIS");
                     return true;
                 }
                 if (plugin.getTrackerKeeper().getInVortex().contains(id)) {
-                    TARDISMessage.send(player, plugin.getPluginName() + MESSAGE.NOT_WHILE_MAT.getText());
+                    TARDISMessage.send(player, "NOT_WHILE_MAT");
                     return true;
                 }
                 int level = rs.getArtron_level();
@@ -146,12 +145,12 @@ public class TARDISComehereCommand {
                     count = tt.safeLocation(start_loc[0], eyeLocation.getBlockY(), start_loc[2], start_loc[1], start_loc[3], eyeLocation.getWorld(), player_d);
                 }
                 if (count > 0) {
-                    TARDISMessage.send(player, plugin.getPluginName() + MESSAGE.WOULD_GRIEF_BLOCKS.getText());
+                    TARDISMessage.send(player, "WOULD_GRIEF_BLOCKS");
                     return true;
                 }
                 int ch = plugin.getArtronConfig().getInt("comehere");
                 if (level < ch) {
-                    TARDISMessage.send(player, plugin.getPluginName() + ChatColor.RED + MESSAGE.NOT_ENOUGH_ENERGY.getText());
+                    TARDISMessage.send(player, "NOT_ENOUGH_ENERGY");
                     return true;
                 }
                 boolean cham = chamtmp;
@@ -196,7 +195,7 @@ public class TARDISComehereCommand {
                     qf.doUpdate("tardis", sett, ttid);
                 }
                 qf.doUpdate("current", set, tid);
-                TARDISMessage.send(player, plugin.getPluginName() + MESSAGE.TARDIS_COMING.getText());
+                TARDISMessage.send(player, "TARDIS_COMING");
                 boolean mat = plugin.getConfig().getBoolean("police_box.materialise");
                 long delay = (mat) ? 1L : 180L;
                 plugin.getTrackerKeeper().getInVortex().add(id);
@@ -249,11 +248,11 @@ public class TARDISComehereCommand {
                 }
                 return true;
             } else {
-                TARDISMessage.send(player, plugin.getPluginName() + MESSAGE.NO_PERMS.getText());
+                TARDISMessage.send(player, "NO_PERMS");
                 return false;
             }
         } else {
-            TARDISMessage.send(player, plugin.getPluginName() + "You need to craft a Stattenheim Remote Control! Type " + ChatColor.AQUA + "/tardisrecipe remote" + ChatColor.RESET + " to see how to make it.");
+            TARDISMessage.send(player, "DIFF_HARD_REMOTE", ChatColor.AQUA + "/tardisrecipe remote" + ChatColor.RESET);
             return true;
         }
     }

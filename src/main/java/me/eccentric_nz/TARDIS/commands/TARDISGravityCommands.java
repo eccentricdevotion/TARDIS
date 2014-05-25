@@ -21,7 +21,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.enumeration.MESSAGE;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import me.eccentric_nz.tardischunkgenerator.TARDISChunkGenerator;
 import org.bukkit.ChatColor;
@@ -76,11 +75,11 @@ public class TARDISGravityCommands implements CommandExecutor {
                 player = (Player) sender;
             }
             if (player == null) {
-                sender.sendMessage(plugin.getPluginName() + ChatColor.RED + MESSAGE.CMD_PLAYER.getText());
+                sender.sendMessage(plugin.getPluginName() + ChatColor.RED + plugin.getLanguage().getString("CMD_PLAYER"));
                 return false;
             }
             if (!player.hasPermission("tardis.gravity")) {
-                sender.sendMessage(plugin.getPluginName() + MESSAGE.NO_PERMS.getText());
+                TARDISMessage.send(sender, "NO_PERMS");
                 return true;
             }
             if (!plugin.getConfig().getBoolean("allow.external_gravity")) {
@@ -90,8 +89,8 @@ public class TARDISGravityCommands implements CommandExecutor {
                 ChunkGenerator gen = world.getGenerator();
                 boolean special = name.contains("TARDIS_TimeVortex") && (world.getWorldType().equals(WorldType.FLAT) || gen instanceof TARDISChunkGenerator);
                 if (!name.equals("TARDIS_WORLD_" + player.getName()) && !special) {
-                    String mess_stub = (name.contains("TARDIS_WORLD_")) ? "your own" : "a";
-                    TARDISMessage.send(player, plugin.getPluginName() + "You must be in " + mess_stub + " TARDIS world to make a gravity well!");
+                    String mess_stub = (name.contains("TARDIS_WORLD_")) ? "GRAVITY_OWN_WORLD" : "GRAVITY_A_WORLD";
+                    TARDISMessage.send(player, mess_stub);
                     return true;
                 }
             }
@@ -109,11 +108,11 @@ public class TARDISGravityCommands implements CommandExecutor {
                     try {
                         values[1] = Double.parseDouble(args[1]);
                         if (values[1] > plugin.getConfig().getDouble("growth.gravity_max_distance")) {
-                            TARDISMessage.send(player, plugin.getPluginName() + "That distance is too far!");
+                            TARDISMessage.send(player, "TOO_FAR");
                             return true;
                         }
                     } catch (NumberFormatException e) {
-                        TARDISMessage.send(player, plugin.getPluginName() + MESSAGE.ARG_SEC_NUMBER.getText());
+                        TARDISMessage.send(player, "ARG_SEC_NUMBER");
                         return false;
                     }
                 } else {
@@ -122,15 +121,15 @@ public class TARDISGravityCommands implements CommandExecutor {
                 if (args.length == 3) {
                     values[2] = plugin.getUtils().parseDouble(args[2]);
                     if (values[2] > plugin.getConfig().getDouble("growth.gravity_max_velocity")) {
-                        TARDISMessage.send(player, plugin.getPluginName() + "That velocity is too fast!");
+                        TARDISMessage.send(player, "GRAVITY_FAST");
                         return true;
                     }
                 } else {
                     values[2] = 0.5D;
                 }
                 plugin.getTrackerKeeper().getGravity().put(player.getUniqueId(), values);
-                String message = (dir.equals("remove")) ? "remove it from the database" : "save its position";
-                TARDISMessage.send(player, plugin.getPluginName() + "Click the wool block to " + message + ".");
+                String message = (dir.equals("remove")) ? "GRAVITY_CLICK_REMOVE" : "GRAVITY_CLICK_SAVE";
+                TARDISMessage.send(player, message);
                 return true;
             }
         }

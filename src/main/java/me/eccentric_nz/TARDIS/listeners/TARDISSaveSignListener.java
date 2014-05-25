@@ -24,7 +24,6 @@ import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetCurrentLocation;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import me.eccentric_nz.TARDIS.database.ResultSetTravellers;
-import me.eccentric_nz.TARDIS.enumeration.MESSAGE;
 import me.eccentric_nz.TARDIS.travel.TARDISAreasInventory;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import org.bukkit.ChatColor;
@@ -115,7 +114,7 @@ public class TARDISSaveSignListener implements Listener {
                                 int level = rs.getArtron_level();
                                 int travel = plugin.getArtronConfig().getInt("travel");
                                 if (level < travel) {
-                                    TARDISMessage.send(player, plugin.getPluginName() + ChatColor.RED + MESSAGE.NOT_ENOUGH_ENERGY.getText());
+                                    TARDISMessage.send(player, "NOT_ENOUGH_ENERGY");
                                     close(player);
                                     return;
                                 }
@@ -128,7 +127,7 @@ public class TARDISSaveSignListener implements Listener {
                                     wheresave.put("z", lore.get(3));
                                     ResultSetCurrentLocation rsz = new ResultSetCurrentLocation(plugin, wheresave);
                                     if (rsz.resultSet()) {
-                                        TARDISMessage.send(player, plugin.getPluginName() + "A TARDIS already occupies this parking spot! Try using the " + ChatColor.AQUA + "/tardistravel area [name]" + ChatColor.RESET + " command instead.");
+                                        TARDISMessage.send(player, "TARDIS_IN_SPOT", ChatColor.AQUA + "/tardistravel area [name]" + ChatColor.RESET + " command instead.");
                                         close(player);
                                         return;
                                     }
@@ -158,7 +157,7 @@ public class TARDISSaveSignListener implements Listener {
                                         plugin.getTrackerKeeper().getRescue().remove(id);
                                     }
                                     close(player);
-                                    TARDISMessage.send(player, plugin.getPluginName() + im.getDisplayName() + " destination set. " + MESSAGE.HANDBRAKE_RELEASE.getText());
+                                    TARDISMessage.send(player, "DEST_SET_TERMINAL", im.getDisplayName(), true);
                                 } else if (!lore.contains("§6Current location")) {
                                     lore.add("§6Current location");
                                     im.setLore(lore);
@@ -166,7 +165,7 @@ public class TARDISSaveSignListener implements Listener {
                                 }
                             } else {
                                 close(player);
-                                TARDISMessage.send(player, plugin.getPluginName() + im.getDisplayName() + " is not a valid destination!");
+                                TARDISMessage.send(player, "DEST_NOT_VALID", im.getDisplayName());
                             }
                         }
                     }
@@ -182,9 +181,9 @@ public class TARDISSaveSignListener implements Listener {
                             // Only add one at a time
                             plugin.getTrackerKeeper().getArrangers().add(uuid);
                         }
-                        TARDISMessage.send(player, plugin.getPluginName() + "Save rearrangement enabled");
+                        TARDISMessage.send(player, "SAVE_ARRANGE");
                     } else {
-                        TARDISMessage.send(player, plugin.getPluginName() + MESSAGE.NOT_OWNER.getText());
+                        TARDISMessage.send(player, "NOT_OWNER");
                     }
                 }
                 if (slot == 49) {

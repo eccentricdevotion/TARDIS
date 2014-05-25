@@ -23,7 +23,6 @@ import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import me.eccentric_nz.TARDIS.database.ResultSetTravellers;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
-import me.eccentric_nz.TARDIS.enumeration.MESSAGE;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
@@ -48,11 +47,11 @@ public class TARDISHomeCommand {
             Location eyeLocation = player.getTargetBlock(plugin.getGeneralKeeper().getTransparent(), 50).getLocation();
             COMPASS player_d = COMPASS.valueOf(plugin.getUtils().getPlayersDirection(player, false));
             if (!plugin.getConfig().getBoolean("travel.include_default_world") && plugin.getConfig().getBoolean("creation.default_world") && eyeLocation.getWorld().getName().equals(plugin.getConfig().getString("creation.default_world_name"))) {
-                TARDISMessage.send(player, plugin.getPluginName() + MESSAGE.NO_WORLD_TRAVEL.getText());
+                TARDISMessage.send(player, "NO_WORLD_TRAVEL");
                 return true;
             }
             if (!plugin.getTardisArea().areaCheckInExisting(eyeLocation)) {
-                TARDISMessage.send(player, plugin.getPluginName() + "You cannot use /tardis home in a TARDIS area! Please use " + ChatColor.AQUA + "/tardistravel area [area name]");
+                TARDISMessage.send(player, "AREA_NO_HOME", ChatColor.AQUA + "/tardistravel area [area name]");
                 return true;
             }
             if (!plugin.getPluginRespect().getRespect(player, eyeLocation, true)) {
@@ -66,14 +65,14 @@ public class TARDISHomeCommand {
             // check the world is not excluded
             String world = eyeLocation.getWorld().getName();
             if (!plugin.getConfig().getBoolean("worlds." + world)) {
-                TARDISMessage.send(player, plugin.getPluginName() + MESSAGE.NO_WORLD_TRAVEL.getText());
+                TARDISMessage.send(player, "NO_WORLD_TRAVEL");
                 return true;
             }
             HashMap<String, Object> where = new HashMap<String, Object>();
             where.put("uuid", player.getUniqueId().toString());
             ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);
             if (!rs.resultSet()) {
-                TARDISMessage.send(player, plugin.getPluginName() + MESSAGE.NOT_A_TIMELORD.getText());
+                TARDISMessage.send(player, "NOT_A_TIMELORD");
                 return false;
             }
             int id = rs.getTardis_id();
@@ -83,7 +82,7 @@ public class TARDISHomeCommand {
                 tcc.getCircuits();
             }
             if (tcc != null && !tcc.hasMemory()) {
-                TARDISMessage.send(player, plugin.getPluginName() + MESSAGE.NO_MEM_CIRCUIT.getText());
+                TARDISMessage.send(player, "NO_MEM_CIRCUIT");
                 return true;
             }
             // check they are not in the tardis
@@ -92,7 +91,7 @@ public class TARDISHomeCommand {
             wherettrav.put("tardis_id", id);
             ResultSetTravellers rst = new ResultSetTravellers(plugin, wherettrav, false);
             if (rst.resultSet()) {
-                TARDISMessage.send(player, plugin.getPluginName() + "You cannot set the home location here because you are inside a TARDIS!");
+                TARDISMessage.send(player, "TARDIS_NO_INSIDE");
                 return true;
             }
             QueryFactory qf = new QueryFactory(plugin);
@@ -106,10 +105,10 @@ public class TARDISHomeCommand {
             set.put("direction", player_d.toString());
             set.put("submarine", isSub(eyeLocation) ? 1 : 0);
             qf.doUpdate("homes", set, tid);
-            TARDISMessage.send(player, plugin.getPluginName() + "The new TARDIS home was set!");
+            TARDISMessage.send(player, "HOME_SET");
             return true;
         } else {
-            TARDISMessage.send(player, plugin.getPluginName() + MESSAGE.NO_PERMS.getText());
+            TARDISMessage.send(player, "NO_PERMS");
             return false;
         }
     }

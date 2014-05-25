@@ -23,7 +23,6 @@ import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetChunks;
 import me.eccentric_nz.TARDIS.database.ResultSetLamps;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
-import me.eccentric_nz.TARDIS.enumeration.MESSAGE;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import org.bukkit.Chunk;
 import org.bukkit.World;
@@ -55,7 +54,7 @@ public class TARDISLampsCommand {
     public boolean addLampBlocks(Player owner) {
         // check they have permission
         if (!owner.hasPermission("tardis.update")) {
-            TARDISMessage.send(owner, plugin.getPluginName() + MESSAGE.NO_PERMS.getText());
+            TARDISMessage.send(owner, "NO_PERMS");
             return false;
         }
         HashMap<String, Object> where = new HashMap<String, Object>();
@@ -69,7 +68,7 @@ public class TARDISLampsCommand {
             ResultSetLamps rsl = new ResultSetLamps(plugin, wherel, false);
             QueryFactory qf = new QueryFactory(plugin);
             if (rsl.resultSet()) {
-                TARDISMessage.send(owner, plugin.getPluginName() + "Deleting previously stored TARDIS lamps!");
+                TARDISMessage.send(owner, "LAMP_DELETE");
                 HashMap<String, Object> wheredel = new HashMap<String, Object>();
                 wheredel.put("tardis_id", id);
                 qf.doDelete("lamps", wheredel);
@@ -145,7 +144,7 @@ public class TARDISLampsCommand {
                                     set.put("tardis_id", id);
                                     set.put("location", lamp);
                                     qf.doInsert("lamps", set);
-                                    TARDISMessage.send(owner, "Added lamp at: " + xx + ":" + yy + ":" + zz);
+                                    TARDISMessage.send(owner, true, "LAMP_ADD", (xx + ":" + yy + ":" + zz));
                                 }
                             }
                         }
@@ -154,7 +153,7 @@ public class TARDISLampsCommand {
             }
             return true;
         } else {
-            TARDISMessage.send(owner, plugin.getPluginName() + MESSAGE.NOT_A_TIMELORD.getText());
+            TARDISMessage.send(owner, "NOT_A_TIMELORD");
             return false;
         }
     }

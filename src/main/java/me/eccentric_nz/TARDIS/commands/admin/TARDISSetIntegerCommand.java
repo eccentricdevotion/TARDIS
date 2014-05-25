@@ -21,9 +21,8 @@ import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.enumeration.MESSAGE;
 import me.eccentric_nz.TARDIS.travel.TARDISTerminalInventory;
-import org.bukkit.ChatColor;
+import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import org.bukkit.command.CommandSender;
 
 /**
@@ -43,7 +42,7 @@ public class TARDISSetIntegerCommand {
         String first = (section.isEmpty()) ? args[0].toLowerCase() : section + "." + args[0].toLowerCase();
         String a = args[1];
         if (args[0].toLowerCase().equals("tips_limit") && !TIPS_SUBS.contains(a)) {
-            sender.sendMessage(plugin.getPluginName() + ChatColor.RED + " The last argument must be '400', '800', '1200' or '1600'!");
+            TARDISMessage.send(sender, "ARG_TIPS");
             return false;
         }
         int val;
@@ -51,7 +50,7 @@ public class TARDISSetIntegerCommand {
             val = Integer.parseInt(a);
         } catch (NumberFormatException nfe) {
             // not a number
-            sender.sendMessage(plugin.getPluginName() + ChatColor.RED + " The last argument must be a number!");
+            TARDISMessage.send(sender, "ARG_LAST_NUMBER");
             return false;
         }
         plugin.getConfig().set(first, val);
@@ -60,7 +59,7 @@ public class TARDISSetIntegerCommand {
             plugin.getGeneralKeeper().getButtonListener().items = new TARDISTerminalInventory().getTerminal();
         }
         plugin.saveConfig();
-        sender.sendMessage(plugin.getPluginName() + MESSAGE.CONFIG_UPDATED.getText());
+        TARDISMessage.send(sender, "CONFIG_UPDATED");
         return true;
     }
 
@@ -72,7 +71,7 @@ public class TARDISSetIntegerCommand {
             val = Integer.parseInt(a);
         } catch (NumberFormatException nfe) {
             // not a number
-            sender.sendMessage(plugin.getPluginName() + ChatColor.RED + " The last argument must be a number!");
+            TARDISMessage.send(sender, "ARG_LAST_NUMBER");
             return false;
         }
         plugin.getArtronConfig().set(first, val);
@@ -81,7 +80,7 @@ public class TARDISSetIntegerCommand {
         } catch (IOException io) {
             plugin.debug("Could not save artron.yml, " + io);
         }
-        sender.sendMessage(plugin.getPluginName() + MESSAGE.CONFIG_UPDATED.getText());
+        TARDISMessage.send(sender, "CONFIG_UPDATED");
         return true;
     }
 }

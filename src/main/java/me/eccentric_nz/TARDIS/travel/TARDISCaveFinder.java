@@ -22,7 +22,6 @@ import java.util.HashMap;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.ResultSetCurrentLocation;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
-import me.eccentric_nz.TARDIS.enumeration.MESSAGE;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -67,44 +66,44 @@ public class TARDISCaveFinder {
                         switch (directions[i]) {
                             case 0:
                                 // east
-                                TARDISMessage.send(p, plugin.getPluginName() + "Looking east...");
+                                TARDISMessage.send(p, "LOOK_E");
                                 for (int east = startx; east < east + limitx; east += step) {
                                     Check chk = isThereRoom(w, east, startz, d);
                                     if (chk.isSafe()) {
-                                        TARDISMessage.send(p, plugin.getPluginName() + "Cave found in an easterly direction!");
+                                        TARDISMessage.send(p, "CAVE_E");
                                         return new Location(w, east, chk.getY(), startz);
                                     }
                                 }
                                 break;
                             case 1:
                                 // south
-                                TARDISMessage.send(p, plugin.getPluginName() + "Looking south...");
+                                TARDISMessage.send(p, "LOOK_S");
                                 for (int south = startz; south < south + limitz; south += step) {
                                     Check chk = isThereRoom(w, startx, south, d);
                                     if (chk.isSafe()) {
-                                        TARDISMessage.send(p, plugin.getPluginName() + "Cave found in a southerly direction!");
+                                        TARDISMessage.send(p, "CAVE_S");
                                         return new Location(w, startx, chk.getY(), south);
                                     }
                                 }
                                 break;
                             case 2:
                                 // west
-                                TARDISMessage.send(p, plugin.getPluginName() + "Looking west...");
+                                TARDISMessage.send(p, "LOOK_W");
                                 for (int west = startx; west > west - limitx; west -= step) {
                                     Check chk = isThereRoom(w, west, startz, d);
                                     if (chk.isSafe()) {
-                                        TARDISMessage.send(p, plugin.getPluginName() + "Cave found in a westerly direction!");
+                                        TARDISMessage.send(p, "CAVE_W");
                                         return new Location(w, west, chk.getY(), startz);
                                     }
                                 }
                                 break;
                             case 3:
                                 // north
-                                TARDISMessage.send(p, plugin.getPluginName() + "Looking north...");
+                                TARDISMessage.send(p, "LOOK_N");
                                 for (int north = startz; north > north - limitz; north -= step) {
                                     Check chk = isThereRoom(w, startx, north, d);
                                     if (chk.isSafe()) {
-                                        TARDISMessage.send(p, plugin.getPluginName() + "Cave found in a northerly direction!");
+                                        TARDISMessage.send(p, "CAVE_N");
                                         return new Location(w, startx, chk.getY(), north);
                                     }
                                 }
@@ -113,10 +112,10 @@ public class TARDISCaveFinder {
                     }
                 }
             } else {
-                TARDISMessage.send(p, plugin.getPluginName() + "You cannot travel to a cave in the " + w.getEnvironment().toString() + "!");
+                TARDISMessage.send(p, "CAVE_NO_TRAVEL", w.getEnvironment().toString());
             }
         } else {
-            TARDISMessage.send(p, plugin.getPluginName() + MESSAGE.CURRENT_NOT_FOUND.getText());
+            TARDISMessage.send(p, "CURRENT_NOT_FOUND");
         }
         return l;
     }

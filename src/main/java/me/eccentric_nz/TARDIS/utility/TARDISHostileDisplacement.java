@@ -28,7 +28,6 @@ import me.eccentric_nz.TARDIS.database.ResultSetCurrentLocation;
 import me.eccentric_nz.TARDIS.database.ResultSetPlayerPrefs;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
-import me.eccentric_nz.TARDIS.enumeration.MESSAGE;
 import me.eccentric_nz.TARDIS.travel.TARDISTimeTravel;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
@@ -162,26 +161,26 @@ public class TARDISHostileDisplacement {
                                         }
                                     }, delay * 2);
                                     // message time lord
-                                    String message = plugin.getPluginName() + ChatColor.RED + "H" + ChatColor.RESET + "ostile " + ChatColor.RED + "A" + ChatColor.RESET + "ction " + ChatColor.RED + "D" + ChatColor.RESET + "isplacement " + ChatColor.RED + "S" + ChatColor.RESET + "ystem engaged, moving TARDIS!";
-                                    TARDISMessage.send(player, message);
+                                    String message = plugin.getPluginName() + ChatColor.RED + "H" + ChatColor.RESET + "ostile " + ChatColor.RED + "A" + ChatColor.RESET + "ction " + ChatColor.RED + "D" + ChatColor.RESET + "isplacement " + ChatColor.RED + "S" + ChatColor.RESET + "ystem " + plugin.getLanguage().getString("HADS_ENGAGED");
+                                    player.sendMessage(message);
                                     String hads = fl.getWorld().getName() + ":" + fl.getBlockX() + ":" + fl.getBlockY() + ":" + fl.getBlockZ();
-                                    TARDISMessage.send(player, plugin.getPluginName() + "TARDIS moved to " + hads);
+                                    TARDISMessage.send(player, "HADS_LOC", hads);
                                     if (player != hostile) {
-                                        TARDISMessage.send(hostile, message);
+                                        hostile.sendMessage(message);
                                     }
                                     break;
                                 } else {
-                                    TARDISMessage.send(player, plugin.getPluginName() + MESSAGE.HADS_PROTECTED.getText());
+                                    TARDISMessage.send(player, "HADS_PROTECTED");
                                     if (player != hostile) {
-                                        TARDISMessage.send(hostile, plugin.getPluginName() + MESSAGE.HADS_PROTECTED.getText());
+                                        TARDISMessage.send(hostile, "HADS_PROTECTED");
                                     }
                                 }
                             } else {
-                                TARDISMessage.send(player, plugin.getPluginName() + "HADS could not be engaged because the it couldn't find a safe area!");
+                                TARDISMessage.send(player, "HADS_NOT_SAFE");
                             }
                         } else {
                             plugin.getTrackerKeeper().getDamage().remove(id);
-                            TARDISMessage.send(player, plugin.getPluginName() + "HADS could not be engaged because the TARDIS cannot land on water!");
+                            TARDISMessage.send(player, "HADS_NO_WATER");
                         }
                     }
                 }

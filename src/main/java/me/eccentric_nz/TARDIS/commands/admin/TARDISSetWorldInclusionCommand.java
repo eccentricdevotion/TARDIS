@@ -17,9 +17,8 @@
 package me.eccentric_nz.TARDIS.commands.admin;
 
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.enumeration.MESSAGE;
+import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import org.apache.commons.lang.StringUtils;
-import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
 
 /**
@@ -48,7 +47,7 @@ public class TARDISSetWorldInclusionCommand {
         String nodots = StringUtils.replace(t, ".", "_");
         // check the world actually exists!
         if (plugin.getServer().getWorld(nodots) == null) {
-            sender.sendMessage(plugin.getPluginName() + ChatColor.RED + "World does not exist!");
+            TARDISMessage.send(sender, "WORLD_NOT_FOUND");
             return false;
         }
         if (first.equals("include")) {
@@ -57,7 +56,7 @@ public class TARDISSetWorldInclusionCommand {
             plugin.getConfig().set("worlds." + nodots, false);
         }
         plugin.saveConfig();
-        sender.sendMessage(plugin.getPluginName() + MESSAGE.CONFIG_UPDATED.getText());
+        TARDISMessage.send(sender, "CONFIG_UPDATED");
         return true;
     }
 }

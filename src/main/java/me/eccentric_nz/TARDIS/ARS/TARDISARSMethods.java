@@ -346,10 +346,10 @@ public class TARDISARSMethods {
                         TARDISARSProcessor tap = new TARDISARSProcessor(plugin, ids.get(uuid));
                         boolean changed = tap.compare3DArray(save_map_data.get(uuid).getData(), map_data.get(uuid).getData());
                         if (changed && tap.checkCosts(tap.getChanged(), tap.getJettison())) {
-                            TARDISMessage.send(p, plugin.getPluginName() + "Architectural reconfiguration starting...");
+                            TARDISMessage.send(p, "ARS_START");
                             // do all jettisons first
                             if (tap.getJettison().size() > 0) {
-                                TARDISMessage.send(p, plugin.getPluginName() + "Jettisoning " + tap.getJettison().size() + " rooms...");
+                                TARDISMessage.send(p, "ROOM_JETT", String.format("%d", tap.getJettison().size()));
                                 long del = 5L;
                                 for (Map.Entry<TARDISARSJettison, ARS> map : tap.getJettison().entrySet()) {
                                     TARDISARSJettisonRunnable jr = new TARDISARSJettisonRunnable(plugin, map.getKey(), map.getValue(), ids.get(uuid), p);
@@ -366,12 +366,12 @@ public class TARDISARSMethods {
                                 delay += period;
                             }
                         } else {
-                            TARDISMessage.send(p, plugin.getPluginName() + tap.getError());
+                            TARDISMessage.send(p, tap.getError());
                             // reset map to the previous version
                             revert(uuid);
                         }
                     } else {
-                        TARDISMessage.send(p, plugin.getPluginName() + "Only the Time Lord of this TARDIS can reconfigure rooms!");
+                        TARDISMessage.send(p, "ROOM_ONLY_TL");
                         revert(uuid);
                     }
                     map_data.remove(uuid);

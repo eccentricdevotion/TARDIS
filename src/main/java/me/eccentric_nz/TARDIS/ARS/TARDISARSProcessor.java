@@ -113,7 +113,7 @@ public class TARDISARSProcessor {
                 int energy = rs.getArtron_level();
                 // check available energy vs cost
                 if (totalcost - recoveredcost > energy) {
-                    this.error = "Insufficient Artron Energy";
+                    this.error = "ENERGY_NOT_ENOUGH";
                     return false;
                 }
             }

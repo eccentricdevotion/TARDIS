@@ -24,7 +24,6 @@ import java.util.Locale;
 import me.eccentric_nz.TARDIS.TARDIS;
 import static me.eccentric_nz.TARDIS.commands.preferences.TARDISPrefsCommands.ucfirst;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
-import me.eccentric_nz.TARDIS.enumeration.MESSAGE;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import org.bukkit.entity.Player;
 
@@ -43,7 +42,7 @@ public class TARDISFloorCommand {
     public boolean setFloorOrWallBlock(Player player, String[] args, QueryFactory qf) {
         String pref = args[0];
         if (args.length < 2) {
-            TARDISMessage.send(player, plugin.getPluginName() + "You need to specify a " + pref + " material!");
+            TARDISMessage.send(player, "PREF_WALL", pref);
             return false;
         }
         String wall_mat;
@@ -60,12 +59,12 @@ public class TARDISFloorCommand {
             wall_mat = args[1].toUpperCase(Locale.ENGLISH);
         }
         if (!plugin.getTardisWalls().blocks.containsKey(wall_mat)) {
-            String message = (wall_mat.equals("HELP")) ? String.format(MESSAGE.WALL_LIST.getText(), pref) : String.format(MESSAGE.WALL_NOT_VALID.getText(), pref);
-            TARDISMessage.send(player, plugin.getPluginName() + message);
+            String message = (wall_mat.equals("HELP")) ? "WALL_LIST" : "WALL_NOT_VALID";
+            TARDISMessage.send(player, message, pref);
             List<String> sortedKeys = new ArrayList<String>(plugin.getTardisWalls().blocks.keySet());
             Collections.sort(sortedKeys);
             for (String w : sortedKeys) {
-                TARDISMessage.send(player, w);
+                player.sendMessage(w);
             }
             return true;
         }
@@ -74,7 +73,7 @@ public class TARDISFloorCommand {
         HashMap<String, Object> where = new HashMap<String, Object>();
         where.put("uuid", player.getUniqueId().toString());
         qf.doUpdate("player_prefs", setw, where);
-        TARDISMessage.send(player, plugin.getPluginName() + ucfirst(pref) + " material saved.");
+        TARDISMessage.send(player, "PREF_MAT_SET", ucfirst(pref));
         return true;
     }
 }

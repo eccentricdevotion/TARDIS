@@ -24,7 +24,6 @@ import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetPlayerPrefs;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
-import me.eccentric_nz.TARDIS.enumeration.MESSAGE;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
@@ -56,7 +55,7 @@ public class TARDISArtronStorageCommand implements CommandExecutor {
         // check there is the right number of arguments
         if (cmd.getName().equalsIgnoreCase("tardisartron")) {
             if (!sender.hasPermission("tardis.store")) {
-                sender.sendMessage(plugin.getPluginName() + MESSAGE.NO_PERMS.getText());
+                TARDISMessage.send(sender, "NO_PERMS");
                 return true;
             }
             if (args.length < 2) {
@@ -67,27 +66,27 @@ public class TARDISArtronStorageCommand implements CommandExecutor {
                 player = (Player) sender;
             }
             if (player == null) {
-                sender.sendMessage(plugin.getPluginName() + ChatColor.RED + MESSAGE.CMD_PLAYER.getText());
+                sender.sendMessage(plugin.getPluginName() + ChatColor.RED + plugin.getLanguage().getString("CMD_PLAYER"));
                 return true;
             }
             ItemStack is = player.getItemInHand();
             if (is == null || !is.hasItemMeta()) {
-                TARDISMessage.send(player, plugin.getPluginName() + "You must be holding an Artron Storage Cell in your hand!");
+                TARDISMessage.send(player, "CELL_IN_HAND");
                 return true;
             }
             if (is.getAmount() > 1) {
-                TARDISMessage.send(player, plugin.getPluginName() + "You can only charge 1 Artron Storage Cell at a time!");
+                TARDISMessage.send(player, "CELL_ONE");
                 return true;
             }
             ItemMeta im = is.getItemMeta();
             String name = im.getDisplayName();
             if (name == null || !name.equals("Artron Storage Cell")) {
-                TARDISMessage.send(player, plugin.getPluginName() + "You must be holding an Artron Storage Cell in your hand!");
+                TARDISMessage.send(player, "CELL_IN_HAND");
                 return true;
             }
             String which = args[0].toLowerCase(Locale.ENGLISH);
             if (!firstArgs.contains(which)) {
-                TARDISMessage.send(player, plugin.getPluginName() + "You must specify 'tardis' or 'timelord' energy to transfer!");
+                TARDISMessage.send(player, "CELL_WHICH");
                 return false;
             }
             // must be a timelord
@@ -98,7 +97,7 @@ public class TARDISArtronStorageCommand implements CommandExecutor {
                 wheret.put("uuid", playerUUID);
                 ResultSetTardis rs = new ResultSetTardis(plugin, wheret, "", false);
                 if (!rs.resultSet()) {
-                    TARDISMessage.send(player, plugin.getPluginName() + MESSAGE.NO_TARDIS.getText());
+                    TARDISMessage.send(player, "NO_TARDIS");
                     return true;
                 }
                 current_level = rs.getArtron_level();
@@ -106,7 +105,7 @@ public class TARDISArtronStorageCommand implements CommandExecutor {
                 wheret.put("uuid", playerUUID);
                 ResultSetPlayerPrefs rs = new ResultSetPlayerPrefs(plugin, wheret);
                 if (!rs.resultSet()) {
-                    TARDISMessage.send(player, plugin.getPluginName() + MESSAGE.NO_TARDIS.getText());
+                    TARDISMessage.send(player, "NO_TARDIS");
                     return true;
                 }
                 current_level = rs.getArtronLevel();
@@ -115,22 +114,22 @@ public class TARDISArtronStorageCommand implements CommandExecutor {
             try {
                 amount = Integer.parseInt(args[1]);
                 if (amount < 0) {
-                    TARDISMessage.send(player, plugin.getPluginName() + "The amount cannot be negative!");
+                    TARDISMessage.send(player, "ENERGY_NOT_NEG");
                     return true;
                 }
             } catch (NumberFormatException n) {
-                TARDISMessage.send(player, plugin.getPluginName() + MESSAGE.ARG_SEC_NUMBER.getText());
+                TARDISMessage.send(player, "ARG_SEC_NUMBER");
                 return false;
             }
             // must have sufficient energy
             if (which.equals("tardis")) {
                 if (current_level - amount < plugin.getArtronConfig().getInt("comehere")) {
-                    TARDISMessage.send(player, plugin.getPluginName() + "You cannot transfer that much energy, you must have enough left to call your TARDIS!");
+                    TARDISMessage.send(player, "CELL_NO_TRANSFER");
                     return true;
                 }
             } else {
                 if (current_level - amount < 0) {
-                    TARDISMessage.send(player, plugin.getPluginName() + "You do not have that much Time Lord energy to transfer!");
+                    TARDISMessage.send(player, "CELL_NOT_ENOUGH");
                     return true;
                 }
             }
@@ -139,7 +138,7 @@ public class TARDISArtronStorageCommand implements CommandExecutor {
             int new_amount = amount + level;
             int max = plugin.getArtronConfig().getInt("full_charge");
             if (new_amount > max) {
-                TARDISMessage.send(player, plugin.getPluginName() + "You cannot overcharge this cell, transfer " + (max - level) + ", or use an empty cell!");
+                TARDISMessage.send(player, plugin.getPluginName() + "CELL_NO_CHARGE", String.format("%d", (max - level)));
                 return false;
             }
             lore.set(1, "" + new_amount);
@@ -157,7 +156,7 @@ public class TARDISArtronStorageCommand implements CommandExecutor {
                 table = "player_prefs";
             }
             new QueryFactory(plugin).alterEnergyLevel(table, -amount, where, player);
-            TARDISMessage.send(player, plugin.getPluginName() + "Artron Storage Cell charged to " + new_amount);
+            TARDISMessage.send(player, "CELL_CHARGED", String.format("%d", new_amount));
             return true;
         }
         return false;

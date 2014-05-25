@@ -24,7 +24,6 @@ import java.util.Map;
 import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.artron.TARDISArtronIndicator;
-import me.eccentric_nz.TARDIS.enumeration.MESSAGE;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
@@ -92,7 +91,7 @@ public class TARDISSQLAlterEnergy implements Runnable {
                     if (id > 0) {
                         new TARDISArtronIndicator(plugin).showArtronLevel(p, id, Math.abs(amount));
                     } else {
-                        TARDISMessage.send(p, plugin.getPluginName() + String.format(MESSAGE.ENERGY_USED.getText(), Math.abs(amount)));
+                        TARDISMessage.send(p, "ENERGY_USED", String.format("%d", Math.abs(amount)));
                     }
                 }
             }.runTask(plugin);

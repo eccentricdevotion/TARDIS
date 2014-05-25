@@ -21,7 +21,6 @@ import java.util.HashMap;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
-import me.eccentric_nz.TARDIS.enumeration.MESSAGE;
 import me.eccentric_nz.TARDIS.utility.TARDISAntiBuild;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import org.bukkit.entity.Player;
@@ -41,7 +40,7 @@ public class TARDISBuildCommand {
 
     public boolean toggleCompanionBuilding(Player player, String[] args) {
         if (!plugin.isWorldGuardOnServer() || !plugin.getConfig().getBoolean("allow.wg_flag_set")) {
-            TARDISMessage.send(player, plugin.getPluginName() + "That command is not available on this server!");
+            TARDISMessage.send(player, "CMD_DISABLED");
             return true;
         }
         String playerNameStr = player.getName();
@@ -50,7 +49,7 @@ public class TARDISBuildCommand {
         where.put("uuid", player.getUniqueId().toString());
         ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);
         if (!rs.resultSet()) {
-            TARDISMessage.send(player, plugin.getPluginName() + MESSAGE.NO_TARDIS.getText());
+            TARDISMessage.send(player, "NO_TARDIS");
             return true;
         }
         Integer id = rs.getTardis_id();
@@ -60,7 +59,7 @@ public class TARDISBuildCommand {
         if (args[1].equalsIgnoreCase("on")) {
             setp.put("build_on", 1);
             plugin.getTrackerKeeper().getAntiBuild().remove(id);
-            TARDISMessage.send(player, plugin.getPluginName() + "Companion building was turned ON!");
+            TARDISMessage.send(player, "ANTIBUILD_ON");
         }
         if (args[1].equalsIgnoreCase("off")) {
             setp.put("build_on", 0);
@@ -68,7 +67,7 @@ public class TARDISBuildCommand {
             // get region vectors
             ProtectedRegion pr = plugin.getWorldGuardUtils().getRegion(rs.getChunk().split(":")[0], playerNameStr);
             if (pr == null) {
-                TARDISMessage.send(player, plugin.getPluginName() + "Could not get WorldGuard region!");
+                TARDISMessage.send(player, "WG_NOT_FOUND");
                 return true;
             }
             Vector min = new Vector(pr.getMinimumPoint().getBlockX(), pr.getMinimumPoint().getBlockY(), pr.getMinimumPoint().getBlockZ());
@@ -77,7 +76,7 @@ public class TARDISBuildCommand {
             tab.setMax(max);
             tab.setTimelord(playerNameStr);
             plugin.getTrackerKeeper().getAntiBuild().put(id, tab);
-            TARDISMessage.send(player, plugin.getPluginName() + "Companion building was turned OFF.");
+            TARDISMessage.send(player, "ANTIBUILD_OFF");
         }
         new QueryFactory(plugin).doUpdate("player_prefs", setp, wherep);
         return true;

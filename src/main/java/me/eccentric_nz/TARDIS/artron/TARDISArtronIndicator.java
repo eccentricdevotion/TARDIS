@@ -20,7 +20,6 @@ import java.util.HashMap;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.ResultSetPlayerPrefs;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
-import me.eccentric_nz.TARDIS.enumeration.MESSAGE;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -100,9 +99,9 @@ public class TARDISArtronIndicator {
                 }, 150L);
             } else {
                 if (used > 0) {
-                    TARDISMessage.send(p, plugin.getPluginName() + String.format(MESSAGE.ENERGY_USED.getText(), used));
+                    TARDISMessage.send(p, "ENERGY_USED", String.format("%d", used));
                 } else {
-                    TARDISMessage.send(p, plugin.getPluginName() + "The Artron Energy Capacitor is at " + percent + "%");
+                    TARDISMessage.send(p, "ENERGY_LEVEL", String.format("%d", percent));
                 }
             }
         }

@@ -20,6 +20,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -55,7 +56,7 @@ public class TARDISRegulatorListener extends TARDISRegulatorSlot implements List
             if (plugin.getTrackerKeeper().getRegulating().containsKey(uuid)) {
                 plugin.getServer().getScheduler().cancelTask(plugin.getTrackerKeeper().getRegulating().get(uuid).getTaskId());
                 plugin.getTrackerKeeper().getRegulating().remove(uuid);
-                player.sendMessage(plugin.getPluginName() + "Regulating aborted. Who knows where you'll land!");
+                TARDISMessage.send(player, "HELMIC_ABORT");
                 // get and set maximum adjustment from original location
                 Location adjusted = new TARDISFlightAdjustment(plugin).getLocation(plugin.getTrackerKeeper().getFlightData().get(uuid), 10);
                 plugin.getTrackerKeeper().getFlightData().get(uuid).setLocation(adjusted);

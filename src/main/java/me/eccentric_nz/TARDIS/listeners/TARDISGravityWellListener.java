@@ -22,7 +22,6 @@ import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetGravity;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
-import me.eccentric_nz.TARDIS.enumeration.MESSAGE;
 import me.eccentric_nz.TARDIS.rooms.TARDISGravityWellRunnable;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import org.bukkit.Location;
@@ -193,7 +192,7 @@ public class TARDISGravityWellListener implements Listener {
                 where.put("uuid", player.getUniqueId().toString());
                 ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);
                 if (!rs.resultSet()) {
-                    TARDISMessage.send(player, plugin.getPluginName() + MESSAGE.NOT_A_TIMELORD.getText());
+                    TARDISMessage.send(player, "NOT_A_TIMELORD");
                     return;
                 }
                 int id = rs.getTardis_id();
@@ -232,16 +231,16 @@ public class TARDISGravityWellListener implements Listener {
                             // set the block to light grey wool
                             b.setType(Material.WOOL);
                             b.setData((byte) 8, true);
-                            TARDISMessage.send(player, plugin.getPluginName() + "The gravity block was removed successfully");
+                            TARDISMessage.send(player, "GRAVITY_REMOVED");
                         }
                     } else {
-                        TARDISMessage.send(player, plugin.getPluginName() + "Could not find the gravity block in the database!");
+                        TARDISMessage.send(player, "GRAVITY_NOT_FOUND");
                     }
                 } else {
                     // check the wool block is the right colour
                     byte bit = woolData.get(values[0]);
                     if (b.getData() != bit) {
-                        TARDISMessage.send(player, plugin.getPluginName() + "That wool block is the wrong colour, it should be " + woolColour.get(values[0]) + ".");
+                        TARDISMessage.send(player, "GRAVITY_COLOUR", woolColour.get(values[0]) + ".");
                         return;
                     }
                     // add a record
@@ -280,7 +279,7 @@ public class TARDISGravityWellListener implements Listener {
                             dir = "DOWN";
                             break;
                     }
-                    TARDISMessage.send(player, plugin.getPluginName() + "The wool was set to a gravity " + dir + " block!");
+                    TARDISMessage.send(player, "GRAVITY_SET", dir);
                 }
             }
             plugin.getTrackerKeeper().getGravity().remove(uuid);

@@ -90,7 +90,7 @@ public class TARDISPrefsMenuInventory {
             // eps
             ItemStack eps = new ItemStack(Material.DIODE, 1);
             ItemMeta e_im = eps.getItemMeta();
-            e_im.setDisplayName("Emergency Program One");
+            e_im.setDisplayName("Emergency Programme One");
             String e_value = (rsp.isEpsOn()) ? "ON" : "OFF";
             e_im.setLore(Arrays.asList(e_value));
             eps.setItemMeta(e_im);

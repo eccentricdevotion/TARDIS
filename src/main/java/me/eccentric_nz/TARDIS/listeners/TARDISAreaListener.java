@@ -65,7 +65,7 @@ public class TARDISAreaListener implements Listener {
                 if (plugin.getTardisArea().areaCheckInExisting(block_loc)) {
                     String locStr = block_loc.getWorld().getName() + ":" + block_loc.getBlockX() + ":" + block_loc.getBlockY() + ":" + block_loc.getBlockZ();
                     plugin.getTrackerKeeper().getBlock().put(uuid, locStr);
-                    TARDISMessage.send(player, plugin.getPluginName() + "You have 60 seconds to select the area end block - use the " + ChatColor.GREEN + "/tardisarea end" + ChatColor.RESET + " command.");
+                    TARDISMessage.send(player, "AREA_END_INFO", ChatColor.GREEN + "/tardisarea end" + ChatColor.RESET + " command.");
                     plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
                         @Override
                         public void run() {
@@ -74,7 +74,7 @@ public class TARDISAreaListener implements Listener {
                         }
                     }, 1200L);
                 } else {
-                    TARDISMessage.send(player, plugin.getPluginName() + "That block is inside an already defined area! Try somewhere else.");
+                    TARDISMessage.send(player, "AREA_INSIDE");
                 }
             } else if (plugin.getTrackerKeeper().getBlock().containsKey(uuid) && plugin.getTrackerKeeper().getEnd().containsKey(uuid)) {
                 Location block_loc = block.getLocation();
@@ -82,12 +82,12 @@ public class TARDISAreaListener implements Listener {
                 if (plugin.getTardisArea().areaCheckInExisting(block_loc)) {
                     String[] firstblock = plugin.getTrackerKeeper().getBlock().get(uuid).split(":");
                     if (!block_loc.getWorld().getName().equals(firstblock[0])) {
-                        TARDISMessage.send(player, plugin.getPluginName() + ChatColor.RED + "Area start and end blocks must be in the same world! Try again");
+                        TARDISMessage.send(player, "AREA_WORLD");
                         return;
                     }
                     int y = block_loc.getBlockY();
                     if (y != (plugin.getUtils().parseInt(firstblock[2]))) {
-                        TARDISMessage.send(player, plugin.getPluginName() + ChatColor.RED + "Area start and end blocks must be at the same Y co-ordinate! Try again with a FLAT area.");
+                        TARDISMessage.send(player, "AREA_Y");
                         return;
                     }
                     int minx, minz, maxx, maxz;
@@ -116,12 +116,12 @@ public class TARDISAreaListener implements Listener {
                     set.put("maxz", maxz);
                     set.put("y", y + 1);
                     qf.doInsert("areas", set);
-                    TARDISMessage.send(player, plugin.getPluginName() + "The area [" + plugin.getTrackerKeeper().getArea().get(uuid) + "] was saved successfully");
+                    TARDISMessage.send(player, "AREA_SAVED", plugin.getTrackerKeeper().getArea().get(uuid));
                     plugin.getTrackerKeeper().getArea().remove(uuid);
                     plugin.getTrackerKeeper().getBlock().remove(uuid);
                     plugin.getTrackerKeeper().getEnd().remove(uuid);
                 } else {
-                    TARDISMessage.send(player, plugin.getPluginName() + "That block is inside an already defined area! Try somewhere else.");
+                    TARDISMessage.send(player, "AREA_INSIDE");
                 }
             }
         }

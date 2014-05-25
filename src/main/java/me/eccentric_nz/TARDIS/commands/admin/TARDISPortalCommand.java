@@ -17,6 +17,7 @@
 package me.eccentric_nz.TARDIS.commands.admin;
 
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import org.bukkit.command.CommandSender;
 
 /**
@@ -36,7 +37,7 @@ public class TARDISPortalCommand {
         plugin.getTrackerKeeper().getPortals().clear();
         // stop tracking players
         plugin.getTrackerKeeper().getMover().clear();
-        sender.sendMessage(plugin.getPluginName() + "Removed all portals, and stopped tracking players!");
+        TARDISMessage.send(sender, "PURGE_PORTAL");
         return true;
     }
 }

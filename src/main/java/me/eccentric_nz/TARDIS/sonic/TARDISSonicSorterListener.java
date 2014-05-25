@@ -84,7 +84,7 @@ public class TARDISSonicSorterListener implements Listener {
                         }
                         if (allow) {
                             sortInventory(inventory, 0, inventory.getSize());
-                            TARDISMessage.send(player, plugin.getPluginName() + "Chest sonically sorted!");
+                            TARDISMessage.send(player, "CHEST_SORTED");
                         }
                     }
                 }

@@ -17,7 +17,6 @@
 package me.eccentric_nz.TARDIS.listeners;
 
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.enumeration.MESSAGE;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -68,10 +67,10 @@ public class TARDISPerceptionFilterListener implements Listener {
                             // make the player invisible
                             plugin.getFilter().addPerceptionFilter(player);
                         } else {
-                            TARDISMessage.send(player, plugin.getPluginName() + "You need to remove your chestplate armour first!");
+                            TARDISMessage.send(player, "FILTER");
                         }
                     } else {
-                        TARDISMessage.send(player, plugin.getPluginName() + MESSAGE.NO_PERMS.getText());
+                        TARDISMessage.send(player, "NO_PERMS");
                     }
                 }
             }

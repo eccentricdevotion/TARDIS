@@ -19,7 +19,7 @@ package me.eccentric_nz.TARDIS.commands.admin;
 import java.util.Arrays;
 import java.util.List;
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.enumeration.MESSAGE;
+import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import org.bukkit.command.CommandSender;
 
 /**
@@ -38,12 +38,12 @@ public class TARDISSignColourCommand {
     public boolean setColour(CommandSender sender, String[] args) {
         String colour = args[1].toUpperCase();
         if (!COLOURS.contains(colour)) {
-            sender.sendMessage(plugin.getPluginName() + "Incorrect colour specified, please check http://jd.bukkit.org/rb/apidocs/org/bukkit/ChatColor.html!");
+            TARDISMessage.send(sender, "ARG_COLOUR");
             return true;
         }
         plugin.getConfig().set("police_box.sign_colour", colour);
         plugin.saveConfig();
-        sender.sendMessage(plugin.getPluginName() + MESSAGE.CONFIG_UPDATED.getText());
+        TARDISMessage.send(sender, "CONFIG_UPDATED");
         return true;
     }
 }

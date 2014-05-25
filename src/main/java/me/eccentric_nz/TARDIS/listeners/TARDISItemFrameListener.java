@@ -23,7 +23,6 @@ import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetControls;
 import me.eccentric_nz.TARDIS.database.ResultSetCurrentLocation;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
-import me.eccentric_nz.TARDIS.enumeration.MESSAGE;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import org.bukkit.Material;
 import org.bukkit.Rotation;
@@ -57,7 +56,7 @@ public class TARDISItemFrameListener implements Listener {
                 wheret.put("uuid", uuid.toString());
                 ResultSetTardis rst = new ResultSetTardis(plugin, wheret, "", false);
                 if (!rst.resultSet()) {
-                    TARDISMessage.send(player, plugin.getPluginName() + MESSAGE.NO_TARDIS.getText());
+                    TARDISMessage.send(player, "NO_TARDIS");
                     return;
                 }
                 int id = rst.getTardis_id();
@@ -80,7 +79,7 @@ public class TARDISItemFrameListener implements Listener {
                     new QueryFactory(plugin).insertControl(id, 18, l, 0);
                 }
                 plugin.getTrackerKeeper().getPlayers().remove(uuid);
-                TARDISMessage.send(player, plugin.getPluginName() + "The position of the TARDIS Direction Frame was updated successfully.");
+                TARDISMessage.send(player, "DIRECTION_UPDATE");
                 return;
             }
             final ItemFrame frame = (ItemFrame) event.getRightClicked();
@@ -140,7 +139,7 @@ public class TARDISItemFrameListener implements Listener {
                                 direction = "NORTH";
                                 break;
                         }
-                        TARDISMessage.send(player, plugin.getPluginName() + "SHIFT-RIGHT click the Direction Frame to set the TARDIS to " + direction);
+                        TARDISMessage.send(player, "DIRECTON_SET", direction);
                     }
                 } else {
                     // are they placing a tripwire hook?
@@ -170,7 +169,7 @@ public class TARDISItemFrameListener implements Listener {
                                             break;
                                     }
                                     frame.setRotation(r);
-                                    TARDISMessage.send(player, plugin.getPluginName() + "Current TARDIS direction is " + rscl.getDirection().toString());
+                                    TARDISMessage.send(player, "DIRECTION_CURRENT", rscl.getDirection().toString());
                                 }
                             }, 4L);
                         }

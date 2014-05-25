@@ -65,7 +65,7 @@ public class TARDISSonicEntityListener implements Listener {
                     final Player scanned = (Player) ent;
                     plugin.getGeneralKeeper().getSonicListener().playSonicSound(player, now, 3050L, "sonic_screwdriver");
                     if (player.hasPermission("tardis.sonic.admin") && lore != null && lore.contains("Admin Upgrade")) {
-                        TARDISMessage.send(player, plugin.getPluginName() + "Opening player's inventory, please wait...");
+                        TARDISMessage.send(player, "SONIC_INV");
                         plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
                             @Override
                             public void run() {
@@ -77,26 +77,26 @@ public class TARDISSonicEntityListener implements Listener {
                             }
                         }, 40L);
                     } else if (player.hasPermission("tardis.sonic.bio") && lore != null && lore.contains("Bio-scanner Upgrade")) {
-                        TARDISMessage.send(player, plugin.getPluginName() + "Scanning player...");
+                        TARDISMessage.send(player, "SONIC_PLAYER");
                         plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
                             @Override
                             public void run() {
                                 // getHealth() / getMaxHealth() * getHealthScale()
                                 double health = scanned.getHealth() / scanned.getMaxHealth() * scanned.getHealthScale();
                                 float hunger = (scanned.getFoodLevel() / 20F) * 100;
-                                TARDISMessage.send(player, "Name: " + scanned.getName());
+                                TARDISMessage.send(player, "SONIC_NAME", scanned.getName());
                                 if (plugin.isProjRassilonOnServer()) {
                                     RassilonAPI ra = ((ProjectRassilon) plugin.getPM().getPlugin("ProjectRassilon")).getAPI(plugin);
                                     if (ra != null) {
-                                        TARDISMessage.send(player, "Time Lord: " + ra.getTimelordStatus(scanned));
-                                        TARDISMessage.send(player, "Regen count: " + ra.getRegenCount(scanned));
-                                        TARDISMessage.send(player, "Regenerating: " + ra.getRegenStatus(scanned));
-                                        TARDISMessage.send(player, "Blocking regeneration: " + ra.getRegenBlock(scanned));
+                                        TARDISMessage.send(player, true, "RASS_TL", String.format("%s", ra.getTimelordStatus(scanned)));
+                                        TARDISMessage.send(player, true, "RASS_COUNT", String.format("%d", ra.getRegenCount(scanned)));
+                                        TARDISMessage.send(player, true, "RASS_REGEN", String.format("%s", ra.getRegenStatus(scanned)));
+                                        TARDISMessage.send(player, true, "RASS_BLOCK", String.format("%s", ra.getRegenBlock(scanned)));
                                     }
                                 }
-                                TARDISMessage.send(player, "Has been alive for: " + convertTicksToTime(scanned.getTicksLived()));
-                                TARDISMessage.send(player, "Health: " + health);
-                                TARDISMessage.send(player, "Hunger: " + String.format("%.2f", hunger) + "%");
+                                TARDISMessage.send(player, true, "SONIC_AGE", convertTicksToTime(scanned.getTicksLived()));
+                                TARDISMessage.send(player, true, "SONIC_HEALTH: ", String.format("%f", health));
+                                TARDISMessage.send(player, true, "SONIC_HUNGER: ", String.format("%.2f", hunger));
                             }
                         }, 40L);
                     }

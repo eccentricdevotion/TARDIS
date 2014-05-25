@@ -105,7 +105,7 @@ public class TARDISDiskCraftListener implements Listener {
                                             player.updateInventory();
                                         }
                                     } else {
-                                        TARDISMessage.send(player, plugin.getPluginName() + "You must use a blank Biome Storage Disk!");
+                                        TARDISMessage.send(player, "DISK_BLANK_BIOME");
                                     }
                                 }
                             }
@@ -136,7 +136,7 @@ public class TARDISDiskCraftListener implements Listener {
                                             }
                                         }
                                     } else {
-                                        TARDISMessage.send(player, plugin.getPluginName() + "You must use a blank Preset Storage Disk!");
+                                        TARDISMessage.send(player, "DISK_BLANK_PRESET");
                                     }
                                 }
                             }

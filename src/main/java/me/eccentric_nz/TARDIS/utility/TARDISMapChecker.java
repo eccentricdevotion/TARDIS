@@ -56,7 +56,7 @@ public class TARDISMapChecker {
         String root = container.getAbsolutePath() + File.separator + server_world;
         File file = new File(root, map);
         if (!file.exists()) {
-            plugin.getConsole().sendMessage(plugin.getPluginName() + ChatColor.RED + "Could not find TARDIS map files, some recipes will not work!");
+            plugin.getConsole().sendMessage(plugin.getPluginName() + ChatColor.RED + plugin.getLanguage().getString("MAPS_NOT_FOUND"));
             plugin.getConsole().sendMessage(plugin.getPluginName() + "Copying map files to the TARDIS folder...");
             TARDISMakeTardisCSV copier = new TARDISMakeTardisCSV(plugin);
             copier.copy(map);
@@ -84,7 +84,7 @@ public class TARDISMapChecker {
                     for (OfflinePlayer olp : ops) {
                         if (olp.isOnline()) {
                             Player p = (Player) olp;
-                            TARDISMessage.send(p, plugin.getPluginName() + ChatColor.RED + "Could not find TARDIS map files, some recipes will not work!");
+                            TARDISMessage.send(p, "MAPS_NOT_FOUND");
                         }
                     }
                 }

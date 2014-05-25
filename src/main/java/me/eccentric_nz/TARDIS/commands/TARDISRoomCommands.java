@@ -31,12 +31,10 @@ import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.ResultSetCondenser;
 import me.eccentric_nz.TARDIS.database.ResultSetPlayerPrefs;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
-import me.eccentric_nz.TARDIS.enumeration.MESSAGE;
 import me.eccentric_nz.TARDIS.files.TARDISMakeRoomCSV;
 import me.eccentric_nz.TARDIS.files.TARDISRoomSchematicReader;
 import me.eccentric_nz.TARDIS.files.TARDISSchematic;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
-import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -72,7 +70,7 @@ public class TARDISRoomCommands implements CommandExecutor {
     public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
         if (cmd.getName().equalsIgnoreCase("tardisroom")) {
             if (args.length < 2) {
-                sender.sendMessage(plugin.getPluginName() + MESSAGE.TOO_FEW_ARGS.getText());
+                TARDISMessage.send(sender, "TOO_FEW_ARGS");
                 return false;
             }
             if (args[0].toLowerCase(Locale.ENGLISH).equals("blocks")) {
@@ -80,7 +78,7 @@ public class TARDISRoomCommands implements CommandExecutor {
                 Set<String> rooms = plugin.getRoomsConfig().getConfigurationSection("rooms").getKeys(false);
                 if (name.equals("SAVE")) {
                     if (!sender.hasPermission("tardis.admin")) {
-                        sender.sendMessage(plugin.getPluginName() + MESSAGE.NO_PERMS.getText());
+                        TARDISMessage.send(sender, "NO_PERMS");
                         return false;
                     }
                     for (String r : rooms) {
@@ -107,12 +105,12 @@ public class TARDISRoomCommands implements CommandExecutor {
                         } catch (IOException e) {
                             plugin.debug("Could not create and write to " + r + "_block_list.txt! " + e.getMessage());
                         }
-                        sender.sendMessage(plugin.getPluginName() + "File saved to 'plugins/TARDIS/" + r + "_block_list.txt'");
+                        TARDISMessage.send(sender, "ROOM_FILE_SAVED", r);
                     }
                     return true;
                 } else {
                     if (!rooms.contains(name)) {
-                        sender.sendMessage(plugin.getPluginName() + MESSAGE.COULD_NOT_FIND_ROOM.getText());
+                        TARDISMessage.send(sender, "COULD_NOT_FIND_ROOM");
                         return true;
                     }
                     HashMap<String, Integer> blockIDs = plugin.getBuildKeeper().getRoomBlockCounts().get(name);
@@ -129,7 +127,7 @@ public class TARDISRoomCommands implements CommandExecutor {
                             floor = rsp.getFloor();
                         }
                     }
-                    sender.sendMessage(plugin.getPluginName() + name + " blocks:");
+                    TARDISMessage.send(sender, "ROOM_BLOCKS", name);
                     for (Map.Entry<String, Integer> entry : blockIDs.entrySet()) {
                         String[] block_data = entry.getKey().split(":");
                         int bid = plugin.getUtils().parseInt(block_data[0]);
@@ -152,13 +150,13 @@ public class TARDISRoomCommands implements CommandExecutor {
                     player = (Player) sender;
                 }
                 if (player == null) {
-                    sender.sendMessage(plugin.getPluginName() + "You cannot run this command from the console!");
+                    TARDISMessage.send(sender, "CMD_NO_CONSOLE");
                     return true;
                 }
                 String name = args[1].toUpperCase(Locale.ENGLISH);
                 Set<String> rooms = plugin.getRoomsConfig().getConfigurationSection("rooms").getKeys(false);
                 if (!rooms.contains(name)) {
-                    TARDISMessage.send(player, plugin.getPluginName() + MESSAGE.COULD_NOT_FIND_ROOM.getText());
+                    TARDISMessage.send(player, "COULD_NOT_FIND_ROOM");
                     return true;
                 }
                 HashMap<String, Integer> blockIDs = plugin.getBuildKeeper().getRoomBlockCounts().get(name);
@@ -178,7 +176,7 @@ public class TARDISRoomCommands implements CommandExecutor {
                 wheret.put("uuid", player.getUniqueId().toString());
                 ResultSetTardis rs = new ResultSetTardis(plugin, wheret, "", false);
                 if (rs.resultSet()) {
-                    TARDISMessage.send(player, plugin.getPluginName() + "You need to condense the following blocks to grow a " + name + ":");
+                    TARDISMessage.send(player, "CONDENSE_REQUIRE", name);
                     HashMap<Integer, Integer> item_counts = new HashMap<Integer, Integer>();
                     for (Map.Entry<String, Integer> entry : blockIDs.entrySet()) {
                         String[] block_data = entry.getKey().split(":");
@@ -211,42 +209,42 @@ public class TARDISRoomCommands implements CommandExecutor {
                         int required = map.getValue() - has;
                         if (required > 0) {
                             String line = Material.getMaterial(map.getKey()).toString() + ", " + required;
-                            TARDISMessage.send(player, line);
+                            player.sendMessage(line);
                             total += required;
                         }
                     }
                     if (total == 0) {
-                        TARDISMessage.send(player, "Nothing! You are good to grow.");
+                        TARDISMessage.send(player, "CONDENSE_NONE");
                     }
                     return true;
                 } else {
-                    TARDISMessage.send(player, plugin.getPluginName() + "Could not get TARDIS id!");
+                    TARDISMessage.send(player, "ID_NOT_FOUND");
                     return true;
                 }
             } else if (args[0].toLowerCase(Locale.ENGLISH).equals("add")) {
                 if (!sender.hasPermission("tardis.admin")) {
-                    sender.sendMessage(plugin.getPluginName() + MESSAGE.NO_PERMS.getText());
+                    TARDISMessage.send(sender, "NO_PERMS");
                     return false;
                 }
                 Pattern regex = Pattern.compile(".*[A-Z].*");
                 if (regex.matcher(args[1]).matches()) {
-                    sender.sendMessage(plugin.getPluginName() + "Please make sure the file name is lowercase only!");
+                    TARDISMessage.send(sender, "ARG_LOWERCASE");
                     return true;
                 }
                 String name = args[1].toUpperCase(Locale.ENGLISH);
                 if (name.equals("ADD") || name.equals("BLOCKS")) {
-                    sender.sendMessage(plugin.getPluginName() + "You cannot call your room '" + args[1] + "'!");
+                    TARDISMessage.send(sender, "ROOM_NO_NAME", args[1]);
                     return false;
                 }
                 if (plugin.getRoomsConfig().contains("rooms." + name)) {
-                    sender.sendMessage(plugin.getPluginName() + "That room name already exists!");
+                    TARDISMessage.send(sender, "ROOM_EXISTS");
                     return true;
                 }
                 String lower = name.toLowerCase(Locale.ENGLISH);
                 String filepath = plugin.getDataFolder() + File.separator + "user_schematics" + File.separator + lower + ".schematic";
                 File file = new File(filepath);
                 if (!file.exists()) {
-                    sender.sendMessage(plugin.getPluginName() + "You need to put the " + lower + ".schematic into the TARDIS user_schematics directory!");
+                    TARDISMessage.send(sender, "ROOM_SCHEMATIC_INFO" + lower);
                     return true;
                 }
                 TARDISMakeRoomCSV mrc = new TARDISMakeRoomCSV(plugin);
@@ -255,7 +253,7 @@ public class TARDISRoomCommands implements CommandExecutor {
                 File csvfile = mrc.createFile(lower + ".csv", basepath);
                 boolean square = reader.readAndMakeRoomCSV(basepath + lower, name, false);
                 if (!square) {
-                    sender.sendMessage(plugin.getPluginName() + "The schematic needs to have equal length sides!");
+                    TARDISMessage.send(sender, "ROOM_SCHEMATIC_SIDES");
                     return true;
                 }
                 short[] dimensions = plugin.getBuildKeeper().getRoomDimensions().get(name);
@@ -268,17 +266,17 @@ public class TARDISRoomCommands implements CommandExecutor {
                 } catch (IOException io) {
                     plugin.debug("Could not save rooms.yml, " + io);
                 }
-                sender.sendMessage(plugin.getPluginName() + "Room added, please set the COST, SEED BLOCK and OFFSET, and then enable it!");
+                TARDISMessage.send(sender, "ROOM_ADDED");
                 return true;
             } else {
                 if (!sender.hasPermission("tardis.admin")) {
-                    sender.sendMessage(plugin.getPluginName() + MESSAGE.NO_PERMS.getText());
+                    TARDISMessage.send(sender, "NO_PERMS");
                     return false;
                 }
                 // check they have specified a valid room
                 String name = args[0].toUpperCase(Locale.ENGLISH);
                 if (!plugin.getRoomsConfig().contains("rooms." + name)) {
-                    sender.sendMessage(plugin.getPluginName() + MESSAGE.COULD_NOT_FIND_ROOM.getText());
+                    TARDISMessage.send(sender, "COULD_NOT_FIND_ROOM");
                     return false;
                 }
                 String option = args[1].toLowerCase(Locale.ENGLISH);
@@ -286,7 +284,7 @@ public class TARDISRoomCommands implements CommandExecutor {
                     // boolean enable/disable
                     // check that the other options have been set first
                     if (!plugin.getRoomsConfig().contains("rooms." + name + ".cost") || !plugin.getRoomsConfig().contains("rooms." + name + ".seed") || !plugin.getRoomsConfig().contains("rooms." + name + ".offset")) {
-                        sender.sendMessage(plugin.getPluginName() + "You must set the COST, SEED BLOCK and OFFSET before you can enable a room!");
+                        TARDISMessage.send(sender, "ROOM_NO_ENABLE");
                         return true;
                     }
                     boolean bool = Boolean.valueOf(args[1]);
@@ -302,7 +300,7 @@ public class TARDISRoomCommands implements CommandExecutor {
                     } else {
                         plugin.getGeneralKeeper().getRoomArgs().remove(name);
                     }
-                    sender.sendMessage(plugin.getPluginName() + name + " was set to " + option + "!");
+                    TARDISMessage.send(sender, "ROOM_TRUE_FALSE", name, option);
                     return true;
                 } else {
                     // cost, offset or seed?
@@ -311,10 +309,10 @@ public class TARDISRoomCommands implements CommandExecutor {
                         int num = Integer.parseInt(args[1]);
                         if (num > 0) {
                             plugin.getRoomsConfig().set("rooms." + name + ".cost", num);
-                            sender.sendMessage(plugin.getPluginName() + "The " + name + " cost was set to " + num + "!");
+                            TARDISMessage.send(sender, "ROOM_COST", name, String.format("%d", num));
                         } else {
                             plugin.getRoomsConfig().set("rooms." + name + ".offset", num);
-                            sender.sendMessage(plugin.getPluginName() + "The " + name + " offset was set to " + num + "!");
+                            TARDISMessage.send(sender, "ROOM_OFFSET", name, String.format("%d", num));
                         }
                         try {
                             plugin.getRoomsConfig().save(new File(plugin.getDataFolder(), "rooms.yml"));
@@ -328,18 +326,18 @@ public class TARDISRoomCommands implements CommandExecutor {
                         try {
                             Material go = Material.valueOf(setMaterial);
                         } catch (IllegalArgumentException e) {
-                            sender.sendMessage(plugin.getPluginName() + ChatColor.RED + MESSAGE.MATERIAL_NOT_VALID.getText());
+                            TARDISMessage.send(sender, "MATERIAL_NOT_VALID");
                             return false;
                         }
                         // check seed material is not already in use
                         for (String m : plugin.getRoomsConfig().getConfigurationSection("rooms").getKeys(false)) {
                             if (setMaterial.equalsIgnoreCase(plugin.getRoomsConfig().getString("rooms." + m + ".seed"))) {
-                                sender.sendMessage(plugin.getPluginName() + "Seed block material is already in use!");
+                                TARDISMessage.send(sender, "ROOM_SEED_EXISTS");
                                 return true;
                             }
                         }
                         plugin.getRoomsConfig().set("rooms." + name + ".seed", setMaterial);
-                        sender.sendMessage(plugin.getPluginName() + "The " + name + " seed block was set to " + setMaterial + "!");
+                        TARDISMessage.send(sender, "ROOM_SEED_SET", name, setMaterial);
                         try {
                             plugin.getRoomsConfig().save(new File(plugin.getDataFolder(), "rooms.yml"));
                         } catch (IOException io) {

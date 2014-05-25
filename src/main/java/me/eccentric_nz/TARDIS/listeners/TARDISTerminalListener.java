@@ -30,7 +30,6 @@ import me.eccentric_nz.TARDIS.database.ResultSetCurrentLocation;
 import me.eccentric_nz.TARDIS.database.ResultSetPlayerPrefs;
 import me.eccentric_nz.TARDIS.database.ResultSetTravellers;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
-import me.eccentric_nz.TARDIS.enumeration.MESSAGE;
 import me.eccentric_nz.TARDIS.travel.TARDISTimeTravel;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import org.bukkit.Location;
@@ -157,7 +156,7 @@ public class TARDISTerminalListener implements Listener {
                                     plugin.getTrackerKeeper().getRescue().remove(terminalIDs.get(uuid));
                                 }
                                 close(player);
-                                TARDISMessage.send(player, plugin.getPluginName() + "Destination set. " + MESSAGE.HANDBRAKE_RELEASE.getText());
+                                TARDISMessage.send(player, "DEST_SET", true);
                             } else {
                                 // set lore
                                 ItemStack is = inv.getItem(49);

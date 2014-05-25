@@ -91,7 +91,7 @@ public class TARDISFarmer {
         if (plugin.getPM().isPluginEnabled("Multiverse-Inventories")) {
             boolean canfarm = plugin.getTMIChecker().checkMVI(from, to);
             if (!canfarm) {
-                TARDISMessage.send(p, plugin.getPluginName() + "You cannot farm mobs from this world.");
+                TARDISMessage.send(p, "WORLD_NO_FARM");
                 plugin.getTrackerKeeper().getFarming().remove(p.getUniqueId());
                 return null;
             }
@@ -455,7 +455,7 @@ public class TARDISFarmer {
                         }
                         p.updateInventory();
                     } else if (farmtotal > 0) {
-                        TARDISMessage.send(p, plugin.getPluginName() + "You need to grow a farm room before you can farm mobs!");
+                        TARDISMessage.send(p, "FARM");
                     }
                 }
                 if (!stable.isEmpty()) {
@@ -533,7 +533,7 @@ public class TARDISFarmer {
                             p.updateInventory();
                         }
                     } else if (horsetotal > 0) {
-                        TARDISMessage.send(p, plugin.getPluginName() + "You need to grow a stable room before you can farm horses!");
+                        TARDISMessage.send(p, "FARM_STABLE");
                     }
                 }
                 if (!village.isEmpty()) {
@@ -574,7 +574,7 @@ public class TARDISFarmer {
                             p.updateInventory();
                         }
                     } else if (villagertotal > 0) {
-                        TARDISMessage.send(p, plugin.getPluginName() + "You need to grow a village room before you can farm villagers!");
+                        TARDISMessage.send(p, "FARM_VILLAGE");
                     }
                 }
             }

@@ -21,7 +21,6 @@ import java.util.HashMap;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetAreas;
-import me.eccentric_nz.TARDIS.enumeration.MESSAGE;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -53,7 +52,7 @@ public class TARDISAreaCommands implements CommandExecutor {
     @Override
     public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
         if (!sender.hasPermission("tardis.admin")) {
-            sender.sendMessage(plugin.getPluginName() + "You do not have permission to add TARDIS areas!");
+            sender.sendMessage(plugin.getPluginName() + plugin.getLanguage().getString("NO_PERM_AREA"));
             return true;
         }
         Player player = null;
@@ -67,13 +66,13 @@ public class TARDISAreaCommands implements CommandExecutor {
                 return false;
             }
             if (player == null) {
-                sender.sendMessage(plugin.getPluginName() + ChatColor.RED + MESSAGE.CMD_PLAYER.getText());
+                sender.sendMessage(plugin.getPluginName() + ChatColor.RED + plugin.getLanguage().getString("CMD_PLAYER"));
                 return false;
             }
             if (args[0].equals("start")) {
                 // check name is unique and acceptable
                 if (args.length < 2 || !args[1].matches("[A-Za-z0-9_]{2,16}")) {
-                    TARDISMessage.send(player, plugin.getPluginName() + "That doesn't appear to be a valid area name (it may be too long) " + ChatColor.GREEN + "/tardisarea start [area_name_goes_here]");
+                    TARDISMessage.send(player, "AREA_NAME_NOT_VALID");
                     return false;
                 }
                 ResultSetAreas rsa = new ResultSetAreas(plugin, null, true);
@@ -81,46 +80,46 @@ public class TARDISAreaCommands implements CommandExecutor {
                     ArrayList<HashMap<String, String>> data = rsa.getData();
                     for (HashMap<String, String> map : data) {
                         if (map.get("area_name").equals(args[1])) {
-                            TARDISMessage.send(player, plugin.getPluginName() + "Area name already in use!");
+                            TARDISMessage.send(player, "AREA_IN_USE");
                             return false;
                         }
                     }
                 }
                 plugin.getTrackerKeeper().getArea().put(player.getUniqueId(), args[1]);
-                TARDISMessage.send(player, plugin.getPluginName() + "Click the area start block to save its position.");
+                TARDISMessage.send(player, "AREA_CLICK_START");
                 return true;
             }
             if (args[0].equals("end")) {
                 if (!plugin.getTrackerKeeper().getBlock().containsKey(player.getUniqueId())) {
-                    TARDISMessage.send(player, plugin.getPluginName() + ChatColor.RED + "You haven't selected an area start block!");
+                    TARDISMessage.send(player, "AREA_NO_START");
                     return false;
                 }
                 plugin.getTrackerKeeper().getEnd().put(player.getUniqueId(), "end");
-                TARDISMessage.send(player, plugin.getPluginName() + "Click the area end block to complete the area.");
+                TARDISMessage.send(player, "AREA_CLICK_END");
                 return true;
             }
             if (args[0].equals("remove")) {
                 if (args.length < 2) {
-                    TARDISMessage.send(player, plugin.getPluginName() + "You need to supply an area name!");
+                    TARDISMessage.send(player, "AREA_NEED");
                     return false;
                 }
                 HashMap<String, Object> where = new HashMap<String, Object>();
                 where.put("area_name", args[1]);
                 QueryFactory qf = new QueryFactory(plugin);
                 qf.doDelete("areas", where);
-                TARDISMessage.send(player, plugin.getPluginName() + "Area [" + args[1] + "] deleted!");
+                TARDISMessage.send(player, "AREA_DELETE", args[1]);
                 return true;
             }
             if (args[0].equals("show")) {
                 if (args.length < 2) {
-                    TARDISMessage.send(player, plugin.getPluginName() + "You need to supply an area name!");
+                    TARDISMessage.send(player, "AREA_NEED");
                     return false;
                 }
                 HashMap<String, Object> where = new HashMap<String, Object>();
                 where.put("area_name", args[1]);
                 ResultSetAreas rsa = new ResultSetAreas(plugin, where, false);
                 if (!rsa.resultSet()) {
-                    TARDISMessage.send(player, plugin.getPluginName() + String.format(MESSAGE.AREA_NOT_FOUND.getText(), ChatColor.GREEN + "/tardis list areas" + ChatColor.RESET));
+                    TARDISMessage.send(player, "AREA_NOT_FOUND", ChatColor.GREEN + "/tardis list areas" + ChatColor.RESET);
                     return false;
                 }
                 int mix = rsa.getMinx();

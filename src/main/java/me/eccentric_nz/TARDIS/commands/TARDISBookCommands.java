@@ -25,7 +25,6 @@ import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.achievement.TARDISBook;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetAchievements;
-import me.eccentric_nz.TARDIS.enumeration.MESSAGE;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -64,7 +63,7 @@ public class TARDISBookCommands implements CommandExecutor {
                 String first = args[0].toLowerCase(Locale.ENGLISH);
                 if (first.equals("list")) {
                     int b = 1;
-                    sender.sendMessage(TARDIS.plugin.getPluginName() + "The books of Rassilon");
+                    sender.sendMessage(TARDIS.plugin.getPluginName() + plugin.getLanguage().getString("BOOK_RASS"));
                     for (Map.Entry<String, String> entry : books.entrySet()) {
                         sender.sendMessage(b + ". [" + entry.getKey() + "] - " + entry.getValue());
                         b++;
@@ -76,16 +75,16 @@ public class TARDISBookCommands implements CommandExecutor {
                     player = (Player) sender;
                 }
                 if (player == null) {
-                    sender.sendMessage(plugin.getPluginName() + MESSAGE.CMD_PLAYER.getText());
+                    sender.sendMessage(plugin.getPluginName() + plugin.getLanguage().getString("CMD_PLAYER"));
                     return true;
                 }
                 if (args.length < 2) {
-                    TARDISMessage.send(player, plugin.getPluginName() + "You need to specify a book name!");
+                    TARDISMessage.send(player, "BOOK_NEED");
                     return false;
                 }
                 String bookname = args[1].toLowerCase(Locale.ENGLISH);
                 if (!books.containsKey(bookname)) {
-                    TARDISMessage.send(player, plugin.getPluginName() + "Could not find that book!");
+                    TARDISMessage.send(player, "BOOK_NOT_FOUND");
                     return true;
                 }
                 if (first.equals("get")) {
@@ -97,7 +96,7 @@ public class TARDISBookCommands implements CommandExecutor {
                 }
                 if (first.equals("start")) {
                     if (plugin.getAchievementConfig().getBoolean(bookname + ".auto")) {
-                        TARDISMessage.send(player, plugin.getPluginName() + "This achievement is awarded automatically!");
+                        TARDISMessage.send(player, "ACHIEVE_AUTO");
                         return true;
                     }
                     // check they have not already started the achievement
@@ -108,11 +107,11 @@ public class TARDISBookCommands implements CommandExecutor {
                     if (rsa.resultSet()) {
                         if (rsa.isCompleted()) {
                             if (!plugin.getAchievementConfig().getBoolean(bookname + ".repeatable")) {
-                                TARDISMessage.send(player, plugin.getPluginName() + "This achievement can only be gained once!");
+                                TARDISMessage.send(player, "ACHIEVE_ONCE");
                                 return true;
                             }
                         } else {
-                            TARDISMessage.send(player, plugin.getPluginName() + "You have already started this achievement!");
+                            TARDISMessage.send(player, "ACHIEVE_ALREADY_STARTED");
                             return true;
                         }
                     }
@@ -121,7 +120,7 @@ public class TARDISBookCommands implements CommandExecutor {
                     set.put("name", bookname);
                     QueryFactory qf = new QueryFactory(plugin);
                     qf.doInsert("achievements", set);
-                    TARDISMessage.send(player, plugin.getPluginName() + "Achievement '" + bookname + "' started!");
+                    TARDISMessage.send(player, "ACHIEVE_STARTED", bookname);
                     return true;
                 }
             }

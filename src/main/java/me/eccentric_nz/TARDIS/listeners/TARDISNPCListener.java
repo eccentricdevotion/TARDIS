@@ -17,7 +17,6 @@
 package me.eccentric_nz.TARDIS.listeners;
 
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import net.citizensnpcs.api.event.NPCRightClickEvent;
 import net.citizensnpcs.api.npc.NPC;
 import org.bukkit.ChatColor;
@@ -28,8 +27,8 @@ import org.bukkit.event.Listener;
 
 /**
  * Believing that he would die on the Game Station, the Ninth Doctor used
- * Emergency Program One to play a message for the benefit of Rose Tyler before
- * the TARDIS returned Rose to her home of Powell Estate in 2006.
+ * Emergency Programme One to play a message for the benefit of Rose Tyler
+ * before the TARDIS returned Rose to her home of Powell Estate in 2006.
  *
  * @author eccentric_nz
  */
@@ -54,7 +53,7 @@ public class TARDISNPCListener implements Listener {
         Integer id = npc.getId();
         if (plugin.getGeneralKeeper().getNpcIDs().contains(id) || (npc.getName().equals(p.getName()) && plugin.getUtils().inTARDISWorld(p))) {
             npc.destroy();
-            TARDISMessage.send(event.getClicker(), ChatColor.RED + "[Emergency Program One] " + ChatColor.RESET + "Bye!");
+            event.getClicker().sendMessage(ChatColor.RED + "[Emergency Programme One] " + ChatColor.RESET + plugin.getLanguage().getString("EP1_BYE"));
             plugin.getGeneralKeeper().getNpcIDs().remove(id);
         }
     }

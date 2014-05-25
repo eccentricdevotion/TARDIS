@@ -22,7 +22,6 @@ import java.util.Locale;
 import java.util.Map;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.enumeration.MAP;
-import me.eccentric_nz.TARDIS.enumeration.MESSAGE;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import org.bukkit.Material;
 import org.bukkit.command.Command;
@@ -84,7 +83,7 @@ public class TARDISRecipeCommands implements CommandExecutor {
     public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
         if (cmd.getName().equalsIgnoreCase("tardisrecipe")) {
             if (!sender.hasPermission("tardis.help")) {
-                sender.sendMessage(plugin.getPluginName() + MESSAGE.NO_PERMS.getText());
+                TARDISMessage.send(sender, "NO_PERMS");
                 return false;
             }
             Player player = null;
@@ -95,12 +94,12 @@ public class TARDISRecipeCommands implements CommandExecutor {
                 if (args.length == 0 || !firstArgs.contains(args[0].toLowerCase(Locale.ENGLISH))) {
                     new TARDISRecipeLister(plugin, sender).list();
                 } else {
-                    sender.sendMessage(plugin.getPluginName() + MESSAGE.CMD_PLAYER.getText());
+                    sender.sendMessage(plugin.getPluginName() + plugin.getLanguage().getString("CMD_PLAYER"));
                 }
                 return true;
             }
             if (args.length < 1) {
-                TARDISMessage.send(player, plugin.getPluginName() + MESSAGE.TOO_FEW_ARGS.getText());
+                TARDISMessage.send(player, "TOO_FEW_ARGS");
                 return false;
             }
             if (!firstArgs.contains(args[0].toLowerCase(Locale.ENGLISH))) {

@@ -64,12 +64,12 @@ public class TARDISChatListener implements Listener {
                     @Override
                     public void run() {
                         if (res.tryRescue(rescuer, saved)) {
-                            TARDISMessage.send(rescuer, plugin.getPluginName() + "Release the handbrake to start rescuing " + player);
+                            TARDISMessage.send(rescuer, "RESCUE_RELEASE", player);
                         }
                     }
                 }, 2L);
             } else {
-                TARDISMessage.send(event.getPlayer(), plugin.getPluginName() + "Rescue request timed out! You need to respond within 60 seconds.");
+                TARDISMessage.send(event.getPlayer(), "RESCUE_TIMEOUT");
             }
         }
     }

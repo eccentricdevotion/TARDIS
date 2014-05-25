@@ -46,7 +46,7 @@ public class TARDISTemporalListener implements Listener {
             if (plugin.getTrackerKeeper().getSetTime().containsKey(p.getUniqueId())) {
                 plugin.getTrackerKeeper().getSetTime().remove(p.getUniqueId());
             }
-            TARDISMessage.send(p, plugin.getPluginName() + "Temporal Location reset to server time.");
+            TARDISMessage.send(p, "TEMPORAL_RESET");
         }
     }
 }

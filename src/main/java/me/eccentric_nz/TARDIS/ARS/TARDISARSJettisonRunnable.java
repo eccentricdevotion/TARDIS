@@ -85,7 +85,7 @@ public class TARDISARSJettisonRunnable implements Runnable {
             set.put("tardis_id", id);
             qf.alterEnergyLevel("tardis", amount, set, null);
             if (p.isOnline()) {
-                TARDISMessage.send(p, plugin.getPluginName() + amount + " Artron Energy recovered.");
+                TARDISMessage.send(p, "ENERGY_RECOVERED", String.format("%d", amount));
             }
             // if it is a secondary console room remove the controls
             if (r.equals("BAKER") || r.equals("WOOD")) {

@@ -23,7 +23,6 @@ import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.achievement.TARDISAchievementFactory;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
-import me.eccentric_nz.TARDIS.enumeration.MESSAGE;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import org.bukkit.ChatColor;
 import org.bukkit.World;
@@ -50,7 +49,7 @@ public class TARDISAddCompanionCommand {
             int id;
             String[] data;
             if (!rs.resultSet()) {
-                TARDISMessage.send(player, plugin.getPluginName() + MESSAGE.NO_TARDIS.getText());
+                TARDISMessage.send(player, "NO_TARDIS");
                 return true;
             } else {
                 id = rs.getTardis_id();
@@ -58,11 +57,11 @@ public class TARDISAddCompanionCommand {
                 data = rs.getChunk().split(":");
             }
             if (args.length < 2) {
-                TARDISMessage.send(player, plugin.getPluginName() + MESSAGE.TOO_FEW_ARGS.getText());
+                TARDISMessage.send(player, "TOO_FEW_ARGS");
                 return false;
             }
             if (!args[1].matches("[A-Za-z0-9_]{2,16}")) {
-                TARDISMessage.send(player, plugin.getPluginName() + MESSAGE.PLAYER_NOT_VALID.getText());
+                TARDISMessage.send(player, "PLAYER_NOT_VALID");
                 return true;
             } else {
                 UUID oluuid = plugin.getServer().getOfflinePlayer(args[1]).getUniqueId();
@@ -84,7 +83,7 @@ public class TARDISAddCompanionCommand {
                         set.put("companions", oluuid.toString());
                     }
                     qf.doUpdate("tardis", set, tid);
-                    TARDISMessage.send(player, plugin.getPluginName() + "You added " + ChatColor.GREEN + args[1] + ChatColor.RESET + " as a TARDIS companion.");
+                    TARDISMessage.send(player, "COMPANIONS_ADD", ChatColor.GREEN + args[1] + ChatColor.RESET);
                     // are we doing an achievement?
                     if (plugin.getAchievementConfig().getBoolean("friends.enabled")) {
                         TARDISAchievementFactory taf = new TARDISAchievementFactory(plugin, player, "friends", 1);
@@ -99,12 +98,12 @@ public class TARDISAddCompanionCommand {
                     }
                     return true;
                 } else {
-                    TARDISMessage.send(player, plugin.getPluginName() + MESSAGE.COULD_NOT_FIND_NAME.getText());
+                    TARDISMessage.send(player, "COULD_NOT_FIND_NAME");
                     return true;
                 }
             }
         } else {
-            TARDISMessage.send(player, plugin.getPluginName() + MESSAGE.NO_PERMS.getText());
+            TARDISMessage.send(player, "NO_PERMS");
             return true;
         }
     }

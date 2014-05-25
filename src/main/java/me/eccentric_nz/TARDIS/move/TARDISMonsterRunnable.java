@@ -181,7 +181,7 @@ public class TARDISMonsterRunnable implements Runnable {
             if (rst.resultSet()) {
                 Player p = plugin.getServer().getPlayer(rst.getUuid());
                 if (p != null) {
-                    TARDISMessage.send(p, plugin.getPluginName() + "A " + m.getType().toString() + " entered the TARDIS!");
+                    TARDISMessage.send(p, "MONSTER", m.getType().toString());
                 }
             }
             HashMap<String, Object> wherer = new HashMap<String, Object>();

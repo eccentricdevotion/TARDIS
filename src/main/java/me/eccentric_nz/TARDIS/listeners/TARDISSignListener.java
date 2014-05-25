@@ -24,7 +24,6 @@ import me.eccentric_nz.TARDIS.advanced.TARDISCircuitChecker;
 import me.eccentric_nz.TARDIS.chameleon.TARDISChameleonInventory;
 import me.eccentric_nz.TARDIS.database.ResultSetTardisSign;
 import me.eccentric_nz.TARDIS.database.ResultSetTravellers;
-import me.eccentric_nz.TARDIS.enumeration.MESSAGE;
 import me.eccentric_nz.TARDIS.travel.TARDISSaveSignInventory;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import org.bukkit.Location;
@@ -96,7 +95,7 @@ public class TARDISSignListener implements Listener {
                 if (rs.resultSet()) {
                     event.setCancelled(true);
                     if (rs.isIso_on() && !player.getUniqueId().equals(rs.getUuid()) && event.isCancelled() && !player.hasPermission("tardis.skeletonkey")) {
-                        TARDISMessage.send(player, plugin.getPluginName() + MESSAGE.ISO_ON.getText());
+                        TARDISMessage.send(player, "ISO_HANDS_OFF");
                         return;
                     }
                     String line1;
@@ -113,7 +112,7 @@ public class TARDISSignListener implements Listener {
                     }
                     if (line1.equals("Chameleon")) {
                         if (tcc != null && !tcc.hasChameleon()) {
-                            TARDISMessage.send(player, plugin.getPluginName() + MESSAGE.CHAM_MISSING.getText());
+                            TARDISMessage.send(player, "CHAM_MISSING");
                             return;
                         }
                         // open Chameleon Circuit GUI
@@ -124,7 +123,7 @@ public class TARDISSignListener implements Listener {
                     } else {
                         if (event.getAction().equals(Action.RIGHT_CLICK_BLOCK)) {
                             if (tcc != null && !tcc.hasMemory()) {
-                                TARDISMessage.send(player, plugin.getPluginName() + MESSAGE.NO_MEM_CIRCUIT.getText());
+                                TARDISMessage.send(player, "NO_MEM_CIRCUIT");
                                 return;
                             }
                             TARDISSaveSignInventory sst = new TARDISSaveSignInventory(plugin, rs.getTardis_id());

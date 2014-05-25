@@ -21,7 +21,6 @@ import java.util.List;
 import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.ResultSetAntiBuild;
-import me.eccentric_nz.TARDIS.enumeration.MESSAGE;
 import me.eccentric_nz.TARDIS.utility.TARDISAntiBuild;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import org.bukkit.Material;
@@ -99,7 +98,7 @@ public class TARDISAntiBuildListener implements Listener {
         TARDISAntiBuild tab = plugin.getTrackerKeeper().getAntiBuild().get(rs.getTardis_id());
         if (v.isInAABB(tab.getMin(), tab.getMax())) {
             event.setCancelled(true);
-            TARDISMessage.send(event.getPlayer(), plugin.getPluginName() + String.format(MESSAGE.ANTIBUILD_TIMELORD.getText(), tab.getTimelord()));
+            TARDISMessage.send(event.getPlayer(), "ANTIBUILD_TIMELORD", tab.getTimelord());
         }
     }
 
@@ -114,7 +113,7 @@ public class TARDISAntiBuildListener implements Listener {
         TARDISAntiBuild tab = plugin.getTrackerKeeper().getAntiBuild().get(rs.getTardis_id());
         if (v.isInAABB(tab.getMin(), tab.getMax())) {
             event.setCancelled(true);
-            TARDISMessage.send(event.getPlayer(), plugin.getPluginName() + String.format(MESSAGE.ANTIBUILD_TIMELORD.getText(), tab.getTimelord()));
+            TARDISMessage.send(event.getPlayer(), "ANTIBUILD_TIMELORD", tab.getTimelord());
         }
     }
 
@@ -129,7 +128,7 @@ public class TARDISAntiBuildListener implements Listener {
         if (no_place.contains(event.getPlayer().getItemInHand().getType()) && !allow_interact.contains(event.getClickedBlock().getType())) {
             event.setUseItemInHand(Result.DENY);
             event.setCancelled(true);
-            TARDISMessage.send(event.getPlayer(), plugin.getPluginName() + MESSAGE.ANTIBUILD.getText());
+            TARDISMessage.send(event.getPlayer(), "ANTIBUILD");
         }
         if (event.getClickedBlock().getType().equals(Material.FLOWER_POT) && no_flower_pot.contains(event.getPlayer().getItemInHand().getType())) {
             event.setUseItemInHand(Result.DENY);
@@ -144,7 +143,7 @@ public class TARDISAntiBuildListener implements Listener {
                     break;
                 }
             }
-            TARDISMessage.send(event.getPlayer(), plugin.getPluginName() + MESSAGE.ANTIBUILD.getText());
+            TARDISMessage.send(event.getPlayer(), "ANTIBUILD");
         }
     }
 
@@ -159,7 +158,7 @@ public class TARDISAntiBuildListener implements Listener {
         TARDISAntiBuild tab = plugin.getTrackerKeeper().getAntiBuild().get(rs.getTardis_id());
         if (v.isInAABB(tab.getMin(), tab.getMax())) {
             event.setCancelled(true);
-            TARDISMessage.send(event.getPlayer(), plugin.getPluginName() + String.format(MESSAGE.ANTIBUILD_TIMELORD.getText(), tab.getTimelord()));
+            TARDISMessage.send(event.getPlayer(), "ANTIBUILD_TIMELORD", tab.getTimelord());
         }
     }
 
@@ -175,7 +174,7 @@ public class TARDISAntiBuildListener implements Listener {
             TARDISAntiBuild tab = plugin.getTrackerKeeper().getAntiBuild().get(rs.getTardis_id());
             if (v.isInAABB(tab.getMin(), tab.getMax())) {
                 event.setCancelled(true);
-                TARDISMessage.send(p, plugin.getPluginName() + String.format(MESSAGE.ANTIBUILD_TIMELORD.getText(), tab.getTimelord()));
+                TARDISMessage.send(p, "ANTIBUILD_TIMELORD", tab.getTimelord());
             }
         }
     }
@@ -192,7 +191,7 @@ public class TARDISAntiBuildListener implements Listener {
             TARDISAntiBuild tab = plugin.getTrackerKeeper().getAntiBuild().get(rs.getTardis_id());
             if (v.isInAABB(tab.getMin(), tab.getMax())) {
                 event.setCancelled(true);
-                TARDISMessage.send(p, plugin.getPluginName() + String.format(MESSAGE.ANTIBUILD_TIMELORD.getText(), tab.getTimelord()));
+                TARDISMessage.send(p, "ANTIBUILD_TIMELORD", tab.getTimelord());
             }
         }
     }

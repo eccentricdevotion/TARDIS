@@ -16,6 +16,8 @@
  */
 package me.eccentric_nz.TARDIS.utility;
 
+import me.eccentric_nz.TARDIS.TARDIS;
+import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 /**
@@ -34,12 +36,81 @@ public class TARDISMessage {
      * @param p the player to send the message
      * @param message the message to send
      */
-    public static void send(Player p, String message) {
+    public static void message(Player p, String message) {
         if (message.length() > lineLength) {
             String[] multiline = TARDISChatPaginator.wordWrap(message, lineLength);
             p.sendMessage(multiline);
         } else {
             p.sendMessage(message);
         }
+    }
+
+    public static void message(CommandSender cs, String message) {
+        if (message.length() > lineLength) {
+            String[] multiline = TARDISChatPaginator.wordWrap(message, lineLength);
+            cs.sendMessage(multiline);
+        } else {
+            cs.sendMessage(message);
+        }
+    }
+
+    public static void send(Player p, String key) {
+        String local = TARDIS.plugin.getLanguage().getString(key);
+        message(p, TARDIS.plugin.getPluginName() + local);
+    }
+
+    public static void send(Player p, String key, String sub) {
+        String local = TARDIS.plugin.getLanguage().getString(key);
+        message(p, TARDIS.plugin.getPluginName() + String.format(local, sub));
+    }
+
+    public static void send(CommandSender cs, String key) {
+        String local = TARDIS.plugin.getLanguage().getString(key);
+        message(cs, TARDIS.plugin.getPluginName() + local);
+    }
+
+    public static void send(CommandSender cs, String key, String sub) {
+        String local = TARDIS.plugin.getLanguage().getString(key);
+        message(cs, TARDIS.plugin.getPluginName() + String.format(local, sub));
+    }
+
+    public static void send(Player p, String key, boolean handbrake) {
+        String local = TARDIS.plugin.getLanguage().getString(key);
+        message(p, TARDIS.plugin.getPluginName() + local + " " + TARDIS.plugin.getLanguage().getString("HANDBRAKE_RELEASE"));
+    }
+
+    public static void send(Player p, String key, String sub, boolean handbrake) {
+        String local = TARDIS.plugin.getLanguage().getString(key);
+        message(p, TARDIS.plugin.getPluginName() + String.format(local, sub) + " " + TARDIS.plugin.getLanguage().getString("HANDBRAKE_RELEASE"));
+    }
+
+    public static void send(Player p, String key, String one, String two) {
+        String local = TARDIS.plugin.getLanguage().getString(key);
+        message(p, TARDIS.plugin.getPluginName() + String.format(local, one, two));
+    }
+
+    public static void send(CommandSender cs, String key, String one, String two) {
+        String local = TARDIS.plugin.getLanguage().getString(key);
+        message(cs, TARDIS.plugin.getPluginName() + String.format(local, one, two));
+    }
+
+    public static void send(Player p, String key, String one, String two, String three) {
+        String local = TARDIS.plugin.getLanguage().getString(key);
+        message(p, TARDIS.plugin.getPluginName() + String.format(local, one, two, three));
+    }
+
+    public static void send(CommandSender cs, String key, String one, int two, int three) {
+        String local = TARDIS.plugin.getLanguage().getString(key);
+        message(cs, TARDIS.plugin.getPluginName() + String.format(local, one, two, three));
+    }
+
+    public static void send(Player p, boolean pn, String key) {
+        String local = TARDIS.plugin.getLanguage().getString(key);
+        message(p, local);
+    }
+
+    public static void send(Player p, boolean pn, String key, String sub) {
+        String local = TARDIS.plugin.getLanguage().getString(key);
+        message(p, String.format(local, sub));
     }
 }

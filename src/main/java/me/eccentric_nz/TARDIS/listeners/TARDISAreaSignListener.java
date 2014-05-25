@@ -20,7 +20,6 @@ import java.util.HashMap;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import me.eccentric_nz.TARDIS.database.ResultSetTravellers;
-import me.eccentric_nz.TARDIS.enumeration.MESSAGE;
 import me.eccentric_nz.TARDIS.travel.TARDISSaveSignInventory;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import org.bukkit.Location;
@@ -70,13 +69,13 @@ public class TARDISAreaSignListener implements Listener {
                         String area = im.getDisplayName();
                         Location l = plugin.getTardisArea().getNextSpot(area);
                         if (l == null) {
-                            TARDISMessage.send(player, plugin.getPluginName() + MESSAGE.NO_MORE_SPOTS.getText());
+                            TARDISMessage.send(player, "NO_MORE_SPOTS");
                             close(player);
                             return;
                         }
                         // check the player is not already in the area!
                         if (plugin.getTardisArea().areaCheckInExisting(l)) {
-                            TARDISMessage.send(player, plugin.getPluginName() + "You are already in this area!");
+                            TARDISMessage.send(player, "TRAVEL_NO_AREA");
                             close(player);
                             return;
                         }

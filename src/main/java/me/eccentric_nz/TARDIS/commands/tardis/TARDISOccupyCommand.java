@@ -21,7 +21,6 @@ import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import me.eccentric_nz.TARDIS.database.ResultSetTravellers;
-import me.eccentric_nz.TARDIS.enumeration.MESSAGE;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
@@ -44,7 +43,7 @@ public class TARDISOccupyCommand {
             where.put("uuid", player.getUniqueId().toString());
             ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);
             if (!rs.resultSet()) {
-                TARDISMessage.send(player, plugin.getPluginName() + MESSAGE.NOT_A_TIMELORD.getText());
+                TARDISMessage.send(player, "NOT_A_TIMELORD");
                 return false;
             }
             int id = rs.getTardis_id();
@@ -60,9 +59,9 @@ public class TARDISOccupyCommand {
                     HashMap<String, Object> whered = new HashMap<String, Object>();
                     whered.put("uuid", player.getUniqueId().toString());
                     qf.doDelete("travellers", whered);
-                    occupied = ChatColor.RED + "UNOCCUPIED";
+                    occupied = ChatColor.RED + plugin.getLanguage().getString("OCCUPY_OUT");
                 } else {
-                    TARDISMessage.send(player, plugin.getPluginName() + "You cannot set occupancy to UNOCCUPIED unless you are outside the TARDIS!");
+                    TARDISMessage.send(player, "OCCUPY_MUST_BE_OUT");
                     return true;
                 }
             } else {
@@ -71,16 +70,16 @@ public class TARDISOccupyCommand {
                     wherei.put("tardis_id", id);
                     wherei.put("uuid", player.getUniqueId().toString());
                     qf.doInsert("travellers", wherei);
-                    occupied = ChatColor.GREEN + "OCCUPIED";
+                    occupied = ChatColor.GREEN + plugin.getLanguage().getString("OCCUPY_IN");
                 } else {
-                    TARDISMessage.send(player, plugin.getPluginName() + "You cannot set occupancy to OCCUPIED unless you are inside the TARDIS!");
+                    TARDISMessage.send(player, "OCCUPY_MUST_BE_IN");
                     return true;
                 }
             }
-            TARDISMessage.send(player, plugin.getPluginName() + " TARDIS occupation was set to: " + occupied);
+            TARDISMessage.send(player, "OCCUPY_SET", occupied);
             return true;
         } else {
-            TARDISMessage.send(player, plugin.getPluginName() + MESSAGE.NO_PERMS.getText());
+            TARDISMessage.send(player, "NO_PERMS");
             return false;
         }
     }

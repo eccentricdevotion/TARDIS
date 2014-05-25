@@ -36,14 +36,14 @@ public class TARDISSetFlightCommand {
 
     public boolean setMode(Player player, String[] args, QueryFactory qf) {
         if (args.length < 2) {
-            TARDISMessage.send(player, plugin.getPluginName() + "You need to specify a flight mode!");
+            TARDISMessage.send(player, "FLIGHT_NEED");
             return false;
         }
         FlightMode fm;
         try {
             fm = FlightMode.valueOf(args[1].toUpperCase());
         } catch (IllegalArgumentException e) {
-            TARDISMessage.send(player, plugin.getPluginName() + "Flight mode must be 'normal', 'regulator' or 'manual'!");
+            TARDISMessage.send(player, "FLIGHT_INFO");
             return true;
         }
         int mode = 1;
@@ -62,7 +62,7 @@ public class TARDISSetFlightCommand {
         HashMap<String, Object> where = new HashMap<String, Object>();
         where.put("uuid", player.getUniqueId().toString());
         qf.doUpdate("player_prefs", setf, where);
-        TARDISMessage.send(player, plugin.getPluginName() + "Flight mode preference saved.");
+        TARDISMessage.send(player, "FLIGHT_SAVED");
         return true;
     }
 

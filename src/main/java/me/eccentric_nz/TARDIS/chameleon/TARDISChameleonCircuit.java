@@ -20,7 +20,6 @@ import java.util.Arrays;
 import java.util.List;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
-import me.eccentric_nz.TARDIS.enumeration.MESSAGE;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.block.Block;
@@ -54,8 +53,8 @@ public class TARDISChameleonCircuit {
             chameleonData = b.getData();
         }
         if (TARDISConstants.CHAMELEON_BLOCKS_BAD.contains((Integer) chameleonType)) {
-            String message = (short_out) ? MESSAGE.CHAM_NOT_SHORT.getText() : MESSAGE.CHAM_NOT_ENGAGE.getText();
-            TARDISMessage.send(p.getPlayer(), plugin.getPluginName() + message);
+            String message = (short_out) ? "CHAM_NOT_SHORT" : "CHAM_NOT_ENGAGE";
+            TARDISMessage.send(p.getPlayer(), message);
         }
         if (TARDISConstants.CHAMELEON_BLOCKS_CHANGE.contains((Integer) chameleonType)) {
             wall_block = swapId(chameleonType);

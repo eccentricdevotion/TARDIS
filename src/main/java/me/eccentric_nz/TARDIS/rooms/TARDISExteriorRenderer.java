@@ -60,9 +60,9 @@ public class TARDISExteriorRenderer {
         int ipbz = plugin.getUtils().parseInt(idata[3]);
         final Location location = new Location(iw, ipbx, ipby, ipbz);
         if (plugin.getTrackerKeeper().getRenderer().containsKey(id) && plugin.getTrackerKeeper().getRenderer().get(id).equals(isRendered)) {
-            TARDISMessage.send(p, plugin.getPluginName() + "Destination unchanged, no rendering needed, stand by for transmat...");
+            TARDISMessage.send(p, "DEST_NO_CHANGE");
         } else {
-            TARDISMessage.send(p, plugin.getPluginName() + "Starting exterior rendering, please wait...");
+            TARDISMessage.send(p, "RENDER_START");
             int isx, isy, isz, esx, esy, esz, xx = 0, yy = 0, zz = 0;
             // get interior coords
             isx = ipbx - 6;
@@ -261,7 +261,7 @@ public class TARDISExteriorRenderer {
                 }
             }
             plugin.getTrackerKeeper().getRenderer().put(id, isRendered);
-            TARDISMessage.send(p, plugin.getPluginName() + "Rendering complete, stand by for transmat...");
+            TARDISMessage.send(p, "RENDER_DONE");
             // remove dropped items
             for (Entity e : location.getChunk().getEntities()) {
                 if (e instanceof Item) {
@@ -280,7 +280,7 @@ public class TARDISExteriorRenderer {
             public void run() {
                 transmat(p, d, location);
                 p.playSound(location, Sound.ENDERMAN_TELEPORT, 1.0f, 1.0f);
-                TARDISMessage.send(p, plugin.getPluginName() + "Right-click to exit.");
+                TARDISMessage.send(p, "RENDER_EXIT");
             }
         }, 10L);
     }

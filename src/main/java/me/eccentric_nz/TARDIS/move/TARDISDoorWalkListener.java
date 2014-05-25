@@ -20,7 +20,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.builders.TARDISEmergencyRelocation;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetCompanions;
@@ -29,7 +28,6 @@ import me.eccentric_nz.TARDIS.database.ResultSetDoors;
 import me.eccentric_nz.TARDIS.database.ResultSetPlayerPrefs;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
-import me.eccentric_nz.TARDIS.enumeration.MESSAGE;
 import me.eccentric_nz.TARDIS.enumeration.PRESET;
 import me.eccentric_nz.TARDIS.mobfarming.TARDISFarmer;
 import me.eccentric_nz.TARDIS.mobfarming.TARDISMob;
@@ -145,27 +143,27 @@ public class TARDISDoorWalkListener extends TARDISDoorListener implements Listen
                             ResultSetTardis rs = new ResultSetTardis(plugin, oid, "", false);
                             if (rs.resultSet()) {
                                 if (rs.getTardis_id() != id) {
-                                    TARDISMessage.send(player, plugin.getPluginName() + MESSAGE.DOOR_LOCK_UNLOCK.getText());
+                                    TARDISMessage.send(player, "DOOR_LOCK_UNLOCK");
                                     return;
                                 }
                                 // must use key to lock / unlock door
                                 if (material.equals(m)) {
                                     int locked = (rsd.isLocked()) ? 0 : 1;
-                                    String message = (rsd.isLocked()) ? "unlocked" : "deadlocked";
+                                    String message = (rsd.isLocked()) ? plugin.getLanguage().getString("DOOR_UNLOCK") : plugin.getLanguage().getString("DOOR_UNLOCK");
                                     HashMap<String, Object> setl = new HashMap<String, Object>();
                                     setl.put("locked", locked);
                                     HashMap<String, Object> wherel = new HashMap<String, Object>();
                                     wherel.put("tardis_id", rsd.getTardis_id());
                                     // always lock / unlock both doors
                                     qf.doUpdate("doors", setl, wherel);
-                                    TARDISMessage.send(player, plugin.getPluginName() + "The door was " + message);
+                                    TARDISMessage.send(player, "DOOR_LOCK", message);
                                 }
                             }
                         }
                         if (action == Action.RIGHT_CLICK_BLOCK && !player.isSneaking()) {
                             final int id = rsd.getTardis_id();
                             if (plugin.getTrackerKeeper().getInVortex().contains(id)) {
-                                TARDISMessage.send(player, plugin.getPluginName() + MESSAGE.NOT_WHILE_MAT.getText());
+                                TARDISMessage.send(player, "NOT_WHILE_MAT");
                                 return;
                             }
                             // handbrake must be on
@@ -174,7 +172,7 @@ public class TARDISDoorWalkListener extends TARDISDoorListener implements Listen
                             ResultSetTardis rs = new ResultSetTardis(plugin, tid, "", false);
                             if (rs.resultSet()) {
                                 if (!rs.isHandbrake_on()) {
-                                    TARDISMessage.send(player, plugin.getPluginName() + MESSAGE.HANDBRAKE_ENGAGE.getText());
+                                    TARDISMessage.send(player, "HANDBRAKE_ENGAGE");
                                     return;
                                 }
                                 // must be Time Lord or companion
@@ -190,13 +188,7 @@ public class TARDISDoorWalkListener extends TARDISDoorListener implements Listen
                                                     String[] split = plugin.getRecipesConfig().getString("shaped.Sonic Screwdriver.result").split(":");
                                                     Material sonic = Material.valueOf(split[0]);
                                                     if (!material.equals(sonic) || !player.hasPermission("tardis.sonic.admin")) {
-                                                        String grammar;
-                                                        if (!material.equals(Material.AIR)) {
-                                                            grammar = (TARDISConstants.vowels.contains(material.toString().substring(0, 1))) ? "an " + material : "a " + material;
-                                                        } else {
-                                                            grammar = "nothing";
-                                                        }
-                                                        TARDISMessage.send(player, plugin.getPluginName() + String.format(MESSAGE.NOT_KEY.getText(), key, grammar));
+                                                        TARDISMessage.send(player, "NOT_KEY", key);
                                                     }
                                                     return;
                                                 }
@@ -244,9 +236,9 @@ public class TARDISDoorWalkListener extends TARDISDoorListener implements Listen
                                         }
                                     } else {
                                         if (rs.getUuid() != playerUUID) {
-                                            TARDISMessage.send(player, plugin.getPluginName() + MESSAGE.DOOR_DEADLOCKED.getText());
+                                            TARDISMessage.send(player, "DOOR_DEADLOCKED");
                                         } else {
-                                            TARDISMessage.send(player, plugin.getPluginName() + MESSAGE.DOOR_UNLOCK.getText());
+                                            TARDISMessage.send(player, "DOOR_UNLOCK");
                                         }
                                     }
                                 }
@@ -254,17 +246,11 @@ public class TARDISDoorWalkListener extends TARDISDoorListener implements Listen
                         } else if (action == Action.RIGHT_CLICK_BLOCK && player.isSneaking()) {
                             if (!material.equals(m) && doortype == 0) {
                                 // must use key to open and close the outer door
-                                String grammar;
-                                if (!material.equals(Material.AIR)) {
-                                    grammar = (TARDISConstants.vowels.contains(material.toString().substring(0, 1))) ? "an " + material : "a " + material;
-                                } else {
-                                    grammar = "nothing";
-                                }
-                                TARDISMessage.send(player, plugin.getPluginName() + String.format(MESSAGE.NOT_KEY.getText(), key, grammar));
+                                TARDISMessage.send(player, "NOT_KEY", key);
                                 return;
                             }
                             if (rsd.isLocked()) {
-                                TARDISMessage.send(player, plugin.getPluginName() + MESSAGE.DOOR_DEADLOCKED.getText());
+                                TARDISMessage.send(player, "DOOR_DEADLOCKED");
                                 return;
                             }
                             int id = rsd.getTardis_id();
@@ -317,7 +303,7 @@ public class TARDISDoorWalkListener extends TARDISDoorListener implements Listen
                                     case 4:
                                         // is the TARDIS materialising?
                                         if (plugin.getTrackerKeeper().getInVortex().contains(id)) {
-                                            TARDISMessage.send(player, plugin.getPluginName() + MESSAGE.LOST_IN_VORTEX.getText());
+                                            TARDISMessage.send(player, "LOST_IN_VORTEX");
                                             return;
                                         }
                                         Location exitLoc;
@@ -385,13 +371,13 @@ public class TARDISDoorWalkListener extends TARDISDoorListener implements Listen
                                             // remove player from traveller table
                                             removeTraveller(playerUUID);
                                         } else {
-                                            TARDISMessage.send(player, plugin.getPluginName() + MESSAGE.LOST_IN_VORTEX.getText());
+                                            TARDISMessage.send(player, "LOST_IN_VORTEX");
                                         }
                                         break;
                                     case 0:
                                         // is the TARDIS materialising?
                                         if (plugin.getTrackerKeeper().getInVortex().contains(id)) {
-                                            TARDISMessage.send(player, plugin.getPluginName() + MESSAGE.LOST_IN_VORTEX.getText());
+                                            TARDISMessage.send(player, "LOST_IN_VORTEX");
                                             return;
                                         }
                                         boolean chkCompanion = false;
@@ -449,14 +435,14 @@ public class TARDISDoorWalkListener extends TARDISDoorListener implements Listen
                                         break;
                                     case 2:
                                         if (artron < required) {
-                                            TARDISMessage.send(player, plugin.getPluginName() + MESSAGE.NOT_ENOUGH_DOOR_ENERGY.getText());
+                                            TARDISMessage.send(player, "NOT_ENOUGH_DOOR_ENERGY");
                                             return;
                                         }
                                         // always enter by the back door
                                         TARDISDoorLocation ibdl = getDoor(3, id);
                                         Location ibd_loc = ibdl.getL();
                                         if (ibd_loc == null) {
-                                            TARDISMessage.send(player, plugin.getPluginName() + "You need to add a back door inside the TARDIS!");
+                                            TARDISMessage.send(player, "DOOR_BACK_IN");
                                             return;
                                         }
                                         COMPASS ibdd = ibdl.getD();
@@ -486,24 +472,22 @@ public class TARDISDoorWalkListener extends TARDISDoorListener implements Listen
                                         break;
                                     case 3:
                                         if (artron < required) {
-                                            TARDISMessage.send(player, plugin.getPluginName() + MESSAGE.NOT_ENOUGH_DOOR_ENERGY.getText());
+                                            TARDISMessage.send(player, "NOT_ENOUGH_DOOR_ENERGY");
                                             return;
                                         }
                                         // always exit to outer back door
                                         TARDISDoorLocation obdl = getDoor(2, id);
                                         Location obd_loc = obdl.getL();
                                         if (obd_loc == null) {
-                                            TARDISMessage.send(player, plugin.getPluginName() + "You need to add a back door outside the TARDIS!");
+                                            TARDISMessage.send(player, "DOOR_BACK_OUT");
                                             return;
                                         }
                                         if (obd_loc.getWorld().getEnvironment().equals(Environment.THE_END) && (!player.hasPermission("tardis.end") || !plugin.getConfig().getBoolean("travel.the_end"))) {
-                                            String message = (!player.hasPermission("tardis.end")) ? "You don't have permission to use a back door to The End!" : String.format(MESSAGE.NO_PERM_TRAVEL.getText(), "End");
-                                            TARDISMessage.send(player, plugin.getPluginName() + message);
+                                            TARDISMessage.send(player, "NO_PERM_TRAVEL", "End");
                                             return;
                                         }
                                         if (obd_loc.getWorld().getEnvironment().equals(Environment.NETHER) && (!player.hasPermission("tardis.nether") || !plugin.getConfig().getBoolean("travel.nether"))) {
-                                            String message = (!player.hasPermission("tardis.end")) ? "You don't have permission to use a back door to the Nether!" : String.format(MESSAGE.NO_PERM_TRAVEL.getText(), "Nether");
-                                            TARDISMessage.send(player, plugin.getPluginName() + message);
+                                            TARDISMessage.send(player, "NO_PERM_TRAVEL", "Nether");
                                             return;
                                         }
                                         COMPASS obdd = obdl.getD();

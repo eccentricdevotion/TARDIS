@@ -67,7 +67,7 @@ public class TARDISRemoteTravelCommand {
             wherenl.put("tardis_id", id);
             ResultSetNextLocation rsn = new ResultSetNextLocation(plugin, wherenl);
             if (!rsn.resultSet() && !(sender instanceof BlockCommandSender)) {
-                sender.sendMessage(plugin.getPluginName() + "Could not load destination!");
+                sender.sendMessage(plugin.getPluginName() + plugin.getLanguage().getString("DEST_NO_LOAD"));
                 return true;
             }
             boolean is_next_sub = rsn.isSubmarine();
