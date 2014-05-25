@@ -258,6 +258,7 @@ public class TARDISConfiguration {
         strOptions.put("preferences.default_sonic", "eleventh");
         strOptions.put("preferences.difficulty", "hard");
         strOptions.put("preferences.key", "GOLD_NUGGET");
+        strOptions.put("preferences.language", "en");
         strOptions.put("preferences.respect_towny", "nation");
         strOptions.put("preferences.use_worldguard", "build");
         strOptions.put("storage.database", "sqlite");
