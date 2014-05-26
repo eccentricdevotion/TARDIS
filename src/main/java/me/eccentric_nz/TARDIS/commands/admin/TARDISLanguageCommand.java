@@ -53,6 +53,9 @@ public class TARDISLanguageCommand {
         // load the language
         plugin.setLanguage(YamlConfiguration.loadConfiguration(file));
         sender.sendMessage(plugin.getPluginName() + String.format(plugin.getLanguage().getString("LANG_SET"), LANGUAGE.valueOf(args[1]).getLang()));
+        // set and save the config
+        plugin.getConfig().set("preferences.language", args[1]);
+        plugin.saveConfig();
         return true;
     }
 }
