@@ -237,14 +237,20 @@
         <dependency>
             <groupId>com.palmergames.bukkit</groupId>
             <artifactId>Towny</artifactId>
-            <version>0.84.0.10</version>
+            <version>0.87.0.0</version>
             <type>jar</type>
         </dependency>
         <dependency>
             <groupId>com.wimbli.WorldBorder</groupId>
             <artifactId>WorldBorder</artifactId>
-            <version>1.7.8</version>
+            <version>1.7.9</version>
             <type>jar</type>
+            <exclusions>
+                <exclusion>
+                    <artifactId>dynmap-api</artifactId>
+                    <groupId>org.dynmap</groupId>
+                </exclusion>
+            </exclusions>
         </dependency>
         <dependency>
             <groupId>com.onarandombox.multiversecore</groupId>
@@ -329,25 +335,25 @@
         <dependency>
             <groupId>multiworld</groupId>
             <artifactId>MultiWorld</artifactId>
-            <version>5.1.1</version>
+            <version>5.2.0</version>
             <type>jar</type>
         </dependency>
         <dependency>
             <groupId>com.massivecraft</groupId>
             <artifactId>factions</artifactId>
-            <version>2.3.1</version>
+            <version>2.4.0</version>
             <type>jar</type>
         </dependency>
         <dependency>
             <groupId>com.massivecraft</groupId>
             <artifactId>mcore</artifactId>
-            <version>7.1.0</version>
+            <version>7.2.0</version>
             <type>jar</type>
         </dependency>
         <dependency>
             <groupId>net.citizensnpcs</groupId>
             <artifactId>citizensapi</artifactId>
-            <version>2.0.12</version>
+            <version>2.0.13-SNAPSHOT</version>
         </dependency>
         <dependency>
             <groupId>com.griefcraft</groupId>

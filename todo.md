@@ -1,7 +1,6 @@
 # TODO
 
 ##Current version `2.9-beta-2`
-1. TARDIS invisibility - 1.8 barrier blocks?
 
 ###In progress
 1. Artron button powers on/off TARDIS after initialisation
@@ -19,7 +18,7 @@
 2. ARS room limit - can only reconfigure x rooms at a time (and cannot open ARS until reconfiguration is complete) - configurable option
 3. Slimmer TARDIS option?
 
-####I couldn't really be bothered
+###I couldn't really be bothered
 1. HADS + explosions + fireballs + lava
 2. Put farmland, crops, buttons, ladders, levers and signs on last when growing rooms
 3. TARDIS Information System auto log out?
@@ -40,12 +39,16 @@ Re-skin mobs for Resource pack, and add new mob sounds
 * Witches -> Empty Child - __done__
 * Villagers -> Ood
 
+##Waiting on Minecraft/Bukkit update
+
+1. TARDIS invisibility - 1.8 barrier blocks?
+
 ##Waiting on Bukkit API
 0. IDs are soon to be history... so convert all ID use to entity names
 1. Get/set horse speed (Attribute API)
 2. Achievements API is now available, but doesn't allow custom achievements :(
 
-# Minecraft API when available
+##Minecraft API when available
 1. Recreate everything with the new API :)
 2. Create custom blocks for the TARDIS and console.
 3. If using the LAPIS block have the walls a special TARDIS wall block.
