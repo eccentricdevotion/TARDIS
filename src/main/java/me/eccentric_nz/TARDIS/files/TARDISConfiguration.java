@@ -69,6 +69,7 @@ public class TARDISConfiguration {
         boolOptions.put("allow.external_gravity", false);
         boolOptions.put("allow.hads", true);
         boolOptions.put("allow.mob_farming", true);
+        boolOptions.put("allow.power_down", false);
         boolOptions.put("allow.sfx", true);
         boolOptions.put("allow.spawn_eggs", true);
         boolOptions.put("allow.tp_switch", true);
@@ -91,6 +92,7 @@ public class TARDISConfiguration {
         boolOptions.put("police_box.materialise", true);
         boolOptions.put("police_box.name_tardis", false);
         boolOptions.put("police_box.set_biome", true);
+        boolOptions.put("preferences.malfunction_on_power_down", true);
         boolOptions.put("preferences.respect_factions", true);
         boolOptions.put("preferences.respect_grief_prevention", true);
         boolOptions.put("preferences.respect_worldborder", true);
@@ -170,6 +172,8 @@ public class TARDISConfiguration {
         artronIntOptions.put("random", 75);
         artronIntOptions.put("recharge_distance", 20);
         artronIntOptions.put("render", 250);
+        artronIntOptions.put("standby", 5);
+        artronIntOptions.put("standby_time", 6000);
         artronIntOptions.put("the_end_min", 5500);
         artronIntOptions.put("travel", 100);
         artronIntOptions.put("zero", 250);

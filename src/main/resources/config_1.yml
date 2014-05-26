@@ -74,6 +74,7 @@ preferences:
     malfunction: 3
     malfunction_end: 3
     malfunction_nether: 3
+    malfunction_on_power_down: true
     use_default_condensables: true
     heal_speed: 200
     default_sonic: eleventh
@@ -91,6 +92,7 @@ allow:
     wg_flag_set: true
     zero_room: false
     external_gravity: false
+    power_down: false
 # room related
 growth:
     gravity_max_distance: 15
