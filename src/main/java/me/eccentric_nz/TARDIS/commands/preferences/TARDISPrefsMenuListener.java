@@ -87,7 +87,7 @@ public class TARDISPrefsMenuListener implements Listener {
                                     // close inventory
                                     p.closeInventory();
                                     // open new inventory
-                                    new_inv.setContents(new TARDISARSMap().getMap());
+                                    new_inv.setContents(new TARDISARSMap(plugin).getMap());
                                     p.openInventory(new_inv);
                                 }
                             }, 1L);

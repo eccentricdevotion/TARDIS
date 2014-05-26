@@ -56,7 +56,7 @@ public class TARDISSetIntegerCommand {
         plugin.getConfig().set(first, val);
         if (first.equals("terminal_step")) {
             // reset the terminal inventory
-            plugin.getGeneralKeeper().getButtonListener().items = new TARDISTerminalInventory().getTerminal();
+            plugin.getGeneralKeeper().getButtonListener().items = new TARDISTerminalInventory(plugin).getTerminal();
         }
         plugin.saveConfig();
         TARDISMessage.send(sender, "CONFIG_UPDATED");

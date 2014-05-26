@@ -19,6 +19,7 @@ package me.eccentric_nz.TARDIS.travel;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import me.eccentric_nz.TARDIS.TARDIS;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -34,9 +35,11 @@ import org.bukkit.inventory.meta.ItemMeta;
 public class TARDISTemporalLocatorInventory {
 
     private final ItemStack[] terminal;
+    private final TARDIS plugin;
     List<String> time = new ArrayList<String>();
 
-    public TARDISTemporalLocatorInventory() {
+    public TARDISTemporalLocatorInventory(TARDIS plugin) {
+        this.plugin = plugin;
         time.add(" ");
         time.add(" ");
         time.add(" ");
@@ -77,28 +80,28 @@ public class TARDISTemporalLocatorInventory {
         // add morning
         ItemStack morn = new ItemStack(Material.WATCH, 1);
         ItemMeta ing = morn.getItemMeta();
-        ing.setDisplayName("Morning");
+        ing.setDisplayName(plugin.getLanguage().getString("BUTTON_Morn"));
         ing.setLore(Arrays.asList("0 ticks", "6 AM"));
         morn.setItemMeta(ing);
         clocks[0] = morn;
         // add midday
         ItemStack mid = new ItemStack(Material.WATCH, 1);
         ItemMeta day = mid.getItemMeta();
-        day.setDisplayName("Midday");
+        day.setDisplayName(plugin.getLanguage().getString("BUTTON_NOON"));
         day.setLore(Arrays.asList("6000 ticks", "12 Noon"));
         mid.setItemMeta(day);
         clocks[1] = mid;
         // add night
         ItemStack nig = new ItemStack(Material.WATCH, 1);
         ItemMeta ht = nig.getItemMeta();
-        ht.setDisplayName("Night");
+        ht.setDisplayName(plugin.getLanguage().getString("BUTTON_NIGHT"));
         ht.setLore(Arrays.asList("12000 ticks", "6 PM"));
         nig.setItemMeta(ht);
         clocks[2] = nig;
         // add midnight
         ItemStack zero = new ItemStack(Material.WATCH, 1);
         ItemMeta hrs = zero.getItemMeta();
-        hrs.setDisplayName("Midnight");
+        hrs.setDisplayName(plugin.getLanguage().getString("BUTTON_MID"));
         hrs.setLore(Arrays.asList("18000 ticks", "12 PM"));
         zero.setItemMeta(hrs);
         clocks[3] = zero;

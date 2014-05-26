@@ -86,9 +86,9 @@ public class TARDISButtonListener implements Listener {
         validBlocks.add(Material.WALL_SIGN);
         validBlocks.add(Material.NOTE_BLOCK);
         validBlocks.add(Material.JUKEBOX);
-        this.items = new TARDISTerminalInventory().getTerminal();
-        this.tars = new TARDISARSInventory().getTerminal();
-        this.clocks = new TARDISTemporalLocatorInventory().getTerminal();
+        this.items = new TARDISTerminalInventory(this.plugin).getTerminal();
+        this.tars = new TARDISARSInventory(this.plugin).getTerminal();
+        this.clocks = new TARDISTemporalLocatorInventory(this.plugin).getTerminal();
     }
 
     /**

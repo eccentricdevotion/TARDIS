@@ -132,18 +132,14 @@ public class TARDISARSMapListener extends TARDISARSMethods implements Listener {
             int pz = loc.getBlockZ();
             // determine row and col
             int col = (int) (4 + (Math.floor((px - tx) / 16.0d)));
-//            plugin.debug("col: " + col);
             int row = (int) (4 + (Math.floor((pz - tz) / 16.0d)));
             if (col < 0 || col > 8 || row < 0 || row > 8) {
                 // outside ARS grid
                 setLore(inv, 47, "You are outside of the ARS grid!");
                 return;
             }
-//            plugin.debug("row: " + row);
             int east = getOffset(col);
-//            plugin.debug("east: " + east);
             int south = getOffset(row);
-//            plugin.debug("south: " + south);
             int py = loc.getBlockY();
             int level = 28;
             if (py >= 48 && py < 64) {
@@ -152,7 +148,6 @@ public class TARDISARSMapListener extends TARDISARSMethods implements Listener {
             if (py >= 80 && py < 96) {
                 level = 29;
             }
-//            plugin.debug("level: " + (level - 27));
             // set map
             switchLevel(inv, level, uuid);
             TARDISARSMapData md = map_data.get(uuid);
@@ -164,7 +159,6 @@ public class TARDISARSMapListener extends TARDISARSMethods implements Listener {
             map_data.put(uuid, md);
             // get itemstack to enchant and change lore
             int slot = ((row - south) * 9) + 4 + (col - east);
-//            plugin.debug("slot: " + slot);
             ItemStack is = inv.getItem(slot);
             is.setType(Material.ARROW);
             setLore(inv, slot, "You are here!");

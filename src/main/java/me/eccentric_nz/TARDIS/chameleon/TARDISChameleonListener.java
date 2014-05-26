@@ -88,16 +88,16 @@ public class TARDISChameleonListener implements Listener {
                                     String engage;
                                     int oo;
                                     if (bool) {
-                                        onoff = ChatColor.RED + "OFF";
-                                        engage = "ON";
+                                        onoff = ChatColor.RED + plugin.getLanguage().getString("SET_OFF");
+                                        engage = plugin.getLanguage().getString("SET_ON");
                                         oo = 0;
                                     } else {
-                                        onoff = ChatColor.GREEN + "ON";
-                                        engage = "OFF";
+                                        onoff = ChatColor.GREEN + plugin.getLanguage().getString("SET_ON");
+                                        engage = plugin.getLanguage().getString("SET_OFF");
                                         oo = 1;
                                     }
                                     ItemMeta im = is.getItemMeta();
-                                    im.setLore(Arrays.asList(onoff, "Click to turn " + engage));
+                                    im.setLore(Arrays.asList(onoff, String.format(plugin.getLanguage().getString("CHAM_CLICK"), engage)));
                                     is.setItemMeta(im);
                                     // set sign text
                                     setSign(rs.getChameleon(), 2, onoff, player);
@@ -113,16 +113,16 @@ public class TARDISChameleonListener implements Listener {
                                     String to_turn;
                                     int ba;
                                     if (adapt) {
-                                        biome = ChatColor.RED + "OFF";
-                                        to_turn = "ON";
+                                        biome = ChatColor.RED + plugin.getLanguage().getString("SET_OFF");
+                                        to_turn = plugin.getLanguage().getString("SET_ON");
                                         ba = 0;
                                     } else {
-                                        biome = ChatColor.GREEN + "ON";
-                                        to_turn = "OFF";
+                                        biome = ChatColor.GREEN + plugin.getLanguage().getString("SET_ON");
+                                        to_turn = plugin.getLanguage().getString("SET_OFF");
                                         ba = 1;
                                     }
                                     ItemMeta bio = is.getItemMeta();
-                                    bio.setLore(Arrays.asList(biome, "Click to turn " + to_turn));
+                                    bio.setLore(Arrays.asList(biome, String.format(plugin.getLanguage().getString("CHAM_CLICK"), to_turn)));
                                     is.setItemMeta(bio);
                                     set.put("adapti_on", ba);
                                     break;
@@ -264,7 +264,7 @@ public class TARDISChameleonListener implements Listener {
                                     plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
                                         @Override
                                         public void run() {
-                                            TARDISPresetInventory tpi = new TARDISPresetInventory(bool, adapt);
+                                            TARDISPresetInventory tpi = new TARDISPresetInventory(plugin, bool, adapt);
                                             ItemStack[] items = tpi.getTerminal();
                                             Inventory presetinv = plugin.getServer().createInventory(player, 54, "§4More Presets");
                                             presetinv.setContents(items);

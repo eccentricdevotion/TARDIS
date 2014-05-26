@@ -84,15 +84,15 @@ public class TARDISConsoleSwitchListener implements Listener {
                                         switch (map) {
                                             case (byte) 1966: // Chameleon circuit
                                                 new_inv = plugin.getServer().createInventory(p, 54, "§4Chameleon Circuit");
-                                                stack = new TARDISChameleonInventory(rs.isChamele_on(), rs.isAdapti_on()).getTerminal();
+                                                stack = new TARDISChameleonInventory(plugin, rs.isChamele_on(), rs.isAdapti_on()).getTerminal();
                                                 break;
                                             case (byte) 1973: // ARS circuit
                                                 new_inv = plugin.getServer().createInventory(p, 54, "§4Architectural Reconfiguration");
-                                                stack = new TARDISARSInventory().getTerminal();
+                                                stack = new TARDISARSInventory(plugin).getTerminal();
                                                 break;
                                             case (byte) 1974: // Temporal circuit
                                                 new_inv = plugin.getServer().createInventory(p, 27, "§4Temporal Locator");
-                                                stack = new TARDISTemporalLocatorInventory().getTerminal();
+                                                stack = new TARDISTemporalLocatorInventory(plugin).getTerminal();
                                                 break;
                                             case (byte) 1975: // Memory circuit (saves/areas)
                                                 new_inv = plugin.getServer().createInventory(p, 54, "§4TARDIS saves");
@@ -100,7 +100,7 @@ public class TARDISConsoleSwitchListener implements Listener {
                                                 break;
                                             case (byte) 1976: // Input circuit (terminal)
                                                 new_inv = plugin.getServer().createInventory(p, 54, "§4Destination Terminal");
-                                                stack = new TARDISTerminalInventory().getTerminal();
+                                                stack = new TARDISTerminalInventory(plugin).getTerminal();
                                                 break;
                                             default: // scanner circuit
                                                 plugin.getGeneralKeeper().getScannerListener().scan(p, rs.getTardis_id(), plugin.getServer().getScheduler());

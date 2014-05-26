@@ -212,11 +212,7 @@ public class TARDISARSListener extends TARDISARSMethods implements Listener {
                                 ItemStack ris = inv.getItem(slot);
                                 String displayName = ris.getItemMeta().getDisplayName();
                                 String room;
-//                                if (displayName.startsWith("§3(Custom)§r ")) {
-//                                    room = displayName.substring(13);
-//                                } else {
                                 room = TARDISARS.ARSFor(displayName).getActualName();
-//                                }
                                 if (!player.hasPermission("tardis.room." + room.toLowerCase())) {
                                     setLore(inv, slot, "You don't have permission for this room!");
                                     break;
