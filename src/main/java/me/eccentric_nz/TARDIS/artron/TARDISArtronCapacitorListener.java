@@ -102,6 +102,7 @@ public class TARDISArtronCapacitorListener implements Listener {
                             whereid.put("tardis_id", id);
                             int current_level = rs.getArtron_level();
                             boolean init = rs.isTardis_init();
+                            boolean powered = rs.isPowered_on();
                             int fc = plugin.getArtronConfig().getInt("full_charge");
                             Material item = player.getItemInHand().getType();
                             Material full = Material.valueOf(plugin.getArtronConfig().getString("full_charge_item"));
@@ -207,6 +208,7 @@ public class TARDISArtronCapacitorListener implements Listener {
                                     int half = Math.round(fc / 2.0F);
                                     set.put("artron_level", half);
                                     set.put("tardis_init", 1);
+                                    set.put("power_on", 1);
                                     qf.doUpdate("tardis", set, whereid);
                                     TARDISMessage.send(player, "ENERGY_INIT");
                                 } else {
@@ -248,8 +250,40 @@ public class TARDISArtronCapacitorListener implements Listener {
                                     TARDISMessage.send(player, "ENERGY_NONE");
                                 }
                             } else {
-                                // just tell us how much energy we have
-                                new TARDISArtronIndicator(plugin).showArtronLevel(player, id, 0);
+                                boolean show = true;
+                                if (plugin.getConfig().getBoolean("allow.power_down")) {
+                                    // toggle power
+                                    HashMap<String, Object> wherep = new HashMap<String, Object>();
+                                    wherep.put("tardis_id", id);
+                                    HashMap<String, Object> setp = new HashMap<String, Object>();
+                                    if (powered) {
+                                        // power down
+                                        setp.put("powered_on", 0);
+                                        if (plugin.getTrackerKeeper().getInVortex().contains(id)) {
+                                            TARDISMessage.send(player, "Q_FLY");
+                                        } else {
+                                            TARDISMessage.send(player, "POWER_OFF");
+                                            // if hidden, rebuild
+
+                                        }
+                                        // if lights are on, turn them off
+
+                                        // if becon is on turn it off
+                                        show = false;
+                                    } else {
+                                        // power up
+                                        setp.put("powered_on", 1);
+                                        TARDISMessage.send(player, "POWER_ON");
+                                        // if lights are off, turn them on
+
+                                        // if beacon is off turn it on
+                                    }
+                                    qf.doUpdate("tardis", setp, wherep);
+                                }
+                                if (show) {
+                                    // just tell us how much energy we have
+                                    new TARDISArtronIndicator(plugin).showArtronLevel(player, id, 0);
+                                }
                             }
                         }
                     }
