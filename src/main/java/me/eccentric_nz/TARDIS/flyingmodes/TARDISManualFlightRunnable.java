@@ -63,7 +63,7 @@ public class TARDISManualFlightRunnable implements Runnable {
         if (i < loops) {
             int r = random.nextInt(4);
             Location loc = target.get(r);
-            TARDISMessage.send(player, plugin.getLanguage().getString("FLIGHT_CLICK"), controls.get(r));
+            TARDISMessage.send(player, "FLIGHT_CLICK", controls.get(r));
             loc.getWorld().playEffect(loc, Effect.STEP_SOUND, 152);
             plugin.getTrackerKeeper().getFlight().put(player.getUniqueId(), loc.toString());
             i++;
