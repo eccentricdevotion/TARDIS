@@ -51,6 +51,7 @@ import me.eccentric_nz.TARDIS.destroyers.TARDISPresetDestroyerFactory;
 import me.eccentric_nz.TARDIS.enumeration.LANGUAGE;
 import me.eccentric_nz.TARDIS.files.TARDISBlockLoader;
 import me.eccentric_nz.TARDIS.files.TARDISConfiguration;
+import me.eccentric_nz.TARDIS.files.TARDISLanguageUpdater;
 import me.eccentric_nz.TARDIS.files.TARDISMakeRoomCSV;
 import me.eccentric_nz.TARDIS.files.TARDISMakeTardisCSV;
 import me.eccentric_nz.TARDIS.move.TARDISMonsterRunnable;
@@ -348,6 +349,8 @@ public class TARDIS extends JavaPlugin {
         // load the language
         this.console.sendMessage(pluginName + "Loading language: " + LANGUAGE.valueOf(lang).getLang());
         this.language = YamlConfiguration.loadConfiguration(file);
+        // update the language configuration
+        new TARDISLanguageUpdater(this).update();
     }
 
     /**
