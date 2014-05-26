@@ -33,6 +33,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import me.eccentric_nz.TARDIS.api.TARDII;
 import me.eccentric_nz.TARDIS.artron.TARDISCondensables;
+import me.eccentric_nz.TARDIS.artron.TARDISStandbyMode;
 import me.eccentric_nz.TARDIS.builders.TARDISBuilderInner;
 import me.eccentric_nz.TARDIS.builders.TARDISPresetBuilderFactory;
 import me.eccentric_nz.TARDIS.builders.TARDISSpace;
@@ -107,6 +108,7 @@ public class TARDIS extends JavaPlugin {
     private FileConfiguration roomsConfig;
     private FileConfiguration tagConfig;
     private HashMap<String, Integer> condensables;
+    private int standbyTask;
     private PluginDescriptionFile pdfFile;
     private String pluginName;
     private String resourcePack;
@@ -247,6 +249,7 @@ public class TARDIS extends JavaPlugin {
                 this.getServer().getScheduler().scheduleSyncRepeatingTask(this, new TARDISMonsterRunnable(this), 2400L, 2400L);
             }
             setDates();
+            startStandBy();
             filter = new TARDISPerceptionFilter(this);
             filter.createPerceptionFilter();
             TARDISCondensables cond = new TARDISCondensables(this);
@@ -408,8 +411,8 @@ public class TARDIS extends JavaPlugin {
     }
 
     /**
-     * StardisArearts a repeating tardisAreask that plays TARDIS sound effects
-     * to players while they are inside the TARDIS.
+     * Starts a repeating task that plays TARDIS sound effects to players while
+     * they are inside the TARDIS.
      */
     private void startSound() {
         this.getServer().getScheduler().scheduleSyncRepeatingTask(this, new Runnable() {
@@ -421,8 +424,23 @@ public class TARDIS extends JavaPlugin {
     }
 
     /**
-     * StardisArearts a repeating tardisAreask that heals players 1/2 a heart
-     * per cycle when they are in the Zero room.
+     * Starts a repeating task that removes Artron Energy from the TARDIS while
+     * it is in standby mode (ie not travelling). Only runs if `standby_time` in
+     * artron.yml is greater than 0 (the default is 6000 or every 5 minutes).
+     */
+    public void startStandBy() {
+        if (getConfig().getBoolean("allow.power_down")) {
+            long repeat = getArtronConfig().getLong("standby_time");
+            if (repeat <= 0) {
+                return;
+            }
+            standbyTask = this.getServer().getScheduler().scheduleSyncRepeatingTask(this, new TARDISStandbyMode(this), 6000L, repeat);
+        }
+    }
+
+    /**
+     * Starts a repeating task that heals players 1/2 a heart per cycle when
+     * they are in the Zero room.
      */
     private void startZeroHealing() {
         if (getConfig().getBoolean("allow.zero_room")) {
@@ -814,5 +832,9 @@ public class TARDIS extends JavaPlugin {
 
     public TARDII getTARDII() {
         return new TARDII();
+    }
+
+    public int getStandbyTask() {
+        return standbyTask;
     }
 }

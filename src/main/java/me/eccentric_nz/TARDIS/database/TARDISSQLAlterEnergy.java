@@ -84,7 +84,7 @@ public class TARDISSQLAlterEnergy implements Runnable {
         where.clear();
         wheres = sbw.toString().substring(0, sbw.length() - 5);
         String query = "UPDATE " + table + " SET artron_level = artron_level + " + amount + " WHERE " + wheres;
-        if (amount < 0) {
+        if (amount < 0 && p != null) {
             new BukkitRunnable() {
                 @Override
                 public void run() {
