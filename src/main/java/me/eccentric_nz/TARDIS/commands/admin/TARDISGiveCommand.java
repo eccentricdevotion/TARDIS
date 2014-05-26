@@ -86,7 +86,7 @@ public class TARDISGiveCommand implements CommandExecutor {
                     return true;
                 }
                 if (args.length < 3) {
-                    sender.sendMessage(plugin.getPluginName() + plugin.getLanguage().getString("TOO_FEW_ARGS") + " /tardisgive [player] [item] [amount]");
+                    TARDISMessage.send(sender, "TOO_FEW_ARGS", " /tardisgive [player] [item] [amount]");
                     return true;
                 }
                 String item = args[1].toLowerCase();

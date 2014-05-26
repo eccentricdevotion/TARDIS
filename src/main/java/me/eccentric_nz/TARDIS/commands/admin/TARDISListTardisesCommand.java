@@ -53,7 +53,7 @@ public class TARDISListTardisesCommand {
                         wherecl.put("tardis_id", plugin.getUtils().parseInt(map.get("tardis_id")));
                         ResultSetCurrentLocation rsc = new ResultSetCurrentLocation(plugin, wherecl);
                         if (!rsc.resultSet()) {
-                            sender.sendMessage(plugin.getPluginName() + plugin.getLanguage().getString("CURRENT_NOT_FOUND"));
+                            TARDISMessage.send(sender, "CURRENT_NOT_FOUND");
                             return true;
                         }
                         String line = "Time Lord: " + map.get("owner") + ", Location: " + rsc.getWorld().getName() + ":" + rsc.getX() + ":" + rsc.getY() + ":" + rsc.getZ();
@@ -85,7 +85,7 @@ public class TARDISListTardisesCommand {
                     wherecl.put("tardis_id", plugin.getUtils().parseInt(map.get("tardis_id")));
                     ResultSetCurrentLocation rsc = new ResultSetCurrentLocation(plugin, wherecl);
                     if (!rsc.resultSet()) {
-                        sender.sendMessage(plugin.getPluginName() + plugin.getLanguage().getString("CURRENT_NOT_FOUND"));
+                        TARDISMessage.send(sender, "CURRENT_NOT_FOUND");
                         return true;
                     }
                     sender.sendMessage("Time Lord: " + map.get("owner") + ", Location: " + rsc.getWorld().getName() + ":" + rsc.getX() + ":" + rsc.getY() + ":" + rsc.getZ());

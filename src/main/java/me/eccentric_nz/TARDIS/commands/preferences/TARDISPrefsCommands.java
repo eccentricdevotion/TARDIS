@@ -88,7 +88,7 @@ public class TARDISPrefsCommands implements CommandExecutor {
                 return false;
             }
             if (player == null) {
-                sender.sendMessage(plugin.getPluginName() + plugin.getLanguage().getString("CMD_PLAYER"));
+                TARDISMessage.send(sender, "CMD_PLAYER");
                 return true;
             }
             String pref = args[0].toLowerCase(Locale.ENGLISH);

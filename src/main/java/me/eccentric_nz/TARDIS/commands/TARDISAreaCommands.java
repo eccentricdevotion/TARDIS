@@ -52,7 +52,7 @@ public class TARDISAreaCommands implements CommandExecutor {
     @Override
     public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
         if (!sender.hasPermission("tardis.admin")) {
-            sender.sendMessage(plugin.getPluginName() + plugin.getLanguage().getString("NO_PERM_AREA"));
+            TARDISMessage.send(sender, "NO_PERM_AREA");
             return true;
         }
         Player player = null;
@@ -66,7 +66,7 @@ public class TARDISAreaCommands implements CommandExecutor {
                 return false;
             }
             if (player == null) {
-                sender.sendMessage(plugin.getPluginName() + ChatColor.RED + plugin.getLanguage().getString("CMD_PLAYER"));
+                TARDISMessage.send(sender, "CMD_PLAYER");
                 return false;
             }
             if (args[0].equals("start")) {

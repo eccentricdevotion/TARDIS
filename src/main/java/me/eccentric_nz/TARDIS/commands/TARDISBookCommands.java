@@ -63,7 +63,7 @@ public class TARDISBookCommands implements CommandExecutor {
                 String first = args[0].toLowerCase(Locale.ENGLISH);
                 if (first.equals("list")) {
                     int b = 1;
-                    sender.sendMessage(TARDIS.plugin.getPluginName() + plugin.getLanguage().getString("BOOK_RASS"));
+                    TARDISMessage.send(sender, "BOOK_RASS");
                     for (Map.Entry<String, String> entry : books.entrySet()) {
                         sender.sendMessage(b + ". [" + entry.getKey() + "] - " + entry.getValue());
                         b++;
@@ -75,7 +75,7 @@ public class TARDISBookCommands implements CommandExecutor {
                     player = (Player) sender;
                 }
                 if (player == null) {
-                    sender.sendMessage(plugin.getPluginName() + plugin.getLanguage().getString("CMD_PLAYER"));
+                    TARDISMessage.send(sender, "CMD_PLAYER");
                     return true;
                 }
                 if (args.length < 2) {

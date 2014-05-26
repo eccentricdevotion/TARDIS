@@ -21,6 +21,7 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
 
@@ -41,7 +42,7 @@ public class TARDISRecipeLister {
     }
 
     public void list() {
-        sender.sendMessage(plugin.getPluginName() + plugin.getLanguage().getString("RECIPE_VIEW"));
+        TARDISMessage.send(sender, "RECIPE_VIEW");
         sender.sendMessage(ChatColor.GRAY + "    Command argument" + ChatColor.RESET + " - " + ChatColor.DARK_GRAY + "Recipe Result");
         for (Map.Entry<String, List<String>> map : options.entrySet()) {
             sender.sendMessage(map.getKey());

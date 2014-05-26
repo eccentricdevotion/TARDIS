@@ -74,7 +74,7 @@ public class TARDISBindCommands implements CommandExecutor {
                 player = (Player) sender;
             }
             if (player == null) {
-                sender.sendMessage(plugin.getPluginName() + plugin.getLanguage().getString("CMD_PLAYER"));
+                TARDISMessage.send(sender, "CMD_PLAYER");
                 return false;
             }
             if (args.length < 1) {

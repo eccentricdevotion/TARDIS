@@ -21,6 +21,7 @@ import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.builders.TARDISMaterialisationData;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetCurrentLocation;
+import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import org.bukkit.Location;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.command.CommandSender;
@@ -42,7 +43,7 @@ public class TARDISRemoteRebuildCommand {
         wherecl.put("tardis_id", id);
         ResultSetCurrentLocation rsc = new ResultSetCurrentLocation(plugin, wherecl);
         if (!rsc.resultSet()) {
-            sender.sendMessage(plugin.getPluginName() + plugin.getLanguage().getString("CURRENT_NOT_FOUND"));
+            TARDISMessage.send(sender, "CURRENT_NOT_FOUND");
             return true;
         }
         Location l = new Location(rsc.getWorld(), rsc.getX(), rsc.getY(), rsc.getZ());
@@ -66,7 +67,7 @@ public class TARDISRemoteRebuildCommand {
                 plugin.getPresetBuilder().buildPreset(pbd);
             }
         }, 10L);
-        sender.sendMessage(plugin.getPluginName() + plugin.getLanguage().getString("TARDIS_REBUILT"));
+        TARDISMessage.send(sender, "TARDIS_REBUILT");
         // set hidden to false
         if (hidden) {
             HashMap<String, Object> whereh = new HashMap<String, Object>();

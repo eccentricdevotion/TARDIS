@@ -22,6 +22,7 @@ import me.eccentric_nz.TARDIS.builders.TARDISMaterialisationData;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetCurrentLocation;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
+import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import org.bukkit.Location;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.command.CommandSender;
@@ -44,7 +45,7 @@ public class TARDISRemoteHideCommand {
         wherecl.put("tardis_id", id);
         ResultSetCurrentLocation rsc = new ResultSetCurrentLocation(plugin, wherecl);
         if (!rsc.resultSet()) {
-            sender.sendMessage(plugin.getPluginName() + plugin.getLanguage().getString("CURRENT_NOT_FOUND"));
+            TARDISMessage.send(sender, "CURRENT_NOT_FOUND");
             return true;
         }
         OfflinePlayer olp = null;
@@ -74,7 +75,7 @@ public class TARDISRemoteHideCommand {
         pdd.setTardisID(id);
         pdd.setBiome(rsc.getBiome());
         plugin.getPresetDestroyer().destroyPreset(pdd);
-        sender.sendMessage(plugin.getPluginName() + String.format(plugin.getLanguage().getString("TARDIS_HIDDEN"), "/tardisremote [player] rebuild"));
+        TARDISMessage.send(sender, "TARDIS_HIDDEN", "/tardisremote [player] rebuild");
         // set hidden to true
         HashMap<String, Object> whereh = new HashMap<String, Object>();
         whereh.put("tardis_id", id);

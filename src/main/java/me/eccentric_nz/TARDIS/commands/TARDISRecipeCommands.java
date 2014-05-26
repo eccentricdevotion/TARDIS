@@ -94,7 +94,7 @@ public class TARDISRecipeCommands implements CommandExecutor {
                 if (args.length == 0 || !firstArgs.contains(args[0].toLowerCase(Locale.ENGLISH))) {
                     new TARDISRecipeLister(plugin, sender).list();
                 } else {
-                    sender.sendMessage(plugin.getPluginName() + plugin.getLanguage().getString("CMD_PLAYER"));
+                    TARDISMessage.send(sender, "CMD_PLAYER");
                 }
                 return true;
             }

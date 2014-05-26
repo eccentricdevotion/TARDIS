@@ -24,6 +24,7 @@ import me.eccentric_nz.TARDIS.database.ResultSetCurrentLocation;
 import me.eccentric_nz.TARDIS.database.ResultSetNextLocation;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
+import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import org.bukkit.Location;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.block.Biome;
@@ -67,7 +68,7 @@ public class TARDISRemoteTravelCommand {
             wherenl.put("tardis_id", id);
             ResultSetNextLocation rsn = new ResultSetNextLocation(plugin, wherenl);
             if (!rsn.resultSet() && !(sender instanceof BlockCommandSender)) {
-                sender.sendMessage(plugin.getPluginName() + plugin.getLanguage().getString("DEST_NO_LOAD"));
+                TARDISMessage.send(sender, "DEST_NO_LOAD");
                 return true;
             }
             boolean is_next_sub = rsn.isSubmarine();
