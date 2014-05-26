@@ -108,6 +108,7 @@ public class TARDISAdminCommands implements CommandExecutor {
         firstsBool.put("name_tardis", "police_box");
         firstsBool.put("nether", "travel");
         firstsBool.put("per_world_perms", "travel");
+        firstsBool.put("power_down", "allow");
         firstsBool.put("respect_factions", "preferences");
         firstsBool.put("respect_grief_prevention", "preferences");
         firstsBool.put("respect_worldborder", "preferences");
@@ -208,6 +209,9 @@ public class TARDISAdminCommands implements CommandExecutor {
                 }
                 if (first.equals("language")) {
                     return new TARDISLanguageCommand(plugin).setLanguage(sender, args);
+                }
+                if (first.equals("power_down")) {
+                    return new TARDISPowerDownCommand(plugin).togglePowerDown(sender, args);
                 }
                 if (first.equals("database")) {
                     String dbtype = args[1].toLowerCase(Locale.ENGLISH);
