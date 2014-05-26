@@ -1,12 +1,11 @@
 # TODO
 
 ##Current version `2.9-beta-2`
-1. Artron button powers on/off TARDIS after initialisation
-2. TARDIS invisibility - 1.8 barrier blocks?
-3. Remove books and achievements?
+1. TARDIS invisibility - 1.8 barrier blocks?
 
 ###In progress
-3. Localisation - this one is a HUGE job
+1. Artron button powers on/off TARDIS after initialisation
+3. Localisation
 4. `/tardisremote` commands
 5. UHC flying mode
 6. Walk in to the TARDIS if door is open
@@ -16,7 +15,7 @@
 10. Fix the NPE when trying to set biome on final demat
 
 ##Future version `3.0+`
-1. Console modes?
+1. Console modes / grace period on hard mode?
 2. ARS room limit - can only reconfigure x rooms at a time (and cannot open ARS until reconfiguration is complete) - configurable option
 3. Slimmer TARDIS option?
 

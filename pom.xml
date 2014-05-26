@@ -31,11 +31,17 @@
             <id>onarandombox</id>
             <url>http://repo.onarandombox.com/content/groups/public</url>
         </repository>
-        <!--<repository>
+        <!--
+        <repository>
             <id>comphenix-rep</id>
             <name>Comphenix Repository</name>
             <url>http://repo.comphenix.net/content/groups/public</url>
-        </repository>-->
+        </repository>
+        <repository>
+            <id>confuser-repo</id>
+            <url>http://ci.frostcast.net/plugin/repository/everything</url>
+        </repository>
+        -->
         <repository>
             <id>comphenix-repo</id>
             <name>Comphenix Repository</name>
@@ -403,5 +409,12 @@
                 </exclusion>
             </exclusions>
         </dependency>
+        <!--
+        <dependency>
+            <groupId>me.confuser</groupId>
+            <artifactId>BarAPI</artifactId>
+            <version>3.1</version>
+        </dependency>
+        -->
     </dependencies>
 </project>
