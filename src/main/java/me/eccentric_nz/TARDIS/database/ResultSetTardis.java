@@ -80,6 +80,7 @@ public class ResultSetTardis {
     private String village;
     private String renderer;
     private String zero;
+    private boolean powered_on;
     private final ArrayList<HashMap<String, String>> data = new ArrayList<HashMap<String, String>>();
 
     /**
@@ -192,6 +193,7 @@ public class ResultSetTardis {
                     this.village = rs.getString("village");
                     this.renderer = rs.getString("renderer");
                     this.zero = rs.getString("zero");
+                    this.powered_on = rs.getBoolean("powered_on");
                 }
             } else {
                 return false;
@@ -357,6 +359,10 @@ public class ResultSetTardis {
 
     public String getZero() {
         return zero;
+    }
+
+    public boolean isPowered_on() {
+        return powered_on;
     }
 
     public ArrayList<HashMap<String, String>> getData() {

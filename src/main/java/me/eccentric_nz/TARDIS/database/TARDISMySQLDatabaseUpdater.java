@@ -52,6 +52,7 @@ public class TARDISMySQLDatabaseUpdater {
         uuidUpdates.put("t_count", "t_id");
         uuidUpdates.put("tardis", "tardis_id");
         uuidUpdates.put("travellers", "tardis_id");
+        tardisupdates.add("powered_on int(1) DEFAULT '0'");
         tardisupdates.add("renderer varchar(512) DEFAULT ''");
         tardisupdates.add("zero varchar(512) DEFAULT ''");
         prefsupdates.add("language varchar(32) DEFAULT 'AUTO_DETECT'");
