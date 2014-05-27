@@ -298,27 +298,32 @@ public class TARDISBuilderInner {
                                 set.put("chameleon", chameleonloc);
                                 set.put("chamele_on", 0);
                             }
-                            if (id == 71 && data < (byte) 8) { // iron door bottom
-                                HashMap<String, Object> setd = new HashMap<String, Object>();
-                                String doorloc = world.getName() + ":" + startx + ":" + starty + ":" + startz;
-                                setd.put("tardis_id", dbID);
-                                setd.put("door_type", 1);
-                                setd.put("door_location", doorloc);
-                                setd.put("door_direction", "SOUTH");
-                                qf.doInsert("doors", setd);
-                                // if create_worlds is true, set the world spawn
-                                if (own_world) {
-                                    if (plugin.getPM().isPluginEnabled("Multiverse-Core")) {
-                                        Plugin mvplugin = plugin.getPM().getPlugin("Multiverse-Core");
-                                        if (mvplugin instanceof MultiverseCore) {
-                                            MultiverseCore mvc = (MultiverseCore) mvplugin;
-                                            MultiverseWorld foundWorld = mvc.getMVWorldManager().getMVWorld(world.getName());
-                                            Location spawn = new Location(world, (startx + 0.5), starty, (startz + 1.5), 0, 0);
-                                            foundWorld.setSpawnLocation(spawn);
+                            if (id == 71) {
+                                if (data < (byte) 8) { // iron door bottom
+                                    HashMap<String, Object> setd = new HashMap<String, Object>();
+                                    String doorloc = world.getName() + ":" + startx + ":" + starty + ":" + startz;
+                                    setd.put("tardis_id", dbID);
+                                    setd.put("door_type", 1);
+                                    setd.put("door_location", doorloc);
+                                    setd.put("door_direction", "SOUTH");
+                                    qf.doInsert("doors", setd);
+                                    // if create_worlds is true, set the world spawn
+                                    if (own_world) {
+                                        if (plugin.getPM().isPluginEnabled("Multiverse-Core")) {
+                                            Plugin mvplugin = plugin.getPM().getPlugin("Multiverse-Core");
+                                            if (mvplugin instanceof MultiverseCore) {
+                                                MultiverseCore mvc = (MultiverseCore) mvplugin;
+                                                MultiverseWorld foundWorld = mvc.getMVWorldManager().getMVWorld(world.getName());
+                                                Location spawn = new Location(world, (startx + 0.5), starty, (startz + 1.5), 0, 0);
+                                                foundWorld.setSpawnLocation(spawn);
+                                            }
+                                        } else {
+                                            world.setSpawnLocation(startx, starty, (startz + 1));
                                         }
-                                    } else {
-                                        world.setSpawnLocation(startx, starty, (startz + 1));
                                     }
+                                } else {
+                                    // iron door top
+                                    data = (byte) 9;
                                 }
                             }
                             if (id == 77) { // stone button
