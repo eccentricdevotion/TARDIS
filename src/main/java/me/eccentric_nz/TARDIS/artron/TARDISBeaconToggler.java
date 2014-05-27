@@ -14,72 +14,29 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package me.eccentric_nz.TARDIS.commands.preferences;
+package me.eccentric_nz.TARDIS.artron;
 
-import java.util.Arrays;
 import java.util.HashMap;
-import java.util.List;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
-import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.block.Block;
-import org.bukkit.entity.Player;
 
 /**
  *
  * @author eccentric_nz
  */
-public class TARDISToggleOnOffCommand {
+public class TARDISBeaconToggler {
 
     private final TARDIS plugin;
-    private final List<String> was;
 
-    public TARDISToggleOnOffCommand(TARDIS plugin) {
+    public TARDISBeaconToggler(TARDIS plugin) {
         this.plugin = plugin;
-        this.was = Arrays.asList("auto", "beacon", "ctm", "dnd", "eps", "hads", "minecart", "plain", "renderer", "submarine");
     }
 
-    public boolean toggle(Player player, String[] args, QueryFactory qf) {
-        String pref = args[0];
-        if (pref.equals("auto") && !plugin.getConfig().getBoolean("allow.autonomous")) {
-            TARDISMessage.send(player, "AUTO_DISABLED");
-            return true;
-        }
-        if (pref.equals("eps") && !plugin.getConfig().getBoolean("allow.emergency_npc")) {
-            TARDISMessage.send(player, "EP1_DISABLED");
-            return true;
-        }
-        if (pref.equals("hads") && !plugin.getConfig().getBoolean("allow.hads")) {
-            TARDISMessage.send(player, "HADS_DISBALED");
-            return true;
-        }
-        HashMap<String, Object> setp = new HashMap<String, Object>();
-        HashMap<String, Object> wherep = new HashMap<String, Object>();
-        wherep.put("uuid", player.getUniqueId().toString());
-        if (args[1].equalsIgnoreCase("on")) {
-            setp.put(pref + "_on", 1);
-            if (pref.equals("beacon")) {
-                toggleBeacon(player.getUniqueId().toString(), true);
-            }
-            String grammar = (was.contains(pref)) ? "PREF_WAS_ON" : "PREF_WERE_ON";
-            TARDISMessage.send(player, grammar, pref);
-        }
-        if (args[1].equalsIgnoreCase("off")) {
-            setp.put(pref + "_on", 0);
-            if (pref.equals("beacon")) {
-                toggleBeacon(player.getUniqueId().toString(), false);
-            }
-            String grammar = (was.contains(pref)) ? "PREF_WAS_OFF" : "PREF_WERE_OFF";
-            TARDISMessage.send(player, grammar, pref);
-        }
-        qf.doUpdate("player_prefs", setp, wherep);
-        return true;
-    }
-
-    public void toggleBeacon(String uuid, boolean on) {
+    public void flickSwitch(String uuid, boolean on) {
         HashMap<String, Object> whereb = new HashMap<String, Object>();
         whereb.put("uuid", uuid);
         ResultSetTardis rs = new ResultSetTardis(plugin, whereb, "", false);

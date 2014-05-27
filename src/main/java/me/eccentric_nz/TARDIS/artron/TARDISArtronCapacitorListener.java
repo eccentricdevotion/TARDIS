@@ -102,6 +102,7 @@ public class TARDISArtronCapacitorListener implements Listener {
                             whereid.put("tardis_id", id);
                             int current_level = rs.getArtron_level();
                             boolean init = rs.isTardis_init();
+                            boolean hidden = rs.isHidden();
                             boolean powered = rs.isPowered_on();
                             int fc = plugin.getArtronConfig().getInt("full_charge");
                             Material item = player.getItemInHand().getType();
@@ -177,6 +178,7 @@ public class TARDISArtronCapacitorListener implements Listener {
                                 // kickstart the TARDIS Artron Energy Capacitor
                                 // has the TARDIS been initialised?
                                 if (!init) {
+                                    plugin.getUtils().playTARDISSound(block.getLocation(), player, "power_up");
                                     // get locations from database
                                     String creeper = rs.getCreeper();
                                     String beacon = rs.getBeacon();
@@ -257,6 +259,7 @@ public class TARDISArtronCapacitorListener implements Listener {
                                     wherep.put("tardis_id", id);
                                     HashMap<String, Object> setp = new HashMap<String, Object>();
                                     if (powered) {
+                                        plugin.getUtils().playTARDISSound(block.getLocation(), player, "power_down");
                                         // power down
                                         setp.put("powered_on", 0);
                                         if (plugin.getTrackerKeeper().getInVortex().contains(id)) {
@@ -264,19 +267,25 @@ public class TARDISArtronCapacitorListener implements Listener {
                                         } else {
                                             TARDISMessage.send(player, "POWER_OFF");
                                             // if hidden, rebuild
-
+                                            if (hidden) {
+                                                plugin.getServer().dispatchCommand(plugin.getConsole(), "tardisremote " + player.getName() + " rebuild");
+                                                TARDISMessage.send(player, "POWER_FAIL");
+                                            }
                                         }
                                         // if lights are on, turn them off
-
-                                        // if becon is on turn it off
+                                        new TARDISLampToggler(plugin).flickSwitch(id, player);
+                                        // if beacon is on turn it off
+                                        new TARDISBeaconToggler(plugin).flickSwitch(player.getUniqueId().toString(), false);
                                         show = false;
                                     } else {
+                                        plugin.getUtils().playTARDISSound(block.getLocation(), player, "power_up");
                                         // power up
                                         setp.put("powered_on", 1);
                                         TARDISMessage.send(player, "POWER_ON");
                                         // if lights are off, turn them on
-
+                                        new TARDISLampToggler(plugin).flickSwitch(id, player);
                                         // if beacon is off turn it on
+                                        new TARDISBeaconToggler(plugin).flickSwitch(player.getUniqueId().toString(), true);
                                     }
                                     qf.doUpdate("tardis", setp, wherep);
                                 }

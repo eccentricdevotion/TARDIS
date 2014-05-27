@@ -26,14 +26,13 @@ import me.eccentric_nz.TARDIS.ARS.TARDISARSInventory;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.advanced.TARDISCircuitChecker;
 import me.eccentric_nz.TARDIS.advanced.TARDISSerializeInventory;
+import me.eccentric_nz.TARDIS.artron.TARDISLampToggler;
 import me.eccentric_nz.TARDIS.builders.TARDISEmergencyRelocation;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetBackLocation;
 import me.eccentric_nz.TARDIS.database.ResultSetControls;
 import me.eccentric_nz.TARDIS.database.ResultSetCurrentLocation;
 import me.eccentric_nz.TARDIS.database.ResultSetDiskStorage;
-import me.eccentric_nz.TARDIS.database.ResultSetLamps;
-import me.eccentric_nz.TARDIS.database.ResultSetPlayerPrefs;
 import me.eccentric_nz.TARDIS.database.ResultSetRepeaters;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import me.eccentric_nz.TARDIS.database.ResultSetTravellers;
@@ -356,37 +355,38 @@ public class TARDISButtonListener implements Listener {
                                     }
                                     break;
                                 case 12: // Control room light switch
-                                    HashMap<String, Object> wherel = new HashMap<String, Object>();
-                                    wherel.put("tardis_id", id);
-                                    ResultSetLamps rsl = new ResultSetLamps(plugin, wherel, true);
-                                    List<Block> lamps = new ArrayList<Block>();
-                                    if (rsl.resultSet()) {
-                                        // get lamp locations
-                                        ArrayList<HashMap<String, String>> data = rsl.getData();
-                                        for (HashMap<String, String> map : data) {
-                                            Location loc = plugin.getUtils().getLocationFromDB(map.get("location"), 0.0F, 0.0F);
-                                            lamps.add(loc.getBlock());
-                                        }
-                                    }
-                                    HashMap<String, Object> wherepp = new HashMap<String, Object>();
-                                    wherepp.put("uuid", player.getUniqueId().toString());
-                                    ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, wherepp);
-                                    boolean use_wool = false;
-                                    if (rsp.resultSet()) {
-                                        use_wool = rsp.isWoolLightsOn();
-                                    }
-                                    for (Block b : lamps) {
-                                        if (b.getType().equals(Material.REDSTONE_LAMP_ON)) {
-                                            if (use_wool) {
-                                                b.setType(Material.WOOL);
-                                                b.setData((byte) 15);
-                                            } else {
-                                                b.setType(Material.SPONGE);
-                                            }
-                                        } else if (b.getType().equals(Material.SPONGE) || (b.getType().equals(Material.WOOL) && b.getData() == (byte) 15)) {
-                                            b.setType(Material.REDSTONE_LAMP_ON);
-                                        }
-                                    }
+                                    new TARDISLampToggler(plugin).flickSwitch(id, player);
+//                                    HashMap<String, Object> wherel = new HashMap<String, Object>();
+//                                    wherel.put("tardis_id", id);
+//                                    ResultSetLamps rsl = new ResultSetLamps(plugin, wherel, true);
+//                                    List<Block> lamps = new ArrayList<Block>();
+//                                    if (rsl.resultSet()) {
+//                                        // get lamp locations
+//                                        ArrayList<HashMap<String, String>> data = rsl.getData();
+//                                        for (HashMap<String, String> map : data) {
+//                                            Location loc = plugin.getUtils().getLocationFromDB(map.get("location"), 0.0F, 0.0F);
+//                                            lamps.add(loc.getBlock());
+//                                        }
+//                                    }
+//                                    HashMap<String, Object> wherepp = new HashMap<String, Object>();
+//                                    wherepp.put("uuid", player.getUniqueId().toString());
+//                                    ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, wherepp);
+//                                    boolean use_wool = false;
+//                                    if (rsp.resultSet()) {
+//                                        use_wool = rsp.isWoolLightsOn();
+//                                    }
+//                                    for (Block b : lamps) {
+//                                        if (b.getType().equals(Material.REDSTONE_LAMP_ON)) {
+//                                            if (use_wool) {
+//                                                b.setType(Material.WOOL);
+//                                                b.setData((byte) 15);
+//                                            } else {
+//                                                b.setType(Material.SPONGE);
+//                                            }
+//                                        } else if (b.getType().equals(Material.SPONGE) || (b.getType().equals(Material.WOOL) && b.getData() == (byte) 15)) {
+//                                            b.setType(Material.REDSTONE_LAMP_ON);
+//                                        }
+//                                    }
                                     break;
                                 case 13: // TIS
                                     plugin.getTrackerKeeper().getInfoMenu().put(player.getUniqueId(), TARDISInfoMenu.TIS);

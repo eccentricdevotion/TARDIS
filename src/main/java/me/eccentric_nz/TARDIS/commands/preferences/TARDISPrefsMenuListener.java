@@ -20,6 +20,7 @@ import java.util.HashMap;
 import java.util.List;
 import me.eccentric_nz.TARDIS.ARS.TARDISARSMap;
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.artron.TARDISBeaconToggler;
 import me.eccentric_nz.TARDIS.commands.admin.TARDISAdminMenuInventory;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetTravellers;
@@ -128,7 +129,7 @@ public class TARDISPrefsMenuListener implements Listener {
                     im.setLore(lore);
                     is.setItemMeta(im);
                     if (im.getDisplayName().equals("Beacon")) {
-                        new TARDISToggleOnOffCommand(plugin).toggleBeacon(uuid, !bool);
+                        new TARDISBeaconToggler(plugin).flickSwitch(uuid, !bool);
                     }
                 }
             }
