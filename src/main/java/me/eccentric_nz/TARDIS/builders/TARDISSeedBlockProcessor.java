@@ -183,11 +183,12 @@ public class TARDISSeedBlockProcessor {
                         return false;
                     }
                 }
+                final String biome = l.getBlock().getBiome().toString();
                 // get player direction
                 String d = plugin.getUtils().getPlayersDirection(player, false);
                 // save data to database (tardis table)
                 String chun = cw + ":" + cx + ":" + cz;
-                QueryFactory qf = new QueryFactory(plugin);
+                final QueryFactory qf = new QueryFactory(plugin);
                 HashMap<String, Object> set = new HashMap<String, Object>();
                 set.put("uuid", player.getUniqueId().toString());
                 set.put("owner", playerNameStr);
@@ -215,7 +216,7 @@ public class TARDISSeedBlockProcessor {
                 setpp.put("wall", getWallKey(middle_id, (int) middle_data));
                 setpp.put("floor", getWallKey(floor_id, (int) floor_data));
                 setpp.put("lamp", seed.getLamp());
-                int lastInsertId = qf.doSyncInsert("tardis", set);
+                final int lastInsertId = qf.doSyncInsert("tardis", set);
                 // insert/update  player prefs
                 HashMap<String, Object> wherep = new HashMap<String, Object>();
                 wherep.put("uuid", player.getUniqueId().toString());
@@ -243,7 +244,12 @@ public class TARDISSeedBlockProcessor {
                 // set the biome if necessary
                 if (plugin.getConfig().getBoolean("police_box.set_biome")) {
                     // remember the current biome
-                    qf.saveBiome(lastInsertId, l.getBlock().getBiome().toString());
+                    plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
+                        @Override
+                        public void run() {
+                            qf.saveBiome(lastInsertId, biome);
+                        }
+                    }, 5L);
                 }
                 // turn the block stack into a TARDIS
                 TARDISMaterialisationData pbd = new TARDISMaterialisationData();
@@ -256,6 +262,7 @@ public class TARDISSeedBlockProcessor {
                 pbd.setRebuild(false);
                 pbd.setSubmarine(isSub(l));
                 pbd.setTardisID(lastInsertId);
+                pbd.setBiome(l.getBlock().getBiome());
                 // police box needs to use chameleon id/data
                 plugin.getPresetBuilder().buildPreset(pbd);
                 plugin.getInteriorBuilder().buildInner(schm, chunkworld, lastInsertId, player, middle_id, middle_data, floor_id, floor_data, tips);

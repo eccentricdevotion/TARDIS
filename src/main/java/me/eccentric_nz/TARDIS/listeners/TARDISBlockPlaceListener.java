@@ -251,8 +251,9 @@ public class TARDISBlockPlaceListener implements Listener {
                         String d = plugin.getUtils().getPlayersDirection(player, false);
                         // save data to database (tardis table)
                         Location block_loc = blockBottom.getLocation();
+                        final String biome = block_loc.getBlock().getBiome().toString();
                         String chun = cw + ":" + cx + ":" + cz;
-                        QueryFactory qf = new QueryFactory(plugin);
+                        final QueryFactory qf = new QueryFactory(plugin);
                         HashMap<String, Object> set = new HashMap<String, Object>();
                         set.put("uuid", player.getUniqueId().toString());
                         set.put("owner", playerNameStr);
@@ -281,7 +282,7 @@ public class TARDISBlockPlaceListener implements Listener {
                             // determine wall block material from HashMap
                             setpp.put("wall", getWallKey(middle_id, (int) middle_data));
                         }
-                        int lastInsertId = qf.doSyncInsert("tardis", set);
+                        final int lastInsertId = qf.doSyncInsert("tardis", set);
                         // insert/update  player prefs
                         HashMap<String, Object> wherep = new HashMap<String, Object>();
                         wherep.put("uuid", player.getUniqueId().toString());
@@ -306,7 +307,12 @@ public class TARDISBlockPlaceListener implements Listener {
                         // set the biome if necessary
                         if (plugin.getConfig().getBoolean("police_box.set_biome")) {
                             // remember the current biome
-                            qf.saveBiome(lastInsertId, block_loc.getBlock().getBiome().toString());
+                            plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
+                                @Override
+                                public void run() {
+                                    qf.saveBiome(lastInsertId, biome);
+                                }
+                            }, 5L);
                         }
                         // remove redstone torch/lapis and iron blocks
                         block.setType(Material.AIR);

@@ -316,18 +316,20 @@ public class QueryFactory {
      * @param biome the biome to save
      */
     public void saveBiome(int id, String biome) {
-        Statement statement = null;
-        String query = "UPDATE current SET biome = '" + biome + "' WHERE tardis_id = " + id;
+        PreparedStatement ps = null;
+        String query = "UPDATE current SET biome = ? WHERE tardis_id = ?";
         try {
             service.testConnection(connection);
-            statement = connection.createStatement();
-            statement.executeUpdate(query);
+            ps = connection.prepareStatement(query);
+            ps.setString(1, biome);
+            ps.setInt(2, id);
+            ps.executeUpdate();
         } catch (SQLException e) {
             plugin.debug("Update error for saving biome to current! " + e.getMessage());
         } finally {
             try {
-                if (statement != null) {
-                    statement.close();
+                if (ps != null) {
+                    ps.close();
                 }
             } catch (SQLException e) {
                 plugin.debug("Error closing statement! " + e.getMessage());
