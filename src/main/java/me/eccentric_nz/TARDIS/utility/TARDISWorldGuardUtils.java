@@ -158,8 +158,8 @@ public class TARDISWorldGuardUtils {
         } catch (ProtectionDatabaseException e) {
             plugin.getConsole().sendMessage(plugin.getPluginName() + "Could not create WorldGuard Protection for TARDIS! " + e.getMessage());
         }
-        // set the mob spawning configuration
-        setDenyInConfig("TARDIS_WORLD_" + p.getName());
+//        // set the mob spawning configuration
+//        setDenyInConfig("TARDIS_WORLD_" + p.getName());
     }
 
     /**
@@ -199,8 +199,8 @@ public class TARDISWorldGuardUtils {
         } catch (ProtectionDatabaseException e) {
             plugin.getConsole().sendMessage(plugin.getPluginName() + "Could not create WorldGuard Protection for TARDIS! " + e.getMessage());
         }
-        // set the mob spawning configuration
-        setDenyInConfig(w.getName());
+//        // set the mob spawning configuration
+//        setDenyInConfig(w.getName());
     }
 
     /**
@@ -410,7 +410,6 @@ public class TARDISWorldGuardUtils {
      */
     public void setDenyInConfig(String world) {
         String world_folder = "worlds" + File.separator + world + File.separator;
-        plugin.debug("world folder: " + world_folder);
         File configFile = new File(wg.getDataFolder(), world_folder + "config.yml");
         if (!configFile.exists()) {
             plugin.debug("Can't find world config file!");
