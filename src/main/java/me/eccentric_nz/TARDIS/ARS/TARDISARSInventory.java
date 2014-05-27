@@ -125,6 +125,11 @@ public class TARDISARSInventory {
         ItemMeta book = library.getItemMeta();
         book.setDisplayName("Library");
         library.setItemMeta(book);
+        // library
+        ItemStack gene = new ItemStack(Material.FURNACE, 1);
+        ItemMeta tic = gene.getItemMeta();
+        tic.setDisplayName("Genetic Manipulator");
+        gene.setItemMeta(tic);
         // pool
         ItemStack pool = new ItemStack(Material.SNOW_BLOCK, 1);
         ItemMeta snow = pool.getItemMeta();
@@ -140,11 +145,6 @@ public class TARDISARSInventory {
         ItemMeta brick = workshop.getItemMeta();
         brick.setDisplayName("Workshop");
         workshop.setItemMeta(brick);
-        // empty
-        ItemStack empty = new ItemStack(Material.GLASS, 1);
-        ItemMeta glass = empty.getItemMeta();
-        glass.setDisplayName(plugin.getLanguage().getString("BUTTON_EMPTY"));
-        empty.setItemMeta(glass);
         // jettison
         ItemStack jettison = new ItemStack(Material.TNT, 1);
         ItemMeta tnt = jettison.getItemMeta();
@@ -167,7 +167,7 @@ public class TARDISARSInventory {
             null, pad_down, null, null, black, black, black, black, black,
             level_bot, level_sel, level_top, reset, black, black, black, black, black,
             scroll_left, null, scroll_right, jettison, black, black, black, black, black,
-            passage, arboretum, bedroom, kitchen, library, pool, vault, workshop, empty
+            passage, arboretum, bedroom, kitchen, library, gene, pool, vault, workshop
         };
         return is;
     }

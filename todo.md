@@ -3,8 +3,7 @@
 ##Current version `2.9-beta-2`
 
 ###Bugs
-1. Genetic manipulator room doesn't appear in the GUI until the room list is scrolled to the end and then back again
-2. Ongoing (occasional) `setBiome()` NPE when hiding TARDIS / final demat - may have something to do with _new_ TARDISes
+?
 
 ###In progress
 1. Artron button powers on/off TARDIS after initialisation
