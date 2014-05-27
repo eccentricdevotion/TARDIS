@@ -1,17 +1,21 @@
-# TODO
+#TODO
 
 ##Current version `2.9-beta-2`
+
+###Bugs
+1. Genetic manipulator room doesn't appear in the GUI until the room list is scrolled to the end and then back again
+2. Ongoing (occasional) `setBiome()` NPE when hiding TARDIS / final demat - may have something to do with _new_ TARDISes
 
 ###In progress
 1. Artron button powers on/off TARDIS after initialisation
 3. Localisation
 4. `/tardisremote` commands
 5. UHC flying mode
+   * malfunctions should happen mid-flight after dematerialisation
 6. Walk in to the TARDIS if door is open
 7. Allow mobs to spawn through the open door
 8. TARDIS map
 9. MCPatcher texture support
-10. Fix the NPE when trying to set biome on final demat
 
 ##Future version `3.0+`
 1. Console modes / grace period on hard mode?

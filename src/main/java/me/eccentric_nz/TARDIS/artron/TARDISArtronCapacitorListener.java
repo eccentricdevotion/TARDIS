@@ -208,7 +208,7 @@ public class TARDISArtronCapacitorListener implements Listener {
                                     int half = Math.round(fc / 2.0F);
                                     set.put("artron_level", half);
                                     set.put("tardis_init", 1);
-                                    set.put("power_on", 1);
+                                    set.put("powered_on", 1);
                                     qf.doUpdate("tardis", set, whereid);
                                     TARDISMessage.send(player, "ENERGY_INIT");
                                 } else {
