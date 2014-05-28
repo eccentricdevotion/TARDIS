@@ -40,7 +40,7 @@ public class TARDISLampToggler {
     }
 
     @SuppressWarnings("deprecation")
-    public void flickSwitch(int id, Player player) {
+    public void flickSwitch(int id, Player player, boolean on) {
         HashMap<String, Object> wherel = new HashMap<String, Object>();
         wherel.put("tardis_id", id);
         ResultSetLamps rsl = new ResultSetLamps(plugin, wherel, true);
@@ -61,15 +61,19 @@ public class TARDISLampToggler {
             use_wool = rsp.isWoolLightsOn();
         }
         for (Block b : lamps) {
-            if (b.getType().equals(Material.REDSTONE_LAMP_ON)) {
-                if (use_wool) {
-                    b.setType(Material.WOOL);
-                    b.setData((byte) 15);
-                } else {
-                    b.setType(Material.SPONGE);
+            if (on) {
+                if (b.getType().equals(Material.REDSTONE_LAMP_ON)) {
+                    if (use_wool) {
+                        b.setType(Material.WOOL);
+                        b.setData((byte) 15);
+                    } else {
+                        b.setType(Material.SPONGE);
+                    }
                 }
-            } else if (b.getType().equals(Material.SPONGE) || (b.getType().equals(Material.WOOL) && b.getData() == (byte) 15)) {
-                b.setType(Material.REDSTONE_LAMP_ON);
+            } else {
+                if (b.getType().equals(Material.SPONGE) || (b.getType().equals(Material.WOOL) && b.getData() == (byte) 15)) {
+                    b.setType(Material.REDSTONE_LAMP_ON);
+                }
             }
         }
     }
