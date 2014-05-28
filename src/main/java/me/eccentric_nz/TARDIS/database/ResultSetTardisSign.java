@@ -43,6 +43,7 @@ public class ResultSetTardisSign {
     private boolean chamele_on;
     private boolean adapti_on;
     private boolean iso_on;
+    private boolean powered_on;
 
     /**
      * Creates a class instance that can be used to retrieve an SQL ResultSet
@@ -82,6 +83,7 @@ public class ResultSetTardisSign {
                 this.chamele_on = rs.getBoolean("chamele_on");
                 this.adapti_on = rs.getBoolean("adapti_on");
                 this.iso_on = rs.getBoolean("iso_on");
+                this.powered_on = rs.getBoolean("powered_on");
             } else {
                 return false;
             }
@@ -133,5 +135,9 @@ public class ResultSetTardisSign {
 
     public boolean isIso_on() {
         return iso_on;
+    }
+
+    public boolean isPowered_on() {
+        return powered_on;
     }
 }

@@ -104,6 +104,7 @@ public class TARDISArtronCapacitorListener implements Listener {
                             boolean init = rs.isTardis_init();
                             boolean hidden = rs.isHidden();
                             boolean powered = rs.isPowered_on();
+                            boolean lights = rs.isLights_on();
                             int fc = plugin.getArtronConfig().getInt("full_charge");
                             Material item = player.getItemInHand().getType();
                             Material full = Material.valueOf(plugin.getArtronConfig().getString("full_charge_item"));
@@ -273,7 +274,9 @@ public class TARDISArtronCapacitorListener implements Listener {
                                             }
                                         }
                                         // if lights are on, turn them off
-                                        new TARDISLampToggler(plugin).flickSwitch(id, player);
+                                        if (lights) {
+                                            new TARDISLampToggler(plugin).flickSwitch(id, player, true);
+                                        }
                                         // if beacon is on turn it off
                                         new TARDISBeaconToggler(plugin).flickSwitch(player.getUniqueId().toString(), false);
                                         show = false;
@@ -283,7 +286,9 @@ public class TARDISArtronCapacitorListener implements Listener {
                                         setp.put("powered_on", 1);
                                         TARDISMessage.send(player, "POWER_ON");
                                         // if lights are off, turn them on
-                                        new TARDISLampToggler(plugin).flickSwitch(id, player);
+                                        if (lights) {
+                                            new TARDISLampToggler(plugin).flickSwitch(id, player, false);
+                                        }
                                         // if beacon is off turn it on
                                         new TARDISBeaconToggler(plugin).flickSwitch(player.getUniqueId().toString(), true);
                                     }

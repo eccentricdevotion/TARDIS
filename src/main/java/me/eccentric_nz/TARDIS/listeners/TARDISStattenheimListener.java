@@ -127,6 +127,10 @@ public class TARDISStattenheimListener implements Listener {
                         TARDISMessage.send(player, "NO_TARDIS");
                         return;
                     }
+                    if (plugin.getConfig().getBoolean("allow.power_down") && !rs.isPowered_on()) {
+                        TARDISMessage.send(player, "POWER_DOWN");
+                        return;
+                    }
                     final int id = rs.getTardis_id();
                     TARDISCircuitChecker tcc = null;
                     if (plugin.getConfig().getString("preferences.difficulty").equals("hard")) {

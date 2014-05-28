@@ -3,23 +3,19 @@
 ##Current version `2.9-beta-2`
 
 ###Bugs
-?
+? probably ...
 
 ###In progress
 1. Artron button powers on/off TARDIS after initialisation
-3. Localisation
-4. `/tardisremote` commands
-5. UHC flying mode
+2. UHC flying mode
    * malfunctions should happen mid-flight after dematerialisation
-6. Walk in to the TARDIS if door is open
-7. Allow mobs to spawn through the open door
-8. TARDIS map
-9. MCPatcher texture support
+3. MCPatcher texture support
 
 ##Future version `3.0+`
 1. Console modes / grace period on hard mode?
 2. ARS room limit - can only reconfigure x rooms at a time (and cannot open ARS until reconfiguration is complete) - configurable option
 3. Slimmer TARDIS option?
+4. BarAPI to show travel progress - player preference
 
 ###I couldn't really be bothered
 1. HADS + explosions + fireballs + lava

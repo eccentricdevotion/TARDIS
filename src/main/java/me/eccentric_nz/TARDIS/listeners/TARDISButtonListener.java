@@ -71,6 +71,7 @@ public class TARDISButtonListener implements Listener {
     private final TARDIS plugin;
     private final List<Material> validBlocks = new ArrayList<Material>();
     private final List<Integer> onlythese = Arrays.asList(1, 8, 9, 10, 11, 12, 13, 14, 16, 17, 20);
+    private final List<Integer> allow_unpowered = Arrays.asList(13, 17);
     public ItemStack[] items;
     private final ItemStack[] tars;
     private final ItemStack[] clocks;
@@ -127,6 +128,15 @@ public class TARDISButtonListener implements Listener {
                             // check they initialised
                             if (!rs.isTardis_init()) {
                                 TARDISMessage.send(player, "ENERGY_NO_INIT");
+                                return;
+                            }
+                            if (plugin.getConfig().getBoolean("allow.power_down") && !rs.isPowered_on() && !allow_unpowered.contains(type)) {
+                                TARDISMessage.send(player, "POWER_DOWN");
+                                return;
+                            }
+                            boolean lights = rs.isLights_on();
+                            if (!lights && type == 12 && plugin.getConfig().getBoolean("allow.power_down") && !rs.isPowered_on()) {
+                                TARDISMessage.send(player, "POWER_DOWN");
                                 return;
                             }
                             int level = rs.getArtron_level();
@@ -355,38 +365,18 @@ public class TARDISButtonListener implements Listener {
                                     }
                                     break;
                                 case 12: // Control room light switch
-                                    new TARDISLampToggler(plugin).flickSwitch(id, player);
-//                                    HashMap<String, Object> wherel = new HashMap<String, Object>();
-//                                    wherel.put("tardis_id", id);
-//                                    ResultSetLamps rsl = new ResultSetLamps(plugin, wherel, true);
-//                                    List<Block> lamps = new ArrayList<Block>();
-//                                    if (rsl.resultSet()) {
-//                                        // get lamp locations
-//                                        ArrayList<HashMap<String, String>> data = rsl.getData();
-//                                        for (HashMap<String, String> map : data) {
-//                                            Location loc = plugin.getUtils().getLocationFromDB(map.get("location"), 0.0F, 0.0F);
-//                                            lamps.add(loc.getBlock());
-//                                        }
-//                                    }
-//                                    HashMap<String, Object> wherepp = new HashMap<String, Object>();
-//                                    wherepp.put("uuid", player.getUniqueId().toString());
-//                                    ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, wherepp);
-//                                    boolean use_wool = false;
-//                                    if (rsp.resultSet()) {
-//                                        use_wool = rsp.isWoolLightsOn();
-//                                    }
-//                                    for (Block b : lamps) {
-//                                        if (b.getType().equals(Material.REDSTONE_LAMP_ON)) {
-//                                            if (use_wool) {
-//                                                b.setType(Material.WOOL);
-//                                                b.setData((byte) 15);
-//                                            } else {
-//                                                b.setType(Material.SPONGE);
-//                                            }
-//                                        } else if (b.getType().equals(Material.SPONGE) || (b.getType().equals(Material.WOOL) && b.getData() == (byte) 15)) {
-//                                            b.setType(Material.REDSTONE_LAMP_ON);
-//                                        }
-//                                    }
+                                    HashMap<String, Object> wherel = new HashMap<String, Object>();
+                                    wherel.put("tardis_id", id);
+                                    HashMap<String, Object> setl = new HashMap<String, Object>();
+                                    if (lights) {
+                                        new TARDISLampToggler(plugin).flickSwitch(id, player, true);
+                                        setl.put("lights_on", 0);
+                                    } else {
+
+                                        new TARDISLampToggler(plugin).flickSwitch(id, player, false);
+                                        setl.put("lights_on", 1);
+                                    }
+                                    qf.doUpdate("tardis", setl, wherel);
                                     break;
                                 case 13: // TIS
                                     plugin.getTrackerKeeper().getInfoMenu().put(player.getUniqueId(), TARDISInfoMenu.TIS);

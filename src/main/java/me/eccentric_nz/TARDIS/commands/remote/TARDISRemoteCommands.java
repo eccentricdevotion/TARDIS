@@ -92,6 +92,10 @@ public class TARDISRemoteCommands implements CommandExecutor {
                             TARDISMessage.send(sender, "CMD_ONLY_TL_REMOTE");
                             return true;
                         }
+                        if (plugin.getConfig().getBoolean("allow.power_down") && !rs.isPowered_on()) {
+                            TARDISMessage.send(sender, "POWER_DOWN");
+                            return true;
+                        }
                         // must have circuits
                         TARDISCircuitChecker tcc = null;
                         if (plugin.getConfig().getString("preferences.difficulty").equals("hard")) {

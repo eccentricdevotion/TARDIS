@@ -102,6 +102,10 @@ public class TARDISItemFrameListener implements Listener {
                     return;
                 }
                 if (frame.getItem().getType().equals(Material.TRIPWIRE_HOOK)) {
+                    if (plugin.getConfig().getBoolean("allow.power_down") && !rso.isPowered_on()) {
+                        TARDISMessage.send(player, "POWER_DOWN");
+                        return;
+                    }
                     String direction;
                     if (player.isSneaking()) {
                         // cancel the rotation!

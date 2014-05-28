@@ -91,6 +91,10 @@ public class TARDISComehereCommand {
                     TARDISMessage.send(player, "NOT_A_TIMELORD");
                     return true;
                 }
+                if (plugin.getConfig().getBoolean("allow.power_down") && !rs.isPowered_on()) {
+                    TARDISMessage.send(player, "POWER_DOWN");
+                    return true;
+                }
                 final int id = rs.getTardis_id();
                 TARDISCircuitChecker tcc = null;
                 if (plugin.getConfig().getString("preferences.difficulty").equals("hard")) {

@@ -95,6 +95,10 @@ public class TARDISScannerListener implements Listener {
                 if (rs.resultSet()) {
                     final int id = rs.getTardis_id();
                     int level = rs.getArtron_level();
+                    if (plugin.getConfig().getBoolean("allow.power_down") && !rs.isPowered_on()) {
+                        TARDISMessage.send(player, "POWER_DOWN");
+                        return;
+                    }
                     TARDISCircuitChecker tcc = null;
                     if (plugin.getConfig().getString("preferences.difficulty").equals("hard")) {
                         tcc = new TARDISCircuitChecker(plugin, id);

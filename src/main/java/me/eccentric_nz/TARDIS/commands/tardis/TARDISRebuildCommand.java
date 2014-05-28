@@ -50,6 +50,10 @@ public class TARDISRebuildCommand {
                 TARDISMessage.send(player.getPlayer(), "NO_TARDIS");
                 return false;
             }
+            if (plugin.getConfig().getBoolean("allow.power_down") && !rs.isPowered_on()) {
+                TARDISMessage.send(player.getPlayer(), "POWER_DOWN");
+                return true;
+            }
             int id = rs.getTardis_id();
             TARDISCircuitChecker tcc = null;
             if (plugin.getConfig().getString("preferences.difficulty").equals("hard")) {

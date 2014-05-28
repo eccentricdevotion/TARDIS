@@ -16,8 +16,10 @@
  */
 package me.eccentric_nz.TARDIS.commands.tardis;
 
+import java.util.HashMap;
 import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
@@ -40,6 +42,17 @@ public class TARDISRescueCommand {
             return true;
         }
         if (player.hasPermission("tardis.timetravel.player")) {
+            HashMap<String, Object> where = new HashMap<String, Object>();
+            where.put("uuid", player.getUniqueId().toString());
+            ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);
+            if (!rs.resultSet()) {
+                TARDISMessage.send(player, "NOT_A_TIMELORD");
+                return true;
+            }
+            if (plugin.getConfig().getBoolean("allow.power_down") && !rs.isPowered_on()) {
+                TARDISMessage.send(player, "POWER_DOWN");
+                return true;
+            }
             final String saved = args[1];
             Player destPlayer = plugin.getServer().getPlayer(saved);
             if (destPlayer == null) {

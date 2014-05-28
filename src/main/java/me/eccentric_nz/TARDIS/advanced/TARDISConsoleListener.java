@@ -95,6 +95,10 @@ public class TARDISConsoleListener implements Listener {
                             TARDISMessage.send(p, "NOT_OWNER");
                             return;
                         }
+                        if (plugin.getConfig().getBoolean("allow.power_down") && !rs.isPowered_on()) {
+                            TARDISMessage.send(p, "POWER_DOWN");
+                            return;
+                        }
                         Inventory inv = plugin.getServer().createInventory(p, 9, "§4TARDIS Console");
                         HashMap<String, Object> where = new HashMap<String, Object>();
                         where.put("uuid", p.getUniqueId().toString());

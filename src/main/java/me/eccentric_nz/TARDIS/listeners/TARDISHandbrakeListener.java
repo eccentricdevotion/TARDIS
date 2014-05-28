@@ -117,6 +117,10 @@ public class TARDISHandbrakeListener implements Listener {
                             TARDISMessage.send(player, "ISO_HANDS_OFF");
                             return;
                         }
+                        if (plugin.getConfig().getBoolean("allow.power_down") && !rs.isPowered_on()) {
+                            TARDISMessage.send(player, "POWER_DOWN");
+                            return;
+                        }
                         boolean cham = rs.isChamele_on();
                         boolean hidden = rs.isHidden();
                         String beacon = rs.getBeacon();

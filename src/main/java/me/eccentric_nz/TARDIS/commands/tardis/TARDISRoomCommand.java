@@ -73,6 +73,10 @@ public class TARDISRoomCommand {
             TARDISMessage.send(player, "NOT_A_TIMELORD");
             return true;
         }
+        if (plugin.getConfig().getBoolean("allow.power_down") && !rs.isPowered_on()) {
+            TARDISMessage.send(player, "POWER_DOWN");
+            return true;
+        }
         if (!plugin.getUtils().canGrowRooms(rs.getChunk())) {
             TARDISMessage.send(player, "ROOM_OWN_WORLD");
             return true;

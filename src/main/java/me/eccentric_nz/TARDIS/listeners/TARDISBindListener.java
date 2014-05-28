@@ -102,6 +102,10 @@ public class TARDISBindListener implements Listener {
                             whereb.put("bind", l);
                             ResultSetDestinations rsd = new ResultSetDestinations(plugin, whereb, false);
                             if (rsd.resultSet()) {
+                                if (plugin.getConfig().getBoolean("allow.power_down") && !rs.isPowered_on()) {
+                                    TARDISMessage.send(player, "POWER_DOWN");
+                                    return;
+                                }
                                 if (rs.isIso_on() && !player.getUniqueId().equals(ownerUUID) && !event.isCancelled()) {
                                     TARDISMessage.send(player, "ISO_HANDS_OFF");
                                     return;

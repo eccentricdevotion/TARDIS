@@ -19,6 +19,8 @@ package me.eccentric_nz.TARDIS.lazarus;
 import java.util.HashMap;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.ResultSetControls;
+import me.eccentric_nz.TARDIS.database.ResultSetTardis;
+import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
@@ -59,6 +61,16 @@ public class TARDISLazarusListener implements Listener {
                 where.put("type", 19);
                 ResultSetControls rsc = new ResultSetControls(plugin, where, false);
                 if (rsc.resultSet()) {
+                    // check for power
+                    if (plugin.getConfig().getBoolean("allow.power_down")) {
+                        HashMap<String, Object> wheret = new HashMap<String, Object>();
+                        wheret.put("tardis_id", rsc.getTardis_id());
+                        ResultSetTardis rs = new ResultSetTardis(plugin, wheret, "", false);
+                        if (!rs.isPowered_on()) {
+                            TARDISMessage.send(player, "POWER_DOWN");
+                            return;
+                        }
+                    }
                     // track the block
                     plugin.getTrackerKeeper().getLazarus().put(player.getUniqueId(), b);
                     // close the door
