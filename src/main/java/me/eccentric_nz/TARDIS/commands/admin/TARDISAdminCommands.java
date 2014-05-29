@@ -56,6 +56,7 @@ public class TARDISAdminCommands implements CommandExecutor {
         firstsStr.put("custom_schematic_seed", "creation");
         firstsStr.put("database", "storage");
         firstsStr.put("decharge", "");
+        firstsStr.put("default_key", "preferences");
         firstsStr.put("default_sonic", "preferences");
         firstsStr.put("default_world_name", "creation");
         firstsStr.put("delete", "");
@@ -257,8 +258,8 @@ public class TARDISAdminCommands implements CommandExecutor {
                 if (first.equals("full_charge_item") || first.equals("jettison_seed")) {
                     return new TARDISSetMaterialCommand(plugin).setConfigMaterial(sender, args);
                 }
-                if (first.equals("default_sonic")) {
-                    return new TARDISDefaultSonicCommand(plugin).setSonic(sender, args);
+                if (first.equals("default_key") || first.equals("default_sonic")) {
+                    return new TARDISDefaultCommand(plugin).setSonic(sender, args);
                 }
                 if (first.equals("default_world_name")) {
                     return new TARDISDefaultWorldNameCommand(plugin).setName(sender, args);
