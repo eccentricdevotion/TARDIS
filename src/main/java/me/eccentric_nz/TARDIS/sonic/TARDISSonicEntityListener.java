@@ -95,8 +95,8 @@ public class TARDISSonicEntityListener implements Listener {
                                     }
                                 }
                                 TARDISMessage.send(player, true, "SONIC_AGE", convertTicksToTime(scanned.getTicksLived()));
-                                TARDISMessage.send(player, true, "SONIC_HEALTH: ", String.format("%f", health));
-                                TARDISMessage.send(player, true, "SONIC_HUNGER: ", String.format("%.2f", hunger));
+                                TARDISMessage.send(player, true, "SONIC_HEALTH", String.format("%f", health));
+                                TARDISMessage.send(player, true, "SONIC_HUNGER", String.format("%.2f", hunger));
                             }
                         }, 40L);
                     }
