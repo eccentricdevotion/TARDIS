@@ -61,6 +61,7 @@ public class TARDISPrefsCommands implements CommandExecutor {
         firstArgs.add("hads");
         firstArgs.add("isomorphic");
         firstArgs.add("key");
+        firstArgs.add("key_menu");
         firstArgs.add("lamp");
         firstArgs.add("language");
         firstArgs.add("minecart");
@@ -99,6 +100,14 @@ public class TARDISPrefsCommands implements CommandExecutor {
                         ItemStack[] sonics = new TARDISSonicMenuInventory().getMenu();
                         Inventory sim = plugin.getServer().createInventory(player, 27, "§4Sonic Prefs Menu");
                         sim.setContents(sonics);
+                        player.openInventory(sim);
+                        return true;
+                    }
+                    if (pref.equals("key_menu")) {
+                        // open sonic prefs menu
+                        ItemStack[] keys = new TARDISKeyMenuInventory().getMenu();
+                        Inventory sim = plugin.getServer().createInventory(player, 27, "§4TARDIS Key Prefs Menu");
+                        sim.setContents(keys);
                         player.openInventory(sim);
                         return true;
                     }

@@ -24,15 +24,16 @@ import org.bukkit.command.CommandSender;
  *
  * @author eccentric_nz
  */
-public class TARDISDefaultSonicCommand {
+public class TARDISDefaultCommand {
 
     private final TARDIS plugin;
 
-    public TARDISDefaultSonicCommand(TARDIS plugin) {
+    public TARDISDefaultCommand(TARDIS plugin) {
         this.plugin = plugin;
     }
 
     public boolean setSonic(CommandSender sender, String[] args) {
+        String which = args[0].toLowerCase();
         int count = args.length;
         StringBuilder buf = new StringBuilder();
         for (int i = 1; i < count; i++) {
@@ -40,7 +41,7 @@ public class TARDISDefaultSonicCommand {
         }
         String tmp = buf.toString();
         String sonic = tmp.substring(0, tmp.length() - 1);
-        plugin.getConfig().set("preferences.default_sonic", sonic);
+        plugin.getConfig().set("preferences." + which, sonic);
         plugin.saveConfig();
         TARDISMessage.send(sender, "CONFIG_UPDATED");
         TARDISMessage.send(sender, "RESTART");
