@@ -39,6 +39,7 @@ import me.eccentric_nz.TARDIS.builders.TARDISPresetBuilderFactory;
 import me.eccentric_nz.TARDIS.builders.TARDISSpace;
 import me.eccentric_nz.TARDIS.chameleon.TARDISChameleonPreset;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
+import me.eccentric_nz.TARDIS.database.TARDISBiomeUpdater;
 import me.eccentric_nz.TARDIS.database.TARDISCompanionClearer;
 import me.eccentric_nz.TARDIS.database.TARDISControlsConverter;
 import me.eccentric_nz.TARDIS.database.TARDISDatabaseConnection;
@@ -256,6 +257,7 @@ public class TARDIS extends JavaPlugin {
             TARDISCondensables cond = new TARDISCondensables(this);
             cond.makeCondensables();
             condensables = cond.getCondensables();
+            checkBiomes();
         } else {
             console.sendMessage(pluginName + ChatColor.RED + "This plugin requires CraftBukkit 1.7.9 or higher, disabling...");
             pm.disablePlugin(this);
@@ -660,6 +662,16 @@ public class TARDIS extends JavaPlugin {
             console.sendMessage(pluginName + "Default world specified, but it doesn't exist! Trying to create it now...");
             new TARDISSpace(this).createDefaultWorld(getConfig().getString("creation.default_world_name"));
         }
+    }
+
+    /**
+     * Makes sure that the biome field in the current table is not empty.
+     */
+    private void checkBiomes() {
+        if (!getConfig().getBoolean("police_box.set_biome") || getConfig().getBoolean("conversions.biome_update")) {
+            return;
+        }
+        getServer().getScheduler().scheduleSyncDelayedTask(this, new TARDISBiomeUpdater(this), 1200L);
     }
 
     /**

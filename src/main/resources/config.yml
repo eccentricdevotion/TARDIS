@@ -103,6 +103,7 @@ growth:
     room_speed: 4
 # don't touch
 conversions:
+    biome_update: true
     conversion_done: true
     location_conversion_done: true
     uuid_conversion_done: true

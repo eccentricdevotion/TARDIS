@@ -75,6 +75,7 @@ public class TARDISConfiguration {
         boolOptions.put("allow.tp_switch", true);
         boolOptions.put("allow.wg_flag_set", true);
         boolOptions.put("allow.zero_room", false);
+        boolOptions.put("conversions.biome_update", false);
         boolOptions.put("conversions.conversion_done", false);
         boolOptions.put("conversions.location_conversion_done", false);
         boolOptions.put("conversions.uuid_conversion_done", false);
