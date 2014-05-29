@@ -204,7 +204,7 @@ public class TARDISArtronCapacitorListener implements Listener {
                                         c.setPowered(true);
                                         if (beaconData.length > 2) {
                                             Location bl = new Location(w, bx, by, bz);
-                                            bl.getBlock().setTypeId(20);
+                                            bl.getBlock().setType(Material.GLASS);
                                         }
                                     }
                                     // set the capacitor to 50% charge
@@ -262,6 +262,10 @@ public class TARDISArtronCapacitorListener implements Listener {
                                     wherep.put("tardis_id", id);
                                     HashMap<String, Object> setp = new HashMap<String, Object>();
                                     if (powered) {
+                                        if (isTravelling(id)) {
+                                            TARDISMessage.send(player, "POWER_NO");
+                                            return;
+                                        }
                                         plugin.getUtils().playTARDISSound(block.getLocation(), player, "power_down");
                                         // power down
                                         setp.put("powered_on", 0);
@@ -321,5 +325,9 @@ public class TARDISArtronCapacitorListener implements Listener {
                 }
             }
         }
+    }
+
+    private boolean isTravelling(int id) {
+        return (plugin.getTrackerKeeper().getDematerialising().contains(id) || plugin.getTrackerKeeper().getMaterialising().contains(id) || plugin.getTrackerKeeper().getInVortex().contains(id));
     }
 }
