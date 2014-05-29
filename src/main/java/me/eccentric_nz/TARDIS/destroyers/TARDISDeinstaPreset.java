@@ -99,6 +99,8 @@ public class TARDISDeinstaPreset {
                         plugin.debug(plugin.getPluginName() + "Couldn't set biome!\nWorld = " + w.toString() + "\nsbx = " + sbx + "\nsbz = " + sbz + "\nbiome = " + biome.toString());
                         e.printStackTrace();
                         run = false;
+                        // remove TARDIS from tracker
+                        plugin.getTrackerKeeper().getDematerialising().remove(Integer.valueOf(id));
                     }
                 }
             }
