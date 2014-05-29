@@ -14,7 +14,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package me.eccentric_nz.TARDIS.listeners;
+package me.eccentric_nz.TARDIS.flight;
 
 import java.util.HashMap;
 import java.util.UUID;
@@ -32,8 +32,6 @@ import me.eccentric_nz.TARDIS.database.ResultSetNextLocation;
 import me.eccentric_nz.TARDIS.database.ResultSetPlayerPrefs;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
-import me.eccentric_nz.TARDIS.flyingmodes.TARDISManualFlightStarter;
-import me.eccentric_nz.TARDIS.flyingmodes.TARDISRegulatorStarter;
 import me.eccentric_nz.TARDIS.travel.TARDISMalfunction;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import org.bukkit.Location;

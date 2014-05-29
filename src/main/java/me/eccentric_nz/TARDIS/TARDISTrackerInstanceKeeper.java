@@ -21,7 +21,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.UUID;
 import me.eccentric_nz.TARDIS.builders.TARDISMaterialisationData;
-import me.eccentric_nz.TARDIS.flyingmodes.TARDISRegulatorRunnable;
+import me.eccentric_nz.TARDIS.flight.TARDISRegulatorRunnable;
 import me.eccentric_nz.TARDIS.info.TARDISInfoMenu;
 import me.eccentric_nz.TARDIS.move.TARDISMoveSession;
 import me.eccentric_nz.TARDIS.move.TARDISTeleportLocation;
