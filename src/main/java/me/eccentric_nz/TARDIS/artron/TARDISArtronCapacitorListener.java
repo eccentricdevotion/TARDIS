@@ -24,6 +24,7 @@ import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetControls;
 import me.eccentric_nz.TARDIS.database.ResultSetPlayerPrefs;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
+import me.eccentric_nz.TARDIS.enumeration.PRESET;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -93,7 +94,7 @@ public class TARDISArtronCapacitorListener implements Listener {
                     ResultSetControls rsc = new ResultSetControls(plugin, where, false);
                     if (rsc.resultSet()) {
                         // get tardis data
-                        int id = rsc.getTardis_id();
+                        final int id = rsc.getTardis_id();
                         HashMap<String, Object> wheret = new HashMap<String, Object>();
                         wheret.put("tardis_id", id);
                         ResultSetTardis rs = new ResultSetTardis(plugin, wheret, "", false);
@@ -255,6 +256,7 @@ public class TARDISArtronCapacitorListener implements Listener {
                             } else {
                                 boolean show = true;
                                 if (plugin.getConfig().getBoolean("allow.power_down")) {
+                                    PRESET preset = rs.getPreset();
                                     // toggle power
                                     HashMap<String, Object> wherep = new HashMap<String, Object>();
                                     wherep.put("tardis_id", id);
@@ -267,10 +269,21 @@ public class TARDISArtronCapacitorListener implements Listener {
                                             TARDISMessage.send(player, "Q_FLY");
                                         } else {
                                             TARDISMessage.send(player, "POWER_OFF");
+                                            long delay = 0;
                                             // if hidden, rebuild
                                             if (hidden) {
                                                 plugin.getServer().dispatchCommand(plugin.getConsole(), "tardisremote " + player.getName() + " rebuild");
                                                 TARDISMessage.send(player, "POWER_FAIL");
+                                                delay = 20L;
+                                            }
+                                            // police box lamp, delay it incase the TARDIS needs rebuilding
+                                            if (preset.equals(PRESET.NEW) || preset.equals(PRESET.OLD)) {
+                                                plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
+                                                    @Override
+                                                    public void run() {
+                                                        new TARDISPoliceBoxLampToggler(plugin).toggleLamp(id, false);
+                                                    }
+                                                }, delay);
                                             }
                                         }
                                         // if lights are on, turn them off
@@ -291,6 +304,10 @@ public class TARDISArtronCapacitorListener implements Listener {
                                         }
                                         // if beacon is off turn it on
                                         new TARDISBeaconToggler(plugin).flickSwitch(player.getUniqueId().toString(), true);
+                                        // police box lamp
+                                        if (preset.equals(PRESET.NEW) || preset.equals(PRESET.OLD)) {
+                                            new TARDISPoliceBoxLampToggler(plugin).toggleLamp(id, true);
+                                        }
                                     }
                                     qf.doUpdate("tardis", setp, wherep);
                                 }

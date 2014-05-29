@@ -7,6 +7,7 @@
 
 ###In progress
 1. Artron button powers on/off TARDIS after initialisation
+   * malfunction on power down
 2. UHC flying mode
    * malfunctions should happen mid-flight after dematerialisation
 3. MCPatcher texture support
