@@ -139,11 +139,13 @@ public class TARDISHandbrakeListener implements Listener {
                             ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, wherek);
                             boolean beac_on = true;
                             boolean minecart = false;
+                            boolean bar = false;
                             int flight_mode = 1;
                             if (rsp.resultSet()) {
                                 beac_on = rsp.isBeaconOn();
                                 minecart = rsp.isMinecartOn();
                                 flight_mode = rsp.getFlightMode();
+                                bar = rsp.isTravelbarOn();
                             }
                             final QueryFactory qf = new QueryFactory(plugin);
                             if (action == Action.RIGHT_CLICK_BLOCK) {
@@ -215,7 +217,6 @@ public class TARDISHandbrakeListener implements Listener {
                                             }
                                         }
                                         if (!malfunction) {
-                                            // TODO move this to after we have processed the flight mode
                                             HashMap<String, Object> wherenl = new HashMap<String, Object>();
                                             wherenl.put("tardis_id", id);
                                             ResultSetNextLocation rsn = new ResultSetNextLocation(plugin, wherenl);
@@ -249,6 +250,11 @@ public class TARDISHandbrakeListener implements Listener {
                                                 exit.getWorld().loadChunk(exit.getChunk());
                                             }
                                             boolean mat = plugin.getConfig().getBoolean("police_box.materialise");
+                                            if (mat && bar && plugin.isBarAPIOnServer()) {
+                                                plugin.debug("Travel bar is on!");
+                                                long bar_time = (flight_mode == 2 || flight_mode == 3) ? 1500L : 880L;
+                                                new TARDISTravelBar(plugin).showTravelRemaining(player, bar_time);
+                                            }
                                             plugin.getTrackerKeeper().getInVortex().add(id);
                                             final TARDISMaterialisationData pdd = new TARDISMaterialisationData();
                                             pdd.setChameleon(cham);
@@ -286,7 +292,7 @@ public class TARDISHandbrakeListener implements Listener {
                                             // remember flight data
                                             plugin.getTrackerKeeper().getFlightData().put(uuid, pbd);
                                             long delay = (mat) ? 500L : 10L;
-                                            // TODO alter delay based on flying mode
+                                            // flight mode
                                             if (mat && (flight_mode == 2 || flight_mode == 3)) {
                                                 delay += 650L;
                                                 Runnable runner = (flight_mode == 2) ? new TARDISRegulatorStarter(plugin, player) : new TARDISManualFlightStarter(plugin, player, id);
@@ -361,7 +367,7 @@ public class TARDISHandbrakeListener implements Listener {
                                             if (plugin.getTrackerKeeper().getDamage().containsKey(id)) {
                                                 plugin.getTrackerKeeper().getDamage().remove(id);
                                             }
-
+                                            // set last use
                                             long now;
                                             if (player.hasPermission("tardis.prune.bypass")) {
                                                 now = Long.MAX_VALUE;
