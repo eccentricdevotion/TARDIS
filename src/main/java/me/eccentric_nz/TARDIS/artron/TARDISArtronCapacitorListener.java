@@ -254,6 +254,10 @@ public class TARDISArtronCapacitorListener implements Listener {
                                     TARDISMessage.send(player, "ENERGY_NONE");
                                 }
                             } else {
+                                if (!init) {
+                                    TARDISMessage.send(player, "ENERGY_NO_INIT");
+                                    return;
+                                }
                                 boolean show = true;
                                 if (plugin.getConfig().getBoolean("allow.power_down")) {
                                     PRESET preset = rs.getPreset();
