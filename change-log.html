@@ -26,6 +26,72 @@
 	<section>
 		<h1>Change log</h1>
 		<h2>What&rsquo;s been changed?</h2>
+		<h3>v2.9-beta-2</h3>
+		<p>The TARDIS resource packs have also been updated, get them here:</p>
+		<ul>
+			<li><a href="https://github.com/eccentricdevotion/TARDIS-MCP">TARDIS-MCP resource pack</a></li>
+			<li><a href="https://github.com/eccentricdevotion/TARDIS-SoundResourcePack">TARDIS-Sounds resource pack</a></li>
+		</ul>
+		<h4>Additions</h4>
+		<ul>
+			<li>Added an &lsquo;umbrella&rsquo; to the police box when <code>set_biome</code> is true and the TARDIS lands in a dry biome.</li>
+			<li>All in-game messages can  now be localised to the server&rsquo;s preferred language
+				<ul>
+					<li>the default language is English, and all the messages are contained in the <code>plugins/TARDIS/language/en.yml</code> file </li>
+					<li>config option: <code>preferences.language: [language code]</code> &mdash; set the language with the command: <code>/tardisadmin language [code]</code> &mdash; use tab completion to see a list of codes </li>
+					<li>language translations require their own file. Make a copy of <code>en.yml</code> and translate it. For example; if the language is set to Spanish (code: <strong>es</strong>), then a file called <code>es.yml</code> needs to placed in the <code>plugins/TARDIS/language/</code> folder</li>
+					<li>Vistaero (a helpful TARDIS plugin user) has written a useful tool for editing language files, you can get it here: <a href="https://www.dropbox.com/s/35rx51ly8994vux/Language%20File%20Translator.zip">TARDIS Language File Translator</a> and a tutorial video is here: <a href="https://www.dropbox.com/s/xxuamw6s2733g8e/Demo.mp4">Language File Translator Demo</a></li>
+					<li>as messages are added for new TARDIS features, the preferred language file will be updated (in English) for you to translate</li>
+					<li>See it in action on <a href="https://www.youtube.com/watch?v=Zx_i66YKIgQ">Youtube</a></li>
+				</ul>
+			</li>
+			<li>You can now completely power down the TARDIS
+				<ul>
+					<li>after the Artron Capacitor has been initialised, right-clicking the Artron button turns the power on and off </li>
+					<li>when powered down access is denied to any TARDIS features that require power</li>
+					<li>if the TARDIS is hidden it will become visible again due to power loss</li>
+					<li>if the TARDIS is left in standby mode (i.e. powered on but not doing anything), a small (configurable) amount of Artron energy is used every (configurable) cycle</li>
+					<li><strong>config options:</strong>
+						<ul>
+							<li>in <em>config.yml</em> <code>allow.power_down: [true|false]</code> &mdash; let players power down the TARDIS</li>
+							<li>in <em>artron.yml</em> <code>standby: [amount]</code> &mdash; the amount of energy the TARDIS uses each cycle in standby mode</li>
+							<li>in <em>artron.yml</em> <code>standby_time: [ticks]</code> &mdash; the length of the repeating cycle in server ticks i.e. energy is removed every x ticks &mdash; if set to <code>0</code> then this feature is disabled</li>
+						</ul>
+					</li>
+					<li>you cannot power down while travelling</li>
+					<li>there are new power up and power down sound effects (<a href="https://github.com/eccentricdevotion/TARDIS-SoundResourcePack">resource pack</a> required)</li>
+					<li>the exterior (redstone) lamp will turn off as well (if there is one)</li>
+					<li><a href="https://www.youtube.com/watch?v=L3TNANYxoEQ" target="_blank">Video</a></li>
+				</ul>
+			</li>
+			<li>Added a Key Prefs Menu to change to different TARDIS key types
+				<ul>
+					<li><strong>requires</strong> the <a href="https://github.com/eccentricdevotion/TARDIS-MCP">TARDIS-MCP resource pack</a> (and MCPatcher)</li>
+					<li>works the same as the Sonic Prefs Menu</li>
+					<li>access the menu with the command <code>/tardisprefs key_menu</code></li>
+				</ul>
+			</li>
+			<li>Added a travel time progress bar
+				<ul>
+					<li><strong>requires</strong> the <a href="http://dev.bukkit.org/bukkit-plugins/bar-api/">BarAPI</a> plugin</li>
+					<li>is a player preference &mdash; set it with <code>/tardisprefs travel bar [on|off]</code>, or use the Player Prefs Menu</li>
+				</ul>
+			</li>
+		</ul>
+		<h4>Changes</h4>
+		<ul>
+			<li>TARDIS now prevents unwanted mobs spawning in TARDIS worlds itself, instead of relying on other plugins (WorldGuard, Multiverse etc)</li>
+			<li>The plugin now only gives Artron energy to players if they have actually travelled (not every time they go through the door)</li>
+		</ul>
+		<h4>Bug fixes</h4>
+		<ul>
+			<li>Fixed the Sonic Prefs Menu not returning the player&rsquo;s sonic if they left it in the GUI and then closed it</li>
+			<li>Fixed the Sonic Prefs Menu allowing items to be placed in bad slots</li>
+			<li>Fixed a bug in Manual Flight mode where if the player did nothing, TARDIS spammed the console with 1000s of errors</li>
+			<li>The hinge is set properly for the interior TARDIS door when it is created (fixes missing texture file when using the TARDIS-MCP resource pack)</li>
+			<li>Fixed a NullPointerException when trying to reset the biome after the Police Box has left, and added a biome database field updater so that it shouldn&rsquo;t ever happen again</li>
+			<li>Fixed Genetic Manipulator room not showing in ARS GUI until the rooms had been scrolled</li>
+		</ul>
 		<h3>v2.9-beta-1</h3>
 		<p>As always, some big changes to TARDIS entry mechanics &mdash; please read carefully.</p>
 		<h4>Additions</h4>
