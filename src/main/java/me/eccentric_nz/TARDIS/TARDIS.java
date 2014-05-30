@@ -128,6 +128,7 @@ public class TARDIS extends JavaPlugin {
     private boolean worldGuardOnServer;
     private boolean horseSpeedOnServer;
     private boolean projRassilonOnServer;
+    private boolean barAPIOnServer;
     private PluginManager pm;
     private final TARDISArea tardisArea = new TARDISArea(this);
     private final TARDISBuilderInner interiorBuilder = new TARDISBuilderInner(this);
@@ -144,6 +145,7 @@ public class TARDIS extends JavaPlugin {
         this.worldGuardOnServer = false;
         this.horseSpeedOnServer = false;
         this.projRassilonOnServer = false;
+        this.barAPIOnServer = false;
     }
 
     @Override
@@ -209,6 +211,7 @@ public class TARDIS extends JavaPlugin {
             loadPluginRespect();
             loadHorseSpeed();
             loadProjRassilon();
+            loadBarAPI();
             startZeroHealing();
 
             new TARDISCreeperChecker(this).startCreeperCheck();
@@ -483,6 +486,16 @@ public class TARDIS extends JavaPlugin {
         if (pm.getPlugin("ProjectRassilon") != null) {
             debug("Hooking into ProjectRassilon!");
             projRassilonOnServer = true;
+        }
+    }
+
+    /**
+     * Checks if the BARAPI plugin is available, and loads support if it is.
+     */
+    private void loadBarAPI() {
+        if (pm.getPlugin("BarAPI") != null) {
+            debug("Hooking into BarAPI!");
+            barAPIOnServer = true;
         }
     }
 
@@ -835,6 +848,10 @@ public class TARDIS extends JavaPlugin {
 
     public boolean isProjRassilonOnServer() {
         return projRassilonOnServer;
+    }
+
+    public boolean isBarAPIOnServer() {
+        return barAPIOnServer;
     }
 
     public PluginManager getPM() {

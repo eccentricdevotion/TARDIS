@@ -8,14 +8,14 @@
 ###In progress
 1. Artron button powers on/off TARDIS after initialisation
 2. UHC flying mode
-   * Fix NPE line 71 in TARDISManualFlightRunnable
 3. MCPatcher texture support
+4. BarAPI to show travel progress
 
 ##Future version `3.0+`
 1. Console modes / grace period on hard mode?
 2. ARS room limit - can only reconfigure x rooms at a time (and cannot open ARS until reconfiguration is complete) - configurable option
 3. Slimmer TARDIS option?
-4. BarAPI to show travel progress - player preference
+4. Chameleon Arch / Fob watch
 
 ###I couldn't really be bothered
 1. HADS + explosions + fireballs + lava
