@@ -63,6 +63,7 @@ public class ResultSetPlayerPrefs {
     private boolean woolLightsOn;
     private boolean ctmOn;
     private boolean signOn;
+    private boolean travelbarOn;
     private int flightMode;
 
     /**
@@ -150,6 +151,7 @@ public class ResultSetPlayerPrefs {
                 this.woolLightsOn = rs.getBoolean("wool_lights_on");
                 this.ctmOn = rs.getBoolean("ctm_on");
                 this.signOn = rs.getBoolean("sign_on");
+                this.travelbarOn = rs.getBoolean("travelbar_on");
                 this.flightMode = rs.getInt("flying_mode");
             } else {
                 return false;
@@ -274,6 +276,10 @@ public class ResultSetPlayerPrefs {
 
     public boolean isSignOn() {
         return signOn;
+    }
+
+    public boolean isTravelbarOn() {
+        return travelbarOn;
     }
 
     public int getFlightMode() {

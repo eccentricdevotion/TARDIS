@@ -36,7 +36,7 @@ public class TARDISToggleOnOffCommand {
 
     public TARDISToggleOnOffCommand(TARDIS plugin) {
         this.plugin = plugin;
-        this.was = Arrays.asList("auto", "beacon", "ctm", "dnd", "eps", "hads", "minecart", "plain", "renderer", "submarine");
+        this.was = Arrays.asList("auto", "beacon", "ctm", "dnd", "eps", "hads", "minecart", "plain", "renderer", "submarine", "travelbar");
     }
 
     public boolean toggle(Player player, String[] args, QueryFactory qf) {
@@ -51,6 +51,10 @@ public class TARDISToggleOnOffCommand {
         }
         if (pref.equals("hads") && !plugin.getConfig().getBoolean("allow.hads")) {
             TARDISMessage.send(player, "HADS_DISBALED");
+            return true;
+        }
+        if (pref.equals("travelbar") && !plugin.isBarAPIOnServer()) {
+            TARDISMessage.send(player, "BAR_DISBALED");
             return true;
         }
         HashMap<String, Object> setp = new HashMap<String, Object>();

@@ -183,6 +183,16 @@ public class TARDISPrefsMenuInventory {
             sign.setLore(Arrays.asList(pre_value));
             pre.setItemMeta(sign);
             options.add(pre);
+            // travel bar
+            if (plugin.isBarAPIOnServer()) {
+                ItemStack bar = new ItemStack(Material.DIODE, 1);
+                ItemMeta api = bar.getItemMeta();
+                api.setDisplayName("Travel Bar");
+                String bar_value = (rsp.isTravelbarOn()) ? "ON" : "OFF";
+                api.setLore(Arrays.asList(bar_value));
+                bar.setItemMeta(api);
+                options.add(bar);
+            }
         }
         ItemStack[] stack = new ItemStack[18];
         for (int s = 0; s < 16; s++) {

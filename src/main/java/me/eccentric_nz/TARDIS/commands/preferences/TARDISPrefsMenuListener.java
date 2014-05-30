@@ -59,6 +59,7 @@ public class TARDISPrefsMenuListener implements Listener {
         lookup.put("Wool For Lights Off", "wool_lights_on");
         lookup.put("Connected Textures", "ctm_on");
         lookup.put("Preset Sign", "sign_on");
+        lookup.put("Travel Bar", "travelbar_on");
     }
 
     @EventHandler(ignoreCancelled = true)
