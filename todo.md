@@ -8,6 +8,7 @@
 ###In progress
 1. Artron button powers on/off TARDIS after initialisation
 2. UHC flying mode
+   * Fix NPE line 71 in TARDISManualFlightRunnable
 3. MCPatcher texture support
 
 ##Future version `3.0+`

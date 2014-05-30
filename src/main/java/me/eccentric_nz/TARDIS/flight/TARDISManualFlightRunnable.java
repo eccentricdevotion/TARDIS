@@ -60,6 +60,8 @@ public class TARDISManualFlightRunnable implements Runnable {
 
     @Override
     public void run() {
+        // always add them to the tracker, in case they sit there and do nothing...
+        plugin.getTrackerKeeper().getCount().put(uuid, 0);
         if (i < loops) {
             int r = random.nextInt(4);
             Location loc = target.get(r);
