@@ -251,7 +251,6 @@ public class TARDISHandbrakeListener implements Listener {
                                             }
                                             boolean mat = plugin.getConfig().getBoolean("police_box.materialise");
                                             if (mat && bar && plugin.isBarAPIOnServer()) {
-                                                plugin.debug("Travel bar is on!");
                                                 long bar_time = (flight_mode == 2 || flight_mode == 3) ? 1500L : 880L;
                                                 new TARDISTravelBar(plugin).showTravelRemaining(player, bar_time);
                                             }

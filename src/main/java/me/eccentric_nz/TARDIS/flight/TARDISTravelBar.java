@@ -33,16 +33,12 @@ public class TARDISTravelBar {
     }
 
     public void showTravelRemaining(Player player, long duration) {
-        plugin.debug("Attempting to show bar...");
         int seconds = (int) duration / 20;
         if (seconds < 1) {
             seconds = 1;
         }
-        plugin.debug("Seconds = " + seconds);
         if (!BarAPI.hasBar(player)) {
-            plugin.debug("Player has no bar...");
             BarAPI.setMessage(player, "TARDIS travel time remaining", seconds);
-            plugin.debug("Should be showing bar!");
         }
     }
 }
