@@ -9,7 +9,6 @@
 1. Artron button powers on/off TARDIS after initialisation
 2. UHC flying mode
 3. MCPatcher texture support
-4. BarAPI to show travel progress
 
 ##Future version `3.0+`
 1. Console modes / grace period on hard mode?
