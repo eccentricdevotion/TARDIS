@@ -116,10 +116,12 @@ public class TARDISArtronCapacitorListener implements Listener {
                             wherek.put("uuid", player.getUniqueId().toString());
                             ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, wherek);
                             String key;
+                            boolean beacon_on = true;
                             boolean hasPrefs = false;
                             if (rsp.resultSet()) {
                                 hasPrefs = true;
                                 key = (!rsp.getKey().isEmpty()) ? rsp.getKey() : plugin.getConfig().getString("preferences.key");
+                                beacon_on = rsp.isBeaconOn();
                             } else {
                                 key = plugin.getConfig().getString("preferences.key");
                             }
@@ -311,7 +313,9 @@ public class TARDISArtronCapacitorListener implements Listener {
                                             new TARDISLampToggler(plugin).flickSwitch(id, player, false);
                                         }
                                         // if beacon is off turn it on
-                                        new TARDISBeaconToggler(plugin).flickSwitch(player.getUniqueId().toString(), true);
+                                        if (beacon_on) {
+                                            new TARDISBeaconToggler(plugin).flickSwitch(player.getUniqueId().toString(), true);
+                                        }
                                         // police box lamp
                                         if (preset.equals(PRESET.NEW) || preset.equals(PRESET.OLD)) {
                                             new TARDISPoliceBoxLampToggler(plugin).toggleLamp(id, true);
