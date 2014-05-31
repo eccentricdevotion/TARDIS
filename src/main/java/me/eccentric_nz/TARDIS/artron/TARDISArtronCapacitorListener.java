@@ -275,26 +275,22 @@ public class TARDISArtronCapacitorListener implements Listener {
                                         plugin.getUtils().playTARDISSound(block.getLocation(), player, "power_down");
                                         // power down
                                         setp.put("powered_on", 0);
-                                        if (plugin.getTrackerKeeper().getInVortex().contains(id)) {
-                                            TARDISMessage.send(player, "Q_FLY");
-                                        } else {
-                                            TARDISMessage.send(player, "POWER_OFF");
-                                            long delay = 0;
-                                            // if hidden, rebuild
-                                            if (hidden) {
-                                                plugin.getServer().dispatchCommand(plugin.getConsole(), "tardisremote " + player.getName() + " rebuild");
-                                                TARDISMessage.send(player, "POWER_FAIL");
-                                                delay = 20L;
-                                            }
-                                            // police box lamp, delay it incase the TARDIS needs rebuilding
-                                            if (preset.equals(PRESET.NEW) || preset.equals(PRESET.OLD)) {
-                                                plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
-                                                    @Override
-                                                    public void run() {
-                                                        new TARDISPoliceBoxLampToggler(plugin).toggleLamp(id, false);
-                                                    }
-                                                }, delay);
-                                            }
+                                        TARDISMessage.send(player, "POWER_OFF");
+                                        long delay = 0;
+                                        // if hidden, rebuild
+                                        if (hidden) {
+                                            plugin.getServer().dispatchCommand(plugin.getConsole(), "tardisremote " + player.getName() + " rebuild");
+                                            TARDISMessage.send(player, "POWER_FAIL");
+                                            delay = 20L;
+                                        }
+                                        // police box lamp, delay it incase the TARDIS needs rebuilding
+                                        if (preset.equals(PRESET.NEW) || preset.equals(PRESET.OLD)) {
+                                            plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
+                                                @Override
+                                                public void run() {
+                                                    new TARDISPoliceBoxLampToggler(plugin).toggleLamp(id, false);
+                                                }
+                                            }, delay);
                                         }
                                         // if lights are on, turn them off
                                         if (lights) {
@@ -304,6 +300,11 @@ public class TARDISArtronCapacitorListener implements Listener {
                                         new TARDISBeaconToggler(plugin).flickSwitch(player.getUniqueId().toString(), false);
                                         show = false;
                                     } else {
+                                        // don't power up if there is no power
+                                        if (current_level <= plugin.getArtronConfig().getInt("standby")) {
+                                            TARDISMessage.send(player, "POWER_LOW");
+                                            return;
+                                        }
                                         plugin.getUtils().playTARDISSound(block.getLocation(), player, "power_up");
                                         // power up
                                         setp.put("powered_on", 1);

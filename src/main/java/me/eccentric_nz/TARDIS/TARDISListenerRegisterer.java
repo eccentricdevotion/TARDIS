@@ -47,7 +47,7 @@ import me.eccentric_nz.TARDIS.listeners.TARDISBlockPlaceListener;
 import me.eccentric_nz.TARDIS.listeners.TARDISButtonListener;
 import me.eccentric_nz.TARDIS.listeners.TARDISChatListener;
 import me.eccentric_nz.TARDIS.listeners.TARDISChunkListener;
-import me.eccentric_nz.TARDIS.listeners.TARDISCondenserListener;
+import me.eccentric_nz.TARDIS.artron.TARDISCondenserListener;
 import me.eccentric_nz.TARDIS.listeners.TARDISCraftListener;
 import me.eccentric_nz.TARDIS.listeners.TARDISCreeperDeathListener;
 import me.eccentric_nz.TARDIS.listeners.TARDISEntityGriefListener;
