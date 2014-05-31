@@ -20,8 +20,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashMap;
 import me.eccentric_nz.TARDIS.TARDIS;
 
 /**
@@ -39,18 +38,18 @@ public class ResultSetStandby {
         this.plugin = plugin;
     }
 
-    public List<Integer> onStandby() {
-        List<Integer> ids = new ArrayList<Integer>();
+    public HashMap<Integer, Integer> onStandby() {
+        HashMap<Integer, Integer> ids = new HashMap<Integer, Integer>();
         PreparedStatement statement = null;
         ResultSet rs = null;
-        String query = "SELECT tardis_id FROM tardis WHERE powered_on = 1";
+        String query = "SELECT tardis_id, artron_level FROM tardis WHERE powered_on = 1";
         try {
             service.testConnection(connection);
             statement = connection.prepareStatement(query);
             rs = statement.executeQuery();
             if (rs.isBeforeFirst()) {
                 while (rs.next()) {
-                    ids.add(rs.getInt("tardis_id"));
+                    ids.put(rs.getInt("tardis_id"), rs.getInt("artron_level"));
                 }
             }
         } catch (SQLException e) {

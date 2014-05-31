@@ -17,7 +17,7 @@
 package me.eccentric_nz.TARDIS.artron;
 
 import java.util.HashMap;
-import java.util.List;
+import java.util.Map;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetStandby;
@@ -39,14 +39,14 @@ public class TARDISStandbyMode implements Runnable {
     @Override
     public void run() {
         // get TARDISes that are powered on
-        List<Integer> ids = new ResultSetStandby(plugin).onStandby();
+        HashMap<Integer, Integer> ids = new ResultSetStandby(plugin).onStandby();
         QueryFactory qf = new QueryFactory(plugin);
-        for (Integer id : ids) {
-            // not while travelling
-            if (!plugin.getTrackerKeeper().getInVortex().contains(id)) {
+        for (Map.Entry<Integer, Integer> map : ids.entrySet()) {
+            // not while travelling and only until they hit zero
+            if (!plugin.getTrackerKeeper().getInVortex().contains(map.getKey()) && map.getValue() >= amount) {
                 // remove some energy
                 HashMap<String, Object> where = new HashMap<String, Object>();
-                where.put("tardis_id", id);
+                where.put("tardis_id", map.getKey());
                 qf.alterEnergyLevel("tardis", -amount, where, null);
             }
         }
