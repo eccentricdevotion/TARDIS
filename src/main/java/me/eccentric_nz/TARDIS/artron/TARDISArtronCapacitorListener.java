@@ -294,7 +294,7 @@ public class TARDISArtronCapacitorListener implements Listener {
                                         }
                                         // if lights are on, turn them off
                                         if (lights) {
-                                            new TARDISLampToggler(plugin).flickSwitch(id, player, true);
+                                            new TARDISLampToggler(plugin).flickSwitch(id, player.getUniqueId(), true);
                                         }
                                         // if beacon is on turn it off
                                         new TARDISBeaconToggler(plugin).flickSwitch(player.getUniqueId().toString(), false);
@@ -311,7 +311,7 @@ public class TARDISArtronCapacitorListener implements Listener {
                                         TARDISMessage.send(player, "POWER_ON");
                                         // if lights are off, turn them on
                                         if (lights) {
-                                            new TARDISLampToggler(plugin).flickSwitch(id, player, false);
+                                            new TARDISLampToggler(plugin).flickSwitch(id, player.getUniqueId(), false);
                                         }
                                         // if beacon is off turn it on
                                         if (beacon_on) {

@@ -19,13 +19,13 @@ package me.eccentric_nz.TARDIS.artron;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.ResultSetLamps;
 import me.eccentric_nz.TARDIS.database.ResultSetPlayerPrefs;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
-import org.bukkit.entity.Player;
 
 /**
  *
@@ -40,7 +40,7 @@ public class TARDISLampToggler {
     }
 
     @SuppressWarnings("deprecation")
-    public void flickSwitch(int id, Player player, boolean on) {
+    public void flickSwitch(int id, UUID uuid, boolean on) {
         HashMap<String, Object> wherel = new HashMap<String, Object>();
         wherel.put("tardis_id", id);
         ResultSetLamps rsl = new ResultSetLamps(plugin, wherel, true);
@@ -54,7 +54,7 @@ public class TARDISLampToggler {
             }
         }
         HashMap<String, Object> wherepp = new HashMap<String, Object>();
-        wherepp.put("uuid", player.getUniqueId().toString());
+        wherepp.put("uuid", uuid.toString());
         ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, wherepp);
         boolean use_wool = false;
         if (rsp.resultSet()) {

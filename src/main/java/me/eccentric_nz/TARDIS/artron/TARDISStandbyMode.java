@@ -21,6 +21,10 @@ import java.util.Map;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetStandby;
+import me.eccentric_nz.TARDIS.database.ResultSetStandby.StandbyData;
+import me.eccentric_nz.TARDIS.enumeration.PRESET;
+import me.eccentric_nz.TARDIS.utility.TARDISMessage;
+import org.bukkit.OfflinePlayer;
 
 /**
  *
@@ -39,15 +43,52 @@ public class TARDISStandbyMode implements Runnable {
     @Override
     public void run() {
         // get TARDISes that are powered on
-        HashMap<Integer, Integer> ids = new ResultSetStandby(plugin).onStandby();
+        HashMap<Integer, StandbyData> ids = new ResultSetStandby(plugin).onStandby();
         QueryFactory qf = new QueryFactory(plugin);
-        for (Map.Entry<Integer, Integer> map : ids.entrySet()) {
+        for (final Map.Entry<Integer, StandbyData> map : ids.entrySet()) {
             // not while travelling and only until they hit zero
-            if (!plugin.getTrackerKeeper().getInVortex().contains(map.getKey()) && map.getValue() >= amount) {
+            if (!plugin.getTrackerKeeper().getInVortex().contains(map.getKey()) && map.getValue().getLevel() >= amount) {
                 // remove some energy
                 HashMap<String, Object> where = new HashMap<String, Object>();
                 where.put("tardis_id", map.getKey());
                 qf.alterEnergyLevel("tardis", -amount, where, null);
+            } else {
+                // power down!
+                HashMap<String, Object> wherep = new HashMap<String, Object>();
+                wherep.put("tardis_id", map.getKey());
+                HashMap<String, Object> setp = new HashMap<String, Object>();
+                setp.put("powered_on", 0);
+                OfflinePlayer player = plugin.getServer().getOfflinePlayer(map.getValue().getUuid());
+                if (player.isOnline()) {
+                    plugin.getUtils().playTARDISSound(player.getPlayer().getLocation(), player.getPlayer(), "power_down");
+                    TARDISMessage.send(player.getPlayer(), "POWER_OFF_AUTO");
+                }
+                long delay = 0;
+                // if hidden, rebuild
+                if (map.getValue().isHidden()) {
+                    plugin.getServer().dispatchCommand(plugin.getConsole(), "tardisremote " + player.getName() + " rebuild");
+                    if (player.isOnline()) {
+                        TARDISMessage.send(player.getPlayer(), "POWER_FAIL");
+                    }
+                    delay = 20L;
+                }
+                // police box lamp, delay it incase the TARDIS needs rebuilding
+                if (map.getValue().getPreset().equals(PRESET.NEW) || map.getValue().getPreset().equals(PRESET.OLD)) {
+                    plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
+                        @Override
+                        public void run() {
+                            new TARDISPoliceBoxLampToggler(plugin).toggleLamp(map.getKey(), false);
+                        }
+                    }, delay);
+                }
+                // if lights are on, turn them off
+                if (map.getValue().isLights()) {
+                    new TARDISLampToggler(plugin).flickSwitch(map.getKey(), map.getValue().getUuid(), true);
+                }
+                // if beacon is on turn it off
+                new TARDISBeaconToggler(plugin).flickSwitch(map.getValue().getUuid().toString(), false);
+                // update database
+                qf.doUpdate("tardis", setp, wherep);
             }
         }
     }

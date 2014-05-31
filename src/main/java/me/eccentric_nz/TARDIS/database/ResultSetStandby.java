@@ -21,7 +21,9 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.HashMap;
+import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.enumeration.PRESET;
 
 /**
  * Gets a list of TARDIS ids whose power is on.
@@ -38,18 +40,19 @@ public class ResultSetStandby {
         this.plugin = plugin;
     }
 
-    public HashMap<Integer, Integer> onStandby() {
-        HashMap<Integer, Integer> ids = new HashMap<Integer, Integer>();
+    public HashMap<Integer, StandbyData> onStandby() {
+        HashMap<Integer, StandbyData> ids = new HashMap<Integer, StandbyData>();
         PreparedStatement statement = null;
         ResultSet rs = null;
-        String query = "SELECT tardis_id, artron_level FROM tardis WHERE powered_on = 1";
+        String query = "SELECT tardis_id, artron_level, chameleon_preset, hidden, lights_on, uuid FROM tardis WHERE powered_on = 1";
         try {
             service.testConnection(connection);
             statement = connection.prepareStatement(query);
             rs = statement.executeQuery();
             if (rs.isBeforeFirst()) {
                 while (rs.next()) {
-                    ids.put(rs.getInt("tardis_id"), rs.getInt("artron_level"));
+                    StandbyData sd = new StandbyData(rs.getInt("artron_level"), UUID.fromString(rs.getString("uuid")), rs.getBoolean("hidden"), rs.getBoolean("lights_on"), PRESET.valueOf(rs.getString("chameleon_preset")));
+                    ids.put(rs.getInt("tardis_id"), sd);
                 }
             }
         } catch (SQLException e) {
@@ -67,5 +70,42 @@ public class ResultSetStandby {
             }
         }
         return ids;
+    }
+
+    public class StandbyData {
+
+        int level;
+        UUID uuid;
+        boolean hidden;
+        boolean lights;
+        PRESET preset;
+
+        public StandbyData(int level, UUID uuid, boolean hidden, boolean lights, PRESET preset) {
+            this.level = level;
+            this.uuid = uuid;
+            this.hidden = hidden;
+            this.lights = lights;
+            this.preset = preset;
+        }
+
+        public int getLevel() {
+            return level;
+        }
+
+        public UUID getUuid() {
+            return uuid;
+        }
+
+        public boolean isHidden() {
+            return hidden;
+        }
+
+        public boolean isLights() {
+            return lights;
+        }
+
+        public PRESET getPreset() {
+            return preset;
+        }
     }
 }

@@ -369,11 +369,11 @@ public class TARDISButtonListener implements Listener {
                                     wherel.put("tardis_id", id);
                                     HashMap<String, Object> setl = new HashMap<String, Object>();
                                     if (lights) {
-                                        new TARDISLampToggler(plugin).flickSwitch(id, player, true);
+                                        new TARDISLampToggler(plugin).flickSwitch(id, player.getUniqueId(), true);
                                         setl.put("lights_on", 0);
                                     } else {
 
-                                        new TARDISLampToggler(plugin).flickSwitch(id, player, false);
+                                        new TARDISLampToggler(plugin).flickSwitch(id, player.getUniqueId(), false);
                                         setl.put("lights_on", 1);
                                     }
                                     qf.doUpdate("tardis", setl, wherel);
