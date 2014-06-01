@@ -34,6 +34,7 @@ import me.eccentric_nz.TARDIS.database.ResultSetHomeLocation;
 import me.eccentric_nz.TARDIS.database.ResultSetPlayerPrefs;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import me.eccentric_nz.TARDIS.database.ResultSetTravellers;
+import me.eccentric_nz.TARDIS.enumeration.COMPASS;
 import me.eccentric_nz.TARDIS.travel.TARDISCaveFinder;
 import me.eccentric_nz.TARDIS.travel.TARDISRescue;
 import me.eccentric_nz.TARDIS.travel.TARDISTimeTravel;
@@ -363,7 +364,9 @@ public class TARDISTravelCommands implements CommandExecutor {
                                 set.put("x", rsd.getX());
                                 set.put("y", rsd.getY());
                                 set.put("z", rsd.getZ());
+                                COMPASS dir;
                                 if (!rsd.getDirection().isEmpty() && rsd.getDirection().length() < 6) {
+                                    dir = COMPASS.valueOf(rsd.getDirection());
                                     set.put("direction", rsd.getDirection());
                                 } else {
                                     // get current direction
@@ -374,9 +377,18 @@ public class TARDISTravelCommands implements CommandExecutor {
                                         TARDISMessage.send(player, "CURRENT_NOT_FOUND");
                                         return true;
                                     }
+                                    dir = rsc.getDirection();
                                     set.put("direction", rsc.getDirection().toString());
                                 }
                                 set.put("submarine", (rsd.isSubmarine()) ? 1 : 0);
+                                // check location is not occupied
+                                Location dest = new Location(plugin.getServer().getWorld(rsd.getWorld()), rsd.getX(), rsd.getY(), rsd.getZ());
+                                int[] start_loc = tt.getStartLocation(dest, dir);
+                                int count = tt.safeLocation(start_loc[0], dest.getBlockY(), start_loc[2], start_loc[1], start_loc[3], dest.getWorld(), dir);
+                                if (count > 0) {
+                                    TARDISMessage.send(player, "WOULD_GRIEF_BLOCKS");
+                                    return true;
+                                }
                                 qf.doUpdate("next", set, tid);
                                 TARDISMessage.send(player, "LOC_SET", true);
                                 plugin.getTrackerKeeper().getHasDestination().put(id, travel);
