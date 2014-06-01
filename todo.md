@@ -17,7 +17,7 @@
 4. Chameleon Arch / Fob watch
 5. Remote locking, advanced hide and rebuild via remote key
 6. TARDIS creation area config
-8. Removal of farm animals and villagers from the TARDIS
+7. Travelling to save should check for clear space...
 
 ###I couldn't really be bothered
 1. HADS + explosions + fireballs + lava

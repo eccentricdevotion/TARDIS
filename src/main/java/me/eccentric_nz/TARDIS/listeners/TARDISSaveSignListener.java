@@ -24,9 +24,7 @@ import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetCurrentLocation;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import me.eccentric_nz.TARDIS.database.ResultSetTravellers;
-import me.eccentric_nz.TARDIS.enumeration.COMPASS;
 import me.eccentric_nz.TARDIS.travel.TARDISAreasInventory;
-import me.eccentric_nz.TARDIS.travel.TARDISTimeTravel;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
@@ -137,12 +135,9 @@ public class TARDISSaveSignListener implements Listener {
                                 if (!save_dest.equals(current)) {
                                     HashMap<String, Object> set = new HashMap<String, Object>();
                                     set.put("world", lore.get(0));
-                                    int x = plugin.getUtils().parseInt(lore.get(1));
-                                    int y = plugin.getUtils().parseInt(lore.get(2));
-                                    int z = plugin.getUtils().parseInt(lore.get(3));
-                                    set.put("x", x);
-                                    set.put("y", y);
-                                    set.put("z", z);
+                                    set.put("x", plugin.getUtils().parseInt(lore.get(1)));
+                                    set.put("y", plugin.getUtils().parseInt(lore.get(2)));
+                                    set.put("z", plugin.getUtils().parseInt(lore.get(3)));
                                     int l_size = lore.size();
                                     if (l_size >= 5) {
                                         if (!lore.get(4).isEmpty() && !lore.get(4).equals("§6Current location")) {
@@ -153,17 +148,6 @@ public class TARDISSaveSignListener implements Listener {
                                         } else {
                                             set.put("submarine", 0);
                                         }
-                                    }
-                                    // check location is not occupied
-                                    Location dest = new Location(plugin.getServer().getWorld(lore.get(0)), x, y, z);
-                                    TARDISTimeTravel tt = new TARDISTimeTravel(plugin);
-                                    COMPASS dir = COMPASS.valueOf(lore.get(4));
-                                    int[] start_loc = tt.getStartLocation(dest, dir);
-                                    int count = tt.safeLocation(start_loc[0], dest.getBlockY(), start_loc[2], start_loc[1], start_loc[3], dest.getWorld(), dir);
-                                    if (count > 0) {
-                                        TARDISMessage.send(player, "WOULD_GRIEF_BLOCKS");
-                                        close(player);
-                                        return;
                                     }
                                     HashMap<String, Object> wheret = new HashMap<String, Object>();
                                     wheret.put("tardis_id", id);
