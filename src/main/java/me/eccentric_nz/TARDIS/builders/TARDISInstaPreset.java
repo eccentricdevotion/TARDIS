@@ -239,7 +239,7 @@ public class TARDISInstaPreset {
                     }
                 }
                 if (yy == 0 && i == 8 && !plugin.getPresetBuilder().no_block_under_door.contains(preset)) {
-                    plugin.getUtils().setUnderDoorBlock(world, xx, (y - 1), zz, platform_id, platform_data, tmd.getTardisID());
+                    plugin.getUtils().setUnderDoorBlock(world, xx, (y - 1), zz, platform_id, platform_data, tmd.getTardisID(), true);
                 }
                 switch (colids[yy]) {
                     case 2:
@@ -322,7 +322,7 @@ public class TARDISInstaPreset {
                                     sponge = world.getBlockAt(xx, sy, zz);
                                     plugin.getWorldGuardUtils().sponge(sponge, true);
                                 } else if (!plugin.getPresetBuilder().no_block_under_door.contains(preset)) {
-                                    plugin.getUtils().setUnderDoorBlock(world, xx, (y - 1), zz, platform_id, platform_data, tmd.getTardisID());
+                                    plugin.getUtils().setUnderDoorBlock(world, xx, (y - 1), zz, platform_id, platform_data, tmd.getTardisID(), false);
                                 }
                             }
                         }
@@ -338,7 +338,7 @@ public class TARDISInstaPreset {
                         break;
                     case 63:
                         if (preset.equals(PRESET.APPERTURE)) {
-                            plugin.getUtils().setUnderDoorBlock(world, xx, (y - 1), zz, platform_id, platform_data, tmd.getTardisID());
+                            plugin.getUtils().setUnderDoorBlock(world, xx, (y - 1), zz, platform_id, platform_data, tmd.getTardisID(), false);
                         }
                         break;
                     case 68: // sign - if there is one

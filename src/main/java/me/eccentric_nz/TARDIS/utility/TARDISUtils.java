@@ -132,11 +132,15 @@ public class TARDISUtils {
      * @param m the typeId to set the block to.
      * @param d the data bit to set the block to.
      * @param id the TARDIS this block belongs to.
+     * @param portal whether a chest can be in the portal block location
      */
     @SuppressWarnings("deprecation")
-    public void setUnderDoorBlock(World w, int x, int y, int z, int m, byte d, int id) {
+    public void setUnderDoorBlock(World w, int x, int y, int z, int m, byte d, int id, boolean portal) {
         // List of blocks that a door cannot be placed on
         List<Integer> ids = plugin.getBlocksConfig().getIntegerList("under_door_blocks");
+        if (portal) {
+            ids.remove(Integer.valueOf(54));
+        }
         Block b = w.getBlockAt(x, y, z);
         int bid = b.getTypeId();
         if (ids.contains(bid)) {
