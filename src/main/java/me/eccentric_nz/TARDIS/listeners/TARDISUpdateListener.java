@@ -474,6 +474,9 @@ public class TARDISUpdateListener implements Listener {
                             case TOM:
                                 control = 155;
                                 break;
+                            case WAR:
+                                control = 95;
+                                break;
                             default:
                                 break;
                         }

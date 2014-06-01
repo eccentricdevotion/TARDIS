@@ -104,6 +104,9 @@ public class TARDISInteriorSchematicReader {
                 case TOM:
                     plugin.getBuildKeeper().setTomDimensions(shorty);
                     break;
+                case WAR:
+                    plugin.getBuildKeeper().setWarDimensions(shorty);
+                    break;
                 case CUSTOM:
                     plugin.getBuildKeeper().setCustomDimensions(shorty);
                     break;

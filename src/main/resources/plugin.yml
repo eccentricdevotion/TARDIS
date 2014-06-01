@@ -114,6 +114,9 @@ permissions:
   tardis.ars:
     description: Allow players to build the 'Architectural Reconfiguration System' TARDIS.
     default: op
+  tardis.war:
+    description: Allow players to build the 'War Doctor's TARDIS.
+    default: op
   tardis.storage:
     description: Allow players to utilise the TARDIS Disk Storage.
     default: op

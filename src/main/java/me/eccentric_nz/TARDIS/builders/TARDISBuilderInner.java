@@ -129,6 +129,10 @@ public class TARDISBuilderInner {
                 s = plugin.getBuildKeeper().getARSSchematic();
                 d = plugin.getBuildKeeper().getARSDimensions();
                 break;
+            case WAR:
+                s = plugin.getBuildKeeper().getWarSchematic();
+                d = plugin.getBuildKeeper().getWarDimensions();
+                break;
             case CUSTOM:
                 s = plugin.getBuildKeeper().getCustomSchematic();
                 d = plugin.getBuildKeeper().getCustomDimensions();

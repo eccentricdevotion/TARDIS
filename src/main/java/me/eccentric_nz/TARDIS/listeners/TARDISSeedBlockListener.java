@@ -122,7 +122,7 @@ public class TARDISSeedBlockListener implements Listener {
                 lore.add(data.getSchematic().toString());
                 lore.add("Walls: " + twl.wall_lookup.get(data.getWall_id() + ":" + data.getWall_data()));
                 lore.add("Floors: " + twl.wall_lookup.get(data.getFloor_id() + ":" + data.getFloor_data()));
-// do some funky stuff to get data values for wool/stained glass & clay/wood/log/log_2
+                // do some funky stuff to get data values for wool/stained glass & clay/wood/log/log_2
                 if (hasColour.contains(data.getBox_id())) {
                     switch (data.getBox_id()) {
                         case 35:

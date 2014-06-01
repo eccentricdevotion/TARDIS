@@ -44,6 +44,7 @@ public class TARDISMakeTardisCSV {
     private File steampunkSchematicCSV = null;
     private File plankSchematicCSV = null;
     private File tomSchematicCSV = null;
+    private File warSchematicCSV = null;
     private File customSchematicCSV = null;
 
     public TARDISMakeTardisCSV(TARDIS plugin) {
@@ -88,6 +89,7 @@ public class TARDISMakeTardisCSV {
         steampunkSchematicCSV = createFile(SCHEMATIC.STEAMPUNK.getFile() + ".csv");
         plankSchematicCSV = createFile(SCHEMATIC.PLANK.getFile() + ".csv");
         tomSchematicCSV = createFile(SCHEMATIC.TOM.getFile() + ".csv");
+        warSchematicCSV = createFile(SCHEMATIC.WAR.getFile() + ".csv");
         reader = new TARDISInteriorSchematicReader(plugin);
         // load schematic files - copy the defaults if they don't exist
         String basepath = plugin.getDataFolder() + File.separator + "schematics" + File.separator;
@@ -101,6 +103,7 @@ public class TARDISMakeTardisCSV {
         String stenstr = basepath + SCHEMATIC.STEAMPUNK.getFile();
         String planstr = basepath + SCHEMATIC.PLANK.getFile();
         String tomnstr = basepath + SCHEMATIC.TOM.getFile();
+        String warnstr = basepath + SCHEMATIC.WAR.getFile();
         copy(arsnstr, plugin.getResource(SCHEMATIC.ARS.getFile()), false);
         copy(bignstr, plugin.getResource(SCHEMATIC.BIGGER.getFile()), false);
         copy(budnstr, plugin.getResource(SCHEMATIC.BUDGET.getFile()), false);
@@ -110,6 +113,7 @@ public class TARDISMakeTardisCSV {
         copy(stenstr, plugin.getResource(SCHEMATIC.STEAMPUNK.getFile()), false);
         copy(planstr, plugin.getResource(SCHEMATIC.PLANK.getFile()), false);
         copy(tomnstr, plugin.getResource(SCHEMATIC.TOM.getFile()), false);
+        copy(warnstr, plugin.getResource(SCHEMATIC.WAR.getFile()), false);
 
         // copy default room files as well
         String antnstr = basepath + SCHEMATIC.ANTIGRAVITY.getFile();
@@ -173,6 +177,7 @@ public class TARDISMakeTardisCSV {
         reader.readAndMakeInteriorCSV(stenstr, SCHEMATIC.STEAMPUNK);
         reader.readAndMakeInteriorCSV(planstr, SCHEMATIC.PLANK);
         reader.readAndMakeInteriorCSV(tomnstr, SCHEMATIC.TOM);
+        reader.readAndMakeInteriorCSV(warnstr, SCHEMATIC.WAR);
         // load the schematic data from the tardisCSV files
         plugin.getBuildKeeper().setARSSchematic(TARDISSchematic.schematic(arsSchematicCSV, plugin.getBuildKeeper().getARSDimensions()[0], plugin.getBuildKeeper().getARSDimensions()[1], plugin.getBuildKeeper().getARSDimensions()[2]));
         plugin.getBuildKeeper().setBiggerSchematic(TARDISSchematic.schematic(biggerSchematicCSV, plugin.getBuildKeeper().getBiggerDimensions()[0], plugin.getBuildKeeper().getBiggerDimensions()[1], plugin.getBuildKeeper().getBiggerDimensions()[2]));
@@ -183,6 +188,7 @@ public class TARDISMakeTardisCSV {
         plugin.getBuildKeeper().setSteampunkSchematic(TARDISSchematic.schematic(steampunkSchematicCSV, plugin.getBuildKeeper().getSteampunkDimensions()[0], plugin.getBuildKeeper().getSteampunkDimensions()[1], plugin.getBuildKeeper().getSteampunkDimensions()[2]));
         plugin.getBuildKeeper().setPlankSchematic(TARDISSchematic.schematic(plankSchematicCSV, plugin.getBuildKeeper().getPlankDimensions()[0], plugin.getBuildKeeper().getPlankDimensions()[1], plugin.getBuildKeeper().getPlankDimensions()[2]));
         plugin.getBuildKeeper().setTomSchematic(TARDISSchematic.schematic(tomSchematicCSV, plugin.getBuildKeeper().getTomDimensions()[0], plugin.getBuildKeeper().getTomDimensions()[1], plugin.getBuildKeeper().getTomDimensions()[2]));
+        plugin.getBuildKeeper().setWarSchematic(TARDISSchematic.schematic(warSchematicCSV, plugin.getBuildKeeper().getWarDimensions()[0], plugin.getBuildKeeper().getWarDimensions()[1], plugin.getBuildKeeper().getWarDimensions()[2]));
         // do custom schematic last
         File c_file = new File(userbasepath + SCHEMATIC.CUSTOM.getFile());
         if (plugin.getConfig().getBoolean("creation.custom_schematic")) {

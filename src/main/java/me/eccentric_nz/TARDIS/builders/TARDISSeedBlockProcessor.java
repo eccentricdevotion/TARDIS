@@ -141,6 +141,12 @@ public class TARDISSeedBlockProcessor {
                             return false;
                         }
                         break;
+                    case WAR:
+                        if (!player.hasPermission("tardis.war")) {
+                            TARDISMessage.send(player, "NO_PERM_TARDIS", "WAR");
+                            return false;
+                        }
+                        break;
                     default:
                         break;
                 }
