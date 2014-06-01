@@ -38,13 +38,15 @@
 			<li>Autonomous homing function</li>
 			<li>HADS</li>
 			<li>Emergency Program One</li>
-			<li>Police Box sign (no longer available in TARDIS v2.6 and higher)</li>
+			<li>Police Box sign (not available in TARDIS v2.6 to v2.8)</li>
 			<li>Police Box lamp (only available if the TARDIS preset is a Police Box)</li>
 			<li>Beacon</li>
 			<li>Build flag</li>
 			<li>Minecart sounds</li>
 			<li>Exterior Rendering Room</li>
 			<li>Wool Lights</li>
+			<li>Connected Textures</li>
+			<li>Travel Bar</li>
 		</ul>
 		<p>Each preference can be set with a command, and some of them can be set via an inventory based GUI (if the player has a Sonic Screwdriver, sneaking and right-clicking air will open the Player Preferences GUI).</p>
 		<h2>Player preference commands</h2>
@@ -60,7 +62,7 @@
 		<p>To change the block room walls and floors a are grown with, type:</p>
 		<pre><code>/tardisprefs [wall|floor] [material]</code></pre>
 		<p>Where <code>[material]</code> is a block from the list on the <a href="walls.html">Wall materials</a> page. Type <code>/tardisprefs wall help</code> to see the list in-game.</p>
-		<p>To change whether the TARDIS Autonomous homing function takes the Police Box to the nearest recharge point or the Tardis &lsquo;home&rsquo; (whichever is closest) when the Timelord owner dies, type:</p>
+		<p>To change whether the TARDIS Autonomous homing function takes the Police Box to the nearest recharge point or the Tardis &lsquo;home&rsquo; (whichever is closest) when the Time Lord owner dies, type:</p>
 		<pre><code>/tardisprefs auto [on|off]</code></pre>
 		<p>If the server admin has disabled the autonomous homing function in the plugin config, this command will have no effect.</p>
 		<p>To toggle HADS on or off, type:</p>
@@ -85,6 +87,12 @@
 		<h3><code>/tardisprefs wool_lights</code></h3>
 		<p>You can choose whether to use black wool or sponge (re-textured with the TARDIS Resource Pack to look like Redstone Lamp Off blocks) for the off state of the TARDIS lights with this command, type:</p>
 		<pre><code>/tardisprefs wool_lights [on|off]</code></pre>
+		<h3><code>/tardisprefs ctm</code></h3>
+		<p>You can choose whether your Police Box preset uses the Connected Textures Mod to change the block to the left of the door to a quartz pillar that is retextured to the Police Box sign (players wihout the mod installed will see a plain quartz pillar instead of the regular blue wool when this is <code>on</code>) with this command, type:</p>
+		<pre><code>/tardisprefs ctm [on|off]</code></pre>
+		<h3><code>/tardisprefs travelbar</code></h3>
+		<p>You can choose whether to show a <em>travel time remaining</em> status bar with this command, type:</p>
+		<pre><code>/tardisprefs travelbar [on|off]</code></pre>
 		<h2>Other preferences</h2>
 		<h3><code>/tardis chameleon</code></h3>
 		<p>You can toggle the Chameleon Circuit on or off with this command, type:</p>

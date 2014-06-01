@@ -73,13 +73,17 @@ td{vertical-align:top;}
 		</table>
 		<p>To upgrade your Sonic Screwdriver, you combine it with a new circuit in the crafting table. Each circuit has an associated permission, see the <a href="permissions.html">permissions page</a> for more details.</p>
 		<h2>Sonic abilities</h2>
+		<h3>Player Pref Menu</h3>
+		<p>Right-clicking AIR with any sonic screwdriver opens the Player Pref Menu GUI where you can click preference items to toggle them on and off. The preferences menu also has a map button to open the <a href="map.html">TARDIS Map</a>.</p>
+		<p><img src="https://dl.dropboxusercontent.com/u/53758864/player_prefs_custom.jpg" alt="Player Prefs Menu" /></p>
+		<p>If a player also has the <code>tardis.admin</code> permission, they can swith to the Admin Menu GUI.</p>
 		<h3>Sonic Sorter</h3>
 		<p>The standard sonic screwdriver, when <strong>LEFT</strong>-clicked on a CHEST or TRAPPED_CHEST, can sort the container&rsquo;s contents by order of the block type and damage value. The permission for this is <code>tardis.sonic.sort</code></p>
 		<h3>Bio-scanner</h3>
 		<p>The Bio-scanner upgrade allows your Sonic to scan a player&rsquo;s health, hunger and time lived when you right-click them.</p>
 		<p>From a distance, the bio-scanner will freeze a player for 5 seconds. There is a cooldown period (default 60 seconds) between uses, and players require the permission <code>tardis.sonic.freeze</code></p>
 		<h3>Redstone Activator</h3>
-		<p>The Redstone Activator upgrade allows your Sonic to power on and off redstone wire, lamps, pistons, detector rails and powered rails.</p>
+		<p>The Redstone Activator upgrade allows your Sonic to power on and off redstone wire, lamps, pistons, detector rails and powered rails. You can also open iron doors by right-clicking them.</p>
 		<h3>Emerald Environment</h3>
 		<p>When right-clicking the ground with your Emerald Environment upgraded Sonic, it will tell you the same information as the TARDIS Scanner, but relative to your current location.</p>
 		<p>If players have the permission <code>tardis.sonic.plant</code>, using the Emerald Environment Sonic Screwdriver to harvest food plants will automatically re-sow the plant if the player has the appropriate seed item in their inventory.</p>
@@ -89,6 +93,17 @@ td{vertical-align:top;}
 		<p>The Server Admin upgraded Sonic allows you to open the Admin menu GUI, scan a TARDIS (owner, Artron Energy Level, last location and occupants) and remotely open a player&rsquo;s inventory (for viewing only).</p>
 		<h3 id="video">Video</h3>
 		<iframe src="http://player.vimeo.com/video/82537488" width="600" height="366" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
+		<p>&nbsp;</p>
+		<h2>Sonic Prefs Menu</h2>
+		<p>If you have the Custom Item Textures mod installed (part of <a href="mcpatcher.html">MCPatcher</a>) then you can change the texture of the sonic screwdriver to one of 15 different types.</p>
+		<p>To change the screwdriver texture:</p>
+		<ul>
+			<li>Open the Sonic Prefs menu using the command <code>/tardisprefs sonic</code></li>
+			<li>In the GUI, place your sonic in the lower left slot and then select the screwdriver of your choice</li>
+			<li>Remove the screwdriver and close the GUI</li>
+		</ul>
+		<p><img src="images/docs/sonic_prefs_menu.jpg" alt="Sonic Prefs Menu" /></p>
+		<p>Server admins can set the default screwdriver type &mdash; <code>/tardisadmin default_sonic [type]</code> &mdash; use tab completion to see a list of types.</p>
 	</section>
 </div>
 <footer>

@@ -1,0 +1,53 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="chrome=1">
+<title>TARDIS: Localisation</title>
+<link rel="stylesheet" href="stylesheets/styles.css">
+<link rel="stylesheet" href="stylesheets/pygment_trac.css">
+<script src="javascripts/scale.fix.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+<!--[if lt IE 9]>
+<script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+<![endif]-->
+</head>
+<body>
+<div class="wrapper">
+	<header>
+		<h1>TARDIS</h1>
+		<p>A Bukkit plugin for all Doctor Who fans &mdash; create and use a TARDIS! It&rsquo;s bigger on the inside!</p>
+		<p class="view"><a href="https://github.com/eccentricdevotion/TARDIS">View the Project on GitHub <small>eccentricdevotion/TARDIS</small></a></p>
+		<ul>
+			<li><a href="/TARDIS/">Back <strong>home</strong></a></li>
+			<li><a href="contents.html"><strong>Contents</strong> page</a></li>
+		</ul>
+	</header>
+	<section>
+		<h1>Localisation</h1>
+		<p>From version 2.9-beta-2, all in-game messages can now be localised to the server&rsquo;s preferred language
+		<p>The default language is English, and all the messages are contained in the <code>plugins/TARDIS/language/en.yml</code> file.</p>
+		<h2>Changing the language</h2>
+		<p>Localising TARDIS is a two step process:</p>
+		<ol>
+			<li>Translate the en.yml file</li>
+			<li>Set the desired language in the config</li>
+		</ol>
+		<h3>Translations</h3>
+		<p>Language translations require their own file. Make a copy of <code>en.yml</code> and translate it. For example; if the language is set to Spanish (code: <strong>es</strong>), then a file called <code>es.yml</code> needs to placed in the <code>plugins/TARDIS/language/</code> folder.</p>
+		<p>Vistaero (a helpful TARDIS plugin user) has written a useful tool for editing language files, you can get it here: <a href="https://www.dropbox.com/s/35rx51ly8994vux/Language%20File%20Translator.zip">TARDIS Language File Translator</a> and a tutorial video is here: <a href="https://www.dropbox.com/s/xxuamw6s2733g8e/Demo.mp4">Language File Translator Demo</a>.</p>
+		<h3>Set the language</h3>
+		<p>The config option to change is: <code>preferences.language: [language code]</code> &mdash; you can set the language with the command: <code>/tardisadmin language [code]</code> &mdash; use tab completion to see a list of valid language codes.</p>
+		<h3>Updates</h3>
+		<p>As messages are added for new TARDIS features, the preferred language file will be updated (in English) for you to translate.</p>
+		<h3>Video</h3>
+		<p>See it in action on <a href="https://www.youtube.com/watch?v=Zx_i66YKIgQ">Youtube</a></p>
+	</section>
+</div>
+<footer>
+	<p>Project maintained by <a href="https://github.com/eccentricdevotion">eccentricdevotion</a></p>
+	<p>Hosted on GitHub Pages &mdash; Theme by <a href="https://github.com/orderedlist">orderedlist</a></p>
+</footer>
+<!--[if !IE]><script>fixScale(document);</script><![endif]-->
+</body>
+</html>

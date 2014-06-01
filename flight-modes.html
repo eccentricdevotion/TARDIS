@@ -1,0 +1,64 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="chrome=1">
+<title>TARDIS: FLight modes</title>
+<link rel="stylesheet" href="stylesheets/styles.css">
+<link rel="stylesheet" href="stylesheets/pygment_trac.css">
+<script src="javascripts/scale.fix.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+<!--[if lt IE 9]>
+<script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+<![endif]-->
+</head>
+<body>
+<div class="wrapper">
+	<header>
+		<h1>TARDIS</h1>
+		<p>A Bukkit plugin for all Doctor Who fans &mdash; create and use a TARDIS! It&rsquo;s bigger on the inside!</p>
+		<p class="view"><a href="https://github.com/eccentricdevotion/TARDIS">View the Project on GitHub <small>eccentricdevotion/TARDIS</small></a></p>
+		<ul>
+			<li><a href="/TARDIS/">Back <strong>home</strong></a></li>
+			<li><a href="contents.html"><strong>Contents</strong> page</a></li>
+		</ul>
+	</header>
+	<section>
+		<h1>TARDIS flight modes</h1>
+		<p>From v2.9-beta-1, TARDIS now has three different flight modes. Flight modes are a player preference, and can be set using the command <code>/tardisprefs flight [mode]</code> command.</p>
+		<p>The three flight modes are:</p>
+		<ul>
+			<li><code>normal</code> &mdash; the default, no special effort required</li>
+			<li><code>regulator</code> &mdash; use the Helmic Regulator to correct the TARDIS&rsquo; flight path, a GUI opens automatically &mdash; you need to use the direction blocks to keep the regulator in the centre</li>
+			<li><code>manual</code> &mdash; run round like crazy clicking the correct console repeater when told to do so</li>
+		</ul>
+		<h3>Manual flight mode</h3>
+		<p>In manual flight mode the repeaters are called:</p>
+			<ul>
+				<li><code>world</code>: Helmic Regulator</li>
+				<li><code>x</code>: Astrosextant Rectifier</li>
+				<li><code>z</code>: Gravitic Anomaliser</li>
+				<li><code>y</code>: Absolute Tesseractulator</li>
+				<li>A visual effect has been added to help show which one to click :)</li>
+			</ul>
+			<p>In manual flight mode, the more repeaters you miss hitting, the further from your desired location you will land</p>
+		<p>You can set the delay between having to click the repeaters in the config: <code>/tardisadmin manual_flight_delay [ticks]</code> &mdash; default is 60 (3 seconds)</p>
+		<p>Video goes here</p>
+		<!--<iframe src="http://player.vimeo.com/video/57807692" width="600" height="366" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>-->
+		<h3>Regulator flight mode</h3>
+		<p>Use the four direction buttons to keep the flight path stabilised in the centre of the vortex blocks (black stained-glass).</p>
+		<p>In regulator flight mode, the further away from the centre the regulator block is, the further from your desired location you will land</p>
+		<p>Video goes here</p>
+		<iframe src="http://player.vimeo.com/video/90391961" width="600" height="366" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
+		<h3>Note:</h3>
+		<p>Currently if the destination is inside a building, the adjusted location will most probably end up on the roof (even if there is room inside the building).</p>
+		</ul>
+	</section>
+</div>
+<footer>
+	<p>Project maintained by <a href="https://github.com/eccentricdevotion">eccentricdevotion</a></p>
+	<p>Hosted on GitHub Pages &mdash; Theme by <a href="https://github.com/orderedlist">orderedlist</a></p>
+</footer>
+<!--[if !IE]><script>fixScale(document);</script><![endif]-->
+</body>
+</html>

@@ -25,14 +25,21 @@
 	</header>
 	<section>
 		<h1>Entering and exiting the TARDIS</h1>
+		<p><strong>Note:</strong> From TARDIS v2.9-beta-1 the entry and exit mechanics of the plugin have changed, and you can now walk in and out of the TARDIS if the door is open.</p>
+		<h2>Walk in and out</h2>
+		<p>Right-clicking the TARDIS door now opens and closes the door, SHIFT-right-clicking will teleport you in and out (the old behaviour).</p>
+		<p>The TARDIS <em>interior</em> door can be opened and closed with any item in hand by simply right-clicking the door.</p>
+		<p>The TARDIS <em>exterior</em> door can be only opened by right-clicking it with the TARDIS key, but can be closed with any item in hand.</p>
+		<p>Opening the door activates walk in access, but be careful, it also means that monsters can enter the TARDIS as well. It might be a good idea to close the door after you!</p>
+		<h2>Legacy entry and exit (pre v2.9)</h2>
 		<p>To enter the TARDIS, right-click the Police Box door with your TARDIS key (by default a Gold Nugget).</p>
 		<p>To exit, right-click the inner TARDIS door with your TARDIS key.</p>
 		<h2>You must exit the TARDIS correctly!</h2>
-		<p>You should never leave the TARDIS by any other way than clicking the TARDIS door. The plugin keeps track of who is in the TARDIS, so that TARDIS specific functions will work correctly (e.g. you can only use the <code>/tardis update</code> command inside the TARDIS, and you can only destroy the TARDIS if you are outside of it.)</p>
+		<p>You should never leave the TARDIS by any other way than walking in and out (or clicking the TARDIS door). The plugin keeps track of who is in the TARDIS, so that TARDIS specific functions will work correctly (e.g. you can only use the <code>/tardis update</code> command inside the TARDIS, and you can only destroy the TARDIS if you are outside of it.)</p>
 		<h2>Locking the door</h2>
 		<p>You can prevent anyone &mdash; including companions and yourself &mdash; from entering the TARDIS by locking the Police Box door. To do this, <strong>LEFT</strong>-click the door with your TARDIS key.</p>
 		<p>To unlock, <strong>LEFT</strong>-click the door again.</p>
-		<h2>Opening the door</h2>
+		<h2>Opening the door (pre v2.9)</h2>
 		<p>To open the door, RIGHT-click the door while sneaking (by default hold down the LEFT-SHIFT key). Both the door being clicked and the door on the opposite side should open (sometimes it&rsquo;s a bit buggy). If you exit the TARDIS when the door is open, instead of being transported outside the Police Box, you will be transported to the outer door location. This can be handy to see what is going on before leaving the safety of the TARDIS. </p>
 		<p><img src="images/docs/tp-to-door.jpg" alt="TP to door" /></p>
 		<p><strong>Note:</strong> In order for the TARDIS to time travel, the door must be closed.</p>
@@ -42,6 +49,10 @@
 			<li><a href="farming.html">Mob farming</a> &mdash; bringing a mob close to the TARDIS door and then entering, will also bring the mob into the TARDIS if you have grown the appropriate room.</li>
 			<li><a href="rail-room.html">Storage minecarts</a> &mdash; if you run rails up to the TARDIS door (and grow a Rail room) you can transport storage minecarts into the TARDIS.</li>
 		</ul>
+		<h2>Interior door Vortex access</h2>
+		<p>TARDIS v2.9 allows you to open the interior so that you can see out into the vortex &mdash; this can be useful if you have built a nice view.</p>
+		<p>To gain access to space, you first need to add a switch to toggle the black wool blocks behind the door on and off. Place a lever somewhere in the console and then use the command <code>/tardis update toggle_wool</code> to set it as the wool toggling switch.</p>
+		<p>Clicking the switch will remove or replace the wool blocks behind the door, so that when you open the door, instead of walking out of the TARDIS, you will gain access to the outside.</p>
 		<h3 id="video">Video</h3>
 		<!--<iframe src="http://player.vimeo.com/video/87380933" width="600" height="366" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>-->
 		<p>Video here</p>

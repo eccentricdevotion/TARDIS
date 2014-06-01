@@ -26,7 +26,7 @@
 	<section>
 		<p><a href="#video">Jump to video</a></p>
 		<h1>Artron Energy</h1>
-		<p>Your TARDIS runs on Artron Energy, and has multiple ways of recharging. By default the wood button on the TARDIS console is how you charge and check your energy levels. Travelling and hiding your TARDIS use up energy.</p>
+		<p>Your TARDIS runs on Artron Energy, and has multiple ways of recharging. By default the wood button on the TARDIS console is how you charge and check your energy levels. Travelling and hiding your TARDIS uses up energy.</p>
 		<h3>Getting started</h3>
 		<p>The first thing you will want to do is jump start your TARDIS with energy.</p>
 		<p>To jumpstart your TARDIS to 50% energy, right-click the wood button with your &ldquo;TARDIS key&rdquo; in hand. When you do this, a charged creeper appears inside the Artron Energy Capacitor, indicating that you now have power.</p>
@@ -35,7 +35,20 @@
 		<h3>Time lord energy</h3>
 		<p>You, as a time traveller, build up energy over time as you travel. To transfer it to the TARDIS, right-click the wood button while sneaking (SHIFT by default).</p>
 		<h3>Checking how much energy you have</h3>
-		<p>If you right-click the wood button with any item that is <strong>NOT</strong> the TARDIS key, then the current percentage of full charge is displayed.</p>
+		<p>If you right-click the wood button with any item that is <strong>NOT</strong> the TARDIS key, then the current percentage of full charge is displayed. *See the next section...</p>
+		<h3>Turning the power off and on</h3>
+		<p>If <code>allow.power_down</code> is <code>true</code> in the TARDIS config, then right-clicking the wood button with any item that is <strong>NOT</strong> the TARDIS key toggles the power up or down. When powered <em>down</em> the console lights and beacon and turned off, and access to any function that requires power is denied.</p>
+		<p>The TARDIS will automatically power down if the Artron Energy levels reach zero, and will not be able to power up again until more energy is transferred to the capacitor (either by Time Lord transfer or via the Artron Condenser).</p>
+		<p>If powered down, and the TARDIS is hidden, it will become visible again due to power loss.</p>
+		<h3>Power standby mode</h3>
+		<p>By default (as of TARDIS v2.9) the TARDIS uses a small amount of Artron Energy when powered on, but not actively doing anything (like travelling). To prevent power use in standby mode, you should power down the TARDIS.</p>
+		<p>You can configure how often and how much energy is used in <em>artron.yml</em> &mdash; see the <a href="configuration-energy.html">Artron Configuration</a> page.</p>
+		<h3>Power up/down/standby config options</h3>
+		<ul>
+			<li>in <em>config.yml</em> <code>allow.power_down: [true|false]</code> &mdash; let players power down the TARDIS</li>
+			<li>in <em>artron.yml</em> <code>standby: [amount]</code> &mdash; the amount of energy the TARDIS uses each cycle in standby mode</li>
+			<li>in <em>artron.yml</em> <code>standby_time: [ticks]</code> &mdash; the length of the repeating cycle in server ticks i.e. energy is removed every x ticks &mdash; if set to <code>0</code> then this feature is disabled</li>
+		</ul>
 		<h3>The TARDIS energy condenser</h3>
 		<p>You can also convert most blocks and items to energy. The energy condenser is added automatically to new TARDISes, if you have a TARDIS from a previous version of the plugin, you can place a chest and run the <code>/tardis update condenser</code> command, then follow the instructions to create one.</p>
 		<p>For a list of items that can be condensed visit the <a href="condensables.html">condensables page</a>.</p>

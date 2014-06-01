@@ -14,34 +14,34 @@
 </head>
 <body>
 <div class="wrapper">
-    <header>
-        <h1>TARDIS</h1>
-        <p>A Bukkit plugin for all Doctor Who fans &mdash; create and use a TARDIS! It&rsquo;s bigger on the inside!</p>
-        <p class="view"><a href="https://github.com/eccentricdevotion/TARDIS">View the Project on GitHub <small>eccentricdevotion/TARDIS</small></a></p>
-        <ul>
-            <li><a href="/TARDIS/">Back <strong>home</strong></a></li>
-            <li><a href="contents.html"><strong>Contents</strong> page</a></li>
-            <li><a href="configuration.html"><strong>Config</strong> page</a></li>
-        </ul>
-    </header>
-    <section>
-        <h1>Artron Energy configuration option</h1>
-        <p>These are the Artron Energy configuration options. These config options are found in the file: <code>artron.yml</code></p>
-        <p>For Artron Energy room growing costs see the <a href="configuration-rooms.html">Room configuration</a> page.</p>
-        <h2>Full charge</h2>
-        <p>Set the amount of energy a fully charged TARDIS Artron Energy Capacitor holds.</p>
-        <pre><code>full_charge: [amount]</code></pre>
-        <p>The default is <code>5000</code>.</p>
-        <p>Set the item that fully charges the Energy Capacitor when you right-click the Artron button with it.</p>
-        <pre><code>full_charge_item: [material]</code></pre>
-        <p>The default is <code>NETHER_STAR</code>.</p>
-        <h2>Timelord energy</h2>
-        <p>Set the amount of energy a player absorbs from the time vortex each time they time travel.</p>
-        <pre><code>player: [amount]</code></pre>
-        <p>The default is <code>25</code>.</p>
-        <h2>Time travel energy costs</h2>
-        <p>Set the amount of energy the different forms of time travel / vortex manipulation / room use consume. The options are: random locations, any <code>/tardistravel</code>, <code>/tardis comehere</code>, <code>/tardis hide</code> commands, autonomous homing and using the renderer or zero rooms</p>
-        <pre><code>player: [amount] - default: 25
+	<header>
+		<h1>TARDIS</h1>
+		<p>A Bukkit plugin for all Doctor Who fans &mdash; create and use a TARDIS! It&rsquo;s bigger on the inside!</p>
+		<p class="view"><a href="https://github.com/eccentricdevotion/TARDIS">View the Project on GitHub <small>eccentricdevotion/TARDIS</small></a></p>
+		<ul>
+			<li><a href="/TARDIS/">Back <strong>home</strong></a></li>
+			<li><a href="contents.html"><strong>Contents</strong> page</a></li>
+			<li><a href="configuration.html"><strong>Config</strong> page</a></li>
+		</ul>
+	</header>
+	<section>
+		<h1>Artron Energy configuration option</h1>
+		<p>These are the Artron Energy configuration options. These config options are found in the file: <code>artron.yml</code></p>
+		<p>For Artron Energy room growing costs see the <a href="configuration-rooms.html">Room configuration</a> page.</p>
+		<h2>Full charge</h2>
+		<p>Set the amount of energy a fully charged TARDIS Artron Energy Capacitor holds.</p>
+		<pre><code>full_charge: [amount]</code></pre>
+		<p>The default is <code>5000</code>.</p>
+		<p>Set the item that fully charges the Energy Capacitor when you right-click the Artron button with it.</p>
+		<pre><code>full_charge_item: [material]</code></pre>
+		<p>The default is <code>NETHER_STAR</code>.</p>
+		<h2>Time Lord energy</h2>
+		<p>Set the amount of energy a player absorbs from the time vortex each time they time travel.</p>
+		<pre><code>player: [amount]</code></pre>
+		<p>The default is <code>25</code>.</p>
+		<h2>Time travel energy costs</h2>
+		<p>Set the amount of energy the different forms of time travel / vortex manipulation / room use consume. The options are: random locations, any <code>/tardistravel</code>, <code>/tardis comehere</code>, <code>/tardis hide</code> commands, autonomous homing and using the renderer or zero rooms</p>
+		<pre><code>player: [amount] - default: 25
 random: [amount] - default: 75
 travel: [amount] - default: 100
 comehere: [amount] - default: 400
@@ -50,43 +50,50 @@ autonomous: [amount] - default: 100
 renderer: [amount] - default: 250
 zero: [amount] - default: 250
 </code></pre>
-        <h2>Inter-dimensional travel</h2>
-        <p>Set the minimum amount of energy the TARDIS Artron Energy Capacitor must have before players can time travel to the Nether or The End.</p>
-        <pre><code>nether_min: [amount] - default: 4250
+		<h2>Inter-dimensional travel</h2>
+		<p>Set the minimum amount of energy the TARDIS Artron Energy Capacitor must have before players can time travel to the Nether or The End.</p>
+		<pre><code>nether_min: [amount] - default: 4250
 the_end_min: [amount] - default: 5500</code></pre>
-        <h2>Beacon recharge distance</h2>
-        <p>Set the maximum distance in blocks, a Police Box can be from a recharge beacon in order to start recharging.</p>
-        <pre><code>recharge_distance: [blocks]</code></pre>
-        <p>The default is <code>20</code>.</p>
-        <h2>Natural lightning recharge</h2>
-        <p>Set the amount of energy TARDISes receive if they are within the <code>recharge_distance</code> of a natural lightning strike.</p>
-        <pre><code>lightning_recharge: [amount]</code></pre>
-        <p>The default is <code>300</code>.</p>
-        <h2>Charged creeper bonus</h2>
-        <p>Set the amount of energy players receive if they kill a charged creeper.</p>
-        <pre><code>creeper_recharge: [amount]</code></pre>
-        <p>The default is <code>150</code>.</p>
-        <h2>Room jettisons</h2>
-        <p>Set the percentage of energy the TARDIS gets back when a room is jettisoned.</p>
-        <pre><code>jettison: [percentage]</code></pre>
-        <p>The default is <code>75</code>.</p>
-        <h1>Rechargers configuration section</h1>
-        <p><strong>NB:</strong> The rechargers configuration section is found in the file: <code>config.yml</code></p>
-        <p>The rechargers section holds the locations of the TARDIS recharge beacons.</p>
-        <p>The format is:</p>
-        <pre><code>rechargers:
+		<h2>Beacon recharge distance</h2>
+		<p>Set the maximum distance in blocks, a Police Box can be from a recharge beacon in order to start recharging.</p>
+		<pre><code>recharge_distance: [blocks]</code></pre>
+		<p>The default is <code>20</code>.</p>
+		<h2>Natural lightning recharge</h2>
+		<p>Set the amount of energy TARDISes receive if they are within the <code>recharge_distance</code> of a natural lightning strike.</p>
+		<pre><code>lightning_recharge: [amount]</code></pre>
+		<p>The default is <code>300</code>.</p>
+		<h2>Charged creeper bonus</h2>
+		<p>Set the amount of energy players receive if they kill a charged creeper.</p>
+		<pre><code>creeper_recharge: [amount]</code></pre>
+		<p>The default is <code>150</code>.</p>
+		<h2>Room jettisons</h2>
+		<p>Set the percentage of energy the TARDIS gets back when a room is jettisoned.</p>
+		<pre><code>jettison: [percentage]</code></pre>
+		<p>The default is <code>75</code>.</p>
+		<h2>Standby power mode</h2>
+		<p>You can set how much energy and how often energy is used when the TARDIS is in standby power mode.</p>
+		<pre><code>standby: [amount]</code></pre>
+		<p>The default is <code>5</code>.</p>
+		<pre><code>standby_time: [ticks]</code></pre>
+		<p>The default is <code>6000</code> or every 5 minutes.</p>
+		<p>If <code>standby_time</code> is set to <code>0</code>, then no energy is removed in standby mode.</p>
+		<h1>Rechargers configuration section</h1>
+		<p><strong>NB:</strong> The rechargers configuration section is found in the file: <code>config.yml</code></p>
+		<p>The rechargers section holds the locations of the TARDIS recharge beacons.</p>
+		<p>The format is:</p>
+		<pre><code>rechargers:
    [name]:
       world: [world]
       x: [co-ordinate]
       y: [co-ordinate]
       z: [co-ordinate]</code></pre>
-        <p>Entries are added automatically by the <code>/tardisadmin recharger [name]</code> command, you should only need to edit this section if you want to remove a recharge point.</p>
-        <p><a href="configuration.html">Back to main configuration page</a></p>
-    </section>
+		<p>Entries are added automatically by the <code>/tardisadmin recharger [name]</code> command, you should only need to edit this section if you want to remove a recharge point.</p>
+		<p><a href="configuration.html">Back to main configuration page</a></p>
+	</section>
 </div>
 <footer>
-    <p>Project maintained by <a href="https://github.com/eccentricdevotion">eccentricdevotion</a></p>
-    <p>Hosted on GitHub Pages &mdash; Theme by <a href="https://github.com/orderedlist">orderedlist</a></p>
+	<p>Project maintained by <a href="https://github.com/eccentricdevotion">eccentricdevotion</a></p>
+	<p>Hosted on GitHub Pages &mdash; Theme by <a href="https://github.com/orderedlist">orderedlist</a></p>
 </footer>
 <!--[if !IE]><script>fixScale(document);</script><![endif]-->
 </body>
