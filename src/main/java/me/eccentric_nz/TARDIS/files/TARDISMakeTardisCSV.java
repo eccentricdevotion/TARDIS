@@ -113,7 +113,7 @@ public class TARDISMakeTardisCSV {
         copy(stenstr, plugin.getResource(SCHEMATIC.STEAMPUNK.getFile()), false);
         copy(planstr, plugin.getResource(SCHEMATIC.PLANK.getFile()), false);
         copy(tomnstr, plugin.getResource(SCHEMATIC.TOM.getFile()), false);
-        copy(warnstr, plugin.getResource(SCHEMATIC.WAR.getFile()), false);
+        copy(warnstr, plugin.getResource(SCHEMATIC.WAR.getFile()), true);
 
         // copy default room files as well
         String antnstr = basepath + SCHEMATIC.ANTIGRAVITY.getFile();
