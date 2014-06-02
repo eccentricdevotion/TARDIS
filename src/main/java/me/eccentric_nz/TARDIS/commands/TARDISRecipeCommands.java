@@ -17,6 +17,8 @@
 package me.eccentric_nz.TARDIS.commands;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -47,6 +49,7 @@ public class TARDISRecipeCommands implements CommandExecutor {
 
     private final TARDIS plugin;
     private final List<String> firstArgs = new ArrayList<String>();
+    private final HashMap<String, Material> t = new HashMap<String, Material>();
 
     public TARDISRecipeCommands(TARDIS plugin) {
         this.plugin = plugin;
@@ -81,6 +84,18 @@ public class TARDISRecipeCommands implements CommandExecutor {
         firstArgs.add("scanner-circuit"); // Scanner Circuit
         firstArgs.add("sonic"); // Sonic Screwdriver
         firstArgs.add("t-circuit"); // Temporal Circuit
+        firstArgs.add("tardis"); // TARDIS Seed Block
+        t.put("BUDGET", Material.IRON_BLOCK); // budget
+        t.put("BIGGER", Material.GOLD_BLOCK); // bigger
+        t.put("DELUXE", Material.DIAMOND_BLOCK); // deluxe
+        t.put("ELEVENTH", Material.EMERALD_BLOCK); // eleventh
+        t.put("REDSTONE", Material.REDSTONE_BLOCK); // redstone
+        t.put("STEAMPUNK", Material.COAL_BLOCK); // steampunk
+        t.put("ARS", Material.QUARTZ_BLOCK); // ARS
+        t.put("TOM", Material.LAPIS_BLOCK); // tom baker
+        t.put("PLANK", Material.BOOKSHELF); // plank
+        t.put("WAR", Material.STAINED_CLAY); // war doctor
+        t.put("CUSTOM", Material.valueOf(this.plugin.getConfig().getString("creation.custom_schematic_seed"))); // custom
     }
 
     @Override
@@ -108,6 +123,14 @@ public class TARDISRecipeCommands implements CommandExecutor {
             }
             if (!firstArgs.contains(args[0].toLowerCase(Locale.ENGLISH))) {
                 new TARDISRecipeLister(plugin, sender).list();
+                return true;
+            }
+            if (args[0].equalsIgnoreCase("tardis") && args.length < 2) {
+                TARDISMessage.send(player, "TOO_FEW_ARGS");
+                return true;
+            }
+            if (args[0].equalsIgnoreCase("tardis") && args.length == 2) {
+                this.showTARDISRecipe(player, args[1]);
                 return true;
             }
             if (args[0].equalsIgnoreCase("a-circuit")) {
@@ -280,6 +303,51 @@ public class TARDISRecipeCommands implements CommandExecutor {
             }
             view.setItem(i + 1, ingredients.get(i));
         }
+    }
+
+    public void showTARDISRecipe(Player player, String type) {
+        plugin.getTrackerKeeper().getRecipeView().add(player.getUniqueId());
+        final InventoryView view = player.openWorkbench(null, true);
+        // redstone torch
+        ItemStack red = new ItemStack(Material.REDSTONE_TORCH_ON, 1);
+        // lapis block
+        ItemStack lapis = new ItemStack(Material.LAPIS_BLOCK, 1);
+        // restone lamp
+        ItemStack lamp = new ItemStack(Material.REDSTONE_LAMP_OFF, 1);
+        ItemMeta lamp_meta = lamp.getItemMeta();
+        lamp_meta.setDisplayName("Police Box lamp");
+        lamp_meta.setLore(Arrays.asList("Any valid lamp item:", "Redstone Lamp", "Glowstone", "Torches"));
+        lamp.setItemMeta(lamp_meta);
+        // police box wall
+        ItemStack pb_wall = new ItemStack(Material.WOOL, 1, (byte) 11);
+        ItemMeta pb_meta = pb_wall.getItemMeta();
+        pb_meta.setDisplayName("Police Box walls");
+        pb_meta.setLore(Arrays.asList("Any valid Chameleon block"));
+        pb_wall.setItemMeta(pb_meta);
+        // interior wall
+        ItemStack in_wall = new ItemStack(Material.WOOL, 1, (byte) 1);
+        ItemMeta in_meta = in_wall.getItemMeta();
+        in_meta.setDisplayName("Interior walls");
+        in_meta.setLore(Arrays.asList("Any valid Wall/Floor block"));
+        in_wall.setItemMeta(in_meta);
+        // interior floor
+        ItemStack in_floor = new ItemStack(Material.WOOL, 1, (byte) 8);
+        ItemMeta fl_meta = in_floor.getItemMeta();
+        fl_meta.setDisplayName("Interior floors");
+        fl_meta.setLore(Arrays.asList("Any valid Wall/Floor block"));
+        in_floor.setItemMeta(fl_meta);
+        // tardis type
+        ItemStack tardis = new ItemStack(t.get(type.toUpperCase()), 1);
+        ItemMeta seed = tardis.getItemMeta();
+        seed.setLore(Arrays.asList(type.toUpperCase()));
+        tardis.setItemMeta(seed);
+        view.setItem(1, red);
+        view.setItem(4, lapis);
+        view.setItem(5, lamp);
+        view.setItem(6, in_wall);
+        view.setItem(7, tardis);
+        view.setItem(8, pb_wall);
+        view.setItem(9, in_floor);
     }
 
     private String getDisplayName(byte data) {

@@ -31,6 +31,7 @@ import org.bukkit.util.StringUtil;
 public class TARDISRecipeTabComplete implements TabCompleter {
 
     private final List<String> ROOT_SUBS = ImmutableList.of("a-circuit", "ars-circuit", "bio-circuit", "biome-disk", "blank", "c-circuit", "cell", "custard", "d-circuit", "e-circuit", "filter", "fish-finger", "i-circuit", "jammy-dodger", "jelly-baby", "key", "l-circuit", "locator", "m-circuit", "memory-circuit", "oscillator", "player-disk", "preset-disk", "p-circuit", "r-circuit", "remote", "s-circuit", "save-disk", "scanner-circuit", "sonic", "t-circuit");
+    private final List<String> TARDIS_TYPES = ImmutableList.of("ars", "bigger", "budget", "custom", "deluxe", "eleventh", "redstone", "steampunk", "tom", "war", "wood");
 
     public TARDISRecipeTabComplete() {
     }
@@ -38,8 +39,14 @@ public class TARDISRecipeTabComplete implements TabCompleter {
     @Override
     public List<String> onTabComplete(CommandSender sender, Command command, String label, String[] args) {
 
+        String lastArg = args[args.length - 1];
         if (args.length <= 1) {
             return partial(args[0], ROOT_SUBS);
+        } else if (args.length == 2) {
+            String sub = args[0];
+            if (sub.equals("tardis")) {
+                return partial(lastArg, TARDIS_TYPES);
+            }
         }
         return ImmutableList.of();
     }

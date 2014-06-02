@@ -55,6 +55,7 @@ public class TARDISRecipeLister {
     private LinkedHashMap<String, List<String>> createRecipeOptions() {
         LinkedHashMap<String, List<String>> recipe_options = new LinkedHashMap<String, List<String>>();
         List<String> items = new ArrayList<String>();
+        items.add(ChatColor.GREEN + "tardis [type]" + ChatColor.RESET + " - " + ChatColor.DARK_GREEN + "TARDIS Seed Block");
         items.add(ChatColor.GREEN + "key" + ChatColor.RESET + " - " + ChatColor.DARK_GREEN + "TARDIS Key");
         items.add(ChatColor.GREEN + "locator" + ChatColor.RESET + " - " + ChatColor.DARK_GREEN + "TARDIS Locator");
         items.add(ChatColor.GREEN + "cell" + ChatColor.RESET + " - " + ChatColor.DARK_GREEN + "Artron Energy Cell");
