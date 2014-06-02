@@ -171,7 +171,7 @@ public class TARDISRecipeCommands implements CommandExecutor {
                 return true;
             }
             if (args[0].equalsIgnoreCase("jelly-baby")) {
-                this.showShapelessRecipe(player, "Jelly Baby");
+                this.showShapelessRecipe(player, "Orange Jelly Baby");
                 return true;
             }
             if (args[0].equalsIgnoreCase("l-circuit")) {
