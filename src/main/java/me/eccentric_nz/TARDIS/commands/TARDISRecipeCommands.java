@@ -57,11 +57,15 @@ public class TARDISRecipeCommands implements CommandExecutor {
         firstArgs.add("blank"); // Blank Storage Disk
         firstArgs.add("c-circuit"); // Chameleon Circuit
         firstArgs.add("cell"); // Artron Energy Cell
+        firstArgs.add("custard"); // Bowl of custard
         firstArgs.add("d-circuit"); // Diamond Circuit
         firstArgs.add("e-circuit"); // Emerald Circuit
         firstArgs.add("filter"); // Perception Filter
+        firstArgs.add("fish-finger"); // Fish Finger
         firstArgs.add("i-circuit"); // Input Circuit
         firstArgs.add("key"); // TARDIS key
+        firstArgs.add("jammy-dodger"); // Jammy Dodger Biscuit
+        firstArgs.add("jelly-baby"); // Jelly Baby
         firstArgs.add("l-circuit"); // Locator Circuit
         firstArgs.add("locator"); // TARDIS Locator
         firstArgs.add("m-circuit"); // Materialisation Circuit
@@ -134,6 +138,10 @@ public class TARDISRecipeCommands implements CommandExecutor {
                 this.showShapedRecipe(player, "Artron Storage Cell");
                 return true;
             }
+            if (args[0].equalsIgnoreCase("custard")) {
+                this.showShapelessRecipe(player, "Bowl of Custard");
+                return true;
+            }
             if (args[0].equalsIgnoreCase("d-circuit")) {
                 this.showShapedRecipe(player, "Diamond Disruptor Circuit");
                 return true;
@@ -146,12 +154,24 @@ public class TARDISRecipeCommands implements CommandExecutor {
                 this.showShapedRecipe(player, "Perception Filter");
                 return true;
             }
+            if (args[0].equalsIgnoreCase("fish-finger")) {
+                this.showShapedRecipe(player, "Fish Finger");
+                return true;
+            }
             if (args[0].equalsIgnoreCase("i-circuit")) {
                 this.showShapedRecipe(player, "TARDIS Input Circuit");
                 return true;
             }
             if (args[0].equalsIgnoreCase("key")) {
                 this.showShapedRecipe(player, "TARDIS Key");
+                return true;
+            }
+            if (args[0].equalsIgnoreCase("jammy-dodger")) {
+                this.showShapedRecipe(player, "Jammy Dodger");
+                return true;
+            }
+            if (args[0].equalsIgnoreCase("jelly-baby")) {
+                this.showShapelessRecipe(player, "Jelly Baby");
                 return true;
             }
             if (args[0].equalsIgnoreCase("l-circuit")) {

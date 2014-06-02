@@ -55,6 +55,7 @@ import me.eccentric_nz.TARDIS.files.TARDISConfiguration;
 import me.eccentric_nz.TARDIS.files.TARDISLanguageUpdater;
 import me.eccentric_nz.TARDIS.files.TARDISMakeRoomCSV;
 import me.eccentric_nz.TARDIS.files.TARDISMakeTardisCSV;
+import me.eccentric_nz.TARDIS.files.TARDISRecipesUpdater;
 import me.eccentric_nz.TARDIS.move.TARDISMonsterRunnable;
 import me.eccentric_nz.TARDIS.move.TARDISPortalPersister;
 import me.eccentric_nz.TARDIS.recipes.TARDISShapedRecipe;
@@ -162,8 +163,8 @@ public class TARDIS extends JavaPlugin {
             hasVersion = true;
             saveDefaultConfig();
             loadCustomConfigs();
-            TARDISConfiguration tc = new TARDISConfiguration(this);
-            tc.checkConfig();
+            new TARDISConfiguration(this).checkConfig();
+            new TARDISRecipesUpdater(this).addRecipes();
             loadLanguage();
             loadDatabase();
             // update database add and populate uuid fields

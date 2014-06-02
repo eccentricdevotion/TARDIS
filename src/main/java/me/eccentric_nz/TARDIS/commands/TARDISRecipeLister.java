@@ -92,6 +92,12 @@ public class TARDISRecipeLister {
         disks.add(ChatColor.AQUA + "preset-disk" + ChatColor.RESET + " - " + ChatColor.DARK_AQUA + "Preset Storage Disk");
         disks.add(ChatColor.AQUA + "save-disk" + ChatColor.RESET + " - " + ChatColor.DARK_AQUA + "Save Storage Disk");
         recipe_options.put("Storage Disks", disks);
+        List<String> food = new ArrayList<String>();
+        food.add(ChatColor.GRAY + "custard" + ChatColor.RESET + " - " + ChatColor.DARK_GRAY + "Bowl of Custard");
+        food.add(ChatColor.GRAY + "fish-finger" + ChatColor.RESET + " - " + ChatColor.DARK_GRAY + "Fish Finger");
+        food.add(ChatColor.GRAY + "jammy-dodger" + ChatColor.RESET + " - " + ChatColor.DARK_GRAY + "Jammy Dodger Biscuit");
+        food.add(ChatColor.GRAY + "jelly-baby" + ChatColor.RESET + " - " + ChatColor.DARK_GRAY + "Jelly Baby");
+        recipe_options.put("Food", food);
         return recipe_options;
     }
 }
