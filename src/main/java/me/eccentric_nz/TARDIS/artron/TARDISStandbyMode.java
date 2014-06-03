@@ -46,16 +46,17 @@ public class TARDISStandbyMode implements Runnable {
         HashMap<Integer, StandbyData> ids = new ResultSetStandby(plugin).onStandby();
         QueryFactory qf = new QueryFactory(plugin);
         for (final Map.Entry<Integer, StandbyData> map : ids.entrySet()) {
+            final int id = map.getKey();
             // not while travelling and only until they hit zero
-            if (!plugin.getTrackerKeeper().getInVortex().contains(map.getKey()) && map.getValue().getLevel() >= amount) {
+            if (!isTravelling(id)) {
                 // remove some energy
                 HashMap<String, Object> where = new HashMap<String, Object>();
-                where.put("tardis_id", map.getKey());
+                where.put("tardis_id", id);
                 qf.alterEnergyLevel("tardis", -amount, where, null);
-            } else {
+            } else if (map.getValue().getLevel() <= amount) {
                 // power down!
                 HashMap<String, Object> wherep = new HashMap<String, Object>();
-                wherep.put("tardis_id", map.getKey());
+                wherep.put("tardis_id", id);
                 HashMap<String, Object> setp = new HashMap<String, Object>();
                 setp.put("powered_on", 0);
                 OfflinePlayer player = plugin.getServer().getOfflinePlayer(map.getValue().getUuid());
@@ -77,13 +78,13 @@ public class TARDISStandbyMode implements Runnable {
                     plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
                         @Override
                         public void run() {
-                            new TARDISPoliceBoxLampToggler(plugin).toggleLamp(map.getKey(), false);
+                            new TARDISPoliceBoxLampToggler(plugin).toggleLamp(id, false);
                         }
                     }, delay);
                 }
                 // if lights are on, turn them off
                 if (map.getValue().isLights()) {
-                    new TARDISLampToggler(plugin).flickSwitch(map.getKey(), map.getValue().getUuid(), true);
+                    new TARDISLampToggler(plugin).flickSwitch(id, map.getValue().getUuid(), true);
                 }
                 // if beacon is on turn it off
                 new TARDISBeaconToggler(plugin).flickSwitch(map.getValue().getUuid().toString(), false);
@@ -91,5 +92,9 @@ public class TARDISStandbyMode implements Runnable {
                 qf.doUpdate("tardis", setp, wherep);
             }
         }
+    }
+
+    private boolean isTravelling(int id) {
+        return (plugin.getTrackerKeeper().getDematerialising().contains(id) || plugin.getTrackerKeeper().getMaterialising().contains(id) || plugin.getTrackerKeeper().getInVortex().contains(id));
     }
 }
