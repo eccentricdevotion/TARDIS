@@ -17,6 +17,7 @@
 package me.eccentric_nz.TARDIS.commands.admin;
 
 import java.io.File;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.UUID;
@@ -52,7 +53,7 @@ public class TARDISDeleteCommand {
     }
 
     @SuppressWarnings("deprecation")
-    public boolean deleteTARDIS(CommandSender sender, String[] args) {
+    public boolean deleteTARDIS(final CommandSender sender, final String[] args) {
         // this should be run from the console if the player running it is the player to be deleted
         if (sender instanceof Player) {
             Player player = (Player) sender;
@@ -77,28 +78,19 @@ public class TARDISDeleteCommand {
             where.put("uuid", uuid.toString());
             ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);
             if (rs.resultSet()) {
-                int id = rs.getTardis_id();
-                int tips = rs.getTIPS();
-                SCHEMATIC schm = rs.getSchematic();
+                final int id = rs.getTardis_id();
+                final int tips = rs.getTIPS();
+                final SCHEMATIC schm = rs.getSchematic();
                 String chunkLoc = rs.getChunk();
+                boolean hidden = rs.isHidden();
                 String[] cdata = chunkLoc.split(":");
-                String name = cdata[0];
-                World cw = plugin.getServer().getWorld(name);
+                final String name = cdata[0];
+                final World cw = plugin.getServer().getWorld(name);
                 if (cw == null) {
                     TARDISMessage.send(sender, "WORLD_DELETED");
                     return true;
                 }
-                int restore = getRestore(cw);
-                // check if player is in the TARDIS
-                HashMap<String, Object> wheret = new HashMap<String, Object>();
-                wheret.put("tardis_id", id);
-                ResultSetTravellers rst = new ResultSetTravellers(plugin, wheret, true);
-                QueryFactory qf = new QueryFactory(plugin);
-                HashMap<String, Object> whered = new HashMap<String, Object>();
-                whered.put("tardis_id", id);
-                if (rst.resultSet()) {
-                    qf.doDelete("travellers", whered);
-                }
+                final int restore = getRestore(cw);
                 // get the current location
                 Location bb_loc = null;
                 COMPASS d = COMPASS.EAST;
@@ -115,32 +107,8 @@ public class TARDISDeleteCommand {
                     TARDISMessage.send(sender, "CURRENT_NOT_FOUND");
                     return true;
                 }
-                // destroy the TARDIS
-                if ((plugin.getConfig().getBoolean("creation.create_worlds") && !plugin.getConfig().getBoolean("creation.default_world")) || name.contains("TARDIS_WORLD_")) {
-                    // delete TARDIS world
-                    List<Player> players = cw.getPlayers();
-                    for (Player p : players) {
-                        p.kickPlayer("World scheduled for deletion!");
-                    }
-                    if (plugin.getPM().isPluginEnabled("Multiverse-Core")) {
-                        plugin.getServer().dispatchCommand(plugin.getConsole(), "mv remove " + name);
-                    }
-                    if (plugin.getPM().isPluginEnabled("MultiWorld")) {
-                        plugin.getServer().dispatchCommand(plugin.getConsole(), "mw unload " + name);
-                    }
-                    if (plugin.getPM().isPluginEnabled("WorldBorder")) {
-                        // wb <world> clear
-                        plugin.getServer().dispatchCommand(plugin.getConsole(), "wb " + name + " clear");
-                    }
-                    plugin.getServer().unloadWorld(cw, true);
-                    File world_folder = new File(plugin.getServer().getWorldContainer() + File.separator + name + File.separator);
-                    if (!deleteFolder(world_folder)) {
-                        plugin.debug("Could not delete world <" + name + ">");
-                    }
-                } else {
-                    plugin.getInteriorDestroyer().destroyInner(schm, id, cw, restore, args[1], tips);
-                }
-                if (!rs.isHidden()) {
+                // destroy outer TARDIS
+                if (!hidden) {
                     final TARDISMaterialisationData pdd = new TARDISMaterialisationData();
                     pdd.setChameleon(false);
                     pdd.setDirection(d);
@@ -154,29 +122,39 @@ public class TARDISDeleteCommand {
                     pdd.setBiome(biome);
                     plugin.getPresetDestroyer().destroyPreset(pdd);
                 }
-                // delete the TARDIS from the db
-                HashMap<String, Object> wherec = new HashMap<String, Object>();
-                wherec.put("tardis_id", id);
-                qf.doDelete("chunks", wherec);
-                HashMap<String, Object> wherea = new HashMap<String, Object>();
-                wherea.put("tardis_id", id);
-                qf.doDelete("tardis", wherea);
-                HashMap<String, Object> whereo = new HashMap<String, Object>();
-                whereo.put("tardis_id", id);
-                qf.doDelete("doors", whereo);
-                HashMap<String, Object> whereb = new HashMap<String, Object>();
-                whereb.put("tardis_id", id);
-                qf.doDelete("blocks", whereb);
-                HashMap<String, Object> wherev = new HashMap<String, Object>();
-                wherev.put("tardis_id", id);
-                qf.doDelete("travellers", wherev);
-                HashMap<String, Object> whereg = new HashMap<String, Object>();
-                whereg.put("tardis_id", id);
-                qf.doDelete("gravity_well", whereg);
-                HashMap<String, Object> wheres = new HashMap<String, Object>();
-                wheres.put("tardis_id", id);
-                qf.doDelete("destinations", wheres);
-                TARDISMessage.send(sender, "TARDIS_EXTERMINATED");
+                // destroy the inner TARDIS
+                // give the TARDIS time to remove itself as it's not hidden
+                plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
+                    @Override
+                    public void run() {
+                        if ((plugin.getConfig().getBoolean("creation.create_worlds") && !plugin.getConfig().getBoolean("creation.default_world")) || name.contains("TARDIS_WORLD_")) {
+                            // delete TARDIS world
+                            List<Player> players = cw.getPlayers();
+                            for (Player p : players) {
+                                p.kickPlayer("World scheduled for deletion!");
+                            }
+                            if (plugin.getPM().isPluginEnabled("Multiverse-Core")) {
+                                plugin.getServer().dispatchCommand(plugin.getConsole(), "mv remove " + name);
+                            }
+                            if (plugin.getPM().isPluginEnabled("MultiWorld")) {
+                                plugin.getServer().dispatchCommand(plugin.getConsole(), "mw unload " + name);
+                            }
+                            if (plugin.getPM().isPluginEnabled("WorldBorder")) {
+                                // wb <world> clear
+                                plugin.getServer().dispatchCommand(plugin.getConsole(), "wb " + name + " clear");
+                            }
+                            plugin.getServer().unloadWorld(cw, true);
+                            File world_folder = new File(plugin.getServer().getWorldContainer() + File.separator + name + File.separator);
+                            if (!deleteFolder(world_folder)) {
+                                plugin.debug("Could not delete world <" + name + ">");
+                            }
+                        } else {
+                            plugin.getInteriorDestroyer().destroyInner(schm, id, cw, restore, args[1], tips);
+                        }
+                        cleanDatabase(id);
+                        TARDISMessage.send(sender, "TARDIS_EXTERMINATED");
+                    }
+                }, 40L);
             } else {
                 TARDISMessage.send(sender, "PLAYER_NOT_FOUND_DB", args[1]);
                 return true;
@@ -200,6 +178,17 @@ public class TARDISDeleteCommand {
                 return 121;
             default:
                 return 1;
+        }
+    }
+
+    private void cleanDatabase(int id) {
+        QueryFactory qf = new QueryFactory(plugin);
+        List<String> tables = Arrays.asList("ars", "back", "blocks", "chunks", "controls", "current", "destinations", "doors", "gravity_well", "homes", "lamps", "next", "tardis", "travellers");
+        // remove record from database tables
+        for (String table : tables) {
+            HashMap<String, Object> where = new HashMap<String, Object>();
+            where.put("tardis_id", id);
+            qf.doDelete(table, where);
         }
     }
 }

@@ -123,7 +123,7 @@ public class TARDISExterminator {
      * @return true or false depending on whether the TARIS could be deleted
      */
     @SuppressWarnings("deprecation")
-    public boolean exterminate(Player player, Block block) {
+    public boolean exterminate(final Player player, Block block) {
         int signx = 0, signz = 0;
         String playerNameStr = player.getName();
         Location sign_loc = block.getLocation();
@@ -166,7 +166,7 @@ public class TARDISExterminator {
         }
         ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);
         if (rs.resultSet()) {
-            int id = rs.getTardis_id();
+            final int id = rs.getTardis_id();
             String chunkLoc = rs.getChunk();
             int tips = rs.getTIPS();
             boolean hasZero = (!rs.getZero().isEmpty());
@@ -240,8 +240,13 @@ public class TARDISExterminator {
                 }
                 cleanWorlds(cw, playerNameStr);
                 removeZeroRoom(tips, hasZero);
-                cleanDatabase(id);
-                TARDISMessage.send(player, "TARDIS_EXTERMINATED");
+                plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
+                    @Override
+                    public void run() {
+                        cleanDatabase(id);
+                        TARDISMessage.send(player, "TARDIS_EXTERMINATED");
+                    }
+                }, 40L);
                 return false;
             } else {
                 // cancel the event because it's not the player's TARDIS
@@ -314,7 +319,7 @@ public class TARDISExterminator {
 
     public void cleanDatabase(int id) {
         QueryFactory qf = new QueryFactory(plugin);
-        List<String> tables = Arrays.asList("tardis", "blocks", "lamps", "ars", "doors", "controls", "gravity_well", "destinations", "homes", "current", "next", "back", "travellers", "chunks");
+        List<String> tables = Arrays.asList("ars", "back", "blocks", "chunks", "controls", "current", "destinations", "doors", "gravity_well", "homes", "lamps", "next", "tardis", "travellers");
         // remove record from database tables
         for (String table : tables) {
             HashMap<String, Object> where = new HashMap<String, Object>();
@@ -327,10 +332,7 @@ public class TARDISExterminator {
         // remove world guard region protection
         if (plugin.isWorldGuardOnServer() && plugin.getConfig().getBoolean("preferences.use_worldguard")) {
             plugin.getWorldGuardUtils().removeRegion(w, owner);
-//            plugin.getWorldGuardUtils().removeRoomRegion(w, owner, "farm");
             plugin.getWorldGuardUtils().removeRoomRegion(w, owner, "renderer");
-//            plugin.getWorldGuardUtils().removeRoomRegion(w, owner, "stable");
-//            plugin.getWorldGuardUtils().removeRoomRegion(w, owner, "village");
         }
         // unload and remove the world if it's a TARDIS_WORLD_ world
         if (w.getName().contains("TARDIS_WORLD_")) {

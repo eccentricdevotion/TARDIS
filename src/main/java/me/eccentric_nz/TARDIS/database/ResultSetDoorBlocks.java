@@ -63,10 +63,11 @@ public class ResultSetDoorBlocks {
     public boolean resultSet() {
         PreparedStatement statement = null;
         ResultSet rs = null;
-        String query = "SELECT * FROM doors WHERE door_type IN (0,1) AND tardis_id =" + id;
+        String query = "SELECT * FROM doors WHERE door_type IN (0,1) AND tardis_id = ?";
         try {
             service.testConnection(connection);
             statement = connection.prepareStatement(query);
+            statement.setInt(1, id);
             rs = statement.executeQuery();
             if (rs.isBeforeFirst()) {
                 while (rs.next()) {
