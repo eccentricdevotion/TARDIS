@@ -12,6 +12,7 @@
         <netbeans.hint.user>eccentric_nz</netbeans.hint.user>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.build.number>romley_massive</project.build.number>
+        <dependency.path>/Volumes/Data/Users/rob/.m2/repository</dependency.path>
     </properties>
     <url>http://eccentricdevotion.github.com/TARDIS/</url>
     <repositories>
@@ -79,6 +80,7 @@
             <properties>
                 <project.build.number>${env.BUILD_NUMBER}</project.build.number>
                 <javadocExecutable>${java.home}/../bin/javadoc</javadocExecutable>
+                <dependency.path>/Users/macgeek/maven/repo</dependency.path>
             </properties>
             <build>
                 <plugins>
@@ -138,27 +140,6 @@
                     </replacements>
                 </configuration>
             </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-resources-plugin</artifactId>
-                <version>2.6</version>
-                <configuration>
-                    <encoding>${project.build.sourceEncoding}</encoding>
-                </configuration>
-            </plugin>
-            <plugin>
-                <artifactId>maven-clean-plugin</artifactId>
-                <version>2.5</version>
-                <executions>
-                    <execution>
-                        <id>auto-clean</id>
-                        <phase>initialize</phase>
-                        <goals>
-                            <goal>clean</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>
         </plugins>
     </build>
     <dependencies>
@@ -183,8 +164,10 @@
         <dependency>
             <groupId>org.bukkit</groupId>
             <artifactId>bukkit</artifactId>
-            <version>LATEST</version>
+            <version>1.7.9-R0.3-SNAPSHOT</version>
             <type>jar</type>
+            <scope>system</scope>
+            <systemPath>${dependency.path}/org/bukkit/bukkit/1.7.9-R0.3-SNAPSHOT/bukkit-1.7.9-R0.3-SNAPSHOT.jar</systemPath>
         </dependency>
         <dependency>
             <groupId>com.sk89q</groupId>
