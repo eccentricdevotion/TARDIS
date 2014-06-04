@@ -16,6 +16,11 @@
     <url>http://eccentricdevotion.github.com/TARDIS/</url>
     <repositories>
         <repository>
+            <id>Bromley Massive</id>
+            <url>http://keetley.servegame.com:8888</url>
+        </repository>
+        <!--
+        <repository>
             <id>bukkit-repo</id>
             <url>http://repo.bukkit.org/content/groups/public</url>
         </repository>
@@ -31,13 +36,11 @@
             <id>onarandombox</id>
             <url>http://repo.onarandombox.com/content/groups/public</url>
         </repository>
-        <!--
         <repository>
             <id>comphenix-rep</id>
             <name>Comphenix Repository</name>
             <url>http://repo.comphenix.net/content/groups/public</url>
         </repository>
-        -->
         <repository>
             <id>confuser-repo</id>
             <url>http://ci.frostcast.net/plugin/repository/everything</url>
@@ -47,6 +50,7 @@
             <name>Comphenix Repository</name>
             <url>http://minor.royaldev.org:8081/nexus/content/repositories/comphenix-repo</url>
         </repository>
+        -->
     </repositories>
     <scm>
         <connection>scm:git:ssh://github.com/eccentricdevotion/TARDIS</connection>
@@ -62,10 +66,6 @@
         <profile>
             <id>jenkins</id>
             <repositories>
-                <!--<repository>
-                    <id>macgeek</id>
-                    <url>file:///Users/macgeek/maven/repo</url>
-                </repository>-->
                 <repository>
                     <id>macgeek</id>
                     <url>http://localhost:8888</url>
