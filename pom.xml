@@ -68,7 +68,7 @@
                 </repository>-->
                 <repository>
                     <id>macgeek</id>
-                    <url>http://keetley.servegame.com:8888</url>
+                    <url>http://localhost:8888</url>
                 </repository>
             </repositories>
             <activation>
