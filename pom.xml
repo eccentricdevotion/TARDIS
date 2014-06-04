@@ -12,15 +12,9 @@
         <netbeans.hint.user>eccentric_nz</netbeans.hint.user>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.build.number>romley_massive</project.build.number>
-        <dependency.path>/Volumes/Data/Users/rob/.m2/repository</dependency.path>
     </properties>
     <url>http://eccentricdevotion.github.com/TARDIS/</url>
     <repositories>
-        <repository>
-            <id>Bromley Massive</id>
-            <url>http://keetley.servegame.com:8888</url>
-        </repository>
-        <!--
         <repository>
             <id>bukkit-repo</id>
             <url>http://repo.bukkit.org/content/groups/public</url>
@@ -37,11 +31,13 @@
             <id>onarandombox</id>
             <url>http://repo.onarandombox.com/content/groups/public</url>
         </repository>
+        <!--
         <repository>
             <id>comphenix-rep</id>
             <name>Comphenix Repository</name>
             <url>http://repo.comphenix.net/content/groups/public</url>
         </repository>
+        -->
         <repository>
             <id>confuser-repo</id>
             <url>http://ci.frostcast.net/plugin/repository/everything</url>
@@ -51,7 +47,6 @@
             <name>Comphenix Repository</name>
             <url>http://minor.royaldev.org:8081/nexus/content/repositories/comphenix-repo</url>
         </repository>
-        -->
     </repositories>
     <scm>
         <connection>scm:git:ssh://github.com/eccentricdevotion/TARDIS</connection>
@@ -80,7 +75,6 @@
             <properties>
                 <project.build.number>${env.BUILD_NUMBER}</project.build.number>
                 <javadocExecutable>${java.home}/../bin/javadoc</javadocExecutable>
-                <dependency.path>/Users/macgeek/maven/repo</dependency.path>
             </properties>
             <build>
                 <plugins>
@@ -164,10 +158,8 @@
         <dependency>
             <groupId>org.bukkit</groupId>
             <artifactId>bukkit</artifactId>
-            <version>1.7.9-R0.3-SNAPSHOT</version>
+            <version>LATEST</version>
             <type>jar</type>
-            <scope>system</scope>
-            <systemPath>${dependency.path}/org/bukkit/bukkit/1.7.9-R0.3-SNAPSHOT/bukkit-1.7.9-R0.3-SNAPSHOT.jar</systemPath>
         </dependency>
         <dependency>
             <groupId>com.sk89q</groupId>
