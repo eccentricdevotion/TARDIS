@@ -179,9 +179,9 @@ public class TARDISArtronCapacitorListener implements Listener {
                                 set.put("artron_level", amount);
                                 qf.doUpdate("tardis", set, whereid);
                             } else if (item.equals(Material.getMaterial(key))) {
-                                // kickstart the TARDIS Artron Energy Capacitor
                                 // has the TARDIS been initialised?
                                 if (!init) {
+                                    // kickstart the TARDIS Artron Energy Capacitor
                                     plugin.getUtils().playTARDISSound(block.getLocation(), player, "power_up");
                                     // get locations from database
                                     String creeper = rs.getCreeper();
@@ -218,7 +218,69 @@ public class TARDISArtronCapacitorListener implements Listener {
                                     qf.doUpdate("tardis", set, whereid);
                                     TARDISMessage.send(player, "ENERGY_INIT");
                                 } else {
-                                    TARDISMessage.send(player, "ENERGY_INIT_ONCE");
+                                    // toggle power
+                                    if (plugin.getConfig().getBoolean("allow.power_down")) {
+                                        PRESET preset = rs.getPreset();
+                                        HashMap<String, Object> wherep = new HashMap<String, Object>();
+                                        wherep.put("tardis_id", id);
+                                        HashMap<String, Object> setp = new HashMap<String, Object>();
+                                        if (powered) {
+                                            if (isTravelling(id)) {
+                                                TARDISMessage.send(player, "POWER_NO");
+                                                return;
+                                            }
+                                            plugin.getUtils().playTARDISSound(block.getLocation(), player, "power_down");
+                                            // power down
+                                            setp.put("powered_on", 0);
+                                            TARDISMessage.send(player, "POWER_OFF");
+                                            long delay = 0;
+                                            // if hidden, rebuild
+                                            if (hidden) {
+                                                plugin.getServer().dispatchCommand(plugin.getConsole(), "tardisremote " + player.getName() + " rebuild");
+                                                TARDISMessage.send(player, "POWER_FAIL");
+                                                delay = 20L;
+                                            }
+                                            // police box lamp, delay it incase the TARDIS needs rebuilding
+                                            if (preset.equals(PRESET.NEW) || preset.equals(PRESET.OLD)) {
+                                                plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
+                                                    @Override
+                                                    public void run() {
+                                                        new TARDISPoliceBoxLampToggler(plugin).toggleLamp(id, false);
+                                                    }
+                                                }, delay);
+                                            }
+                                            // if lights are on, turn them off
+                                            if (lights) {
+                                                new TARDISLampToggler(plugin).flickSwitch(id, player.getUniqueId(), true);
+                                            }
+                                            // if beacon is on turn it off
+                                            new TARDISBeaconToggler(plugin).flickSwitch(player.getUniqueId().toString(), false);
+                                        } else {
+                                            // don't power up if there is no power
+                                            if (current_level <= plugin.getArtronConfig().getInt("standby")) {
+                                                TARDISMessage.send(player, "POWER_LOW");
+                                                return;
+                                            }
+                                            plugin.getUtils().playTARDISSound(block.getLocation(), player, "power_up");
+                                            // power up
+                                            setp.put("powered_on", 1);
+                                            TARDISMessage.send(player, "POWER_ON");
+                                            // if lights are off, turn them on
+                                            if (lights) {
+                                                new TARDISLampToggler(plugin).flickSwitch(id, player.getUniqueId(), false);
+                                            }
+                                            // if beacon is off turn it on
+                                            if (beacon_on) {
+                                                new TARDISBeaconToggler(plugin).flickSwitch(player.getUniqueId().toString(), true);
+                                            }
+                                            // police box lamp
+                                            if (preset.equals(PRESET.NEW) || preset.equals(PRESET.OLD)) {
+                                                new TARDISPoliceBoxLampToggler(plugin).toggleLamp(id, true);
+                                            }
+                                        }
+                                        qf.doUpdate("tardis", setp, wherep);
+                                    }
+//                                    TARDISMessage.send(player, "ENERGY_INIT_ONCE");
                                 }
                             } else if (player.isSneaking()) {
                                 if (!init) {
@@ -260,74 +322,8 @@ public class TARDISArtronCapacitorListener implements Listener {
                                     TARDISMessage.send(player, "ENERGY_NO_INIT");
                                     return;
                                 }
-                                boolean show = true;
-                                if (plugin.getConfig().getBoolean("allow.power_down")) {
-                                    PRESET preset = rs.getPreset();
-                                    // toggle power
-                                    HashMap<String, Object> wherep = new HashMap<String, Object>();
-                                    wherep.put("tardis_id", id);
-                                    HashMap<String, Object> setp = new HashMap<String, Object>();
-                                    if (powered) {
-                                        if (isTravelling(id)) {
-                                            TARDISMessage.send(player, "POWER_NO");
-                                            return;
-                                        }
-                                        plugin.getUtils().playTARDISSound(block.getLocation(), player, "power_down");
-                                        // power down
-                                        setp.put("powered_on", 0);
-                                        TARDISMessage.send(player, "POWER_OFF");
-                                        long delay = 0;
-                                        // if hidden, rebuild
-                                        if (hidden) {
-                                            plugin.getServer().dispatchCommand(plugin.getConsole(), "tardisremote " + player.getName() + " rebuild");
-                                            TARDISMessage.send(player, "POWER_FAIL");
-                                            delay = 20L;
-                                        }
-                                        // police box lamp, delay it incase the TARDIS needs rebuilding
-                                        if (preset.equals(PRESET.NEW) || preset.equals(PRESET.OLD)) {
-                                            plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
-                                                @Override
-                                                public void run() {
-                                                    new TARDISPoliceBoxLampToggler(plugin).toggleLamp(id, false);
-                                                }
-                                            }, delay);
-                                        }
-                                        // if lights are on, turn them off
-                                        if (lights) {
-                                            new TARDISLampToggler(plugin).flickSwitch(id, player.getUniqueId(), true);
-                                        }
-                                        // if beacon is on turn it off
-                                        new TARDISBeaconToggler(plugin).flickSwitch(player.getUniqueId().toString(), false);
-                                        show = false;
-                                    } else {
-                                        // don't power up if there is no power
-                                        if (current_level <= plugin.getArtronConfig().getInt("standby")) {
-                                            TARDISMessage.send(player, "POWER_LOW");
-                                            return;
-                                        }
-                                        plugin.getUtils().playTARDISSound(block.getLocation(), player, "power_up");
-                                        // power up
-                                        setp.put("powered_on", 1);
-                                        TARDISMessage.send(player, "POWER_ON");
-                                        // if lights are off, turn them on
-                                        if (lights) {
-                                            new TARDISLampToggler(plugin).flickSwitch(id, player.getUniqueId(), false);
-                                        }
-                                        // if beacon is off turn it on
-                                        if (beacon_on) {
-                                            new TARDISBeaconToggler(plugin).flickSwitch(player.getUniqueId().toString(), true);
-                                        }
-                                        // police box lamp
-                                        if (preset.equals(PRESET.NEW) || preset.equals(PRESET.OLD)) {
-                                            new TARDISPoliceBoxLampToggler(plugin).toggleLamp(id, true);
-                                        }
-                                    }
-                                    qf.doUpdate("tardis", setp, wherep);
-                                }
-                                if (show) {
-                                    // just tell us how much energy we have
-                                    new TARDISArtronIndicator(plugin).showArtronLevel(player, id, 0);
-                                }
+                                // just tell us how much energy we have
+                                new TARDISArtronIndicator(plugin).showArtronLevel(player, id, 0);
                             }
                         }
                     }
