@@ -254,7 +254,7 @@ public class TARDISArtronCapacitorListener implements Listener {
                                                 new TARDISLampToggler(plugin).flickSwitch(id, player.getUniqueId(), true);
                                             }
                                             // if beacon is on turn it off
-                                            new TARDISBeaconToggler(plugin).flickSwitch(player.getUniqueId().toString(), false);
+                                            new TARDISBeaconToggler(plugin).flickSwitch(player.getUniqueId(), false);
                                         } else {
                                             // don't power up if there is no power
                                             if (current_level <= plugin.getArtronConfig().getInt("standby")) {
@@ -271,7 +271,7 @@ public class TARDISArtronCapacitorListener implements Listener {
                                             }
                                             // if beacon is off turn it on
                                             if (beacon_on) {
-                                                new TARDISBeaconToggler(plugin).flickSwitch(player.getUniqueId().toString(), true);
+                                                new TARDISBeaconToggler(plugin).flickSwitch(player.getUniqueId(), true);
                                             }
                                             // police box lamp
                                             if (preset.equals(PRESET.NEW) || preset.equals(PRESET.OLD)) {

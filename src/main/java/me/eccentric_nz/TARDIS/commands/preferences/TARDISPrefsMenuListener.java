@@ -18,6 +18,7 @@ package me.eccentric_nz.TARDIS.commands.preferences;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.UUID;
 import me.eccentric_nz.TARDIS.ARS.TARDISARSMap;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.artron.TARDISBeaconToggler;
@@ -73,12 +74,12 @@ public class TARDISPrefsMenuListener implements Listener {
                 ItemStack is = inv.getItem(slot);
                 if (is != null) {
                     final Player p = (Player) event.getWhoClicked();
-                    String uuid = p.getUniqueId().toString();
+                    UUID uuid = p.getUniqueId();
                     ItemMeta im = is.getItemMeta();
                     if ((slot == 16 || slot == 17) && im.getDisplayName().equals("TARDIS Map")) {
                         // must be in the TARDIS
                         HashMap<String, Object> where = new HashMap<String, Object>();
-                        where.put("uuid", uuid);
+                        where.put("uuid", uuid.toString());
                         ResultSetTravellers rs = new ResultSetTravellers(plugin, where, false);
                         if (rs.resultSet()) {
                             // close this gui and load the TARDIS map
@@ -123,7 +124,7 @@ public class TARDISPrefsMenuListener implements Listener {
                         HashMap<String, Object> set = new HashMap<String, Object>();
                         set.put(lookup.get(im.getDisplayName()), b);
                         HashMap<String, Object> where = new HashMap<String, Object>();
-                        where.put("uuid", uuid);
+                        where.put("uuid", uuid.toString());
                         new QueryFactory(plugin).doUpdate("player_prefs", set, where);
                     }
                     lore.set(0, value);

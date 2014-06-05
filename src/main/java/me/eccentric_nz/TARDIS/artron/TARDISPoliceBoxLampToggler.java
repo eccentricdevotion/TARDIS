@@ -44,6 +44,9 @@ public class TARDISPoliceBoxLampToggler {
         if (rs.resultSet()) {
             Block lamp = new Location(rs.getWorld(), rs.getX(), rs.getY(), rs.getZ()).getBlock().getRelative(BlockFace.UP, 3);
             Block redstone = new Location(rs.getWorld(), rs.getX(), rs.getY(), rs.getZ()).getBlock().getRelative(BlockFace.UP, 2);
+            while (!lamp.getChunk().isLoaded()) {
+                lamp.getChunk().load();
+            }
             if (lamp.getType().equals(Material.REDSTONE_LAMP_ON) && !on) {
                 // turn off
                 redstone.setType(Material.WOOL);

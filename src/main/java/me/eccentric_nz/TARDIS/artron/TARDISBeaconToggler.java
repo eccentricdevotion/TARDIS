@@ -17,10 +17,12 @@
 package me.eccentric_nz.TARDIS.artron;
 
 import java.util.HashMap;
+import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import org.bukkit.Location;
+import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.block.Block;
 
@@ -36,9 +38,9 @@ public class TARDISBeaconToggler {
         this.plugin = plugin;
     }
 
-    public void flickSwitch(String uuid, boolean on) {
+    public void flickSwitch(UUID uuid, boolean on) {
         HashMap<String, Object> whereb = new HashMap<String, Object>();
-        whereb.put("uuid", uuid);
+        whereb.put("uuid", uuid.toString());
         ResultSetTardis rs = new ResultSetTardis(plugin, whereb, "", false);
         if (rs.resultSet()) {
             // toggle beacon
@@ -85,7 +87,10 @@ public class TARDISBeaconToggler {
             }
             Location bl = new Location(w, bx, by, bz);
             Block b = bl.getBlock();
-            b.setTypeId((on) ? 20 : 7);
+            while (!b.getChunk().isLoaded()) {
+                b.getChunk().load();
+            }
+            b.setType((on) ? Material.GLASS : Material.BEDROCK);
         }
     }
 }

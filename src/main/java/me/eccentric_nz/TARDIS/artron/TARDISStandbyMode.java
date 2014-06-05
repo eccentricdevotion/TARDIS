@@ -87,7 +87,7 @@ public class TARDISStandbyMode implements Runnable {
                     new TARDISLampToggler(plugin).flickSwitch(id, map.getValue().getUuid(), true);
                 }
                 // if beacon is on turn it off
-                new TARDISBeaconToggler(plugin).flickSwitch(map.getValue().getUuid().toString(), false);
+                new TARDISBeaconToggler(plugin).flickSwitch(map.getValue().getUuid(), false);
                 // update database
                 qf.doUpdate("tardis", setp, wherep);
             }

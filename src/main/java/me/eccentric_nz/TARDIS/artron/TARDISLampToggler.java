@@ -61,6 +61,9 @@ public class TARDISLampToggler {
             use_wool = rsp.isWoolLightsOn();
         }
         for (Block b : lamps) {
+            while (!b.getChunk().isLoaded()) {
+                b.getChunk().load();
+            }
             if (on) {
                 if (b.getType().equals(Material.REDSTONE_LAMP_ON)) {
                     if (use_wool) {

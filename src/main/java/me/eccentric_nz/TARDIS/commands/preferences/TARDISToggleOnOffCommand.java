@@ -63,7 +63,7 @@ public class TARDISToggleOnOffCommand {
         if (args[1].equalsIgnoreCase("on")) {
             setp.put(pref + "_on", 1);
             if (pref.equals("beacon")) {
-                new TARDISBeaconToggler(plugin).flickSwitch(player.getUniqueId().toString(), true);
+                new TARDISBeaconToggler(plugin).flickSwitch(player.getUniqueId(), true);
             }
             String grammar = (was.contains(pref)) ? "PREF_WAS_ON" : "PREF_WERE_ON";
             TARDISMessage.send(player, grammar, pref);
@@ -71,7 +71,7 @@ public class TARDISToggleOnOffCommand {
         if (args[1].equalsIgnoreCase("off")) {
             setp.put(pref + "_on", 0);
             if (pref.equals("beacon")) {
-                new TARDISBeaconToggler(plugin).flickSwitch(player.getUniqueId().toString(), false);
+                new TARDISBeaconToggler(plugin).flickSwitch(player.getUniqueId(), false);
             }
             String grammar = (was.contains(pref)) ? "PREF_WAS_OFF" : "PREF_WERE_OFF";
             TARDISMessage.send(player, grammar, pref);
