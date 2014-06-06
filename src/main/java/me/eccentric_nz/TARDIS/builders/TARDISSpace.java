@@ -59,8 +59,6 @@ public class TARDISSpace {
             if (plugin.getPM().isPluginEnabled("MultiWorld")) {
                 plugin.getServer().dispatchCommand(plugin.getConsole(), "mw create " + name + " plugin:TARDISChunkGenerator");
                 plugin.getServer().dispatchCommand(plugin.getConsole(), "mw load " + name);
-//                plugin.getServer().dispatchCommand(plugin.getConsole(), "mw setflag " + name + " SpawnMonster false");
-//                plugin.getServer().dispatchCommand(plugin.getConsole(), "mw setflag " + name + " SpawnAnimal false");
                 plugin.getServer().dispatchCommand(plugin.getConsole(), "mw setflag " + name + " PvP false");
                 if (gm.equalsIgnoreCase("creative")) {
                     plugin.getServer().dispatchCommand(plugin.getConsole(), "mw setflag " + name + " CreativeWorld true");
@@ -76,11 +74,8 @@ public class TARDISSpace {
             plugin.saveConfig();
             if (plugin.getPM().isPluginEnabled("Multiverse-Core")) {
                 plugin.getServer().dispatchCommand(plugin.getConsole(), "mv import " + name + " normal -g TARDISChunkGenerator -n");
-//                plugin.getServer().dispatchCommand(plugin.getConsole(), "mv modify set animalsrate 0 " + name);
-//                plugin.getServer().dispatchCommand(plugin.getConsole(), "mv modify set monstersrate 0 " + name);
                 plugin.getServer().dispatchCommand(plugin.getConsole(), "mv modify set hidden true " + name);
                 plugin.getServer().dispatchCommand(plugin.getConsole(), "mv modify set weather false " + name);
-                //plugin.getServer().dispatchCommand(plugin.getConsole(), "mv modify set memory false " + name);
                 plugin.getServer().dispatchCommand(plugin.getConsole(), "mv modify set portalform none " + name);
                 plugin.getServer().dispatchCommand(plugin.getConsole(), "mv modify set adjustspawn false " + name);
                 plugin.getServer().dispatchCommand(plugin.getConsole(), "mv modify set pvp false " + name);
@@ -89,7 +84,6 @@ public class TARDISSpace {
             String inventory_group = plugin.getConfig().getString("creation.inventory_group");
             if (plugin.getPM().isPluginEnabled("My Worlds")) {
                 plugin.getServer().dispatchCommand(plugin.getConsole(), "myworlds load " + name + ":TARDISChunkGenerator");
-//                plugin.getServer().dispatchCommand(plugin.getConsole(), "myworlds denyspawn all " + name);
                 plugin.getServer().dispatchCommand(plugin.getConsole(), "myworlds weather always sunny " + name);
                 plugin.getServer().dispatchCommand(plugin.getConsole(), "myworlds gamemode " + gm + " " + name);
                 if (plugin.getConfig().getBoolean("creation.keep_night")) {

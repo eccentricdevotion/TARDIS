@@ -64,7 +64,7 @@ import me.eccentric_nz.TARDIS.rooms.TARDISWalls;
 import me.eccentric_nz.TARDIS.rooms.TARDISZeroRoomRunnable;
 import me.eccentric_nz.TARDIS.travel.TARDISArea;
 import me.eccentric_nz.TARDIS.travel.TARDISPluginRespect;
-import me.eccentric_nz.TARDIS.utility.TARDISCreeperChecker;
+import me.eccentric_nz.TARDIS.artron.TARDISCreeperChecker;
 import me.eccentric_nz.TARDIS.utility.TARDISMapChecker;
 import me.eccentric_nz.TARDIS.utility.TARDISMultiverseInventoriesChecker;
 import me.eccentric_nz.TARDIS.utility.TARDISPerceptionFilter;

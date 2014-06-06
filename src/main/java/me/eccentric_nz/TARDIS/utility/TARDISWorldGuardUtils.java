@@ -149,7 +149,7 @@ public class TARDISWorldGuardUtils {
         flags.put(DefaultFlag.LAVA_FIRE, State.DENY);
         flags.put(DefaultFlag.LAVA_FLOW, State.DENY);
         flags.put(DefaultFlag.LIGHTER, State.DENY);
-        flags.put(DefaultFlag.MOB_SPAWNING, State.DENY);
+//        flags.put(DefaultFlag.MOB_SPAWNING, State.DENY);
         flags.put(DefaultFlag.CHEST_ACCESS, State.ALLOW);
         region.setFlags(flags);
         rm.addRegion(region);
@@ -182,12 +182,11 @@ public class TARDISWorldGuardUtils {
         HashMap<Flag<?>, Object> flags = new HashMap<Flag<?>, Object>();
         flags.put(DefaultFlag.ENTRY, State.DENY);
         flags.put(DefaultFlag.TNT, State.DENY);
-//        flags.put(DefaultFlag.CREEPER_EXPLOSION, State.DENY);
         flags.put(DefaultFlag.FIRE_SPREAD, State.DENY);
         flags.put(DefaultFlag.LAVA_FIRE, State.DENY);
         flags.put(DefaultFlag.LAVA_FLOW, State.DENY);
         flags.put(DefaultFlag.LIGHTER, State.DENY);
-        flags.put(DefaultFlag.MOB_SPAWNING, State.DENY);
+//        flags.put(DefaultFlag.MOB_SPAWNING, State.DENY);
         flags.put(DefaultFlag.CHEST_ACCESS, State.ALLOW);
         region.setFlags(flags);
         rm.addRegion(region);
