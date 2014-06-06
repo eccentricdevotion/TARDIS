@@ -20,10 +20,12 @@ import java.util.HashMap;
 import java.util.Map;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
+import me.eccentric_nz.TARDIS.database.ResultSetCurrentLocation;
 import me.eccentric_nz.TARDIS.database.ResultSetStandby;
 import me.eccentric_nz.TARDIS.database.ResultSetStandby.StandbyData;
 import me.eccentric_nz.TARDIS.enumeration.PRESET;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
+import org.bukkit.Location;
 import org.bukkit.OfflinePlayer;
 
 /**
@@ -47,8 +49,8 @@ public class TARDISStandbyMode implements Runnable {
         QueryFactory qf = new QueryFactory(plugin);
         for (final Map.Entry<Integer, StandbyData> map : ids.entrySet()) {
             final int id = map.getKey();
-            // not while travelling and only until they hit zero
-            if (!isTravelling(id)) {
+            // not while travelling or recharging and only until they hit zero
+            if (!isTravelling(id) && !isNearCharger(id)) {
                 // remove some energy
                 HashMap<String, Object> where = new HashMap<String, Object>();
                 where.put("tardis_id", id);
@@ -96,5 +98,27 @@ public class TARDISStandbyMode implements Runnable {
 
     private boolean isTravelling(int id) {
         return (plugin.getTrackerKeeper().getDematerialising().contains(id) || plugin.getTrackerKeeper().getMaterialising().contains(id) || plugin.getTrackerKeeper().getInVortex().contains(id));
+    }
+
+    /**
+     * Checks whether the TARDIS is near a recharge location.
+     */
+    private boolean isNearCharger(int id) {
+        HashMap<String, Object> where = new HashMap<String, Object>();
+        where.put("tardis_id", id);
+        ResultSetCurrentLocation rs = new ResultSetCurrentLocation(plugin, where);
+        if (!rs.resultSet()) {
+            return false;
+        }
+        if (rs.getWorld() == null) {
+            return false;
+        }
+        // get Police Box location
+        Location pb_loc = new Location(rs.getWorld(), rs.getX(), rs.getY(), rs.getZ());
+        // check location is within configured blocks of a recharger
+        for (Location l : plugin.getGeneralKeeper().getRechargers()) {
+            return plugin.getUtils().compareLocations(pb_loc, l);
+        }
+        return false;
     }
 }
