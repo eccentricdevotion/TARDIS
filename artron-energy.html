@@ -35,13 +35,14 @@
 		<h3>Time lord energy</h3>
 		<p>You, as a time traveller, build up energy over time as you travel. To transfer it to the TARDIS, right-click the wood button while sneaking (SHIFT by default).</p>
 		<h3>Checking how much energy you have</h3>
-		<p>If you right-click the wood button with any item that is <strong>NOT</strong> the TARDIS key, then the current percentage of full charge is displayed. *See the next section...</p>
+		<p>If you right-click the wood button with any item that is <strong>NOT</strong> the TARDIS key, then the current percentage of full charge is displayed.</p>
 		<h3>Turning the power off and on</h3>
-		<p>If <code>allow.power_down</code> is <code>true</code> in the TARDIS config, then right-clicking the wood button with any item that is <strong>NOT</strong> the TARDIS key toggles the power up or down. When powered <em>down</em> the console lights and beacon and turned off, and access to any function that requires power is denied.</p>
+		<p>If <code>allow.power_down</code> is <code>true</code> in the TARDIS config, then right-clicking the wood button with the TARDIS key toggles the power up or down. When powered <em>down</em> the console lights and beacon are turned off, and access to any function that requires power is denied.</p>
 		<p>The TARDIS will automatically power down if the Artron Energy levels reach zero, and will not be able to power up again until more energy is transferred to the capacitor (either by Time Lord transfer or via the Artron Condenser).</p>
 		<p>If powered down, and the TARDIS is hidden, it will become visible again due to power loss.</p>
+		<p>You can remotely power up the TARDIS (if it has sufficient power) by right-clicking AIR with the Stattenheim Remote.</p>
 		<h3>Power standby mode</h3>
-		<p>By default (as of TARDIS v2.9) the TARDIS uses a small amount of Artron Energy when powered on, but not actively doing anything (like travelling). To prevent power use in standby mode, you should power down the TARDIS.</p>
+		<p>By default (as of TARDIS v2.9) the TARDIS uses a small amount of Artron Energy when powered on, but not actively doing anything (like travelling or recharging). To prevent power use in standby mode, you should power down the TARDIS.</p>
 		<p>You can configure how often and how much energy is used in <em>artron.yml</em> &mdash; see the <a href="configuration-energy.html">Artron Configuration</a> page.</p>
 		<h3>Power up/down/standby config options</h3>
 		<ul>
