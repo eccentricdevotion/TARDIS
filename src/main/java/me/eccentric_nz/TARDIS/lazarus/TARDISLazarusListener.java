@@ -66,7 +66,7 @@ public class TARDISLazarusListener implements Listener {
                         HashMap<String, Object> wheret = new HashMap<String, Object>();
                         wheret.put("tardis_id", rsc.getTardis_id());
                         ResultSetTardis rs = new ResultSetTardis(plugin, wheret, "", false);
-                        if (!rs.isPowered_on()) {
+                        if (rs.resultSet() && !rs.isPowered_on()) {
                             TARDISMessage.send(player, "POWER_DOWN");
                             return;
                         }
