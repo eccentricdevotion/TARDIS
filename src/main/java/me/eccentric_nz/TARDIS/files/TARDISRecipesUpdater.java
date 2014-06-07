@@ -97,6 +97,27 @@ public class TARDISRecipesUpdater {
                 i++;
             }
         }
+        if (!recipes_config.contains("shaped.Painter Circuit")) {
+            recipes_config.set("shaped.Painter Circuit.easy_shape", "-I-,DGD,-I-");
+            recipes_config.set("shaped.Painter Circuit.easy_ingredients.I", "INK_SACK:0");
+            recipes_config.set("shaped.Painter Circuit.easy_ingredients.D", "INK_SACK:5");
+            recipes_config.set("shaped.Painter Circuit.easy_ingredients.G", "GOLD_NUGGET");
+            recipes_config.set("shaped.Painter Circuit.hard_shape", "-B-,-F-,-B-");
+            recipes_config.set("shaped.Painter Circuit.hard_ingredients.I", "INK_SACK:0");
+            recipes_config.set("shaped.Painter Circuit.hard_ingredients.D", "INK_SACK:5");
+            recipes_config.set("shaped.Painter Circuit.hard_ingredients.G", "GOLD_BLOCK");
+            recipes_config.set("shaped.Painter Circuit.result", "MAP:1979");
+            recipes_config.set("shaped.Painter Circuit.amount", 1);
+            recipes_config.set("shaped.Painter Circuit.lore", "");
+            i++;
+        }
+        if (!recipes_config.contains("shapeless.Painter Upgrade")) {
+            recipes_config.set("shapeless.Painter Upgrade.recipe", "BLAZE_ROD,MAP:1979");
+            recipes_config.set("shapeless.Painter Upgrade.result", "BLAZE_ROD");
+            recipes_config.set("shapeless.Painter Upgrade.amount", 1);
+            recipes_config.set("shapeless.Painter Upgrade.lore", "");
+            i++;
+        }
         try {
             recipes_config.save(new File(plugin.getDataFolder(), "recipes.yml"));
             if (i > 0) {

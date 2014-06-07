@@ -322,6 +322,20 @@ shaped:
         result: 'MAP:1972'
         amount: 1
         lore: ""
+    Painter Circuit:
+        easy_shape: -I-,DGD,-I-
+        easy_ingredients:
+            I: 'INK_SACK:0'
+            D: 'INK_SACK:5'
+            G: GOLD_NUGGET
+        hard_shape: -I-,DGD,-I-
+        hard_ingredients:
+            I: 'INK_SACK:0'
+            D: 'INK_SACK:5'
+            G: GOLD_BLOCK
+        result: 'MAP:1979'
+        amount: 1
+        lore: ""
     Artron Storage Cell:
         easy_shape: -B-,-R-,-L-
         easy_ingredients:
@@ -406,6 +420,11 @@ shapeless:
         lore: ""
     Emerald Upgrade:
         recipe: 'BLAZE_ROD,MAP:1972'
+        result: BLAZE_ROD
+        amount: 1
+        lore: ""
+    Painter Upgrade:
+        recipe: 'BLAZE_ROD,MAP:1979'
         result: BLAZE_ROD
         amount: 1
         lore: ""

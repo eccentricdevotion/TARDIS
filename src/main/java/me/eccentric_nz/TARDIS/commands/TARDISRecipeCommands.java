@@ -74,6 +74,7 @@ public class TARDISRecipeCommands implements CommandExecutor {
         firstArgs.add("m-circuit"); // Materialisation Circuit
         firstArgs.add("memory-circuit"); // Memory Circuit
         firstArgs.add("oscillator"); // Sonic Oscillator
+        firstArgs.add("painter"); // Painter Circuit
         firstArgs.add("p-circuit"); // Perception Circuit
         firstArgs.add("player-disk"); // Player Storage Disk
         firstArgs.add("preset-disk"); // Preset Storage Disk
@@ -219,6 +220,10 @@ public class TARDISRecipeCommands implements CommandExecutor {
             }
             if (args[0].equalsIgnoreCase("p-circuit")) {
                 this.showShapedRecipe(player, "Perception Circuit");
+                return true;
+            }
+            if (args[0].equalsIgnoreCase("painter")) {
+                this.showShapedRecipe(player, "Painter Circuit");
                 return true;
             }
             if (args[0].equalsIgnoreCase("player-disk")) {

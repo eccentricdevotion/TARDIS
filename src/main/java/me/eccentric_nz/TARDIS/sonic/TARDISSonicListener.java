@@ -82,6 +82,7 @@ public class TARDISSonicListener implements Listener {
     private final List<Material> redstone = new ArrayList<Material>();
     private final List<UUID> frozenPlayers = new ArrayList<UUID>();
     private final List<BlockFace> faces = new ArrayList<BlockFace>();
+    private final List<Material> paintable = new ArrayList<Material>();
 
     public TARDISSonicListener(TARDIS plugin) {
         this.plugin = plugin;
@@ -138,6 +139,11 @@ public class TARDISSonicListener implements Listener {
         faces.add(BlockFace.WEST);
         faces.add(BlockFace.UP);
         faces.add(BlockFace.DOWN);
+        this.paintable.add(Material.CARPET);
+        this.paintable.add(Material.STAINED_CLAY);
+        this.paintable.add(Material.STAINED_GLASS);
+        this.paintable.add(Material.STAINED_GLASS_PANE);
+        this.paintable.add(Material.WOOL);
     }
 
     @SuppressWarnings("deprecation")
@@ -416,46 +422,88 @@ public class TARDISSonicListener implements Listener {
                 }
                 if (action.equals(Action.LEFT_CLICK_BLOCK)) {
                     Block b = event.getClickedBlock();
-                    if (diamond.contains(b.getType()) && player.hasPermission("tardis.sonic.diamond") && lore != null && lore.contains("Diamond Upgrade")) {
-                        // check the block is not protected by WorldGuard
-                        if (plugin.isWorldGuardOnServer()) {
-                            if (!plugin.getWorldGuardUtils().canBreakBlock(player, b)) {
-                                TARDISMessage.send(player, "SONIC_PROTECT");
-                                return;
+                    if (!player.isSneaking()) {
+                        if (diamond.contains(b.getType()) && player.hasPermission("tardis.sonic.diamond") && lore != null && lore.contains("Diamond Upgrade")) {
+                            // check the block is not protected by WorldGuard
+                            if (plugin.isWorldGuardOnServer()) {
+                                if (!plugin.getWorldGuardUtils().canBreakBlock(player, b)) {
+                                    TARDISMessage.send(player, "SONIC_PROTECT");
+                                    return;
+                                }
+                            }
+                            playSonicSound(player, now, 600L, "sonic_short");
+                            // drop appropriate material
+                            if (player.hasPermission("tardis.sonic.silktouch")) {
+                                Location l = b.getLocation();
+                                switch (b.getType()) {
+                                    case GLASS:
+                                        l.getWorld().dropItemNaturally(l, new ItemStack(Material.GLASS, 1));
+                                        break;
+                                    case IRON_FENCE:
+                                        l.getWorld().dropItemNaturally(l, new ItemStack(Material.IRON_FENCE, 1));
+                                        break;
+                                    case STAINED_GLASS:
+                                        l.getWorld().dropItemNaturally(l, new ItemStack(Material.STAINED_GLASS, 1, b.getData()));
+                                        break;
+                                    case STAINED_GLASS_PANE:
+                                        l.getWorld().dropItemNaturally(l, new ItemStack(Material.STAINED_GLASS_PANE, 1, b.getData()));
+                                        break;
+                                    case THIN_GLASS:
+                                        l.getWorld().dropItemNaturally(l, new ItemStack(Material.THIN_GLASS, 1));
+                                        break;
+                                    case WEB:
+                                        l.getWorld().dropItemNaturally(l, new ItemStack(Material.WEB, 1));
+                                        break;
+                                    default:
+                                        break;
+                                }
+                                l.getWorld().playSound(l, Sound.SHEEP_SHEAR, 1.0F, 1.5F);
+                                // set the block to AIR
+                                b.setType(Material.AIR);
+                            } else {
+                                b.breakNaturally();
+                                b.getLocation().getWorld().playSound(b.getLocation(), Sound.SHEEP_SHEAR, 1.0F, 1.5F);
                             }
                         }
-                        playSonicSound(player, now, 600L, "sonic_short");
-                        // drop appropriate material
-                        if (player.hasPermission("tardis.sonic.silktouch")) {
-                            Location l = b.getLocation();
-                            switch (b.getType()) {
-                                case GLASS:
-                                    l.getWorld().dropItemNaturally(l, new ItemStack(Material.GLASS, 1));
-                                    break;
-                                case IRON_FENCE:
-                                    l.getWorld().dropItemNaturally(l, new ItemStack(Material.IRON_FENCE, 1));
-                                    break;
-                                case STAINED_GLASS:
-                                    l.getWorld().dropItemNaturally(l, new ItemStack(Material.STAINED_GLASS, 1, b.getData()));
-                                    break;
-                                case STAINED_GLASS_PANE:
-                                    l.getWorld().dropItemNaturally(l, new ItemStack(Material.STAINED_GLASS_PANE, 1, b.getData()));
-                                    break;
-                                case THIN_GLASS:
-                                    l.getWorld().dropItemNaturally(l, new ItemStack(Material.THIN_GLASS, 1));
-                                    break;
-                                case WEB:
-                                    l.getWorld().dropItemNaturally(l, new ItemStack(Material.WEB, 1));
-                                    break;
-                                default:
-                                    break;
+                    } else {
+                        if (paintable.contains(b.getType()) && player.hasPermission("tardis.sonic.paint") && lore != null && lore.contains("Painter Upgrade")) {
+                            // must be in TARDIS world
+                            if (!plugin.getUtils().inTARDISWorld(player)) {
+                                TARDISMessage.send(player, "UPDATE_IN_WORLD");
+                                return;
                             }
-                            l.getWorld().playSound(l, Sound.SHEEP_SHEAR, 1.0F, 1.5F);
-                            // set the block to AIR
-                            b.setType(Material.AIR);
-                        } else {
-                            b.breakNaturally();
-                            b.getLocation().getWorld().playSound(b.getLocation(), Sound.SHEEP_SHEAR, 1.0F, 1.5F);
+                            // check the block is not protected by WorldGuard
+                            if (plugin.isWorldGuardOnServer()) {
+                                if (!plugin.getWorldGuardUtils().canBreakBlock(player, b)) {
+                                    TARDISMessage.send(player, "SONIC_PROTECT");
+                                    return;
+                                }
+                            }
+                            playSonicSound(player, now, 600L, "sonic_short");
+                            // check for dye in slot
+                            PlayerInventory inv = player.getInventory();
+                            ItemStack dye = inv.getItem(8);
+                            if (dye == null || !dye.getType().equals(Material.INK_SACK)) {
+                                player.sendMessage("There must be a dye in your last hotbar slot!");
+                                return;
+                            }
+                            byte dye_data = dye.getData().getData();
+                            byte block_data = b.getData();
+                            byte new_data = (byte) (15 - dye_data);
+                            // don't do anything if it is the same colour
+                            if (new_data == block_data) {
+                                return;
+                            }
+                            // remove one dye
+                            int a = dye.getAmount();
+                            int a2 = a - 1;
+                            if (a2 > 0) {
+                                inv.getItem(8).setAmount(a2);
+                            } else {
+                                inv.setItem(8, null);
+                            }
+                            player.updateInventory();
+                            b.setData(new_data, true);
                         }
                     }
                 }
