@@ -1,6 +1,6 @@
 #TODO
 
-##Current version `2.9-beta-2`
+##Current version `2.9`
 
 ###Bugs
 ? probably ...
@@ -18,7 +18,6 @@
 5. Remote locking, advanced hide and rebuild via remote key
 6. TARDIS creation area config
 7. Travelling to save should check for clear space...
-8. Sonic painter upgrade for stained glass, clay and wool
 
 ###I couldn't really be bothered
 1. HADS + explosions + fireballs + lava
