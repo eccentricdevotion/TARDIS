@@ -26,6 +26,66 @@
 	<section>
 		<h1>Change log</h1>
 		<h2>What&rsquo;s been changed?</h2>
+		<h3>v2.9</h3>
+		<p>Please view the change logs for TARDIS v2.9-beta-1 and v2.9-beta-2 below as well!</p>
+		<h4>Additions</h4>
+		<ul>
+			<li>Added a war doctor&rsquo;s TARDIS (MCPatcher and TARDIS-MCP resource pack recommended) &mdash; seed block is STAINED_CLAY</li>
+			<li>Added Whovian food:
+				<ul>
+					<li>Jelly babies &mdash; <code>/tardisrecipe jelly-baby</code></li>
+					<li>Fish fingers &mdash; <code>/tardisrecipe fish-finger</code></li>
+					<li>Bowl of custard &mdash; <code>/tardisrecipe custard</code></li>
+					<li>Jammy Dodgers &mdash; <code>/tardisrecipe jammy-dodger</code></li>
+					<li>http://eccentricdevotion.github.io/TARDIS/food.html</li>
+				</ul>
+			</li>
+			<li>Added <code>/tardisrecipe tardis [type]</code> command to view TARDIS seed block recipes</li>
+			<li>Right-cliking AIR with the Stattenheim Remote powers on TARDIS (if it is powered down) from anywhere in the world</li>
+			<li>Added a Sonic Screwdriver Painter Upgrade to change block colours inside the TARDIS
+				<ul>
+					<li>Move new TARDIS map file (map<em>1979.dat) to correct location (</em>server/main world/data_ folder)</li>
+					<li>Craft Painter Circuit &mdash; <code>/tardisrecipe painter</code></li>
+					<li>Upgrade your sonic</li>
+					<li>Place dye in last (right-most) hotbar slot</li>
+					<li>SHIFT-LEFT-click wool, carpet, stained glass, stained glass panes and stained clay to change block colour to colour of dye in the slot</li>
+					<li>Must be in TARDIS!</li>
+				</ul>
+			</li>
+		</ul>
+		<h4>Resource packs</h4>
+		<p>The TARDIS-MCP resource pack has been updated, get it here: <a href="https://github.com/eccentricdevotion/TARDIS-MCP">TARDIS-MCP resource pack</a> &mdash; read the installation instructions!</p>
+		<ul>
+			<li>New Whovian food textures</li>
+			<li>New TARDIS roundel texture for war doctor&rsquo;s TARDIS</li>
+			<li>New &lsquo;The Moment&rsquo; texture &mdash; use (red) HUGE_MUSHROOM_2 with cap texture on all sides (<code>/give [player] 100:14 1</code>)</li>
+			<li>Updated storage disk textures with easier to read labels (thanks to WonkoTheSane)</li>
+			<li>Added CIT Weeping Angel, Cyberman and Ice Warrior textures</li>
+			<li>New fob watch texture &mdash; rename a clock to &lsquo;Fob Watch&rsquo;</li>
+			<li>New &lsquo;slimmer&rsquo; Police Box textures &mdash; see: <a href="http://dev.bukkit.org/bukkit-plugins/tardis/tickets/688-tardis-mcpatcher-texture-support/?comment=394">TARDIS ticket #688</a>
+				<ul>
+					<li>must be in a DEEP_OCEAN biome with doors facing South</li>
+					<li>door closed &mdash; blue stained clay</li>
+					<li>door open &mdash; change right column to light blue stained clay</li>
+				</ul>
+			</li>
+		</ul>
+		<h4>Changes</h4>
+		<ul>
+			<li>The TARDIS now automatically powers down if it runs out of energy</li>
+			<li>To power up or down the TARDIS players must must have the TARDIS key in hand</li>
+			<li>Reverted back to the old behaviour of clicking Artron button with NO key in hand to show the current power level </li>
+			<li>Added snowy biomes to <code>set_biome</code> umbrella</li>
+		</ul>
+		<h4>Bug fixes</h4>
+		<ul>
+			<li>Fixed chest contents being spat out, and the chest replaced when the TARDIS lands directly on a chest</li>
+			<li>Fixed door lock message</li>
+			<li>Fixed broken TARDIS deletion</li>
+			<li>Fixed the Genetic Manipulator not working even though the power was on</li>
+			<li>Power is not removed in standby mode if the TARDIS is at a recharge point</li>
+			<li>Fixed the Artron creeper not being able to spawn &mdash; you may need to edit your TARDIS world&rsquo;s WorldGuard region and remove the <code>mob_spawning: deny</code> flag...</li>
+		</ul>
 		<h3>v2.9-beta-2</h3>
 		<p>The TARDIS resource packs have also been updated, get them here:</p>
 		<ul>
