@@ -366,9 +366,9 @@ public class TARDISARSMethods {
                                 delay += period;
                             }
                         } else {
-                            TARDISMessage.send(p, tap.getError());
                             // reset map to the previous version
                             revert(uuid);
+                            TARDISMessage.send(p, tap.getError());
                         }
                     } else {
                         TARDISMessage.send(p, "ROOM_ONLY_TL");

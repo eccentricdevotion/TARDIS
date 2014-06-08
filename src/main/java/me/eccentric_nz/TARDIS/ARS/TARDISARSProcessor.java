@@ -31,7 +31,7 @@ public class TARDISARSProcessor {
 
     private final TARDIS plugin;
     private final int id;
-    private String error;
+    private String error = "ENERGY_NOT_ENOUGH";
     private HashMap<TARDISARSSlot, ARS> changed;
     private HashMap<TARDISARSJettison, ARS> jettison;
 
