@@ -5,11 +5,6 @@
 ###Bugs
 ? probably ...
 
-###In progress
-1. Artron button powers on/off TARDIS after initialisation
-2. UHC flying mode
-3. MCPatcher texture support
-
 ##Future version `3.0+`
 1. Console modes / grace period on hard mode?
 2. ARS room limit - can only reconfigure x rooms at a time (and cannot open ARS until reconfiguration is complete) - configurable option
@@ -17,7 +12,7 @@
 4. Chameleon Arch / Fob watch
 5. Remote locking, advanced hide and rebuild via remote key
 6. TARDIS creation area config
-7. Travelling to save should check for clear space...
+7. MCPatcher texture support
 
 ###I couldn't really be bothered
 1. HADS + explosions + fireballs + lava
@@ -37,8 +32,11 @@ Re-skin mobs for Resource pack, and add new mob sounds
 * Endermen -> The Silence
 * Creepers -> Daleks
 * Slimes -> Adipose
-* Witches -> Empty Child - __done__
+* Zombie babies -> Empty Child - __done__
+* Witches -> Silurians
 * Villagers -> Ood
+* ? -> Zygons
+* ? -> Sontarans
 
 ##Waiting on Minecraft/Bukkit update
 
