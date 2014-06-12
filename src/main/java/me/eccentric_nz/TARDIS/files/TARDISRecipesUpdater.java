@@ -102,7 +102,7 @@ public class TARDISRecipesUpdater {
             recipes_config.set("shaped.Painter Circuit.easy_ingredients.I", "INK_SACK:0");
             recipes_config.set("shaped.Painter Circuit.easy_ingredients.D", "INK_SACK:5");
             recipes_config.set("shaped.Painter Circuit.easy_ingredients.G", "GOLD_NUGGET");
-            recipes_config.set("shaped.Painter Circuit.hard_shape", "-B-,-F-,-B-");
+            recipes_config.set("shaped.Painter Circuit.hard_shape", "-I-,DGD,-I-");
             recipes_config.set("shaped.Painter Circuit.hard_ingredients.I", "INK_SACK:0");
             recipes_config.set("shaped.Painter Circuit.hard_ingredients.D", "INK_SACK:5");
             recipes_config.set("shaped.Painter Circuit.hard_ingredients.G", "GOLD_BLOCK");

@@ -12,7 +12,7 @@
 4. Chameleon Arch / Fob watch
 5. Remote locking, advanced hide and rebuild via remote key
 6. TARDIS creation area config
-7. MCPatcher texture support
+7. More MCPatcher texture support
 
 ###I couldn't really be bothered
 1. HADS + explosions + fireballs + lava
@@ -25,18 +25,18 @@
 Re-skin mobs for Resource pack, and add new mob sounds
 
 * Skeletons -> Weeping Angels - __done__
-* Wither Skeletons -> Vashta Nerada
+* (Wither?) Skeletons -> Vashta Nerada
 * Wolves -> K-9
 * Zombies -> Cybermen - __done__
 * Pigmen -> Ice Warriors - __done__
 * Endermen -> The Silence
-* Creepers -> Daleks
+* Snow Golems -> Daleks
 * Slimes -> Adipose
 * Zombie babies -> Empty Child - __done__
-* Witches -> Silurians
+* Skeletons -> Silurians - _Started_
 * Villagers -> Ood
-* ? -> Zygons
-* ? -> Sontarans
+* Zombies -> Zygons - __done__
+* PigZombies -> Sontarans
 
 ##Waiting on Minecraft/Bukkit update
 
