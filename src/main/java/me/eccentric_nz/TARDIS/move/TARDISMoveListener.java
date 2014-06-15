@@ -77,7 +77,13 @@ public class TARDISMoveListener implements Listener {
             List<UUID> companions = new ResultSetCompanions(plugin, id).getCompanions();
             if (companions.contains(uuid)) {
                 Location to = tpl.getLocation();
-                boolean exit = !(to.getWorld().getName().contains("TARDIS"));
+                boolean exit;
+                if (plugin.getConfig().getBoolean("creation.default_world")) {
+                    // check default world name
+                    exit = !(to.getWorld().getName().equals(plugin.getConfig().getString("creation.default_world_name")));
+                } else {
+                    exit = !(to.getWorld().getName().contains("TARDIS"));
+                }
                 // adjust player yaw for to
                 float yaw = (exit) ? p.getLocation().getYaw() + 180.0f : p.getLocation().getYaw();
                 COMPASS d = COMPASS.valueOf(plugin.getUtils().getPlayersDirection(p, false));
