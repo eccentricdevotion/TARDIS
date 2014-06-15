@@ -13,6 +13,7 @@
 5. Remote locking, advanced hide and rebuild via remote key
 6. TARDIS creation area config
 7. More MCPatcher texture support
+8. Add snow to Diamond Disruptor Sonic Screwdriver
 
 ###I couldn't really be bothered
 1. HADS + explosions + fireballs + lava
@@ -24,19 +25,21 @@
 
 Re-skin mobs for Resource pack, and add new mob sounds
 
-* Skeletons -> Weeping Angels - __done__
 * (Wither?) Skeletons -> Vashta Nerada
 * Wolves -> K-9
-* Zombies -> Cybermen - __done__
-* Pigmen -> Ice Warriors - __done__
 * Endermen -> The Silence
-* Snow Golems -> Daleks
 * Slimes -> Adipose
-* Zombie babies -> Empty Child - __done__
-* Skeletons -> Silurians - _Started_
 * Villagers -> Ood
+* Villagers -> Hath
+* PigZombies -> Strax / Butler _started_
+* PigZombies -> Sontarans - __done__
+* Skeletons -> Weeping Angels - __done__
+* Skeletons disguised as Snow Golems -> Daleks - __done__
+* Skeletons -> Silurians - __done__
+* PigZombies -> Ice Warriors - __done__
+* Zombie babies -> Empty Child - __done__
 * Zombies -> Zygons - __done__
-* PigZombies -> Sontarans
+* Zombies -> Cybermen - __done__
 
 ##Waiting on Minecraft/Bukkit update
 
