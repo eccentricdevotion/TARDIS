@@ -93,6 +93,7 @@ allow:
     zero_room: false
     external_gravity: false
     power_down: false
+    power_down_on_quit: false
 # room related
 growth:
     gravity_max_distance: 15

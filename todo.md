@@ -1,6 +1,8 @@
 #TODO
 
 ##Current version `2.9`
+* Power down on quit - check can power up again!
+* Add power up / down status to Artron Indicator
 
 ###Bugs
 ? probably ...
@@ -31,7 +33,7 @@ Re-skin mobs for Resource pack, and add new mob sounds
 * Slimes -> Adipose
 * Villagers -> Ood
 * Villagers -> Hath
-* PigZombies -> Strax / Butler _started_
+* PigZombies -> Strax / Butler (allow milking) _started_
 * PigZombies -> Sontarans - __done__
 * Skeletons -> Weeping Angels - __done__
 * Skeletons disguised as Snow Golems -> Daleks - __done__
