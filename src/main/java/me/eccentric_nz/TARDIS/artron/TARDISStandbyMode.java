@@ -49,13 +49,14 @@ public class TARDISStandbyMode implements Runnable {
         QueryFactory qf = new QueryFactory(plugin);
         for (final Map.Entry<Integer, StandbyData> map : ids.entrySet()) {
             final int id = map.getKey();
+            int level = map.getValue().getLevel();
             // not while travelling or recharging and only until they hit zero
-            if (!isTravelling(id) && !isNearCharger(id)) {
+            if (!isTravelling(id) && !isNearCharger(id) && level > amount) {
                 // remove some energy
                 HashMap<String, Object> where = new HashMap<String, Object>();
                 where.put("tardis_id", id);
                 qf.alterEnergyLevel("tardis", -amount, where, null);
-            } else if (map.getValue().getLevel() <= amount) {
+            } else if (level <= amount) {
                 // power down!
                 HashMap<String, Object> wherep = new HashMap<String, Object>();
                 wherep.put("tardis_id", id);
