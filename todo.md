@@ -1,8 +1,6 @@
 #TODO
 
 ##Current version `2.9`
-* Check `inTARDISWorld()` method caters for default world name not including "TARDIS"
-* Add power up / down status to Artron Indicator
 
 ###Bugs
 ? probably ...

@@ -22,14 +22,10 @@ import java.util.List;
 import java.util.Locale;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
-import me.eccentric_nz.tardischunkgenerator.TARDISChunkGenerator;
-import org.bukkit.World;
-import org.bukkit.WorldType;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
-import org.bukkit.generator.ChunkGenerator;
 
 /**
  * Command /tardisgravity [arguments].
@@ -83,12 +79,16 @@ public class TARDISGravityCommands implements CommandExecutor {
             }
             if (!plugin.getConfig().getBoolean("allow.external_gravity")) {
                 // check they are still in the TARDIS world
-                World world = player.getLocation().getWorld();
-                String name = world.getName();
-                ChunkGenerator gen = world.getGenerator();
-                boolean special = name.contains("TARDIS_TimeVortex") && (world.getWorldType().equals(WorldType.FLAT) || gen instanceof TARDISChunkGenerator);
-                if (!name.equals("TARDIS_WORLD_" + player.getName()) && !special) {
-                    String mess_stub = (name.contains("TARDIS_WORLD_")) ? "GRAVITY_OWN_WORLD" : "GRAVITY_A_WORLD";
+//                World world = player.getLocation().getWorld();
+//                String name = world.getName();
+//                ChunkGenerator gen = world.getGenerator();
+//                String dn = "TARDIS_TimeVortex";
+//                if (plugin.getConfig().getBoolean("creation.default_world")) {
+//                    dn = plugin.getConfig().getString("creation.default_world_name");
+//                }
+//                boolean special = (name.equals(dn) && (world.getWorldType().equals(WorldType.FLAT) || gen instanceof TARDISChunkGenerator));
+                if (!plugin.getUtils().inTARDISWorld(player)) {
+                    String mess_stub = (player.getLocation().getWorld().getName().contains("TARDIS_WORLD_")) ? "GRAVITY_OWN_WORLD" : "GRAVITY_A_WORLD";
                     TARDISMessage.send(player, mess_stub);
                     return true;
                 }

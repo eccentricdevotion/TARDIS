@@ -450,7 +450,11 @@ public class TARDISUtils {
         World room_world = plugin.getServer().getWorld(data[0]);
         ChunkGenerator gen = room_world.getGenerator();
         WorldType wt = room_world.getWorldType();
-        boolean special = (data[0].contains("TARDIS_TimeVortex") && (wt.equals(WorldType.FLAT) || gen instanceof TARDISChunkGenerator));
+        String dn = "TARDIS_TimeVortex";
+        if (plugin.getConfig().getBoolean("creation.default_world")) {
+            dn = plugin.getConfig().getString("creation.default_world_name");
+        }
+        boolean special = (data[0].equals(dn) && (wt.equals(WorldType.FLAT) || gen instanceof TARDISChunkGenerator));
         return (data[0].contains("TARDIS_WORLD_") || special);
     }
 
@@ -620,7 +624,12 @@ public class TARDISUtils {
         World world = player.getLocation().getWorld();
         String name = world.getName();
         ChunkGenerator gen = world.getGenerator();
-        boolean special = (name.contains("TARDIS_TimeVortex") && (world.getWorldType().equals(WorldType.FLAT) || gen instanceof TARDISChunkGenerator));
+        // get default world name
+        String dn = "TARDIS_TimeVortex";
+        if (plugin.getConfig().getBoolean("creation.default_world")) {
+            dn = plugin.getConfig().getString("creation.default_world_name");
+        }
+        boolean special = (name.equals(dn) && (world.getWorldType().equals(WorldType.FLAT) || gen instanceof TARDISChunkGenerator));
         return name.equals("TARDIS_WORLD_" + player.getName()) || special;
     }
 

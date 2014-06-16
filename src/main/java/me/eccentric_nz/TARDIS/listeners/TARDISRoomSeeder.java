@@ -32,12 +32,9 @@ import me.eccentric_nz.TARDIS.rooms.TARDISRoomBuilder;
 import me.eccentric_nz.TARDIS.rooms.TARDISRoomDirection;
 import me.eccentric_nz.TARDIS.rooms.TARDISSeedData;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
-import me.eccentric_nz.tardischunkgenerator.TARDISChunkGenerator;
 import org.bukkit.Chunk;
 import org.bukkit.Location;
 import org.bukkit.Material;
-import org.bukkit.World;
-import org.bukkit.WorldType;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 import org.bukkit.entity.Player;
@@ -45,7 +42,6 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerInteractEvent;
-import org.bukkit.generator.ChunkGenerator;
 
 /**
  * The Doctor kept some of the clothes from his previous regenerations, as well
@@ -102,11 +98,16 @@ public class TARDISRoomSeeder implements Listener {
             // only proceed if they are clicking a seed block with the TARDIS key!
             if (plugin.getBuildKeeper().getSeeds().containsKey(blockType) && inhand.equals(Material.getMaterial(key))) {
                 // check they are still in the TARDIS world
-                World world = block.getLocation().getWorld();
-                String name = world.getName();
-                ChunkGenerator gen = world.getGenerator();
-                boolean special = name.contains("TARDIS_TimeVortex") && (world.getWorldType().equals(WorldType.FLAT) || gen instanceof TARDISChunkGenerator);
-                if (!name.equals("TARDIS_WORLD_" + player.getName()) && !special) {
+//                World world = block.getLocation().getWorld();
+//                String name = world.getName();
+//                ChunkGenerator gen = world.getGenerator();
+//                String dn = "TARDIS_TimeVortex";
+//                if (plugin.getConfig().getBoolean("creation.default_world")) {
+//                    dn = plugin.getConfig().getString("creation.default_world_name");
+//                }
+//                boolean special = (name.equals(dn) && (world.getWorldType().equals(WorldType.FLAT) || gen instanceof TARDISChunkGenerator));
+//                if (!name.equals("TARDIS_WORLD_" + player.getName()) && !special) {
+                if (!plugin.getUtils().inTARDISWorld(player)) {
                     TARDISMessage.send(player, "ROOM_IN_WORLD");
                     return;
                 }
