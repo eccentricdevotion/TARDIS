@@ -1,6 +1,8 @@
 #TODO
 
-##Current version `2.9`
+##Current version `2.9.1`
+* Add /tpa equivalent to travel to player's WorldGuard region
+* Add fence gates to emerald sonic ignore blocks
 
 ###Bugs
 ? probably ...
@@ -25,12 +27,13 @@
 
 Re-skin mobs for Resource pack, and add new mob sounds
 
-* (Wither?) Skeletons -> Vashta Nerada
+* (Wither?) Skeletons -> Vashta Nerada (breaking a bookcase gives a random chance of one spawning at that location)
 * Wolves -> K-9
 * Endermen -> The Silence
 * Slimes -> Adipose
 * Villagers -> Ood
 * Villagers -> Hath
+* Iron Golem -> Gunslinger
 * PigZombies -> Strax / Butler (allow milking) _started_
 * PigZombies -> Sontarans - __done__
 * Skeletons -> Weeping Angels - __done__

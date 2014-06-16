@@ -110,6 +110,11 @@ public class TARDISRecipesUpdater {
             recipes_config.set("shaped.Painter Circuit.amount", 1);
             recipes_config.set("shaped.Painter Circuit.lore", "");
             i++;
+        } else {
+            // fix the hard recipe if necessary
+            if (recipes_config.get("shaped.Painter Circuit.hard_shape").equals("-B-,-F-,-B-")) {
+                recipes_config.set("shaped.Painter Circuit.hard_shape", "-I-,DGD,-I-");
+            }
         }
         if (!recipes_config.contains("shapeless.Painter Upgrade")) {
             recipes_config.set("shapeless.Painter Upgrade.recipe", "BLAZE_ROD,MAP:1979");
