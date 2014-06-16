@@ -1,7 +1,7 @@
 #TODO
 
 ##Current version `2.9`
-* Power down on quit - check can power up again!
+* Check `inTARDISWorld()` method caters for default world name not including "TARDIS"
 * Add power up / down status to Artron Indicator
 
 ###Bugs

@@ -82,6 +82,7 @@ public class TARDISAdminCommands implements CommandExecutor {
         firstsStr.put("respect_towny", "preferences");
         firstsStr.put("respect_worldguard", "preferences");
         firstsStr.put("sign_colour", "police_box");
+        firstsStr.put("add_regions", "");
         firstsStrArtron.add("full_charge_item");
         firstsStrArtron.add("jettison_seed");
         // boolean
@@ -191,6 +192,9 @@ public class TARDISAdminCommands implements CommandExecutor {
                     }
                     if (first.equals("reload")) {
                         return new TARDISReloadCommand(plugin).reloadConfig(sender);
+                    }
+                    if (first.equals("add_regions")) {
+                        return new TARDISAddRegionsCommand(plugin).doCheck(sender);
                     }
                 }
                 if (first.equals("list")) {

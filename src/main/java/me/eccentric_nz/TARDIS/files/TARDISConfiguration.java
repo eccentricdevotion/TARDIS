@@ -257,7 +257,7 @@ public class TARDISConfiguration {
         roomIntOptions.put("rooms.ZERO.offset", -4);
         // string
         strOptions.put("creation.custom_schematic_seed", "OBSIDIAN");
-        strOptions.put("creation.default_world_name", "myridiculouslylongworldnameiscalledcuthbert");
+        strOptions.put("creation.default_world_name", "TARDIS_TimeVortex");
         strOptions.put("creation.gamemode", "survival");
         strOptions.put("police_box.sign_colour", "WHITE");
         strOptions.put("preferences.default_key", "eleventh");

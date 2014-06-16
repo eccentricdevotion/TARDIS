@@ -12,7 +12,7 @@ creation:
     create_worlds: true
     create_worlds_with_perms: false
     default_world: false
-    default_world_name: myridiculouslylongworldnameiscalledcuthbert
+    default_world_name: TARDIS_TimeVortex
     tips_limit: 400
     border_radius: 256
     gamemode: survival

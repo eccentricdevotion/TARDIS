@@ -170,14 +170,14 @@ public class TARDISWorldGuardUtils {
      * @param data a TIPS Data container
      * @param w the world we are creating the region in
      */
-    public void addWGProtection(Player p, TARDISTIPSData data, World w) {
+    public void addWGProtection(String p, TARDISTIPSData data, World w) {
         RegionManager rm = wg.getRegionManager(w);
         BlockVector b1 = new BlockVector(data.getMinX(), 0, data.getMinZ());
         BlockVector b2 = new BlockVector(data.getMaxX(), 256, data.getMaxZ());
-        String region_id = "tardis_" + p.getName();
+        String region_id = "tardis_" + p;
         ProtectedCuboidRegion region = new ProtectedCuboidRegion(region_id, b1, b2);
         DefaultDomain dd = new DefaultDomain();
-        dd.addPlayer(p.getName());
+        dd.addPlayer(p);
         region.setOwners(dd);
         HashMap<Flag<?>, Object> flags = new HashMap<Flag<?>, Object>();
         flags.put(DefaultFlag.ENTRY, State.DENY);

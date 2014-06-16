@@ -706,7 +706,7 @@ public class TARDISBuilderInner {
         if (plugin.isWorldGuardOnServer() && plugin.getConfig().getBoolean("preferences.use_worldguard")) {
             if (tips) {
                 if (pos != null) {
-                    plugin.getWorldGuardUtils().addWGProtection(p, pos, world);
+                    plugin.getWorldGuardUtils().addWGProtection(p.getName(), pos, world);
                 }
             } else {
                 plugin.getWorldGuardUtils().addWGProtection(p, wg1, wg2);
