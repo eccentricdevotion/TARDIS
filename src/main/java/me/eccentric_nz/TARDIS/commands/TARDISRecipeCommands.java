@@ -131,6 +131,10 @@ public class TARDISRecipeCommands implements CommandExecutor {
                 return true;
             }
             if (args[0].equalsIgnoreCase("tardis") && args.length == 2) {
+                if (!t.containsKey(args[1].toUpperCase())) {
+                    TARDISMessage.send(player, "ARG_NOT_VALID");
+                    return true;
+                }
                 this.showTARDISRecipe(player, args[1]);
                 return true;
             }
