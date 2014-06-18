@@ -55,13 +55,11 @@ public class TARDISBiomeUpdater implements Runnable {
                 while (rs.next()) {
                     if (rs.getString("biome").isEmpty()) {
                         String b = getBiome(rs.getString("world"), rs.getInt("x"), rs.getInt("y"), rs.getInt("z"));
-                        if (!b.isEmpty()) {
-                            HashMap<String, Object> where = new HashMap<String, Object>();
-                            where.put("current_id", rs.getInt("current_id"));
-                            HashMap<String, Object> set = new HashMap<String, Object>();
-                            set.put("biome", b);
-                            qf.doUpdate("current", set, where);
-                        }
+                        HashMap<String, Object> set = new HashMap<String, Object>();
+                        set.put("biome", b);
+                        HashMap<String, Object> where = new HashMap<String, Object>();
+                        where.put("current_id", rs.getInt("current_id"));
+                        qf.doUpdate("current", set, where);
                     }
                 }
             }
@@ -86,7 +84,7 @@ public class TARDISBiomeUpdater implements Runnable {
     private String getBiome(String w, int x, int y, int z) {
         World world = plugin.getServer().getWorld(w);
         if (world == null) {
-            return "";
+            return "PLAINS";
         }
         Location l = new Location(world, x, y, z);
         while (!world.getChunkAt(l).isLoaded()) {
