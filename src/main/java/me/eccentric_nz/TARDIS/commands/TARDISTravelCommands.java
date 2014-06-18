@@ -100,12 +100,9 @@ public class TARDISTravelCommands implements CommandExecutor {
                     TARDISMessage.send(player, "NO_TARDIS");
                     return true;
                 }
-                if (plugin.getConfig().getBoolean("allow.power_down") && !rs.isPowered_on()) {
-                    TARDISMessage.send(player, "POWER_DOWN");
-                    return true;
-                }
                 int id = rs.getTardis_id();
                 int level = rs.getArtron_level();
+                boolean powered = rs.isPowered_on();
                 if (!rs.isHandbrake_on()) {
                     TARDISMessage.send(player, "NOT_WHILE_TRAVELLING");
                     return true;
@@ -120,6 +117,10 @@ public class TARDISTravelCommands implements CommandExecutor {
                 int tardis_id = rst.getTardis_id();
                 if (tardis_id != id) {
                     TARDISMessage.send(player, "CMD_ONLY_TL");
+                    return true;
+                }
+                if (plugin.getConfig().getBoolean("allow.power_down") && !powered) {
+                    TARDISMessage.send(player, "POWER_DOWN");
                     return true;
                 }
                 int travel = plugin.getArtronConfig().getInt("travel");
