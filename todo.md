@@ -1,8 +1,6 @@
 #TODO
 
-##Current version `2.9.1`
-* Add /tpa equivalent to travel to player's WorldGuard region
-* Add fence gates to emerald sonic ignore blocks
+##Current version `2.9.2`
 
 ###Bugs
 ? probably ...
@@ -16,6 +14,8 @@
 6. TARDIS creation area config
 7. More MCPatcher texture support
 8. Add snow to Diamond Disruptor Sonic Screwdriver
+9. Server condenser
+10. Add `/tpa` equivalent to travel to player's WorldGuard region
 
 ###I couldn't really be bothered
 1. HADS + explosions + fireballs + lava
