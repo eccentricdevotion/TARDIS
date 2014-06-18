@@ -87,11 +87,8 @@
 		<p>You should only need to do this if you created a TARDIS before installing the multi-world plugin (and only if you&rsquo;re using an early version 2.0 beta of TARDIS)</p>
 		<p>If you are using <strong>Multiverse-Core</strong>:</p>
 		<pre><code>/mv import [world name] normal -g TARDISChunkGenerator -n
-/mv modify set animalsrate 0 [world name]
-/mv modify set monstersrate 0 [world name]
 /mv modify set hidden true [world name]
 /mv modify set weather false [world name]
-/mv modify set memory false [world name]
 /mv modify set portalform none [world name]
 /mv modify set pvp false [world name]</code></pre>
 		<p>Only the first command is required, but the TARDIS plugin sets the other world options as well by default.</p>
@@ -109,8 +106,6 @@
     difficulty: 2
     autoload: true
     flags:
-      SPAWNMONSTER: false
-      SPAWNANIMAL: false
       PVP: false
     spawnGroup: defaultGroup</code></pre>
 		<p><a href="#top">Back to top</a></p>
