@@ -119,7 +119,7 @@
 		<p><a href="#top">Back to top</a></p>
 		<h4 id="maps">The console says &ldquo;Could not find TARDIS map files, some recipes may not work!&rdquo;</h4>
 		<p>TARDIS requires some special <code>map.dat</code> files in order for some TARDIS recipes to work correctly. If you read the rest of the message in the server log, you will see that the required map files have been copied into the <em>Bukkit/plugins/TARDIS</em> folder. It then tells you where to put the copied map files &mdash; they go into the <code>data</code> folder of the server&rsquo;s main world folder (by default it is called &lsquo;world&rsquo;).</p>
-		<p>You need to move all the TARDIS map files (named <code>map_1963.dat</code> to <code>map_1978.dat</code>) in to the world data folder located at: <em>Bukkit/<strong>world</strong>/data</em> &mdash; substitute <em><strong>world</strong></em> for whatever the name of the server&rsquo;s main world is called.</p>
+		<p>You need to move all the TARDIS map files (named <code>map_1963.dat</code> to <code>map_1979.dat</code>) in to the world data folder located at: <em>Bukkit/<strong>world</strong>/data</em> &mdash; substitute <em><strong>world</strong></em> for whatever the name of the server&rsquo;s main world is called.</p>
 		<p><img src="images/docs/mapfiles.jpg" /></p>
 		<p><a href="#top">Back to top</a></p>
 		<h4 id="handbrake">My Handbrake is not re-engaging!</h4>
@@ -128,6 +128,7 @@
 		<h4 id="stat">I can&rsquo;t craft the Stattenheim Circuit!</h4>
 		<p>There are a couple of things you can try:</p>
 		<ul>
+		        <li>Assign more RAM to your server (in the startup script). Adding new recipes requires more memory!</li>
 			<li>Watch this video of the <a href="https://vimeo.com/83094452" target="_blank">Stattenheim Circuit being crafted</a> on a freshly installed server.</li>
 			<li>Set the TARDIS difficulty level to <code>easy</code> &mdash; the Stattenheim Remote doesn&rsquo;t use the Stattenheim Circuit in easy mode.</li>
 			<li>Change the recipe! All TARDIS item recipes are configurable as of TARDIS v2.7. Edit <em>recipes.yml</em>.</li>
