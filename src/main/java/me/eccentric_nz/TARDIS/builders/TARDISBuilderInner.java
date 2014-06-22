@@ -417,6 +417,9 @@ public class TARDISBuilderInner {
                                             case TOM:
                                                 control = 22;
                                                 break;
+                                            case WAR:
+                                                control = 159;
+                                                break;
                                             default:
                                                 break;
                                         }

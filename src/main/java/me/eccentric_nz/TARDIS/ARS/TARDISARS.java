@@ -58,7 +58,8 @@ public enum TARDISARS implements ARS {
     BIGGER(41, "BIGGER", "A Bigger Console", 0),
     PLANK(47, "PLANK", "Wood Console", 0),
     STEAMPUNK(173, "STEAMPUNK", "Steampunk Console", 0),
-    TOM(22, "TOM", "4th Doctor's Console", 0);
+    TOM(22, "TOM", "4th Doctor's Console", 0),
+    WAR(159, "WAR", "War Doctor's Console", 0);
     private final int id;
     private final String name;
     private final String descriptiveName;

@@ -59,8 +59,8 @@ public class TARDISARSMethods {
     public final HashMap<UUID, TARDISARSSaveData> save_map_data = new HashMap<UUID, TARDISARSSaveData>();
     public final HashMap<UUID, TARDISARSMapData> map_data = new HashMap<UUID, TARDISARSMapData>();
     public final String[] levels = new String[]{"Bottom level", "Main level", "Top level"};
-    public final List<TARDISARS> notrooms = Arrays.asList(TARDISARS.ARS, TARDISARS.BIGGER, TARDISARS.BUDGET, TARDISARS.DELUXE, TARDISARS.ELEVENTH, TARDISARS.JETTISON, TARDISARS.PLANK, TARDISARS.REDSTONE, TARDISARS.SLOT, TARDISARS.STEAMPUNK, TARDISARS.TOM);
-    public final List<Material> consoleBlocks = Arrays.asList(Material.IRON_BLOCK, Material.GOLD_BLOCK, Material.DIAMOND_BLOCK, Material.EMERALD_BLOCK, Material.REDSTONE_BLOCK, Material.COAL_BLOCK, Material.QUARTZ_BLOCK, Material.LAPIS_BLOCK, Material.BOOKSHELF);
+    public final List<TARDISARS> notrooms = Arrays.asList(TARDISARS.ARS, TARDISARS.BIGGER, TARDISARS.BUDGET, TARDISARS.DELUXE, TARDISARS.ELEVENTH, TARDISARS.JETTISON, TARDISARS.PLANK, TARDISARS.REDSTONE, TARDISARS.SLOT, TARDISARS.STEAMPUNK, TARDISARS.TOM, TARDISARS.WAR);
+    public final List<Material> consoleBlocks = Arrays.asList(Material.IRON_BLOCK, Material.GOLD_BLOCK, Material.DIAMOND_BLOCK, Material.EMERALD_BLOCK, Material.REDSTONE_BLOCK, Material.COAL_BLOCK, Material.QUARTZ_BLOCK, Material.LAPIS_BLOCK, Material.BOOKSHELF, Material.STAINED_CLAY);
     public final HashMap<UUID, Integer> ids = new HashMap<UUID, Integer>();
     public final List<UUID> hasLoadedMap = new ArrayList<UUID>();
 
