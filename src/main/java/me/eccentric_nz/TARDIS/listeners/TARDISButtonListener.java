@@ -86,6 +86,8 @@ public class TARDISButtonListener implements Listener {
         validBlocks.add(Material.WALL_SIGN);
         validBlocks.add(Material.NOTE_BLOCK);
         validBlocks.add(Material.JUKEBOX);
+        validBlocks.add(Material.STONE_PLATE);
+        validBlocks.add(Material.WOOD_PLATE);
         this.items = new TARDISTerminalInventory(this.plugin).getTerminal();
         this.tars = new TARDISARSInventory(this.plugin).getTerminal();
         this.clocks = new TARDISTemporalLocatorInventory(this.plugin).getTerminal();
@@ -106,52 +108,52 @@ public class TARDISButtonListener implements Listener {
         if (block != null) {
             Material blockType = block.getType();
             Action action = event.getAction();
-            if (action == Action.RIGHT_CLICK_BLOCK) {
-                // only proceed if they are clicking a type of a button or a lever!
-                if (validBlocks.contains(blockType)) {
-                    // get clicked block location
-                    String buttonloc = block.getLocation().toString();
-                    // get tardis from saved button location
-                    HashMap<String, Object> where = new HashMap<String, Object>();
-                    where.put("location", buttonloc);
-                    ResultSetControls rsc = new ResultSetControls(plugin, where, false);
-                    if (rsc.resultSet()) {
-                        int id = rsc.getTardis_id();
-                        int type = rsc.getType();
-                        if (!onlythese.contains(type)) {
+            // only proceed if they are clicking a type of a button or a lever!
+            if (validBlocks.contains(blockType)) {
+                // get clicked block location
+                String buttonloc = block.getLocation().toString();
+                // get tardis from saved button location
+                HashMap<String, Object> where = new HashMap<String, Object>();
+                where.put("location", buttonloc);
+                ResultSetControls rsc = new ResultSetControls(plugin, where, false);
+                if (rsc.resultSet()) {
+                    int id = rsc.getTardis_id();
+                    int type = rsc.getType();
+                    if (!onlythese.contains(type)) {
+                        return;
+                    }
+                    HashMap<String, Object> whereid = new HashMap<String, Object>();
+                    whereid.put("tardis_id", id);
+                    ResultSetTardis rs = new ResultSetTardis(plugin, whereid, "", false);
+                    if (rs.resultSet()) {
+                        // check they initialised
+                        if (!rs.isTardis_init()) {
+                            TARDISMessage.send(player, "ENERGY_NO_INIT");
                             return;
                         }
-                        HashMap<String, Object> whereid = new HashMap<String, Object>();
-                        whereid.put("tardis_id", id);
-                        ResultSetTardis rs = new ResultSetTardis(plugin, whereid, "", false);
-                        if (rs.resultSet()) {
-                            // check they initialised
-                            if (!rs.isTardis_init()) {
-                                TARDISMessage.send(player, "ENERGY_NO_INIT");
-                                return;
-                            }
-                            if (plugin.getConfig().getBoolean("allow.power_down") && !rs.isPowered_on() && !allow_unpowered.contains(type)) {
-                                TARDISMessage.send(player, "POWER_DOWN");
-                                return;
-                            }
-                            boolean lights = rs.isLights_on();
-                            if (!lights && type == 12 && plugin.getConfig().getBoolean("allow.power_down") && !rs.isPowered_on()) {
-                                TARDISMessage.send(player, "POWER_DOWN");
-                                return;
-                            }
-                            int level = rs.getArtron_level();
-                            boolean hb = rs.isHandbrake_on();
-                            boolean set_dest = false;
-                            String comps = rs.getCompanions();
-                            UUID ownerUUID = rs.getUuid();
-                            TARDISCircuitChecker tcc = null;
-                            if (plugin.getConfig().getString("preferences.difficulty").equals("hard")) {
-                                tcc = new TARDISCircuitChecker(plugin, id);
-                                tcc.getCircuits();
-                            }
-                            QueryFactory qf = new QueryFactory(plugin);
-                            HashMap<String, Object> set = new HashMap<String, Object>();
-                            int cost = 0;
+                        if (plugin.getConfig().getBoolean("allow.power_down") && !rs.isPowered_on() && !allow_unpowered.contains(type)) {
+                            TARDISMessage.send(player, "POWER_DOWN");
+                            return;
+                        }
+                        boolean lights = rs.isLights_on();
+                        if (!lights && type == 12 && plugin.getConfig().getBoolean("allow.power_down") && !rs.isPowered_on()) {
+                            TARDISMessage.send(player, "POWER_DOWN");
+                            return;
+                        }
+                        int level = rs.getArtron_level();
+                        boolean hb = rs.isHandbrake_on();
+                        boolean set_dest = false;
+                        String comps = rs.getCompanions();
+                        UUID ownerUUID = rs.getUuid();
+                        TARDISCircuitChecker tcc = null;
+                        if (plugin.getConfig().getString("preferences.difficulty").equals("hard")) {
+                            tcc = new TARDISCircuitChecker(plugin, id);
+                            tcc.getCircuits();
+                        }
+                        QueryFactory qf = new QueryFactory(plugin);
+                        HashMap<String, Object> set = new HashMap<String, Object>();
+                        int cost = 0;
+                        if (action == Action.RIGHT_CLICK_BLOCK) {
                             switch (type) {
                                 case 1: // random location button
                                     if (!hb) {
@@ -430,27 +432,7 @@ public class TARDISButtonListener implements Listener {
                                     player.openInventory(inv);
                                     break;
                                 case 16: // enter zero room
-                                    int zero_amount = plugin.getArtronConfig().getInt("zero");
-                                    if (level < zero_amount) {
-                                        TARDISMessage.send(player, "NOT_ENOUGH_ZERO_ENERGY");
-                                        return;
-                                    }
-                                    final Location zero = plugin.getUtils().getLocationFromDB(rs.getZero(), 0.0F, 0.0F);
-                                    if (zero != null) {
-                                        TARDISMessage.send(player, "ZERO_READY");
-                                        plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
-                                            @Override
-                                            public void run() {
-                                                new TARDISExteriorRenderer(plugin).transmat(player, COMPASS.SOUTH, zero);
-                                            }
-                                        }, 20L);
-                                        plugin.getTrackerKeeper().getZeroRoomOccupants().add(player.getUniqueId());
-                                        HashMap<String, Object> wherez = new HashMap<String, Object>();
-                                        wherez.put("tardis_id", id);
-                                        qf.alterEnergyLevel("tardis", -zero_amount, wherez, player);
-                                    } else {
-                                        TARDISMessage.send(player, "NO_ZERO");
-                                    }
+                                    doZero(level, player, rs.getZero(), id, qf);
                                     break;
                                 case 17:
                                     // exit zero room
@@ -473,6 +455,8 @@ public class TARDISButtonListener implements Listener {
                                     plugin.getTrackerKeeper().getRescue().remove(id);
                                 }
                             }
+                        } else if (action.equals(Action.PHYSICAL) && type == 16) {
+                            doZero(level, player, rs.getZero(), id, qf);
                         }
                     }
                 }
@@ -485,5 +469,29 @@ public class TARDISButtonListener implements Listener {
                 && c.getX() == b.getX()
                 && c.getY() == b.getY()
                 && c.getZ() == b.getZ());
+    }
+
+    private void doZero(int level, final Player player, String z, int id, QueryFactory qf) {
+        int zero_amount = plugin.getArtronConfig().getInt("zero");
+        if (level < zero_amount) {
+            TARDISMessage.send(player, "NOT_ENOUGH_ZERO_ENERGY");
+            return;
+        }
+        final Location zero = plugin.getUtils().getLocationFromDB(z, 0.0F, 0.0F);
+        if (zero != null) {
+            TARDISMessage.send(player, "ZERO_READY");
+            plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
+                @Override
+                public void run() {
+                    new TARDISExteriorRenderer(plugin).transmat(player, COMPASS.SOUTH, zero);
+                }
+            }, 20L);
+            plugin.getTrackerKeeper().getZeroRoomOccupants().add(player.getUniqueId());
+            HashMap<String, Object> wherez = new HashMap<String, Object>();
+            wherez.put("tardis_id", id);
+            qf.alterEnergyLevel("tardis", -zero_amount, wherez, player);
+        } else {
+            TARDISMessage.send(player, "NO_ZERO");
+        }
     }
 }

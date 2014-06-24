@@ -60,6 +60,7 @@ public class TARDISUpdateListener implements Listener {
     private final TARDIS plugin;
     List<Material> validBlocks = new ArrayList<Material>();
     List<Material> validSigns = new ArrayList<Material>();
+    List<Material> plates = new ArrayList<Material>();
     HashMap<String, Integer> controls = new HashMap<String, Integer>();
 
     public TARDISUpdateListener(TARDIS plugin) {
@@ -94,6 +95,8 @@ public class TARDISUpdateListener implements Listener {
         validSigns.add(Material.REDSTONE_COMPARATOR_ON);
         validSigns.add(Material.SIGN_POST);
         validSigns.add(Material.WALL_SIGN);
+        plates.add(Material.STONE_PLATE);
+        plates.add(Material.WOOD_PLATE);
     }
 
     /**
@@ -576,7 +579,7 @@ public class TARDISUpdateListener implements Listener {
                 // check if player has storage record, and update the tardis_id field
                 plugin.getUtils().updateStorageId(playerUUID, id, qf);
             }
-            if (blockName.equalsIgnoreCase("zero") && (validBlocks.contains(blockType) || validSigns.contains(blockType))) {
+            if (blockName.equalsIgnoreCase("zero") && (validBlocks.contains(blockType) || validSigns.contains(blockType) || plates.contains(blockType))) {
                 HashMap<String, Object> wherez = new HashMap<String, Object>();
                 wherez.put("tardis_id", id);
                 wherez.put("type", 16);

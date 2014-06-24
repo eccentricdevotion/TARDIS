@@ -16,7 +16,6 @@
 8. Add snow to Diamond Disruptor Sonic Screwdriver
 9. Server condenser
 10. Add `/tpa` equivalent to travel to player's WorldGuard/Towny/Factions/GriefPrevention region
-11. `/tardis update zero` allows pressure plates
 
 ###I couldn't really be bothered
 1. HADS + explosions + fireballs + lava
