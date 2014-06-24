@@ -16,6 +16,7 @@
 8. Add snow to Diamond Disruptor Sonic Screwdriver
 9. Server condenser
 10. Add `/tpa` equivalent to travel to player's WorldGuard/Towny/Factions/GriefPrevention region
+11. `/tardis update zero` allows pressure plates
 
 ###I couldn't really be bothered
 1. HADS + explosions + fireballs + lava
@@ -52,6 +53,7 @@ Re-skin mobs for Resource pack, and add new mob sounds
 
 ##Waiting on Bukkit API
 0. IDs are soon to be history... so convert all ID use to entity names
+    * create our own `json` schematic format - _started_
 1. Get/set horse speed (Attribute API)
 2. Achievements API is now available, but doesn't allow custom achievements :(
 

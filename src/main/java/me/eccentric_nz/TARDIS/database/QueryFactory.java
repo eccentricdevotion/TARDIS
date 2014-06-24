@@ -274,9 +274,11 @@ public class QueryFactory {
      *
      * @param data a HashMap<String, Object> of table fields and values to
      * insert.
+     * @param biome the biome of the Police Box location
+     * @param id the tardis_id
      */
-    public void insertLocations(HashMap<String, Object> data) {
-        TARDISSQLInsertLocations locate = new TARDISSQLInsertLocations(plugin, data);
+    public void insertLocations(HashMap<String, Object> data, String biome, int id) {
+        TARDISSQLInsertLocations locate = new TARDISSQLInsertLocations(plugin, data, biome, id);
         plugin.getServer().getScheduler().runTaskAsynchronously(plugin, locate);
     }
 

@@ -246,17 +246,7 @@ public class TARDISSeedBlockProcessor {
                 setlocs.put("y", l.getBlockY());
                 setlocs.put("z", l.getBlockZ());
                 setlocs.put("direction", d);
-                qf.insertLocations(setlocs);
-                // set the biome if necessary
-                if (plugin.getConfig().getBoolean("police_box.set_biome")) {
-                    // remember the current biome
-                    plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
-                        @Override
-                        public void run() {
-                            qf.saveBiome(lastInsertId, biome);
-                        }
-                    }, 5L);
-                }
+                qf.insertLocations(setlocs, biome, lastInsertId);
                 // turn the block stack into a TARDIS
                 TARDISMaterialisationData pbd = new TARDISMaterialisationData();
                 pbd.setChameleon(false);
