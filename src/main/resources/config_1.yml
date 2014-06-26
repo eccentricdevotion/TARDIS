@@ -78,6 +78,7 @@ preferences:
     heal_speed: 200
     default_key: eleventh
     default_sonic: eleventh
+    wand: BONE
 # restrictions
 allow:
     mob_farming: true

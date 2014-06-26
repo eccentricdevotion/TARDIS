@@ -267,6 +267,7 @@ public class TARDISConfiguration {
         strOptions.put("preferences.language", "en");
         strOptions.put("preferences.respect_towny", "nation");
         strOptions.put("preferences.use_worldguard", "build");
+        strOptions.put("preferences.wand", "BONE");
         strOptions.put("storage.database", "sqlite");
         strOptions.put("storage.mysql.url", "mysql://localhost:3306/TARDIS");
         strOptions.put("storage.mysql.user", "bukkit");
