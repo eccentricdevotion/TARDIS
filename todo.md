@@ -16,6 +16,16 @@
 8. Add snow to Diamond Disruptor Sonic Screwdriver
 9. Server condenser
 10. Add `/tpa` equivalent to travel to player's WorldGuard/Towny/Factions/GriefPrevention region
+11. Create a TARDIS `json` schematic format, convert current code to use the new format - _started_
+    * region selection via wand - __done__
+    * record dimensions - __done__
+    * record block type and data - __done__
+    * record player's relative location - __done__
+    * schematic creation and compression/decompression - __done__
+    * load/paste schematics - __done__
+    * add checks to make sure region is square, a multiple of 16 - __done__
+    * add check to make sure player is facing the correct direction?
+    * allow custom schematic to be ARS compatible
 
 ###I couldn't really be bothered
 1. HADS + explosions + fireballs + lava
@@ -52,7 +62,6 @@ Re-skin mobs for Resource pack, and add new mob sounds
 
 ##Waiting on Bukkit API
 0. IDs are soon to be history... so convert all ID use to entity names
-    * create our own `json` schematic format - _started_
 1. Get/set horse speed (Attribute API)
 2. Achievements API is now available, but doesn't allow custom achievements :(
 
