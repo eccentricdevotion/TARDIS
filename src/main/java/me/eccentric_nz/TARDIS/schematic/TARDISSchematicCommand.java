@@ -125,13 +125,13 @@ public class TARDISSchematicCommand implements CommandExecutor {
                 schematic.put("relative", relative);
                 schematic.put("dimensions", dimensions);
                 schematic.put("input", levels);
-                String output = plugin.getDataFolder() + File.separator + args[1] + ".json";
+                String output = plugin.getDataFolder() + File.separator + "user_schematics" + File.separator + args[1] + ".json";
                 File file = new File(output);
                 try {
                     BufferedWriter bw = new BufferedWriter(new FileWriter(file), 16 * 1024);
-                    bw.write(schematic.toString(4));
+                    bw.write(schematic.toString());
                     bw.close();
-                    TARDISSchematicGZip.zip(output, plugin.getDataFolder() + File.separator + args[1] + ".tsb");
+                    TARDISSchematicGZip.zip(output, plugin.getDataFolder() + File.separator + "user_schematics" + File.separator + args[1] + ".tsb");
                     file.delete();
                     player.sendMessage(plugin.getPluginName() + args[1] + ".tsb saved :)");
                 } catch (IOException e) {
@@ -140,7 +140,7 @@ public class TARDISSchematicCommand implements CommandExecutor {
                 return true;
             }
             if (args[0].equalsIgnoreCase("load")) {
-                String instr = plugin.getDataFolder() + File.separator + args[1] + ".tsb";
+                String instr = plugin.getDataFolder() + File.separator + "user_schematics" + File.separator + args[1] + ".tsb";
                 File file = new File(instr);
                 if (!file.exists()) {
                     player.sendMessage(plugin.getPluginName() + "Could not find a schematic with that name!");
@@ -148,7 +148,7 @@ public class TARDISSchematicCommand implements CommandExecutor {
                 }
                 JSONObject sch = TARDISSchematicGZip.unzip(instr);
                 plugin.getTrackerKeeper().getPastes().put(uuid, sch);
-                player.sendMessage(plugin.getPluginName() + "Schematic loaded! You can now use the " + ChatColor.GREEN + "/tsb paste" + ChatColor.RESET + " command");
+                player.sendMessage(plugin.getPluginName() + "Schematic loaded! You can now use the " + ChatColor.GREEN + "/ts paste" + ChatColor.RESET + " command");
                 return true;
             }
         }

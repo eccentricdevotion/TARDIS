@@ -31,7 +31,7 @@ public class TARDISSchematicPaster {
     public boolean paste() {
         UUID uuid = player.getUniqueId();
         if (!plugin.getTrackerKeeper().getPastes().containsKey(uuid)) {
-            player.sendMessage(plugin.getPluginName() + "No schematic loaded! " + ChatColor.GREEN + "/tsb load [name]");
+            player.sendMessage(plugin.getPluginName() + "No schematic loaded! " + ChatColor.GREEN + "/ts load [name]");
             return true;
         }
         JSONObject obj = plugin.getTrackerKeeper().getPastes().get(uuid);
