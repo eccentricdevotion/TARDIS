@@ -131,16 +131,16 @@ public class TARDISSchematicCommand implements CommandExecutor {
                     BufferedWriter bw = new BufferedWriter(new FileWriter(file), 16 * 1024);
                     bw.write(schematic.toString());
                     bw.close();
-                    TARDISSchematicGZip.zip(output, plugin.getDataFolder() + File.separator + "user_schematics" + File.separator + args[1] + ".tsb");
+                    TARDISSchematicGZip.zip(output, plugin.getDataFolder() + File.separator + "user_schematics" + File.separator + args[1] + ".tschm");
                     file.delete();
-                    player.sendMessage(plugin.getPluginName() + args[1] + ".tsb saved :)");
+                    player.sendMessage(plugin.getPluginName() + args[1] + ".tschm saved :)");
                 } catch (IOException e) {
                     player.sendMessage(plugin.getPluginName() + "Could not write GZipped JSON schematic file!");
                 }
                 return true;
             }
             if (args[0].equalsIgnoreCase("load")) {
-                String instr = plugin.getDataFolder() + File.separator + "user_schematics" + File.separator + args[1] + ".tsb";
+                String instr = plugin.getDataFolder() + File.separator + "user_schematics" + File.separator + args[1] + ".tschm";
                 File file = new File(instr);
                 if (!file.exists()) {
                     player.sendMessage(plugin.getPluginName() + "Could not find a schematic with that name!");
