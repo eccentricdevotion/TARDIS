@@ -574,3 +574,9 @@ commands:
     usage: /<command> [player] [travel|comehere|chameleon|hide|rebuild] [home|area|coords]
     permission: tardis.remote
     permission-message: You don't have the permission <permission> to use this command
+  tardisschematic:
+    aliases: [tschematic, ts]
+    description: Save, load or paste a TARDIS schematic.
+    usage: /<command> [save|load|paste] [name]
+    permission: tardis.admin
+    permission-message: You don't have the permission <permission> to use this command

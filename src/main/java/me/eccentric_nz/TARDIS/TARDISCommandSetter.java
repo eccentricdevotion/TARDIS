@@ -41,6 +41,7 @@ import me.eccentric_nz.TARDIS.commands.preferences.TARDISPrefsTabComplete;
 import me.eccentric_nz.TARDIS.commands.remote.TARDISRemoteCommands;
 import me.eccentric_nz.TARDIS.commands.tardis.TARDISCommands;
 import me.eccentric_nz.TARDIS.commands.tardis.TARDISTabComplete;
+import me.eccentric_nz.TARDIS.schematic.TARDISSchematicCommand;
 import me.eccentric_nz.TARDIS.universaltranslator.TARDISSayCommand;
 import me.eccentric_nz.TARDIS.universaltranslator.TARDISSayTabComplete;
 
@@ -82,6 +83,7 @@ public class TARDISCommandSetter {
         plugin.getCommand("tardisrecipe").setExecutor(new TARDISRecipeCommands(plugin));
         plugin.getCommand("tardisrecipe").setTabCompleter(new TARDISRecipeTabComplete());
         plugin.getCommand("tardisroom").setExecutor(new TARDISRoomCommands(plugin));
+        plugin.getCommand("tardisschematic").setExecutor(new TARDISSchematicCommand(plugin));
         plugin.getCommand("tardistexture").setExecutor(new TARDISTextureCommands(plugin));
         plugin.getCommand("tardistexture").setTabCompleter(new TARDISTextureTabComplete());
         TARDISTravelCommands tardisTravelCommand = new TARDISTravelCommands(plugin);
