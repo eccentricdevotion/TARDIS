@@ -133,7 +133,7 @@ public enum TARDISDescription {
             + "USAGE: Right-click with the TARDIS key.\n"
             + "UPDATING: /tardis update door\n"
             + "BLOCK: IRON_DOOR"),
-    EPS(" INFO: Updates the block that the Emergency Program One appears on when enacted.\n"
+    EPS(" INFO: Updates the block that the Emergency Programme One appears on when enacted.\n"
             + "USAGE: Right-click the block to update\n"
             + "UPDATING: /tardis update EPS\n"
             + "BLOCK: any"),
@@ -162,6 +162,10 @@ public enum TARDISDescription {
     LIGHT(" INFO: When pressed, the lamps in the TARDIS control room are toggled on/off.\n"
             + "USAGE: Right-click.\n"
             + "UPDATING: /tardis update light\n"
+            + "BLOCK: LEVER, STONE_BUTTON or WOOD_BUTTON"),
+    TOGGLE(" INFO: When pressed, the black wool blocks behind the TARDIS interior door are toggled AIR/WOOL to provide access to the Vortex.\n"
+            + "USAGE: Right-click.\n"
+            + "UPDATING: /tardis update toggle_wool\n"
             + "BLOCK: LEVER, STONE_BUTTON or WOOD_BUTTON"),
     CONSOLE_RAIL(" INFO: Updates the block that storage minecarts spawn on when entering the TARDIS.\n"
             + "USAGE: Attach a minetrack to the front of the TARDIS and have a Minecart with Chest run into the TARDIS door.\n"

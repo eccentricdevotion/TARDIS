@@ -21,9 +21,12 @@ import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.builders.TARDISMaterialisationData;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetCurrentLocation;
-import me.eccentric_nz.TARDIS.enumeration.MESSAGE;
+import me.eccentric_nz.TARDIS.database.ResultSetTardis;
+import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import org.bukkit.Location;
+import org.bukkit.OfflinePlayer;
 import org.bukkit.command.CommandSender;
+import org.bukkit.entity.Player;
 
 /**
  *
@@ -42,8 +45,20 @@ public class TARDISRemoteHideCommand {
         wherecl.put("tardis_id", id);
         ResultSetCurrentLocation rsc = new ResultSetCurrentLocation(plugin, wherecl);
         if (!rsc.resultSet()) {
-            sender.sendMessage(plugin.getPluginName() + MESSAGE.NO_CURRENT.getText());
+            TARDISMessage.send(sender, "CURRENT_NOT_FOUND");
             return true;
+        }
+        OfflinePlayer olp = null;
+        if (sender instanceof Player) {
+            olp = (OfflinePlayer) sender;
+        } else {
+            // get tardis owner
+            HashMap<String, Object> where = new HashMap<String, Object>();
+            where.put("tardis_id", id);
+            ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);
+            if (rs.resultSet()) {
+                olp = plugin.getServer().getOfflinePlayer(rs.getUuid());
+            }
         }
         Location l = new Location(rsc.getWorld(), rsc.getX(), rsc.getY(), rsc.getZ());
         HashMap<String, Object> wheret = new HashMap<String, Object>();
@@ -53,13 +68,14 @@ public class TARDISRemoteHideCommand {
         pdd.setDirection(rsc.getDirection());
         pdd.setLocation(l);
         pdd.setDematerialise(false);
-        pdd.setPlayer(null);
+        pdd.setPlayer(olp);
         pdd.setHide(false);
         pdd.setOutside(false);
         pdd.setSubmarine(rsc.isSubmarine());
         pdd.setTardisID(id);
+        pdd.setBiome(rsc.getBiome());
         plugin.getPresetDestroyer().destroyPreset(pdd);
-        sender.sendMessage(plugin.getPluginName() + "The TARDIS Police Box was hidden!");
+        TARDISMessage.send(sender, "TARDIS_HIDDEN", "/tardisremote [player] rebuild");
         // set hidden to true
         HashMap<String, Object> whereh = new HashMap<String, Object>();
         whereh.put("tardis_id", id);

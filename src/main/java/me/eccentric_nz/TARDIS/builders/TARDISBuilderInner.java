@@ -34,6 +34,7 @@ import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.WorldType;
+import org.bukkit.block.Biome;
 import org.bukkit.block.Block;
 import org.bukkit.block.Sign;
 import org.bukkit.entity.Player;
@@ -79,7 +80,7 @@ public class TARDISBuilderInner {
     public void buildInner(SCHEMATIC schm, World world, int dbID, Player p, int middle_id, byte middle_data, int floor_id, byte floor_data, boolean tips) {
         String[][][] s;
         short[] d;
-        int level, row, col, id, x, z, startx, startz, resetx, resetz, j = 2;
+        int level, row, col, id, startx, startz, resetx, resetz, j = 2;
         boolean below = (!plugin.getConfig().getBoolean("creation.create_worlds") && !plugin.getConfig().getBoolean("creation.default_world"));
         int starty;
         if (below) {
@@ -127,6 +128,10 @@ public class TARDISBuilderInner {
             case ARS:
                 s = plugin.getBuildKeeper().getARSSchematic();
                 d = plugin.getBuildKeeper().getARSDimensions();
+                break;
+            case WAR:
+                s = plugin.getBuildKeeper().getWarSchematic();
+                d = plugin.getBuildKeeper().getWarDimensions();
                 break;
             case CUSTOM:
                 s = plugin.getBuildKeeper().getCustomSchematic();
@@ -221,6 +226,10 @@ public class TARDISBuilderInner {
             for (row = 0; row < w; row++) {
                 for (col = 0; col < l; col++) {
                     tmp = s[level][row][col];
+                    // if we're setting the biome to sky, do it now
+                    if (plugin.getConfig().getBoolean("creation.sky_biome") && level == 0 && !below) {
+                        world.setBiome(startx, startz, Biome.SKY);
+                    }
                     if (!tmp.equals("-")) {
                         if (tmp.contains(":")) {
                             String[] iddata = tmp.split(":");
@@ -293,27 +302,32 @@ public class TARDISBuilderInner {
                                 set.put("chameleon", chameleonloc);
                                 set.put("chamele_on", 0);
                             }
-                            if (id == 71 && data < (byte) 8) { // iron door bottom
-                                HashMap<String, Object> setd = new HashMap<String, Object>();
-                                String doorloc = world.getName() + ":" + startx + ":" + starty + ":" + startz;
-                                setd.put("tardis_id", dbID);
-                                setd.put("door_type", 1);
-                                setd.put("door_location", doorloc);
-                                setd.put("door_direction", "SOUTH");
-                                qf.doInsert("doors", setd);
-                                // if create_worlds is true, set the world spawn
-                                if (own_world) {
-                                    if (plugin.getPM().isPluginEnabled("Multiverse-Core")) {
-                                        Plugin mvplugin = plugin.getPM().getPlugin("Multiverse-Core");
-                                        if (mvplugin instanceof MultiverseCore) {
-                                            MultiverseCore mvc = (MultiverseCore) mvplugin;
-                                            MultiverseWorld foundWorld = mvc.getMVWorldManager().getMVWorld(world.getName());
-                                            Location spawn = new Location(world, (startx + 0.5), starty, (startz + 1.5), 0, 0);
-                                            foundWorld.setSpawnLocation(spawn);
+                            if (id == 71) {
+                                if (data < (byte) 8) { // iron door bottom
+                                    HashMap<String, Object> setd = new HashMap<String, Object>();
+                                    String doorloc = world.getName() + ":" + startx + ":" + starty + ":" + startz;
+                                    setd.put("tardis_id", dbID);
+                                    setd.put("door_type", 1);
+                                    setd.put("door_location", doorloc);
+                                    setd.put("door_direction", "SOUTH");
+                                    qf.doInsert("doors", setd);
+                                    // if create_worlds is true, set the world spawn
+                                    if (own_world) {
+                                        if (plugin.getPM().isPluginEnabled("Multiverse-Core")) {
+                                            Plugin mvplugin = plugin.getPM().getPlugin("Multiverse-Core");
+                                            if (mvplugin instanceof MultiverseCore) {
+                                                MultiverseCore mvc = (MultiverseCore) mvplugin;
+                                                MultiverseWorld foundWorld = mvc.getMVWorldManager().getMVWorld(world.getName());
+                                                Location spawn = new Location(world, (startx + 0.5), starty, (startz + 1.5), 0, 0);
+                                                foundWorld.setSpawnLocation(spawn);
+                                            }
+                                        } else {
+                                            world.setSpawnLocation(startx, starty, (startz + 1));
                                         }
-                                    } else {
-                                        world.setSpawnLocation(startx, starty, (startz + 1));
                                     }
+                                } else {
+                                    // iron door top
+                                    data = (byte) 9;
                                 }
                             }
                             if (id == 77) { // stone button
@@ -402,6 +416,9 @@ public class TARDISBuilderInner {
                                                 break;
                                             case TOM:
                                                 control = 22;
+                                                break;
+                                            case WAR:
+                                                control = 159;
                                                 break;
                                             default:
                                                 break;
@@ -692,7 +709,7 @@ public class TARDISBuilderInner {
         if (plugin.isWorldGuardOnServer() && plugin.getConfig().getBoolean("preferences.use_worldguard")) {
             if (tips) {
                 if (pos != null) {
-                    plugin.getWorldGuardUtils().addWGProtection(p, pos, world);
+                    plugin.getWorldGuardUtils().addWGProtection(p.getName(), pos, world);
                 }
             } else {
                 plugin.getWorldGuardUtils().addWGProtection(p, wg1, wg2);

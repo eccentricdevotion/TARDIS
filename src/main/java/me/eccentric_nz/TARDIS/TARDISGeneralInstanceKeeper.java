@@ -21,18 +21,22 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.UUID;
 import me.eccentric_nz.TARDIS.commands.TARDISTravelCommands;
 import me.eccentric_nz.TARDIS.commands.admin.TARDISAdminCommands;
 import me.eccentric_nz.TARDIS.listeners.TARDISButtonListener;
-import me.eccentric_nz.TARDIS.move.TARDISDoorListener;
 import me.eccentric_nz.TARDIS.listeners.TARDISRenderRoomListener;
 import me.eccentric_nz.TARDIS.listeners.TARDISScannerListener;
+import me.eccentric_nz.TARDIS.move.TARDISDoorClickListener;
+import me.eccentric_nz.TARDIS.move.TARDISDoorListener;
 import me.eccentric_nz.TARDIS.rooms.TARDISCondenserData;
 import me.eccentric_nz.TARDIS.sonic.TARDISSonicListener;
 import me.eccentric_nz.TARDIS.utility.TARDISUUIDCache;
 import org.bukkit.Chunk;
+import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.World;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 
@@ -63,6 +67,7 @@ public class TARDISGeneralInstanceKeeper {
     private final List<BlockFace> faces = Arrays.asList(BlockFace.NORTH, BlockFace.WEST, BlockFace.SOUTH, BlockFace.EAST);
     private final List<Chunk> roomChunkList = new ArrayList<Chunk>();
     private final List<Chunk> tardisChunkList = new ArrayList<Chunk>();
+    private final List<Location> rechargers = new ArrayList<Location>();
     private final List<Material> rails = Arrays.asList(Material.POWERED_RAIL, Material.RAILS, Material.DETECTOR_RAIL, Material.ACTIVATOR_RAIL);
     private final List<String> gravityDownList = new ArrayList<String>();
     private final List<String> roomArgs;
@@ -78,6 +83,8 @@ public class TARDISGeneralInstanceKeeper {
         this.roomArgs = buildRoomArgs();
         this.transparent = buildTransparent();
         this.UUIDCache = new TARDISUUIDCache(plugin);
+        this.doorListener = new TARDISDoorListener(plugin);
+        setRechargers();
     }
 
     public List<String> getQuotes() {
@@ -172,7 +179,7 @@ public class TARDISGeneralInstanceKeeper {
         return doorListener;
     }
 
-    public void setDoorListener(TARDISDoorListener doorListener) {
+    public void setDoorListener(TARDISDoorClickListener doorListener) {
         this.doorListener = doorListener;
     }
 
@@ -234,6 +241,24 @@ public class TARDISGeneralInstanceKeeper {
 
     public List<String> getSonicWires() {
         return sonicWires;
+    }
+
+    public List<Location> getRechargers() {
+        return rechargers;
+    }
+
+    private void setRechargers() {
+        if (plugin.getConfig().isConfigurationSection("rechargers")) {
+            Set<String> therechargers = plugin.getConfig().getConfigurationSection("rechargers").getKeys(false);
+            for (String s : therechargers) {
+                World w = plugin.getServer().getWorld(plugin.getConfig().getString("rechargers." + s + ".world"));
+                int x = plugin.getConfig().getInt("rechargers." + s + ".x");
+                int y = plugin.getConfig().getInt("rechargers." + s + ".y");
+                int z = plugin.getConfig().getInt("rechargers." + s + ".z");
+                Location rc_loc = new Location(w, x, y, z);
+                this.rechargers.add(rc_loc);
+            }
+        }
     }
 
     private HashSet<Byte> buildTransparent() {

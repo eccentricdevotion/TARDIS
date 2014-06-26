@@ -12,7 +12,7 @@ creation:
     create_worlds: true
     create_worlds_with_perms: false
     default_world: false
-    default_world_name: myridiculouslylongworldnameiscalledcuthbert
+    default_world_name: TARDIS_TimeVortex
     tips_limit: 400
     border_radius: 256
     gamemode: survival
@@ -25,6 +25,7 @@ creation:
     use_block_stack: false
     use_clay: false
     count: 0
+    sky_biome: true
 # outer TARDIS
 police_box:
     name_tardis: false
@@ -36,11 +37,11 @@ police_box:
     materialise: true
     confirm_timeout: 15
     sign_colour: WHITE
+    set_biome: true
 # travel settings
 travel:
     include_default_world: false
     tp_radius: 500
-    platform: false
     chameleon: true
     give_key: false
     the_end: false
@@ -52,14 +53,18 @@ travel:
     exile: false
     per_world_perms: false
     terminal_step: 1
+    manual_flight_delay: 60
 # general preferences
 preferences:
+    language: en
     key: GOLD_NUGGET
+    walk_in_tardis: true
     use_worldguard: true
     respect_worldguard: true
     respect_towny: nation
     respect_worldborder: true
     respect_factions: true
+    respect_grief_prevention: true
     sfx_volume: 10;
     difficulty: hard
     strike_lightning: true
@@ -71,6 +76,8 @@ preferences:
     malfunction_nether: 3
     use_default_condensables: true
     heal_speed: 200
+    default_key: eleventh
+    default_sonic: eleventh
 # restrictions
 allow:
     mob_farming: true
@@ -85,6 +92,8 @@ allow:
     wg_flag_set: true
     zero_room: false
     external_gravity: false
+    power_down: false
+    power_down_on_quit: false
 # room related
 growth:
     gravity_max_distance: 15
@@ -95,6 +104,8 @@ growth:
     room_speed: 4
 # don't touch
 conversions:
+    biome_update: false
     conversion_done: true
     location_conversion_done: true
     uuid_conversion_done: false
+    companion_clearing_done: false

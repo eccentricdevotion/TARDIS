@@ -213,7 +213,6 @@ public enum TARDISInfoMenu {
     TARDISPREFS_LAMP("TIS|Commands|Player Preference Commands|lamp", "TARDISPREFS", "l"),
     TARDISPREFS_MESSAGE("TIS|Commands|Player Preference Commands|eps_message", "TARDISPREFS", "m"),
     TARDISPREFS_PLAIN("TIS|Commands|Player Preference Commands|plain", "TARDISPREFS", "n"),
-    TARDISPREFS_PLATFORM("TIS|Commands|Player Preference Commands|platform", "TARDISPREFS", "t"),
     TARDISPREFS_QUOTES("TIS|Commands|Player Preference Commands|quotes", "TARDISPREFS", "q"),
     TARDISPREFS_SFX("TIS|Commands|Player Preference Commands|sfx", "TARDISPREFS", "s"),
     TARDISPREFS_SUBMARINE("TIS|Commands|Player Preference Commands|submarine", "TARDISPREFS", "u"),
@@ -255,6 +254,7 @@ public enum TARDISInfoMenu {
     HANDBRAKE("TIS|Manual|Console Blocks|Handbrake", "CONSOLE_BLOCKS", "k"), //k
     INFO("TIS|Manual|Console Blocks|Information System", "CONSOLE_BLOCKS_2", "I"), //I
     KEYBOARD("TIS|Manual|Console Blocks|Keyboard", "CONSOLE_BLOCKS_2", "K"), //K
+    TOGGLE("TIS|Manual|Console Blocks 2|Wool toggle", "CONSOLE_BLOCKS_2", "o"), //o
     LIGHT("TIS|Manual|Console Blocks 2|Light", "CONSOLE_BLOCKS_2", "L"), //L
     CONSOLE_RAIL("TIS|Manual|Console Blocks 2|Rails", "CONSOLE_BLOCKS_2", "R"), //R
     SAVE_SIGN("TIS|Manual|Console Blocks 2|Save Sign", "CONSOLE_BLOCKS_2", "S"), //S

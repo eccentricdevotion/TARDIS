@@ -32,12 +32,9 @@ import me.eccentric_nz.TARDIS.rooms.TARDISRoomBuilder;
 import me.eccentric_nz.TARDIS.rooms.TARDISRoomDirection;
 import me.eccentric_nz.TARDIS.rooms.TARDISSeedData;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
-import me.eccentric_nz.tardischunkgenerator.TARDISChunkGenerator;
 import org.bukkit.Chunk;
 import org.bukkit.Location;
 import org.bukkit.Material;
-import org.bukkit.World;
-import org.bukkit.WorldType;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 import org.bukkit.entity.Player;
@@ -45,7 +42,6 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerInteractEvent;
-import org.bukkit.generator.ChunkGenerator;
 
 /**
  * The Doctor kept some of the clothes from his previous regenerations, as well
@@ -83,7 +79,7 @@ public class TARDISRoomSeeder implements Listener {
         final Player player = event.getPlayer();
         UUID uuid = player.getUniqueId();
         // check that player is in TARDIS
-        if (!plugin.getTrackerKeeper().getTrackRoomSeed().containsKey(uuid)) {
+        if (!plugin.getTrackerKeeper().getRoomSeed().containsKey(uuid)) {
             return;
         }
         Block block = event.getClickedBlock();
@@ -102,12 +98,17 @@ public class TARDISRoomSeeder implements Listener {
             // only proceed if they are clicking a seed block with the TARDIS key!
             if (plugin.getBuildKeeper().getSeeds().containsKey(blockType) && inhand.equals(Material.getMaterial(key))) {
                 // check they are still in the TARDIS world
-                World world = block.getLocation().getWorld();
-                String name = world.getName();
-                ChunkGenerator gen = world.getGenerator();
-                boolean special = name.contains("TARDIS_TimeVortex") && (world.getWorldType().equals(WorldType.FLAT) || gen instanceof TARDISChunkGenerator);
-                if (!name.equals("TARDIS_WORLD_" + player.getName()) && !special) {
-                    TARDISMessage.send(player, plugin.getPluginName() + "You must be in a TARDIS world to grow a room!");
+//                World world = block.getLocation().getWorld();
+//                String name = world.getName();
+//                ChunkGenerator gen = world.getGenerator();
+//                String dn = "TARDIS_TimeVortex";
+//                if (plugin.getConfig().getBoolean("creation.default_world")) {
+//                    dn = plugin.getConfig().getString("creation.default_world_name");
+//                }
+//                boolean special = (name.equals(dn) && (world.getWorldType().equals(WorldType.FLAT) || gen instanceof TARDISChunkGenerator));
+//                if (!name.equals("TARDIS_WORLD_" + player.getName()) && !special) {
+                if (!plugin.getUtils().inTARDISWorld(player)) {
+                    TARDISMessage.send(player, "ROOM_IN_WORLD");
                     return;
                 }
                 // get clicked block location
@@ -116,7 +117,7 @@ public class TARDISRoomSeeder implements Listener {
                 TARDISRoomDirection trd = new TARDISRoomDirection(block);
                 trd.getDirection();
                 if (!trd.isFound()) {
-                    TARDISMessage.send(player, plugin.getPluginName() + "Could not find the door pressure plate! Check the seed block position.");
+                    TARDISMessage.send(player, "PLATE_NOT_FOUND");
                     return;
                 }
                 COMPASS d = trd.getCompass();
@@ -124,11 +125,11 @@ public class TARDISRoomSeeder implements Listener {
                 // check there is not a block in the direction the player is facing
                 Block check_block = b.getBlock().getRelative(BlockFace.DOWN).getRelative(facing, 9);
                 if (!check_block.getType().equals(Material.AIR)) {
-                    TARDISMessage.send(player, plugin.getPluginName() + "There seems to be a block in the way! You should be growing out into the void...");
+                    TARDISMessage.send(player, "ROOM_VOID");
                     return;
                 }
                 // get seed data
-                TARDISSeedData sd = plugin.getTrackerKeeper().getTrackRoomSeed().get(uuid);
+                TARDISSeedData sd = plugin.getTrackerKeeper().getRoomSeed().get(uuid);
                 // check they are not in an ARS chunk
                 if (ars.contains(sd.getSchematic()) && sd.hasARS()) {
                     Chunk c = b.getWorld().getChunkAt(block.getRelative(BlockFace.valueOf(d.toString()), 4));
@@ -136,7 +137,7 @@ public class TARDISRoomSeeder implements Listener {
                     int cy = block.getY();
                     int cz = c.getZ();
                     if ((cx >= sd.getMinx() && cx <= sd.getMaxx()) && (cy >= 48 && cy <= 96) && (cz >= sd.getMinz() && cz <= sd.getMaxz())) {
-                        TARDISMessage.send(player, plugin.getPluginName() + "You cannot manually grow a room here, please use the Architectural Reconfiguration System!");
+                        TARDISMessage.send(player, "ROOM_USE_ARS");
                         return;
                     }
                 }
@@ -144,7 +145,7 @@ public class TARDISRoomSeeder implements Listener {
                 String r = plugin.getBuildKeeper().getSeeds().get(blockType);
                 // check that the blockType is the same as the one they ran the /tardis room [type] command for
                 if (!sd.getRoom().equals(r)) {
-                    TARDISMessage.send(player, plugin.getPluginName() + "That is not the correct seed block to grow a " + plugin.getTrackerKeeper().getTrackRoomSeed().get(uuid).getRoom() + "!");
+                    TARDISMessage.send(player, "ROOM_SEED_NOT_VALID", plugin.getTrackerKeeper().getRoomSeed().get(uuid).getRoom());
                     return;
                 }
                 // adjust the location three/four blocks out
@@ -157,7 +158,7 @@ public class TARDISRoomSeeder implements Listener {
                     Block doorway = block.getRelative(facing, 2);
                     doorway.setType(Material.AIR);
                     doorway.getRelative(BlockFace.UP).setType(Material.AIR);
-                    plugin.getTrackerKeeper().getTrackRoomSeed().remove(uuid);
+                    plugin.getTrackerKeeper().getRoomSeed().remove(uuid);
                     // ok, room growing was successful, so take their energy!
                     int amount = plugin.getRoomsConfig().getInt("rooms." + r + ".cost");
                     QueryFactory qf = new QueryFactory(plugin);

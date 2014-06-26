@@ -322,6 +322,20 @@ shaped:
         result: 'MAP:1972'
         amount: 1
         lore: ""
+    Painter Circuit:
+        easy_shape: -I-,DGD,-I-
+        easy_ingredients:
+            I: 'INK_SACK:0'
+            D: 'INK_SACK:5'
+            G: GOLD_NUGGET
+        hard_shape: -I-,DGD,-I-
+        hard_ingredients:
+            I: 'INK_SACK:0'
+            D: 'INK_SACK:5'
+            G: GOLD_BLOCK
+        result: 'MAP:1979'
+        amount: 1
+        lore: ""
     Artron Storage Cell:
         easy_shape: -B-,-R-,-L-
         easy_ingredients:
@@ -336,6 +350,30 @@ shaped:
         result: BUCKET
         amount: 1
         lore: "Charge Level\n0"
+    Jammy Dodger:
+        easy_shape: ---,WRW,---
+        easy_ingredients:
+            W: WHEAT
+            R: 'INK_SACK:1'
+        hard_shape: ---,WRW,---
+        hard_ingredients:
+            W: WHEAT
+            R: 'INK_SACK:1'
+        result: COOKIE
+        amount: 8
+        lore: ""
+    Fish Finger:
+        easy_shape: -B-,-F-,-B-
+        easy_ingredients:
+            B: BREAD
+            F: RAW_FISH
+        hard_shape: -B-,-F-,-B-
+        hard_ingredients:
+            B: BREAD
+            F: RAW_FISH
+        result: COOKED_FISH
+        amount: 3
+        lore: "Best eaten with custard!"
 # -------------------
 # these are the shapeless recipes
 # -------------------
@@ -385,6 +423,96 @@ shapeless:
         result: BLAZE_ROD
         amount: 1
         lore: ""
+    Painter Upgrade:
+        recipe: 'BLAZE_ROD,MAP:1979'
+        result: BLAZE_ROD
+        amount: 1
+        lore: ""
+    Bowl of Custard:
+        recipe: 'BOWL,MILK_BUCKET,EGG'
+        result: MUSHROOM_SOUP
+        amount: 1
+        lore: ""
+    Vanilla Jelly Baby:
+        recipe: SUGAR,SLIME_BALL,INK_SACK:15
+        result: MELON
+        amount: 4
+        lore: ''
+    Orange Jelly Baby:
+        recipe: SUGAR,SLIME_BALL,INK_SACK:14
+        result: MELON
+        amount: 4
+        lore: ''
+    Watermelon Jelly Baby:
+        recipe: SUGAR,SLIME_BALL,INK_SACK:13
+        result: MELON
+        amount: 4
+        lore: ''
+    Bubblegum Jelly Baby:
+        recipe: SUGAR,SLIME_BALL,INK_SACK:12
+        result: MELON
+        amount: 4
+        lore: ''
+    Lemon Jelly Baby:
+        recipe: SUGAR,SLIME_BALL,INK_SACK:11
+        result: MELON
+        amount: 4
+        lore: ''
+    Lime Jelly Baby:
+        recipe: SUGAR,SLIME_BALL,INK_SACK:10
+        result: MELON
+        amount: 4
+        lore: ''
+    Strawberry Jelly Baby:
+        recipe: SUGAR,SLIME_BALL,INK_SACK:9
+        result: MELON
+        amount: 4
+        lore: ''
+    Earl Grey Jelly Baby:
+        recipe: SUGAR,SLIME_BALL,INK_SACK:8
+        result: MELON
+        amount: 4
+        lore: ''
+    Vodka Jelly Baby:
+        recipe: SUGAR,SLIME_BALL,INK_SACK:7
+        result: MELON
+        amount: 4
+        lore: ''
+    Island Punch Jelly Baby:
+        recipe: SUGAR,SLIME_BALL,INK_SACK:6
+        result: MELON
+        amount: 4
+        lore: 'Orange'
+    Grape Jelly Baby:
+        recipe: SUGAR,SLIME_BALL,INK_SACK:5
+        result: MELON
+        amount: 4
+        lore: ''
+    Blueberry Jelly Baby:
+        recipe: SUGAR,SLIME_BALL,INK_SACK:4
+        result: MELON
+        amount: 4
+        lore: ''
+    Cappuccino Jelly Baby:
+        recipe: SUGAR,SLIME_BALL,INK_SACK:3
+        result: MELON
+        amount: 4
+        lore: ''
+    Apple Jelly Baby:
+        recipe: SUGAR,SLIME_BALL,INK_SACK:2
+        result: MELON
+        amount: 4
+        lore: ''
+    Raspberry Jelly Baby:
+        recipe: SUGAR,SLIME_BALL,INK_SACK:1
+        result: MELON
+        amount: 4
+        lore: ''
+    Licorice Jelly Baby:
+        recipe: SUGAR,SLIME_BALL,INK_SACK:0
+        result: MELON
+        amount: 4
+        lore: ''
 # -------------------
 ## furnace recipes are not used yet...
 # -------------------

@@ -22,7 +22,7 @@ import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.TARDISConstants;
+import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
@@ -51,11 +51,12 @@ public class TARDISAdminMenuInventory {
     private ItemStack[] getItemStack() {
         List<ItemStack> options = new ArrayList<ItemStack>();
         int i = 0;
-        Set<String> config = new TreeSet(plugin.getConfig().getKeys(true));
+        Set<String> config = new TreeSet<String>(plugin.getConfig().getKeys(true));
         for (String c : config) {
             String value = plugin.getConfig().getString(c);
             if ((value.equalsIgnoreCase("true") || value.equalsIgnoreCase("false")) && !c.startsWith("conversions") && !c.startsWith("worlds")) {
-                ItemStack is = new ItemStack(TARDISConstants.GUI_ITEMS.get(i), 1);
+                //ItemStack is = new ItemStack(TARDISConstants.GUI_ITEMS.get(i), 1);
+                ItemStack is = new ItemStack(Material.DIODE, 1);
                 ItemMeta im = is.getItemMeta();
                 im.setDisplayName(c);
                 im.setLore(Arrays.asList(value));
@@ -65,13 +66,19 @@ public class TARDISAdminMenuInventory {
             }
         }
         ItemStack[] stack = new ItemStack[54];
-        for (int s = 0; s < 54; s++) {
+        for (int s = 0; s < 53; s++) {
             if (s < options.size()) {
                 stack[s] = options.get(s);
             } else {
                 stack[s] = null;
             }
         }
+        // player prefs
+        ItemStack play = new ItemStack(Material.NETHER_STAR, 1);
+        ItemMeta prefs = play.getItemMeta();
+        prefs.setDisplayName("Player Preferences");
+        play.setItemMeta(prefs);
+        stack[53] = play;
         return stack;
     }
 

@@ -21,6 +21,7 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
 
@@ -41,7 +42,7 @@ public class TARDISRecipeLister {
     }
 
     public void list() {
-        sender.sendMessage(plugin.getPluginName() + "You can view the following recipes:");
+        TARDISMessage.send(sender, "RECIPE_VIEW");
         sender.sendMessage(ChatColor.GRAY + "    Command argument" + ChatColor.RESET + " - " + ChatColor.DARK_GRAY + "Recipe Result");
         for (Map.Entry<String, List<String>> map : options.entrySet()) {
             sender.sendMessage(map.getKey());
@@ -54,6 +55,7 @@ public class TARDISRecipeLister {
     private LinkedHashMap<String, List<String>> createRecipeOptions() {
         LinkedHashMap<String, List<String>> recipe_options = new LinkedHashMap<String, List<String>>();
         List<String> items = new ArrayList<String>();
+        items.add(ChatColor.GREEN + "tardis [type]" + ChatColor.RESET + " - " + ChatColor.DARK_GREEN + "TARDIS Seed Block");
         items.add(ChatColor.GREEN + "key" + ChatColor.RESET + " - " + ChatColor.DARK_GREEN + "TARDIS Key");
         items.add(ChatColor.GREEN + "locator" + ChatColor.RESET + " - " + ChatColor.DARK_GREEN + "TARDIS Locator");
         items.add(ChatColor.GREEN + "cell" + ChatColor.RESET + " - " + ChatColor.DARK_GREEN + "Artron Energy Cell");
@@ -91,6 +93,12 @@ public class TARDISRecipeLister {
         disks.add(ChatColor.AQUA + "preset-disk" + ChatColor.RESET + " - " + ChatColor.DARK_AQUA + "Preset Storage Disk");
         disks.add(ChatColor.AQUA + "save-disk" + ChatColor.RESET + " - " + ChatColor.DARK_AQUA + "Save Storage Disk");
         recipe_options.put("Storage Disks", disks);
+        List<String> food = new ArrayList<String>();
+        food.add(ChatColor.GRAY + "custard" + ChatColor.RESET + " - " + ChatColor.DARK_GRAY + "Bowl of Custard");
+        food.add(ChatColor.GRAY + "fish-finger" + ChatColor.RESET + " - " + ChatColor.DARK_GRAY + "Fish Finger");
+        food.add(ChatColor.GRAY + "jammy-dodger" + ChatColor.RESET + " - " + ChatColor.DARK_GRAY + "Jammy Dodger Biscuit");
+        food.add(ChatColor.GRAY + "jelly-baby" + ChatColor.RESET + " - " + ChatColor.DARK_GRAY + "Jelly Baby");
+        recipe_options.put("Food", food);
         return recipe_options;
     }
 }

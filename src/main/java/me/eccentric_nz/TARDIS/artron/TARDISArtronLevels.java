@@ -76,7 +76,7 @@ public class TARDISArtronLevels {
         }
         int level = rs.getArtron_level();
         if (level - required <= 100) {
-            TARDISMessage.send(p, plugin.getPluginName() + "The Artron Levels are critically low. You should recharge soon!");
+            TARDISMessage.send(p, "ENERGY_LOW");
         }
         return (level > required);
     }

@@ -19,6 +19,8 @@ package me.eccentric_nz.TARDIS.commands.admin;
 import java.util.Arrays;
 import java.util.List;
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.commands.preferences.TARDISPrefsMenuInventory;
+import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
@@ -53,6 +55,19 @@ public class TARDISAdminMenuListener implements Listener {
             int slot = event.getRawSlot();
             if (slot < 54) {
                 String option = getDisplay(inv, slot);
+                if (slot == 53 && option.equals("Player Preferences")) {
+                    final Player p = (Player) event.getWhoClicked();
+                    // close this gui and load the Player Prefs Menu
+                    plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
+                        @Override
+                        public void run() {
+                            Inventory ppm = plugin.getServer().createInventory(p, 18, "§4Player Prefs Menu");
+                            ppm.setContents(new TARDISPrefsMenuInventory(plugin, p.getUniqueId()).getMenu());
+                            p.openInventory(ppm);
+                        }
+                    }, 1L);
+                    return;
+                }
                 if (!option.isEmpty()) {
                     boolean bool = plugin.getConfig().getBoolean(option);
                     plugin.getConfig().set(option, !bool);

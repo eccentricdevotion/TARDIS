@@ -53,8 +53,8 @@ public class TARDISChameleonCircuit {
             chameleonData = b.getData();
         }
         if (TARDISConstants.CHAMELEON_BLOCKS_BAD.contains((Integer) chameleonType)) {
-            String message = (short_out) ? "You cannot short out the Chameleon Circuit with that kind of block!" : "Bummer, the TARDIS could not engage the Chameleon Circuit!";
-            TARDISMessage.send(p.getPlayer(), plugin.getPluginName() + message);
+            String message = (short_out) ? "CHAM_NOT_SHORT" : "CHAM_NOT_ENGAGE";
+            TARDISMessage.send(p.getPlayer(), message);
         }
         if (TARDISConstants.CHAMELEON_BLOCKS_CHANGE.contains((Integer) chameleonType)) {
             wall_block = swapId(chameleonType);

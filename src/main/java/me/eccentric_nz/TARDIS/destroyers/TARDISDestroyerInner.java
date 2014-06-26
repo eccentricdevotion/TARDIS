@@ -88,6 +88,9 @@ public class TARDISDestroyerInner {
             case ARS:
                 d = plugin.getBuildKeeper().getARSDimensions();
                 break;
+            case WAR:
+                d = plugin.getBuildKeeper().getWarDimensions();
+                break;
             case CUSTOM:
                 d = plugin.getBuildKeeper().getCustomDimensions();
                 break;

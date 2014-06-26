@@ -19,6 +19,8 @@ package me.eccentric_nz.TARDIS;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
+import org.bukkit.Material;
+import org.bukkit.block.Biome;
 import org.bukkit.entity.EntityType;
 
 /**
@@ -30,11 +32,10 @@ import org.bukkit.entity.EntityType;
  */
 public class TARDISConstants {
 
-    // GUI ids
-    public static final List<Integer> GUI_IDS = Arrays.asList(1, 2, 5, 7, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 29, 35, 41, 42, 45, 46, 47, 48, 49, 52, 56, 57, 58, 61, 73, 79, 80, 81, 82, 84, 86, 87, 88, 89, 98, 99, 100, 103, 110, 112, 118, 121, 123, 129, 133, 153, 155);
-    public static final List<Integer> GUI_ITEMS = Arrays.asList(6, 37, 38, 39, 40, 50, 131, 260, 262, 266, 280, 281, 287, 288, 289, 291, 295, 296, 297, 318, 320, 321, 322, 323, 326, 328, 331, 332, 334, 336, 337, 338, 339, 340, 341, 344, 345, 347, 349, 352, 355, 357, 358, 359, 360, 364, 365, 368, 385, 386, 390, 393, 2262);
-    // platform blocks
-    public static final List<Integer> PLATFORM_BLOCKS = Arrays.asList(0, 6, 9, 8, 31, 32, 37, 38, 39, 40, 78, 106, 3019, 3020);
+    // GUI materials
+    public static final List<Material> GUI_IDS = Arrays.asList(Material.STONE, Material.GRASS, Material.WOOD, Material.BEDROCK, Material.SAND, Material.GRAVEL, Material.GOLD_ORE, Material.IRON_ORE, Material.COAL_ORE, Material.LOG, Material.LEAVES, Material.SPONGE, Material.GLASS, Material.LAPIS_ORE, Material.LAPIS_BLOCK, Material.DISPENSER, Material.SANDSTONE, Material.PISTON_STICKY_BASE, Material.WOOL, Material.GOLD_BLOCK, Material.IRON_BLOCK, Material.BRICK, Material.TNT, Material.BOOKSHELF, Material.MOSSY_COBBLESTONE, Material.OBSIDIAN, Material.MOB_SPAWNER, Material.DIAMOND_ORE, Material.DIAMOND_BLOCK, Material.WORKBENCH, Material.FURNACE, Material.REDSTONE_ORE, Material.ICE, Material.SNOW_BLOCK, Material.CACTUS, Material.CLAY, Material.JUKEBOX, Material.PUMPKIN, Material.NETHERRACK, Material.SOUL_SAND, Material.GLOWSTONE, Material.SMOOTH_BRICK, Material.HUGE_MUSHROOM_1, Material.HUGE_MUSHROOM_2, Material.MELON, Material.MYCEL, Material.NETHER_BRICK, Material.CAULDRON, Material.ENDER_STONE, Material.REDSTONE_LAMP_OFF, Material.EMERALD_ORE, Material.EMERALD_BLOCK, Material.QUARTZ_ORE, Material.QUARTZ_BLOCK);
+    // underdoor blocks
+    public static final List<Integer> UNDERDOOR_BLOCKS = Arrays.asList(0, 6, 9, 8, 31, 32, 37, 38, 39, 40, 78, 89, 106, 3019, 3020);
     // chameleon blocks
     public static final List<Integer> CHAMELEON_BLOCKS_VALID = Arrays.asList(1, 3, 4, 5, 7, 14, 15, 16, 17, 18, 19, 20, 21, 22, 24, 25, 35, 41, 42, 43, 45, 46, 47, 48, 49, 56, 57, 58, 73, 74, 79, 80, 82, 84, 86, 87, 88, 89, 91, 98, 99, 100, 103, 110, 112, 121, 123, 124, 129, 133, 155, 159, 161, 162, 170, 172, 173, 174);
     public static final List<Integer> CHAMELEON_BLOCKS_BAD = Arrays.asList(6, 8, 9, 10, 11, 23, 26, 29, 33, 34, 50, 51, 52, 54, 55, 59, 61, 62, 63, 64, 65, 68, 70, 71, 72, 75, 76, 77, 83, 85, 90, 92, 93, 94, 95, 101, 107, 111, 115, 116, 117, 118, 119, 122, 127, 130, 131, 132);
@@ -45,7 +46,9 @@ public class TARDISConstants {
     public static final List<Integer> CHAMELEON_BLOCKS_NEXT = Arrays.asList(0, 27, 28, 30, 31, 32, 37, 38, 39, 40, 66, 151);
     public static final List<Integer> CHAMELEON_BLOCKS_PRECIOUS = Arrays.asList(41, 42, 46, 57, 133, 152, 173);
     public static final List<String> vowels = Arrays.asList("A", "E", "I", "O", "U");
-    public static final List<EntityType> ENTITY_TYPES = Arrays.asList(EntityType.BAT, EntityType.BLAZE, EntityType.CAVE_SPIDER, EntityType.CHICKEN, EntityType.COW, EntityType.CREEPER, EntityType.ENDERMAN, EntityType.GHAST, EntityType.HORSE, EntityType.IRON_GOLEM, EntityType.MAGMA_CUBE, EntityType.MUSHROOM_COW, EntityType.OCELOT, EntityType.PIG, EntityType.PIG_ZOMBIE, EntityType.PLAYER, EntityType.SHEEP, EntityType.SILVERFISH, EntityType.SKELETON, EntityType.SLIME, EntityType.SPIDER, EntityType.SQUID, EntityType.VILLAGER, EntityType.WITCH, EntityType.WOLF, EntityType.ZOMBIE);
+    public static final List<EntityType> ENTITY_TYPES = Arrays.asList(EntityType.BAT, EntityType.BLAZE, EntityType.CAVE_SPIDER, EntityType.CHICKEN, EntityType.COW, EntityType.CREEPER, EntityType.ENDER_DRAGON, EntityType.ENDERMAN, EntityType.GIANT, EntityType.GHAST, EntityType.HORSE, EntityType.IRON_GOLEM, EntityType.MAGMA_CUBE, EntityType.MUSHROOM_COW, EntityType.OCELOT, EntityType.PIG, EntityType.PIG_ZOMBIE, EntityType.PLAYER, EntityType.SHEEP, EntityType.SILVERFISH, EntityType.SKELETON, EntityType.SLIME, EntityType.SNOWMAN, EntityType.SPIDER, EntityType.SQUID, EntityType.VILLAGER, EntityType.WITCH, EntityType.WITHER, EntityType.WOLF, EntityType.ZOMBIE);
+    public static final List<EntityType> MONSTER_TYPES = Arrays.asList(EntityType.CAVE_SPIDER, EntityType.CREEPER, EntityType.ENDERMAN, EntityType.SILVERFISH, EntityType.SKELETON, EntityType.SLIME, EntityType.SPIDER, EntityType.SQUID, EntityType.WITCH, EntityType.ZOMBIE);
+    public static final List<Biome> NO_RAIN = Arrays.asList(Biome.DESERT, Biome.DESERT_HILLS, Biome.DESERT_MOUNTAINS, Biome.HELL, Biome.SAVANNA, Biome.SAVANNA_MOUNTAINS, Biome.SAVANNA_PLATEAU, Biome.SAVANNA_PLATEAU_MOUNTAINS, Biome.MESA, Biome.MESA_BRYCE, Biome.MESA_PLATEAU, Biome.MESA_PLATEAU_FOREST, Biome.MESA_PLATEAU_FOREST_MOUNTAINS, Biome.MESA_PLATEAU_MOUNTAINS, Biome.FROZEN_OCEAN, Biome.FROZEN_RIVER, Biome.ICE_MOUNTAINS, Biome.ICE_PLAINS, Biome.ICE_PLAINS_SPIKES, Biome.COLD_BEACH, Biome.COLD_TAIGA, Biome.COLD_TAIGA_HILLS, Biome.COLD_TAIGA_MOUNTAINS);
 
     /**
      * Creates a HashMap from two arrays. The resulting map is used by the
@@ -56,16 +59,16 @@ public class TARDISConstants {
      * @param values an array of block types to change to
      * @return the combined arrays as a HashMap
      */
-    public static HashMap toMap(Object[] keys, Object[] values) {
+    public static HashMap<Integer, Integer> toMap(Integer[] keys, Integer[] values) {
         int keysSize = (keys != null) ? keys.length : 0;
         int valuesSize = (values != null) ? values.length : 0;
         if (keysSize == 0 && valuesSize == 0) {
-            return new HashMap();
+            return new HashMap<Integer, Integer>();
         }
         if (keysSize != valuesSize) {
             throw new IllegalArgumentException("The number of keys doesn't match the number of values.");
         }
-        HashMap map = new HashMap();
+        HashMap<Integer, Integer> map = new HashMap<Integer, Integer>();
         for (int i = 0; i < keysSize; i++) {
             map.put(keys[i], values[i]);
         }

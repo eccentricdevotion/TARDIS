@@ -42,17 +42,17 @@ public class TARDISIsomorphicCommand {
         // does the player have a TARDIS
         if (rs.resultSet()) {
             int iso = (rs.isIso_on()) ? 0 : 1;
-            String onoff = (rs.isIso_on()) ? "OFF" : "ON";
+            String onoff = (rs.isIso_on()) ? "ISO_ON_OFF" : "ISO_ON_ON";
             int id = rs.getTardis_id();
             HashMap<String, Object> seti = new HashMap<String, Object>();
             seti.put("iso_on", iso);
             HashMap<String, Object> wheret = new HashMap<String, Object>();
             wheret.put("tardis_id", id);
             qf.doUpdate("tardis", seti, wheret);
-            TARDISMessage.send(player, plugin.getPluginName() + "Isomorphic controls were turned " + onoff + "!");
+            TARDISMessage.send(player, onoff);
             return true;
         } else {
-            TARDISMessage.send(player, plugin.getPluginName() + "You don't have a TARDIS yet!");
+            TARDISMessage.send(player, "NO_TARDIS");
             return true;
         }
     }

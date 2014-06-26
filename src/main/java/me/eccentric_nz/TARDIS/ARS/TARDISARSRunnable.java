@@ -118,7 +118,7 @@ public class TARDISARSRunnable implements Runnable {
             set.put("uuid", p.getUniqueId().toString());
             qf.alterEnergyLevel("tardis", -amount, set, p);
             if (p.isOnline()) {
-                TARDISMessage.send(p, plugin.getPluginName() + "To cancel growing this [" + whichroom + "] room use the command /tardis abort " + taskID);
+                TARDISMessage.send(p, "ARS_CANCEL", whichroom, String.format("%d", taskID));
             }
         }
     }

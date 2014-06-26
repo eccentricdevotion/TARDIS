@@ -143,12 +143,13 @@ public class TARDISWorldGuardUtils {
         region.setOwners(dd);
         HashMap<Flag<?>, Object> flags = new HashMap<Flag<?>, Object>();
         flags.put(DefaultFlag.TNT, State.DENY);
-        flags.put(DefaultFlag.CREEPER_EXPLOSION, State.DENY);
+//        flags.put(DefaultFlag.CREEPER_EXPLOSION, State.DENY);
+        flags.put(DefaultFlag.ENDER_BUILD, State.DENY);
         flags.put(DefaultFlag.FIRE_SPREAD, State.DENY);
         flags.put(DefaultFlag.LAVA_FIRE, State.DENY);
         flags.put(DefaultFlag.LAVA_FLOW, State.DENY);
         flags.put(DefaultFlag.LIGHTER, State.DENY);
-        flags.put(DefaultFlag.MOB_SPAWNING, State.DENY);
+//        flags.put(DefaultFlag.MOB_SPAWNING, State.DENY);
         flags.put(DefaultFlag.CHEST_ACCESS, State.ALLOW);
         region.setFlags(flags);
         rm.addRegion(region);
@@ -157,8 +158,8 @@ public class TARDISWorldGuardUtils {
         } catch (ProtectionDatabaseException e) {
             plugin.getConsole().sendMessage(plugin.getPluginName() + "Could not create WorldGuard Protection for TARDIS! " + e.getMessage());
         }
-        // set the mob spawning configuration
-        setDenyInConfig("TARDIS_WORLD_" + p.getName());
+//        // set the mob spawning configuration
+//        setDenyInConfig("TARDIS_WORLD_" + p.getName());
     }
 
     /**
@@ -169,24 +170,23 @@ public class TARDISWorldGuardUtils {
      * @param data a TIPS Data container
      * @param w the world we are creating the region in
      */
-    public void addWGProtection(Player p, TARDISTIPSData data, World w) {
+    public void addWGProtection(String p, TARDISTIPSData data, World w) {
         RegionManager rm = wg.getRegionManager(w);
         BlockVector b1 = new BlockVector(data.getMinX(), 0, data.getMinZ());
         BlockVector b2 = new BlockVector(data.getMaxX(), 256, data.getMaxZ());
-        String region_id = "tardis_" + p.getName();
+        String region_id = "tardis_" + p;
         ProtectedCuboidRegion region = new ProtectedCuboidRegion(region_id, b1, b2);
         DefaultDomain dd = new DefaultDomain();
-        dd.addPlayer(p.getName());
+        dd.addPlayer(p);
         region.setOwners(dd);
         HashMap<Flag<?>, Object> flags = new HashMap<Flag<?>, Object>();
         flags.put(DefaultFlag.ENTRY, State.DENY);
         flags.put(DefaultFlag.TNT, State.DENY);
-        flags.put(DefaultFlag.CREEPER_EXPLOSION, State.DENY);
         flags.put(DefaultFlag.FIRE_SPREAD, State.DENY);
         flags.put(DefaultFlag.LAVA_FIRE, State.DENY);
         flags.put(DefaultFlag.LAVA_FLOW, State.DENY);
         flags.put(DefaultFlag.LIGHTER, State.DENY);
-        flags.put(DefaultFlag.MOB_SPAWNING, State.DENY);
+//        flags.put(DefaultFlag.MOB_SPAWNING, State.DENY);
         flags.put(DefaultFlag.CHEST_ACCESS, State.ALLOW);
         region.setFlags(flags);
         rm.addRegion(region);
@@ -198,8 +198,8 @@ public class TARDISWorldGuardUtils {
         } catch (ProtectionDatabaseException e) {
             plugin.getConsole().sendMessage(plugin.getPluginName() + "Could not create WorldGuard Protection for TARDIS! " + e.getMessage());
         }
-        // set the mob spawning configuration
-        setDenyInConfig(w.getName());
+//        // set the mob spawning configuration
+//        setDenyInConfig(w.getName());
     }
 
     /**
@@ -228,7 +228,6 @@ public class TARDISWorldGuardUtils {
         flags.put(DefaultFlag.LAVA_FIRE, State.DENY);
         flags.put(DefaultFlag.LAVA_FLOW, State.DENY);
         flags.put(DefaultFlag.LIGHTER, State.DENY);
-        //flags.put(DefaultFlag.CONSTRUCT, RegionGroup.OWNERS);
         region.setFlags(flags);
         rm.addRegion(region);
         try {
@@ -269,33 +268,6 @@ public class TARDISWorldGuardUtils {
         }
     }
 
-//    /**
-//     * Adds a WorldGuard region that allows mobs spawning in the specified room.
-//     *
-//     * @param name the name of the recharger
-//     * @param room the name of the room the region is for
-//     * @param one a start location of a cuboid region
-//     * @param two an end location of a cuboid region
-//     */
-//    public void addAllowSpawning(String name, String room, Location one, Location two) {
-//        RegionManager rm = wg.getRegionManager(one.getWorld());
-//        BlockVector b1;
-//        BlockVector b2;
-//        b1 = makeBlockVector(one);
-//        b2 = makeBlockVector(two);
-//        ProtectedCuboidRegion region = new ProtectedCuboidRegion(room + "_" + name, b1, b2);
-//        HashMap<Flag<?>, Object> flags = new HashMap<Flag<?>, Object>();
-//        flags.put(DefaultFlag.MOB_SPAWNING, State.ALLOW);
-//        region.setFlags(flags);
-//        region.setPriority(10);
-//        rm.addRegion(region);
-//        try {
-//            rm.save();
-//        } catch (ProtectionDatabaseException e) {
-//            plugin.getConsole().sendMessage(plugin.getPluginName() + "Could not allow WorldGuard mob spawning for " + room + " room! " + e.getMessage());
-//        }
-//    }
-//
     /**
      * Removes the WorldGuard region when the TARDIS is deleted.
      *
@@ -417,7 +389,7 @@ public class TARDISWorldGuardUtils {
      * Gets a TARDIS WorldGuard region.
      *
      * @param world the world the region is in
-     * @param p the Timelord whose region it is
+     * @param p the Time Lord whose region it is
      * @return the protected region
      */
     public ProtectedRegion getRegion(String world, String p) {
@@ -437,7 +409,6 @@ public class TARDISWorldGuardUtils {
      */
     public void setDenyInConfig(String world) {
         String world_folder = "worlds" + File.separator + world + File.separator;
-        plugin.debug("world folder: " + world_folder);
         File configFile = new File(wg.getDataFolder(), world_folder + "config.yml");
         if (!configFile.exists()) {
             plugin.debug("Can't find world config file!");
@@ -469,5 +440,18 @@ public class TARDISWorldGuardUtils {
             }
         }
         return regions;
+    }
+
+    /**
+     * Checks whether there is a protected region at a location and if so
+     * whether mobs can spawn.
+     *
+     * @param l the location to check
+     * @return true if mobs can spawn, otherwise false
+     */
+    public boolean mobsCanSpawnAtLocation(Location l) {
+        RegionManager rm = wg.getRegionManager(l.getWorld());
+        ApplicableRegionSet ars = rm.getApplicableRegions(l);
+        return ars.allows(DefaultFlag.MOB_SPAWNING);
     }
 }

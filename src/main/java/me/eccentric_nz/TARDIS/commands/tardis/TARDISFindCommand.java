@@ -20,7 +20,6 @@ import java.util.HashMap;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.ResultSetCurrentLocation;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
-import me.eccentric_nz.TARDIS.enumeration.MESSAGE;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
@@ -44,25 +43,25 @@ public class TARDISFindCommand {
                 where.put("uuid", player.getUniqueId().toString());
                 ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);
                 if (!rs.resultSet()) {
-                    TARDISMessage.send(player, plugin.getPluginName() + MESSAGE.NO_TARDIS.getText());
+                    TARDISMessage.send(player, "NO_TARDIS");
                     return false;
                 }
                 HashMap<String, Object> wherecl = new HashMap<String, Object>();
                 wherecl.put("tardis_id", rs.getTardis_id());
                 ResultSetCurrentLocation rsc = new ResultSetCurrentLocation(plugin, wherecl);
                 if (rsc.resultSet()) {
-                    TARDISMessage.send(player, plugin.getPluginName() + "TARDIS was left at " + rsc.getWorld().getName() + " at x: " + rsc.getX() + " y: " + rsc.getY() + " z: " + rsc.getZ());
+                    TARDISMessage.send(player, "TARDIS_FIND", rsc.getWorld().getName() + " at x: " + rsc.getX() + " y: " + rsc.getY() + " z: " + rsc.getZ());
                     return true;
                 } else {
-                    TARDISMessage.send(player, plugin.getPluginName() + MESSAGE.NO_CURRENT.getText());
+                    TARDISMessage.send(player, "CURRENT_NOT_FOUND");
                     return true;
                 }
             } else {
-                TARDISMessage.send(player, plugin.getPluginName() + MESSAGE.NO_PERMS.getText());
+                TARDISMessage.send(player, "NO_PERMS");
                 return false;
             }
         } else {
-            TARDISMessage.send(player, plugin.getPluginName() + "You need to craft a TARDIS Locator! Type " + ChatColor.AQUA + "/tardisrecipe locator" + ChatColor.RESET + " to see how to make it.");
+            TARDISMessage.send(player, "DIFF_HARD_FIND", ChatColor.AQUA + "/tardisrecipe locator" + ChatColor.RESET);
             return true;
         }
     }

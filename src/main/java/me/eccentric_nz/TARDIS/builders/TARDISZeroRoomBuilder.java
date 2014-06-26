@@ -44,7 +44,7 @@ public class TARDISZeroRoomBuilder {
 
     public boolean build(Player p, int tips, int id) {
         if (!plugin.getConfig().getBoolean("allow.zero_room")) {
-            TARDISMessage.send(p, plugin.getPluginName() + "This server does not allow Zero rooms!");
+            TARDISMessage.send(p, "ZERO_DISABLED");
             return true;
         }
         TARDISInteriorPostioning tintpos = new TARDISInteriorPostioning(plugin);
@@ -65,7 +65,7 @@ public class TARDISZeroRoomBuilder {
         int z = pos.getCentreZ();
         World w = plugin.getServer().getWorld("TARDIS_Zero_room");
         if (w == null) {
-            TARDISMessage.send(p, plugin.getPluginName() + "Could not find the TARDIS_Zero_Room world! Has it been created yet?");
+            TARDISMessage.send(p, "ZERO_NOT_FOUND");
             return true;
         }
         Location l = new Location(w, x, y, z);

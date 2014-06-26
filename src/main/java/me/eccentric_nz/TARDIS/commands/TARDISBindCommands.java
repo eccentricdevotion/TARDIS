@@ -27,7 +27,6 @@ import me.eccentric_nz.TARDIS.database.ResultSetAreas;
 import me.eccentric_nz.TARDIS.database.ResultSetDestinations;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import me.eccentric_nz.TARDIS.database.ResultSetTravellers;
-import me.eccentric_nz.TARDIS.enumeration.MESSAGE;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import org.bukkit.ChatColor;
 import org.bukkit.OfflinePlayer;
@@ -67,7 +66,7 @@ public class TARDISBindCommands implements CommandExecutor {
     public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
         if (cmd.getName().equalsIgnoreCase("tardisbind")) {
             if (!sender.hasPermission("tardis.update")) {
-                sender.sendMessage(plugin.getPluginName() + MESSAGE.NO_PERMS.getText());
+                TARDISMessage.send(sender, "NO_PERMS");
                 return false;
             }
             Player player = null;
@@ -75,22 +74,22 @@ public class TARDISBindCommands implements CommandExecutor {
                 player = (Player) sender;
             }
             if (player == null) {
-                sender.sendMessage(plugin.getPluginName() + MESSAGE.MUST_BE_PLAYER.getText());
+                TARDISMessage.send(sender, "CMD_PLAYER");
                 return false;
             }
             if (args.length < 1) {
-                TARDISMessage.send(player, plugin.getPluginName() + MESSAGE.TOO_FEW_ARGS.getText());
+                TARDISMessage.send(player, "TOO_FEW_ARGS");
                 return false;
             }
             if (!firstArgs.contains(args[0].toLowerCase(Locale.ENGLISH))) {
-                TARDISMessage.send(player, plugin.getPluginName() + "That is not a valid 'bind' type! Try one of: save|cmd|player|area|remove");
+                TARDISMessage.send(player, "BIND_NOT_VALID");
                 return false;
             }
             HashMap<String, Object> where = new HashMap<String, Object>();
             where.put("uuid", player.getUniqueId().toString());
             ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);
             if (!rs.resultSet()) {
-                TARDISMessage.send(player, plugin.getPluginName() + MESSAGE.NOT_A_TIMELORD.getText());
+                TARDISMessage.send(player, "NOT_A_TIMELORD");
                 return false;
             }
             int id = rs.getTardis_id();
@@ -98,7 +97,7 @@ public class TARDISBindCommands implements CommandExecutor {
             wheret.put("uuid", player.getUniqueId().toString());
             ResultSetTravellers rst = new ResultSetTravellers(plugin, wheret, false);
             if (!rst.resultSet()) {
-                TARDISMessage.send(player, plugin.getPluginName() + MESSAGE.NOT_IN_TARDIS.getText());
+                TARDISMessage.send(player, "NOT_IN_TARDIS");
                 return false;
             }
             if (args[0].equalsIgnoreCase("update")) {
@@ -111,11 +110,11 @@ public class TARDISBindCommands implements CommandExecutor {
                     setu.put("type", 1);
                     qf.doUpdate("destinations", setu, whereu);
                 }
-                TARDISMessage.send(player, plugin.getPluginName() + "Binds updated!");
+                TARDISMessage.send(player, "BIND_SET");
                 return true;
             }
             if (args.length < 2) {
-                TARDISMessage.send(player, plugin.getPluginName() + MESSAGE.TOO_FEW_ARGS.getText());
+                TARDISMessage.send(player, "TOO_FEW_ARGS");
                 return false;
             }
             if (args[0].equalsIgnoreCase("remove")) {
@@ -124,11 +123,11 @@ public class TARDISBindCommands implements CommandExecutor {
                 whered.put("dest_name", args[1].toLowerCase(Locale.ENGLISH));
                 ResultSetDestinations rsd = new ResultSetDestinations(plugin, whered, false);
                 if (!rsd.resultSet()) {
-                    TARDISMessage.send(player, plugin.getPluginName() + "Could not find a save with that name! Try using " + ChatColor.AQUA + "/tardis list saves" + ChatColor.RESET + " first.");
+                    TARDISMessage.send(player, "SAVE_NOT_FOUND", ChatColor.GREEN + "/TARDIS list saves" + ChatColor.RESET);
                     return true;
                 }
                 if (rsd.getBind().isEmpty()) {
-                    TARDISMessage.send(player, plugin.getPluginName() + "There is no button bound to that save name!");
+                    TARDISMessage.send(player, "BIND_NO_SAVE");
                     return true;
                 }
                 int did = rsd.getDest_id();
@@ -145,7 +144,7 @@ public class TARDISBindCommands implements CommandExecutor {
                     set.put("bind", "");
                     qf.doUpdate("destinations", set, whereb);
                 }
-                TARDISMessage.send(player, plugin.getPluginName() + "The " + firstArgs.get(dtype) + " was unbound. You can safely delete the block.");
+                TARDISMessage.send(player, "BIND_REMOVED", firstArgs.get(dtype));
                 return true;
             } else {
                 int did = 0;
@@ -155,7 +154,7 @@ public class TARDISBindCommands implements CommandExecutor {
                     whered.put("dest_name", args[1]);
                     ResultSetDestinations rsd = new ResultSetDestinations(plugin, whered, false);
                     if (!rsd.resultSet()) {
-                        TARDISMessage.send(player, plugin.getPluginName() + "Could not find a save with that name! Try using " + ChatColor.AQUA + "/tardis list saves" + ChatColor.RESET + " first.");
+                        TARDISMessage.send(player, "SAVE_NOT_FOUND", ChatColor.GREEN + "/TARDIS list saves" + ChatColor.RESET);
                         return true;
                     } else {
                         did = rsd.getDest_id();
@@ -166,7 +165,7 @@ public class TARDISBindCommands implements CommandExecutor {
                 set.put("tardis_id", id);
                 if (args[0].equalsIgnoreCase("cmd")) { // type 1
                     if (!type_1.contains(args[1])) {
-                        TARDISMessage.send(player, plugin.getPluginName() + "You can only bind the hide, cave, rebuild and home commands!");
+                        TARDISMessage.send(player, "BIND_CMD_NOT_VALID");
                         return true;
                     }
                     set.put("dest_name", args[1].toLowerCase(Locale.ENGLISH));
@@ -179,7 +178,7 @@ public class TARDISBindCommands implements CommandExecutor {
                     if (p == null) {
                         OfflinePlayer offp = plugin.getServer().getOfflinePlayer(args[1]);
                         if (offp == null) {
-                            TARDISMessage.send(player, plugin.getPluginName() + MESSAGE.COULD_NOT_FIND_NAME.getText());
+                            TARDISMessage.send(player, "COULD_NOT_FIND_NAME");
                             return true;
                         }
                     }
@@ -192,11 +191,11 @@ public class TARDISBindCommands implements CommandExecutor {
                     wherea.put("area_name", args[1]);
                     ResultSetAreas rsa = new ResultSetAreas(plugin, wherea, false);
                     if (!rsa.resultSet()) {
-                        TARDISMessage.send(player, plugin.getPluginName() + "Could not find an area with that name! try using " + ChatColor.AQUA + "/tardis list areas" + ChatColor.RESET + " first.");
+                        TARDISMessage.send(player, "AREA_NOT_FOUND", ChatColor.GREEN + "/tardis list areas" + ChatColor.RESET);
                         return true;
                     }
                     if (!player.hasPermission("tardis.area." + args[1]) || !player.isPermissionSet("tardis.area." + args[1])) {
-                        TARDISMessage.send(player, plugin.getPluginName() + "You do not have permission [tardis.area." + args[1] + "] to bind to this location!");
+                        TARDISMessage.send(player, "BIND_NO_AREA_PERM", args[1]);
                         return true;
                     }
                     set.put("dest_name", args[1].toLowerCase(Locale.ENGLISH));
@@ -214,13 +213,13 @@ public class TARDISBindCommands implements CommandExecutor {
                             did = qf.doSyncInsert("destinations", set);
                         }
                     } catch (IllegalArgumentException iae) {
-                        TARDISMessage.send(player, plugin.getPluginName() + "Biome type not valid!");
+                        TARDISMessage.send(player, "BIOME_NOT_VALID");
                         return true;
                     }
                 }
                 if (did != 0) {
-                    plugin.getTrackerKeeper().getTrackBinder().put(player.getUniqueId(), did);
-                    TARDISMessage.send(player, plugin.getPluginName() + "Click the block you want to bind to this save location.");
+                    plugin.getTrackerKeeper().getBinder().put(player.getUniqueId(), did);
+                    TARDISMessage.send(player, "BIND_CLICK");
                     return true;
                 }
             }

@@ -44,8 +44,8 @@ public class TARDISChatListener implements Listener {
 
     /**
      * Listens for player typing "tardis rescue accept". If the player types it
-     * within 60 seconds of a Timelord sending a rescue request, a player rescue
-     * attempt is made.
+     * within 60 seconds of a Time Lord sending a rescue request, a player
+     * rescue attempt is made.
      *
      * @param event a player typing in chat
      */
@@ -54,22 +54,22 @@ public class TARDISChatListener implements Listener {
         final UUID saved = event.getPlayer().getUniqueId();
         String chat = event.getMessage();
         if (chat != null && chat.equalsIgnoreCase("tardis rescue accept")) {
-            if (plugin.getTrackerKeeper().getTrackChat().containsKey(saved)) {
-                final Player rescuer = plugin.getServer().getPlayer(plugin.getTrackerKeeper().getTrackChat().get(saved));
+            if (plugin.getTrackerKeeper().getChat().containsKey(saved)) {
+                final Player rescuer = plugin.getServer().getPlayer(plugin.getTrackerKeeper().getChat().get(saved));
                 final TARDISRescue res = new TARDISRescue(plugin);
-                plugin.getTrackerKeeper().getTrackChat().remove(saved);
+                plugin.getTrackerKeeper().getChat().remove(saved);
                 // delay it so the chat appears before the message
                 final String player = event.getPlayer().getName();
                 plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
                     @Override
                     public void run() {
                         if (res.tryRescue(rescuer, saved)) {
-                            TARDISMessage.send(rescuer, plugin.getPluginName() + "Release the handbrake to start rescuing " + player);
+                            TARDISMessage.send(rescuer, "RESCUE_RELEASE", player);
                         }
                     }
                 }, 2L);
             } else {
-                TARDISMessage.send(event.getPlayer(), plugin.getPluginName() + "Rescue request timed out! You need to respond within 60 seconds.");
+                TARDISMessage.send(event.getPlayer(), "RESCUE_TIMEOUT");
             }
         }
     }

@@ -181,3 +181,6 @@ no_artron_value:
 #- COBBLESTONE
 #- SAND
 #- GRAVEL
+keys:
+- GOLD_NUGGET
+- STICK

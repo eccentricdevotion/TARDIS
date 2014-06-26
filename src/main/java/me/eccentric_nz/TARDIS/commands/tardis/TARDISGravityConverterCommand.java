@@ -25,7 +25,6 @@ import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import me.eccentric_nz.TARDIS.database.TARDISDatabaseConnection;
-import me.eccentric_nz.TARDIS.enumeration.MESSAGE;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
@@ -52,7 +51,7 @@ public class TARDISGravityConverterCommand {
         where.put("uuid", player.getUniqueId().toString());
         ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);
         if (!rs.resultSet()) {
-            TARDISMessage.send(player, plugin.getPluginName() + MESSAGE.NO_TARDIS.getText());
+            TARDISMessage.send(player, "NO_TARDIS");
             return false;
         }
         int id = rs.getTardis_id();
@@ -86,7 +85,7 @@ public class TARDISGravityConverterCommand {
                 QueryFactory qf = new QueryFactory(plugin);
                 qf.doInsert("gravity_well", setu);
                 qf.doInsert("gravity_well", setd);
-                TARDISMessage.send(player, plugin.getPluginName() + "Gravity well converted successfully.");
+                player.sendMessage(plugin.getPluginName() + "Gravity well converted successfully.");
                 return true;
             }
         } catch (SQLException e) {

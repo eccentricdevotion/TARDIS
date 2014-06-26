@@ -43,10 +43,10 @@ public class TARDISTemporalListener implements Listener {
         Material inhand = p.getItemInHand().getType();
         if (event.getAction().equals(Action.RIGHT_CLICK_AIR) && inhand.equals(Material.WATCH) && p.hasPermission("tardis.temporal")) {
             p.resetPlayerTime();
-            if (plugin.getTrackerKeeper().getTrackSetTime().containsKey(p.getUniqueId())) {
-                plugin.getTrackerKeeper().getTrackSetTime().remove(p.getUniqueId());
+            if (plugin.getTrackerKeeper().getSetTime().containsKey(p.getUniqueId())) {
+                plugin.getTrackerKeeper().getSetTime().remove(p.getUniqueId());
             }
-            TARDISMessage.send(p, plugin.getPluginName() + "Temporal Location reset to server time.");
+            TARDISMessage.send(p, "TEMPORAL_RESET");
         }
     }
 }

@@ -211,7 +211,7 @@ public class TARDISTimeTravel {
                             if (rsp.resultSet()) {
                                 if (rsp.isSubmarineOn() && plugin.getUtils().isOceanBiome(currentBlock.getBiome())) {
                                     // get submarine location
-                                    TARDISMessage.send(p, plugin.getPluginName() + "Searching for underwater location...");
+                                    TARDISMessage.send(p, "SUB_SEARCH");
                                     Location underwater = submarine(currentBlock, d);
                                     if (underwater != null) {
                                         // get TARDIS id
@@ -219,7 +219,7 @@ public class TARDISTimeTravel {
                                         wherep.put("uuid", p.getUniqueId().toString());
                                         ResultSetTravellers rst = new ResultSetTravellers(plugin, wherep, false);
                                         if (rst.resultSet()) {
-                                            plugin.getTrackerKeeper().getTrackSubmarine().add(rst.getTardis_id());
+                                            plugin.getTrackerKeeper().getSubmarine().add(rst.getTardis_id());
                                         }
                                         return underwater;
                                     } else {
@@ -383,7 +383,7 @@ public class TARDISTimeTravel {
     }
 
     /**
-     * Checks if a block to see whether it is clear. Blocks include AIR,
+     * Checks a block to see whether it is clear. Blocks include AIR,
      * LONG_GRASS, MUSHROOMS, SNOW etc.
      *
      * @param id the block typeId to check.

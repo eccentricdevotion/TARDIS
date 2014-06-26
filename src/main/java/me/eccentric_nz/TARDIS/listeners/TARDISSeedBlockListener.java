@@ -94,7 +94,7 @@ public class TARDISSeedBlockListener implements Listener {
             seed.setLamp(lamp_data.getId());
             Location l = event.getBlockPlaced().getLocation();
             trackTARDISSeed.put(l, seed);
-            TARDISMessage.send(player, plugin.getPluginName() + "You placed a TARDIS seed block!");
+            TARDISMessage.send(player, "SEED_PLACE");
             // now the player has to click the block with the TARDIS key
         }
     }
@@ -122,7 +122,7 @@ public class TARDISSeedBlockListener implements Listener {
                 lore.add(data.getSchematic().toString());
                 lore.add("Walls: " + twl.wall_lookup.get(data.getWall_id() + ":" + data.getWall_data()));
                 lore.add("Floors: " + twl.wall_lookup.get(data.getFloor_id() + ":" + data.getFloor_data()));
-// do some funky stuff to get data values for wool/stained glass & clay/wood/log/log_2
+                // do some funky stuff to get data values for wool/stained glass & clay/wood/log/log_2
                 if (hasColour.contains(data.getBox_id())) {
                     switch (data.getBox_id()) {
                         case 35:
@@ -170,7 +170,7 @@ public class TARDISSeedBlockListener implements Listener {
                 }
                 if (player.getItemInHand().getType().equals(Material.getMaterial(key))) {
                     if (!plugin.getConfig().getBoolean("worlds." + l.getWorld().getName())) {
-                        TARDISMessage.send(player, plugin.getPluginName() + "You cannot create a TARDIS in this world!");
+                        TARDISMessage.send(player, "WORLD_NO_TARDIS");
                         return;
                     }
                     // grow a TARDIS

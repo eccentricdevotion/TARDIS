@@ -23,12 +23,14 @@ import java.util.Locale;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetPlayerPrefs;
-import me.eccentric_nz.TARDIS.enumeration.MESSAGE;
+import me.eccentric_nz.TARDIS.sonic.TARDISSonicMenuInventory;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.Inventory;
+import org.bukkit.inventory.ItemStack;
 
 /**
  * Command /tardisprefs [arguments].
@@ -50,22 +52,27 @@ public class TARDISPrefsCommands implements CommandExecutor {
         firstArgs.add("auto");
         firstArgs.add("beacon");
         firstArgs.add("build");
+        firstArgs.add("ctm");
         firstArgs.add("dnd");
         firstArgs.add("eps");
         firstArgs.add("eps_message");
+        firstArgs.add("flight");
         firstArgs.add("floor");
         firstArgs.add("hads");
         firstArgs.add("isomorphic");
         firstArgs.add("key");
+        firstArgs.add("key_menu");
         firstArgs.add("lamp");
         firstArgs.add("language");
         firstArgs.add("minecart");
         firstArgs.add("plain");
-        firstArgs.add("platform");
         firstArgs.add("quotes");
         firstArgs.add("renderer");
         firstArgs.add("sfx");
+        firstArgs.add("sign");
+        firstArgs.add("sonic");
         firstArgs.add("submarine");
+        firstArgs.add("travelbar");
         firstArgs.add("wall");
         firstArgs.add("wool_lights");
     }
@@ -83,12 +90,28 @@ public class TARDISPrefsCommands implements CommandExecutor {
                 return false;
             }
             if (player == null) {
-                sender.sendMessage(plugin.getPluginName() + MESSAGE.MUST_BE_PLAYER.getText());
+                TARDISMessage.send(sender, "CMD_PLAYER");
                 return true;
             }
             String pref = args[0].toLowerCase(Locale.ENGLISH);
             if (firstArgs.contains(pref)) {
                 if (player.hasPermission("tardis.timetravel")) {
+                    if (pref.equals("sonic")) {
+                        // open sonic prefs menu
+                        ItemStack[] sonics = new TARDISSonicMenuInventory().getMenu();
+                        Inventory sim = plugin.getServer().createInventory(player, 27, "§4Sonic Prefs Menu");
+                        sim.setContents(sonics);
+                        player.openInventory(sim);
+                        return true;
+                    }
+                    if (pref.equals("key_menu")) {
+                        // open sonic prefs menu
+                        ItemStack[] keys = new TARDISKeyMenuInventory().getMenu();
+                        Inventory sim = plugin.getServer().createInventory(player, 27, "§4TARDIS Key Prefs Menu");
+                        sim.setContents(keys);
+                        player.openInventory(sim);
+                        return true;
+                    }
                     // get the players preferences
                     HashMap<String, Object> wherepp = new HashMap<String, Object>();
                     wherepp.put("uuid", player.getUniqueId().toString());
@@ -119,8 +142,11 @@ public class TARDISPrefsCommands implements CommandExecutor {
                     if (pref.equals("wall") || pref.equals("floor")) {
                         return new TARDISFloorCommand(plugin).setFloorOrWallBlock(player, args, qf);
                     }
+                    if (pref.equals("flight")) {
+                        return new TARDISSetFlightCommand(plugin).setMode(player, args, qf);
+                    }
                     if (args.length < 2 || (!args[1].equalsIgnoreCase("on") && !args[1].equalsIgnoreCase("off"))) {
-                        TARDISMessage.send(player, plugin.getPluginName() + "You need to specify if " + pref + " should be on or off!");
+                        TARDISMessage.send(player, "PREF_ON_OFF", pref);
                         return false;
                     }
                     if (pref.equals("build")) {
@@ -129,11 +155,11 @@ public class TARDISPrefsCommands implements CommandExecutor {
                         return new TARDISToggleOnOffCommand(plugin).toggle(player, args, qf);
                     }
                 } else {
-                    TARDISMessage.send(player, plugin.getPluginName() + MESSAGE.NO_PERMS.getText());
+                    TARDISMessage.send(player, "NO_PERMS");
                     return false;
                 }
             } else {
-                TARDISMessage.send(player, plugin.getPluginName() + "That is not a valid TARDIS player preference!");
+                TARDISMessage.send(player, "PREF_NOT_VALID");
             }
         }
         return false;

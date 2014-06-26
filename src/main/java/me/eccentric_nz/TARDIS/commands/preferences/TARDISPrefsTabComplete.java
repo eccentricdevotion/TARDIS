@@ -21,6 +21,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
+import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.rooms.TARDISWalls;
 import org.bukkit.Material;
 import org.bukkit.command.Command;
@@ -33,34 +34,40 @@ import org.bukkit.util.StringUtil;
  */
 public class TARDISPrefsTabComplete implements TabCompleter {
 
-    private final ImmutableList<String> ROOT_SUBS = ImmutableList.of("auto", "build", "beacon", "dnd", "eps", "eps_message", "floor", "hads", "isomorphic", "key", "lamp", "language", "minecart", "plain", "platform", "quotes", "renderer", "sfx", "submarine", "wall", "wool_lights");
+    private final TARDIS plugin;
+    private final ImmutableList<String> ROOT_SUBS = ImmutableList.of("auto", "build", "beacon", "ctm", "dnd", "eps", "eps_message", "flight", "floor", "hads", "isomorphic", "key", "key_menu", "lamp", "language", "minecart", "plain", "quotes", "renderer", "sfx", "sign", "sonic", "submarine", "travelbar", "wall", "wool_lights");
     private final ImmutableList<String> ONOFF_SUBS = ImmutableList.of("on", "off");
+    private final ImmutableList<String> FLIGHT_SUBS = ImmutableList.of("normal", "regulator", "manual");
     private final ImmutableList<String> KEY_SUBS;
     private final ImmutableList<String> MAT_SUBS;
     private final ImmutableList<String> LANGUAGE_SUBS = ImmutableList.of("ARABIC", "BULGARIAN", "CATALAN", "CHINESE_SIMPLIFIED", "CHINESE_TRADITIONAL", "CZECH", "DANISH", "DUTCH", "ENGLISH", "ESTONIAN", "FINNISH", "FRENCH", "GERMAN", "GREEK", "HAITIAN_CREOLE", "HEBREW", "HINDI", "HMONG_DAW", "HUNGARIAN", "INDONESIAN", "ITALIAN", "JAPANESE", "KOREAN", "LATVIAN", "LITHUANIAN", "MALAY", "NORWEGIAN", "PERSIAN", "POLISH", "PORTUGUESE", "ROMANIAN", "RUSSIAN", "SLOVAK", "SLOVENIAN", "SPANISH", "SWEDISH", "THAI", "TURKISH", "UKRAINIAN", "URDU", "VIETNAMESE");
 
-    ;
-
-    public TARDISPrefsTabComplete() {
+    public TARDISPrefsTabComplete(TARDIS plugin) {
+        this.plugin = plugin;
         HashMap<String, int[]> map = new TARDISWalls().blocks;
         List<String> mats = new ArrayList<String>();
         for (String key : map.keySet()) {
             mats.add(key);
         }
         this.MAT_SUBS = ImmutableList.copyOf(mats);
-        List<String> keys = new ArrayList<String>();
-        Material[] materialValues = Material.values();
-        for (Material key : materialValues) {
-            keys.add(key.toString());
+        if (plugin.getConfig().getBoolean("travel.give_key") && !plugin.getConfig().getBoolean("allow.all_blocks")) {
+            this.KEY_SUBS = ImmutableList.copyOf(plugin.getBlocksConfig().getStringList("keys"));
+        } else {
+            List<String> keys = new ArrayList<String>();
+            Material[] materialValues = Material.values();
+            for (Material key : materialValues) {
+                if (!key.isBlock()) {
+                    keys.add(key.toString());
+                }
+            }
+            this.KEY_SUBS = ImmutableList.copyOf(keys);
         }
-        this.KEY_SUBS = ImmutableList.copyOf(keys);
     }
 
     @Override
     public List<String> onTabComplete(CommandSender sender, Command command, String label, String[] args) {
         // Remember that we can return null to default to online player name matching
         String lastArg = args[args.length - 1];
-
         if (args.length <= 1) {
             return partial(args[0], ROOT_SUBS);
         } else if (args.length == 2) {
@@ -73,6 +80,8 @@ public class TARDISPrefsTabComplete implements TabCompleter {
                 return partial(lastArg, KEY_SUBS);
             } else if (sub.equals("language")) {
                 return partial(lastArg, LANGUAGE_SUBS);
+            } else if (sub.equals("flight")) {
+                return partial(lastArg, FLIGHT_SUBS);
             } else {
                 return partial(lastArg, ONOFF_SUBS);
             }

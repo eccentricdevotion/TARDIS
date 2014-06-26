@@ -21,7 +21,6 @@ import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetDestinations;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
-import me.eccentric_nz.TARDIS.enumeration.MESSAGE;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import org.bukkit.entity.Player;
 
@@ -40,14 +39,14 @@ public class TARDISRemoveSavedLocationCommand {
     public boolean doRemoveSave(Player player, String[] args) {
         if (player.hasPermission("tardis.save")) {
             if (args.length < 2) {
-                TARDISMessage.send(player, plugin.getPluginName() + MESSAGE.TOO_FEW_ARGS.getText());
+                TARDISMessage.send(player, "TOO_FEW_ARGS");
                 return false;
             }
             HashMap<String, Object> where = new HashMap<String, Object>();
             where.put("uuid", player.getUniqueId().toString());
             ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);
             if (!rs.resultSet()) {
-                TARDISMessage.send(player, plugin.getPluginName() + MESSAGE.NO_TARDIS.getText());
+                TARDISMessage.send(player, "NO_TARDIS");
                 return false;
             }
             int id = rs.getTardis_id();
@@ -56,7 +55,7 @@ public class TARDISRemoveSavedLocationCommand {
             whered.put("tardis_id", id);
             ResultSetDestinations rsd = new ResultSetDestinations(plugin, whered, false);
             if (!rsd.resultSet()) {
-                TARDISMessage.send(player, plugin.getPluginName() + "Could not find a saved destination with that name!");
+                TARDISMessage.send(player, "SAVE_NOT_FOUND");
                 return false;
             }
             int destID = rsd.getDest_id();
@@ -64,10 +63,10 @@ public class TARDISRemoveSavedLocationCommand {
             HashMap<String, Object> did = new HashMap<String, Object>();
             did.put("dest_id", destID);
             qf.doDelete("destinations", did);
-            TARDISMessage.send(player, plugin.getPluginName() + "The destination " + args[1] + " was deleted!");
+            TARDISMessage.send(player, "DEST_DELETED", args[1]);
             return true;
         } else {
-            TARDISMessage.send(player, plugin.getPluginName() + MESSAGE.NO_PERMS.getText());
+            TARDISMessage.send(player, "NO_PERMS");
             return false;
         }
     }

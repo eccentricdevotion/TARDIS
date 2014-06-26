@@ -53,6 +53,7 @@ public enum SCHEMATIC {
     TRENZALORE("trenzalore.schematic"),
     VAULT("vault.schematic"),
     VILLAGE("village.schematic"),
+    WAR("war.schematic"),
     WOOD("wood.schematic"),
     WORKSHOP("workshop.schematic"),
     ZERO("zero.schematic");

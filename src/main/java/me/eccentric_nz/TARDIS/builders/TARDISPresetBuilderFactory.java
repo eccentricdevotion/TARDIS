@@ -17,12 +17,10 @@
 package me.eccentric_nz.TARDIS.builders;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Random;
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.chameleon.TARDISChameleonCircuit;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetPlayerPrefs;
@@ -32,9 +30,7 @@ import me.eccentric_nz.TARDIS.enumeration.COMPASS;
 import me.eccentric_nz.TARDIS.enumeration.PRESET;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import org.bukkit.Chunk;
-import org.bukkit.Location;
 import org.bukkit.Material;
-import org.bukkit.World;
 import org.bukkit.block.Biome;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
@@ -87,8 +83,18 @@ public class TARDISPresetBuilderFactory {
         ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);
         if (rs.resultSet()) {
             PRESET preset = rs.getPreset();
+            Biome biome;
+            if (pbd.isRebuild()) {
+                biome = pbd.getLocation().getWorld().getBlockAt(pbd.getLocation()).getRelative(getOppositeFace(pbd.getDirection()), 2).getBiome();
+            } else {
+                biome = pbd.getLocation().getWorld().getBiome(pbd.getLocation().getBlockX(), pbd.getLocation().getBlockZ());
+            }
+            pbd.setBiome(biome);
+            if (plugin.getConfig().getBoolean("police_box.set_biome") && !pbd.isRebuild()) {
+                // remember the current biome (unless rebuilding)
+                new QueryFactory(plugin).saveBiome(rs.getTardis_id(), biome.toString());
+            }
             if (rs.isAdapti_on()) {
-                Biome biome = pbd.getLocation().getWorld().getBiome(pbd.getLocation().getBlockX(), pbd.getLocation().getBlockZ());
                 preset = adapt(biome, preset);
             }
             PRESET demat = rs.getDemat();
@@ -111,6 +117,8 @@ public class TARDISPresetBuilderFactory {
             // get lamp and submarine preferences
             int lamp = plugin.getConfig().getInt("police_box.tardis_lamp");
             boolean minecart = false;
+            boolean ctm = false;
+            boolean add_sign = true;
             boolean hidden = rs.isHidden();
             HashMap<String, Object> wherepp = new HashMap<String, Object>();
             wherepp.put("uuid", pbd.getPlayer().getUniqueId().toString());
@@ -118,10 +126,12 @@ public class TARDISPresetBuilderFactory {
             if (rsp.resultSet()) {
                 lamp = rsp.getLamp();
                 minecart = rsp.isMinecartOn();
+                ctm = rsp.isCtmOn();
+                add_sign = rsp.isSignOn();
             }
             if (pbd.isSubmarine() && notSubmarinePresets.contains(preset)) {
                 preset = PRESET.YELLOW;
-                TARDISMessage.send(pbd.getPlayer().getPlayer(), plugin.getPluginName() + "Selected preset unsuitable for submarine mode - changed to Yellow Submarine.");
+                TARDISMessage.send(pbd.getPlayer().getPlayer(), "SUB_UNSUITED");
             }
             // keep the chunk this Police box is in loaded
             Chunk thisChunk = pbd.getLocation().getChunk();
@@ -138,9 +148,9 @@ public class TARDISPresetBuilderFactory {
                 // always destroy it first as the player may just be switching presets
                 if (!hidden) {
                     TARDISDeinstaPreset deinsta = new TARDISDeinstaPreset(plugin);
-                    deinsta.instaDestroyPreset(pbd.getLocation(), pbd.getDirection(), pbd.getTardisID(), false, demat, pbd.isSubmarine());
+                    deinsta.instaDestroyPreset(pbd, false, demat);
                 }
-                final TARDISInstaPreset trp = new TARDISInstaPreset(plugin, pbd.getLocation(), preset, pbd.getTardisID(), pbd.getDirection(), pbd.getPlayer().getUniqueId().toString(), pbd.isMalfunction(), lamp, pbd.isSubmarine(), cham_id, cham_data, true, minecart);
+                final TARDISInstaPreset trp = new TARDISInstaPreset(plugin, pbd, preset, lamp, cham_id, cham_data, true, minecart, ctm, add_sign);
                 plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
                     @Override
                     public void run() {
@@ -149,13 +159,13 @@ public class TARDISPresetBuilderFactory {
                 }, 10L);
             } else {
                 if (plugin.getConfig().getBoolean("police_box.materialise")) {
-                    plugin.getTrackerKeeper().getTrackMaterialising().add(pbd.getTardisID());
-                    TARDISMaterialisationPreset runnable = new TARDISMaterialisationPreset(plugin, pbd.getLocation(), preset, pbd.getTardisID(), pbd.getDirection(), pbd.getPlayer(), pbd.isMalfunction(), lamp, pbd.isSubmarine(), cham_id, cham_data, minecart, pbd.isOutside());
+                    plugin.getTrackerKeeper().getMaterialising().add(pbd.getTardisID());
+                    TARDISMaterialisationPreset runnable = new TARDISMaterialisationPreset(plugin, pbd, preset, lamp, cham_id, cham_data, minecart, ctm, add_sign);
                     int taskID = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, runnable, 10L, 20L);
                     runnable.setTask(taskID);
                 } else {
-                    plugin.getTrackerKeeper().getTrackMaterialising().add(pbd.getTardisID());
-                    TARDISInstaPreset insta = new TARDISInstaPreset(plugin, pbd.getLocation(), preset, pbd.getTardisID(), pbd.getDirection(), pbd.getPlayer().getUniqueId().toString(), pbd.isMalfunction(), lamp, pbd.isSubmarine(), cham_id, cham_data, false, minecart);
+                    plugin.getTrackerKeeper().getMaterialising().add(pbd.getTardisID());
+                    TARDISInstaPreset insta = new TARDISInstaPreset(plugin, pbd, preset, lamp, cham_id, cham_data, false, minecart, ctm, add_sign);
                     insta.buildPreset();
                 }
             }
@@ -165,62 +175,6 @@ public class TARDISPresetBuilderFactory {
             HashMap<String, Object> set = new HashMap<String, Object>();
             set.put("chameleon_demat", preset.toString());
             new QueryFactory(plugin).doUpdate("tardis", set, whered);
-        }
-    }
-
-    @SuppressWarnings("deprecation")
-    public void addPlatform(Location l, boolean rebuild, COMPASS d, String uuid, int id) {
-        int plusx, minusx, x, y, plusz, minusz, z;
-        int platform_id = plugin.getConfig().getInt("police_box.platform_id");
-        byte platform_data = (byte) plugin.getConfig().getInt("police_box.platform_data");
-        // add platform if configured and necessary
-        World world = l.getWorld();
-        x = l.getBlockX();
-        plusx = (l.getBlockX() + 1);
-        minusx = (l.getBlockX() - 1);
-        if (plugin.getConfig().getBoolean("police_box.materialise") && rebuild == false) {
-            y = (l.getBlockY() - 1);
-        } else {
-            y = (l.getBlockY() - 3);
-        }
-        z = (l.getBlockZ());
-        plusz = (l.getBlockZ() + 1);
-        minusz = (l.getBlockZ() - 1);
-        QueryFactory qf = new QueryFactory(plugin);
-        if (plugin.getConfig().getBoolean("travel.platform")) {
-            // check if user has platform pref
-            HashMap<String, Object> wherep = new HashMap<String, Object>();
-            wherep.put("uuid", uuid);
-            ResultSetPlayerPrefs pp = new ResultSetPlayerPrefs(plugin, wherep);
-            boolean userPlatform;
-            if (pp.resultSet()) {
-                userPlatform = pp.isPlatformOn();
-            } else {
-                userPlatform = true;
-            }
-            if (userPlatform) {
-                List<Block> platform_blocks;
-                switch (d) {
-                    case SOUTH:
-                        platform_blocks = Arrays.asList(world.getBlockAt(x - 1, y, minusz - 1), world.getBlockAt(x, y, minusz - 1), world.getBlockAt(x + 1, y, minusz - 1), world.getBlockAt(x - 1, y, minusz - 2), world.getBlockAt(x, y, minusz - 2), world.getBlockAt(x + 1, y, minusz - 2));
-                        break;
-                    case EAST:
-                        platform_blocks = Arrays.asList(world.getBlockAt(minusx - 1, y, z - 1), world.getBlockAt(minusx - 1, y, z), world.getBlockAt(minusx - 1, y, z + 1), world.getBlockAt(minusx - 2, y, z - 1), world.getBlockAt(minusx - 2, y, z), world.getBlockAt(minusx - 2, y, z + 1));
-                        break;
-                    case NORTH:
-                        platform_blocks = Arrays.asList(world.getBlockAt(x + 1, y, plusz + 1), world.getBlockAt(x, y, plusz + 1), world.getBlockAt(x - 1, y, plusz + 1), world.getBlockAt(x + 1, y, plusz + 2), world.getBlockAt(x, y, plusz + 2), world.getBlockAt(x - 1, y, plusz + 2));
-                        break;
-                    default:
-                        platform_blocks = Arrays.asList(world.getBlockAt(plusx + 1, y, z + 1), world.getBlockAt(plusx + 1, y, z), world.getBlockAt(plusx + 1, y, z - 1), world.getBlockAt(plusx + 2, y, z + 1), world.getBlockAt(plusx + 2, y, z), world.getBlockAt(plusx + 2, y, z - 1));
-                        break;
-                }
-                for (Block pb : platform_blocks) {
-                    int matint = pb.getTypeId();
-                    if (TARDISConstants.PLATFORM_BLOCKS.contains(matint)) {
-                        plugin.getUtils().setBlockAndRemember(world, pb.getX(), pb.getY(), pb.getZ(), platform_id, platform_data, id);
-                    }
-                }
-            }
         }
     }
 
@@ -255,5 +209,18 @@ public class TARDISPresetBuilderFactory {
     public BlockFace getSkullDirection(COMPASS d) {
         BlockFace[] faces = face_map.get(d);
         return faces[rand.nextInt(5)];
+    }
+
+    private BlockFace getOppositeFace(COMPASS d) {
+        switch (d) {
+            case SOUTH:
+                return BlockFace.NORTH;
+            case WEST:
+                return BlockFace.EAST;
+            case NORTH:
+                return BlockFace.SOUTH;
+            default:
+                return BlockFace.WEST;
+        }
     }
 }

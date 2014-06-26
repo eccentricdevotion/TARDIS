@@ -19,6 +19,8 @@ package me.eccentric_nz.TARDIS.lazarus;
 import java.util.HashMap;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.ResultSetControls;
+import me.eccentric_nz.TARDIS.database.ResultSetTardis;
+import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
@@ -47,7 +49,7 @@ public class TARDISLazarusListener implements Listener {
         Action a = event.getAction();
         if (a.equals(Action.PHYSICAL) && event.getClickedBlock().getType().equals(Material.WOOD_PLATE)) {
             final Player player = event.getPlayer();
-            if (plugin.getTrackerKeeper().getTrackLazarus().containsKey(player.getUniqueId())) {
+            if (plugin.getTrackerKeeper().getLazarus().containsKey(player.getUniqueId())) {
                 return;
             }
             if (player.hasPermission("tardis.lazarus")) {
@@ -59,14 +61,24 @@ public class TARDISLazarusListener implements Listener {
                 where.put("type", 19);
                 ResultSetControls rsc = new ResultSetControls(plugin, where, false);
                 if (rsc.resultSet()) {
+                    // check for power
+                    if (plugin.getConfig().getBoolean("allow.power_down")) {
+                        HashMap<String, Object> wheret = new HashMap<String, Object>();
+                        wheret.put("tardis_id", rsc.getTardis_id());
+                        ResultSetTardis rs = new ResultSetTardis(plugin, wheret, "", false);
+                        if (rs.resultSet() && !rs.isPowered_on()) {
+                            TARDISMessage.send(player, "POWER_DOWN");
+                            return;
+                        }
+                    }
                     // track the block
-                    plugin.getTrackerKeeper().getTrackLazarus().put(player.getUniqueId(), b);
+                    plugin.getTrackerKeeper().getLazarus().put(player.getUniqueId(), b);
                     // close the door
                     b.getRelative(BlockFace.SOUTH).setType(Material.COBBLE_WALL);
                     b.getRelative(BlockFace.SOUTH).getRelative(BlockFace.UP).setType(Material.COBBLE_WALL);
                     // open the GUI
                     Inventory inv = plugin.getServer().createInventory(player, 54, "§4Genetic Manipulator");
-                    inv.setContents(new TARDISLazarusInventory().getTerminal());
+                    inv.setContents(new TARDISLazarusInventory(plugin).getTerminal());
                     player.openInventory(inv);
                 }
             }

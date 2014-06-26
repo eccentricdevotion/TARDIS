@@ -57,10 +57,12 @@ public class TARDISUUIDConverter {
             return false;
         }
         // backup database
-        plugin.getConsole().sendMessage(plugin.getPluginName() + "Backing up TARDIS database...");
-        File oldFile = new File(plugin.getDataFolder() + File.separator + "TARDIS.db");
-        File newFile = new File(plugin.getDataFolder() + File.separator + "TARDIS_" + System.currentTimeMillis() + ".db");
-        FileUtil.copy(oldFile, newFile);
+        if (plugin.getConfig().getString("storage.database").equalsIgnoreCase("sqlite")) {
+            plugin.getConsole().sendMessage(plugin.getPluginName() + plugin.getLanguage().getString("BACKUP_DB"));
+            File oldFile = new File(plugin.getDataFolder() + File.separator + "TARDIS.db");
+            File newFile = new File(plugin.getDataFolder() + File.separator + "TARDIS_" + System.currentTimeMillis() + ".db");
+            FileUtil.copy(oldFile, newFile);
+        }
         // get all TARDIS owners from database
         Statement statement = null;
         PreparedStatement ps_ach = null;
@@ -99,14 +101,16 @@ public class TARDISUUIDConverter {
             rst = statement.executeQuery(queryt);
             if (rst.isBeforeFirst()) {
                 while (rst.next()) {
-                    timelords.add(rst.getString("owner"));
+                    if (!rst.getString("owner").isEmpty()) {
+                        timelords.add(rst.getString("owner"));
+                    }
                 }
             }
             rsa = statement.executeQuery(querya);
             if (rsa.isBeforeFirst()) {
                 while (rsa.next()) {
                     // only add them if we haven't already
-                    if (!timelords.contains(rsa.getString("player"))) {
+                    if (!timelords.contains(rsa.getString("player")) && !rsa.getString("player").isEmpty()) {
                         timelords.add(rsa.getString("player"));
                     }
                 }
@@ -114,7 +118,7 @@ public class TARDISUUIDConverter {
             rsc = statement.executeQuery(queryc);
             if (rsc.isBeforeFirst()) {
                 while (rsc.next()) {
-                    if (!timelords.contains(rsc.getString("player"))) {
+                    if (!timelords.contains(rsc.getString("player")) && !rsc.getString("player").isEmpty()) {
                         timelords.add(rsc.getString("player"));
                     }
                 }
@@ -122,7 +126,7 @@ public class TARDISUUIDConverter {
             rsp = statement.executeQuery(queryp);
             if (rsp.isBeforeFirst()) {
                 while (rsp.next()) {
-                    if (!timelords.contains(rsp.getString("player"))) {
+                    if (!timelords.contains(rsp.getString("player")) && !rsp.getString("player").isEmpty()) {
                         timelords.add(rsp.getString("player"));
                     }
                 }
@@ -130,7 +134,7 @@ public class TARDISUUIDConverter {
             rsr = statement.executeQuery(queryr);
             if (rsr.isBeforeFirst()) {
                 while (rsr.next()) {
-                    if (!timelords.contains(rsr.getString("player"))) {
+                    if (!timelords.contains(rsr.getString("player")) && !rsr.getString("player").isEmpty()) {
                         timelords.add(rsr.getString("player"));
                     }
                 }
@@ -138,7 +142,7 @@ public class TARDISUUIDConverter {
             rss = statement.executeQuery(querys);
             if (rss.isBeforeFirst()) {
                 while (rss.next()) {
-                    if (!timelords.contains(rss.getString("owner"))) {
+                    if (!timelords.contains(rss.getString("owner")) && !rss.getString("owner").isEmpty()) {
                         timelords.add(rss.getString("owner"));
                     }
                 }
@@ -146,7 +150,7 @@ public class TARDISUUIDConverter {
             rsv = statement.executeQuery(queryv);
             if (rsv.isBeforeFirst()) {
                 while (rsv.next()) {
-                    if (!timelords.contains(rsv.getString("player"))) {
+                    if (!timelords.contains(rsv.getString("player")) && !rsv.getString("player").isEmpty()) {
                         timelords.add(rsv.getString("player"));
                     }
                 }

@@ -23,7 +23,6 @@ import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetDoors;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
-import me.eccentric_nz.TARDIS.enumeration.MESSAGE;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import org.bukkit.Location;
 import org.bukkit.World;
@@ -48,15 +47,19 @@ public class TARDISEnterCommand {
             player = (Player) sender;
         }
         if (player == null) {
-            sender.sendMessage(plugin.getPluginName() + "Only a player can run this command!");
+            TARDISMessage.send(sender, "CMD_ONLY_PLAYER");
             return true;
         }
         if (!player.hasPermission("tardis.skeletonkey")) {
-            TARDISMessage.send(player, plugin.getPluginName() + MESSAGE.NO_PERMS.getText());
+            TARDISMessage.send(player, "NO_PERMS");
             return true;
         }
         // Look up this player's UUID
-        UUID uuid = plugin.getGeneralKeeper().getUUIDCache().getIdOptimistic(args[1]);
+        UUID uuid = plugin.getServer().getOfflinePlayer(args[1]).getUniqueId();
+        if (uuid == null) {
+            uuid = plugin.getGeneralKeeper().getUUIDCache().getIdOptimistic(args[1]);
+            plugin.getGeneralKeeper().getUUIDCache().getId(args[1]);
+        }
         if (uuid != null) {
             HashMap<String, Object> where = new HashMap<String, Object>();
             where.put("uuid", uuid.toString());
@@ -140,10 +143,10 @@ public class TARDISEnterCommand {
                     return true;
                 }
             }
-            TARDISMessage.send(player, plugin.getPluginName() + args[1] + " has not created a TARDIS yet!");
+            TARDISMessage.send(player, "PLAYER_NO_TARDIS");
             return true;
         } else {
-            sender.sendMessage(plugin.getPluginName() + "Could not find UUID for player [" + args[1] + "]!");
+            TARDISMessage.send(sender, "UUID_NOT_FOUND", args[1]);
             return true;
         }
     }

@@ -18,8 +18,14 @@ package me.eccentric_nz.TARDIS.commands.preferences;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.UUID;
+import me.eccentric_nz.TARDIS.ARS.TARDISARSMap;
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.artron.TARDISBeaconToggler;
+import me.eccentric_nz.TARDIS.commands.admin.TARDISAdminMenuInventory;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
+import me.eccentric_nz.TARDIS.database.ResultSetTravellers;
+import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -42,10 +48,9 @@ public class TARDISPrefsMenuListener implements Listener {
         lookup.put("Autonomous", "auto_on");
         lookup.put("Beacon", "beacon_on");
         lookup.put("Do Not Disturb", "dnd_on");
-        lookup.put("Emergency Program One", "eps_on");
+        lookup.put("Emergency Programme One", "eps_on");
         lookup.put("Hostile Action Displacement System", "hads_on");
         lookup.put("Minecart Sounds", "minecart_on");
-        lookup.put("Safety Platform", "platform_on");
         lookup.put("Who Quotes", "quotes_on");
         lookup.put("Exterior Rendering Room", "renderer_on");
         lookup.put("Interior SFX", "sfx_on");
@@ -53,10 +58,13 @@ public class TARDISPrefsMenuListener implements Listener {
         lookup.put("Resource Pack Switching", "texture_on");
         lookup.put("Companion Build", "build_on");
         lookup.put("Wool For Lights Off", "wool_lights_on");
+        lookup.put("Connected Textures", "ctm_on");
+        lookup.put("Preset Sign", "sign_on");
+        lookup.put("Travel Bar", "travelbar_on");
     }
 
     @EventHandler(ignoreCancelled = true)
-    public void onPrefsMenuClick(InventoryClickEvent event) {
+    public void onPrefsMenuClick(final InventoryClickEvent event) {
         Inventory inv = event.getInventory();
         String name = inv.getTitle();
         if (name.equals("§4Player Prefs Menu")) {
@@ -65,12 +73,48 @@ public class TARDISPrefsMenuListener implements Listener {
             if (slot >= 0 && slot < 18) {
                 ItemStack is = inv.getItem(slot);
                 if (is != null) {
+                    final Player p = (Player) event.getWhoClicked();
+                    UUID uuid = p.getUniqueId();
                     ItemMeta im = is.getItemMeta();
+                    if ((slot == 16 || slot == 17) && im.getDisplayName().equals("TARDIS Map")) {
+                        // must be in the TARDIS
+                        HashMap<String, Object> where = new HashMap<String, Object>();
+                        where.put("uuid", uuid.toString());
+                        ResultSetTravellers rs = new ResultSetTravellers(plugin, where, false);
+                        if (rs.resultSet()) {
+                            // close this gui and load the TARDIS map
+                            plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
+                                @Override
+                                public void run() {
+                                    Inventory new_inv = plugin.getServer().createInventory(p, 54, "§4TARDIS Map");
+                                    // close inventory
+                                    p.closeInventory();
+                                    // open new inventory
+                                    new_inv.setContents(new TARDISARSMap(plugin).getMap());
+                                    p.openInventory(new_inv);
+                                }
+                            }, 1L);
+                        } else {
+                            TARDISMessage.send(p, "NOT_IN_TARDIS");
+                        }
+                        return;
+                    }
+                    if (slot == 17 && im.getDisplayName().equals("Admin Menu")) {
+                        // close this gui and load the Admin Menu
+                        plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
+                            @Override
+                            public void run() {
+                                Inventory menu = plugin.getServer().createInventory(p, 54, "§4Admin Menu");
+                                menu.setContents(new TARDISAdminMenuInventory(plugin).getMenu());
+                                p.openInventory(menu);
+                            }
+                        }, 1L);
+                        return;
+                    }
                     List<String> lore = im.getLore();
                     boolean bool = (lore.get(0).equals("ON"));
                     String value = (bool) ? "OFF" : "ON";
                     int b = (bool) ? 0 : 1;
-                    String uuid = ((Player) event.getWhoClicked()).getUniqueId().toString();
                     if (im.getDisplayName().equals("Companion Build")) {
                         String[] args = new String[2];
                         args[0] = "";
@@ -80,14 +124,14 @@ public class TARDISPrefsMenuListener implements Listener {
                         HashMap<String, Object> set = new HashMap<String, Object>();
                         set.put(lookup.get(im.getDisplayName()), b);
                         HashMap<String, Object> where = new HashMap<String, Object>();
-                        where.put("uuid", uuid);
+                        where.put("uuid", uuid.toString());
                         new QueryFactory(plugin).doUpdate("player_prefs", set, where);
                     }
                     lore.set(0, value);
                     im.setLore(lore);
                     is.setItemMeta(im);
                     if (im.getDisplayName().equals("Beacon")) {
-                        new TARDISToggleOnOffCommand(plugin).toggleBeacon(uuid, !bool);
+                        new TARDISBeaconToggler(plugin).flickSwitch(uuid, !bool);
                     }
                 }
             }

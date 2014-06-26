@@ -33,11 +33,14 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import me.eccentric_nz.TARDIS.api.TARDII;
 import me.eccentric_nz.TARDIS.artron.TARDISCondensables;
+import me.eccentric_nz.TARDIS.artron.TARDISStandbyMode;
 import me.eccentric_nz.TARDIS.builders.TARDISBuilderInner;
 import me.eccentric_nz.TARDIS.builders.TARDISPresetBuilderFactory;
 import me.eccentric_nz.TARDIS.builders.TARDISSpace;
 import me.eccentric_nz.TARDIS.chameleon.TARDISChameleonPreset;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
+import me.eccentric_nz.TARDIS.database.TARDISBiomeUpdater;
+import me.eccentric_nz.TARDIS.database.TARDISCompanionClearer;
 import me.eccentric_nz.TARDIS.database.TARDISControlsConverter;
 import me.eccentric_nz.TARDIS.database.TARDISDatabaseConnection;
 import me.eccentric_nz.TARDIS.database.TARDISLocationsConverter;
@@ -46,17 +49,22 @@ import me.eccentric_nz.TARDIS.database.TARDISSQLiteDatabase;
 import me.eccentric_nz.TARDIS.database.TARDISUUIDConverter;
 import me.eccentric_nz.TARDIS.destroyers.TARDISDestroyerInner;
 import me.eccentric_nz.TARDIS.destroyers.TARDISPresetDestroyerFactory;
+import me.eccentric_nz.TARDIS.enumeration.LANGUAGE;
 import me.eccentric_nz.TARDIS.files.TARDISBlockLoader;
 import me.eccentric_nz.TARDIS.files.TARDISConfiguration;
+import me.eccentric_nz.TARDIS.files.TARDISLanguageUpdater;
 import me.eccentric_nz.TARDIS.files.TARDISMakeRoomCSV;
 import me.eccentric_nz.TARDIS.files.TARDISMakeTardisCSV;
+import me.eccentric_nz.TARDIS.files.TARDISRecipesUpdater;
+import me.eccentric_nz.TARDIS.move.TARDISMonsterRunnable;
+import me.eccentric_nz.TARDIS.move.TARDISPortalPersister;
 import me.eccentric_nz.TARDIS.recipes.TARDISShapedRecipe;
 import me.eccentric_nz.TARDIS.recipes.TARDISShapelessRecipe;
 import me.eccentric_nz.TARDIS.rooms.TARDISWalls;
 import me.eccentric_nz.TARDIS.rooms.TARDISZeroRoomRunnable;
 import me.eccentric_nz.TARDIS.travel.TARDISArea;
 import me.eccentric_nz.TARDIS.travel.TARDISPluginRespect;
-import me.eccentric_nz.TARDIS.utility.TARDISCreeperChecker;
+import me.eccentric_nz.TARDIS.artron.TARDISCreeperChecker;
 import me.eccentric_nz.TARDIS.utility.TARDISMapChecker;
 import me.eccentric_nz.TARDIS.utility.TARDISMultiverseInventoriesChecker;
 import me.eccentric_nz.TARDIS.utility.TARDISPerceptionFilter;
@@ -98,10 +106,12 @@ public class TARDIS extends JavaPlugin {
     private FileConfiguration blocksConfig;
     private FileConfiguration condensablesConfig;
     private FileConfiguration kitsConfig;
+    private FileConfiguration language;
     private FileConfiguration recipesConfig;
     private FileConfiguration roomsConfig;
     private FileConfiguration tagConfig;
     private HashMap<String, Integer> condensables;
+    private int standbyTask;
     private PluginDescriptionFile pdfFile;
     private String pluginName;
     private String resourcePack;
@@ -115,10 +125,11 @@ public class TARDIS extends JavaPlugin {
     private TARDISWalls tardisWalls;
     private TARDISWorldGuardUtils worldGuardUtils;
     private boolean hasVersion = false;
-    private boolean mySpawn = false;
+    private boolean tardisSpawn = false;
     private boolean worldGuardOnServer;
     private boolean horseSpeedOnServer;
     private boolean projRassilonOnServer;
+    private boolean barAPIOnServer;
     private PluginManager pm;
     private final TARDISArea tardisArea = new TARDISArea(this);
     private final TARDISBuilderInner interiorBuilder = new TARDISBuilderInner(this);
@@ -135,6 +146,7 @@ public class TARDIS extends JavaPlugin {
         this.worldGuardOnServer = false;
         this.horseSpeedOnServer = false;
         this.projRassilonOnServer = false;
+        this.barAPIOnServer = false;
     }
 
     @Override
@@ -151,8 +163,9 @@ public class TARDIS extends JavaPlugin {
             hasVersion = true;
             saveDefaultConfig();
             loadCustomConfigs();
-            TARDISConfiguration tc = new TARDISConfiguration(this);
-            tc.checkConfig();
+            new TARDISConfiguration(this).checkConfig();
+            new TARDISRecipesUpdater(this).addRecipes();
+            loadLanguage();
             loadDatabase();
             // update database add and populate uuid fields
             if (!getConfig().getBoolean("conversions.uuid_conversion_done")) {
@@ -160,12 +173,28 @@ public class TARDIS extends JavaPlugin {
                 if (!uc.convert()) {
                     // conversion failed
                     console.sendMessage(pluginName + ChatColor.RED + "UUID conversion failed, disabling...");
+                    hasVersion = false;
                     pm.disablePlugin(this);
                     return;
                 } else {
                     getConfig().set("conversions.uuid_conversion_done", true);
                     saveConfig();
                     console.sendMessage(pluginName + "UUID conversion successful :)");
+                }
+            }
+            // update database clear companions to UUIDs
+            if (!getConfig().getBoolean("conversions.companion_clearing_done")) {
+                TARDISCompanionClearer cc = new TARDISCompanionClearer(this);
+                if (!cc.clear()) {
+                    // clearing failed
+                    console.sendMessage(pluginName + ChatColor.RED + "Companion clearing failed, disabling...");
+                    hasVersion = false;
+                    pm.disablePlugin(this);
+                    return;
+                } else {
+                    getConfig().set("conversions.companion_clearing_done", true);
+                    saveConfig();
+                    console.sendMessage(pluginName + "Cleared companion lists as they now use UUIDs!");
                 }
             }
             checkTCG();
@@ -183,6 +212,7 @@ public class TARDIS extends JavaPlugin {
             loadPluginRespect();
             loadHorseSpeed();
             loadProjRassilon();
+            loadBarAPI();
             startZeroHealing();
 
             new TARDISCreeperChecker(this).startCreeperCheck();
@@ -220,12 +250,18 @@ public class TARDIS extends JavaPlugin {
             if (pm.isPluginEnabled("Multiverse-Inventories")) {
                 TMIChecker = new TARDISMultiverseInventoriesChecker(this);
             }
+            if (getConfig().getBoolean("preferences.walk_in_tardis")) {
+                new TARDISPortalPersister(this).load();
+                this.getServer().getScheduler().scheduleSyncRepeatingTask(this, new TARDISMonsterRunnable(this), 2400L, 2400L);
+            }
             setDates();
+            startStandBy();
             filter = new TARDISPerceptionFilter(this);
             filter.createPerceptionFilter();
             TARDISCondensables cond = new TARDISCondensables(this);
             cond.makeCondensables();
             condensables = cond.getCondensables();
+            checkBiomes();
         } else {
             console.sendMessage(pluginName + ChatColor.RED + "This plugin requires CraftBukkit 1.7.9 or higher, disabling...");
             pm.disablePlugin(this);
@@ -248,6 +284,9 @@ public class TARDIS extends JavaPlugin {
     @Override
     public void onDisable() {
         if (hasVersion) {
+            if (getConfig().getBoolean("preferences.walk_in_tardis")) {
+                new TARDISPortalPersister(this).save();
+            }
             updateTagStats();
             saveConfig();
             closeDatabase();
@@ -257,7 +296,7 @@ public class TARDIS extends JavaPlugin {
     }
 
     /**
-     * Sets up the datardisAreabase.
+     * Sets up the database.
      */
     private void loadDatabase() {
         String dbtype = getConfig().getString("storage.database");
@@ -289,10 +328,41 @@ public class TARDIS extends JavaPlugin {
     }
 
     /**
+     * Loads the configured language file.
+     */
+    private void loadLanguage() {
+        // copy language files
+        File langDir = new File(getDataFolder() + File.separator + "language");
+        if (!langDir.exists()) {
+            boolean result = langDir.mkdir();
+            if (result) {
+                langDir.setWritable(true);
+                langDir.setExecutable(true);
+                console.sendMessage(pluginName + "Created language directory.");
+            }
+        }
+        // always copy English default
+        tardisCSV.copy(getDataFolder() + File.separator + "language" + File.separator + "en.yml", getResource("en.yml"), true);
+        // get configured language
+        String lang = getConfig().getString("preferences.language");
+        // check file exists
+        File file;
+        file = new File(getDataFolder() + File.separator + "language" + File.separator + lang + ".yml");
+        if (!file.isFile()) {
+            // load English
+            file = new File(getDataFolder() + File.separator + "language" + File.separator + "en.yml");
+        }
+        // load the language
+        this.console.sendMessage(pluginName + "Loading language: " + LANGUAGE.valueOf(lang).getLang());
+        this.language = YamlConfiguration.loadConfiguration(file);
+        // update the language configuration
+        new TARDISLanguageUpdater(this).update();
+    }
+
+    /**
      * Loads the custom configuration files.
      */
     private void loadCustomConfigs() {
-        //TODO - change file copy method - just send the file name and process it there?
         tardisCSV.copy("achievements.yml");
         tardisCSV.copy("artron.yml");
         tardisCSV.copy("blocks.yml");
@@ -345,13 +415,13 @@ public class TARDIS extends JavaPlugin {
         }
         Set<String> booknames = achievementConfig.getKeys(false);
         for (String b : booknames) {
-            tardisCSV.copy(getDataFolder() + File.separator + "books" + File.separator + b + ".txt", getResource(b + ".txt"));
+            tardisCSV.copy(getDataFolder() + File.separator + "books" + File.separator + b + ".txt", getResource(b + ".txt"), false);
         }
     }
 
     /**
-     * StardisArearts a repeating tardisAreask that plays TARDIS sound effects
-     * to players while they are inside the TARDIS.
+     * Starts a repeating task that plays TARDIS sound effects to players while
+     * they are inside the TARDIS.
      */
     private void startSound() {
         this.getServer().getScheduler().scheduleSyncRepeatingTask(this, new Runnable() {
@@ -363,8 +433,23 @@ public class TARDIS extends JavaPlugin {
     }
 
     /**
-     * StardisArearts a repeating tardisAreask that heals players 1/2 a heart
-     * per cycle when they are in the Zero room.
+     * Starts a repeating task that removes Artron Energy from the TARDIS while
+     * it is in standby mode (ie not travelling). Only runs if `standby_time` in
+     * artron.yml is greater than 0 (the default is 6000 or every 5 minutes).
+     */
+    public void startStandBy() {
+        if (getConfig().getBoolean("allow.power_down")) {
+            long repeat = getArtronConfig().getLong("standby_time");
+            if (repeat <= 0) {
+                return;
+            }
+            standbyTask = this.getServer().getScheduler().scheduleSyncRepeatingTask(this, new TARDISStandbyMode(this), 6000L, repeat);
+        }
+    }
+
+    /**
+     * Starts a repeating task that heals players 1/2 a heart per cycle when
+     * they are in the Zero room.
      */
     private void startZeroHealing() {
         if (getConfig().getBoolean("allow.zero_room")) {
@@ -402,6 +487,16 @@ public class TARDIS extends JavaPlugin {
         if (pm.getPlugin("ProjectRassilon") != null) {
             debug("Hooking into ProjectRassilon!");
             projRassilonOnServer = true;
+        }
+    }
+
+    /**
+     * Checks if the BARAPI plugin is available, and loads support if it is.
+     */
+    private void loadBarAPI() {
+        if (pm.getPlugin("BarAPI") != null) {
+            debug("Hooking into BarAPI!");
+            barAPIOnServer = true;
         }
     }
 
@@ -535,7 +630,7 @@ public class TARDIS extends JavaPlugin {
      * Resets any player who is 'Temporally Located' back to normal time.
      */
     private void resetTime() {
-        for (UUID key : trackerKeeper.getTrackSetTime().keySet()) {
+        for (UUID key : trackerKeeper.getSetTime().keySet()) {
             Player p = this.getServer().getPlayer(key);
             if (p != null) {
                 p.resetPlayerTime();
@@ -584,6 +679,16 @@ public class TARDIS extends JavaPlugin {
     }
 
     /**
+     * Makes sure that the biome field in the current table is not empty.
+     */
+    private void checkBiomes() {
+        if (!getConfig().getBoolean("police_box.set_biome") || getConfig().getBoolean("conversions.biome_update")) {
+            return;
+        }
+        getServer().getScheduler().scheduleSyncDelayedTask(this, new TARDISBiomeUpdater(this), 1200L);
+    }
+
+    /**
      * Outputs a message to the console. Requires debug: true in config.yml
      *
      * @param o the Object to print to the console
@@ -624,6 +729,14 @@ public class TARDIS extends JavaPlugin {
 
     public FileConfiguration getCondensablesConfig() {
         return condensablesConfig;
+    }
+
+    public FileConfiguration getLanguage() {
+        return language;
+    }
+
+    public void setLanguage(FileConfiguration language) {
+        this.language = language;
     }
 
     public TARDISUtils getUtils() {
@@ -718,12 +831,12 @@ public class TARDIS extends JavaPlugin {
         return resourcePack;
     }
 
-    public boolean isMySpawn() {
-        return mySpawn;
+    public boolean isTardisSpawn() {
+        return tardisSpawn;
     }
 
-    public void setMySpawn(boolean mySpawn) {
-        this.mySpawn = mySpawn;
+    public void setTardisSpawn(boolean tardisSpawn) {
+        this.tardisSpawn = tardisSpawn;
     }
 
     public boolean isWorldGuardOnServer() {
@@ -738,6 +851,10 @@ public class TARDIS extends JavaPlugin {
         return projRassilonOnServer;
     }
 
+    public boolean isBarAPIOnServer() {
+        return barAPIOnServer;
+    }
+
     public PluginManager getPM() {
         return pm;
     }
@@ -748,5 +865,9 @@ public class TARDIS extends JavaPlugin {
 
     public TARDII getTARDII() {
         return new TARDII();
+    }
+
+    public int getStandbyTask() {
+        return standbyTask;
     }
 }

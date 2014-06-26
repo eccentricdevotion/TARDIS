@@ -29,7 +29,7 @@ import java.util.HashMap;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.ResultSetCurrentLocation;
 import me.eccentric_nz.TARDIS.database.TARDISDatabaseConnection;
-import me.eccentric_nz.TARDIS.enumeration.MESSAGE;
+import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import org.bukkit.command.CommandSender;
 
 /**
@@ -64,7 +64,7 @@ public class TARDISPruner {
                 if (rs.isBeforeFirst()) {
                     sender.sendMessage(plugin.getPluginName() + "Prune List:");
                 } else {
-                    sender.sendMessage(plugin.getPluginName() + "No TARDISes to prune");
+                    TARDISMessage.send(sender, "PRUNE_NONE");
                 }
                 while (rs.next()) {
                     HashMap<String, Object> wherecl = new HashMap<String, Object>();
@@ -74,7 +74,7 @@ public class TARDISPruner {
                         // double check that this is an unused TARDIS
                         Timestamp lastuse = new Timestamp(rs.getLong("lastuse"));
                         if (lastuse.before(prune)) {
-                            String line = "Timelord: " + rs.getString("owner") + ", Location: " + rsc.getWorld().getName() + ":" + rsc.getX() + ":" + rsc.getY() + ":" + rsc.getZ();
+                            String line = "Time Lord: " + rs.getString("owner") + ", Location: " + rsc.getWorld().getName() + ":" + rsc.getX() + ":" + rsc.getY() + ":" + rsc.getZ();
                             // write line to file
                             bw.write(line);
                             bw.newLine();
@@ -82,7 +82,7 @@ public class TARDISPruner {
                             sender.sendMessage(line);
                         }
                     } else {
-                        plugin.debug(MESSAGE.NO_CURRENT.getText());
+                        plugin.debug(plugin.getLanguage().getString("CURRENT_NOT_FOUND"));
                     }
                 }
                 bw.close();
@@ -142,7 +142,7 @@ public class TARDISPruner {
     }
 
     private long getTime(int day) {
-        long period = (long) (day * 86400000L);
+        long period = day * 86400000L;
         long now = System.currentTimeMillis();
         long prune = now - period;
         return prune;

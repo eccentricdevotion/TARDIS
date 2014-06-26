@@ -22,7 +22,6 @@ import java.util.Locale;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.advanced.TARDISDiskWriterCommand;
 import me.eccentric_nz.TARDIS.enumeration.CMDS;
-import me.eccentric_nz.TARDIS.enumeration.MESSAGE;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
@@ -113,7 +112,7 @@ public class TARDISCommands implements CommandExecutor {
                 return new TARDISVersionCommand(plugin).displayVersion(sender, player);
             }
             if (player == null) {
-                sender.sendMessage(plugin.getPluginName() + MESSAGE.MUST_BE_PLAYER.getText());
+                TARDISMessage.send(sender, "CMD_PLAYER");
                 return false;
             } else {
                 if (args[0].equalsIgnoreCase("arsremove")) {
@@ -179,7 +178,7 @@ public class TARDISCommands implements CommandExecutor {
                 if (args[0].equalsIgnoreCase("save")) {
                     ItemStack is = player.getItemInHand();
                     if (plugin.getConfig().getString("preferences.difficulty").equals("hard") && heldDiskIsWrong(is)) {
-                        TARDISMessage.send(player, plugin.getPluginName() + "You must be holding a Save Storage Disk in your hand!");
+                        TARDISMessage.send(player, "DISK_HAND_SAVE");
                         return true;
                     }
                     if (is != null && is.hasItemMeta() && is.getItemMeta().hasDisplayName() && is.getItemMeta().getDisplayName().equals("Save Storage Disk")) {
@@ -193,7 +192,7 @@ public class TARDISCommands implements CommandExecutor {
                     if (is != null && is.hasItemMeta() && is.getItemMeta().hasDisplayName() && is.getItemMeta().getDisplayName().equals("Player Storage Disk")) {
                         return new TARDISDiskWriterCommand(plugin).writePlayer(player, args);
                     } else {
-                        TARDISMessage.send(player, plugin.getPluginName() + "You must be holding a Player Storage Disk in your hand!");
+                        TARDISMessage.send(player, "DISK_HAND_PLAYER");
                         return true;
                     }
                 }

@@ -46,7 +46,7 @@ public class TARDISRenderRoomListener implements Listener {
     @EventHandler
     public void onInteract(PlayerInteractEvent event) {
         final Player player = event.getPlayer();
-        if (plugin.getTrackerKeeper().getTrackTransmat().contains(player.getUniqueId())) {
+        if (plugin.getTrackerKeeper().getTransmat().contains(player.getUniqueId())) {
             event.setCancelled(true);
             if (event.getAction().equals(Action.RIGHT_CLICK_BLOCK) || event.getAction().equals(Action.RIGHT_CLICK_AIR)) {
                 // tp the player back to the TARDIS console
@@ -56,7 +56,7 @@ public class TARDISRenderRoomListener implements Listener {
     }
 
     public void transmat(final Player p) {
-        TARDISMessage.send(p, plugin.getPluginName() + "Stand by for transmat...");
+        TARDISMessage.send(p, "TRANSMAT");
         // get the TARDIS the player is in
         HashMap<String, Object> wherep = new HashMap<String, Object>();
         wherep.put("uuid", p.getUniqueId().toString());
@@ -108,14 +108,14 @@ public class TARDISRenderRoomListener implements Listener {
                     public void run() {
                         p.playSound(tp_loc, Sound.ENDERMAN_TELEPORT, 1.0f, 1.0f);
                         p.teleport(tp_loc);
-                        plugin.getTrackerKeeper().getTrackTransmat().remove(p.getUniqueId());
+                        plugin.getTrackerKeeper().getTransmat().remove(p.getUniqueId());
                     }
                 }, 10L);
             } else {
-                TARDISMessage.send(p, plugin.getPluginName() + "The Transmat device couldn't find the TARDIS console!");
+                TARDISMessage.send(p, "TRANSMAT_NO_CONSOLE");
             }
         } else {
-            TARDISMessage.send(p, plugin.getPluginName() + "The Transmat device couldn't determine which TARDIS you are in!");
+            TARDISMessage.send(p, "TRANSMAT_NO_TARDIS");
         }
     }
 }

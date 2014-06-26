@@ -23,7 +23,6 @@ import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetBlocks;
 import me.eccentric_nz.TARDIS.database.ResultSetCurrentLocation;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
-import me.eccentric_nz.TARDIS.enumeration.MESSAGE;
 import me.eccentric_nz.TARDIS.utility.TARDISHostileDisplacement;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import org.bukkit.Location;
@@ -81,26 +80,27 @@ public class TARDISBlockDamageListener implements Listener {
             }
             boolean m = false;
             boolean isDoor = false;
-            if (HADS && !plugin.getTrackerKeeper().getTrackInVortex().contains(id) && isOwnerOnline(id)) {
+            if (HADS && !plugin.getTrackerKeeper().getInVortex().contains(id) && isOwnerOnline(id)) {
                 if (b.getTypeId() == 71) {
                     if (isOwner(id, p.getUniqueId().toString())) {
                         isDoor = true;
                     }
                 }
                 if (!isDoor && rsb.isPolice_box()) {
-                    int damage = (plugin.getTrackerKeeper().getTrackDamage().containsKey(id)) ? plugin.getTrackerKeeper().getTrackDamage().get(Integer.valueOf(id)) : 0;
-                    plugin.getTrackerKeeper().getTrackDamage().put(id, damage + 1);
+                    int damage = (plugin.getTrackerKeeper().getDamage().containsKey(id)) ? plugin.getTrackerKeeper().getDamage().get(Integer.valueOf(id)) : 0;
+                    plugin.getTrackerKeeper().getDamage().put(id, damage + 1);
                     if (damage == plugin.getConfig().getInt("preferences.hads_damage")) {
                         new TARDISHostileDisplacement(plugin).moveTARDIS(id, p);
                         m = true;
                     }
-                    message = "WARNING - HADS initiating in " + (plugin.getConfig().getInt("preferences.hads_damage") - damage);
+                    if (!m) {
+                        TARDISMessage.send(p, "HADS_WARNING", String.format("%d", (plugin.getConfig().getInt("preferences.hads_damage") - damage)));
+                    }
                 }
+            } else {
+                TARDISMessage.send(p, "TARDIS_BREAK");
             }
             event.setCancelled(true);
-            if (b.getTypeId() != 71 && !m) {
-                TARDISMessage.send(p, plugin.getPluginName() + message);
-            }
         }
     }
 
@@ -138,7 +138,7 @@ public class TARDISBlockDamageListener implements Listener {
             wherecl.put("tardis_id", id);
             ResultSetCurrentLocation rsc = new ResultSetCurrentLocation(plugin, wherecl);
             if (!rsc.resultSet()) {
-                TARDISMessage.send(player, plugin.getPluginName() + MESSAGE.NO_CURRENT.getText());
+                TARDISMessage.send(player, "CURRENT_NOT_FOUND");
             }
             Location l = new Location(rsc.getWorld(), rsc.getX(), rsc.getY(), rsc.getZ());
             HashMap<String, Object> wheret = new HashMap<String, Object>();

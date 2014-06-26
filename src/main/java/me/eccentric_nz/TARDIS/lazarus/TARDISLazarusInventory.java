@@ -19,6 +19,7 @@ package me.eccentric_nz.TARDIS.lazarus;
 import java.util.Arrays;
 import java.util.LinkedHashMap;
 import java.util.Map;
+import me.eccentric_nz.TARDIS.TARDIS;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -35,9 +36,11 @@ import org.bukkit.inventory.meta.ItemMeta;
 public class TARDISLazarusInventory {
 
     private final ItemStack[] terminal;
+    private final TARDIS plugin;
     LinkedHashMap<String, Short> disguises = new LinkedHashMap<String, Short>();
 
-    public TARDISLazarusInventory() {
+    public TARDISLazarusInventory(TARDIS plugin) {
+        this.plugin = plugin;
         disguises.put("BAT", (short) 65);
         disguises.put("BLAZE", (short) 61);
         disguises.put("CAVE_SPIDER", (short) 59);
@@ -128,43 +131,43 @@ public class TARDISLazarusInventory {
         // add options
         ItemStack the = new ItemStack(Material.REDSTONE_COMPARATOR, 1);
         ItemMeta master = the.getItemMeta();
-        master.setDisplayName("The Master's reverse polarity button");
+        master.setDisplayName(plugin.getLanguage().getString("BUTTON_MASTER"));
         master.setLore(Arrays.asList("OFF"));
         the.setItemMeta(master);
         eggs[37] = the;
         ItemStack adult = new ItemStack(Material.HOPPER, 1);
         ItemMeta baby = adult.getItemMeta();
-        baby.setDisplayName("Age");
+        baby.setDisplayName(plugin.getLanguage().getString("BUTTON_AGE"));
         baby.setLore(Arrays.asList("ADULT"));
         adult.setItemMeta(baby);
         eggs[39] = adult;
         ItemStack typ = new ItemStack(Material.INK_SACK, 1, (byte) 6);
         ItemMeta col = typ.getItemMeta();
-        col.setDisplayName("Type/Colour");
+        col.setDisplayName(plugin.getLanguage().getString("BUTTON_TYPE"));
         col.setLore(Arrays.asList("WHITE"));
         typ.setItemMeta(col);
         eggs[41] = typ;
         ItemStack tamed = new ItemStack(Material.LEASH, 1, (byte) 6);
         ItemMeta tf = tamed.getItemMeta();
-        tf.setDisplayName("Tamed/Flying/Blazing/Powered/Agressive");
+        tf.setDisplayName(plugin.getLanguage().getString("BUTTON_OPTS"));
         tf.setLore(Arrays.asList("FALSE"));
         tamed.setItemMeta(tf);
         eggs[43] = tamed;
         // add buttons
         ItemStack rem = new ItemStack(Material.DAYLIGHT_DETECTOR, 1);
         ItemMeta ove = rem.getItemMeta();
-        ove.setDisplayName("Restore my original genetic material");
+        ove.setDisplayName(plugin.getLanguage().getString("BUTTON_RESTORE"));
         rem.setItemMeta(ove);
         eggs[47] = rem;
         // set
         ItemStack s = new ItemStack(Material.ANVIL, 1);
         ItemMeta sim = s.getItemMeta();
-        sim.setDisplayName("Modify my genetic material");
+        sim.setDisplayName(plugin.getLanguage().getString("BUTTON_DNA"));
         s.setItemMeta(sim);
         eggs[49] = s;
         ItemStack can = new ItemStack(Material.OBSIDIAN, 1);
         ItemMeta cel = can.getItemMeta();
-        cel.setDisplayName("Cancel");
+        cel.setDisplayName(plugin.getLanguage().getString("BUTTON_CANCEL"));
         can.setItemMeta(cel);
         eggs[51] = can;
 

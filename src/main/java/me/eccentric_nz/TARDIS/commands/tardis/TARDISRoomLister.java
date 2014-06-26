@@ -42,18 +42,18 @@ public class TARDISRoomLister {
     }
 
     public void list() {
-        TARDISMessage.send(player, plugin.getPluginName() + "There are currently " + plugin.getGeneralKeeper().getRoomArgs().size() + " room types! They are:");
+        TARDISMessage.send(player, "ROOM_INFO", String.format("%d", plugin.getGeneralKeeper().getRoomArgs().size()));
         for (Map.Entry<String, List<String>> map : options.entrySet()) {
-            TARDISMessage.send(player, map.getKey());
+            player.sendMessage(map.getKey());
             if (map.getValue().size() > 0) {
                 for (String s : map.getValue()) {
-                    TARDISMessage.send(player, "    " + s);
+                    player.sendMessage("    " + s);
                 }
             } else {
-                TARDISMessage.send(player, "    None");
+                TARDISMessage.send(player, true, "SCAN_NONE");
             }
         }
-        TARDISMessage.send(player, "View a TARDIS room gallery at http://eccentricdevotion.github.com/TARDIS/room-gallery.html");
+        TARDISMessage.send(player, "ROOM_GALLERY");
     }
 
     private LinkedHashMap<String, List<String>> createRoomOptions(Player player) {

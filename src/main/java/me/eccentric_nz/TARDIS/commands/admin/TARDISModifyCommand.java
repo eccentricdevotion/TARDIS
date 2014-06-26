@@ -17,7 +17,7 @@
 package me.eccentric_nz.TARDIS.commands.admin;
 
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.enumeration.MESSAGE;
+import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import org.bukkit.World;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
@@ -36,19 +36,19 @@ public class TARDISModifyCommand {
 
     public boolean alterConfig(CommandSender sender, String[] args) {
         if (args.length < 2) {
-            sender.sendMessage(plugin.getPluginName() + MESSAGE.TOO_FEW_ARGS.getText());
+            TARDISMessage.send(sender, "TOO_FEW_ARGS");
             return true;
         }
         if (!args[1].toLowerCase().equals("mv") && !args[1].toLowerCase().equals("wg")) {
-            sender.sendMessage(plugin.getPluginName() + "The second argument must be 'mv' or 'wg'!");
+            TARDISMessage.send(sender, "ARG_PLUGIN");
             return true;
         }
         if (args[1].toLowerCase().equals("mv") && !plugin.getPM().isPluginEnabled("Multiverse-Core")) {
-            sender.sendMessage(plugin.getPluginName() + "Multiverse-Core is not enabled!");
+            TARDISMessage.send(sender, "MV_DISABLED");
             return true;
         }
         if (args[1].toLowerCase().equals("wg") && !plugin.isWorldGuardOnServer()) {
-            sender.sendMessage(plugin.getPluginName() + "WorldGuard is not enabled!");
+            TARDISMessage.send(sender, "WG_DISABLED");
             return true;
         }
         Player p = null;
@@ -77,7 +77,7 @@ public class TARDISModifyCommand {
                 plugin.getServer().dispatchCommand(plugin.getConsole(), "mv modify set animalsrate 0 " + w.getName());
                 plugin.getServer().dispatchCommand(plugin.getConsole(), "mv modify set monstersrate 0 " + w.getName());
                 if (p != null) {
-                    p.sendMessage(plugin.getPluginName() + "Multiverse settings for " + w.getName() + " modified!");
+                    TARDISMessage.send(p, "MV_MODIFIED", w.getName());
                 }
             }
         }
@@ -95,7 +95,7 @@ public class TARDISModifyCommand {
                 for (String s : plugin.getWorldGuardUtils().getRegions(w)) {
                     plugin.getServer().dispatchCommand(plugin.getConsole(), "rg flag " + s + " build -w " + w.getName());
                     if (p != null) {
-                        p.sendMessage(plugin.getPluginName() + "WorldGuard build flag removed for " + w.getName());
+                        TARDISMessage.send(p, "WG_REMOVED", w.getName());
                     }
                 }
             }

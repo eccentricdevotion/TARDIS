@@ -17,18 +17,17 @@
 package me.eccentric_nz.TARDIS.move;
 
 import java.util.HashMap;
+import java.util.List;
+import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
-import me.eccentric_nz.TARDIS.database.ResultSetCurrentLocation;
-import me.eccentric_nz.TARDIS.database.ResultSetDoors;
+import me.eccentric_nz.TARDIS.database.ResultSetCompanions;
 import me.eccentric_nz.TARDIS.database.ResultSetPlayerPrefs;
-import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
-import me.eccentric_nz.TARDIS.enumeration.MESSAGE;
-import me.eccentric_nz.TARDIS.travel.TARDISDoorLocation;
+import me.eccentric_nz.TARDIS.mobfarming.TARDISFarmer;
+import me.eccentric_nz.TARDIS.mobfarming.TARDISMob;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import org.bukkit.Location;
-import org.bukkit.World;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -50,10 +49,10 @@ public class TARDISMoveListener implements Listener {
     @EventHandler(priority = EventPriority.MONITOR)
     public void onPlayerMoveToFromTARDIS(PlayerMoveEvent event) {
         Player p = event.getPlayer();
-        if (!plugin.getTrackerKeeper().getTrackMover().contains(p.getUniqueId())) {
+        if (!plugin.getTrackerKeeper().getMover().contains(p.getUniqueId())) {
             return;
         }
-        Location l = event.getTo();
+        Location l = new Location(event.getTo().getWorld(), event.getTo().getBlockX(), event.getTo().getBlockY(), event.getTo().getBlockZ(), 0.0f, 0.0f);
         Location loc = p.getLocation(); // Grab Location
 
         /**
@@ -70,146 +69,63 @@ public class TARDISMoveListener implements Listener {
             return;
         }
         // check the block they're on
-        MoveResult mvres = checkMoveLocation(l, p);
-        if (mvres.getWhich() != 0) {
-            HashMap<String, Object> wherepp = new HashMap<String, Object>();
-            wherepp.put("uuid", p.getUniqueId().toString());
-            ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, wherepp);
-            boolean hasPrefs = rsp.resultSet();
-            boolean minecart = (hasPrefs) ? rsp.isMinecartOn() : false;
-            boolean userQuotes = (hasPrefs) ? rsp.isQuotesOn() : false;
-            boolean isExit = (mvres.getWhich() == 2);
-            // tp player
-            plugin.getGeneralKeeper().getDoorListener().movePlayer(p, mvres.getTo(), isExit, l.getWorld(), userQuotes, 0, minecart);
-            //plugin.getTrackerKeeper().getTrackMover().remove(p.getUniqueId());
-            TARDISMessage.send(p, plugin.getPluginName() + "Don't forget to close the door!");
-        }
-    }
-
-    private MoveResult checkMoveLocation(Location l, Player player) {
-        MoveResult mr = new MoveResult();
-        HashMap<String, Object> wherec = new HashMap<String, Object>();
-        wherec.put("world", l.getWorld().getName());
-        wherec.put("x", l.getBlockX());
-        wherec.put("y", l.getBlockY()); // may need to check 1 block down...
-        wherec.put("z", l.getBlockZ());
-        ResultSetCurrentLocation rsc = new ResultSetCurrentLocation(plugin, wherec);
-        if (rsc.resultSet()) {
-            mr.setWhich(1);
-            float yaw = player.getLocation().getYaw();
-            float pitch = player.getLocation().getPitch();
-            COMPASS pd = COMPASS.valueOf(plugin.getUtils().getPlayersDirection(player, false));
-            // get inner TARDIS location
-            TARDISDoorLocation idl = plugin.getGeneralKeeper().getDoorListener().getDoor(1, rsc.getTardis_id());
-            Location door_loc = idl.getL();
-            World cw = idl.getW();
-            COMPASS innerD = idl.getD();
-            cw.getChunkAt(door_loc).load();
-            door_loc.setPitch(pitch);
-            // get inner door direction so we can adjust yaw if necessary
-            if (!innerD.equals(pd)) {
-                yaw += plugin.getGeneralKeeper().getDoorListener().adjustYaw(pd, innerD);
-            }
-            door_loc.setYaw(yaw);
-            mr.setTo(door_loc);
-            // put player into travellers table
-            HashMap<String, Object> set = new HashMap<String, Object>();
-            set.put("tardis_id", rsc.getTardis_id());
-            set.put("uuid", player.getUniqueId().toString());
-            new QueryFactory(plugin).doInsert("travellers", set);
-        } else {
-            String door_loc = l.getWorld().getName() + ":" + l.getBlockX() + ":" + l.getBlockY() + ":" + l.getBlockZ();
-            HashMap<String, Object> whered = new HashMap<String, Object>();
-            whered.put("door_type", 1);
-            whered.put("door_location", door_loc);
-            ResultSetDoors rsd = new ResultSetDoors(plugin, whered, false);
-            if (rsd.resultSet()) {
-                int id = rsd.getTardis_id();
-                COMPASS dd = rsd.getDoor_direction();
-                mr.setWhich(2);
-                float yaw = player.getLocation().getYaw();
-                float pitch = player.getLocation().getPitch();
-                // get outer TARDIS location
-                Location exit;
-                COMPASS d;
-                HashMap<String, Object> wheret = new HashMap<String, Object>();
-                wheret.put("tardis_id", id);
-                ResultSetTardis rs = new ResultSetTardis(plugin, wheret, "", false);
-                if (rs.resultSet() && rs.isHandbrake_on()) {
-                    if (rs.getPreset().hasDoor()) {
-                        HashMap<String, Object> other = new HashMap<String, Object>();
-                        other.put("tardis_id", id);
-                        other.put("door_type", 0);
-                        ResultSetDoors rse = new ResultSetDoors(plugin, other, false);
-                        rse.resultSet();
-                        d = rse.getDoor_direction();
-                        exit = plugin.getUtils().getLocationFromDB(rse.getDoor_location(), yaw, pitch);
-                        exit.setX(exit.getX() + 0.5);
-                        exit.setZ(exit.getZ() + 0.5);
-                    } else {
-                        HashMap<String, Object> wherecl = new HashMap<String, Object>();
-                        wherecl.put("tardis_id", id);
-                        ResultSetCurrentLocation rscl = new ResultSetCurrentLocation(plugin, wherecl);
-                        rscl.resultSet();
-                        d = rsc.getDirection();
-                        exit = new Location(rsc.getWorld(), rscl.getX(), rscl.getY(), rscl.getZ(), yaw, pitch);
-                        switch (d) {
-                            case NORTH:
-                                exit.setX(exit.getX() + 0.5);
-                                exit.setZ(exit.getZ() + 2.5);
-                                break;
-                            case EAST:
-                                exit.setX(exit.getX() - 1.5);
-                                exit.setZ(exit.getZ() + 0.5);
-                                break;
-                            case SOUTH:
-                                exit.setX(exit.getX() + 0.5);
-                                exit.setZ(exit.getZ() - 1.5);
-                                break;
-                            case WEST:
-                                exit.setX(exit.getX() + 2.5);
-                                exit.setZ(exit.getZ() + 0.5);
-                                break;
-                        }
-                    }
-                    if (!dd.equals(d)) {
-                        yaw += plugin.getGeneralKeeper().getDoorListener().adjustYaw(dd, d);
-                    }
-                    exit.setYaw(yaw);
-                    mr.setTo(exit);
-                    // remove player from tarvellers table
-                    plugin.getGeneralKeeper().getDoorListener().removeTraveller(player.getUniqueId());
+        if (plugin.getTrackerKeeper().getPortals().containsKey(l)) {
+            TARDISTeleportLocation tpl = plugin.getTrackerKeeper().getPortals().get(l);
+            UUID uuid = p.getUniqueId();
+            int id = tpl.getTardisId();
+            // are they a companion of this TARDIS?
+            List<UUID> companions = new ResultSetCompanions(plugin, id).getCompanions();
+            if (companions.contains(uuid)) {
+                Location to = tpl.getLocation();
+                boolean exit;
+                if (plugin.getConfig().getBoolean("creation.default_world")) {
+                    // check default world name
+                    exit = !(to.getWorld().getName().equals(plugin.getConfig().getString("creation.default_world_name")));
                 } else {
-                    // send message handbrake must be on?
-                    TARDISMessage.send(player, plugin.getPluginName() + MESSAGE.LOST_IN_VORTEX.getText());
-                    mr.setWhich(0);
+                    exit = !(to.getWorld().getName().contains("TARDIS"));
                 }
-            } else {
-                mr.setWhich(0);
+                // adjust player yaw for to
+                float yaw = (exit) ? p.getLocation().getYaw() + 180.0f : p.getLocation().getYaw();
+                COMPASS d = COMPASS.valueOf(plugin.getUtils().getPlayersDirection(p, false));
+                if (!tpl.getDirection().equals(d)) {
+                    yaw += plugin.getGeneralKeeper().getDoorListener().adjustYaw(d, tpl.getDirection());
+                }
+                to.setYaw(yaw);
+                HashMap<String, Object> wherepp = new HashMap<String, Object>();
+                wherepp.put("uuid", uuid.toString());
+                ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, wherepp);
+                boolean hasPrefs = rsp.resultSet();
+                boolean minecart = (hasPrefs) ? rsp.isMinecartOn() : false;
+                boolean userQuotes = (hasPrefs) ? rsp.isQuotesOn() : false;
+                // check for entities near the police box
+                List<TARDISMob> pets = null;
+                if (plugin.getConfig().getBoolean("allow.mob_farming") && p.hasPermission("tardis.farm") && !plugin.getTrackerKeeper().getFarming().contains(uuid)) {
+                    plugin.getTrackerKeeper().getFarming().add(uuid);
+                    TARDISFarmer tf = new TARDISFarmer(plugin);
+                    pets = tf.farmAnimals(l, d, id, p, tpl.getLocation().getWorld().getName(), l.getWorld().getName());
+                }
+                // set travelling status
+                QueryFactory qf = new QueryFactory(plugin);
+                if (exit) {
+                    // unoccupied
+                    plugin.getGeneralKeeper().getDoorListener().removeTraveller(uuid);
+                } else {
+                    // occupied
+                    plugin.getGeneralKeeper().getDoorListener().removeTraveller(uuid);
+                    HashMap<String, Object> set = new HashMap<String, Object>();
+                    set.put("tardis_id", id);
+                    set.put("uuid", uuid.toString());
+                    qf.doSyncInsert("travellers", set);
+                }
+                // tp player
+                plugin.getGeneralKeeper().getDoorListener().movePlayer(p, to, exit, l.getWorld(), userQuotes, 0, minecart);
+                if (pets != null && pets.size() > 0) {
+                    plugin.getGeneralKeeper().getDoorListener().movePets(pets, tpl.getLocation(), p, d, true);
+                }
+                if (userQuotes) {
+                    TARDISMessage.send(p, "DOOR_REMIND");
+                }
             }
-        }
-        return mr;
-    }
-
-    public class MoveResult {
-
-        private int which;
-        private Location to;
-
-        public int getWhich() {
-            return which;
-        }
-
-        public void setWhich(int which) {
-            this.which = which;
-        }
-
-        public Location getTo() {
-            return to;
-        }
-
-        public void setTo(Location to) {
-            this.to = to;
         }
     }
 }

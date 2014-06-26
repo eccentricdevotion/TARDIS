@@ -21,7 +21,6 @@ import java.util.List;
 import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.ResultSetDoors;
-import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import net.citizensnpcs.api.CitizensAPI;
 import net.citizensnpcs.api.npc.NPC;
 import net.citizensnpcs.api.npc.NPCRegistry;
@@ -33,8 +32,8 @@ import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 
 /**
- * Emergency Program One was a feature of the Doctor's TARDIS designed to return
- * a companion to a designated place in case of extreme emergency.
+ * Emergency Programme One was a feature of the Doctor's TARDIS designed to
+ * return a companion to a designated place in case of extreme emergency.
  *
  * @author eccentric_nz
  */
@@ -64,7 +63,7 @@ public class TARDISEPSRunnable implements Runnable {
         plugin.debug("Location:" + l);
         if (l != null) {
             try {
-                plugin.setMySpawn(true);
+                plugin.setTardisSpawn(true);
                 l.setX(l.getX() + 0.5F);
                 l.setZ(l.getZ() + 1.5F);
                 // set yaw if npc spawn location has been changed
@@ -89,8 +88,8 @@ public class TARDISEPSRunnable implements Runnable {
                 for (UUID p : players) {
                     Player pp = plugin.getServer().getPlayer(p);
                     if (pp != null) {
-                        TARDISMessage.send(pp, ChatColor.RED + "[Emergency Program One] " + ChatColor.RESET + message);
-                        TARDISMessage.send(pp, ChatColor.RED + "[Emergency Program One] " + ChatColor.RESET + "Right-click me to make me go away.");
+                        pp.sendMessage(ChatColor.RED + "[Emergency Programme One] " + ChatColor.RESET + message);
+                        pp.sendMessage(ChatColor.RED + "[Emergency Programme One] " + ChatColor.RESET + plugin.getLanguage().getString("EP1_INFO"));
                     }
                 }
             } catch (CommandException e) {

@@ -19,6 +19,7 @@ package me.eccentric_nz.TARDIS.commands.admin;
 import java.io.File;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.destroyers.TARDISPruner;
+import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import org.bukkit.command.CommandSender;
 import org.bukkit.util.FileUtil;
 
@@ -37,18 +38,18 @@ public class TARDISPruneCommand {
     public boolean startPruning(CommandSender sender, String[] args) {
         TARDISPruner pruner = new TARDISPruner(plugin);
         if (args[1].equalsIgnoreCase("list") && args.length == 3) {
-            sender.sendMessage(plugin.getPluginName() + "Please use the /tardisadmin prunelist command");
+            TARDISMessage.send(sender, "PRUNE_INFO");
             return true;
         }
         try {
-            sender.sendMessage(plugin.getPluginName() + "Backing up TARDIS database...");
+            TARDISMessage.send(sender, "BACKUP_DB");
             // backup database
             File oldFile = new File(plugin.getDataFolder() + File.separator + "TARDIS.db");
             File newFile = new File(plugin.getDataFolder() + File.separator + "TARDIS_" + System.currentTimeMillis() + ".db");
             // back up the file
             FileUtil.copy(oldFile, newFile);
             int days = Integer.parseInt(args[1]);
-            sender.sendMessage(plugin.getPluginName() + "Starting TARDIS prune...");
+            TARDISMessage.send(sender, "PRUNE_START");
             pruner.prune(sender, days);
             return true;
         } catch (NumberFormatException nfe) {

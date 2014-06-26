@@ -16,10 +16,11 @@
  */
 package me.eccentric_nz.TARDIS.commands.admin;
 
+import java.util.Arrays;
+import java.util.List;
 import java.util.Locale;
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.enumeration.MESSAGE;
-import org.bukkit.ChatColor;
+import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import org.bukkit.command.CommandSender;
 
 /**
@@ -29,22 +30,27 @@ import org.bukkit.command.CommandSender;
 public class TARDISSetBooleanCommand {
 
     private final TARDIS plugin;
+    private final List<String> require_restart = Arrays.asList("use_block_stack", "use_worldguard", "wg_flag_set", "walk_in_tardis", "zero_room");
 
     public TARDISSetBooleanCommand(TARDIS plugin) {
         this.plugin = plugin;
     }
 
     public boolean setConfigBool(CommandSender sender, String[] args, String section) {
-        String first = (section.isEmpty()) ? args[0].toLowerCase() : section + "." + args[0].toLowerCase();
+        String tolower = args[0].toLowerCase();
+        String first = (section.isEmpty()) ? tolower : section + "." + tolower;
         // check they typed true of false
         String tf = args[1].toLowerCase(Locale.ENGLISH);
         if (!tf.equals("true") && !tf.equals("false")) {
-            sender.sendMessage(plugin.getPluginName() + ChatColor.RED + "The last argument must be true or false!");
+            TARDISMessage.send(sender, "TRUE_FALSE");
             return false;
         }
         plugin.getConfig().set(first, Boolean.valueOf(tf));
         plugin.saveConfig();
-        sender.sendMessage(plugin.getPluginName() + MESSAGE.CONFIG_UPDATED.getText());
+        TARDISMessage.send(sender, "CONFIG_UPDATED");
+        if (require_restart.contains(tolower)) {
+            TARDISMessage.send(sender, "RESTART");
+        }
         return true;
     }
 }

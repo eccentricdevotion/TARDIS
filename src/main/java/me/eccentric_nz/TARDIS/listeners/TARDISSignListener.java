@@ -24,7 +24,6 @@ import me.eccentric_nz.TARDIS.advanced.TARDISCircuitChecker;
 import me.eccentric_nz.TARDIS.chameleon.TARDISChameleonInventory;
 import me.eccentric_nz.TARDIS.database.ResultSetTardisSign;
 import me.eccentric_nz.TARDIS.database.ResultSetTravellers;
-import me.eccentric_nz.TARDIS.enumeration.MESSAGE;
 import me.eccentric_nz.TARDIS.travel.TARDISSaveSignInventory;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import org.bukkit.Location;
@@ -95,8 +94,12 @@ public class TARDISSignListener implements Listener {
                 ResultSetTardisSign rs = new ResultSetTardisSign(plugin, signloc);
                 if (rs.resultSet()) {
                     event.setCancelled(true);
+                    if (plugin.getConfig().getBoolean("allow.power_down") && !rs.isPowered_on()) {
+                        TARDISMessage.send(player, "POWER_DOWN");
+                        return;
+                    }
                     if (rs.isIso_on() && !player.getUniqueId().equals(rs.getUuid()) && event.isCancelled() && !player.hasPermission("tardis.skeletonkey")) {
-                        TARDISMessage.send(player, plugin.getPluginName() + MESSAGE.ISO_ON.getText());
+                        TARDISMessage.send(player, "ISO_HANDS_OFF");
                         return;
                     }
                     String line1;
@@ -113,18 +116,18 @@ public class TARDISSignListener implements Listener {
                     }
                     if (line1.equals("Chameleon")) {
                         if (tcc != null && !tcc.hasChameleon()) {
-                            TARDISMessage.send(player, plugin.getPluginName() + "The Chameleon Circuit is missing from the console!");
+                            TARDISMessage.send(player, "CHAM_MISSING");
                             return;
                         }
                         // open Chameleon Circuit GUI
-                        ItemStack[] cc = new TARDISChameleonInventory(rs.isChamele_on(), rs.isAdapti_on()).getTerminal();
+                        ItemStack[] cc = new TARDISChameleonInventory(plugin, rs.isChamele_on(), rs.isAdapti_on()).getTerminal();
                         Inventory cc_gui = plugin.getServer().createInventory(player, 54, "§4Chameleon Circuit");
                         cc_gui.setContents(cc);
                         player.openInventory(cc_gui);
                     } else {
                         if (event.getAction().equals(Action.RIGHT_CLICK_BLOCK)) {
                             if (tcc != null && !tcc.hasMemory()) {
-                                TARDISMessage.send(player, plugin.getPluginName() + MESSAGE.NO_MEM_CIRCUIT.getText());
+                                TARDISMessage.send(player, "NO_MEM_CIRCUIT");
                                 return;
                             }
                             TARDISSaveSignInventory sst = new TARDISSaveSignInventory(plugin, rs.getTardis_id());

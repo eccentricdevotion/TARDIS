@@ -26,7 +26,6 @@ import me.eccentric_nz.TARDIS.database.ResultSetControls;
 import me.eccentric_nz.TARDIS.database.ResultSetCurrentLocation;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
-import me.eccentric_nz.TARDIS.enumeration.MESSAGE;
 import me.eccentric_nz.TARDIS.enumeration.PRESET;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import org.bukkit.Chunk;
@@ -51,15 +50,19 @@ public class TARDISDirectionCommand {
     public boolean changeDirection(final Player player, String[] args) {
         if (player.hasPermission("tardis.timetravel")) {
             if (args.length < 2 || (!args[1].equalsIgnoreCase("north") && !args[1].equalsIgnoreCase("west") && !args[1].equalsIgnoreCase("south") && !args[1].equalsIgnoreCase("east"))) {
-                TARDISMessage.send(player, plugin.getPluginName() + "You need to specify the compass direction e.g. north, west, south or east!");
+                TARDISMessage.send(player, "DIRECTION_NEED");
                 return false;
             }
             HashMap<String, Object> where = new HashMap<String, Object>();
             where.put("uuid", player.getUniqueId().toString());
             ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);
             if (!rs.resultSet()) {
-                TARDISMessage.send(player, plugin.getPluginName() + MESSAGE.NO_TARDIS.getText());
+                TARDISMessage.send(player, "NO_TARDIS");
                 return false;
+            }
+            if (plugin.getConfig().getBoolean("allow.power_down") && !rs.isPowered_on()) {
+                TARDISMessage.send(player, "POWER_DOWN");
+                return true;
             }
             int id = rs.getTardis_id();
             TARDISCircuitChecker tcc = null;
@@ -68,17 +71,17 @@ public class TARDISDirectionCommand {
                 tcc.getCircuits();
             }
             if (tcc != null && !tcc.hasMaterialisation()) {
-                TARDISMessage.send(player, plugin.getPluginName() + MESSAGE.NO_MAT_CIRCUIT.getText());
+                TARDISMessage.send(player, "NO_MAT_CIRCUIT");
                 return true;
             }
             int level = rs.getArtron_level();
             int amount = plugin.getArtronConfig().getInt("random");
             if (level < amount) {
-                TARDISMessage.send(player, plugin.getPluginName() + "The TARDIS does not have enough Artron Energy to change the Police Box direction!");
+                TARDISMessage.send(player, "ENERGY_NO_DIRECTION");
                 return true;
             }
-            if (plugin.getTrackerKeeper().getTrackInVortex().contains(id)) {
-                TARDISMessage.send(player, plugin.getPluginName() + MESSAGE.NOT_WHILE_MAT.getText());
+            if (plugin.getTrackerKeeper().getInVortex().contains(id)) {
+                TARDISMessage.send(player, "NOT_WHILE_MAT");
                 return true;
             }
             boolean tmp_cham = false;
@@ -93,7 +96,7 @@ public class TARDISDirectionCommand {
             wherecl.put("tardis_id", id);
             ResultSetCurrentLocation rsc = new ResultSetCurrentLocation(plugin, wherecl);
             if (!rsc.resultSet()) {
-                TARDISMessage.send(player, plugin.getPluginName() + MESSAGE.NO_CURRENT.getText());
+                TARDISMessage.send(player, "CURRENT_NOT_FOUND");
                 return true;
             }
             COMPASS old_d = rsc.getDirection();
@@ -131,6 +134,7 @@ public class TARDISDirectionCommand {
                 pbd.setRebuild(true);
                 pbd.setSubmarine(rsc.isSubmarine());
                 pbd.setTardisID(id);
+                pbd.setBiome(rsc.getBiome());
                 plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
                     @Override
                     public void run() {
@@ -142,7 +146,7 @@ public class TARDISDirectionCommand {
             wherea.put("tardis_id", id);
             qf.alterEnergyLevel("tardis", -amount, wherea, player);
             if (hid) {
-                TARDISMessage.send(player, plugin.getPluginName() + "Direction changed.");
+                TARDISMessage.send(player, "DIRECTION_CHANGED");
             }
             // if they have a Direction Frame, update the rotation
             HashMap<String, Object> wheredf = new HashMap<String, Object>();
@@ -181,7 +185,7 @@ public class TARDISDirectionCommand {
             }
             return true;
         } else {
-            TARDISMessage.send(player, plugin.getPluginName() + MESSAGE.NO_PERMS.getText());
+            TARDISMessage.send(player, "NO_PERMS");
             return false;
         }
     }

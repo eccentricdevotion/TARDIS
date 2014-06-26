@@ -19,14 +19,18 @@ package me.eccentric_nz.TARDIS.destroyers;
 import java.util.ArrayList;
 import java.util.HashMap;
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.builders.TARDISMaterialisationData;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetBlocks;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
 import me.eccentric_nz.TARDIS.enumeration.PRESET;
+import me.eccentric_nz.TARDIS.move.TARDISDoorCloser;
 import org.bukkit.Chunk;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
+import org.bukkit.World.Environment;
+import org.bukkit.block.Biome;
 import org.bukkit.block.Block;
 
 /**
@@ -49,16 +53,26 @@ public class TARDISDeinstaPreset {
     /**
      * Destroys the TARDIS Police Box. A 3 x 3 x 3 block area.
      *
-     * @param l the location of the TARDIS Police Box (bottom centre).
-     * @param d the direction the Police Box is facing.
-     * @param id the unique key of the record for this TARDIS in the database.
+     * @param tmd the TARDISMaterialisationData
      * @param hide boolean determining whether to forget the protected Police
      * Box blocks.
      * @param preset the preset to destroy
-     * @param sub whether the next location is submarine
      */
     @SuppressWarnings("deprecation")
-    public void instaDestroyPreset(Location l, COMPASS d, final int id, boolean hide, PRESET preset, boolean sub) {
+    public void instaDestroyPreset(TARDISMaterialisationData tmd, boolean hide, PRESET preset) {
+        Location l = tmd.getLocation();
+        COMPASS d = tmd.getDirection();
+        final int id = tmd.getTardisID();
+        boolean sub = tmd.isSubmarine();
+        Biome biome = tmd.getBiome();
+        if (plugin.getConfig().getBoolean("preferences.walk_in_tardis")) {
+            // always remove the portal
+            if (plugin.getTrackerKeeper().getPortals().containsKey(l)) {
+                plugin.getTrackerKeeper().getPortals().remove(l);
+            }
+            // toggle the doors if neccessary
+            new TARDISDoorCloser(plugin, tmd.getPlayer().getUniqueId(), id).closeDoors();
+        }
         final World w = l.getWorld();
         // make sure chunk is loaded
         Chunk chunk = w.getChunkAt(l);
@@ -73,8 +87,27 @@ public class TARDISDeinstaPreset {
             sby = l.getBlockY();
         }
         final int sbz = l.getBlockZ() - 1;
+        // reset biome and it's not The End
+        if (l.getBlock().getBiome().equals(Biome.DEEP_OCEAN) || (l.getBlock().getBiome().equals(Biome.SKY) && !l.getWorld().getEnvironment().equals(Environment.THE_END)) && biome != null) {
+            // reset the biome
+            boolean run = true;
+            for (int c = 0; c < 3 && run; c++) {
+                for (int r = 0; r < 3 && run; r++) {
+                    try {
+                        w.setBiome(sbx + c, sbz + r, biome);
+                    } catch (NullPointerException e) {
+                        plugin.debug(plugin.getPluginName() + "Couldn't set biome!\nWorld = " + w.toString() + "\nsbx = " + sbx + "\nsbz = " + sbz + "\nbiome = " + biome.toString());
+                        e.printStackTrace();
+                        run = false;
+                        // remove TARDIS from tracker
+                        plugin.getTrackerKeeper().getDematerialising().remove(Integer.valueOf(id));
+                    }
+                }
+            }
+            // refresh the chunk
+            w.refreshChunk(chunk.getX(), chunk.getZ());
+        }
         // remove problem blocks first
-
         switch (preset) {
             case GRAVESTONE:
                 // remove flower
@@ -110,7 +143,7 @@ public class TARDISDeinstaPreset {
             default:
                 break;
         }
-        plugin.getTrackerKeeper().getTrackDematerialising().remove(Integer.valueOf(id));
+        plugin.getTrackerKeeper().getDematerialising().remove(Integer.valueOf(id));
         plugin.getGeneralKeeper().getTardisChunkList().remove(l.getChunk());
         // remove door
         plugin.getPresetDestroyer().destroyDoor(id);
@@ -162,22 +195,18 @@ public class TARDISDeinstaPreset {
                 if (map.get("data") != null) {
                     bd = plugin.getUtils().parseByte(map.get("data"));
                 }
-                // if it wasn't AIR put it back
-                if (bID != 0) {
-                    String locStr = map.get("location");
-                    String[] loc_data = locStr.split(",");
-                    // x, y, z - 1, 2, 3
-                    String[] xStr = loc_data[1].split("=");
-                    String[] yStr = loc_data[2].split("=");
-                    String[] zStr = loc_data[3].split("=");
-                    int rx = plugin.getUtils().parseInt(xStr[1].substring(0, (xStr[1].length() - 2)));
-                    int ry = plugin.getUtils().parseInt(yStr[1].substring(0, (yStr[1].length() - 2)));
-                    int rz = plugin.getUtils().parseInt(zStr[1].substring(0, (zStr[1].length() - 2)));
-                    plugin.getUtils().setBlock(w, rx, ry, rz, bID, bd);
-                }
+                String locStr = map.get("location");
+                String[] loc_data = locStr.split(",");
+                // x, y, z - 1, 2, 3
+                String[] xStr = loc_data[1].split("=");
+                String[] yStr = loc_data[2].split("=");
+                String[] zStr = loc_data[3].split("=");
+                int rx = plugin.getUtils().parseInt(xStr[1].substring(0, (xStr[1].length() - 2)));
+                int ry = plugin.getUtils().parseInt(yStr[1].substring(0, (yStr[1].length() - 2)));
+                int rz = plugin.getUtils().parseInt(zStr[1].substring(0, (zStr[1].length() - 2)));
+                plugin.getUtils().setBlock(w, rx, ry, rz, bID, bd);
             }
         }
-
         // if just hiding don't remove block protection
         if (!hide) {
             plugin.getPresetDestroyer().removeBlockProtection(id, new QueryFactory(plugin));

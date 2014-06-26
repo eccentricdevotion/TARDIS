@@ -132,7 +132,7 @@ public class TARDISBlockLoader {
                         tab.setMin(min);
                         tab.setMax(max);
                         tab.setTimelord(tl);
-                        plugin.getTrackerKeeper().getTrackAntiBuild().put(id, tab);
+                        plugin.getTrackerKeeper().getAntiBuild().put(id, tab);
                     }
                 }
             }

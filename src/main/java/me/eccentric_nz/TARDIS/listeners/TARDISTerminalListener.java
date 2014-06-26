@@ -36,8 +36,6 @@ import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.World.Environment;
-import org.bukkit.block.Block;
-import org.bukkit.block.BlockFace;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -153,12 +151,12 @@ public class TARDISTerminalListener implements Listener {
                                 HashMap<String, Object> wheret = new HashMap<String, Object>();
                                 wheret.put("tardis_id", terminalIDs.get(uuid));
                                 new QueryFactory(plugin).doUpdate("next", set, wheret);
-                                plugin.getTrackerKeeper().getTrackHasDestination().put(terminalIDs.get(uuid), plugin.getArtronConfig().getInt("travel"));
-                                if (plugin.getTrackerKeeper().getTrackRescue().containsKey(terminalIDs.get(uuid))) {
-                                    plugin.getTrackerKeeper().getTrackRescue().remove(terminalIDs.get(uuid));
+                                plugin.getTrackerKeeper().getHasDestination().put(terminalIDs.get(uuid), plugin.getArtronConfig().getInt("travel"));
+                                if (plugin.getTrackerKeeper().getRescue().containsKey(terminalIDs.get(uuid))) {
+                                    plugin.getTrackerKeeper().getRescue().remove(terminalIDs.get(uuid));
                                 }
                                 close(player);
-                                TARDISMessage.send(player, plugin.getPluginName() + "Destination set. Please release the handbrake!");
+                                TARDISMessage.send(player, "DEST_SET", true);
                             } else {
                                 // set lore
                                 ItemStack is = inv.getItem(49);
@@ -461,7 +459,7 @@ public class TARDISTerminalListener implements Listener {
                             break;
                         case NETHER:
                             if (tt.safeNether(w, slotx, slotz, d, p)) {
-                                String save = world + ":" + slotx + ":" + getHighestNetherBlock(w, slotx, slotz) + ":" + slotz;
+                                String save = world + ":" + slotx + ":" + plugin.getUtils().getHighestNetherBlock(w, slotx, slotz) + ":" + slotz;
                                 terminalDestination.put(uuid, save);
                                 lore.add(save);
                                 lore.add("is a valid destination!");
@@ -474,7 +472,7 @@ public class TARDISTerminalListener implements Listener {
                             Location loc = new Location(w, slotx, 0, slotz);
                             int[] start = tt.getStartLocation(loc, d);
                             int starty = w.getHighestBlockYAt(slotx, slotz);
-                            // allow room for under door block / platform if necessary
+                            // allow room for under door block
                             if (starty <= 0) {
                                 starty = 1;
                             }
@@ -522,25 +520,6 @@ public class TARDISTerminalListener implements Listener {
         ItemMeta im = is.getItemMeta();
         im.setLore(lore);
         is.setItemMeta(im);
-    }
-
-    @SuppressWarnings("deprecation")
-    private int getHighestNetherBlock(World w, int wherex, int wherez) {
-        int y = 100;
-        Block startBlock = w.getBlockAt(wherex, y, wherez);
-        while (startBlock.getTypeId() != 0) {
-            startBlock = startBlock.getRelative(BlockFace.DOWN);
-        }
-        int air = 0;
-        while (startBlock.getTypeId() == 0 && startBlock.getLocation().getBlockY() > 30) {
-            startBlock = startBlock.getRelative(BlockFace.DOWN);
-            air++;
-        }
-        int id = startBlock.getTypeId();
-        if ((id == 87 || id == 88 || id == 89 || id == 112 || id == 113 || id == 114) && air >= 4) {
-            y = startBlock.getLocation().getBlockY() + 1;
-        }
-        return y;
     }
 
     private void close(final Player p) {

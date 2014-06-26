@@ -24,7 +24,6 @@ import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.ResultSetPlayerPrefs;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import me.eccentric_nz.TARDIS.database.ResultSetTravellers;
-import me.eccentric_nz.TARDIS.enumeration.MESSAGE;
 import me.eccentric_nz.TARDIS.travel.TARDISEPSRunnable;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import org.bukkit.entity.Player;
@@ -44,14 +43,14 @@ public class TARDISEmergencyProgrammeCommand {
     public boolean showEP1(Player p) {
         if (plugin.getPM().isPluginEnabled("Citizens") && plugin.getConfig().getBoolean("allow.emergency_npc")) {
             if (!plugin.getUtils().inTARDISWorld(p)) {
-                TARDISMessage.send(p, plugin.getPluginName() + "You must be in a TARDIS world to run this command!");
+                TARDISMessage.send(p, "CMD_IN_WORLD");
                 return true;
             }
             HashMap<String, Object> where = new HashMap<String, Object>();
             where.put("uuid", p.getUniqueId().toString());
             ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);
             if (!rs.resultSet()) {
-                TARDISMessage.send(p, plugin.getPluginName() + MESSAGE.NOT_A_TIMELORD.getText());
+                TARDISMessage.send(p, "NOT_A_TIMELORD");
                 return true;
             }
             int id = rs.getTardis_id();
@@ -61,11 +60,11 @@ public class TARDISEmergencyProgrammeCommand {
             wherem.put("uuid", p.getUniqueId().toString());
             ResultSetTravellers rsm = new ResultSetTravellers(plugin, wherem, true);
             if (!rsm.resultSet()) {
-                TARDISMessage.send(p, plugin.getPluginName() + MESSAGE.NOT_IN_TARDIS.getText());
+                TARDISMessage.send(p, "NOT_IN_TARDIS");
                 return true;
             }
             if (rsm.getTardis_id() != id) {
-                TARDISMessage.send(p, plugin.getPluginName() + MESSAGE.NOT_IN_TARDIS.getText());
+                TARDISMessage.send(p, "NOT_IN_TARDIS");
                 return true;
             }
             // get player prefs
@@ -90,7 +89,7 @@ public class TARDISEmergencyProgrammeCommand {
                 return true;
             }
         } else {
-            TARDISMessage.send(p, plugin.getPluginName() + "Emergency Programme One is not available on this server.");
+            TARDISMessage.send(p, "EP1_DISABLED");
             return true;
         }
         return false;

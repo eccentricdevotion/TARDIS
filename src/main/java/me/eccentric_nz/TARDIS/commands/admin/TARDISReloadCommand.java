@@ -18,6 +18,7 @@ package me.eccentric_nz.TARDIS.commands.admin;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.files.TARDISConfiguration;
+import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import org.bukkit.command.CommandSender;
 
 /**
@@ -38,7 +39,7 @@ public class TARDISReloadCommand {
         TARDISConfiguration tc = new TARDISConfiguration(plugin);
         tc.doWorlds();
         plugin.saveConfig();
-        sender.sendMessage(plugin.getPluginName() + "TARDIS config reloaded.");
+        TARDISMessage.send(sender, "RELOADED");
         return true;
     }
 }

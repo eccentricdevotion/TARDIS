@@ -81,8 +81,8 @@ public class TARDISMakePresetListener implements Listener {
         final UUID uuid = player.getUniqueId();
         Block block = event.getClickedBlock();
         if (block != null) {
-            if (plugin.getTrackerKeeper().getTrackPreset().containsKey(uuid)) {
-                String[] split = plugin.getTrackerKeeper().getTrackPreset().get(uuid).split(":");
+            if (plugin.getTrackerKeeper().getPreset().containsKey(uuid)) {
+                String[] split = plugin.getTrackerKeeper().getPreset().get(uuid).split(":");
                 String name = split[0];
                 String bool = split[1];
                 Location block_loc = block.getLocation();
@@ -90,7 +90,7 @@ public class TARDISMakePresetListener implements Listener {
                 int fx = block_loc.getBlockX();
                 int fy = block_loc.getBlockY();
                 int fz = block_loc.getBlockZ();
-                TARDISMessage.send(player, plugin.getPluginName() + "Scanning 3 x 3 x 4 area...");
+                TARDISMessage.send(player, "PRESET_SCAN");
                 StringBuilder sb_id = new StringBuilder("[");
                 StringBuilder sb_data = new StringBuilder("[");
                 StringBuilder sb_stain_id = new StringBuilder("[");
@@ -230,8 +230,8 @@ public class TARDISMakePresetListener implements Listener {
                 } catch (IOException e) {
                     plugin.debug("Could not create and write to " + filename + "! " + e.getMessage());
                 }
-                plugin.getTrackerKeeper().getTrackPreset().remove(uuid);
-                TARDISMessage.send(player, plugin.getPluginName() + "Scanning complete! " + filename + " written to the plugins/TARDIS folder.");
+                plugin.getTrackerKeeper().getPreset().remove(uuid);
+                TARDISMessage.send(player, "PRESET_DONE", filename);
             }
         }
     }

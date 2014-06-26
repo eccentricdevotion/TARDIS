@@ -17,6 +17,7 @@
 package me.eccentric_nz.TARDIS.commands.admin;
 
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import org.bukkit.Chunk;
 import org.bukkit.command.CommandSender;
 
@@ -38,7 +39,7 @@ public class TARDISChunksCommand {
                 sender.sendMessage(plugin.getPluginName() + c.getWorld().getName() + ": " + c);
             }
         } else {
-            sender.sendMessage("No chunks in list!");
+            TARDISMessage.send(sender, "NO_CHUNKS");
         }
         return true;
     }

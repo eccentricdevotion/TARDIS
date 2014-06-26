@@ -71,7 +71,7 @@ public class TARDISSeedBlockProcessor {
                 if (rsc.resultSet()) {
                     player_count = rsc.getCount();
                     if (player_count == max_count) {
-                        TARDISMessage.send(player, plugin.getPluginName() + "You have used up your quota of TARDISes!");
+                        TARDISMessage.send(player, "COUNT_QUOTA");
                         return false;
                     }
                 }
@@ -86,57 +86,64 @@ public class TARDISSeedBlockProcessor {
                 switch (schm) {
                     case CUSTOM:
                         if (!plugin.getConfig().getBoolean("creation.custom_schematic")) {
-                            TARDISMessage.send(player, plugin.getPluginName() + "The custom TARDIS schematic is not enabled on this server!");
+                            TARDISMessage.send(player, "CUSTOM_NO");
                             return false;
                         } else if (!player.hasPermission("tardis.custom")) {
-                            TARDISMessage.send(player, plugin.getPluginName() + "You don't have permission to create the server's custom' TARDIS!");
+                            TARDISMessage.send(player, "NO_PERM_TARDIS", "custom");
                             return false;
                         }
+                        break;
                     case BIGGER:
                         if (!player.hasPermission("tardis.bigger")) {
-                            TARDISMessage.send(player, plugin.getPluginName() + "You don't have permission to create a 'bigger' TARDIS!");
+                            TARDISMessage.send(player, "NO_PERM_TARDIS", "bigger");
                             return false;
                         }
                         break;
                     case DELUXE:
                         if (!player.hasPermission("tardis.deluxe")) {
-                            TARDISMessage.send(player, plugin.getPluginName() + "You don't have permission to create a 'deluxe' TARDIS!");
+                            TARDISMessage.send(player, "NO_PERM_TARDIS", "deluxe");
                             return false;
                         }
                         break;
                     case ELEVENTH:
                         if (!player.hasPermission("tardis.eleventh")) {
-                            TARDISMessage.send(player, plugin.getPluginName() + "You don't have permission to create an 'eleventh Doctor's' TARDIS!");
+                            TARDISMessage.send(player, "NO_PERM_TARDIS", "eleventh");
                             return false;
                         }
                         break;
                     case REDSTONE:
                         if (!player.hasPermission("tardis.redstone")) {
-                            TARDISMessage.send(player, plugin.getPluginName() + "You don't have permission to create a 'redstone' TARDIS!");
+                            TARDISMessage.send(player, "NO_PERM_TARDIS", "redstone");
                             return false;
                         }
                         break;
                     case STEAMPUNK:
                         if (!player.hasPermission("tardis.steampunk")) {
-                            TARDISMessage.send(player, plugin.getPluginName() + "You don't have permission to create a 'steampunk' TARDIS!");
+                            TARDISMessage.send(player, "NO_PERM_TARDIS", "steampunk");
                             return false;
                         }
                         break;
                     case TOM:
                         if (!player.hasPermission("tardis.tom")) {
-                            TARDISMessage.send(player, plugin.getPluginName() + "You don't have permission to create a '4th Doctor's' TARDIS!");
+                            TARDISMessage.send(player, "NO_PERM_TARDIS", "tom");
                             return false;
                         }
                         break;
                     case PLANK:
                         if (!player.hasPermission("tardis.plank")) {
-                            TARDISMessage.send(player, plugin.getPluginName() + "You don't have permission to create a 'wood' TARDIS!");
+                            TARDISMessage.send(player, "NO_PERM_TARDIS", "wood");
                             return false;
                         }
                         break;
                     case ARS:
                         if (!player.hasPermission("tardis.ars")) {
-                            TARDISMessage.send(player, plugin.getPluginName() + "You don't have permission to create an 'ARS' TARDIS!");
+                            TARDISMessage.send(player, "NO_PERM_TARDIS", "ARS");
+                            return false;
+                        }
+                        break;
+                    case WAR:
+                        if (!player.hasPermission("tardis.war")) {
+                            TARDISMessage.send(player, "NO_PERM_TARDIS", "WAR");
                             return false;
                         }
                         break;
@@ -178,15 +185,16 @@ public class TARDISSeedBlockProcessor {
                     cx = chunk.getX();
                     cz = chunk.getZ();
                     if (!plugin.getConfig().getBoolean("creation.default_world") && plugin.getUtils().checkChunk(cw, cx, cz, schm)) {
-                        TARDISMessage.send(player, plugin.getPluginName() + "A TARDIS already exists at this location, please try another chunk!");
+                        TARDISMessage.send(player, "TARDIS_EXISTS");
                         return false;
                     }
                 }
+                final String biome = l.getBlock().getBiome().toString();
                 // get player direction
                 String d = plugin.getUtils().getPlayersDirection(player, false);
                 // save data to database (tardis table)
                 String chun = cw + ":" + cx + ":" + cz;
-                QueryFactory qf = new QueryFactory(plugin);
+                final QueryFactory qf = new QueryFactory(plugin);
                 HashMap<String, Object> set = new HashMap<String, Object>();
                 set.put("uuid", player.getUniqueId().toString());
                 set.put("owner", playerNameStr);
@@ -214,7 +222,7 @@ public class TARDISSeedBlockProcessor {
                 setpp.put("wall", getWallKey(middle_id, (int) middle_data));
                 setpp.put("floor", getWallKey(floor_id, (int) floor_data));
                 setpp.put("lamp", seed.getLamp());
-                int lastInsertId = qf.doSyncInsert("tardis", set);
+                final int lastInsertId = qf.doSyncInsert("tardis", set);
                 // insert/update  player prefs
                 HashMap<String, Object> wherep = new HashMap<String, Object>();
                 wherep.put("uuid", player.getUniqueId().toString());
@@ -238,7 +246,7 @@ public class TARDISSeedBlockProcessor {
                 setlocs.put("y", l.getBlockY());
                 setlocs.put("z", l.getBlockZ());
                 setlocs.put("direction", d);
-                qf.insertLocations(setlocs);
+                qf.insertLocations(setlocs, biome, lastInsertId);
                 // turn the block stack into a TARDIS
                 TARDISMaterialisationData pbd = new TARDISMaterialisationData();
                 pbd.setChameleon(false);
@@ -250,6 +258,7 @@ public class TARDISSeedBlockProcessor {
                 pbd.setRebuild(false);
                 pbd.setSubmarine(isSub(l));
                 pbd.setTardisID(lastInsertId);
+                pbd.setBiome(l.getBlock().getBiome());
                 // police box needs to use chameleon id/data
                 plugin.getPresetBuilder().buildPreset(pbd);
                 plugin.getInteriorBuilder().buildInner(schm, chunkworld, lastInsertId, player, middle_id, middle_data, floor_id, floor_data, tips);
@@ -261,11 +270,11 @@ public class TARDISSeedBlockProcessor {
                     wherea.put("uuid", player.getUniqueId().toString());
                     wherea.put("name", "tardis");
                     qf.doUpdate("achievements", seta, wherea);
-                    TARDISMessage.send(player, ChatColor.YELLOW + "Achievement Get!");
-                    TARDISMessage.send(player, ChatColor.WHITE + plugin.getAchievementConfig().getString("tardis.message"));
+                    player.sendMessage(ChatColor.YELLOW + "Achievement Get!");
+                    player.sendMessage(ChatColor.WHITE + plugin.getAchievementConfig().getString("tardis.message"));
                 }
                 if (max_count > 0) {
-                    TARDISMessage.send(player, plugin.getPluginName() + "You have used up " + (player_count + 1) + " of " + max_count + " TARDIS builds!");
+                    TARDISMessage.send(player, "COUNT", String.format("%d", (player_count + 1)), String.format("%d", max_count));
                     HashMap<String, Object> setc = new HashMap<String, Object>();
                     setc.put("count", player_count + 1);
                     if (player_count > 0) {
@@ -285,14 +294,14 @@ public class TARDISSeedBlockProcessor {
                 wherecl.put("tardis_id", rs.getTardis_id());
                 ResultSetCurrentLocation rsc = new ResultSetCurrentLocation(plugin, wherecl);
                 if (rsc.resultSet()) {
-                    TARDISMessage.send(player, plugin.getPluginName() + "You already have a TARDIS, you left it in " + rsc.getWorld().getName() + " at x:" + rsc.getX() + " y:" + rsc.getY() + " z:" + rsc.getZ());
+                    TARDISMessage.send(player, "TARDIS_HAVE", rsc.getWorld().getName() + " at x:" + rsc.getX() + " y:" + rsc.getY() + " z:" + rsc.getZ());
                 } else {
-                    TARDISMessage.send(player, plugin.getPluginName() + "You already have a TARDIS, but we couldn't find it! Try calling it to you.");
+                    TARDISMessage.send(player, "HAVE_TARDIS");
                 }
                 return false;
             }
         } else {
-            TARDISMessage.send(player, plugin.getPluginName() + "You don't have permission to build a TARDIS!");
+            TARDISMessage.send(player, "NO_PERM_TARDIS");
             return false;
         }
     }

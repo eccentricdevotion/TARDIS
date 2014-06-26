@@ -112,7 +112,7 @@ public class TARDISStorageListener implements Listener {
                         Location loc = p.getLocation();
                         loc.getWorld().dropItemNaturally(loc, stack);
                         inv.setItem(i, new ItemStack(Material.AIR));
-                        TARDISMessage.send(p, plugin.getPluginName() + "You cannot store Area Storage Disks here!");
+                        TARDISMessage.send(p, "ADV_NO_STORE");
                     }
                 }
             }
@@ -262,7 +262,7 @@ public class TARDISStorageListener implements Listener {
             if (ims.hasDisplayName() && ims.getDisplayName().equals("Area Storage Disk")) {
                 event.setCancelled(true);
                 Player p = event.getPlayer();
-                TARDISMessage.send(p, plugin.getPluginName() + "You cannot drop Area Storage Disks!");
+                TARDISMessage.send(p, "ADV_NO_DROP");
             }
         }
     }

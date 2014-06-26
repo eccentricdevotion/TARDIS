@@ -20,6 +20,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
 
@@ -45,7 +46,7 @@ public class TARDISConfigCommand {
 
     public boolean showConfigOptions(CommandSender sender, String[] args) {
         String section = args[1].toLowerCase();
-        sender.sendMessage(plugin.getPluginName() + ChatColor.RED + " Here are the current plugin options!");
+        TARDISMessage.send(sender, "CONFIG");
         if (sections.contains(section)) {
             sender.sendMessage(ChatColor.AQUA + section + ":" + ChatColor.RESET);
             Set<String> options = plugin.getConfig().getConfigurationSection(section).getKeys(false);

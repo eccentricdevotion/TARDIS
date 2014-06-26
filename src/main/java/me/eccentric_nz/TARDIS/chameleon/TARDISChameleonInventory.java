@@ -17,6 +17,7 @@
 package me.eccentric_nz.TARDIS.chameleon;
 
 import java.util.Arrays;
+import me.eccentric_nz.TARDIS.TARDIS;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
@@ -35,10 +36,12 @@ import org.bukkit.inventory.meta.ItemMeta;
 public class TARDISChameleonInventory {
 
     private final ItemStack[] terminal;
+    private final TARDIS plugin;
     private final boolean bool;
     private final boolean adapt;
 
-    public TARDISChameleonInventory(boolean bool, boolean adapt) {
+    public TARDISChameleonInventory(TARDIS plugin, boolean bool, boolean adapt) {
+        this.plugin = plugin;
         this.bool = bool;
         this.adapt = adapt;
         this.terminal = getItemStack();
@@ -53,20 +56,20 @@ public class TARDISChameleonInventory {
         // on/off
         ItemStack con = new ItemStack(Material.REDSTONE_COMPARATOR, 1);
         ItemMeta ing = con.getItemMeta();
-        ing.setDisplayName("Circuit");
-        String on_off = (bool) ? ChatColor.GREEN + "ON" : ChatColor.RED + "OFF";
-        String to_engage = (bool) ? "OFF" : "ON";
-        ing.setLore(Arrays.asList(on_off, "Click to turn " + to_engage));
+        ing.setDisplayName(plugin.getLanguage().getString("BUTTON_CIRC"));
+        String on_off = (bool) ? ChatColor.GREEN + plugin.getLanguage().getString("SET_ON") : ChatColor.RED + plugin.getLanguage().getString("SET_OFF");
+        String to_engage = (bool) ? plugin.getLanguage().getString("SET_OFF") : plugin.getLanguage().getString("SET_ON");
+        ing.setLore(Arrays.asList(on_off, String.format(plugin.getLanguage().getString("CHAM_CLICK"), to_engage)));
         con.setItemMeta(ing);
         // Apply preset
         ItemStack apply = new ItemStack(Material.BOOKSHELF, 1);
         ItemMeta now = apply.getItemMeta();
-        now.setDisplayName("Apply preset now");
+        now.setDisplayName(plugin.getLanguage().getString("BUTTON_APPLY"));
         apply.setItemMeta(now);
         // page two
         ItemStack page = new ItemStack(Material.ARROW, 1);
         ItemMeta two = page.getItemMeta();
-        two.setDisplayName("Go to page 2");
+        two.setDisplayName(plugin.getLanguage().getString("BUTTON_PAGE_2"));
         Enchantment e = EnchantmentWrapper.ARROW_FIRE;
         two.addEnchant(e, 1, true);
         page.setItemMeta(two);
@@ -183,15 +186,15 @@ public class TARDISChameleonInventory {
         // Biome
         ItemStack bio = new ItemStack(Material.LOG, 1, (short) 2);
         ItemMeta me = bio.getItemMeta();
-        me.setDisplayName("Biome Adaption");
-        String biome = (adapt) ? ChatColor.GREEN + "ON" : ChatColor.RED + "OFF";
-        String to_turn = (adapt) ? "OFF" : "ON";
-        me.setLore(Arrays.asList(biome, "Click to turn " + to_turn));
+        me.setDisplayName(plugin.getLanguage().getString("BUTTON_ADAPT"));
+        String biome = (adapt) ? ChatColor.GREEN + plugin.getLanguage().getString("SET_ON") : ChatColor.RED + plugin.getLanguage().getString("SET_OFF");
+        String to_turn = (adapt) ? plugin.getLanguage().getString("SET_OFF") : plugin.getLanguage().getString("SET_ON");
+        me.setLore(Arrays.asList(biome, String.format(plugin.getLanguage().getString("CHAM_CLICK"), to_turn)));
         bio.setItemMeta(me);
         // Cancel / close
         ItemStack close = new ItemStack(Material.WOOL, 1, (short) 15);
         ItemMeta can = close.getItemMeta();
-        can.setDisplayName("Close");
+        can.setDisplayName(plugin.getLanguage().getString("BUTTON_CLOSE"));
         close.setItemMeta(can);
 
         ItemStack[] is = {

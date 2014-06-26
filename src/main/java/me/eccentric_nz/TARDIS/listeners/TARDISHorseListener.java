@@ -80,7 +80,7 @@ public class TARDISHorseListener implements Listener {
                         whered.put("door_type", 1);
                         ResultSetDoors rsd = new ResultSetDoors(plugin, whered, false);
                         if (rsd.resultSet() && rsd.isLocked()) {
-                            TARDISMessage.send(p, plugin.getPluginName() + "You need to unlock the door!");
+                            TARDISMessage.send(p, "DOOR_UNLOCK");
                             return;
                         }
                         // get spawn location

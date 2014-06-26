@@ -20,12 +20,9 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.artron.TARDISBeaconToggler;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
-import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
-import org.bukkit.Location;
-import org.bukkit.World;
-import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
 
 /**
@@ -39,99 +36,100 @@ public class TARDISToggleOnOffCommand {
 
     public TARDISToggleOnOffCommand(TARDIS plugin) {
         this.plugin = plugin;
-        this.was = Arrays.asList("auto", "beacon", "dnd", "platform", "eps", "hads", "minecart", "plain", "renderer", "submarine");
+        this.was = Arrays.asList("auto", "beacon", "ctm", "dnd", "eps", "hads", "minecart", "plain", "renderer", "submarine", "travelbar");
     }
 
     public boolean toggle(Player player, String[] args, QueryFactory qf) {
         String pref = args[0];
         if (pref.equals("auto") && !plugin.getConfig().getBoolean("allow.autonomous")) {
-            TARDISMessage.send(player, plugin.getPluginName() + "Autonomous homing is disabled on this server!");
-            return true;
-        }
-        if (pref.equals("platform") && !plugin.getConfig().getBoolean("travel.platform")) {
-            TARDISMessage.send(player, plugin.getPluginName() + "Safety platforms are disabled on this server!");
+            TARDISMessage.send(player, "AUTO_DISABLED");
             return true;
         }
         if (pref.equals("eps") && !plugin.getConfig().getBoolean("allow.emergency_npc")) {
-            TARDISMessage.send(player, plugin.getPluginName() + "Emergency Programme One is disabled on this server!");
+            TARDISMessage.send(player, "EP1_DISABLED");
             return true;
         }
         if (pref.equals("hads") && !plugin.getConfig().getBoolean("allow.hads")) {
-            TARDISMessage.send(player, plugin.getPluginName() + "The Hostile Action Displacement System is disabled on this server!");
+            TARDISMessage.send(player, "HADS_DISBALED");
+            return true;
+        }
+        if (pref.equals("travelbar") && !plugin.isBarAPIOnServer()) {
+            TARDISMessage.send(player, "BAR_DISBALED");
             return true;
         }
         HashMap<String, Object> setp = new HashMap<String, Object>();
         HashMap<String, Object> wherep = new HashMap<String, Object>();
         wherep.put("uuid", player.getUniqueId().toString());
-        String grammar = (was.contains(pref)) ? " was" : " were";
         if (args[1].equalsIgnoreCase("on")) {
             setp.put(pref + "_on", 1);
             if (pref.equals("beacon")) {
-                toggleBeacon(player.getUniqueId().toString(), true);
+                new TARDISBeaconToggler(plugin).flickSwitch(player.getUniqueId(), true);
             }
-            TARDISMessage.send(player, plugin.getPluginName() + pref + grammar + " turned ON!");
+            String grammar = (was.contains(pref)) ? "PREF_WAS_ON" : "PREF_WERE_ON";
+            TARDISMessage.send(player, grammar, pref);
         }
         if (args[1].equalsIgnoreCase("off")) {
             setp.put(pref + "_on", 0);
             if (pref.equals("beacon")) {
-                toggleBeacon(player.getUniqueId().toString(), false);
+                new TARDISBeaconToggler(plugin).flickSwitch(player.getUniqueId(), false);
             }
-            TARDISMessage.send(player, plugin.getPluginName() + pref + grammar + " turned OFF.");
+            String grammar = (was.contains(pref)) ? "PREF_WAS_OFF" : "PREF_WERE_OFF";
+            TARDISMessage.send(player, grammar, pref);
         }
         qf.doUpdate("player_prefs", setp, wherep);
         return true;
     }
 
-    public void toggleBeacon(String uuid, boolean on) {
-        HashMap<String, Object> whereb = new HashMap<String, Object>();
-        whereb.put("uuid", uuid);
-        ResultSetTardis rs = new ResultSetTardis(plugin, whereb, "", false);
-        if (rs.resultSet()) {
-            // toggle beacon
-            String beacon = rs.getBeacon();
-            String[] beaconData;
-            int plusy = 0;
-            if (beacon.isEmpty()) {
-                // get the location from the TARDIS size and the creeper location
-                switch (rs.getSchematic()) {
-                    // TODO - Find out how far away the bedrock block is
-                    case REDSTONE:
-                        plusy = 18;
-                        break;
-                    case ELEVENTH:
-                        plusy = 17;
-                        break;
-                    case DELUXE:
-                        plusy = 16;
-                        break;
-                    case BIGGER:
-                        plusy = 13;
-                        break;
-                    default: // BUDGET & STEAMPUNK
-                        plusy = 12;
-                        break;
-                }
-                String creeper = rs.getCreeper();
-                beaconData = creeper.split(":");
-            } else {
-                beaconData = beacon.split(":");
-            }
-            World w = plugin.getServer().getWorld(beaconData[0]);
-            int bx = plugin.getUtils().parseInt(beaconData[1]);
-            int by = plugin.getUtils().parseInt(beaconData[2]) + plusy;
-            int bz = plugin.getUtils().parseInt(beaconData[3]);
-            if (beacon.isEmpty()) {
-                // update the tardis table so we don't have to do this again
-                String beacon_loc = beaconData[0] + ":" + beaconData[1] + ":" + by + ":" + beaconData[3];
-                HashMap<String, Object> set = new HashMap<String, Object>();
-                set.put("beacon", beacon_loc);
-                HashMap<String, Object> where = new HashMap<String, Object>();
-                where.put("tardis_id", rs.getTardis_id());
-                new QueryFactory(plugin).doUpdate("tardis", set, where);
-            }
-            Location bl = new Location(w, bx, by, bz);
-            Block b = bl.getBlock();
-            b.setTypeId((on) ? 20 : 7);
-        }
-    }
+//    public void toggleBeacon(String uuid, boolean on) {
+//        HashMap<String, Object> whereb = new HashMap<String, Object>();
+//        whereb.put("uuid", uuid);
+//        ResultSetTardis rs = new ResultSetTardis(plugin, whereb, "", false);
+//        if (rs.resultSet()) {
+//            // toggle beacon
+//            String beacon = rs.getBeacon();
+//            String[] beaconData;
+//            int plusy = 0;
+//            if (beacon.isEmpty()) {
+//                // get the location from the TARDIS size and the creeper location
+//                switch (rs.getSchematic()) {
+//                    // TODO - Find out how far away the bedrock block is
+//                    case REDSTONE:
+//                        plusy = 18;
+//                        break;
+//                    case ELEVENTH:
+//                        plusy = 17;
+//                        break;
+//                    case DELUXE:
+//                        plusy = 16;
+//                        break;
+//                    case BIGGER:
+//                        plusy = 13;
+//                        break;
+//                    default: // BUDGET & STEAMPUNK
+//                        plusy = 12;
+//                        break;
+//                }
+//                String creeper = rs.getCreeper();
+//                beaconData = creeper.split(":");
+//            } else {
+//                beaconData = beacon.split(":");
+//            }
+//            World w = plugin.getServer().getWorld(beaconData[0]);
+//            int bx = plugin.getUtils().parseInt(beaconData[1]);
+//            int by = plugin.getUtils().parseInt(beaconData[2]) + plusy;
+//            int bz = plugin.getUtils().parseInt(beaconData[3]);
+//            if (beacon.isEmpty()) {
+//                // update the tardis table so we don't have to do this again
+//                String beacon_loc = beaconData[0] + ":" + beaconData[1] + ":" + by + ":" + beaconData[3];
+//                HashMap<String, Object> set = new HashMap<String, Object>();
+//                set.put("beacon", beacon_loc);
+//                HashMap<String, Object> where = new HashMap<String, Object>();
+//                where.put("tardis_id", rs.getTardis_id());
+//                new QueryFactory(plugin).doUpdate("tardis", set, where);
+//            }
+//            Location bl = new Location(w, bx, by, bz);
+//            Block b = bl.getBlock();
+//            b.setTypeId((on) ? 20 : 7);
+//        }
+//    }
 }

@@ -25,7 +25,7 @@ import java.util.HashMap;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.ResultSetCurrentLocation;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
-import me.eccentric_nz.TARDIS.enumeration.MESSAGE;
+import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import org.bukkit.command.CommandSender;
 
 /**
@@ -53,10 +53,10 @@ public class TARDISListTardisesCommand {
                         wherecl.put("tardis_id", plugin.getUtils().parseInt(map.get("tardis_id")));
                         ResultSetCurrentLocation rsc = new ResultSetCurrentLocation(plugin, wherecl);
                         if (!rsc.resultSet()) {
-                            sender.sendMessage(plugin.getPluginName() + MESSAGE.NO_CURRENT.getText());
+                            TARDISMessage.send(sender, "CURRENT_NOT_FOUND");
                             return true;
                         }
-                        String line = "Timelord: " + map.get("owner") + ", Location: " + rsc.getWorld().getName() + ":" + rsc.getX() + ":" + rsc.getY() + ":" + rsc.getZ();
+                        String line = "Time Lord: " + map.get("owner") + ", Location: " + rsc.getWorld().getName() + ":" + rsc.getX() + ":" + rsc.getY() + ":" + rsc.getZ();
                         bw.write(line);
                         bw.newLine();
                     }
@@ -65,7 +65,7 @@ public class TARDISListTardisesCommand {
                     plugin.debug("Could not create and write to TARDIS_list.txt! " + e.getMessage());
                 }
             }
-            sender.sendMessage(plugin.getPluginName() + "File saved to 'plugins/TARDIS/TARDIS_list.txt'");
+            TARDISMessage.send(sender, "FILE_SAVED");
             return true;
         } else {
             // get all tardis positions - max 18
@@ -78,21 +78,21 @@ public class TARDISListTardisesCommand {
             String limit = start + ", " + end;
             ResultSetTardis rsl = new ResultSetTardis(plugin, null, limit, true);
             if (rsl.resultSet()) {
-                sender.sendMessage(plugin.getPluginName() + "TARDIS locations.");
+                TARDISMessage.send(sender, "TARDIS_LOCS");
                 ArrayList<HashMap<String, String>> data = rsl.getData();
                 for (HashMap<String, String> map : data) {
                     HashMap<String, Object> wherecl = new HashMap<String, Object>();
                     wherecl.put("tardis_id", plugin.getUtils().parseInt(map.get("tardis_id")));
                     ResultSetCurrentLocation rsc = new ResultSetCurrentLocation(plugin, wherecl);
                     if (!rsc.resultSet()) {
-                        sender.sendMessage(plugin.getPluginName() + MESSAGE.NO_CURRENT.getText());
+                        TARDISMessage.send(sender, "CURRENT_NOT_FOUND");
                         return true;
                     }
-                    sender.sendMessage("Timelord: " + map.get("owner") + ", Location: " + rsc.getWorld().getName() + ":" + rsc.getX() + ":" + rsc.getY() + ":" + rsc.getZ());
+                    sender.sendMessage("Time Lord: " + map.get("owner") + ", Location: " + rsc.getWorld().getName() + ":" + rsc.getX() + ":" + rsc.getY() + ":" + rsc.getZ());
                 }
-                sender.sendMessage(plugin.getPluginName() + "To see more locations, type: /tardisadmin list 2,  /tardisadmin list 3 etc.");
+                TARDISMessage.send(sender, "TARDIS_LOCS_INFO");
             } else {
-                sender.sendMessage(plugin.getPluginName() + "There are no more records to display.");
+                TARDISMessage.send(sender, "TARDIS_LOCS_NONE");
             }
             return true;
         }

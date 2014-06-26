@@ -69,7 +69,7 @@ public class TARDISJettisonSeeder implements Listener {
         String playerNameStr = player.getName();
         UUID uuid = player.getUniqueId();
         // check that player is in TARDIS
-        if (!plugin.getTrackerKeeper().getTrackJettison().containsKey(uuid)) {
+        if (!plugin.getTrackerKeeper().getJettison().containsKey(uuid)) {
             return;
         }
         Block block = event.getClickedBlock();
@@ -87,12 +87,12 @@ public class TARDISJettisonSeeder implements Listener {
             }
             // only proceed if they are clicking a seed block with the TARDIS key!
             if (blockType.equals(Material.getMaterial(plugin.getArtronConfig().getString("jettison_seed"))) && inhand.equals(Material.getMaterial(key))) {
-                String r = plugin.getTrackerKeeper().getTrackJettison().get(uuid);
+                String r = plugin.getTrackerKeeper().getJettison().get(uuid);
                 // get jettison direction
                 TARDISRoomDirection trd = new TARDISRoomDirection(block);
                 trd.getDirection();
                 if (!trd.isFound()) {
-                    TARDISMessage.send(player, plugin.getPluginName() + "Could not find the door pressure plate! Check the seed block position.");
+                    TARDISMessage.send(player, "PLATE_NOT_FOUND");
                     return;
                 }
                 COMPASS d = trd.getCompass();
@@ -107,7 +107,7 @@ public class TARDISJettisonSeeder implements Listener {
                     int id = rs.getTardis_id();
                     TARDISRoomRemover remover = new TARDISRoomRemover(plugin, r, l, d, id);
                     if (remover.remove()) {
-                        plugin.getTrackerKeeper().getTrackJettison().remove(uuid);
+                        plugin.getTrackerKeeper().getJettison().remove(uuid);
                         block.setType(Material.AIR);
                         l.getWorld().playEffect(l, Effect.POTION_BREAK, 9);
                         // ok they clicked it, so give them their energy!
@@ -124,22 +124,10 @@ public class TARDISJettisonSeeder implements Listener {
                             del.put("secondary", secondary);
                             qf.doDelete("controls", del);
                         }
-//                        if (r.equals("FARM")) {
-//                            // remove WorldGuard allow mob spawning
-//                            plugin.getWorldGuardUtils().removeRoomRegion(l.getWorld(), playerNameStr, "farm");
-//                        }
                         if (r.equals("RENDERER")) {
                             // remove WorldGuard protection
                             plugin.getWorldGuardUtils().removeRoomRegion(l.getWorld(), playerNameStr, "renderer");
                         }
-//                        if (r.equals("STABLE")) {
-//                            // remove WorldGuard allow mob spawning
-//                            plugin.getWorldGuardUtils().removeRoomRegion(l.getWorld(), playerNameStr, "stable");
-//                        }
-//                        if (r.equals("VILLAGE")) {
-//                            // remove WorldGuard allow mob spawning
-//                            plugin.getWorldGuardUtils().removeRoomRegion(l.getWorld(), playerNameStr, "village");
-//                        }
                         if (plugin.getConfig().getBoolean("growth.return_room_seed")) {
                             // give the player back the room seed block
                             ItemStack is = new ItemStack(Material.getMaterial(plugin.getRoomsConfig().getString("rooms." + r + ".seed")));
@@ -147,12 +135,12 @@ public class TARDISJettisonSeeder implements Listener {
                             inv.addItem(is);
                             player.updateInventory();
                         }
-                        TARDISMessage.send(player, plugin.getPluginName() + "You added " + amount + " to the Artron Energy Capacitor");
+                        TARDISMessage.send(player, "ENERGY_AMOUNT", String.format("%d", amount));
                     } else {
-                        TARDISMessage.send(player, plugin.getPluginName() + "The room has already been jettisoned!");
+                        TARDISMessage.send(player, "ROOM_HAS_JETT");
                     }
                 } else {
-                    TARDISMessage.send(player, plugin.getPluginName() + "Could not get TARDIS id!");
+                    TARDISMessage.send(player, "ID_NOT_FOUND");
                 }
             }
         }

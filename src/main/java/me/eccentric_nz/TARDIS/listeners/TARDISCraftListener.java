@@ -20,7 +20,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.enumeration.MESSAGE;
 import me.eccentric_nz.TARDIS.rooms.TARDISWallsLookup;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import org.bukkit.DyeColor;
@@ -61,6 +60,7 @@ public class TARDISCraftListener implements Listener {
         t.put(Material.QUARTZ_BLOCK, "ARS"); // ARS
         t.put(Material.LAPIS_BLOCK, "TOM"); // tom baker
         t.put(Material.BOOKSHELF, "PLANK"); // plank
+        t.put(Material.STAINED_CLAY, "WAR"); // war doctor
         t.put(Material.valueOf(this.plugin.getConfig().getString("creation.custom_schematic_seed")), "CUSTOM"); // custom
         for (Integer i : plugin.getBlocksConfig().getIntegerList("chameleon_blocks")) {
             c.add(i);
@@ -129,11 +129,11 @@ public class TARDISCraftListener implements Listener {
                             is.setItemMeta(im);
                             Player player = (Player) event.getWhoClicked();
                             if (checkPerms(player, m7)) {
-                                TARDISMessage.send(player, plugin.getPluginName() + "Valid seed block :)");
+                                TARDISMessage.send(player, "SEED_VALID");
                                 inv.setItem(0, is);
                                 player.updateInventory();
                             } else {
-                                TARDISMessage.send(player, plugin.getPluginName() + MESSAGE.NO_PERMS.getText());
+                                TARDISMessage.send(player, "NO_PERMS");
                             }
                         }
                     }

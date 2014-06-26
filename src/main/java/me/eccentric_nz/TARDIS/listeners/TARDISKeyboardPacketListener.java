@@ -91,11 +91,11 @@ public class TARDISKeyboardPacketListener implements Listener {
                     tcc.getCircuits();
                 }
                 if (tcc != null && !tcc.hasInput()) {
-                    TARDISMessage.send(player, plugin.getPluginName() + "The Input Circuit is missing from the console!");
+                    TARDISMessage.send(player, "INPUT_MISSING");
                     return;
                 }
                 Sign sign = (Sign) b.getState();
-                plugin.getTrackerKeeper().getTrackSign().put(loc, sign);
+                plugin.getTrackerKeeper().getSign().put(loc, sign);
                 displaySignEditor(player, b);
             }
         }

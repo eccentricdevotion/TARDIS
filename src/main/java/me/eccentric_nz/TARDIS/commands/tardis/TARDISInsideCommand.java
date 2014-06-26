@@ -22,7 +22,6 @@ import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import me.eccentric_nz.TARDIS.database.ResultSetTravellers;
-import me.eccentric_nz.TARDIS.enumeration.MESSAGE;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import org.bukkit.entity.Player;
 
@@ -44,7 +43,7 @@ public class TARDISInsideCommand {
         where.put("uuid", player.getUniqueId().toString());
         ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);
         if (!rs.resultSet()) {
-            TARDISMessage.send(player, plugin.getPluginName() + MESSAGE.NOT_A_TIMELORD.getText());
+            TARDISMessage.send(player, "NOT_A_TIMELORD");
             return true;
         }
         int id = rs.getTardis_id();
@@ -53,12 +52,12 @@ public class TARDISInsideCommand {
         ResultSetTravellers rst = new ResultSetTravellers(plugin, wheret, true);
         if (rst.resultSet()) {
             List<UUID> data = rst.getData();
-            TARDISMessage.send(player, plugin.getPluginName() + "The players inside your TARDIS are:");
+            TARDISMessage.send(player, "INSIDE_PLAYERS");
             for (UUID s : data) {
-                TARDISMessage.send(player, plugin.getServer().getPlayer(s).getDisplayName());
+                player.sendMessage(plugin.getServer().getPlayer(s).getDisplayName());
             }
         } else {
-            TARDISMessage.send(player, plugin.getPluginName() + "Nobody is inside your TARDIS.");
+            TARDISMessage.send(player, "INSIDE");
         }
         return true;
     }

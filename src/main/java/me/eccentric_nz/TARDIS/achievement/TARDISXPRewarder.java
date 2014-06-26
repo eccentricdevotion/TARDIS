@@ -157,7 +157,7 @@ public class TARDISXPRewarder {
     public int getCurrentExp() {
         Player player = getPlayer();
         int lvl = player.getLevel();
-        int cur = getXpForLevel(lvl) + (int) Math.round(xpRequiredForNextLevel[lvl] * player.getExp());
+        int cur = getXpForLevel(lvl) + Math.round(xpRequiredForNextLevel[lvl] * player.getExp());
         return cur;
     }
 

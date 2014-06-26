@@ -19,9 +19,8 @@ package me.eccentric_nz.TARDIS.commands.admin;
 import com.google.common.collect.ImmutableList;
 import java.util.Locale;
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.enumeration.MESSAGE;
+import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import me.eccentric_nz.TARDIS.utility.TARDISWorldGuardFlag;
-import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
 
 /**
@@ -43,24 +42,24 @@ public class TARDISSetRespectCommand {
     public boolean setRegion(CommandSender sender, String[] args) {
         String region = args[1].toLowerCase(Locale.ENGLISH);
         if (!regions.contains(region)) {
-            sender.sendMessage(plugin.getPluginName() + ChatColor.RED + "The last argument must be none, wilderness, town or nation!");
+            TARDISMessage.send(sender, "ARG_TOWNY");
             return false;
         }
         plugin.getConfig().set("preferences.respect_towny", region);
         plugin.saveConfig();
-        sender.sendMessage(plugin.getPluginName() + MESSAGE.CONFIG_UPDATED.getText());
+        TARDISMessage.send(sender, "CONFIG_UPDATED");
         return true;
     }
 
     public boolean setFlag(CommandSender sender, String[] args) {
         String flag = args[1].toLowerCase(Locale.ENGLISH);
         if (!flags.contains(flag)) {
-            sender.sendMessage(plugin.getPluginName() + ChatColor.RED + "The last argument must be a WorldGuard flag!");
+            TARDISMessage.send(sender, "ARG_FLAG");
             return false;
         }
         plugin.getConfig().set("preferences.respect_worldguard", flag);
         plugin.saveConfig();
-        sender.sendMessage(plugin.getPluginName() + MESSAGE.CONFIG_UPDATED.getText());
+        TARDISMessage.send(sender, "CONFIG_UPDATED");
         return true;
     }
 }

@@ -21,8 +21,7 @@ import java.io.IOException;
 import java.util.Arrays;
 import java.util.Locale;
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.enumeration.MESSAGE;
-import org.bukkit.ChatColor;
+import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import org.bukkit.Material;
 import org.bukkit.command.CommandSender;
 
@@ -42,12 +41,12 @@ public class TARDISSetMaterialCommand {
         String first = (section.isEmpty()) ? args[0].toLowerCase() : section + "." + args[0].toLowerCase();
         String setMaterial = args[1].toUpperCase(Locale.ENGLISH);
         if (!checkMaterial(setMaterial)) {
-            sender.sendMessage(plugin.getPluginName() + ChatColor.RED + MESSAGE.NOT_VALID_MATERIAL.getText());
+            TARDISMessage.send(sender, "MATERIAL_NOT_VALID");
             return false;
         } else {
             plugin.getConfig().set(first, setMaterial);
             plugin.saveConfig();
-            sender.sendMessage(plugin.getPluginName() + MESSAGE.CONFIG_UPDATED.getText());
+            TARDISMessage.send(sender, "CONFIG_UPDATED");
             return true;
         }
     }
@@ -56,7 +55,7 @@ public class TARDISSetMaterialCommand {
         String first = args[0].toLowerCase();
         String setMaterial = args[1].toUpperCase(Locale.ENGLISH);
         if (!checkMaterial(setMaterial)) {
-            sender.sendMessage(plugin.getPluginName() + ChatColor.RED + MESSAGE.NOT_VALID_MATERIAL.getText());
+            TARDISMessage.send(sender, "MATERIAL_NOT_VALID");
             return false;
         } else {
             plugin.getArtronConfig().set(first, setMaterial);
@@ -65,7 +64,7 @@ public class TARDISSetMaterialCommand {
             } catch (IOException io) {
                 plugin.debug("Could not save artron.yml, " + io);
             }
-            sender.sendMessage(plugin.getPluginName() + MESSAGE.CONFIG_UPDATED.getText());
+            TARDISMessage.send(sender, "CONFIG_UPDATED");
             return true;
         }
     }

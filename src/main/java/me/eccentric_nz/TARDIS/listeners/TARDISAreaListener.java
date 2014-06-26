@@ -59,35 +59,35 @@ public class TARDISAreaListener implements Listener {
         final UUID uuid = player.getUniqueId();
         Block block = event.getClickedBlock();
         if (block != null) {
-            if (plugin.getTrackerKeeper().getTrackUUID().containsKey(uuid) && !plugin.getTrackerKeeper().getTrackBlock().containsKey(uuid)) {
+            if (plugin.getTrackerKeeper().getArea().containsKey(uuid) && !plugin.getTrackerKeeper().getBlock().containsKey(uuid)) {
                 Location block_loc = block.getLocation();
                 // check if block is in an already defined area
                 if (plugin.getTardisArea().areaCheckInExisting(block_loc)) {
                     String locStr = block_loc.getWorld().getName() + ":" + block_loc.getBlockX() + ":" + block_loc.getBlockY() + ":" + block_loc.getBlockZ();
-                    plugin.getTrackerKeeper().getTrackBlock().put(uuid, locStr);
-                    TARDISMessage.send(player, plugin.getPluginName() + "You have 60 seconds to select the area end block - use the " + ChatColor.GREEN + "/tardisarea end" + ChatColor.RESET + " command.");
+                    plugin.getTrackerKeeper().getBlock().put(uuid, locStr);
+                    TARDISMessage.send(player, "AREA_END_INFO", ChatColor.GREEN + "/tardisarea end" + ChatColor.RESET + " command.");
                     plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
                         @Override
                         public void run() {
-                            plugin.getTrackerKeeper().getTrackUUID().remove(uuid);
-                            plugin.getTrackerKeeper().getTrackBlock().remove(uuid);
+                            plugin.getTrackerKeeper().getArea().remove(uuid);
+                            plugin.getTrackerKeeper().getBlock().remove(uuid);
                         }
                     }, 1200L);
                 } else {
-                    TARDISMessage.send(player, plugin.getPluginName() + "That block is inside an already defined area! Try somewhere else.");
+                    TARDISMessage.send(player, "AREA_INSIDE");
                 }
-            } else if (plugin.getTrackerKeeper().getTrackBlock().containsKey(uuid) && plugin.getTrackerKeeper().getTrackEnd().containsKey(uuid)) {
+            } else if (plugin.getTrackerKeeper().getBlock().containsKey(uuid) && plugin.getTrackerKeeper().getEnd().containsKey(uuid)) {
                 Location block_loc = block.getLocation();
                 // check if block is in an already defined area
                 if (plugin.getTardisArea().areaCheckInExisting(block_loc)) {
-                    String[] firstblock = plugin.getTrackerKeeper().getTrackBlock().get(uuid).split(":");
+                    String[] firstblock = plugin.getTrackerKeeper().getBlock().get(uuid).split(":");
                     if (!block_loc.getWorld().getName().equals(firstblock[0])) {
-                        TARDISMessage.send(player, plugin.getPluginName() + ChatColor.RED + "Area start and end blocks must be in the same world! Try again");
+                        TARDISMessage.send(player, "AREA_WORLD");
                         return;
                     }
                     int y = block_loc.getBlockY();
                     if (y != (plugin.getUtils().parseInt(firstblock[2]))) {
-                        TARDISMessage.send(player, plugin.getPluginName() + ChatColor.RED + "Area start and end blocks must be at the same Y co-ordinate! Try again with a FLAT area.");
+                        TARDISMessage.send(player, "AREA_Y");
                         return;
                     }
                     int minx, minz, maxx, maxz;
@@ -105,7 +105,7 @@ public class TARDISAreaListener implements Listener {
                         minz = block_loc.getBlockZ();
                         maxz = plugin.getUtils().parseInt(firstblock[3]);
                     }
-                    String n = plugin.getTrackerKeeper().getTrackUUID().get(uuid);
+                    String n = plugin.getTrackerKeeper().getArea().get(uuid);
                     QueryFactory qf = new QueryFactory(plugin);
                     HashMap<String, Object> set = new HashMap<String, Object>();
                     set.put("area_name", n);
@@ -116,12 +116,12 @@ public class TARDISAreaListener implements Listener {
                     set.put("maxz", maxz);
                     set.put("y", y + 1);
                     qf.doInsert("areas", set);
-                    TARDISMessage.send(player, plugin.getPluginName() + "The area [" + plugin.getTrackerKeeper().getTrackUUID().get(uuid) + "] was saved successfully");
-                    plugin.getTrackerKeeper().getTrackUUID().remove(uuid);
-                    plugin.getTrackerKeeper().getTrackBlock().remove(uuid);
-                    plugin.getTrackerKeeper().getTrackEnd().remove(uuid);
+                    TARDISMessage.send(player, "AREA_SAVED", plugin.getTrackerKeeper().getArea().get(uuid));
+                    plugin.getTrackerKeeper().getArea().remove(uuid);
+                    plugin.getTrackerKeeper().getBlock().remove(uuid);
+                    plugin.getTrackerKeeper().getEnd().remove(uuid);
                 } else {
-                    TARDISMessage.send(player, plugin.getPluginName() + "That block is inside an already defined area! Try somewhere else.");
+                    TARDISMessage.send(player, "AREA_INSIDE");
                 }
             }
         }

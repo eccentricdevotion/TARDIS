@@ -41,6 +41,9 @@ public class TARDISAdminTabComplete implements TabCompleter {
     private final ImmutableList<String> FLAG_SUBS;
     private final ImmutableList<String> CONFIG_SUBS = ImmutableList.of("worlds", "rechargers", "storage", "creation", "police_box", "travel", "preferences", "allow", "growth", "rooms");
     private final ImmutableList<String> COLOURS = ImmutableList.of("AQUA", "BLACK", "BLUE", "DARK_AQUA", "DARK_BLUE", "DARK_GRAY", "DARK_GREEN", "DARK_PURPLE", "DARK_RED", "GOLD", "GRAY", "GREEN", "LIGHT_PURPLE", "RED", "WHITE", "YELLOW");
+    private final ImmutableList<String> SONICS = ImmutableList.of("mark_1", "mark_2", "mark_3", "mark_4", "eighth", "ninth", "ninth_open", "tenth", "tenth_open", "eleventh", "eleventh_open", "master", "sarah_jane", "river_song", "war");
+    private final ImmutableList<String> KEYS = ImmutableList.of("first", "second", "third", "fifth", "seventh", "ninth", "tenth", "eleventh", "susan", "rose", "sally", "perception", "gold");
+    private final ImmutableList<String> LANG_SUBS = ImmutableList.of("ar", "bg", "ca", "zh", "cs", "da", "nl", "en", "et", "fi", "fr", "de", "el", "ht", "he", "hi", "mww", "hu", "id", "it", "ja", "ko", "lv", "lt", "ms", "no", "fa", "pl", "pt", "ro", "ru", "sk", "sl", "es", "sv", "th", "tr", "uk", "ur", "vi");
 
     public TARDISAdminTabComplete(TARDIS plugin) {
         this.plugin = plugin;
@@ -73,8 +76,17 @@ public class TARDISAdminTabComplete implements TabCompleter {
             if (sub.equals("sign_colour")) {
                 return partial(lastArg, COLOURS);
             }
+            if (sub.equals("default_key")) {
+                return partial(lastArg, KEYS);
+            }
+            if (sub.equals("default_sonic")) {
+                return partial(lastArg, SONICS);
+            }
             if (sub.equals("database")) {
                 return partial(lastArg, DB_SUBS);
+            }
+            if (sub.equals("language")) {
+                return partial(lastArg, LANG_SUBS);
             }
             if (sub.equals("tips_limit")) {
                 return partial(lastArg, TIPS_SUBS);

@@ -16,13 +16,13 @@
  */
 package me.eccentric_nz.TARDIS.commands.preferences;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Locale;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
-import me.eccentric_nz.TARDIS.enumeration.MESSAGE;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
-import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 
@@ -33,22 +33,38 @@ import org.bukkit.entity.Player;
 public class TARDISSetKeyCommand {
 
     private final TARDIS plugin;
+    private final List<Material> keys = new ArrayList<Material>();
 
     public TARDISSetKeyCommand(TARDIS plugin) {
         this.plugin = plugin;
+        for (String m : plugin.getBlocksConfig().getStringList("keys")) {
+            try {
+                keys.add(Material.valueOf(m));
+            } catch (IllegalArgumentException e) {
+            }
+        }
     }
 
     public boolean setKeyPref(Player player, String[] args, QueryFactory qf) {
         if (args.length < 2) {
-            TARDISMessage.send(player, plugin.getPluginName() + "You need to specify a key item!");
+            TARDISMessage.send(player, "KEY_NEED");
             return false;
         }
         String setMaterial = args[1].toUpperCase(Locale.ENGLISH);
+        Material go;
         try {
-            Material go = Material.valueOf(setMaterial);
+            go = Material.valueOf(setMaterial);
         } catch (IllegalArgumentException e) {
-            TARDISMessage.send(player, plugin.getPluginName() + ChatColor.RED + MESSAGE.NOT_VALID_MATERIAL.getText());
+            TARDISMessage.send(player, "MATERIAL_NOT_VALID");
             return false;
+        }
+        if (go.isBlock()) {
+            TARDISMessage.send(player, "KEY_NO_BLOCK");
+            return true;
+        }
+        if (plugin.getConfig().getBoolean("travel.give_key") && !plugin.getConfig().getBoolean("allow.all_blocks") && !keys.contains(go)) {
+            TARDISMessage.send(player, "MATERIAL_NOT_VALID");
+            return true;
         }
         String field = (plugin.getConfig().getString("storage.database").equals("sqlite")) ? "key" : "key_item";
         HashMap<String, Object> setk = new HashMap<String, Object>();
@@ -56,7 +72,7 @@ public class TARDISSetKeyCommand {
         HashMap<String, Object> where = new HashMap<String, Object>();
         where.put("uuid", player.getUniqueId().toString());
         qf.doUpdate("player_prefs", setk, where);
-        TARDISMessage.send(player, plugin.getPluginName() + "Key preference saved.");
+        TARDISMessage.send(player, "KEY_SAVED");
         return true;
     }
 }

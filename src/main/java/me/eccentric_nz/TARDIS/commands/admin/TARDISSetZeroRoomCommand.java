@@ -19,8 +19,7 @@ package me.eccentric_nz.TARDIS.commands.admin;
 import java.util.Locale;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.builders.TARDISSpace;
-import me.eccentric_nz.TARDIS.enumeration.MESSAGE;
-import org.bukkit.ChatColor;
+import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import org.bukkit.command.CommandSender;
 
 /**
@@ -39,16 +38,16 @@ public class TARDISSetZeroRoomCommand {
         // check they typed true of false
         String tf = args[1].toLowerCase(Locale.ENGLISH);
         if (!tf.equals("true") && !tf.equals("false")) {
-            sender.sendMessage(plugin.getPluginName() + ChatColor.RED + "The last argument must be true or false!");
+            TARDISMessage.send(sender, "TRUE_FALSE");
             return false;
         }
         plugin.getConfig().set("allow.zero_room", Boolean.valueOf(tf));
         plugin.saveConfig();
-        sender.sendMessage(plugin.getPluginName() + MESSAGE.CONFIG_UPDATED.getText());
+        TARDISMessage.send(sender, "CONFIG_UPDATED");
         if (tf.equals("true") && plugin.getServer().getWorld("TARDIS_Zero_Room") == null) {
-            sender.sendMessage(plugin.getPluginName() + "The TARDIS_Zero_Room does not exist, attempting to create it!");
+            TARDISMessage.send(sender, "ZERO_CREATE");
             new TARDISSpace(plugin).createDefaultWorld("TARDIS_Zero_Room");
-            sender.sendMessage(plugin.getPluginName() + "A server restart is also required to enable Zero room isolation and healing.");
+            TARDISMessage.send(sender, "ZERO_RESTART");
         }
         return true;
     }

@@ -32,6 +32,7 @@ import org.bukkit.Chunk;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
+import org.bukkit.block.Biome;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 import org.bukkit.entity.Player;
@@ -122,13 +123,13 @@ public class TARDISRoomRunnable implements Runnable {
             if (room.equals("GRAVITY") || room.equals("ANTIGRAVITY")) {
                 grammar += " WELL";
             }
-            TARDISMessage.send(p, plugin.getPluginName() + "Started growing " + grammar + "...");
+            TARDISMessage.send(p, "ROOM_START", grammar);
         }
         String tmp;
         if (level == h && row == w && col == (c - 1)) {
             // the entire schematic has been read :)
             if (iceblocks.size() > 0) {
-                TARDISMessage.send(p, plugin.getPluginName() + "Melting the ice!");
+                TARDISMessage.send(p, "ICE");
                 // set all the ice to water
                 for (Block ice : iceblocks) {
                     ice.setTypeId(9);
@@ -165,7 +166,7 @@ public class TARDISRoomRunnable implements Runnable {
                 doorblocks.clear();
             }
             // update lamp block states
-            TARDISMessage.send(p, plugin.getPluginName() + "Turning on the power!");
+            TARDISMessage.send(p, "ROOM_POWER");
             for (Block lamp : lampblocks) {
                 lamp.setType(Material.REDSTONE_LAMP_ON);
             }
@@ -185,6 +186,10 @@ public class TARDISRoomRunnable implements Runnable {
             // remove the chunks, so they can unload as normal again
             if (chunkList.size() > 0) {
                 for (Chunk ch : chunkList) {
+                    if (plugin.getConfig().getBoolean("creation.sky_biome")) {
+                        // refesh the cunk so ctm textures show
+                        world.refreshChunk(ch.getX(), ch.getZ());
+                    }
                     plugin.getGeneralKeeper().getRoomChunkList().remove(ch);
                 }
             }
@@ -192,7 +197,7 @@ public class TARDISRoomRunnable implements Runnable {
             plugin.getServer().getScheduler().cancelTask(task);
             task = 0;
             String rname = (room.equals("GRAVITY") || room.equals("ANTIGRAVITY")) ? room + " WELL" : room;
-            TARDISMessage.send(p, plugin.getPluginName() + "Finished growing the " + rname + "!");
+            TARDISMessage.send(p, "ROOM_FINISHED", rname);
         } else {
             // place one block
             tmp = s[level][row][col];
@@ -265,12 +270,6 @@ public class TARDISRoomRunnable implements Runnable {
                 // replace with floor material
                 id = (floor_id == 35 && floor_data == 8 && plugin.getConfig().getBoolean("creation.use_clay")) ? 159 : floor_id;
                 data = floor_data;
-                // add WorldGuard region that allows spawn eggs
-//                if (plugin.isWorldGuardOnServer() && plugin.getConfig().getBoolean("preferences.use_worldguard")) {
-//                    Location one = new Location(world, startx - 6, starty, startz - 6);
-//                    Location two = new Location(world, startx + 6, starty + 8, startz + 6);
-//                    plugin.getWorldGuardUtils().addAllowSpawning(p.getName(), "farm", one, two);
-//                }
             }
             // set lazarus
             if (id == 72 && room.equals("LAZARUS")) {
@@ -289,22 +288,10 @@ public class TARDISRoomRunnable implements Runnable {
                     case VILLAGE:
                         id = 4;
                         data = 0;
-                        // add WorldGuard region that allows spawn eggs
-//                        if (plugin.isWorldGuardOnServer() && plugin.getConfig().getBoolean("preferences.use_worldguard")) {
-//                            Location one = new Location(world, startx - 6, starty, startz - 6);
-//                            Location two = new Location(world, startx + 6, starty + 8, startz + 6);
-//                            plugin.getWorldGuardUtils().addAllowSpawning(p.getName(), "village", one, two);
-//                        }
                         break;
                     case STABLE:
                         id = 2;
                         data = 0;
-                        // add WorldGuard region that allows spawn eggs
-//                        if (plugin.isWorldGuardOnServer() && plugin.getConfig().getBoolean("preferences.use_worldguard")) {
-//                            Location one = new Location(world, startx - 6, starty, startz - 6);
-//                            Location two = new Location(world, startx + 6, starty + 8, startz + 6);
-//                            plugin.getWorldGuardUtils().addAllowSpawning(p.getName(), "stable", one, two);
-//                        }
                         break;
                     case ZERO:
                         id = 171;
@@ -421,6 +408,10 @@ public class TARDISRoomRunnable implements Runnable {
             if (!plugin.getGeneralKeeper().getRoomChunkList().contains(thisChunk)) {
                 plugin.getGeneralKeeper().getRoomChunkList().add(thisChunk);
                 chunkList.add(thisChunk);
+            }
+            // if we're setting the biome to sky, do it now
+            if (plugin.getConfig().getBoolean("creation.sky_biome") && level == 0) {
+                world.setBiome(startx, startz, Biome.SKY);
             }
             if (id != 83 && id != 127 && id != 64 && id != 50 && id != 76 && id != 34 && !(id == 100 && data == (byte) 15)) {
                 if (id == 9) {

@@ -23,8 +23,10 @@ import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetChunks;
 import me.eccentric_nz.TARDIS.database.ResultSetDiskStorage;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
+import me.eccentric_nz.TARDIS.enumeration.COMPASS;
 import me.eccentric_nz.TARDIS.enumeration.SCHEMATIC;
 import me.eccentric_nz.tardischunkgenerator.TARDISChunkGenerator;
+import org.bukkit.ChatColor;
 import org.bukkit.Chunk;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -32,6 +34,7 @@ import org.bukkit.World;
 import org.bukkit.WorldType;
 import org.bukkit.block.Biome;
 import org.bukkit.block.Block;
+import org.bukkit.block.BlockFace;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
@@ -65,6 +68,7 @@ public class TARDISUtils {
      * @param m the typeId to set the block to.
      * @param d the data bit to set the block to.
      */
+    @SuppressWarnings("deprecation")
     public void setBlock(World w, int x, int y, int z, int m, byte d) {
         final Block b = w.getBlockAt(x, y, z);
         if (m < 0) {
@@ -128,11 +132,15 @@ public class TARDISUtils {
      * @param m the typeId to set the block to.
      * @param d the data bit to set the block to.
      * @param id the TARDIS this block belongs to.
+     * @param portal whether a chest can be in the portal block location
      */
     @SuppressWarnings("deprecation")
-    public void setUnderDoorBlock(World w, int x, int y, int z, int m, byte d, int id) {
+    public void setUnderDoorBlock(World w, int x, int y, int z, int m, byte d, int id, boolean portal) {
         // List of blocks that a door cannot be placed on
         List<Integer> ids = plugin.getBlocksConfig().getIntegerList("under_door_blocks");
+        if (portal) {
+            ids.remove(Integer.valueOf(54));
+        }
         Block b = w.getBlockAt(x, y, z);
         int bid = b.getTypeId();
         if (ids.contains(bid)) {
@@ -241,6 +249,9 @@ public class TARDISUtils {
                 break;
             case ARS:
                 d = plugin.getBuildKeeper().getARSDimensions();
+                break;
+            case WAR:
+                d = plugin.getBuildKeeper().getWarDimensions();
                 break;
             case CUSTOM:
                 d = plugin.getBuildKeeper().getCustomDimensions();
@@ -439,7 +450,11 @@ public class TARDISUtils {
         World room_world = plugin.getServer().getWorld(data[0]);
         ChunkGenerator gen = room_world.getGenerator();
         WorldType wt = room_world.getWorldType();
-        boolean special = (data[0].contains("TARDIS_TimeVortex") && (wt.equals(WorldType.FLAT) || gen instanceof TARDISChunkGenerator));
+        String dn = "TARDIS_TimeVortex";
+        if (plugin.getConfig().getBoolean("creation.default_world")) {
+            dn = plugin.getConfig().getString("creation.default_world_name");
+        }
+        boolean special = (data[0].equals(dn) && (wt.equals(WorldType.FLAT) || gen instanceof TARDISChunkGenerator));
         return (data[0].contains("TARDIS_WORLD_") || special);
     }
 
@@ -467,12 +482,15 @@ public class TARDISUtils {
      * handbrake
      * @param s The sound to play
      */
+    @SuppressWarnings("deprecation")
     public void playTARDISSound(Location l, Player p, String s) {
-        p.playSound(l, s, volume, 1.0F);
-        for (Entity e : p.getNearbyEntities(10.0d, 10.0d, 10.0d)) {
-            if (e instanceof Player && !((Player) e).equals(p)) {
-                Player pp = (Player) e;
-                pp.playSound(pp.getLocation(), s, volume, 1.0f);
+        if (p != null) {
+            p.playSound(l, s, volume, 1.0F);
+            for (Entity e : p.getNearbyEntities(10.0d, 10.0d, 10.0d)) {
+                if (e instanceof Player && !((Player) e).equals(p)) {
+                    Player pp = (Player) e;
+                    pp.playSound(pp.getLocation(), s, volume, 1.0f);
+                }
             }
         }
     }
@@ -606,7 +624,12 @@ public class TARDISUtils {
         World world = player.getLocation().getWorld();
         String name = world.getName();
         ChunkGenerator gen = world.getGenerator();
-        boolean special = (name.contains("TARDIS_TimeVortex") && (world.getWorldType().equals(WorldType.FLAT) || gen instanceof TARDISChunkGenerator));
+        // get default world name
+        String dn = "TARDIS_TimeVortex";
+        if (plugin.getConfig().getBoolean("creation.default_world")) {
+            dn = plugin.getConfig().getString("creation.default_world_name");
+        }
+        boolean special = (name.equals(dn) && (world.getWorldType().equals(WorldType.FLAT) || gen instanceof TARDISChunkGenerator));
         return name.equals("TARDIS_WORLD_" + player.getName()) || special;
     }
 
@@ -629,5 +652,95 @@ public class TARDISUtils {
             setj.put("tardis_id", id);
             qf.doUpdate("storage", setj, wherej);
         }
+    }
+
+    /**
+     * Checks whether a door is open.
+     *
+     * @param door_bottom the bottom door block
+     * @param dd the direction the door is facing
+     * @return true or false
+     */
+    @SuppressWarnings("deprecation")
+    public boolean isOpen(Block door_bottom, COMPASS dd) {
+        byte door_data = door_bottom.getData();
+        switch (dd) {
+            case NORTH:
+                if (door_data == 7) {
+                    return true;
+                }
+                break;
+            case WEST:
+                if (door_data == 6) {
+                    return true;
+                }
+                break;
+            case SOUTH:
+                if (door_data == 5) {
+                    return true;
+                }
+                break;
+            default:
+                if (door_data == 4) {
+                    return true;
+                }
+                break;
+        }
+        return false;
+    }
+
+    /**
+     * Gets the chat colour to use on the Ploice Box sign.
+     *
+     * @return the configured chat colour
+     */
+    public ChatColor getSignColour() {
+        ChatColor colour;
+        String cc = plugin.getConfig().getString("police_box.sign_colour");
+        try {
+            colour = ChatColor.valueOf(cc);
+        } catch (IllegalArgumentException e) {
+            colour = ChatColor.WHITE;
+        }
+        return colour;
+    }
+
+    /**
+     * Gets the column to set the Police box sign in if CTM is on in the
+     * player's preferences.
+     *
+     * @param d the direction of the Police Box
+     * @return the column
+     */
+    public int getCol(COMPASS d) {
+        switch (d) {
+            case NORTH:
+                return 6;
+            case WEST:
+                return 4;
+            case SOUTH:
+                return 2;
+            default:
+                return 0;
+        }
+    }
+
+    @SuppressWarnings("deprecation")
+    public int getHighestNetherBlock(World w, int wherex, int wherez) {
+        int y = 100;
+        Block startBlock = w.getBlockAt(wherex, y, wherez);
+        while (startBlock.getTypeId() != 0) {
+            startBlock = startBlock.getRelative(BlockFace.DOWN);
+        }
+        int air = 0;
+        while (startBlock.getTypeId() == 0 && startBlock.getLocation().getBlockY() > 30) {
+            startBlock = startBlock.getRelative(BlockFace.DOWN);
+            air++;
+        }
+        int id = startBlock.getTypeId();
+        if ((id == 87 || id == 88 || id == 89 || id == 112 || id == 113 || id == 114) && air >= 4) {
+            y = startBlock.getLocation().getBlockY() + 1;
+        }
+        return y;
     }
 }

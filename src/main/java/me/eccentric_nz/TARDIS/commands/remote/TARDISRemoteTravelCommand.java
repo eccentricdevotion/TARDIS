@@ -24,8 +24,10 @@ import me.eccentric_nz.TARDIS.database.ResultSetCurrentLocation;
 import me.eccentric_nz.TARDIS.database.ResultSetNextLocation;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
+import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import org.bukkit.Location;
 import org.bukkit.OfflinePlayer;
+import org.bukkit.block.Biome;
 import org.bukkit.command.BlockCommandSender;
 import org.bukkit.command.CommandSender;
 
@@ -60,12 +62,13 @@ public class TARDISRemoteTravelCommand {
                 l = new Location(rscl.getWorld(), rscl.getX(), rscl.getY(), rscl.getZ());
             }
             COMPASS cd = rscl.getDirection();
+            Biome biome = rscl.getBiome();
             boolean sub = rscl.isSubmarine();
             HashMap<String, Object> wherenl = new HashMap<String, Object>();
             wherenl.put("tardis_id", id);
             ResultSetNextLocation rsn = new ResultSetNextLocation(plugin, wherenl);
             if (!rsn.resultSet() && !(sender instanceof BlockCommandSender)) {
-                sender.sendMessage(plugin.getPluginName() + "Could not load destination!");
+                TARDISMessage.send(sender, "DEST_NO_LOAD");
                 return true;
             }
             boolean is_next_sub = rsn.isSubmarine();
@@ -76,7 +79,7 @@ public class TARDISRemoteTravelCommand {
                 exit.getWorld().loadChunk(exit.getChunk());
             }
             boolean mat = plugin.getConfig().getBoolean("police_box.materialise");
-            plugin.getTrackerKeeper().getTrackInVortex().add(id);
+            plugin.getTrackerKeeper().getInVortex().add(id);
             final TARDISMaterialisationData pdd = new TARDISMaterialisationData();
             pdd.setChameleon(cham);
             pdd.setDirection(cd);
@@ -87,9 +90,10 @@ public class TARDISRemoteTravelCommand {
             pdd.setOutside(false);
             pdd.setSubmarine(sub);
             pdd.setTardisID(id);
+            pdd.setBiome(biome);
             HashMap<String, Object> set = new HashMap<String, Object>();
-            if (!hidden && !plugin.getTrackerKeeper().getTrackReset().contains(resetw)) {
-                plugin.getTrackerKeeper().getTrackDematerialising().add(id);
+            if (!hidden && !plugin.getTrackerKeeper().getReset().contains(resetw)) {
+                plugin.getTrackerKeeper().getDematerialising().add(id);
                 plugin.getPresetDestroyer().destroyPreset(pdd);
             } else {
                 // set hidden false!
@@ -114,8 +118,8 @@ public class TARDISRemoteTravelCommand {
                     plugin.getUtils().playTARDISSoundNearby(pbd.getLocation(), "tardis_land");
                 }
             }, delay);
-            if (plugin.getTrackerKeeper().getTrackDamage().containsKey(id)) {
-                plugin.getTrackerKeeper().getTrackDamage().remove(id);
+            if (plugin.getTrackerKeeper().getDamage().containsKey(id)) {
+                plugin.getTrackerKeeper().getDamage().remove(id);
             }
             // current
             HashMap<String, Object> setcurrent = new HashMap<String, Object>();

@@ -21,7 +21,6 @@ import java.util.HashMap;
 import java.util.concurrent.TimeUnit;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.ResultSetTag;
-import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 
@@ -39,23 +38,23 @@ public class TARDISTagCommand {
 
     public boolean getStats(Player player) {
         ResultSetTag rs = new ResultSetTag(plugin);
-        TARDISMessage.send(player, plugin.getPluginName() + "Here are the stats:");
+        player.sendMessage(plugin.getPluginName() + "Here are the stats:");
         String who = (!plugin.getTagConfig().getString("it").equals("")) ? plugin.getTagConfig().getString("it") : "No one";
-        TARDISMessage.send(player, who + " is currently the " + ChatColor.RED + "'OOD'");
-        TARDISMessage.send(player, "-----------");
-        TARDISMessage.send(player, ChatColor.GOLD + "Top 5 OODs");
-        TARDISMessage.send(player, "-----------");
+        player.sendMessage(who + " is currently the " + ChatColor.RED + "'OOD'");
+        player.sendMessage("-----------");
+        player.sendMessage(ChatColor.GOLD + "Top 5 OODs");
+        player.sendMessage("-----------");
         if (rs.resultSet()) {
             ArrayList<HashMap<String, String>> data = rs.getData();
             for (HashMap<String, String> map : data) {
                 String p = map.get("player");
                 long t = plugin.getUtils().parseLong(map.get("time"));
-                TARDISMessage.send(player, p + ": " + ChatColor.GREEN + getHoursMinutesSeconds(t));
+                player.sendMessage(p + ": " + ChatColor.GREEN + getHoursMinutesSeconds(t));
             }
         } else {
-            TARDISMessage.send(player, "The are no stats yet :(");
+            player.sendMessage("The are no stats yet :(");
         }
-        TARDISMessage.send(player, "-----------");
+        player.sendMessage("-----------");
         return true;
     }
 

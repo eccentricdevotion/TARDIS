@@ -52,13 +52,19 @@ public class TARDISMySQLDatabaseUpdater {
         uuidUpdates.put("t_count", "t_id");
         uuidUpdates.put("tardis", "tardis_id");
         uuidUpdates.put("travellers", "tardis_id");
+        tardisupdates.add("lights_on int(1) DEFAULT '1'");
+        tardisupdates.add("powered_on int(1) DEFAULT '0'");
         tardisupdates.add("renderer varchar(512) DEFAULT ''");
         tardisupdates.add("zero varchar(512) DEFAULT ''");
         prefsupdates.add("language varchar(32) DEFAULT 'AUTO_DETECT'");
         prefsupdates.add("build_on int(1) DEFAULT '1'");
+        prefsupdates.add("ctm_on int(1) DEFAULT '0'");
+        prefsupdates.add("flying_mode int(1) DEFAULT '1'");
         prefsupdates.add("minecart_on int(1) DEFAULT '0'");
         prefsupdates.add("renderer_on int(1) DEFAULT '1'");
+        prefsupdates.add("sign_on int(1) DEFAULT '1'");
         prefsupdates.add("wool_lights_on int(1) DEFAULT '0'");
+        prefsupdates.add("travelbar_on int(1) DEFAULT '0'");
         destsupdates.add("slot int(1) DEFAULT '-1'");
     }
 
@@ -103,9 +109,17 @@ public class TARDISMySQLDatabaseUpdater {
                 ResultSet rsd = statement.executeQuery(d_query);
                 if (!rsd.next()) {
                     i++;
-                    String d_alter = "ALTER TABLE player_prefs ADD " + d;
+                    String d_alter = "ALTER TABLE destinations ADD " + d;
                     statement.executeUpdate(d_alter);
                 }
+            }
+            // add biome to current location
+            String bio_query = "SHOW COLUMNS FROM current LIKE 'biome'";
+            ResultSet rsbio = statement.executeQuery(bio_query);
+            if (!rsbio.next()) {
+                i++;
+                String bio_alter = "ALTER TABLE current ADD biome varchar(64) DEFAULT ''";
+                statement.executeUpdate(bio_alter);
             }
         } catch (SQLException e) {
             plugin.debug("MySQL database add fields error: " + e.getMessage() + e.getErrorCode());

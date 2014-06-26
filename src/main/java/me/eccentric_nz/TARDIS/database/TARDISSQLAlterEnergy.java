@@ -84,14 +84,14 @@ public class TARDISSQLAlterEnergy implements Runnable {
         where.clear();
         wheres = sbw.toString().substring(0, sbw.length() - 5);
         String query = "UPDATE " + table + " SET artron_level = artron_level + " + amount + " WHERE " + wheres;
-        if (amount < 0) {
+        if (amount < 0 && p != null) {
             new BukkitRunnable() {
                 @Override
                 public void run() {
                     if (id > 0) {
                         new TARDISArtronIndicator(plugin).showArtronLevel(p, id, Math.abs(amount));
                     } else {
-                        TARDISMessage.send(p, plugin.getPluginName() + "You used " + Math.abs(amount) + " Artron Energy.");
+                        TARDISMessage.send(p, "ENERGY_USED", String.format("%d", Math.abs(amount)));
                     }
                 }
             }.runTask(plugin);

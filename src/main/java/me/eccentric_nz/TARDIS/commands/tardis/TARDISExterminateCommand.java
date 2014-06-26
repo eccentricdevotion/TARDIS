@@ -18,7 +18,6 @@ package me.eccentric_nz.TARDIS.commands.tardis;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.destroyers.TARDISExterminator;
-import me.eccentric_nz.TARDIS.enumeration.MESSAGE;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
@@ -37,14 +36,14 @@ public class TARDISExterminateCommand {
 
     public boolean doExterminate(CommandSender sender, Player player) {
         if (player == null) {
-            sender.sendMessage(plugin.getPluginName() + MESSAGE.MUST_BE_PLAYER.getText());
+            TARDISMessage.send(sender, "CMD_PLAYER");
             return false;
         }
-        if (!plugin.getTrackerKeeper().getTrackExterminate().containsKey(player.getUniqueId())) {
-            TARDISMessage.send(player, plugin.getPluginName() + "You must break the TARDIS Police Box sign first!");
+        if (!plugin.getTrackerKeeper().getExterminate().containsKey(player.getUniqueId())) {
+            TARDISMessage.send(player, "TARDIS_BREAK_SIGN");
             return false;
         }
         TARDISExterminator del = new TARDISExterminator(plugin);
-        return del.exterminate(player, plugin.getTrackerKeeper().getTrackExterminate().get(player.getUniqueId()));
+        return del.exterminate(player, plugin.getTrackerKeeper().getExterminate().get(player.getUniqueId()));
     }
 }

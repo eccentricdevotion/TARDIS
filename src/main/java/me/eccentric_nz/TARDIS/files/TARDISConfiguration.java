@@ -69,30 +69,38 @@ public class TARDISConfiguration {
         boolOptions.put("allow.external_gravity", false);
         boolOptions.put("allow.hads", true);
         boolOptions.put("allow.mob_farming", true);
+        boolOptions.put("allow.power_down", false);
+        boolOptions.put("allow.power_down_on_quit", false);
         boolOptions.put("allow.sfx", true);
         boolOptions.put("allow.spawn_eggs", true);
         boolOptions.put("allow.tp_switch", true);
         boolOptions.put("allow.wg_flag_set", true);
         boolOptions.put("allow.zero_room", false);
+        boolOptions.put("conversions.biome_update", false);
         boolOptions.put("conversions.conversion_done", false);
         boolOptions.put("conversions.location_conversion_done", false);
         boolOptions.put("conversions.uuid_conversion_done", false);
+        boolOptions.put("conversions.companion_clearing_done", false);
         boolOptions.put("creation.add_perms", true);
         boolOptions.put("creation.create_worlds", true);
         boolOptions.put("creation.create_worlds_with_perms", false);
         boolOptions.put("creation.custom_schematic", false);
         boolOptions.put("creation.default_world", false);
         boolOptions.put("creation.keep_night", true);
+        boolOptions.put("creation.sky_biome", true);
         boolOptions.put("creation.use_block_stack", false);
         boolOptions.put("creation.use_clay", false);
         boolOptions.put("debug", false);
         boolOptions.put("police_box.materialise", true);
         boolOptions.put("police_box.name_tardis", false);
+        boolOptions.put("police_box.set_biome", true);
         boolOptions.put("preferences.respect_factions", true);
+        boolOptions.put("preferences.respect_grief_prevention", true);
         boolOptions.put("preferences.respect_worldborder", true);
         boolOptions.put("preferences.respect_worldguard", true);
         boolOptions.put("preferences.strike_lightning", true);
         boolOptions.put("preferences.use_default_condensables", true);
+        boolOptions.put("preferences.walk_in_tardis", true);
         boolOptions.put("growth.return_room_seed", true);
         boolOptions.put("growth.rooms_require_blocks", false);
         boolOptions.put("travel.chameleon", true);
@@ -102,7 +110,6 @@ public class TARDISConfiguration {
         boolOptions.put("travel.land_on_water", true);
         boolOptions.put("travel.nether", false);
         boolOptions.put("travel.per_world_perms", false);
-        boolOptions.put("travel.platform", false);
         boolOptions.put("travel.the_end", false);
         roomBoolOptions.put("rooms.ANTIGRAVITY.enabled", true);
         roomBoolOptions.put("rooms.ANTIGRAVITY.user", false);
@@ -166,6 +173,8 @@ public class TARDISConfiguration {
         artronIntOptions.put("random", 75);
         artronIntOptions.put("recharge_distance", 20);
         artronIntOptions.put("render", 250);
+        artronIntOptions.put("standby", 5);
+        artronIntOptions.put("standby_time", 6000);
         artronIntOptions.put("the_end_min", 5500);
         artronIntOptions.put("travel", 100);
         artronIntOptions.put("zero", 250);
@@ -192,6 +201,7 @@ public class TARDISConfiguration {
         intOptions.put("growth.gravity_max_velocity", 5);
         intOptions.put("growth.room_speed", 4);
         intOptions.put("growth.rooms_condenser_percent", 100);
+        intOptions.put("travel.manual_flight_delay", 60);
         intOptions.put("travel.random_attempts", 30);
         intOptions.put("travel.terminal_step", 1);
         intOptions.put("travel.timeout", 5);
@@ -247,17 +257,20 @@ public class TARDISConfiguration {
         roomIntOptions.put("rooms.ZERO.offset", -4);
         // string
         strOptions.put("creation.custom_schematic_seed", "OBSIDIAN");
-        strOptions.put("creation.default_world_name", "myridiculouslylongworldnameiscalledcuthbert");
+        strOptions.put("creation.default_world_name", "TARDIS_TimeVortex");
         strOptions.put("creation.gamemode", "survival");
         strOptions.put("police_box.sign_colour", "WHITE");
+        strOptions.put("preferences.default_key", "eleventh");
+        strOptions.put("preferences.default_sonic", "eleventh");
         strOptions.put("preferences.difficulty", "hard");
         strOptions.put("preferences.key", "GOLD_NUGGET");
+        strOptions.put("preferences.language", "en");
         strOptions.put("preferences.respect_towny", "nation");
         strOptions.put("preferences.use_worldguard", "build");
         strOptions.put("storage.database", "sqlite");
-        strOptions.put("storage.mysql.password", "mysecurepassword");
         strOptions.put("storage.mysql.url", "mysql://localhost:3306/TARDIS");
         strOptions.put("storage.mysql.user", "bukkit");
+        strOptions.put("storage.mysql.password", "mysecurepassword");
         artronStrOptions.put("jettison_seed", "TNT");
         artronStrOptions.put("full_charge_item", "NETHER_STAR");
         roomStrOptions.put("rooms.ARBORETUM.seed", "LEAVES");
@@ -429,6 +442,11 @@ public class TARDISConfiguration {
 
     private void checkBlocksConfig() {
         int i = 0;
+        if (!blocks_config.contains("keys")) {
+            List<String> KEYS = Arrays.asList("GOLD_NUGGET", "STICK");
+            blocks_config.set("keys", KEYS);
+            i++;
+        }
         if (!blocks_config.contains("tardis_blocks")) {
             List<String> MIDDLE_BLOCKS;
             if (config.contains("tardis_blocks")) {

@@ -21,7 +21,7 @@ import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.builders.TARDISMaterialisationData;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetCurrentLocation;
-import me.eccentric_nz.TARDIS.enumeration.MESSAGE;
+import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import org.bukkit.Location;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.command.CommandSender;
@@ -43,7 +43,7 @@ public class TARDISRemoteRebuildCommand {
         wherecl.put("tardis_id", id);
         ResultSetCurrentLocation rsc = new ResultSetCurrentLocation(plugin, wherecl);
         if (!rsc.resultSet()) {
-            sender.sendMessage(plugin.getPluginName() + MESSAGE.NO_CURRENT.getText());
+            TARDISMessage.send(sender, "CURRENT_NOT_FOUND");
             return true;
         }
         Location l = new Location(rsc.getWorld(), rsc.getX(), rsc.getY(), rsc.getZ());
@@ -60,13 +60,14 @@ public class TARDISRemoteRebuildCommand {
         pbd.setRebuild(true);
         pbd.setSubmarine(rsc.isSubmarine());
         pbd.setTardisID(id);
+        pbd.setBiome(rsc.getBiome());
         plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
             @Override
             public void run() {
                 plugin.getPresetBuilder().buildPreset(pbd);
             }
         }, 10L);
-        sender.sendMessage(plugin.getPluginName() + "The TARDIS Police Box was rebuilt!");
+        TARDISMessage.send(sender, "TARDIS_REBUILT");
         // set hidden to false
         if (hidden) {
             HashMap<String, Object> whereh = new HashMap<String, Object>();

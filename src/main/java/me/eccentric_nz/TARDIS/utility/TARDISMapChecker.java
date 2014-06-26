@@ -52,11 +52,11 @@ public class TARDISMapChecker {
         } else {
             server_world = s_world + File.separator + "data" + File.separator;
         }
-        String map = "map_1973.dat";
+        String map = "map_1979.dat";
         String root = container.getAbsolutePath() + File.separator + server_world;
         File file = new File(root, map);
         if (!file.exists()) {
-            plugin.getConsole().sendMessage(plugin.getPluginName() + ChatColor.RED + "Could not find TARDIS map files, some recipes will not work!");
+            plugin.getConsole().sendMessage(plugin.getPluginName() + ChatColor.RED + plugin.getLanguage().getString("MAPS_NOT_FOUND"));
             plugin.getConsole().sendMessage(plugin.getPluginName() + "Copying map files to the TARDIS folder...");
             TARDISMakeTardisCSV copier = new TARDISMakeTardisCSV(plugin);
             copier.copy(map);
@@ -76,6 +76,7 @@ public class TARDISMapChecker {
             copier.copy("map_1976.dat");
             copier.copy("map_1977.dat");
             copier.copy("map_1978.dat");
+            copier.copy("map_1979.dat");
             plugin.getConsole().sendMessage(plugin.getPluginName() + "Please move the new map files to the main world [" + s_world + "] data folder.");
             plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
                 @Override
@@ -84,7 +85,7 @@ public class TARDISMapChecker {
                     for (OfflinePlayer olp : ops) {
                         if (olp.isOnline()) {
                             Player p = (Player) olp;
-                            TARDISMessage.send(p, plugin.getPluginName() + ChatColor.RED + "Could not find TARDIS map files, some recipes will not work!");
+                            TARDISMessage.send(p, "MAPS_NOT_FOUND");
                         }
                     }
                 }

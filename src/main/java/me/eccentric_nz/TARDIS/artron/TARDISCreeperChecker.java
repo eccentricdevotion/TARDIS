@@ -14,7 +14,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package me.eccentric_nz.TARDIS.utility;
+package me.eccentric_nz.TARDIS.artron;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -72,7 +72,7 @@ public class TARDISCreeperChecker {
                             float cy = plugin.getUtils().parseFloat(creeperData[2]) + 1;
                             float cz = plugin.getUtils().parseFloat(creeperData[3]);
                             Location l = new Location(w, cx, cy, cz);
-                            plugin.setMySpawn(true);
+                            plugin.setTardisSpawn(true);
                             Entity e = w.spawnEntity(l, EntityType.CREEPER);
                             // if there is a creeper there already get rid of it!
                             for (Entity k : e.getNearbyEntities(1d, 1d, 1d)) {

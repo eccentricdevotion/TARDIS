@@ -50,12 +50,12 @@ public class TARDISNameKeyCommand {
         }
         Material m = Material.getMaterial(key);
         if (m.equals(Material.AIR)) {
-            TARDISMessage.send(player, plugin.getPluginName() + "You cannot rename AIR!");
+            TARDISMessage.send(player, "KEY_NO_RENAME");
             return true;
         }
         ItemStack is = player.getItemInHand();
         if (!is.getType().equals(m)) {
-            TARDISMessage.send(player, plugin.getPluginName() + "You can only rename the TARDIS key!");
+            TARDISMessage.send(player, "KEY_ONLY");
             return true;
         }
         int count = args.length;
@@ -70,7 +70,7 @@ public class TARDISNameKeyCommand {
         if (!tmp.isEmpty()) {
             TARDISItemRenamer ir = new TARDISItemRenamer(is);
             ir.setName(tmp, false);
-            TARDISMessage.send(player, plugin.getPluginName() + "TARDIS key renamed to '" + tmp + "'");
+            TARDISMessage.send(player, "KEY_RENAMED", tmp);
             return true;
         } else {
             return false;

@@ -43,7 +43,7 @@ public class TARDISBlockPhysicsListener implements Listener {
     // prevent hatches from breaking
     @EventHandler(priority = EventPriority.LOW, ignoreCancelled = true)
     public void onBlockPhysics(BlockPhysicsEvent event) {
-        if (plugin.getTrackerKeeper().getTrackInVortex().size() > 0) {
+        if (plugin.getTrackerKeeper().getInVortex().size() > 0) {
             Block block = event.getBlock();
             if (block != null) {
                 BlockState state;

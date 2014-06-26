@@ -31,9 +31,7 @@ import me.eccentric_nz.TARDIS.enumeration.COMPASS;
 import me.eccentric_nz.TARDIS.travel.TARDISTimeTravel;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
-import org.bukkit.World;
 import org.bukkit.World.Environment;
-import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 import org.bukkit.entity.Player;
 
@@ -90,7 +88,7 @@ public class TARDISHostileDisplacement {
                         boolean bool = true;
                         int y;
                         if (l.getWorld().getEnvironment().equals(Environment.NETHER)) {
-                            y = getHighestNetherBlock(l.getWorld(), wx, wz);
+                            y = plugin.getUtils().getHighestNetherBlock(l.getWorld(), wx, wz);
                         } else {
                             y = l.getWorld().getHighestBlockAt(l).getY();
                         }
@@ -123,11 +121,11 @@ public class TARDISHostileDisplacement {
                                     set.put("z", fl.getBlockZ());
                                     set.put("submarine", (rsc.isSubmarine()) ? 1 : 0);
                                     qf.doUpdate("current", set, tid);
-                                    plugin.getTrackerKeeper().getTrackDamage().remove(id);
+                                    plugin.getTrackerKeeper().getDamage().remove(id);
                                     boolean mat = plugin.getConfig().getBoolean("police_box.materialise");
                                     long delay = (mat) ? 1L : 180L;
                                     // move TARDIS
-                                    plugin.getTrackerKeeper().getTrackInVortex().add(id);
+                                    plugin.getTrackerKeeper().getInVortex().add(id);
                                     final TARDISMaterialisationData pdd = new TARDISMaterialisationData();
                                     pdd.setChameleon(cham);
                                     pdd.setDirection(d);
@@ -138,10 +136,11 @@ public class TARDISHostileDisplacement {
                                     pdd.setOutside(true);
                                     pdd.setSubmarine(rsc.isSubmarine());
                                     pdd.setTardisID(id);
+                                    pdd.setBiome(rsc.getBiome());
                                     plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
                                         @Override
                                         public void run() {
-                                            plugin.getTrackerKeeper().getTrackDematerialising().add(id);
+                                            plugin.getTrackerKeeper().getDematerialising().add(id);
                                             plugin.getPresetDestroyer().destroyPreset(pdd);
                                         }
                                     }, delay);
@@ -162,49 +161,30 @@ public class TARDISHostileDisplacement {
                                         }
                                     }, delay * 2);
                                     // message time lord
-                                    String message = plugin.getPluginName() + ChatColor.RED + "H" + ChatColor.RESET + "ostile " + ChatColor.RED + "A" + ChatColor.RESET + "ction " + ChatColor.RED + "D" + ChatColor.RESET + "isplacement " + ChatColor.RED + "S" + ChatColor.RESET + "ystem engaged, moving TARDIS!";
-                                    TARDISMessage.send(player, message);
+                                    String message = plugin.getPluginName() + ChatColor.RED + "H" + ChatColor.RESET + "ostile " + ChatColor.RED + "A" + ChatColor.RESET + "ction " + ChatColor.RED + "D" + ChatColor.RESET + "isplacement " + ChatColor.RED + "S" + ChatColor.RESET + "ystem " + plugin.getLanguage().getString("HADS_ENGAGED");
+                                    player.sendMessage(message);
                                     String hads = fl.getWorld().getName() + ":" + fl.getBlockX() + ":" + fl.getBlockY() + ":" + fl.getBlockZ();
-                                    TARDISMessage.send(player, plugin.getPluginName() + "TARDIS moved to " + hads);
+                                    TARDISMessage.send(player, "HADS_LOC", hads);
                                     if (player != hostile) {
-                                        TARDISMessage.send(hostile, message);
+                                        hostile.sendMessage(message);
                                     }
                                     break;
                                 } else {
-                                    TARDISMessage.send(player, plugin.getPluginName() + "HADS could not be engaged because the area is protected!");
+                                    TARDISMessage.send(player, "HADS_PROTECTED");
                                     if (player != hostile) {
-                                        TARDISMessage.send(hostile, plugin.getPluginName() + "HADS could not be engaged because the area is protected!");
+                                        TARDISMessage.send(hostile, "HADS_PROTECTED");
                                     }
                                 }
                             } else {
-                                TARDISMessage.send(player, plugin.getPluginName() + "HADS could not be engaged because the it couldn't find a safe area!");
+                                TARDISMessage.send(player, "HADS_NOT_SAFE");
                             }
                         } else {
-                            plugin.getTrackerKeeper().getTrackDamage().remove(id);
-                            TARDISMessage.send(player, plugin.getPluginName() + "HADS could not be engaged because the TARDIS cannot land on water!");
+                            plugin.getTrackerKeeper().getDamage().remove(id);
+                            TARDISMessage.send(player, "HADS_NO_WATER");
                         }
                     }
                 }
             }
         }
-    }
-
-    @SuppressWarnings("deprecation")
-    private int getHighestNetherBlock(World w, int wherex, int wherez) {
-        int y = 100;
-        Block startBlock = w.getBlockAt(wherex, y, wherez);
-        while (startBlock.getTypeId() != 0) {
-            startBlock = startBlock.getRelative(BlockFace.DOWN);
-        }
-        int air = 0;
-        while (startBlock.getTypeId() == 0 && startBlock.getLocation().getBlockY() > 30) {
-            startBlock = startBlock.getRelative(BlockFace.DOWN);
-            air++;
-        }
-        int id = startBlock.getTypeId();
-        if ((id == 87 || id == 88 || id == 89 || id == 112 || id == 113 || id == 114) && air >= 4) {
-            y = startBlock.getLocation().getBlockY() + 1;
-        }
-        return y;
     }
 }

@@ -24,7 +24,6 @@ import java.util.Random;
 import java.util.concurrent.TimeUnit;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
-import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -63,10 +62,10 @@ public class TARDISTagListener implements Listener {
             if (eggcal.get(Calendar.MONTH) == 10 && eggcal.get(Calendar.DATE) == 23) { // zero based month
                 int age = ((eggcal.get(Calendar.YEAR)) - 1963);
                 String ordinal = getOrdinal(age);
-                TARDISMessage.send(event.getPlayer(), plugin.getPluginName() + "Happy " + age + ordinal + " Birthday Doctor Who!");
+                event.getPlayer().sendMessage(plugin.getPluginName() + "Happy " + age + ordinal + " Birthday Doctor Who!");
             }
-            TARDISMessage.send(event.getPlayer(), plugin.getPluginName() + "Today, and today only, you can play 'Tag the OOD'!");
-            TARDISMessage.send(event.getPlayer(), plugin.getPluginName() + "To see tag stats (and who is currently 'it'), use the command " + ChatColor.AQUA + "/tardis tagtheood");
+            event.getPlayer().sendMessage(plugin.getPluginName() + "Today, and today only, you can play 'Tag the OOD'!");
+            event.getPlayer().sendMessage(plugin.getPluginName() + "To see tag stats (and who is currently 'it'), use the command " + ChatColor.AQUA + "/tardis tagtheood");
             if (plugin.getTagConfig().get("it").equals("")) {
                 Player startit = getRandomPlayer();
                 plugin.getServer().broadcastMessage(plugin.getPluginName() + startit.getName() + " is now the " + ChatColor.RED + "'OOD'!");

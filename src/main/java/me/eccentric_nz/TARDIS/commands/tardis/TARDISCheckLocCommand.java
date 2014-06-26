@@ -21,7 +21,6 @@ import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.ResultSetCurrentLocation;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
-import me.eccentric_nz.TARDIS.enumeration.MESSAGE;
 import me.eccentric_nz.TARDIS.travel.TARDISTimeTravel;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import org.bukkit.Location;
@@ -53,14 +52,14 @@ public class TARDISCheckLocCommand {
         where.put("uuid", player.getUniqueId().toString());
         ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);
         if (!rs.resultSet()) {
-            TARDISMessage.send(player, plugin.getPluginName() + MESSAGE.NOT_A_TIMELORD.getText());
+            TARDISMessage.send(player, "NOT_A_TIMELORD");
             return true;
         }
         HashMap<String, Object> wherecl = new HashMap<String, Object>();
         wherecl.put("tardis_id", rs.getTardis_id());
         ResultSetCurrentLocation rsc = new ResultSetCurrentLocation(plugin, wherecl);
         if (!rsc.resultSet()) {
-            TARDISMessage.send(player, plugin.getPluginName() + "Could not get the TARDIS direction!");
+            TARDISMessage.send(player, "DIRECTION_NOT_FOUND");
             return true;
         }
         COMPASS d = rsc.getDirection();

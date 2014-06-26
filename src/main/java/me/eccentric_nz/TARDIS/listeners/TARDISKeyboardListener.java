@@ -75,22 +75,22 @@ public class TARDISKeyboardListener implements Listener {
                 tcc.getCircuits();
             }
             if (tcc != null && !tcc.hasInput()) {
-                TARDISMessage.send(event.getPlayer(), plugin.getPluginName() + "The Input Circuit is missing from the console!");
+                TARDISMessage.send(event.getPlayer(), "INPUT_MISSING");
                 return;
             }
             Sign keyboard = (Sign) against.getState();
             // track this sign
-            plugin.getTrackerKeeper().getTrackSign().put(block.getLocation().toString(), keyboard);
+            plugin.getTrackerKeeper().getSign().put(block.getLocation().toString(), keyboard);
         }
     }
 
     @EventHandler(ignoreCancelled = true)
     public void onSignChange(SignChangeEvent event) {
         String loc = event.getBlock().getLocation().toString();
-        if (!plugin.getTrackerKeeper().getTrackSign().containsKey(loc)) {
+        if (!plugin.getTrackerKeeper().getSign().containsKey(loc)) {
             return;
         }
-        Sign keyboard = plugin.getTrackerKeeper().getTrackSign().get(loc);
+        Sign keyboard = plugin.getTrackerKeeper().getSign().get(loc);
         Player p = event.getPlayer();
         if (!plugin.getPM().isPluginEnabled("ProtocolLib")) {
             int i = 0;
@@ -99,7 +99,7 @@ public class TARDISKeyboardListener implements Listener {
                 i++;
             }
             keyboard.update();
-            plugin.getTrackerKeeper().getTrackSign().remove(loc);
+            plugin.getTrackerKeeper().getSign().remove(loc);
             // cancel the edit and give the sign back to the player
             event.setCancelled(true);
             event.getBlock().setType(Material.AIR);
@@ -144,7 +144,7 @@ public class TARDISKeyboardListener implements Listener {
                 return;
             }
         } catch (IllegalArgumentException iae) {
-            plugin.debug("Biome type not valid!");
+            plugin.debug(plugin.getLanguage().getString("BIOME_NOT_VALID"));
         }
         // dest?
         HashMap<String, Object> whered = new HashMap<String, Object>();
@@ -164,6 +164,6 @@ public class TARDISKeyboardListener implements Listener {
             plugin.getConsole().sendMessage(p.getName() + " issued server command: /tardistravel area " + event.getLine(0));
             return;
         }
-        TARDISMessage.send(p, plugin.getPluginName() + "Keyboard not responding, press any key to continue.");
+        TARDISMessage.send(p, "KEYBOARD_ERROR");
     }
 }

@@ -91,8 +91,8 @@ public class TARDISFarmer {
         if (plugin.getPM().isPluginEnabled("Multiverse-Inventories")) {
             boolean canfarm = plugin.getTMIChecker().checkMVI(from, to);
             if (!canfarm) {
-                TARDISMessage.send(p, plugin.getPluginName() + "You cannot farm mobs from this world.");
-                plugin.getTrackerKeeper().getTrackFarming().remove(p.getUniqueId());
+                TARDISMessage.send(p, "WORLD_NO_FARM");
+                plugin.getTrackerKeeper().getFarming().remove(p.getUniqueId());
                 return null;
             }
         }
@@ -333,7 +333,7 @@ public class TARDISFarmer {
                             world.getChunkAt(chicken_pen).load();
                         }
                         for (TARDISMob e : old_macd_had_a_chicken) {
-                            plugin.setMySpawn(true);
+                            plugin.setTardisSpawn(true);
                             Entity chicken = world.spawnEntity(chicken_pen, EntityType.CHICKEN);
                             Chicken pecker = (Chicken) chicken;
                             pecker.setAge(e.getAge());
@@ -353,7 +353,7 @@ public class TARDISFarmer {
                             world.getChunkAt(cow_pen).load();
                         }
                         for (TARDISMob e : old_macd_had_a_cow) {
-                            plugin.setMySpawn(true);
+                            plugin.setTardisSpawn(true);
                             Entity cow = world.spawnEntity(cow_pen, EntityType.COW);
                             Cow moo = (Cow) cow;
                             moo.setAge(e.getAge());
@@ -373,7 +373,7 @@ public class TARDISFarmer {
                             world.getChunkAt(pig_pen).load();
                         }
                         for (TARDISPig e : old_macd_had_a_pig) {
-                            plugin.setMySpawn(true);
+                            plugin.setTardisSpawn(true);
                             Entity pig = world.spawnEntity(pig_pen, EntityType.PIG);
                             Pig oinker = (Pig) pig;
                             oinker.setAge(e.getAge());
@@ -394,7 +394,7 @@ public class TARDISFarmer {
                             world.getChunkAt(sheep_pen).load();
                         }
                         for (TARDISMob e : old_macd_had_a_sheep) {
-                            plugin.setMySpawn(true);
+                            plugin.setTardisSpawn(true);
                             Entity sheep = world.spawnEntity(sheep_pen, EntityType.SHEEP);
                             Sheep baa = (Sheep) sheep;
                             baa.setAge(e.getAge());
@@ -415,7 +415,7 @@ public class TARDISFarmer {
                             world.getChunkAt(cow_pen).load();
                         }
                         for (TARDISMob e : old_macd_had_a_mooshroom) {
-                            plugin.setMySpawn(true);
+                            plugin.setTardisSpawn(true);
                             Entity mooshroom = world.spawnEntity(cow_pen, EntityType.MUSHROOM_COW);
                             MushroomCow fungi = (MushroomCow) mooshroom;
                             fungi.setAge(e.getAge());
@@ -455,7 +455,7 @@ public class TARDISFarmer {
                         }
                         p.updateInventory();
                     } else if (farmtotal > 0) {
-                        TARDISMessage.send(p, plugin.getPluginName() + "You need to grow a farm room before you can farm mobs!");
+                        TARDISMessage.send(p, "FARM");
                     }
                 }
                 if (!stable.isEmpty()) {
@@ -471,7 +471,7 @@ public class TARDISFarmer {
                             world.getChunkAt(horse_pen).load();
                         }
                         for (TARDISHorse e : old_macd_had_a_horse) {
-                            plugin.setMySpawn(true);
+                            plugin.setTardisSpawn(true);
                             Entity horse = world.spawnEntity(horse_pen, EntityType.HORSE);
                             Horse equine = (Horse) horse;
                             equine.setAge(e.getAge());
@@ -533,7 +533,7 @@ public class TARDISFarmer {
                             p.updateInventory();
                         }
                     } else if (horsetotal > 0) {
-                        TARDISMessage.send(p, plugin.getPluginName() + "You need to grow a stable room before you can farm horses!");
+                        TARDISMessage.send(p, "FARM_STABLE");
                     }
                 }
                 if (!village.isEmpty()) {
@@ -549,7 +549,7 @@ public class TARDISFarmer {
                             world.getChunkAt(v_room).load();
                         }
                         for (TARDISVillager e : old_macd_had_a_villager) {
-                            plugin.setMySpawn(true);
+                            plugin.setTardisSpawn(true);
                             Entity vill = world.spawnEntity(v_room, EntityType.VILLAGER);
                             Villager npc = (Villager) vill;
                             npc.setProfession(e.getProfession());
@@ -574,7 +574,7 @@ public class TARDISFarmer {
                             p.updateInventory();
                         }
                     } else if (villagertotal > 0) {
-                        TARDISMessage.send(p, plugin.getPluginName() + "You need to grow a village room before you can farm villagers!");
+                        TARDISMessage.send(p, "FARM_VILLAGE");
                     }
                 }
             }
@@ -583,7 +583,7 @@ public class TARDISFarmer {
         plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
             @Override
             public void run() {
-                plugin.getTrackerKeeper().getTrackFarming().remove(p.getUniqueId());
+                plugin.getTrackerKeeper().getFarming().remove(p.getUniqueId());
             }
         }, 20L);
         return old_macd_had_a_pet;

@@ -18,12 +18,11 @@ package me.eccentric_nz.TARDIS.commands.tardis;
 
 import java.util.HashMap;
 import java.util.Locale;
+import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
-import me.eccentric_nz.TARDIS.enumeration.MESSAGE;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
-import org.bukkit.ChatColor;
 import org.bukkit.World;
 import org.bukkit.entity.Player;
 
@@ -48,44 +47,54 @@ public class TARDISRemoveCompanionCommand {
             int id;
             String[] data;
             if (!rs.resultSet()) {
-                TARDISMessage.send(player, plugin.getPluginName() + MESSAGE.NO_TARDIS.getText());
+                TARDISMessage.send(player, "NO_TARDIS");
                 return false;
             } else {
                 comps = rs.getCompanions();
                 if (comps == null || comps.isEmpty()) {
-                    TARDISMessage.send(player, plugin.getPluginName() + "You have not added any TARDIS companions yet!");
+                    TARDISMessage.send(player, "COMPANIONS_NONE");
                     return true;
                 }
                 id = rs.getTardis_id();
                 data = rs.getChunk().split(":");
             }
             if (args.length < 2) {
-                TARDISMessage.send(player, plugin.getPluginName() + MESSAGE.TOO_FEW_ARGS.getText());
+                TARDISMessage.send(player, "TOO_FEW_ARGS");
                 return false;
             }
             if (!args[1].matches("[A-Za-z0-9_]{2,16}")) {
-                TARDISMessage.send(player, plugin.getPluginName() + MESSAGE.NOT_VALID_NAME.getText());
-                return false;
+                TARDISMessage.send(player, "PLAYER_NOT_VALID");
+                return true;
             } else {
                 String newList = "";
-                String message = "You removed " + ChatColor.GREEN + "ALL" + ChatColor.RESET + " your TARDIS companions.";
+                String message = "COMPANIONS_REMOVE_ALL";
                 if (!args[1].equals("all")) {
-                    String[] split = comps.split(":");
-                    StringBuilder buf = new StringBuilder();
-                    if (split.length > 1) {
-                        // recompile string without the specified player
-                        for (String c : split) {
-                            if (!c.equals(args[1].toLowerCase(Locale.ENGLISH))) {
-                                // add to new string
-                                buf.append(c).append(":");
+                    UUID oluuid = plugin.getServer().getOfflinePlayer(args[1]).getUniqueId();
+                    if (oluuid == null) {
+                        oluuid = plugin.getGeneralKeeper().getUUIDCache().getIdOptimistic(args[1]);
+                        plugin.getGeneralKeeper().getUUIDCache().getId(args[1]);
+                    }
+                    if (oluuid != null) {
+                        String[] split = comps.split(":");
+                        StringBuilder buf = new StringBuilder();
+                        if (split.length > 1) {
+                            // recompile string without the specified player
+                            for (String c : split) {
+                                if (!c.equals(oluuid.toString())) {
+                                    // add to new string
+                                    buf.append(c).append(":");
+                                }
+                            }
+                            // remove trailing colon
+                            if (buf.length() > 0) {
+                                newList = buf.toString().substring(0, buf.length() - 1);
                             }
                         }
-                        // remove trailing colon
-                        if (buf.length() > 0) {
-                            newList = buf.toString().substring(0, buf.length() - 1);
-                        }
+                        message = "COMPANIONS_REMOVE_ONE";
+                    } else {
+                        TARDISMessage.send(player, "COULD_NOT_FIND_NAME");
+                        return true;
                     }
-                    message = "You removed " + ChatColor.GREEN + args[1] + ChatColor.RESET + " as a TARDIS companion.";
                 }
                 HashMap<String, Object> tid = new HashMap<String, Object>();
                 HashMap<String, Object> set = new HashMap<String, Object>();
@@ -100,11 +109,15 @@ public class TARDISRemoveCompanionCommand {
                         plugin.getWorldGuardUtils().removeMemberFromRegion(w, player.getName(), args[1].toLowerCase(Locale.ENGLISH));
                     }
                 }
-                TARDISMessage.send(player, plugin.getPluginName() + message);
+                if (!args[1].equals("all")) {
+                    TARDISMessage.send(player, message, args[1]);
+                } else {
+                    TARDISMessage.send(player, message);
+                }
                 return true;
             }
         } else {
-            TARDISMessage.send(player, plugin.getPluginName() + MESSAGE.NO_PERMS.getText());
+            TARDISMessage.send(player, "NO_PERMS");
             return false;
         }
     }

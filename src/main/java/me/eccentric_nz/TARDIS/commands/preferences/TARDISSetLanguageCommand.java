@@ -39,14 +39,14 @@ public class TARDISSetLanguageCommand {
     public boolean setLanguagePref(Player player, String[] args, QueryFactory qf) {
         String pref = args[0];
         if (args.length < 2) {
-            TARDISMessage.send(player, plugin.getPluginName() + "You need to specify a " + pref);
+            TARDISMessage.send(player, "PREF_NEED", pref);
             return false;
         }
         Language lang;
         try {
             lang = Language.valueOf(args[1].toUpperCase());
         } catch (IllegalArgumentException e) {
-            TARDISMessage.send(player, plugin.getPluginName() + "Invalid language specified, try using tab key completion!");
+            TARDISMessage.send(player, "LANG_NOT_VALID");
             return true;
         }
         HashMap<String, Object> setl = new HashMap<String, Object>();
@@ -54,7 +54,7 @@ public class TARDISSetLanguageCommand {
         HashMap<String, Object> where = new HashMap<String, Object>();
         where.put("uuid", player.getUniqueId().toString());
         qf.doUpdate("player_prefs", setl, where);
-        TARDISMessage.send(player, plugin.getPluginName() + ucfirst(pref) + " saved.");
+        TARDISMessage.send(player, "PREF_SET", ucfirst(pref));
         return true;
     }
 }

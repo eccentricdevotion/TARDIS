@@ -84,10 +84,10 @@ public class TARDISMinecartListener implements Listener {
                             HashMap<String, Object> whereid = new HashMap<String, Object>();
                             whereid.put("tardis_id", id);
                             ResultSetTardis rs = new ResultSetTardis(plugin, whereid, "", false);
-                            if (rs.resultSet() && !plugin.getTrackerKeeper().getTrackMinecart().contains(id)) {
+                            if (rs.resultSet() && !plugin.getTrackerKeeper().getMinecart().contains(id)) {
                                 data = rs.getRail().split(":");
                                 playerUUID = rs.getUuid();
-                                plugin.getTrackerKeeper().getTrackMinecart().add(id);
+                                plugin.getTrackerKeeper().getMinecart().add(id);
                             }
                         }
                         break;
@@ -113,7 +113,7 @@ public class TARDISMinecartListener implements Listener {
                             if (rspb.resultSet()) {
                                 data = rspb.getDoor_location().split(":");
                                 d = switchDirection(rspb.getDoor_direction());
-                                plugin.getTrackerKeeper().getTrackMinecart().remove(Integer.valueOf(id));
+                                plugin.getTrackerKeeper().getMinecart().remove(Integer.valueOf(id));
                             }
                         }
                         break;
@@ -124,9 +124,9 @@ public class TARDISMinecartListener implements Listener {
                     if (plugin.getPM().isPluginEnabled("Multiverse-Inventories")) {
                         if (!plugin.getTMIChecker().checkMVI(bw, data[0])) {
                             if (playerUUID != null && plugin.getServer().getPlayer(playerUUID).isOnline()) {
-                                TARDISMessage.send(plugin.getServer().getPlayer(playerUUID), plugin.getPluginName() + "You cannot use minecarts from " + bw + " to " + data[0] + ".");
+                                TARDISMessage.send(plugin.getServer().getPlayer(playerUUID), "WORLD_NO_CART", bw, data[0]);
                             }
-                            plugin.getTrackerKeeper().getTrackMinecart().remove(Integer.valueOf(id));
+                            plugin.getTrackerKeeper().getMinecart().remove(Integer.valueOf(id));
                             return;
                         }
                     }

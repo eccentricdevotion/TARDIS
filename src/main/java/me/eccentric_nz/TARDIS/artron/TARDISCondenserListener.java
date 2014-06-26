@@ -14,7 +14,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package me.eccentric_nz.TARDIS.listeners;
+package me.eccentric_nz.TARDIS.artron;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -141,7 +141,6 @@ public class TARDISCondenserListener implements Listener {
                 qf.alterEnergyLevel("tardis", amount, wheret, player);
                 String message;
                 if (amount > 0) {
-                    message = "You condensed the molecules of the universe itself into " + amount + " artron energy!";
                     // are we doing an achievement?
                     if (plugin.getAchievementConfig().getBoolean("energy.enabled")) {
                         // determine the current percentage
@@ -155,10 +154,10 @@ public class TARDISCondenserListener implements Listener {
                             taf.doAchievement(Math.round((amount * 100F) / fc));
                         }
                     }
+                    TARDISMessage.send(player, "ENERGY_CONDENSED", String.format("%d", amount));
                 } else {
-                    message = "There were no valid materials to condense!";
+                    TARDISMessage.send(player, "CONDENSE_NO_VALID");
                 }
-                TARDISMessage.send(player, plugin.getPluginName() + message);
             }
         }
     }

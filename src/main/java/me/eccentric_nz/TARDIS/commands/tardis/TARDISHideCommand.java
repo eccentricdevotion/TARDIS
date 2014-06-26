@@ -24,7 +24,6 @@ import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetCurrentLocation;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import me.eccentric_nz.TARDIS.database.ResultSetTravellers;
-import me.eccentric_nz.TARDIS.enumeration.MESSAGE;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
@@ -49,8 +48,12 @@ public class TARDISHideCommand {
             where.put("uuid", player.getUniqueId().toString());
             ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);
             if (!rs.resultSet()) {
-                TARDISMessage.send(player.getPlayer(), plugin.getPluginName() + MESSAGE.NO_TARDIS.getText());
+                TARDISMessage.send(player.getPlayer(), "NO_TARDIS");
                 return false;
+            }
+            if (plugin.getConfig().getBoolean("allow.power_down") && !rs.isPowered_on()) {
+                TARDISMessage.send(player.getPlayer(), "POWER_DOWN");
+                return true;
             }
             id = rs.getTardis_id();
             TARDISCircuitChecker tcc = null;
@@ -59,26 +62,26 @@ public class TARDISHideCommand {
                 tcc.getCircuits();
             }
             if (tcc != null && !tcc.hasMaterialisation()) {
-                TARDISMessage.send(player.getPlayer(), plugin.getPluginName() + MESSAGE.NO_MAT_CIRCUIT.getText());
+                TARDISMessage.send(player.getPlayer(), "NO_MAT_CIRCUIT");
                 return true;
             }
             HashMap<String, Object> wherein = new HashMap<String, Object>();
             wherein.put("uuid", player.getUniqueId().toString());
             ResultSetTravellers rst = new ResultSetTravellers(plugin, wherein, false);
-            if (rst.resultSet() && plugin.getTrackerKeeper().getTrackHasDestination().containsKey(id)) {
-                TARDISMessage.send(player.getPlayer(), plugin.getPluginName() + "You cannot rebuild the TARDIS right now! Try travelling first.");
+            if (rst.resultSet() && plugin.getTrackerKeeper().getHasDestination().containsKey(id)) {
+                TARDISMessage.send(player.getPlayer(), "TARDIS_NO_HIDE");
                 return true;
             }
             int level = rs.getArtron_level();
-            if (plugin.getTrackerKeeper().getTrackInVortex().contains(id)) {
-                TARDISMessage.send(player.getPlayer(), plugin.getPluginName() + MESSAGE.NOT_WHILE_MAT.getText());
+            if (plugin.getTrackerKeeper().getInVortex().contains(id)) {
+                TARDISMessage.send(player.getPlayer(), "NOT_WHILE_MAT");
                 return true;
             }
             HashMap<String, Object> wherecl = new HashMap<String, Object>();
             wherecl.put("tardis_id", rs.getTardis_id());
             ResultSetCurrentLocation rsc = new ResultSetCurrentLocation(plugin, wherecl);
             if (!rsc.resultSet()) {
-                TARDISMessage.send(player.getPlayer(), plugin.getPluginName() + MESSAGE.NO_CURRENT.getText());
+                TARDISMessage.send(player.getPlayer(), "CURRENT_NOT_FOUND");
                 return true;
             }
             Location l = new Location(rsc.getWorld(), rsc.getX(), rsc.getY(), rsc.getZ());
@@ -87,7 +90,7 @@ public class TARDISHideCommand {
             QueryFactory qf = new QueryFactory(plugin);
             int hide = plugin.getArtronConfig().getInt("hide");
             if (level < hide) {
-                TARDISMessage.send(player.getPlayer(), plugin.getPluginName() + ChatColor.RED + "The TARDIS does not have enough Artron Energy to hide!");
+                TARDISMessage.send(player.getPlayer(), "ENERGY_NO_HIDE");
                 return false;
             }
             final TARDISMaterialisationData pdd = new TARDISMaterialisationData();
@@ -95,13 +98,14 @@ public class TARDISHideCommand {
             pdd.setDirection(rsc.getDirection());
             pdd.setLocation(l);
             pdd.setDematerialise(false);
-            pdd.setPlayer(null);
+            pdd.setPlayer(player.getPlayer());
             pdd.setHide(false);
             pdd.setOutside(false);
             pdd.setSubmarine(rsc.isSubmarine());
             pdd.setTardisID(id);
+            pdd.setBiome(rsc.getBiome());
             plugin.getPresetDestroyer().destroyPreset(pdd);
-            TARDISMessage.send(player.getPlayer(), plugin.getPluginName() + "The TARDIS Police Box was hidden! Use " + ChatColor.GREEN + " /tardis rebuild " + ChatColor.RESET + " to show it again.");
+            TARDISMessage.send(player.getPlayer(), "TARDIS_HIDDEN", ChatColor.GREEN + " /tardis rebuild " + ChatColor.RESET);
             qf.alterEnergyLevel("tardis", -hide, wheret, player.getPlayer());
             // set hidden to true
             HashMap<String, Object> whereh = new HashMap<String, Object>();
@@ -111,7 +115,7 @@ public class TARDISHideCommand {
             qf.doUpdate("tardis", seth, whereh);
             return true;
         } else {
-            TARDISMessage.send(player.getPlayer(), plugin.getPluginName() + MESSAGE.NO_PERMS.getText());
+            TARDISMessage.send(player.getPlayer(), "NO_PERMS");
             return false;
         }
     }

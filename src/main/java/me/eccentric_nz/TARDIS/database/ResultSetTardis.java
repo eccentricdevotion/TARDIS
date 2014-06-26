@@ -52,7 +52,6 @@ public class ResultSetTardis {
     private SCHEMATIC schematic;
     private String replaced;
     private String companions;
-    private String platform;
     private String save_sign;
     private String chameleon;
     private boolean chamele_on;
@@ -81,6 +80,8 @@ public class ResultSetTardis {
     private String village;
     private String renderer;
     private String zero;
+    private boolean powered_on;
+    private boolean lights_on;
     private final ArrayList<HashMap<String, String>> data = new ArrayList<HashMap<String, String>>();
 
     /**
@@ -165,10 +166,6 @@ public class ResultSetTardis {
                     if (rs.wasNull()) {
                         this.companions = "";
                     }
-                    this.platform = rs.getString("platform");
-                    if (rs.wasNull()) {
-                        this.platform = "";
-                    }
                     this.save_sign = rs.getString("save_sign");
                     this.chameleon = rs.getString("chameleon");
                     this.chamele_on = rs.getBoolean("chamele_on");
@@ -197,6 +194,8 @@ public class ResultSetTardis {
                     this.village = rs.getString("village");
                     this.renderer = rs.getString("renderer");
                     this.zero = rs.getString("zero");
+                    this.powered_on = rs.getBoolean("powered_on");
+                    this.lights_on = rs.getBoolean("lights_on");
                 }
             } else {
                 return false;
@@ -250,10 +249,6 @@ public class ResultSetTardis {
 
     public String getCompanions() {
         return companions;
-    }
-
-    public String getPlatform() {
-        return platform;
     }
 
     public String getSave_sign() {
@@ -366,6 +361,14 @@ public class ResultSetTardis {
 
     public String getZero() {
         return zero;
+    }
+
+    public boolean isPowered_on() {
+        return powered_on;
+    }
+
+    public boolean isLights_on() {
+        return lights_on;
     }
 
     public ArrayList<HashMap<String, String>> getData() {

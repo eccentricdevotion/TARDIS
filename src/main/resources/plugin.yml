@@ -3,7 +3,7 @@ description: A plugin for all Doctor Who fans - create and use a TARDIS! Telepor
 main: me.eccentric_nz.TARDIS.TARDIS
 name: TARDIS
 load: POSTWORLD
-softdepend: [Multiverse-Core,Multiverse-Adventure,Multiverse-Inventories,MultiWorld,My Worlds,WorldGuard,WorldBorder,Towny,Citizens,ProtocolLib,LibsDisguises,ProjectRassilon]
+softdepend: [Multiverse-Core,Multiverse-Adventure,Multiverse-Inventories,MultiWorld,My Worlds,WorldGuard,WorldBorder,Towny,Citizens,ProtocolLib,LibsDisguises,ProjectRassilon,GriefPrevention,BarAPI]
 website: http://dev.bukkit.org/bukkit-plugins/tardis/
 dev-url: http://dev.bukkit.org/bukkit-plugins/tardis/
 url: http://eccentricdevotion.github.io/TARDIS/
@@ -114,6 +114,9 @@ permissions:
   tardis.ars:
     description: Allow players to build the 'Architectural Reconfiguration System' TARDIS.
     default: op
+  tardis.war:
+    description: Allow players to build the 'War Doctor's TARDIS.
+    default: op
   tardis.storage:
     description: Allow players to utilise the TARDIS Disk Storage.
     default: op
@@ -216,6 +219,9 @@ permissions:
     default: op
   tardis.sonic.plant:
     description: Allows the sonic screwdriver with Emerald Environment abilities to re-sow plants if the player has the appropriate seed items in their inventory.
+    default: op
+  tardis.sonic.paint:
+    description: Allows the sonic screwdriver to be upgraded and used with Painter abilities..
     default: op
   tardis.sonic.sort:
     description: Allows a player to use the chest sorting function of the sonic screwdriver.
@@ -434,9 +440,6 @@ commands:
     quotes:
       description: Toggle the TARDIS quotes on and off.
       usage: /<command> quotes [on|off]
-    platform:
-      description: Toggle the TARDIS platform on and off.
-      usage: /<command> platform [on|off]
     key:
       description: Set the TARDIS key item.
       usage: /<command> key [material]
@@ -450,10 +453,10 @@ commands:
       description: Toggle the TARDIS Autonomous Homing feature on and off.
       usage: /<command> auto [on|off]
     eps:
-      description: Toggle Emergency Program One on and off.
+      description: Toggle Emergency Programme One on and off.
       usage: /<command> eps [on|off]
     message:
-      description: Set the Emergency Program One message.
+      description: Set the Emergency Programme One message.
       usage: /<command> eps_message [message]
     hads:
       description: Toggle HADS on and off.

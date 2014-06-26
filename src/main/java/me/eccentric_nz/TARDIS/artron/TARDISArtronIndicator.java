@@ -99,9 +99,9 @@ public class TARDISArtronIndicator {
                 }, 150L);
             } else {
                 if (used > 0) {
-                    TARDISMessage.send(p, plugin.getPluginName() + "You used " + used + " Artron Energy.");
+                    TARDISMessage.send(p, "ENERGY_USED", String.format("%d", used));
                 } else {
-                    TARDISMessage.send(p, plugin.getPluginName() + "The Artron Energy Capacitor is at " + percent + "%");
+                    TARDISMessage.send(p, "ENERGY_LEVEL", String.format("%d", percent));
                 }
             }
         }

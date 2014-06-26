@@ -16,6 +16,7 @@
  */
 package me.eccentric_nz.TARDIS.ARS;
 
+import me.eccentric_nz.TARDIS.TARDIS;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -30,8 +31,10 @@ import org.bukkit.inventory.meta.ItemMeta;
 public class TARDISARSInventory {
 
     private final ItemStack[] terminal;
+    private final TARDIS plugin;
 
-    public TARDISARSInventory() {
+    public TARDISARSInventory(TARDIS plugin) {
+        this.plugin = plugin;
         this.terminal = getItemStack();
     }
 
@@ -45,57 +48,57 @@ public class TARDISARSInventory {
         // up
         ItemStack pad_up = new ItemStack(Material.WOOL, 1, (byte) 9);
         ItemMeta up = pad_up.getItemMeta();
-        up.setDisplayName("Up");
+        up.setDisplayName(plugin.getLanguage().getString("BUTTON_UP"));
         pad_up.setItemMeta(up);
         // down
         ItemStack pad_down = new ItemStack(Material.WOOL, 1, (byte) 9);
         ItemMeta down = pad_down.getItemMeta();
-        down.setDisplayName("Down");
+        down.setDisplayName(plugin.getLanguage().getString("BUTTON_DOWN"));
         pad_down.setItemMeta(down);
         // left
         ItemStack pad_left = new ItemStack(Material.WOOL, 1, (byte) 9);
         ItemMeta left = pad_left.getItemMeta();
-        left.setDisplayName("Left");
+        left.setDisplayName(plugin.getLanguage().getString("BUTTON_LEFT"));
         pad_left.setItemMeta(left);
         // right
         ItemStack pad_right = new ItemStack(Material.WOOL, 1, (byte) 9);
         ItemMeta right = pad_right.getItemMeta();
-        right.setDisplayName("Right");
+        right.setDisplayName(plugin.getLanguage().getString("BUTTON_RIGHT"));
         pad_right.setItemMeta(right);
         // level selected
         ItemStack level_sel = new ItemStack(Material.WOOL, 1, (byte) 4);
         ItemMeta main = level_sel.getItemMeta();
-        main.setDisplayName("Main level");
+        main.setDisplayName(plugin.getLanguage().getString("BUTTON_LEVEL"));
         level_sel.setItemMeta(main);
         // level top
         ItemStack level_top = new ItemStack(Material.WOOL, 1, (byte) 0);
         ItemMeta top = level_top.getItemMeta();
-        top.setDisplayName("Top level");
+        top.setDisplayName(plugin.getLanguage().getString("BUTTON_LEVEL_T"));
         level_top.setItemMeta(top);
         // level top
         ItemStack level_bot = new ItemStack(Material.WOOL, 1, (byte) 0);
         ItemMeta bot = level_bot.getItemMeta();
-        bot.setDisplayName("Bottom level");
+        bot.setDisplayName(plugin.getLanguage().getString("BUTTON_LEVEL_B"));
         level_bot.setItemMeta(bot);
-        // stone
-        ItemStack stone = new ItemStack(Material.WOOL, 1, (byte) 15);
-        ItemMeta s1 = stone.getItemMeta();
-        s1.setDisplayName("Empty slot");
-        stone.setItemMeta(s1);
+        // black wool
+        ItemStack black = new ItemStack(Material.WOOL, 1, (byte) 15);
+        ItemMeta wool = black.getItemMeta();
+        wool.setDisplayName(plugin.getLanguage().getString("BUTTON_MAP_NO"));
+        black.setItemMeta(wool);
         // scroll left
         ItemStack scroll_left = new ItemStack(Material.WOOL, 1, (byte) 14);
         ItemMeta nim = scroll_left.getItemMeta();
-        nim.setDisplayName("Scroll left");
+        nim.setDisplayName(plugin.getLanguage().getString("BUTTON_SCROLL_L"));
         scroll_left.setItemMeta(nim);
         // scroll right
         ItemStack scroll_right = new ItemStack(Material.WOOL, 1, (byte) 5);
         ItemMeta pim = scroll_right.getItemMeta();
-        pim.setDisplayName("Scroll right");
+        pim.setDisplayName(plugin.getLanguage().getString("BUTTON_SCROLL_R"));
         scroll_right.setItemMeta(pim);
         // set
         ItemStack s = new ItemStack(Material.WOOL, 1, (byte) 6);
         ItemMeta sim = s.getItemMeta();
-        sim.setDisplayName("Reconfigure!");
+        sim.setDisplayName(plugin.getLanguage().getString("BUTTON_RECON"));
         s.setItemMeta(sim);
         // passage
         ItemStack passage = new ItemStack(Material.CLAY, 1);
@@ -122,6 +125,11 @@ public class TARDISARSInventory {
         ItemMeta book = library.getItemMeta();
         book.setDisplayName("Library");
         library.setItemMeta(book);
+        // library
+        ItemStack gene = new ItemStack(Material.FURNACE, 1);
+        ItemMeta tic = gene.getItemMeta();
+        tic.setDisplayName("Genetic Manipulator");
+        gene.setItemMeta(tic);
         // pool
         ItemStack pool = new ItemStack(Material.SNOW_BLOCK, 1);
         ItemMeta snow = pool.getItemMeta();
@@ -137,34 +145,29 @@ public class TARDISARSInventory {
         ItemMeta brick = workshop.getItemMeta();
         brick.setDisplayName("Workshop");
         workshop.setItemMeta(brick);
-        // empty
-        ItemStack empty = new ItemStack(Material.GLASS, 1);
-        ItemMeta glass = empty.getItemMeta();
-        glass.setDisplayName("Empty");
-        empty.setItemMeta(glass);
         // jettison
         ItemStack jettison = new ItemStack(Material.TNT, 1);
         ItemMeta tnt = jettison.getItemMeta();
-        tnt.setDisplayName("Jettison");
+        tnt.setDisplayName(plugin.getLanguage().getString("BUTTON_JETT"));
         jettison.setItemMeta(tnt);
         // reset
         ItemStack reset = new ItemStack(Material.COBBLESTONE, 1);
         ItemMeta cobble = reset.getItemMeta();
-        cobble.setDisplayName("Reset selected");
+        cobble.setDisplayName(plugin.getLanguage().getString("BUTTON_RESET"));
         reset.setItemMeta(cobble);
         // load map
         ItemStack map = new ItemStack(Material.MAP, 1);
         ItemMeta load = map.getItemMeta();
-        load.setDisplayName("Load map");
+        load.setDisplayName(plugin.getLanguage().getString("BUTTON_MAP"));
         map.setItemMeta(load);
 
         ItemStack[] is = {
-            null, pad_up, null, null, stone, stone, stone, stone, stone,
-            pad_left, map, pad_right, s, stone, stone, stone, stone, stone,
-            null, pad_down, null, null, stone, stone, stone, stone, stone,
-            level_bot, level_sel, level_top, reset, stone, stone, stone, stone, stone,
-            scroll_left, null, scroll_right, jettison, stone, stone, stone, stone, stone,
-            passage, arboretum, bedroom, kitchen, library, pool, vault, workshop, empty
+            null, pad_up, null, null, black, black, black, black, black,
+            pad_left, map, pad_right, s, black, black, black, black, black,
+            null, pad_down, null, null, black, black, black, black, black,
+            level_bot, level_sel, level_top, reset, black, black, black, black, black,
+            scroll_left, null, scroll_right, jettison, black, black, black, black, black,
+            passage, arboretum, bedroom, kitchen, library, gene, pool, vault, workshop
         };
         return is;
     }

@@ -50,6 +50,7 @@ public class TARDISSonicUpgradeListener implements Listener {
         this.upgrades.put("Redstone Upgrade", "redstone");
         this.upgrades.put("Diamond Upgrade", "diamond");
         this.upgrades.put("Emerald Upgrade", "emerald");
+        this.upgrades.put("Painter Upgrade", "paint");
     }
 
     /**
@@ -101,18 +102,19 @@ public class TARDISSonicUpgradeListener implements Listener {
                     ci.setResult(null);
                 } else {
                     ItemMeta sim = sonic.getItemMeta();
+                    String dn = sim.getDisplayName();
                     List<String> lore;
                     if (sim.hasLore()) {
                         // get the current sonic's upgrades
                         lore = sim.getLore();
                     } else {
-                        // otherwise thisis the first upgrade
+                        // otherwise this is the first upgrade
                         lore = new ArrayList<String>();
                         lore.add("Upgrades:");
                     }
                     // if they don't already have the upgrade
                     if (!lore.contains(upgrade)) {
-                        im.setDisplayName("Sonic Screwdriver");
+                        im.setDisplayName(dn);
                         lore.add(upgrade);
                         im.setLore(lore);
                         is.setItemMeta(im);

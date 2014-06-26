@@ -33,6 +33,8 @@ public class TARDISSQLInsertLocations implements Runnable {
     private final TARDISDatabaseConnection service = TARDISDatabaseConnection.getInstance();
     private final Connection connection = service.getConnection();
     private final HashMap<String, Object> data;
+    private final String biome;
+    private final int id;
 
     /**
      * Inserts data into an SQLite database table. This method builds a prepared
@@ -41,10 +43,14 @@ public class TARDISSQLInsertLocations implements Runnable {
      * @param plugin an instance of the main plugin class
      * @param data a HashMap<String, Object> of table fields and values to
      * insert.
+     * @param biome the Police Box biome type
+     * @param id the tardis_id
      */
-    public TARDISSQLInsertLocations(TARDIS plugin, HashMap<String, Object> data) {
+    public TARDISSQLInsertLocations(TARDIS plugin, HashMap<String, Object> data, String biome, int id) {
         this.plugin = plugin;
         this.data = data;
+        this.biome = biome;
+        this.id = id;
     }
 
     @Override
@@ -74,6 +80,16 @@ public class TARDISSQLInsertLocations implements Runnable {
                     }
                     i++;
                 }
+                ps.executeUpdate();
+            }
+            // set the biome if necessary
+            if (plugin.getConfig().getBoolean("police_box.set_biome")) {
+                // remember the current biome
+                String query = "UPDATE current SET biome = ? WHERE tardis_id = ?";
+                service.testConnection(connection);
+                ps = connection.prepareStatement(query);
+                ps.setString(1, biome);
+                ps.setInt(2, id);
                 ps.executeUpdate();
             }
             data.clear();

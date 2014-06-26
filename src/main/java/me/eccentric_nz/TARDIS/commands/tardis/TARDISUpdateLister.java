@@ -42,12 +42,12 @@ public class TARDISUpdateLister {
     }
 
     public void list() {
-        TARDISMessage.send(player, plugin.getPluginName() + "You can update the postion of the following:");
-        TARDISMessage.send(player, ChatColor.GRAY + "    Command argument" + ChatColor.RESET + " - " + ChatColor.DARK_GRAY + "Description");
+        TARDISMessage.send(player, "UPDATE_INFO");
+        player.sendMessage(ChatColor.GRAY + "    Command argument" + ChatColor.RESET + " - " + ChatColor.DARK_GRAY + "Description");
         for (Map.Entry<String, List<String>> map : options.entrySet()) {
-            TARDISMessage.send(player, map.getKey());
+            player.sendMessage(map.getKey());
             for (String s : map.getValue()) {
-                TARDISMessage.send(player, "    " + s);
+                player.sendMessage("    " + s);
             }
         }
     }
@@ -77,7 +77,7 @@ public class TARDISUpdateLister {
         update_options.put("TARDIS User Interfaces", guis);
         List<String> spawns = new ArrayList<String>();
         spawns.add(ChatColor.BLUE + "creeper" + ChatColor.RESET + " - " + ChatColor.DARK_BLUE + "Artron Charged Creeper");
-        spawns.add(ChatColor.BLUE + "eps" + ChatColor.RESET + " - " + ChatColor.DARK_BLUE + "Emergency Program One");
+        spawns.add(ChatColor.BLUE + "eps" + ChatColor.RESET + " - " + ChatColor.DARK_BLUE + "Emergency Programme One");
         spawns.add(ChatColor.BLUE + "farm" + ChatColor.RESET + " - " + ChatColor.DARK_BLUE + "Farm room");
         spawns.add(ChatColor.BLUE + "rail" + ChatColor.RESET + " - " + ChatColor.DARK_BLUE + "Rail room");
         spawns.add(ChatColor.BLUE + "stable" + ChatColor.RESET + " - " + ChatColor.DARK_BLUE + "Stable room");
@@ -90,6 +90,7 @@ public class TARDISUpdateLister {
         misc.add(ChatColor.LIGHT_PURPLE + "keyboard" + ChatColor.RESET + " - " + ChatColor.DARK_PURPLE + "Keyboard Input sign");
         misc.add(ChatColor.LIGHT_PURPLE + "scanner" + ChatColor.RESET + " - " + ChatColor.DARK_PURPLE + "Exterior Scanner button");
         misc.add(ChatColor.LIGHT_PURPLE + "light" + ChatColor.RESET + " - " + ChatColor.DARK_PURPLE + "Console Light switch");
+        misc.add(ChatColor.LIGHT_PURPLE + "toggle_wool" + ChatColor.RESET + " - " + ChatColor.DARK_PURPLE + "Toggle Black Wool behind door");
         misc.add(ChatColor.LIGHT_PURPLE + "zero" + ChatColor.RESET + " - " + ChatColor.DARK_PURPLE + "Zero room transmat button");
         update_options.put("Others", misc);
         return update_options;

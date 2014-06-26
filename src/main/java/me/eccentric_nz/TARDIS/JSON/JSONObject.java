@@ -89,6 +89,7 @@ import java.util.Set;
  * @author JSON.org
  * @version 2013-04-18
  */
+@SuppressWarnings({"rawtypes", "unchecked"})
 public class JSONObject {
 
     /**
@@ -116,6 +117,7 @@ public class JSONObject {
          *
          * @return NULL.
          */
+        @Override
         protected final Object clone() {
             return this;
         }
@@ -127,6 +129,7 @@ public class JSONObject {
          * @return true if the object parameter is the JSONObject.NULL object or
          * null.
          */
+        @Override
         public boolean equals(Object object) {
             return object == null || object == this;
         }
@@ -136,6 +139,7 @@ public class JSONObject {
          *
          * @return The string "null".
          */
+        @Override
         public String toString() {
             return "null";
         }
@@ -175,7 +179,7 @@ public class JSONObject {
         for (int i = 0; i < names.length; i += 1) {
             try {
                 this.putOnce(names[i], jo.opt(names[i]));
-            } catch (Exception ignore) {
+            } catch (JSONException ignore) {
             }
         }
     }
@@ -423,7 +427,7 @@ public class JSONObject {
             return "null";
         }
 
-// Shave off trailing zeros and decimal point, if possible.
+        // Shave off trailing zeros and decimal point, if possible.
         String string = Double.toString(d);
         if (string.indexOf('.') > 0 && string.indexOf('e') < 0
                 && string.indexOf('E') < 0) {
@@ -470,12 +474,10 @@ public class JSONObject {
                 .equalsIgnoreCase("false"))) {
             return false;
         } else if (object.equals(Boolean.TRUE)
-                || (object instanceof String && ((String) object)
-                .equalsIgnoreCase("true"))) {
+                || (object instanceof String && ((String) object).equalsIgnoreCase("true"))) {
             return true;
         }
-        throw new JSONException("JSONObject[" + quote(key)
-                + "] is not a Boolean.");
+        throw new JSONException("JSONObject[" + quote(key) + "] is not a Boolean.");
     }
 
     /**
@@ -492,8 +494,7 @@ public class JSONObject {
             return object instanceof Number ? ((Number) object).doubleValue()
                     : Double.parseDouble((String) object);
         } catch (NumberFormatException e) {
-            throw new JSONException("JSONObject[" + quote(key)
-                    + "] is not a number.");
+            throw new JSONException("JSONObject[" + quote(key) + "] is not a number.");
         }
     }
 
@@ -511,8 +512,7 @@ public class JSONObject {
             return object instanceof Number ? ((Number) object).intValue()
                     : Integer.parseInt((String) object);
         } catch (NumberFormatException e) {
-            throw new JSONException("JSONObject[" + quote(key)
-                    + "] is not an int.");
+            throw new JSONException("JSONObject[" + quote(key) + "] is not an int.");
         }
     }
 
@@ -529,8 +529,7 @@ public class JSONObject {
         if (object instanceof JSONArray) {
             return (JSONArray) object;
         }
-        throw new JSONException("JSONObject[" + quote(key)
-                + "] is not a JSONArray.");
+        throw new JSONException("JSONObject[" + quote(key) + "] is not a JSONArray.");
     }
 
     /**
@@ -546,8 +545,7 @@ public class JSONObject {
         if (object instanceof JSONObject) {
             return (JSONObject) object;
         }
-        throw new JSONException("JSONObject[" + quote(key)
-                + "] is not a JSONObject.");
+        throw new JSONException("JSONObject[" + quote(key) + "] is not a JSONObject.");
     }
 
     /**
@@ -564,8 +562,7 @@ public class JSONObject {
             return object instanceof Number ? ((Number) object).longValue()
                     : Long.parseLong((String) object);
         } catch (NumberFormatException e) {
-            throw new JSONException("JSONObject[" + quote(key)
-                    + "] is not a long.");
+            throw new JSONException("JSONObject[" + quote(key) + "] is not a long.");
         }
     }
 
@@ -653,13 +650,13 @@ public class JSONObject {
         if (value == null) {
             this.put(key, 1);
         } else if (value instanceof Integer) {
-            this.put(key, ((Integer) value).intValue() + 1);
+            this.put(key, ((Integer) value) + 1);
         } else if (value instanceof Long) {
-            this.put(key, ((Long) value).longValue() + 1);
+            this.put(key, ((Long) value) + 1);
         } else if (value instanceof Double) {
-            this.put(key, ((Double) value).doubleValue() + 1);
+            this.put(key, ((Double) value) + 1);
         } else if (value instanceof Float) {
-            this.put(key, ((Float) value).floatValue() + 1);
+            this.put(key, ((Float) value) + 1);
         } else {
             throw new JSONException("Unable to increment [" + quote(key) + "].");
         }
@@ -734,7 +731,7 @@ public class JSONObject {
         }
         testValidity(number);
 
-// Shave off trailing zeros and decimal point, if possible.
+        // Shave off trailing zeros and decimal point, if possible.
         String string = number.toString();
         if (string.indexOf('.') > 0 && string.indexOf('e') < 0
                 && string.indexOf('E') < 0) {
@@ -1249,8 +1246,8 @@ public class JSONObject {
                 } else {
                     Long myLong = new Long(string);
                     if (string.equals(myLong.toString())) {
-                        if (myLong.longValue() == myLong.intValue()) {
-                            return new Integer(myLong.intValue());
+                        if (myLong == myLong.intValue()) {
+                            return myLong.intValue();
                         } else {
                             return myLong;
                         }
@@ -1316,6 +1313,7 @@ public class JSONObject {
      * brace)</small> and ending with <code>}</code>&nbsp;<small>(right
      * brace)</small>.
      */
+    @Override
     public String toString() {
         try {
             return this.toString(0);
@@ -1455,6 +1453,7 @@ public class JSONObject {
      * <p>
      * Warning: This method assumes that the data structure is acyclical.
      *
+     * @param writer
      * @return The writer.
      * @throws JSONException
      */

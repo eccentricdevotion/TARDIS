@@ -35,6 +35,7 @@ public class TARDISBuilderInstanceKeeper {
     private String[][][] steampunkSchematic;
     private String[][][] plankSchematic;
     private String[][][] tomSchematic;
+    private String[][][] warSchematic;
     private String[][][] customSchematic;
     private short[] ARSDimensions = new short[3];
     private short[] budgetDimensions = new short[3];
@@ -45,6 +46,7 @@ public class TARDISBuilderInstanceKeeper {
     private short[] steampunkDimensions = new short[3];
     private short[] plankDimensions = new short[3];
     private short[] tomDimensions = new short[3];
+    private short[] warDimensions = new short[3];
     private short[] customDimensions = new short[3];
     private HashMap<String, String[][][]> roomSchematics = new HashMap<String, String[][][]>();
     private final HashMap<String, short[]> roomDimensions = new HashMap<String, short[]>();
@@ -122,6 +124,14 @@ public class TARDISBuilderInstanceKeeper {
 
     public void setTomSchematic(String[][][] tomSchematic) {
         this.tomSchematic = tomSchematic;
+    }
+
+    public String[][][] getWarSchematic() {
+        return warSchematic;
+    }
+
+    public void setWarSchematic(String[][][] warSchematic) {
+        this.warSchematic = warSchematic;
     }
 
     public String[][][] getCustomSchematic() {
@@ -210,6 +220,14 @@ public class TARDISBuilderInstanceKeeper {
 
     public void setTomDimensions(short[] tomDimensions) {
         this.tomDimensions = tomDimensions;
+    }
+
+    public short[] getWarDimensions() {
+        return warDimensions;
+    }
+
+    public void setWarDimensions(short[] warDimensions) {
+        this.warDimensions = warDimensions;
     }
 
     public short[] getCustomDimensions() {

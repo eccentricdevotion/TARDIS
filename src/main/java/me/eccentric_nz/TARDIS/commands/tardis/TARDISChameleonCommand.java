@@ -22,7 +22,6 @@ import me.eccentric_nz.TARDIS.advanced.TARDISCircuitChecker;
 import me.eccentric_nz.TARDIS.chameleon.TARDISChameleonCircuit;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
-import me.eccentric_nz.TARDIS.enumeration.MESSAGE;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -46,12 +45,12 @@ public class TARDISChameleonCommand {
     @SuppressWarnings("deprecation")
     public boolean doChameleon(Player player, String[] args) {
         if (!plugin.getConfig().getBoolean("travel.chameleon")) {
-            TARDISMessage.send(player, plugin.getPluginName() + "This server does not allow the use of the chameleon circuit!");
+            TARDISMessage.send(player, "CHAM_DISABLED");
             return false;
         }
         if (player.hasPermission("tardis.timetravel")) {
             if (args.length < 2 || (!args[1].equalsIgnoreCase("on") && !args[1].equalsIgnoreCase("off") && !args[1].equalsIgnoreCase("short") && !args[1].equalsIgnoreCase("reset"))) {
-                TARDISMessage.send(player, plugin.getPluginName() + MESSAGE.TOO_FEW_ARGS.getText());
+                TARDISMessage.send(player, "TOO_FEW_ARGS");
                 return false;
             }
             // get the players TARDIS id
@@ -59,7 +58,7 @@ public class TARDISChameleonCommand {
             where.put("uuid", player.getUniqueId().toString());
             ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);
             if (!rs.resultSet()) {
-                TARDISMessage.send(player, plugin.getPluginName() + MESSAGE.NO_TARDIS.getText());
+                TARDISMessage.send(player, "NO_TARDIS");
                 return false;
             }
             int id = rs.getTardis_id();
@@ -69,12 +68,12 @@ public class TARDISChameleonCommand {
                 circ_chk.getCircuits();
             }
             if (circ_chk != null && !circ_chk.hasChameleon()) {
-                TARDISMessage.send(player, plugin.getPluginName() + "The Chameleon Circuit is missing from the console!");
+                TARDISMessage.send(player, "CHAM_MISSING");
                 return true;
             }
             String chamStr = rs.getChameleon();
             if (chamStr.isEmpty()) {
-                TARDISMessage.send(player, plugin.getPluginName() + "Could not find the Chameleon Circuit!");
+                TARDISMessage.send(player, "CHAM_NOT_FOUND");
                 return false;
             } else {
                 QueryFactory qf = new QueryFactory(plugin);
@@ -95,13 +94,13 @@ public class TARDISChameleonCommand {
                         if (args[1].equalsIgnoreCase("on")) {
                             set.put("chamele_on", 1);
                             qf.doUpdate("tardis", set, tid);
-                            TARDISMessage.send(player, plugin.getPluginName() + "The Chameleon Circuit was turned ON!");
+                            TARDISMessage.send(player, "CHAM_ON");
                             cs.setLine(3, ChatColor.GREEN + "ON");
                         }
                         if (args[1].equalsIgnoreCase("off")) {
                             set.put("chamele_on", 0);
                             qf.doUpdate("tardis", set, tid);
-                            TARDISMessage.send(player, plugin.getPluginName() + "The Chameleon Circuit was turned OFF.");
+                            TARDISMessage.send(player, "CHAM_OFF");
                             cs.setLine(3, ChatColor.RED + "OFF");
                         }
                         cs.update();
@@ -120,19 +119,19 @@ public class TARDISChameleonCommand {
                     qf.doUpdate("tardis", set, tid);
                     boolean bluewool = (c_id == dwid && c_data == (byte) dwd);
                     if (!bluewool) {
-                        TARDISMessage.send(player, plugin.getPluginName() + "The Chameleon Circuit was shorted out to: " + target_block.getType().toString() + ".");
+                        TARDISMessage.send(player, "CHAM_SET", target_block.getType().toString());
                     }
                 }
                 if (args[1].equalsIgnoreCase("reset")) {
                     set.put("chameleon_id", dwid);
                     set.put("chameleon_data", dwd);
                     qf.doUpdate("tardis", set, tid);
-                    TARDISMessage.send(player, plugin.getPluginName() + "The Chameleon Circuit was repaired.");
+                    TARDISMessage.send(player, "CHAM_REPAIR");
                 }
             }
             return true;
         } else {
-            TARDISMessage.send(player, plugin.getPluginName() + MESSAGE.NO_PERMS.getText());
+            TARDISMessage.send(player, "NO_PERMS");
             return false;
         }
     }

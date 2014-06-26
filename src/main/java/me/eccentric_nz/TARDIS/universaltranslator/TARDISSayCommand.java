@@ -21,7 +21,7 @@ import com.memetix.mst.Translate;
 import java.util.HashMap;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.ResultSetPlayerPrefs;
-import me.eccentric_nz.TARDIS.enumeration.MESSAGE;
+import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -50,11 +50,11 @@ public class TARDISSayCommand implements CommandExecutor {
     public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
         if (cmd.getName().equalsIgnoreCase("tardissay")) {
             if (!sender.hasPermission("tardis.translate")) {
-                sender.sendMessage(plugin.getPluginName() + MESSAGE.NO_PERMS.getText());
+                TARDISMessage.send(sender, "NO_PERMS");
                 return false;
             }
             if (args.length < 2) {
-                sender.sendMessage(plugin.getPluginName() + MESSAGE.TOO_FEW_ARGS.getText());
+                TARDISMessage.send(sender, "TOO_FEW_ARGS");
                 return false;
             }
             String preferedLang = "AUTO_DETECT";
@@ -89,7 +89,7 @@ public class TARDISSayCommand implements CommandExecutor {
                     plugin.debug("Could not get translation! " + ex);
                 }
             } catch (IllegalArgumentException e) {
-                sender.sendMessage(UT + "Invalid language specified, try using tab key completion!");
+                TARDISMessage.send(sender, "LANG_NOT_VALID");
             }
         }
         return false;

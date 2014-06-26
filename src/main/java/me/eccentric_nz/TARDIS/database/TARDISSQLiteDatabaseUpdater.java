@@ -63,20 +63,24 @@ public class TARDISSQLiteDatabaseUpdater {
         prefsupdates.add("auto_on INTEGER DEFAULT 0");
         prefsupdates.add("beacon_on INTEGER DEFAULT 1");
         prefsupdates.add("build_on INTEGER DEFAULT 1");
+        prefsupdates.add("ctm_on INTEGER DEFAULT 0");
         prefsupdates.add("dnd_on INTEGER DEFAULT 0");
         prefsupdates.add("eps_message TEXT DEFAULT ''");
         prefsupdates.add("eps_on INTEGER DEFAULT 0");
         prefsupdates.add("floor TEXT DEFAULT 'LIGHT_GREY_WOOL'");
+        prefsupdates.add("flying_mode INTEGER DEFAULT 1");
         prefsupdates.add("hads_on INTEGER DEFAULT 1");
         prefsupdates.add("key TEXT DEFAULT ''");
         prefsupdates.add("lamp INTEGER");
         prefsupdates.add("language TEXT DEFAULT 'AUTO_DETECT'");
         prefsupdates.add("minecart_on INTEGER DEFAULT 0");
         prefsupdates.add("renderer_on INTEGER DEFAULT 1");
+        prefsupdates.add("sign_on INTEGER DEFAULT 1");
         prefsupdates.add("submarine_on INTEGER DEFAULT 0");
         prefsupdates.add("texture_in TEXT DEFAULT ''");
         prefsupdates.add("texture_on INTEGER DEFAULT 0");
         prefsupdates.add("texture_out TEXT DEFAULT 'default'");
+        prefsupdates.add("travelbar_on INTEGER DEFAULT 0");
         prefsupdates.add("wall TEXT DEFAULT 'ORANGE_WOOL'");
         prefsupdates.add("wool_lights_on INTEGER DEFAULT 0");
         tardisupdates.add("adapti_on INTEGER DEFAULT 0");
@@ -96,6 +100,8 @@ public class TARDISSQLiteDatabaseUpdater {
         tardisupdates.add("lastuse INTEGER DEFAULT " + now);
         tardisupdates.add("middle_data INTEGER");
         tardisupdates.add("middle_id INTEGER");
+        tardisupdates.add("powered_on INTEGER DEFAULT 0");
+        tardisupdates.add("lights_on INTEGER DEFAULT 1");
         tardisupdates.add("rail TEXT DEFAULT ''");
         tardisupdates.add("recharging INTEGER DEFAULT 0");
         tardisupdates.add("renderer TEXT DEFAULT ''");
@@ -193,6 +199,14 @@ public class TARDISSQLiteDatabaseUpdater {
                     String t_alter = "ALTER TABLE tardis ADD " + t;
                     statement.executeUpdate(t_alter);
                 }
+            }
+            // add biome to current location
+            String bio_query = "SELECT sql FROM sqlite_master WHERE tbl_name = 'current' AND sql LIKE '%biome%'";
+            ResultSet rsbio = statement.executeQuery(bio_query);
+            if (!rsbio.next()) {
+                i++;
+                String bio_alter = "ALTER TABLE current ADD biome TEXT DEFAULT ''";
+                statement.executeUpdate(bio_alter);
             }
         } catch (SQLException e) {
             plugin.debug("SQLite database add fields error: " + e.getMessage() + e.getErrorCode());

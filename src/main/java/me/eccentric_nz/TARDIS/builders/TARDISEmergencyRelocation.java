@@ -21,7 +21,6 @@ import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
-import me.eccentric_nz.TARDIS.enumeration.MESSAGE;
 import me.eccentric_nz.TARDIS.travel.TARDISTimeTravel;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import org.bukkit.Location;
@@ -41,7 +40,7 @@ public class TARDISEmergencyRelocation {
     }
 
     public void relocate(int id, Player p) {
-        TARDISMessage.send(p, plugin.getPluginName() + MESSAGE.EMERGENCY.getText());
+        TARDISMessage.send(p, "EMERGENCY");
         // get the TARDIS
         HashMap<String, Object> where = new HashMap<String, Object>();
         where.put("tardis_id", id);
@@ -51,7 +50,13 @@ public class TARDISEmergencyRelocation {
             World w = plugin.getServer().getWorlds().get(0);
             Location emergency = new TARDISTimeTravel(plugin).randomDestination(p, (byte) 15, (byte) 15, (byte) 15, COMPASS.EAST, "THIS", w, false, w.getSpawnLocation());
             if (emergency != null) {
-                new TARDISInstaPreset(plugin, emergency, rs.getPreset(), id, COMPASS.EAST, p.getUniqueId().toString(), false, 50, false, rs.getChameleon_id(), rs.getChameleon_data(), false, false).buildPreset();
+                TARDISMaterialisationData tmd = new TARDISMaterialisationData();
+                tmd.setLocation(emergency);
+                tmd.setTardisID(id);
+                tmd.setDirection(COMPASS.EAST);
+                tmd.setMalfunction(false);
+                tmd.setSubmarine(false);
+                new TARDISInstaPreset(plugin, tmd, rs.getPreset(), 50, rs.getChameleon_id(), rs.getChameleon_data(), false, false, false, true).buildPreset();
                 QueryFactory qf = new QueryFactory(plugin);
                 HashMap<String, Object> wherec = new HashMap<String, Object>();
                 wherec.put("tardis_id", id);
@@ -73,7 +78,7 @@ public class TARDISEmergencyRelocation {
                 setb.put("direction", "EAST");
                 setb.put("submarine", 0);
                 qf.doUpdate("current", setb, whereb);
-                TARDISMessage.send(p, plugin.getPluginName() + "Emergency Relocation complete.");
+                TARDISMessage.send(p, "EMERGENCY_DONE");
                 HashMap<String, Object> wherea = new HashMap<String, Object>();
                 wherea.put("tardis_id", id);
                 qf.alterEnergyLevel("tardis", -plugin.getArtronConfig().getInt("travel"), wherea, p);
