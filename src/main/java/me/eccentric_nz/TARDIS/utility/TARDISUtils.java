@@ -16,8 +16,10 @@
  */
 package me.eccentric_nz.TARDIS.utility;
 
+import java.io.File;
 import java.util.HashMap;
 import java.util.List;
+import me.eccentric_nz.TARDIS.JSON.JSONObject;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetChunks;
@@ -25,6 +27,7 @@ import me.eccentric_nz.TARDIS.database.ResultSetDiskStorage;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
 import me.eccentric_nz.TARDIS.enumeration.SCHEMATIC;
+import me.eccentric_nz.TARDIS.schematic.TARDISSchematicGZip;
 import me.eccentric_nz.tardischunkgenerator.TARDISChunkGenerator;
 import org.bukkit.ChatColor;
 import org.bukkit.Chunk;
@@ -89,7 +92,34 @@ public class TARDISUtils {
     }
 
     /**
-     * Sets a block to the specified typeId and data and remembers its location,
+     * Sets a block to the specified typeId and data.
+     *
+     * @param w the world the block is in.
+     * @param x the x co-ordinate of the block.
+     * @param y the y co-ordinate of the block.
+     * @param z the z co-ordinate of the block.
+     * @param m the material to set the block to.
+     * @param d the data bit to set the block to.
+     */
+    @SuppressWarnings("deprecation")
+    public void setBlock(World w, int x, int y, int z, Material m, byte d) {
+        final Block b = w.getBlockAt(x, y, z);
+        if (m.equals(Material.CAKE_BLOCK)) { //cake -> handbrake
+            m = Material.LEVER;
+            d = (byte) 5;
+        }
+        if (m.equals(Material.MOB_SPAWNER)) { //mob spawner -> scanner button
+            m = Material.WOOD_BUTTON;
+            d = (byte) 3;
+        }
+        if (b != null) {
+            b.setType(m);
+            b.setData(d, true);
+        }
+    }
+
+    /**
+     * Sets a block to the specified type and data and remembers its location,
      * typeId and data.
      *
      * @param w the world the block is in.
@@ -118,6 +148,40 @@ public class TARDISUtils {
         plugin.getGeneralKeeper().getProtectBlockMap().put(l, id);
         // set the block
         b.setTypeId(m);
+        b.setData(d, true);
+    }
+
+    /**
+     * Sets a block to the specified type and data and remembers its location,
+     * typeId and data.
+     *
+     * @param w the world the block is in.
+     * @param x the x co-ordinate of the block.
+     * @param y the y co-ordinate of the block.
+     * @param z the z co-ordinate of the block.
+     * @param m the typeId to set the block to.
+     * @param d the data bit to set the block to.
+     * @param id the TARDIS this block belongs to.
+     */
+    @SuppressWarnings("deprecation")
+    public void setBlockAndRemember(World w, int x, int y, int z, Material m, byte d, int id) {
+        Block b = w.getBlockAt(x, y, z);
+        // save the block location so that we can protect it from damage and restore it (if it wasn't air)!
+        String l = b.getLocation().toString();
+        QueryFactory qf = new QueryFactory(plugin);
+        HashMap<String, Object> set = new HashMap<String, Object>();
+        set.put("tardis_id", id);
+        set.put("location", l);
+        // TODO convert database int values to material strings
+        String bid = b.getType().toString();
+        byte data = b.getData();
+        set.put("block", bid);
+        set.put("data", data);
+        set.put("police_box", 1);
+        qf.doInsert("blocks", set);
+        plugin.getGeneralKeeper().getProtectBlockMap().put(l, id);
+        // set the block
+        b.setType(m);
         b.setData(d, true);
     }
 
@@ -224,44 +288,16 @@ public class TARDISUtils {
      */
     public boolean checkChunk(String w, int x, int z, SCHEMATIC schm) {
         boolean chunkchk = false;
-        short[] d;
-        switch (schm) {
-            case BIGGER:
-                d = plugin.getBuildKeeper().getBiggerDimensions();
-                break;
-            case DELUXE:
-                d = plugin.getBuildKeeper().getDeluxeDimensions();
-                break;
-            case ELEVENTH:
-                d = plugin.getBuildKeeper().getEleventhDimensions();
-                break;
-            case REDSTONE:
-                d = plugin.getBuildKeeper().getRedstoneDimensions();
-                break;
-            case STEAMPUNK:
-                d = plugin.getBuildKeeper().getSteampunkDimensions();
-                break;
-            case PLANK:
-                d = plugin.getBuildKeeper().getPlankDimensions();
-                break;
-            case TOM:
-                d = plugin.getBuildKeeper().getTomDimensions();
-                break;
-            case ARS:
-                d = plugin.getBuildKeeper().getARSDimensions();
-                break;
-            case WAR:
-                d = plugin.getBuildKeeper().getWarDimensions();
-                break;
-            case CUSTOM:
-                d = plugin.getBuildKeeper().getCustomDimensions();
-                break;
-            default:
-                d = plugin.getBuildKeeper().getBudgetDimensions();
-                break;
-        }
-        int cw = roundUp(d[1], 16);
-        int cl = roundUp(d[2], 16);
+        String directory = (schm.equals(SCHEMATIC.CUSTOM)) ? "user_schematics" : "schematics";
+        String path = plugin.getDataFolder() + File.separator + directory + File.separator + schm.getFile();
+        // get JSON
+        JSONObject obj = TARDISSchematicGZip.unzip(path);
+        // get dimensions
+        JSONObject dimensions = (JSONObject) obj.get("dimensions");
+        int wid = dimensions.getInt("width");
+        int len = dimensions.getInt("length");
+        int cw = roundUp(wid, 16);
+        int cl = roundUp(len, 16);
         // check all the chunks that will be used by the schematic
         for (int cx = 0; cx < cw; cx++) {
             for (int cz = 0; cz < cl; cz++) {

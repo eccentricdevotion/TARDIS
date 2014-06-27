@@ -53,8 +53,8 @@ import me.eccentric_nz.TARDIS.enumeration.LANGUAGE;
 import me.eccentric_nz.TARDIS.files.TARDISBlockLoader;
 import me.eccentric_nz.TARDIS.files.TARDISConfiguration;
 import me.eccentric_nz.TARDIS.files.TARDISLanguageUpdater;
-import me.eccentric_nz.TARDIS.files.TARDISMakeRoomCSV;
-import me.eccentric_nz.TARDIS.files.TARDISMakeTardisCSV;
+import me.eccentric_nz.TARDIS.files.TARDISRoomMap;
+import me.eccentric_nz.TARDIS.files.TARDISFileCopier;
 import me.eccentric_nz.TARDIS.files.TARDISRecipesUpdater;
 import me.eccentric_nz.TARDIS.move.TARDISMonsterRunnable;
 import me.eccentric_nz.TARDIS.move.TARDISPortalPersister;
@@ -136,8 +136,8 @@ public class TARDIS extends JavaPlugin {
     private final TARDISBuilderInstanceKeeper buildKeeper = new TARDISBuilderInstanceKeeper();
     private final TARDISDestroyerInner interiorDestroyer = new TARDISDestroyerInner(this);
     private TARDISGeneralInstanceKeeper generalKeeper;
-    private final TARDISMakeRoomCSV roomCSV = new TARDISMakeRoomCSV(this);
-    private final TARDISMakeTardisCSV tardisCSV = new TARDISMakeTardisCSV(this);
+    private final TARDISRoomMap roomCSV = new TARDISRoomMap(this);
+    private final TARDISFileCopier tardisCSV = new TARDISFileCopier(this);
     private final TARDISPresetBuilderFactory presetBuilder = new TARDISPresetBuilderFactory(this);
     private final TARDISPresetDestroyerFactory presetDestroyer = new TARDISPresetDestroyerFactory(this);
     private final TARDISTrackerInstanceKeeper trackerKeeper = new TARDISTrackerInstanceKeeper();
@@ -395,7 +395,7 @@ public class TARDIS extends JavaPlugin {
      */
     private void loadFiles() {
         tardisCSV.loadCSV();
-        roomCSV.loadCSV();
+        roomCSV.load();
         quotesfile = tardisCSV.copy("quotes.txt");
     }
 
@@ -859,7 +859,7 @@ public class TARDIS extends JavaPlugin {
         return pm;
     }
 
-    public TARDISMakeTardisCSV getTardisCSV() {
+    public TARDISFileCopier getTardisCSV() {
         return tardisCSV;
     }
 

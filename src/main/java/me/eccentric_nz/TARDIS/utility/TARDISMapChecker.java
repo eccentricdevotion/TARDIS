@@ -21,7 +21,7 @@ import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.files.TARDISMakeTardisCSV;
+import me.eccentric_nz.TARDIS.files.TARDISFileCopier;
 import org.bukkit.ChatColor;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
@@ -58,7 +58,7 @@ public class TARDISMapChecker {
         if (!file.exists()) {
             plugin.getConsole().sendMessage(plugin.getPluginName() + ChatColor.RED + plugin.getLanguage().getString("MAPS_NOT_FOUND"));
             plugin.getConsole().sendMessage(plugin.getPluginName() + "Copying map files to the TARDIS folder...");
-            TARDISMakeTardisCSV copier = new TARDISMakeTardisCSV(plugin);
+            TARDISFileCopier copier = new TARDISFileCopier(plugin);
             copier.copy(map);
             copier.copy("map_1963.dat");
             copier.copy("map_1964.dat");

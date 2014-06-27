@@ -31,9 +31,8 @@ import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.ResultSetCondenser;
 import me.eccentric_nz.TARDIS.database.ResultSetPlayerPrefs;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
-import me.eccentric_nz.TARDIS.files.TARDISMakeRoomCSV;
-import me.eccentric_nz.TARDIS.files.TARDISRoomSchematicReader;
-import me.eccentric_nz.TARDIS.files.TARDISSchematic;
+import me.eccentric_nz.TARDIS.files.TARDISRoomMap;
+import me.eccentric_nz.TARDIS.rooms.TARDISWalls.Pair;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import org.bukkit.Material;
 import org.bukkit.command.Command;
@@ -185,8 +184,9 @@ public class TARDISRoomCommands implements CommandExecutor {
                         int block_id;
                         if (hasPrefs && block_data.length == 2 && (block_data[1].equals("1") || block_data[1].equals("8"))) {
                             mat = (block_data[1].equals("1")) ? wall : floor;
-                            int[] iddata = plugin.getTardisWalls().blocks.get(mat);
-                            block_id = iddata[0];
+                            Pair iddata = plugin.getTardisWalls().blocks.get(mat);
+                            // TODO use Material
+                            block_id = iddata.getType().getId();
                         } else {
                             block_id = bid;
                         }
@@ -247,18 +247,8 @@ public class TARDISRoomCommands implements CommandExecutor {
                     TARDISMessage.send(sender, "ROOM_SCHEMATIC_INFO" + lower);
                     return true;
                 }
-                TARDISMakeRoomCSV mrc = new TARDISMakeRoomCSV(plugin);
-                TARDISRoomSchematicReader reader = new TARDISRoomSchematicReader(plugin);
                 String basepath = plugin.getDataFolder() + File.separator + "user_schematics" + File.separator;
-                File csvfile = mrc.createFile(lower + ".csv", basepath);
-                boolean square = reader.readAndMakeRoomCSV(basepath + lower, name, false);
-                if (!square) {
-                    TARDISMessage.send(sender, "ROOM_SCHEMATIC_SIDES");
-                    return true;
-                }
-                short[] dimensions = plugin.getBuildKeeper().getRoomDimensions().get(name);
-                String[][][] schem = TARDISSchematic.schematic(csvfile, dimensions[0], dimensions[1], dimensions[2]);
-                plugin.getBuildKeeper().getRoomSchematics().put(name, schem);
+                new TARDISRoomMap(plugin).makeRoomMap(basepath + lower, name);
                 plugin.getRoomsConfig().set("rooms." + name + ".enabled", false);
                 plugin.getRoomsConfig().set("rooms." + name + ".user", true);
                 try {

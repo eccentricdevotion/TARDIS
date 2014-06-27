@@ -25,6 +25,7 @@ import me.eccentric_nz.TARDIS.builders.TARDISBuildData;
 import me.eccentric_nz.TARDIS.builders.TARDISSeedBlockProcessor;
 import me.eccentric_nz.TARDIS.database.ResultSetPlayerPrefs;
 import me.eccentric_nz.TARDIS.enumeration.SCHEMATIC;
+import me.eccentric_nz.TARDIS.rooms.TARDISWalls.Pair;
 import me.eccentric_nz.TARDIS.rooms.TARDISWallsLookup;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import org.bukkit.DyeColor;
@@ -79,16 +80,16 @@ public class TARDISSeedBlockListener implements Listener {
         if (im.getDisplayName().equals("§6TARDIS Seed Block")) {
             List<String> lore = im.getLore();
             SCHEMATIC schm = SCHEMATIC.valueOf(lore.get(0));
-            TwoValues wall_data = getValuesFromWallString(lore.get(1));
-            TwoValues floor_data = getValuesFromWallString(lore.get(2));
+            Pair wall_data = getValuesFromWallString(lore.get(1));
+            Pair floor_data = getValuesFromWallString(lore.get(2));
             TwoValues cham_data = getValuesFromString(lore.get(3));
             TwoValues lamp_data = getValuesFromString(lore.get(4));
             TARDISBuildData seed = new TARDISBuildData();
             seed.setSchematic(schm);
-            seed.setWall_id(wall_data.getId());
-            seed.setWall_data(wall_data.getData());
-            seed.setFloor_id(floor_data.getId());
-            seed.setFloor_data(floor_data.getData());
+            seed.setWallType(wall_data.getType());
+            seed.setWallData(wall_data.getData());
+            seed.setFloorType(floor_data.getType());
+            seed.setFloorData(floor_data.getData());
             seed.setBox_id(cham_data.getId());
             seed.setBox_data(cham_data.getData());
             seed.setLamp(lamp_data.getId());
@@ -120,8 +121,8 @@ public class TARDISSeedBlockListener implements Listener {
                 im.setDisplayName("§6TARDIS Seed Block");
                 List<String> lore = new ArrayList<String>();
                 lore.add(data.getSchematic().toString());
-                lore.add("Walls: " + twl.wall_lookup.get(data.getWall_id() + ":" + data.getWall_data()));
-                lore.add("Floors: " + twl.wall_lookup.get(data.getFloor_id() + ":" + data.getFloor_data()));
+                lore.add("Walls: " + twl.wall_lookup.get(data.getWallType() + ":" + data.getWallData()));
+                lore.add("Floors: " + twl.wall_lookup.get(data.getFloorType() + ":" + data.getFloorData()));
                 // do some funky stuff to get data values for wool/stained glass & clay/wood/log/log_2
                 if (hasColour.contains(data.getBox_id())) {
                     switch (data.getBox_id()) {
@@ -220,13 +221,9 @@ public class TARDISSeedBlockListener implements Listener {
      * @param str the lore stored in the TARDIS Seed block's Item Meta
      * @return an int and a byte stored in a simple data class
      */
-    private TwoValues getValuesFromWallString(String str) {
-        TwoValues data = new TwoValues();
+    private Pair getValuesFromWallString(String str) {
         String[] split = str.split(": ");
-        int[] values = plugin.getTardisWalls().blocks.get(split[1]);
-        data.setId(values[0]);
-        data.setData((byte) values[1]);
-        return data;
+        return plugin.getTardisWalls().blocks.get(split[1]);
     }
 
     private byte getWoodDataType(Material m, String w) {

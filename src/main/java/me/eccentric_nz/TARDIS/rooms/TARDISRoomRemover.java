@@ -16,10 +16,13 @@
  */
 package me.eccentric_nz.TARDIS.rooms;
 
+import java.io.File;
 import java.util.HashMap;
+import me.eccentric_nz.TARDIS.JSON.JSONObject;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
+import me.eccentric_nz.TARDIS.schematic.TARDISSchematicGZip;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
@@ -65,17 +68,24 @@ public class TARDISRoomRemover {
         // get start locations
         int sx, sy, sz, ex, ey, ez, downy, upy;
         // calculate values for downy and upy from schematic dimensions / config
-        short[] dimensions = plugin.getBuildKeeper().getRoomDimensions().get(r);
+        String directory = (plugin.getRoomsConfig().getBoolean("rooms." + r + ".user")) ? "user_schematics" : "schematics";
+        String path = plugin.getDataFolder() + File.separator + directory + File.separator + r.toLowerCase() + ".tschm";
+        // get JSON
+        JSONObject obj = TARDISSchematicGZip.unzip(path);
+        // get dimensions
+        JSONObject dimensions = (JSONObject) obj.get("dimensions");
+        int h = dimensions.getInt("height");
+        int wid = dimensions.getInt("width");
         downy = Math.abs(plugin.getRoomsConfig().getInt("rooms." + r + ".offset"));
-        upy = dimensions[0] - (downy + 1);
-        int xzoffset = (dimensions[1] / 2);
+        upy = h - (downy + 1);
+        int xzoffset = (wid / 2);
         switch (d) {
             case NORTH:
                 l.setX(l.getX() - xzoffset);
-                l.setZ(l.getZ() - dimensions[1]);
+                l.setZ(l.getZ() - wid);
                 break;
             case WEST:
-                l.setX(l.getX() - dimensions[1]);
+                l.setX(l.getX() - wid);
                 l.setZ(l.getZ() - xzoffset);
                 break;
             case SOUTH:
@@ -86,9 +96,9 @@ public class TARDISRoomRemover {
                 break;
         }
         sx = l.getBlockX();
-        ex = l.getBlockX() + (dimensions[1] - 1);
+        ex = l.getBlockX() + (wid - 1);
         sz = l.getBlockZ();
-        ez = l.getBlockZ() + (dimensions[1] - 1);
+        ez = l.getBlockZ() + (wid - 1);
         sy = l.getBlockY() + upy;
         ey = l.getBlockY() - downy;
         World w = l.getWorld();

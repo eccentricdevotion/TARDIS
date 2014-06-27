@@ -30,6 +30,7 @@ import me.eccentric_nz.TARDIS.database.ResultSetTravellers;
 import me.eccentric_nz.TARDIS.enumeration.SCHEMATIC;
 import me.eccentric_nz.TARDIS.rooms.TARDISCondenserData;
 import me.eccentric_nz.TARDIS.rooms.TARDISSeedData;
+import me.eccentric_nz.TARDIS.rooms.TARDISWalls.Pair;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -137,9 +138,10 @@ public class TARDISRoomCommand {
                 int block_id;
                 if (hasPrefs && block_data.length == 2 && (block_data[1].equals("1") || block_data[1].equals("8"))) {
                     mat = (block_data[1].equals("1")) ? wall : floor;
-                    int[] iddata = plugin.getTardisWalls().blocks.get(mat);
-                    bdata = String.format("%d", iddata[0]);
-                    block_id = iddata[0];
+                    // TODO use Material
+                    Pair iddata = plugin.getTardisWalls().blocks.get(mat);
+                    bdata = String.format("%d", iddata.getType().getId());
+                    block_id = iddata.getType().getId();
                 } else {
                     bdata = String.format("%d", bid);
                     block_id = bid;

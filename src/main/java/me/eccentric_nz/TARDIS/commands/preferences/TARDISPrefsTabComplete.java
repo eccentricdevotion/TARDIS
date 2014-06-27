@@ -23,6 +23,7 @@ import java.util.HashMap;
 import java.util.List;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.rooms.TARDISWalls;
+import me.eccentric_nz.TARDIS.rooms.TARDISWalls.Pair;
 import org.bukkit.Material;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
@@ -44,7 +45,7 @@ public class TARDISPrefsTabComplete implements TabCompleter {
 
     public TARDISPrefsTabComplete(TARDIS plugin) {
         this.plugin = plugin;
-        HashMap<String, int[]> map = new TARDISWalls().blocks;
+        HashMap<String, Pair> map = new TARDISWalls().blocks;
         List<String> mats = new ArrayList<String>();
         for (String key : map.keySet()) {
             mats.add(key);

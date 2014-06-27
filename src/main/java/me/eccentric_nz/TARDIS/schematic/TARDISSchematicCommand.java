@@ -99,7 +99,7 @@ public class TARDISSchematicCommand implements CommandExecutor {
                     player.sendMessage(plugin.getPluginName() + "Region must be a square!");
                     return true;
                 }
-                if (width % 16 != 0 || length % 16 != 0) {
+                if ((width % 16 != 0 || length % 16 != 0) && !args[1].equals("zero")) {
                     player.sendMessage(plugin.getPluginName() + "Length of sides must be a multiple of 16 blocks!");
                     return true;
                 }

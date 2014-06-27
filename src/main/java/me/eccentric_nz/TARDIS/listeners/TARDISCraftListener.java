@@ -108,8 +108,8 @@ public class TARDISCraftListener implements Listener {
                             im.setDisplayName("§6TARDIS Seed Block");
                             List<String> lore = new ArrayList<String>();
                             lore.add(t.get(m7));
-                            lore.add("Walls: " + twl.wall_lookup.get(inv.getItem(6).getTypeId() + ":" + inv.getItem(6).getData().getData()));
-                            lore.add("Floors: " + twl.wall_lookup.get(inv.getItem(9).getTypeId() + ":" + inv.getItem(9).getData().getData()));
+                            lore.add("Walls: " + twl.wall_lookup.get(inv.getItem(6).getType().toString() + ":" + inv.getItem(6).getData().getData()));
+                            lore.add("Floors: " + twl.wall_lookup.get(inv.getItem(9).getType().toString() + ":" + inv.getItem(9).getData().getData()));
                             // do some funky stuff to get data values for wool/stained glass & clay/wood/log/log_2
                             if (hasColour.contains(m8)) {
                                 switch (m8) {
@@ -190,7 +190,7 @@ public class TARDISCraftListener implements Listener {
                     break;
                 default:
                     // must be a valid wall / floor block
-                    if (!twl.wall_lookup.containsKey(id + ":" + is.getData().getData())) {
+                    if (!twl.wall_lookup.containsKey(m.toString() + ":" + is.getData().getData())) {
                         return false;
                     }
                     break;

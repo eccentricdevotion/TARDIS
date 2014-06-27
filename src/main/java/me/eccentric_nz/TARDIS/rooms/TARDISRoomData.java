@@ -16,8 +16,10 @@
  */
 package me.eccentric_nz.TARDIS.rooms;
 
+import me.eccentric_nz.TARDIS.JSON.JSONObject;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
 import org.bukkit.Location;
+import org.bukkit.Material;
 import org.bukkit.block.Block;
 
 /**
@@ -35,10 +37,10 @@ public class TARDISRoomData {
     String room;
     Location location;
     Block block;
-    String[][][] schematic;
-    short[] dimensions;
-    int middle_id, floor_id, x, z, tardis_id;
-    byte middle_data, floor_data;
+    JSONObject schematic;
+    int tardis_id;
+    Material middleType, floorType;
+    byte middleData, floorData;
 
     public TARDISRoomData() {
     }
@@ -75,68 +77,44 @@ public class TARDISRoomData {
         this.block = block;
     }
 
-    public String[][][] getSchematic() {
+    public JSONObject getSchematic() {
         return schematic;
     }
 
-    public void setSchematic(String[][][] schematic) {
+    public void setSchematic(JSONObject schematic) {
         this.schematic = schematic;
     }
 
-    public short[] getDimensions() {
-        return dimensions;
+    public Material getMiddleType() {
+        return middleType;
     }
 
-    public void setDimensions(short[] dimensions) {
-        this.dimensions = dimensions;
+    public void setMiddleType(Material middleType) {
+        this.middleType = middleType;
     }
 
-    public int getMiddle_id() {
-        return middle_id;
+    public byte getMiddleData() {
+        return middleData;
     }
 
-    public void setMiddle_id(int middle_id) {
-        this.middle_id = middle_id;
+    public void setMiddleData(byte middleData) {
+        this.middleData = middleData;
     }
 
-    public byte getMiddle_data() {
-        return middle_data;
+    public Material getFloorType() {
+        return floorType;
     }
 
-    public void setMiddle_data(byte middle_data) {
-        this.middle_data = middle_data;
+    public void setFloorType(Material floorType) {
+        this.floorType = floorType;
     }
 
-    public int getFloor_id() {
-        return floor_id;
+    public byte getFloorData() {
+        return floorData;
     }
 
-    public void setFloor_id(int floor_id) {
-        this.floor_id = floor_id;
-    }
-
-    public byte getFloor_data() {
-        return floor_data;
-    }
-
-    public void setFloor_data(byte floor_data) {
-        this.floor_data = floor_data;
-    }
-
-    public int getX() {
-        return x;
-    }
-
-    public void setX(int x) {
-        this.x = x;
-    }
-
-    public int getZ() {
-        return z;
-    }
-
-    public void setZ(int z) {
-        this.z = z;
+    public void setFloorData(byte floorData) {
+        this.floorData = floorData;
     }
 
     public int getTardis_id() {

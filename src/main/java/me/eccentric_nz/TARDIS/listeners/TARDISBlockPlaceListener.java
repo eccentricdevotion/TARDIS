@@ -30,6 +30,7 @@ import me.eccentric_nz.TARDIS.database.ResultSetPlayerPrefs;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
 import me.eccentric_nz.TARDIS.enumeration.SCHEMATIC;
+import me.eccentric_nz.TARDIS.rooms.TARDISWalls.Pair;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import org.bukkit.ChatColor;
 import org.bukkit.Chunk;
@@ -96,7 +97,7 @@ public class TARDISBlockPlaceListener implements Listener {
         // only listen for redstone torches
         if (block.getType() == Material.REDSTONE_TORCH_ON) {
             Block blockBelow = block.getRelative(BlockFace.DOWN);
-            int middle_id = blockBelow.getTypeId();
+            Material middle_type = blockBelow.getType();
             byte middle_data = blockBelow.getData();
             Block blockBottom = blockBelow.getRelative(BlockFace.DOWN);
             // only continue if the redstone torch is placed on top of [JUST ABOUT ANY] BLOCK on top of an IRON/GOLD/DIAMOND_BLOCK
@@ -267,8 +268,8 @@ public class TARDISBlockPlaceListener implements Listener {
                         }
                         set.put("lastuse", now);
                         HashMap<String, Object> setpp = new HashMap<String, Object>();
-                        if (middle_id == 22) {
-                            set.put("middle_id", 35);
+                        if (middle_type.equals(Material.LAPIS_BLOCK)) {
+                            set.put("middle_id", "WOOL");
                             if (blockBottom.getType().equals(Material.EMERALD_BLOCK)) {
                                 set.put("middle_data", 8);
                                 setpp.put("wall", "LIGHT_GREY_WOOL");
@@ -277,10 +278,10 @@ public class TARDISBlockPlaceListener implements Listener {
                                 setpp.put("wall", "ORANGE_WOOL");
                             }
                         } else {
-                            set.put("middle_id", middle_id);
+                            set.put("middle_id", middle_type.toString());
                             set.put("middle_data", middle_data);
                             // determine wall block material from HashMap
-                            setpp.put("wall", getWallKey(middle_id, (int) middle_data));
+                            setpp.put("wall", getWallKey(middle_type, middle_data));
                         }
                         final int lastInsertId = qf.doSyncInsert("tardis", set);
                         // insert/update  player prefs
@@ -320,7 +321,7 @@ public class TARDISBlockPlaceListener implements Listener {
                         pbd.setSubmarine(isSub(blockBottom));
                         pbd.setTardisID(lastInsertId);
                         plugin.getPresetBuilder().buildPreset(pbd);
-                        plugin.getInteriorBuilder().buildInner(schm, chunkworld, lastInsertId, player, middle_id, middle_data, 35, (byte) 8, tips);
+                        plugin.getInteriorBuilder().buildInner(schm, chunkworld, lastInsertId, player, middle_type, middle_data, Material.WOOL, (byte) 8, tips);
                         // set achievement completed
                         if (player.hasPermission("tardis.book")) {
                             HashMap<String, Object> seta = new HashMap<String, Object>();
@@ -364,10 +365,10 @@ public class TARDISBlockPlaceListener implements Listener {
         }
     }
 
-    private String getWallKey(int i, int d) {
-        for (Map.Entry<String, int[]> entry : plugin.getTardisWalls().blocks.entrySet()) {
-            int[] value = entry.getValue();
-            if (value[0] == i && value[1] == d) {
+    private String getWallKey(Material i, byte d) {
+        for (Map.Entry<String, Pair> entry : plugin.getTardisWalls().blocks.entrySet()) {
+            Pair value = entry.getValue();
+            if (value.getType().equals(i) && value.getData() == d) {
                 return entry.getKey();
             }
         }

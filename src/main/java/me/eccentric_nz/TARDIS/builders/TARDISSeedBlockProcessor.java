@@ -26,10 +26,13 @@ import me.eccentric_nz.TARDIS.database.ResultSetPlayerPrefs;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
 import me.eccentric_nz.TARDIS.enumeration.SCHEMATIC;
+import me.eccentric_nz.TARDIS.rooms.TARDISWalls;
+import me.eccentric_nz.TARDIS.rooms.TARDISWalls.Pair;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import org.bukkit.ChatColor;
 import org.bukkit.Chunk;
 import org.bukkit.Location;
+import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.block.BlockFace;
 import org.bukkit.entity.Player;
@@ -201,10 +204,10 @@ public class TARDISSeedBlockProcessor {
                 set.put("chunk", chun);
                 set.put("size", schm.name());
                 HashMap<String, Object> setpp = new HashMap<String, Object>();
-                int middle_id = seed.getWall_id();
-                byte middle_data = seed.getWall_data();
-                int floor_id = seed.getFloor_id();
-                byte floor_data = seed.getFloor_data();
+                Material middle_id = seed.getWallType();
+                byte middle_data = seed.getWallData();
+                Material floor_id = seed.getFloorType();
+                byte floor_data = seed.getFloorData();
                 int c_id = seed.getBox_id();
                 byte c_data = seed.getBox_data();
                 set.put("middle_id", middle_id);
@@ -219,8 +222,8 @@ public class TARDISSeedBlockProcessor {
                 }
                 set.put("lastuse", now);
                 // determine wall block material from HashMap
-                setpp.put("wall", getWallKey(middle_id, (int) middle_data));
-                setpp.put("floor", getWallKey(floor_id, (int) floor_data));
+                setpp.put("wall", getWallKey(middle_id, middle_data));
+                setpp.put("floor", getWallKey(floor_id, floor_data));
                 setpp.put("lamp", seed.getLamp());
                 final int lastInsertId = qf.doSyncInsert("tardis", set);
                 // insert/update  player prefs
@@ -306,10 +309,10 @@ public class TARDISSeedBlockProcessor {
         }
     }
 
-    private String getWallKey(int i, int d) {
-        for (Map.Entry<String, int[]> entry : plugin.getTardisWalls().blocks.entrySet()) {
-            int[] value = entry.getValue();
-            if (value[0] == i && value[1] == d) {
+    private String getWallKey(Material i, byte d) {
+        for (Map.Entry<String, TARDISWalls.Pair> entry : plugin.getTardisWalls().blocks.entrySet()) {
+            Pair value = entry.getValue();
+            if (value.getType().equals(i) && value.getData() == d) {
                 return entry.getKey();
             }
         }

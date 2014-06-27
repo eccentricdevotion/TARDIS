@@ -32,6 +32,7 @@ import me.eccentric_nz.TARDIS.database.ResultSetCondenser;
 import me.eccentric_nz.TARDIS.database.ResultSetPlayerPrefs;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import me.eccentric_nz.TARDIS.database.ResultSetTravellers;
+import me.eccentric_nz.TARDIS.rooms.TARDISWalls.Pair;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -538,11 +539,7 @@ public class TARDISARSMethods {
         Set<String> names = plugin.getRoomsConfig().getConfigurationSection("rooms").getKeys(false);
         for (String cr : names) {
             if (plugin.getRoomsConfig().getBoolean("rooms." + cr + ".user") && plugin.getRoomsConfig().getBoolean("rooms." + cr + ".enabled")) {
-                // check room dimensions
-                short[] dim = plugin.getBuildKeeper().getRoomDimensions().get(cr);
-                if (dim[0] <= (short) 16 && dim[1] == (short) 16) {
-                    crooms.add(cr);
-                }
+                crooms.add(cr);
             }
         }
         return crooms;
@@ -571,16 +568,16 @@ public class TARDISARSMethods {
             wall = rsp.getWall();
             floor = rsp.getFloor();
         }
-        HashMap<Integer, Integer> item_counts = new HashMap<Integer, Integer>();
+        HashMap<String, Integer> item_counts = new HashMap<String, Integer>();
         for (Map.Entry<String, Integer> entry : roomBlocks.entrySet()) {
             String[] block_data = entry.getKey().split(":");
-            int bid = plugin.getUtils().parseInt(block_data[0]);
+            String bid = block_data[0];
             String mat;
-            int bdata;
+            String bdata;
             if (hasPrefs && block_data.length == 2 && (block_data[1].equals("1") || block_data[1].equals("8"))) {
                 mat = (block_data[1].equals("1")) ? wall : floor;
-                int[] iddata = plugin.getTardisWalls().blocks.get(mat);
-                bdata = iddata[0];
+                Pair iddata = plugin.getTardisWalls().blocks.get(mat);
+                bdata = iddata.getType().toString();
             } else {
                 bdata = bid;
             }
@@ -592,7 +589,7 @@ public class TARDISARSMethods {
                 item_counts.put(bdata, required);
             }
         }
-        for (Map.Entry<Integer, Integer> map : item_counts.entrySet()) {
+        for (Map.Entry<String, Integer> map : item_counts.entrySet()) {
             HashMap<String, Object> wherec = new HashMap<String, Object>();
             wherec.put("tardis_id", id);
             wherec.put("block_data", map.getKey());
