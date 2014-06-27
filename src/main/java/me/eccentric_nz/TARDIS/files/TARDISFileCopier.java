@@ -40,13 +40,9 @@ public class TARDISFileCopier {
     }
 
     /**
-     * Loads CSV data into a 3D array for use by the TARDIS builder classes. If
-     * the required files are not present in the TARDIS plugin folder, then they
-     * are created. The WorldEdit schematics are first read and converted to CSV
-     * format, then the CSV data is loaded into an array. This allows server
-     * administrators to use their own schematic files.
+     * Copies files for use by the TARDIS builder classes.
      */
-    public void loadCSV() {
+    public void copyFiles() {
         // make directories if they don't exist
         File schematicDir = new File(plugin.getDataFolder() + File.separator + "schematics");
         if (!schematicDir.exists()) {
@@ -67,7 +63,7 @@ public class TARDISFileCopier {
             }
         }
         // TARDIS schematics supplied by Lord_Rahl and killeratnight at mcnovus.net
-        // load schematic files - copy the defaults if they don't exist
+        // load schematic files - copy the default files if they don't exist
         String basepath = plugin.getDataFolder() + File.separator + "schematics" + File.separator;
         String userbasepath = plugin.getDataFolder() + File.separator + "user_schematics" + File.separator;
         String arsnstr = basepath + SCHEMATIC.ARS.getFile();
