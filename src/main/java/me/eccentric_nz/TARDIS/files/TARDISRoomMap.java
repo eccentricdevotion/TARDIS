@@ -112,7 +112,6 @@ public class TARDISRoomMap {
      */
     public void makeRoomMap(String fileStr, String s) {
         HashMap<String, Integer> blockIDs = new HashMap<String, Integer>();
-        plugin.debug("Loading schematic: " + fileStr + ".tschm");
         File f = new File(fileStr + ".tschm");
         if (!f.exists()) {
             plugin.debug(plugin.getPluginName() + "Could not find a schematic with that name!");
