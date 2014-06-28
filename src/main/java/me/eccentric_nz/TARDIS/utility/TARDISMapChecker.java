@@ -82,7 +82,7 @@ public class TARDISMapChecker {
                     Set<OfflinePlayer> ops = plugin.getServer().getOperators();
                     for (OfflinePlayer olp : ops) {
                         if (olp.isOnline()) {
-                            Player p = (Player) olp;
+                            Player p = olp.getPlayer();
                             TARDISMessage.send(p, "MAPS_NOT_FOUND");
                         }
                     }
