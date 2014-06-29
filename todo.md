@@ -13,17 +13,9 @@
 5. Remote locking, advanced hide and rebuild via remote key
 6. TARDIS creation area config
 7. More MCPatcher texture support
-8. Add snow to Diamond Disruptor Sonic Screwdriver
-9. Server condenser
-10. Add `/tpa` equivalent to travel to player's WorldGuard/Towny/Factions/GriefPrevention region
-11. Create a TARDIS `json` schematic format, convert current code to use the new format - _started_
-    * region selection via wand - __done__
-    * record dimensions - __done__
-    * record block type and data - __done__
-    * record player's relative location - __done__
-    * schematic creation and compression/decompression - __done__
-    * load/paste schematics - __done__
-    * add checks to make sure region is square, a multiple of 16 - __done__
+8. Server condenser
+9. Add `/tpa` equivalent to travel to player's WorldGuard/Towny/Factions/GriefPrevention region
+10. Create a TARDIS `json` schematic format
     * add check to make sure player is facing the correct direction?
     * allow custom schematic to be ARS compatible
 
