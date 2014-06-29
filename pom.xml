@@ -388,17 +388,6 @@
             </exclusions>
         </dependency>
         <dependency>
-            <groupId>net.pekkit</groupId>
-            <artifactId>Project_Rassilon</artifactId>
-            <version>1.2.3</version>
-            <exclusions>
-                <exclusion>
-                    <artifactId>Vault</artifactId>
-                    <groupId>net.milkbowl.vault</groupId>
-                </exclusion>
-            </exclusions>
-        </dependency>
-        <dependency>
             <groupId>me.confuser</groupId>
             <artifactId>BarAPI</artifactId>
             <version>3.1</version>
