@@ -530,7 +530,7 @@ public class TARDISRoomRunnable implements Runnable {
     }
 
     private boolean checkRoomNextDoor(Block b) {
-        if (b.getLocation().getBlockZ() > (resetz + 10) && !b.getRelative(BlockFace.EAST).getType().equals(Material.AIR)) {
+        if (b.getLocation().getBlockZ() < (resetz + 10) && !b.getRelative(BlockFace.EAST).getType().equals(Material.AIR)) {
             return true;
         } else if (!b.getRelative(BlockFace.SOUTH).getType().equals(Material.AIR)) {
             return true;
