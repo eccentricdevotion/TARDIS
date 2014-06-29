@@ -129,29 +129,29 @@ public class TARDISRoomCommand {
                 wall = rsp.getWall();
                 floor = rsp.getFloor();
             }
-            HashMap<Integer, Integer> item_counts = new HashMap<Integer, Integer>();
+            HashMap<String, Integer> item_counts = new HashMap<String, Integer>();
             for (Map.Entry<String, Integer> entry : roomBlocks.entrySet()) {
                 String[] block_data = entry.getKey().split(":");
-                int bid = plugin.getUtils().parseInt(block_data[0]);
+                String bid = block_data[0];
                 String mat;
-                String bdata;
-                int block_id;
+                String bkey;
+                String block_id;
                 if (hasPrefs && block_data.length == 2 && (block_data[1].equals("1") || block_data[1].equals("8"))) {
                     mat = (block_data[1].equals("1")) ? wall : floor;
                     // TODO use Material
                     Pair iddata = plugin.getTardisWalls().blocks.get(mat);
-                    bdata = String.format("%d", iddata.getType().getId());
-                    block_id = iddata.getType().getId();
+                    bkey = iddata.getType().toString();
+                    block_id = iddata.getType().toString();
                 } else {
-                    bdata = String.format("%d", bid);
+                    bkey = bid;
                     block_id = bid;
                 }
                 int tmp = Math.round((entry.getValue() / 100.0F) * plugin.getConfig().getInt("growth.rooms_condenser_percent"));
                 int required = (tmp > 0) ? tmp : 1;
-                if (blockIDCount.containsKey(bdata)) {
-                    blockIDCount.put(bdata, blockIDCount.get(bdata) + required);
+                if (blockIDCount.containsKey(bkey)) {
+                    blockIDCount.put(bkey, blockIDCount.get(bkey) + required);
                 } else {
-                    blockIDCount.put(bdata, required);
+                    blockIDCount.put(bkey, required);
                 }
                 if (item_counts.containsKey(block_id)) {
                     item_counts.put(block_id, item_counts.get(block_id) + required);
@@ -159,7 +159,7 @@ public class TARDISRoomCommand {
                     item_counts.put(block_id, required);
                 }
             }
-            for (Map.Entry<Integer, Integer> map : item_counts.entrySet()) {
+            for (Map.Entry<String, Integer> map : item_counts.entrySet()) {
                 HashMap<String, Object> wherec = new HashMap<String, Object>();
                 wherec.put("tardis_id", id);
                 wherec.put("block_data", map.getKey());

@@ -573,20 +573,20 @@ public class TARDISARSMethods {
             String[] block_data = entry.getKey().split(":");
             String bid = block_data[0];
             String mat;
-            String bdata;
+            String bkey;
             if (hasPrefs && block_data.length == 2 && (block_data[1].equals("1") || block_data[1].equals("8"))) {
                 mat = (block_data[1].equals("1")) ? wall : floor;
                 Pair iddata = plugin.getTardisWalls().blocks.get(mat);
-                bdata = iddata.getType().toString();
+                bkey = iddata.getType().toString();
             } else {
-                bdata = bid;
+                bkey = bid;
             }
             int tmp = Math.round((entry.getValue() / 100.0F) * plugin.getConfig().getInt("growth.rooms_condenser_percent"));
             int required = (tmp > 0) ? tmp : 1;
-            if (item_counts.containsKey(bdata)) {
-                item_counts.put(bdata, (item_counts.get(bdata) + required));
+            if (item_counts.containsKey(bkey)) {
+                item_counts.put(bkey, (item_counts.get(bkey) + required));
             } else {
-                item_counts.put(bdata, required);
+                item_counts.put(bkey, required);
             }
         }
         for (Map.Entry<String, Integer> map : item_counts.entrySet()) {

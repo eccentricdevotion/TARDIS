@@ -16,8 +16,10 @@
 8. Server condenser
 9. Add `/tpa` equivalent to travel to player's WorldGuard/Towny/Factions/GriefPrevention region
 10. Create a TARDIS `json` schematic format
+    * Fix `rooms_require_blocks` database entries and player messages
     * add check to make sure player is facing the correct direction?
     * allow custom schematic to be ARS compatible
+11. Bow-ties and 3-D glasses
 
 ###I couldn't really be bothered
 1. HADS + explosions + fireballs + lava
