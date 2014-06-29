@@ -75,6 +75,7 @@ public class TARDISRoomRunnable implements Runnable {
     HashMap<Block, Byte> redstoneTorchblocks = new HashMap<Block, Byte>();
     HashMap<Block, Byte> mushroomblocks = new HashMap<Block, Byte>();
     byte[] repeaterData = new byte[6];
+    HashMap<Integer, Integer> repeaterOrder = new HashMap<Integer, Integer>();
     JSONArray arr;
 
     public TARDISRoomRunnable(TARDIS plugin, TARDISRoomData roomData, Player p) {
@@ -97,6 +98,10 @@ public class TARDISRoomRunnable implements Runnable {
         this.repeaterData[3] = (byte) 2;
         this.repeaterData[4] = (byte) 0;
         this.repeaterData[5] = (byte) 3;
+        this.repeaterOrder.put(2, 3);
+        this.repeaterOrder.put(3, 2);
+        this.repeaterOrder.put(4, 5);
+        this.repeaterOrder.put(5, 4);
         this.notThese.add(Material.COCOA);
         this.notThese.add(Material.PISTON_EXTENSION);
         this.notThese.add(Material.REDSTONE_TORCH_ON);
@@ -480,7 +485,7 @@ public class TARDISRoomRunnable implements Runnable {
                             loc_str = plugin.getUtils().makeLocationStr(world, startx, starty, startz);
                             break;
                         case HUGE_MUSHROOM_2: // repeater
-                            ctype = r;
+                            ctype = repeaterOrder.get(r);
                             loc_str = world.getName() + ":" + startx + ":" + starty + ":" + startz;
                             Block rb = world.getBlockAt(startx, starty, startz);
                             mushroomblocks.put(rb, repeaterData[r]);

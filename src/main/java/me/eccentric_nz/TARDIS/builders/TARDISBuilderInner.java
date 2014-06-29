@@ -517,19 +517,22 @@ public class TARDISBuilderInner {
                         // save repeater location
                         if (j < 6) {
                             String repeater = world.getName() + ":" + x + ":" + y + ":" + z;
-                            qf.insertSyncControl(dbID, j, repeater, 0);
                             switch (j) {
                                 case 2:
                                     postRepeaterBlocks.put(world.getBlockAt(x, y, z), (byte) 1);
+                                    qf.insertSyncControl(dbID, 3, repeater, 0);
                                     break;
                                 case 3:
                                     postRepeaterBlocks.put(world.getBlockAt(x, y, z), (byte) 2);
+                                    qf.insertSyncControl(dbID, 2, repeater, 0);
                                     break;
                                 case 4:
                                     postRepeaterBlocks.put(world.getBlockAt(x, y, z), (byte) 0);
+                                    qf.insertSyncControl(dbID, 5, repeater, 0);
                                     break;
                                 default:
                                     postRepeaterBlocks.put(world.getBlockAt(x, y, z), (byte) 3);
+                                    qf.insertSyncControl(dbID, 4, repeater, 0);
                                     break;
                             }
                             j++;

@@ -17,7 +17,6 @@
 9. Server condenser
 10. Add `/tpa` equivalent to travel to player's WorldGuard/Towny/Factions/GriefPrevention region
 11. Create a TARDIS `json` schematic format, convert current code to use the new format - _started_
-    * fix repeater control positions in console
     * fix bedrock in doorway not being replaced with wall block (or AIR if a room is next door) _started_
     * region selection via wand - __done__
     * record dimensions - __done__
