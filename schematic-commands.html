@@ -1,0 +1,49 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="chrome=1">
+<title>TARDIS: Schematics</title>
+<link rel="stylesheet" href="stylesheets/styles.css">
+<link rel="stylesheet" href="stylesheets/pygment_trac.css">
+<script src="javascripts/scale.fix.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+<!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+</head>
+<body>
+<div class="wrapper">
+	<header>
+		<h1>TARDIS</h1>
+		<p>A Bukkit plugin for all Doctor Who fans &mdash; create and use a TARDIS! It&rsquo;s bigger on the inside!</p>
+		<p class="view"><a href="https://github.com/eccentricdevotion/TARDIS">View the Project on GitHub <small>eccentricdevotion/TARDIS</small></a></p>
+		<ul>
+			<li><a href="/TARDIS/">Back <strong>home</strong></a></li>
+			<li><a href="contents.html"><strong>Contents</strong> page</a></li>
+		</ul>
+	</header>
+	<section>
+		<h1>TARDIS Schematic command</h1>
+		<p>As of version 3.0-beta-1, TARDIS now uses its own JSON schematic format. To create a TARDIS schematic (.tschm) file, you use the <code>/tardisschematic</code> command.</p>
+		<h2>Command use</h2>
+		<pre><code>/tardisschematic [save|load|paste] [name]</code></pre>
+		<h4>Saving</h4>
+		<p>I order to use the <code>save</code> argument, you must first define the schematic region start and end points with the TARDIS schematic wand (a bone by default, can be changed in the config).</p>
+		<pre><code>/tardisschematic save custom</code></pre>
+		<h4>Loading</h4>
+		<p>To use the <code>load</code> argument, the specified file <code>[name]</code> must be in the <em>plugins/TARDIS/user_schematics</em> folder. You don&rsquo;t need to add the file extension.</p>
+		<pre><code>/tardisschematic load custom</code></pre>
+		<h4>Pasting</h4>
+		<p>Once loaded the schematic can be pasted back into the world with the <code>paste</code> argument.</p>
+		<pre><code>/tardisschematic paste</code></pre>
+		<p><strong>Note:</strong> While it is posiible to paste schematics, it is still recommended to use a plugin such as WorldEdit to do this sort of work.</p>
+	</section>
+</div>
+<footer>
+	<p>Project maintained by <a href="https://github.com/eccentricdevotion">eccentricdevotion</a></p>
+	<p>Hosted on GitHub Pages &mdash; Theme by <a href="https://github.com/orderedlist">orderedlist</a></p>
+</footer>
+<!--[if !IE]><script>fixScale(document);</script><![endif]-->
+</body>
+</html>

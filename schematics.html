@@ -26,10 +26,20 @@
 	<section>
 		<p><a href="#video">Jump to video</a></p>
 		<h1>Schematics</h1>
-		<p>You can create a custom schematic for the inner TARDIS, but there are a few things you need to know before you jump right in!</p>
+		<h2>New schematic format</h2> 
+		<p>As of version 3.0-beta-1, TARDIS now uses its own JSON schematic format. The method for creating schematics remains basically the same, with the following differences:</p>
+		<ul>
+			<li>The schematic region start and end points must be defined with the TARDIS schematic wand (a bone by default, can be changed in the config)</li>
+			<li>RIGHT-clicking with the wand sets the start point</li>
+			<li>LEFT-clicking with the wand sets the end point</li>
+			<li>Once the region is defined, use the <code>/tardisschematic</code> command (<code>/ts</code> for short) to save the schematic &mdash; see the <a href="schematic-commands.html">TARDIS Schematic commands</a> page for more details</li>
+			<li>You will be warned if the schematic region is not square and a multiple of 16 blocks</li>
+			<li>TARDIS schematic files have the extension <code>.tschm</code> and are saved in the <em>plugins/TARDIS/user_schematics</em> folder</li>
+		</ul>
 		<h2>Guidelines for custom TARDIS schematics</h2>
+		<p>You can create a custom schematic for the inner TARDIS, but there are a few things you need to know before you jump right in!</p>
 		<ol>
-			<li>In order to be loaded by the plugin, the schematic file must be named <em>custom.schematic</em>, and should be located in the <em>plugins/TARDIS/user_schematics</em> folder.</li>
+			<li>In order to be loaded by the plugin, the schematic file must be named <em>custom.tschm</em> (<em>custom.schematic</em> for pre-v3.0 versions), and should be located in the <em>plugins/TARDIS/user_schematics</em> folder.</li>
 			<li>The custom TARDIS can only have 1 iron door, 1 stone button, 1 wood button, and 1 sign in its initial design.</li>
 			<li>The TARDIS should be sized in multipes of 16 blocks (1 chunk) &mdash; the chunks they use are reserved and cannot be used by other TARDISes - but be aware that big TARDISs will lag the server!</li>
 			<li>TARDISes should be squares i.e. that same width (x) and length (z) dimensions. A 16 x 16 block TARDIS is <em>good</em>, a 24 x 18 block TARDIS would be <strong>bad</strong>.</li>
@@ -95,7 +105,7 @@
 				</table>
 			</li>
 		</ol>
-		<h2>Making the schematics</h2>
+		<h2>Making the schematics (pre-v3.0)</h2>
 		<p>The WorldEdit plugin was used to create the default set of TARDIS schematics.</p>
 		<p>So you could:</p>
 		<ol>
