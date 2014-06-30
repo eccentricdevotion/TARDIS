@@ -75,10 +75,10 @@ public class TARDISBuilderInner {
      * @param world the world where the TARDIS is to be built.
      * @param dbID the unique key of the record for this TARDIS in the database.
      * @param p an instance of the player who owns the TARDIS.
-     * @param middle_type a material type determined from the TARDIS seed block,
+     * @param wall_type a material type determined from the TARDIS seed block,
      * or the middle block in the TARDIS creation stack, this material
      * determines the makeup of the TARDIS walls.
-     * @param middle_data the data bit associated with the middle_id parameter.
+     * @param wall_data the data bit associated with the wall_type parameter.
      * @param floor_type a material type determined from the TARDIS seed block,
      * or 35 (if TARDIS was made via the creation stack), this material
      * determines the makeup of the TARDIS floors.
@@ -87,7 +87,7 @@ public class TARDISBuilderInner {
      * -------- false:own world, underground - true:default world--------
      */
     @SuppressWarnings("deprecation")
-    public void buildInner(SCHEMATIC schm, World world, int dbID, Player p, Material middle_type, byte middle_data, Material floor_type, byte floor_data, boolean tips) {
+    public void buildInner(SCHEMATIC schm, World world, int dbID, Player p, Material wall_type, byte wall_data, Material floor_type, byte floor_data, boolean tips) {
         Material type;
         int level, row, col, startx, startz, resetx, resetz, j = 2;
         boolean below = (!plugin.getConfig().getBoolean("creation.create_worlds") && !plugin.getConfig().getBoolean("creation.default_world"));
@@ -225,7 +225,7 @@ public class TARDISBuilderInner {
                     if (type.equals(Material.WOOL)) {
                         switch (data) {
                             case 1:
-                                switch (middle_type) {
+                                switch (wall_type) {
                                     case LAPIS_BLOCK: // if using the default Lapis Block - then use Orange Wool / Stained Clay
                                         if (plugin.getConfig().getBoolean("creation.use_clay")) {
                                             type = Material.STAINED_CLAY;
@@ -233,8 +233,8 @@ public class TARDISBuilderInner {
                                         break;
                                     default:
                                         // TODO convert database int values to Material name
-                                        type = middle_type;
-                                        data = middle_data;
+                                        type = wall_type;
+                                        data = wall_data;
                                 }
                                 break;
                             case 8:

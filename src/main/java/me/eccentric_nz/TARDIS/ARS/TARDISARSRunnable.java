@@ -71,25 +71,25 @@ public class TARDISARSRunnable implements Runnable {
             TARDISRoomData roomData = new TARDISRoomData();
             roomData.setTardis_id(rs.getTardis_id());
             // get middle data, default to orange wool if not set
-            Material middle_id, floor_id;
-            byte middle_data, floor_data;
+            Material wall_type, floor_type;
+            byte wall_data, floor_data;
             if (rsp.resultSet()) {
                 Pair wid_data = plugin.getTardisWalls().blocks.get(rsp.getWall());
                 // TODO use Material
-                middle_id = wid_data.getType();
-                middle_data = wid_data.getData();
+                wall_type = wid_data.getType();
+                wall_data = wid_data.getData();
                 Pair fid_data = plugin.getTardisWalls().blocks.get(rsp.getFloor());
-                floor_id = fid_data.getType();
+                floor_type = fid_data.getType();
                 floor_data = fid_data.getData();
             } else {
-                middle_id = Material.WOOL;
-                middle_data = 1;
-                floor_id = Material.WOOL;
+                wall_type = Material.WOOL;
+                wall_data = 1;
+                floor_type = Material.WOOL;
                 floor_data = 8;
             }
-            roomData.setMiddleType(middle_id);
-            roomData.setMiddleData(middle_data);
-            roomData.setFloorType(floor_id);
+            roomData.setMiddleType(wall_type);
+            roomData.setMiddleData(wall_data);
+            roomData.setFloorType(floor_type);
             roomData.setFloorData(floor_data);
             // get start locations
             Location l = new Location(w, slot.getX(), slot.getY(), slot.getZ());

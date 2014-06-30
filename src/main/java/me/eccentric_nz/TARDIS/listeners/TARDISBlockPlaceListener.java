@@ -97,8 +97,8 @@ public class TARDISBlockPlaceListener implements Listener {
         // only listen for redstone torches
         if (block.getType() == Material.REDSTONE_TORCH_ON) {
             Block blockBelow = block.getRelative(BlockFace.DOWN);
-            Material middle_type = blockBelow.getType();
-            byte middle_data = blockBelow.getData();
+            Material wall_type = blockBelow.getType();
+            byte wall_data = blockBelow.getData();
             Block blockBottom = blockBelow.getRelative(BlockFace.DOWN);
             // only continue if the redstone torch is placed on top of [JUST ABOUT ANY] BLOCK on top of an IRON/GOLD/DIAMOND_BLOCK
             if (plugin.getBlocksConfig().getStringList("tardis_blocks").contains(blockBelow.getType().toString()) && blocks.contains(blockBottom.getType())) {
@@ -268,8 +268,7 @@ public class TARDISBlockPlaceListener implements Listener {
                         }
                         set.put("lastuse", now);
                         HashMap<String, Object> setpp = new HashMap<String, Object>();
-                        if (middle_type.equals(Material.LAPIS_BLOCK)) {
-                            set.put("middle_id", "WOOL");
+                        if (wall_type.equals(Material.LAPIS_BLOCK)) {
                             if (blockBottom.getType().equals(Material.EMERALD_BLOCK)) {
                                 setpp.put("wall", "LIGHT_GREY_WOOL");
                             } else {
@@ -277,7 +276,7 @@ public class TARDISBlockPlaceListener implements Listener {
                             }
                         } else {
                             // determine wall block material from HashMap
-                            setpp.put("wall", getWallKey(middle_type, middle_data));
+                            setpp.put("wall", getWallKey(wall_type, wall_data));
                         }
                         final int lastInsertId = qf.doSyncInsert("tardis", set);
                         // insert/update  player prefs
@@ -317,7 +316,7 @@ public class TARDISBlockPlaceListener implements Listener {
                         pbd.setSubmarine(isSub(blockBottom));
                         pbd.setTardisID(lastInsertId);
                         plugin.getPresetBuilder().buildPreset(pbd);
-                        plugin.getInteriorBuilder().buildInner(schm, chunkworld, lastInsertId, player, middle_type, middle_data, Material.WOOL, (byte) 8, tips);
+                        plugin.getInteriorBuilder().buildInner(schm, chunkworld, lastInsertId, player, wall_type, wall_data, Material.WOOL, (byte) 8, tips);
                         // set achievement completed
                         if (player.hasPermission("tardis.book")) {
                             HashMap<String, Object> seta = new HashMap<String, Object>();

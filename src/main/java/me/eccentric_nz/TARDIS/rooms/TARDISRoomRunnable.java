@@ -54,9 +54,9 @@ public class TARDISRoomRunnable implements Runnable {
     JSONObject s;
     private int task, level, row, col, h, w, c, startx, starty, startz, resetx, resety, resetz;
     private final int tardis_id;
-    private final Material middle_id, floor_id;
+    private final Material wall_type, floor_type;
     Material type;
-    byte data, middle_data, floor_data;
+    byte data, wall_data, floor_data;
     Block b;
     COMPASS d;
     String room;
@@ -84,9 +84,9 @@ public class TARDISRoomRunnable implements Runnable {
         this.s = roomData.getSchematic();
         this.b = roomData.getBlock();
         this.d = roomData.getDirection();
-        this.middle_id = roomData.getMiddleType();
-        this.middle_data = roomData.getMiddleData();
-        this.floor_id = roomData.getFloorType();
+        this.wall_type = roomData.getMiddleType();
+        this.wall_data = roomData.getMiddleData();
+        this.floor_type = roomData.getFloorType();
         this.floor_data = roomData.getFloorData();
         this.room = roomData.getRoom();
         this.tardis_id = roomData.getTardis_id();
@@ -249,20 +249,20 @@ public class TARDISRoomRunnable implements Runnable {
                 type = Material.STAINED_CLAY;
             }
             if (type.equals(Material.WOOL) && data == 1) {
-                if (middle_id.equals(Material.WOOL) && middle_data == 1 && plugin.getConfig().getBoolean("creation.use_clay")) {
+                if (wall_type.equals(Material.WOOL) && wall_data == 1 && plugin.getConfig().getBoolean("creation.use_clay")) {
                     type = Material.STAINED_CLAY;
                 } else {
-                    type = middle_id;
+                    type = wall_type;
                 }
-                data = ((room.equals("GRAVITY") || room.equals("ANTIGRAVITY")) && middle_id.equals(Material.WOOL) && (middle_data == 5 || middle_data == 6)) ? 1 : middle_data;
+                data = ((room.equals("GRAVITY") || room.equals("ANTIGRAVITY")) && wall_type.equals(Material.WOOL) && (wall_data == 5 || wall_data == 6)) ? 1 : wall_data;
             }
             if (type.equals(Material.WOOL) && data == 8) {
-                if (floor_id.equals(Material.WOOL) && floor_data == 8 && plugin.getConfig().getBoolean("creation.use_clay")) {
+                if (floor_type.equals(Material.WOOL) && floor_data == 8 && plugin.getConfig().getBoolean("creation.use_clay")) {
                     type = Material.STAINED_CLAY;
                 } else {
-                    type = floor_id;
+                    type = floor_type;
                 }
-                data = ((room.equals("GRAVITY") || room.equals("ANTIGRAVITY")) && floor_id.equals(Material.WOOL) && (floor_data == 5 || floor_data == 6)) ? 8 : floor_data;
+                data = ((room.equals("GRAVITY") || room.equals("ANTIGRAVITY")) && floor_type.equals(Material.WOOL) && (floor_data == 5 || floor_data == 6)) ? 8 : floor_data;
             }
             QueryFactory qf = new QueryFactory(plugin);
             // set condenser
@@ -281,7 +281,7 @@ public class TARDISRoomRunnable implements Runnable {
                 wheref.put("tardis_id", tardis_id);
                 qf.doUpdate("tardis", setf, wheref);
                 // replace with floor material
-                type = (floor_id.equals(Material.WOOL) && floor_data == 8 && plugin.getConfig().getBoolean("creation.use_clay")) ? Material.STAINED_CLAY : floor_id;
+                type = (floor_type.equals(Material.WOOL) && floor_data == 8 && plugin.getConfig().getBoolean("creation.use_clay")) ? Material.STAINED_CLAY : floor_type;
                 data = floor_data;
             }
             // set lazarus
@@ -368,8 +368,8 @@ public class TARDISRoomRunnable implements Runnable {
                     type = Material.AIR;
                     data = (byte) 0;
                 } else {
-                    type = (middle_id.equals(Material.WOOL) && middle_data == 1 && plugin.getConfig().getBoolean("creation.use_clay")) ? Material.STAINED_CLAY : middle_id;
-                    data = middle_data;
+                    type = (wall_type.equals(Material.WOOL) && wall_data == 1 && plugin.getConfig().getBoolean("creation.use_clay")) ? Material.STAINED_CLAY : wall_type;
+                    data = wall_data;
                 }
             }
             // always clear the door blocks on the north and west sides of adjacent spaces
