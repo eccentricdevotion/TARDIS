@@ -198,10 +198,12 @@ public class TARDISConfiguration {
         intOptions.put("preferences.malfunction_end", 3);
         intOptions.put("preferences.malfunction_nether", 3);
         intOptions.put("preferences.sfx_volume", 10);
+        intOptions.put("growth.ars_limit", 1);
         intOptions.put("growth.gravity_max_distance", 16);
         intOptions.put("growth.gravity_max_velocity", 5);
         intOptions.put("growth.room_speed", 4);
         intOptions.put("growth.rooms_condenser_percent", 100);
+        intOptions.put("travel.grace_period", 10);
         intOptions.put("travel.manual_flight_delay", 60);
         intOptions.put("travel.random_attempts", 30);
         intOptions.put("travel.terminal_step", 1);
