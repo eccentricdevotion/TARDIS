@@ -89,19 +89,19 @@ public class TARDISCondenserListener implements Listener {
                 QueryFactory qf = new QueryFactory(plugin);
                 int amount = 0;
                 // get the stacks in the inventory
-                HashMap<Integer, Integer> item_counts = new HashMap<Integer, Integer>();
+                HashMap<String, Integer> item_counts = new HashMap<String, Integer>();
                 for (ItemStack is : inv.getContents()) {
                     if (is != null) {
-                        String item = is.getType().name();
+                        String item = is.getType().toString();
                         if (plugin.getCondensables().containsKey(item)) {
                             int stack_size = is.getAmount();
                             if (!zero.contains(item)) {
                                 amount += stack_size * plugin.getCondensables().get(item);
                             }
-                            int block_data = is.getTypeId();
+                            String block_data = is.getType().toString();
                             if (plugin.getConfig().getBoolean("growth.rooms_require_blocks")) {
                                 if (item_counts.containsKey(block_data)) {
-                                    Integer add_this = (item_counts.get(Integer.valueOf(block_data)) + stack_size);
+                                    Integer add_this = (item_counts.get(block_data) + stack_size);
                                     item_counts.put(block_data, add_this);
                                 } else {
                                     item_counts.put(block_data, stack_size);
@@ -116,19 +116,19 @@ public class TARDISCondenserListener implements Listener {
                 }
                 // process item_counts
                 if (plugin.getConfig().getBoolean("growth.rooms_require_blocks")) {
-                    for (Map.Entry<Integer, Integer> map : item_counts.entrySet()) {
+                    for (Map.Entry<String, Integer> map : item_counts.entrySet()) {
                         // check if the tardis has condensed this material before
                         HashMap<String, Object> wherec = new HashMap<String, Object>();
                         wherec.put("tardis_id", rs.getTardis_id());
-                        wherec.put("block_data", (int) map.getKey());
+                        wherec.put("block_data", map.getKey());
                         ResultSetCondenser rsc = new ResultSetCondenser(plugin, wherec, false);
                         HashMap<String, Object> setc = new HashMap<String, Object>();
                         if (rsc.resultSet()) {
                             int new_stack_size = (int) map.getValue() + rsc.getBlock_count();
-                            qf.updateCondensedBlockCount(new_stack_size, rs.getTardis_id(), (int) map.getKey());
+                            qf.updateCondensedBlockCount(new_stack_size, rs.getTardis_id(), map.getKey());
                         } else {
                             setc.put("tardis_id", rs.getTardis_id());
-                            setc.put("block_data", (int) map.getKey());
+                            setc.put("block_data", map.getKey());
                             setc.put("block_count", (int) map.getValue());
                             qf.doInsert("condenser", setc);
                         }
