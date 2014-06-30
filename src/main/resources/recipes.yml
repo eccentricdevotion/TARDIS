@@ -374,6 +374,36 @@ shaped:
         result: COOKED_FISH
         amount: 3
         lore: "Best eaten with custard!"
+    Bow Tie:
+        easy_shape: ---,SWS,---
+        easy_ingredients:
+            S: STRING
+            W: WOOL
+        hard_shape: STS,L-L,WWW
+        hard_ingredients:
+            S: STRING
+            L: LEATHER
+            T: TRIPWIRE_HOOK
+            W: WOOL
+        result: LEATHER_HELMET
+        amount: 1
+        lore: "Bow ties are cool!"
+    3-D Glasses:
+        easy_shape: ---,P-P,CPM
+        easy_ingredients:
+            P: PAPER
+            C: 'STAINED_GLASS_PANE:9'
+            M: 'STAINED_GLASS_PANE:2'
+        easy_shape: R-T,P-P,CPM
+        hard_ingredients:
+            R: REDSTONE_COMPARATOR
+            T: REDSTONE_TORCH_ON
+            P: PAPER
+            C: 'STAINED_GLASS_PANE:9'
+            M: 'STAINED_GLASS_PANE:2'
+        result: LEATHER_HELMET
+        amount: 1
+        lore: ""
 # -------------------
 # these are the shapeless recipes
 # -------------------

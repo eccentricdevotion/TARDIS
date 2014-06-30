@@ -58,6 +58,7 @@ public class TARDISRecipeCommands implements CommandExecutor {
         firstArgs.add("bio-circuit"); // Bio-scanner Circuit
         firstArgs.add("biome-disk"); // Biome Storage Disk
         firstArgs.add("blank"); // Blank Storage Disk
+        firstArgs.add("bow-tie"); // Bow Tie
         firstArgs.add("c-circuit"); // Chameleon Circuit
         firstArgs.add("cell"); // Artron Energy Cell
         firstArgs.add("custard"); // Bowl of custard
@@ -65,6 +66,7 @@ public class TARDISRecipeCommands implements CommandExecutor {
         firstArgs.add("e-circuit"); // Emerald Circuit
         firstArgs.add("filter"); // Perception Filter
         firstArgs.add("fish-finger"); // Fish Finger
+        firstArgs.add("glasses"); // 3-D Glasses
         firstArgs.add("i-circuit"); // Input Circuit
         firstArgs.add("key"); // TARDIS key
         firstArgs.add("jammy-dodger"); // Jammy Dodger Biscuit
@@ -158,6 +160,10 @@ public class TARDISRecipeCommands implements CommandExecutor {
                 this.showShapedRecipe(player, "Blank Storage Disk");
                 return true;
             }
+            if (args[0].equalsIgnoreCase("bow-tie")) {
+                this.showShapedRecipe(player, "Bow Tie");
+                return true;
+            }
             if (args[0].equalsIgnoreCase("c-circuit")) {
                 showShapedRecipe(player, "TARDIS Chameleon Circuit");
                 return true;
@@ -184,6 +190,10 @@ public class TARDISRecipeCommands implements CommandExecutor {
             }
             if (args[0].equalsIgnoreCase("fish-finger")) {
                 this.showShapedRecipe(player, "Fish Finger");
+                return true;
+            }
+            if (args[0].equalsIgnoreCase("glasses")) {
+                this.showShapedRecipe(player, "3-D Glasses");
                 return true;
             }
             if (args[0].equalsIgnoreCase("i-circuit")) {
