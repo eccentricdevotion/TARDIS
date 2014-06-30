@@ -39,7 +39,6 @@ public class TARDISMaterialIDConverter {
 
     @SuppressWarnings("deprecation")
     public void convert() {
-        QueryFactory qf = new QueryFactory(this.plugin);
         PreparedStatement statement = null;
         PreparedStatement ps = null;
         ResultSet rs = null;
@@ -48,6 +47,7 @@ public class TARDISMaterialIDConverter {
         int i = 0;
         try {
             service.testConnection(connection);
+            connection.setAutoCommit(false);
             // do condenser data
             statement = connection.prepareStatement(query);
             ps = connection.prepareStatement(update);
@@ -63,12 +63,14 @@ public class TARDISMaterialIDConverter {
                         // update the record
                         ps.setString(1, mat);
                         ps.setInt(2, c_id);
-                        ps.executeUpdate();
+                        ps.addBatch();
                     } catch (NumberFormatException e) {
                         plugin.debug("Condenser data was not a number");
                     }
                     i++;
                 }
+                ps.executeBatch();
+                connection.commit();
             }
         } catch (SQLException e) {
             plugin.debug("Conversion error for condenser IDs! " + e.getMessage());
