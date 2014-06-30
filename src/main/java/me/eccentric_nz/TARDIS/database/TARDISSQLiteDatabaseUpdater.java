@@ -98,8 +98,6 @@ public class TARDISSQLiteDatabaseUpdater {
         tardisupdates.add("hidden INTEGER DEFAULT 0");
         tardisupdates.add("iso_on INTEGER DEFAULT 0");
         tardisupdates.add("lastuse INTEGER DEFAULT " + now);
-        tardisupdates.add("middle_data INTEGER");
-        tardisupdates.add("middle_id INTEGER");
         tardisupdates.add("powered_on INTEGER DEFAULT 0");
         tardisupdates.add("lights_on INTEGER DEFAULT 1");
         tardisupdates.add("rail TEXT DEFAULT ''");

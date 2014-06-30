@@ -204,14 +204,12 @@ public class TARDISSeedBlockProcessor {
                 set.put("chunk", chun);
                 set.put("size", schm.name());
                 HashMap<String, Object> setpp = new HashMap<String, Object>();
-                Material middle_id = seed.getWallType();
+                Material middle_type = seed.getWallType();
                 byte middle_data = seed.getWallData();
-                Material floor_id = seed.getFloorType();
+                Material floor_type = seed.getFloorType();
                 byte floor_data = seed.getFloorData();
                 int c_id = seed.getBox_id();
                 byte c_data = seed.getBox_data();
-                set.put("middle_id", middle_id);
-                set.put("middle_data", middle_data);
                 set.put("chameleon_id", c_id);
                 set.put("chameleon_data", c_data);
                 Long now;
@@ -222,8 +220,8 @@ public class TARDISSeedBlockProcessor {
                 }
                 set.put("lastuse", now);
                 // determine wall block material from HashMap
-                setpp.put("wall", getWallKey(middle_id, middle_data));
-                setpp.put("floor", getWallKey(floor_id, floor_data));
+                setpp.put("wall", getWallKey(middle_type, middle_data));
+                setpp.put("floor", getWallKey(floor_type, floor_data));
                 setpp.put("lamp", seed.getLamp());
                 final int lastInsertId = qf.doSyncInsert("tardis", set);
                 // insert/update  player prefs
@@ -264,7 +262,7 @@ public class TARDISSeedBlockProcessor {
                 pbd.setBiome(l.getBlock().getBiome());
                 // police box needs to use chameleon id/data
                 plugin.getPresetBuilder().buildPreset(pbd);
-                plugin.getInteriorBuilder().buildInner(schm, chunkworld, lastInsertId, player, middle_id, middle_data, floor_id, floor_data, tips);
+                plugin.getInteriorBuilder().buildInner(schm, chunkworld, lastInsertId, player, middle_type, middle_data, floor_type, floor_data, tips);
                 // set achievement completed
                 if (player.hasPermission("tardis.book")) {
                     HashMap<String, Object> seta = new HashMap<String, Object>();

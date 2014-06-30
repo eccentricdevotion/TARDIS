@@ -271,15 +271,11 @@ public class TARDISBlockPlaceListener implements Listener {
                         if (middle_type.equals(Material.LAPIS_BLOCK)) {
                             set.put("middle_id", "WOOL");
                             if (blockBottom.getType().equals(Material.EMERALD_BLOCK)) {
-                                set.put("middle_data", 8);
                                 setpp.put("wall", "LIGHT_GREY_WOOL");
                             } else {
-                                set.put("middle_data", 1);
                                 setpp.put("wall", "ORANGE_WOOL");
                             }
                         } else {
-                            set.put("middle_id", middle_type.toString());
-                            set.put("middle_data", middle_data);
                             // determine wall block material from HashMap
                             setpp.put("wall", getWallKey(middle_type, middle_data));
                         }

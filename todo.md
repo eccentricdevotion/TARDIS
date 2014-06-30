@@ -29,8 +29,6 @@
 
 ##Resource Pack / TARDISWeepingAngels
 
-1. Texture the top and bottom of white stained clay roundel
-
 Re-skin mobs for Resource pack, and add new mob sounds
 
 * (Wither?) Skeletons -> Vashta Nerada (breaking a bookcase gives a random chance of one spawning at that location)
