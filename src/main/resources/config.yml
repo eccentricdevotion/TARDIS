@@ -110,3 +110,4 @@ conversions:
     location_conversion_done: true
     uuid_conversion_done: true
     companion_clearing_done: true
+    condenser_done: true

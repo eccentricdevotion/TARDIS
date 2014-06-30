@@ -81,6 +81,7 @@ public class TARDISConfiguration {
         boolOptions.put("conversions.location_conversion_done", false);
         boolOptions.put("conversions.uuid_conversion_done", false);
         boolOptions.put("conversions.companion_clearing_done", false);
+        boolOptions.put("conversions.condenser_done", false);
         boolOptions.put("creation.add_perms", true);
         boolOptions.put("creation.create_worlds", true);
         boolOptions.put("creation.create_worlds_with_perms", false);

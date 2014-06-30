@@ -45,6 +45,7 @@ import me.eccentric_nz.TARDIS.database.TARDISCompanionClearer;
 import me.eccentric_nz.TARDIS.database.TARDISControlsConverter;
 import me.eccentric_nz.TARDIS.database.TARDISDatabaseConnection;
 import me.eccentric_nz.TARDIS.database.TARDISLocationsConverter;
+import me.eccentric_nz.TARDIS.database.TARDISMaterialIDConverter;
 import me.eccentric_nz.TARDIS.database.TARDISMySQLDatabase;
 import me.eccentric_nz.TARDIS.database.TARDISSQLiteDatabase;
 import me.eccentric_nz.TARDIS.database.TARDISUUIDConverter;
@@ -231,6 +232,9 @@ public class TARDIS extends JavaPlugin {
             }
             if (!getConfig().getBoolean("conversions.location_conversion_done")) {
                 new TARDISLocationsConverter(this).convert();
+            }
+            if (!getConfig().getBoolean("conversions.condenser_done")) {
+                new TARDISMaterialIDConverter(this).convert();
             }
             resourcePack = getServerTP();
             // copy maps
