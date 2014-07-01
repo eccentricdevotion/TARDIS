@@ -33,6 +33,7 @@ public class TARDISRecipesUpdater {
     private final TARDIS plugin;
     private FileConfiguration recipes_config = null;
     private final HashMap<String, Integer> flavours = new HashMap<String, Integer>();
+    private final HashMap<String, Integer> colours = new HashMap<String, Integer>();
 
     public TARDISRecipesUpdater(TARDIS plugin) {
         this.plugin = plugin;
@@ -53,23 +54,41 @@ public class TARDISRecipesUpdater {
         this.flavours.put("Watermelon", 13);
         this.flavours.put("Orange", 14);
         this.flavours.put("Vanilla", 15);
+        this.colours.put("White", 0);
+        this.colours.put("Orange", 1);
+        this.colours.put("Magenta", 2);
+        this.colours.put("Light Blue", 3);
+        this.colours.put("Yellow", 4);
+        this.colours.put("Lime", 5);
+        this.colours.put("Pink", 6);
+        this.colours.put("Grey", 7);
+        this.colours.put("Light Grey", 8);
+        this.colours.put("Cyan", 9);
+        this.colours.put("Purple", 10);
+        this.colours.put("Blue", 11);
+        this.colours.put("Brown", 12);
+        this.colours.put("Green", 13);
+        this.colours.put("Red", 14);
+        this.colours.put("Black", 15);
     }
 
     public void addRecipes() {
         int i = 0;
-        if (!recipes_config.contains("shaped.Bow Tie")) {
-            recipes_config.set("shaped.Bow Tie.easy_shape", "---,SWS,---");
-            recipes_config.set("shaped.Bow Tie.easy_ingredients.S", "STRING");
-            recipes_config.set("shaped.Bow Tie.easy_ingredients.W", "WOOL");
-            recipes_config.set("shaped.Bow Tie.hard_shape", "STS,L-L,WWW");
-            recipes_config.set("shaped.Bow Tie.hard_ingredients.S", "STRING");
-            recipes_config.set("shaped.Bow Tie.hard_ingredients.T", "TRIPWIRE_HOOK");
-            recipes_config.set("shaped.Bow Tie.hard_ingredients.L", "LEATHER");
-            recipes_config.set("shaped.Bow Tie.hard_ingredients.W", "WOOL");
-            recipes_config.set("shaped.Bow Tie.result", "LEATHER_CHESTPLATE");
-            recipes_config.set("shaped.Bow Tie.amount", 1);
-            recipes_config.set("shaped.Bow Tie.lore", "Bow ties are cool!");
-            i++;
+        if (!recipes_config.contains("shapeless.White Bow Tie")) {
+            for (Map.Entry<String, Integer> map : colours.entrySet()) {
+                recipes_config.set("shaped." + map.getKey() + " Bow Tie.easy_shape", "---,SWS,---");
+                recipes_config.set("shaped." + map.getKey() + " Bow Tie.easy_ingredients.S", "STRING");
+                recipes_config.set("shaped." + map.getKey() + " Bow Tie.easy_ingredients.W", "WOOL:" + map.getValue());
+                recipes_config.set("shaped." + map.getKey() + " Bow Tie.hard_shape", "STS,L-L,WWW");
+                recipes_config.set("shaped." + map.getKey() + " Bow Tie.hard_ingredients.S", "STRING");
+                recipes_config.set("shaped." + map.getKey() + " Bow Tie.hard_ingredients.T", "TRIPWIRE_HOOK");
+                recipes_config.set("shaped." + map.getKey() + " Bow Tie.hard_ingredients.L", "LEATHER");
+                recipes_config.set("shaped." + map.getKey() + " Bow Tie.hard_ingredients.W", "WOOL:" + map.getValue());
+                recipes_config.set("shaped." + map.getKey() + " Bow Tie.result", "LEATHER_CHESTPLATE");
+                recipes_config.set("shaped." + map.getKey() + " Bow Tie.amount", 1);
+                recipes_config.set("shaped." + map.getKey() + " Bow Tie.lore", "Bow ties are cool!");
+                i++;
+            }
         }
         if (!recipes_config.contains("shaped.3-D Glasses")) {
             recipes_config.set("shaped.3-D Glasses.easy_shape", "---,P-P,CPM");

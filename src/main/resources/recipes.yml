@@ -374,20 +374,230 @@ shaped:
         result: COOKED_FISH
         amount: 3
         lore: "Best eaten with custard!"
-    Bow Tie:
-        easy_shape: ---,SWS,---
+    White Bow Tie:
+        easy_shape: '---,SWS,---'
         easy_ingredients:
             S: STRING
-            W: WOOL
+            W: WOOL:0
         hard_shape: STS,L-L,WWW
         hard_ingredients:
             S: STRING
             T: TRIPWIRE_HOOK
             L: LEATHER
-            W: WOOL
+            W: WOOL:0
         result: LEATHER_CHESTPLATE
         amount: 1
-        lore: "Bow ties are cool!"
+        lore: Bow ties are cool!
+    Orange Bow Tie:
+        easy_shape: '---,SWS,---'
+        easy_ingredients:
+            S: STRING
+            W: WOOL:1
+        hard_shape: STS,L-L,WWW
+        hard_ingredients:
+            S: STRING
+            T: TRIPWIRE_HOOK
+            L: LEATHER
+            W: WOOL:1
+        result: LEATHER_CHESTPLATE
+        amount: 1
+        lore: Bow ties are cool!
+    Magenta Bow Tie:
+        easy_shape: '---,SWS,---'
+        easy_ingredients:
+            S: STRING
+            W: WOOL:2
+        hard_shape: STS,L-L,WWW
+        hard_ingredients:
+            S: STRING
+            T: TRIPWIRE_HOOK
+            L: LEATHER
+            W: WOOL:2
+        result: LEATHER_CHESTPLATE
+        amount: 1
+        lore: Bow ties are cool!
+    Light Blue Bow Tie:
+        easy_shape: '---,SWS,---'
+        easy_ingredients:
+            S: STRING
+            W: WOOL:3
+        hard_shape: STS,L-L,WWW
+        hard_ingredients:
+            S: STRING
+            T: TRIPWIRE_HOOK
+            L: LEATHER
+            W: WOOL:3
+        result: LEATHER_CHESTPLATE
+        amount: 1
+        lore: Bow ties are cool!
+    Yellow Bow Tie:
+        easy_shape: '---,SWS,---'
+        easy_ingredients:
+            S: STRING
+            W: WOOL:4
+        hard_shape: STS,L-L,WWW
+        hard_ingredients:
+            S: STRING
+            T: TRIPWIRE_HOOK
+            L: LEATHER
+            W: WOOL:4
+        result: LEATHER_CHESTPLATE
+        amount: 1
+        lore: Bow ties are cool!
+    Lime Bow Tie:
+        easy_shape: '---,SWS,---'
+        easy_ingredients:
+            S: STRING
+            W: WOOL:5
+        hard_shape: STS,L-L,WWW
+        hard_ingredients:
+            S: STRING
+            T: TRIPWIRE_HOOK
+            L: LEATHER
+            W: WOOL:5
+        result: LEATHER_CHESTPLATE
+        amount: 1
+        lore: Bow ties are cool!
+    Pink Bow Tie:
+        easy_shape: '---,SWS,---'
+        easy_ingredients:
+            S: STRING
+            W: WOOL:6
+        hard_shape: STS,L-L,WWW
+        hard_ingredients:
+            S: STRING
+            T: TRIPWIRE_HOOK
+            L: LEATHER
+            W: WOOL:6
+        result: LEATHER_CHESTPLATE
+        amount: 1
+        lore: Bow ties are cool!
+    Grey Bow Tie:
+        easy_shape: '---,SWS,---'
+        easy_ingredients:
+            S: STRING
+            W: WOOL:7
+        hard_shape: STS,L-L,WWW
+        hard_ingredients:
+            S: STRING
+            T: TRIPWIRE_HOOK
+            L: LEATHER
+            W: WOOL:7
+        result: LEATHER_CHESTPLATE
+        amount: 1
+        lore: Bow ties are cool!
+    Light Grey Bow Tie:
+        easy_shape: '---,SWS,---'
+        easy_ingredients:
+            S: STRING
+            W: WOOL:8
+        hard_shape: STS,L-L,WWW
+        hard_ingredients:
+            S: STRING
+            T: TRIPWIRE_HOOK
+            L: LEATHER
+            W: WOOL:8
+        result: LEATHER_CHESTPLATE
+        amount: 1
+        lore: Bow ties are cool!
+    Cyan Bow Tie:
+        easy_shape: '---,SWS,---'
+        easy_ingredients:
+            S: STRING
+            W: WOOL:9
+        hard_shape: STS,L-L,WWW
+        hard_ingredients:
+            S: STRING
+            T: TRIPWIRE_HOOK
+            L: LEATHER
+            W: WOOL:9
+        result: LEATHER_CHESTPLATE
+        amount: 1
+        lore: Bow ties are cool!
+    Purple Bow Tie:
+        easy_shape: '---,SWS,---'
+        easy_ingredients:
+            S: STRING
+            W: WOOL:10
+        hard_shape: STS,L-L,WWW
+        hard_ingredients:
+            S: STRING
+            T: TRIPWIRE_HOOK
+            L: LEATHER
+            W: WOOL:10
+        result: LEATHER_CHESTPLATE
+        amount: 1
+        lore: Bow ties are cool!
+    Blue Bow Tie:
+        easy_shape: '---,SWS,---'
+        easy_ingredients:
+            S: STRING
+            W: WOOL:11
+        hard_shape: STS,L-L,WWW
+        hard_ingredients:
+            S: STRING
+            T: TRIPWIRE_HOOK
+            L: LEATHER
+            W: WOOL:11
+        result: LEATHER_CHESTPLATE
+        amount: 1
+        lore: Bow ties are cool!
+    Brown Bow Tie:
+        easy_shape: '---,SWS,---'
+        easy_ingredients:
+            S: STRING
+            W: WOOL:12
+        hard_shape: STS,L-L,WWW
+        hard_ingredients:
+            S: STRING
+            T: TRIPWIRE_HOOK
+            L: LEATHER
+            W: WOOL:12
+        result: LEATHER_CHESTPLATE
+        amount: 1
+        lore: Bow ties are cool!
+    Green Bow Tie:
+        easy_shape: '---,SWS,---'
+        easy_ingredients:
+            S: STRING
+            W: WOOL:13
+        hard_shape: STS,L-L,WWW
+        hard_ingredients:
+            S: STRING
+            T: TRIPWIRE_HOOK
+            L: LEATHER
+            W: WOOL:13
+        result: LEATHER_CHESTPLATE
+        amount: 1
+        lore: Bow ties are cool!
+    Red Bow Tie:
+        easy_shape: '---,SWS,---'
+        easy_ingredients:
+            S: STRING
+            W: WOOL:14
+        hard_shape: STS,L-L,WWW
+        hard_ingredients:
+            S: STRING
+            T: TRIPWIRE_HOOK
+            L: LEATHER
+            W: WOOL:14
+        result: LEATHER_CHESTPLATE
+        amount: 1
+        lore: Bow ties are cool!
+    Black Bow Tie:
+        easy_shape: '---,SWS,---'
+        easy_ingredients:
+            S: STRING
+            W: WOOL:15
+        hard_shape: STS,L-L,WWW
+        hard_ingredients:
+            S: STRING
+            T: TRIPWIRE_HOOK
+            L: LEATHER
+            W: WOOL:15
+        result: LEATHER_CHESTPLATE
+        amount: 1
+        lore: Bow ties are cool!
     3-D Glasses:
         easy_shape: ---,P-P,CPM
         easy_ingredients:
