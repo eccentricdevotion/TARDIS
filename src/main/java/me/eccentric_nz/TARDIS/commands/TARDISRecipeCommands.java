@@ -161,7 +161,7 @@ public class TARDISRecipeCommands implements CommandExecutor {
                 return true;
             }
             if (args[0].equalsIgnoreCase("bow-tie")) {
-                this.showShapedRecipe(player, "Bow Tie");
+                this.showShapedRecipe(player, "Red Bow Tie");
                 return true;
             }
             if (args[0].equalsIgnoreCase("c-circuit")) {
