@@ -26,24 +26,39 @@
 	<section>
 		<h1>Change log</h1>
 		<h2>What&rsquo;s been changed?</h2>
-	        <h3>v2.9.1</h3>
-	        <h4>Additions</h4>
-	        <ul>
-	        	<li>Added snowy biomes to <code>set_biome</code> umbrella</li>
-	        	<li>Added an <code>allow.power_down_on_quit</code> option
-	        		<ul>
-	        			<li>Both <code>allow.power_down_on_quit</code> AND <code>allow.power_down</code> must be <code>true</code></li>
-	        		</ul>
-	        	</li>
-        	</ul>
-        	<h4>Bug fixes</h4>
-        	<ul>
-	        	<li>Fixed an ARS bug with a missing message</li>
-		        <li>Fix <code>/tardistravel biome list</code> command</li>
-        		<li>Fixed the recipes updater, and correct wrongly set painter circuit recipes</li>
-	        	<li>Fixed TARDIS occupation not being set, and other <strong>"must be in TARDIS world"</strong> errors if the <code>default_world_name</code> does not contain <strong>"TARDIS"</strong></li>
-		        <li>Fixed the standby power mode allowing the TARDIS to go into negative Artron levels</li>
-        	</ul>
+		<h3>v2.9.2</h3>
+		<h4>Additions</h4>
+		<ul>
+			<li><code>/tardis update zero</code> allows stone/wood plates</li>
+			<li>Added the War Doctor&rsquo;s TARDIS to ARS</li>
+			<li>Added fence gates to emerald sonic interactable blocks</li>
+		</ul>
+		<h4>Bug fixes</h4>
+		<ul>
+			<li>Fixed isomorphic preference message</li>
+			<li>Fixed ClassCastException trying to message ops when map files are not in the correct location</li>
+			<li>Fixed the biome database field not being updated on underpowered servers</li>
+			<li>Fixed the <code>/tardistravel</code> command giving wrong message</li>
+			<li>Fixed a NPE when an invalid argument is given to the <code>/tardisrecipe tardis</code> command</li>
+		</ul>
+		<h3>v2.9.1</h3>
+		<h4>Additions</h4>
+		<ul>
+			<li>Added snowy biomes to <code>set_biome</code> umbrella</li>
+			<li>Added an <code>allow.power_down_on_quit</code> option
+				<ul>
+					<li>Both <code>allow.power_down_on_quit</code> AND <code>allow.power_down</code> must be <code>true</code></li>
+				</ul>
+			</li>
+		</ul>
+		<h4>Bug fixes</h4>
+		<ul>
+			<li>Fixed an ARS bug with a missing message</li>
+			<li>Fix <code>/tardistravel biome list</code> command</li>
+			<li>Fixed the recipes updater, and correct wrongly set painter circuit recipes</li>
+			<li>Fixed TARDIS occupation not being set, and other <strong>"must be in TARDIS world"</strong> errors if the <code>default_world_name</code> does not contain <strong>"TARDIS"</strong></li>
+			<li>Fixed the standby power mode allowing the TARDIS to go into negative Artron levels</li>
+		</ul>
 		<h3>v2.9</h3>
 		<p>Please view the change logs for TARDIS v2.9-beta-1 and v2.9-beta-2 below as well!</p>
 		<h4>Additions</h4>
@@ -62,7 +77,7 @@
 			<li>Right-cliking AIR with the Stattenheim Remote powers on TARDIS (if it is powered down) from anywhere in the world</li>
 			<li>Added a Sonic Screwdriver Painter Upgrade to change block colours inside the TARDIS
 				<ul>
-				        <li>permission: <code>tardis.sonic.paint</code></li>
+					<li>permission: <code>tardis.sonic.paint</code></li>
 					<li>Move new TARDIS map file (map<em>1979.dat) to correct location (</em>server/main world/data_ folder)</li>
 					<li>Craft Painter Circuit &mdash; <code>/tardisrecipe painter</code></li>
 					<li>Upgrade your sonic</li>
