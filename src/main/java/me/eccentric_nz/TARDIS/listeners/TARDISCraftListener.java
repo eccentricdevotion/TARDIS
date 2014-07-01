@@ -217,6 +217,8 @@ public class TARDISCraftListener implements Listener {
                 return p.hasPermission("tardis.tom");
             case BOOKSHELF:
                 return p.hasPermission("tardis.plank");
+            case STAINED_CLAY:
+                return p.hasPermission("tardis.war");
             case IRON_BLOCK:
                 return true;
             default:
