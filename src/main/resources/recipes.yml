@@ -382,10 +382,10 @@ shaped:
         hard_shape: STS,L-L,WWW
         hard_ingredients:
             S: STRING
-            L: LEATHER
             T: TRIPWIRE_HOOK
+            L: LEATHER
             W: WOOL
-        result: LEATHER_HELMET
+        result: LEATHER_CHESTPLATE
         amount: 1
         lore: "Bow ties are cool!"
     3-D Glasses:

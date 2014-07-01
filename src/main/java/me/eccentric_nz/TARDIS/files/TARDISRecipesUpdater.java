@@ -57,6 +57,36 @@ public class TARDISRecipesUpdater {
 
     public void addRecipes() {
         int i = 0;
+        if (!recipes_config.contains("shaped.Bow Tie")) {
+            recipes_config.set("shaped.Bow Tie.easy_shape", "---,SWS,---");
+            recipes_config.set("shaped.Bow Tie.easy_ingredients.S", "STRING");
+            recipes_config.set("shaped.Bow Tie.easy_ingredients.W", "WOOL");
+            recipes_config.set("shaped.Bow Tie.hard_shape", "STS,L-L,WWW");
+            recipes_config.set("shaped.Bow Tie.hard_ingredients.S", "STRING");
+            recipes_config.set("shaped.Bow Tie.hard_ingredients.T", "TRIPWIRE_HOOK");
+            recipes_config.set("shaped.Bow Tie.hard_ingredients.L", "LEATHER");
+            recipes_config.set("shaped.Bow Tie.hard_ingredients.W", "WOOL");
+            recipes_config.set("shaped.Bow Tie.result", "LEATHER_CHESTPLATE");
+            recipes_config.set("shaped.Bow Tie.amount", 1);
+            recipes_config.set("shaped.Bow Tie.lore", "Bow ties are cool!");
+            i++;
+        }
+        if (!recipes_config.contains("shaped.3-D Glasses")) {
+            recipes_config.set("shaped.3-D Glasses.easy_shape", "---,P-P,CPM");
+            recipes_config.set("shaped.3-D Glasses.easy_ingredients.P", "PAPER");
+            recipes_config.set("shaped.3-D Glasses.easy_ingredients.C", "STAINED_GLASS_PANE:9");
+            recipes_config.set("shaped.3-D Glasses.easy_ingredients.M", "STAINED_GLASS_PANE:2");
+            recipes_config.set("shaped.3-D Glasses.hard_shape", "R-T,P-P,CPM");
+            recipes_config.set("shaped.3-D Glasses.hard_ingredients.R", "REDSTONE_COMPARATOR");
+            recipes_config.set("shaped.3-D Glasses.hard_ingredients.T", "REDSTONE_TORCH_ON");
+            recipes_config.set("shaped.3-D Glasses.hard_ingredients.P", "PAPER");
+            recipes_config.set("shaped.3-D Glasses.hard_ingredients.C", "STAINED_GLASS_PANE:9");
+            recipes_config.set("shaped.3-D Glasses.hard_ingredients.M", "STAINED_GLASS_PANE:2");
+            recipes_config.set("shaped.3-D Glasses.result", "LEATHER_HELMET");
+            recipes_config.set("shaped.3-D Glasses.amount", 1);
+            recipes_config.set("shaped.3-D Glasses.lore", "");
+            i++;
+        }
         if (!recipes_config.contains("shaped.Jammy Dodger")) {
             recipes_config.set("shaped.Jammy Dodger.easy_shape", "---,WRW,---");
             recipes_config.set("shaped.Jammy Dodger.easy_ingredients.W", "WHEAT");
