@@ -369,7 +369,11 @@ public class TARDISARSMethods {
                         } else {
                             // reset map to the previous version
                             revert(uuid);
-                            TARDISMessage.send(p, tap.getError());
+                            if (tap.getError().equals("ARS_LIMIT")) {
+                                TARDISMessage.send(p, tap.getError(), plugin.getConfig().getString("growth.ars_limit"));
+                            } else {
+                                TARDISMessage.send(p, tap.getError());
+                            }
                         }
                     } else {
                         TARDISMessage.send(p, "ROOM_ONLY_TL");
