@@ -96,11 +96,16 @@ public class TARDISARSMethods {
     public void revert(UUID uuid) {
         TARDISARSSaveData sd = save_map_data.get(uuid);
         JSONArray json = new JSONArray(sd.getData());
-        HashMap<String, Object> set = new HashMap<String, Object>();
+        final HashMap<String, Object> set = new HashMap<String, Object>();
         set.put("json", json.toString());
-        HashMap<String, Object> wherea = new HashMap<String, Object>();
+        final HashMap<String, Object> wherea = new HashMap<String, Object>();
         wherea.put("ars_id", sd.getId());
-        new QueryFactory(plugin).doUpdate("ars", set, wherea);
+        plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
+            @Override
+            public void run() {
+                new QueryFactory(plugin).doUpdate("ars", set, wherea);
+            }
+        }, 6L);
     }
 
     /**
