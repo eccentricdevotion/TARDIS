@@ -53,6 +53,7 @@ import me.eccentric_nz.TARDIS.listeners.TARDISCreeperDeathListener;
 import me.eccentric_nz.TARDIS.listeners.TARDISEntityGriefListener;
 import me.eccentric_nz.TARDIS.listeners.TARDISExplosionListener;
 import me.eccentric_nz.TARDIS.listeners.TARDISFireListener;
+import me.eccentric_nz.TARDIS.listeners.TARDISGlassesListener;
 import me.eccentric_nz.TARDIS.listeners.TARDISGravityWellListener;
 import me.eccentric_nz.TARDIS.listeners.TARDISHorseListener;
 import me.eccentric_nz.TARDIS.listeners.TARDISHotbarListener;
@@ -163,6 +164,7 @@ public class TARDISListenerRegisterer {
         plugin.getPM().registerEvents(new TARDISExplosionListener(plugin), plugin);
         plugin.getPM().registerEvents(new TARDISFarmBlockListener(plugin), plugin);
         plugin.getPM().registerEvents(new TARDISFireListener(plugin), plugin);
+        plugin.getPM().registerEvents(new TARDISGlassesListener(plugin), plugin);
         plugin.getPM().registerEvents(new TARDISGravityWellListener(plugin), plugin);
         plugin.getPM().registerEvents(new TARDISHandbrakeListener(plugin), plugin);
         plugin.getPM().registerEvents(new TARDISHorseListener(plugin), plugin);

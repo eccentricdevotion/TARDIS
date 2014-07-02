@@ -7,17 +7,16 @@
 
 ##Future version `3.0+`
 1. Console modes / grace period on hard mode?
-2. ARS room limit - can only reconfigure x rooms at a time (and cannot open ARS until reconfiguration is complete) - configurable option
-3. Slimmer TARDIS option?
-4. Chameleon Arch / Fob watch
-5. Remote locking, advanced hide and rebuild via remote key
-6. TARDIS creation area config
-7. More MCPatcher texture support
-8. Server condenser
-9. Add `/tpa` equivalent to travel to player's WorldGuard/Towny/Factions/GriefPrevention region
-10. Create a TARDIS `json` schematic format
+2. Slimmer TARDIS option?
+3. Chameleon Arch / Fob watch
+4. Remote locking, advanced hide and rebuild via remote key
+5. TARDIS creation area config
+6. More MCPatcher texture support
+7. Server condenser
+8. Add `/tpa` equivalent to travel to player's WorldGuard/Towny/Factions/GriefPrevention region
+9. Create a TARDIS `json` schematic format
     * allow custom schematic to be ARS compatible
-11. Coloured bow-ties use dynamic recipes instead of adding 16 different ones?
+10. Coloured bow-ties use dynamic recipes instead of adding 16 different ones?
 
 ###I couldn't really be bothered
 1. HADS + explosions + fireballs + lava
