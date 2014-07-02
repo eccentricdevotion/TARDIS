@@ -50,12 +50,18 @@ public class TARDISGiveCommand implements CommandExecutor {
         items.put("bio-circuit", "Bio-scanner Circuit");
         items.put("biome-disk", "Biome Storage Disk");
         items.put("blank", "Blank Storage Disk");
+        items.put("bow-tie", "Red Bow Tie");
         items.put("c-circuit", "TARDIS Chameleon Circuit");
         items.put("cell", "Artron Storage Cell");
+        items.put("custard", "Bowl of Custard");
         items.put("d-circuit", "Diamond Disruptor Circuit");
         items.put("e-circuit", "Emerald Environment Circuit");
         items.put("filter", "Perception Filter");
+        items.put("fish-finger", "Fish Finger");
+        items.put("glasses", "3-D Glasses");
         items.put("i-circuit", "TARDIS Input Circuit");
+        items.put("jammy-dodger", "Jammy Dodger");
+        items.put("jelly-baby", "Orange Jelly Baby");
         items.put("key", "TARDIS Key");
         items.put("kit", "TARDIS Item Kit");
         items.put("l-circuit", "TARDIS Locator Circuit");
@@ -64,6 +70,7 @@ public class TARDISGiveCommand implements CommandExecutor {
         items.put("memory-circuit", "TARDIS Memory Circuit");
         items.put("oscillator", "Sonic Oscillator");
         items.put("p-circuit", "Perception Circuit");
+        items.put("painter", "Painter Circuit");
         items.put("player-disk", "Player Storage Disk");
         items.put("preset-disk", "Preset Storage Disk");
         items.put("r-circuit", "Redstone Activator Circuit");
@@ -153,7 +160,7 @@ public class TARDISGiveCommand implements CommandExecutor {
         }
         String item_to_give = items.get(item);
         ItemStack result;
-        if (item.equals("save-disk") || item.equals("preset-disk") || item.equals("biome-disk") || item.equals("player-disk")) {
+        if (item.equals("save-disk") || item.equals("preset-disk") || item.equals("biome-disk") || item.equals("player-disk") || item.equals("custard") || item.equals("jelly-baby")) {
             ShapelessRecipe recipe = plugin.getIncomposita().getShapelessRecipes().get(item_to_give);
             result = recipe.getResult();
         } else {
