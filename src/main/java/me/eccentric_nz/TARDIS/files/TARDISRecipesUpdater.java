@@ -74,7 +74,7 @@ public class TARDISRecipesUpdater {
 
     public void addRecipes() {
         int i = 0;
-        if (!recipes_config.contains("shapeless.White Bow Tie")) {
+        if (!recipes_config.contains("shaped.White Bow Tie")) {
             for (Map.Entry<String, Integer> map : colours.entrySet()) {
                 recipes_config.set("shaped." + map.getKey() + " Bow Tie.easy_shape", "---,SWS,---");
                 recipes_config.set("shaped." + map.getKey() + " Bow Tie.easy_ingredients.S", "STRING");
