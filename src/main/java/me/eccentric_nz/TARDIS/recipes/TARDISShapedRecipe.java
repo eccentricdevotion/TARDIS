@@ -100,6 +100,12 @@ public class TARDISShapedRecipe {
         } else {
             im.setDisplayName(s);
         }
+        if (s.endsWith("Bow Tie")) {
+            is.setDurability((short) 75);
+        }
+        if (s.equals("3-D Glasses")) {
+            is.setDurability((short) 50);
+        }
         if (!plugin.getRecipesConfig().getString("shaped." + s + ".lore").equals("")) {
             im.setLore(Arrays.asList(plugin.getRecipesConfig().getString("shaped." + s + ".lore").split("\n")));
         }

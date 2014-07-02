@@ -18,7 +18,6 @@
 10. Create a TARDIS `json` schematic format
     * allow custom schematic to be ARS compatible
 11. Coloured bow-ties use dynamic recipes instead of adding 16 different ones?
-12. Nerf the leather helmet and chest plate durability for bow ties and glasses so that players can't get armour on the cheap
 
 ###I couldn't really be bothered
 1. HADS + explosions + fireballs + lava
