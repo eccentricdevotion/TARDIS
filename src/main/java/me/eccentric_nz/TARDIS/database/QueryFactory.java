@@ -291,7 +291,7 @@ public class QueryFactory {
      */
     public void updateCondensedBlockCount(int new_size, int id, String block_data) {
         Statement statement = null;
-        String query = "UPDATE condenser SET block_count = " + new_size + " WHERE tardis_id = " + id + " AND block_data = " + block_data;
+        String query = "UPDATE condenser SET block_count = " + new_size + " WHERE tardis_id = " + id + " AND block_data = '" + block_data + "'";
         try {
             service.testConnection(connection);
             statement = connection.createStatement();
