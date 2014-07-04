@@ -241,6 +241,9 @@ permissions:
   tardis.themaster:
     description: Allows a player to reverse the polarity of the TARDIS Genetic Manipulator turning it into the Immortality Gate.
     default: op
+  tardis.chameleonarch:
+    description: Allows a player to use the Chameleon Arch.
+    default: op
 commands:
   tardis:
     aliases: [tt,ttardis,/tardis,timelord]

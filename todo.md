@@ -16,7 +16,6 @@
 8. Add `/tpa` equivalent to travel to player's WorldGuard/Towny/Factions/GriefPrevention region
 9. Create a TARDIS `json` schematic format
     * allow custom schematic to be ARS compatible
-10. Coloured bow-ties use dynamic recipes instead of adding 16 different ones?
 
 ###I couldn't really be bothered
 1. HADS + explosions + fireballs + lava

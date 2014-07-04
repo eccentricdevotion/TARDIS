@@ -96,6 +96,7 @@ allow:
     external_gravity: false
     power_down: false
     power_down_on_quit: false
+    chameleon_arch: true
 # room related
 growth:
     gravity_max_distance: 15

@@ -65,6 +65,7 @@ public class TARDISConfiguration {
         boolOptions.put("allow.achievements", true);
         boolOptions.put("allow.all_blocks", false);
         boolOptions.put("allow.autonomous", true);
+        boolOptions.put("allow.chameleon_arch", true);
         boolOptions.put("allow.emergency_npc", true);
         boolOptions.put("allow.external_gravity", false);
         boolOptions.put("allow.hads", true);

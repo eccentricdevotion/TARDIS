@@ -99,11 +99,15 @@ public class TARDISCondenserListener implements Listener {
                                 amount += stack_size * plugin.getCondensables().get(item);
                             }
                             String block_data = is.getType().toString();
+                            plugin.debug("block_data: " + block_data);
                             if (plugin.getConfig().getBoolean("growth.rooms_require_blocks")) {
+                                plugin.debug("Require blocks TRUE");
                                 if (item_counts.containsKey(block_data)) {
+                                    plugin.debug("Map contains block_data");
                                     Integer add_this = (item_counts.get(block_data) + stack_size);
                                     item_counts.put(block_data, add_this);
                                 } else {
+                                    plugin.debug("New block_data");
                                     item_counts.put(block_data, stack_size);
                                 }
                             }
@@ -116,6 +120,8 @@ public class TARDISCondenserListener implements Listener {
                 }
                 // process item_counts
                 if (plugin.getConfig().getBoolean("growth.rooms_require_blocks")) {
+                    plugin.debug("loop...");
+                    System.out.print(item_counts);
                     for (Map.Entry<String, Integer> map : item_counts.entrySet()) {
                         // check if the tardis has condensed this material before
                         HashMap<String, Object> wherec = new HashMap<String, Object>();
@@ -125,8 +131,10 @@ public class TARDISCondenserListener implements Listener {
                         HashMap<String, Object> setc = new HashMap<String, Object>();
                         if (rsc.resultSet()) {
                             int new_stack_size = (int) map.getValue() + rsc.getBlock_count();
+                            plugin.debug("doing update block count");
                             qf.updateCondensedBlockCount(new_stack_size, rs.getTardis_id(), map.getKey());
                         } else {
+                            plugin.debug("inserting new block count");
                             setc.put("tardis_id", rs.getTardis_id());
                             setc.put("block_data", map.getKey());
                             setc.put("block_count", (int) map.getValue());
@@ -139,7 +147,6 @@ public class TARDISCondenserListener implements Listener {
                 HashMap<String, Object> wheret = new HashMap<String, Object>();
                 wheret.put("tardis_id", rs.getTardis_id());
                 qf.alterEnergyLevel("tardis", amount, wheret, player);
-                String message;
                 if (amount > 0) {
                     // are we doing an achievement?
                     if (plugin.getAchievementConfig().getBoolean("energy.enabled")) {

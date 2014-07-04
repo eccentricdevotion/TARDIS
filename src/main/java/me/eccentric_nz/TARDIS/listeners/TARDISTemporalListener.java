@@ -24,6 +24,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
+import org.bukkit.inventory.ItemStack;
 
 /**
  *
@@ -40,8 +41,11 @@ public class TARDISTemporalListener implements Listener {
     @EventHandler
     public void onPlayerInteract(PlayerInteractEvent event) {
         Player p = event.getPlayer();
-        Material inhand = p.getItemInHand().getType();
-        if (event.getAction().equals(Action.RIGHT_CLICK_AIR) && inhand.equals(Material.WATCH) && p.hasPermission("tardis.temporal")) {
+        ItemStack inhand = p.getItemInHand();
+        if (event.getAction().equals(Action.RIGHT_CLICK_AIR) && inhand.getType().equals(Material.WATCH) && p.hasPermission("tardis.temporal")) {
+            if (inhand.hasItemMeta() && inhand.getItemMeta().hasDisplayName() && inhand.getItemMeta().getDisplayName().equals("Fob Watch")) {
+                return;
+            }
             p.resetPlayerTime();
             if (plugin.getTrackerKeeper().getSetTime().containsKey(p.getUniqueId())) {
                 plugin.getTrackerKeeper().getSetTime().remove(p.getUniqueId());
