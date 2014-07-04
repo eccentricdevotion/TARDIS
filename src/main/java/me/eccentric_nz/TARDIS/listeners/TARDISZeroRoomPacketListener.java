@@ -79,8 +79,9 @@ public final class TARDISZeroRoomPacketListener implements Listener {
                                     }
                                 }
                             } catch (JSONException e) {
-                                instance.debug("Invalid JSON in packet! " + e.getMessage());
+                                instance.debug("Invalid JSON in packet!");
                                 instance.debug(json);
+                                e.printStackTrace();
                             }
                         }
                     }
