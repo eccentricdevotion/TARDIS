@@ -102,6 +102,10 @@ public class TARDISMySQLDatabase {
             String homesQuery = "CREATE TABLE IF NOT EXISTS homes (home_id int(11) NOT NULL AUTO_INCREMENT, tardis_id int(11) DEFAULT '0', world varchar(64) DEFAULT '', x int(7) DEFAULT '0', y int(3) DEFAULT '0', z int(7) DEFAULT '0', direction varchar(5) DEFAULT '', submarine int(1) DEFAULT '0', PRIMARY KEY (home_id)) DEFAULT CHARSET=utf8 COLLATE utf8_general_ci";
             statement.executeUpdate(homesQuery);
 
+            // add inventories table
+            String queryInventories = "CREATE TABLE inventories (id int(11) NOT NULL AUTO_INCREMENT, uuid varchar(48) DEFAULT '', player varchar(24) DEFAULT '', arch int(1), inventory text, armour text, PRIMARY KEY (id)) DEFAULT CHARSET=utf8 COLLATE utf8_general_ci";
+            statement.executeUpdate(queryInventories);
+
             // Table structure for table 'lamps'
             String lampsQuery = "CREATE TABLE IF NOT EXISTS lamps (l_id int(11) NOT NULL AUTO_INCREMENT, tardis_id int(11) DEFAULT '0', location varchar(512) DEFAULT '', PRIMARY KEY (l_id)) DEFAULT CHARSET=utf8 COLLATE utf8_general_ci";
             statement.executeUpdate(lampsQuery);

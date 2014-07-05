@@ -11,6 +11,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.TARDISDatabaseConnection;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Horse;
@@ -19,16 +20,16 @@ import org.bukkit.entity.Player;
 import org.bukkit.entity.minecart.HopperMinecart;
 import org.bukkit.entity.minecart.PoweredMinecart;
 import org.bukkit.entity.minecart.StorageMinecart;
-import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.InventoryHolder;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.ShapedRecipe;
 
 public class TARDISArchInventory {
 
     private final TARDISDatabaseConnection service = TARDISDatabaseConnection.getInstance();
 
     @SuppressWarnings("deprecation")
-    public void switchInventories(Player p, Inventory inventory, int arch) {
+    public void switchInventories(Player p, int arch) {
         String uuid = p.getUniqueId().toString();
         String name = p.getName();
         String inv = TARDISInventorySerialization.toString(p.getInventory().getContents());
@@ -62,6 +63,16 @@ public class TARDISArchInventory {
                 ps.setString(5, arm);
                 ps.executeUpdate();
                 ps.close();
+                // give a fob watch if it is the Chameleon Arch inventory
+                if (arch == 0) {
+                    TARDIS.plugin.debug("Giving a fob watch...");
+                    ShapedRecipe recipe = TARDIS.plugin.getFigura().getShapedRecipes().get("Fob Watch");
+                    ItemStack result = recipe.getResult();
+                    TARDIS.plugin.debug("Result: " + result.toString());
+                    result.setAmount(1);
+                    p.getInventory().addItem(result);
+                    p.updateInventory();
+                }
             }
             rsInv.close();
             // check if they have an inventory for the apposing chameleon arch state
