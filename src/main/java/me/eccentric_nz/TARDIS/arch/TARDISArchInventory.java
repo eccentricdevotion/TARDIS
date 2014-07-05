@@ -29,7 +29,7 @@ public class TARDISArchInventory {
     private final TARDISDatabaseConnection service = TARDISDatabaseConnection.getInstance();
 
     @SuppressWarnings("deprecation")
-    public void switchInventories(Player p, int arch) {
+    public void switchInventories(final Player p, int arch) {
         String uuid = p.getUniqueId().toString();
         String name = p.getName();
         String inv = TARDISInventorySerialization.toString(p.getInventory().getContents());
@@ -65,13 +65,16 @@ public class TARDISArchInventory {
                 ps.close();
                 // give a fob watch if it is the Chameleon Arch inventory
                 if (arch == 0) {
-                    TARDIS.plugin.debug("Giving a fob watch...");
-                    ShapedRecipe recipe = TARDIS.plugin.getFigura().getShapedRecipes().get("Fob Watch");
-                    ItemStack result = recipe.getResult();
-                    TARDIS.plugin.debug("Result: " + result.toString());
-                    result.setAmount(1);
-                    p.getInventory().addItem(result);
-                    p.updateInventory();
+                    TARDIS.plugin.getServer().getScheduler().scheduleSyncDelayedTask(TARDIS.plugin, new Runnable() {
+                        @Override
+                        public void run() {
+                            ShapedRecipe recipe = TARDIS.plugin.getFigura().getShapedRecipes().get("Fob Watch");
+                            ItemStack result = recipe.getResult();
+                            result.setAmount(1);
+                            p.getInventory().addItem(result);
+                            p.updateInventory();
+                        }
+                    }, 5L);
                 }
             }
             rsInv.close();
