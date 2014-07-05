@@ -23,6 +23,7 @@ import me.eccentric_nz.TARDIS.advanced.TARDISConsoleListener;
 import me.eccentric_nz.TARDIS.advanced.TARDISConsoleSwitchListener;
 import me.eccentric_nz.TARDIS.advanced.TARDISDiskCraftListener;
 import me.eccentric_nz.TARDIS.advanced.TARDISStorageListener;
+import me.eccentric_nz.TARDIS.arch.TARDISFakerListener;
 import me.eccentric_nz.TARDIS.arch.TARDISFobWatchListener;
 import me.eccentric_nz.TARDIS.artron.TARDISArtronCapacitorListener;
 import me.eccentric_nz.TARDIS.artron.TARDISCondenserListener;
@@ -163,6 +164,7 @@ public class TARDISListenerRegisterer {
         plugin.getPM().registerEvents(new TARDISDiskCraftListener(plugin), plugin);
         plugin.getPM().registerEvents(new TARDISEntityGriefListener(plugin), plugin);
         plugin.getPM().registerEvents(new TARDISExplosionListener(plugin), plugin);
+        plugin.getPM().registerEvents(new TARDISFakerListener(plugin), plugin);
         plugin.getPM().registerEvents(new TARDISFarmBlockListener(plugin), plugin);
         plugin.getPM().registerEvents(new TARDISFireListener(plugin), plugin);
         plugin.getPM().registerEvents(new TARDISGlassesListener(plugin), plugin);

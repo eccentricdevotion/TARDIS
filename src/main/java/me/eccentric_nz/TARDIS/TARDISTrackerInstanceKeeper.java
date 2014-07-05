@@ -62,6 +62,7 @@ public class TARDISTrackerInstanceKeeper {
     private final HashMap<UUID, String> end = new HashMap<UUID, String>();
     private final HashMap<UUID, String> flight = new HashMap<UUID, String>();
     private final HashMap<UUID, String> jettison = new HashMap<UUID, String>();
+    private final HashMap<UUID, String> johnSmith = new HashMap<UUID, String>();
     private final HashMap<UUID, String> perm = new HashMap<UUID, String>();
     private final HashMap<UUID, String> players = new HashMap<UUID, String>();
     private final HashMap<UUID, String> preset = new HashMap<UUID, String>();
@@ -82,7 +83,6 @@ public class TARDISTrackerInstanceKeeper {
     private final List<UUID> farming = new ArrayList<UUID>();
     private final List<UUID> geneticManipulation = new ArrayList<UUID>();
     private final List<UUID> hasTravelled = new ArrayList<UUID>();
-    private final List<UUID> johnSmith = new ArrayList<UUID>();
     private final List<UUID> mover = new ArrayList<UUID>();
     private final List<UUID> recipeView = new ArrayList<UUID>();
     private final List<UUID> sonicDoors = new ArrayList<UUID>();
@@ -247,7 +247,7 @@ public class TARDISTrackerInstanceKeeper {
         return hasTravelled;
     }
 
-    public List<UUID> getJohnSmith() {
+    public HashMap<UUID, String> getJohnSmith() {
         return johnSmith;
     }
 

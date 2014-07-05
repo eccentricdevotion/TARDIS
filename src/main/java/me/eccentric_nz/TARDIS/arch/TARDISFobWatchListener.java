@@ -65,24 +65,31 @@ public class TARDISFobWatchListener implements Listener {
             return;
         }
         final UUID uuid = player.getUniqueId();
-        if (plugin.getTrackerKeeper().getJohnSmith().contains(uuid)) {
+        if (plugin.getTrackerKeeper().getJohnSmith().containsKey(uuid)) {
             return;
         }
-        plugin.getTrackerKeeper().getJohnSmith().add(uuid);
+        final String name = TARDISRandomName.name();
+        plugin.getTrackerKeeper().getJohnSmith().put(uuid, name);
         if (DisguiseAPI.isDisguised(player)) {
             DisguiseAPI.undisguiseToAll(player);
         }
         player.getWorld().strikeLightningEffect(player.getLocation());
-        PlayerDisguise playerDisguise = new PlayerDisguise("§§§§");
+        player.setHealth(player.getMaxHealth() / 10.0d);
+        new TARDISArchInventory().switchInventories(player, 0);
+        PlayerDisguise playerDisguise = new PlayerDisguise(name);
         DisguiseAPI.disguiseToAll(player, playerDisguise);
+        player.setDisplayName(name);
+        player.setPlayerListName(name);
         plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
             @Override
             public void run() {
                 if (DisguiseAPI.isDisguised(player)) {
                     DisguiseAPI.undisguiseToAll(player);
                 }
+                new TARDISArchInventory().switchInventories(player, 1);
                 plugin.getTrackerKeeper().getJohnSmith().remove(uuid);
+                player.setPlayerListName(player.getName());
             }
-        }, 300L);
+        }, 400L);
     }
 }
