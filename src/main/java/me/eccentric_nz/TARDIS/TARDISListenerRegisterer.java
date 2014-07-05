@@ -25,6 +25,7 @@ import me.eccentric_nz.TARDIS.advanced.TARDISDiskCraftListener;
 import me.eccentric_nz.TARDIS.advanced.TARDISStorageListener;
 import me.eccentric_nz.TARDIS.arch.TARDISFakerListener;
 import me.eccentric_nz.TARDIS.arch.TARDISFobWatchListener;
+import me.eccentric_nz.TARDIS.arch.TARDISSelectWatchListener;
 import me.eccentric_nz.TARDIS.artron.TARDISArtronCapacitorListener;
 import me.eccentric_nz.TARDIS.artron.TARDISCondenserListener;
 import me.eccentric_nz.TARDIS.chameleon.TARDISChameleonListener;
@@ -226,7 +227,10 @@ public class TARDISListenerRegisterer {
             plugin.getPM().registerEvents(kpl, plugin);
             kpl.startSignPackets();
             if (plugin.getPM().isPluginEnabled("LibsDisguises")) {
-                plugin.getPM().registerEvents(new TARDISFobWatchListener(plugin), plugin);
+                if (plugin.getConfig().getBoolean("allow.chameleon_arch")) {
+                    plugin.getPM().registerEvents(new TARDISFobWatchListener(plugin), plugin);
+                    plugin.getPM().registerEvents(new TARDISSelectWatchListener(plugin), plugin);
+                }
                 plugin.getPM().registerEvents(new TARDISLazarusListener(plugin), plugin);
                 plugin.getPM().registerEvents(new TARDISLazarusGUIListener(plugin), plugin);
             }

@@ -16,6 +16,7 @@
  */
 package me.eccentric_nz.TARDIS.arch;
 
+import java.util.Random;
 import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
@@ -38,6 +39,7 @@ import org.bukkit.inventory.meta.ItemMeta;
 public class TARDISFobWatchListener implements Listener {
 
     private final TARDIS plugin;
+    private final Random rand = new Random();
 
     public TARDISFobWatchListener(TARDIS plugin) {
         this.plugin = plugin;
@@ -45,9 +47,6 @@ public class TARDISFobWatchListener implements Listener {
 
     @EventHandler(priority = EventPriority.MONITOR)
     public void onInteract(PlayerInteractEvent event) {
-        if (!plugin.getConfig().getBoolean("allow.chameleon_arch")) {
-            return;
-        }
         if (!event.getAction().equals(Action.RIGHT_CLICK_AIR)) {
             return;
         }
@@ -70,6 +69,7 @@ public class TARDISFobWatchListener implements Listener {
         }
         final String name = TARDISRandomName.name();
         plugin.getTrackerKeeper().getJohnSmith().put(uuid, name);
+        plugin.getTrackerKeeper().getFobWatch().put(player.getUniqueId(), rand.nextInt(6) + 5);
         if (DisguiseAPI.isDisguised(player)) {
             DisguiseAPI.undisguiseToAll(player);
         }
@@ -90,6 +90,6 @@ public class TARDISFobWatchListener implements Listener {
                 plugin.getTrackerKeeper().getJohnSmith().remove(uuid);
                 player.setPlayerListName(player.getName());
             }
-        }, 400L);
+        }, 1200L);
     }
 }
