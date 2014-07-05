@@ -56,7 +56,7 @@ public final class TARDISZeroRoomPacketListener implements Listener {
                         boolean send = false;
                         WrappedChatComponent chat = event.getPacket().getChatComponents().read(0);
                         String json = chat.getJson();
-                        if (!json.isEmpty()) {
+                        if (!json.isEmpty() && !json.equals("\"\"")) {
                             try {
                                 JSONObject data = new JSONObject(json);
                                 if (data.has("extra")) {
@@ -81,7 +81,6 @@ public final class TARDISZeroRoomPacketListener implements Listener {
                             } catch (JSONException e) {
                                 instance.debug("Invalid JSON in packet!");
                                 instance.debug(json);
-                                e.printStackTrace();
                             }
                         }
                     }
