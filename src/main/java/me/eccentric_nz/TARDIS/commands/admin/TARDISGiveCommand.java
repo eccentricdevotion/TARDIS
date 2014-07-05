@@ -80,6 +80,7 @@ public class TARDISGiveCommand implements CommandExecutor {
         items.put("save-disk", "Save Storage Disk");
         items.put("sonic", "Sonic Screwdriver");
         items.put("t-circuit", "TARDIS Temporal Circuit");
+        items.put("watch", "Fob Watch");
     }
 
     @Override

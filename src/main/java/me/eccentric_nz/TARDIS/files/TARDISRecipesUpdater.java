@@ -106,6 +106,21 @@ public class TARDISRecipesUpdater {
             recipes_config.set("shaped.3-D Glasses.lore", "");
             i++;
         }
+        if (!recipes_config.contains("shaped.Fob Watch")) {
+            recipes_config.set("shaped.Fob Watch.easy_shape", "-C-,-W-,R-R");
+            recipes_config.set("shaped.Fob Watch.easy_ingredients.C", "MAP:1966");
+            recipes_config.set("shaped.Fob Watch.easy_ingredients.W", "WATCH");
+            recipes_config.set("shaped.Fob Watch.easy_ingredients.R", "REDSTONE");
+            recipes_config.set("shaped.Fob Watch.hard_shape", "-C-,IWI,R-R");
+            recipes_config.set("shaped.Fob Watch.hard_ingredients.C", "MAP:1966");
+            recipes_config.set("shaped.Fob Watch.hard_ingredients.W", "WATCH");
+            recipes_config.set("shaped.Fob Watch.hard_ingredients.I", "IRON_INGOT");
+            recipes_config.set("shaped.Fob Watch.hard_ingredients.R", "REDSTONE");
+            recipes_config.set("shaped.Fob Watch.result", "WATCH");
+            recipes_config.set("shaped.Fob Watch.amount", 1);
+            recipes_config.set("shaped.Fob Watch.lore", "");
+            i++;
+        }
         if (!recipes_config.contains("shaped.Jammy Dodger")) {
             recipes_config.set("shaped.Jammy Dodger.easy_shape", "---,WRW,---");
             recipes_config.set("shaped.Jammy Dodger.easy_ingredients.W", "WHEAT");

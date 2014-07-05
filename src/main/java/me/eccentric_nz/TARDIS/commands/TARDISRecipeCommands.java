@@ -88,6 +88,7 @@ public class TARDISRecipeCommands implements CommandExecutor {
         firstArgs.add("sonic"); // Sonic Screwdriver
         firstArgs.add("t-circuit"); // Temporal Circuit
         firstArgs.add("tardis"); // TARDIS Seed Block
+        firstArgs.add("watch"); // TARDIS Seed Block
         t.put("BUDGET", Material.IRON_BLOCK); // budget
         t.put("BIGGER", Material.GOLD_BLOCK); // bigger
         t.put("DELUXE", Material.DIAMOND_BLOCK); // deluxe
@@ -274,6 +275,10 @@ public class TARDISRecipeCommands implements CommandExecutor {
             }
             if (args[0].equalsIgnoreCase("t-circuit")) {
                 this.showShapedRecipe(player, "TARDIS Temporal Circuit");
+                return true;
+            }
+            if (args[0].equalsIgnoreCase("watch")) {
+                this.showShapedRecipe(player, "Fob Watch");
                 return true;
             }
         }

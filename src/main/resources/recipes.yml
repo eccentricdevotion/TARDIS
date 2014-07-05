@@ -614,6 +614,21 @@ shaped:
         result: LEATHER_HELMET
         amount: 1
         lore: ""
+    Fob Watch:
+        easy_shape: -C-,-W-,R-R
+        easy_ingredients:
+            C: 'MAP:1966'
+            W: WATCH
+            R: REDSTONE
+        easy_shape: -C-,IWI,R-R
+        hard_ingredients:
+            C: 'MAP:1966'
+            I: IRON_INGOT
+            W: WATCH
+            R: REDSTONE
+        result: WATCH
+        amount: 1
+        lore: ""
 # -------------------
 # these are the shapeless recipes
 # -------------------
