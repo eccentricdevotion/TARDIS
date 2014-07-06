@@ -9,6 +9,7 @@
 1. Console modes / grace period on hard mode?
 2. Slimmer TARDIS option?
 3. Chameleon Arch / Fob watch
+    * persist 'arched' status over player death, log out, and restarts
 4. Remote locking, advanced hide and rebuild via remote key
 5. TARDIS creation area config
 6. More MCPatcher texture support

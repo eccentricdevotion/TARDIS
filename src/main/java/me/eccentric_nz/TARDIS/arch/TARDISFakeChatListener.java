@@ -27,11 +27,11 @@ import org.bukkit.event.player.AsyncPlayerChatEvent;
  *
  * @author eccentric_nz
  */
-public class TARDISFakerListener implements Listener {
+public class TARDISFakeChatListener implements Listener {
 
     private final TARDIS plugin;
 
-    public TARDISFakerListener(TARDIS plugin) {
+    public TARDISFakeChatListener(TARDIS plugin) {
         this.plugin = plugin;
     }
 
@@ -42,7 +42,7 @@ public class TARDISFakerListener implements Listener {
             return;
         }
         String currentDisplayName = player.getDisplayName();
-        String newDisplayName = currentDisplayName.replace(player.getName(), plugin.getTrackerKeeper().getJohnSmith().get(player.getUniqueId()));
+        String newDisplayName = currentDisplayName.replace(player.getName(), plugin.getTrackerKeeper().getJohnSmith().get(player.getUniqueId()).getName());
         player.setDisplayName(newDisplayName);
     }
 }

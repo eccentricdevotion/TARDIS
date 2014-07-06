@@ -46,43 +46,38 @@ public class TARDISFobWatchListener implements Listener {
     }
 
     @EventHandler(priority = EventPriority.MONITOR)
-    public void onInteract(PlayerInteractEvent event) {
-        if (!event.getAction().equals(Action.RIGHT_CLICK_AIR)) {
-            return;
-        }
-        ItemStack is = event.getItem();
-        if (!is.getType().equals(Material.WATCH) || !is.hasItemMeta()) {
-            return;
-        }
-        ItemMeta im = is.getItemMeta();
-        if (!im.hasDisplayName() || !im.getDisplayName().equals("Fob Watch")) {
-            return;
-        }
-        final Player player = event.getPlayer();
-        if (!player.hasPermission("tardis.chameleonarch")) {
-            TARDISMessage.send(player, "NO_PERM_CHAM_ARCH");
-            return;
-        }
-        final UUID uuid = player.getUniqueId();
-        if (plugin.getTrackerKeeper().getJohnSmith().containsKey(uuid)) {
-            return;
-        }
-        final String name = TARDISRandomName.name();
-        plugin.getTrackerKeeper().getJohnSmith().put(uuid, name);
-        plugin.getTrackerKeeper().getFobWatch().put(player.getUniqueId(), rand.nextInt(6) + 5);
-        if (DisguiseAPI.isDisguised(player)) {
-            DisguiseAPI.undisguiseToAll(player);
-        }
-        player.getWorld().strikeLightningEffect(player.getLocation());
-        player.setHealth(player.getMaxHealth() / 10.0d);
-        new TARDISArchInventory().switchInventories(player, 0);
-        PlayerDisguise playerDisguise = new PlayerDisguise(name);
-        DisguiseAPI.disguiseToAll(player, playerDisguise);
-        player.setDisplayName(name);
-        player.setPlayerListName(name);
-        plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
-            @Override
-            public void run() {
+    public void onFobWatchClick(PlayerInteractEvent event) {
+        if (event.getAction().equals(Action.RIGHT_CLICK_AIR)) {
+            ItemStack is = event.getItem();
+            if (!is.getType().equals(Material.WATCH) || !is.hasItemMeta()) {
+                return;
+            }
+            ItemMeta im = is.getItemMeta();
+            if (!im.hasDisplayName() || !im.getDisplayName().equals("Fob Watch")) {
+                return;
+            }
+            final Player player = event.getPlayer();
+            if (!player.hasPermission("tardis.chameleonarch")) {
+                TARDISMessage.send(player, "NO_PERM_CHAM_ARCH");
+                return;
+            }
+            final UUID uuid = player.getUniqueId();
+            if (!plugin.getTrackerKeeper().getJohnSmith().containsKey(uuid)) {
+                final String name = TARDISRandomName.name();
+                long time = System.currentTimeMillis() + plugin.getConfig().getLong("preferences.arch_time") * 60000L;
+                TARDISWatchData twd = new TARDISWatchData(name, time);
+                plugin.getTrackerKeeper().getJohnSmith().put(uuid, twd);
+                if (DisguiseAPI.isDisguised(player)) {
+                    DisguiseAPI.undisguiseToAll(player);
+                }
+                player.getWorld().strikeLightningEffect(player.getLocation());
+                player.setHealth(player.getMaxHealth() / 10.0d);
+                new TARDISArchInventory().switchInventories(player, 0);
+                PlayerDisguise playerDisguise = new PlayerDisguise(name);
+                DisguiseAPI.disguiseToAll(player, playerDisguise);
+                player.setDisplayName(name);
+                player.setPlayerListName(name);
+            } else {
                 if (DisguiseAPI.isDisguised(player)) {
                     DisguiseAPI.undisguiseToAll(player);
                 }
@@ -90,6 +85,6 @@ public class TARDISFobWatchListener implements Listener {
                 plugin.getTrackerKeeper().getJohnSmith().remove(uuid);
                 player.setPlayerListName(player.getName());
             }
-        }, 1200L);
+        }
     }
 }

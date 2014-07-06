@@ -40,9 +40,9 @@ public class TARDISSelectWatchListener implements Listener {
 
     @EventHandler
     @SuppressWarnings("deprecation")
-    public void onTryToGrabWatch(PlayerItemHeldEvent event) {
+    public void onTryToSelectWatch(PlayerItemHeldEvent event) {
         final Player player = event.getPlayer();
-        if (!plugin.getTrackerKeeper().getFobWatch().containsKey(player.getUniqueId())) {
+        if (!plugin.getTrackerKeeper().getJohnSmith().containsKey(player.getUniqueId())) {
             return;
         }
         int slot = event.getNewSlot();
@@ -55,18 +55,14 @@ public class TARDISSelectWatchListener implements Listener {
         if (!im.hasDisplayName() || !im.getDisplayName().equals("Fob Watch")) {
             return;
         }
-        if (plugin.getTrackerKeeper().getFobWatch().get(player.getUniqueId()) > 1) {
+        if (plugin.getTrackerKeeper().getJohnSmith().get(player.getUniqueId()).getTime() > System.currentTimeMillis()) {
             // move the fob watch
             int empty = inv.firstEmpty();
-            plugin.debug("held item slot: " + slot);
             inv.setItem(slot, null);
             inv.setItem(empty, is);
             player.updateInventory();
-            // update count
-            int count = plugin.getTrackerKeeper().getFobWatch().get(player.getUniqueId()) - 1;
-            plugin.getTrackerKeeper().getFobWatch().put(player.getUniqueId(), count);
         } else {
-            plugin.getTrackerKeeper().getFobWatch().remove(player.getUniqueId());
+            plugin.getTrackerKeeper().getJohnSmith().remove(player.getUniqueId());
         }
     }
 }

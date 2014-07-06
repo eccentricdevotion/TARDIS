@@ -13,14 +13,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.TARDISDatabaseConnection;
-import org.bukkit.entity.Entity;
-import org.bukkit.entity.Horse;
-import org.bukkit.entity.ItemFrame;
 import org.bukkit.entity.Player;
-import org.bukkit.entity.minecart.HopperMinecart;
-import org.bukkit.entity.minecart.PoweredMinecart;
-import org.bukkit.entity.minecart.StorageMinecart;
-import org.bukkit.inventory.InventoryHolder;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.ShapedRecipe;
 
@@ -133,13 +126,5 @@ public class TARDISArchInventory {
 
     public void setArmour(Player p, ItemStack[] is) {
         p.getInventory().setArmorContents(is);
-    }
-
-    public boolean isInstanceOf(Entity e) {
-        return e instanceof PoweredMinecart || e instanceof StorageMinecart || e instanceof HopperMinecart || e instanceof ItemFrame;
-    }
-
-    public boolean isInstanceOf(InventoryHolder h) {
-        return h instanceof Horse;
     }
 }

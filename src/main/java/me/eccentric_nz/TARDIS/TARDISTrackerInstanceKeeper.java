@@ -21,6 +21,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.UUID;
 import me.eccentric_nz.TARDIS.JSON.JSONObject;
+import me.eccentric_nz.TARDIS.arch.TARDISWatchData;
 import me.eccentric_nz.TARDIS.builders.TARDISMaterialisationData;
 import me.eccentric_nz.TARDIS.flight.TARDISRegulatorRunnable;
 import me.eccentric_nz.TARDIS.info.TARDISInfoMenu;
@@ -52,7 +53,6 @@ public class TARDISTrackerInstanceKeeper {
     private final HashMap<UUID, Double[]> gravity = new HashMap<UUID, Double[]>();
     private final HashMap<UUID, Integer> binder = new HashMap<UUID, Integer>();
     private final HashMap<UUID, Integer> count = new HashMap<UUID, Integer>();
-    private final HashMap<UUID, Integer> fobWatch = new HashMap<UUID, Integer>();
     private final HashMap<UUID, JSONObject> pastes = new HashMap<UUID, JSONObject>();
     private final HashMap<UUID, List<Location>> repeaters = new HashMap<UUID, List<Location>>();
     private final HashMap<UUID, Location> startLocation = new HashMap<UUID, Location>();
@@ -63,7 +63,7 @@ public class TARDISTrackerInstanceKeeper {
     private final HashMap<UUID, String> end = new HashMap<UUID, String>();
     private final HashMap<UUID, String> flight = new HashMap<UUID, String>();
     private final HashMap<UUID, String> jettison = new HashMap<UUID, String>();
-    private final HashMap<UUID, String> johnSmith = new HashMap<UUID, String>();
+    private final HashMap<UUID, TARDISWatchData> johnSmith = new HashMap<UUID, TARDISWatchData>();
     private final HashMap<UUID, String> perm = new HashMap<UUID, String>();
     private final HashMap<UUID, String> players = new HashMap<UUID, String>();
     private final HashMap<UUID, String> preset = new HashMap<UUID, String>();
@@ -153,10 +153,6 @@ public class TARDISTrackerInstanceKeeper {
 
     public HashMap<UUID, Integer> getCount() {
         return count;
-    }
-
-    public HashMap<UUID, Integer> getFobWatch() {
-        return fobWatch;
     }
 
     public HashMap<UUID, TARDISRegulatorRunnable> getRegulating() {
@@ -252,7 +248,7 @@ public class TARDISTrackerInstanceKeeper {
         return hasTravelled;
     }
 
-    public HashMap<UUID, String> getJohnSmith() {
+    public HashMap<UUID, TARDISWatchData> getJohnSmith() {
         return johnSmith;
     }
 
