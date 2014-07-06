@@ -78,7 +78,7 @@ public enum TARDISInfoMenu {
     D_CIRCUIT("TIS|Components|Diamond Disruptor Circuit", "COMPONENTS", "D"),
     D_CIRCUIT_INFO("TIS|Components|Diamond Disruptor Circuit|Info", "D_CIRCUIT", "I"),
     D_CIRCUIT_RECIPE("TIS|Components|Diamond Disruptor Circuit|Recipe", "D_CIRCUIT", "R"),
-    E_CIRCUIT("TIS|Components|Emerald Environment Circuit", "COMPONENTS", "E"),
+    E_CIRCUIT("TIS|Components|Emerald Environment Circuit", "COMPONENTS", "v"),
     E_CIRCUIT_INFO("TIS|Components|Emerald Environment Circuit|Info", "E_CIRCUIT", "I"),
     E_CIRCUIT_RECIPE("TIS|Components|Emerald Environment Circuit|Recipe", "E_CIRCUIT", "R"),
     ARS_CIRCUIT("TIS|Components|Architectural Reconfiguration System (ARS) Circuit", "COMPONENTS", "h"),
