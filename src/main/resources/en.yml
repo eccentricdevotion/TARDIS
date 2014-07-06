@@ -15,6 +15,7 @@ ANTIBUILD: "You can't do that because the TARDIS has placed this area in a stasi
 ANTIBUILD_OFF: "Companion building was turned OFF."
 ANTIBUILD_ON: "Companion building was turned ON!"
 ANTIBUILD_TIMELORD: "You can't do that because %s has locked the TARDIS in a perpetual state of relativistic stability!"
+ARCH_TIME: "You still have %s minutes left before you can become a Time Lord again."
 AREAS: "Areas"
 AREA_CLICK_END: "Click the area end block to complete the area."
 AREA_CLICK_START: "Click the area start block to save its position."
