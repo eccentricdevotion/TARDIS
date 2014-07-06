@@ -130,10 +130,13 @@ public class TARDISAdminCommands implements CommandExecutor {
         firstsBool.put("wg_flag_set", "allow");
         firstsBool.put("zero_room", "allow");
         // integer
+        firstsInt.put("arch_time", "preferences");
+        firstsInt.put("ars_limit", "growth");
         firstsInt.put("border_radius", "creation");
         firstsInt.put("confirm_timeout", "police_box");
         firstsInt.put("count", "creation");
         firstsInt.put("custom_creeper_id", "creation");
+        firstsInt.put("grace_period", "travel");
         firstsInt.put("gravity_max_distance", "growth");
         firstsInt.put("gravity_max_velocity", "growth");
         firstsInt.put("hads_damage", "preferences");

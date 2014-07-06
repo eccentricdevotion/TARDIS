@@ -191,6 +191,7 @@ public class TARDISConfiguration {
         intOptions.put("police_box.tardis_lamp", 50);
         intOptions.put("police_box.wall_data", 11);
         intOptions.put("police_box.wall_id", 35);
+        intOptions.put("preferences.arch_time", 20);
         intOptions.put("preferences.freeze_cooldown", 60);
         intOptions.put("preferences.hads_damage", 10);
         intOptions.put("preferences.hads_distance", 10);

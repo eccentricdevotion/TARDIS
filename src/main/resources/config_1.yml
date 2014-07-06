@@ -80,6 +80,7 @@ preferences:
     default_key: eleventh
     default_sonic: eleventh
     wand: BONE
+    arch_time: 20
 # restrictions
 allow:
     mob_farming: true
