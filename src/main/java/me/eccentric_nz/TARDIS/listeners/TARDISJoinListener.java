@@ -19,6 +19,7 @@ package me.eccentric_nz.TARDIS.listeners;
 import java.util.HashMap;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.achievement.TARDISBook;
+import me.eccentric_nz.TARDIS.arch.TARDISArchPersister;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetAchievements;
 import me.eccentric_nz.TARDIS.database.ResultSetCurrentLocation;
@@ -159,6 +160,10 @@ public class TARDISJoinListener implements Listener {
             plugin.getGeneralKeeper().getUUIDCache().ensurePlayerUUID(player.getName());
             // also add reverse lookup
             plugin.getGeneralKeeper().getUUIDCache().getNameCache().put(player.getUniqueId(), player.getName());
+        }
+        // re-arch the player
+        if (plugin.getConfig().getBoolean("allow.chameleon_arch")) {
+            new TARDISArchPersister(plugin).reArch(player.getUniqueId());
         }
         plugin.getFilter().addPlayer(player);
     }

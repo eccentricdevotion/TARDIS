@@ -32,6 +32,7 @@ import java.util.UUID;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import me.eccentric_nz.TARDIS.api.TARDII;
+import me.eccentric_nz.TARDIS.arch.TARDISArchPersister;
 import me.eccentric_nz.TARDIS.artron.TARDISCondensables;
 import me.eccentric_nz.TARDIS.artron.TARDISCreeperChecker;
 import me.eccentric_nz.TARDIS.artron.TARDISStandbyMode;
@@ -97,7 +98,7 @@ public class TARDIS extends JavaPlugin {
 
     public static TARDIS plugin;
     TARDISDatabaseConnection service = TARDISDatabaseConnection.getInstance();
-    //public TARDISFurnaceRecipe fornacis;
+//    public TARDISFurnaceRecipe fornacis;
     private Calendar afterCal;
     private Calendar beforeCal;
     private ConsoleCommandSender console;
@@ -254,6 +255,9 @@ public class TARDIS extends JavaPlugin {
                 new TARDISPortalPersister(this).load();
                 this.getServer().getScheduler().scheduleSyncRepeatingTask(this, new TARDISMonsterRunnable(this), 2400L, 2400L);
             }
+            if (getConfig().getBoolean("allow.chameleon_arch")) {
+                new TARDISArchPersister(this).checkAll();
+            }
             setDates();
             startStandBy();
             filter = new TARDISPerceptionFilter(this);
@@ -287,8 +291,11 @@ public class TARDIS extends JavaPlugin {
             if (getConfig().getBoolean("preferences.walk_in_tardis")) {
                 new TARDISPortalPersister(this).save();
             }
+            if (getConfig().getBoolean("allow.chameleon_arch")) {
+                new TARDISArchPersister(this).saveAll();
+            }
             updateTagStats();
-            saveConfig();
+//            saveConfig();
             closeDatabase();
             resetTime();
             getServer().getScheduler().cancelTasks(this);

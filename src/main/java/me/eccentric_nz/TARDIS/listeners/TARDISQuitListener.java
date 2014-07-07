@@ -19,6 +19,7 @@ package me.eccentric_nz.TARDIS.listeners;
 import java.util.HashMap;
 import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.arch.TARDISArchPersister;
 import me.eccentric_nz.TARDIS.artron.TARDISBeaconToggler;
 import me.eccentric_nz.TARDIS.artron.TARDISLampToggler;
 import me.eccentric_nz.TARDIS.artron.TARDISPoliceBoxLampToggler;
@@ -69,6 +70,7 @@ public class TARDISQuitListener implements Listener {
             // remove player from the TARDIS UUID cache
             plugin.getGeneralKeeper().getUUIDCache().getCache().remove(event.getPlayer().getName());
             plugin.getGeneralKeeper().getUUIDCache().getNameCache().remove(event.getPlayer().getUniqueId());
+            // power down TARDIS
             if (plugin.getConfig().getBoolean("allow.power_down") && plugin.getConfig().getBoolean("allow.power_down_on_quit")) {
                 // check if powered on
                 if (rs.isPowered_on()) {
@@ -109,6 +111,10 @@ public class TARDISQuitListener implements Listener {
                     sett.put("powered_on", 0);
                     new QueryFactory(plugin).doUpdate("tardis", sett, wheret);
                 }
+            }
+            // save arched status
+            if (plugin.getConfig().getBoolean("allow.chameleon_arch") && plugin.getTrackerKeeper().getJohnSmith().containsKey(uuid)) {
+                new TARDISArchPersister(plugin).save(uuid);
             }
         }
     }
