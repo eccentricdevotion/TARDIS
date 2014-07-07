@@ -41,9 +41,13 @@ public class TARDISArchCommand {
         long time = plugin.getTrackerKeeper().getJohnSmith().get(uuid).getTime();
         long now = System.currentTimeMillis();
         long diff = (time - now);
-        String sub0 = String.format("%d", (diff / (1000 * 60)) % 60);
-        String sub1 = String.format("%d", (diff / 1000) % 60);
-        TARDISMessage.send(player, "ARCH_TIME", sub0, sub1);
+        if (diff > 0) {
+            String sub0 = String.format("%d", (diff / (1000 * 60)) % 60);
+            String sub1 = String.format("%d", (diff / 1000) % 60);
+            TARDISMessage.send(player, "ARCH_TIME", sub0, sub1);
+        } else {
+            TARDISMessage.send(player, "ARCH_FREE");
+        }
         return true;
     }
 

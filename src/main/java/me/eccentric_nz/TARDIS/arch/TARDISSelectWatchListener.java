@@ -58,12 +58,10 @@ public class TARDISSelectWatchListener implements Listener {
         if (!im.hasDisplayName() || !im.getDisplayName().equals("Fob Watch")) {
             return;
         }
-//        if (plugin.getTrackerKeeper().getJohnSmith().get(player.getUniqueId()).getTime() > System.currentTimeMillis()) {
         // move the fob watch
         int empty = inv.firstEmpty();
         inv.setItem(slot, null);
         inv.setItem(empty, is);
         player.updateInventory();
-//        }
     }
 }
