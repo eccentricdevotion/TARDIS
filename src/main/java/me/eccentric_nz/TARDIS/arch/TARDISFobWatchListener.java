@@ -78,7 +78,7 @@ public class TARDISFobWatchListener implements Listener {
                 DisguiseAPI.disguiseToAll(player, playerDisguise);
                 player.setDisplayName(name);
                 player.setPlayerListName(name);
-            } else {
+            } else if (plugin.getTrackerKeeper().getJohnSmith().get(uuid).getTime() <= System.currentTimeMillis()) {
                 if (DisguiseAPI.isDisguised(player)) {
                     DisguiseAPI.undisguiseToAll(player);
                 }
