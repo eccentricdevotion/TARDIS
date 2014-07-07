@@ -16,20 +16,23 @@
  */
 package me.eccentric_nz.TARDIS.arch;
 
+import java.util.ArrayList;
 import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
+import org.bukkit.ChatColor;
+import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 /**
  *
  * @author eccentric_nz
  */
-public class TARDISArchTimeCommand {
+public class TARDISArchCommand {
 
     private final TARDIS plugin;
 
-    public TARDISArchTimeCommand(TARDIS plugin) {
+    public TARDISArchCommand(TARDIS plugin) {
         this.plugin = plugin;
     }
 
@@ -37,9 +40,21 @@ public class TARDISArchTimeCommand {
         UUID uuid = player.getUniqueId();
         long time = plugin.getTrackerKeeper().getJohnSmith().get(uuid).getTime();
         long now = System.currentTimeMillis();
-        long diff = (time - now) / 60000l;
-        TARDISMessage.send(player, "ARCH_TIME", String.format("%d", diff));
-        //
+        long diff = (time - now);
+        String sub0 = String.format("%d", (diff / (1000 * 60)) % 60);
+        String sub1 = String.format("%d", (diff / 1000) % 60);
+        TARDISMessage.send(player, "ARCH_TIME", sub0, sub1);
+        return true;
+    }
+
+    public boolean whois(CommandSender sender, String[] args) {
+        for (Player p : new ArrayList<Player>(plugin.getServer().getOnlinePlayers())) {
+            if (ChatColor.stripColor(p.getPlayerListName()).equalsIgnoreCase(args[1])) {
+                TARDISMessage.send(sender, "ARCH_PLAYER", p.getName());
+                return true;
+            }
+        }
+        TARDISMessage.send(sender, "COULD_NOT_FIND_NAME");
         return true;
     }
 }

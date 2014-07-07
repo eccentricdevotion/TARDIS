@@ -21,6 +21,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.arch.TARDISArchCommand;
 import me.eccentric_nz.TARDIS.enumeration.CMDS;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import org.bukkit.command.Command;
@@ -51,6 +52,7 @@ public class TARDISAdminCommands implements CommandExecutor {
     public TARDISAdminCommands(TARDIS plugin) {
         this.plugin = plugin;
         // add first arguments
+        firstsStr.put("arch", "");
         firstsStr.put("chunks", "");
         firstsStr.put("config", "");
         firstsStr.put("custom_schematic_seed", "creation");
@@ -212,6 +214,9 @@ public class TARDISAdminCommands implements CommandExecutor {
                 if (args.length < 2) {
                     TARDISMessage.send(sender, "TOO_FEW_ARGS");
                     return false;
+                }
+                if (first.equals("arch")) {
+                    return new TARDISArchCommand(plugin).whois(sender, args);
                 }
                 if (first.equals("config")) {
                     return new TARDISConfigCommand(plugin).showConfigOptions(sender, args);

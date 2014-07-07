@@ -21,7 +21,7 @@ import java.util.List;
 import java.util.Locale;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.advanced.TARDISDiskWriterCommand;
-import me.eccentric_nz.TARDIS.arch.TARDISArchTimeCommand;
+import me.eccentric_nz.TARDIS.arch.TARDISArchCommand;
 import me.eccentric_nz.TARDIS.enumeration.CMDS;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import org.bukkit.ChatColor;
@@ -121,7 +121,7 @@ public class TARDISCommands implements CommandExecutor {
                     return new TARDISARSRemoveCommand(plugin).resetARS(player);
                 }
                 if (args[0].equalsIgnoreCase("arch_time")) {
-                    return new TARDISArchTimeCommand(plugin).getTime(player);
+                    return new TARDISArchCommand(plugin).getTime(player);
                 }
                 if (args[0].equalsIgnoreCase("lamps")) {
                     return new TARDISLampsCommand(plugin).addLampBlocks(player);
