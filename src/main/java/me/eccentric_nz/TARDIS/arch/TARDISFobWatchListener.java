@@ -16,7 +16,6 @@
  */
 package me.eccentric_nz.TARDIS.arch;
 
-import java.util.Random;
 import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
@@ -39,7 +38,6 @@ import org.bukkit.inventory.meta.ItemMeta;
 public class TARDISFobWatchListener implements Listener {
 
     private final TARDIS plugin;
-    private final Random rand = new Random();
 
     public TARDISFobWatchListener(TARDIS plugin) {
         this.plugin = plugin;
@@ -62,6 +60,7 @@ public class TARDISFobWatchListener implements Listener {
                 return;
             }
             final UUID uuid = player.getUniqueId();
+            boolean inv = plugin.getConfig().getBoolean("preferences.arch_inventory");
             if (!plugin.getTrackerKeeper().getJohnSmith().containsKey(uuid)) {
                 final String name = TARDISRandomName.name();
                 long time = System.currentTimeMillis() + plugin.getConfig().getLong("preferences.arch_time") * 60000L;
@@ -72,7 +71,9 @@ public class TARDISFobWatchListener implements Listener {
                 }
                 player.getWorld().strikeLightningEffect(player.getLocation());
                 player.setHealth(player.getMaxHealth() / 10.0d);
-                new TARDISArchInventory().switchInventories(player, 0);
+                if (inv) {
+                    new TARDISArchInventory().switchInventories(player, 0);
+                }
                 PlayerDisguise playerDisguise = new PlayerDisguise(name);
                 DisguiseAPI.disguiseToAll(player, playerDisguise);
                 player.setDisplayName(name);
@@ -81,9 +82,13 @@ public class TARDISFobWatchListener implements Listener {
                 if (DisguiseAPI.isDisguised(player)) {
                     DisguiseAPI.undisguiseToAll(player);
                 }
-                new TARDISArchInventory().switchInventories(player, 1);
+                if (inv) {
+                    new TARDISArchInventory().switchInventories(player, 1);
+                }
                 plugin.getTrackerKeeper().getJohnSmith().remove(uuid);
                 player.setPlayerListName(player.getName());
+                // remove player from arched table
+                new TARDISArchPersister(plugin).removeArch(uuid);
             }
         }
     }

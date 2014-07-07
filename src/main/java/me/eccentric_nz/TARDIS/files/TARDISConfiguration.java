@@ -96,6 +96,7 @@ public class TARDISConfiguration {
         boolOptions.put("police_box.materialise", true);
         boolOptions.put("police_box.name_tardis", false);
         boolOptions.put("police_box.set_biome", true);
+        boolOptions.put("preferences.arch_inventory", true);
         boolOptions.put("preferences.respect_factions", true);
         boolOptions.put("preferences.respect_grief_prevention", true);
         boolOptions.put("preferences.respect_worldborder", true);

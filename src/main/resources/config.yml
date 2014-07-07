@@ -81,6 +81,7 @@ preferences:
     default_sonic: eleventh
     wand: BONE
     arch_time: 20
+    arch_inventory: true
 # restrictions
 allow:
     mob_farming: true
