@@ -115,7 +115,7 @@ public class TARDISRoomCommand {
             return true;
         }
         if (plugin.getConfig().getBoolean("growth.rooms_require_blocks")) {
-            HashMap<String, Integer> blockIDCount = new HashMap<String, Integer>();
+            HashMap<String, Integer> blockTypeCount = new HashMap<String, Integer>();
             boolean hasRequired = true;
             HashMap<String, Integer> roomBlocks = plugin.getBuildKeeper().getRoomBlockCounts().get(room);
             String wall = "ORANGE_WOOL";
@@ -138,7 +138,6 @@ public class TARDISRoomCommand {
                 String block_id;
                 if (hasPrefs && block_data.length == 2 && (block_data[1].equals("1") || block_data[1].equals("8"))) {
                     mat = (block_data[1].equals("1")) ? wall : floor;
-                    // TODO use Material
                     Pair iddata = plugin.getTardisWalls().blocks.get(mat);
                     bkey = iddata.getType().toString();
                     block_id = iddata.getType().toString();
@@ -148,10 +147,10 @@ public class TARDISRoomCommand {
                 }
                 int tmp = Math.round((entry.getValue() / 100.0F) * plugin.getConfig().getInt("growth.rooms_condenser_percent"));
                 int required = (tmp > 0) ? tmp : 1;
-                if (blockIDCount.containsKey(bkey)) {
-                    blockIDCount.put(bkey, blockIDCount.get(bkey) + required);
+                if (blockTypeCount.containsKey(bkey)) {
+                    blockTypeCount.put(bkey, blockTypeCount.get(bkey) + required);
                 } else {
-                    blockIDCount.put(bkey, required);
+                    blockTypeCount.put(bkey, required);
                 }
                 if (item_counts.containsKey(block_id)) {
                     item_counts.put(block_id, item_counts.get(block_id) + required);
@@ -180,7 +179,7 @@ public class TARDISRoomCommand {
                 return true;
             }
             TARDISCondenserData c_data = new TARDISCondenserData();
-            c_data.setBlockIDCount(blockIDCount);
+            c_data.setBlockIDCount(blockTypeCount);
             c_data.setTardis_id(id);
             plugin.getGeneralKeeper().getRoomCondenserData().put(player.getUniqueId(), c_data);
         }
