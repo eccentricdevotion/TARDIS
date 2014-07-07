@@ -75,7 +75,6 @@ public class TARDISARSRunnable implements Runnable {
             byte wall_data, floor_data;
             if (rsp.resultSet()) {
                 Pair wid_data = plugin.getTardisWalls().blocks.get(rsp.getWall());
-                // TODO use Material
                 wall_type = wid_data.getType();
                 wall_data = wid_data.getData();
                 Pair fid_data = plugin.getTardisWalls().blocks.get(rsp.getFloor());

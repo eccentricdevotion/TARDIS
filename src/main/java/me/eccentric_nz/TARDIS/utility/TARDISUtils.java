@@ -172,7 +172,6 @@ public class TARDISUtils {
         HashMap<String, Object> set = new HashMap<String, Object>();
         set.put("tardis_id", id);
         set.put("location", l);
-        // TODO convert database int values to material strings
         String bid = b.getType().toString();
         byte data = b.getData();
         set.put("block", bid);

@@ -232,7 +232,6 @@ public class TARDISBuilderInner {
                                         }
                                         break;
                                     default:
-                                        // TODO convert database int values to Material name
                                         type = wall_type;
                                         data = wall_data;
                                 }
@@ -246,7 +245,6 @@ public class TARDISBuilderInner {
                                             }
                                             break;
                                         default:
-                                            // TODO convert database int values to Material name
                                             type = floor_type;
                                             data = floor_data;
                                     }
