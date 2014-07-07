@@ -97,6 +97,7 @@ public class TARDISUpdateCommand {
                 TARDISMessage.send(player, "NOT_A_TIMELORD");
                 return false;
             }
+            int ownerid = rs.getTardis_id();
             // must grow a room first
             if (tardis_block.equals("farm") || tardis_block.equals("stable") || tardis_block.equals("village") || tardis_block.equals("rail")) {
                 if (tardis_block.equals("farm") && rs.getFarm().isEmpty()) {
@@ -141,6 +142,11 @@ public class TARDISUpdateCommand {
                 ResultSetTravellers rst = new ResultSetTravellers(plugin, wheret, false);
                 if (!rst.resultSet()) {
                     TARDISMessage.send(player, "NOT_IN_TARDIS");
+                    return false;
+                }
+                int thisid = rst.getTardis_id();
+                if (thisid != ownerid) {
+                    TARDISMessage.send(player, "CMD_ONLY_TL");
                     return false;
                 }
             }
