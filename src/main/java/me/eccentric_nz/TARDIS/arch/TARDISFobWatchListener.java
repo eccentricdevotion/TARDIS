@@ -85,6 +85,7 @@ public class TARDISFobWatchListener implements Listener {
                 if (inv) {
                     new TARDISArchInventory().switchInventories(player, 1);
                 }
+                player.getWorld().createExplosion(player.getLocation(), 0.0f);
                 plugin.getTrackerKeeper().getJohnSmith().remove(uuid);
                 player.setPlayerListName(player.getName());
                 // remove player from arched table
