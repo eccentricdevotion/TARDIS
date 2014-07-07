@@ -73,13 +73,14 @@ public class TARDISArchInventory {
             rsInv.close();
             // check if they have an inventory for the apposing chameleon arch state
             int to = (arch == 0) ? 1 : 0;
-            String getNewQuery = "SELECT inventory, armour FROM inventories WHERE uuid = '" + uuid + "' AND arch = '" + to + "'";
-            ResultSet rsNewInv = statement.executeQuery(getNewQuery);
-            if (rsNewInv.next()) {
+            String getToQuery = "SELECT inventory, armour FROM inventories WHERE uuid = '" + uuid + "' AND arch = '" + to + "'";
+            TARDIS.plugin.debug("to inventory sql: " + getToQuery);
+            ResultSet rsToInv = statement.executeQuery(getToQuery);
+            if (rsToInv.next()) {
                 // set their inventory to the saved one
-                ItemStack[] i = TARDISInventorySerialization.toItemStacks(rsNewInv.getString("inventory"));
+                ItemStack[] i = TARDISInventorySerialization.toItemStacks(rsToInv.getString("inventory"));
                 p.getInventory().setContents(i);
-                ItemStack[] a = TARDISInventorySerialization.toItemStacks(rsNewInv.getString("armour"));
+                ItemStack[] a = TARDISInventorySerialization.toItemStacks(rsToInv.getString("armour"));
                 setArmour(p, a);
             } else {
                 // start with an empty inventory and armour
@@ -89,38 +90,11 @@ public class TARDISArchInventory {
                 p.getInventory().setLeggings(null);
                 p.getInventory().setHelmet(null);
             }
-            rsNewInv.close();
+            rsToInv.close();
             statement.close();
             p.updateInventory();
         } catch (SQLException e) {
             System.err.println("Could not save inventory on Chameleon Arch change, " + e);
-        }
-    }
-
-    public void restoreOnSpawn(Player p) {
-        String uuid = p.getUniqueId().toString();
-        String gm = p.getGameMode().name();
-        // restore their inventory
-        try {
-            Connection connection = service.getConnection();
-            service.testConnection(connection);
-            Statement statement = connection.createStatement();
-            // get their current gamemode inventory from database
-            String getQuery = "SELECT inventory, armour FROM inventories WHERE uuid = '" + uuid + "' AND gamemode = '" + gm + "'";
-            ResultSet rsInv = statement.executeQuery(getQuery);
-            if (rsInv.next()) {
-                // set their inventory to the saved one
-                String base64 = rsInv.getString("inventory");
-                ItemStack[] i = TARDISInventorySerialization.toItemStacks(base64);
-                p.getInventory().setContents(i);
-                String savedarmour = rsInv.getString("armour");
-                ItemStack[] a = TARDISInventorySerialization.toItemStacks(savedarmour);
-                setArmour(p, a);
-            }
-            rsInv.close();
-            statement.close();
-        } catch (SQLException e) {
-            System.err.println("Could not restore inventories on respawn, " + e);
         }
     }
 
