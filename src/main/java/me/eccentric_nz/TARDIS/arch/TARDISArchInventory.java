@@ -74,7 +74,6 @@ public class TARDISArchInventory {
             // check if they have an inventory for the apposing chameleon arch state
             int to = (arch == 0) ? 1 : 0;
             String getToQuery = "SELECT inventory, armour FROM inventories WHERE uuid = '" + uuid + "' AND arch = '" + to + "'";
-            TARDIS.plugin.debug("to inventory sql: " + getToQuery);
             ResultSet rsToInv = statement.executeQuery(getToQuery);
             if (rsToInv.next()) {
                 // set their inventory to the saved one
