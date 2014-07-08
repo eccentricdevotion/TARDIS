@@ -119,6 +119,10 @@ public class TARDISButtonListener implements Listener {
                 if (rsc.resultSet()) {
                     int id = rsc.getTardis_id();
                     int type = rsc.getType();
+                    if (plugin.getTrackerKeeper().getJohnSmith().containsKey(player.getUniqueId()) && type != 13) {
+                        TARDISMessage.send(player, "ISO_HANDS_OFF");
+                        return;
+                    }
                     if (!onlythese.contains(type)) {
                         return;
                     }
