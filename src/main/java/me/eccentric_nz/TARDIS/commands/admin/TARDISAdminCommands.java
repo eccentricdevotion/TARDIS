@@ -52,6 +52,7 @@ public class TARDISAdminCommands implements CommandExecutor {
     public TARDISAdminCommands(TARDIS plugin) {
         this.plugin = plugin;
         // add first arguments
+        firstsStr.put("add_regions", "");
         firstsStr.put("arch", "");
         firstsStr.put("chunks", "");
         firstsStr.put("config", "");
@@ -84,17 +85,13 @@ public class TARDISAdminCommands implements CommandExecutor {
         firstsStr.put("respect_towny", "preferences");
         firstsStr.put("respect_worldguard", "preferences");
         firstsStr.put("sign_colour", "police_box");
-        firstsStr.put("add_regions", "");
         firstsStrArtron.add("full_charge_item");
         firstsStrArtron.add("jettison_seed");
         // boolean
+        firstsBool.put("achievements", "allow");
         firstsBool.put("add_perms", "creation");
         firstsBool.put("all_blocks", "allow");
-        firstsBool.put("achievements", "allow");
         firstsBool.put("autonomous", "allow");
-        firstsBool.put("hads", "allow");
-        firstsBool.put("mob_farming", "allow");
-        firstsBool.put("tp_switch", "allow");
         firstsBool.put("chameleon", "");
         firstsBool.put("create_worlds", "creation");
         firstsBool.put("create_worlds_with_perms", "creation");
@@ -102,13 +99,15 @@ public class TARDISAdminCommands implements CommandExecutor {
         firstsBool.put("debug", "");
         firstsBool.put("default_world", "creation");
         firstsBool.put("emergency_npc", "allow");
-        firstsBool.put("external_gravity", "allow");
         firstsBool.put("exile", "travel");
+        firstsBool.put("external_gravity", "allow");
         firstsBool.put("give_key", "travel");
+        firstsBool.put("hads", "allow");
         firstsBool.put("include_default_world", "travel");
         firstsBool.put("keep_night", "creation");
         firstsBool.put("land_on_water", "travel");
         firstsBool.put("materialise", "police_box");
+        firstsBool.put("mob_farming", "allow");
         firstsBool.put("name_tardis", "police_box");
         firstsBool.put("nether", "travel");
         firstsBool.put("per_world_perms", "travel");
@@ -120,11 +119,12 @@ public class TARDISAdminCommands implements CommandExecutor {
         firstsBool.put("return_room_seed", "growth");
         firstsBool.put("rooms_require_blocks", "growth");
         firstsBool.put("set_biome", "police_box");
-        firstsBool.put("sky_biome", "creation");
         firstsBool.put("sfx", "allow");
+        firstsBool.put("sky_biome", "creation");
         firstsBool.put("spawn_eggs", "allow");
         firstsBool.put("strike_lightning", "preferences");
         firstsBool.put("the_end", "travel");
+        firstsBool.put("tp_switch", "allow");
         firstsBool.put("use_block_stack", "creation");
         firstsBool.put("use_clay", "creation");
         firstsBool.put("use_worldguard", "preferences");
@@ -132,7 +132,6 @@ public class TARDISAdminCommands implements CommandExecutor {
         firstsBool.put("wg_flag_set", "allow");
         firstsBool.put("zero_room", "allow");
         // integer
-        firstsInt.put("arch_time", "preferences");
         firstsInt.put("ars_limit", "growth");
         firstsInt.put("border_radius", "creation");
         firstsInt.put("confirm_timeout", "police_box");
@@ -147,20 +146,21 @@ public class TARDISAdminCommands implements CommandExecutor {
         firstsInt.put("malfunction", "preferences");
         firstsInt.put("malfunction_end", "preferences");
         firstsInt.put("malfunction_nether", "preferences");
+        firstsInt.put("min_time", "arch");
         firstsInt.put("platform_data", "police_box");
         firstsInt.put("platform_id", "police_box");
         firstsInt.put("random_attempts", "travel");
         firstsInt.put("room_speed", "growth");
         firstsInt.put("rooms_condenser_percent", "growth");
         firstsInt.put("sfx_volume", "preferences");
+        firstsInt.put("tardis_lamp", "police_box");
         firstsInt.put("terminal_step", "travel");
         firstsInt.put("timeout", "travel");
         firstsInt.put("timeout_height", "travel");
         firstsInt.put("tips_limit", "creation");
         firstsInt.put("tp_radius", "travel");
-        firstsInt.put("wall_id", "police_box");
         firstsInt.put("wall_data", "police_box");
-        firstsInt.put("tardis_lamp", "police_box");
+        firstsInt.put("wall_id", "police_box");
         firstsIntArtron.add("autonomous");
         firstsIntArtron.add("backdoor");
         firstsIntArtron.add("comehere");

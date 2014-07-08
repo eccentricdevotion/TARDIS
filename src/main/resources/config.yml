@@ -80,8 +80,6 @@ preferences:
     default_key: eleventh
     default_sonic: eleventh
     wand: BONE
-    arch_time: 20
-    arch_inventory: true
 # restrictions
 allow:
     mob_farming: true
@@ -98,7 +96,6 @@ allow:
     external_gravity: false
     power_down: false
     power_down_on_quit: false
-    chameleon_arch: true
 # room related
 growth:
     gravity_max_distance: 15
@@ -108,6 +105,12 @@ growth:
     rooms_condenser_percent: 100
     room_speed: 4
     ars_limit: 1
+# chameleon arch
+arch:
+    enabled: true
+    min_time: 20
+    switch_inventory: true
+    clear_inv_on_death: false
 # don't touch
 conversions:
     biome_update: true

@@ -255,7 +255,7 @@ public class TARDIS extends JavaPlugin {
                 new TARDISPortalPersister(this).load();
                 this.getServer().getScheduler().scheduleSyncRepeatingTask(this, new TARDISMonsterRunnable(this), 2400L, 2400L);
             }
-            if (getConfig().getBoolean("allow.chameleon_arch")) {
+            if (getConfig().getBoolean("arch.enabled")) {
                 new TARDISArchPersister(this).checkAll();
             }
             setDates();
@@ -291,7 +291,7 @@ public class TARDIS extends JavaPlugin {
             if (getConfig().getBoolean("preferences.walk_in_tardis")) {
                 new TARDISPortalPersister(this).save();
             }
-            if (getConfig().getBoolean("allow.chameleon_arch")) {
+            if (getConfig().getBoolean("arch.enabled")) {
                 new TARDISArchPersister(this).saveAll();
             }
             updateTagStats();

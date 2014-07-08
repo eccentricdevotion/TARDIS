@@ -113,7 +113,7 @@ public class TARDISQuitListener implements Listener {
                 }
             }
             // save arched status
-            if (plugin.getConfig().getBoolean("allow.chameleon_arch") && plugin.getTrackerKeeper().getJohnSmith().containsKey(uuid)) {
+            if (plugin.getConfig().getBoolean("arch.enabled") && plugin.getTrackerKeeper().getJohnSmith().containsKey(uuid)) {
                 new TARDISArchPersister(plugin).save(uuid);
             }
         }

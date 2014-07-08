@@ -60,10 +60,10 @@ public class TARDISFobWatchListener implements Listener {
                 return;
             }
             final UUID uuid = player.getUniqueId();
-            boolean inv = plugin.getConfig().getBoolean("preferences.arch_inventory");
+            boolean inv = plugin.getConfig().getBoolean("arch.switch_inventory");
             if (!plugin.getTrackerKeeper().getJohnSmith().containsKey(uuid)) {
                 final String name = TARDISRandomName.name();
-                long time = System.currentTimeMillis() + plugin.getConfig().getLong("preferences.arch_time") * 60000L;
+                long time = System.currentTimeMillis() + plugin.getConfig().getLong("arch.min_time") * 60000L;
                 TARDISWatchData twd = new TARDISWatchData(name, time);
                 plugin.getTrackerKeeper().getJohnSmith().put(uuid, twd);
                 if (DisguiseAPI.isDisguised(player)) {

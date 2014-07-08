@@ -228,7 +228,7 @@ public class TARDISListenerRegisterer {
             plugin.getPM().registerEvents(kpl, plugin);
             kpl.startSignPackets();
             if (plugin.getPM().isPluginEnabled("LibsDisguises")) {
-                if (plugin.getConfig().getBoolean("allow.chameleon_arch")) {
+                if (plugin.getConfig().getBoolean("arch.enabled")) {
                     plugin.getPM().registerEvents(new TARDISFobWatchListener(plugin), plugin);
                     plugin.getPM().registerEvents(new TARDISSelectWatchListener(plugin), plugin);
                     plugin.getPM().registerEvents(new TARDISRespawnListener(plugin), plugin);

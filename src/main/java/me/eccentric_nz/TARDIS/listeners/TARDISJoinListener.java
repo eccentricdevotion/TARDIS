@@ -162,7 +162,7 @@ public class TARDISJoinListener implements Listener {
             plugin.getGeneralKeeper().getUUIDCache().getNameCache().put(player.getUniqueId(), player.getName());
         }
         // re-arch the player
-        if (plugin.getConfig().getBoolean("allow.chameleon_arch")) {
+        if (plugin.getConfig().getBoolean("arch.enabled")) {
             new TARDISArchPersister(plugin).reArch(player.getUniqueId());
         }
         plugin.getFilter().addPlayer(player);

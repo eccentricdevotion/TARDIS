@@ -11,6 +11,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.TARDISDatabaseConnection;
 import org.bukkit.entity.Player;
@@ -94,6 +95,28 @@ public class TARDISArchInventory {
             p.updateInventory();
         } catch (SQLException e) {
             System.err.println("Could not save inventory on Chameleon Arch change, " + e);
+        }
+    }
+
+    public void clear(UUID uuid) {
+        Connection connection = service.getConnection();
+        PreparedStatement ps = null;
+        try {
+            service.testConnection(connection);
+            String clearQuery = "DELETE FROM inventories WHERE uuid = ?";
+            ps = connection.prepareStatement(clearQuery);
+            ps.setString(1, uuid.toString());
+            ps.executeUpdate();
+        } catch (SQLException e) {
+            System.err.println("Could not save inventory on Chameleon Arch change, " + e);
+        } finally {
+            if (ps != null) {
+                try {
+                    ps.close();
+                } catch (SQLException e) {
+                    System.err.println("Could not clear inventory on Chameleon Arch death, " + e);
+                }
+            }
         }
     }
 

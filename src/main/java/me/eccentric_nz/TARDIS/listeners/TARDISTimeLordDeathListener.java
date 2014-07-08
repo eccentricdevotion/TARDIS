@@ -20,6 +20,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.arch.TARDISArchInventory;
 import me.eccentric_nz.TARDIS.arch.TARDISArchPersister;
 import me.eccentric_nz.TARDIS.builders.TARDISMaterialisationData;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
@@ -224,8 +225,12 @@ public class TARDISTimeLordDeathListener implements Listener {
             }
         }
         // save arched status
-        if (plugin.getConfig().getBoolean("allow.chameleon_arch") && plugin.getTrackerKeeper().getJohnSmith().containsKey(playerUUID)) {
+        if (plugin.getConfig().getBoolean("arch.enabled") && plugin.getTrackerKeeper().getJohnSmith().containsKey(playerUUID)) {
             new TARDISArchPersister(plugin).save(playerUUID);
+            if (plugin.getConfig().getBoolean("arch.clear_inv_on_death")) {
+                // clear inventories
+                new TARDISArchInventory().clear(playerUUID);
+            }
         }
     }
 
