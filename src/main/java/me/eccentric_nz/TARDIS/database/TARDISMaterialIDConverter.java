@@ -71,6 +71,7 @@ public class TARDISMaterialIDConverter {
                 }
                 ps.executeBatch();
                 connection.commit();
+                // reset auto commit
                 connection.setAutoCommit(true);
             }
         } catch (SQLException e) {

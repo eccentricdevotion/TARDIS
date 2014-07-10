@@ -107,7 +107,7 @@ public class TARDISMySQLDatabase {
             statement.executeUpdate(homesQuery);
 
             // add inventories table
-            String queryInventories = "CREATE TABLE inventories (id int(11) NOT NULL AUTO_INCREMENT, uuid varchar(48) DEFAULT '', player varchar(24) DEFAULT '', arch int(1), inventory text, armour text, PRIMARY KEY (id)) DEFAULT CHARSET=utf8 COLLATE utf8_general_ci";
+            String queryInventories = "CREATE TABLE IF NOT EXISTS inventories (id int(11) NOT NULL AUTO_INCREMENT, uuid varchar(48) DEFAULT '', player varchar(24) DEFAULT '', arch int(1), inventory text, armour text, PRIMARY KEY (id)) DEFAULT CHARSET=utf8 COLLATE utf8_general_ci";
             statement.executeUpdate(queryInventories);
 
             // Table structure for table 'lamps'

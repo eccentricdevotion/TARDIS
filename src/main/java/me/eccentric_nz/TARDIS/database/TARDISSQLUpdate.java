@@ -56,7 +56,7 @@ public class TARDISSQLUpdate implements Runnable {
 
     @Override
     public void run() {
-        PreparedStatement statement = null;
+        PreparedStatement ps = null;
         String updates;
         String wheres;
         StringBuilder sbu = new StringBuilder();
@@ -78,28 +78,28 @@ public class TARDISSQLUpdate implements Runnable {
         String query = "UPDATE " + table + " SET " + updates + " WHERE " + wheres;
         try {
             service.testConnection(connection);
-            statement = connection.prepareStatement(query);
+            ps = connection.prepareStatement(query);
             int s = 1;
             for (Map.Entry<String, Object> entry : data.entrySet()) {
                 if (entry.getValue().getClass().equals(String.class) || entry.getValue().getClass().equals(UUID.class)) {
-                    statement.setString(s, entry.getValue().toString());
+                    ps.setString(s, entry.getValue().toString());
                 }
                 if (entry.getValue() instanceof Integer) {
-                    statement.setInt(s, (Integer) entry.getValue());
+                    ps.setInt(s, (Integer) entry.getValue());
                 }
                 if (entry.getValue() instanceof Long) {
-                    statement.setLong(s, (Long) entry.getValue());
+                    ps.setLong(s, (Long) entry.getValue());
                 }
                 s++;
             }
             data.clear();
-            statement.executeUpdate();
+            ps.executeUpdate();
         } catch (SQLException e) {
             plugin.debug("Update error for " + table + "! " + e.getMessage());
         } finally {
             try {
-                if (statement != null) {
-                    statement.close();
+                if (ps != null) {
+                    ps.close();
                 }
             } catch (SQLException e) {
                 plugin.debug("Error closing " + table + "! " + e.getMessage());
