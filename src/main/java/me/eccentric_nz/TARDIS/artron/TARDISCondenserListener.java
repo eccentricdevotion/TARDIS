@@ -116,7 +116,6 @@ public class TARDISCondenserListener implements Listener {
                 }
                 // process item_counts
                 if (plugin.getConfig().getBoolean("growth.rooms_require_blocks")) {
-                    System.out.print(item_counts);
                     for (Map.Entry<String, Integer> map : item_counts.entrySet()) {
                         // check if the tardis has condensed this material before
                         HashMap<String, Object> wherec = new HashMap<String, Object>();
