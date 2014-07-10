@@ -142,18 +142,20 @@ public class TARDISArchPersister {
             rs = ps.executeQuery();
             if (rs.next()) {
                 Player player = plugin.getServer().getPlayer(uuid);
-                // disguise the player
-                final String name = rs.getString("arch_name");
-                long time = System.currentTimeMillis() + rs.getLong("arch_time");
-                TARDISWatchData twd = new TARDISWatchData(name, time);
-                plugin.getTrackerKeeper().getJohnSmith().put(uuid, twd);
-                if (DisguiseAPI.isDisguised(player)) {
-                    DisguiseAPI.undisguiseToAll(player);
+                if (player.isOnline()) {
+                    // disguise the player
+                    final String name = rs.getString("arch_name");
+                    long time = System.currentTimeMillis() + rs.getLong("arch_time");
+                    TARDISWatchData twd = new TARDISWatchData(name, time);
+                    plugin.getTrackerKeeper().getJohnSmith().put(uuid, twd);
+                    if (DisguiseAPI.isDisguised(player)) {
+                        DisguiseAPI.undisguiseToAll(player);
+                    }
+                    PlayerDisguise playerDisguise = new PlayerDisguise(name);
+                    DisguiseAPI.disguiseToAll(player, playerDisguise);
+                    player.setDisplayName(name);
+                    player.setPlayerListName(name);
                 }
-                PlayerDisguise playerDisguise = new PlayerDisguise(name);
-                DisguiseAPI.disguiseToAll(player, playerDisguise);
-                player.setDisplayName(name);
-                player.setPlayerListName(name);
             }
         } catch (SQLException ex) {
             plugin.debug("ResultSet error for arched table: " + ex.getMessage());

@@ -8,7 +8,7 @@
 ##Future version `3.0+`
 1. Console modes / grace period on hard mode?
 2. Slimmer TARDIS option?
-3. Chameleon Arch / Fob watch
+3. Chameleon Arch / Fob watch - _started, needs thorough testing_
 4. Remote locking, advanced hide and rebuild via remote key
 5. TARDIS creation area config
 6. More MCPatcher texture support
