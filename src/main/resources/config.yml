@@ -26,6 +26,7 @@ creation:
     use_clay: false
     count: 0
     sky_biome: true
+    area: none
 # outer TARDIS
 police_box:
     name_tardis: false

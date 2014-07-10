@@ -263,6 +263,7 @@ public class TARDISConfiguration {
         roomIntOptions.put("rooms.ZERO.cost", 650);
         roomIntOptions.put("rooms.ZERO.offset", -4);
         // string
+        strOptions.put("creation.area", "none");
         strOptions.put("creation.custom_schematic_seed", "OBSIDIAN");
         strOptions.put("creation.default_world_name", "TARDIS_TimeVortex");
         strOptions.put("creation.gamemode", "survival");

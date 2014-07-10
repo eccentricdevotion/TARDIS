@@ -174,6 +174,13 @@ public class TARDISSeedBlockListener implements Listener {
                         TARDISMessage.send(player, "WORLD_NO_TARDIS");
                         return;
                     }
+                    if (!plugin.getConfig().getString("creation.area").equals("none")) {
+                        String area = plugin.getConfig().getString("creation.area");
+                        if (plugin.getTardisArea().areaCheckInExile(area, l)) {
+                            TARDISMessage.send(player, "TARDIS_ONLY_AREA", area);
+                            return;
+                        }
+                    }
                     // grow a TARDIS
                     TARDISBuildData seed = trackTARDISSeed.get(l);
                     // process seed data

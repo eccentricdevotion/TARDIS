@@ -106,6 +106,13 @@ public class TARDISBlockPlaceListener implements Listener {
                     TARDISMessage.send(player, "WORLD_NO_TARDIS");
                     return;
                 }
+                if (!plugin.getConfig().getString("creation.area").equals("none")) {
+                    String area = plugin.getConfig().getString("creation.area");
+                    if (plugin.getTardisArea().areaCheckInExile(area, block.getLocation())) {
+                        TARDISMessage.send(player, "TARDIS_ONLY_AREA", area);
+                        return;
+                    }
+                }
                 SCHEMATIC schm;
                 int max_count = plugin.getConfig().getInt("creation.count");
                 int player_count = 0;
