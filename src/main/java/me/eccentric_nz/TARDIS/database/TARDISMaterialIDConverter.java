@@ -71,8 +71,6 @@ public class TARDISMaterialIDConverter {
                 }
                 ps.executeBatch();
                 connection.commit();
-                // reset auto commit
-                connection.setAutoCommit(true);
             }
         } catch (SQLException e) {
             plugin.debug("Conversion error for condenser IDs! " + e.getMessage());
@@ -87,6 +85,8 @@ public class TARDISMaterialIDConverter {
                 if (statement != null) {
                     statement.close();
                 }
+                // reset auto commit
+                connection.setAutoCommit(true);
             } catch (SQLException e) {
                 plugin.debug("Error closing condenser table (converting IDs)! " + e.getMessage());
             }
