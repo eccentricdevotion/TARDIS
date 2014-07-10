@@ -45,6 +45,7 @@ public class TARDISDatabaseConnection {
     public void setConnection(String path) throws Exception {
         Class.forName("org.sqlite.JDBC");
         connection = DriverManager.getConnection("jdbc:sqlite:" + path);
+        connection.setAutoCommit(true);
     }
 
     public void setIsMySQL(boolean isMySQL) {
