@@ -76,15 +76,15 @@ public class TARDISFileCopier {
         String planstr = basepath + SCHEMATIC.PLANK.getFile();
         String tomnstr = basepath + SCHEMATIC.TOM.getFile();
         String warnstr = basepath + SCHEMATIC.WAR.getFile();
-        copy(arsnstr, plugin.getResource(SCHEMATIC.ARS.getFile()), false);
-        copy(bignstr, plugin.getResource(SCHEMATIC.BIGGER.getFile()), false);
-        copy(budnstr, plugin.getResource(SCHEMATIC.BUDGET.getFile()), false);
-        copy(delnstr, plugin.getResource(SCHEMATIC.DELUXE.getFile()), false);
-        copy(elenstr, plugin.getResource(SCHEMATIC.ELEVENTH.getFile()), false);
-        copy(rednstr, plugin.getResource(SCHEMATIC.REDSTONE.getFile()), false);
-        copy(stenstr, plugin.getResource(SCHEMATIC.STEAMPUNK.getFile()), false);
-        copy(planstr, plugin.getResource(SCHEMATIC.PLANK.getFile()), false);
-        copy(tomnstr, plugin.getResource(SCHEMATIC.TOM.getFile()), false);
+        copy(arsnstr, plugin.getResource(SCHEMATIC.ARS.getFile()), true);
+        copy(bignstr, plugin.getResource(SCHEMATIC.BIGGER.getFile()), true);
+        copy(budnstr, plugin.getResource(SCHEMATIC.BUDGET.getFile()), true);
+        copy(delnstr, plugin.getResource(SCHEMATIC.DELUXE.getFile()), true);
+        copy(elenstr, plugin.getResource(SCHEMATIC.ELEVENTH.getFile()), true);
+        copy(rednstr, plugin.getResource(SCHEMATIC.REDSTONE.getFile()), true);
+        copy(stenstr, plugin.getResource(SCHEMATIC.STEAMPUNK.getFile()), true);
+        copy(planstr, plugin.getResource(SCHEMATIC.PLANK.getFile()), true);
+        copy(tomnstr, plugin.getResource(SCHEMATIC.TOM.getFile()), true);
         copy(warnstr, plugin.getResource(SCHEMATIC.WAR.getFile()), true);
 
         // copy default room files as well
