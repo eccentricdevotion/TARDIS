@@ -566,6 +566,7 @@ TARDIS_NO_REBUILD: "You cannot rebuild the TARDIS right now! Try travelling firs
 TARDIS_ONLY_AREA: "You can only create a TARDIS in the %s area!"
 TARDIS_OUTSIDE: "You should be outside of the TARDIS!"
 TARDIS_REBUILT: "The TARDIS Police Box was rebuilt!"
+TARDIS_SET_HOME: "I don't really feel like going back to the TARDIS Creation Yards. It's rather boring there, wouldn't you agree? Set a new home location using the '/tardis home' command and let's go on an adventure!"
 TARDIS_WHOSE: "This is TARDIS belongs to %s"
 TASK_ABORT: "Task aborted!"
 TASK_NUMBER: "Task ID is not a number!"

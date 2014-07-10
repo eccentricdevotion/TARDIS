@@ -126,7 +126,13 @@ public class TARDISPluginRespect {
         }
         if (plugin.getTardisArea().areaCheckLocPlayer(p, l)) {
             if (message) {
-                TARDISMessage.send(p, "TRAVEL_NO_PERM", plugin.getTrackerKeeper().getPerm().get(p.getUniqueId()));
+                String area_perm = plugin.getTrackerKeeper().getPerm().get(p.getUniqueId());
+                String area_name = "tardis.area." + plugin.getConfig().getString("creation.area");
+                if (area_perm.equals(area_name)) {
+                    TARDISMessage.send(p, "TARDIS_SET_HOME");
+                } else {
+                    TARDISMessage.send(p, "TRAVEL_NO_PERM", area_perm);
+                }
             }
             plugin.getTrackerKeeper().getPerm().remove(p.getUniqueId());
             bool = false;
