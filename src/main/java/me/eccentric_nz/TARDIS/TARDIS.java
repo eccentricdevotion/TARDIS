@@ -501,6 +501,7 @@ public class TARDIS extends JavaPlugin {
         pluginRespect.loadFactions();
         pluginRespect.loadTowny();
         pluginRespect.loadWorldBorder();
+        pluginRespect.loadGriefPrevention();
     }
 
     /**

@@ -40,10 +40,10 @@ public class TARDISPluginRespect {
     private TARDISWorldBorderChecker borderchk;
     private TARDISFactionsChecker factionschk;
     private TARDISGriefPreventionChecker griefchk;
-    public boolean townyOnServer = false;
-    public boolean borderOnServer = false;
-    public boolean factionsOnServer = false;
-    public boolean griefPreventionOnServer = false;
+    private boolean townyOnServer = false;
+    private boolean borderOnServer = false;
+    private boolean factionsOnServer = false;
+    private boolean griefPreventionOnServer = false;
 
     public TARDISPluginRespect(TARDIS plugin) {
         this.plugin = plugin;
@@ -181,7 +181,7 @@ public class TARDISPluginRespect {
      * Checks if the GriefPrevention plugin is available, and loads support if
      * it is.
      */
-    private void loadGriefPrevention() {
+    public void loadGriefPrevention() {
         if (plugin.getPM().getPlugin("GriefPrevention") != null) {
             plugin.debug("Hooking into GriefPrevention!");
             griefPreventionOnServer = true;
@@ -189,4 +189,39 @@ public class TARDISPluginRespect {
         }
     }
 
+    public TARDIS getPlugin() {
+        return plugin;
+    }
+
+    public TARDISTownyChecker getTychk() {
+        return tychk;
+    }
+
+    public TARDISWorldBorderChecker getBorderchk() {
+        return borderchk;
+    }
+
+    public TARDISFactionsChecker getFactionschk() {
+        return factionschk;
+    }
+
+    public TARDISGriefPreventionChecker getGriefchk() {
+        return griefchk;
+    }
+
+    public boolean isTownyOnServer() {
+        return townyOnServer;
+    }
+
+    public boolean isBorderOnServer() {
+        return borderOnServer;
+    }
+
+    public boolean isFactionsOnServer() {
+        return factionsOnServer;
+    }
+
+    public boolean isGriefPreventionOnServer() {
+        return griefPreventionOnServer;
+    }
 }
