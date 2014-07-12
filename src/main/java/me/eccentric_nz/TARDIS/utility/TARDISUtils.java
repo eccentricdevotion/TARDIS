@@ -23,6 +23,7 @@ import me.eccentric_nz.TARDIS.JSON.JSONObject;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetChunks;
+import me.eccentric_nz.TARDIS.database.ResultSetCount;
 import me.eccentric_nz.TARDIS.database.ResultSetDiskStorage;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
@@ -538,6 +539,7 @@ public class TARDISUtils {
      * @param l The location to play the sound
      * @param s The sound to play
      */
+    @SuppressWarnings("deprecation")
     public void playTARDISSoundNearby(Location l, String s) {
         // spawn an entity at the location - an egg will do
         Entity egg = l.getWorld().spawnEntity(l, EntityType.EGG);
@@ -777,5 +779,30 @@ public class TARDISUtils {
             y = startBlock.getLocation().getBlockY() + 1;
         }
         return y;
+    }
+
+    public boolean inGracePeriod(Player p) {
+        boolean inGracePeriod = false;
+        // check grace period
+        int grace = plugin.getConfig().getInt("travel.grace_period");
+        if (grace > 0) {
+            HashMap<String, Object> wherec = new HashMap<String, Object>();
+            wherec.put("uuid", p.getUniqueId().toString());
+            ResultSetCount rsc = new ResultSetCount(plugin, wherec, false);
+            if (rsc.resultSet()) {
+                int grace_count = rsc.getGrace();
+                if (grace_count < grace) {
+                    TARDISMessage.send(p, "GRACE_PERIOD", String.format("%d", (grace - grace_count)));
+                    inGracePeriod = true;
+                    // update the grace count
+                    HashMap<String, Object> where = new HashMap<String, Object>();
+                    where.put("uuid", p.getUniqueId().toString());
+                    HashMap<String, Object> set = new HashMap<String, Object>();
+                    set.put("grace", (grace_count + 1));
+                    new QueryFactory(plugin).doUpdate("t_count", set, where);
+                }
+            }
+        }
+        return inGracePeriod;
     }
 }

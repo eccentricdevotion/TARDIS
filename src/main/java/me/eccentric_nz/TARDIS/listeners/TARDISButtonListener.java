@@ -150,7 +150,7 @@ public class TARDISButtonListener implements Listener {
                         String comps = rs.getCompanions();
                         UUID ownerUUID = rs.getUuid();
                         TARDISCircuitChecker tcc = null;
-                        if (plugin.getConfig().getString("preferences.difficulty").equals("hard")) {
+                        if (plugin.getConfig().getString("preferences.difficulty").equals("hard") && !plugin.getUtils().inGracePeriod(player)) {
                             tcc = new TARDISCircuitChecker(plugin, id);
                             tcc.getCircuits();
                         }

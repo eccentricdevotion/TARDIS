@@ -45,8 +45,8 @@ public class ResultSetCount {
     private final boolean multiple;
     private int id;
     private UUID uuid;
-    private String player;
     private int count;
+    private int grace;
     private final ArrayList<HashMap<String, String>> data = new ArrayList<HashMap<String, String>>();
 
     /**
@@ -113,8 +113,8 @@ public class ResultSetCount {
                     }
                     this.id = rs.getInt("t_id");
                     this.uuid = UUID.fromString(rs.getString("uuid"));
-                    this.player = rs.getString("player");
                     this.count = rs.getInt("count");
+                    this.grace = rs.getInt("grace");
                 }
             } else {
                 return false;
@@ -145,11 +145,12 @@ public class ResultSetCount {
         return uuid;
     }
 
-//    public String getPlayer() {
-//        return player;
-//    }
     public int getCount() {
         return count;
+    }
+
+    public int getGrace() {
+        return grace;
     }
 
     public ArrayList<HashMap<String, String>> getData() {

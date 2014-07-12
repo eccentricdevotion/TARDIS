@@ -110,7 +110,7 @@ public class TARDISSignListener implements Listener {
                         line1 = (signloc.equals(rs.getChameleon())) ? "Chameleon" : "Save Sign";
                     }
                     TARDISCircuitChecker tcc = null;
-                    if (plugin.getConfig().getString("preferences.difficulty").equals("hard")) {
+                    if (plugin.getConfig().getString("preferences.difficulty").equals("hard") && !plugin.getUtils().inGracePeriod(player)) {
                         tcc = new TARDISCircuitChecker(plugin, rs.getTardis_id());
                         tcc.getCircuits();
                     }

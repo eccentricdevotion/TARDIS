@@ -88,7 +88,7 @@ public class TARDISRoomCommand {
         }
         int id = rs.getTardis_id();
         TARDISCircuitChecker tcc = null;
-        if (plugin.getConfig().getString("preferences.difficulty").equals("hard")) {
+        if (plugin.getConfig().getString("preferences.difficulty").equals("hard") && !plugin.getUtils().inGracePeriod(player)) {
             tcc = new TARDISCircuitChecker(plugin, id);
             tcc.getCircuits();
         }

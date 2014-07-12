@@ -36,6 +36,7 @@ public class TARDISSQLiteDatabaseUpdater {
 
     private final List<String> areaupdates = new ArrayList<String>();
     private final List<String> blockupdates = new ArrayList<String>();
+    private final List<String> countupdates = new ArrayList<String>();
     private final List<String> destupdates = new ArrayList<String>();
     private final List<String> doorupdates = new ArrayList<String>();
     private final List<String> gravityupdates = new ArrayList<String>();
@@ -51,6 +52,7 @@ public class TARDISSQLiteDatabaseUpdater {
         this.statement = statement;
         areaupdates.add("y INTEGER");
         blockupdates.add("police_box INTEGER DEFAULT 0");
+        countupdates.add("grace INTEGER DEFAULT 0");
         destupdates.add("bind TEXT DEFAULT ''");
         destupdates.add("type INTEGER DEFAULT 0");
         destupdates.add("direction TEXT DEFAULT ''");
@@ -145,6 +147,16 @@ public class TARDISSQLiteDatabaseUpdater {
                     i++;
                     String b_alter = "ALTER TABLE blocks ADD " + b;
                     statement.executeUpdate(b_alter);
+                }
+            }
+            for (String c : countupdates) {
+                String[] csplit = c.split(" ");
+                String c_query = "SELECT sql FROM sqlite_master WHERE tbl_name = 't_count' AND sql LIKE '%" + csplit[0] + "%'";
+                ResultSet rsc = statement.executeQuery(c_query);
+                if (!rsc.next()) {
+                    i++;
+                    String c_alter = "ALTER TABLE blocks ADD " + c;
+                    statement.executeUpdate(c_alter);
                 }
             }
             for (String d : destupdates) {

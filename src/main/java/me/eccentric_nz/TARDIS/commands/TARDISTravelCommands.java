@@ -223,7 +223,7 @@ public class TARDISTravelCommands implements CommandExecutor {
                             return true;
                         } else {
                             if (player.hasPermission("tardis.timetravel.player")) {
-                                if (plugin.getConfig().getString("preferences.difficulty").equals("hard")) {
+                                if (plugin.getConfig().getString("preferences.difficulty").equals("hard") && !plugin.getUtils().inGracePeriod(player)) {
                                     TARDISMessage.send(player, "ADV_PLAYER");
                                     return true;
                                 }
@@ -306,7 +306,7 @@ public class TARDISTravelCommands implements CommandExecutor {
                             TARDISMessage.send(player, "TRAVEL_NO_PERM_BIOME");
                             return true;
                         }
-                        if (plugin.getConfig().getString("preferences.difficulty").equals("hard") && mustUseAdvanced.contains(args[0].toLowerCase())) {
+                        if (plugin.getConfig().getString("preferences.difficulty").equals("hard") && mustUseAdvanced.contains(args[0].toLowerCase()) && !plugin.getUtils().inGracePeriod(player)) {
                             TARDISMessage.send(player, "ADV_BIOME");
                             return true;
                         }
@@ -439,7 +439,7 @@ public class TARDISTravelCommands implements CommandExecutor {
                     }
                     if (args.length == 2 && args[0].equalsIgnoreCase("area")) {
                         // we're thinking this is admin defined area name
-                        if (plugin.getConfig().getString("preferences.difficulty").equals("hard") && mustUseAdvanced.contains(args[0].toLowerCase())) {
+                        if (plugin.getConfig().getString("preferences.difficulty").equals("hard") && mustUseAdvanced.contains(args[0].toLowerCase()) && !plugin.getUtils().inGracePeriod(player)) {
                             TARDISMessage.send(player, "ADV_AREA");
                             return true;
                         }

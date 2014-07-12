@@ -88,7 +88,7 @@ public class TARDISConsoleCloseListener implements Listener {
                 }
                 // remember what was placed in the console
                 saveCurrentConsole(inv, p.getUniqueId().toString());
-                if (plugin.getConfig().getString("preferences.difficulty").equals("hard")) {
+                if (plugin.getConfig().getString("preferences.difficulty").equals("hard") && !plugin.getUtils().inGracePeriod(p)) {
                     // check circuits
                     TARDISCircuitChecker tcc = new TARDISCircuitChecker(plugin, id);
                     tcc.getCircuits();

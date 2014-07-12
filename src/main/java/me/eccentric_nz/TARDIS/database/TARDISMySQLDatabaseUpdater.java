@@ -38,6 +38,7 @@ public class TARDISMySQLDatabaseUpdater {
     private final List<String> tardisupdates = new ArrayList<String>();
     private final List<String> prefsupdates = new ArrayList<String>();
     private final List<String> destsupdates = new ArrayList<String>();
+    private final List<String> countupdates = new ArrayList<String>();
     private final HashMap<String, String> uuidUpdates = new HashMap<String, String>();
     private final Statement statement;
     private final TARDIS plugin;
@@ -66,6 +67,7 @@ public class TARDISMySQLDatabaseUpdater {
         prefsupdates.add("wool_lights_on int(1) DEFAULT '0'");
         prefsupdates.add("travelbar_on int(1) DEFAULT '0'");
         destsupdates.add("slot int(1) DEFAULT '-1'");
+        countupdates.add("grace int(3) DEFAULT '0'");
     }
 
     /**
@@ -111,6 +113,16 @@ public class TARDISMySQLDatabaseUpdater {
                     i++;
                     String d_alter = "ALTER TABLE destinations ADD " + d;
                     statement.executeUpdate(d_alter);
+                }
+            }
+            for (String c : countupdates) {
+                String[] csplit = c.split(" ");
+                String c_query = "SHOW COLUMNS FROM t_count LIKE '" + csplit[0] + "'";
+                ResultSet rsc = statement.executeQuery(c_query);
+                if (!rsc.next()) {
+                    i++;
+                    String c_alter = "ALTER TABLE t_count ADD " + c;
+                    statement.executeUpdate(c_alter);
                 }
             }
             // add biome to current location

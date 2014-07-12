@@ -63,7 +63,7 @@ public class TARDISChameleonCommand {
             }
             int id = rs.getTardis_id();
             TARDISCircuitChecker circ_chk = null;
-            if (plugin.getConfig().getString("preferences.difficulty").equals("hard")) {
+            if (plugin.getConfig().getString("preferences.difficulty").equals("hard") && !plugin.getUtils().inGracePeriod(player)) {
                 circ_chk = new TARDISCircuitChecker(plugin, id);
                 circ_chk.getCircuits();
             }

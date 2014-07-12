@@ -339,6 +339,7 @@ public class TARDISBlockPlaceListener implements Listener {
                             TARDISMessage.send(player, "COUNT", String.format("%d", (player_count + 1)), String.format("%d", max_count));
                             HashMap<String, Object> setc = new HashMap<String, Object>();
                             setc.put("count", player_count + 1);
+                            setc.put("grace", plugin.getConfig().getInt("travel.grace_period"));
                             if (player_count > 0) {
                                 // update the player's TARDIS count
                                 HashMap<String, Object> wheretc = new HashMap<String, Object>();

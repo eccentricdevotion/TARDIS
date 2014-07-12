@@ -86,7 +86,7 @@ public class TARDISKeyboardPacketListener implements Listener {
             ResultSetControls rs = new ResultSetControls(plugin, where, false);
             if (rs.resultSet()) {
                 TARDISCircuitChecker tcc = null;
-                if (plugin.getConfig().getString("preferences.difficulty").equals("hard")) {
+                if (plugin.getConfig().getString("preferences.difficulty").equals("hard") && !plugin.getUtils().inGracePeriod(player)) {
                     tcc = new TARDISCircuitChecker(plugin, rs.getTardis_id());
                     tcc.getCircuits();
                 }

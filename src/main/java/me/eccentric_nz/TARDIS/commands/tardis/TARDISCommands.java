@@ -182,12 +182,14 @@ public class TARDISCommands implements CommandExecutor {
                 }
                 if (args[0].equalsIgnoreCase("save")) {
                     ItemStack is = player.getItemInHand();
-                    if (plugin.getConfig().getString("preferences.difficulty").equals("hard") && heldDiskIsWrong(is)) {
-                        TARDISMessage.send(player, "DISK_HAND_SAVE");
-                        return true;
-                    }
-                    if (is != null && is.hasItemMeta() && is.getItemMeta().hasDisplayName() && is.getItemMeta().getDisplayName().equals("Save Storage Disk")) {
-                        return new TARDISDiskWriterCommand(plugin).writeSave(player, args);
+                    if (plugin.getConfig().getString("preferences.difficulty").equals("hard") && !plugin.getUtils().inGracePeriod(player)) {
+                        if (heldDiskIsWrong(is)) {
+                            TARDISMessage.send(player, "DISK_HAND_SAVE");
+                            return true;
+                        }
+                        if (is != null && is.hasItemMeta() && is.getItemMeta().hasDisplayName() && is.getItemMeta().getDisplayName().equals("Save Storage Disk")) {
+                            return new TARDISDiskWriterCommand(plugin).writeSave(player, args);
+                        }
                     } else {
                         return new TARDISSaveLocationCommand(plugin).doSave(player, args);
                     }

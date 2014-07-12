@@ -89,7 +89,7 @@ public class TARDISHandbrakeListener implements Listener {
                 if (rsc.resultSet()) {
                     final int id = rsc.getTardis_id();
                     TARDISCircuitChecker tcc = null;
-                    if (plugin.getConfig().getString("preferences.difficulty").equals("hard")) {
+                    if (plugin.getConfig().getString("preferences.difficulty").equals("hard") && !plugin.getUtils().inGracePeriod(player)) {
                         tcc = new TARDISCircuitChecker(plugin, id);
                         tcc.getCircuits();
                     }

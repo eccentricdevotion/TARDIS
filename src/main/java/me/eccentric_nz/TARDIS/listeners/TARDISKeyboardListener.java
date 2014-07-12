@@ -70,7 +70,7 @@ public class TARDISKeyboardListener implements Listener {
                 event.setCancelled(true);
             }
             TARDISCircuitChecker tcc = null;
-            if (plugin.getConfig().getString("preferences.difficulty").equals("hard")) {
+            if (plugin.getConfig().getString("preferences.difficulty").equals("hard") && !plugin.getUtils().inGracePeriod(event.getPlayer())) {
                 tcc = new TARDISCircuitChecker(plugin, rsc.getTardis_id());
                 tcc.getCircuits();
             }

@@ -1,7 +1,7 @@
 #TODO
 
 ##Current version `3.0-beta-1`
-1. Console modes / grace period on hard mode?
+1. Console modes / grace period on hard mode? - _started_
 2. Slimmer TARDIS option?
 3. Chameleon Arch / Fob watch - _started, needs testing_
 4. Remote locking, advanced hide and rebuild via remote key

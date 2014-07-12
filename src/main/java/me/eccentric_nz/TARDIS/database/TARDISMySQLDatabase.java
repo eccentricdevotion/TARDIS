@@ -159,7 +159,7 @@ public class TARDISMySQLDatabase {
             statement.executeUpdate(travellersQuery);
 
             // Table structure for table 't_count'
-            String t_countQuery = "CREATE TABLE IF NOT EXISTS t_count (t_id int(11) NOT NULL AUTO_INCREMENT, uuid varchar(48) DEFAULT '', player varchar(32) DEFAULT '', count int(3) DEFAULT '0', PRIMARY KEY (t_id)) DEFAULT CHARSET=utf8 COLLATE utf8_general_ci";
+            String t_countQuery = "CREATE TABLE IF NOT EXISTS t_count (t_id int(11) NOT NULL AUTO_INCREMENT, uuid varchar(48) DEFAULT '', player varchar(32) DEFAULT '', count int(3) DEFAULT '0', grace int(3) DEFAULT '0', PRIMARY KEY (t_id)) DEFAULT CHARSET=utf8 COLLATE utf8_general_ci";
             statement.executeUpdate(t_countQuery);
 
             // update tables
