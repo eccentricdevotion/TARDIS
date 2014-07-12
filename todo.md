@@ -1,21 +1,17 @@
 #TODO
 
-##Current version `2.9.2`
-
-###Bugs
-? probably ...
-
-##Future version `3.0+`
+##Current version `3.0-beta-1`
 1. Console modes / grace period on hard mode?
 2. Slimmer TARDIS option?
 3. Chameleon Arch / Fob watch - _started, needs testing_
 4. Remote locking, advanced hide and rebuild via remote key
 5. TARDIS creation area config - _started_
-6. More MCPatcher texture support
-7. Server condenser
-8. Add `/tpa` equivalent to travel to player's WorldGuard/Towny/Factions/GriefPrevention region
-9. Create a TARDIS `json` schematic format
-    * allow custom schematic to be ARS compatible
+6. Server condenser
+7. Add `/tardistravel [player] ?` command to request travel to a player's WorldGuard/Towny/Factions/GriefPrevention region - _started_
+8. Allow custom schematic to be ARS compatible
+
+##Future version `3.1+`
+?
 
 ###I couldn't really be bothered
 1. HADS + explosions + fireballs + lava

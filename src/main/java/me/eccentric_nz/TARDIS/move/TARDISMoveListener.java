@@ -78,7 +78,9 @@ public class TARDISMoveListener implements Listener {
             if (companions.contains(uuid)) {
                 Location to = tpl.getLocation();
                 boolean exit;
-                if (plugin.getConfig().getBoolean("creation.default_world")) {
+                if (plugin.getConfig().getBoolean("creation.create_worlds_with_perms") && plugin.getServer().getPlayer(uuid).hasPermission("tardis.create_world")) {
+                    exit = !(to.getWorld().getName().contains("TARDIS"));
+                } else if (plugin.getConfig().getBoolean("creation.default_world")) {
                     // check default world name
                     exit = !(to.getWorld().getName().equals(plugin.getConfig().getString("creation.default_world_name")));
                 } else {
