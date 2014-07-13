@@ -71,91 +71,104 @@ public class TARDISCondenserListener implements Listener {
     public void onChestClose(InventoryCloseEvent event) {
         Inventory inv = event.getInventory();
         InventoryHolder holder = inv.getHolder();
-        if (holder instanceof Chest && inv.getName().equals("§4Artron Condenser")) {
-            Chest chest = (Chest) holder;
-            Location loc = chest.getLocation();
-            String chest_loc = loc.getWorld().getName() + ":" + loc.getBlockX() + ":" + loc.getBlockY() + ":" + loc.getBlockZ();
-            HashMap<String, Object> where = new HashMap<String, Object>();
-            where.put("condenser", chest_loc);
-            ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);
-            if (rs.resultSet()) {
+        String title = inv.getName();
+        if (holder instanceof Chest) {
+            if (title.equals("§4Artron Condenser") || title.equals("§4Server Condenser")) {
                 final Player player = (Player) event.getPlayer();
-                try {
-                    Class.forName("org.bukkit.Sound");
-                    player.playSound(player.getLocation(), Sound.CHEST_CLOSE, 1, 1);
-                } catch (ClassNotFoundException e) {
-                    loc.getWorld().playEffect(loc, Effect.CLICK2, 0);
-                }
-                QueryFactory qf = new QueryFactory(plugin);
-                int amount = 0;
-                // get the stacks in the inventory
-                HashMap<String, Integer> item_counts = new HashMap<String, Integer>();
-                for (ItemStack is : inv.getContents()) {
-                    if (is != null) {
-                        String item = is.getType().toString();
-                        if (plugin.getCondensables().containsKey(item)) {
-                            int stack_size = is.getAmount();
-                            if (!zero.contains(item)) {
-                                amount += stack_size * plugin.getCondensables().get(item);
-                            }
-                            String block_data = is.getType().toString();
-                            if (plugin.getConfig().getBoolean("growth.rooms_require_blocks")) {
-                                if (item_counts.containsKey(block_data)) {
-                                    Integer add_this = (item_counts.get(block_data) + stack_size);
-                                    item_counts.put(block_data, add_this);
-                                } else {
-                                    item_counts.put(block_data, stack_size);
-                                }
-                            }
-                            inv.remove(is);
-                        } else {
-                            // return items that can't be condensed
-                            player.getInventory().addItem(is);
-                        }
-                    }
-                }
-                // process item_counts
-                if (plugin.getConfig().getBoolean("growth.rooms_require_blocks")) {
-                    for (Map.Entry<String, Integer> map : item_counts.entrySet()) {
-                        // check if the tardis has condensed this material before
-                        HashMap<String, Object> wherec = new HashMap<String, Object>();
-                        wherec.put("tardis_id", rs.getTardis_id());
-                        wherec.put("block_data", map.getKey());
-                        ResultSetCondenser rsc = new ResultSetCondenser(plugin, wherec, false);
-                        HashMap<String, Object> setc = new HashMap<String, Object>();
-                        if (rsc.resultSet()) {
-                            int new_stack_size = (int) map.getValue() + rsc.getBlock_count();
-                            qf.updateCondensedBlockCount(new_stack_size, rs.getTardis_id(), map.getKey());
-                        } else {
-                            setc.put("tardis_id", rs.getTardis_id());
-                            setc.put("block_data", map.getKey());
-                            setc.put("block_count", (int) map.getValue());
-                            qf.doInsert("condenser", setc);
-                        }
-                    }
-                }
-                // halve it cause 1:1 is too much...
-                amount = Math.round(amount / 2.0F);
-                HashMap<String, Object> wheret = new HashMap<String, Object>();
-                wheret.put("tardis_id", rs.getTardis_id());
-                qf.alterEnergyLevel("tardis", amount, wheret, player);
-                if (amount > 0) {
-                    // are we doing an achievement?
-                    if (plugin.getAchievementConfig().getBoolean("energy.enabled")) {
-                        // determine the current percentage
-                        int current_level = rs.getArtron_level() + amount;
-                        int fc = plugin.getArtronConfig().getInt("full_charge");
-                        int percent = Math.round((current_level * 100F) / fc);
-                        TARDISAchievementFactory taf = new TARDISAchievementFactory(plugin, player, "energy", 1);
-                        if (percent >= plugin.getAchievementConfig().getInt("energy.required")) {
-                            taf.doAchievement(percent);
-                        } else {
-                            taf.doAchievement(Math.round((amount * 100F) / fc));
-                        }
-                    }
-                    TARDISMessage.send(player, "ENERGY_CONDENSED", String.format("%d", amount));
+                Chest chest = (Chest) holder;
+                Location loc = chest.getLocation();
+                String chest_loc;
+                ResultSetTardis rs;
+                boolean isCondenser;
+                HashMap<String, Object> where = new HashMap<String, Object>();
+                if (title.equals("§4Artron Condenser")) {
+                    chest_loc = loc.getWorld().getName() + ":" + loc.getBlockX() + ":" + loc.getBlockY() + ":" + loc.getBlockZ();
+                    where.put("condenser", chest_loc);
+                    rs = new ResultSetTardis(plugin, where, "", false);
+                    isCondenser = rs.resultSet();
                 } else {
-                    TARDISMessage.send(player, "CONDENSE_NO_VALID");
+                    chest_loc = loc.toString();
+                    where.put("uuid", player.getUniqueId().toString());
+                    rs = new ResultSetTardis(plugin, where, "", false);
+                    isCondenser = (plugin.getArtronConfig().contains("condenser") && plugin.getArtronConfig().getString("condenser").equals(chest_loc) && rs.resultSet());
+                }
+                if (isCondenser) {
+                    try {
+                        Class.forName("org.bukkit.Sound");
+                        player.playSound(player.getLocation(), Sound.CHEST_CLOSE, 1, 1);
+                    } catch (ClassNotFoundException e) {
+                        loc.getWorld().playEffect(loc, Effect.CLICK2, 0);
+                    }
+                    QueryFactory qf = new QueryFactory(plugin);
+                    int amount = 0;
+                    // get the stacks in the inventory
+                    HashMap<String, Integer> item_counts = new HashMap<String, Integer>();
+                    for (ItemStack is : inv.getContents()) {
+                        if (is != null) {
+                            String item = is.getType().toString();
+                            if (plugin.getCondensables().containsKey(item) && !zero.contains(item)) {
+                                int stack_size = is.getAmount();
+                                amount += stack_size * plugin.getCondensables().get(item);
+                                String block_data = is.getType().toString();
+                                if (plugin.getConfig().getBoolean("growth.rooms_require_blocks")) {
+                                    if (item_counts.containsKey(block_data)) {
+                                        Integer add_this = (item_counts.get(block_data) + stack_size);
+                                        item_counts.put(block_data, add_this);
+                                    } else {
+                                        item_counts.put(block_data, stack_size);
+                                    }
+                                }
+                                inv.remove(is);
+                            } else {
+                                // return items that can't be condensed
+                                player.getInventory().addItem(is);
+                                player.updateInventory();
+                            }
+                        }
+                    }
+                    // process item_counts
+                    if (plugin.getConfig().getBoolean("growth.rooms_require_blocks")) {
+                        for (Map.Entry<String, Integer> map : item_counts.entrySet()) {
+                            // check if the tardis has condensed this material before
+                            HashMap<String, Object> wherec = new HashMap<String, Object>();
+                            wherec.put("tardis_id", rs.getTardis_id());
+                            wherec.put("block_data", map.getKey());
+                            ResultSetCondenser rsc = new ResultSetCondenser(plugin, wherec, false);
+                            HashMap<String, Object> setc = new HashMap<String, Object>();
+                            if (rsc.resultSet()) {
+                                int new_stack_size = (int) map.getValue() + rsc.getBlock_count();
+                                qf.updateCondensedBlockCount(new_stack_size, rs.getTardis_id(), map.getKey());
+                            } else {
+                                setc.put("tardis_id", rs.getTardis_id());
+                                setc.put("block_data", map.getKey());
+                                setc.put("block_count", (int) map.getValue());
+                                qf.doInsert("condenser", setc);
+                            }
+                        }
+                    }
+                    // halve it cause 1:1 is too much...
+                    amount = Math.round(amount / 2.0F);
+                    HashMap<String, Object> wheret = new HashMap<String, Object>();
+                    wheret.put("tardis_id", rs.getTardis_id());
+                    qf.alterEnergyLevel("tardis", amount, wheret, player);
+                    if (amount > 0) {
+                        // are we doing an achievement?
+                        if (plugin.getAchievementConfig().getBoolean("energy.enabled")) {
+                            // determine the current percentage
+                            int current_level = rs.getArtron_level() + amount;
+                            int fc = plugin.getArtronConfig().getInt("full_charge");
+                            int percent = Math.round((current_level * 100F) / fc);
+                            TARDISAchievementFactory taf = new TARDISAchievementFactory(plugin, player, "energy", 1);
+                            if (percent >= plugin.getAchievementConfig().getInt("energy.required")) {
+                                taf.doAchievement(percent);
+                            } else {
+                                taf.doAchievement(Math.round((amount * 100F) / fc));
+                            }
+                        }
+                        TARDISMessage.send(player, "ENERGY_CONDENSED", String.format("%d", amount));
+                    } else {
+                        TARDISMessage.send(player, "CONDENSE_NO_VALID");
+                    }
                 }
             }
         }
@@ -172,24 +185,35 @@ public class TARDISCondenserListener implements Listener {
             ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);
             if (rs.resultSet()) {
                 event.setCancelled(true);
-                InventoryHolder holder = (Chest) b.getState();
-                // the chest may have been filled by a hopper so get its contents and then clear it
-                ItemStack[] is = holder.getInventory().getContents();
-                // check inv size
-                int inv_size = (is.length > 27) ? 54 : 27;
-                holder.getInventory().clear();
-                Inventory aec = plugin.getServer().createInventory(holder, inv_size, "§4Artron Condenser");
-                // set the contents to what was in the chest
-                aec.setContents(is);
-                Player p = event.getPlayer();
-                try {
-                    Class.forName("org.bukkit.Sound");
-                    p.playSound(p.getLocation(), Sound.CHEST_OPEN, 1, 1);
-                } catch (ClassNotFoundException e) {
-                    loc.getWorld().playEffect(loc, Effect.CLICK1, 0);
+                openCondenser(b, event.getPlayer(), "Artron Condenser");
+            } else {
+                // is it the server condenser
+                if (!plugin.getArtronConfig().contains("condenser")) {
+                    return;
                 }
-                p.openInventory(aec);
+                if (plugin.getArtronConfig().getString("condenser").equals(loc.toString())) {
+                    event.setCancelled(true);
+                    openCondenser(b, event.getPlayer(), "Server Condenser");
+                }
             }
         }
+    }
+
+    private void openCondenser(Block b, Player p, String title) {
+        InventoryHolder holder = (Chest) b.getState();
+        ItemStack[] is = holder.getInventory().getContents();
+        // check inv size
+        int inv_size = (is.length > 27) ? 54 : 27;
+        holder.getInventory().clear();
+        Inventory aec = plugin.getServer().createInventory(holder, inv_size, "§4" + title);
+        // set the contents to what was in the chest
+        aec.setContents(is);
+        try {
+            Class.forName("org.bukkit.Sound");
+            p.playSound(p.getLocation(), Sound.CHEST_OPEN, 1, 1);
+        } catch (ClassNotFoundException e) {
+            b.getLocation().getWorld().playEffect(b.getLocation(), Effect.CLICK1, 0);
+        }
+        p.openInventory(aec);
     }
 }

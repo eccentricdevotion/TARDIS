@@ -56,6 +56,7 @@ public class TARDISAdminCommands implements CommandExecutor {
         firstsStr.put("arch", "");
         firstsStr.put("area", "creation");
         firstsStr.put("chunks", "");
+        firstsStr.put("condenser", "");
         firstsStr.put("config", "");
         firstsStr.put("custom_schematic_seed", "creation");
         firstsStr.put("database", "storage");
@@ -195,6 +196,9 @@ public class TARDISAdminCommands implements CommandExecutor {
                 if (args.length == 1) {
                     if (first.equals("chunks")) {
                         return new TARDISChunksCommand(plugin).listChunks(sender);
+                    }
+                    if (first.equals("condenser")) {
+                        return new TARDISCondenserCommand(plugin).set(sender);
                     }
                     if (first.equals("reload")) {
                         return new TARDISReloadCommand(plugin).reloadConfig(sender);
