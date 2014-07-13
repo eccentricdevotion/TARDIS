@@ -150,7 +150,7 @@ public class TARDISButtonListener implements Listener {
                         String comps = rs.getCompanions();
                         UUID ownerUUID = rs.getUuid();
                         TARDISCircuitChecker tcc = null;
-                        if (plugin.getConfig().getString("preferences.difficulty").equals("hard") && !plugin.getUtils().inGracePeriod(player)) {
+                        if (plugin.getConfig().getString("preferences.difficulty").equals("hard")) {
                             tcc = new TARDISCircuitChecker(plugin, id);
                             tcc.getCircuits();
                         }
@@ -328,7 +328,7 @@ public class TARDISButtonListener implements Listener {
                                         TARDISMessage.send(player, "NOT_ENOUGH_ENERGY");
                                         return;
                                     }
-                                    if (tcc != null && !tcc.hasInput()) {
+                                    if (tcc != null && !tcc.hasInput() && !plugin.getUtils().inGracePeriod(player, false)) {
                                         TARDISMessage.send(player, "INPUT_MISSING");
                                         return;
                                     }
@@ -351,7 +351,7 @@ public class TARDISButtonListener implements Listener {
                                         TARDISMessage.send(player, "ROOM_OWN_WORLD");
                                         return;
                                     }
-                                    if (tcc != null && !tcc.hasARS()) {
+                                    if (tcc != null && !tcc.hasARS() && !plugin.getUtils().inGracePeriod(player, true)) {
                                         TARDISMessage.send(player, "ARS_MISSING");
                                         return;
                                     }
@@ -360,7 +360,7 @@ public class TARDISButtonListener implements Listener {
                                     player.openInventory(ars);
                                     break;
                                 case 11: // Temporal Locator sign
-                                    if (tcc != null && !tcc.hasTemporal()) {
+                                    if (tcc != null && !tcc.hasTemporal() && !plugin.getUtils().inGracePeriod(player, false)) {
                                         TARDISMessage.send(player, "TEMP_MISSING");
                                         return;
                                     }

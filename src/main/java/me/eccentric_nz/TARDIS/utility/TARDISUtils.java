@@ -781,7 +781,7 @@ public class TARDISUtils {
         return y;
     }
 
-    public boolean inGracePeriod(Player p) {
+    public boolean inGracePeriod(Player p, boolean update) {
         boolean inGracePeriod = false;
         // check grace period
         int grace = plugin.getConfig().getInt("travel.grace_period");
@@ -792,14 +792,16 @@ public class TARDISUtils {
             if (rsc.resultSet()) {
                 int grace_count = rsc.getGrace();
                 if (grace_count < grace) {
-                    TARDISMessage.send(p, "GRACE_PERIOD", String.format("%d", (grace - grace_count)));
                     inGracePeriod = true;
-                    // update the grace count
-                    HashMap<String, Object> where = new HashMap<String, Object>();
-                    where.put("uuid", p.getUniqueId().toString());
-                    HashMap<String, Object> set = new HashMap<String, Object>();
-                    set.put("grace", (grace_count + 1));
-                    new QueryFactory(plugin).doUpdate("t_count", set, where);
+                    if (update) {
+                        TARDISMessage.send(p, "GRACE_PERIOD", String.format("%d", (grace - (grace_count + 1))));
+                        // update the grace count if the TARDIS has travelled
+                        HashMap<String, Object> where = new HashMap<String, Object>();
+                        where.put("uuid", p.getUniqueId().toString());
+                        HashMap<String, Object> set = new HashMap<String, Object>();
+                        set.put("grace", (grace_count + 1));
+                        new QueryFactory(plugin).doUpdate("t_count", set, where);
+                    }
                 }
             }
         }

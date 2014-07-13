@@ -1,14 +1,15 @@
 #TODO
 
 ##Current version `3.0-beta-1`
-1. Console modes / grace period on hard mode? - _started_
-2. Slimmer TARDIS option?
-3. Chameleon Arch / Fob watch - _started, needs testing_
-4. Remote locking, advanced hide and rebuild via remote key
-5. TARDIS creation area config - _started_
-6. Server condenser
-7. Add `/tardistravel [player] ?` command to request travel to a player's WorldGuard/Towny/Factions/GriefPrevention region - _started_
-8. Allow custom schematic to be ARS compatible
+1. Console modes
+2. Grace period on hard mode - _started_
+3. Slimmer TARDIS option?
+4. Chameleon Arch / Fob watch - _started, needs testing_
+5. Remote locking, advanced hide and rebuild via remote key
+6. TARDIS creation area config - _started_
+7. Server condenser
+8. Add `/tardistravel [player] ?` command to request travel to a player's WorldGuard/Towny/Factions/GriefPrevention region - _started_
+9. Allow custom schematic to be ARS compatible
 
 ##Future version `3.1+`
 ?
