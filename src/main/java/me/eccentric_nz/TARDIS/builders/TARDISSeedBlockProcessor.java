@@ -67,16 +67,18 @@ public class TARDISSeedBlockProcessor {
         if (player.hasPermission("tardis.create")) {
             int max_count = plugin.getConfig().getInt("creation.count");
             int player_count = 0;
-            if (max_count > 0) {
-                HashMap<String, Object> wherec = new HashMap<String, Object>();
-                wherec.put("uuid", player.getUniqueId().toString());
-                ResultSetCount rsc = new ResultSetCount(plugin, wherec, false);
-                if (rsc.resultSet()) {
-                    player_count = rsc.getCount();
-                    if (player_count == max_count) {
-                        TARDISMessage.send(player, "COUNT_QUOTA");
-                        return false;
-                    }
+            int grace_count = 0;
+            boolean has_count = false;
+            HashMap<String, Object> wherec = new HashMap<String, Object>();
+            wherec.put("uuid", player.getUniqueId().toString());
+            ResultSetCount rsc = new ResultSetCount(plugin, wherec, false);
+            if (rsc.resultSet()) {
+                player_count = rsc.getCount();
+                grace_count = rsc.getGrace();
+                has_count = true;
+                if (player_count == max_count && max_count > 0) {
+                    TARDISMessage.send(player, "COUNT_QUOTA");
+                    return false;
                 }
             }
             String playerNameStr = player.getName();
@@ -276,27 +278,27 @@ public class TARDISSeedBlockProcessor {
                 }
                 if (max_count > 0) {
                     TARDISMessage.send(player, "COUNT", String.format("%d", (player_count + 1)), String.format("%d", max_count));
-                    HashMap<String, Object> setc = new HashMap<String, Object>();
-                    setc.put("count", player_count + 1);
-                    setc.put("grace", plugin.getConfig().getInt("travel.grace_period"));
-                    if (player_count > 0) {
-                        // update the player's TARDIS count
-                        HashMap<String, Object> wheretc = new HashMap<String, Object>();
-                        wheretc.put("uuid", player.getUniqueId().toString());
-                        qf.doUpdate("t_count", setc, wheretc);
-                    } else {
-                        // insert new TARDIS count record
-                        setc.put("uuid", player.getUniqueId().toString());
-                        qf.doInsert("t_count", setc);
-                    }
+                }
+                HashMap<String, Object> setc = new HashMap<String, Object>();
+                setc.put("count", player_count + 1);
+                setc.put("grace", grace_count);
+                if (has_count) {
+                    // update the player's TARDIS count
+                    HashMap<String, Object> wheretc = new HashMap<String, Object>();
+                    wheretc.put("uuid", player.getUniqueId().toString());
+                    qf.doUpdate("t_count", setc, wheretc);
+                } else {
+                    // insert new TARDIS count record
+                    setc.put("uuid", player.getUniqueId().toString());
+                    qf.doInsert("t_count", setc);
                 }
                 return true;
             } else {
                 HashMap<String, Object> wherecl = new HashMap<String, Object>();
                 wherecl.put("tardis_id", rs.getTardis_id());
-                ResultSetCurrentLocation rsc = new ResultSetCurrentLocation(plugin, wherecl);
-                if (rsc.resultSet()) {
-                    TARDISMessage.send(player, "TARDIS_HAVE", rsc.getWorld().getName() + " at x:" + rsc.getX() + " y:" + rsc.getY() + " z:" + rsc.getZ());
+                ResultSetCurrentLocation rscl = new ResultSetCurrentLocation(plugin, wherecl);
+                if (rscl.resultSet()) {
+                    TARDISMessage.send(player, "TARDIS_HAVE", rscl.getWorld().getName() + " at x:" + rscl.getX() + " y:" + rscl.getY() + " z:" + rscl.getZ());
                 } else {
                     TARDISMessage.send(player, "HAVE_TARDIS");
                 }

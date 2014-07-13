@@ -155,7 +155,7 @@ public class TARDISSQLiteDatabaseUpdater {
                 ResultSet rsc = statement.executeQuery(c_query);
                 if (!rsc.next()) {
                     i++;
-                    String c_alter = "ALTER TABLE blocks ADD " + c;
+                    String c_alter = "ALTER TABLE t_count ADD " + c;
                     statement.executeUpdate(c_alter);
                 }
             }
