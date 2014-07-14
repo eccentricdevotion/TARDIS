@@ -352,35 +352,15 @@ public class TARDISBuilderInner {
                                 switch (schm) {
                                     case DELUXE:
                                         control = 57;
-                                        empty[2][4][4] = control;
-                                        empty[2][4][5] = control;
-                                        empty[2][5][4] = control;
-                                        empty[2][5][5] = control;
-                                        empty[1][4][5] = control;
-                                        empty[1][5][4] = control;
-                                        empty[1][5][5] = control;
                                         break;
                                     case ELEVENTH:
                                         control = 133;
-                                        empty[2][4][4] = control;
-                                        empty[2][4][5] = control;
-                                        empty[2][5][4] = control;
-                                        empty[2][5][5] = control;
-                                        empty[1][4][5] = control;
-                                        empty[1][5][4] = control;
-                                        empty[1][5][5] = control;
                                         break;
                                     case BIGGER:
                                         control = 41;
-                                        empty[1][4][5] = control;
-                                        empty[1][5][4] = control;
-                                        empty[1][5][5] = control;
                                         break;
                                     case REDSTONE:
                                         control = 152;
-                                        empty[1][4][5] = control;
-                                        empty[1][5][4] = control;
-                                        empty[1][5][5] = control;
                                         break;
                                     case STEAMPUNK:
                                         control = 173;
@@ -397,10 +377,26 @@ public class TARDISBuilderInner {
                                     case WAR:
                                         control = 159;
                                         break;
+                                    case CUSTOM:
+                                        control = 122;
+                                        break;
                                     default:
                                         break;
                                 }
                                 empty[1][4][4] = control;
+                                if (w > 16) {
+                                    empty[1][4][5] = control;
+                                    empty[1][5][4] = control;
+                                    empty[1][5][5] = control;
+                                    if (h > 16) {
+                                        empty[2][4][4] = control;
+                                        empty[2][4][5] = control;
+                                        empty[2][5][4] = control;
+                                        empty[2][5][5] = control;
+                                    }
+                                } else if (h > 16) {
+                                    empty[2][4][4] = control;
+                                }
                                 JSONArray json = new JSONArray(empty);
                                 HashMap<String, Object> seta = new HashMap<String, Object>();
                                 seta.put("tardis_id", dbID);

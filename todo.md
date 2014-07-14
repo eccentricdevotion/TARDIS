@@ -9,7 +9,6 @@
 6. TARDIS creation area config - _started_
 7. Server condenser - _started_
 8. Add `/tardistravel [player] ?` command to request travel to a player's WorldGuard/Towny/Factions/GriefPrevention region - _started_
-9. Allow custom schematic to be ARS compatible
 
 ##Future version `3.1+`
 ?

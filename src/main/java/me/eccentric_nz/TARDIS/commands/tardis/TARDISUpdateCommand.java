@@ -22,7 +22,6 @@ import java.util.Locale;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import me.eccentric_nz.TARDIS.database.ResultSetTravellers;
-import me.eccentric_nz.TARDIS.enumeration.SCHEMATIC;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
@@ -128,11 +127,6 @@ public class TARDISUpdateCommand {
                 }
                 if (!plugin.getUtils().canGrowRooms(rs.getChunk())) {
                     TARDISMessage.send(player, "ARS_OWN_WORLD");
-                    return true;
-                }
-                SCHEMATIC schm = rs.getSchematic();
-                if (schm.equals(SCHEMATIC.CUSTOM)) {
-                    TARDISMessage.send(player, "ARS_NO_CUSTOM");
                     return true;
                 }
             }
