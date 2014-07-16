@@ -8,6 +8,7 @@ import java.util.UUID;
 import me.eccentric_nz.TARDIS.JSON.JSONArray;
 import me.eccentric_nz.TARDIS.JSON.JSONObject;
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import org.bukkit.ChatColor;
 import org.bukkit.World;
 import org.bukkit.block.Block;
@@ -33,7 +34,11 @@ public class TARDISSchematicCommand implements CommandExecutor {
                 player = (Player) sender;
             }
             if (player == null) {
-                sender.sendMessage(plugin.getPluginName() + "Command can only be used by a player!");
+                TARDISMessage.send(sender, "CMD_ONLY_PLAYER");
+                return true;
+            }
+            if (!player.hasPermission("tardis.admin")) {
+                TARDISMessage.send(sender, "CMD_ADMIN");
                 return true;
             }
             UUID uuid = player.getUniqueId();
@@ -41,28 +46,28 @@ public class TARDISSchematicCommand implements CommandExecutor {
                 return new TARDISSchematicPaster(plugin, player).paste();
             }
             if (args.length < 2) {
-                sender.sendMessage(plugin.getPluginName() + "Too few arguments!");
+                TARDISMessage.send(player, "TOO_FEW_ARGS");
                 return true;
             }
             if (!args[0].equalsIgnoreCase("load") && !args[0].equalsIgnoreCase("save")) {
-                sender.sendMessage(plugin.getPluginName() + "You must supply a schematic name!");
+                TARDISMessage.send(player, "SCHM_NAME");
                 return true;
             }
             if (args[0].equalsIgnoreCase("save")) {
                 // check they have selected start and end blocks
                 if (!plugin.getTrackerKeeper().getStartLocation().containsKey(uuid)) {
-                    player.sendMessage(plugin.getPluginName() + "No start block selected!");
+                    TARDISMessage.send(player, "SCHM_NO_START");
                     return true;
                 }
                 if (!plugin.getTrackerKeeper().getEndLocation().containsKey(uuid)) {
-                    player.sendMessage(plugin.getPluginName() + "No end block selected!");
+                    TARDISMessage.send(player, "SCHM_NO_END");
                     return true;
                 }
                 // get the world
                 World w = plugin.getTrackerKeeper().getStartLocation().get(uuid).getWorld();
                 String chk_w = plugin.getTrackerKeeper().getStartLocation().get(uuid).getWorld().getName();
                 if (!w.getName().equals(chk_w)) {
-                    player.sendMessage(plugin.getPluginName() + "Start and end blocks are not in the same world!");
+                    TARDISMessage.send(player, "SCHM_WORLD!");
                     return true;
                 }
                 // get the raw coords
@@ -96,11 +101,11 @@ public class TARDISSchematicCommand implements CommandExecutor {
                 dimensions.put("height", height);
                 dimensions.put("length", length);
                 if (width != length) {
-                    player.sendMessage(plugin.getPluginName() + "Region must be a square!");
+                    TARDISMessage.send(player, "SCHM_SQUARE");
                     return true;
                 }
                 if ((width % 16 != 0 || length % 16 != 0) && !args[1].equals("zero")) {
-                    player.sendMessage(plugin.getPluginName() + "Length of sides must be a multiple of 16 blocks!");
+                    TARDISMessage.send(player, "SCHM_MULTIPLE");
                     return true;
                 }
                 // create JSON arrays for block data
@@ -133,9 +138,9 @@ public class TARDISSchematicCommand implements CommandExecutor {
                     bw.close();
                     TARDISSchematicGZip.zip(output, plugin.getDataFolder() + File.separator + "user_schematics" + File.separator + args[1] + ".tschm");
                     file.delete();
-                    player.sendMessage(plugin.getPluginName() + args[1] + ".tschm saved :)");
+                    TARDISMessage.send(player, "SCHM_SAVED", args[1]);
                 } catch (IOException e) {
-                    player.sendMessage(plugin.getPluginName() + "Could not write GZipped JSON schematic file!");
+                    TARDISMessage.send(player, "SCHM_ERROR");
                 }
                 return true;
             }
@@ -143,12 +148,12 @@ public class TARDISSchematicCommand implements CommandExecutor {
                 String instr = plugin.getDataFolder() + File.separator + "user_schematics" + File.separator + args[1] + ".tschm";
                 File file = new File(instr);
                 if (!file.exists()) {
-                    player.sendMessage(plugin.getPluginName() + "Could not find a schematic with that name!");
+                    TARDISMessage.send(player, "SCHM_NOT_VALID");
                     return true;
                 }
                 JSONObject sch = TARDISSchematicGZip.unzip(instr);
                 plugin.getTrackerKeeper().getPastes().put(uuid, sch);
-                player.sendMessage(plugin.getPluginName() + "Schematic loaded! You can now use the " + ChatColor.GREEN + "/ts paste" + ChatColor.RESET + " command");
+                TARDISMessage.send(player, "SCHM_LOADED", ChatColor.GREEN + "/ts paste" + ChatColor.RESET + " command");
                 return true;
             }
         }
