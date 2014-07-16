@@ -9,9 +9,10 @@
 6. TARDIS creation area config - _started_
 7. Server condenser - _started_
 8. Add `/tardistravel [player] ?` command to request travel to a player's WorldGuard/Towny/Factions/GriefPrevention region - _started_
+9. Fix `custom_creeper_id`, check creeper spawns in bigger and deluxe
 
 ##Future version `3.1+`
-?
+1. TARDIS up/cross-grades (change the desktop theme)
 
 ###I couldn't really be bothered
 1. HADS + explosions + fireballs + lava
@@ -23,15 +24,14 @@
 
 Re-skin mobs for Resource pack, and add new mob sounds
 
-* (Wither?) Skeletons -> Vashta Nerada (breaking a bookcase gives a random chance of one spawning at that location)
 * Villagers -> Ood - _started_
 * Villagers -> Hath
 * Endermen -> The Silence
 * Iron Golem -> Gunslinger
-* Witches -> ?
-* Wolves -> K-9
+* Witches -> Slitheen
+* Wolves -> K-9? (All the textures I seen so far just don't work - you shouldn't see the legs...)
 * Slimes -> Adipose
-* PigZombies -> Strax / Butler (allow milking) __done__
+* PigZombies -> Strax / Butler (allow milking) - __done__
 * Skeletons -> Weeping Angels - __done__
 * Skeletons disguised as Snow Golems -> Daleks - __done__
 * Skeletons -> Silurians - __done__
@@ -40,6 +40,7 @@ Re-skin mobs for Resource pack, and add new mob sounds
 * Zombies -> Zygons - __done__
 * Zombies -> Cybermen - __done__
 * Zombies -> Sontarans - __done__
+* Zombies -> Vashta Nerada (breaking a bookcase gives a random chance of one spawning at that location) - __done__
 
 ##Waiting on Minecraft/Bukkit update
 
