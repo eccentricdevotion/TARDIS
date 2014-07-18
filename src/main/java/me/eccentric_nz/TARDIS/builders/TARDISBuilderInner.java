@@ -440,9 +440,7 @@ public class TARDISBuilderInner {
                         set.put("creeper", creeploc);
                         switch (schm) {
                             case CUSTOM:
-                                // TODO convert config int value to material string
-                                type = Material.getMaterial(plugin.getConfig().getInt("creation.custom_creeper_id"));
-                                // type = Material.valueOf(plugin.getConfig().getString("creation.custom_creeper_id"));
+                                type = Material.valueOf(plugin.getConfig().getString("creation.custom_creeper_id"));
                                 break;
                             case BIGGER:
                             case DELUXE:

@@ -1,15 +1,15 @@
 #TODO
 
 ##Current version `3.0-beta-1`
-1. Console modes
-2. Grace period on hard mode - _started_
-3. Slimmer TARDIS option?
-4. Chameleon Arch / Fob watch - _started, needs testing_
-5. Remote locking, advanced hide and rebuild via remote key
+1. Strengthen bow-ties by adding leather
+2. Player difficulty modes, requires config option
+3. Remote locking, advanced hide and rebuild via remote key
+4. Grace period on hard mode - _started_
+5. Chameleon Arch / Fob watch - _started, needs testing_
 6. TARDIS creation area config - _started_
 7. Server condenser - _started_
 8. Add `/tardistravel [player] ?` command to request travel to a player's WorldGuard/Towny/Factions/GriefPrevention region - _started_
-9. Fix `custom_creeper_id`, check creeper spawns in bigger and deluxe
+9. Slimmer TARDIS option?
 
 ##Future version `3.1+`
 1. TARDIS up/cross-grades (change the desktop theme)
@@ -50,15 +50,14 @@ Re-skin mobs for Resource pack, and add new mob sounds
 ##Waiting on Bukkit API
 0. IDs are soon to be history... so convert all ID use to entity names
 1. Get/set horse speed (Attribute API)
-2. Achievements API is now available, but doesn't allow custom achievements :(
+2. Achievements API is now available, but doesn't allow custom achievements :( [https://bukkit.atlassian.net/browse/BUKKIT-5672](https://bukkit.atlassian.net/browse/BUKKIT-5672)
 
 ##Minecraft API when available
 1. Recreate everything with the new API :)
 2. Create custom blocks for the TARDIS and console.
-3. If using the LAPIS block have the walls a special TARDIS wall block.
-4. Custom TARDIS items and crafting recipes for the same.
-5. A Sonic Screwdriver and a crafting recipe for it.
-6. GUIs (if allowed)
-7. Make the TARDIS Police Box an entity (if allowed)
-8. Custom achievements
-9. Custom monsters
+3. Custom TARDIS items and crafting recipes for the same.
+4. A Sonic Screwdriver and a crafting recipe for it.
+5. GUIs (if allowed)
+6. Make the TARDIS Police Box an entity (if allowed)
+7. Custom achievements
+8. Custom monsters

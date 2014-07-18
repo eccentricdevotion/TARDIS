@@ -26,6 +26,7 @@ import java.util.Map;
 import java.util.Set;
 import me.eccentric_nz.TARDIS.TARDIS;
 import org.bukkit.ChatColor;
+import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
@@ -185,7 +186,6 @@ public class TARDISConfiguration {
         intOptions.put("arch.min_time", 20);
         intOptions.put("creation.border_radius", 256);
         intOptions.put("creation.count", 0);
-        intOptions.put("creation.custom_creeper_id", 138);
         intOptions.put("creation.inventory_group", 0);
         intOptions.put("creation.tips_limit", 400);
         intOptions.put("growth.ars_limit", 1);
@@ -264,6 +264,7 @@ public class TARDISConfiguration {
         roomIntOptions.put("rooms.ZERO.offset", -4);
         // string
         strOptions.put("creation.area", "none");
+        strOptions.put("creation.custom_creeper_id", "BEACON");
         strOptions.put("creation.custom_schematic_seed", "OBSIDIAN");
         strOptions.put("creation.default_world_name", "TARDIS_TimeVortex");
         strOptions.put("creation.gamemode", "survival");
@@ -353,6 +354,14 @@ public class TARDISConfiguration {
                 if (!config.contains(entry.getKey())) {
                     plugin.getConfig().set(entry.getKey(), entry.getValue());
                     i++;
+                } else if (entry.getKey().equals("creation.custom_creeper_id")) {
+                    try {
+                        int id = Integer.parseInt(plugin.getConfig().getString("creation.custom_creeper_id"));
+                        String set = Material.getMaterial(id).toString();
+                        plugin.getConfig().set("creation.custom_creeper_id", set);
+                    } catch (NumberFormatException e) {
+                        // no conversion necessary
+                    }
                 }
             }
             if (!config.isConfigurationSection("rechargers")) {
