@@ -33,7 +33,23 @@ shaped:
             R: REDSTONE
         result: FLINT
         amount: 1
-        lore: "Right-click block\nto call TARDIS"
+        lore: "Right-click block~to call TARDIS"
+    TARDIS Remote Key:
+        easy_shape: RCR,-K-,-T-
+        easy_ingredients:
+            R: REDSTONE
+            C: REDSTONE_COMPARATOR
+            K: GOLD_NUGGET
+            T: REDSTONE_TORCH
+        hard_shape: RCR,-K-,-T-
+        hard_ingredients:
+            R: REDSTONE
+            C: REDSTONE_COMPARATOR
+            K: GOLD_NUGGET
+            T: 'MAP:1964'
+        result: GOLD_NUGGET
+        amount: 1
+        lore: "Deadlock & unlock~Hide & rebuild"
     TARDIS Locator Circuit:
         easy_shape: RQR,RIR,DRL
         easy_ingredients:
@@ -349,7 +365,7 @@ shaped:
             R: REDSTONE_BLOCK
         result: BUCKET
         amount: 1
-        lore: "Charge Level\n0"
+        lore: "Charge Level~0"
     Jammy Dodger:
         easy_shape: ---,WRW,---
         easy_ingredients:

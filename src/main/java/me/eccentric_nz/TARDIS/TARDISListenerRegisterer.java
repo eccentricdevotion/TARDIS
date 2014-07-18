@@ -76,6 +76,7 @@ import me.eccentric_nz.TARDIS.listeners.TARDISPistonListener;
 import me.eccentric_nz.TARDIS.listeners.TARDISQuitListener;
 import me.eccentric_nz.TARDIS.listeners.TARDISRecipeListener;
 import me.eccentric_nz.TARDIS.listeners.TARDISRedstoneListener;
+import me.eccentric_nz.TARDIS.listeners.TARDISRemoteKeyListener;
 import me.eccentric_nz.TARDIS.listeners.TARDISRenderRoomListener;
 import me.eccentric_nz.TARDIS.listeners.TARDISRoomSeeder;
 import me.eccentric_nz.TARDIS.listeners.TARDISSaveSignListener;
@@ -191,6 +192,7 @@ public class TARDISListenerRegisterer {
         plugin.getPM().registerEvents(new TARDISQuitListener(plugin), plugin);
         plugin.getPM().registerEvents(new TARDISRecipeListener(plugin), plugin);
         plugin.getPM().registerEvents(new TARDISRegulatorListener(plugin), plugin);
+        plugin.getPM().registerEvents(new TARDISRemoteKeyListener(plugin), plugin);
         plugin.getPM().registerEvents(new TARDISRedstoneListener(plugin), plugin);
         plugin.getPM().registerEvents(new TARDISRoomSeeder(plugin), plugin);
         plugin.getPM().registerEvents(new TARDISSaveSignListener(plugin), plugin);

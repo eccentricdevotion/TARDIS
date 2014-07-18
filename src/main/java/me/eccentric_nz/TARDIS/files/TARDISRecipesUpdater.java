@@ -74,6 +74,25 @@ public class TARDISRecipesUpdater {
 
     public void addRecipes() {
         int i = 0;
+        // fix lore
+        recipes_config.set("shaped.Stattenheim Remote.lore", "Right-click block~to call TARDIS");
+        recipes_config.set("shaped.Artron Storage Cell.lore", "Charge Level~0");
+        //
+        if (!recipes_config.contains("shaped.TARDIS Remote Key")) {
+            recipes_config.set("shaped.TARDIS Remote Key.easy_shape", "RCR,-K-,-T-");
+            recipes_config.set("shaped.TARDIS Remote Key.easy_ingredients.R", "REDSTONE");
+            recipes_config.set("shaped.TARDIS Remote Key.easy_ingredients.C", "REDSTONE_COMPARATOR");
+            recipes_config.set("shaped.TARDIS Remote Key.easy_ingredients.K", "GOLD_NUGGET");
+            recipes_config.set("shaped.TARDIS Remote Key.easy_ingredients.T", "REDSTONE_TORCH");
+            recipes_config.set("shaped.TARDIS Remote Key.hard_shape", "RCR,-K-,-T-");
+            recipes_config.set("shaped.TARDIS Remote Key.hard_ingredients.R", "REDSTONE");
+            recipes_config.set("shaped.TARDIS Remote Key.hard_ingredients.C", "REDSTONE_COMPARATOR");
+            recipes_config.set("shaped.TARDIS Remote Key.hard_ingredients.K", "GOLD_NUGGET");
+            recipes_config.set("shaped.TARDIS Remote Key.hard_ingredients.T", "MAP:1964");
+            recipes_config.set("shaped.TARDIS Remote Key.result", "GOLD_NUGGET");
+            recipes_config.set("shaped.TARDIS Remote Key.amount", 1);
+            recipes_config.set("shaped.TARDIS Remote Key.lore", "Deadlock & unlock~Hide & rebuild");
+        }
         if (!recipes_config.contains("shaped.White Bow Tie")) {
             for (Map.Entry<String, Integer> map : colours.entrySet()) {
                 recipes_config.set("shaped." + map.getKey() + " Bow Tie.easy_shape", "---,SWS,---");

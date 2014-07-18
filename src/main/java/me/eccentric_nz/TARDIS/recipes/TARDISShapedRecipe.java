@@ -107,7 +107,7 @@ public class TARDISShapedRecipe {
             is.setDurability((short) 50);
         }
         if (!plugin.getRecipesConfig().getString("shaped." + s + ".lore").equals("")) {
-            im.setLore(Arrays.asList(plugin.getRecipesConfig().getString("shaped." + s + ".lore").split("\n")));
+            im.setLore(Arrays.asList(plugin.getRecipesConfig().getString("shaped." + s + ".lore").split("~")));
         }
         is.setItemMeta(im);
         ShapedRecipe r = new ShapedRecipe(is);

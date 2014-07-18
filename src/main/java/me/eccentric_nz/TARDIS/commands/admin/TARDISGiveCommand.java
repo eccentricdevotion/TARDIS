@@ -74,6 +74,7 @@ public class TARDISGiveCommand implements CommandExecutor {
         items.put("player-disk", "Player Storage Disk");
         items.put("preset-disk", "Preset Storage Disk");
         items.put("r-circuit", "Redstone Activator Circuit");
+        items.put("r-key", "TARDIS Remote Key");
         items.put("remote", "Stattenheim Remote");
         items.put("s-circuit", "TARDIS Stattenheim Circuit");
         items.put("scanner-circuit", "TARDIS Scanner Circuit");

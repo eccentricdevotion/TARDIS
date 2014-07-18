@@ -1,23 +1,15 @@
 #TODO
 
 ##Current version `3.0-beta-1`
-2. Player difficulty modes, requires config option
-3. Remote locking, advanced hide and rebuild via remote key
-4. Grace period on hard mode - _started_
-5. Chameleon Arch / Fob watch - _started, needs testing_
-6. TARDIS creation area config - _started_
-7. Server condenser - _started_
-8. Add `/tardistravel [player] ?` command to request travel to a player's WorldGuard/Towny/Factions/GriefPrevention region - _started_
-9. Slimmer TARDIS option?
+1. Remote locking, hide and rebuild via remote key - _started_
+    * Add unique key texture
+    * Recipe should use an existing key
+    * Flash lamp on TARDIS
 
 ##Future version `3.1+`
 1. TARDIS up/cross-grades (change the desktop theme)
-
-###I couldn't really be bothered
-1. HADS + explosions + fireballs + lava
-2. Put farmland, crops, buttons, ladders, levers and signs on last when growing rooms
-3. TARDIS Information System auto log out?
-4. Check interior SFX don't play in the TARDIS of the player whose preference is off
+2. Saved biome disks able to be extended
+3. Slimmer TARDIS option?
 
 ##Resource Pack / TARDISWeepingAngels
 
@@ -27,19 +19,9 @@ Re-skin mobs for Resource pack, and add new mob sounds
 * Villagers -> Hath
 * Endermen -> The Silence
 * Iron Golem -> Gunslinger
-* Witches -> Slitheen
+* Witches -> Slitheen?
 * Wolves -> K-9? (All the textures I seen so far just don't work - you shouldn't see the legs...)
 * Slimes -> Adipose
-* PigZombies -> Strax / Butler (allow milking) - __done__
-* Skeletons -> Weeping Angels - __done__
-* Skeletons disguised as Snow Golems -> Daleks - __done__
-* Skeletons -> Silurians - __done__
-* PigZombies -> Ice Warriors - __done__
-* Zombie babies -> Empty Child - __done__
-* Zombies -> Zygons - __done__
-* Zombies -> Cybermen - __done__
-* Zombies -> Sontarans - __done__
-* Zombies -> Vashta Nerada (breaking a bookcase gives a random chance of one spawning at that location) - __done__
 
 ##Waiting on Minecraft/Bukkit update
 
@@ -47,7 +29,7 @@ Re-skin mobs for Resource pack, and add new mob sounds
 2. Add new blocks / items
 
 ##Waiting on Bukkit API
-0. IDs are soon to be history... so convert all ID use to entity names
+0. IDs/data are soon to be history... so convert all ID/data use to block states 
 1. Get/set horse speed (Attribute API)
 2. Achievements API is now available, but doesn't allow custom achievements :( [https://bukkit.atlassian.net/browse/BUKKIT-5672](https://bukkit.atlassian.net/browse/BUKKIT-5672)
 
