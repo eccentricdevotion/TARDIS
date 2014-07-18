@@ -1,7 +1,6 @@
 #TODO
 
 ##Current version `3.0-beta-1`
-1. Strengthen bow-ties by adding leather
 2. Player difficulty modes, requires config option
 3. Remote locking, advanced hide and rebuild via remote key
 4. Grace period on hard mode - _started_

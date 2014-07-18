@@ -60,6 +60,7 @@ public class TARDISMySQLDatabaseUpdater {
         prefsupdates.add("language varchar(32) DEFAULT 'AUTO_DETECT'");
         prefsupdates.add("build_on int(1) DEFAULT '1'");
         prefsupdates.add("ctm_on int(1) DEFAULT '0'");
+        prefsupdates.add("difficulty int(1) DEFAULT '0'");
         prefsupdates.add("flying_mode int(1) DEFAULT '1'");
         prefsupdates.add("minecart_on int(1) DEFAULT '0'");
         prefsupdates.add("renderer_on int(1) DEFAULT '1'");

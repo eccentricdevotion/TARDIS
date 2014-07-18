@@ -50,19 +50,16 @@ public class TARDISAdminMenuInventory {
     @SuppressWarnings("deprecation")
     private ItemStack[] getItemStack() {
         List<ItemStack> options = new ArrayList<ItemStack>();
-        int i = 0;
         Set<String> config = new TreeSet<String>(plugin.getConfig().getKeys(true));
         for (String c : config) {
             String value = plugin.getConfig().getString(c);
             if ((value.equalsIgnoreCase("true") || value.equalsIgnoreCase("false")) && !c.startsWith("conversions") && !c.startsWith("worlds")) {
-                //ItemStack is = new ItemStack(TARDISConstants.GUI_ITEMS.get(i), 1);
                 ItemStack is = new ItemStack(Material.DIODE, 1);
                 ItemMeta im = is.getItemMeta();
                 im.setDisplayName(c);
                 im.setLore(Arrays.asList(value));
                 is.setItemMeta(im);
                 options.add(is);
-                i++;
             }
         }
         ItemStack[] stack = new ItemStack[54];

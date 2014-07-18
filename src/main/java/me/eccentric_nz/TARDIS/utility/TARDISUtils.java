@@ -25,6 +25,7 @@ import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetChunks;
 import me.eccentric_nz.TARDIS.database.ResultSetCount;
 import me.eccentric_nz.TARDIS.database.ResultSetDiskStorage;
+import me.eccentric_nz.TARDIS.database.ResultSetPlayerPrefs;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
 import me.eccentric_nz.TARDIS.enumeration.SCHEMATIC;
@@ -802,6 +803,16 @@ public class TARDISUtils {
                         HashMap<String, Object> set = new HashMap<String, Object>();
                         set.put("grace", (grace_count + 1));
                         new QueryFactory(plugin).doUpdate("t_count", set, where);
+                    }
+                } else {
+                    // check player difficulty preference
+                    if (plugin.getConfig().getBoolean("allow.player_difficulty") && p.hasPermission("tardis.difficulty")) {
+                        HashMap<String, Object> wherep = new HashMap<String, Object>();
+                        wherep.put("uuid", p.getUniqueId().toString());
+                        ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, wherep);
+                        if (rsp.resultSet()) {
+                            inGracePeriod = rsp.isEasyDifficulty();
+                        }
                     }
                 }
             }

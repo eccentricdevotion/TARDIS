@@ -65,6 +65,7 @@ public class ResultSetPlayerPrefs {
     private boolean signOn;
     private boolean travelbarOn;
     private int flightMode;
+    private boolean easyDifficulty;
 
     /**
      * Creates a class instance that can be used to retrieve an SQL ResultSet
@@ -153,6 +154,7 @@ public class ResultSetPlayerPrefs {
                 this.signOn = rs.getBoolean("sign_on");
                 this.travelbarOn = rs.getBoolean("travelbar_on");
                 this.flightMode = rs.getInt("flying_mode");
+                this.easyDifficulty = rs.getBoolean("difficulty");
             } else {
                 return false;
             }
@@ -284,5 +286,9 @@ public class ResultSetPlayerPrefs {
 
     public int getFlightMode() {
         return flightMode;
+    }
+
+    public boolean isEasyDifficulty() {
+        return easyDifficulty;
     }
 }

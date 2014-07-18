@@ -244,6 +244,9 @@ permissions:
   tardis.chameleonarch:
     description: Allows a player to use the Chameleon Arch.
     default: op
+  tardis.difficulty:
+    description: Allows a player to use the /tardisprefs difficulty command.
+    default: op
 commands:
   tardis:
     aliases: [tt,ttardis,/tardis,timelord]
