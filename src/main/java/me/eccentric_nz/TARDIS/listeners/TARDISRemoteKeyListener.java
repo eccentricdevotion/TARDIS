@@ -18,6 +18,7 @@ package me.eccentric_nz.TARDIS.listeners;
 
 import java.util.HashMap;
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.artron.TARDISPoliceBoxLampToggler;
 import me.eccentric_nz.TARDIS.commands.tardis.TARDISHideCommand;
 import me.eccentric_nz.TARDIS.commands.tardis.TARDISRebuildCommand;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
@@ -72,9 +73,10 @@ public class TARDISRemoteKeyListener implements Listener {
             if (!rs.resultSet()) {
                 return;
             }
-            int id = rs.getTardis_id();
+            final int id = rs.getTardis_id();
             boolean hidden = rs.isHidden();
             if (action.equals(Action.LEFT_CLICK_AIR)) {
+                final boolean powered = rs.isPowered_on();
                 // get the TARDIS current location
                 HashMap<String, Object> wherec = new HashMap<String, Object>();
                 wherec.put("tardis_id", id);
@@ -96,7 +98,15 @@ public class TARDISRemoteKeyListener implements Listener {
                     wherel.put("tardis_id", id);
                     // always lock / unlock both doors
                     qf.doUpdate("doors", setl, wherel);
+                    final TARDISPoliceBoxLampToggler tpblt = new TARDISPoliceBoxLampToggler(plugin);
                     plugin.getUtils().playTARDISSoundNearby(l, "tardis_lock");
+                    tpblt.toggleLamp(id, !powered);
+                    plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
+                        @Override
+                        public void run() {
+                            tpblt.toggleLamp(id, powered);
+                        }
+                    }, 6L);
                 }
             } else {
                 // toggle hidden

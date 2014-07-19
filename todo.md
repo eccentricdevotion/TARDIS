@@ -1,10 +1,7 @@
 #TODO
 
 ##Current version `3.0-beta-1`
-1. Remote locking, hide and rebuild via remote key - _started_
-    * Add unique key texture
-    * Recipe should use an existing key
-    * Flash lamp on TARDIS
+1. Find & fix bugs
 
 ##Future version `3.1+`
 1. TARDIS up/cross-grades (change the desktop theme)
