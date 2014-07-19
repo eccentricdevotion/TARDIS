@@ -41,8 +41,6 @@
 			<li><a href="#charging">My TARDIS isn&rsquo;t charging at a recharge beacon</a></li>
 			<li><a href="#sfx">I can&rsquo;t hear the custom sound effects</a></li>
 			<li><a href="#inside">It says I&rsquo;m still inside the TARDIS, but I&rsquo;m not</a></li>
-			<li><a href="#stuck">Help! I&rsquo;m stuck in my TARDIS!</a></li>
-			<li><a href="#gravity">My Gravity Well stopped working</a></li>
 			<li><a href="#perms">It keeps saying I&rsquo;m restricted to the [] area or something about my exile status!</a></li>
 			<li><a href="#config">I changed some config options but they keep changing back!</a></li>
 			<li><a href="#jettison">I jettisoned a room and it deleted part of the control room!</a></li>
@@ -151,7 +149,7 @@
 		<p><a href="#top">Back to top</a></p>
 		<h4 id="sfx">I can&rsquo;t hear the custom sound effects</h4>
 		<p>The custom TARDIS sound effects require you to have the <strong>TARDIS Resource Pack</strong> installed in the Minecraft client, and that you are running Minecraft 1.7.x or higher.</p>
-		<p>You can download the resource pack from the Curse website: <a href="http://www.curse.com/texture-packs/minecraft/tardis-tp">http://www.curse.com/texture-packs/minecraft/tardis-tp</a></p>
+		<p>You can download the resource pack from GitHub: <a href="https://github.com/eccentricdevotion/TARDIS-SoundResourcePack">https://github.com/eccentricdevotion/TARDIS-SoundResourcePack</a></p>
 		<p><a href="#top">Back to top</a></p>
 		<h4 id="inside">It says I&rsquo;m still inside the TARDIS, but I&rsquo;m not</h4>
 		<p>This happens if you have exited the TARDIS by some other way than the TARDIS door &mdash; this could be because of death, call, teleport, Multiverse teleport, or server crash.</p>
@@ -164,15 +162,6 @@
 			<li>Once inside the TARDIS again, exit the door properly and things should be back to normal.</li>
 		</ul>
 		<p><a href="#top">Back to top</a></p>
-		<h4 id="stuck">Help! I&rsquo;m stuck in my TARDIS!</h4>
-		<p>Your TARDIS door may not be saved. This may occur after an upgrade. Simply use the command:</p>
-		<pre><code>/tardis update door</code></pre>
-		<p>Then follow the onscreen instructions to remedy the situation.</p>
-		<p><a href="#top">Back to top</a></p>
-		<h4 id="gravity">My Gravity Well stopped working</h4>
-		<p>The way gravity wells work was changed in TARDIS v2.0-beta-7. To fix the gravity wells and update them to the new style, just run the command:</p>
-		<pre><code>/tardis gravity</code></pre>
-		<p><a href="#top">Back to top</a></p>
 		<h4 id="perms">It keeps saying I&rsquo;m restricted to the [] area or something about my exile status!</h4>
 		<p>Please read the first part of the <a href="permissions.html">Permissions</a> page.</p>
 		<p><a href="#top">Back to top</a></p>
@@ -182,13 +171,6 @@
 		<p><a href="#top">Back to top</a></p>
 		<h4 id="jettison">I jettisoned a room and it deleted part of the control room!</h4>
 		<p>The <code>/tardis jettison</code> command relies on the direction the player is facing in order to work &mdash; always <strong>face into the room you want to jettison</strong>, otherwise you are likely to be removing parts of your TARDIS that you don&rsquo;t want to.</p>
-		<p><a href="#top">Back to top</a></p>
-		<h4 id="missing">I created a TARDIS but some of the blocks are missing!</h4>
-		<p>You are probably using a server that is a fork of CraftBukkit, such as Spigot, Libigot, FTB Mindcrack or MCPC+. These forked versions have been changed in a way that makes this happen. We really don&rsquo;t have time to support these server versions (just keeping up with CraftBukkit takes enough time), we suggest you try and get some help on the forums of the server you are using.</p>
-		<p><strong>Note:</strong> It seems the problem is with one of the CraftBukkit patches to do with chunks &mdash; specifically this one: <a href="https://github.com/EcoCityCraft/Spigot/blob/master/CraftBukkit-Patches/0013-Alternate-sync-free-but-safe-chunk-reference-cache.patch">Alternate-sync-free-but-safe-chunk-reference-cache.patch</a><br />
-			If you build the server from source with the regular CraftBukkit code, it seems to fix the problem.</p>
-		<p>A Spigot build without the chunk patch is available here: <a href="https://dl.dropboxusercontent.com/u/53758864/spigot-1.5.2-R0.2-SNAPSHOT.jar">https://dl.dropboxusercontent.com/u/53758864/spigot-1.5.2-R0.2-SNAPSHOT.jar</a></p>
-		<p>A Libigot build without the chunk patch is available here: <a href="https://dl.dropboxusercontent.com/u/53758864/libigot-1.4.7-R1.1-without-CB-Patch-15.jar">https://dl.dropboxusercontent.com/u/53758864/libigot-1.4.7-R1.1-without-CB-Patch-15.jar</a></p>
 		<p><a href="#top">Back to top</a></p>
 		<h4 id="reload">I edited the config file, but when I reload the changes don&rsquo;t save!</h4>
 		<p>This is fairly standard behaviour for plugins. The <strong>currently loaded</strong> config options are saved when you restart the server, and the new ones you put in are overwritten.</p>
