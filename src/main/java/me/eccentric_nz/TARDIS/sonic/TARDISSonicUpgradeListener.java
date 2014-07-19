@@ -20,6 +20,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import me.eccentric_nz.TARDIS.TARDIS;
+import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.HumanEntity;
 import org.bukkit.entity.Player;
@@ -30,6 +31,7 @@ import org.bukkit.event.inventory.PrepareItemCraftEvent;
 import org.bukkit.inventory.CraftingInventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.Recipe;
+import org.bukkit.inventory.ShapedRecipe;
 import org.bukkit.inventory.ShapelessRecipe;
 import org.bukkit.inventory.meta.ItemMeta;
 
@@ -39,12 +41,16 @@ import org.bukkit.inventory.meta.ItemMeta;
  */
 public class TARDISSonicUpgradeListener implements Listener {
 
+    private final TARDIS plugin;
     private final Material sonicMaterial;
+    private final Material rkey;
     private final HashMap<String, String> upgrades = new HashMap<String, String>();
 
     public TARDISSonicUpgradeListener(TARDIS plugin) {
-        String[] split = plugin.getRecipesConfig().getString("shaped.Sonic Screwdriver.result").split(":");
+        this.plugin = plugin;
+        String[] split = this.plugin.getRecipesConfig().getString("shaped.Sonic Screwdriver.result").split(":");
         this.sonicMaterial = Material.valueOf(split[0]);
+        this.rkey = Material.valueOf(this.plugin.getRecipesConfig().getString("shaped.TARDIS Remote Key.result"));
         this.upgrades.put("Admin Upgrade", "admin");
         this.upgrades.put("Bio-scanner Upgrade", "bio");
         this.upgrades.put("Redstone Upgrade", "redstone");
@@ -65,9 +71,9 @@ public class TARDISSonicUpgradeListener implements Listener {
     public void onSonicUpgrade(PrepareItemCraftEvent event) {
         CraftingInventory ci = event.getInventory();
         Recipe recipe = ci.getRecipe();
+        ItemStack is = ci.getResult();
         // upgrades are all shapeless so only check those
         if (recipe instanceof ShapelessRecipe) {
-            ItemStack is = ci.getResult();
             // if the recipe result is the same type of material as the sonic screwdriver
             if (is.getType().equals(sonicMaterial) && is.hasItemMeta()) {
                 ItemMeta im = is.getItemMeta();
@@ -124,6 +130,14 @@ public class TARDISSonicUpgradeListener implements Listener {
                         ci.setResult(null);
                     }
                 }
+            }
+        } else if (recipe instanceof ShapedRecipe) {
+            if (!is.hasItemMeta() || !is.getItemMeta().hasDisplayName() || !is.getItemMeta().getDisplayName().equals("TARDIS Remote Key")) {
+                return;
+            }
+            ItemStack key = ci.getItem(5);
+            if (!key.hasItemMeta() || !key.getItemMeta().hasDisplayName() || !ChatColor.stripColor(key.getItemMeta().getDisplayName()).equals("TARDIS Key")) {
+                ci.setResult(null);
             }
         }
     }
