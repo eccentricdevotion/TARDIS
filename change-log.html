@@ -26,6 +26,47 @@
 	<section>
 		<h1>Change log</h1>
 		<h2>What&rsquo;s been changed?</h2>
+		<h3>TARDIS v3.0-beta-1</h3>
+		<ul>
+			<li>CraftBukkit 1.7.10-R0.1 <strong>recommended</strong></li>
+			<li><a href="http://ci.md-5.net/job/LibsDisguises/">LibsDisguises</a> build #312 or higher <strong>required</strong> (if enabling the Genetic Manipulator and Chameleon Arch features)</li>
+		</ul>
+		<h4>Additions</h4>
+		<ul>
+			<li>Added a <code>/tardisschematic</code> command (<code>/ts</code> for short) &mdash; use it to create the new TARDIS schematics (see Changes below) and <a href="http://eccentricdevotion.github.io/TARDIS/schematic-commands.html">http://eccentricdevotion.github.io/TARDIS/schematic-commands.html</a></li>
+			<li>Added craftable bow ties and 3D-glasses (requires MCPatcher and the TARDIS-MCP Resource Pack). See <a href="http://eccentricdevotion.github.io/TARDIS/accessories.html">http://eccentricdevotion.github.io/TARDIS/accessories.html</a> for recipes and functionality.</li>
+			<li>Added a config option to restrict the number of rooms that can be reconfigured at one time with ARS. See <a href="http://eccentricdevotion.github.io/TARDIS/configuration-growth.html#alimit">http://eccentricdevotion.github.io/TARDIS/configuration-growth.html</a></li>
+			<li>Added a craftable Fob Watch with a Chameleon Arch ability &mdash; <a href="http://eccentricdevotion.github.io/TARDIS/chameleon-arch.html">http://eccentricdevotion.github.io/TARDIS/chameleon-arch.html</a></li>
+			<li>Added a TARDIS creation area config option, see: <a href="http://eccentricdevotion.github.io/TARDIS/configuration-creation.html#carea">http://eccentricdevotion.github.io/TARDIS/configuration-creation.html</a> and <a href="http://eccentricdevotion.github.io/TARDIS/tardis-areas.html#forcec">http://eccentricdevotion.github.io/TARDIS/tardis-areas.html</a></li>
+			<li>Added a <code>/tardisarea yard [area name] [material] [material]</code> command to visually set up parking spots in the specified TARDIS area, see: <a href="http://eccentricdevotion.github.io/TARDIS/area-commands.html#yard">http://eccentricdevotion.github.io/TARDIS/area-commands.html</a></li>
+			<li>Added a <code>/tardistravel player ?</code> command to request travel to a player’s protected region/claim. Can also use <code>/tardistravel player tpa</code>.</li>
+			<li>Added a config option to allow players to use &lsquo;easy&rsquo; mode while within the configured grace period (and the server is on &lsquo;hard&rsquo;). See <a href="http://eccentricdevotion.github.io/TARDIS/configuration-travel.html#grace">http://eccentricdevotion.github.io/TARDIS/configuration-travel.html</a></li>
+			<li>Added a <a href="http://eccentricdevotion.github.io/TARDIS/configuration-allow.html#diff">config option</a>, <a href="http://eccentricdevotion.github.io/TARDIS/permissions.html">permission</a> and <a href="http://eccentricdevotion.github.io/TARDIS/player-preferences.html#diff">command</a> to allow the personal setting of difficulty preference by players.</li>
+			<li>Added a public server condenser. To add a server condenser, place a chest, target it, then run the command <code>/tardisadmin condenser</code></li>
+			<li>Add remote deadlocking, unlocking, hide and rebuild via new craftable remote key, see <a href="http://eccentricdevotion.github.io/TARDIS/remote-key.html">http://eccentricdevotion.github.io/TARDIS/remote-key.html</a></li>
+		</ul>
+		<h4>Changes</h4>
+		<ul>
+			<li>The plugin no longer uses MCEdit/WorldEdit schematics, instead, a new TARDIS JSON format is used. All the default plugin schematics will be updated automatically, but custom consoles and rooms will need to be remade. See <a href="http://eccentricdevotion.github.io/TARDIS/schematics.html">http://eccentricdevotion.github.io/TARDIS/schematics.html</a>
+				<ul>
+					<li>As the plugin now has a bit more control over the schematics, the CUSTOM console can now be used with ARS</li>
+				</ul>
+			</li>
+			<li>Project Rassilon plugin support was removed, as it was reported to not work anyway</li>
+			<li>The Diamond Disruptor Sonic upgrade can now break snow</li>
+			<li>Only allow <code>/tardis update</code> command in player&rsquo;s own TARDIS</li>
+		</ul>
+		<h4>Bug fixes</h4>
+		<ul>
+			<li>Fixed the isomorphic preference message</li>
+			<li>Fixed a NPE when messaging ops if the TARDIS map files were not found</li>
+			<li>The plugin now properly checks player permission for creating the war TARDIS</li>
+			<li>Fixed the Zero room chat listener sometimes throwing man error when other plugins sending empty quotes (<code>""</code>) in chat</li>
+			<li>Fixed the e-circuit in the TARDIS Information System</li>
+			<li>Fixed GriefPrevention support not actually loading</li>
+			<li>Fixed walking into TARDIS not setting &lsquo;occupied&rsquo; when a player has <code>tardis.create_world</code> permission</li>
+			<li>Fixed the condenser not returning items with no Artron value</li>
+		</ul>
 		<h3>v2.9.2</h3>
 		<h4>Additions</h4>
 		<ul>
