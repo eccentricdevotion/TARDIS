@@ -464,6 +464,7 @@ REBUILD_FAIL: "Try using the Stattenheim Remote, or the /tardis comehere command
 RECIPE_VIEW: "You can view the following recipes:"
 RELATIVE_NOT_FOUND: "Could not get relative location! Check all arguments start with '~'."
 RELOADED: "TARDIS config reloaded."
+REMOTE_KEY: "You need to use a TARDIS Key when crafting the Remote Key."
 REMOTE_SUCCESS: "The remote TARDIS travel command was %s"
 RENDER_DONE: "Rendering complete, stand by for transmat..."
 RENDER_EXISTS: "You already have an exterior rendering room! Please jettison the existing room first."

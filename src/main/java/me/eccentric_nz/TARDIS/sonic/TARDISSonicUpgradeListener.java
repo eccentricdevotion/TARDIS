@@ -20,6 +20,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.HumanEntity;
@@ -128,6 +129,7 @@ public class TARDISSonicUpgradeListener implements Listener {
                         ci.setResult(is);
                     } else {
                         ci.setResult(null);
+                        TARDISMessage.send(p, "REMOTE_KEY");
                     }
                 }
             }
