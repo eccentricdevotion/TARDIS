@@ -47,7 +47,7 @@ public class TARDISFobWatchListener implements Listener {
     public void onFobWatchClick(PlayerInteractEvent event) {
         if (event.getAction().equals(Action.RIGHT_CLICK_AIR)) {
             ItemStack is = event.getItem();
-            if (!is.getType().equals(Material.WATCH) || !is.hasItemMeta()) {
+            if (is == null || !is.getType().equals(Material.WATCH) || !is.hasItemMeta()) {
                 return;
             }
             ItemMeta im = is.getItemMeta();
