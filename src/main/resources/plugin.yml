@@ -586,3 +586,9 @@ commands:
     usage: /<command> [save|load|paste] [name]
     permission: tardis.admin
     permission-message: You don't have the permission <permission> to use this command
+  tardisnetherportal:
+    aliases: [tnether, tnp, o2n, n2o]
+    description: Get coordinates for linking Nether Portals.
+    usage: /<command> [x] [y] [z] [overworld|nether]
+    permission: tardis.help
+    permission-message: You don't have the permission <permission> to use this command

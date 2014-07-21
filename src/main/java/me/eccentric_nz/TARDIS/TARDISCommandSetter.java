@@ -25,6 +25,7 @@ import me.eccentric_nz.TARDIS.commands.TARDISBindTabComplete;
 import me.eccentric_nz.TARDIS.commands.TARDISBookCommands;
 import me.eccentric_nz.TARDIS.commands.TARDISGravityCommands;
 import me.eccentric_nz.TARDIS.commands.TARDISGravityTabComplete;
+import me.eccentric_nz.TARDIS.commands.TARDISNetherPortalCommand;
 import me.eccentric_nz.TARDIS.commands.TARDISRecipeCommands;
 import me.eccentric_nz.TARDIS.commands.TARDISRecipeTabComplete;
 import me.eccentric_nz.TARDIS.commands.TARDISRoomCommands;
@@ -93,5 +94,6 @@ public class TARDISCommandSetter {
         plugin.getCommand("tardissay").setExecutor(new TARDISSayCommand(plugin));
         plugin.getCommand("tardissay").setTabCompleter(new TARDISSayTabComplete());
         plugin.getCommand("tardisremote").setExecutor(new TARDISRemoteCommands(plugin));
+        plugin.getCommand("tardisnetherportal").setExecutor(new TARDISNetherPortalCommand(plugin));
     }
 }
