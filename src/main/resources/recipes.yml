@@ -40,7 +40,7 @@ shaped:
             R: REDSTONE
             C: REDSTONE_COMPARATOR
             K: GOLD_NUGGET
-            T: REDSTONE_TORCH
+            T: REDSTONE_TORCH_ON
         hard_shape: RCR,-K-,-T-
         hard_ingredients:
             R: REDSTONE
