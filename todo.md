@@ -1,6 +1,6 @@
 #TODO
 
-##Current version `3.0-beta-1`
+##Current version `3.0-beta-2`
 1. Find & fix bugs
 
 ##Future version `3.1+`

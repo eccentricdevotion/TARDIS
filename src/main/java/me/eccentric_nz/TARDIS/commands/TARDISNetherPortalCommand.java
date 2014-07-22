@@ -30,24 +30,23 @@ import org.bukkit.entity.Player;
  * Inspired by Nether Portal Calculator v1.0 by D3Phoenix
  * http://ilurker.rooms.cwal.net/portal.html
  *
- * Choose a location for a portal in the Overworld and, without lighting it,
+ * Choose a location for a portal in the OVERWORLD and, without lighting it,
  * build the frame. Walk into your portal frame as if you were going to use it,
- * and run the comamnd /tardisnetherportal. You will be messaged the coordinates
- * for placing your Nether-side portal. Light your portal and go to the Nether.
- * Go to the calculated coordinates in the Nether using F3. Destroy and replace
- * the block below your feet at these coordinates with obsidian. Turn your
- * character until the F3 Facing (F) number from earlier matches up. This is the
- * direction you will be facing when exiting the portal. Place a second obsidian
- * block in the floor either to your left or right (it doesn't matter). These
- * two obsidian will form the base of your portal. Build a walkway from the
- * portal base at least a few blocks in the matching "F" number direction to
- * ensure a smooth transition through the portal. (This ensures that you won't
- * be staring at a wall after going through a portal.) Complete the Nether
- * portal frame and light it. Disable or destroy the Nether portal that the game
- * spawned for you when you first entered the Nether. Exit the Nether through
- * the new portal you just built. If you did everything right, you should have a
- * pair of perfectly linked Nether portals. You can repeat this process as many
- * times as you like.
+ * and run the command /tnp. You will be messaged the coordinates for placing
+ * your NETHER-side portal. Light your portal and go to the NETHER. Go to the
+ * calculated coordinates in the NETHER using F3. Destroy and replace the block
+ * below your feet at these coordinates with obsidian. Turn your character until
+ * the F3 Facing (F) number from earlier matches up. This is the direction you
+ * will be facing when exiting the portal. Place a second obsidian block in the
+ * floor either to your left or right (it doesn't matter). These two obsidian
+ * will form the base of your portal. Build a walkway from the portal base at
+ * least a few blocks in the matching "F" number direction to ensure a smooth
+ * transition through the portal. (This ensures that you won't be staring at a
+ * wall after going through a portal.) Complete the NETHER portal frame and
+ * light it. Disable or destroy the NETHER portal that the game spawned for you
+ * when you first entered the NETHER. Exit the NETHER through the new portal you
+ * just built. If you did everything right, you should have a pair of perfectly
+ * linked NETHER portals. You can repeat this process as many times as you like.
  *
  * @author eccentric_nz
  */
