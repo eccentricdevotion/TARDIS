@@ -24,6 +24,8 @@ import org.bukkit.Chunk;
 import org.bukkit.World;
 
 /**
+ * Preprocessor for checking changes in the Architectural Reconfiguration
+ * System.
  *
  * @author eccentric_nz
  */

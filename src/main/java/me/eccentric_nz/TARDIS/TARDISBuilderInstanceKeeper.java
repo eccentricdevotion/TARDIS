@@ -21,6 +21,9 @@ import me.eccentric_nz.TARDIS.chameleon.TARDISStainedGlassLookup;
 import org.bukkit.Material;
 
 /**
+ * Keeps track of various building related lookups. these include: Room block
+ * counts, Room seed blocks and Stained Glass block colour equivalents for
+ * regular blocks.
  *
  * @author eccentric_nz
  */

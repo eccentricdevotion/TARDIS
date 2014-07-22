@@ -107,6 +107,8 @@ import me.eccentric_nz.TARDIS.sonic.TARDISSonicSorterListener;
 import me.eccentric_nz.TARDIS.sonic.TARDISSonicUpgradeListener;
 
 /**
+ * Registers all the listeners for the various events required to use the
+ * TARDIS.
  *
  * @author eccentric_nz
  */

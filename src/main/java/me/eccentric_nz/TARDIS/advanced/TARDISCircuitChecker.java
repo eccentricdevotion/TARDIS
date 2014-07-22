@@ -24,6 +24,8 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
 /**
+ * The synchronic feedback circuit, along with the multi-loop stabiliser, was an
+ * essential component for a smooth rematerialisation of a TARDIS.
  *
  * @author eccentric_nz
  */

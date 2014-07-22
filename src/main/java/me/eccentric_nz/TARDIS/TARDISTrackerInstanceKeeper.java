@@ -35,6 +35,10 @@ import org.bukkit.block.Sign;
 import org.bukkit.entity.Player;
 
 /**
+ * A central repository used to store various data values required to track what
+ * Time lords and TARDIS are doing in-game, and provide easy access to the data
+ * in other classes. For example the spectacleWearers List tracks which Time
+ * Lords are currently wearing 3d_glasses.
  *
  * @author eccentric_nz
  */

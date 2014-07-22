@@ -43,6 +43,10 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
 /**
+ * Banshee Circuits were components of TARDISes, emergency defence mechanisms
+ * used as a last resort when all other systems had failed. They allowed a
+ * TARDIS to use whatever resources were available to ensure the survival of the
+ * ship and its crew.
  *
  * @author eccentric_nz
  */

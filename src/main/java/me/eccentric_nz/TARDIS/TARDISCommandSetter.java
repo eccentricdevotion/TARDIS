@@ -47,6 +47,7 @@ import me.eccentric_nz.TARDIS.universaltranslator.TARDISSayCommand;
 import me.eccentric_nz.TARDIS.universaltranslator.TARDISSayTabComplete;
 
 /**
+ * Loads all TARDIS command executors and tab completers.
  *
  * @author eccentric_nz
  */

@@ -36,6 +36,7 @@ import org.bukkit.World;
 import org.bukkit.entity.Player;
 
 /**
+ * Builds rooms determined by the Architectural Reconfiguration System.
  *
  * @author eccentric_nz
  */
