@@ -6,7 +6,13 @@
 ##Future version `3.1+`
 1. TARDIS up/cross-grades (change the desktop theme)
 2. Saved biome disks able to be extended
-3. Slimmer TARDIS option?
+3. Update the VAULT room to automatically sort items into the chests
+   * one chest is set as the drop chest
+   * all other chests in the 16x16x16 chunk are set as storage chests
+   * place at least 1 block/item into the storage chests
+   * blocks/items placed in the drop chest will automatically be sent to the chest with the same block/item in it
+   * add commands to update existing VAULT rooms to the new system
+4. Slimmer TARDIS option?
 
 ##Resource Pack / TARDISWeepingAngels
 
