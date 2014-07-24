@@ -816,6 +816,16 @@ public class TARDISUtils {
                     }
                 }
             }
+        } else {
+            // check player difficulty preference
+            if (plugin.getConfig().getBoolean("allow.player_difficulty") && p.hasPermission("tardis.difficulty")) {
+                HashMap<String, Object> wherep = new HashMap<String, Object>();
+                wherep.put("uuid", p.getUniqueId().toString());
+                ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, wherep);
+                if (rsp.resultSet()) {
+                    inGracePeriod = rsp.isEasyDifficulty();
+                }
+            }
         }
         return inGracePeriod;
     }
