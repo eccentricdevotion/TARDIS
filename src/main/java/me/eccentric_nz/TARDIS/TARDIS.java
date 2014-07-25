@@ -131,6 +131,7 @@ public class TARDIS extends JavaPlugin {
     private boolean worldGuardOnServer;
     private boolean horseSpeedOnServer;
     private boolean barAPIOnServer;
+    private boolean disguisesOnServer;
     private PluginManager pm;
     private final TARDISArea tardisArea = new TARDISArea(this);
     private final TARDISBuilderInner interiorBuilder = new TARDISBuilderInner(this);
@@ -255,7 +256,8 @@ public class TARDIS extends JavaPlugin {
                 new TARDISPortalPersister(this).load();
                 this.getServer().getScheduler().scheduleSyncRepeatingTask(this, new TARDISMonsterRunnable(this), 2400L, 2400L);
             }
-            if (getConfig().getBoolean("arch.enabled")) {
+            this.disguisesOnServer = pm.isPluginEnabled("LibsDisguises");
+            if (disguisesOnServer && getConfig().getBoolean("arch.enabled")) {
                 new TARDISArchPersister(this).checkAll();
             }
             setDates();
@@ -291,7 +293,7 @@ public class TARDIS extends JavaPlugin {
             if (getConfig().getBoolean("preferences.walk_in_tardis")) {
                 new TARDISPortalPersister(this).save();
             }
-            if (getConfig().getBoolean("arch.enabled")) {
+            if (disguisesOnServer && getConfig().getBoolean("arch.enabled")) {
                 new TARDISArchPersister(this).saveAll();
             }
             updateTagStats();
@@ -846,6 +848,10 @@ public class TARDIS extends JavaPlugin {
 
     public boolean isBarAPIOnServer() {
         return barAPIOnServer;
+    }
+
+    public boolean isDisguisesOnServer() {
+        return disguisesOnServer;
     }
 
     public PluginManager getPM() {

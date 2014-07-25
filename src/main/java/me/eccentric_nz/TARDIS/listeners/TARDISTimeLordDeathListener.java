@@ -225,7 +225,7 @@ public class TARDISTimeLordDeathListener implements Listener {
             }
         }
         // save arched status
-        if (plugin.getConfig().getBoolean("arch.enabled") && plugin.getTrackerKeeper().getJohnSmith().containsKey(playerUUID)) {
+        if (plugin.isDisguisesOnServer() && plugin.getConfig().getBoolean("arch.enabled") && plugin.getTrackerKeeper().getJohnSmith().containsKey(playerUUID)) {
             new TARDISArchPersister(plugin).save(playerUUID);
             if (plugin.getConfig().getBoolean("arch.clear_inv_on_death")) {
                 // clear inventories
