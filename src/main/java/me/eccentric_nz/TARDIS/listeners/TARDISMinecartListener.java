@@ -140,10 +140,8 @@ public class TARDISMinecartListener implements Listener {
                     }
                     if (mat.equals(Material.IRON_DOOR_BLOCK)) {
                         plugin.getGeneralKeeper().getTardisChunkList().add(w.getChunkAt(in_out));
-                        plugin.getGeneralKeeper().getTardisChunkList().add(b.getWorld().getChunkAt(block_loc));
                     } else {
                         plugin.getGeneralKeeper().getTardisChunkList().remove(w.getChunkAt(in_out));
-                        plugin.getGeneralKeeper().getTardisChunkList().remove(b.getWorld().getChunkAt(block_loc));
                     }
                     teleportMinecart(minecart, in_out, d, inv);
                 }
