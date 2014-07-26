@@ -620,7 +620,7 @@ shaped:
             P: PAPER
             C: 'STAINED_GLASS_PANE:9'
             M: 'STAINED_GLASS_PANE:2'
-        easy_shape: R-T,P-P,CPM
+        hard_shape: R-T,P-P,CPM
         hard_ingredients:
             R: REDSTONE_COMPARATOR
             T: REDSTONE_TORCH_ON
@@ -636,7 +636,7 @@ shaped:
             C: 'MAP:1966'
             W: WATCH
             R: REDSTONE
-        easy_shape: -C-,IWI,R-R
+        hard_shape: -C-,IWI,R-R
         hard_ingredients:
             C: 'MAP:1966'
             I: IRON_INGOT

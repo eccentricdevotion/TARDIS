@@ -2,6 +2,7 @@
 
 ##Current version `3.0-beta-2`
 1. Find & fix bugs
+2. Find the Multiverse problem that prevents the Rail room from functioning properly
 
 ##Future version `3.1+`
 1. TARDIS up/cross-grades (change the desktop theme)
