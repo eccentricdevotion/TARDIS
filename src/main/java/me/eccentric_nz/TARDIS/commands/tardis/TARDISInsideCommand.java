@@ -54,7 +54,10 @@ public class TARDISInsideCommand {
             List<UUID> data = rst.getData();
             TARDISMessage.send(player, "INSIDE_PLAYERS");
             for (UUID s : data) {
-                player.sendMessage(plugin.getServer().getPlayer(s).getDisplayName());
+                Player p = plugin.getServer().getPlayer(s);
+                if (p != null) {
+                    player.sendMessage(p.getDisplayName());
+                }
             }
         } else {
             TARDISMessage.send(player, "INSIDE");
