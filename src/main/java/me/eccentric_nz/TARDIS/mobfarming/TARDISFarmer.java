@@ -88,14 +88,6 @@ public class TARDISFarmer {
      */
     @SuppressWarnings("deprecation")
     public List<TARDISMob> farmAnimals(Location l, COMPASS d, int id, final Player p, String to, String from) {
-        if (plugin.getPM().isPluginEnabled("Multiverse-Inventories")) {
-            boolean canfarm = plugin.getTMIChecker().checkMVI(from, to);
-            if (!canfarm) {
-                TARDISMessage.send(p, "WORLD_NO_FARM");
-                plugin.getTrackerKeeper().getFarming().remove(p.getUniqueId());
-                return null;
-            }
-        }
         List<TARDISMob> old_macd_had_a_pet = new ArrayList<TARDISMob>();
         switch (d) {
             case NORTH:
@@ -117,6 +109,14 @@ public class TARDISFarmer {
         Entity ent = w.spawnEntity(l, EntityType.EGG);
         List<Entity> mobs = ent.getNearbyEntities(3.75D, 3.75D, 3.75D);
         if (mobs.size() > 0) {
+            if (plugin.getPM().isPluginEnabled("Multiverse-Inventories")) {
+                boolean canfarm = plugin.getTMIChecker().checkMVI(from, to);
+                if (!canfarm) {
+                    TARDISMessage.send(p, "WORLD_NO_FARM");
+                    plugin.getTrackerKeeper().getFarming().remove(p.getUniqueId());
+                    return null;
+                }
+            }
             List<TARDISMob> old_macd_had_a_chicken = new ArrayList<TARDISMob>();
             List<TARDISMob> old_macd_had_a_cow = new ArrayList<TARDISMob>();
             List<TARDISPig> old_macd_had_a_pig = new ArrayList<TARDISPig>();
