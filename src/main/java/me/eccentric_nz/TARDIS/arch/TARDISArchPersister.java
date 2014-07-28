@@ -142,7 +142,7 @@ public class TARDISArchPersister {
             rs = ps.executeQuery();
             if (rs.next()) {
                 Player player = plugin.getServer().getPlayer(uuid);
-                if (player.isOnline()) {
+                if (player != null && player.isOnline()) {
                     // disguise the player
                     final String name = rs.getString("arch_name");
                     long time = System.currentTimeMillis() + rs.getLong("arch_time");

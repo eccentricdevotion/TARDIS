@@ -39,8 +39,13 @@ public class TARDISRespawnListener implements Listener {
     @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
     public void onArchedRespawn(PlayerRespawnEvent event) {
         final Player player = event.getPlayer();
-        UUID uuid = player.getUniqueId();
+        final UUID uuid = player.getUniqueId();
         // check if we should re-arch this player
-        new TARDISArchPersister(plugin).reArch(uuid);
+        plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
+            @Override
+            public void run() {
+                new TARDISArchPersister(plugin).reArch(uuid);
+            }
+        }, 5L);
     }
 }

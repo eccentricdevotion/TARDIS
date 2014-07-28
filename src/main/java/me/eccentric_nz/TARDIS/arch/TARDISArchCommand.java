@@ -38,6 +38,10 @@ public class TARDISArchCommand {
 
     public boolean getTime(Player player) {
         UUID uuid = player.getUniqueId();
+        if (!plugin.getTrackerKeeper().getJohnSmith().containsKey(uuid)) {
+            TARDISMessage.send(player, "ARCH_NOT_VALID");
+            return true;
+        }
         long time = plugin.getTrackerKeeper().getJohnSmith().get(uuid).getTime();
         long now = System.currentTimeMillis();
         long diff = (time - now);
