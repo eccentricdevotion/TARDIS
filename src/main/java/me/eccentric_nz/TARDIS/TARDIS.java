@@ -203,6 +203,7 @@ public class TARDIS extends JavaPlugin {
             buildKeeper.setSeeds(getSeeds());
             tardisWalls = new TARDISWalls();
             loadFiles();
+            this.disguisesOnServer = pm.isPluginEnabled("LibsDisguises");
             generalKeeper = new TARDISGeneralInstanceKeeper(this);
             generalKeeper.setQuotes(quotes());
             new TARDISListenerRegisterer(this).registerListeners();
@@ -256,7 +257,6 @@ public class TARDIS extends JavaPlugin {
                 new TARDISPortalPersister(this).load();
                 this.getServer().getScheduler().scheduleSyncRepeatingTask(this, new TARDISMonsterRunnable(this), 2400L, 2400L);
             }
-            this.disguisesOnServer = pm.isPluginEnabled("LibsDisguises");
             if (disguisesOnServer && getConfig().getBoolean("arch.enabled")) {
                 new TARDISArchPersister(this).checkAll();
             }
