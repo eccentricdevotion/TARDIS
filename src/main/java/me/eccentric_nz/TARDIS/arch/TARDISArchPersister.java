@@ -152,6 +152,8 @@ public class TARDISArchPersister {
                         DisguiseAPI.undisguiseToAll(player);
                     }
                     PlayerDisguise playerDisguise = new PlayerDisguise(name);
+                    playerDisguise.setHideHeldItemFromSelf(false);
+                    playerDisguise.setViewSelfDisguise(false);
                     DisguiseAPI.disguiseToAll(player, playerDisguise);
                     player.setDisplayName(name);
                     player.setPlayerListName(name);
@@ -191,6 +193,8 @@ public class TARDISArchPersister {
                                 plugin.getTrackerKeeper().getJohnSmith().put(player.getUniqueId(), twd);
                                 DisguiseAPI.undisguiseToAll(player);
                                 PlayerDisguise playerDisguise = new PlayerDisguise(name);
+                                playerDisguise.setHideHeldItemFromSelf(false);
+                                playerDisguise.setViewSelfDisguise(false);
                                 DisguiseAPI.disguiseToAll(player, playerDisguise);
                                 player.setDisplayName(name);
                                 player.setPlayerListName(name);

@@ -75,6 +75,7 @@ public class TARDISFobWatchListener implements Listener {
                     new TARDISArchInventory().switchInventories(player, 0);
                 }
                 PlayerDisguise playerDisguise = new PlayerDisguise(name);
+                playerDisguise.setHideHeldItemFromSelf(false);
                 playerDisguise.setViewSelfDisguise(false);
                 DisguiseAPI.disguiseToAll(player, playerDisguise);
                 player.setDisplayName(name);
