@@ -6,6 +6,7 @@
  */
 package me.eccentric_nz.TARDIS.arch;
 
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -26,8 +27,8 @@ public class TARDISArchInventory {
     public void switchInventories(final Player p, int arch) {
         String uuid = p.getUniqueId().toString();
         String name = p.getName();
-        String inv = TARDISInventorySerialization.toString(p.getInventory().getContents());
-        String arm = TARDISInventorySerialization.toString(p.getInventory().getArmorContents());
+        String inv = TARDISArchSerialization.toDatabase(p.getInventory().getContents());
+        String arm = TARDISArchSerialization.toDatabase(p.getInventory().getArmorContents());
         try {
             Connection connection = service.getConnection();
             service.testConnection(connection);
@@ -65,10 +66,24 @@ public class TARDISArchInventory {
             ResultSet rsToInv = statement.executeQuery(getToQuery);
             if (rsToInv.next()) {
                 // set their inventory to the saved one
-                ItemStack[] i = TARDISInventorySerialization.toItemStacks(rsToInv.getString("inventory"));
-                p.getInventory().setContents(i);
-                ItemStack[] a = TARDISInventorySerialization.toItemStacks(rsToInv.getString("armour"));
-                setArmour(p, a);
+                try {
+                    String to_inv = rsToInv.getString("inventory");
+                    ItemStack[] i;
+                    ItemStack[] a;
+                    if (to_inv.startsWith("[")) {
+                        // old data format
+                        i = TARDISInventorySerialization.toItemStacks(to_inv);
+                        a = TARDISInventorySerialization.toItemStacks(rsToInv.getString("armour"));
+                    } else {
+                        // new data format - supports Fireworks meta
+                        i = TARDISArchSerialization.fromDatabase(to_inv);
+                        a = TARDISArchSerialization.fromDatabase(rsToInv.getString("armour"));
+                    }
+                    p.getInventory().setContents(i);
+                    p.getInventory().setArmorContents(a);
+                } catch (IOException ex) {
+                    System.err.println("Could not restore inventory on Chameleon Arch change, " + ex);
+                }
             } else {
                 // start with an empty inventory and armour
                 p.getInventory().clear();
@@ -118,9 +133,5 @@ public class TARDISArchInventory {
                 }
             }
         }
-    }
-
-    public void setArmour(Player p, ItemStack[] is) {
-        p.getInventory().setArmorContents(is);
     }
 }
