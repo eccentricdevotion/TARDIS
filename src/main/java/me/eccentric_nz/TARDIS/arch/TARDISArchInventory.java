@@ -57,19 +57,6 @@ public class TARDISArchInventory {
                 ps.setString(5, arm);
                 ps.executeUpdate();
                 ps.close();
-                // give a fob watch if it is the Chameleon Arch inventory
-                if (arch == 0) {
-                    TARDIS.plugin.getServer().getScheduler().scheduleSyncDelayedTask(TARDIS.plugin, new Runnable() {
-                        @Override
-                        public void run() {
-                            ShapedRecipe recipe = TARDIS.plugin.getFigura().getShapedRecipes().get("Fob Watch");
-                            ItemStack result = recipe.getResult();
-                            result.setAmount(1);
-                            p.getInventory().addItem(result);
-                            p.updateInventory();
-                        }
-                    }, 5L);
-                }
             }
             rsInv.close();
             // check if they have an inventory for the apposing chameleon arch state
@@ -89,6 +76,19 @@ public class TARDISArchInventory {
                 p.getInventory().setChestplate(null);
                 p.getInventory().setLeggings(null);
                 p.getInventory().setHelmet(null);
+                // give a fob watch if it is the Chameleon Arch inventory
+                if (arch == 0) {
+                    TARDIS.plugin.getServer().getScheduler().scheduleSyncDelayedTask(TARDIS.plugin, new Runnable() {
+                        @Override
+                        public void run() {
+                            ShapedRecipe recipe = TARDIS.plugin.getFigura().getShapedRecipes().get("Fob Watch");
+                            ItemStack result = recipe.getResult();
+                            result.setAmount(1);
+                            p.getInventory().addItem(result);
+                            p.updateInventory();
+                        }
+                    }, 5L);
+                }
             }
             rsToInv.close();
             statement.close();
