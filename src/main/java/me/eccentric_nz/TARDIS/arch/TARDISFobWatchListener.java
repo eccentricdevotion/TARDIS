@@ -55,13 +55,14 @@ public class TARDISFobWatchListener implements Listener {
                 return;
             }
             final Player player = event.getPlayer();
-            if (!player.hasPermission("tardis.chameleonarch")) {
-                TARDISMessage.send(player, "NO_PERM_CHAM_ARCH");
-                return;
-            }
             final UUID uuid = player.getUniqueId();
             boolean inv = plugin.getConfig().getBoolean("arch.switch_inventory");
             if (!plugin.getTrackerKeeper().getJohnSmith().containsKey(uuid)) {
+                // only check the permission when trying to 'fob'
+                if (!player.hasPermission("tardis.chameleonarch")) {
+                    TARDISMessage.send(player, "NO_PERM_CHAM_ARCH");
+                    return;
+                }
                 final String name = TARDISRandomName.name();
                 long time = System.currentTimeMillis() + plugin.getConfig().getLong("arch.min_time") * 60000L;
                 TARDISWatchData twd = new TARDISWatchData(name, time);
@@ -81,6 +82,7 @@ public class TARDISFobWatchListener implements Listener {
                 player.setDisplayName(name);
                 player.setPlayerListName(name);
             } else if (plugin.getTrackerKeeper().getJohnSmith().get(uuid).getTime() <= System.currentTimeMillis()) {
+                // no permission check, always allow 'de-fobbing'
                 if (DisguiseAPI.isDisguised(player)) {
                     DisguiseAPI.undisguiseToAll(player);
                 }
