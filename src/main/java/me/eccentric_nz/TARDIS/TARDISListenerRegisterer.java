@@ -25,6 +25,7 @@ import me.eccentric_nz.TARDIS.advanced.TARDISDiskCraftListener;
 import me.eccentric_nz.TARDIS.advanced.TARDISStorageListener;
 import me.eccentric_nz.TARDIS.arch.TARDISFakeChatListener;
 import me.eccentric_nz.TARDIS.arch.TARDISFobWatchListener;
+import me.eccentric_nz.TARDIS.arch.TARDISGMIHelper;
 import me.eccentric_nz.TARDIS.arch.TARDISMVIHelper;
 import me.eccentric_nz.TARDIS.arch.TARDISRespawnListener;
 import me.eccentric_nz.TARDIS.arch.TARDISSelectWatchListener;
@@ -237,8 +238,13 @@ public class TARDISListenerRegisterer {
                     plugin.getPM().registerEvents(new TARDISFobWatchListener(plugin), plugin);
                     plugin.getPM().registerEvents(new TARDISSelectWatchListener(plugin), plugin);
                     plugin.getPM().registerEvents(new TARDISRespawnListener(plugin), plugin);
-                    if (plugin.getPM().isPluginEnabled("Multiverse-Inventories") && plugin.getConfig().getBoolean("arch.switch_inventory")) {
-                        plugin.getPM().registerEvents(new TARDISMVIHelper(plugin), plugin);
+                    if (plugin.getConfig().getBoolean("arch.switch_inventory")) {
+                        if (plugin.getPM().isPluginEnabled("Multiverse-Inventories")) {
+                            plugin.getPM().registerEvents(new TARDISMVIHelper(plugin), plugin);
+                        }
+                        if (plugin.getPM().isPluginEnabled("GameModeInventories")) {
+                            plugin.getPM().registerEvents(new TARDISGMIHelper(plugin), plugin);
+                        }
                     }
                 }
                 plugin.getPM().registerEvents(new TARDISLazarusListener(plugin), plugin);
