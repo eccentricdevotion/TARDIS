@@ -73,22 +73,6 @@ public class TARDISPermissionsExHandler {
                 }
             }
         }
-//        int i = 0;
-//        for (Map.Entry<String, List<String>> entry : permgroups.entrySet()) {
-//            String grpstr = entry.getKey();
-//            List<String> perms = entry.getValue();
-//            // pex set default group <group> [world]
-//            plugin.getServer().dispatchCommand(plugin.getConsole(), "pex set default group " + grpstr + " TARDIS_WORLD_" + player);
-//            for (String p : perms) {
-//                // pex group <group> add <permission> [world]
-//                plugin.getServer().dispatchCommand(plugin.getConsole(), "pex group " + grpstr + " add " + p + " TARDIS_WORLD_" + player);
-//            }
-//            if (i == 0) {
-//                plugin.getServer().dispatchCommand(plugin.getConsole(), "pex user " + player + " group add " + grpstr + " TARDIS_WORLD_" + player);
-//                // pex user <user> group add <group> [world]
-//            }
-//            i++;
-//        }
         // get the default world
         String w = plugin.getServer().getWorlds().get(0).getName();
         // pex world <world> inherit <parentWorld> - make the TARDIS world inherit the main worlds permissions
