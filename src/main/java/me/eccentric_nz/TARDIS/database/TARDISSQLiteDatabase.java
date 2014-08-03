@@ -107,7 +107,7 @@ public class TARDISSQLiteDatabase {
             statement.executeUpdate(queryHomes);
 
             // Table structure for inventories
-            String queryInventories = "CREATE TABLE IF NOT EXISTS inventories (id INTEGER PRIMARY KEY NOT NULL, uuid TEXT, player TEXT, arch INTEGER, inventory TEXT, armour TEXT)";
+            String queryInventories = "CREATE TABLE IF NOT EXISTS inventories (id INTEGER PRIMARY KEY NOT NULL, uuid TEXT, player TEXT, arch INTEGER, inventory TEXT, armour TEXT, attributes TEXT, armour_attributes TEXT)";
             statement.executeUpdate(queryInventories);
 
             // Table structure for table 'lamps'

@@ -42,6 +42,7 @@ public class TARDISSQLiteDatabaseUpdater {
     private final List<String> gravityupdates = new ArrayList<String>();
     private final List<String> prefsupdates = new ArrayList<String>();
     private final List<String> tardisupdates = new ArrayList<String>();
+    private final List<String> inventoryupdates = new ArrayList<String>();
     private final List<String> uuidUpdates = Arrays.asList("achievements", "ars", "player_prefs", "storage", "t_count", "tardis", "travellers");
     private final long now = System.currentTimeMillis();
     private final Statement statement;
@@ -112,6 +113,8 @@ public class TARDISSQLiteDatabaseUpdater {
         tardisupdates.add("tips INTEGER DEFAULT '-1'");
         tardisupdates.add("village TEXT DEFAULT ''");
         tardisupdates.add("zero TEXT DEFAULT ''");
+        inventoryupdates.add("attributes TEXT DEFAULT ''");
+        inventoryupdates.add("armour_attributes TEXT DEFAULT ''");
     }
 
     /**
@@ -209,6 +212,16 @@ public class TARDISSQLiteDatabaseUpdater {
                     i++;
                     String t_alter = "ALTER TABLE tardis ADD " + t;
                     statement.executeUpdate(t_alter);
+                }
+            }
+            for (String v : inventoryupdates) {
+                String[] vsplit = v.split(" ");
+                String v_query = "SELECT sql FROM sqlite_master WHERE tbl_name = 'inventories' AND sql LIKE '%" + vsplit[0] + "%'";
+                ResultSet rsv = statement.executeQuery(v_query);
+                if (!rsv.next()) {
+                    i++;
+                    String v_alter = "ALTER TABLE inventories ADD " + v;
+                    statement.executeUpdate(v_alter);
                 }
             }
             // add biome to current location
