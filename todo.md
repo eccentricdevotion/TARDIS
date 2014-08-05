@@ -1,6 +1,6 @@
 #TODO
 
-##Current version `3.0-beta-2`
+##Current version `3.0`
 1. Find & fix bugs
 2. Find the Multiverse problem that prevents the Rail room from functioning properly
 
