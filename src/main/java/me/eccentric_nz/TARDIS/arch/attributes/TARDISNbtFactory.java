@@ -127,8 +127,8 @@ public class TARDISNbtFactory {
      * <p>
      * See also:
      * <ul>
-     * <li>{@link NbtFactory#createCompound()}</li>
-     * <li>{@link NbtFactory#fromCompound(Object)}</li>
+     * <li>{@link TARDISNbtFactory#createCompound()}</li>
+     * <li>{@link TARDISNbtFactory#fromCompound(Object)}</li>
      * </ul>
      *
      * @author Kristian
@@ -230,6 +230,7 @@ public class TARDISNbtFactory {
          * compounds. The retrieval operation will be cancelled if any of them
          * are missing.
          *
+         * @param <T>
          * @param path - path to the entry.
          * @return The value, or NULL if not found.
          */
@@ -296,8 +297,8 @@ public class TARDISNbtFactory {
     /**
      * Represents a root NBT list. See also:
      * <ul>
-     * <li>{@link NbtFactory#createNbtList()}</li>
-     * <li>{@link NbtFactory#fromList(Object)}</li>
+     * <li>{@link TARDISNbtFactory#createNbtList()}</li>
+     * <li>{@link TARDISNbtFactory#fromList(Object)}</li>
      * </ul>
      *
      * @author Kristian
@@ -412,6 +413,7 @@ public class TARDISNbtFactory {
     /**
      * Construct a new NBT list of an unspecified type.
      *
+     * @param content
      * @return The NBT list.
      */
     public static NbtList createList(Object... content) {
@@ -421,12 +423,11 @@ public class TARDISNbtFactory {
     /**
      * Construct a new NBT list of an unspecified type.
      *
+     * @param iterable
      * @return The NBT list.
      */
     public static NbtList createList(Iterable<? extends Object> iterable) {
-        NbtList list = get().new NbtList(
-                INSTANCE.createNbtTag(NbtType.TAG_LIST, null)
-        );
+        NbtList list = get().new NbtList(INSTANCE.createNbtTag(NbtType.TAG_LIST, null));
 
         // Add the content as well
         for (Object obj : iterable) {
@@ -443,9 +444,7 @@ public class TARDISNbtFactory {
      * @return The NBT compound.
      */
     public static NbtCompound createCompound() {
-        return get().new NbtCompound(
-                INSTANCE.createNbtTag(NbtType.TAG_COMPOUND, null)
-        );
+        return get().new NbtCompound(INSTANCE.createNbtTag(NbtType.TAG_COMPOUND, null));
     }
 
     /**
@@ -724,14 +723,11 @@ public class TARDISNbtFactory {
      * @return The corresponding type.
      */
     private NbtType getPrimitiveType(Object primitive) {
-        NbtType type = NBT_ENUM.get(NBT_CLASS.inverse().get(
-                Primitives.unwrap(primitive.getClass())
-        ));
+        NbtType type = NBT_ENUM.get(NBT_CLASS.inverse().get(Primitives.unwrap(primitive.getClass())));
 
         // Display the illegal value at least
         if (type == null) {
-            throw new IllegalArgumentException(String.format(
-                    "Illegal type: %s (%s)", primitive.getClass(), primitive));
+            throw new IllegalArgumentException(String.format("Illegal type: %s (%s)", primitive.getClass(), primitive));
         }
         return type;
     }
@@ -886,10 +882,7 @@ public class TARDISNbtFactory {
         // Modification
         @Override
         public Object put(String key, Object value) {
-            return wrapOutgoing(original.put(
-                    (String) key,
-                    unwrapIncoming(value)
-            ));
+            return wrapOutgoing(original.put(key, unwrapIncoming(value)));
         }
 
         // Performance
