@@ -59,7 +59,7 @@ public enum PRESET {
     ROBOT(Material.COBBLE_WALL, "WILL BE", "DELETED", false, false),
     SHROOM(Material.BROWN_MUSHROOM, "TRIPPY", "SPACE SHROOM", false, false),
     SNOWMAN(Material.SNOW_BALL, "TAKES ONE", "TO SNOW ONE", false, false),
-    STONE(Material.COBBLESTONE, "STONE BRICK", "COLUMN", true, true),
+    STONE(Material.STONE, "STONE BRICK", "COLUMN", true, true),
     SUBMERGED(Material.DIRT, "", "", false, false),
     SWAMP(Material.WATER_LILY, "SIGN ABOVE", "THE DOOR", false, false),
     TELEPHONE(Material.GLASS, "TELEPHONE", "BOX", true, true),
