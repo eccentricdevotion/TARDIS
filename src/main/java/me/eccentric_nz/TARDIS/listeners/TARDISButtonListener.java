@@ -203,6 +203,10 @@ public class TARDISButtonListener implements Listener {
                                             int nether_min = plugin.getArtronConfig().getInt("nether_min");
                                             int the_end_min = plugin.getArtronConfig().getInt("the_end_min");
                                             byte[] repeaters = rsr.getRepeaters();
+                                            if (repeaters[0] == -1) {
+                                                TARDISMessage.send(player, "FLIGHT_BAD");
+                                                return;
+                                            }
                                             if (repeaters[0] <= 3) { // first position
                                                 environment = "THIS";
                                             }
