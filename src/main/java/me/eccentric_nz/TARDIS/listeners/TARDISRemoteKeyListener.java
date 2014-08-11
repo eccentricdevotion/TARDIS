@@ -25,6 +25,7 @@ import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetCurrentLocation;
 import me.eccentric_nz.TARDIS.database.ResultSetDoors;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
+import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -98,6 +99,8 @@ public class TARDISRemoteKeyListener implements Listener {
                     wherel.put("tardis_id", id);
                     // always lock / unlock both doors
                     qf.doUpdate("doors", setl, wherel);
+                    String message = (rsd.isLocked()) ? plugin.getLanguage().getString("DOOR_UNLOCK") : plugin.getLanguage().getString("DOOR_DEADLOCK");
+                    TARDISMessage.send(player, "DOOR_LOCK", message);
                     final TARDISPoliceBoxLampToggler tpblt = new TARDISPoliceBoxLampToggler(plugin);
                     plugin.getUtils().playTARDISSoundNearby(l, "tardis_lock");
                     tpblt.toggleLamp(id, !powered);
