@@ -97,6 +97,7 @@ import me.eccentric_nz.TARDIS.listeners.TARDISUpdateListener;
 import me.eccentric_nz.TARDIS.listeners.TARDISWorldResetListener;
 import me.eccentric_nz.TARDIS.listeners.TARDISZeroRoomChatListener;
 import me.eccentric_nz.TARDIS.listeners.TARDISZeroRoomPacketListener;
+import me.eccentric_nz.TARDIS.listeners.TARDISVaultListener;
 import me.eccentric_nz.TARDIS.move.TARDISDoorClickListener;
 import me.eccentric_nz.TARDIS.move.TARDISDoorWalkListener;
 import me.eccentric_nz.TARDIS.move.TARDISMoveListener;
@@ -217,6 +218,7 @@ public class TARDISListenerRegisterer {
         plugin.getPM().registerEvents(new TARDISTerminalListener(plugin), plugin);
         plugin.getPM().registerEvents(new TARDISTimeLordDeathListener(plugin), plugin);
         plugin.getPM().registerEvents(new TARDISUpdateListener(plugin), plugin);
+        plugin.getPM().registerEvents(new TARDISVaultListener(plugin), plugin);
         if (getNPCManager()) {
             plugin.getPM().registerEvents(new TARDISNPCListener(plugin), plugin);
         }

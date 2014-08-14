@@ -162,6 +162,10 @@ public class TARDISSQLiteDatabase {
             String queryT_Counts = "CREATE TABLE IF NOT EXISTS t_count (t_id INTEGER PRIMARY KEY NOT NULL, uuid TEXT DEFAULT '', player TEXT COLLATE NOCASE DEFAULT '', count INTEGER DEFAULT 0, grace INTEGER DEFAULT 0)";
             statement.executeUpdate(queryT_Counts);
 
+            // Table structure for table 'controls'
+            String queryVaults = "CREATE TABLE IF NOT EXISTS vaults (v_id INTEGER PRIMARY KEY NOT NULL, tardis_id INTEGER, location TEXT COLLATE NOCASE DEFAULT '', x INTEGER DEFAULT 0, y INTEGER DEFAULT 0, z INTEGER DEFAULT 0)";
+            statement.executeUpdate(queryVaults);
+
             // delete old submerged, gravity and levers tables
             String dropSubmerged = "DROP TABLE IF EXISTS submerged";
             statement.executeUpdate(dropSubmerged);

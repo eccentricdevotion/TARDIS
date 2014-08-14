@@ -42,7 +42,7 @@ public class TARDISUpdateCommand {
     @SuppressWarnings("deprecation")
     public boolean startUpdate(Player player, String[] args) {
         if (player.hasPermission("tardis.update")) {
-            String[] validBlockNames = {"advanced", "ars", "artron", "back", "backdoor", "button", "chameleon", "condenser", "creeper", "direction", "door", "eps", "farm", "handbrake", "hinge", "info", "keyboard", "light", "rail", "save-sign", "scanner", "stable", "storage", "temporal", "terminal", "toggle_wool", "village", "world-repeater", "x-repeater", "y-repeater", "z-repeater", "zero"};
+            String[] validBlockNames = {"advanced", "ars", "artron", "back", "backdoor", "button", "chameleon", "condenser", "creeper", "direction", "door", "eps", "farm", "handbrake", "hinge", "info", "keyboard", "light", "rail", "save-sign", "scanner", "stable", "storage", "temporal", "terminal", "toggle_wool", "vault", "village", "world-repeater", "x-repeater", "y-repeater", "z-repeater", "zero"};
             if (args.length < 2) {
                 TARDISMessage.send(player, "TOO_FEW_ARGS");
                 return false;
@@ -68,6 +68,9 @@ public class TARDISUpdateCommand {
                     }
                 }
                 return true;
+            }
+            if (tardis_block.equals("vault")) {
+                return new TARDISVaultCommand(plugin).addSorter(player);
             }
             if (tardis_block.equals("advanced") && !player.hasPermission("tardis.advanced")) {
                 TARDISMessage.send(player, "NO_PERM_ADV");

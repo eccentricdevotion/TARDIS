@@ -273,6 +273,29 @@ public class TARDISRoomRunnable implements Runnable {
                 wherec.put("tardis_id", tardis_id);
                 qf.doUpdate("tardis", setc, wherec);
             }
+            // set sorter chest
+            if (type.equals(Material.TRAPPED_CHEST) && room.equals("VAULT") && p.hasPermission("tardis.vault")) {
+                // determine the min x, y, z coords
+                int mx = startx % 16;
+                if (mx < 0) {
+                    mx += 16;
+                }
+                int mz = startz % 16;
+                if (mz < 0) {
+                    mz += 16;
+                }
+                int x = startx - mx;
+                int y = starty - (starty % 16);
+                int z = startz - mz;
+                String pos = new Location(world, startx, starty, startz).toString();
+                HashMap<String, Object> setv = new HashMap<String, Object>();
+                setv.put("tardis_id", tardis_id);
+                setv.put("location", pos);
+                setv.put("x", x);
+                setv.put("y", y);
+                setv.put("z", z);
+                qf.doInsert("vaults", setv);
+            }
             // set farm
             if (type.equals(Material.MOB_SPAWNER) && room.equals("FARM")) {
                 HashMap<String, Object> setf = new HashMap<String, Object>();

@@ -72,6 +72,7 @@ import me.eccentric_nz.TARDIS.utility.TARDISMultiverseInventoriesChecker;
 import me.eccentric_nz.TARDIS.utility.TARDISPerceptionFilter;
 import me.eccentric_nz.TARDIS.utility.TARDISSounds;
 import me.eccentric_nz.TARDIS.utility.TARDISUtils;
+import me.eccentric_nz.TARDIS.utility.TARDISVaultChecker;
 import me.eccentric_nz.TARDIS.utility.TARDISWorldGuardUtils;
 import me.eccentric_nz.TARDIS.utility.Version;
 import org.bukkit.ChatColor;
@@ -268,6 +269,7 @@ public class TARDIS extends JavaPlugin {
             cond.makeCondensables();
             condensables = cond.getCondensables();
             checkBiomes();
+            checkSorters();
         } else {
             console.sendMessage(pluginName + ChatColor.RED + "This plugin requires CraftBukkit 1.7.9 or higher, disabling...");
             pm.disablePlugin(this);
@@ -685,6 +687,13 @@ public class TARDIS extends JavaPlugin {
             return;
         }
         getServer().getScheduler().scheduleSyncDelayedTask(this, new TARDISBiomeUpdater(this), 1200L);
+    }
+
+    /**
+     * Removes unused sorter database records from the vaults table.
+     */
+    private void checkSorters() {
+        getServer().getScheduler().scheduleSyncDelayedTask(this, new TARDISVaultChecker(this), 2400L);
     }
 
     /**

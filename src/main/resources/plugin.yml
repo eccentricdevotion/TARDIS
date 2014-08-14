@@ -41,6 +41,7 @@ permissions:
       tardis.temporal: true
       tardis.advanced: true
       tardis.storage: true
+      tardis.vault: true
     default: op
   tardis.exile:
     description: Disallow players from travelling anywhere but to areas they have a permission node for.
@@ -246,6 +247,9 @@ permissions:
     default: op
   tardis.difficulty:
     description: Allows a player to use the /tardisprefs difficulty command.
+    default: op
+  tardis.vault:
+    description: Allows a player to have an automatic vault room chest sorter.
     default: op
 commands:
   tardis:

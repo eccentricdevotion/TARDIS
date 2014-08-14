@@ -92,7 +92,7 @@ public class TARDISSonicSorterListener implements Listener {
         }
     }
 
-    public void sortInventory(Inventory inventory, int startIndex, int endIndex) {
+    public static void sortInventory(Inventory inventory, int startIndex, int endIndex) {
         ItemStack[] items = inventory.getContents();
         for (int i = startIndex; i < endIndex; i++) {
             ItemStack item1 = items[i];
