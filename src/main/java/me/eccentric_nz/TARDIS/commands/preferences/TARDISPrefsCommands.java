@@ -53,6 +53,7 @@ public class TARDISPrefsCommands implements CommandExecutor {
         firstArgs.add("beacon");
         firstArgs.add("build");
         firstArgs.add("ctm");
+        firstArgs.add("difficulty");
         firstArgs.add("dnd");
         firstArgs.add("eps");
         firstArgs.add("eps_message");
@@ -65,7 +66,6 @@ public class TARDISPrefsCommands implements CommandExecutor {
         firstArgs.add("lamp");
         firstArgs.add("language");
         firstArgs.add("minecart");
-        firstArgs.add("plain");
         firstArgs.add("quotes");
         firstArgs.add("renderer");
         firstArgs.add("sfx");
@@ -144,6 +144,9 @@ public class TARDISPrefsCommands implements CommandExecutor {
                     }
                     if (pref.equals("flight")) {
                         return new TARDISSetFlightCommand(plugin).setMode(player, args, qf);
+                    }
+                    if (pref.equals("difficulty")) {
+                        return new TARDISSetDifficultyCommand(plugin).setDiff(player, args, qf);
                     }
                     if (args.length < 2 || (!args[1].equalsIgnoreCase("on") && !args[1].equalsIgnoreCase("off"))) {
                         TARDISMessage.send(player, "PREF_ON_OFF", pref);

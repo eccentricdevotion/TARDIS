@@ -30,6 +30,7 @@ import me.eccentric_nz.TARDIS.database.ResultSetPlayerPrefs;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
 import me.eccentric_nz.TARDIS.enumeration.SCHEMATIC;
+import me.eccentric_nz.TARDIS.rooms.TARDISWalls.Pair;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import org.bukkit.ChatColor;
 import org.bukkit.Chunk;
@@ -96,8 +97,8 @@ public class TARDISBlockPlaceListener implements Listener {
         // only listen for redstone torches
         if (block.getType() == Material.REDSTONE_TORCH_ON) {
             Block blockBelow = block.getRelative(BlockFace.DOWN);
-            int middle_id = blockBelow.getTypeId();
-            byte middle_data = blockBelow.getData();
+            Material wall_type = blockBelow.getType();
+            byte wall_data = blockBelow.getData();
             Block blockBottom = blockBelow.getRelative(BlockFace.DOWN);
             // only continue if the redstone torch is placed on top of [JUST ABOUT ANY] BLOCK on top of an IRON/GOLD/DIAMOND_BLOCK
             if (plugin.getBlocksConfig().getStringList("tardis_blocks").contains(blockBelow.getType().toString()) && blocks.contains(blockBottom.getType())) {
@@ -105,21 +106,32 @@ public class TARDISBlockPlaceListener implements Listener {
                     TARDISMessage.send(player, "WORLD_NO_TARDIS");
                     return;
                 }
+                if (!plugin.getConfig().getString("creation.area").equals("none")) {
+                    String area = plugin.getConfig().getString("creation.area");
+                    if (plugin.getTardisArea().areaCheckInExile(area, block.getLocation())) {
+                        TARDISMessage.send(player, "TARDIS_ONLY_AREA", area);
+                        return;
+                    }
+                }
                 SCHEMATIC schm;
                 int max_count = plugin.getConfig().getInt("creation.count");
                 int player_count = 0;
-                if (max_count > 0) {
-                    HashMap<String, Object> wherec = new HashMap<String, Object>();
-                    wherec.put("uuid", player.getUniqueId().toString());
-                    ResultSetCount rsc = new ResultSetCount(plugin, wherec, false);
-                    if (rsc.resultSet()) {
-                        player_count = rsc.getCount();
-                        if (player_count == max_count) {
-                            TARDISMessage.send(player, "COUNT_QUOTA");
-                            return;
-                        }
+                int grace_count = 0;
+                boolean has_count = false;
+//                if (max_count > 0) {
+                HashMap<String, Object> wherec = new HashMap<String, Object>();
+                wherec.put("uuid", player.getUniqueId().toString());
+                ResultSetCount rsc = new ResultSetCount(plugin, wherec, false);
+                if (rsc.resultSet()) {
+                    player_count = rsc.getCount();
+                    grace_count = rsc.getGrace();
+                    has_count = true;
+                    if (player_count == max_count && max_count > 0) {
+                        TARDISMessage.send(player, "COUNT_QUOTA");
+                        return;
                     }
                 }
+//                }
                 switch (blockBottom.getType()) {
                     case IRON_BLOCK:
                         schm = SCHEMATIC.BUDGET;
@@ -267,20 +279,15 @@ public class TARDISBlockPlaceListener implements Listener {
                         }
                         set.put("lastuse", now);
                         HashMap<String, Object> setpp = new HashMap<String, Object>();
-                        if (middle_id == 22) {
-                            set.put("middle_id", 35);
+                        if (wall_type.equals(Material.LAPIS_BLOCK)) {
                             if (blockBottom.getType().equals(Material.EMERALD_BLOCK)) {
-                                set.put("middle_data", 8);
                                 setpp.put("wall", "LIGHT_GREY_WOOL");
                             } else {
-                                set.put("middle_data", 1);
                                 setpp.put("wall", "ORANGE_WOOL");
                             }
                         } else {
-                            set.put("middle_id", middle_id);
-                            set.put("middle_data", middle_data);
                             // determine wall block material from HashMap
-                            setpp.put("wall", getWallKey(middle_id, (int) middle_data));
+                            setpp.put("wall", getWallKey(wall_type, wall_data));
                         }
                         final int lastInsertId = qf.doSyncInsert("tardis", set);
                         // insert/update  player prefs
@@ -320,7 +327,7 @@ public class TARDISBlockPlaceListener implements Listener {
                         pbd.setSubmarine(isSub(blockBottom));
                         pbd.setTardisID(lastInsertId);
                         plugin.getPresetBuilder().buildPreset(pbd);
-                        plugin.getInteriorBuilder().buildInner(schm, chunkworld, lastInsertId, player, middle_id, middle_data, 35, (byte) 8, tips);
+                        plugin.getInteriorBuilder().buildInner(schm, chunkworld, lastInsertId, player, wall_type, wall_data, Material.WOOL, (byte) 8, tips);
                         // set achievement completed
                         if (player.hasPermission("tardis.book")) {
                             HashMap<String, Object> seta = new HashMap<String, Object>();
@@ -334,25 +341,26 @@ public class TARDISBlockPlaceListener implements Listener {
                         }
                         if (max_count > 0) {
                             TARDISMessage.send(player, "COUNT", String.format("%d", (player_count + 1)), String.format("%d", max_count));
-                            HashMap<String, Object> setc = new HashMap<String, Object>();
-                            setc.put("count", player_count + 1);
-                            if (player_count > 0) {
-                                // update the player's TARDIS count
-                                HashMap<String, Object> wheretc = new HashMap<String, Object>();
-                                wheretc.put("uuid", player.getUniqueId().toString());
-                                qf.doUpdate("t_count", setc, wheretc);
-                            } else {
-                                // insert new TARDIS count record
-                                setc.put("uuid", player.getUniqueId().toString());
-                                qf.doInsert("t_count", setc);
-                            }
+                        }
+                        HashMap<String, Object> setc = new HashMap<String, Object>();
+                        setc.put("count", player_count + 1);
+                        setc.put("grace", grace_count);
+                        if (has_count) {
+                            // update the player's TARDIS count
+                            HashMap<String, Object> wheretc = new HashMap<String, Object>();
+                            wheretc.put("uuid", player.getUniqueId().toString());
+                            qf.doUpdate("t_count", setc, wheretc);
+                        } else {
+                            // insert new TARDIS count record
+                            setc.put("uuid", player.getUniqueId().toString());
+                            qf.doInsert("t_count", setc);
                         }
                     } else {
                         HashMap<String, Object> wherecl = new HashMap<String, Object>();
                         wherecl.put("tardis_id", rs.getTardis_id());
-                        ResultSetCurrentLocation rsc = new ResultSetCurrentLocation(plugin, wherecl);
-                        if (rsc.resultSet()) {
-                            TARDISMessage.send(player, "TARDIS_HAVE", rsc.getWorld().getName() + " at x:" + rsc.getX() + " y:" + rsc.getY() + " z:" + rsc.getZ());
+                        ResultSetCurrentLocation rscl = new ResultSetCurrentLocation(plugin, wherecl);
+                        if (rscl.resultSet()) {
+                            TARDISMessage.send(player, "TARDIS_HAVE", rscl.getWorld().getName() + " at x:" + rscl.getX() + " y:" + rscl.getY() + " z:" + rscl.getZ());
                         } else {
                             TARDISMessage.send(player, "HAVE_TARDIS");
                         }
@@ -364,10 +372,10 @@ public class TARDISBlockPlaceListener implements Listener {
         }
     }
 
-    private String getWallKey(int i, int d) {
-        for (Map.Entry<String, int[]> entry : plugin.getTardisWalls().blocks.entrySet()) {
-            int[] value = entry.getValue();
-            if (value[0] == i && value[1] == d) {
+    private String getWallKey(Material i, byte d) {
+        for (Map.Entry<String, Pair> entry : plugin.getTardisWalls().blocks.entrySet()) {
+            Pair value = entry.getValue();
+            if (value.getType().equals(i) && value.getData() == d) {
                 return entry.getKey();
             }
         }

@@ -31,6 +31,8 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
 /**
+ * The visual stabiliser circuit controlled the TARDIS' outward appearance. Its
+ * removal rendered the ship invisible.
  *
  * @author eccentric_nz
  */

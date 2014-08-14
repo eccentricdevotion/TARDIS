@@ -21,7 +21,6 @@ import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.files.TARDISMakeTardisCSV;
 import org.bukkit.ChatColor;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
@@ -58,25 +57,24 @@ public class TARDISMapChecker {
         if (!file.exists()) {
             plugin.getConsole().sendMessage(plugin.getPluginName() + ChatColor.RED + plugin.getLanguage().getString("MAPS_NOT_FOUND"));
             plugin.getConsole().sendMessage(plugin.getPluginName() + "Copying map files to the TARDIS folder...");
-            TARDISMakeTardisCSV copier = new TARDISMakeTardisCSV(plugin);
-            copier.copy(map);
-            copier.copy("map_1963.dat");
-            copier.copy("map_1964.dat");
-            copier.copy("map_1965.dat");
-            copier.copy("map_1966.dat");
-            copier.copy("map_1967.dat");
-            copier.copy("map_1968.dat");
-            copier.copy("map_1969.dat");
-            copier.copy("map_1970.dat");
-            copier.copy("map_1971.dat");
-            copier.copy("map_1972.dat");
-            copier.copy("map_1973.dat");
-            copier.copy("map_1974.dat");
-            copier.copy("map_1975.dat");
-            copier.copy("map_1976.dat");
-            copier.copy("map_1977.dat");
-            copier.copy("map_1978.dat");
-            copier.copy("map_1979.dat");
+            plugin.getTardisCopier().copy(map);
+            plugin.getTardisCopier().copy("map_1963.dat");
+            plugin.getTardisCopier().copy("map_1964.dat");
+            plugin.getTardisCopier().copy("map_1965.dat");
+            plugin.getTardisCopier().copy("map_1966.dat");
+            plugin.getTardisCopier().copy("map_1967.dat");
+            plugin.getTardisCopier().copy("map_1968.dat");
+            plugin.getTardisCopier().copy("map_1969.dat");
+            plugin.getTardisCopier().copy("map_1970.dat");
+            plugin.getTardisCopier().copy("map_1971.dat");
+            plugin.getTardisCopier().copy("map_1972.dat");
+            plugin.getTardisCopier().copy("map_1973.dat");
+            plugin.getTardisCopier().copy("map_1974.dat");
+            plugin.getTardisCopier().copy("map_1975.dat");
+            plugin.getTardisCopier().copy("map_1976.dat");
+            plugin.getTardisCopier().copy("map_1977.dat");
+            plugin.getTardisCopier().copy("map_1978.dat");
+            plugin.getTardisCopier().copy("map_1979.dat");
             plugin.getConsole().sendMessage(plugin.getPluginName() + "Please move the new map files to the main world [" + s_world + "] data folder.");
             plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
                 @Override
@@ -84,7 +82,7 @@ public class TARDISMapChecker {
                     Set<OfflinePlayer> ops = plugin.getServer().getOperators();
                     for (OfflinePlayer olp : ops) {
                         if (olp.isOnline()) {
-                            Player p = (Player) olp;
+                            Player p = olp.getPlayer();
                             TARDISMessage.send(p, "MAPS_NOT_FOUND");
                         }
                     }

@@ -61,8 +61,6 @@ public class ResultSetTardis {
     private PRESET demat;
     private boolean adapti_on;
     private int artron_level;
-    private int middle_id;
-    private byte middle_data;
     private String creeper;
     private String condenser;
     private String beacon;
@@ -175,8 +173,6 @@ public class ResultSetTardis {
                     this.demat = PRESET.valueOf(rs.getString("chameleon_demat"));
                     this.adapti_on = rs.getBoolean("adapti_on");
                     this.artron_level = rs.getInt("artron_level");
-                    this.middle_id = rs.getInt("middle_id");
-                    this.middle_data = rs.getByte("middle_data");
                     this.creeper = rs.getString("creeper");
                     this.condenser = rs.getString("condenser");
                     this.beacon = rs.getString("beacon");
@@ -285,14 +281,6 @@ public class ResultSetTardis {
 
     public int getArtron_level() {
         return artron_level;
-    }
-
-    public int getMiddle_id() {
-        return middle_id;
-    }
-
-    public byte getMiddle_data() {
-        return middle_data;
     }
 
     public String getCreeper() {

@@ -33,6 +33,7 @@ public class TARDISRecipesUpdater {
     private final TARDIS plugin;
     private FileConfiguration recipes_config = null;
     private final HashMap<String, Integer> flavours = new HashMap<String, Integer>();
+    private final HashMap<String, Integer> colours = new HashMap<String, Integer>();
 
     public TARDISRecipesUpdater(TARDIS plugin) {
         this.plugin = plugin;
@@ -53,10 +54,94 @@ public class TARDISRecipesUpdater {
         this.flavours.put("Watermelon", 13);
         this.flavours.put("Orange", 14);
         this.flavours.put("Vanilla", 15);
+        this.colours.put("White", 0);
+        this.colours.put("Orange", 1);
+        this.colours.put("Magenta", 2);
+        this.colours.put("Light Blue", 3);
+        this.colours.put("Yellow", 4);
+        this.colours.put("Lime", 5);
+        this.colours.put("Pink", 6);
+        this.colours.put("Grey", 7);
+        this.colours.put("Light Grey", 8);
+        this.colours.put("Cyan", 9);
+        this.colours.put("Purple", 10);
+        this.colours.put("Blue", 11);
+        this.colours.put("Brown", 12);
+        this.colours.put("Green", 13);
+        this.colours.put("Red", 14);
+        this.colours.put("Black", 15);
     }
 
     public void addRecipes() {
         int i = 0;
+        // fix lore
+        recipes_config.set("shaped.Stattenheim Remote.lore", "Right-click block~to call TARDIS");
+        recipes_config.set("shaped.Artron Storage Cell.lore", "Charge Level~0");
+        //
+        if (!recipes_config.contains("shaped.TARDIS Remote Key")) {
+            recipes_config.set("shaped.TARDIS Remote Key.easy_shape", "RCR,-K-,-T-");
+            recipes_config.set("shaped.TARDIS Remote Key.easy_ingredients.R", "REDSTONE");
+            recipes_config.set("shaped.TARDIS Remote Key.easy_ingredients.C", "REDSTONE_COMPARATOR");
+            recipes_config.set("shaped.TARDIS Remote Key.easy_ingredients.K", "GOLD_NUGGET");
+            recipes_config.set("shaped.TARDIS Remote Key.easy_ingredients.T", "REDSTONE_TORCH_ON");
+            recipes_config.set("shaped.TARDIS Remote Key.hard_shape", "RCR,-K-,-T-");
+            recipes_config.set("shaped.TARDIS Remote Key.hard_ingredients.R", "REDSTONE");
+            recipes_config.set("shaped.TARDIS Remote Key.hard_ingredients.C", "REDSTONE_COMPARATOR");
+            recipes_config.set("shaped.TARDIS Remote Key.hard_ingredients.K", "GOLD_NUGGET");
+            recipes_config.set("shaped.TARDIS Remote Key.hard_ingredients.T", "MAP:1964");
+            recipes_config.set("shaped.TARDIS Remote Key.result", "GOLD_NUGGET");
+            recipes_config.set("shaped.TARDIS Remote Key.amount", 1);
+            recipes_config.set("shaped.TARDIS Remote Key.lore", "Deadlock & unlock~Hide & rebuild");
+        } else if (recipes_config.getString("shaped.TARDIS Remote Key.easy_ingredients.T").equals("REDSTONE_TORCH")) {
+            recipes_config.set("shaped.TARDIS Remote Key.easy_ingredients.T", "REDSTONE_TORCH_ON");
+        }
+        if (!recipes_config.contains("shaped.White Bow Tie")) {
+            for (Map.Entry<String, Integer> map : colours.entrySet()) {
+                recipes_config.set("shaped." + map.getKey() + " Bow Tie.easy_shape", "---,SWS,---");
+                recipes_config.set("shaped." + map.getKey() + " Bow Tie.easy_ingredients.S", "STRING");
+                recipes_config.set("shaped." + map.getKey() + " Bow Tie.easy_ingredients.W", "WOOL:" + map.getValue());
+                recipes_config.set("shaped." + map.getKey() + " Bow Tie.hard_shape", "STS,L-L,WWW");
+                recipes_config.set("shaped." + map.getKey() + " Bow Tie.hard_ingredients.S", "STRING");
+                recipes_config.set("shaped." + map.getKey() + " Bow Tie.hard_ingredients.T", "TRIPWIRE_HOOK");
+                recipes_config.set("shaped." + map.getKey() + " Bow Tie.hard_ingredients.L", "LEATHER");
+                recipes_config.set("shaped." + map.getKey() + " Bow Tie.hard_ingredients.W", "WOOL:" + map.getValue());
+                recipes_config.set("shaped." + map.getKey() + " Bow Tie.result", "LEATHER_CHESTPLATE");
+                recipes_config.set("shaped." + map.getKey() + " Bow Tie.amount", 1);
+                recipes_config.set("shaped." + map.getKey() + " Bow Tie.lore", "Bow ties are cool!");
+                i++;
+            }
+        }
+        if (!recipes_config.contains("shaped.3-D Glasses")) {
+            recipes_config.set("shaped.3-D Glasses.easy_shape", "---,P-P,CPM");
+            recipes_config.set("shaped.3-D Glasses.easy_ingredients.P", "PAPER");
+            recipes_config.set("shaped.3-D Glasses.easy_ingredients.C", "STAINED_GLASS_PANE:9");
+            recipes_config.set("shaped.3-D Glasses.easy_ingredients.M", "STAINED_GLASS_PANE:2");
+            recipes_config.set("shaped.3-D Glasses.hard_shape", "R-T,P-P,CPM");
+            recipes_config.set("shaped.3-D Glasses.hard_ingredients.R", "REDSTONE_COMPARATOR");
+            recipes_config.set("shaped.3-D Glasses.hard_ingredients.T", "REDSTONE_TORCH_ON");
+            recipes_config.set("shaped.3-D Glasses.hard_ingredients.P", "PAPER");
+            recipes_config.set("shaped.3-D Glasses.hard_ingredients.C", "STAINED_GLASS_PANE:9");
+            recipes_config.set("shaped.3-D Glasses.hard_ingredients.M", "STAINED_GLASS_PANE:2");
+            recipes_config.set("shaped.3-D Glasses.result", "LEATHER_HELMET");
+            recipes_config.set("shaped.3-D Glasses.amount", 1);
+            recipes_config.set("shaped.3-D Glasses.lore", "");
+            i++;
+        }
+        if (!recipes_config.contains("shaped.Fob Watch")) {
+            recipes_config.set("shaped.Fob Watch.easy_shape", "-C-,-W-,R-R");
+            recipes_config.set("shaped.Fob Watch.easy_ingredients.C", "MAP:1966");
+            recipes_config.set("shaped.Fob Watch.easy_ingredients.W", "WATCH");
+            recipes_config.set("shaped.Fob Watch.easy_ingredients.R", "REDSTONE");
+            recipes_config.set("shaped.Fob Watch.hard_shape", "-C-,IWI,R-R");
+            recipes_config.set("shaped.Fob Watch.hard_ingredients.C", "MAP:1966");
+            recipes_config.set("shaped.Fob Watch.hard_ingredients.W", "WATCH");
+            recipes_config.set("shaped.Fob Watch.hard_ingredients.I", "IRON_INGOT");
+            recipes_config.set("shaped.Fob Watch.hard_ingredients.R", "REDSTONE");
+            recipes_config.set("shaped.Fob Watch.result", "WATCH");
+            recipes_config.set("shaped.Fob Watch.amount", 1);
+            recipes_config.set("shaped.Fob Watch.lore", "");
+            i++;
+        }
         if (!recipes_config.contains("shaped.Jammy Dodger")) {
             recipes_config.set("shaped.Jammy Dodger.easy_shape", "---,WRW,---");
             recipes_config.set("shaped.Jammy Dodger.easy_ingredients.W", "WHEAT");

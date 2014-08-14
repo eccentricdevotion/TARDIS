@@ -137,7 +137,7 @@ public class TARDISArtronStorageCommand implements CommandExecutor {
             int new_amount = amount + level;
             int max = plugin.getArtronConfig().getInt("full_charge");
             if (new_amount > max) {
-                TARDISMessage.send(player, plugin.getPluginName() + "CELL_NO_CHARGE", String.format("%d", (max - level)));
+                TARDISMessage.send(player, "CELL_NO_CHARGE", String.format("%d", (max - level)));
                 return false;
             }
             lore.set(1, "" + new_amount);

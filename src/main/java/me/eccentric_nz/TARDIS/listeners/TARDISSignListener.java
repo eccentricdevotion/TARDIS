@@ -98,7 +98,7 @@ public class TARDISSignListener implements Listener {
                         TARDISMessage.send(player, "POWER_DOWN");
                         return;
                     }
-                    if (rs.isIso_on() && !player.getUniqueId().equals(rs.getUuid()) && event.isCancelled() && !player.hasPermission("tardis.skeletonkey")) {
+                    if ((rs.isIso_on() && !player.getUniqueId().equals(rs.getUuid()) && event.isCancelled() && !player.hasPermission("tardis.skeletonkey")) || plugin.getTrackerKeeper().getJohnSmith().containsKey(player.getUniqueId())) {
                         TARDISMessage.send(player, "ISO_HANDS_OFF");
                         return;
                     }
@@ -110,7 +110,7 @@ public class TARDISSignListener implements Listener {
                         line1 = (signloc.equals(rs.getChameleon())) ? "Chameleon" : "Save Sign";
                     }
                     TARDISCircuitChecker tcc = null;
-                    if (plugin.getConfig().getString("preferences.difficulty").equals("hard")) {
+                    if (plugin.getConfig().getString("preferences.difficulty").equals("hard") && !plugin.getUtils().inGracePeriod(player, false)) {
                         tcc = new TARDISCircuitChecker(plugin, rs.getTardis_id());
                         tcc.getCircuits();
                     }

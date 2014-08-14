@@ -229,7 +229,7 @@ public class TARDISInformationSystemListener implements Listener {
                         if (chat.equalsIgnoreCase("D")) {
                             processKey(p, TARDISInfoMenu.D_CIRCUIT);
                         }
-                        if (chat.equalsIgnoreCase("E")) {
+                        if (chat.equalsIgnoreCase("v")) {
                             processKey(p, TARDISInfoMenu.E_CIRCUIT);
                         }
                         if (chat.equalsIgnoreCase("h")) {

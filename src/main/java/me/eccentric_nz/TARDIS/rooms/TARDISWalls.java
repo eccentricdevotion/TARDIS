@@ -18,6 +18,7 @@ package me.eccentric_nz.TARDIS.rooms;
 
 import java.util.HashMap;
 import me.eccentric_nz.TARDIS.TARDIS;
+import org.bukkit.Material;
 
 /**
  * A TARDIS isn't just a vehicle for travelling in space and time. As a TARDIS
@@ -29,108 +30,127 @@ import me.eccentric_nz.TARDIS.TARDIS;
  */
 public class TARDISWalls {
 
-    public HashMap<String, int[]> blocks;
+    public HashMap<String, Pair> blocks;
 
     public TARDISWalls() {
-        blocks = new HashMap<String, int[]>();
-        blocks.put("STONE", new int[]{1, 0});
-        blocks.put("COBBLESTONE", new int[]{4, 0});
-        blocks.put("MOSSY_COBBLESTONE", new int[]{48, 0});
-        blocks.put("ENDER_STONE", new int[]{121, 0});
-        blocks.put("DIRT", new int[]{3, 0});
-        blocks.put("OAK_WOOD", new int[]{5, 0});
-        blocks.put("PINE_WOOD", new int[]{5, 1});
-        blocks.put("SPRUCE_WOOD", new int[]{5, 1});
-        blocks.put("BIRCH_WOOD", new int[]{5, 2});
-        blocks.put("JUNGLE_WOOD", new int[]{5, 3});
-        blocks.put("ACACIA_WOOD", new int[]{5, 4});
-        blocks.put("DARK_OAK_WOOD", new int[]{5, 5});
-        blocks.put("OAK_LOG", new int[]{17, 0});
-        blocks.put("PINE_LOG", new int[]{17, 1});
-        blocks.put("SPRUCE_LOG", new int[]{17, 1});
-        blocks.put("BIRCH_LOG", new int[]{17, 2});
-        blocks.put("JUNGLE_LOG", new int[]{17, 3});
-        blocks.put("ACACIA_LOG", new int[]{162, 0});
-        blocks.put("DARK_OAK_LOG", new int[]{162, 1});
-        blocks.put("SANDSTONE", new int[]{24, 0});
-        blocks.put("CHISELED_SANDSTONE", new int[]{24, 1});
-        blocks.put("SMOOTH_SANDSTONE", new int[]{24, 2});
-        blocks.put("WHITE_WOOL", new int[]{35, 0});
-        blocks.put("ORANGE_WOOL", new int[]{35, 1});
-        blocks.put("MAGENTA_WOOL", new int[]{35, 2});
-        blocks.put("LIGHT_BLUE_WOOL", new int[]{35, 3});
-        blocks.put("YELLOW_WOOL", new int[]{35, 4});
-        blocks.put("LIGHT_GREEN_WOOL", new int[]{35, 5});
-        blocks.put("PINK_WOOL", new int[]{35, 6});
-        blocks.put("GREY_WOOL", new int[]{35, 7});
-        blocks.put("LIGHT_GREY_WOOL", new int[]{35, 8});
-        blocks.put("GRAY_WOOL", new int[]{35, 7});
-        blocks.put("LIGHT_GRAY_WOOL", new int[]{35, 8});
-        blocks.put("CYAN_WOOL", new int[]{35, 9});
-        blocks.put("PURPLE_WOOL", new int[]{35, 10});
-        blocks.put("BLUE_WOOL", new int[]{35, 11});
-        blocks.put("BROWN_WOOL", new int[]{35, 12});
-        blocks.put("GREEN_WOOL", new int[]{35, 13});
-        blocks.put("RED_WOOL", new int[]{35, 14});
-        blocks.put("BLACK_WOOL", new int[]{35, 15});
-        blocks.put("BRICK", new int[]{45, 0});
-        blocks.put("CLAY", new int[]{82, 0});
-        blocks.put("HARD_CLAY", new int[]{172, 0});
-        blocks.put("WHITE_CLAY", new int[]{159, 0});
-        blocks.put("ORANGE_CLAY", new int[]{159, 1});
-        blocks.put("MAGENTA_CLAY", new int[]{159, 2});
-        blocks.put("LIGHT_BLUE_CLAY", new int[]{159, 3});
-        blocks.put("YELLOW_CLAY", new int[]{159, 4});
-        blocks.put("LIGHT_GREEN_CLAY", new int[]{159, 5});
-        blocks.put("PINK_CLAY", new int[]{159, 6});
-        blocks.put("GREY_CLAY", new int[]{159, 7});
-        blocks.put("LIGHT_GREY_CLAY", new int[]{159, 8});
-        blocks.put("GRAY_CLAY", new int[]{159, 7});
-        blocks.put("LIGHT_GRAY_CLAY", new int[]{159, 8});
-        blocks.put("CYAN_CLAY", new int[]{159, 9});
-        blocks.put("PURPLE_CLAY", new int[]{159, 10});
-        blocks.put("BLUE_CLAY", new int[]{159, 11});
-        blocks.put("BROWN_CLAY", new int[]{159, 12});
-        blocks.put("GREEN_CLAY", new int[]{159, 13});
-        blocks.put("RED_CLAY", new int[]{159, 14});
-        blocks.put("BLACK_CLAY", new int[]{159, 15});
-        blocks.put("STONE_BRICK", new int[]{98, 0});
-        blocks.put("SMOOTH_BRICK", new int[]{98, 0});
-        blocks.put("MOSSY_BRICK", new int[]{98, 1});
-        blocks.put("CRACKED_BRICK", new int[]{98, 2});
-        blocks.put("CHISELED_BRICK", new int[]{98, 3});
-        blocks.put("CHISELED_STONE", new int[]{98, 3});
-        blocks.put("NETHER_BRICK", new int[]{112, 0});
-        blocks.put("NETHERRACK", new int[]{87, 0});
-        blocks.put("SOUL_SAND", new int[]{88, 0});
-        blocks.put("HUGE_MUSHROOM_1", new int[]{99, 14});
-        blocks.put("HUGE_MUSHROOM_2", new int[]{100, 14});
-        blocks.put("HUGE_MUSHROOM_STEM", new int[]{100, 15});
-        blocks.put("QUARTZ", new int[]{155, 0});
-        blocks.put("CHISELED_QUARTZ", new int[]{155, 1});
-        blocks.put("QUARTZ_PILLAR", new int[]{155, 2});
-        blocks.put("HAY", new int[]{170, 0});
-        blocks.put("PACKED_ICE", new int[]{174, 0});
+        blocks = new HashMap<String, Pair>();
+        blocks.put("STONE", new Pair(Material.STONE, (byte) 0));
+        blocks.put("COBBLESTONE", new Pair(Material.COBBLESTONE, (byte) 0));
+        blocks.put("MOSSY_COBBLESTONE", new Pair(Material.MOSSY_COBBLESTONE, (byte) 0));
+        blocks.put("ENDER_STONE", new Pair(Material.ENDER_STONE, (byte) 0));
+        blocks.put("DIRT", new Pair(Material.DIRT, (byte) 0));
+        blocks.put("OAK_WOOD", new Pair(Material.WOOD, (byte) 0));
+        blocks.put("PINE_WOOD", new Pair(Material.WOOD, (byte) 1));
+        blocks.put("SPRUCE_WOOD", new Pair(Material.WOOD, (byte) 1));
+        blocks.put("BIRCH_WOOD", new Pair(Material.WOOD, (byte) 2));
+        blocks.put("JUNGLE_WOOD", new Pair(Material.WOOD, (byte) 3));
+        blocks.put("ACACIA_WOOD", new Pair(Material.WOOD, (byte) 4));
+        blocks.put("DARK_OAK_WOOD", new Pair(Material.WOOD, (byte) 5));
+        blocks.put("OAK_LOG", new Pair(Material.LOG, (byte) 0));
+        blocks.put("PINE_LOG", new Pair(Material.LOG, (byte) 1));
+        blocks.put("SPRUCE_LOG", new Pair(Material.LOG, (byte) 1));
+        blocks.put("BIRCH_LOG", new Pair(Material.LOG, (byte) 2));
+        blocks.put("JUNGLE_LOG", new Pair(Material.LOG, (byte) 3));
+        blocks.put("ACACIA_LOG", new Pair(Material.LOG_2, (byte) 0));
+        blocks.put("DARK_OAK_LOG", new Pair(Material.LOG_2, (byte) 1));
+        blocks.put("SANDSTONE", new Pair(Material.SANDSTONE, (byte) 0));
+        blocks.put("CHISELED_SANDSTONE", new Pair(Material.SANDSTONE, (byte) 1));
+        blocks.put("SMOOTH_SANDSTONE", new Pair(Material.SANDSTONE, (byte) 2));
+        blocks.put("WHITE_WOOL", new Pair(Material.WOOL, (byte) 0));
+        blocks.put("ORANGE_WOOL", new Pair(Material.WOOL, (byte) 1));
+        blocks.put("MAGENTA_WOOL", new Pair(Material.WOOL, (byte) 2));
+        blocks.put("LIGHT_BLUE_WOOL", new Pair(Material.WOOL, (byte) 3));
+        blocks.put("YELLOW_WOOL", new Pair(Material.WOOL, (byte) 4));
+        blocks.put("LIGHT_GREEN_WOOL", new Pair(Material.WOOL, (byte) 5));
+        blocks.put("PINK_WOOL", new Pair(Material.WOOL, (byte) 6));
+        blocks.put("GREY_WOOL", new Pair(Material.WOOL, (byte) 7));
+        blocks.put("LIGHT_GREY_WOOL", new Pair(Material.WOOL, (byte) 8));
+        blocks.put("GRAY_WOOL", new Pair(Material.WOOL, (byte) 7));
+        blocks.put("LIGHT_GRAY_WOOL", new Pair(Material.WOOL, (byte) 8));
+        blocks.put("CYAN_WOOL", new Pair(Material.WOOL, (byte) 9));
+        blocks.put("PURPLE_WOOL", new Pair(Material.WOOL, (byte) 10));
+        blocks.put("BLUE_WOOL", new Pair(Material.WOOL, (byte) 11));
+        blocks.put("BROWN_WOOL", new Pair(Material.WOOL, (byte) 12));
+        blocks.put("GREEN_WOOL", new Pair(Material.WOOL, (byte) 13));
+        blocks.put("RED_WOOL", new Pair(Material.WOOL, (byte) 14));
+        blocks.put("BLACK_WOOL", new Pair(Material.WOOL, (byte) 15));
+        blocks.put("BRICK", new Pair(Material.BRICK, (byte) 0));
+        blocks.put("CLAY", new Pair(Material.CLAY, (byte) 0));
+        blocks.put("HARD_CLAY", new Pair(Material.HARD_CLAY, (byte) 0));
+        blocks.put("WHITE_CLAY", new Pair(Material.STAINED_CLAY, (byte) 0));
+        blocks.put("ORANGE_CLAY", new Pair(Material.STAINED_CLAY, (byte) 1));
+        blocks.put("MAGENTA_CLAY", new Pair(Material.STAINED_CLAY, (byte) 2));
+        blocks.put("LIGHT_BLUE_CLAY", new Pair(Material.STAINED_CLAY, (byte) 3));
+        blocks.put("YELLOW_CLAY", new Pair(Material.STAINED_CLAY, (byte) 4));
+        blocks.put("LIGHT_GREEN_CLAY", new Pair(Material.STAINED_CLAY, (byte) 5));
+        blocks.put("PINK_CLAY", new Pair(Material.STAINED_CLAY, (byte) 6));
+        blocks.put("GREY_CLAY", new Pair(Material.STAINED_CLAY, (byte) 7));
+        blocks.put("LIGHT_GREY_CLAY", new Pair(Material.STAINED_CLAY, (byte) 8));
+        blocks.put("GRAY_CLAY", new Pair(Material.STAINED_CLAY, (byte) 7));
+        blocks.put("LIGHT_GRAY_CLAY", new Pair(Material.STAINED_CLAY, (byte) 8));
+        blocks.put("CYAN_CLAY", new Pair(Material.STAINED_CLAY, (byte) 9));
+        blocks.put("PURPLE_CLAY", new Pair(Material.STAINED_CLAY, (byte) 10));
+        blocks.put("BLUE_CLAY", new Pair(Material.STAINED_CLAY, (byte) 11));
+        blocks.put("BROWN_CLAY", new Pair(Material.STAINED_CLAY, (byte) 12));
+        blocks.put("GREEN_CLAY", new Pair(Material.STAINED_CLAY, (byte) 13));
+        blocks.put("RED_CLAY", new Pair(Material.STAINED_CLAY, (byte) 14));
+        blocks.put("BLACK_CLAY", new Pair(Material.STAINED_CLAY, (byte) 15));
+        blocks.put("STONE_BRICK", new Pair(Material.SMOOTH_BRICK, (byte) 0));
+        blocks.put("SMOOTH_BRICK", new Pair(Material.SMOOTH_BRICK, (byte) 0));
+        blocks.put("MOSSY_BRICK", new Pair(Material.SMOOTH_BRICK, (byte) 1));
+        blocks.put("CRACKED_BRICK", new Pair(Material.SMOOTH_BRICK, (byte) 2));
+        blocks.put("CHISELED_BRICK", new Pair(Material.SMOOTH_BRICK, (byte) 3));
+        blocks.put("CHISELED_STONE", new Pair(Material.SMOOTH_BRICK, (byte) 3));
+        blocks.put("NETHER_BRICK", new Pair(Material.NETHER_BRICK, (byte) 0));
+        blocks.put("NETHERRACK", new Pair(Material.NETHERRACK, (byte) 0));
+        blocks.put("SOUL_SAND", new Pair(Material.SOUL_SAND, (byte) 0));
+        blocks.put("HUGE_MUSHROOM_1", new Pair(Material.HUGE_MUSHROOM_1, (byte) 14));
+        blocks.put("HUGE_MUSHROOM_2", new Pair(Material.HUGE_MUSHROOM_2, (byte) 14));
+        blocks.put("HUGE_MUSHROOM_STEM", new Pair(Material.HUGE_MUSHROOM_2, (byte) 15));
+        blocks.put("QUARTZ", new Pair(Material.QUARTZ_BLOCK, (byte) 0));
+        blocks.put("CHISELED_QUARTZ", new Pair(Material.QUARTZ_BLOCK, (byte) 1));
+        blocks.put("QUARTZ_PILLAR", new Pair(Material.QUARTZ_BLOCK, (byte) 2));
+        blocks.put("HAY", new Pair(Material.HAY_BLOCK, (byte) 0));
+        blocks.put("PACKED_ICE", new Pair(Material.PACKED_ICE, (byte) 0));
         if (TARDIS.plugin.getConfig().getBoolean("allow.all_blocks")) {
-            blocks.put("BEDROCK", new int[]{7, 0});
-            blocks.put("COAL_ORE", new int[]{16, 0});
-            blocks.put("DIAMOND_BLOCK", new int[]{57, 0});
-            blocks.put("DIAMOND_ORE", new int[]{56, 0});
-            blocks.put("EMERALD_BLOCK", new int[]{133, 0});
-            blocks.put("EMERALD_ORE", new int[]{129, 0});
-            blocks.put("QUARTZ_ORE", new int[]{153, 0});
-            blocks.put("GOLD_BLOCK", new int[]{41, 0});
-            blocks.put("GOLD_ORE", new int[]{14, 0});
-            blocks.put("IRON_BLOCK", new int[]{42, 0});
-            blocks.put("IRON_ORE", new int[]{15, 0});
-            blocks.put("JACK_O_LANTERN", new int[]{91, 0});
-            blocks.put("LAPIS_BLOCK", new int[]{22, 0});
-            blocks.put("LAPIS_LAZULI", new int[]{22, 0});
-            blocks.put("MELON", new int[]{103, 0});
-            blocks.put("OBSIDIAN", new int[]{49, 0});
-            blocks.put("PUMPKIN", new int[]{86, 0});
-            blocks.put("REDSTONE_BLOCK", new int[]{152, 0});
-            blocks.put("REDSTONE_ORE", new int[]{73, 0});
+            blocks.put("BEDROCK", new Pair(Material.BEDROCK, (byte) 0));
+            blocks.put("COAL_ORE", new Pair(Material.COAL_ORE, (byte) 0));
+            blocks.put("DIAMOND_BLOCK", new Pair(Material.DIAMOND_BLOCK, (byte) 0));
+            blocks.put("DIAMOND_ORE", new Pair(Material.DIAMOND_ORE, (byte) 0));
+            blocks.put("EMERALD_BLOCK", new Pair(Material.EMERALD_BLOCK, (byte) 0));
+            blocks.put("EMERALD_ORE", new Pair(Material.EMERALD_ORE, (byte) 0));
+            blocks.put("QUARTZ_ORE", new Pair(Material.QUARTZ_ORE, (byte) 0));
+            blocks.put("GOLD_BLOCK", new Pair(Material.GOLD_BLOCK, (byte) 0));
+            blocks.put("GOLD_ORE", new Pair(Material.GOLD_ORE, (byte) 0));
+            blocks.put("IRON_BLOCK", new Pair(Material.IRON_BLOCK, (byte) 0));
+            blocks.put("IRON_ORE", new Pair(Material.IRON_ORE, (byte) 0));
+            blocks.put("JACK_O_LANTERN", new Pair(Material.JACK_O_LANTERN, (byte) 0));
+            blocks.put("LAPIS_BLOCK", new Pair(Material.LAPIS_BLOCK, (byte) 0));
+            blocks.put("LAPIS_LAZULI", new Pair(Material.LAPIS_BLOCK, (byte) 0));
+            blocks.put("MELON", new Pair(Material.MELON, (byte) 0));
+            blocks.put("OBSIDIAN", new Pair(Material.OBSIDIAN, (byte) 0));
+            blocks.put("PUMPKIN", new Pair(Material.PUMPKIN, (byte) 0));
+            blocks.put("REDSTONE_BLOCK", new Pair(Material.REDSTONE_BLOCK, (byte) 0));
+            blocks.put("REDSTONE_ORE", new Pair(Material.REDSTONE_ORE, (byte) 0));
+        }
+    }
+
+    public class Pair {
+
+        private final Material type;
+        private final Byte data;
+
+        public Pair(Material type, Byte data) {
+            this.type = type;
+            this.data = data;
+        }
+
+        public Material getType() {
+            return type;
+        }
+
+        public Byte getData() {
+            return data;
         }
     }
 }

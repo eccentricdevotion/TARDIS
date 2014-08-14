@@ -26,10 +26,13 @@ import me.eccentric_nz.TARDIS.database.ResultSetPlayerPrefs;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
 import me.eccentric_nz.TARDIS.enumeration.SCHEMATIC;
+import me.eccentric_nz.TARDIS.rooms.TARDISWalls;
+import me.eccentric_nz.TARDIS.rooms.TARDISWalls.Pair;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import org.bukkit.ChatColor;
 import org.bukkit.Chunk;
 import org.bukkit.Location;
+import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.block.BlockFace;
 import org.bukkit.entity.Player;
@@ -64,16 +67,19 @@ public class TARDISSeedBlockProcessor {
         if (player.hasPermission("tardis.create")) {
             int max_count = plugin.getConfig().getInt("creation.count");
             int player_count = 0;
-            if (max_count > 0) {
-                HashMap<String, Object> wherec = new HashMap<String, Object>();
-                wherec.put("uuid", player.getUniqueId().toString());
-                ResultSetCount rsc = new ResultSetCount(plugin, wherec, false);
-                if (rsc.resultSet()) {
-                    player_count = rsc.getCount();
-                    if (player_count == max_count) {
-                        TARDISMessage.send(player, "COUNT_QUOTA");
-                        return false;
-                    }
+
+            int grace_count = 0;
+            boolean has_count = false;
+            HashMap<String, Object> wherec = new HashMap<String, Object>();
+            wherec.put("uuid", player.getUniqueId().toString());
+            ResultSetCount rsc = new ResultSetCount(plugin, wherec, false);
+            if (rsc.resultSet()) {
+                player_count = rsc.getCount();
+                grace_count = rsc.getGrace();
+                has_count = true;
+                if (player_count == max_count && max_count > 0) {
+                    TARDISMessage.send(player, "COUNT_QUOTA");
+                    return false;
                 }
             }
             String playerNameStr = player.getName();
@@ -201,14 +207,12 @@ public class TARDISSeedBlockProcessor {
                 set.put("chunk", chun);
                 set.put("size", schm.name());
                 HashMap<String, Object> setpp = new HashMap<String, Object>();
-                int middle_id = seed.getWall_id();
-                byte middle_data = seed.getWall_data();
-                int floor_id = seed.getFloor_id();
-                byte floor_data = seed.getFloor_data();
+                Material wall_type = seed.getWallType();
+                byte wall_data = seed.getWallData();
+                Material floor_type = seed.getFloorType();
+                byte floor_data = seed.getFloorData();
                 int c_id = seed.getBox_id();
                 byte c_data = seed.getBox_data();
-                set.put("middle_id", middle_id);
-                set.put("middle_data", middle_data);
                 set.put("chameleon_id", c_id);
                 set.put("chameleon_data", c_data);
                 Long now;
@@ -219,8 +223,8 @@ public class TARDISSeedBlockProcessor {
                 }
                 set.put("lastuse", now);
                 // determine wall block material from HashMap
-                setpp.put("wall", getWallKey(middle_id, (int) middle_data));
-                setpp.put("floor", getWallKey(floor_id, (int) floor_data));
+                setpp.put("wall", getWallKey(wall_type, wall_data));
+                setpp.put("floor", getWallKey(floor_type, floor_data));
                 setpp.put("lamp", seed.getLamp());
                 final int lastInsertId = qf.doSyncInsert("tardis", set);
                 // insert/update  player prefs
@@ -261,7 +265,7 @@ public class TARDISSeedBlockProcessor {
                 pbd.setBiome(l.getBlock().getBiome());
                 // police box needs to use chameleon id/data
                 plugin.getPresetBuilder().buildPreset(pbd);
-                plugin.getInteriorBuilder().buildInner(schm, chunkworld, lastInsertId, player, middle_id, middle_data, floor_id, floor_data, tips);
+                plugin.getInteriorBuilder().buildInner(schm, chunkworld, lastInsertId, player, wall_type, wall_data, floor_type, floor_data, tips);
                 // set achievement completed
                 if (player.hasPermission("tardis.book")) {
                     HashMap<String, Object> seta = new HashMap<String, Object>();
@@ -275,26 +279,27 @@ public class TARDISSeedBlockProcessor {
                 }
                 if (max_count > 0) {
                     TARDISMessage.send(player, "COUNT", String.format("%d", (player_count + 1)), String.format("%d", max_count));
-                    HashMap<String, Object> setc = new HashMap<String, Object>();
-                    setc.put("count", player_count + 1);
-                    if (player_count > 0) {
-                        // update the player's TARDIS count
-                        HashMap<String, Object> wheretc = new HashMap<String, Object>();
-                        wheretc.put("uuid", player.getUniqueId().toString());
-                        qf.doUpdate("t_count", setc, wheretc);
-                    } else {
-                        // insert new TARDIS count record
-                        setc.put("uuid", player.getUniqueId().toString());
-                        qf.doInsert("t_count", setc);
-                    }
+                }
+                HashMap<String, Object> setc = new HashMap<String, Object>();
+                setc.put("count", player_count + 1);
+                setc.put("grace", grace_count);
+                if (has_count) {
+                    // update the player's TARDIS count
+                    HashMap<String, Object> wheretc = new HashMap<String, Object>();
+                    wheretc.put("uuid", player.getUniqueId().toString());
+                    qf.doUpdate("t_count", setc, wheretc);
+                } else {
+                    // insert new TARDIS count record
+                    setc.put("uuid", player.getUniqueId().toString());
+                    qf.doInsert("t_count", setc);
                 }
                 return true;
             } else {
                 HashMap<String, Object> wherecl = new HashMap<String, Object>();
                 wherecl.put("tardis_id", rs.getTardis_id());
-                ResultSetCurrentLocation rsc = new ResultSetCurrentLocation(plugin, wherecl);
-                if (rsc.resultSet()) {
-                    TARDISMessage.send(player, "TARDIS_HAVE", rsc.getWorld().getName() + " at x:" + rsc.getX() + " y:" + rsc.getY() + " z:" + rsc.getZ());
+                ResultSetCurrentLocation rscl = new ResultSetCurrentLocation(plugin, wherecl);
+                if (rscl.resultSet()) {
+                    TARDISMessage.send(player, "TARDIS_HAVE", rscl.getWorld().getName() + " at x:" + rscl.getX() + " y:" + rscl.getY() + " z:" + rscl.getZ());
                 } else {
                     TARDISMessage.send(player, "HAVE_TARDIS");
                 }
@@ -306,10 +311,10 @@ public class TARDISSeedBlockProcessor {
         }
     }
 
-    private String getWallKey(int i, int d) {
-        for (Map.Entry<String, int[]> entry : plugin.getTardisWalls().blocks.entrySet()) {
-            int[] value = entry.getValue();
-            if (value[0] == i && value[1] == d) {
+    private String getWallKey(Material i, byte d) {
+        for (Map.Entry<String, TARDISWalls.Pair> entry : plugin.getTardisWalls().blocks.entrySet()) {
+            Pair value = entry.getValue();
+            if (value.getType().equals(i) && value.getData() == d) {
                 return entry.getKey();
             }
         }

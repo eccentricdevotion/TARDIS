@@ -20,8 +20,6 @@ import java.util.HashMap;
 import java.util.List;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
-import net.pekkit.projectrassilon.ProjectRassilon;
-import net.pekkit.projectrassilon.api.RassilonAPI;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Entity;
@@ -85,15 +83,6 @@ public class TARDISSonicEntityListener implements Listener {
                                 double health = scanned.getHealth() / scanned.getMaxHealth() * scanned.getHealthScale();
                                 float hunger = (scanned.getFoodLevel() / 20F) * 100;
                                 TARDISMessage.send(player, "SONIC_NAME", scanned.getName());
-                                if (plugin.isProjRassilonOnServer()) {
-                                    RassilonAPI ra = ((ProjectRassilon) plugin.getPM().getPlugin("ProjectRassilon")).getAPI(plugin);
-                                    if (ra != null) {
-                                        TARDISMessage.send(player, true, "RASS_TL", String.format("%s", ra.getTimelordStatus(scanned)));
-                                        TARDISMessage.send(player, true, "RASS_COUNT", String.format("%d", ra.getRegenCount(scanned)));
-                                        TARDISMessage.send(player, true, "RASS_REGEN", String.format("%s", ra.getRegenStatus(scanned)));
-                                        TARDISMessage.send(player, true, "RASS_BLOCK", String.format("%s", ra.getRegenBlock(scanned)));
-                                    }
-                                }
                                 TARDISMessage.send(player, true, "SONIC_AGE", convertTicksToTime(scanned.getTicksLived()));
                                 TARDISMessage.send(player, true, "SONIC_HEALTH", String.format("%f", health));
                                 TARDISMessage.send(player, true, "SONIC_HUNGER", String.format("%.2f", hunger));

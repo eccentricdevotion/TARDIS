@@ -42,7 +42,7 @@ public class TARDISIsomorphicCommand {
         // does the player have a TARDIS
         if (rs.resultSet()) {
             int iso = (rs.isIso_on()) ? 0 : 1;
-            String onoff = (rs.isIso_on()) ? "ISO_ON_OFF" : "ISO_ON_ON";
+            String onoff = (rs.isIso_on()) ? "ISO_OFF" : "ISO_ON";
             int id = rs.getTardis_id();
             HashMap<String, Object> seti = new HashMap<String, Object>();
             seti.put("iso_on", iso);

@@ -18,7 +18,6 @@ package me.eccentric_nz.TARDIS.commands.tardis;
 
 import java.util.HashMap;
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.advanced.TARDISCircuitChecker;
 import me.eccentric_nz.TARDIS.builders.TARDISMaterialisationData;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetCurrentLocation;
@@ -51,7 +50,7 @@ public class TARDISComehereCommand {
 
     @SuppressWarnings("deprecation")
     public boolean doComeHere(Player player) {
-        if (plugin.getConfig().getString("preferences.difficulty").equalsIgnoreCase("easy")) {
+        if (plugin.getConfig().getString("preferences.difficulty").equalsIgnoreCase("easy") || plugin.getUtils().inGracePeriod(player, true)) {
             if (player.hasPermission("tardis.timetravel")) {
                 Location eyeLocation = player.getTargetBlock(plugin.getGeneralKeeper().getTransparent(), 50).getLocation();
                 if (!plugin.getConfig().getBoolean("travel.include_default_world") && plugin.getConfig().getBoolean("creation.default_world") && eyeLocation.getWorld().getName().equals(plugin.getConfig().getString("creation.default_world_name"))) {
@@ -96,15 +95,15 @@ public class TARDISComehereCommand {
                     return true;
                 }
                 final int id = rs.getTardis_id();
-                TARDISCircuitChecker tcc = null;
-                if (plugin.getConfig().getString("preferences.difficulty").equals("hard")) {
-                    tcc = new TARDISCircuitChecker(plugin, id);
-                    tcc.getCircuits();
-                }
-                if (tcc != null && !tcc.hasMaterialisation()) {
-                    TARDISMessage.send(player, "NO_MAT_CIRCUIT");
-                    return true;
-                }
+//                TARDISCircuitChecker tcc = null;
+//                if (plugin.getConfig().getString("preferences.difficulty").equals("hard")) {
+//                    tcc = new TARDISCircuitChecker(plugin, id);
+//                    tcc.getCircuits();
+//                }
+//                if (tcc != null && !tcc.hasMaterialisation()) {
+//                    TARDISMessage.send(player, "NO_MAT_CIRCUIT");
+//                    return true;
+//                }
                 // check they are not in the tardis
                 HashMap<String, Object> wherettrav = new HashMap<String, Object>();
                 wherettrav.put("uuid", player.getUniqueId().toString());

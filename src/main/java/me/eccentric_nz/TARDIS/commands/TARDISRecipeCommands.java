@@ -58,6 +58,7 @@ public class TARDISRecipeCommands implements CommandExecutor {
         firstArgs.add("bio-circuit"); // Bio-scanner Circuit
         firstArgs.add("biome-disk"); // Biome Storage Disk
         firstArgs.add("blank"); // Blank Storage Disk
+        firstArgs.add("bow-tie"); // Bow Tie
         firstArgs.add("c-circuit"); // Chameleon Circuit
         firstArgs.add("cell"); // Artron Energy Cell
         firstArgs.add("custard"); // Bowl of custard
@@ -65,6 +66,7 @@ public class TARDISRecipeCommands implements CommandExecutor {
         firstArgs.add("e-circuit"); // Emerald Circuit
         firstArgs.add("filter"); // Perception Filter
         firstArgs.add("fish-finger"); // Fish Finger
+        firstArgs.add("glasses"); // 3-D Glasses
         firstArgs.add("i-circuit"); // Input Circuit
         firstArgs.add("key"); // TARDIS key
         firstArgs.add("jammy-dodger"); // Jammy Dodger Biscuit
@@ -79,6 +81,7 @@ public class TARDISRecipeCommands implements CommandExecutor {
         firstArgs.add("player-disk"); // Player Storage Disk
         firstArgs.add("preset-disk"); // Preset Storage Disk
         firstArgs.add("r-circuit"); // Redstone Circuit
+        firstArgs.add("r-key"); // TARDIS Remote Key
         firstArgs.add("remote"); // Stattenheim Remote
         firstArgs.add("s-circuit"); // Stattenheim Circuit
         firstArgs.add("save-disk"); // Save Storage Disk
@@ -86,6 +89,7 @@ public class TARDISRecipeCommands implements CommandExecutor {
         firstArgs.add("sonic"); // Sonic Screwdriver
         firstArgs.add("t-circuit"); // Temporal Circuit
         firstArgs.add("tardis"); // TARDIS Seed Block
+        firstArgs.add("watch"); // TARDIS Seed Block
         t.put("BUDGET", Material.IRON_BLOCK); // budget
         t.put("BIGGER", Material.GOLD_BLOCK); // bigger
         t.put("DELUXE", Material.DIAMOND_BLOCK); // deluxe
@@ -158,6 +162,10 @@ public class TARDISRecipeCommands implements CommandExecutor {
                 this.showShapedRecipe(player, "Blank Storage Disk");
                 return true;
             }
+            if (args[0].equalsIgnoreCase("bow-tie")) {
+                this.showShapedRecipe(player, "Red Bow Tie");
+                return true;
+            }
             if (args[0].equalsIgnoreCase("c-circuit")) {
                 showShapedRecipe(player, "TARDIS Chameleon Circuit");
                 return true;
@@ -184,6 +192,10 @@ public class TARDISRecipeCommands implements CommandExecutor {
             }
             if (args[0].equalsIgnoreCase("fish-finger")) {
                 this.showShapedRecipe(player, "Fish Finger");
+                return true;
+            }
+            if (args[0].equalsIgnoreCase("glasses")) {
+                this.showShapedRecipe(player, "3-D Glasses");
                 return true;
             }
             if (args[0].equalsIgnoreCase("i-circuit")) {
@@ -242,6 +254,10 @@ public class TARDISRecipeCommands implements CommandExecutor {
                 this.showShapedRecipe(player, "Redstone Activator Circuit");
                 return true;
             }
+            if (args[0].equalsIgnoreCase("r-key")) {
+                this.showShapedRecipe(player, "TARDIS Remote Key");
+                return true;
+            }
             if (args[0].equalsIgnoreCase("remote")) {
                 showShapedRecipe(player, "Stattenheim Remote");
                 return true;
@@ -264,6 +280,10 @@ public class TARDISRecipeCommands implements CommandExecutor {
             }
             if (args[0].equalsIgnoreCase("t-circuit")) {
                 this.showShapedRecipe(player, "TARDIS Temporal Circuit");
+                return true;
+            }
+            if (args[0].equalsIgnoreCase("watch")) {
+                this.showShapedRecipe(player, "Fob Watch");
                 return true;
             }
         }

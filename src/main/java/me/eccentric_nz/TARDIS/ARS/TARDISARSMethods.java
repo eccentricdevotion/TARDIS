@@ -32,6 +32,7 @@ import me.eccentric_nz.TARDIS.database.ResultSetCondenser;
 import me.eccentric_nz.TARDIS.database.ResultSetPlayerPrefs;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import me.eccentric_nz.TARDIS.database.ResultSetTravellers;
+import me.eccentric_nz.TARDIS.rooms.TARDISWalls.Pair;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -59,8 +60,8 @@ public class TARDISARSMethods {
     public final HashMap<UUID, TARDISARSSaveData> save_map_data = new HashMap<UUID, TARDISARSSaveData>();
     public final HashMap<UUID, TARDISARSMapData> map_data = new HashMap<UUID, TARDISARSMapData>();
     public final String[] levels = new String[]{"Bottom level", "Main level", "Top level"};
-    public final List<TARDISARS> notrooms = Arrays.asList(TARDISARS.ARS, TARDISARS.BIGGER, TARDISARS.BUDGET, TARDISARS.DELUXE, TARDISARS.ELEVENTH, TARDISARS.JETTISON, TARDISARS.PLANK, TARDISARS.REDSTONE, TARDISARS.SLOT, TARDISARS.STEAMPUNK, TARDISARS.TOM, TARDISARS.WAR);
-    public final List<Material> consoleBlocks = Arrays.asList(Material.IRON_BLOCK, Material.GOLD_BLOCK, Material.DIAMOND_BLOCK, Material.EMERALD_BLOCK, Material.REDSTONE_BLOCK, Material.COAL_BLOCK, Material.QUARTZ_BLOCK, Material.LAPIS_BLOCK, Material.BOOKSHELF, Material.STAINED_CLAY);
+    public final List<TARDISARS> notrooms = Arrays.asList(TARDISARS.ARS, TARDISARS.BIGGER, TARDISARS.BUDGET, TARDISARS.CUSTOM, TARDISARS.DELUXE, TARDISARS.ELEVENTH, TARDISARS.JETTISON, TARDISARS.PLANK, TARDISARS.REDSTONE, TARDISARS.SLOT, TARDISARS.STEAMPUNK, TARDISARS.TOM, TARDISARS.WAR);
+    public final List<Material> consoleBlocks = Arrays.asList(Material.IRON_BLOCK, Material.GOLD_BLOCK, Material.DIAMOND_BLOCK, Material.EMERALD_BLOCK, Material.REDSTONE_BLOCK, Material.COAL_BLOCK, Material.QUARTZ_BLOCK, Material.LAPIS_BLOCK, Material.BOOKSHELF, Material.STAINED_CLAY, Material.DRAGON_EGG);
     public final HashMap<UUID, Integer> ids = new HashMap<UUID, Integer>();
     public final List<UUID> hasLoadedMap = new ArrayList<UUID>();
 
@@ -95,11 +96,16 @@ public class TARDISARSMethods {
     public void revert(UUID uuid) {
         TARDISARSSaveData sd = save_map_data.get(uuid);
         JSONArray json = new JSONArray(sd.getData());
-        HashMap<String, Object> set = new HashMap<String, Object>();
+        final HashMap<String, Object> set = new HashMap<String, Object>();
         set.put("json", json.toString());
-        HashMap<String, Object> wherea = new HashMap<String, Object>();
+        final HashMap<String, Object> wherea = new HashMap<String, Object>();
         wherea.put("ars_id", sd.getId());
-        new QueryFactory(plugin).doUpdate("ars", set, wherea);
+        plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
+            @Override
+            public void run() {
+                new QueryFactory(plugin).doUpdate("ars", set, wherea);
+            }
+        }, 6L);
     }
 
     /**
@@ -368,7 +374,11 @@ public class TARDISARSMethods {
                         } else {
                             // reset map to the previous version
                             revert(uuid);
-                            TARDISMessage.send(p, tap.getError());
+                            if (tap.getError().equals("ARS_LIMIT")) {
+                                TARDISMessage.send(p, tap.getError(), plugin.getConfig().getString("growth.ars_limit"));
+                            } else {
+                                TARDISMessage.send(p, tap.getError());
+                            }
                         }
                     } else {
                         TARDISMessage.send(p, "ROOM_ONLY_TL");
@@ -538,11 +548,7 @@ public class TARDISARSMethods {
         Set<String> names = plugin.getRoomsConfig().getConfigurationSection("rooms").getKeys(false);
         for (String cr : names) {
             if (plugin.getRoomsConfig().getBoolean("rooms." + cr + ".user") && plugin.getRoomsConfig().getBoolean("rooms." + cr + ".enabled")) {
-                // check room dimensions
-                short[] dim = plugin.getBuildKeeper().getRoomDimensions().get(cr);
-                if (dim[0] <= (short) 16 && dim[1] == (short) 16) {
-                    crooms.add(cr);
-                }
+                crooms.add(cr);
             }
         }
         return crooms;
@@ -571,28 +577,28 @@ public class TARDISARSMethods {
             wall = rsp.getWall();
             floor = rsp.getFloor();
         }
-        HashMap<Integer, Integer> item_counts = new HashMap<Integer, Integer>();
+        HashMap<String, Integer> item_counts = new HashMap<String, Integer>();
         for (Map.Entry<String, Integer> entry : roomBlocks.entrySet()) {
             String[] block_data = entry.getKey().split(":");
-            int bid = plugin.getUtils().parseInt(block_data[0]);
+            String bid = block_data[0];
             String mat;
-            int bdata;
+            String bkey;
             if (hasPrefs && block_data.length == 2 && (block_data[1].equals("1") || block_data[1].equals("8"))) {
                 mat = (block_data[1].equals("1")) ? wall : floor;
-                int[] iddata = plugin.getTardisWalls().blocks.get(mat);
-                bdata = iddata[0];
+                Pair iddata = plugin.getTardisWalls().blocks.get(mat);
+                bkey = iddata.getType().toString();
             } else {
-                bdata = bid;
+                bkey = bid;
             }
             int tmp = Math.round((entry.getValue() / 100.0F) * plugin.getConfig().getInt("growth.rooms_condenser_percent"));
             int required = (tmp > 0) ? tmp : 1;
-            if (item_counts.containsKey(bdata)) {
-                item_counts.put(bdata, (item_counts.get(bdata) + required));
+            if (item_counts.containsKey(bkey)) {
+                item_counts.put(bkey, (item_counts.get(bkey) + required));
             } else {
-                item_counts.put(bdata, required);
+                item_counts.put(bkey, required);
             }
         }
-        for (Map.Entry<Integer, Integer> map : item_counts.entrySet()) {
+        for (Map.Entry<String, Integer> map : item_counts.entrySet()) {
             HashMap<String, Object> wherec = new HashMap<String, Object>();
             wherec.put("tardis_id", id);
             wherec.put("block_data", map.getKey());

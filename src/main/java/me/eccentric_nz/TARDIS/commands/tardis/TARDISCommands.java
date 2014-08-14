@@ -21,6 +21,7 @@ import java.util.List;
 import java.util.Locale;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.advanced.TARDISDiskWriterCommand;
+import me.eccentric_nz.TARDIS.arch.TARDISArchCommand;
 import me.eccentric_nz.TARDIS.enumeration.CMDS;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import org.bukkit.ChatColor;
@@ -48,6 +49,7 @@ public class TARDISCommands implements CommandExecutor {
         // add first arguments
         firstArgs.add("abort");
         firstArgs.add("add");
+        firstArgs.add("arch_time");
         firstArgs.add("arsremove");
         firstArgs.add("chameleon");
         firstArgs.add("check_loc");
@@ -118,6 +120,9 @@ public class TARDISCommands implements CommandExecutor {
                 if (args[0].equalsIgnoreCase("arsremove")) {
                     return new TARDISARSRemoveCommand(plugin).resetARS(player);
                 }
+                if (args[0].equalsIgnoreCase("arch_time")) {
+                    return new TARDISArchCommand(plugin).getTime(player);
+                }
                 if (args[0].equalsIgnoreCase("lamps")) {
                     return new TARDISLampsCommand(plugin).addLampBlocks(player);
                 }
@@ -177,12 +182,14 @@ public class TARDISCommands implements CommandExecutor {
                 }
                 if (args[0].equalsIgnoreCase("save")) {
                     ItemStack is = player.getItemInHand();
-                    if (plugin.getConfig().getString("preferences.difficulty").equals("hard") && heldDiskIsWrong(is)) {
-                        TARDISMessage.send(player, "DISK_HAND_SAVE");
-                        return true;
-                    }
-                    if (is != null && is.hasItemMeta() && is.getItemMeta().hasDisplayName() && is.getItemMeta().getDisplayName().equals("Save Storage Disk")) {
-                        return new TARDISDiskWriterCommand(plugin).writeSave(player, args);
+                    if (plugin.getConfig().getString("preferences.difficulty").equals("hard") && !plugin.getUtils().inGracePeriod(player, true)) {
+                        if (heldDiskIsWrong(is)) {
+                            TARDISMessage.send(player, "DISK_HAND_SAVE");
+                            return true;
+                        }
+                        if (is != null && is.hasItemMeta() && is.getItemMeta().hasDisplayName() && is.getItemMeta().getDisplayName().equals("Save Storage Disk")) {
+                            return new TARDISDiskWriterCommand(plugin).writeSave(player, args);
+                        }
                     } else {
                         return new TARDISSaveLocationCommand(plugin).doSave(player, args);
                     }

@@ -17,6 +17,8 @@
 package me.eccentric_nz.TARDIS.ARS;
 
 /**
+ * Used to dynamically add custom rooms to the TARDIS' Architectural
+ * Reconfiguration System.
  *
  * @author eccentric_nz
  */

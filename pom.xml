@@ -2,7 +2,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>me.eccentric_nz.TARDIS</groupId>
     <artifactId>TARDIS</artifactId>
-    <version>2.9.2</version>
+    <version>3.0</version>
     <name>TARDIS</name>
     <description>A Doctor Who Plugin</description>
     <properties>
@@ -30,17 +30,6 @@
         <repository>
             <id>onarandombox</id>
             <url>http://repo.onarandombox.com/content/groups/public</url>
-        </repository>
-        <!--
-        <repository>
-            <id>comphenix-rep</id>
-            <name>Comphenix Repository</name>
-            <url>http://repo.comphenix.net/content/groups/public</url>
-        </repository>
-        -->
-        <repository>
-            <id>confuser-repo</id>
-            <url>http://ci.frostcast.net/plugin/repository/everything</url>
         </repository>
         <repository>
             <id>comphenix-repo</id>
@@ -310,19 +299,19 @@
         <dependency>
             <groupId>multiworld</groupId>
             <artifactId>MultiWorld</artifactId>
-            <version>5.2.0</version>
+            <version>5.2.2</version>
             <type>jar</type>
         </dependency>
         <dependency>
             <groupId>com.massivecraft</groupId>
             <artifactId>factions</artifactId>
-            <version>2.4.0</version>
+            <version>2.5.0</version>
             <type>jar</type>
         </dependency>
         <dependency>
             <groupId>com.massivecraft</groupId>
-            <artifactId>mcore</artifactId>
-            <version>7.2.1</version>
+            <artifactId>massivecore</artifactId>
+            <version>7.3</version>
             <type>jar</type>
         </dependency>
         <dependency>
@@ -363,7 +352,7 @@
         <dependency>
             <groupId>LibsDisguises</groupId>
             <artifactId>LibsDisguises</artifactId>
-            <version>8.2.5-SNAPSHOT</version>
+            <version>8.2.6-SNAPSHOT</version>
             <exclusions>
                 <exclusion>
                     <artifactId>spigot-api</artifactId>
@@ -384,17 +373,6 @@
                 <exclusion>
                     <artifactId>ProtocolLib</artifactId>
                     <groupId>com.comphenix.protocol</groupId>
-                </exclusion>
-            </exclusions>
-        </dependency>
-        <dependency>
-            <groupId>net.pekkit</groupId>
-            <artifactId>Project_Rassilon</artifactId>
-            <version>1.2.3</version>
-            <exclusions>
-                <exclusion>
-                    <artifactId>Vault</artifactId>
-                    <groupId>net.milkbowl.vault</groupId>
                 </exclusion>
             </exclusions>
         </dependency>

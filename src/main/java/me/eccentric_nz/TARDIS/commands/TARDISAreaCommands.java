@@ -110,7 +110,7 @@ public class TARDISAreaCommands implements CommandExecutor {
                 TARDISMessage.send(player, "AREA_DELETE", args[1]);
                 return true;
             }
-            if (args[0].equals("show")) {
+            if (args[0].equalsIgnoreCase("show")) {
                 if (args.length < 2) {
                     TARDISMessage.send(player, "AREA_NEED");
                     return false;
@@ -136,6 +136,52 @@ public class TARDISAreaCommands implements CommandExecutor {
                 final Block b4 = w.getHighestBlockAt(max, maz).getRelative(BlockFace.UP);
                 b4.setType(Material.SNOW_BLOCK);
                 plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new SetAir(b1, b2, b3, b4), 300L);
+                return true;
+            }
+            if (args[0].equalsIgnoreCase("yard")) {
+                if (args.length < 2) {
+                    TARDISMessage.send(player, "AREA_NEED");
+                    return false;
+                }                // set some basic defaults
+                Material fill = Material.COBBLESTONE;
+                Material dock = Material.BRICK;
+                if (args.length > 2) {
+                    try {
+                        fill = Material.valueOf(args[2].toUpperCase());
+                        if (args.length > 3) {
+                            dock = Material.valueOf(args[3].toUpperCase());
+                        }
+                    } catch (IllegalArgumentException e) {
+                        TARDISMessage.send(player, "ARG_MATERIAL");
+                        return true;
+                    }
+                    if (!fill.isBlock() || !dock.isBlock() || !fill.isSolid() || !dock.isSolid()) {
+                        TARDISMessage.send(player, "ARG_NOT_BLOCK");
+                        return true;
+                    }
+                }
+                HashMap<String, Object> where = new HashMap<String, Object>();
+                where.put("area_name", args[1]);
+                ResultSetAreas rsa = new ResultSetAreas(plugin, where, false);
+                if (!rsa.resultSet()) {
+                    TARDISMessage.send(player, "AREA_NOT_FOUND", ChatColor.GREEN + "/tardis list areas" + ChatColor.RESET);
+                    return false;
+                }
+                int mix = rsa.getMinx();
+                int miz = rsa.getMinz();
+                int max = rsa.getMaxx();
+                int maz = rsa.getMaxz();
+                World w = plugin.getServer().getWorld(rsa.getWorld());
+                for (int x = mix; x <= max; x++) {
+                    for (int z = miz; z <= maz; z++) {
+                        int y = w.getHighestBlockYAt(x, z) - 1;
+                        if ((x - 2) % 5 == 0 && (z - 2) % 5 == 0) {
+                            w.getBlockAt(x, y, z).setType(dock);
+                        } else {
+                            w.getBlockAt(x, y, z).setType(fill);
+                        }
+                    }
+                }
                 return true;
             }
         }

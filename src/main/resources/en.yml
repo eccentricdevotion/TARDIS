@@ -15,6 +15,13 @@ ANTIBUILD: "You can't do that because the TARDIS has placed this area in a stasi
 ANTIBUILD_OFF: "Companion building was turned OFF."
 ANTIBUILD_ON: "Companion building was turned ON!"
 ANTIBUILD_TIMELORD: "You can't do that because %s has locked the TARDIS in a perpetual state of relativistic stability!"
+<<<<<<< HEAD
+=======
+ARCH_FREE: "You are free to become a Time Lord again!"
+ARCH_NOT_VALID: "You are already a Time Lord!"
+ARCH_PLAYER: "The player's real name is: %s"
+ARCH_TIME: "You still have %s minutes and %s seconds left before you can become a Time Lord again."
+>>>>>>> v3.0
 AREAS: "Areas"
 AREA_CLICK_END: "Click the area end block to complete the area."
 AREA_CLICK_START: "Click the area start block to save its position."
@@ -45,7 +52,13 @@ ARG_GIVE: "Amount must be a number, 'full' or 'empty'! /tardisgive [player] [ite
 ARG_KIT: "Could not find a kit with that name!"
 ARG_LAST_NUMBER: "The last argument must be a number!"
 ARG_LOWERCASE: "Please make sure the file name is lowercase only!"
+<<<<<<< HEAD
 ARG_MAX: "You can only give a maximum of 64 items at once!"
+=======
+ARG_MATERIAL: "Invalid block name specified!"
+ARG_MAX: "You can only give a maximum of 64 items at once!"
+ARG_NOT_BLOCK: "The materials must be solid blocks!"
+>>>>>>> v3.0
 ARG_NOT_VALID: "TARDIS does not recognise that command argument!"
 ARG_PLUGIN: "The second argument must be 'mv' or 'wg'!"
 ARG_REMOTE: "Too few command arguments for remote travel!"
@@ -53,9 +66,15 @@ ARG_SEC_NUMBER: "The second argument must be a number!"
 ARG_TIPS: "The last argument must be '400', '800', '1200' or '1600'!"
 ARG_TOWNY: "The last argument must be none, wilderness, town or nation!"
 ARS_CANCEL: "To cancel growing this [%s] room use the command /tardis abort %s"
+<<<<<<< HEAD
 ARS_LOAD: "You need to load the map first!"
 ARS_MISSING: "The ARS Circuit is missing from the console!"
 ARS_NO_CUSTOM: "You cannot use the Architectural Reconfiguration System with a CUSTOM TARDIS!"
+=======
+ARS_LIMIT: "You can only reconfigure a maximum of %s rooms at a time!"
+ARS_LOAD: "You need to load the map first!"
+ARS_MISSING: "The ARS Circuit is missing from the console!"
+>>>>>>> v3.0
 ARS_NO_TRAVEL: "You cannot reconfigure rooms while the TARDIS is travelling!"
 ARS_OWN_WORLD: "You cannot use the Architectural Reconfiguration System unless your TARDIS was created in its own world!"
 ARS_REMOVED: "Architectural Reconfiguration System GUI removed successfully"
@@ -207,6 +226,10 @@ DEST_SET: "Destination set."
 DEST_SET_TERMINAL: "%s destination set."
 DIFF_HARD_FIND: "You need to craft a TARDIS Locator! Type %s to see how to make it."
 DIFF_HARD_REMOTE: "You need to craft a Stattenheim Remote Control! Type %s to see how to make it."
+<<<<<<< HEAD
+=======
+DIFF_SAVED: "Difficulty preference saved."
+>>>>>>> v3.0
 DIRECTION_CHANGED: "Direction changed."
 DIRECTION_CURRENT: "Current TARDIS direction is %s"
 DIRECTION_NEED: "You need to specify the compass direction e.g. north, west, south or east!"
@@ -274,6 +297,10 @@ FARM_STABLE: "You need to grow a stable room before you can farm horses!"
 FARM_VILLAGE: "You need to grow a village room before you can farm villagers!"
 FILE_SAVED: "File saved to 'plugins/TARDIS/TARDIS_list.txt'"
 FILTER: "You need to remove your chestplate armour first!"
+<<<<<<< HEAD
+=======
+FLIGHT_BAD: "Flight is broken, please properly update your repeaters."
+>>>>>>> v3.0
 FLIGHT_CLICK: "Click the %s"
 FLIGHT_ENGAGED: "Manual flight engaged, click those repeaters!"
 FLIGHT_INFO: "Flight mode must be 'normal', 'regulator' or 'manual'!"
@@ -286,6 +313,11 @@ GIVE_INFO: "You can 'give' the following items:"
 GIVE_ITEM: "%s just gave you %s"
 GIVE_KIT: "%s just gave you the TARDIS Item Kit %s"
 GIVE_SET_PLAYER: "%s's Artron Energy Level was set to %s"
+<<<<<<< HEAD
+=======
+GLASSES_DONE: "Your 3-D Glasses have run out, time to craft some more!"
+GRACE_PERIOD: "You can use TARDIS 'easy' mode %s more times before you must use the Advanced TARDIS features."
+>>>>>>> v3.0
 GRAVITY_A_WORLD: "You must be in a TARDIS world to make a gravity well!"
 GRAVITY_CLICK_REMOVE: "Click the wool block to remove it from the database."
 GRAVITY_CLICK_SAVE: "Click the wool block to save its position."
@@ -387,6 +419,10 @@ NO_PERM_ADV: "You do not have permission to create an Advanced Console!"
 NO_PERM_AREA: "You do not have permission to add TARDIS areas!"
 NO_PERM_ARS: "You do not have permission to create an Architectural Reconfiguration System!"
 NO_PERM_BACKDOOR: "You do not have permission to create a back door!"
+<<<<<<< HEAD
+=======
+NO_PERM_CHAM_ARCH: "You do not have permission to use the Chameleon Arch!"
+>>>>>>> v3.0
 NO_PERM_DELETE: "You do not have permission to delete a TARDIS!"
 NO_PERM_DISK: "You do not have permission to create Disk Storage!"
 NO_PERM_PLAYER: "You do not have permission to time travel to a player!"
@@ -400,6 +436,12 @@ NO_RENAME: "You cannot name the item that!"
 NO_TARDIS: "You have not created a TARDIS yet!"
 NO_WORLD_TRAVEL: "The server does not allow time travel to this world!"
 NO_ZERO: "You don't have a Zero room!"
+<<<<<<< HEAD
+=======
+O2N_Y: "Y coordinate is not in range!"
+O2N_COORDS_N: "Portal coordinates in the NETHER should be: %s"
+O2N_COORDS_O: "Portal coordinates in the OVERWORLD should be: %s"
+>>>>>>> v3.0
 OCCUPY_AUTO: "You left the TARDIS, setting OCCUPIED to false"
 OCCUPY_IN: "OCCUPIED"
 OCCUPY_MUST_BE_IN: "You cannot set occupancy to OCCUPIED unless you are inside the TARDIS!"
@@ -455,11 +497,22 @@ REBUILD_FAIL: "Try using the Stattenheim Remote, or the /tardis comehere command
 RECIPE_VIEW: "You can view the following recipes:"
 RELATIVE_NOT_FOUND: "Could not get relative location! Check all arguments start with '~'."
 RELOADED: "TARDIS config reloaded."
+<<<<<<< HEAD
+=======
+REMOTE_KEY: "You need to use a TARDIS Key when crafting the Remote Key."
+>>>>>>> v3.0
 REMOTE_SUCCESS: "The remote TARDIS travel command was %s"
 RENDER_DONE: "Rendering complete, stand by for transmat..."
 RENDER_EXISTS: "You already have an exterior rendering room! Please jettison the existing room first."
 RENDER_EXIT: "Right-click to exit."
 RENDER_START: "Starting exterior rendering, please wait..."
+<<<<<<< HEAD
+=======
+REQUEST_NO_RESPONSE: "%s didn't respond with 60 seconds, aborting travel request!"
+REQUEST_RELEASE: "Release the handbrake to travel to %s"
+REQUEST_TIMEOUT: "Player travel request timed out! You need to respond within 60 seconds."
+REQUEST_TRAVEL: "%s wants to travel to you! Type: %s in chat within 60 seconds to accept the request."
+>>>>>>> v3.0
 RESCUE_NOT_SAFE: "The player's location would not be safe! Please tell the player to move!"
 RESCUE_NO_RESPONSE: "%s didn't respond with 60 seconds, aborting rescue!"
 RESCUE_RELEASE: "Release the handbrake to start rescuing %s"
@@ -519,6 +572,21 @@ SCAN_TEMP: "Temperature: %s"
 SCAN_TIME: "Time of day: %s ticks"
 SCAN_WEATHER: "Weather: %s"
 SCAN_WORLD: "World: %s"
+<<<<<<< HEAD
+=======
+SCHM_END: "End block selected!"
+SCHM_ERROR: "Could not write GZipped JSON schematic file!"
+SCHM_LOADED: "Schematic loaded! You can now use the %s command"
+SCHM_MULTIPLE: "Length of sides must be a multiple of 16 blocks!"
+SCHM_NAME: "You must supply a schematic name!"
+SCHM_NO_END: "No end block selected!"
+SCHM_NOT_VALID: "Could not find a schematic with that name!"
+SCHM_NO_START: "No start block selected!"
+SCHM_SAVED: "%s.tschm saved :)"
+SCHM_SQUARE: "Region must be a square!"
+SCHM_START: "Start block selected!"
+SCHM_WORLD: "Start and end blocks are not in the same world!"
+>>>>>>> v3.0
 SEED_PLACE: "You placed a TARDIS seed block!"
 SEED_VALID: "Valid seed block :)"
 SONIC_AGE: "Has been alive for: %s"
@@ -557,8 +625,15 @@ TARDIS_NO_DELETE: "You cannot delete this TARDIS as it is occupied!"
 TARDIS_NO_HIDE: "You cannot hide the TARDIS right now! Try travelling first."
 TARDIS_NO_INSIDE: "You cannot set the home location here because you are inside a TARDIS!"
 TARDIS_NO_REBUILD: "You cannot rebuild the TARDIS right now! Try travelling first."
+<<<<<<< HEAD
 TARDIS_OUTSIDE: "You should be outside of the TARDIS!"
 TARDIS_REBUILT: "The TARDIS Police Box was rebuilt!"
+=======
+TARDIS_ONLY_AREA: "You can only create a TARDIS in the %s area!"
+TARDIS_OUTSIDE: "You should be outside of the TARDIS!"
+TARDIS_REBUILT: "The TARDIS Police Box was rebuilt!"
+TARDIS_SET_HOME: "I don't really feel like going back to the TARDIS Creation Yards. It's rather boring there, wouldn't you agree? Set a new home location using the '/tardis home' command and let's go on an adventure!"
+>>>>>>> v3.0
 TARDIS_WHOSE: "This is TARDIS belongs to %s"
 TASK_ABORT: "Task aborted!"
 TASK_NUMBER: "Task ID is not a number!"
@@ -595,6 +670,10 @@ TRAVEL_NO_SELF: "You cannot travel to yourself!"
 TRUE_FALSE: "The last argument must be true or false!"
 UPDATE_BAD_CLICK: "You didn't click the correct type of block for the %s! Try the command again."
 UPDATE_CLICK: "Click the TARDIS %s to update its position."
+<<<<<<< HEAD
+=======
+UPDATE_CONDENSER: "You didn't target a CHEST! Try the command again."
+>>>>>>> v3.0
 UPDATE_FARM: "You must grow a farm room before you can update its position!"
 UPDATE_INFO: "You can update the postion of the following:"
 UPDATE_IN_WORLD: "You must be in a TARDIS world to update this block!"

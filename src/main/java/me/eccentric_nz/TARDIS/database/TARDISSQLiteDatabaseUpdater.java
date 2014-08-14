@@ -36,11 +36,13 @@ public class TARDISSQLiteDatabaseUpdater {
 
     private final List<String> areaupdates = new ArrayList<String>();
     private final List<String> blockupdates = new ArrayList<String>();
+    private final List<String> countupdates = new ArrayList<String>();
     private final List<String> destupdates = new ArrayList<String>();
     private final List<String> doorupdates = new ArrayList<String>();
     private final List<String> gravityupdates = new ArrayList<String>();
     private final List<String> prefsupdates = new ArrayList<String>();
     private final List<String> tardisupdates = new ArrayList<String>();
+    private final List<String> inventoryupdates = new ArrayList<String>();
     private final List<String> uuidUpdates = Arrays.asList("achievements", "ars", "player_prefs", "storage", "t_count", "tardis", "travellers");
     private final long now = System.currentTimeMillis();
     private final Statement statement;
@@ -51,6 +53,7 @@ public class TARDISSQLiteDatabaseUpdater {
         this.statement = statement;
         areaupdates.add("y INTEGER");
         blockupdates.add("police_box INTEGER DEFAULT 0");
+        countupdates.add("grace INTEGER DEFAULT 0");
         destupdates.add("bind TEXT DEFAULT ''");
         destupdates.add("type INTEGER DEFAULT 0");
         destupdates.add("direction TEXT DEFAULT ''");
@@ -64,6 +67,7 @@ public class TARDISSQLiteDatabaseUpdater {
         prefsupdates.add("beacon_on INTEGER DEFAULT 1");
         prefsupdates.add("build_on INTEGER DEFAULT 1");
         prefsupdates.add("ctm_on INTEGER DEFAULT 0");
+        prefsupdates.add("difficulty INTEGER DEFAULT 0");
         prefsupdates.add("dnd_on INTEGER DEFAULT 0");
         prefsupdates.add("eps_message TEXT DEFAULT ''");
         prefsupdates.add("eps_on INTEGER DEFAULT 0");
@@ -98,8 +102,6 @@ public class TARDISSQLiteDatabaseUpdater {
         tardisupdates.add("hidden INTEGER DEFAULT 0");
         tardisupdates.add("iso_on INTEGER DEFAULT 0");
         tardisupdates.add("lastuse INTEGER DEFAULT " + now);
-        tardisupdates.add("middle_data INTEGER");
-        tardisupdates.add("middle_id INTEGER");
         tardisupdates.add("powered_on INTEGER DEFAULT 0");
         tardisupdates.add("lights_on INTEGER DEFAULT 1");
         tardisupdates.add("rail TEXT DEFAULT ''");
@@ -111,6 +113,8 @@ public class TARDISSQLiteDatabaseUpdater {
         tardisupdates.add("tips INTEGER DEFAULT '-1'");
         tardisupdates.add("village TEXT DEFAULT ''");
         tardisupdates.add("zero TEXT DEFAULT ''");
+        inventoryupdates.add("attributes TEXT DEFAULT ''");
+        inventoryupdates.add("armour_attributes TEXT DEFAULT ''");
     }
 
     /**
@@ -147,6 +151,16 @@ public class TARDISSQLiteDatabaseUpdater {
                     i++;
                     String b_alter = "ALTER TABLE blocks ADD " + b;
                     statement.executeUpdate(b_alter);
+                }
+            }
+            for (String c : countupdates) {
+                String[] csplit = c.split(" ");
+                String c_query = "SELECT sql FROM sqlite_master WHERE tbl_name = 't_count' AND sql LIKE '%" + csplit[0] + "%'";
+                ResultSet rsc = statement.executeQuery(c_query);
+                if (!rsc.next()) {
+                    i++;
+                    String c_alter = "ALTER TABLE t_count ADD " + c;
+                    statement.executeUpdate(c_alter);
                 }
             }
             for (String d : destupdates) {
@@ -198,6 +212,16 @@ public class TARDISSQLiteDatabaseUpdater {
                     i++;
                     String t_alter = "ALTER TABLE tardis ADD " + t;
                     statement.executeUpdate(t_alter);
+                }
+            }
+            for (String v : inventoryupdates) {
+                String[] vsplit = v.split(" ");
+                String v_query = "SELECT sql FROM sqlite_master WHERE tbl_name = 'inventories' AND sql LIKE '%" + vsplit[0] + "%'";
+                ResultSet rsv = statement.executeQuery(v_query);
+                if (!rsv.next()) {
+                    i++;
+                    String v_alter = "ALTER TABLE inventories ADD " + v;
+                    statement.executeUpdate(v_alter);
                 }
             }
             // add biome to current location

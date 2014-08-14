@@ -56,25 +56,25 @@ public class TARDISRescue {
      * @param tt an instance of the TARDISTimeTravel class
      * @param d the direction the Police Box is facing
      * @param rescue whether to rescue the player
+     * @param request whether this is a travel to player request
      * @return true or false
      */
-    public boolean rescue(Player player, UUID saved, int id, TARDISTimeTravel tt, COMPASS d, boolean rescue) {
+    public boolean rescue(Player player, UUID saved, int id, TARDISTimeTravel tt, COMPASS d, boolean rescue, boolean request) {
         if (plugin.getServer().getPlayer(saved) == null) {
             TARDISMessage.send(player, "NOT_ONLINE");
-            return (!rescue);
+            return false;
         }
-        Player destPlayer = plugin.getServer().getPlayer(saved);
-        Location player_loc = destPlayer.getLocation();
+        Location player_loc = plugin.getServer().getPlayer(saved).getLocation();
         if (!plugin.getTardisArea().areaCheckInExisting(player_loc)) {
             TARDISMessage.send(player, "PLAYER_IN_AREA", ChatColor.AQUA + "/tardistravel area [area name]");
-            return (!rescue);
+            return false;
         }
-        if (!plugin.getPluginRespect().getRespect(player, player_loc, true)) {
-            return (!rescue);
+        if (!request && !plugin.getPluginRespect().getRespect(player, player_loc, true)) {
+            return false;
         }
         if (!plugin.getConfig().getBoolean("worlds." + player_loc.getWorld().getName())) {
             TARDISMessage.send(player, "NO_WORLD_TRAVEL");
-            return (!rescue);
+            return false;
         }
         World w = player_loc.getWorld();
         int[] start_loc = tt.getStartLocation(player_loc, d);
@@ -82,7 +82,7 @@ public class TARDISRescue {
         int count = tt.safeLocation(start_loc[0] - move, player_loc.getBlockY(), start_loc[2], start_loc[1] - move, start_loc[3], w, d);
         if (count > 0) {
             TARDISMessage.send(player, "RESCUE_NOT_SAFE");
-            return (!rescue);
+            return false;
         }
         HashMap<String, Object> set = new HashMap<String, Object>();
         set.put("world", player_loc.getWorld().getName());
@@ -110,9 +110,10 @@ public class TARDISRescue {
      *
      * @param player The Time Lord
      * @param saved The player to be rescued
+     * @param request whether this is a travel to player request
      * @return true if rescue was successful
      */
-    public boolean tryRescue(Player player, UUID saved) {
+    public boolean tryRescue(Player player, UUID saved, boolean request) {
         if (player.hasPermission("tardis.timetravel") && !(player.hasPermission("tardis.exile") && plugin.getConfig().getBoolean("travel.exile"))) {
             TARDISTimeTravel tt = new TARDISTimeTravel(plugin);
             // get tardis data
@@ -154,7 +155,7 @@ public class TARDISRescue {
                 TARDISMessage.send(player, "CURRENT_NOT_FOUND");
                 return false;
             }
-            return rescue(player, saved, id, tt, rsc.getDirection(), true);
+            return rescue(player, saved, id, tt, rsc.getDirection(), !request, request);
         } else {
             return false;
         }

@@ -119,6 +119,10 @@ public class TARDISButtonListener implements Listener {
                 if (rsc.resultSet()) {
                     int id = rsc.getTardis_id();
                     int type = rsc.getType();
+                    if (plugin.getTrackerKeeper().getJohnSmith().containsKey(player.getUniqueId()) && type != 13) {
+                        TARDISMessage.send(player, "ISO_HANDS_OFF");
+                        return;
+                    }
                     if (!onlythese.contains(type)) {
                         return;
                     }
@@ -199,6 +203,10 @@ public class TARDISButtonListener implements Listener {
                                             int nether_min = plugin.getArtronConfig().getInt("nether_min");
                                             int the_end_min = plugin.getArtronConfig().getInt("the_end_min");
                                             byte[] repeaters = rsr.getRepeaters();
+                                            if (repeaters[0] == -1) {
+                                                TARDISMessage.send(player, "FLIGHT_BAD");
+                                                return;
+                                            }
                                             if (repeaters[0] <= 3) { // first position
                                                 environment = "THIS";
                                             }
@@ -324,7 +332,7 @@ public class TARDISButtonListener implements Listener {
                                         TARDISMessage.send(player, "NOT_ENOUGH_ENERGY");
                                         return;
                                     }
-                                    if (tcc != null && !tcc.hasInput()) {
+                                    if (tcc != null && !tcc.hasInput() && !plugin.getUtils().inGracePeriod(player, false)) {
                                         TARDISMessage.send(player, "INPUT_MISSING");
                                         return;
                                     }
@@ -347,7 +355,7 @@ public class TARDISButtonListener implements Listener {
                                         TARDISMessage.send(player, "ROOM_OWN_WORLD");
                                         return;
                                     }
-                                    if (tcc != null && !tcc.hasARS()) {
+                                    if (tcc != null && !tcc.hasARS() && !plugin.getUtils().inGracePeriod(player, true)) {
                                         TARDISMessage.send(player, "ARS_MISSING");
                                         return;
                                     }
@@ -356,7 +364,7 @@ public class TARDISButtonListener implements Listener {
                                     player.openInventory(ars);
                                     break;
                                 case 11: // Temporal Locator sign
-                                    if (tcc != null && !tcc.hasTemporal()) {
+                                    if (tcc != null && !tcc.hasTemporal() && !plugin.getUtils().inGracePeriod(player, false)) {
                                         TARDISMessage.send(player, "TEMP_MISSING");
                                         return;
                                     }

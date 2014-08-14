@@ -26,6 +26,10 @@ creation:
     use_clay: false
     count: 0
     sky_biome: true
+<<<<<<< HEAD
+=======
+    area: none
+>>>>>>> v3.0
 # outer TARDIS
 police_box:
     name_tardis: false
@@ -54,6 +58,10 @@ travel:
     per_world_perms: false
     terminal_step: 1
     manual_flight_delay: 60
+<<<<<<< HEAD
+=======
+    grace_period: 10
+>>>>>>> v3.0
 # general preferences
 preferences:
     language: en
@@ -78,6 +86,10 @@ preferences:
     heal_speed: 200
     default_key: eleventh
     default_sonic: eleventh
+<<<<<<< HEAD
+=======
+    wand: BONE
+>>>>>>> v3.0
 # restrictions
 allow:
     mob_farming: true
@@ -94,6 +106,10 @@ allow:
     external_gravity: false
     power_down: false
     power_down_on_quit: false
+<<<<<<< HEAD
+=======
+    player_difficulty: true
+>>>>>>> v3.0
 # room related
 growth:
     gravity_max_distance: 15
@@ -102,10 +118,22 @@ growth:
     rooms_require_blocks: false
     rooms_condenser_percent: 100
     room_speed: 4
+    ars_limit: 1
+# chameleon arch
+arch:
+    enabled: true
+    min_time: 20
+    switch_inventory: true
+    clear_inv_on_death: false
 # don't touch
 conversions:
     biome_update: false
     conversion_done: true
     location_conversion_done: true
     uuid_conversion_done: false
+<<<<<<< HEAD
     companion_clearing_done: false
+=======
+    companion_clearing_done: false
+    condenser_done: false
+>>>>>>> v3.0

@@ -16,13 +16,16 @@
  */
 package me.eccentric_nz.TARDIS.destroyers;
 
+import java.io.File;
 import java.util.Collections;
 import java.util.HashMap;
+import me.eccentric_nz.TARDIS.JSON.JSONObject;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.builders.TARDISInteriorPostioning;
 import me.eccentric_nz.TARDIS.builders.TARDISTIPSData;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.enumeration.SCHEMATIC;
+import me.eccentric_nz.TARDIS.schematic.TARDISSchematicGZip;
 import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.block.Block;
@@ -62,45 +65,20 @@ public class TARDISDestroyerInner {
     @SuppressWarnings("deprecation")
     public void destroyInner(SCHEMATIC schm, int id, World w, int i, String p, int slot) {
         // get dimensions
-        short[] d;
-        switch (schm) {
-            case BIGGER:
-                d = plugin.getBuildKeeper().getBiggerDimensions();
-                break;
-            case DELUXE:
-                d = plugin.getBuildKeeper().getDeluxeDimensions();
-                break;
-            case ELEVENTH:
-                d = plugin.getBuildKeeper().getEleventhDimensions();
-                break;
-            case REDSTONE:
-                d = plugin.getBuildKeeper().getRedstoneDimensions();
-                break;
-            case STEAMPUNK:
-                d = plugin.getBuildKeeper().getSteampunkDimensions();
-                break;
-            case PLANK:
-                d = plugin.getBuildKeeper().getPlankDimensions();
-                break;
-            case TOM:
-                d = plugin.getBuildKeeper().getTomDimensions();
-                break;
-            case ARS:
-                d = plugin.getBuildKeeper().getARSDimensions();
-                break;
-            case WAR:
-                d = plugin.getBuildKeeper().getWarDimensions();
-                break;
-            case CUSTOM:
-                d = plugin.getBuildKeeper().getCustomDimensions();
-                break;
-            default:
-                d = plugin.getBuildKeeper().getBudgetDimensions();
-                break;
+        String directory = (schm.equals(SCHEMATIC.CUSTOM)) ? "user_schematics" : "schematics";
+        String path = plugin.getDataFolder() + File.separator + directory + File.separator + schm.getFile();
+        File file = new File(path);
+        if (!file.exists()) {
+            plugin.debug(plugin.getPluginName() + "Could not find a schematic with that name!");
+            return;
         }
-        short h = d[0];
-        short width = d[1];
-        short l = d[2];
+        // get JSON
+        JSONObject obj = TARDISSchematicGZip.unzip(path);
+        // get dimensions
+        JSONObject dimensions = (JSONObject) obj.get("dimensions");
+        int h = dimensions.getInt("height");
+        int width = dimensions.getInt("width");
+        int l = dimensions.getInt("length");
         // destroy TARDIS
         boolean below = (!plugin.getConfig().getBoolean("creation.create_worlds") && !plugin.getConfig().getBoolean("creation.default_world"));
         if (below) {

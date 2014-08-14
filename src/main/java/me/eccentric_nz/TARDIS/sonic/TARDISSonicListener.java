@@ -90,6 +90,8 @@ public class TARDISSonicListener implements Listener {
         this.sonic = Material.valueOf(split[0]);
         diamond.add(Material.GLASS);
         diamond.add(Material.IRON_FENCE);
+        diamond.add(Material.SNOW);
+        diamond.add(Material.SNOW_BLOCK);
         diamond.add(Material.STAINED_GLASS);
         diamond.add(Material.STAINED_GLASS_PANE);
         diamond.add(Material.THIN_GLASS);
@@ -434,14 +436,21 @@ public class TARDISSonicListener implements Listener {
                             }
                             playSonicSound(player, now, 600L, "sonic_short");
                             // drop appropriate material
+                            Material mat = b.getType();
                             if (player.hasPermission("tardis.sonic.silktouch")) {
                                 Location l = b.getLocation();
-                                switch (b.getType()) {
+                                switch (mat) {
                                     case GLASS:
                                         l.getWorld().dropItemNaturally(l, new ItemStack(Material.GLASS, 1));
                                         break;
                                     case IRON_FENCE:
                                         l.getWorld().dropItemNaturally(l, new ItemStack(Material.IRON_FENCE, 1));
+                                        break;
+                                    case SNOW:
+                                        b.getLocation().getWorld().dropItemNaturally(b.getLocation(), new ItemStack(Material.SNOW_BALL, 1 + b.getData()));
+                                        break;
+                                    case SNOW_BLOCK:
+                                        l.getWorld().dropItemNaturally(l, new ItemStack(Material.SNOW_BLOCK, 1));
                                         break;
                                     case STAINED_GLASS:
                                         l.getWorld().dropItemNaturally(l, new ItemStack(Material.STAINED_GLASS, 1, b.getData()));
@@ -462,8 +471,20 @@ public class TARDISSonicListener implements Listener {
                                 // set the block to AIR
                                 b.setType(Material.AIR);
                             } else {
-                                b.breakNaturally();
-                                b.getLocation().getWorld().playSound(b.getLocation(), Sound.SHEEP_SHEAR, 1.0F, 1.5F);
+                                if (mat.equals(Material.SNOW) || mat.equals(Material.SNOW_BLOCK)) {
+                                    // how many?
+                                    int balls;
+                                    if (mat.equals(Material.SNOW_BLOCK)) {
+                                        balls = 4;
+                                    } else {
+                                        balls = 1 + b.getData();
+                                    }
+                                    b.setType(Material.AIR);
+                                    b.getLocation().getWorld().dropItemNaturally(b.getLocation(), new ItemStack(Material.SNOW_BALL, balls));
+                                } else {
+                                    b.breakNaturally();
+                                    b.getLocation().getWorld().playSound(b.getLocation(), Sound.SHEEP_SHEAR, 1.0F, 1.5F);
+                                }
                             }
                         }
                     } else {

@@ -16,11 +16,14 @@
  */
 package me.eccentric_nz.TARDIS.artron;
 
+import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
+import me.eccentric_nz.TARDIS.enumeration.SCHEMATIC;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
@@ -33,6 +36,7 @@ import org.bukkit.block.Block;
 public class TARDISBeaconToggler {
 
     private final TARDIS plugin;
+    private final List<SCHEMATIC> no_beacon = Arrays.asList(SCHEMATIC.PLANK, SCHEMATIC.TOM);
 
     public TARDISBeaconToggler(TARDIS plugin) {
         this.plugin = plugin;
@@ -43,42 +47,54 @@ public class TARDISBeaconToggler {
         whereb.put("uuid", uuid.toString());
         ResultSetTardis rs = new ResultSetTardis(plugin, whereb, "", false);
         if (rs.resultSet()) {
+            SCHEMATIC schm = rs.getSchematic();
+            if (no_beacon.contains(schm)) {
+                // doesn't have a beacon!
+                return;
+            }
             // toggle beacon
             String beacon = rs.getBeacon();
             String[] beaconData;
             int plusy = 0;
             if (beacon.isEmpty()) {
                 // get the location from the TARDIS size and the creeper location
-                switch (rs.getSchematic()) {
-                    // TODO - Find out how far away the bedrock block is
+                switch (schm) {
                     case REDSTONE:
-                        plusy = 18;
+                        plusy = 14;
                         break;
                     case ELEVENTH:
-                        plusy = 17;
+                        plusy = 22;
                         break;
                     case DELUXE:
-                        plusy = 16;
+                        plusy = 23;
                         break;
                     case BIGGER:
-                        plusy = 13;
-                        break;
-                    default: // BUDGET & STEAMPUNK
+                    case ARS:
                         plusy = 12;
                         break;
-                }
+                    default: // BUDGET, STEAMPUNK, WAR, CUSTOM?
+                        plusy = 11;
+                        break;                }
                 String creeper = rs.getCreeper();
                 beaconData = creeper.split(":");
             } else {
                 beaconData = beacon.split(":");
             }
             World w = plugin.getServer().getWorld(beaconData[0]);
-            int bx = plugin.getUtils().parseInt(beaconData[1]);
-            int by = plugin.getUtils().parseInt(beaconData[2]) + plusy;
-            int bz = plugin.getUtils().parseInt(beaconData[3]);
-            if (beacon.isEmpty()) {
+            boolean stuffed = (beaconData[1].contains(".5"));
+            int bx, bz;
+            // get rid of decimal places due to incorrectly copied values from creeper field...
+            if (stuffed) {
+                bx = (int) plugin.getUtils().parseFloat(beaconData[1]) * 1;
+                bz = (int) plugin.getUtils().parseFloat(beaconData[3]) * 1;
+            } else {
+                bx = plugin.getUtils().parseInt(beaconData[1]);
+                bz = plugin.getUtils().parseInt(beaconData[3]);
+            }
+            int by = (int) plugin.getUtils().parseFloat(beaconData[2]) * 1 + plusy;
+            if (beacon.isEmpty() || stuffed) {
                 // update the tardis table so we don't have to do this again
-                String beacon_loc = beaconData[0] + ":" + beaconData[1] + ":" + by + ":" + beaconData[3];
+                String beacon_loc = beaconData[0] + ":" + bx + ":" + by + ":" + bz;
                 HashMap<String, Object> set = new HashMap<String, Object>();
                 set.put("beacon", beacon_loc);
                 HashMap<String, Object> where = new HashMap<String, Object>();

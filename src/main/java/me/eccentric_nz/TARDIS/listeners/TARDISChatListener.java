@@ -53,23 +53,26 @@ public class TARDISChatListener implements Listener {
     public void onChat(AsyncPlayerChatEvent event) {
         final UUID saved = event.getPlayer().getUniqueId();
         String chat = event.getMessage();
-        if (chat != null && chat.equalsIgnoreCase("tardis rescue accept")) {
+        if (chat != null && (chat.equalsIgnoreCase("tardis rescue accept") || chat.equalsIgnoreCase("tardis request accept"))) {
             if (plugin.getTrackerKeeper().getChat().containsKey(saved)) {
                 final Player rescuer = plugin.getServer().getPlayer(plugin.getTrackerKeeper().getChat().get(saved));
                 final TARDISRescue res = new TARDISRescue(plugin);
                 plugin.getTrackerKeeper().getChat().remove(saved);
                 // delay it so the chat appears before the message
                 final String player = event.getPlayer().getName();
+                final boolean request = (chat.equalsIgnoreCase("tardis request accept"));
+                final String message = (chat.equalsIgnoreCase("tardis request accept")) ? "REQUEST_RELEASE" : "RESCUE_RELEASE";
                 plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
                     @Override
                     public void run() {
-                        if (res.tryRescue(rescuer, saved)) {
-                            TARDISMessage.send(rescuer, "RESCUE_RELEASE", player);
+                        if (res.tryRescue(rescuer, saved, request)) {
+                            TARDISMessage.send(rescuer, message, player);
                         }
                     }
                 }, 2L);
             } else {
-                TARDISMessage.send(event.getPlayer(), "RESCUE_TIMEOUT");
+                final String message = (chat.equalsIgnoreCase("tardis request accept")) ? "REQUEST_TIMEOUT" : "RESCUE_TIMEOUT";
+                TARDISMessage.send(event.getPlayer(), message);
             }
         }
     }

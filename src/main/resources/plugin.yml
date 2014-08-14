@@ -241,6 +241,12 @@ permissions:
   tardis.themaster:
     description: Allows a player to reverse the polarity of the TARDIS Genetic Manipulator turning it into the Immortality Gate.
     default: op
+  tardis.chameleonarch:
+    description: Allows a player to use the Chameleon Arch.
+    default: op
+  tardis.difficulty:
+    description: Allows a player to use the /tardisprefs difficulty command.
+    default: op
 commands:
   tardis:
     aliases: [tt,ttardis,/tardis,timelord]
@@ -573,4 +579,16 @@ commands:
     description: Remote control a TARDIS.
     usage: /<command> [player] [travel|comehere|chameleon|hide|rebuild] [home|area|coords]
     permission: tardis.remote
+    permission-message: You don't have the permission <permission> to use this command
+  tardisschematic:
+    aliases: [tschematic, ts]
+    description: Save, load or paste a TARDIS schematic.
+    usage: /<command> [save|load|paste] [name]
+    permission: tardis.admin
+    permission-message: You don't have the permission <permission> to use this command
+  tardisnetherportal:
+    aliases: [tnether, tnp, o2n, n2o]
+    description: Get coordinates for linking Nether Portals.
+    usage: /<command> [x] [y] [z] [overworld|nether]
+    permission: tardis.help
     permission-message: You don't have the permission <permission> to use this command

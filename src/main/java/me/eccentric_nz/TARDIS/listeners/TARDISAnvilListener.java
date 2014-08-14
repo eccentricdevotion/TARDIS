@@ -63,12 +63,31 @@ public class TARDISAnvilListener implements Listener {
                 ItemStack is = event.getCurrentItem();
                 if (is != null && is.hasItemMeta()) {
                     ItemMeta im = is.getItemMeta();
-                    if (im.hasDisplayName() && disallow.containsKey(im.getDisplayName()) && is.getType() == disallow.get(im.getDisplayName())) {
+                    ItemStack one = inv.getItem(0);
+                    ItemStack two = inv.getItem(1);
+                    if (checkRepair(one, two) && im.hasDisplayName() && disallow.containsKey(im.getDisplayName()) && is.getType() == disallow.get(im.getDisplayName())) {
                         TARDISMessage.send(player, "NO_RENAME");
                         event.setCancelled(true);
                     }
                 }
             }
         }
+    }
+
+    private boolean checkRepair(ItemStack one, ItemStack two) {
+        if (two == null) {
+            return true;
+        }
+        if (!one.hasItemMeta() || !two.hasItemMeta()) {
+            return true;
+        }
+        ItemMeta im_one = one.getItemMeta();
+        ItemMeta im_two = two.getItemMeta();
+        if (!im_one.hasDisplayName() || !im_two.hasDisplayName()) {
+            return true;
+        }
+        String dn_one = im_one.getDisplayName();
+        String dn_two = im_two.getDisplayName();
+        return !dn_one.equals(dn_two);
     }
 }

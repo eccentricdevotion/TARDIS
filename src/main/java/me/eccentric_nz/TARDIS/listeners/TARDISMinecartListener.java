@@ -138,6 +138,11 @@ public class TARDISMinecartListener implements Listener {
                     if (mat.equals(Material.IRON_DOOR_BLOCK)) {
                         d = getDirection(in_out);
                     }
+                    if (mat.equals(Material.IRON_DOOR_BLOCK)) {
+                        plugin.getGeneralKeeper().getTardisChunkList().add(w.getChunkAt(in_out));
+                    } else {
+                        plugin.getGeneralKeeper().getTardisChunkList().remove(w.getChunkAt(in_out));
+                    }
                     teleportMinecart(minecart, in_out, d, inv);
                 }
             }

@@ -63,12 +63,16 @@ public class TARDISManualFlightRunnable implements Runnable {
         // always add them to the tracker, in case they sit there and do nothing...
         plugin.getTrackerKeeper().getCount().put(uuid, 0);
         if (i < loops) {
+            i++;
+            if (target.size() < 4) {
+                TARDISMessage.send(player, "FLIGHT_BAD");
+                return;
+            }
             int r = random.nextInt(4);
             Location loc = target.get(r);
             TARDISMessage.send(player, "FLIGHT_CLICK", controls.get(r));
             loc.getWorld().playEffect(loc, Effect.STEP_SOUND, 152);
             plugin.getTrackerKeeper().getFlight().put(player.getUniqueId(), loc.toString());
-            i++;
         } else {
             int blocks = 10 - plugin.getTrackerKeeper().getCount().get(player.getUniqueId());
             plugin.debug("You hit the correct control " + plugin.getTrackerKeeper().getCount().get(player.getUniqueId()) + " times out of 10!");

@@ -26,6 +26,7 @@ import java.util.Map;
 import java.util.Set;
 import me.eccentric_nz.TARDIS.TARDIS;
 import org.bukkit.ChatColor;
+import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
@@ -69,6 +70,7 @@ public class TARDISConfiguration {
         boolOptions.put("allow.external_gravity", false);
         boolOptions.put("allow.hads", true);
         boolOptions.put("allow.mob_farming", true);
+        boolOptions.put("allow.player_difficulty", true);
         boolOptions.put("allow.power_down", false);
         boolOptions.put("allow.power_down_on_quit", false);
         boolOptions.put("allow.sfx", true);
@@ -76,7 +78,12 @@ public class TARDISConfiguration {
         boolOptions.put("allow.tp_switch", true);
         boolOptions.put("allow.wg_flag_set", true);
         boolOptions.put("allow.zero_room", false);
+        boolOptions.put("arch.clear_inv_on_death", false);
+        boolOptions.put("arch.enabled", true);
+        boolOptions.put("arch.switch_inventory", true);
         boolOptions.put("conversions.biome_update", false);
+        boolOptions.put("conversions.companion_clearing_done", false);
+        boolOptions.put("conversions.condenser_done", false);
         boolOptions.put("conversions.conversion_done", false);
         boolOptions.put("conversions.location_conversion_done", false);
         boolOptions.put("conversions.uuid_conversion_done", false);
@@ -91,6 +98,8 @@ public class TARDISConfiguration {
         boolOptions.put("creation.use_block_stack", false);
         boolOptions.put("creation.use_clay", false);
         boolOptions.put("debug", false);
+        boolOptions.put("growth.return_room_seed", true);
+        boolOptions.put("growth.rooms_require_blocks", false);
         boolOptions.put("police_box.materialise", true);
         boolOptions.put("police_box.name_tardis", false);
         boolOptions.put("police_box.set_biome", true);
@@ -101,8 +110,6 @@ public class TARDISConfiguration {
         boolOptions.put("preferences.strike_lightning", true);
         boolOptions.put("preferences.use_default_condensables", true);
         boolOptions.put("preferences.walk_in_tardis", true);
-        boolOptions.put("growth.return_room_seed", true);
-        boolOptions.put("growth.rooms_require_blocks", false);
         boolOptions.put("travel.chameleon", true);
         boolOptions.put("travel.exile", false);
         boolOptions.put("travel.give_key", false);
@@ -178,11 +185,16 @@ public class TARDISConfiguration {
         artronIntOptions.put("the_end_min", 5500);
         artronIntOptions.put("travel", 100);
         artronIntOptions.put("zero", 250);
+        intOptions.put("arch.min_time", 20);
         intOptions.put("creation.border_radius", 256);
         intOptions.put("creation.count", 0);
-        intOptions.put("creation.custom_creeper_id", 138);
         intOptions.put("creation.inventory_group", 0);
         intOptions.put("creation.tips_limit", 400);
+        intOptions.put("growth.ars_limit", 1);
+        intOptions.put("growth.gravity_max_distance", 16);
+        intOptions.put("growth.gravity_max_velocity", 5);
+        intOptions.put("growth.room_speed", 4);
+        intOptions.put("growth.rooms_condenser_percent", 100);
         intOptions.put("police_box.confirm_timeout", 15);
         intOptions.put("police_box.platform_data", 8);
         intOptions.put("police_box.platform_id", 35);
@@ -197,10 +209,7 @@ public class TARDISConfiguration {
         intOptions.put("preferences.malfunction_end", 3);
         intOptions.put("preferences.malfunction_nether", 3);
         intOptions.put("preferences.sfx_volume", 10);
-        intOptions.put("growth.gravity_max_distance", 16);
-        intOptions.put("growth.gravity_max_velocity", 5);
-        intOptions.put("growth.room_speed", 4);
-        intOptions.put("growth.rooms_condenser_percent", 100);
+        intOptions.put("travel.grace_period", 10);
         intOptions.put("travel.manual_flight_delay", 60);
         intOptions.put("travel.random_attempts", 30);
         intOptions.put("travel.terminal_step", 1);
@@ -256,6 +265,8 @@ public class TARDISConfiguration {
         roomIntOptions.put("rooms.ZERO.cost", 650);
         roomIntOptions.put("rooms.ZERO.offset", -4);
         // string
+        strOptions.put("creation.area", "none");
+        strOptions.put("creation.custom_creeper_id", "BEACON");
         strOptions.put("creation.custom_schematic_seed", "OBSIDIAN");
         strOptions.put("creation.default_world_name", "TARDIS_TimeVortex");
         strOptions.put("creation.gamemode", "survival");
@@ -267,6 +278,7 @@ public class TARDISConfiguration {
         strOptions.put("preferences.language", "en");
         strOptions.put("preferences.respect_towny", "nation");
         strOptions.put("preferences.use_worldguard", "build");
+        strOptions.put("preferences.wand", "BONE");
         strOptions.put("storage.database", "sqlite");
         strOptions.put("storage.mysql.url", "mysql://localhost:3306/TARDIS");
         strOptions.put("storage.mysql.user", "bukkit");
@@ -344,6 +356,14 @@ public class TARDISConfiguration {
                 if (!config.contains(entry.getKey())) {
                     plugin.getConfig().set(entry.getKey(), entry.getValue());
                     i++;
+                } else if (entry.getKey().equals("creation.custom_creeper_id")) {
+                    try {
+                        int id = Integer.parseInt(plugin.getConfig().getString("creation.custom_creeper_id"));
+                        String set = Material.getMaterial(id).toString();
+                        plugin.getConfig().set("creation.custom_creeper_id", set);
+                    } catch (NumberFormatException e) {
+                        // no conversion necessary
+                    }
                 }
             }
             if (!config.isConfigurationSection("rechargers")) {

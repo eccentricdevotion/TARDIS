@@ -35,6 +35,7 @@ public enum MAP {
     LOCATOR((byte) 1965, "TARDIS Locator Circuit"),
     MATERIALISATION((byte) 1964, "TARDIS Materialisation Circuit"),
     MEMORY((byte) 1975, "TARDIS Memory Circuit"),
+    PAINTER((byte) 1979, "Painter Circuit"),
     PERCEPTION((byte) 1978, "Perception Circuit"),
     REDSTONE((byte) 1970, "Redstone Activator Circuit"),
     SCANNER((byte) 1977, "TARDIS Scanner Circuit"),

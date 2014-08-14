@@ -22,6 +22,7 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
+import java.util.UUID;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import me.eccentric_nz.TARDIS.TARDIS;
@@ -37,6 +38,7 @@ import me.eccentric_nz.TARDIS.database.ResultSetTravellers;
 import me.eccentric_nz.TARDIS.travel.TARDISCaveFinder;
 import me.eccentric_nz.TARDIS.travel.TARDISRescue;
 import me.eccentric_nz.TARDIS.travel.TARDISTimeTravel;
+import me.eccentric_nz.TARDIS.travel.TARDISTravelRequest;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import me.eccentric_nz.TARDIS.utility.TARDISWorldBorderChecker;
 import org.bukkit.ChatColor;
@@ -73,6 +75,7 @@ public class TARDISTravelCommands implements CommandExecutor {
     }
 
     @Override
+    @SuppressWarnings("deprecation")
     public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
         Player player = null;
         if (sender instanceof Player) {
@@ -220,7 +223,7 @@ public class TARDISTravelCommands implements CommandExecutor {
                             return true;
                         } else {
                             if (player.hasPermission("tardis.timetravel.player")) {
-                                if (plugin.getConfig().getString("preferences.difficulty").equals("hard")) {
+                                if (plugin.getConfig().getString("preferences.difficulty").equals("hard") && !plugin.getUtils().inGracePeriod(player, false)) {
                                     TARDISMessage.send(player, "ADV_PLAYER");
                                     return true;
                                 }
@@ -250,12 +253,52 @@ public class TARDISTravelCommands implements CommandExecutor {
                                     return true;
                                 }
                                 TARDISRescue to_player = new TARDISRescue(plugin);
-                                return to_player.rescue(player, saved.getUniqueId(), id, tt, rsc.getDirection(), false);
+                                return to_player.rescue(player, saved.getUniqueId(), id, tt, rsc.getDirection(), false, false);
                             } else {
                                 TARDISMessage.send(player, "NO_PERM_PLAYER");
                                 return true;
                             }
                         }
+                    }
+                    if (args.length == 2 && (args[1].equals("?") || args[1].equalsIgnoreCase("tpa"))) {
+                        if (!player.hasPermission("tardis.timetravel.player")) {
+                            TARDISMessage.send(player, "NO_PERM_PLAYER");
+                            return true;
+                        }
+                        Player requested = plugin.getServer().getPlayer(args[0]);
+                        if (requested == null) {
+                            TARDISMessage.send(player, "NOT_ONLINE");
+                            return true;
+                        }
+                        // check the to player's DND status
+                        HashMap<String, Object> wherednd = new HashMap<String, Object>();
+                        wherednd.put("uuid", requested.getUniqueId().toString());
+                        ResultSetPlayerPrefs rspp = new ResultSetPlayerPrefs(plugin, wherednd);
+                        if (rspp.resultSet() && rspp.isDND()) {
+                            TARDISMessage.send(player, "DND", args[0]);
+                            return true;
+                        }
+                        // check the location
+                        TARDISTravelRequest ttr = new TARDISTravelRequest(plugin);
+                        if (!ttr.getRequest(player, requested, requested.getLocation())) {
+                            return true;
+                        }
+                        // ask if we can travel to this player
+                        final UUID requestedUUID = requested.getUniqueId();
+                        TARDISMessage.send(requested, "REQUEST_TRAVEL", player.getName(), ChatColor.AQUA + "tardis request accept" + ChatColor.RESET);
+                        plugin.getTrackerKeeper().getChat().put(requestedUUID, player.getUniqueId());
+                        final Player p = player;
+                        final String to = args[0];
+                        plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
+                            @Override
+                            public void run() {
+                                if (plugin.getTrackerKeeper().getChat().containsKey(requestedUUID)) {
+                                    plugin.getTrackerKeeper().getChat().remove(requestedUUID);
+                                    TARDISMessage.send(p, "REQUEST_NO_RESPONSE", to);
+                                }
+                            }
+                        }, 1200L);
+                        return true;
                     }
                     if (args.length == 2 && args[0].equalsIgnoreCase("biome")) {
                         // we're thinking this is a biome search
@@ -263,7 +306,7 @@ public class TARDISTravelCommands implements CommandExecutor {
                             TARDISMessage.send(player, "TRAVEL_NO_PERM_BIOME");
                             return true;
                         }
-                        if (plugin.getConfig().getString("preferences.difficulty").equals("hard") && mustUseAdvanced.contains(args[0].toLowerCase())) {
+                        if (plugin.getConfig().getString("preferences.difficulty").equals("hard") && mustUseAdvanced.contains(args[0].toLowerCase()) && !plugin.getUtils().inGracePeriod(player, false)) {
                             TARDISMessage.send(player, "ADV_BIOME");
                             return true;
                         }
@@ -396,7 +439,7 @@ public class TARDISTravelCommands implements CommandExecutor {
                     }
                     if (args.length == 2 && args[0].equalsIgnoreCase("area")) {
                         // we're thinking this is admin defined area name
-                        if (plugin.getConfig().getString("preferences.difficulty").equals("hard") && mustUseAdvanced.contains(args[0].toLowerCase())) {
+                        if (plugin.getConfig().getString("preferences.difficulty").equals("hard") && mustUseAdvanced.contains(args[0].toLowerCase()) && !plugin.getUtils().inGracePeriod(player, false)) {
                             TARDISMessage.send(player, "ADV_AREA");
                             return true;
                         }
@@ -570,7 +613,7 @@ public class TARDISTravelCommands implements CommandExecutor {
             int limitz = 30000;
             if (plugin.getPM().isPluginEnabled("WorldBorder")) {
                 // get the border limit for this world
-                TARDISWorldBorderChecker wb = new TARDISWorldBorderChecker(plugin, plugin.getPluginRespect().borderOnServer);
+                TARDISWorldBorderChecker wb = new TARDISWorldBorderChecker(plugin, plugin.getPluginRespect().isBorderOnServer());
                 int[] data = wb.getBorderDistance(w.getName());
                 limitx = data[0];
                 limitz = data[1];

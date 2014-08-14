@@ -25,6 +25,7 @@ import me.eccentric_nz.TARDIS.commands.TARDISBindTabComplete;
 import me.eccentric_nz.TARDIS.commands.TARDISBookCommands;
 import me.eccentric_nz.TARDIS.commands.TARDISGravityCommands;
 import me.eccentric_nz.TARDIS.commands.TARDISGravityTabComplete;
+import me.eccentric_nz.TARDIS.commands.TARDISNetherPortalCommand;
 import me.eccentric_nz.TARDIS.commands.TARDISRecipeCommands;
 import me.eccentric_nz.TARDIS.commands.TARDISRecipeTabComplete;
 import me.eccentric_nz.TARDIS.commands.TARDISRoomCommands;
@@ -41,10 +42,12 @@ import me.eccentric_nz.TARDIS.commands.preferences.TARDISPrefsTabComplete;
 import me.eccentric_nz.TARDIS.commands.remote.TARDISRemoteCommands;
 import me.eccentric_nz.TARDIS.commands.tardis.TARDISCommands;
 import me.eccentric_nz.TARDIS.commands.tardis.TARDISTabComplete;
+import me.eccentric_nz.TARDIS.schematic.TARDISSchematicCommand;
 import me.eccentric_nz.TARDIS.universaltranslator.TARDISSayCommand;
 import me.eccentric_nz.TARDIS.universaltranslator.TARDISSayTabComplete;
 
 /**
+ * Loads all TARDIS command executors and tab completers.
  *
  * @author eccentric_nz
  */
@@ -82,6 +85,7 @@ public class TARDISCommandSetter {
         plugin.getCommand("tardisrecipe").setExecutor(new TARDISRecipeCommands(plugin));
         plugin.getCommand("tardisrecipe").setTabCompleter(new TARDISRecipeTabComplete());
         plugin.getCommand("tardisroom").setExecutor(new TARDISRoomCommands(plugin));
+        plugin.getCommand("tardisschematic").setExecutor(new TARDISSchematicCommand(plugin));
         plugin.getCommand("tardistexture").setExecutor(new TARDISTextureCommands(plugin));
         plugin.getCommand("tardistexture").setTabCompleter(new TARDISTextureTabComplete());
         TARDISTravelCommands tardisTravelCommand = new TARDISTravelCommands(plugin);
@@ -91,5 +95,6 @@ public class TARDISCommandSetter {
         plugin.getCommand("tardissay").setExecutor(new TARDISSayCommand(plugin));
         plugin.getCommand("tardissay").setTabCompleter(new TARDISSayTabComplete());
         plugin.getCommand("tardisremote").setExecutor(new TARDISRemoteCommands(plugin));
+        plugin.getCommand("tardisnetherportal").setExecutor(new TARDISNetherPortalCommand(plugin));
     }
 }

@@ -41,6 +41,8 @@ import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 
 /**
+ * Keeps instances of various classes, maps and lists for easy access in other
+ * classes.
  *
  * @author eccentric_nz
  */

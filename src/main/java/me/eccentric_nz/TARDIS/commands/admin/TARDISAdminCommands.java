@@ -21,6 +21,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.arch.TARDISArchCommand;
 import me.eccentric_nz.TARDIS.enumeration.CMDS;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import org.bukkit.command.Command;
@@ -51,7 +52,11 @@ public class TARDISAdminCommands implements CommandExecutor {
     public TARDISAdminCommands(TARDIS plugin) {
         this.plugin = plugin;
         // add first arguments
+        firstsStr.put("add_regions", "");
+        firstsStr.put("arch", "");
+        firstsStr.put("area", "creation");
         firstsStr.put("chunks", "");
+        firstsStr.put("condenser", "");
         firstsStr.put("config", "");
         firstsStr.put("custom_schematic_seed", "creation");
         firstsStr.put("database", "storage");
@@ -86,13 +91,10 @@ public class TARDISAdminCommands implements CommandExecutor {
         firstsStrArtron.add("full_charge_item");
         firstsStrArtron.add("jettison_seed");
         // boolean
+        firstsBool.put("achievements", "allow");
         firstsBool.put("add_perms", "creation");
         firstsBool.put("all_blocks", "allow");
-        firstsBool.put("achievements", "allow");
         firstsBool.put("autonomous", "allow");
-        firstsBool.put("hads", "allow");
-        firstsBool.put("mob_farming", "allow");
-        firstsBool.put("tp_switch", "allow");
         firstsBool.put("chameleon", "");
         firstsBool.put("create_worlds", "creation");
         firstsBool.put("create_worlds_with_perms", "creation");
@@ -100,13 +102,15 @@ public class TARDISAdminCommands implements CommandExecutor {
         firstsBool.put("debug", "");
         firstsBool.put("default_world", "creation");
         firstsBool.put("emergency_npc", "allow");
-        firstsBool.put("external_gravity", "allow");
         firstsBool.put("exile", "travel");
+        firstsBool.put("external_gravity", "allow");
         firstsBool.put("give_key", "travel");
+        firstsBool.put("hads", "allow");
         firstsBool.put("include_default_world", "travel");
         firstsBool.put("keep_night", "creation");
         firstsBool.put("land_on_water", "travel");
         firstsBool.put("materialise", "police_box");
+        firstsBool.put("mob_farming", "allow");
         firstsBool.put("name_tardis", "police_box");
         firstsBool.put("nether", "travel");
         firstsBool.put("per_world_perms", "travel");
@@ -118,11 +122,12 @@ public class TARDISAdminCommands implements CommandExecutor {
         firstsBool.put("return_room_seed", "growth");
         firstsBool.put("rooms_require_blocks", "growth");
         firstsBool.put("set_biome", "police_box");
-        firstsBool.put("sky_biome", "creation");
         firstsBool.put("sfx", "allow");
+        firstsBool.put("sky_biome", "creation");
         firstsBool.put("spawn_eggs", "allow");
         firstsBool.put("strike_lightning", "preferences");
         firstsBool.put("the_end", "travel");
+        firstsBool.put("tp_switch", "allow");
         firstsBool.put("use_block_stack", "creation");
         firstsBool.put("use_clay", "creation");
         firstsBool.put("use_worldguard", "preferences");
@@ -130,10 +135,12 @@ public class TARDISAdminCommands implements CommandExecutor {
         firstsBool.put("wg_flag_set", "allow");
         firstsBool.put("zero_room", "allow");
         // integer
+        firstsInt.put("ars_limit", "growth");
         firstsInt.put("border_radius", "creation");
         firstsInt.put("confirm_timeout", "police_box");
         firstsInt.put("count", "creation");
         firstsInt.put("custom_creeper_id", "creation");
+        firstsInt.put("grace_period", "travel");
         firstsInt.put("gravity_max_distance", "growth");
         firstsInt.put("gravity_max_velocity", "growth");
         firstsInt.put("hads_damage", "preferences");
@@ -142,20 +149,21 @@ public class TARDISAdminCommands implements CommandExecutor {
         firstsInt.put("malfunction", "preferences");
         firstsInt.put("malfunction_end", "preferences");
         firstsInt.put("malfunction_nether", "preferences");
+        firstsInt.put("min_time", "arch");
         firstsInt.put("platform_data", "police_box");
         firstsInt.put("platform_id", "police_box");
         firstsInt.put("random_attempts", "travel");
         firstsInt.put("room_speed", "growth");
         firstsInt.put("rooms_condenser_percent", "growth");
         firstsInt.put("sfx_volume", "preferences");
+        firstsInt.put("tardis_lamp", "police_box");
         firstsInt.put("terminal_step", "travel");
         firstsInt.put("timeout", "travel");
         firstsInt.put("timeout_height", "travel");
         firstsInt.put("tips_limit", "creation");
         firstsInt.put("tp_radius", "travel");
-        firstsInt.put("wall_id", "police_box");
         firstsInt.put("wall_data", "police_box");
-        firstsInt.put("tardis_lamp", "police_box");
+        firstsInt.put("wall_id", "police_box");
         firstsIntArtron.add("autonomous");
         firstsIntArtron.add("backdoor");
         firstsIntArtron.add("comehere");
@@ -190,6 +198,9 @@ public class TARDISAdminCommands implements CommandExecutor {
                     if (first.equals("chunks")) {
                         return new TARDISChunksCommand(plugin).listChunks(sender);
                     }
+                    if (first.equals("condenser")) {
+                        return new TARDISCondenserCommand(plugin).set(sender);
+                    }
                     if (first.equals("reload")) {
                         return new TARDISReloadCommand(plugin).reloadConfig(sender);
                     }
@@ -209,6 +220,12 @@ public class TARDISAdminCommands implements CommandExecutor {
                 if (args.length < 2) {
                     TARDISMessage.send(sender, "TOO_FEW_ARGS");
                     return false;
+                }
+                if (first.equals("arch")) {
+                    return new TARDISArchCommand(plugin).whois(sender, args);
+                }
+                if (first.equals("area")) {
+                    plugin.getConfig().set("creation.area", args[1]);
                 }
                 if (first.equals("config")) {
                     return new TARDISConfigCommand(plugin).showConfigOptions(sender, args);

@@ -22,7 +22,6 @@ import java.util.Locale;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import me.eccentric_nz.TARDIS.database.ResultSetTravellers;
-import me.eccentric_nz.TARDIS.enumeration.SCHEMATIC;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
@@ -97,6 +96,7 @@ public class TARDISUpdateCommand {
                 TARDISMessage.send(player, "NOT_A_TIMELORD");
                 return false;
             }
+            int ownerid = rs.getTardis_id();
             // must grow a room first
             if (tardis_block.equals("farm") || tardis_block.equals("stable") || tardis_block.equals("village") || tardis_block.equals("rail")) {
                 if (tardis_block.equals("farm") && rs.getFarm().isEmpty()) {
@@ -129,11 +129,6 @@ public class TARDISUpdateCommand {
                     TARDISMessage.send(player, "ARS_OWN_WORLD");
                     return true;
                 }
-                SCHEMATIC schm = rs.getSchematic();
-                if (schm.equals(SCHEMATIC.CUSTOM)) {
-                    TARDISMessage.send(player, "ARS_NO_CUSTOM");
-                    return true;
-                }
             }
             if (!tardis_block.equals("backdoor")) {
                 HashMap<String, Object> wheret = new HashMap<String, Object>();
@@ -141,6 +136,11 @@ public class TARDISUpdateCommand {
                 ResultSetTravellers rst = new ResultSetTravellers(plugin, wheret, false);
                 if (!rst.resultSet()) {
                     TARDISMessage.send(player, "NOT_IN_TARDIS");
+                    return false;
+                }
+                int thisid = rst.getTardis_id();
+                if (thisid != ownerid) {
+                    TARDISMessage.send(player, "CMD_ONLY_TL");
                     return false;
                 }
             }

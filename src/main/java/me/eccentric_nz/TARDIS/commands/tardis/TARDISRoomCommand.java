@@ -30,6 +30,7 @@ import me.eccentric_nz.TARDIS.database.ResultSetTravellers;
 import me.eccentric_nz.TARDIS.enumeration.SCHEMATIC;
 import me.eccentric_nz.TARDIS.rooms.TARDISCondenserData;
 import me.eccentric_nz.TARDIS.rooms.TARDISSeedData;
+import me.eccentric_nz.TARDIS.rooms.TARDISWalls.Pair;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -87,7 +88,7 @@ public class TARDISRoomCommand {
         }
         int id = rs.getTardis_id();
         TARDISCircuitChecker tcc = null;
-        if (plugin.getConfig().getString("preferences.difficulty").equals("hard")) {
+        if (plugin.getConfig().getString("preferences.difficulty").equals("hard") && !plugin.getUtils().inGracePeriod(player, true)) {
             tcc = new TARDISCircuitChecker(plugin, id);
             tcc.getCircuits();
         }
@@ -114,7 +115,7 @@ public class TARDISRoomCommand {
             return true;
         }
         if (plugin.getConfig().getBoolean("growth.rooms_require_blocks")) {
-            HashMap<String, Integer> blockIDCount = new HashMap<String, Integer>();
+            HashMap<String, Integer> blockTypeCount = new HashMap<String, Integer>();
             boolean hasRequired = true;
             HashMap<String, Integer> roomBlocks = plugin.getBuildKeeper().getRoomBlockCounts().get(room);
             String wall = "ORANGE_WOOL";
@@ -128,28 +129,28 @@ public class TARDISRoomCommand {
                 wall = rsp.getWall();
                 floor = rsp.getFloor();
             }
-            HashMap<Integer, Integer> item_counts = new HashMap<Integer, Integer>();
+            HashMap<String, Integer> item_counts = new HashMap<String, Integer>();
             for (Map.Entry<String, Integer> entry : roomBlocks.entrySet()) {
                 String[] block_data = entry.getKey().split(":");
-                int bid = plugin.getUtils().parseInt(block_data[0]);
+                String bid = block_data[0];
                 String mat;
-                String bdata;
-                int block_id;
+                String bkey;
+                String block_id;
                 if (hasPrefs && block_data.length == 2 && (block_data[1].equals("1") || block_data[1].equals("8"))) {
                     mat = (block_data[1].equals("1")) ? wall : floor;
-                    int[] iddata = plugin.getTardisWalls().blocks.get(mat);
-                    bdata = String.format("%d", iddata[0]);
-                    block_id = iddata[0];
+                    Pair iddata = plugin.getTardisWalls().blocks.get(mat);
+                    bkey = iddata.getType().toString();
+                    block_id = iddata.getType().toString();
                 } else {
-                    bdata = String.format("%d", bid);
+                    bkey = bid;
                     block_id = bid;
                 }
                 int tmp = Math.round((entry.getValue() / 100.0F) * plugin.getConfig().getInt("growth.rooms_condenser_percent"));
                 int required = (tmp > 0) ? tmp : 1;
-                if (blockIDCount.containsKey(bdata)) {
-                    blockIDCount.put(bdata, blockIDCount.get(bdata) + required);
+                if (blockTypeCount.containsKey(bkey)) {
+                    blockTypeCount.put(bkey, blockTypeCount.get(bkey) + required);
                 } else {
-                    blockIDCount.put(bdata, required);
+                    blockTypeCount.put(bkey, required);
                 }
                 if (item_counts.containsKey(block_id)) {
                     item_counts.put(block_id, item_counts.get(block_id) + required);
@@ -157,7 +158,7 @@ public class TARDISRoomCommand {
                     item_counts.put(block_id, required);
                 }
             }
-            for (Map.Entry<Integer, Integer> map : item_counts.entrySet()) {
+            for (Map.Entry<String, Integer> map : item_counts.entrySet()) {
                 HashMap<String, Object> wherec = new HashMap<String, Object>();
                 wherec.put("tardis_id", id);
                 wherec.put("block_data", map.getKey());
@@ -178,7 +179,7 @@ public class TARDISRoomCommand {
                 return true;
             }
             TARDISCondenserData c_data = new TARDISCondenserData();
-            c_data.setBlockIDCount(blockIDCount);
+            c_data.setBlockIDCount(blockTypeCount);
             c_data.setTardis_id(id);
             plugin.getGeneralKeeper().getRoomCondenserData().put(player.getUniqueId(), c_data);
         }

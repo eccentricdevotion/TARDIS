@@ -148,7 +148,7 @@ public class TARDISDoorClickListener extends TARDISDoorListener implements Liste
                                         return;
                                     }
                                     int locked = (rsd.isLocked()) ? 0 : 1;
-                                    String message = (rsd.isLocked()) ? plugin.getLanguage().getString("DOOR_UNLOCK") : plugin.getLanguage().getString("DOOR_UNLOCK");
+                                    String message = (rsd.isLocked()) ? plugin.getLanguage().getString("DOOR_UNLOCK") : plugin.getLanguage().getString("DOOR_DEADLOCK");
                                     HashMap<String, Object> setl = new HashMap<String, Object>();
                                     setl.put("locked", locked);
                                     HashMap<String, Object> wherel = new HashMap<String, Object>();

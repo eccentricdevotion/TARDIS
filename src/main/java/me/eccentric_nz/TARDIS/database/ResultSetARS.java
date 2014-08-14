@@ -45,7 +45,6 @@ public class ResultSetARS {
     private int id;
     private int tardis_id;
     private UUID uuid;
-    private String player;
     private int east;
     private int south;
     private int layer;
@@ -104,7 +103,6 @@ public class ResultSetARS {
                     this.id = rs.getInt("ars_id");
                     this.tardis_id = rs.getInt("tardis_id");
                     this.uuid = UUID.fromString(rs.getString("uuid"));
-                    this.player = rs.getString("player");
                     this.east = rs.getInt("ars_x_east");
                     this.south = rs.getInt("ars_z_south");
                     this.layer = rs.getInt("ars_y_layer");

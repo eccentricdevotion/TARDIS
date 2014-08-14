@@ -88,14 +88,6 @@ public class TARDISFarmer {
      */
     @SuppressWarnings("deprecation")
     public List<TARDISMob> farmAnimals(Location l, COMPASS d, int id, final Player p, String to, String from) {
-        if (plugin.getPM().isPluginEnabled("Multiverse-Inventories")) {
-            boolean canfarm = plugin.getTMIChecker().checkMVI(from, to);
-            if (!canfarm) {
-                TARDISMessage.send(p, "WORLD_NO_FARM");
-                plugin.getTrackerKeeper().getFarming().remove(p.getUniqueId());
-                return null;
-            }
-        }
         List<TARDISMob> old_macd_had_a_pet = new ArrayList<TARDISMob>();
         switch (d) {
             case NORTH:
@@ -135,6 +127,8 @@ public class TARDISFarmer {
             int horsetotal = 0;
             // count total villagers
             int villagertotal = 0;
+            // count total pets
+            int pettotal = 0;
             // is there a farm room?
             HashMap<String, Object> where = new HashMap<String, Object>();
             where.put("tardis_id", id);
@@ -314,10 +308,19 @@ public class TARDISFarmer {
                                 }
                                 old_macd_had_a_pet.add(pet);
                                 e.remove();
+                                pettotal++;
                             }
                             break;
                         default:
                             break;
+                    }
+                }
+                if (plugin.getPM().isPluginEnabled("Multiverse-Inventories") && (farmtotal > 0 || horsetotal > 0 || villagertotal > 0 || pettotal > 0)) {
+                    boolean canfarm = plugin.getTMIChecker().checkMVI(from, to);
+                    if (!canfarm) {
+                        TARDISMessage.send(p, "WORLD_NO_FARM");
+                        plugin.getTrackerKeeper().getFarming().remove(p.getUniqueId());
+                        return null;
                     }
                 }
                 if (!farm.isEmpty()) {

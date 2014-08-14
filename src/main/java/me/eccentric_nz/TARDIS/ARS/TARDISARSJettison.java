@@ -19,6 +19,8 @@ package me.eccentric_nz.TARDIS.ARS;
 import org.bukkit.Chunk;
 
 /**
+ * Data container for performing Architectural Reconfiguration System room
+ * jettisons.
  *
  * @author eccentric_nz
  */

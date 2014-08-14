@@ -132,6 +132,7 @@ public class TARDISCondensables {
             condensables.put("GOLD_HOE", 16);
             condensables.put("GOLD_INGOT", 105);
             condensables.put("GOLD_LEGGINGS", 16);
+            condensables.put("GOLD_NUGGET", 12);
             condensables.put("GOLD_PICKAXE", 16);
             condensables.put("GOLD_PLATE", 205);
             condensables.put("GOLD_RECORD", 100);

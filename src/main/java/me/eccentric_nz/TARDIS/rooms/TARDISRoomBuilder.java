@@ -16,13 +16,18 @@
  */
 package me.eccentric_nz.TARDIS.rooms;
 
+import java.io.File;
 import java.util.HashMap;
+import me.eccentric_nz.TARDIS.JSON.JSONObject;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.ResultSetPlayerPrefs;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
+import me.eccentric_nz.TARDIS.rooms.TARDISWalls.Pair;
+import me.eccentric_nz.TARDIS.schematic.TARDISSchematicGZip;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import org.bukkit.Location;
+import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
 
@@ -69,39 +74,43 @@ public class TARDISRoomBuilder {
             ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, wherepp);
             TARDISRoomData roomData = new TARDISRoomData();
             roomData.setTardis_id(rs.getTardis_id());
-            // get middle data, default to orange wool if not set
-            int middle_id, floor_id;
-            byte middle_data, floor_data;
+            // get wall data, default to orange wool if not set
+            Material wall_type, floor_type;
+            byte wall_data, floor_data;
             if (rsp.resultSet()) {
-                int[] wid_data = plugin.getTardisWalls().blocks.get(rsp.getWall());
-                middle_id = wid_data[0];
-                middle_data = (byte) wid_data[1];
-                int[] fid_data = plugin.getTardisWalls().blocks.get(rsp.getFloor());
-                floor_id = fid_data[0];
-                floor_data = (byte) fid_data[1];
+                Pair wid_data = plugin.getTardisWalls().blocks.get(rsp.getWall());
+                wall_type = wid_data.getType();
+                wall_data = wid_data.getData();
+                Pair fid_data = plugin.getTardisWalls().blocks.get(rsp.getFloor());
+                floor_type = fid_data.getType();
+                floor_data = fid_data.getData();
             } else {
-                middle_id = 35;
-                middle_data = 1;
-                floor_id = 35;
+                wall_type = Material.WOOL;
+                wall_data = 1;
+                floor_type = Material.WOOL;
                 floor_data = 8;
             }
-            roomData.setMiddle_id(middle_id);
-            roomData.setMiddle_data(middle_data);
-            roomData.setFloor_id(floor_id);
-            roomData.setFloor_data(floor_data);
+            roomData.setMiddleType(wall_type);
+            roomData.setMiddleData(wall_data);
+            roomData.setFloorType(floor_type);
+            roomData.setFloorData(floor_data);
             // get start locations
             Block b = l.getBlock();
             roomData.setBlock(b);
             roomData.setDirection(d);
-            short[] dimensions = plugin.getBuildKeeper().getRoomDimensions().get(r);
-            int xzoffset = (dimensions[1] / 2);
+            String directory = (plugin.getRoomsConfig().getBoolean("rooms." + r + ".user")) ? "user_schematics" : "schematics";
+            String path = plugin.getDataFolder() + File.separator + directory + File.separator + r.toLowerCase() + ".tschm";
+            // get JSON
+            JSONObject obj = TARDISSchematicGZip.unzip(path);
+            JSONObject dimensions = obj.getJSONObject("dimensions");
+            int xzoffset = (dimensions.getInt("width") / 2);
             switch (d) {
                 case NORTH:
                     l.setX(l.getX() - xzoffset);
-                    l.setZ(l.getZ() - dimensions[1]);
+                    l.setZ(l.getZ() - dimensions.getInt("width"));
                     break;
                 case WEST:
-                    l.setX(l.getX() - dimensions[1]);
+                    l.setX(l.getX() - dimensions.getInt("width"));
                     l.setZ(l.getZ() - xzoffset);
                     break;
                 case SOUTH:
@@ -115,11 +124,8 @@ public class TARDISRoomBuilder {
             int offset = Math.abs(plugin.getRoomsConfig().getInt("rooms." + r + ".offset"));
             l.setY(l.getY() - offset);
             roomData.setLocation(l);
-            roomData.setX(1);
-            roomData.setZ(1);
             roomData.setRoom(r);
-            roomData.setSchematic(plugin.getBuildKeeper().getRoomSchematics().get(r));
-            roomData.setDimensions(dimensions);
+            roomData.setSchematic(obj);
 
             // determine how often to place a block (in ticks) - `room_speed` is the number of blocks to place in a second (20 ticks)
             long delay = Math.round(20 / plugin.getConfig().getDouble("growth.room_speed"));

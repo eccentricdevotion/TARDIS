@@ -20,6 +20,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.arch.TARDISArchInventory;
+import me.eccentric_nz.TARDIS.arch.TARDISArchPersister;
 import me.eccentric_nz.TARDIS.builders.TARDISMaterialisationData;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetAreas;
@@ -62,10 +64,10 @@ public class TARDISTimeLordDeathListener implements Listener {
      */
     @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
     public void onTimeLordDeath(PlayerDeathEvent event) {
+        Player player = event.getEntity();
+        UUID playerUUID = player.getUniqueId();
         if (plugin.getConfig().getBoolean("allow.autonomous")) {
-            Player player = event.getEntity();
             if (player.hasPermission("tardis.autonomous")) {
-                UUID playerUUID = player.getUniqueId();
                 HashMap<String, Object> where = new HashMap<String, Object>();
                 where.put("uuid", playerUUID.toString());
                 ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);
@@ -220,6 +222,14 @@ public class TARDISTimeLordDeathListener implements Listener {
                         }
                     }
                 }
+            }
+        }
+        // save arched status
+        if (plugin.isDisguisesOnServer() && plugin.getConfig().getBoolean("arch.enabled") && plugin.getTrackerKeeper().getJohnSmith().containsKey(playerUUID)) {
+            new TARDISArchPersister(plugin).save(playerUUID);
+            if (plugin.getConfig().getBoolean("arch.clear_inv_on_death")) {
+                // clear inventories
+                new TARDISArchInventory().clear(playerUUID);
             }
         }
     }

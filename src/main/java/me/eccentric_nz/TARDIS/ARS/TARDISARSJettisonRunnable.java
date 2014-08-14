@@ -27,6 +27,7 @@ import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
 
 /**
+ * Performs Architectural Reconfiguration System room jettisons.
  *
  * @author eccentric_nz
  */

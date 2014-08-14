@@ -77,7 +77,8 @@ import java.util.Map;
  * @author JSON.org
  * @version 2013-04-18
  */
-public class JSONArray {
+@SuppressWarnings("rawtypes")
+public final class JSONArray {
 
     /**
      * The arrayList where the JSONArray's properties are kept.
@@ -97,6 +98,7 @@ public class JSONArray {
      * @param x A JSONTokener
      * @throws JSONException If there is a syntax error.
      */
+    @SuppressWarnings("unchecked")
     public JSONArray(JSONTokener x) throws JSONException {
         this();
         if (x.nextClean() != '[') {
@@ -145,6 +147,7 @@ public class JSONArray {
      *
      * @param collection A Collection.
      */
+    @SuppressWarnings("unchecked")
     public JSONArray(Collection collection) {
         this.myArrayList = new ArrayList();
         if (collection != null) {
@@ -580,7 +583,7 @@ public class JSONArray {
      * @return this.
      */
     public JSONArray put(double value) throws JSONException {
-        Double d = new Double(value);
+        Double d = value;
         JSONObject.testValidity(d);
         this.put(d);
         return this;
@@ -628,6 +631,7 @@ public class JSONArray {
      * object.
      * @return this.
      */
+    @SuppressWarnings("unchecked")
     public JSONArray put(Object value) {
         this.myArrayList.add(value);
         return this;
@@ -737,6 +741,7 @@ public class JSONArray {
      * @throws JSONException If the index is negative or if the the value is an
      * invalid number.
      */
+    @SuppressWarnings("unchecked")
     public JSONArray put(int index, Object value) throws JSONException {
         JSONObject.testValidity(value);
         if (index < 0) {

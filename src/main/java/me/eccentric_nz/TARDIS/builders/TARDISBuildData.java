@@ -17,6 +17,7 @@
 package me.eccentric_nz.TARDIS.builders;
 
 import me.eccentric_nz.TARDIS.enumeration.SCHEMATIC;
+import org.bukkit.Material;
 
 /**
  *
@@ -25,10 +26,10 @@ import me.eccentric_nz.TARDIS.enumeration.SCHEMATIC;
 public class TARDISBuildData {
 
     private SCHEMATIC schematic;
-    private int wall_id;
-    private byte wall_data;
-    private int floor_id;
-    private byte floor_data;
+    private Material wallType;
+    private byte wallData;
+    private Material floorType;
+    private byte floorData;
     private int box_id;
     private byte box_data;
     private int lamp;
@@ -44,36 +45,36 @@ public class TARDISBuildData {
         this.schematic = schematic;
     }
 
-    public int getWall_id() {
-        return wall_id;
+    public Material getWallType() {
+        return wallType;
     }
 
-    public void setWall_id(int wall_id) {
-        this.wall_id = wall_id;
+    public void setWallType(Material wallType) {
+        this.wallType = wallType;
     }
 
-    public byte getWall_data() {
-        return wall_data;
+    public byte getWallData() {
+        return wallData;
     }
 
-    public void setWall_data(byte wall_data) {
-        this.wall_data = wall_data;
+    public void setWallData(byte wallData) {
+        this.wallData = wallData;
     }
 
-    public int getFloor_id() {
-        return floor_id;
+    public Material getFloorType() {
+        return floorType;
     }
 
-    public void setFloor_id(int floor_id) {
-        this.floor_id = floor_id;
+    public void setFloorType(Material floorType) {
+        this.floorType = floorType;
     }
 
-    public byte getFloor_data() {
-        return floor_data;
+    public byte getFloorData() {
+        return floorData;
     }
 
-    public void setFloor_data(byte floor_data) {
-        this.floor_data = floor_data;
+    public void setFloorData(byte floorData) {
+        this.floorData = floorData;
     }
 
     public int getBox_id() {

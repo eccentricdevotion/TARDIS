@@ -101,16 +101,16 @@ public class ResultSetRepeaters {
         return true;
     }
 
+    @SuppressWarnings("deprecation")
     public byte[] getRepeaters() {
-        // get repeater settings
-        diodes[0] = plugin.getUtils().getLocationFromDB(locations.get(0), 0, 0).getBlock().getData();
-        diodes[1] = plugin.getUtils().getLocationFromDB(locations.get(1), 0, 0).getBlock().getData();
-        diodes[2] = plugin.getUtils().getLocationFromDB(locations.get(2), 0, 0).getBlock().getData();
-        // temporary fix for NPE on Castrovalva - someone is missing a y-repeater record
-        if (locations.get(3) != null) {
+        if (locations.size() == 4) {
+            // get repeater settings
+            diodes[0] = plugin.getUtils().getLocationFromDB(locations.get(0), 0, 0).getBlock().getData();
+            diodes[1] = plugin.getUtils().getLocationFromDB(locations.get(1), 0, 0).getBlock().getData();
+            diodes[2] = plugin.getUtils().getLocationFromDB(locations.get(2), 0, 0).getBlock().getData();
             diodes[3] = plugin.getUtils().getLocationFromDB(locations.get(3), 0, 0).getBlock().getData();
         } else {
-            diodes[3] = plugin.getUtils().getLocationFromDB(locations.get(2), 0, 0).getBlock().getData();
+            diodes[0] = (byte) -1;
         }
         return diodes;
     }

@@ -20,6 +20,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.UUID;
+import me.eccentric_nz.TARDIS.JSON.JSONObject;
+import me.eccentric_nz.TARDIS.arch.TARDISWatchData;
 import me.eccentric_nz.TARDIS.builders.TARDISMaterialisationData;
 import me.eccentric_nz.TARDIS.flight.TARDISRegulatorRunnable;
 import me.eccentric_nz.TARDIS.info.TARDISInfoMenu;
@@ -33,6 +35,10 @@ import org.bukkit.block.Sign;
 import org.bukkit.entity.Player;
 
 /**
+ * A central repository used to store various data values required to track what
+ * Time lords and TARDIS are doing in-game, and provide easy access to the data
+ * in other classes. For example the spectacleWearers List tracks which Time
+ * Lords are currently wearing 3d_glasses.
  *
  * @author eccentric_nz
  */
@@ -51,13 +57,17 @@ public class TARDISTrackerInstanceKeeper {
     private final HashMap<UUID, Double[]> gravity = new HashMap<UUID, Double[]>();
     private final HashMap<UUID, Integer> binder = new HashMap<UUID, Integer>();
     private final HashMap<UUID, Integer> count = new HashMap<UUID, Integer>();
+    private final HashMap<UUID, JSONObject> pastes = new HashMap<UUID, JSONObject>();
     private final HashMap<UUID, List<Location>> repeaters = new HashMap<UUID, List<Location>>();
+    private final HashMap<UUID, Location> startLocation = new HashMap<UUID, Location>();
+    private final HashMap<UUID, Location> endLocation = new HashMap<UUID, Location>();
     private final HashMap<UUID, Long> setTime = new HashMap<UUID, Long>();
     private final HashMap<UUID, String> area = new HashMap<UUID, String>();
     private final HashMap<UUID, String> block = new HashMap<UUID, String>();
     private final HashMap<UUID, String> end = new HashMap<UUID, String>();
     private final HashMap<UUID, String> flight = new HashMap<UUID, String>();
     private final HashMap<UUID, String> jettison = new HashMap<UUID, String>();
+    private final HashMap<UUID, TARDISWatchData> johnSmith = new HashMap<UUID, TARDISWatchData>();
     private final HashMap<UUID, String> perm = new HashMap<UUID, String>();
     private final HashMap<UUID, String> players = new HashMap<UUID, String>();
     private final HashMap<UUID, String> preset = new HashMap<UUID, String>();
@@ -81,6 +91,7 @@ public class TARDISTrackerInstanceKeeper {
     private final List<UUID> mover = new ArrayList<UUID>();
     private final List<UUID> recipeView = new ArrayList<UUID>();
     private final List<UUID> sonicDoors = new ArrayList<UUID>();
+    private final List<UUID> spectacleWearers = new ArrayList<UUID>();
     private final List<UUID> transmat = new ArrayList<UUID>();
     private final List<UUID> zeroRoomOccupants = new ArrayList<UUID>();
 
@@ -241,6 +252,10 @@ public class TARDISTrackerInstanceKeeper {
         return hasTravelled;
     }
 
+    public HashMap<UUID, TARDISWatchData> getJohnSmith() {
+        return johnSmith;
+    }
+
     public List<UUID> getMover() {
         return mover;
     }
@@ -251,6 +266,10 @@ public class TARDISTrackerInstanceKeeper {
 
     public List<UUID> getSonicDoors() {
         return sonicDoors;
+    }
+
+    public List<UUID> getSpectacleWearers() {
+        return spectacleWearers;
     }
 
     public List<String> getReset() {
@@ -271,5 +290,17 @@ public class TARDISTrackerInstanceKeeper {
 
     public void setImmortalityGate(String immortalityGate) {
         this.immortalityGate = immortalityGate;
+    }
+
+    public HashMap<UUID, JSONObject> getPastes() {
+        return pastes;
+    }
+
+    public HashMap<UUID, Location> getStartLocation() {
+        return startLocation;
+    }
+
+    public HashMap<UUID, Location> getEndLocation() {
+        return endLocation;
     }
 }

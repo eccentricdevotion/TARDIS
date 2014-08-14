@@ -420,7 +420,7 @@ public class TARDISUpdateListener implements Listener {
                     // check if they already have an ARS record (they may have used `/tardis arsremove`)
                     HashMap<String, Object> wherer = new HashMap<String, Object>();
                     wherer.put("tardis_id", id);
-                    ResultSetARS rsa = new ResultSetARS(plugin, where);
+                    ResultSetARS rsa = new ResultSetARS(plugin, wherer);
                     if (!rsa.resultSet()) {
                         // create default json
                         int[][][] empty = new int[3][9][9];

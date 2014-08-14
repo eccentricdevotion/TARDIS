@@ -38,6 +38,9 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
 /**
+ * A trip stitch circuit-breaker was a circuit that if was enabled in the
+ * psycho-kinetic threshold manipulator of the Daleks had the effect of
+ * preventing them from controlling their movement.
  *
  * @author eccentric_nz
  */

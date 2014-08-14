@@ -24,6 +24,8 @@ import org.bukkit.Chunk;
 import org.bukkit.World;
 
 /**
+ * Preprocessor for checking changes in the Architectural Reconfiguration
+ * System.
  *
  * @author eccentric_nz
  */
@@ -31,6 +33,7 @@ public class TARDISARSProcessor {
 
     private final TARDIS plugin;
     private final int id;
+    private final int limit;
     private String error = "ENERGY_NOT_ENOUGH";
     private HashMap<TARDISARSSlot, ARS> changed;
     private HashMap<TARDISARSJettison, ARS> jettison;
@@ -38,6 +41,7 @@ public class TARDISARSProcessor {
     public TARDISARSProcessor(TARDIS plugin, int id) {
         this.plugin = plugin;
         this.id = id;
+        this.limit = this.plugin.getConfig().getInt("growth.ars_limit");
     }
 
     public boolean compare3DArray(int[][][] start, int[][][] end) {
@@ -90,7 +94,11 @@ public class TARDISARSProcessor {
                 }
             }
         }
-        return jettison.size() > 0 || changed.size() > 0;
+        boolean overlimit = (limit > 0 && changed.size() > limit);
+        if (overlimit) {
+            error = "ARS_LIMIT";
+        }
+        return jettison.size() > 0 || (changed.size() > 0 && !overlimit);
     }
 
     public boolean checkCosts(HashMap<TARDISARSSlot, ARS> changed, HashMap<TARDISARSJettison, ARS> jettison) {

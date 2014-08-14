@@ -16,8 +16,10 @@
  */
 package me.eccentric_nz.TARDIS.ARS;
 
+import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
+import me.eccentric_nz.TARDIS.JSON.JSONObject;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetPlayerPrefs;
@@ -25,12 +27,16 @@ import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
 import me.eccentric_nz.TARDIS.rooms.TARDISRoomData;
 import me.eccentric_nz.TARDIS.rooms.TARDISRoomRunnable;
+import me.eccentric_nz.TARDIS.rooms.TARDISWalls.Pair;
+import me.eccentric_nz.TARDIS.schematic.TARDISSchematicGZip;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import org.bukkit.Location;
+import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.entity.Player;
 
 /**
+ * Builds rooms determined by the Architectural Reconfiguration System.
  *
  * @author eccentric_nz
  */
@@ -66,37 +72,37 @@ public class TARDISARSRunnable implements Runnable {
             TARDISRoomData roomData = new TARDISRoomData();
             roomData.setTardis_id(rs.getTardis_id());
             // get middle data, default to orange wool if not set
-            int middle_id, floor_id;
-            byte middle_data, floor_data;
+            Material wall_type, floor_type;
+            byte wall_data, floor_data;
             if (rsp.resultSet()) {
-                int[] wid_data = plugin.getTardisWalls().blocks.get(rsp.getWall());
-                middle_id = wid_data[0];
-                middle_data = (byte) wid_data[1];
-                int[] fid_data = plugin.getTardisWalls().blocks.get(rsp.getFloor());
-                floor_id = fid_data[0];
-                floor_data = (byte) fid_data[1];
+                Pair wid_data = plugin.getTardisWalls().blocks.get(rsp.getWall());
+                wall_type = wid_data.getType();
+                wall_data = wid_data.getData();
+                Pair fid_data = plugin.getTardisWalls().blocks.get(rsp.getFloor());
+                floor_type = fid_data.getType();
+                floor_data = fid_data.getData();
             } else {
-                middle_id = 35;
-                middle_data = 1;
-                floor_id = 35;
+                wall_type = Material.WOOL;
+                wall_data = 1;
+                floor_type = Material.WOOL;
                 floor_data = 8;
             }
-            roomData.setMiddle_id(middle_id);
-            roomData.setMiddle_data(middle_data);
-            roomData.setFloor_id(floor_id);
-            roomData.setFloor_data(floor_data);
+            roomData.setMiddleType(wall_type);
+            roomData.setMiddleData(wall_data);
+            roomData.setFloorType(floor_type);
+            roomData.setFloorData(floor_data);
             // get start locations
             Location l = new Location(w, slot.getX(), slot.getY(), slot.getZ());
             roomData.setDirection(COMPASS.SOUTH);
-            short[] dimensions = plugin.getBuildKeeper().getRoomDimensions().get(whichroom);
+            String directory = (plugin.getRoomsConfig().getBoolean("rooms." + whichroom + ".user")) ? "user_schematics" : "schematics";
+            String path = plugin.getDataFolder() + File.separator + directory + File.separator + whichroom.toLowerCase() + ".tschm";
+            // get JSON
+            JSONObject obj = TARDISSchematicGZip.unzip(path);
             // set y offset - this needs to be how many blocks above ground 0 of the 16x16x16 chunk the room starts
             l.setY(l.getY() + room.getOffset());
             roomData.setLocation(l);
-            roomData.setX(1);
-            roomData.setZ(1);
             roomData.setRoom(whichroom);
-            roomData.setSchematic(plugin.getBuildKeeper().getRoomSchematics().get(whichroom));
-            roomData.setDimensions(dimensions);
+            roomData.setSchematic(obj);
             long delay = Math.round(20 / plugin.getConfig().getDouble("growth.room_speed"));
             TARDISRoomRunnable runnable = new TARDISRoomRunnable(plugin, roomData, p);
             int taskID = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, runnable, delay, delay);
@@ -104,8 +110,8 @@ public class TARDISARSRunnable implements Runnable {
             QueryFactory qf = new QueryFactory(plugin);
             // remove blocks from condenser table if rooms_require_blocks is true
             if (plugin.getConfig().getBoolean("growth.rooms_require_blocks")) {
-                HashMap<Integer, Integer> roomBlockCounts = getRoomBlockCounts(whichroom, p.getUniqueId().toString());
-                for (Map.Entry<Integer, Integer> entry : roomBlockCounts.entrySet()) {
+                HashMap<String, Integer> roomBlockCounts = getRoomBlockCounts(whichroom, p.getUniqueId().toString());
+                for (Map.Entry<String, Integer> entry : roomBlockCounts.entrySet()) {
                     HashMap<String, Object> wherec = new HashMap<String, Object>();
                     wherec.put("tardis_id", tardis_id);
                     wherec.put("block_data", entry.getKey());
@@ -127,8 +133,8 @@ public class TARDISARSRunnable implements Runnable {
         this.id = id;
     }
 
-    private HashMap<Integer, Integer> getRoomBlockCounts(String room, String uuid) {
-        HashMap<Integer, Integer> blockIDCount = new HashMap<Integer, Integer>();
+    private HashMap<String, Integer> getRoomBlockCounts(String room, String uuid) {
+        HashMap<String, Integer> blockIDCount = new HashMap<String, Integer>();
         HashMap<String, Integer> roomBlocks = plugin.getBuildKeeper().getRoomBlockCounts().get(room);
         String wall = "ORANGE_WOOL";
         String floor = "LIGHT_GREY_WOOL";
@@ -143,13 +149,13 @@ public class TARDISARSRunnable implements Runnable {
         }
         for (Map.Entry<String, Integer> entry : roomBlocks.entrySet()) {
             String[] block_data = entry.getKey().split(":");
-            int bid = plugin.getUtils().parseInt(block_data[0]);
+            String bid = block_data[0];
             String mat;
-            int bdata;
+            String bdata;
             if (hasPrefs && block_data.length == 2 && (block_data[1].equals("1") || block_data[1].equals("8"))) {
                 mat = (block_data[1].equals("1")) ? wall : floor;
-                int[] iddata = plugin.getTardisWalls().blocks.get(mat);
-                bdata = iddata[0];
+                Pair iddata = plugin.getTardisWalls().blocks.get(mat);
+                bdata = iddata.getType().toString();
             } else {
                 bdata = bid;
             }

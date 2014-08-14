@@ -224,7 +224,7 @@ public class TARDISConsoleCloseListener implements Listener {
                                                     continue;
                                                 }
                                                 TARDISRescue to_player = new TARDISRescue(plugin);
-                                                to_player.rescue(p, toUUID, id, tt, rsc.getDirection(), false);
+                                                to_player.rescue(p, toUUID, id, tt, rsc.getDirection(), false, false);
                                             } else {
                                                 TARDISMessage.send(p, "NO_PERM_PLAYER");
                                                 continue;
