@@ -1,46 +1,48 @@
-# TODO
+#TODO
 
-## Current version `2.7-beta-3`
-1. Documentation & videos!
-2. Advanced TARDIS console
-   * Test all disks & circuits
-   * Add a blank storage disk section?
-3. TARDIS exterior rendering / scanner room
-   * find a way to prevent items dropping between renders
-4. TARDIS Information System
-    * auto log out?
-    
-## Waiting on Bukkit API
-0. IDs are soon to be history... so convert all ID use to entity names
+##Current version `3.1`
+1. TARDIS up/cross-grades (change the desktop theme)
+2. Saved biome disks able to be extended
+3. Update the VAULT room to automatically sort items into the chests
+   * one chest is set as the drop chest
+   * all other chests in the 16x16x16 chunk are set as storage chests
+   * place at least 1 block/item into the storage chests
+   * blocks/items placed in the drop chest will automatically be sent to the chest with the same block/item in it
+   * add commands to update existing VAULT rooms to the new system
+4. Slimmer TARDIS option?
+5. Find the Multiverse problem that prevents the Rail room from functioning properly
+
+##Future version `3.2+`
+* ?
+
+##Resource Pack / TARDISWeepingAngels
+
+Re-skin mobs for Resource pack, and add new mob sounds
+
+* Villagers -> Ood - _started_
+* Villagers -> Hath
+* Endermen -> The Silence
+* Iron Golem -> Gunslinger
+* Witches -> Slitheen?
+* Wolves -> K-9? (All the textures I seen so far just don't work - you shouldn't see the legs...)
+* Slimes -> Adipose
+
+##Waiting on Minecraft/Bukkit update
+
+1. TARDIS invisibility - 1.8 barrier blocks?
+2. Add new blocks / items
+
+##Waiting on Bukkit API
+0. IDs/data are soon to be history... so convert all ID/data use to block states 
 1. Get/set horse speed (Attribute API)
-2. Achievements API
+2. Achievements API is now available, but doesn't allow custom achievements :( [https://bukkit.atlassian.net/browse/BUKKIT-5672](https://bukkit.atlassian.net/browse/BUKKIT-5672)
 
-## Future version `2.8+`
-1. Custom room schematics in ARS (check they are 16x16x16)
-2. TARDIS direction sign
-3. Configurable option to allow Gravity Wells outside of the TARDIS
-4. TARDIS invisiblity
-5. HADS + explosions + fireballs + lava
-6. Put farmland, crops, buttons, ladders, levers and signs on last when growing rooms
-7. Reskin mobs for Resource pack, and add new mob sounds
-   * Skeletons -> Weeping Angels
-   * Wither Skeletons -> Vashta Nerada
-   * Wolves -> K-9
-   * Zombies -> Empty child
-   * Pigmen -> Sontarans
-   * Endermen -> The Silence
-   * Creepers -> Daleks
-   * Slimes -> Adipose
-   * Witches -> Silurians
-   * Villagers -> Ood
-8. Toggle both doors open when shift-clicking the door, and when exiting (if the preset has a door and the door is open) tp the player to the door location.
-9. Eject mobs and villagers
-
-# Minecraft API when available
+##Minecraft API when available
 1. Recreate everything with the new API :)
 2. Create custom blocks for the TARDIS and console.
-3. If using the LAPIS block have the walls a special TARDIS wall block.
-4. A TARDIS key and a crafting recipe for that item.
-5. A Sonic Screwdriver and a crafting recipe for that item.
-6. GUIs (if allowed)
-7. Make the TARDIS Police Box an entity (if allowed)
+3. Custom TARDIS items and crafting recipes for the same.
+4. A Sonic Screwdriver and a crafting recipe for it.
+5. GUIs (if allowed)
+6. Make the TARDIS Police Box an entity (if allowed)
+7. Custom achievements
+8. Custom monsters
