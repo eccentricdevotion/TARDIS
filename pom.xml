@@ -36,6 +36,17 @@
             <name>Comphenix Repository</name>
             <url>http://minor.royaldev.org:8081/nexus/content/repositories/comphenix-repo</url>
         </repository>
+        <repository>
+            <id>confuser-repo</id>
+            <url>http://ci.frostcast.net/plugin/repository/everything</url>
+        </repository>
+        <!--
+        <repository>
+            <id>comphenix-repo</id>
+            <name>Comphenix Repository</name>
+            <url>http://minor.royaldev.org:8081/nexus/content/repositories/comphenix-repo</url>
+        </repository>
+        -->
     </repositories>
     <scm>
         <connection>scm:git:ssh://github.com/eccentricdevotion/TARDIS</connection>

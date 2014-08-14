@@ -74,7 +74,8 @@ public class TARDISBeaconToggler {
                         break;
                     default: // BUDGET, STEAMPUNK, WAR, CUSTOM?
                         plusy = 11;
-                        break;                }
+                        break;
+                }
                 String creeper = rs.getCreeper();
                 beaconData = creeper.split(":");
             } else {

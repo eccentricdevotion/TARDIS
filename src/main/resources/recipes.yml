@@ -365,11 +365,7 @@ shaped:
             R: REDSTONE_BLOCK
         result: BUCKET
         amount: 1
-<<<<<<< HEAD
-        lore: "Charge Level\n0"
-=======
         lore: "Charge Level~0"
->>>>>>> v3.0
     Jammy Dodger:
         easy_shape: ---,WRW,---
         easy_ingredients:
@@ -394,8 +390,6 @@ shaped:
         result: COOKED_FISH
         amount: 3
         lore: "Best eaten with custard!"
-<<<<<<< HEAD
-=======
     White Bow Tie:
         easy_shape: '---,SWS,---'
         easy_ingredients:
@@ -651,7 +645,6 @@ shaped:
         result: WATCH
         amount: 1
         lore: ""
->>>>>>> v3.0
 # -------------------
 # these are the shapeless recipes
 # -------------------

@@ -67,7 +67,6 @@ public class TARDISSeedBlockProcessor {
         if (player.hasPermission("tardis.create")) {
             int max_count = plugin.getConfig().getInt("creation.count");
             int player_count = 0;
-
             int grace_count = 0;
             boolean has_count = false;
             HashMap<String, Object> wherec = new HashMap<String, Object>();
