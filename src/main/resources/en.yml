@@ -642,7 +642,7 @@ UPDATE_ZERO: "You need to grow a zero room before you can update its entry butto
 URL: "Not a valid URL! %s"
 UUID: "Could not get specified player's UUID. If the player is offline we need to lookup the UUID from the Mojang Authentication server. Try the command again shortly."
 UUID_NOT_FOUND: "Could not find UUID for player [%s]!"
-VAULT_SORTER_SET: "Sorter chest set!"
+VAULT_SORTER_SET: "Drop chest set!"
 WALL_LIST: "Here is a list of valid %s materials:"
 WALL_NOT_VALID: "That is not a valid %s material! Try:"
 WEATHER_CLEAR: "clear"

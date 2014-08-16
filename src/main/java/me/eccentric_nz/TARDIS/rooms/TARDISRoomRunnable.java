@@ -273,7 +273,7 @@ public class TARDISRoomRunnable implements Runnable {
                 wherec.put("tardis_id", tardis_id);
                 qf.doUpdate("tardis", setc, wherec);
             }
-            // set sorter chest
+            // set drop chest
             if (type.equals(Material.TRAPPED_CHEST) && room.equals("VAULT") && p.hasPermission("tardis.vault")) {
                 // determine the min x, y, z coords
                 int mx = startx % 16;

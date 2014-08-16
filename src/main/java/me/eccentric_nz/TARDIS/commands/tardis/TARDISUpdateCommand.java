@@ -70,7 +70,7 @@ public class TARDISUpdateCommand {
                 return true;
             }
             if (tardis_block.equals("vault")) {
-                return new TARDISVaultCommand(plugin).addSorter(player);
+                return new TARDISVaultCommand(plugin).addDropChest(player);
             }
             if (tardis_block.equals("advanced") && !player.hasPermission("tardis.advanced")) {
                 TARDISMessage.send(player, "NO_PERM_ADV");

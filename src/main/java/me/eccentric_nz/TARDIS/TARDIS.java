@@ -269,7 +269,7 @@ public class TARDIS extends JavaPlugin {
             cond.makeCondensables();
             condensables = cond.getCondensables();
             checkBiomes();
-            checkSorters();
+            checkDropChests();
         } else {
             console.sendMessage(pluginName + ChatColor.RED + "This plugin requires CraftBukkit 1.7.9 or higher, disabling...");
             pm.disablePlugin(this);
@@ -690,9 +690,9 @@ public class TARDIS extends JavaPlugin {
     }
 
     /**
-     * Removes unused sorter database records from the vaults table.
+     * Removes unused drop chest database records from the vaults table.
      */
-    private void checkSorters() {
+    private void checkDropChests() {
         getServer().getScheduler().scheduleSyncDelayedTask(this, new TARDISVaultChecker(this), 2400L);
     }
 

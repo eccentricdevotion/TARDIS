@@ -40,10 +40,10 @@ public class TARDISVaultCommand {
     }
 
     @SuppressWarnings("deprecation")
-    public boolean addSorter(Player player) {
+    public boolean addDropChest(Player player) {
         // check permission
         if (!player.hasPermission("tardis.vault")) {
-            TARDISMessage.send(player, "UPDATE_NO_PERM", "Sorter Chest");
+            TARDISMessage.send(player, "UPDATE_NO_PERM", "Drop Chest");
             return true;
         }
         // player is a Time Lord

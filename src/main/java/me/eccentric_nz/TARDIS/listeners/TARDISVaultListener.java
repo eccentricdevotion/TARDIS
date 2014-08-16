@@ -35,14 +35,14 @@ public class TARDISVaultListener implements Listener {
     }
 
     @EventHandler(priority = EventPriority.NORMAL)
-    public void onSorterClose(InventoryCloseEvent event) {
+    public void onDropChestClose(InventoryCloseEvent event) {
         final Inventory inv = event.getInventory();
         InventoryHolder holder = inv.getHolder();
         if (holder instanceof Chest) {
             Chest chest = (Chest) holder;
             Player p = (Player) event.getPlayer();
             String loc = chest.getLocation().toString();
-            // check is sorter chest
+            // check is drop chest
             HashMap<String, Object> where = new HashMap<String, Object>();
             where.put("location", loc);
             ResultSetVault rs = new ResultSetVault(plugin, where);
@@ -62,7 +62,7 @@ public class TARDISVaultListener implements Listener {
                     for (int z = sz; z < (sz + 16); z++) {
                         // get the block
                         Block b = w.getBlockAt(x, y, z);
-                        // check if it is a chest (but not the sorter chest)
+                        // check if it is a chest (but not the drop chest)
                         if ((b.getType().equals(Material.CHEST) || b.getType().equals(Material.TRAPPED_CHEST)) && !loc.equals(b.getLocation().toString())) {
                             Chest c = (Chest) b.getState();
                             // get chest contents
@@ -77,13 +77,13 @@ public class TARDISVaultListener implements Listener {
                                         mats.add(is.getType());
                                     }
                                 }
-                                // for each material found, see if there are any stacks of it in the sorter chest
+                                // for each material found, see if there are any stacks of it in the drop chest
                                 for (Material m : mats) {
                                     int slot = inv.first(m);
                                     while (slot != -1 && cinv.firstEmpty() != -1) {
                                         // get the item stack
                                         ItemStack get = inv.getItem(slot);
-                                        // remove the stack from the sorter
+                                        // remove the stack from the drop chest
                                         inv.setItem(slot, null);
                                         // put it in the chest
                                         cinv.setItem(cinv.firstEmpty(), get);
