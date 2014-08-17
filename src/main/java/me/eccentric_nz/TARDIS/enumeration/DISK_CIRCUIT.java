@@ -43,6 +43,11 @@ public enum DISK_CIRCUIT {
     String name;
     Material material;
 
+    private DISK_CIRCUIT(String name, Material material) {
+        this.name = name;
+        this.material = material;
+    }
+
     public String getName() {
         return name;
     }
@@ -62,10 +67,5 @@ public enum DISK_CIRCUIT {
             default:
                 return false;
         }
-    }
-
-    private DISK_CIRCUIT(String name, Material material) {
-        this.name = name;
-        this.material = material;
     }
 }

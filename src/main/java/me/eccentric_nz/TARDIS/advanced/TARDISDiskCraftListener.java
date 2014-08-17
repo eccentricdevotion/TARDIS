@@ -42,6 +42,7 @@ public class TARDISDiskCraftListener implements Listener {
 
     private final TARDIS plugin;
     private final List<InventoryAction> actions = new ArrayList<InventoryAction>();
+    private final List<String> regular = new ArrayList<String>();
 
     public TARDISDiskCraftListener(TARDIS plugin) {
         this.plugin = plugin;
@@ -49,6 +50,9 @@ public class TARDISDiskCraftListener implements Listener {
         actions.add(InventoryAction.PLACE_ONE);
         actions.add(InventoryAction.PLACE_SOME);
         actions.add(InventoryAction.SWAP_WITH_CURSOR);
+        for (BIOME_LOOKUP b : BIOME_LOOKUP.values()) {
+            regular.add(b.getRegular());
+        }
     }
 
     @EventHandler(ignoreCancelled = true)
@@ -71,10 +75,10 @@ public class TARDISDiskCraftListener implements Listener {
                                 ItemMeta im = is.getItemMeta();
                                 if (im.hasDisplayName() && im.getDisplayName().equals("Biome Storage Disk") && im.hasLore()) {
                                     List<String> lore = im.getLore();
+                                    int ladder = inv.first(Material.LADDER);
                                     if (lore.get(0).equals("Blank")) {
                                         List<String> disk_lore = new ArrayList<String>();
                                         // biome disk
-                                        int ladder = inv.first(Material.LADDER);
                                         if (items.size() > 1 && ladder > 0) {
                                             // mega biome
                                             items.remove(inv.getItem(ladder));
@@ -103,6 +107,22 @@ public class TARDISDiskCraftListener implements Listener {
                                             disk.setItemMeta(dim);
                                             inv.setItem(0, disk);
                                             player.updateInventory();
+                                        }
+                                    } else if (BIOME_LOOKUP.BY_REG.containsKey(lore.get(0)) && ladder > 0) {
+                                        // upgrade to mega biome
+                                        List<String> disk_lore = new ArrayList<String>();
+                                        try {
+                                            String biome = BIOME_LOOKUP.getBiome(lore.get(0)).getUpper();
+                                            disk_lore.add(biome);
+                                            disk = new ItemStack(Material.GREEN_RECORD, 1);
+                                            ItemMeta dim = disk.getItemMeta();
+                                            dim.setDisplayName("Biome Storage Disk");
+                                            dim.setLore(disk_lore);
+                                            disk.setItemMeta(dim);
+                                            inv.setItem(0, disk);
+                                            player.updateInventory();
+                                        } catch (IllegalArgumentException e) {
+                                            plugin.debug("Could not get biome from craft item! " + e);
                                         }
                                     } else {
                                         TARDISMessage.send(player, "DISK_BLANK_BIOME");

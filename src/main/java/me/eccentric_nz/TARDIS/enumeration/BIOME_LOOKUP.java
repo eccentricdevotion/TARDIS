@@ -16,6 +16,9 @@
  */
 package me.eccentric_nz.TARDIS.enumeration;
 
+import com.google.common.collect.Maps;
+import java.util.Map;
+
 /**
  *
  * @author eccentric_nz
@@ -43,6 +46,7 @@ public enum BIOME_LOOKUP {
 
     String regular;
     String upper;
+    public final static Map<String, BIOME_LOOKUP> BY_REG = Maps.newHashMap();
 
     private BIOME_LOOKUP(String regular, String upper) {
         this.regular = regular;
@@ -55,5 +59,15 @@ public enum BIOME_LOOKUP {
 
     public String getUpper() {
         return upper;
+    }
+
+    public static BIOME_LOOKUP getBiome(final String data) {
+        return BY_REG.get(data);
+    }
+
+    static {
+        for (BIOME_LOOKUP bm : values()) {
+            BY_REG.put(bm.getRegular(), bm);
+        }
     }
 }

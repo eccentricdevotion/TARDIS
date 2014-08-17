@@ -5,7 +5,7 @@
 2. Saved biome disks able to be extended
 3. Slimmer TARDIS option?
 4. Find the Multiverse problem that prevents the Rail room from functioning properly
-5. Update for Minecart / Bukkit 1.8
+5. Update for Minecraft / Bukkit 1.8
 
 ##Future version `3.2+`
 * ?
