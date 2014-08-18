@@ -97,7 +97,7 @@ public class TARDISRoomMap {
                 if (sch.exists()) {
                     makeRoomMap(basepath + lower, r);
                 } else {
-                    plugin.getConsole().sendMessage(plugin.getPluginName() + ChatColor.RED + lower + ".schematic was not found in 'user_schematics' and was disabled!");
+                    plugin.getConsole().sendMessage(plugin.getPluginName() + ChatColor.RED + lower + ".tschm was not found in 'user_schematics' and was disabled!");
                     plugin.getRoomsConfig().set("rooms." + r + ".enabled", false);
                 }
             }

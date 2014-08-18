@@ -2,10 +2,11 @@
 
 ##Current version `3.1-beta-1`
 1. TARDIS up/cross-grades (change the desktop theme)
-2. Saved biome disks able to be extended
+2. Villager / mob de-farming
 3. Slimmer TARDIS option?
 4. Find the Multiverse problem that prevents the Rail room from functioning properly
 5. Update for Minecraft / Bukkit 1.8
+6. Better EP1 message editing
 
 ##Future version `3.2+`
 * ?
