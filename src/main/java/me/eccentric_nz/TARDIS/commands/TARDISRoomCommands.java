@@ -182,7 +182,6 @@ public class TARDISRoomCommands implements CommandExecutor {
                         String bid = block_data[0];
                         String mat;
                         String bkey;
-//                        String block_id;
                         if (hasPrefs && block_data.length == 2 && (block_data[1].equals("1") || block_data[1].equals("8"))) {
                             mat = (block_data[1].equals("1")) ? wall : floor;
                             Pair iddata = plugin.getTardisWalls().blocks.get(mat);
@@ -241,7 +240,7 @@ public class TARDISRoomCommands implements CommandExecutor {
                     return true;
                 }
                 String lower = name.toLowerCase(Locale.ENGLISH);
-                String filepath = plugin.getDataFolder() + File.separator + "user_schematics" + File.separator + lower + ".schematic";
+                String filepath = plugin.getDataFolder() + File.separator + "user_schematics" + File.separator + lower + ".tschm";
                 File file = new File(filepath);
                 if (!file.exists()) {
                     TARDISMessage.send(sender, "ROOM_SCHEMATIC_INFO" + lower);
