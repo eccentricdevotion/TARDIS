@@ -421,7 +421,7 @@ public class TARDISRoomRunnable implements Runnable {
                 data = (byte) 0;
             } else {
                 Block existing = world.getBlockAt(startx, starty, startz);
-                if (existing.getTypeId() != 0) {
+                if (!existing.getType().equals(Material.AIR)) {
                     if (room.equals("GRAVITY") || room.equals("ANTIGRAVITY")) {
                         switch (type) {
                             case AIR:

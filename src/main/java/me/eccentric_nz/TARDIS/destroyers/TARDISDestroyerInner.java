@@ -103,11 +103,11 @@ public class TARDISDestroyerInner {
                             Chest chest = getDoubleChest(b);
                             if (chest != null) {
                                 chest.getInventory().clear();
-                                chest.getBlock().setTypeId(0);
-                                container.getBlock().setTypeId(0);
+                                chest.getBlock().setType(Material.AIR);
+                                container.getBlock().setType(Material.AIR);
                             } else if (container != null) {
                                 container.getInventory().clear();
-                                container.getBlock().setTypeId(0);
+                                container.getBlock().setType(Material.AIR);
                             }
                         }
                         // if it's a furnace clear the inventory first
@@ -149,16 +149,16 @@ public class TARDISDestroyerInner {
     @SuppressWarnings("deprecation")
     public Chest getDoubleChest(Block block) {
         Chest chest = null;
-        if (block.getRelative(BlockFace.NORTH).getTypeId() == 54) {
+        if (block.getRelative(BlockFace.NORTH).getType().equals(Material.CHEST)) {
             chest = (Chest) block.getRelative(BlockFace.NORTH).getState();
             return chest;
-        } else if (block.getRelative(BlockFace.EAST).getTypeId() == 54) {
+        } else if (block.getRelative(BlockFace.EAST).getType().equals(Material.CHEST)) {
             chest = (Chest) block.getRelative(BlockFace.EAST).getState();
             return chest;
-        } else if (block.getRelative(BlockFace.SOUTH).getTypeId() == 54) {
+        } else if (block.getRelative(BlockFace.SOUTH).getType().equals(Material.CHEST)) {
             chest = (Chest) block.getRelative(BlockFace.SOUTH).getState();
             return chest;
-        } else if (block.getRelative(BlockFace.WEST).getTypeId() == 54) {
+        } else if (block.getRelative(BlockFace.WEST).getType().equals(Material.CHEST)) {
             chest = (Chest) block.getRelative(BlockFace.WEST).getState();
             return chest;
         }

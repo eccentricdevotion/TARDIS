@@ -49,20 +49,27 @@ public class TARDISTimeTravel {
     private Location dest;
     private final TARDIS plugin;
     private final List<Material> goodMaterials = new ArrayList<Material>();
+    private final List<Material> goodWater = new ArrayList<Material>();
     private final int attempts;
 
     public TARDISTimeTravel(TARDIS plugin) {
         this.plugin = plugin;
         // add good materials
         goodMaterials.add(Material.AIR);
-        goodMaterials.add(Material.SNOW);
-        goodMaterials.add(Material.LONG_GRASS);
-        goodMaterials.add(Material.RED_ROSE);
-        goodMaterials.add(Material.YELLOW_FLOWER);
         goodMaterials.add(Material.BROWN_MUSHROOM);
+        goodMaterials.add(Material.DEAD_BUSH);
+        goodMaterials.add(Material.LONG_GRASS);
+        goodMaterials.add(Material.NETHER_WARTS);
         goodMaterials.add(Material.RED_MUSHROOM);
+        goodMaterials.add(Material.RED_ROSE);
         goodMaterials.add(Material.SAPLING);
         goodMaterials.add(Material.SNOW);
+        goodMaterials.add(Material.SNOW);
+        goodMaterials.add(Material.YELLOW_FLOWER);
+        // add good water
+        goodWater.add(Material.AIR);
+        goodWater.add(Material.WATER);
+        goodWater.add(Material.STATIONARY_WATER);
         this.attempts = plugin.getConfig().getInt("travel.random_attempts");
     }
 
@@ -203,7 +210,7 @@ public class TARDISTimeTravel {
                     highest = randworld.getHighestBlockYAt(wherex, wherez);
                     if (highest > 3) {
                         Block currentBlock = randworld.getBlockAt(wherex, highest, wherez);
-                        if ((currentBlock.getRelative(BlockFace.DOWN).getTypeId() == 8 || currentBlock.getRelative(BlockFace.DOWN).getTypeId() == 9) && plugin.getConfig().getBoolean("travel.land_on_water") == false) {
+                        if ((currentBlock.getRelative(BlockFace.DOWN).getType().equals(Material.WATER) || currentBlock.getRelative(BlockFace.DOWN).getType().equals(Material.STATIONARY_WATER)) && plugin.getConfig().getBoolean("travel.land_on_water") == false) {
                             // check if submarine is on
                             HashMap<String, Object> wheres = new HashMap<String, Object>();
                             wheres.put("uuid", p.getUniqueId().toString());
@@ -302,8 +309,8 @@ public class TARDISTimeTravel {
         for (level = 0; level < 4; level++) {
             for (row = 0; row < rowcount; row++) {
                 for (col = 0; col < colcount; col++) {
-                    int id = w.getBlockAt(startx, starty, startz).getTypeId();
-                    if (!isItSafe(id)) {
+                    Material mat = w.getBlockAt(startx, starty, startz).getType();
+                    if (!goodMaterials.contains(mat)) {
                         count++;
                     }
                     startx += 1;
@@ -383,20 +390,6 @@ public class TARDISTimeTravel {
     }
 
     /**
-     * Checks a block to see whether it is clear. Blocks include AIR,
-     * LONG_GRASS, MUSHROOMS, SNOW etc.
-     *
-     * @param id the block typeId to check.
-     */
-    private boolean isItSafe(int id) {
-        boolean safe = false;
-        if (id == 0 || id == 6 || id == 31 || id == 32 || id == 37 || id == 38 || id == 39 || id == 40 || id == 78 || id == 115) {
-            safe = true;
-        }
-        return safe;
-    }
-
-    /**
      * Gets the starting location for safe location checking.
      *
      * @param loc a location object to check.
@@ -451,8 +444,8 @@ public class TARDISTimeTravel {
             startBlock = startBlock.getRelative(BlockFace.DOWN);
             air++;
         }
-        int id = startBlock.getTypeId();
-        if ((id == 87 || id == 88 || id == 89 || id == 112 || id == 113 || id == 114) && air >= 4) {
+        Material mat = startBlock.getType();
+        if (plugin.getGeneralKeeper().getGoodNether().contains(mat) && air >= 4) {
             Location netherLocation = startBlock.getLocation();
             int netherLocY = netherLocation.getBlockY();
             netherLocation.setY(netherLocY + 1);
@@ -603,8 +596,8 @@ public class TARDISTimeTravel {
         for (level = 0; level < 4; level++) {
             for (row = 0; row < rowcount; row++) {
                 for (col = 0; col < colcount; col++) {
-                    int id = l.getWorld().getBlockAt(s[0], starty, s[2]).getTypeId();
-                    if (!isItWaterSafe(id)) {
+                    Material mat = l.getWorld().getBlockAt(s[0], starty, s[2]).getType();
+                    if (!goodWater.contains(mat)) {
                         count++;
                     }
                     s[0] += 1;
@@ -616,13 +609,5 @@ public class TARDISTimeTravel {
             starty += 1;
         }
         return (count == 0);
-    }
-
-    private boolean isItWaterSafe(int id) {
-        boolean safe = false;
-        if (id == 8 || id == 9 || id == 0) {
-            safe = true;
-        }
-        return safe;
     }
 }

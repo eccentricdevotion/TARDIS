@@ -87,19 +87,20 @@ public class TARDISExteriorRenderer {
                         if (!(y >= epby && y <= buy && x >= bwx && x <= bex && z >= bnz && z <= bsz)) {
                             Block eb = ew.getBlockAt(x, y, z);
                             Block ib = iw.getBlockAt(isx + xx, isy + yy, isz + zz);
-                            switch (eb.getTypeId()) {
-                                case 8:
-                                case 9:
+                            switch (eb.getType()) {
+                                case WATER:
+                                case STATIONARY_WATER:
                                     ib.setType(Material.STAINED_GLASS);
                                     ib.setData((byte) 3, true);
                                     break;
-                                case 10:
-                                case 11:
+                                case LAVA:
+                                case STATIONARY_LAVA:
                                     ib.setType(Material.WOOL);
                                     ib.setData((byte) 1, true);
                                     break;
                                 default:
-                                    ib.setTypeIdAndData(eb.getTypeId(), eb.getData(), true);
+                                    ib.setType(eb.getType());
+                                    ib.setData(eb.getData(), true);
                             }
                         }
                         zz++;
