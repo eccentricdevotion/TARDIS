@@ -113,7 +113,7 @@ public class TARDISArea {
         HashMap<String, Object> where = new HashMap<String, Object>();
         where.put("world", w);
         ResultSetAreas rsa = new ResultSetAreas(plugin, where, true);
-        int i = 1;
+//        int i = 1;
         if (rsa.resultSet()) {
             ArrayList<HashMap<String, String>> data = rsa.getData();
             for (HashMap<String, String> map : data) {
@@ -131,7 +131,7 @@ public class TARDISArea {
                         break;
                     }
                 }
-                i++;
+//                i++;
             }
         }
         return chk;
