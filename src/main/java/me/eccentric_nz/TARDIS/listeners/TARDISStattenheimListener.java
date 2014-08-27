@@ -49,6 +49,7 @@ import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.InventoryHolder;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+import org.yi.acru.bukkit.Lockette.Lockette;
 
 /**
  * The handheld Recall Button on the TARDIS Stattenheim remote broadcasts a
@@ -178,7 +179,7 @@ public class TARDISStattenheimListener implements Listener {
                         TARDISTimeTravel tt = new TARDISTimeTravel(plugin);
                         int count;
                         boolean sub = false;
-                        if (b.getRelative(BlockFace.UP).getTypeId() == 8 || b.getRelative(BlockFace.UP).getTypeId() == 9) {
+                        if (b.getRelative(BlockFace.UP).getType().equals(Material.WATER) || b.getRelative(BlockFace.UP).getType().equals(Material.STATIONARY_WATER)) {
                             count = (tt.isSafeSubmarine(remoteLocation, player_d)) ? 0 : 1;
                             if (count == 0) {
                                 sub = true;
@@ -187,6 +188,12 @@ public class TARDISStattenheimListener implements Listener {
                             int[] start_loc = tt.getStartLocation(remoteLocation, player_d);
                             // safeLocation(int startx, int starty, int startz, int resetx, int resetz, World w, COMPASS player_d)
                             count = tt.safeLocation(start_loc[0], remoteLocation.getBlockY(), start_loc[2], start_loc[1], start_loc[3], remoteLocation.getWorld(), player_d);
+                        }
+                        if (plugin.getPM().isPluginEnabled("Lockette")) {
+                            Lockette Lockette = (Lockette) plugin.getPM().getPlugin("Lockette");
+                            if (Lockette.isProtected(remoteLocation.getBlock())) {
+                                count = 1;
+                            }
                         }
                         if (count > 0) {
                             TARDISMessage.send(player, "WOULD_GRIEF_BLOCKS");
