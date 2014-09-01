@@ -114,7 +114,7 @@ public class TARDISARSMethods {
      * @param js the JSON from the database
      * @return a 3D array of ints
      */
-    public int[][][] getGridFromJSON(String js) {
+    public static int[][][] getGridFromJSON(String js) {
         int[][][] grid = new int[3][9][9];
         JSONArray json = new JSONArray(js);
         for (int y = 0; y < 3; y++) {
@@ -498,7 +498,6 @@ public class TARDISARSMethods {
         TARDISARS[] ars = TARDISARS.values();
         // less non-room types
         int l = (custom_names.size() + ars.length) - notrooms.size();
-//        int l = ars.length - notrooms.size();
         this.room_ids = new int[l];
         this.room_names = new String[l];
         int i = 0;
@@ -533,6 +532,11 @@ public class TARDISARSMethods {
                 @Override
                 public int getOffset() {
                     return 1;
+                }
+
+                @Override
+                public boolean isConsole() {
+                    return false;
                 }
             });
         }

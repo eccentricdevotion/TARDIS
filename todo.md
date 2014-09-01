@@ -2,11 +2,19 @@
 
 ##Current version `3.1-beta-1`
 1. TARDIS up/cross-grades (change the desktop theme)
+   * add `/tardis [desktop|theme|upgrade]` command and associated permission node - _done, all three arguments are aliases of each other..._
+   * add config for Artron Energy cost - _done_
+   * add GUI(s) - _done_
+   * save size, wall & floor preferences - _done_
+   * rebuild the TARDIS a row at a time - _done_
+   * jettison unused blocks if downgrading to smaller TARDIS, give back a percentage of Artron Energy
+   * open upgrade GUI if SHIFT-clicking ARS sign
 2. Villager / mob de-farming
 3. Slimmer TARDIS option?
 4. Find the Multiverse problem that prevents the Rail room from functioning properly
 5. Update for Minecraft / Bukkit 1.8
 6. Better EP1 message editing
+7. Use new Wall menu for `/tardisprefs [wall|floor]` command
 
 ##Future version `3.2+`
 * ?

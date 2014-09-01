@@ -251,6 +251,9 @@ permissions:
   tardis.vault:
     description: Allows a player to have an automatic vault room chest sorter.
     default: op
+  tardis.upgrade:
+    description: Allows a player to upgrade their TARDIS.
+    default: op
 commands:
   tardis:
     aliases: [tt,ttardis,/tardis,timelord]

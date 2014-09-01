@@ -36,6 +36,8 @@ import me.eccentric_nz.TARDIS.chameleon.TARDISPresetListener;
 import me.eccentric_nz.TARDIS.commands.admin.TARDISAdminMenuListener;
 import me.eccentric_nz.TARDIS.commands.preferences.TARDISKeyMenuListener;
 import me.eccentric_nz.TARDIS.commands.preferences.TARDISPrefsMenuListener;
+import me.eccentric_nz.TARDIS.desktop.TARDISThemeMenuListener;
+import me.eccentric_nz.TARDIS.desktop.TARDISWallMenuListener;
 import me.eccentric_nz.TARDIS.flight.TARDISHandbrakeListener;
 import me.eccentric_nz.TARDIS.flight.TARDISManualFlightListener;
 import me.eccentric_nz.TARDIS.flight.TARDISRegulatorListener;
@@ -94,10 +96,10 @@ import me.eccentric_nz.TARDIS.listeners.TARDISTemporalLocatorListener;
 import me.eccentric_nz.TARDIS.listeners.TARDISTerminalListener;
 import me.eccentric_nz.TARDIS.listeners.TARDISTimeLordDeathListener;
 import me.eccentric_nz.TARDIS.listeners.TARDISUpdateListener;
+import me.eccentric_nz.TARDIS.listeners.TARDISVaultListener;
 import me.eccentric_nz.TARDIS.listeners.TARDISWorldResetListener;
 import me.eccentric_nz.TARDIS.listeners.TARDISZeroRoomChatListener;
 import me.eccentric_nz.TARDIS.listeners.TARDISZeroRoomPacketListener;
-import me.eccentric_nz.TARDIS.listeners.TARDISVaultListener;
 import me.eccentric_nz.TARDIS.move.TARDISDoorClickListener;
 import me.eccentric_nz.TARDIS.move.TARDISDoorWalkListener;
 import me.eccentric_nz.TARDIS.move.TARDISMoveListener;
@@ -215,10 +217,12 @@ public class TARDISListenerRegisterer {
         plugin.getPM().registerEvents(new TARDISTeleportListener(plugin), plugin);
         plugin.getPM().registerEvents(new TARDISTemporalListener(plugin), plugin);
         plugin.getPM().registerEvents(new TARDISTemporalLocatorListener(plugin), plugin);
+        plugin.getPM().registerEvents(new TARDISThemeMenuListener(plugin), plugin);
         plugin.getPM().registerEvents(new TARDISTerminalListener(plugin), plugin);
         plugin.getPM().registerEvents(new TARDISTimeLordDeathListener(plugin), plugin);
         plugin.getPM().registerEvents(new TARDISUpdateListener(plugin), plugin);
         plugin.getPM().registerEvents(new TARDISVaultListener(plugin), plugin);
+        plugin.getPM().registerEvents(new TARDISWallMenuListener(plugin), plugin);
         if (getNPCManager()) {
             plugin.getPM().registerEvents(new TARDISNPCListener(plugin), plugin);
         }

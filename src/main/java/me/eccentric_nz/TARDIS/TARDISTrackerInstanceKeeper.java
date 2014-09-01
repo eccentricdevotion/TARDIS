@@ -23,6 +23,7 @@ import java.util.UUID;
 import me.eccentric_nz.TARDIS.JSON.JSONObject;
 import me.eccentric_nz.TARDIS.arch.TARDISWatchData;
 import me.eccentric_nz.TARDIS.builders.TARDISMaterialisationData;
+import me.eccentric_nz.TARDIS.desktop.TARDISUpgradeData;
 import me.eccentric_nz.TARDIS.flight.TARDISRegulatorRunnable;
 import me.eccentric_nz.TARDIS.info.TARDISInfoMenu;
 import me.eccentric_nz.TARDIS.move.TARDISMoveSession;
@@ -77,6 +78,7 @@ public class TARDISTrackerInstanceKeeper {
     private final HashMap<UUID, TARDISMoveSession> moveSessions = new HashMap<UUID, TARDISMoveSession>();
     private final HashMap<UUID, TARDISRegulatorRunnable> regulating = new HashMap<UUID, TARDISRegulatorRunnable>();
     private final HashMap<UUID, TARDISSeedData> roomSeed = new HashMap<UUID, TARDISSeedData>();
+    private final HashMap<UUID, TARDISUpgradeData> upgrades = new HashMap<UUID, TARDISUpgradeData>();
     private final HashMap<UUID, UUID> chat = new HashMap<UUID, UUID>();
     private final List<Integer> dematerialising = new ArrayList<Integer>();
     private final List<Integer> inVortex = new ArrayList<Integer>();
@@ -214,6 +216,10 @@ public class TARDISTrackerInstanceKeeper {
 
     public HashMap<UUID, TARDISSeedData> getRoomSeed() {
         return roomSeed;
+    }
+
+    public HashMap<UUID, TARDISUpgradeData> getUpgrades() {
+        return upgrades;
     }
 
     public List<Integer> getDematerialising() {

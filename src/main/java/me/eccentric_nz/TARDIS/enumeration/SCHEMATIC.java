@@ -67,4 +67,38 @@ public enum SCHEMATIC {
     private SCHEMATIC(String file) {
         this.file = file;
     }
+
+    /**
+     * Checks if this SCHEMATIC is 1 chunk wide.
+     *
+     * @return true if this SCHEMATIC is 1 chunk wide.
+     */
+    public boolean isSmall() {
+        switch (this) {
+            case ARS:
+            case BUDGET:
+            case PLANK:
+            case STEAMPUNK:
+            case TOM:
+            case WAR:
+                return true;
+            default:
+                return false;
+        }
+    }
+
+    /**
+     * Checks if this SCHEMATIC is 2 chunks high.
+     *
+     * @return true if this SCHEMATIC is 2 chunks high.
+     */
+    public boolean isTall() {
+        switch (this) {
+            case DELUXE:
+            case ELEVENTH:
+                return true;
+            default:
+                return false;
+        }
+    }
 }

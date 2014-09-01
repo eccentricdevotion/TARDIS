@@ -54,6 +54,7 @@ public class TARDISCommands implements CommandExecutor {
         firstArgs.add("chameleon");
         firstArgs.add("check_loc");
         firstArgs.add("comehere");
+        firstArgs.add("desktop");
         firstArgs.add("direction");
         firstArgs.add("ep1");
         firstArgs.add("erase");
@@ -79,7 +80,9 @@ public class TARDISCommands implements CommandExecutor {
         firstArgs.add("secondary");
         firstArgs.add("setdest");
         firstArgs.add("tagtheood");
+        firstArgs.add("theme");
         firstArgs.add("update");
+        firstArgs.add("upgrade");
         firstArgs.add("version");
     }
 
@@ -158,6 +161,9 @@ public class TARDISCommands implements CommandExecutor {
                 }
                 if (args[0].equalsIgnoreCase("update")) {
                     return new TARDISUpdateCommand(plugin).startUpdate(player, args);
+                }
+                if (args[0].equalsIgnoreCase("upgrade") || args[0].equalsIgnoreCase("desktop") || args[0].equalsIgnoreCase("theme")) {
+                    return new TARDISUpgradeCommand(plugin).openUpgradeGUI(player);
                 }
                 if (args[0].equalsIgnoreCase("secondary")) {
                     return new TARDISSecondaryCommand(plugin).startSecondary(player, args);
