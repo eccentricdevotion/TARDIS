@@ -552,6 +552,18 @@ public class TARDISThemeRunnable implements Runnable {
                                         break;
                                 }
                                 existing[1][4][4] = control;
+                                if (downgrade) {
+                                    // reset slots to stone
+                                    existing[2][4][4] = 1;
+                                    existing[2][4][5] = 1;
+                                    existing[2][5][4] = 1;
+                                    existing[2][5][5] = 1;
+                                    if (w <= 16) {
+                                        existing[1][4][5] = 1;
+                                        existing[1][5][4] = 1;
+                                        existing[1][5][5] = 1;
+                                    }
+                                }
                                 if (w > 16) {
                                     existing[1][4][5] = control;
                                     existing[1][5][4] = control;
