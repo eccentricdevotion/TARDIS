@@ -105,7 +105,6 @@ public class TARDISThemeRunnable implements Runnable {
     @Override
     @SuppressWarnings("deprecation")
     public void run() {
-        plugin.debug("running");
         // initialise
         if (!running) {
             set = new HashMap<String, Object>();
@@ -191,7 +190,6 @@ public class TARDISThemeRunnable implements Runnable {
         }
         if (level == (h - 1) && row == (w - 1)) {
             // we're finished
-            plugin.debug("finished placing blocks");
             // put on the door, redstone torches, signs, and the repeaters
             for (Map.Entry<Block, Byte> entry : postDoorBlocks.entrySet()) {
                 Block pdb = entry.getKey();
@@ -383,7 +381,6 @@ public class TARDISThemeRunnable implements Runnable {
                     world.setBiome(x, zz, Biome.SKY);
                 }
                 Material type = Material.valueOf((String) bb.get("type"));
-                plugin.debug(world.getName() + ":" + x + ":" + y + ":" + zz + " - " + type.toString());
                 byte data = bb.getByte("data");
                 if (type.equals(Material.BEDROCK)) {
                     // remember bedrock location to block off the beacon light
@@ -718,12 +715,10 @@ public class TARDISThemeRunnable implements Runnable {
             }
             if (row < w) {
                 row++;
-                plugin.debug("incrementing row");
             }
             if (row == w && level < h) {
                 row = 0;
                 level++;
-                plugin.debug("resetting row, incrementing level");
             }
         }
     }
