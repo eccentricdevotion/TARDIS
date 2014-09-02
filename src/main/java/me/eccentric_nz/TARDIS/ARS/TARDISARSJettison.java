@@ -31,6 +31,16 @@ public class TARDISARSJettison {
     private int x;
     private int z;
 
+    public TARDISARSJettison() {
+    }
+
+    public TARDISARSJettison(Chunk chunk, int y, int x, int z) {
+        this.chunk = chunk;
+        setY(y);
+        setX(x);
+        setZ(z);
+    }
+
     public Chunk getChunk() {
         return chunk;
     }
@@ -43,7 +53,7 @@ public class TARDISARSJettison {
         return y;
     }
 
-    public void setY(int y) {
+    public final void setY(int y) {
         // convert to the actual y coordinate of the start of the chunk
         int sl = getChunkY(y);
         this.y = sl;
@@ -53,7 +63,7 @@ public class TARDISARSJettison {
         return x;
     }
 
-    public void setX(int x) {
+    public final void setX(int x) {
         // convert to the actual x coordinate of the start of the chunk
         int sx = getChunkX(x, this.chunk);
         this.x = sx;
@@ -63,7 +73,7 @@ public class TARDISARSJettison {
         return z;
     }
 
-    public void setZ(int z) {
+    public final void setZ(int z) {
         // convert to the actual z coordinate of the start of the chunk
         int sz = getChunkZ(z, this.chunk);
         this.z = sz;

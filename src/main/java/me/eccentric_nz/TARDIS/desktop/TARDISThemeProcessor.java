@@ -81,7 +81,7 @@ public class TARDISThemeProcessor {
     }
 
     private boolean compare(SCHEMATIC prev, SCHEMATIC next) {
-        return (!prev.equals(next) && (prev.isSmall() && !next.isSmall() || !prev.isTall() && next.isTall()));
+        return (!prev.equals(next) && ((prev.isSmall() && !next.isSmall()) || (!prev.isTall() && next.isTall())));
     }
 
     private boolean checkARSGrid(SCHEMATIC prev, SCHEMATIC next, UUID uuid) {

@@ -24,6 +24,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
+import me.eccentric_nz.TARDIS.ARS.TARDISARSJettison;
 import me.eccentric_nz.TARDIS.ARS.TARDISARSMethods;
 import me.eccentric_nz.TARDIS.JSON.JSONArray;
 import me.eccentric_nz.TARDIS.JSON.JSONObject;
@@ -37,12 +38,15 @@ import me.eccentric_nz.TARDIS.enumeration.SCHEMATIC;
 import me.eccentric_nz.TARDIS.schematic.TARDISSchematicGZip;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import org.bukkit.ChatColor;
+import org.bukkit.Chunk;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.block.Biome;
 import org.bukkit.block.Block;
 import org.bukkit.block.Sign;
+import org.bukkit.entity.Entity;
+import org.bukkit.entity.Item;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
 
@@ -82,6 +86,8 @@ public class TARDISThemeRunnable implements Runnable {
     boolean own_world;
     Location wg1;
     Location wg2;
+    boolean downgrade = false;
+    Chunk chunk;
 
     public TARDISThemeRunnable(TARDIS plugin, UUID uuid, TARDISUpgradeData tud) {
         this.plugin = plugin;
@@ -131,6 +137,7 @@ public class TARDISThemeRunnable implements Runnable {
             }
             slot = rs.getTIPS();
             id = rs.getTardis_id();
+            chunk = getChunk(rs.getChunk());
             if (slot != -1) { // default world - use TIPS
                 TARDISInteriorPostioning tintpos = new TARDISInteriorPostioning(plugin);
                 TARDISTIPSData pos = tintpos.getTIPSData(slot);
@@ -153,6 +160,7 @@ public class TARDISThemeRunnable implements Runnable {
                     starty = 64;
                     break;
             }
+            downgrade = compare(tud.getPrevious(), tud.getSchematic());
             String[] split = rs.getChunk().split(":");
             world = plugin.getServer().getWorld(split[0]);
             own_world = plugin.getConfig().getBoolean("creation.create_worlds");
@@ -323,6 +331,40 @@ public class TARDISThemeRunnable implements Runnable {
             where.put("tardis_id", id);
             qf.doUpdate("tardis", set, where);
             // jettison blocks if downgrading to smaller size
+            if (downgrade) {
+                List<TARDISARSJettison> jettisons = getJettisons(tud.getPrevious(), tud.getSchematic(), chunk);
+                for (TARDISARSJettison jet : jettisons) {
+                    // remove the room
+                    World jw = jet.getChunk().getWorld();
+                    int jx = jet.getX();
+                    int jy = jet.getY();
+                    int jz = jet.getZ();
+                    for (int yy = jy; yy < (jy + 16); yy++) {
+                        for (int xx = jx; xx < (jx + 16); xx++) {
+                            for (int zz = jz; zz < (jz + 16); zz++) {
+                                Block b = jw.getBlockAt(xx, yy, zz);
+                                b.setType(Material.AIR);
+                            }
+                        }
+                    }
+                }
+                // give them back some energy (jettison % * difference in cost)
+                int big = plugin.getArtronConfig().getInt("upgrades." + tud.getPrevious().name().toLowerCase());
+                int small = plugin.getArtronConfig().getInt("upgrades." + tud.getSchematic().name().toLowerCase());
+                int refund = Math.round((plugin.getArtronConfig().getInt("jettison") / 100F) * (big - small));
+                HashMap<String, Object> setr = new HashMap<String, Object>();
+                setr.put("tardis_id", id);
+                qf.alterEnergyLevel("tardis", refund, setr, null);
+                if (player.isOnline()) {
+                    TARDISMessage.send(player, "ENERGY_RECOVERED", String.format("%d", refund));
+                }
+            }
+            // remove dropped items
+            for (Entity e : chunk.getEntities()) {
+                if (e instanceof Item) {
+                    e.remove();
+                }
+            }
             // cancel the task
             plugin.getServer().getScheduler().cancelTask(taskID);
             taskID = 0;
@@ -672,6 +714,58 @@ public class TARDISThemeRunnable implements Runnable {
                 plugin.debug("resetting row, incrementing level");
             }
         }
+    }
+
+    private Chunk getChunk(String str) {
+        String[] split = str.split(":");
+        World cw = plugin.getServer().getWorld(split[0]);
+        int cx = plugin.getUtils().parseInt(split[1]);
+        int cz = plugin.getUtils().parseInt(split[2]);
+        return cw.getChunkAt(cx, cz);
+    }
+
+    private boolean compare(SCHEMATIC prev, SCHEMATIC next) {
+        return (!prev.equals(next) && ((!prev.isSmall() && next.isSmall()) || (prev.isTall() && !next.isTall())));
+    }
+
+    private List<TARDISARSJettison> getJettisons(SCHEMATIC prev, SCHEMATIC next, Chunk chunk) {
+        List<TARDISARSJettison> list = new ArrayList<TARDISARSJettison>();
+        switch (prev) {
+            case BIGGER:
+            case REDSTONE:
+                // the 3 chunks on the same level
+                list.add(new TARDISARSJettison(chunk, 1, 4, 5));
+                list.add(new TARDISARSJettison(chunk, 1, 5, 4));
+                list.add(new TARDISARSJettison(chunk, 1, 5, 5));
+                break;
+            case DELUXE:
+            case ELEVENTH:
+                switch (next) {
+                    case BIGGER:
+                    case REDSTONE:
+                        // the 4 chunks on the level above
+                        list.add(new TARDISARSJettison(chunk, 2, 4, 4));
+                        list.add(new TARDISARSJettison(chunk, 2, 4, 5));
+                        list.add(new TARDISARSJettison(chunk, 2, 5, 4));
+                        list.add(new TARDISARSJettison(chunk, 2, 5, 5));
+                        break;
+                    default:
+                        // the 3 chunks on the same level &
+                        // the 4 chunks on the level above
+                        list.add(new TARDISARSJettison(chunk, 1, 4, 5));
+                        list.add(new TARDISARSJettison(chunk, 1, 5, 4));
+                        list.add(new TARDISARSJettison(chunk, 1, 5, 5));
+                        list.add(new TARDISARSJettison(chunk, 2, 4, 4));
+                        list.add(new TARDISARSJettison(chunk, 2, 4, 5));
+                        list.add(new TARDISARSJettison(chunk, 2, 5, 4));
+                        list.add(new TARDISARSJettison(chunk, 2, 5, 5));
+                        break;
+                }
+                break;
+            default:
+                break;
+        }
+        return list;
     }
 
     public void setTaskID(int taskID) {
