@@ -7,8 +7,8 @@
    * add GUI(s) - _done_
    * save size, wall & floor preferences - _done_
    * rebuild the TARDIS a row at a time - _done_
-   * jettison unused blocks if downgrading to smaller TARDIS, give back a percentage of Artron Energy
-   * open upgrade GUI if SHIFT-clicking ARS sign
+   * jettison unused blocks if downgrading to smaller TARDIS, give back a percentage of Artron Energy - _done_
+   * open upgrade GUI if SHIFT-clicking ARS sign - _done_
 2. Villager / mob de-farming
 3. Slimmer TARDIS option?
 4. Find the Multiverse problem that prevents the Rail room from functioning properly

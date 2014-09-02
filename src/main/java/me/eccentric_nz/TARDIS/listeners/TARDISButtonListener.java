@@ -36,7 +36,10 @@ import me.eccentric_nz.TARDIS.database.ResultSetDiskStorage;
 import me.eccentric_nz.TARDIS.database.ResultSetRepeaters;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import me.eccentric_nz.TARDIS.database.ResultSetTravellers;
+import me.eccentric_nz.TARDIS.desktop.TARDISThemeInventory;
+import me.eccentric_nz.TARDIS.desktop.TARDISUpgradeData;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
+import me.eccentric_nz.TARDIS.enumeration.SCHEMATIC;
 import me.eccentric_nz.TARDIS.enumeration.STORAGE;
 import me.eccentric_nz.TARDIS.info.TARDISInfoMenu;
 import me.eccentric_nz.TARDIS.move.TARDISBlackWoolToggler;
@@ -345,11 +348,6 @@ public class TARDISButtonListener implements Listener {
                                         TARDISMessage.send(player, "ARS_NO_TRAVEL");
                                         return;
                                     }
-                                    // check they have permission to grow rooms
-                                    if (!player.hasPermission("tardis.ars")) {
-                                        TARDISMessage.send(player, "NO_PERM_ROOMS");
-                                        return;
-                                    }
                                     // check they're in a compatible world
                                     if (!plugin.getUtils().canGrowRooms(rs.getChunk())) {
                                         TARDISMessage.send(player, "ROOM_OWN_WORLD");
@@ -359,9 +357,33 @@ public class TARDISButtonListener implements Listener {
                                         TARDISMessage.send(player, "ARS_MISSING");
                                         return;
                                     }
-                                    Inventory ars = plugin.getServer().createInventory(player, 54, "§4Architectural Reconfiguration");
-                                    ars.setContents(tars);
-                                    player.openInventory(ars);
+                                    if (player.isSneaking()) {
+                                        // check they have permission to change the desktop
+                                        if (!player.hasPermission("tardis.upgrade")) {
+                                            TARDISMessage.send(player, "NO_PERM_UPGRADE");
+                                            return;
+                                        }
+                                        // get player's current console
+                                        SCHEMATIC current_console = rs.getSchematic();
+                                        TARDISUpgradeData tud = new TARDISUpgradeData();
+                                        tud.setPrevious(current_console);
+                                        tud.setLevel(level);
+                                        plugin.getTrackerKeeper().getUpgrades().put(player.getUniqueId(), tud);
+                                        // open the upgrade menu
+                                        ItemStack[] consoles = new TARDISThemeInventory(plugin, player, current_console.toString(), level).getMenu();
+                                        Inventory upg = plugin.getServer().createInventory(player, 27, "§4TARDIS Upgrade Menu");
+                                        upg.setContents(consoles);
+                                        player.openInventory(upg);
+                                    } else {
+                                        // check they have permission to grow rooms
+                                        if (!player.hasPermission("tardis.ars")) {
+                                            TARDISMessage.send(player, "NO_PERM_ROOMS");
+                                            return;
+                                        }
+                                        Inventory ars = plugin.getServer().createInventory(player, 54, "§4Architectural Reconfiguration");
+                                        ars.setContents(tars);
+                                        player.openInventory(ars);
+                                    }
                                     break;
                                 case 11: // Temporal Locator sign
                                     if (tcc != null && !tcc.hasTemporal() && !plugin.getUtils().inGracePeriod(player, false)) {
