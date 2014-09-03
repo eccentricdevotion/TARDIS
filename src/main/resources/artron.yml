@@ -33,3 +33,4 @@ upgrades:
     tom: 5000
     war: 5000
     custom: 10000
+just_wall_floor: 50

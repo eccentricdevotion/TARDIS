@@ -173,6 +173,7 @@ public class TARDISConfiguration {
         artronIntOptions.put("full_charge", 5000);
         artronIntOptions.put("hide", 500);
         artronIntOptions.put("jettison", 75);
+        artronIntOptions.put("just_wall_floor", 50);
         artronIntOptions.put("lightning_recharge", 300);
         artronIntOptions.put("nether_min", 4250);
         artronIntOptions.put("player", 25);
