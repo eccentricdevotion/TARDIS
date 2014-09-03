@@ -22,7 +22,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import me.eccentric_nz.TARDIS.TARDIS;
-import static me.eccentric_nz.TARDIS.commands.preferences.TARDISPrefsCommands.ucfirst;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import org.bukkit.entity.Player;
@@ -73,7 +72,7 @@ public class TARDISFloorCommand {
         HashMap<String, Object> where = new HashMap<String, Object>();
         where.put("uuid", player.getUniqueId().toString());
         qf.doUpdate("player_prefs", setw, where);
-        TARDISMessage.send(player, "PREF_MAT_SET", ucfirst(pref));
+        TARDISMessage.send(player, "PREF_MAT_SET", TARDISPrefsCommands.ucfirst(pref));
         return true;
     }
 }
