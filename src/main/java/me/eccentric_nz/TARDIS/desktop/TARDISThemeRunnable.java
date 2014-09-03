@@ -51,6 +51,9 @@ import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
 
 /**
+ * There was also a safety mechanism for when TARDIS rooms were deleted,
+ * automatically relocating any living beings in the deleted room, depositing
+ * them in the control room.
  *
  * @author eccentric_nz
  */
@@ -88,6 +91,7 @@ public class TARDISThemeRunnable implements Runnable {
     Location wg2;
     boolean downgrade = false;
     Chunk chunk;
+    Player player;
 
     public TARDISThemeRunnable(TARDIS plugin, UUID uuid, TARDISUpgradeData tud) {
         this.plugin = plugin;
@@ -132,7 +136,7 @@ public class TARDISThemeRunnable implements Runnable {
                 HashMap<String, Object> wherea = new HashMap<String, Object>();
                 wherea.put("uuid", uuid.toString());
                 int amount = plugin.getArtronConfig().getInt("upgrades." + tud.getSchematic().name().toLowerCase());
-                qf.alterEnergyLevel("tardis", amount, wherea, plugin.getServer().getPlayer(uuid));
+                qf.alterEnergyLevel("tardis", amount, wherea, player);
             }
             slot = rs.getTIPS();
             id = rs.getTardis_id();
@@ -185,8 +189,17 @@ public class TARDISThemeRunnable implements Runnable {
             qf.doDelete("blocks", wherep);
             // set running
             running = true;
+            player = plugin.getServer().getPlayer(uuid);
             // remove upgrade data
             plugin.getTrackerKeeper().getUpgrades().remove(uuid);
+            if (downgrade) {
+                if (checkPlayerLocation(player)) {
+                    TARDISMessage.send(player, "UPGRADE_TELEPORT");
+                    // teleport player to safe location
+                    Location loc = chunk.getBlock(8, 69, 4).getLocation();
+                    player.teleport(loc);
+                }
+            }
         }
         if (level == (h - 1) && row == (w - 1)) {
             // we're finished
@@ -319,7 +332,6 @@ public class TARDISThemeRunnable implements Runnable {
                 lamp.setType(Material.REDSTONE_LAMP_ON);
             }
             lampblocks.clear();
-            Player player = plugin.getServer().getPlayer(uuid);
             if (plugin.isWorldGuardOnServer() && plugin.getConfig().getBoolean("preferences.use_worldguard")) {
                 if (slot == -1) {
                     plugin.getWorldGuardUtils().addWGProtection(player, wg1, wg2);
@@ -773,6 +785,13 @@ public class TARDISThemeRunnable implements Runnable {
                 break;
         }
         return list;
+    }
+
+    private boolean checkPlayerLocation(Player p) {
+        Location l = p.getLocation();
+        int lx = l.getBlockX();
+        int lz = l.getBlockZ();
+        return ((lx > startx + 16 && lx < startx + 32) || (lz > startz + 16 && lz < startz + 32));
     }
 
     public void setTaskID(int taskID) {
