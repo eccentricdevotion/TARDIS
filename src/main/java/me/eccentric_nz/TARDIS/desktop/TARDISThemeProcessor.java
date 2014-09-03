@@ -73,10 +73,15 @@ public class TARDISThemeProcessor {
         HashMap<String, Object> wherea = new HashMap<String, Object>();
         wherea.put("uuid", uuid.toString());
         int amount = plugin.getArtronConfig().getInt("upgrades." + tud.getSchematic().name().toLowerCase());
+        if (tud.getPrevious().equals(tud.getSchematic())) {
+            // reduce the cost of the theme change
+            amount = Math.round((plugin.getArtronConfig().getInt("just_wall_floor") / 100F) * amount);
+        }
         qf.alterEnergyLevel("tardis", -amount, wherea, plugin.getServer().getPlayer(uuid));
         // start the rebuild
         TARDISThemeRunnable ttr = new TARDISThemeRunnable(plugin, uuid, tud);
-        int task = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, ttr, 5L, 2L);
+        long delay = Math.round(20 / plugin.getConfig().getDouble("growth.room_speed"));
+        int task = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, ttr, 5L, delay);
         ttr.setTaskID(task);
     }
 
