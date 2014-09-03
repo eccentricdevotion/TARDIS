@@ -72,6 +72,9 @@ public class TARDISThemeInventory {
                 ItemMeta im = is.getItemMeta();
                 im.setDisplayName(a.getDescriptiveName());
                 int cost = plugin.getArtronConfig().getInt("upgrades." + a.getActualName().toLowerCase());
+                if (current_console.equals(a.getActualName())) {
+                    cost = Math.round((plugin.getArtronConfig().getInt("just_wall_floor") / 100F) * cost);
+                }
                 List<String> lore = new ArrayList<String>();
                 lore.add("Cost: " + cost);
                 if (!player.hasPermission("tardis." + a.getActualName().toLowerCase())) {
