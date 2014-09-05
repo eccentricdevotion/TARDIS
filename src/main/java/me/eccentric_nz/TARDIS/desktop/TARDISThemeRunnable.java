@@ -76,6 +76,7 @@ public class TARDISThemeRunnable implements Runnable {
     private final HashMap<Block, Byte> postPistonBaseBlocks = new HashMap<Block, Byte>();
     private final HashMap<Block, Byte> postStickyPistonBaseBlocks = new HashMap<Block, Byte>();
     private final HashMap<Block, Byte> postPistonExtensionBlocks = new HashMap<Block, Byte>();
+    private Block postBedrock;
     Block postSaveSignBlock = null;
     Block postTerminalBlock = null;
     Block postARSBlock = null;
@@ -343,6 +344,7 @@ public class TARDISThemeRunnable implements Runnable {
                 lamp.setType(Material.REDSTONE_LAMP_ON);
             }
             lampblocks.clear();
+            postBedrock.setType(Material.GLASS);
             if (plugin.isWorldGuardOnServer() && plugin.getConfig().getBoolean("preferences.use_worldguard")) {
                 if (slot == -1) {
                     plugin.getWorldGuardUtils().addWGProtection(player, wg1, wg2);
@@ -402,6 +404,7 @@ public class TARDISThemeRunnable implements Runnable {
                     // remember bedrock location to block off the beacon light
                     String bedrocloc = world.getName() + ":" + x + ":" + y + ":" + zz;
                     set.put("beacon", bedrocloc);
+                    postBedrock = world.getBlockAt(x, y, zz);
                 }
                 if (type.equals(Material.NOTE_BLOCK)) {
                     // remember the location of this Disk Storage
