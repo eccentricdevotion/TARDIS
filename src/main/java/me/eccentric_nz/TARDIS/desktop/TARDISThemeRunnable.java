@@ -45,7 +45,9 @@ import org.bukkit.World;
 import org.bukkit.block.Biome;
 import org.bukkit.block.Block;
 import org.bukkit.block.Sign;
+import org.bukkit.entity.Creeper;
 import org.bukkit.entity.Entity;
+import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Item;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
@@ -141,6 +143,15 @@ public class TARDISThemeRunnable implements Runnable {
             slot = rs.getTIPS();
             id = rs.getTardis_id();
             chunk = getChunk(rs.getChunk());
+            // remove the charged creeper
+            Location creeper = getCreeperLocation(rs.getCreeper());
+            Entity ent = creeper.getWorld().spawnEntity(creeper, EntityType.EGG);
+            for (Entity e : ent.getNearbyEntities(1.5d, 1.5d, 1.5d)) {
+                if (e instanceof Creeper) {
+                    e.remove();
+                }
+            }
+            ent.remove();
             if (slot != -1) { // default world - use TIPS
                 TARDISInteriorPostioning tintpos = new TARDISInteriorPostioning(plugin);
                 TARDISTIPSData pos = tintpos.getTIPSData(slot);
@@ -345,17 +356,16 @@ public class TARDISThemeRunnable implements Runnable {
                 List<TARDISARSJettison> jettisons = getJettisons(tud.getPrevious(), tud.getSchematic(), chunk);
                 for (TARDISARSJettison jet : jettisons) {
                     // remove the room
-                    World jw = jet.getChunk().getWorld();
-                    int jx = jet.getX();
-                    int jy = jet.getY();
-                    int jz = jet.getZ();
-                    for (int yy = jy; yy < (jy + 16); yy++) {
-                        for (int xx = jx; xx < (jx + 16); xx++) {
-                            for (int zz = jz; zz < (jz + 16); zz++) {
-                                Block b = jw.getBlockAt(xx, yy, zz);
-                                b.setType(Material.AIR);
-                            }
-                        }
+                    setAir(jet.getX(), jet.getY(), jet.getZ(), jet.getChunk().getWorld(), 16);
+                }
+                // also tidy up the space directly above the ARS centre slot
+                int tidy = starty + h;
+                int plus = 16 - h;
+                setAir(chunk.getX(), tidy, chunk.getZ(), chunk.getWorld(), plus);
+                // remove dropped items
+                for (Entity e : chunk.getEntities()) {
+                    if (e instanceof Item) {
+                        e.remove();
                     }
                 }
                 // give them back some energy (jettison % * difference in cost)
@@ -367,12 +377,6 @@ public class TARDISThemeRunnable implements Runnable {
                 qf.alterEnergyLevel("tardis", refund, setr, null);
                 if (player.isOnline()) {
                     TARDISMessage.send(player, "ENERGY_RECOVERED", String.format("%d", refund));
-                }
-            }
-            // remove dropped items
-            for (Entity e : chunk.getEntities()) {
-                if (e instanceof Item) {
-                    e.remove();
                 }
             }
             // cancel the task
@@ -725,6 +729,12 @@ public class TARDISThemeRunnable implements Runnable {
                     plugin.getUtils().setBlock(world, x, y, zz, type, data);
                 }
             }
+            // remove dropped items
+            for (Entity e : chunk.getEntities()) {
+                if (e instanceof Item) {
+                    e.remove();
+                }
+            }
             if (row < w) {
                 row++;
             }
@@ -790,8 +800,30 @@ public class TARDISThemeRunnable implements Runnable {
     private boolean checkPlayerLocation(Player p) {
         Location l = p.getLocation();
         int lx = l.getBlockX();
+        int ly = l.getBlockY();
         int lz = l.getBlockZ();
-        return ((lx > startx + 16 && lx < startx + 32) || (lz > startz + 16 && lz < startz + 32));
+        return ((lx > startx + 16 && lx < startx + 32) || (lz > startz + 16 && lz < startz + 32) || (ly > 69 && ly < 81));
+    }
+
+    private void setAir(int jx, int jy, int jz, World jw, int plusy) {
+        plugin.debug("x:" + jx + " y:" + jy + " z:" + jz + " +:" + plusy);
+        for (int yy = jy; yy < (jy + plusy); yy++) {
+            for (int xx = jx; xx < (jx + 16); xx++) {
+                for (int zz = jz; zz < (jz + 16); zz++) {
+                    Block b = jw.getBlockAt(xx, yy, zz);
+                    b.setType(Material.AIR);
+                }
+            }
+        }
+    }
+
+    private Location getCreeperLocation(String str) {
+        String[] creeperData = str.split(":");
+        World cw = plugin.getServer().getWorld(creeperData[0]);
+        float cx = plugin.getUtils().parseFloat(creeperData[1]);
+        float cy = plugin.getUtils().parseFloat(creeperData[2]) + 1;
+        float cz = plugin.getUtils().parseFloat(creeperData[3]);
+        return new Location(cw, cx, cy, cz);
     }
 
     public void setTaskID(int taskID) {
