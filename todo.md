@@ -2,6 +2,8 @@
 
 ##Current version `3.1-beta-1`
 1. TARDIS up/down/cross-grades (change the desktop theme)
+   * better removal dropped items
+   * better removal of larger sized TARDISes
 2. Villager / mob de-farming
 3. Slimmer TARDIS option?
 4. Find the Multiverse problem that prevents the Rail room from functioning properly
