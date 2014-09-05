@@ -76,6 +76,7 @@ public class TARDISThemeRunnable implements Runnable {
     private final HashMap<Block, Byte> postPistonBaseBlocks = new HashMap<Block, Byte>();
     private final HashMap<Block, Byte> postStickyPistonBaseBlocks = new HashMap<Block, Byte>();
     private final HashMap<Block, Byte> postPistonExtensionBlocks = new HashMap<Block, Byte>();
+    private Block postBedrock;
     Block postSaveSignBlock = null;
     Block postTerminalBlock = null;
     Block postARSBlock = null;
@@ -343,6 +344,7 @@ public class TARDISThemeRunnable implements Runnable {
                 lamp.setType(Material.REDSTONE_LAMP_ON);
             }
             lampblocks.clear();
+            postBedrock.setType(Material.GLASS);
             if (plugin.isWorldGuardOnServer() && plugin.getConfig().getBoolean("preferences.use_worldguard")) {
                 if (slot == -1) {
                     plugin.getWorldGuardUtils().addWGProtection(player, wg1, wg2);
@@ -356,11 +358,11 @@ public class TARDISThemeRunnable implements Runnable {
                 List<TARDISARSJettison> jettisons = getJettisons(tud.getPrevious(), tud.getSchematic(), chunk);
                 for (TARDISARSJettison jet : jettisons) {
                     // remove the room
-                    setAir(jet.getX(), jet.getY(), jet.getZ(), jet.getChunk().getWorld(), 16);
+                    setAir(jet.getX(), jet.getY(), jet.getZ(), jet.getChunk().getWorld(), 15);
                 }
                 // also tidy up the space directly above the ARS centre slot
                 int tidy = starty + h;
-                int plus = 16 - h;
+                int plus = 15 - h;
                 setAir(chunk.getX(), tidy, chunk.getZ(), chunk.getWorld(), plus);
                 // remove dropped items
                 for (Entity e : chunk.getEntities()) {
@@ -402,6 +404,7 @@ public class TARDISThemeRunnable implements Runnable {
                     // remember bedrock location to block off the beacon light
                     String bedrocloc = world.getName() + ":" + x + ":" + y + ":" + zz;
                     set.put("beacon", bedrocloc);
+                    postBedrock = world.getBlockAt(x, y, zz);
                 }
                 if (type.equals(Material.NOTE_BLOCK)) {
                     // remember the location of this Disk Storage
@@ -806,8 +809,8 @@ public class TARDISThemeRunnable implements Runnable {
     }
 
     private void setAir(int jx, int jy, int jz, World jw, int plusy) {
-        plugin.debug("x:" + jx + " y:" + jy + " z:" + jz + " +:" + plusy);
-        for (int yy = jy; yy < (jy + plusy); yy++) {
+        // top down
+        for (int yy = (jy + plusy); yy <= jy; yy--) {
             for (int xx = jx; xx < (jx + 16); xx++) {
                 for (int zz = jz; zz < (jz + 16); zz++) {
                     Block b = jw.getBlockAt(xx, yy, zz);
