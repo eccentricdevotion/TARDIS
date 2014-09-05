@@ -21,6 +21,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.utility.Version;
 import me.libraryaddict.disguise.DisguiseAPI;
 import me.libraryaddict.disguise.disguisetypes.AnimalColor;
 import me.libraryaddict.disguise.disguisetypes.DisguiseType;
@@ -69,9 +70,20 @@ public class TARDISLazarusGUIListener implements Listener {
     private final HashMap<UUID, Integer> professions = new HashMap<UUID, Integer>();
     private final HashMap<UUID, Integer> slimes = new HashMap<UUID, Integer>();
     private final List<Integer> slimeSizes = Arrays.asList(1, 2, 4);
+    private final List<String> twaMonsters = Arrays.asList("WEEPING ANGEL", "CYBERMAN", "ICE WARRIOR", "EMPTY CHILD", "SILURIAN", "SONTARAN", "STRAX", "VASHTA NERADA", "ZYGON");
+    private final List<String> twaChests = Arrays.asList("Weeping Angel Chest", "Cyberman Chest", "Ice Warrior Chest", "Empty Child Chest", "Silurian Chest", "Sontaran Chest", "Strax Chest", "Vashta Nerada Chest", "Zygon Chest");
+    private final Version min = new Version("2.0");
+    private Version twa = null;
+    private int max_slot = 36;
 
     public TARDISLazarusGUIListener(TARDIS plugin) {
         this.plugin = plugin;
+        if (this.plugin.getPM().isPluginEnabled("TARDISWeepingAngels")) {
+            this.twa = new Version(this.plugin.getPM().getPlugin("TARDISWeepingAngels").getDescription().getVersion());
+        }
+        if (min.compareTo(this.twa) >= 0) {
+            max_slot = 42;
+        }
     }
 
     /**
@@ -93,14 +105,14 @@ public class TARDISLazarusGUIListener implements Listener {
             if (b == null) {
                 return;
             }
-            if (slot >= 0 && slot < 36) {
+            if (slot >= 0 && slot < max_slot) {
                 // get selection
                 ItemStack is = inv.getItem(slot);
                 if (is != null) {
                     ItemMeta im = is.getItemMeta();
                     // remember selection
                     String display = im.getDisplayName();
-                    if ((display.equals("WEEPING ANGEL") || display.equals("CYBERMAN") || display.equals("ICE WARRIOR")) && !plugin.getPM().isPluginEnabled("TARDISWeepingAngels")) {
+                    if (twaMonsters.contains(display) && !plugin.getPM().isPluginEnabled("TARDISWeepingAngels")) {
                         im.setLore(Arrays.asList("Genetic modification not available!"));
                         is.setItemMeta(im);
                     } else {
@@ -111,7 +123,7 @@ public class TARDISLazarusGUIListener implements Listener {
                     disguises.put(uuid, "PLAYER");
                 }
             }
-            if (slot == 37) { // The Master Switch : ON | OFF
+            if (slot == 45) { // The Master Switch : ON | OFF
                 ItemStack is = inv.getItem(slot);
                 ItemMeta im = is.getItemMeta();
                 if (player.hasPermission("tardis.themaster")) {
@@ -126,26 +138,26 @@ public class TARDISLazarusGUIListener implements Listener {
                 }
                 is.setItemMeta(im);
             }
-            if (slot == 39) { // adult / baby
+            if (slot == 47) { // adult / baby
                 ItemStack is = inv.getItem(slot);
                 ItemMeta im = is.getItemMeta();
                 String onoff = (im.getLore().get(0).equals("ADULT")) ? "BABY" : "ADULT";
                 im.setLore(Arrays.asList(onoff));
                 is.setItemMeta(im);
             }
-            if (slot == 41) { // type / colour
+            if (slot == 48) { // type / colour
                 if (disguises.containsKey(uuid)) {
                     setSlotFourtyOne(inv, disguises.get(uuid), uuid);
                 }
             }
-            if (slot == 43) { // Tamed / Flying / Blazing / Powered / Agressive : TRUE | FALSE
+            if (slot == 49) { // Tamed / Flying / Blazing / Powered / Agressive : TRUE | FALSE
                 ItemStack is = inv.getItem(slot);
                 ItemMeta im = is.getItemMeta();
                 String truefalse = (im.getLore().get(0).equals("FALSE")) ? "TRUE" : "FALSE";
                 im.setLore(Arrays.asList(truefalse));
                 is.setItemMeta(im);
             }
-            if (slot == 47) { //remove disguise
+            if (slot == 51) { //remove disguise
                 plugin.getTrackerKeeper().getGeneticManipulation().add(uuid);
                 close(player);
                 // animate the manipulator walls
@@ -158,19 +170,7 @@ public class TARDISLazarusGUIListener implements Listener {
                         if (DisguiseAPI.isDisguised(player)) {
                             DisguiseAPI.undisguiseToAll(player);
                         } else {
-                            ItemStack chest = player.getInventory().getChestplate();
-                            if (chest != null && chest.hasItemMeta() && chest.getItemMeta().hasDisplayName()) {
-                                String metaName = chest.getItemMeta().getDisplayName();
-                                if (metaName.equals("Weeping Angel Chest")) {
-                                    player.performCommand("angeldisguise off");
-                                }
-                                if (metaName.equals("Cyberman Chest")) {
-                                    player.performCommand("cyberdisguise off");
-                                }
-                                if (metaName.equals("Ice Warrior Chest")) {
-                                    player.performCommand("icedisguise off");
-                                }
-                            }
+                            twaOff(player);
                         }
                     }
                 }, 80L);
@@ -183,7 +183,7 @@ public class TARDISLazarusGUIListener implements Listener {
                     }
                 }, 100L);
             }
-            if (slot == 49) { // add disguise
+            if (slot == 52) { // add disguise
                 plugin.getTrackerKeeper().getGeneticManipulation().add(uuid);
                 close(player);
                 // animate the manipulator walls
@@ -221,15 +221,47 @@ public class TARDISLazarusGUIListener implements Listener {
                         } else {
                             if (disguises.containsKey(uuid)) {
                                 String disguise = disguises.get(uuid);
-                                if (disguise.equals("WEEPING ANGEL") || disguise.equals("CYBERMAN") || disguise.equals("ICE WARRIOR")) {
+                                // undisguise first
+                                twaOff(player);
+                                if (twaMonsters.contains(disguise)) {
                                     if (disguise.equals("WEEPING ANGEL")) {
-                                        player.performCommand("angeldisguise on");
+                                        if (min.compareTo(twa) < 0) {
+                                            player.performCommand("angeldisguise on");
+                                        } else {
+                                            player.performCommand("twad ANGEL on");
+                                        }
                                     }
                                     if (disguise.equals("CYBERMAN")) {
-                                        player.performCommand("cyberdisguise on");
+                                        if (min.compareTo(twa) < 0) {
+                                            player.performCommand("cyberdisguise on");
+                                        } else {
+                                            player.performCommand("twad CYBERMAN on");
+                                        }
                                     }
                                     if (disguise.equals("ICE WARRIOR")) {
-                                        player.performCommand("icedisguise on");
+                                        if (min.compareTo(twa) < 0) {
+                                            player.performCommand("icedisguise on");
+                                        } else {
+                                            player.performCommand("twad ICE on");
+                                        }
+                                    }
+                                    if (disguise.equals("EMPTY CHILD")) {
+                                        player.performCommand("twad EMPTY on");
+                                    }
+                                    if (disguise.equals("SILURIAN")) {
+                                        player.performCommand("twad SILURIAN on");
+                                    }
+                                    if (disguise.equals("SONTARAN")) {
+                                        player.performCommand("twad SONTARAN on");
+                                    }
+                                    if (disguise.equals("STRAX")) {
+                                        player.performCommand("twad STRAX on");
+                                    }
+                                    if (disguise.equals("VASHTA NERADA")) {
+                                        player.performCommand("twad VASHTA on");
+                                    }
+                                    if (disguise.equals("ZYGON")) {
+                                        player.performCommand("twad ZYGON on");
                                     }
                                 } else {
                                     DisguiseType dt = DisguiseType.valueOf(disguise);
@@ -329,7 +361,7 @@ public class TARDISLazarusGUIListener implements Listener {
                     }
                 }, 100L);
             }
-            if (slot == 51) {
+            if (slot == 53) {
                 close(player);
                 openDoor(b);
             }
@@ -446,7 +478,7 @@ public class TARDISLazarusGUIListener implements Listener {
             slimes.put(uuid, o);
         }
         if (t != null) {
-            ItemStack is = i.getItem(41);
+            ItemStack is = i.getItem(48);
             ItemMeta im = is.getItemMeta();
             im.setLore(Arrays.asList(t));
             is.setItemMeta(im);
@@ -454,13 +486,13 @@ public class TARDISLazarusGUIListener implements Listener {
     }
 
     private boolean isReversedPolarity(Inventory i) {
-        ItemStack is = i.getItem(37);
+        ItemStack is = i.getItem(45);
         ItemMeta im = is.getItemMeta();
         return im.getLore().get(0).equals("ON");
     }
 
     private AnimalColor getColor(Inventory i) {
-        ItemStack is = i.getItem(41);
+        ItemStack is = i.getItem(48);
         ItemMeta im = is.getItemMeta();
         try {
             return AnimalColor.valueOf(im.getLore().get(0));
@@ -470,7 +502,7 @@ public class TARDISLazarusGUIListener implements Listener {
     }
 
     private Color getHorseColor(Inventory i) {
-        ItemStack is = i.getItem(41);
+        ItemStack is = i.getItem(48);
         ItemMeta im = is.getItemMeta();
         try {
             return Color.valueOf(im.getLore().get(0));
@@ -480,7 +512,7 @@ public class TARDISLazarusGUIListener implements Listener {
     }
 
     private Type getCatType(Inventory i) {
-        ItemStack is = i.getItem(41);
+        ItemStack is = i.getItem(48);
         ItemMeta im = is.getItemMeta();
         try {
             return Type.valueOf(im.getLore().get(0));
@@ -490,7 +522,7 @@ public class TARDISLazarusGUIListener implements Listener {
     }
 
     private Profession getProfession(Inventory i) {
-        ItemStack is = i.getItem(41);
+        ItemStack is = i.getItem(48);
         ItemMeta im = is.getItemMeta();
         try {
             return Profession.valueOf(im.getLore().get(0));
@@ -500,21 +532,43 @@ public class TARDISLazarusGUIListener implements Listener {
     }
 
     private int getSlimeSize(Inventory i) {
-        ItemStack is = i.getItem(41);
+        ItemStack is = i.getItem(48);
         ItemMeta im = is.getItemMeta();
         int size = plugin.getUtils().parseInt(im.getLore().get(0));
         return (size == 0) ? 2 : size;
     }
 
     private boolean getBaby(Inventory i) {
-        ItemStack is = i.getItem(39);
+        ItemStack is = i.getItem(47);
         ItemMeta im = is.getItemMeta();
         return im.getLore().get(0).equals("BABY");
     }
 
     private boolean getBoolean(Inventory i) {
-        ItemStack is = i.getItem(43);
+        ItemStack is = i.getItem(49);
         ItemMeta im = is.getItemMeta();
         return im.getLore().get(0).equals("TRUE");
+    }
+
+    private void twaOff(Player player) {
+        ItemStack chest = player.getInventory().getChestplate();
+        if (chest != null && chest.hasItemMeta() && chest.getItemMeta().hasDisplayName()) {
+            String metaName = chest.getItemMeta().getDisplayName();
+            if (twaChests.contains(metaName)) {
+                if (min.compareTo(twa) >= 0) {
+                    player.performCommand("twad ANGEL off");
+                } else {
+                    if (metaName.equals("Weeping Angel Chest")) {
+                        player.performCommand("angeldisguise off");
+                    }
+                    if (metaName.equals("Cyberman Chest")) {
+                        player.performCommand("cyberdisguise off");
+                    }
+                    if (metaName.equals("Ice Warrior Chest")) {
+                        player.performCommand("icedisguise off");
+                    }
+                }
+            }
+        }
     }
 }
