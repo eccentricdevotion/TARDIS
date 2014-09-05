@@ -344,7 +344,9 @@ public class TARDISThemeRunnable implements Runnable {
                 lamp.setType(Material.REDSTONE_LAMP_ON);
             }
             lampblocks.clear();
-            postBedrock.setType(Material.GLASS);
+            if (postBedrock != null) {
+                postBedrock.setType(Material.GLASS);
+            }
             if (plugin.isWorldGuardOnServer() && plugin.getConfig().getBoolean("preferences.use_worldguard")) {
                 if (slot == -1) {
                     plugin.getWorldGuardUtils().addWGProtection(player, wg1, wg2);
