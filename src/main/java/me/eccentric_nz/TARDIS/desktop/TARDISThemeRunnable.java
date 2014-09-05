@@ -811,7 +811,6 @@ public class TARDISThemeRunnable implements Runnable {
     }
 
     private void setAir(int jx, int jy, int jz, World jw, int plusy) {
-        plugin.debug("x:" + jx + " y:" + jy + " z:" + jz + " +:" + plusy);
         for (int yy = jy; yy < (jy + plusy); yy++) {
             for (int xx = jx; xx < (jx + 16); xx++) {
                 for (int zz = jz; zz < (jz + 16); zz++) {
