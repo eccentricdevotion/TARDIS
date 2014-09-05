@@ -63,6 +63,7 @@ public class TARDISThemeMenuListener implements Listener {
                     case 6:
                     case 7:
                     case 8:
+                    case 9:
                     case 10:
                         event.setCancelled(true);
                         // get Display name of selected console
