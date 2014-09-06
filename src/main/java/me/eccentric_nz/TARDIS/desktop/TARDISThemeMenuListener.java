@@ -66,6 +66,9 @@ public class TARDISThemeMenuListener implements Listener {
                     case 9:
                     case 10:
                         event.setCancelled(true);
+                        if (slot == 10 && !plugin.getConfig().getBoolean("creation.custom_schematic")) {
+                            return;
+                        }
                         // get Display name of selected console
                         ItemStack choice = inv.getItem(slot);
                         ItemMeta choice_im = choice.getItemMeta();
