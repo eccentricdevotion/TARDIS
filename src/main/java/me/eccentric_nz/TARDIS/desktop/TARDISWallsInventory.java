@@ -70,13 +70,13 @@ public class TARDISWallsInventory {
         }
 
         // scroll up
-        ItemStack scroll_up = new ItemStack(Material.WOOL, 1, (byte) 14);
+        ItemStack scroll_up = new ItemStack(Material.ARROW, 1);
         ItemMeta uim = scroll_up.getItemMeta();
         uim.setDisplayName(plugin.getLanguage().getString("BUTTON_SCROLL_U"));
         scroll_up.setItemMeta(uim);
         stack[8] = scroll_up;
         // scroll down
-        ItemStack scroll_down = new ItemStack(Material.WOOL, 1, (byte) 5);
+        ItemStack scroll_down = new ItemStack(Material.ARROW, 1);
         ItemMeta dim = scroll_down.getItemMeta();
         dim.setDisplayName(plugin.getLanguage().getString("BUTTON_SCROLL_D"));
         scroll_down.setItemMeta(dim);
