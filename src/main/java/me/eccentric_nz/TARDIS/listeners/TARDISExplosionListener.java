@@ -63,7 +63,6 @@ public class TARDISExplosionListener implements Listener {
             e.setCancelled(true);
             // check it is not the Artron creeper
             String loc_chk = explode.getWorld().getName() + ":" + (explode.getBlockX() + 0.5f) + ":" + (explode.getBlockY()) + ":" + (explode.getBlockZ() + 0.5f);
-            plugin.debug("Explode location: " + loc_chk);
             if (new ResultSetCreeper(plugin, loc_chk).resultSet()) {
                 // create a new explosion that doesn't destroy blocks or set fire
                 explode.getWorld().createExplosion(explode.getX(), explode.getY(), explode.getZ(), 4.0f, false, false);
@@ -85,9 +84,9 @@ public class TARDISExplosionListener implements Listener {
                         String[] xStr = loc_tmp[1].split("=");
                         String[] yStr = loc_tmp[2].split("=");
                         String[] zStr = loc_tmp[3].split("=");
-                        int x = plugin.getUtils().parseInt(xStr[1].substring(0, (xStr[1].length() - 2)));
-                        int y = plugin.getUtils().parseInt(yStr[1].substring(0, (yStr[1].length() - 2)));
-                        int z = plugin.getUtils().parseInt(zStr[1].substring(0, (zStr[1].length() - 2)));
+                        int x = (int) Math.floor(plugin.getUtils().parseDouble(xStr[1].substring(0, (xStr[1].length() - 2))));
+                        int y = (int) Math.floor(plugin.getUtils().parseDouble(yStr[1].substring(0, (yStr[1].length() - 2))));
+                        int z = (int) Math.floor(plugin.getUtils().parseDouble(zStr[1].substring(0, (zStr[1].length() - 2))));
                         Block block = w.getBlockAt(x, y, z);
                         // if the block is a TARDIS block then remove it
                         if (e.blockList().contains(block)) {
