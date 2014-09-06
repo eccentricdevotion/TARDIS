@@ -38,7 +38,6 @@ import org.bukkit.entity.Tameable;
 import org.bukkit.entity.Villager;
 import org.bukkit.entity.Wolf;
 import org.bukkit.event.EventHandler;
-import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerInteractEntityEvent;
 
@@ -54,7 +53,7 @@ public class TARDISEjectListener implements Listener {
         this.plugin = plugin;
     }
 
-    @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
+    @EventHandler(ignoreCancelled = true)
     public void onInteract(PlayerInteractEntityEvent event) {
         final Player player = event.getPlayer();
         UUID uuid = player.getUniqueId();
@@ -217,6 +216,7 @@ public class TARDISEjectListener implements Listener {
                 }
                 break;
             case VILLAGER:
+                event.setCancelled(true);
                 Villager v = (Villager) ent;
                 Villager villager = (Villager) l.getWorld().spawnEntity(l, EntityType.VILLAGER);
                 villager.setProfession(v.getProfession());
@@ -229,6 +229,7 @@ public class TARDISEjectListener implements Listener {
                 if (vilname != null && !vilname.isEmpty()) {
                     villager.setCustomName(vilname);
                 }
+                ent.remove();
                 break;
             default:
                 TARDISMessage.send(player, "EJECT_NOT_VALID");
