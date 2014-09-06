@@ -105,7 +105,7 @@ public class TARDISEjectListener implements Listener {
             case CHICKEN:
                 Chicken k = (Chicken) ent;
                 Chicken chicken = (Chicken) l.getWorld().spawnEntity(l, EntityType.CHICKEN);
-                chicken.setTicksLived(k.getAge());
+                chicken.setTicksLived(k.getTicksLived());
                 if ((!k.isAdult())) {
                     chicken.setBaby();
                 }
@@ -118,7 +118,7 @@ public class TARDISEjectListener implements Listener {
             case COW:
                 Cow c = (Cow) ent;
                 Cow cow = (Cow) l.getWorld().spawnEntity(l, EntityType.COW);
-                cow.setTicksLived(c.getAge());
+                cow.setTicksLived(c.getTicksLived());
                 if ((!c.isAdult())) {
                     cow.setBaby();
                 }
@@ -134,7 +134,7 @@ public class TARDISEjectListener implements Listener {
             case MUSHROOM_COW:
                 MushroomCow m = (MushroomCow) ent;
                 MushroomCow mush = (MushroomCow) l.getWorld().spawnEntity(l, EntityType.MUSHROOM_COW);
-                mush.setTicksLived(m.getAge());
+                mush.setTicksLived(m.getTicksLived());
                 if ((!m.isAdult())) {
                     mush.setBaby();
                 }
@@ -149,7 +149,7 @@ public class TARDISEjectListener implements Listener {
                 // eject any passengers
                 g.eject();
                 Pig pig = (Pig) l.getWorld().spawnEntity(l, EntityType.PIG);
-                pig.setTicksLived(g.getAge());
+                pig.setTicksLived(g.getTicksLived());
                 if ((!g.isAdult())) {
                     pig.setBaby();
                 }
@@ -165,7 +165,7 @@ public class TARDISEjectListener implements Listener {
             case SHEEP:
                 Sheep s = (Sheep) ent;
                 Sheep sheep = (Sheep) l.getWorld().spawnEntity(l, EntityType.SHEEP);
-                sheep.setTicksLived(s.getAge());
+                sheep.setTicksLived(s.getTicksLived());
                 if ((!s.isAdult())) {
                     sheep.setBaby();
                 }
@@ -181,7 +181,7 @@ public class TARDISEjectListener implements Listener {
                 if (wtamed.isTamed() && ((OfflinePlayer) wtamed.getOwner()).getUniqueId().equals(player.getUniqueId())) {
                     Wolf w = (Wolf) ent;
                     Wolf wolf = (Wolf) l.getWorld().spawnEntity(l, EntityType.WOLF);
-                    wolf.setTicksLived(w.getAge());
+                    wolf.setTicksLived(w.getTicksLived());
                     if ((!w.isAdult())) {
                         wolf.setBaby();
                     }
@@ -201,7 +201,7 @@ public class TARDISEjectListener implements Listener {
                 if (otamed.isTamed() && ((OfflinePlayer) otamed.getOwner()).getUniqueId().equals(player.getUniqueId())) {
                     Ocelot o = (Ocelot) ent;
                     Ocelot cat = (Ocelot) l.getWorld().spawnEntity(l, EntityType.OCELOT);
-                    cat.setTicksLived(o.getAge());
+                    cat.setTicksLived(o.getTicksLived());
                     if ((!o.isAdult())) {
                         cat.setBaby();
                     }
@@ -220,7 +220,7 @@ public class TARDISEjectListener implements Listener {
                 Villager v = (Villager) ent;
                 Villager villager = (Villager) l.getWorld().spawnEntity(l, EntityType.VILLAGER);
                 villager.setProfession(v.getProfession());
-                villager.setAge(v.getAge());
+                villager.setAge(v.getTicksLived());
                 villager.setHealth(v.getHealth());
                 if ((!((Villager) ent).isAdult())) {
                     villager.setBaby();
