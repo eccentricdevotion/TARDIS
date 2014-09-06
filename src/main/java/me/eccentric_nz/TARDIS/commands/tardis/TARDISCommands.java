@@ -56,6 +56,7 @@ public class TARDISCommands implements CommandExecutor {
         firstArgs.add("comehere");
         firstArgs.add("desktop");
         firstArgs.add("direction");
+        firstArgs.add("eject");
         firstArgs.add("ep1");
         firstArgs.add("erase");
         firstArgs.add("exterminate");
@@ -125,6 +126,9 @@ public class TARDISCommands implements CommandExecutor {
                 }
                 if (args[0].equalsIgnoreCase("arch_time")) {
                     return new TARDISArchCommand(plugin).getTime(player);
+                }
+                if (args[0].equalsIgnoreCase("eject")) {
+                    return new TARDISEjectCommand(plugin).eject(player);
                 }
                 if (args[0].equalsIgnoreCase("lamps")) {
                     return new TARDISLampsCommand(plugin).addLampBlocks(player);

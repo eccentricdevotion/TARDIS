@@ -2,7 +2,7 @@
 
 ##Current version `3.1-beta-1`
 1. TARDIS up/down/cross-grades (change the desktop theme) - _started_
-2. Villager / mob de-farming
+2. Villager / mob / companion ejecting
 3. Slimmer TARDIS option?
 4. Find the Multiverse problem that prevents the Rail room from functioning properly
 5. Update for Minecraft / Bukkit 1.8

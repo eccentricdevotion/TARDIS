@@ -179,6 +179,9 @@ permissions:
   tardis.farm:
     description: Allow players to farm mobs.
     default: op
+  tardis.eject:
+    description: Allow players eject farmed mobs, villagers and companions.
+    default: op
   tardis.autonomous:
     description: Allow players to use the TARDIS autonomous homing function.
     default: op

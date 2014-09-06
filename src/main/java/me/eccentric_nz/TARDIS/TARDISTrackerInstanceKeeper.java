@@ -58,6 +58,7 @@ public class TARDISTrackerInstanceKeeper {
     private final HashMap<UUID, Double[]> gravity = new HashMap<UUID, Double[]>();
     private final HashMap<UUID, Integer> binder = new HashMap<UUID, Integer>();
     private final HashMap<UUID, Integer> count = new HashMap<UUID, Integer>();
+    private final HashMap<UUID, Integer> ejecting = new HashMap<UUID, Integer>();
     private final HashMap<UUID, JSONObject> pastes = new HashMap<UUID, JSONObject>();
     private final HashMap<UUID, List<Location>> repeaters = new HashMap<UUID, List<Location>>();
     private final HashMap<UUID, Location> startLocation = new HashMap<UUID, Location>();
@@ -244,6 +245,10 @@ public class TARDISTrackerInstanceKeeper {
 
     public List<UUID> getArrangers() {
         return arrangers;
+    }
+
+    public HashMap<UUID, Integer> getEjecting() {
+        return ejecting;
     }
 
     public List<UUID> getFarming() {
