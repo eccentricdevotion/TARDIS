@@ -458,7 +458,7 @@ public class TARDISHandbrakeListener implements Listener {
         ResultSetDoors rs = new ResultSetDoors(plugin, where, false);
         if (rs.resultSet()) {
             byte data = plugin.getUtils().getLocationFromDB(rs.getDoor_location(), 0.0f, 0.0f).getBlock().getData();
-            return plugin.getGeneralKeeper().getDoorListener().idDoorOpen(data, rs.getDoor_direction());
+            return plugin.getGeneralKeeper().getDoorListener().isDoorOpen(data, rs.getDoor_direction());
         }
         return false;
     }

@@ -387,7 +387,7 @@ public class TARDISDoorListener {
         }
     }
 
-    public boolean idDoorOpen(byte door_data, COMPASS d) {
+    public boolean isDoorOpen(byte door_data, COMPASS d) {
         switch (d) {
             case NORTH:
                 if (door_data == 7) {
