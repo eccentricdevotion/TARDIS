@@ -50,7 +50,6 @@ public class TARDISEPSMessageCommand {
                 sb.append(s).append(" ");
             }
             message = sb.toString();
-            plugin.debug(message);
         } else {
             if (count < 2) {
                 TARDISMessage.send(player, "EP1_NEED");

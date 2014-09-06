@@ -6,8 +6,9 @@
 3. Slimmer TARDIS option?
 4. Find the Multiverse problem that prevents the Rail room from functioning properly
 5. Update for Minecraft / Bukkit 1.8
-6. Better EP1 message editing
+6. Better EP1 message editing - _started_
 7. Use new Wall menu for `/tardisprefs [wall|floor]` command?
+8. `/tardis hide` and `/tardis rebuild` has materialisation animation
 
 ##Future version `3.2+`
 * ?
