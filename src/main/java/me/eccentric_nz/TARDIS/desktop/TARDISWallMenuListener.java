@@ -206,7 +206,7 @@ public class TARDISWallMenuListener implements Listener {
         int r = 0;
         int c = 0;
         for (Map.Entry<String, Pair> entry : plugin.getTardisWalls().blocks.entrySet()) {
-            if (!entry.getKey().equals("STONE_BRICK")) {
+            if (!entry.getKey().equals("STONE_BRICK") && !entry.getKey().equals("HUGE_MUSHROOM_STEM")) {
                 Pair value = entry.getValue();
                 ItemStack is = new ItemStack(value.getType(), 1, value.getData());
                 stacks[r][c] = is;
