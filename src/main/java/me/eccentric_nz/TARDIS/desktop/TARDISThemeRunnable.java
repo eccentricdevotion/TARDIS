@@ -114,11 +114,6 @@ public class TARDISThemeRunnable implements Runnable {
     public void run() {
         // initialise
         if (!running) {
-            plugin.debug("schematic: " + tud.getSchematic().toString());
-            plugin.debug("previous: " + tud.getPrevious().toString());
-            plugin.debug("wall: " + tud.getWall());
-            plugin.debug("floor: " + tud.getFloor());
-            plugin.debug("level: " + tud.getLevel());
             set = new HashMap<String, Object>();
             where = new HashMap<String, Object>();
             String directory = (tud.getSchematic().equals(SCHEMATIC.CUSTOM)) ? "user_schematics" : "schematics";
@@ -130,7 +125,6 @@ public class TARDISThemeRunnable implements Runnable {
             }
             // get JSON
             JSONObject obj = TARDISSchematicGZip.unzip(path);
-            System.out.print(obj);
             // get dimensions
             JSONObject dimensions = (JSONObject) obj.get("dimensions");
             h = dimensions.getInt("height");
@@ -148,7 +142,6 @@ public class TARDISThemeRunnable implements Runnable {
                 qf.alterEnergyLevel("tardis", amount, wherea, player);
             }
             slot = rs.getTIPS();
-            plugin.debug("TIPS slot: " + slot);
             id = rs.getTardis_id();
             chunk = getChunk(rs.getChunk());
             // remove the charged creeper
@@ -174,8 +167,6 @@ public class TARDISThemeRunnable implements Runnable {
                 startz = gsl[2];
                 resetz = gsl[3];
             }
-            plugin.debug("startx: " + startx);
-            plugin.debug("startz: " + startz);
             switch (tud.getSchematic()) {
                 case REDSTONE:
                     starty = 65;
@@ -184,7 +175,6 @@ public class TARDISThemeRunnable implements Runnable {
                     starty = 64;
                     break;
             }
-            plugin.debug("starty: " + starty);
             downgrade = compare(tud.getPrevious(), tud.getSchematic());
             String[] split = rs.getChunk().split(":");
             world = plugin.getServer().getWorld(split[0]);
@@ -375,7 +365,7 @@ public class TARDISThemeRunnable implements Runnable {
                 // also tidy up the space directly above the ARS centre slot
                 int tidy = starty + h;
                 int plus = 16 - h;
-                setAir(chunk.getX(), tidy, chunk.getZ(), chunk.getWorld(), plus);
+                setAir(chunk.getBlock(0, 64, 0).getX(), tidy, chunk.getBlock(0, 64, 0).getZ(), chunk.getWorld(), plus);
                 // remove dropped items
                 for (Entity e : chunk.getEntities()) {
                     if (e instanceof Item) {
@@ -402,7 +392,6 @@ public class TARDISThemeRunnable implements Runnable {
             JSONArray r = (JSONArray) floor.get(row);
             // place a row of blocks
             for (int col = 0; col < c; col++) {
-                plugin.debug("z: " + col);
                 JSONObject bb = (JSONObject) r.get(col);
                 int x = startx + row;
                 int y = starty + level;
