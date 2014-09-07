@@ -144,8 +144,8 @@ public class TARDISDestroyerInner {
             plugin.getWorldGuardUtils().removeRegion(w, p);
         }
     }
-    //Originally stolen from Babarix. Thank you :)
 
+    //Originally stolen from Babarix. Thank you :)
     @SuppressWarnings("deprecation")
     public Chest getDoubleChest(Block block) {
         Chest chest = null;

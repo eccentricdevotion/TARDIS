@@ -135,7 +135,7 @@ public class TARDISMonsterRunnable implements Runnable {
                     // spawn a random mob inside TARDIS?
                     Random r = new Random();
                     // 25% chance + must not be peaceful, a Mooshroom biome or WG mob-spawning: deny
-                    if (r.nextInt(4) == 0 && canSpawn(map.getKey(), r.nextInt(4), map.getValue().getTardisId())) {
+                    if (r.nextInt(4) == 0 && canSpawn(map.getKey(), r.nextInt(4))) {
                         TARDISMonster rtm = new TARDISMonster();
                         // choose a random monster
                         rtm.setType(monsters.get(r.nextInt(monsters.size())));
@@ -147,7 +147,7 @@ public class TARDISMonsterRunnable implements Runnable {
         }
     }
 
-    private boolean canSpawn(Location l, int r, int id) {
+    private boolean canSpawn(Location l, int r) {
         // get biome
         Biome biome = l.getBlock().getRelative(plugin.getGeneralKeeper().getFaces().get(r), 2).getBiome();
         if (biome.equals(Biome.MUSHROOM_ISLAND) || biome.equals(Biome.MUSHROOM_SHORE)) {
