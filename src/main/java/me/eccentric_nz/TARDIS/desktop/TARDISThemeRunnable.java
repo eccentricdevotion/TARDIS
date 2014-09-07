@@ -205,12 +205,10 @@ public class TARDISThemeRunnable implements Runnable {
             // remove upgrade data
             plugin.getTrackerKeeper().getUpgrades().remove(uuid);
             if (downgrade) {
-                if (checkPlayerLocation(player)) {
-                    TARDISMessage.send(player, "UPGRADE_TELEPORT");
-                    // teleport player to safe location
-                    Location loc = chunk.getBlock(8, 69, 4).getLocation();
-                    player.teleport(loc);
-                }
+                TARDISMessage.send(player, "UPGRADE_TELEPORT");
+                // teleport player to safe location
+                Location loc = chunk.getBlock(8, 69, 4).getLocation();
+                player.teleport(loc);
             }
         }
         if (level == (h - 1) && row == (w - 1)) {
@@ -800,14 +798,6 @@ public class TARDISThemeRunnable implements Runnable {
                 break;
         }
         return list;
-    }
-
-    private boolean checkPlayerLocation(Player p) {
-        Location l = p.getLocation();
-        int lx = l.getBlockX();
-        int ly = l.getBlockY();
-        int lz = l.getBlockZ();
-        return ((lx > startx + 16 && lx < startx + 32) || (lz > startz + 16 && lz < startz + 32) || (ly > 69 && ly < 81));
     }
 
     private void setAir(int jx, int jy, int jz, World jw, int plusy) {
