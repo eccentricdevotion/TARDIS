@@ -63,14 +63,16 @@ public class TARDISExplosionListener implements Listener {
             e.setCancelled(true);
             // check it is not the Artron creeper
             String loc_chk = explode.getWorld().getName() + ":" + (explode.getBlockX() + 0.5f) + ":" + (explode.getBlockY()) + ":" + (explode.getBlockZ() + 0.5f);
-            if (new ResultSetCreeper(plugin, loc_chk).resultSet()) {
+            if (new ResultSetCreeper(plugin, loc_chk).resultSet() == false) {
                 // create a new explosion that doesn't destroy blocks or set fire
                 explode.getWorld().createExplosion(explode.getX(), explode.getY(), explode.getZ(), 4.0f, false, false);
             }
         } else {
             int idchk = 0;
             // get list of police box blocks from DB
-            ResultSetBlocks rs = new ResultSetBlocks(plugin, null, true);
+            HashMap<String, Object> whereb = new HashMap<String, Object>();
+            whereb.put("police_box", 1);
+            ResultSetBlocks rs = new ResultSetBlocks(plugin, whereb, true);
             if (rs.resultSet()) {
                 ArrayList<HashMap<String, String>> data = rs.getData();
                 for (HashMap<String, String> map : data) {
@@ -84,9 +86,9 @@ public class TARDISExplosionListener implements Listener {
                         String[] xStr = loc_tmp[1].split("=");
                         String[] yStr = loc_tmp[2].split("=");
                         String[] zStr = loc_tmp[3].split("=");
-                        int x = (int) Math.floor(plugin.getUtils().parseDouble(xStr[1].substring(0, (xStr[1].length() - 2))));
-                        int y = (int) Math.floor(plugin.getUtils().parseDouble(yStr[1].substring(0, (yStr[1].length() - 2))));
-                        int z = (int) Math.floor(plugin.getUtils().parseDouble(zStr[1].substring(0, (zStr[1].length() - 2))));
+                        int x = plugin.getUtils().parseInt(xStr[1].substring(0, (xStr[1].length() - 2)));
+                        int y = plugin.getUtils().parseInt(yStr[1].substring(0, (yStr[1].length() - 2)));
+                        int z = plugin.getUtils().parseInt(zStr[1].substring(0, (zStr[1].length() - 2)));
                         Block block = w.getBlockAt(x, y, z);
                         // if the block is a TARDIS block then remove it
                         if (e.blockList().contains(block)) {
