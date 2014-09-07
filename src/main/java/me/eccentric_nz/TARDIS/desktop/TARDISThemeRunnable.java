@@ -65,7 +65,7 @@ public class TARDISThemeRunnable implements Runnable {
     private final UUID uuid;
     private final TARDISUpgradeData tud;
     private boolean running;
-    int taskID, id, slot, level = 0, row = 0, col = 0, h, w, c, startx, starty, startz, resetx, resetz, j = 2;
+    int taskID, id, slot, level = 0, row = 0, h, w, c, startx, starty, startz, resetx, resetz, j = 2;
     World world;
     private final List<Block> lampblocks = new ArrayList<Block>();
     private final List<Material> precious = new ArrayList<Material>();
@@ -114,6 +114,11 @@ public class TARDISThemeRunnable implements Runnable {
     public void run() {
         // initialise
         if (!running) {
+            plugin.debug("schematic: " + tud.getSchematic().toString());
+            plugin.debug("previous: " + tud.getPrevious().toString());
+            plugin.debug("wall: " + tud.getWall());
+            plugin.debug("floor: " + tud.getFloor());
+            plugin.debug("level: " + tud.getLevel());
             set = new HashMap<String, Object>();
             where = new HashMap<String, Object>();
             String directory = (tud.getSchematic().equals(SCHEMATIC.CUSTOM)) ? "user_schematics" : "schematics";
@@ -125,6 +130,7 @@ public class TARDISThemeRunnable implements Runnable {
             }
             // get JSON
             JSONObject obj = TARDISSchematicGZip.unzip(path);
+            System.out.print(obj);
             // get dimensions
             JSONObject dimensions = (JSONObject) obj.get("dimensions");
             h = dimensions.getInt("height");
@@ -142,6 +148,7 @@ public class TARDISThemeRunnable implements Runnable {
                 qf.alterEnergyLevel("tardis", amount, wherea, player);
             }
             slot = rs.getTIPS();
+            plugin.debug("TIPS slot: " + slot);
             id = rs.getTardis_id();
             chunk = getChunk(rs.getChunk());
             // remove the charged creeper
@@ -167,6 +174,8 @@ public class TARDISThemeRunnable implements Runnable {
                 startz = gsl[2];
                 resetz = gsl[3];
             }
+            plugin.debug("startx: " + startx);
+            plugin.debug("startz: " + startz);
             switch (tud.getSchematic()) {
                 case REDSTONE:
                     starty = 65;
@@ -175,6 +184,7 @@ public class TARDISThemeRunnable implements Runnable {
                     starty = 64;
                     break;
             }
+            plugin.debug("starty: " + starty);
             downgrade = compare(tud.getPrevious(), tud.getSchematic());
             String[] split = rs.getChunk().split(":");
             world = plugin.getServer().getWorld(split[0]);
@@ -391,26 +401,27 @@ public class TARDISThemeRunnable implements Runnable {
             JSONArray floor = (JSONArray) arr.get(level);
             JSONArray r = (JSONArray) floor.get(row);
             // place a row of blocks
-            for (int zz = startz; zz < startz + c; zz++) {
-                JSONObject bb = (JSONObject) r.get(zz);
+            for (int col = 0; col < c; col++) {
+                plugin.debug("z: " + col);
+                JSONObject bb = (JSONObject) r.get(col);
                 int x = startx + row;
                 int y = starty + level;
-                //int z = startz + col;
+                int z = startz + col;
                 // if we're setting the biome to sky, do it now
                 if (plugin.getConfig().getBoolean("creation.sky_biome") && level == 0) {
-                    world.setBiome(x, zz, Biome.SKY);
+                    world.setBiome(x, z, Biome.SKY);
                 }
                 Material type = Material.valueOf((String) bb.get("type"));
                 byte data = bb.getByte("data");
                 if (type.equals(Material.BEDROCK)) {
                     // remember bedrock location to block off the beacon light
-                    String bedrocloc = world.getName() + ":" + x + ":" + y + ":" + zz;
+                    String bedrocloc = world.getName() + ":" + x + ":" + y + ":" + z;
                     set.put("beacon", bedrocloc);
-                    postBedrock = world.getBlockAt(x, y, zz);
+                    postBedrock = world.getBlockAt(x, y, z);
                 }
                 if (type.equals(Material.NOTE_BLOCK)) {
                     // remember the location of this Disk Storage
-                    String storage = plugin.getUtils().makeLocationStr(world, x, y, zz);
+                    String storage = plugin.getUtils().makeLocationStr(world, x, y, z);
                     qf.insertSyncControl(id, 14, storage, 0);
                 }
                 if (type.equals(Material.WOOL)) {
@@ -457,23 +468,23 @@ public class TARDISThemeRunnable implements Runnable {
                      * mob spawner will be converted to the correct id by
                      * setBlock(), but remember it for the scanner.
                      */
-                    String scanloc = world.getName() + ":" + x + ":" + y + ":" + zz;
+                    String scanloc = world.getName() + ":" + x + ":" + y + ":" + z;
                     set.put("scanner", scanloc);
                 }
                 if (type.equals(Material.CHEST)) {
                     // remember the location of the condenser chest
-                    String chest = world.getName() + ":" + x + ":" + y + ":" + zz;
+                    String chest = world.getName() + ":" + x + ":" + y + ":" + z;
                     set.put("condenser", chest);
                 }
                 if (type.equals(Material.WALL_SIGN)) { // chameleon circuit sign
-                    String chameleonloc = world.getName() + ":" + x + ":" + y + ":" + zz;
+                    String chameleonloc = world.getName() + ":" + x + ":" + y + ":" + z;
                     set.put("chameleon", chameleonloc);
                     set.put("chamele_on", 0);
                 }
                 if (type.equals(Material.IRON_DOOR_BLOCK)) {
                     if (data < (byte) 8) { // iron door bottom
                         HashMap<String, Object> setd = new HashMap<String, Object>();
-                        String doorloc = world.getName() + ":" + x + ":" + y + ":" + zz;
+                        String doorloc = world.getName() + ":" + x + ":" + y + ":" + z;
                         setd.put("door_location", doorloc);
                         HashMap<String, Object> whered = new HashMap<String, Object>();
                         whered.put("tardis_id", id);
@@ -486,11 +497,11 @@ public class TARDISThemeRunnable implements Runnable {
                                 if (mvplugin instanceof MultiverseCore) {
                                     MultiverseCore mvc = (MultiverseCore) mvplugin;
                                     MultiverseWorld foundWorld = mvc.getMVWorldManager().getMVWorld(world.getName());
-                                    Location spawn = new Location(world, (x + 0.5), y, (zz + 1.5), 0, 0);
+                                    Location spawn = new Location(world, (x + 0.5), y, (z + 1.5), 0, 0);
                                     foundWorld.setSpawnLocation(spawn);
                                 }
                             } else {
-                                world.setSpawnLocation(x, y, (zz + 1));
+                                world.setSpawnLocation(x, y, (z + 1));
                             }
                         }
                     } else {
@@ -500,12 +511,12 @@ public class TARDISThemeRunnable implements Runnable {
                 }
                 if (type.equals(Material.STONE_BUTTON)) { // random button
                     // remember the location of this button
-                    String button = plugin.getUtils().makeLocationStr(world, x, y, zz);
+                    String button = plugin.getUtils().makeLocationStr(world, x, y, z);
                     qf.insertSyncControl(id, 1, button, 0);
                 }
                 if (type.equals(Material.JUKEBOX)) {
                     // remember the location of this Advanced Console
-                    String advanced = plugin.getUtils().makeLocationStr(world, x, y, zz);
+                    String advanced = plugin.getUtils().makeLocationStr(world, x, y, z);
                     qf.insertSyncControl(id, 15, advanced, 0);
                 }
                 if (type.equals(Material.CAKE_BLOCK)) {
@@ -513,14 +524,14 @@ public class TARDISThemeRunnable implements Runnable {
                      * This block will be converted to a lever by
                      * setBlock(), but remember it so we can use it as the handbrake!
                      */
-                    String handbrakeloc = plugin.getUtils().makeLocationStr(world, x, y, zz);
+                    String handbrakeloc = plugin.getUtils().makeLocationStr(world, x, y, z);
                     qf.insertSyncControl(id, 0, handbrakeloc, 0);
                 }
                 if (type.equals(Material.MONSTER_EGGS)) { // silverfish stone
-                    String blockLocStr = (new Location(world, x, y, zz)).toString();
+                    String blockLocStr = (new Location(world, x, y, z)).toString();
                     switch (data) {
                         case 0: // Save Sign
-                            String save_loc = world.getName() + ":" + x + ":" + y + ":" + zz;
+                            String save_loc = world.getName() + ":" + x + ":" + y + ":" + z;
                             set.put("save_sign", save_loc);
                             break;
                         case 1: // Destination Terminal
@@ -618,12 +629,12 @@ public class TARDISThemeRunnable implements Runnable {
                 }
                 if (type.equals(Material.REDSTONE_LAMP_ON)) {
                     // remember lamp blocks
-                    Block lamp = world.getBlockAt(x, y, zz);
+                    Block lamp = world.getBlockAt(x, y, z);
                     lampblocks.add(lamp);
                     if (plugin.getConfig().getInt("preferences.malfunction") > 0) {
                         // remember lamp block locations for malfunction
                         HashMap<String, Object> setlb = new HashMap<String, Object>();
-                        String lloc = world.getName() + ":" + x + ":" + y + ":" + zz;
+                        String lloc = world.getName() + ":" + x + ":" + y + ":" + z;
                         setlb.put("tardis_id", id);
                         setlb.put("location", lloc);
                         qf.doInsert("lamps", setlb);
@@ -635,7 +646,7 @@ public class TARDISThemeRunnable implements Runnable {
                      * could also be a beacon block, as the creeper sits
                      * over the beacon in the deluxe and bigger consoles.
                      */
-                    String creeploc = world.getName() + ":" + (x + 0.5) + ":" + y + ":" + (zz + 0.5);
+                    String creeploc = world.getName() + ":" + (x + 0.5) + ":" + y + ":" + (z + 0.5);
                     set.put("creeper", creeploc);
                     switch (tud.getSchematic()) {
                         case CUSTOM:
@@ -655,13 +666,13 @@ public class TARDISThemeRunnable implements Runnable {
                      * wood button will be coverted to the correct id by
                      * setBlock(), but remember it for the Artron Energy Capacitor.
                      */
-                    String woodbuttonloc = plugin.getUtils().makeLocationStr(world, x, y, zz);
+                    String woodbuttonloc = plugin.getUtils().makeLocationStr(world, x, y, z);
                     qf.insertSyncControl(id, 6, woodbuttonloc, 0);
                 }
                 // if it's an iron/gold/diamond/emerald/beacon/redstone block put it in the blocks table
                 if (precious.contains(type)) {
                     HashMap<String, Object> setpb = new HashMap<String, Object>();
-                    String loc = plugin.getUtils().makeLocationStr(world, x, y, zz);
+                    String loc = plugin.getUtils().makeLocationStr(world, x, y, z);
                     setpb.put("tardis_id", id);
                     setpb.put("location", loc);
                     setpb.put("police_box", 0);
@@ -670,36 +681,36 @@ public class TARDISThemeRunnable implements Runnable {
                 }
                 // if it's the door, don't set it just remember its block then do it at the end
                 if (type.equals(Material.IRON_DOOR_BLOCK)) { // doors
-                    postDoorBlocks.put(world.getBlockAt(x, y, zz), data);
+                    postDoorBlocks.put(world.getBlockAt(x, y, z), data);
                 } else if (type.equals(Material.REDSTONE_TORCH_ON)) {
-                    postTorchBlocks.put(world.getBlockAt(x, y, zz), data);
+                    postTorchBlocks.put(world.getBlockAt(x, y, z), data);
                 } else if (type.equals(Material.PISTON_STICKY_BASE)) {
-                    postStickyPistonBaseBlocks.put(world.getBlockAt(x, y, zz), data);
+                    postStickyPistonBaseBlocks.put(world.getBlockAt(x, y, z), data);
                 } else if (type.equals(Material.PISTON_BASE)) {
-                    postPistonBaseBlocks.put(world.getBlockAt(x, y, zz), data);
+                    postPistonBaseBlocks.put(world.getBlockAt(x, y, z), data);
                 } else if (type.equals(Material.PISTON_EXTENSION)) {
-                    postPistonExtensionBlocks.put(world.getBlockAt(x, y, zz), data);
+                    postPistonExtensionBlocks.put(world.getBlockAt(x, y, z), data);
                 } else if (type.equals(Material.WALL_SIGN)) {
-                    postSignBlocks.put(world.getBlockAt(x, y, zz), data);
+                    postSignBlocks.put(world.getBlockAt(x, y, z), data);
                 } else if (type.equals(Material.MONSTER_EGGS)) { // monster egg stone for controls
                     switch (data) {
                         case 0:
-                            postSaveSignBlock = world.getBlockAt(x, y, zz);
+                            postSaveSignBlock = world.getBlockAt(x, y, z);
                             break;
                         case 1:
-                            postTerminalBlock = world.getBlockAt(x, y, zz);
+                            postTerminalBlock = world.getBlockAt(x, y, z);
                             break;
                         case 2:
-                            postARSBlock = world.getBlockAt(x, y, zz);
+                            postARSBlock = world.getBlockAt(x, y, z);
                             break;
                         case 3:
-                            postTISBlock = world.getBlockAt(x, y, zz);
+                            postTISBlock = world.getBlockAt(x, y, z);
                             break;
                         case 4:
-                            postTemporalBlock = world.getBlockAt(x, y, zz);
+                            postTemporalBlock = world.getBlockAt(x, y, z);
                             break;
                         case 5:
-                            postKeyboardBlock = world.getBlockAt(x, y, zz);
+                            postKeyboardBlock = world.getBlockAt(x, y, z);
                             break;
                         default:
                             break;
@@ -707,31 +718,31 @@ public class TARDISThemeRunnable implements Runnable {
                 } else if (type.equals(Material.HUGE_MUSHROOM_2) && data == 15) { // mushroom stem for repeaters
                     // save repeater location
                     if (j < 6) {
-                        String repeater = world.getName() + ":" + x + ":" + y + ":" + zz;
+                        String repeater = world.getName() + ":" + x + ":" + y + ":" + z;
                         switch (j) {
                             case 2:
-                                postRepeaterBlocks.put(world.getBlockAt(x, y, zz), (byte) 1);
+                                postRepeaterBlocks.put(world.getBlockAt(x, y, z), (byte) 1);
                                 qf.insertSyncControl(id, 3, repeater, 0);
                                 break;
                             case 3:
-                                postRepeaterBlocks.put(world.getBlockAt(x, y, zz), (byte) 2);
+                                postRepeaterBlocks.put(world.getBlockAt(x, y, z), (byte) 2);
                                 qf.insertSyncControl(id, 2, repeater, 0);
                                 break;
                             case 4:
-                                postRepeaterBlocks.put(world.getBlockAt(x, y, zz), (byte) 0);
+                                postRepeaterBlocks.put(world.getBlockAt(x, y, z), (byte) 0);
                                 qf.insertSyncControl(id, 5, repeater, 0);
                                 break;
                             default:
-                                postRepeaterBlocks.put(world.getBlockAt(x, y, zz), (byte) 3);
+                                postRepeaterBlocks.put(world.getBlockAt(x, y, z), (byte) 3);
                                 qf.insertSyncControl(id, 4, repeater, 0);
                                 break;
                         }
                         j++;
                     }
                 } else if (type.equals(Material.SPONGE)) {
-                    plugin.getUtils().setBlock(world, x, y, zz, Material.AIR, (byte) 0);
+                    plugin.getUtils().setBlock(world, x, y, z, Material.AIR, (byte) 0);
                 } else {
-                    plugin.getUtils().setBlock(world, x, y, zz, type, data);
+                    plugin.getUtils().setBlock(world, x, y, z, type, data);
                 }
             }
             // remove dropped items
