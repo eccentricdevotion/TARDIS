@@ -40,6 +40,7 @@ import me.eccentric_nz.TARDIS.builders.TARDISBuilderInner;
 import me.eccentric_nz.TARDIS.builders.TARDISPresetBuilderFactory;
 import me.eccentric_nz.TARDIS.builders.TARDISSpace;
 import me.eccentric_nz.TARDIS.chameleon.TARDISChameleonPreset;
+import me.eccentric_nz.TARDIS.chatGUI.TARDISChatGUIJSON;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.TARDISBiomeUpdater;
 import me.eccentric_nz.TARDIS.database.TARDISCompanionClearer;
@@ -143,6 +144,7 @@ public class TARDIS extends JavaPlugin {
     private final TARDISPresetBuilderFactory presetBuilder = new TARDISPresetBuilderFactory(this);
     private final TARDISPresetDestroyerFactory presetDestroyer = new TARDISPresetDestroyerFactory(this);
     private final TARDISTrackerInstanceKeeper trackerKeeper = new TARDISTrackerInstanceKeeper();
+    private final TARDISChatGUIJSON jsonKeeper = new TARDISChatGUIJSON();
 
     public TARDIS() {
         this.worldGuardOnServer = false;
@@ -825,6 +827,10 @@ public class TARDIS extends JavaPlugin {
 
     public TARDISTrackerInstanceKeeper getTrackerKeeper() {
         return trackerKeeper;
+    }
+
+    public TARDISChatGUIJSON getJsonKeeper() {
+        return jsonKeeper;
     }
 
     public ConsoleCommandSender getConsole() {

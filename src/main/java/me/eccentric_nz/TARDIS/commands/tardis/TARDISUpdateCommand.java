@@ -20,6 +20,7 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Locale;
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.chatGUI.TARDISUpdateChatGUI;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import me.eccentric_nz.TARDIS.database.ResultSetTravellers;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
@@ -43,7 +44,9 @@ public class TARDISUpdateCommand {
     public boolean startUpdate(Player player, String[] args) {
         if (player.hasPermission("tardis.update")) {
             String[] validBlockNames = {"advanced", "ars", "artron", "back", "backdoor", "button", "chameleon", "condenser", "creeper", "direction", "door", "eps", "farm", "handbrake", "hinge", "info", "keyboard", "light", "rail", "save-sign", "scanner", "stable", "storage", "temporal", "terminal", "toggle_wool", "vault", "village", "world-repeater", "x-repeater", "y-repeater", "z-repeater", "zero"};
-            if (args.length < 2) {
+            if (args.length == 1 && plugin.getPM().isPluginEnabled("ProtocolLib")) {
+                return new TARDISUpdateChatGUI(plugin).showGUI(player, args);
+            } else if (args.length < 2) {
                 TARDISMessage.send(player, "TOO_FEW_ARGS");
                 return false;
             }

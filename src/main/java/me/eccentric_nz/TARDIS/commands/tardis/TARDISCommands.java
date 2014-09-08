@@ -22,6 +22,7 @@ import java.util.Locale;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.advanced.TARDISDiskWriterCommand;
 import me.eccentric_nz.TARDIS.arch.TARDISArchCommand;
+import me.eccentric_nz.TARDIS.chatGUI.TARDISUpdateChatGUI;
 import me.eccentric_nz.TARDIS.enumeration.CMDS;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import org.bukkit.ChatColor;
@@ -81,6 +82,7 @@ public class TARDISCommands implements CommandExecutor {
         firstArgs.add("save");
         firstArgs.add("save_player");
         firstArgs.add("secondary");
+        firstArgs.add("section");
         firstArgs.add("setdest");
         firstArgs.add("tagtheood");
         firstArgs.add("theme");
@@ -118,6 +120,9 @@ public class TARDISCommands implements CommandExecutor {
             }
             if (args[0].equalsIgnoreCase("version")) {
                 return new TARDISVersionCommand(plugin).displayVersion(sender, player);
+            }
+            if (args[0].equalsIgnoreCase("section")) {
+                return new TARDISUpdateChatGUI(plugin).showGUI(player, args);
             }
             if (player == null) {
                 TARDISMessage.send(sender, "CMD_PLAYER");
