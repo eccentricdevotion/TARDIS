@@ -45,7 +45,7 @@ public class TARDISUpdateCommand {
         if (player.hasPermission("tardis.update")) {
             String[] validBlockNames = {"advanced", "ars", "artron", "back", "backdoor", "button", "chameleon", "condenser", "creeper", "direction", "door", "eps", "farm", "handbrake", "hinge", "info", "keyboard", "light", "rail", "save-sign", "scanner", "stable", "storage", "temporal", "terminal", "toggle_wool", "vault", "village", "world-repeater", "x-repeater", "y-repeater", "z-repeater", "zero"};
             if (args.length == 1 && plugin.getPM().isPluginEnabled("ProtocolLib")) {
-                return new TARDISUpdateChatGUI(plugin).showGUI(player, args);
+                return new TARDISUpdateChatGUI(plugin).showInterface(player, args);
             } else if (args.length < 2) {
                 TARDISMessage.send(player, "TOO_FEW_ARGS");
                 return false;

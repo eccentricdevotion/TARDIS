@@ -17,7 +17,7 @@ public class TARDISUpdateChatGUI {
         this.plugin = plugin;
     }
 
-    public boolean showGUI(Player player, String[] args) {
+    public boolean showInterface(Player player, String[] args) {
         if (args.length == 1) {
             TARDISMessage.send(player, "UPDATE_SECTION");
             for (String s : plugin.getJsonKeeper().getSections()) {

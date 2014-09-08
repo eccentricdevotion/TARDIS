@@ -122,7 +122,7 @@ public class TARDISCommands implements CommandExecutor {
                 return new TARDISVersionCommand(plugin).displayVersion(sender, player);
             }
             if (args[0].equalsIgnoreCase("section")) {
-                return new TARDISUpdateChatGUI(plugin).showGUI(player, args);
+                return new TARDISUpdateChatGUI(plugin).showInterface(player, args);
             }
             if (player == null) {
                 TARDISMessage.send(sender, "CMD_PLAYER");
