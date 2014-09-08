@@ -53,6 +53,8 @@ public class TARDISCommands implements CommandExecutor {
         firstArgs.add("arsremove");
         firstArgs.add("chameleon");
         firstArgs.add("check_loc");
+        firstArgs.add("colourise");
+        firstArgs.add("colorize");
         firstArgs.add("comehere");
         firstArgs.add("desktop");
         firstArgs.add("direction");
@@ -135,6 +137,9 @@ public class TARDISCommands implements CommandExecutor {
                 }
                 if (args[0].equalsIgnoreCase("chameleon")) {
                     new TARDISChameleonCommand(plugin).doChameleon(player, args);
+                }
+                if (args[0].equalsIgnoreCase("colourise") || args[0].equalsIgnoreCase("colorize")) {
+                    new TARDISColouriseCommand(plugin).updateBeaconGlass(player);
                 }
                 if (args[0].equalsIgnoreCase("rescue")) {
                     return new TARDISRescueCommand(plugin).startRescue(player, args);

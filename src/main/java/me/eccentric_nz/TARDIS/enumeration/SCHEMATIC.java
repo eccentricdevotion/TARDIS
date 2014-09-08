@@ -101,4 +101,39 @@ public enum SCHEMATIC {
                 return false;
         }
     }
+
+    /**
+     * Checks if this SCHEMATIC has a beacon.
+     *
+     * @return true if this SCHEMATIC has a beacon.
+     */
+    public boolean hasBeacon() {
+        switch (this) {
+            case ARS:
+            case BUDGET:
+            case BIGGER:
+            case DELUXE:
+            case ELEVENTH:
+            case REDSTONE:
+            case STEAMPUNK:
+            case WAR:
+                return true;
+            default:
+                return false;
+        }
+    }
+
+    /**
+     * Checks if this SCHEMATIC has a beacon.
+     *
+     * @return true if this SCHEMATIC has a beacon.
+     */
+    public boolean mustUseSonic() {
+        switch (this) {
+            case BUDGET:
+                return true;
+            default:
+                return false;
+        }
+    }
 }

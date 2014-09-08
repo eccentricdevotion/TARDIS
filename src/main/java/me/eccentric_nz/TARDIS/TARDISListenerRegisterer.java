@@ -48,6 +48,7 @@ import me.eccentric_nz.TARDIS.listeners.TARDISAntiBuildListener;
 import me.eccentric_nz.TARDIS.listeners.TARDISAnvilListener;
 import me.eccentric_nz.TARDIS.listeners.TARDISAreaListener;
 import me.eccentric_nz.TARDIS.listeners.TARDISAreaSignListener;
+import me.eccentric_nz.TARDIS.listeners.TARDISBeaconColouringListener;
 import me.eccentric_nz.TARDIS.listeners.TARDISBindListener;
 import me.eccentric_nz.TARDIS.listeners.TARDISBlockBreakListener;
 import me.eccentric_nz.TARDIS.listeners.TARDISBlockDamageListener;
@@ -160,6 +161,7 @@ public class TARDISListenerRegisterer {
         plugin.getPM().registerEvents(new TARDISAreaListener(plugin), plugin);
         plugin.getPM().registerEvents(new TARDISAreaSignListener(plugin), plugin);
         plugin.getPM().registerEvents(new TARDISArtronCapacitorListener(plugin), plugin);
+        plugin.getPM().registerEvents(new TARDISBeaconColouringListener(plugin), plugin);
         plugin.getPM().registerEvents(new TARDISBindListener(plugin), plugin);
         plugin.getPM().registerEvents(new TARDISBlockDamageListener(plugin), plugin);
         plugin.getPM().registerEvents(new TARDISBlockPhysicsListener(plugin), plugin);
