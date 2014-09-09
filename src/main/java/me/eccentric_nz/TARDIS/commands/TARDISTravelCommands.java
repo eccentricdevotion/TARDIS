@@ -523,6 +523,7 @@ public class TARDISTravelCommands implements CommandExecutor {
                         return false;
                     }
                     if (args.length >= 4 && player.hasPermission("tardis.timetravel.location")) {
+                        // coords
                         String w_str = args[0];
                         if (w_str.contains("'")) {
                             w_str = getQuotedString(args);
@@ -544,11 +545,15 @@ public class TARDISTravelCommands implements CommandExecutor {
                         }
                         x = plugin.getUtils().parseInt(args[args.length - 3]);
                         y = plugin.getUtils().parseInt(args[args.length - 2]);
-                        if (y == 0) {
+                        if (y == 0 || y > 250) {
                             TARDISMessage.send(player, "Y_NOT_VALID");
                             return true;
                         }
                         z = plugin.getUtils().parseInt(args[args.length - 1]);
+                        if (x > 15000000 || x < -15000000 || z > 15000000 || z < -15000000) {
+                            TARDISMessage.send(player, "XZ_NOT_VALID");
+                            return true;
+                        }
                         Location location = new Location(w, x, y, z);
                         // check location
                         int count = this.checkLocation(location, player, id, tt);
