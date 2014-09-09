@@ -23,6 +23,7 @@ import java.util.List;
 import java.util.Random;
 import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.chatGUI.TARDISUpdateChatGUI;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetDoors;
 import me.eccentric_nz.TARDIS.database.ResultSetPlayerPrefs;
@@ -117,7 +118,11 @@ public class TARDISDoorListener {
                     p.setAllowFlight(true);
                 }
                 if (quotes) {
-                    p.sendMessage(plugin.getPluginName() + plugin.getGeneralKeeper().getQuotes().get(i));
+                    if (r.nextInt(100) < 3 && plugin.getPM().isPluginEnabled("ProtocolLib")) {
+                        TARDISUpdateChatGUI.sendJSON(plugin.getJsonKeeper().getEgg(), p);
+                    } else {
+                        p.sendMessage(plugin.getPluginName() + plugin.getGeneralKeeper().getQuotes().get(i));
+                    }
                 }
                 if (exit) {
                     // give some artron energy

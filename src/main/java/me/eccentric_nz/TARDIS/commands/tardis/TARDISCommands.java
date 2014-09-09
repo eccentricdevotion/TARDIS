@@ -24,6 +24,7 @@ import me.eccentric_nz.TARDIS.advanced.TARDISDiskWriterCommand;
 import me.eccentric_nz.TARDIS.arch.TARDISArchCommand;
 import me.eccentric_nz.TARDIS.chatGUI.TARDISUpdateChatGUI;
 import me.eccentric_nz.TARDIS.enumeration.CMDS;
+import me.eccentric_nz.TARDIS.noteblock.TARDISPlayThemeCommand;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
@@ -59,6 +60,7 @@ public class TARDISCommands implements CommandExecutor {
         firstArgs.add("comehere");
         firstArgs.add("desktop");
         firstArgs.add("direction");
+        firstArgs.add("egg");
         firstArgs.add("eject");
         firstArgs.add("ep1");
         firstArgs.add("erase");
@@ -109,6 +111,10 @@ public class TARDISCommands implements CommandExecutor {
             if (!firstArgs.contains(args[0].toLowerCase(Locale.ENGLISH))) {
                 sender.sendMessage(plugin.getPluginName() + "That command wasn't recognised type " + ChatColor.GREEN + "/tardis help" + ChatColor.RESET + " to see the commands");
                 return false;
+            }
+            // play tardis theme on  noteblocks
+            if (args[0].equalsIgnoreCase("egg")) {
+                return new TARDISPlayThemeCommand(plugin).playTheme(player);
             }
             // delete the TARDIS
             if (args[0].equalsIgnoreCase("exterminate")) {

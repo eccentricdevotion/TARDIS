@@ -9,6 +9,7 @@
 6. Better EP1 message editing - _started_
 7. Use new Wall menu for `/tardisprefs [wall|floor]` command?
 8. `/tardis hide` and `/tardis rebuild` has materialisation animation
+9. Add stupidity check for `/ttravel [world] [x] [y] [z]` command so that values are within the maximum allowed by Minecraft and/or WorldBorder
 
 ##Future version `3.2+`
 * ?
