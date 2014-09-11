@@ -528,6 +528,10 @@ public class TARDISTravelCommands implements CommandExecutor {
                         if (w_str.contains("'")) {
                             w_str = getQuotedString(args);
                         }
+                        if (args[1].startsWith("~")) {
+                            TARDISMessage.send(player, "NO_WORLD_RELATIVE");
+                            return true;
+                        }
                         // must be a location then
                         int x, y, z;
                         World w = plugin.getServer().getWorld(w_str);

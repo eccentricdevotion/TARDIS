@@ -1,18 +1,14 @@
 #TODO
 
 ##Current version `3.1-beta-1`
-1. TARDIS up/down/cross-grades (change the desktop theme) - _started_
-2. Villager / mob / companion ejecting - _started_
-3. Slimmer TARDIS option?
-4. Find the Multiverse problem that prevents the Rail room from functioning properly
-5. Update for Minecraft / Bukkit 1.8
-6. Better EP1 message editing - _started_
-7. Use new Wall menu for `/tardisprefs [wall|floor]` command?
-8. `/tardis hide` and `/tardis rebuild` has materialisation animation
-9. Add stupidity check for `/ttravel [world] [x] [y] [z]` command so that values are within the maximum allowed by Minecraft and/or WorldBorder
+1. Update for Minecraft / Bukkit 1.8
+2. Slimmer TARDIS option?
+3. Find the Multiverse problem that prevents the Rail room from functioning properly
+4. Use new Wall menu for `/tardisprefs [wall|floor]` command?
+5. `/tardis hide` and `/tardis rebuild` has materialisation animation
 
 ##Future version `3.2+`
-* ?
+* Sponge?
 
 ##Resource Pack / TARDISWeepingAngels
 
