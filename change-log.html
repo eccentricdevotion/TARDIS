@@ -32,6 +32,39 @@
 	<section>
 		<h1>Change log</h1>
 		<h2>What&rsquo;s been changed?</h2>
+		<h3>3.1-beta-1</h3>
+		<h4>Additions</h4>
+		<ul>
+			<li>Added the ability to change the TARDIS desktop theme &mdash; see: <a href="http://eccentricdevotion.github.io/TARDIS/">http://eccentricdevotion.github.io/TARDIS/</a></li>
+			<li>Added <code>/tardis eject</code> command to eject farmed mobs, villagers and companions &mdash; see: <a href="http://eccentricdevotion.github.io/TARDIS/farming.html">http://eccentricdevotion.github.io/TARDIS/farming.html</a></li>
+			<li>Added time rotor glass colouring, use the <code>/tardis colourise</code> or <code>/tardis colorize</code> command, then click the bottom glass block in the time rotor with a dye</li>
+			<li>Added a clickable chat interface for the <code>/tardis update</code> command (just do a /tardis update with no further arguments) &mdash; requires ProtocolLib - the command remains essentially the same otherwise</li>
+			<li>Updated the VAULT room to automatically sort items into the chests:
+				<ul>
+					<li>one chest is set as the drop chest</li>
+					<li>all other chests in the 16x16x16 chunk are set as storage chests</li>
+					<li>place at least 1 block/item into the storage chests</li>
+					<li>blocks/items placed in the drop chest will automatically be sent to
+						the chest with the same block/item in it</li>
+					<li>add a sorter chest to existing VAULT rooms with the <code>/tardis update
+						vault</code> command</li>
+				</ul>
+			</li>
+		</ul>
+		<h4>Changes</h4>
+		<ul>
+			<li>Updated the creation help message to use Seed blocks rather than block stacks</li>
+			<li>Updated the Lazarus Device to support TARDISWeepingAngels v2.0.2</li>
+			<li>The Emergency Programme One message can now be set to the contents of the book in the player's hand (the command remains essentially the same)</li>
+			<li>There is now a 15 million block limit to coordinates travel</li>
+			<li>Saved biome disks can now be extended by combining them with a ladder</li>
+		</ul>
+		<h4>Bug fixes</h4>
+		<ul>
+			<li>Prevented a Lockette exploit</li>
+			<li>Prevented autonomous travel to TARDIS creation area</li>
+			<li>An incorrect world argument given to ~relative travel command is now caught instead of throwing an error</li>
+		</ul>
 		<h3>v3.0.1</h3>
 		<h4>Bug fixes</h4>
 		<ul>
