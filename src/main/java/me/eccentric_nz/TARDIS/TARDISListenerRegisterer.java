@@ -78,6 +78,7 @@ import me.eccentric_nz.TARDIS.listeners.TARDISMakePresetListener;
 import me.eccentric_nz.TARDIS.listeners.TARDISMinecartListener;
 import me.eccentric_nz.TARDIS.listeners.TARDISNPCListener;
 import me.eccentric_nz.TARDIS.listeners.TARDISPerceptionFilterListener;
+import me.eccentric_nz.TARDIS.listeners.TARDISPistonHarvesterListener;
 import me.eccentric_nz.TARDIS.listeners.TARDISPistonListener;
 import me.eccentric_nz.TARDIS.listeners.TARDISQuitListener;
 import me.eccentric_nz.TARDIS.listeners.TARDISRecipeListener;
@@ -184,6 +185,9 @@ public class TARDISListenerRegisterer {
         plugin.getPM().registerEvents(new TARDISGlassesListener(plugin), plugin);
         plugin.getPM().registerEvents(new TARDISGravityWellListener(plugin), plugin);
         plugin.getPM().registerEvents(new TARDISHandbrakeListener(plugin), plugin);
+        if (plugin.getConfig().getBoolean("preferences.nerf_pistons.enabled")) {
+            plugin.getPM().registerEvents(new TARDISPistonHarvesterListener(plugin), plugin);
+        }
         plugin.getPM().registerEvents(new TARDISHorseListener(plugin), plugin);
         plugin.getPM().registerEvents(new TARDISHotbarListener(plugin), plugin);
         plugin.getPM().registerEvents(new TARDISIceMeltListener(plugin), plugin);

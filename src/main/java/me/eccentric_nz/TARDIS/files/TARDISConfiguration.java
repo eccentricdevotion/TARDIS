@@ -102,6 +102,8 @@ public class TARDISConfiguration {
         boolOptions.put("police_box.materialise", true);
         boolOptions.put("police_box.name_tardis", false);
         boolOptions.put("police_box.set_biome", true);
+        boolOptions.put("preferences.nerf_pistons.enabled", false);
+        boolOptions.put("preferences.nerf_pistons.only_tardis_worlds", true);
         boolOptions.put("preferences.respect_factions", true);
         boolOptions.put("preferences.respect_grief_prevention", true);
         boolOptions.put("preferences.respect_worldborder", true);
@@ -209,6 +211,7 @@ public class TARDISConfiguration {
         intOptions.put("police_box.confirm_timeout", 15);
         intOptions.put("police_box.platform_data", 8);
         intOptions.put("police_box.platform_id", 35);
+        intOptions.put("police_box.rebuild_cooldown", 10000);
         intOptions.put("police_box.tardis_lamp", 50);
         intOptions.put("police_box.wall_data", 11);
         intOptions.put("police_box.wall_id", 35);

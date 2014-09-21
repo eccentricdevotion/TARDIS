@@ -64,6 +64,7 @@ public class TARDISTrackerInstanceKeeper {
     private final HashMap<UUID, Location> startLocation = new HashMap<UUID, Location>();
     private final HashMap<UUID, Location> endLocation = new HashMap<UUID, Location>();
     private final HashMap<UUID, Long> setTime = new HashMap<UUID, Long>();
+    private final HashMap<UUID, Long> rebuildCooldown = new HashMap<UUID, Long>();
     private final HashMap<UUID, String> area = new HashMap<UUID, String>();
     private final HashMap<UUID, String> block = new HashMap<UUID, String>();
     private final HashMap<UUID, String> end = new HashMap<UUID, String>();
@@ -142,6 +143,10 @@ public class TARDISTrackerInstanceKeeper {
 
     public HashMap<UUID, Long> getSetTime() {
         return setTime;
+    }
+
+    public HashMap<UUID, Long> getRebuildCooldown() {
+        return rebuildCooldown;
     }
 
     public HashMap<String, Sign> getSign() {
