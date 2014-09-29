@@ -146,7 +146,7 @@ public class TARDISRoomRunnable implements Runnable {
                 TARDISMessage.send(p, "ICE");
                 // set all the ice to water
                 for (Block ice : iceblocks) {
-                    ice.setType(Material.ICE);
+                    ice.setType(Material.STATIONARY_WATER);
                 }
                 iceblocks.clear();
             }
