@@ -162,7 +162,7 @@ public class TARDIS extends JavaPlugin {
         Version bukkitversion = getServerVersion(getServer().getVersion());
         Version minversion = new Version("1.7.9");
         // check CraftBukkit version
-        if (bukkitversion.compareTo(minversion) >= 0) {
+        //if (bukkitversion.compareTo(minversion) >= 0) {
             hasVersion = true;
             saveDefaultConfig();
             loadCustomConfigs();
@@ -272,9 +272,9 @@ public class TARDIS extends JavaPlugin {
             condensables = cond.getCondensables();
             checkBiomes();
             checkDropChests();
-        } else {
-            console.sendMessage(pluginName + ChatColor.RED + "This plugin requires CraftBukkit 1.7.9 or higher, disabling...");
-            pm.disablePlugin(this);
+        //} else {
+            //console.sendMessage(pluginName + ChatColor.RED + "This plugin requires CraftBukkit 1.7.9 or higher, disabling...");
+            //pm.disablePlugin(this);
         }
     }
 
