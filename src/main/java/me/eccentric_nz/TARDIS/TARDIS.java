@@ -273,7 +273,7 @@ public class TARDIS extends JavaPlugin {
             checkBiomes();
             checkDropChests();
         } else {
-            console.sendMessage(pluginName + ChatColor.RED + "This plugin requires CraftBukkit 1.7.10 or higher, or Glowstone, disabling...");
+            console.sendMessage(pluginName + ChatColor.RED + "This plugin requires CraftBukkit 1.7.10 or higher, disabling...");
             pm.disablePlugin(this);
         }
     }
@@ -286,15 +286,8 @@ public class TARDIS extends JavaPlugin {
             String[] split = mat.group(1).split(" ");
             v = split[1];
         } else {
-            v = "1.7.2";
+            v = "1.7.9";
         }
-        try {
-            Class.forName("net.glowstone.GlowServer");
-            v = "1.8";
-        } catch (ClassNotFoundException e) {
-            debug("GlowStone not found!");
-        }
-        debug(v);
         return new Version(v);
     }
 
@@ -308,7 +301,6 @@ public class TARDIS extends JavaPlugin {
                 new TARDISArchPersister(this).saveAll();
             }
             updateTagStats();
-//            saveConfig();
             closeDatabase();
             resetTime();
             getServer().getScheduler().cancelTasks(this);
