@@ -160,7 +160,7 @@ public class TARDIS extends JavaPlugin {
         plugin = this;
         console = getServer().getConsoleSender();
         Version bukkitversion = getServerVersion(getServer().getVersion());
-        Version minversion = new Version("1.7.9");
+        Version minversion = new Version("1.7.10");
         // check CraftBukkit version
         if (bukkitversion.compareTo(minversion) >= 0) {
             hasVersion = true;
@@ -273,7 +273,7 @@ public class TARDIS extends JavaPlugin {
             checkBiomes();
             checkDropChests();
         } else {
-            console.sendMessage(pluginName + ChatColor.RED + "This plugin requires CraftBukkit 1.7.9 or higher, disabling...");
+            console.sendMessage(pluginName + ChatColor.RED + "This plugin requires CraftBukkit 1.7.10 or higher, or Glowstone, disabling...");
             pm.disablePlugin(this);
         }
     }
@@ -288,6 +288,13 @@ public class TARDIS extends JavaPlugin {
         } else {
             v = "1.7.2";
         }
+        try {
+            Class.forName("net.glowstone.GlowServer");
+            v = "1.8";
+        } catch (ClassNotFoundException e) {
+            debug("GlowStone not found!");
+        }
+        debug(v);
         return new Version(v);
     }
 
