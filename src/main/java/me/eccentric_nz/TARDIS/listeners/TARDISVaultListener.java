@@ -10,7 +10,6 @@ import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.block.Block;
 import org.bukkit.block.Chest;
-import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
@@ -22,16 +21,9 @@ import org.bukkit.inventory.ItemStack;
 public class TARDISVaultListener implements Listener {
 
     private final TARDIS plugin;
-    private String dn;
-    private final boolean dw;
 
     public TARDISVaultListener(TARDIS plugin) {
         this.plugin = plugin;
-        this.dn = "TARDIS_TimeVortex";
-        this.dw = this.plugin.getConfig().getBoolean("creation.default_world");
-        if (this.dw) {
-            dn = this.plugin.getConfig().getString("creation.default_world_name");
-        }
     }
 
     @EventHandler(priority = EventPriority.NORMAL)
@@ -40,7 +32,6 @@ public class TARDISVaultListener implements Listener {
         InventoryHolder holder = inv.getHolder();
         if (holder instanceof Chest) {
             Chest chest = (Chest) holder;
-            Player p = (Player) event.getPlayer();
             String loc = chest.getLocation().toString();
             // check is drop chest
             HashMap<String, Object> where = new HashMap<String, Object>();
@@ -71,26 +62,50 @@ public class TARDISVaultListener implements Listener {
                             if (cinv.firstEmpty() != -1) {
                                 ItemStack[] cc = cinv.getContents();
                                 List<Material> mats = new ArrayList<Material>();
+                                List<MatData> mds = new ArrayList<MatData>();
                                 // find unique item stack materials
                                 for (ItemStack is : cc) {
-                                    if (is != null && !mats.contains(is.getType())) {
-                                        mats.add(is.getType());
+                                    if (is != null) {
+                                        Material m = is.getType();
+                                        MatData md = new MatData();
+                                        md.setMaterial(m);
+                                        md.setData(is.getData().getData());
+                                        if (mats.contains(m)) {
+                                            boolean found = false;
+                                            for (MatData dm : mds) {
+                                                if (dm.equals(md)) {
+                                                    found = true;
+                                                    break;
+                                                }
+                                            }
+                                            if (!found) {
+                                                mds.add(md);
+                                            }
+                                        } else {
+                                            // just add the material data
+                                            mds.add(md);
+                                            mats.add(m);
+                                        }
                                     }
                                 }
                                 // for each material found, see if there are any stacks of it in the drop chest
-                                for (Material m : mats) {
-                                    int slot = inv.first(m);
+                                for (MatData m : mds) {
+                                    int slot = inv.first(m.getMaterial());
                                     while (slot != -1 && cinv.firstEmpty() != -1) {
                                         // get the item stack
                                         ItemStack get = inv.getItem(slot);
-                                        // remove the stack from the drop chest
-                                        inv.setItem(slot, null);
-                                        // put it in the chest
-                                        cinv.setItem(cinv.firstEmpty(), get);
-                                        // sort the chest
-                                        TARDISSonicSorterListener.sortInventory(cinv, 0, cinv.getSize());
-                                        // get any other stacks
-                                        slot = inv.first(m);
+                                        if (get.getData().getData() == m.getData()) {
+                                            // remove the stack from the drop chest
+                                            inv.setItem(slot, null);
+                                            // put it in the chest
+                                            cinv.setItem(cinv.firstEmpty(), get);
+                                            // sort the chest
+                                            TARDISSonicSorterListener.sortInventory(cinv, 0, cinv.getSize());
+                                            // get any other stacks
+                                            slot = inv.first(m.getMaterial());
+                                        } else {
+                                            slot = -1;
+                                        }
                                     }
                                 }
                             }
@@ -98,6 +113,54 @@ public class TARDISVaultListener implements Listener {
                     }
                 }
             }
+        }
+    }
+
+    public class MatData {
+
+        private Material material;
+        private byte data;
+
+        public Material getMaterial() {
+            return material;
+        }
+
+        public void setMaterial(Material material) {
+            this.material = material;
+        }
+
+        public byte getData() {
+            return data;
+        }
+
+        public void setData(byte data) {
+            this.data = data;
+        }
+
+        /**
+         * Define equality of state.
+         *
+         * @param md the MatData to compare to
+         * @return true or false
+         */
+        @Override
+        public boolean equals(Object md) {
+            if (this == md) {
+                return true;
+            }
+            if (!(md instanceof MatData)) {
+                return false;
+            }
+            MatData that = (MatData) md;
+            return (this.material == that.material && this.data == that.data);
+        }
+
+        @Override
+        public int hashCode() {
+            int hash = 7;
+            hash = 67 * hash + (this.material != null ? this.material.hashCode() : 0);
+            hash = 67 * hash + this.data;
+            return hash;
         }
     }
 }
