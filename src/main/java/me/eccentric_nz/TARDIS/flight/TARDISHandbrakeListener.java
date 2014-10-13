@@ -90,10 +90,14 @@ public class TARDISHandbrakeListener implements Listener {
                     final int id = rsc.getTardis_id();
                     TARDISCircuitChecker tcc = null;
                     if (plugin.getConfig().getString("preferences.difficulty").equals("hard") && !plugin.getUtils().inGracePeriod(player, event.getAction().equals(Action.LEFT_CLICK_BLOCK))) {
+                        plugin.debug("Circuit check starting...");
                         tcc = new TARDISCircuitChecker(plugin, id);
                         tcc.getCircuits();
                     }
+                    String foundcc = (tcc != null) ? "true" : "false";
+                    plugin.debug("TARDISCircuitChecker was NOT NULL? " + foundcc);
                     if (tcc != null && !tcc.hasMaterialisation()) {
+                        plugin.debug("No materialisation circuit found!");
                         TARDISMessage.send(player, "NO_MAT_CIRCUIT");
                         return;
                     }

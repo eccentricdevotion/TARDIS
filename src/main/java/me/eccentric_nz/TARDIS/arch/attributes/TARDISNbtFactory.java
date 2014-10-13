@@ -762,7 +762,7 @@ public class TARDISNbtFactory {
     }
 
     /**
-     * Search for the first publically and privately defined method of the given
+     * Search for the first publicly and privately defined method of the given
      * name and parameter count.
      *
      * @param requireMod - modifiers that are required.

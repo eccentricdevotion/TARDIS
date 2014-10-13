@@ -58,37 +58,50 @@ public class TARDISCircuitChecker {
      * installed.
      */
     public void getCircuits() {
+        plugin.debug("Checking circuits for TARDIS ID: " + id);
         HashMap<String, Object> where = new HashMap<String, Object>();
         where.put("tardis_id", id);
+        plugin.debug("Querying database - storage table...");
         ResultSetDiskStorage rs = new ResultSetDiskStorage(plugin, where);
         if (rs.resultSet()) {
+            plugin.debug("Record found for TARDIS ID: " + id);
             ItemStack[] items;
             try {
+                plugin.debug("Deserializinf inventory data to item stacks...");
                 items = TARDISSerializeInventory.itemStacksFromString(rs.getConsole());
+                plugin.debug("Checking item stacks...");
                 for (ItemStack is : items) {
                     if (is != null && is.hasItemMeta()) {
                         ItemMeta im = is.getItemMeta();
                         if (im.hasDisplayName()) {
                             String dn = im.getDisplayName();
+                            plugin.debug("Item has display name: " + dn);
                             if (dn.equals("TARDIS ARS Circuit")) {
+                                plugin.debug("Found: ARS Circuit");
                                 this.ars = true;
                             }
                             if (dn.equals("TARDIS Chameleon Circuit")) {
+                                plugin.debug("Found: Chameleon Circuit");
                                 this.chameleon = true;
                             }
                             if (dn.equals("TARDIS Input Circuit")) {
+                                plugin.debug("Found: Input Circuit");
                                 this.input = true;
                             }
                             if (dn.equals("TARDIS Materialisation Circuit")) {
+                                plugin.debug("Found: Materialisation Circuit");
                                 this.materialisation = true;
                             }
                             if (dn.equals("TARDIS Memory Circuit")) {
+                                plugin.debug("Found: Memory Circuit");
                                 this.memory = true;
                             }
                             if (dn.equals("TARDIS Scanner Circuit")) {
+                                plugin.debug("Found: Scanner Circuit");
                                 this.scanner = true;
                             }
                             if (dn.equals("TARDIS Temporal Circuit")) {
+                                plugin.debug("Found: Temporal Circuit");
                                 this.temporal = true;
                             }
                         }
