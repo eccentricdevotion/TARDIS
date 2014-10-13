@@ -67,7 +67,7 @@ public class TARDISCircuitChecker {
             plugin.debug("Record found for TARDIS ID: " + id);
             ItemStack[] items;
             try {
-                plugin.debug("Deserializinf inventory data to item stacks...");
+                plugin.debug("Deserializing inventory data to item stacks...");
                 items = TARDISSerializeInventory.itemStacksFromString(rs.getConsole());
                 plugin.debug("Checking item stacks...");
                 for (ItemStack is : items) {
