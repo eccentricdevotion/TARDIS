@@ -247,7 +247,11 @@ public class TARDISRoomCommands implements CommandExecutor {
                     return true;
                 }
                 String basepath = plugin.getDataFolder() + File.separator + "user_schematics" + File.separator;
-                new TARDISRoomMap(plugin).makeRoomMap(basepath + lower, name);
+                boolean success = new TARDISRoomMap(plugin).makeRoomMap(basepath + lower, name);
+                if (!success) {
+                    TARDISMessage.send(sender, "ROOM_FAILED");
+                    return true;
+                }
                 plugin.getRoomsConfig().set("rooms." + name + ".enabled", false);
                 plugin.getRoomsConfig().set("rooms." + name + ".user", true);
                 try {

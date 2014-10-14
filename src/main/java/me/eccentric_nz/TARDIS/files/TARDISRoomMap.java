@@ -109,56 +109,63 @@ public class TARDISRoomMap {
      *
      * @param fileStr the schematic file to read
      * @param s the schematic name
+     * @return true if the schematic was loaded successfully
      */
-    public void makeRoomMap(String fileStr, String s) {
+    public boolean makeRoomMap(String fileStr, String s) {
         HashMap<String, Integer> blockIDs = new HashMap<String, Integer>();
         File f = new File(fileStr + ".tschm");
         if (!f.exists()) {
             plugin.debug(plugin.getPluginName() + "Could not find a schematic with that name!");
-            return;
+            return false;
         }
         // get JSON
         JSONObject obj = TARDISSchematicGZip.unzip(fileStr + ".tschm");
-        // get dimensions
-        JSONObject dimensions = (JSONObject) obj.get("dimensions");
-        int h = dimensions.getInt("height");
-        int w = dimensions.getInt("width");
-        int l = dimensions.getInt("length");
-        // get input array
-        JSONArray arr = (JSONArray) obj.get("input");
-        // loop like crazy
-        for (int level = 0; level < h; level++) {
-            JSONArray floor = (JSONArray) arr.get(level);
-            for (int row = 0; row < w; row++) {
-                JSONArray r = (JSONArray) floor.get(row);
-                for (int col = 0; col < l; col++) {
-                    JSONObject c = (JSONObject) r.get(col);
-                    String bid = c.getString("type");
-                    if (ignoreBlocks.contains(bid)) {
-                        continue;
-                    }
-                    if (blockConversion.containsKey(bid)) {
-                        bid = blockConversion.get(bid);
-                    }
-                    if (bid.equals("WOOL") && (c.getByte("data") == 1 || c.getByte("data") == 8)) {
-                        String bstr = bid + ":" + c.getByte("data");
-                        if (blockIDs.containsKey(bstr)) {
-                            Integer count = blockIDs.get(bstr) + 1;
-                            blockIDs.put(bstr, count);
-                        } else {
-                            blockIDs.put(bstr, 1);
+        if (obj == null) {
+            plugin.debug(plugin.getPluginName() + "The supplied file [" + fileStr + ".tschm] is not a TARDIS JSON schematic!");
+            return false;
+        } else {
+            // get dimensions
+            JSONObject dimensions = (JSONObject) obj.get("dimensions");
+            int h = dimensions.getInt("height");
+            int w = dimensions.getInt("width");
+            int l = dimensions.getInt("length");
+            // get input array
+            JSONArray arr = (JSONArray) obj.get("input");
+            // loop like crazy
+            for (int level = 0; level < h; level++) {
+                JSONArray floor = (JSONArray) arr.get(level);
+                for (int row = 0; row < w; row++) {
+                    JSONArray r = (JSONArray) floor.get(row);
+                    for (int col = 0; col < l; col++) {
+                        JSONObject c = (JSONObject) r.get(col);
+                        String bid = c.getString("type");
+                        if (ignoreBlocks.contains(bid)) {
+                            continue;
                         }
-                    } else {
-                        if (blockIDs.containsKey(bid)) {
-                            Integer count = blockIDs.get(bid) + 1;
-                            blockIDs.put(bid, count);
+                        if (blockConversion.containsKey(bid)) {
+                            bid = blockConversion.get(bid);
+                        }
+                        if (bid.equals("WOOL") && (c.getByte("data") == 1 || c.getByte("data") == 8)) {
+                            String bstr = bid + ":" + c.getByte("data");
+                            if (blockIDs.containsKey(bstr)) {
+                                Integer count = blockIDs.get(bstr) + 1;
+                                blockIDs.put(bstr, count);
+                            } else {
+                                blockIDs.put(bstr, 1);
+                            }
                         } else {
-                            blockIDs.put(bid, 1);
+                            if (blockIDs.containsKey(bid)) {
+                                Integer count = blockIDs.get(bid) + 1;
+                                blockIDs.put(bid, count);
+                            } else {
+                                blockIDs.put(bid, 1);
+                            }
                         }
                     }
+                    plugin.getBuildKeeper().getRoomBlockCounts().put(s, blockIDs);
                 }
-                plugin.getBuildKeeper().getRoomBlockCounts().put(s, blockIDs);
             }
+            return true;
         }
     }
 }
