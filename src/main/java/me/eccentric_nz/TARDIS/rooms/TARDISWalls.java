@@ -17,6 +17,7 @@
 package me.eccentric_nz.TARDIS.rooms;
 
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import me.eccentric_nz.TARDIS.TARDIS;
 import org.bukkit.Material;
 
@@ -33,7 +34,7 @@ public class TARDISWalls {
     public HashMap<String, Pair> blocks;
 
     public TARDISWalls() {
-        blocks = new HashMap<String, Pair>();
+        blocks = new LinkedHashMap<String, Pair>();
         blocks.put("STONE", new Pair(Material.STONE, (byte) 0));
         blocks.put("COBBLESTONE", new Pair(Material.COBBLESTONE, (byte) 0));
         blocks.put("MOSSY_COBBLESTONE", new Pair(Material.MOSSY_COBBLESTONE, (byte) 0));

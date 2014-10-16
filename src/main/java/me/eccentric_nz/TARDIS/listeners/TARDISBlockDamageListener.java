@@ -16,7 +16,9 @@
  */
 package me.eccentric_nz.TARDIS.listeners;
 
+import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.builders.TARDISMaterialisationData;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
@@ -44,6 +46,7 @@ public class TARDISBlockDamageListener implements Listener {
 
     private final TARDIS plugin;
     private final boolean HADS;
+    private final List<Material> doors = Arrays.asList(Material.IRON_DOOR_BLOCK, Material.WOODEN_DOOR, Material.TRAP_DOOR);
 
     public TARDISBlockDamageListener(TARDIS plugin) {
         this.plugin = plugin;
@@ -67,7 +70,6 @@ public class TARDISBlockDamageListener implements Listener {
         ResultSetBlocks rsb = new ResultSetBlocks(plugin, where, false);
         if (rsb.resultSet()) {
             int id = rsb.getTardis_id();
-            String message = "You cannot break the TARDIS blocks!";
             if (p.hasPermission("tardis.sonic.admin")) {
                 String[] split = plugin.getRecipesConfig().getString("shaped.Sonic Screwdriver.result").split(":");
                 Material sonic = Material.valueOf(split[0]);
@@ -81,7 +83,7 @@ public class TARDISBlockDamageListener implements Listener {
             boolean m = false;
             boolean isDoor = false;
             if (HADS && !plugin.getTrackerKeeper().getInVortex().contains(id) && isOwnerOnline(id)) {
-                if (b.getTypeId() == 71) {
+                if (doors.contains(b.getType())) {
                     if (isOwner(id, p.getUniqueId().toString())) {
                         isDoor = true;
                     }

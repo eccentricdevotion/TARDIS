@@ -93,6 +93,7 @@ public class TARDISHandbrakeListener implements Listener {
                         tcc = new TARDISCircuitChecker(plugin, id);
                         tcc.getCircuits();
                     }
+                    String foundcc = (tcc != null) ? "true" : "false";
                     if (tcc != null && !tcc.hasMaterialisation()) {
                         TARDISMessage.send(player, "NO_MAT_CIRCUIT");
                         return;
@@ -458,7 +459,7 @@ public class TARDISHandbrakeListener implements Listener {
         ResultSetDoors rs = new ResultSetDoors(plugin, where, false);
         if (rs.resultSet()) {
             byte data = plugin.getUtils().getLocationFromDB(rs.getDoor_location(), 0.0f, 0.0f).getBlock().getData();
-            return plugin.getGeneralKeeper().getDoorListener().idDoorOpen(data, rs.getDoor_direction());
+            return plugin.getGeneralKeeper().getDoorListener().isDoorOpen(data, rs.getDoor_direction());
         }
         return false;
     }

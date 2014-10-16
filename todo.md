@@ -1,19 +1,15 @@
 #TODO
 
 ##Current version `3.1`
-1. TARDIS up/cross-grades (change the desktop theme)
-2. Saved biome disks able to be extended
-3. Update the VAULT room to automatically sort items into the chests
-   * one chest is set as the drop chest
-   * all other chests in the 16x16x16 chunk are set as storage chests
-   * place at least 1 block/item into the storage chests
-   * blocks/items placed in the drop chest will automatically be sent to the chest with the same block/item in it
-   * add commands to update existing VAULT rooms to the new system
-4. Slimmer TARDIS option?
-5. Find the Multiverse problem that prevents the Rail room from functioning properly
+1. Update for Minecraft / Bukkit 1.8
+2. Slimmer TARDIS option?
+3. Find the Multiverse problem that prevents the Rail room from functioning properly
+4. Use new Wall menu for `/tardisprefs [wall|floor]` command?
+5. `/tardis hide` and `/tardis rebuild` has materialisation animation
 
 ##Future version `3.2+`
-* ?
+* SpongeAPI?
+* Glowstone
 
 ##Resource Pack / TARDISWeepingAngels
 
@@ -23,7 +19,7 @@ Re-skin mobs for Resource pack, and add new mob sounds
 * Villagers -> Hath
 * Endermen -> The Silence
 * Iron Golem -> Gunslinger
-* Witches -> Slitheen?
+* Witches -> Slitheen / Whispermen?
 * Wolves -> K-9? (All the textures I seen so far just don't work - you shouldn't see the legs...)
 * Slimes -> Adipose
 

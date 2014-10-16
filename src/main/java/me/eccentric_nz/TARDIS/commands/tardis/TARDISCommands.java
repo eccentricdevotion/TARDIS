@@ -22,7 +22,9 @@ import java.util.Locale;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.advanced.TARDISDiskWriterCommand;
 import me.eccentric_nz.TARDIS.arch.TARDISArchCommand;
+import me.eccentric_nz.TARDIS.chatGUI.TARDISUpdateChatGUI;
 import me.eccentric_nz.TARDIS.enumeration.CMDS;
+import me.eccentric_nz.TARDIS.noteblock.TARDISPlayThemeCommand;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
@@ -53,8 +55,13 @@ public class TARDISCommands implements CommandExecutor {
         firstArgs.add("arsremove");
         firstArgs.add("chameleon");
         firstArgs.add("check_loc");
+        firstArgs.add("colourise");
+        firstArgs.add("colorize");
         firstArgs.add("comehere");
+        firstArgs.add("desktop");
         firstArgs.add("direction");
+        firstArgs.add("egg");
+        firstArgs.add("eject");
         firstArgs.add("ep1");
         firstArgs.add("erase");
         firstArgs.add("exterminate");
@@ -77,9 +84,12 @@ public class TARDISCommands implements CommandExecutor {
         firstArgs.add("save");
         firstArgs.add("save_player");
         firstArgs.add("secondary");
+        firstArgs.add("section");
         firstArgs.add("setdest");
         firstArgs.add("tagtheood");
+        firstArgs.add("theme");
         firstArgs.add("update");
+        firstArgs.add("upgrade");
         firstArgs.add("version");
     }
 
@@ -102,6 +112,10 @@ public class TARDISCommands implements CommandExecutor {
                 sender.sendMessage(plugin.getPluginName() + "That command wasn't recognised type " + ChatColor.GREEN + "/tardis help" + ChatColor.RESET + " to see the commands");
                 return false;
             }
+            // play tardis theme on  noteblocks
+            if (args[0].equalsIgnoreCase("egg")) {
+                return new TARDISPlayThemeCommand(plugin).playTheme(player);
+            }
             // delete the TARDIS
             if (args[0].equalsIgnoreCase("exterminate")) {
                 return new TARDISExterminateCommand(plugin).doExterminate(sender, player);
@@ -113,6 +127,9 @@ public class TARDISCommands implements CommandExecutor {
             if (args[0].equalsIgnoreCase("version")) {
                 return new TARDISVersionCommand(plugin).displayVersion(sender, player);
             }
+            if (args[0].equalsIgnoreCase("section")) {
+                return new TARDISUpdateChatGUI(plugin).showInterface(player, args);
+            }
             if (player == null) {
                 TARDISMessage.send(sender, "CMD_PLAYER");
                 return false;
@@ -123,11 +140,17 @@ public class TARDISCommands implements CommandExecutor {
                 if (args[0].equalsIgnoreCase("arch_time")) {
                     return new TARDISArchCommand(plugin).getTime(player);
                 }
+                if (args[0].equalsIgnoreCase("eject")) {
+                    return new TARDISEjectCommand(plugin).eject(player);
+                }
                 if (args[0].equalsIgnoreCase("lamps")) {
                     return new TARDISLampsCommand(plugin).addLampBlocks(player);
                 }
                 if (args[0].equalsIgnoreCase("chameleon")) {
                     new TARDISChameleonCommand(plugin).doChameleon(player, args);
+                }
+                if (args[0].equalsIgnoreCase("colourise") || args[0].equalsIgnoreCase("colorize")) {
+                    new TARDISColouriseCommand(plugin).updateBeaconGlass(player);
                 }
                 if (args[0].equalsIgnoreCase("rescue")) {
                     return new TARDISRescueCommand(plugin).startRescue(player, args);
@@ -158,6 +181,9 @@ public class TARDISCommands implements CommandExecutor {
                 }
                 if (args[0].equalsIgnoreCase("update")) {
                     return new TARDISUpdateCommand(plugin).startUpdate(player, args);
+                }
+                if (args[0].equalsIgnoreCase("upgrade") || args[0].equalsIgnoreCase("desktop") || args[0].equalsIgnoreCase("theme")) {
+                    return new TARDISUpgradeCommand(plugin).openUpgradeGUI(player);
                 }
                 if (args[0].equalsIgnoreCase("secondary")) {
                     return new TARDISSecondaryCommand(plugin).startSecondary(player, args);

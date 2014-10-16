@@ -39,6 +39,7 @@ police_box:
     confirm_timeout: 15
     sign_colour: WHITE
     set_biome: true
+    rebuild_cooldown: 10000
 # travel settings
 travel:
     include_default_world: false
@@ -80,6 +81,9 @@ preferences:
     default_key: eleventh
     default_sonic: eleventh
     wand: BONE
+    nerf_pistons:
+        enabled: false
+        only_tardis_worlds: true
 # restrictions
 allow:
     mob_farming: true

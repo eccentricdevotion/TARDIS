@@ -32,12 +32,12 @@ import org.bukkit.util.StringUtil;
 public class TARDISTabComplete implements TabCompleter {
 
     private final TARDIS plugin;
-    private final List<String> ROOT_SUBS = ImmutableList.of("abort", "add", "arch_time", "arsremove", "chameleon", "comehere", "direction", "ep1", "erase", "exterminate", "find", "help", "hide", "home", "inside", "jettison", "list", "namekey", "occupy", "rebuild", "remove", "removesave", "rescue", "room", "save", "save_player", "secondary", "setdest", "tagtheood", "update", "version");
+    private final List<String> ROOT_SUBS = ImmutableList.of("abort", "add", "arch_time", "arsremove", "chameleon", "colourise", "colorize", "comehere", "desktop", "direction", "eject", "ep1", "erase", "exterminate", "find", "help", "hide", "home", "inside", "jettison", "list", "namekey", "occupy", "rebuild", "remove", "removesave", "rescue", "room", "save", "save_player", "secondary", "setdest", "tagtheood", "theme", "update", "upgrade", "version");
     private final List<String> CHAM_SUBS = ImmutableList.of("on", "off", "short", "reset");
     private final List<String> DIR_SUBS = ImmutableList.of("north", "west", "south", "east");
     private final List<String> LIST_SUBS = ImmutableList.of("companions", "saves", "areas", "rechargers");
     private final List<String> SEC_SUBS = ImmutableList.of("button", "world-repeater", "x-repeater", "z-repeater", "y-repeater", "artron", "handbrake", "door", "back");
-    private final List<String> UPD_SUBS = ImmutableList.of("advanced", "ars", "artron", "back", "backdoor", "button", "chameleon", "condenser", "creeper", "direction", "door", "eps", "farm", "handbrake", "info", "keyboard", "light", "rail", "save-sign", "scanner", "stable", "storage", "temporal", "terminal", "toggle_wool", "village", "world-repeater", "x-repeater", "y-repeater", "z-repeater", "zero");
+    private final List<String> UPD_SUBS = ImmutableList.of("advanced", "ars", "artron", "back", "backdoor", "button", "chameleon", "condenser", "creeper", "direction", "door", "eps", "farm", "handbrake", "info", "keyboard", "light", "rail", "save-sign", "scanner", "stable", "storage", "temporal", "terminal", "toggle_wool", "vault", "village", "world-repeater", "x-repeater", "y-repeater", "z-repeater", "zero");
 
     public TARDISTabComplete(TARDIS plugin) {
         this.plugin = plugin;

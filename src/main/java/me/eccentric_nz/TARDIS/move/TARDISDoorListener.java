@@ -23,6 +23,7 @@ import java.util.List;
 import java.util.Random;
 import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.chatGUI.TARDISUpdateChatGUI;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetDoors;
 import me.eccentric_nz.TARDIS.database.ResultSetPlayerPrefs;
@@ -35,7 +36,6 @@ import multiworld.MultiWorldPlugin;
 import multiworld.api.MultiWorldAPI;
 import multiworld.api.MultiWorldWorldData;
 import multiworld.api.flag.FlagName;
-import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -102,14 +102,14 @@ public class TARDISDoorListener {
         final boolean quotes = q;
         final boolean isSurvival = checkSurvival(to);
 
-        Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
+        plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
             @Override
             public void run() {
                 p.teleport(l);
                 playDoorSound(p, sound, l, m);
             }
         }, 5L);
-        Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
+        plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
             @Override
             public void run() {
                 p.teleport(l);
@@ -117,7 +117,11 @@ public class TARDISDoorListener {
                     p.setAllowFlight(true);
                 }
                 if (quotes) {
-                    p.sendMessage(plugin.getPluginName() + plugin.getGeneralKeeper().getQuotes().get(i));
+                    if (r.nextInt(100) < 3 && plugin.getPM().isPluginEnabled("ProtocolLib")) {
+                        TARDISUpdateChatGUI.sendJSON(plugin.getJsonKeeper().getEgg(), p);
+                    } else {
+                        p.sendMessage(plugin.getPluginName() + plugin.getGeneralKeeper().getQuotes().get(i));
+                    }
                 }
                 if (exit) {
                     // give some artron energy
@@ -387,7 +391,7 @@ public class TARDISDoorListener {
         }
     }
 
-    public boolean idDoorOpen(byte door_data, COMPASS d) {
+    public boolean isDoorOpen(byte door_data, COMPASS d) {
         switch (d) {
             case NORTH:
                 if (door_data == 7) {

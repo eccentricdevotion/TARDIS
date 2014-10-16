@@ -297,7 +297,6 @@ public class TARDISNbtFactory {
     /**
      * Represents a root NBT list. See also:
      * <ul>
-     * <li>{@link TARDISNbtFactory#createNbtList()}</li>
      * <li>{@link TARDISNbtFactory#fromList(Object)}</li>
      * </ul>
      *
@@ -438,8 +437,6 @@ public class TARDISNbtFactory {
 
     /**
      * Construct a new NBT compound.
-     * <p>
-     * Use {@link NbtCompound#asMap()} to modify it.
      *
      * @return The NBT compound.
      */
@@ -539,8 +536,7 @@ public class TARDISNbtFactory {
     /**
      * Set the NBT compound tag of a given item stack.
      * <p>
-     * The item stack must be a wrapper for a CraftItemStack. Use
-     * {@link MinecraftReflection#getBukkitItemStack(ItemStack)} if not.
+     * The item stack must be a wrapper for a CraftItemStack.
      *
      * @param stack - the item stack, cannot be air.
      * @param compound - the new NBT compound, or NULL to remove it.
@@ -766,7 +762,7 @@ public class TARDISNbtFactory {
     }
 
     /**
-     * Search for the first publically and privately defined method of the given
+     * Search for the first publicly and privately defined method of the given
      * name and parameter count.
      *
      * @param requireMod - modifiers that are required.

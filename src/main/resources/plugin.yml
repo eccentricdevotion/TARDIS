@@ -41,6 +41,7 @@ permissions:
       tardis.temporal: true
       tardis.advanced: true
       tardis.storage: true
+      tardis.vault: true
     default: op
   tardis.exile:
     description: Disallow players from travelling anywhere but to areas they have a permission node for.
@@ -178,6 +179,9 @@ permissions:
   tardis.farm:
     description: Allow players to farm mobs.
     default: op
+  tardis.eject:
+    description: Allow players eject farmed mobs, villagers and companions.
+    default: op
   tardis.autonomous:
     description: Allow players to use the TARDIS autonomous homing function.
     default: op
@@ -246,6 +250,12 @@ permissions:
     default: op
   tardis.difficulty:
     description: Allows a player to use the /tardisprefs difficulty command.
+    default: op
+  tardis.vault:
+    description: Allows a player to have an automatic vault room chest sorter.
+    default: op
+  tardis.upgrade:
+    description: Allows a player to upgrade their TARDIS.
     default: op
 commands:
   tardis:

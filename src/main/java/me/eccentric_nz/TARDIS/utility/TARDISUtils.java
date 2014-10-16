@@ -768,16 +768,16 @@ public class TARDISUtils {
     public int getHighestNetherBlock(World w, int wherex, int wherez) {
         int y = 100;
         Block startBlock = w.getBlockAt(wherex, y, wherez);
-        while (startBlock.getTypeId() != 0) {
+        while (!startBlock.getType().equals(Material.AIR)) {
             startBlock = startBlock.getRelative(BlockFace.DOWN);
         }
         int air = 0;
-        while (startBlock.getTypeId() == 0 && startBlock.getLocation().getBlockY() > 30) {
+        while (startBlock.getType().equals(Material.AIR) && startBlock.getLocation().getBlockY() > 30) {
             startBlock = startBlock.getRelative(BlockFace.DOWN);
             air++;
         }
-        int id = startBlock.getTypeId();
-        if ((id == 87 || id == 88 || id == 89 || id == 112 || id == 113 || id == 114) && air >= 4) {
+        Material mat = startBlock.getType();
+        if (plugin.getGeneralKeeper().getGoodNether().contains(mat) && air >= 4) {
             y = startBlock.getLocation().getBlockY() + 1;
         }
         return y;

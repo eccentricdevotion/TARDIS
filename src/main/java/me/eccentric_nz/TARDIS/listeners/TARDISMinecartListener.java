@@ -120,7 +120,7 @@ public class TARDISMinecartListener implements Listener {
                     default:
                         break;
                 }
-                if (data != null) {
+                if (data != null && data.length > 3) {
                     if (plugin.getPM().isPluginEnabled("Multiverse-Inventories")) {
                         if (!plugin.getTMIChecker().checkMVI(bw, data[0])) {
                             if (playerUUID != null && plugin.getServer().getPlayer(playerUUID).isOnline()) {

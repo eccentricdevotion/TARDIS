@@ -62,8 +62,7 @@ public class TARDISGravityCommands implements CommandExecutor {
 
     @Override
     public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
-        // If the player typed /tardisarea then do the following...
-        // check there is the right number of arguments
+        // If the player typed /tardisgravity then do the following...
         if (cmd.getName().equalsIgnoreCase("tardisgravity")) {
             Player player = null;
             if (sender instanceof Player) {
@@ -79,20 +78,13 @@ public class TARDISGravityCommands implements CommandExecutor {
             }
             if (!plugin.getConfig().getBoolean("allow.external_gravity")) {
                 // check they are still in the TARDIS world
-//                World world = player.getLocation().getWorld();
-//                String name = world.getName();
-//                ChunkGenerator gen = world.getGenerator();
-//                String dn = "TARDIS_TimeVortex";
-//                if (plugin.getConfig().getBoolean("creation.default_world")) {
-//                    dn = plugin.getConfig().getString("creation.default_world_name");
-//                }
-//                boolean special = (name.equals(dn) && (world.getWorldType().equals(WorldType.FLAT) || gen instanceof TARDISChunkGenerator));
                 if (!plugin.getUtils().inTARDISWorld(player)) {
                     String mess_stub = (player.getLocation().getWorld().getName().contains("TARDIS_WORLD_")) ? "GRAVITY_OWN_WORLD" : "GRAVITY_A_WORLD";
                     TARDISMessage.send(player, mess_stub);
                     return true;
                 }
             }
+            // check there is the right number of arguments
             if (args.length < 1) {
                 return false;
             }

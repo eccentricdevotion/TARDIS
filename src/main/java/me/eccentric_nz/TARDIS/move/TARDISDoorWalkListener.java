@@ -311,7 +311,7 @@ public class TARDISDoorWalkListener extends TARDISDoorListener implements Listen
                                         Block door_bottom;
                                         Door door = (Door) block.getState().getData();
                                         door_bottom = (door.isTopHalf()) ? block.getRelative(BlockFace.DOWN) : block;
-                                        boolean opened = idDoorOpen(door_bottom.getData(), dd);
+                                        boolean opened = isDoorOpen(door_bottom.getData(), dd);
                                         if (opened && preset.hasDoor()) {
                                             exitLoc = plugin.getUtils().getLocationFromDB(rse.getDoor_location(), 0.0f, 0.0f);
                                         } else {

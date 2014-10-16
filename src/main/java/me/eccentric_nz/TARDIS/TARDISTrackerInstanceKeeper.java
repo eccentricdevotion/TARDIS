@@ -23,6 +23,7 @@ import java.util.UUID;
 import me.eccentric_nz.TARDIS.JSON.JSONObject;
 import me.eccentric_nz.TARDIS.arch.TARDISWatchData;
 import me.eccentric_nz.TARDIS.builders.TARDISMaterialisationData;
+import me.eccentric_nz.TARDIS.desktop.TARDISUpgradeData;
 import me.eccentric_nz.TARDIS.flight.TARDISRegulatorRunnable;
 import me.eccentric_nz.TARDIS.info.TARDISInfoMenu;
 import me.eccentric_nz.TARDIS.move.TARDISMoveSession;
@@ -57,11 +58,13 @@ public class TARDISTrackerInstanceKeeper {
     private final HashMap<UUID, Double[]> gravity = new HashMap<UUID, Double[]>();
     private final HashMap<UUID, Integer> binder = new HashMap<UUID, Integer>();
     private final HashMap<UUID, Integer> count = new HashMap<UUID, Integer>();
+    private final HashMap<UUID, Integer> ejecting = new HashMap<UUID, Integer>();
     private final HashMap<UUID, JSONObject> pastes = new HashMap<UUID, JSONObject>();
     private final HashMap<UUID, List<Location>> repeaters = new HashMap<UUID, List<Location>>();
     private final HashMap<UUID, Location> startLocation = new HashMap<UUID, Location>();
     private final HashMap<UUID, Location> endLocation = new HashMap<UUID, Location>();
     private final HashMap<UUID, Long> setTime = new HashMap<UUID, Long>();
+    private final HashMap<UUID, Long> rebuildCooldown = new HashMap<UUID, Long>();
     private final HashMap<UUID, String> area = new HashMap<UUID, String>();
     private final HashMap<UUID, String> block = new HashMap<UUID, String>();
     private final HashMap<UUID, String> end = new HashMap<UUID, String>();
@@ -77,6 +80,7 @@ public class TARDISTrackerInstanceKeeper {
     private final HashMap<UUID, TARDISMoveSession> moveSessions = new HashMap<UUID, TARDISMoveSession>();
     private final HashMap<UUID, TARDISRegulatorRunnable> regulating = new HashMap<UUID, TARDISRegulatorRunnable>();
     private final HashMap<UUID, TARDISSeedData> roomSeed = new HashMap<UUID, TARDISSeedData>();
+    private final HashMap<UUID, TARDISUpgradeData> upgrades = new HashMap<UUID, TARDISUpgradeData>();
     private final HashMap<UUID, UUID> chat = new HashMap<UUID, UUID>();
     private final List<Integer> dematerialising = new ArrayList<Integer>();
     private final List<Integer> inVortex = new ArrayList<Integer>();
@@ -85,6 +89,8 @@ public class TARDISTrackerInstanceKeeper {
     private final List<Integer> submarine = new ArrayList<Integer>();
     private final List<String> reset = new ArrayList<String>();
     private final List<UUID> arrangers = new ArrayList<UUID>();
+    private final List<UUID> beaconColouring = new ArrayList<UUID>();
+    private final List<UUID> eggs = new ArrayList<UUID>();
     private final List<UUID> farming = new ArrayList<UUID>();
     private final List<UUID> geneticManipulation = new ArrayList<UUID>();
     private final List<UUID> hasTravelled = new ArrayList<UUID>();
@@ -137,6 +143,10 @@ public class TARDISTrackerInstanceKeeper {
 
     public HashMap<UUID, Long> getSetTime() {
         return setTime;
+    }
+
+    public HashMap<UUID, Long> getRebuildCooldown() {
+        return rebuildCooldown;
     }
 
     public HashMap<String, Sign> getSign() {
@@ -216,6 +226,10 @@ public class TARDISTrackerInstanceKeeper {
         return roomSeed;
     }
 
+    public HashMap<UUID, TARDISUpgradeData> getUpgrades() {
+        return upgrades;
+    }
+
     public List<Integer> getDematerialising() {
         return dematerialising;
     }
@@ -238,6 +252,18 @@ public class TARDISTrackerInstanceKeeper {
 
     public List<UUID> getArrangers() {
         return arrangers;
+    }
+
+    public List<UUID> getBeaconColouring() {
+        return beaconColouring;
+    }
+
+    public List<UUID> getEggs() {
+        return eggs;
+    }
+
+    public HashMap<UUID, Integer> getEjecting() {
+        return ejecting;
     }
 
     public List<UUID> getFarming() {

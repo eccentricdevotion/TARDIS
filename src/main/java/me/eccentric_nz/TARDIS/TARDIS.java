@@ -40,6 +40,7 @@ import me.eccentric_nz.TARDIS.builders.TARDISBuilderInner;
 import me.eccentric_nz.TARDIS.builders.TARDISPresetBuilderFactory;
 import me.eccentric_nz.TARDIS.builders.TARDISSpace;
 import me.eccentric_nz.TARDIS.chameleon.TARDISChameleonPreset;
+import me.eccentric_nz.TARDIS.chatGUI.TARDISChatGUIJSON;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.TARDISBiomeUpdater;
 import me.eccentric_nz.TARDIS.database.TARDISCompanionClearer;
@@ -72,6 +73,7 @@ import me.eccentric_nz.TARDIS.utility.TARDISMultiverseInventoriesChecker;
 import me.eccentric_nz.TARDIS.utility.TARDISPerceptionFilter;
 import me.eccentric_nz.TARDIS.utility.TARDISSounds;
 import me.eccentric_nz.TARDIS.utility.TARDISUtils;
+import me.eccentric_nz.TARDIS.utility.TARDISVaultChecker;
 import me.eccentric_nz.TARDIS.utility.TARDISWorldGuardUtils;
 import me.eccentric_nz.TARDIS.utility.Version;
 import org.bukkit.ChatColor;
@@ -142,6 +144,7 @@ public class TARDIS extends JavaPlugin {
     private final TARDISPresetBuilderFactory presetBuilder = new TARDISPresetBuilderFactory(this);
     private final TARDISPresetDestroyerFactory presetDestroyer = new TARDISPresetDestroyerFactory(this);
     private final TARDISTrackerInstanceKeeper trackerKeeper = new TARDISTrackerInstanceKeeper();
+    private final TARDISChatGUIJSON jsonKeeper = new TARDISChatGUIJSON();
 
     public TARDIS() {
         this.worldGuardOnServer = false;
@@ -157,7 +160,7 @@ public class TARDIS extends JavaPlugin {
         plugin = this;
         console = getServer().getConsoleSender();
         Version bukkitversion = getServerVersion(getServer().getVersion());
-        Version minversion = new Version("1.7.9");
+        Version minversion = new Version("1.7.10");
         // check CraftBukkit version
         if (bukkitversion.compareTo(minversion) >= 0) {
             hasVersion = true;
@@ -268,8 +271,9 @@ public class TARDIS extends JavaPlugin {
             cond.makeCondensables();
             condensables = cond.getCondensables();
             checkBiomes();
+            checkDropChests();
         } else {
-            console.sendMessage(pluginName + ChatColor.RED + "This plugin requires CraftBukkit 1.7.9 or higher, disabling...");
+            console.sendMessage(pluginName + ChatColor.RED + "This plugin requires CraftBukkit 1.7.10 or higher, disabling...");
             pm.disablePlugin(this);
         }
     }
@@ -282,7 +286,7 @@ public class TARDIS extends JavaPlugin {
             String[] split = mat.group(1).split(" ");
             v = split[1];
         } else {
-            v = "1.7.2";
+            v = "1.7.9";
         }
         return new Version(v);
     }
@@ -297,7 +301,6 @@ public class TARDIS extends JavaPlugin {
                 new TARDISArchPersister(this).saveAll();
             }
             updateTagStats();
-//            saveConfig();
             closeDatabase();
             resetTime();
             getServer().getScheduler().cancelTasks(this);
@@ -688,6 +691,13 @@ public class TARDIS extends JavaPlugin {
     }
 
     /**
+     * Removes unused drop chest database records from the vaults table.
+     */
+    private void checkDropChests() {
+        getServer().getScheduler().scheduleSyncDelayedTask(this, new TARDISVaultChecker(this), 2400L);
+    }
+
+    /**
      * Outputs a message to the console. Requires debug: true in config.yml
      *
      * @param o the Object to print to the console
@@ -816,6 +826,10 @@ public class TARDIS extends JavaPlugin {
 
     public TARDISTrackerInstanceKeeper getTrackerKeeper() {
         return trackerKeeper;
+    }
+
+    public TARDISChatGUIJSON getJsonKeeper() {
+        return jsonKeeper;
     }
 
     public ConsoleCommandSender getConsole() {

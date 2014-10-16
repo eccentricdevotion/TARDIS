@@ -17,6 +17,7 @@
 package me.eccentric_nz.TARDIS.commands.tardis;
 
 import java.util.HashMap;
+import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.advanced.TARDISCircuitChecker;
 import me.eccentric_nz.TARDIS.builders.TARDISMaterialisationData;
@@ -42,13 +43,24 @@ public class TARDISRebuildCommand {
 
     public boolean rebuildPreset(final OfflinePlayer player) {
         if (player.getPlayer().hasPermission("tardis.rebuild")) {
+            UUID uuid = player.getUniqueId();
+            if (plugin.getTrackerKeeper().getRebuildCooldown().containsKey(uuid)) {
+                long now = System.currentTimeMillis();
+                long cooldown = plugin.getConfig().getLong("police_box.rebuild_cooldown");
+                long then = plugin.getTrackerKeeper().getRebuildCooldown().get(uuid) + cooldown;
+                if (now < then) {
+                    TARDISMessage.send(player.getPlayer(), "COOLDOWN", String.format("%d", cooldown / 1000));
+                    return true;
+                }
+            }
+            plugin.getTrackerKeeper().getRebuildCooldown().put(uuid, System.currentTimeMillis());
             boolean cham = false;
             HashMap<String, Object> where = new HashMap<String, Object>();
-            where.put("uuid", player.getUniqueId().toString());
+            where.put("uuid", uuid.toString());
             ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);
             if (!rs.resultSet()) {
                 TARDISMessage.send(player.getPlayer(), "NO_TARDIS");
-                return false;
+                return true;
             }
             if (plugin.getConfig().getBoolean("allow.power_down") && !rs.isPowered_on()) {
                 TARDISMessage.send(player.getPlayer(), "POWER_DOWN");
@@ -65,11 +77,10 @@ public class TARDISRebuildCommand {
                 return true;
             }
             HashMap<String, Object> wherein = new HashMap<String, Object>();
-            wherein.put("uuid", player.getUniqueId().toString());
+            wherein.put("uuid", uuid.toString());
             ResultSetTravellers rst = new ResultSetTravellers(plugin, wherein, false);
             if (rst.resultSet() && plugin.getTrackerKeeper().getHasDestination().containsKey(id)) {
                 TARDISMessage.send(player.getPlayer(), "TARDIS_NO_REBUILD");
-                ;
                 return true;
             }
             int level = rs.getArtron_level();

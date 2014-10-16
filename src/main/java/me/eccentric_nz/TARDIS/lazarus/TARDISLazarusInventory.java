@@ -20,9 +20,11 @@ import java.util.Arrays;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.utility.Version;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.plugin.Plugin;
 
 /**
  * The Genetic Manipulation Device was invented by Professor Richard Lazarus.
@@ -111,65 +113,107 @@ public class TARDISLazarusInventory {
         eggs[i] = wit;
         i++;
         // if TARDISWeepingAngels is enabled angels, cybermen and ice warriors will be available
-        ItemStack weep = new ItemStack(Material.SMOOTH_BRICK, 1, (short) 2);
-        ItemMeta ing = weep.getItemMeta();
-        ing.setDisplayName("WEEPING ANGEL");
-        weep.setItemMeta(ing);
-        eggs[i] = weep;
-        i++;
-        ItemStack cyber = new ItemStack(Material.IRON_INGOT, 1);
-        ItemMeta men = cyber.getItemMeta();
-        men.setDisplayName("CYBERMAN");
-        cyber.setItemMeta(men);
-        eggs[i] = cyber;
-        i++;
-        ItemStack ice = new ItemStack(Material.ICE, 1);
-        ItemMeta war = ice.getItemMeta();
-        war.setDisplayName("ICE WARRIOR");
-        ice.setItemMeta(war);
-        eggs[i] = ice;
+        if (plugin.getPM().isPluginEnabled("TARDISWeepingAngels")) {
+            Plugin twa = plugin.getPM().getPlugin("TARDISWeepingAngels");
+            Version version = new Version(twa.getDescription().getVersion());
+            ItemStack weep = new ItemStack(Material.SMOOTH_BRICK, 1, (short) 2);
+            ItemMeta ing = weep.getItemMeta();
+            ing.setDisplayName("WEEPING ANGEL");
+            weep.setItemMeta(ing);
+            eggs[i] = weep;
+            i++;
+            ItemStack cyber = new ItemStack(Material.IRON_INGOT, 1);
+            ItemMeta men = cyber.getItemMeta();
+            men.setDisplayName("CYBERMAN");
+            cyber.setItemMeta(men);
+            eggs[i] = cyber;
+            i++;
+            ItemStack ice = new ItemStack(Material.ICE, 1);
+            ItemMeta war = ice.getItemMeta();
+            war.setDisplayName("ICE WARRIOR");
+            ice.setItemMeta(war);
+            eggs[i] = ice;
+            if (version.compareTo(new Version("2.0")) >= 0) {
+                i++;
+                ItemStack emp = new ItemStack(Material.SUGAR, 1);
+                ItemMeta tyc = emp.getItemMeta();
+                tyc.setDisplayName("EMPTY CHILD");
+                emp.setItemMeta(tyc);
+                eggs[i] = emp;
+                i++;
+                ItemStack sil = new ItemStack(Material.FEATHER, 1);
+                ItemMeta uri = sil.getItemMeta();
+                uri.setDisplayName("SILURIAN");
+                sil.setItemMeta(uri);
+                eggs[i] = sil;
+                i++;
+                ItemStack son = new ItemStack(Material.POTATO_ITEM, 1);
+                ItemMeta tar = son.getItemMeta();
+                tar.setDisplayName("SONTARAN");
+                son.setItemMeta(tar);
+                eggs[i] = son;
+                i++;
+                ItemStack str = new ItemStack(Material.BAKED_POTATO, 1);
+                ItemMeta axs = str.getItemMeta();
+                axs.setDisplayName("STRAX");
+                str.setItemMeta(axs);
+                eggs[i] = str;
+                i++;
+                ItemStack vas = new ItemStack(Material.BOOK, 1);
+                ItemMeta hta = vas.getItemMeta();
+                hta.setDisplayName("VASHTA NERADA");
+                vas.setItemMeta(hta);
+                eggs[i] = vas;
+                i++;
+                ItemStack zyg = new ItemStack(Material.PAINTING, 1);
+                ItemMeta onz = zyg.getItemMeta();
+                onz.setDisplayName("ZYGON");
+                zyg.setItemMeta(onz);
+                eggs[i] = zyg;
+            }
+        }
         // add options
         ItemStack the = new ItemStack(Material.REDSTONE_COMPARATOR, 1);
         ItemMeta master = the.getItemMeta();
         master.setDisplayName(plugin.getLanguage().getString("BUTTON_MASTER"));
         master.setLore(Arrays.asList("OFF"));
         the.setItemMeta(master);
-        eggs[37] = the;
+        eggs[45] = the;
         ItemStack adult = new ItemStack(Material.HOPPER, 1);
         ItemMeta baby = adult.getItemMeta();
         baby.setDisplayName(plugin.getLanguage().getString("BUTTON_AGE"));
         baby.setLore(Arrays.asList("ADULT"));
         adult.setItemMeta(baby);
-        eggs[39] = adult;
+        eggs[47] = adult;
         ItemStack typ = new ItemStack(Material.INK_SACK, 1, (byte) 6);
         ItemMeta col = typ.getItemMeta();
         col.setDisplayName(plugin.getLanguage().getString("BUTTON_TYPE"));
         col.setLore(Arrays.asList("WHITE"));
         typ.setItemMeta(col);
-        eggs[41] = typ;
+        eggs[48] = typ;
         ItemStack tamed = new ItemStack(Material.LEASH, 1, (byte) 6);
         ItemMeta tf = tamed.getItemMeta();
         tf.setDisplayName(plugin.getLanguage().getString("BUTTON_OPTS"));
         tf.setLore(Arrays.asList("FALSE"));
         tamed.setItemMeta(tf);
-        eggs[43] = tamed;
+        eggs[49] = tamed;
         // add buttons
         ItemStack rem = new ItemStack(Material.DAYLIGHT_DETECTOR, 1);
         ItemMeta ove = rem.getItemMeta();
         ove.setDisplayName(plugin.getLanguage().getString("BUTTON_RESTORE"));
         rem.setItemMeta(ove);
-        eggs[47] = rem;
+        eggs[51] = rem;
         // set
         ItemStack s = new ItemStack(Material.ANVIL, 1);
         ItemMeta sim = s.getItemMeta();
         sim.setDisplayName(plugin.getLanguage().getString("BUTTON_DNA"));
         s.setItemMeta(sim);
-        eggs[49] = s;
+        eggs[52] = s;
         ItemStack can = new ItemStack(Material.OBSIDIAN, 1);
         ItemMeta cel = can.getItemMeta();
         cel.setDisplayName(plugin.getLanguage().getString("BUTTON_CANCEL"));
         can.setItemMeta(cel);
-        eggs[51] = can;
+        eggs[53] = can;
 
         return eggs;
     }

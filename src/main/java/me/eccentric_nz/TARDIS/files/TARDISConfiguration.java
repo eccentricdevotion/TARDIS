@@ -103,6 +103,8 @@ public class TARDISConfiguration {
         boolOptions.put("police_box.materialise", true);
         boolOptions.put("police_box.name_tardis", false);
         boolOptions.put("police_box.set_biome", true);
+        boolOptions.put("preferences.nerf_pistons.enabled", false);
+        boolOptions.put("preferences.nerf_pistons.only_tardis_worlds", true);
         boolOptions.put("preferences.respect_factions", true);
         boolOptions.put("preferences.respect_grief_prevention", true);
         boolOptions.put("preferences.respect_worldborder", true);
@@ -174,6 +176,7 @@ public class TARDISConfiguration {
         artronIntOptions.put("full_charge", 5000);
         artronIntOptions.put("hide", 500);
         artronIntOptions.put("jettison", 75);
+        artronIntOptions.put("just_wall_floor", 50);
         artronIntOptions.put("lightning_recharge", 300);
         artronIntOptions.put("nether_min", 4250);
         artronIntOptions.put("player", 25);
@@ -185,6 +188,17 @@ public class TARDISConfiguration {
         artronIntOptions.put("the_end_min", 5500);
         artronIntOptions.put("travel", 100);
         artronIntOptions.put("zero", 250);
+        artronIntOptions.put("upgrades.ars", 5000);
+        artronIntOptions.put("upgrades.budget", 5000);
+        artronIntOptions.put("upgrades.deluxe", 10000);
+        artronIntOptions.put("upgrades.eleventh", 10000);
+        artronIntOptions.put("upgrades.redstone", 7500);
+        artronIntOptions.put("upgrades.bigger", 7500);
+        artronIntOptions.put("upgrades.plank", 5000);
+        artronIntOptions.put("upgrades.steampunk", 5000);
+        artronIntOptions.put("upgrades.tom", 5000);
+        artronIntOptions.put("upgrades.war", 5000);
+        artronIntOptions.put("upgrades.custom", 10000);
         intOptions.put("arch.min_time", 20);
         intOptions.put("creation.border_radius", 256);
         intOptions.put("creation.count", 0);
@@ -198,6 +212,7 @@ public class TARDISConfiguration {
         intOptions.put("police_box.confirm_timeout", 15);
         intOptions.put("police_box.platform_data", 8);
         intOptions.put("police_box.platform_id", 35);
+        intOptions.put("police_box.rebuild_cooldown", 10000);
         intOptions.put("police_box.tardis_lamp", 50);
         intOptions.put("police_box.wall_data", 11);
         intOptions.put("police_box.wall_id", 35);

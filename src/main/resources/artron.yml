@@ -20,3 +20,17 @@ jettison: 75
 jettison_seed: TNT
 render: 250
 zero: 250
+# upgrades
+upgrades:
+    ars: 5000
+    budget: 5000
+    deluxe: 10000
+    eleventh: 10000
+    redstone: 7500
+    bigger: 7500
+    plank: 5000
+    steampunk: 5000
+    tom: 5000
+    war: 5000
+    custom: 10000
+just_wall_floor: 50

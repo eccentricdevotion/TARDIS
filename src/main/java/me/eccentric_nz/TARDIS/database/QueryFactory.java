@@ -217,7 +217,7 @@ public class QueryFactory {
     }
 
     /**
-     * Inserts data into an SQLite database table. This method executes the SQL
+     * Inserts or updates data in a database table. This method executes the SQL
      * in a separate thread.
      *
      * @param id the database table name to insert the data into.
@@ -231,7 +231,7 @@ public class QueryFactory {
     }
 
     /**
-     * Inserts data into an SQLite database table. This method executes the SQL
+     * Inserts or updates data in a database table. This method executes the SQL
      * in a separate thread.
      *
      * @param id the database table name to insert the data into.

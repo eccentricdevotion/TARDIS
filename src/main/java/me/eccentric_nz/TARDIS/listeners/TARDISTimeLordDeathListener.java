@@ -149,6 +149,11 @@ public class TARDISTimeLordDeathListener implements Listener {
                             }
                             // if the TARDIS is already at the home location, do nothing
                             if (!compareCurrentToHome(rsc, rsh)) {
+                                // check for creation area
+                                if (!plugin.getConfig().getString("creation.area").equals("none") && plugin.getTardisArea().areaCheckLocPlayer(player, goto_loc)) {
+                                    plugin.getTrackerKeeper().getPerm().remove(player.getUniqueId());
+                                    return;
+                                }
                                 QueryFactory qf = new QueryFactory(plugin);
                                 boolean cham = rs.isChamele_on();
                                 COMPASS fd = (going_home) ? hd : cd;

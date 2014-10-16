@@ -26,7 +26,6 @@ import me.eccentric_nz.TARDIS.database.ResultSetTravellers;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
 import me.eccentric_nz.TARDIS.travel.TARDISTimeTravel;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
-import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -35,6 +34,7 @@ import org.bukkit.block.Biome;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 import org.bukkit.entity.Player;
+import org.yi.acru.bukkit.Lockette.Lockette;
 
 /**
  *
@@ -137,7 +137,7 @@ public class TARDISComehereCommand {
                 int count;
                 boolean sub = false;
                 Block b = eyeLocation.getBlock();
-                if (b.getRelative(BlockFace.UP).getTypeId() == 8 || b.getRelative(BlockFace.UP).getTypeId() == 9) {
+                if (b.getRelative(BlockFace.UP).getType().equals(Material.WATER) || b.getRelative(BlockFace.UP).getType().equals(Material.STATIONARY_WATER)) {
                     count = (tt.isSafeSubmarine(eyeLocation, player_d)) ? 0 : 1;
                     if (count == 0) {
                         sub = true;
@@ -146,6 +146,12 @@ public class TARDISComehereCommand {
                     int[] start_loc = tt.getStartLocation(eyeLocation, player_d);
                     // safeLocation(int startx, int starty, int startz, int resetx, int resetz, World w, COMPASS player_d)
                     count = tt.safeLocation(start_loc[0], eyeLocation.getBlockY(), start_loc[2], start_loc[1], start_loc[3], eyeLocation.getWorld(), player_d);
+                }
+                if (plugin.getPM().isPluginEnabled("Lockette")) {
+                    Lockette Lockette = (Lockette) plugin.getPM().getPlugin("Lockette");
+                    if (Lockette.isProtected(eyeLocation.getBlock())) {
+                        count = 1;
+                    }
                 }
                 if (count > 0) {
                     TARDISMessage.send(player, "WOULD_GRIEF_BLOCKS");
@@ -214,7 +220,7 @@ public class TARDISComehereCommand {
                 pdd.setSubmarine(rsc.isSubmarine());
                 pdd.setTardisID(id);
                 pdd.setBiome(biome);
-                Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
+                plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
                     @Override
                     public void run() {
                         if (!hid) {
@@ -235,7 +241,7 @@ public class TARDISComehereCommand {
                 pbd.setRebuild(false);
                 pbd.setSubmarine(sub);
                 pbd.setTardisID(id);
-                Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
+                plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
                     @Override
                     public void run() {
                         plugin.getPresetBuilder().buildPreset(pbd);
