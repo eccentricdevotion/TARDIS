@@ -159,7 +159,7 @@ public class TARDISArtronCapacitorListener implements Listener {
                                             return;
                                         }
                                         List<String> lore = im.getLore();
-                                        int charge = plugin.getUtils().parseInt(lore.get(1));
+                                        int charge = plugin.getUtils().parseInt(lore.get(1)) * is.getAmount();
                                         if (charge <= 0) {
                                             TARDISMessage.send(player, "CELL_NOT_CHARGED");
                                             return;
