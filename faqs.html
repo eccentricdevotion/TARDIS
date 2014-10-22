@@ -55,6 +55,7 @@
 			<li><a href="#reload">I edited the config file, but when I reload the changes don&rsquo;t save!</a></li>
 			<li><a href="#filter">The perception filter has gone completely invisible!</a></li>
 			<li><a href="#rain">Why does it rain on my TARDIS in dry biomes?</a></li>
+			<li><a href="#sync">Why does my TARDIS door open when I crouch-click it (and get out of sync with the other door)?</a></li>
 			<li><a href="#txtpac">What is the Texture Pack in the videos?</a></li>
 		</ul>
 		<h4 id="create">I made a stack of blocks but the TARDIS doesn&rsquo;t materialise!</h4>
@@ -190,6 +191,12 @@
 		<p>This is due to a residual temporal flux causing the immediate TARDIS environment to be out of sync with the rest of the multiverse &mdash; nothing the TARDIS perception filter can&rsquo;t handle!</p>
 		<p>In reality, you have <code>police_box.set_biome: true</code> in the config. This sets the biome of the TARDIS location to DEEP_OCEAN, so that players with <a href="https://bitbucket.org/prupe/mcpatcher/wiki/Home" target="_blank">MCPatcher</a> modded clients and the <a href="https://github.com/eccentricdevotion/TARDIS-MCP" target="_blank">TARDIS_MCP Resource Pack</a> will see a groovy looking TARDIS &mdash; the result is that it sometimes rains on the Police Box.</p>
 		<p><img src="https://dl.dropboxusercontent.com/u/53758864/another_lonely_tardis.jpg" alt="Another lonely TARDIS" /></p>
+		<p><a href="#top">Back to top</a></p>
+		<h4 id="sync">Why does my TARDIS door open when I crouch-click it (and get out of sync with the other door)?</h4>
+		<p>You probably have the LWC plugin installed. LWC has a setting that allows iron doors to be opened by clicking them. You should disable this in LWC&rsquo;s doors.yml:</p>
+		<pre><code># Enable the opening of Iron Doors when you click on them
+    enabled: false</code></pre>
+		<p>If you move the interior TARDIS door, remember to remove the LWC protection after placing the door in its new position (and before running the <code>/tardis update door</code> command.</p>
 		<p><a href="#top">Back to top</a></p>
 		<h4 id="txtpac">What is the Texture Pack in the videos?</h4>
 		<p>An unreleased (and unfinished &mdash; still most of the mobs to do) pack called Bromley Massive Vector, also by eccentric_nz. Maybe, one day he will finish it. It&rsquo;s [128X], and is compatible with Minecraft 1.8.</p>
