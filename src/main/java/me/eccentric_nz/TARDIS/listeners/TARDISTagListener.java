@@ -18,7 +18,7 @@ package me.eccentric_nz.TARDIS.listeners;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.Arrays;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
@@ -127,7 +127,7 @@ public class TARDISTagListener implements Listener {
      * @return a random player
      */
     private Player getRandomPlayer() {
-        List<Player> players = Arrays.asList(plugin.getServer().getOnlinePlayers());
+        List<Player> players = new ArrayList<Player>(plugin.getServer().getOnlinePlayers());
         int num = players.size();
         return players.get(rand.nextInt(num));
     }
