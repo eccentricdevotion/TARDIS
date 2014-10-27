@@ -127,7 +127,6 @@ public class TARDISTagListener implements Listener {
      * @return a random player
      */
     private Player getRandomPlayer() {
-        @SuppressWarnings("unchecked")
         List<Player> players = new ArrayList<Player>(plugin.getServer().getOnlinePlayers());
         int num = players.size();
         return players.get(rand.nextInt(num));

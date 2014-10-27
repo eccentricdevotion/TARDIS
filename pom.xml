@@ -142,6 +142,12 @@
             <artifactId>TARDISChunkGenerator</artifactId>
             <version>1.0g</version>
             <type>jar</type>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.bukkit</groupId>
+                    <artifactId>bukkit</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
         <dependency>
             <groupId>me.eccentric_nz.tardishorsespeed</groupId>
@@ -156,15 +162,20 @@
             </exclusions>
         </dependency>
         <dependency>
+            <groupId>org.spigotmc</groupId>
+            <artifactId>spigot-api</artifactId>
+            <version>1.7.10-R0.1-SNAPSHOT</version>
+        </dependency>
+        <!--<dependency>
             <groupId>org.bukkit</groupId>
             <artifactId>bukkit</artifactId>
             <version>1.7.10-R0.1-SNAPSHOT</version>
             <type>jar</type>
-        </dependency>
+        </dependency>-->
         <dependency>
             <groupId>com.sk89q</groupId>
             <artifactId>worldguard</artifactId>
-            <version>5.9.1-SNAPSHOT</version>
+            <version>6.0.0-SNAPSHOT</version>
             <type>jar</type>
             <exclusions>
                 <exclusion>
@@ -182,6 +193,18 @@
                 <exclusion>
                     <artifactId>commandbook</artifactId>
                     <groupId>com.sk89q</groupId>
+                </exclusion>
+                <exclusion>
+                    <groupId>com.google.guava</groupId>
+                    <artifactId>guava</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>com.google.code.findbugs</groupId>
+                    <artifactId>jsr305</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>org.bukkit</groupId>
+                    <artifactId>bukkit</artifactId>
                 </exclusion>
             </exclusions>
         </dependency>
@@ -269,6 +292,10 @@
                     <artifactId>junit</artifactId>
                     <groupId>junit</groupId>
                 </exclusion>
+                <exclusion>
+                    <groupId>org.bukkit</groupId>
+                    <artifactId>bukkit</artifactId>
+                </exclusion>
             </exclusions>
         </dependency>
         <dependency>
@@ -304,6 +331,10 @@
                 <exclusion>
                     <artifactId>Multiverse-Portals</artifactId>
                     <groupId>com.onarandombox.multiverseportals</groupId>
+                </exclusion>
+                <exclusion>
+                    <groupId>org.bukkit</groupId>
+                    <artifactId>bukkit</artifactId>
                 </exclusion>
             </exclusions>
         </dependency>
@@ -343,7 +374,7 @@
         <dependency>
             <groupId>me.ryanhamshire</groupId>
             <artifactId>GriefPrevention</artifactId>
-            <version>8.3.3</version>
+            <version>8.6</version>
         </dependency>
         <dependency>
             <groupId>com.comphenix.protocol</groupId>
@@ -365,10 +396,6 @@
             <artifactId>LibsDisguises</artifactId>
             <version>8.2.6-SNAPSHOT</version>
             <exclusions>
-                <exclusion>
-                    <artifactId>spigot-api</artifactId>
-                    <groupId>org.spigotmc</groupId>
-                </exclusion>
                 <exclusion>
                     <artifactId>craftbukkit</artifactId>
                     <groupId>org.bukkit</groupId>

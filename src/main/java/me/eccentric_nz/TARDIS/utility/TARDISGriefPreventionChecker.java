@@ -39,8 +39,8 @@ public class TARDISGriefPreventionChecker {
     }
 
     /**
-     * Checks to see whether the specified location is within a WorldBorder
-     * border.
+     * Checks to see whether the specified location is within a GriefPrevention
+     * claim.
      *
      * @param p the player to check access for.
      * @param l the location to check.

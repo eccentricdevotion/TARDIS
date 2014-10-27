@@ -17,16 +17,16 @@
 package me.eccentric_nz.TARDIS.utility;
 
 import com.sk89q.worldedit.BlockVector;
-import com.sk89q.worldguard.bukkit.SpongeUtil;
 import com.sk89q.worldguard.bukkit.WorldGuardPlugin;
+import com.sk89q.worldguard.bukkit.listener.SpongeUtil;
 import com.sk89q.worldguard.domains.DefaultDomain;
 import com.sk89q.worldguard.protection.ApplicableRegionSet;
-import com.sk89q.worldguard.protection.databases.ProtectionDatabaseException;
 import com.sk89q.worldguard.protection.flags.DefaultFlag;
 import com.sk89q.worldguard.protection.flags.Flag;
 import com.sk89q.worldguard.protection.flags.StateFlag;
 import com.sk89q.worldguard.protection.flags.StateFlag.State;
 import com.sk89q.worldguard.protection.managers.RegionManager;
+import com.sk89q.worldguard.protection.managers.storage.StorageException;
 import com.sk89q.worldguard.protection.regions.ProtectedCuboidRegion;
 import com.sk89q.worldguard.protection.regions.ProtectedRegion;
 import java.util.ArrayList;
@@ -101,7 +101,7 @@ public class TARDISWorldGuardUtils {
         }
         // get the regions for this location
         ApplicableRegionSet rs = wg.getRegionManager(l.getWorld()).getApplicableRegions(l);
-        return rs.allows(flag);
+        return rs.testState(null, flag);
     }
 
     /**
@@ -142,7 +142,7 @@ public class TARDISWorldGuardUtils {
         rm.addRegion(region);
         try {
             rm.save();
-        } catch (ProtectionDatabaseException e) {
+        } catch (StorageException e) {
             plugin.getConsole().sendMessage(plugin.getPluginName() + "Could not create WorldGuard Protection for TARDIS! " + e.getMessage());
         }
     }
@@ -179,7 +179,7 @@ public class TARDISWorldGuardUtils {
         plugin.getServer().dispatchCommand(plugin.getConsole(), "rg flag " + region_id + " entry -w " + w.getName() + " -g nonmembers deny");
         try {
             rm.save();
-        } catch (ProtectionDatabaseException e) {
+        } catch (StorageException e) {
             plugin.getConsole().sendMessage(plugin.getPluginName() + "Could not create WorldGuard Protection for TARDIS! " + e.getMessage());
         }
     }
@@ -214,7 +214,7 @@ public class TARDISWorldGuardUtils {
         rm.addRegion(region);
         try {
             rm.save();
-        } catch (ProtectionDatabaseException e) {
+        } catch (StorageException e) {
             plugin.getConsole().sendMessage(plugin.getPluginName() + "Could not create WorldGuard Protection for recharger! " + e.getMessage());
         }
     }
@@ -245,7 +245,7 @@ public class TARDISWorldGuardUtils {
         rm.addRegion(region);
         try {
             rm.save();
-        } catch (ProtectionDatabaseException e) {
+        } catch (StorageException e) {
             plugin.getConsole().sendMessage(plugin.getPluginName() + "Could not create WorldGuard Protection for exterior renderering room! " + e.getMessage());
         }
     }
@@ -261,7 +261,7 @@ public class TARDISWorldGuardUtils {
         rm.removeRegion("tardis_" + p);
         try {
             rm.save();
-        } catch (ProtectionDatabaseException e) {
+        } catch (StorageException e) {
             plugin.getConsole().sendMessage(plugin.getPluginName() + "Could not remove WorldGuard Protection for TARDIS! " + e.getMessage());
         }
     }
@@ -277,7 +277,7 @@ public class TARDISWorldGuardUtils {
         rm.removeRegion("tardis_recharger_" + name);
         try {
             rm.save();
-        } catch (ProtectionDatabaseException e) {
+        } catch (StorageException e) {
             plugin.getConsole().sendMessage(plugin.getPluginName() + "Could not remove recharger WorldGuard Protection for recharger! " + e.getMessage());
         }
     }
@@ -296,7 +296,7 @@ public class TARDISWorldGuardUtils {
             rm.removeRegion(r + "_" + p);
             try {
                 rm.save();
-            } catch (ProtectionDatabaseException e) {
+            } catch (StorageException e) {
                 plugin.getConsole().sendMessage(plugin.getPluginName() + "Could not remove WorldGuard Protection for " + r + " room! " + e.getMessage());
             }
         }
@@ -411,6 +411,6 @@ public class TARDISWorldGuardUtils {
     public boolean mobsCanSpawnAtLocation(Location l) {
         RegionManager rm = wg.getRegionManager(l.getWorld());
         ApplicableRegionSet ars = rm.getApplicableRegions(l);
-        return ars.allows(DefaultFlag.MOB_SPAWNING);
+        return ars.testState(null, DefaultFlag.MOB_SPAWNING);
     }
 }
