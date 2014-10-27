@@ -1,14 +1,18 @@
 #TODO
 
-##Current version `3.1`
-1. Update for Minecraft / Bukkit 1.8
-2. Slimmer TARDIS option?
-3. Find the Multiverse problem that prevents the Rail room from functioning properly
-4. Use new Wall menu for `/tardisprefs [wall|floor]` command?
+##Current version `3.2-beta-1`
+1. Update for Minecraft / Spigot 1.8
+2. TARDIS invisibility - 1.8 barrier blocks?
+3. Add new blocks / items
+4. Slimmer TARDIS option?
 5. `/tardis hide` and `/tardis rebuild` has materialisation animation
+6. SpongeAPI?
+7. New underwater temple preset
+8. Siege mode + custom textured block
+9. Randomiser circuit
 
-##Future version `3.2+`
-* SpongeAPI?
+##Future version `3.3+`
+?
 
 ##Resource Pack / TARDISWeepingAngels
 
@@ -22,12 +26,7 @@ Re-skin mobs for Resource pack, and add new mob sounds
 * Wolves -> K-9? (All the textures I seen so far just don't work - you shouldn't see the legs...)
 * Slimes -> Adipose
 
-##Waiting on Minecraft/Bukkit update
-
-1. TARDIS invisibility - 1.8 barrier blocks?
-2. Add new blocks / items
-
-##Waiting on Bukkit API
+##Waiting on Spigot API
 0. IDs/data are soon to be history... so convert all ID/data use to block states 
 1. Get/set horse speed (Attribute API)
 2. Achievements API is now available, but doesn't allow custom achievements :( [https://bukkit.atlassian.net/browse/BUKKIT-5672](https://bukkit.atlassian.net/browse/BUKKIT-5672)
