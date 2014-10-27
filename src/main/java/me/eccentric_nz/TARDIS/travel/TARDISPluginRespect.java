@@ -118,7 +118,7 @@ public class TARDISPluginRespect {
             }
             bool = false;
         }
-        if (griefPreventionOnServer && plugin.getConfig().getBoolean("preferences.respect_grief_prevention") && !griefchk.isInClaim(p, l)) {
+        if (griefPreventionOnServer && plugin.getConfig().getBoolean("preferences.respect_grief_prevention") && griefchk.isInClaim(p, l)) {
             if (message) {
                 TARDISMessage.send(p, "GRIEFPREVENTION");
             }
