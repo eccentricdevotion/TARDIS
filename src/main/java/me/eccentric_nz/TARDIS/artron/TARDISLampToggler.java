@@ -50,7 +50,9 @@ public class TARDISLampToggler {
             ArrayList<HashMap<String, String>> data = rsl.getData();
             for (HashMap<String, String> map : data) {
                 Location loc = plugin.getUtils().getLocationFromDB(map.get("location"), 0.0F, 0.0F);
-                lamps.add(loc.getBlock());
+                if (loc != null) {
+                    lamps.add(loc.getBlock());
+                }
             }
         }
         HashMap<String, Object> wherepp = new HashMap<String, Object>();

@@ -190,6 +190,9 @@ public class ResultSetTardis {
                     this.village = rs.getString("village");
                     this.renderer = rs.getString("renderer");
                     this.zero = rs.getString("zero");
+                    if (rs.wasNull()) {
+                        this.zero = "";
+                    }
                     this.powered_on = rs.getBoolean("powered_on");
                     this.lights_on = rs.getBoolean("lights_on");
                 }
