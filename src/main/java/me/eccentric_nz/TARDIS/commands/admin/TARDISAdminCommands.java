@@ -23,6 +23,7 @@ import java.util.Locale;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.arch.TARDISArchCommand;
 import me.eccentric_nz.TARDIS.enumeration.CMDS;
+import me.eccentric_nz.TARDIS.enumeration.PRESET;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -62,6 +63,7 @@ public class TARDISAdminCommands implements CommandExecutor {
         firstsStr.put("database", "storage");
         firstsStr.put("decharge", "");
         firstsStr.put("default_key", "preferences");
+        firstsStr.put("default_preset", "police_box");
         firstsStr.put("default_sonic", "preferences");
         firstsStr.put("default_world_name", "creation");
         firstsStr.put("delete", "");
@@ -297,6 +299,15 @@ public class TARDISAdminCommands implements CommandExecutor {
                         return true;
                     }
                     plugin.getConfig().set("preferences.difficulty", args[1].toLowerCase(Locale.ENGLISH));
+                }
+                if (first.equals("default_preset")) {
+                    try {
+                        PRESET preset = PRESET.valueOf(args[1].toUpperCase(Locale.ENGLISH));
+                    } catch (IllegalArgumentException e) {
+                        TARDISMessage.send(sender, "ARG_PRESET");
+                        return true;
+                    }
+                    plugin.getConfig().set("police_box.default_preset", args[1].toUpperCase(Locale.ENGLISH));
                 }
                 if (first.equals("gamemode")) {
                     if (!args[1].equalsIgnoreCase("creative") && !args[1].equalsIgnoreCase("survival")) {

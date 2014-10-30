@@ -29,6 +29,7 @@ creation:
     area: none
 # outer TARDIS
 police_box:
+    default_preset: NEW
     name_tardis: false
     wall_id: 35
     wall_data: 11

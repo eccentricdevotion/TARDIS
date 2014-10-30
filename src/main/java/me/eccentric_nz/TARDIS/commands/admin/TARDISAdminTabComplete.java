@@ -21,6 +21,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.enumeration.PRESET;
 import me.eccentric_nz.TARDIS.utility.TARDISWorldGuardFlag;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
@@ -39,6 +40,7 @@ public class TARDISAdminTabComplete implements TabCompleter {
     private final ImmutableList<String> TIPS_SUBS = ImmutableList.of("400", "800", "1200", "1600");
     private final ImmutableList<String> TOWNY_SUBS = ImmutableList.of("none", "wilderness", "town", "nation");
     private final ImmutableList<String> FLAG_SUBS;
+    private final ImmutableList<String> PRESETS;
     private final ImmutableList<String> CONFIG_SUBS = ImmutableList.of("worlds", "rechargers", "storage", "creation", "police_box", "travel", "preferences", "allow", "growth", "rooms");
     private final ImmutableList<String> COLOURS = ImmutableList.of("AQUA", "BLACK", "BLUE", "DARK_AQUA", "DARK_BLUE", "DARK_GRAY", "DARK_GREEN", "DARK_PURPLE", "DARK_RED", "GOLD", "GRAY", "GREEN", "LIGHT_PURPLE", "RED", "WHITE", "YELLOW");
     private final ImmutableList<String> SONICS = ImmutableList.of("mark_1", "mark_2", "mark_3", "mark_4", "eighth", "ninth", "ninth_open", "tenth", "tenth_open", "eleventh", "eleventh_open", "master", "sarah_jane", "river_song", "war");
@@ -52,6 +54,11 @@ public class TARDISAdminTabComplete implements TabCompleter {
         } else {
             this.FLAG_SUBS = ImmutableList.of("none", "build", "entry");
         }
+        List<String> tmpPresets = new ArrayList<String>();
+        for (PRESET p : PRESET.values()) {
+            tmpPresets.add(p.toString());
+        }
+        this.PRESETS = ImmutableList.copyOf(tmpPresets);
     }
 
     @Override
@@ -78,6 +85,9 @@ public class TARDISAdminTabComplete implements TabCompleter {
             }
             if (sub.equals("default_key")) {
                 return partial(lastArg, KEYS);
+            }
+            if (sub.equals("default_preset")) {
+                return partial(lastArg, PRESETS);
             }
             if (sub.equals("default_sonic")) {
                 return partial(lastArg, SONICS);

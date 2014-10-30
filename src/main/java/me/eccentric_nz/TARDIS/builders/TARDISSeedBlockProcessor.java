@@ -221,6 +221,12 @@ public class TARDISSeedBlockProcessor {
                     now = System.currentTimeMillis();
                 }
                 set.put("lastuse", now);
+                // set preset if default is not 'NEW'
+                String preset = plugin.getConfig().getString("police_box.default_preset").toUpperCase();
+                if (!preset.equals("NEW")) {
+                    set.put("chameleon_preset", preset);
+                    set.put("chameleon_demat", preset);
+                }
                 // determine wall block material from HashMap
                 setpp.put("wall", getWallKey(wall_type, wall_data));
                 setpp.put("floor", getWallKey(floor_type, floor_data));

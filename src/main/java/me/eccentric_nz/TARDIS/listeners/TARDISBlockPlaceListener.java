@@ -118,7 +118,6 @@ public class TARDISBlockPlaceListener implements Listener {
                 int player_count = 0;
                 int grace_count = 0;
                 boolean has_count = false;
-//                if (max_count > 0) {
                 HashMap<String, Object> wherec = new HashMap<String, Object>();
                 wherec.put("uuid", player.getUniqueId().toString());
                 ResultSetCount rsc = new ResultSetCount(plugin, wherec, false);
@@ -131,7 +130,6 @@ public class TARDISBlockPlaceListener implements Listener {
                         return;
                     }
                 }
-//                }
                 switch (blockBottom.getType()) {
                     case IRON_BLOCK:
                         schm = SCHEMATIC.BUDGET;
@@ -278,6 +276,12 @@ public class TARDISBlockPlaceListener implements Listener {
                             now = System.currentTimeMillis();
                         }
                         set.put("lastuse", now);
+                        // set preset if default is not 'NEW'
+                        String preset = plugin.getConfig().getString("police_box.default_preset").toUpperCase();
+                        if (!preset.equals("NEW")) {
+                            set.put("chameleon_preset", preset);
+                            set.put("chameleon_demat", preset);
+                        }
                         HashMap<String, Object> setpp = new HashMap<String, Object>();
                         if (wall_type.equals(Material.LAPIS_BLOCK)) {
                             if (blockBottom.getType().equals(Material.EMERALD_BLOCK)) {
