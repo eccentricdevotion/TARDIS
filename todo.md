@@ -10,7 +10,7 @@
 7. New underwater temple preset
 8. Siege mode + custom textured block
 9. Randomiser circuit
-10. Default preset configuration
+10. Code an SQLite to MySQL migration tool
 
 ##Future version `3.3+`
 ?
