@@ -51,43 +51,28 @@ public class TARDISMapChecker {
         } else {
             server_world = s_world + File.separator + "data" + File.separator;
         }
-        String map = "map_1979.dat";
         String root = container.getAbsolutePath() + File.separator + server_world;
-        File file = new File(root, map);
-        if (!file.exists()) {
-            plugin.getConsole().sendMessage(plugin.getPluginName() + ChatColor.RED + plugin.getLanguage().getString("MAPS_NOT_FOUND"));
-            plugin.getConsole().sendMessage(plugin.getPluginName() + "Copying map files to the TARDIS folder...");
-            plugin.getTardisCopier().copy(map);
-            plugin.getTardisCopier().copy("map_1963.dat");
-            plugin.getTardisCopier().copy("map_1964.dat");
-            plugin.getTardisCopier().copy("map_1965.dat");
-            plugin.getTardisCopier().copy("map_1966.dat");
-            plugin.getTardisCopier().copy("map_1967.dat");
-            plugin.getTardisCopier().copy("map_1968.dat");
-            plugin.getTardisCopier().copy("map_1969.dat");
-            plugin.getTardisCopier().copy("map_1970.dat");
-            plugin.getTardisCopier().copy("map_1971.dat");
-            plugin.getTardisCopier().copy("map_1972.dat");
-            plugin.getTardisCopier().copy("map_1973.dat");
-            plugin.getTardisCopier().copy("map_1974.dat");
-            plugin.getTardisCopier().copy("map_1975.dat");
-            plugin.getTardisCopier().copy("map_1976.dat");
-            plugin.getTardisCopier().copy("map_1977.dat");
-            plugin.getTardisCopier().copy("map_1978.dat");
-            plugin.getTardisCopier().copy("map_1979.dat");
-            plugin.getConsole().sendMessage(plugin.getPluginName() + "Please move the new map files to the main world [" + s_world + "] data folder.");
-            plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
-                @Override
-                public void run() {
-                    Set<OfflinePlayer> ops = plugin.getServer().getOperators();
-                    for (OfflinePlayer olp : ops) {
-                        if (olp.isOnline()) {
-                            Player p = olp.getPlayer();
-                            TARDISMessage.send(p, "MAPS_NOT_FOUND");
-                        }
+        for (int i = 1963; i < 1981; i++) {
+            String map = "map_" + i + ".dat";
+            File file = new File(root, map);
+            if (!file.exists()) {
+                plugin.getConsole().sendMessage(plugin.getPluginName() + ChatColor.RED + String.format(plugin.getLanguage().getString("MAP_NOT_FOUND"), map));
+                plugin.getConsole().sendMessage(plugin.getPluginName() + String.format(plugin.getLanguage().getString("MAP_COPYING"), map));
+                plugin.getTardisCopier().copy(map);
+                plugin.getConsole().sendMessage(plugin.getPluginName() + String.format(plugin.getLanguage().getString("MAP_WORLD"), s_world));
+            }
+        }
+        plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
+            @Override
+            public void run() {
+                Set<OfflinePlayer> ops = plugin.getServer().getOperators();
+                for (OfflinePlayer olp : ops) {
+                    if (olp.isOnline()) {
+                        Player p = olp.getPlayer();
+                        TARDISMessage.send(p, "MAPS_NOT_FOUND");
                     }
                 }
-            }, 200L);
-        }
+            }
+        }, 200L);
     }
 }

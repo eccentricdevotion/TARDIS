@@ -154,6 +154,7 @@ public class TARDISAdminCommands implements CommandExecutor {
         firstsInt.put("platform_data", "police_box");
         firstsInt.put("platform_id", "police_box");
         firstsInt.put("random_attempts", "travel");
+        firstsInt.put("random_circuit", "travel");
         firstsInt.put("room_speed", "growth");
         firstsInt.put("rooms_condenser_percent", "growth");
         firstsInt.put("sfx_volume", "preferences");
@@ -332,7 +333,11 @@ public class TARDISAdminCommands implements CommandExecutor {
                 }
                 // checks if its a number config option
                 if (firstsInt.containsKey(first)) {
-                    return new TARDISSetIntegerCommand(plugin).setConfigInt(sender, args, firstsInt.get(first));
+                    if (first.equalsIgnoreCase("random_circuit")) {
+                        return new TARDISSetIntegerCommand(plugin).setRandomInt(sender, args);
+                    } else {
+                        return new TARDISSetIntegerCommand(plugin).setConfigInt(sender, args, firstsInt.get(first));
+                    }
                 }
                 if (firstsIntArtron.contains(first)) {
                     return new TARDISSetIntegerCommand(plugin).setConfigInt(sender, args);

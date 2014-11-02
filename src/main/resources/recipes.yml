@@ -186,6 +186,24 @@ shaped:
         result: 'MAP:1977'
         amount: 1
         lore: ""
+    TARDIS Randomiser Circuit:
+        easy_shape: -D-,NCE,-W-
+        easy_ingredients:
+            D: DIRT
+            N: NETHERRACK
+            C: COMPASS
+            E: ENDER_STONE
+            W: WATER_BUCKET
+        hard_shape: -D-,NCE,-W-
+        hard_ingredients:
+            D: DIRT
+            N: NETHERRACK
+            C: COMPASS
+            E: ENDER_STONE
+            W: WATER_BUCKET
+        result: 'MAP:1980'
+        amount: 1
+        lore: ""
     Perception Filter:
         easy_shape: S-S,-S-,RGC
         easy_ingredients:

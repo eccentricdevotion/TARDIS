@@ -58,6 +58,9 @@ travel:
     terminal_step: 1
     manual_flight_delay: 60
     grace_period: 10
+    random_circuit:
+        x: 5000
+        z: 5000
 # general preferences
 preferences:
     language: en

@@ -182,6 +182,24 @@ public class TARDISRecipesUpdater {
                 i++;
             }
         }
+        if (!recipes_config.contains("shaped.TARDIS Randomiser Circuit")) {
+            recipes_config.set("shaped.TARDIS Randomiser Circuit.easy_shape", "-D-,NCE,-W-");
+            recipes_config.set("shaped.TARDIS Randomiser Circuit.easy_ingredients.D", "DIRT");
+            recipes_config.set("shaped.TARDIS Randomiser Circuit.easy_ingredients.N", "NETHERRACK");
+            recipes_config.set("shaped.TARDIS Randomiser Circuit.easy_ingredients.C", "COMPASS");
+            recipes_config.set("shaped.TARDIS Randomiser Circuit.easy_ingredients.E", "ENDER_STONE");
+            recipes_config.set("shaped.TARDIS Randomiser Circuit.easy_ingredients.W", "WATER_BUCKET");
+            recipes_config.set("shaped.TARDIS Randomiser Circuit.hard_shape", "-D-,NCE,-W-");
+            recipes_config.set("shaped.TARDIS Randomiser Circuit.hard_ingredients.D", "DIRT");
+            recipes_config.set("shaped.TARDIS Randomiser Circuit.hard_ingredients.N", "NETHERRACK");
+            recipes_config.set("shaped.TARDIS Randomiser Circuit.hard_ingredients.C", "COMPASS");
+            recipes_config.set("shaped.TARDIS Randomiser Circuit.hard_ingredients.E", "ENDER_STONE");
+            recipes_config.set("shaped.TARDIS Randomiser Circuit.hard_ingredients.W", "WATER_BUCKET");
+            recipes_config.set("shaped.TARDIS Randomiser Circuit.result", "MAP:1980");
+            recipes_config.set("shaped.TARDIS Randomiser Circuit.amount", 1);
+            recipes_config.set("shaped.TARDIS Randomiser Circuit.lore", "");
+            i++;
+        }
         if (!recipes_config.contains("shaped.Painter Circuit")) {
             recipes_config.set("shaped.Painter Circuit.easy_shape", "-I-,DGD,-I-");
             recipes_config.set("shaped.Painter Circuit.easy_ingredients.I", "INK_SACK:0");

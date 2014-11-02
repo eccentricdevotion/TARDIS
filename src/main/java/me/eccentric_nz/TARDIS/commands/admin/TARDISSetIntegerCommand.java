@@ -76,10 +76,32 @@ public class TARDISSetIntegerCommand {
         }
         plugin.getArtronConfig().set(first, val);
         try {
-            plugin.getArtronConfig().save(new File(plugin.getDataFolder(), "artron.yml"));
+            plugin.getArtronConfig().save(new File(plugin.getDataFolder(), "config.yml"));
         } catch (IOException io) {
             plugin.debug("Could not save artron.yml, " + io);
         }
+        TARDISMessage.send(sender, "CONFIG_UPDATED");
+        return true;
+    }
+
+    public boolean setRandomInt(CommandSender sender, String[] args) {
+        String first = args[0];
+        String which = args[1];
+        if (!which.equalsIgnoreCase("x") || !which.equalsIgnoreCase("z")) {
+            TARDISMessage.send(sender, "ARG_DIRECTION");
+            return true;
+        }
+        String a = args[2];
+        int val;
+        try {
+            val = Integer.parseInt(a);
+        } catch (NumberFormatException nfe) {
+            // not a number
+            TARDISMessage.send(sender, "ARG_LAST_NUMBER");
+            return false;
+        }
+        plugin.getConfig().set("travel." + first + "." + which.toLowerCase(), val);
+        plugin.saveConfig();
         TARDISMessage.send(sender, "CONFIG_UPDATED");
         return true;
     }
