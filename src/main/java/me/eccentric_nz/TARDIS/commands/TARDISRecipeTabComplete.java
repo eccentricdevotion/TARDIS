@@ -30,7 +30,7 @@ import org.bukkit.util.StringUtil;
  */
 public class TARDISRecipeTabComplete implements TabCompleter {
 
-    private final List<String> ROOT_SUBS = ImmutableList.of("a-circuit", "ars-circuit", "bow-tie", "bio-circuit", "biome-disk", "blank", "c-circuit", "cell", "custard", "d-circuit", "e-circuit", "filter", "fish-finger", "glasses", "i-circuit", "jammy-dodger", "jelly-baby", "key", "l-circuit", "locator", "m-circuit", "memory-circuit", "oscillator", "painter", "player-disk", "preset-disk", "p-circuit", "r-circuit", "r-key", "remote", "s-circuit", "save-disk", "scanner-circuit", "sonic", "t-circuit", "watch");
+    private final List<String> ROOT_SUBS = ImmutableList.of("a-circuit", "ars-circuit", "bow-tie", "bio-circuit", "biome-disk", "blank", "c-circuit", "cell", "custard", "d-circuit", "e-circuit", "filter", "fish-finger", "glasses", "i-circuit", "jammy-dodger", "jelly-baby", "key", "l-circuit", "locator", "m-circuit", "memory-circuit", "oscillator", "painter", "player-disk", "preset-disk", "p-circuit", "r-circuit", "r-key", "random-circuit", "remote", "s-circuit", "save-disk", "scanner-circuit", "sonic", "t-circuit", "watch");
     private final List<String> TARDIS_TYPES = ImmutableList.of("ars", "bigger", "budget", "custom", "deluxe", "eleventh", "redstone", "steampunk", "tom", "war", "wood");
 
     public TARDISRecipeTabComplete() {

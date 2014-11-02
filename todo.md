@@ -6,14 +6,12 @@
 3. Add new blocks / items
 4. Slimmer TARDIS option?
 5. `/tardis hide` and `/tardis rebuild` has materialisation animation
-6. SpongeAPI?
-7. New underwater temple preset
-8. Siege mode + custom textured block
-9. Randomiser circuit
-10. Code an SQLite to MySQL migration tool
+6. New underwater temple preset
+7. Siege mode + custom textured block
+8. Code an SQLite to MySQL migration tool
 
 ##Future version `3.3+`
-?
+? SpongeAPI
 
 ##Resource Pack / TARDISWeepingAngels
 
