@@ -418,6 +418,9 @@ public class TARDISHandbrakeListener implements Listener {
                                         }
                                     }
                                     plugin.getTrackerKeeper().getHasDestination().remove(id);
+                                    if (plugin.getTrackerKeeper().getHasRandomised().contains(id)) {
+                                        plugin.getTrackerKeeper().getHasRandomised().remove(Integer.valueOf(id));
+                                    }
                                 } else {
                                     TARDISMessage.send(player, "HANDBRAKE_ON_ERR");
                                     error = true;

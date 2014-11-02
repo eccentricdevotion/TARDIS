@@ -286,20 +286,15 @@ public class TARDISRandomiserCircuit {
                     colcount = 3;
                     break;
             }
-            for (level = 0; level < 4; level++) {
-                for (row = 0; row < rowcount; row++) {
-                    for (col = 0; col < colcount; col++) {
-                        Material mat = loc.getWorld().getBlockAt(s[0], starty, s[2]).getType();
+            for (level = starty; level < starty + 4; level++) {
+                for (row = s[0]; row < s[0] + rowcount; row++) {
+                    for (col = s[2]; col < s[2] + colcount; col++) {
+                        Material mat = loc.getWorld().getBlockAt(row, level, col).getType();
                         if (!TARDISConstants.GOOD_WATER.contains(mat)) {
                             count++;
                         }
-                        s[0] += 1;
                     }
-                    s[0] = s[1];
-                    s[2] += 1;
                 }
-                s[2] = s[3];
-                starty += 1;
             }
             if (count == 0) {
                 safe = true;

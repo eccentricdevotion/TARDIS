@@ -40,6 +40,7 @@ public class TARDISCircuitChecker {
     private boolean memory;
     private boolean scanner;
     private boolean temporal;
+    private boolean randomiser;
 
     public TARDISCircuitChecker(TARDIS plugin, int id) {
         this.plugin = plugin;
@@ -51,6 +52,7 @@ public class TARDISCircuitChecker {
         this.memory = false;
         this.scanner = false;
         this.temporal = false;
+        this.randomiser = false;
     }
 
     /**
@@ -85,6 +87,9 @@ public class TARDISCircuitChecker {
                             if (dn.equals("TARDIS Memory Circuit")) {
                                 this.memory = true;
                             }
+                            if (dn.equals("TARDIS Randomiser Circuit")) {
+                                this.randomiser = true;
+                            }
                             if (dn.equals("TARDIS Scanner Circuit")) {
                                 this.scanner = true;
                             }
@@ -118,6 +123,10 @@ public class TARDISCircuitChecker {
 
     public boolean hasMemory() {
         return memory;
+    }
+
+    public boolean hasRandomiser() {
+        return randomiser;
     }
 
     public boolean hasScanner() {

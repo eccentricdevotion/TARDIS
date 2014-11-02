@@ -108,6 +108,10 @@ public class TARDISScannerListener implements Listener {
                         TARDISMessage.send(player, "SCAN_MISSING");
                         return;
                     }
+                    if (plugin.getTrackerKeeper().getHasRandomised().contains(id)) {
+                        TARDISMessage.send(player, "SCAN_NO_RANDOM");
+                        return;
+                    }
                     final String renderer = rs.getRenderer();
                     BukkitScheduler bsched = plugin.getServer().getScheduler();
                     final TARDISScannerData data = scan(player, id, bsched);

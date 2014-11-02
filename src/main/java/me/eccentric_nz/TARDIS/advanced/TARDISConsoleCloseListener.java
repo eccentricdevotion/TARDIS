@@ -296,11 +296,13 @@ public class TARDISConsoleCloseListener implements Listener {
                                 boolean sub = plugin.getTrackerKeeper().getSubmarine().contains(id);
                                 set_next.put("submarine", (sub) ? 1 : 0);
                                 if (plugin.getTrackerKeeper().getSubmarine().contains(id)) {
-                                    plugin.getTrackerKeeper().getSubmarine().remove(id);
+                                    plugin.getTrackerKeeper().getSubmarine().remove(Integer.valueOf(id));
                                 }
                                 where_next.put("tardis_id", id);
                                 new QueryFactory(plugin).doUpdate("next", set_next, where_next);
                                 plugin.getTrackerKeeper().getHasDestination().put(id, plugin.getArtronConfig().getInt("random_circuit"));
+                                plugin.getTrackerKeeper().getHasRandomised().add(id);
+                                TARDISMessage.send(p, "RANDOMISER");
                             } else {
                                 TARDISMessage.send(p, "PROTECTED");
                             }
