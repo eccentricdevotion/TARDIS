@@ -37,7 +37,7 @@
             <url>http://repo.comphenix.net/content/groups/public</url>
         </repository>
         <repository>
-            <id>confuser-repo</id>
+            <id>bar-api-repo</id>
             <url>http://ci.frostcast.net/plugin/repository/everything</url>
         </repository>
         <!--
@@ -417,7 +417,7 @@
         <dependency>
             <groupId>me.confuser</groupId>
             <artifactId>BarAPI</artifactId>
-            <version>3.1</version>
+            <version>3.2-SNAPSHOT</version>
         </dependency>
     </dependencies>
 </project>
