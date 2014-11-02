@@ -253,6 +253,9 @@ public class TARDISInformationSystemListener implements Listener {
                         if (chat.equalsIgnoreCase("n")) {
                             processKey(p, TARDISInfoMenu.SCANNER_CIRCUIT);
                         }
+                        if (chat.equalsIgnoreCase("o")) {
+                            processKey(p, TARDISInfoMenu.RANDOMISER_CIRCUIT);
+                        }
                         if (chat.equalsIgnoreCase("S")) {
                             processKey(p, TARDISInfoMenu.S_CIRCUIT);
                         }
@@ -612,6 +615,14 @@ public class TARDISInformationSystemListener implements Listener {
                         }
                         if (chat.equalsIgnoreCase("R")) {
                             showRecipe(p, TARDISInfoMenu.R_CIRCUIT_RECIPE);
+                        }
+                        break;
+                    case RANDOMISER_CIRCUIT:
+                        if (chat.equalsIgnoreCase("I")) {
+                            showInfo(p, TARDISInfoMenu.RANDOMISER_CIRCUIT_INFO);
+                        }
+                        if (chat.equalsIgnoreCase("R")) {
+                            showRecipe(p, TARDISInfoMenu.RANDOMISER_CIRCUIT_RECIPE);
                         }
                         break;
                     case S_CIRCUIT:

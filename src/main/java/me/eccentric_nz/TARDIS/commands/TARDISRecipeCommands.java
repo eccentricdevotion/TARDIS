@@ -82,7 +82,7 @@ public class TARDISRecipeCommands implements CommandExecutor {
         firstArgs.add("preset-disk"); // Preset Storage Disk
         firstArgs.add("r-circuit"); // Redstone Circuit
         firstArgs.add("r-key"); // TARDIS Remote Key
-        firstArgs.add("random-circuit"); // Randomiser Circuit
+        firstArgs.add("randomiser-circuit"); // Randomiser Circuit
         firstArgs.add("remote"); // Stattenheim Remote
         firstArgs.add("s-circuit"); // Stattenheim Circuit
         firstArgs.add("save-disk"); // Save Storage Disk
@@ -259,7 +259,7 @@ public class TARDISRecipeCommands implements CommandExecutor {
                 this.showShapedRecipe(player, "TARDIS Remote Key");
                 return true;
             }
-            if (args[0].equalsIgnoreCase("random-circuit")) {
+            if (args[0].equalsIgnoreCase("randomiser-circuit")) {
                 this.showShapedRecipe(player, "TARDIS Randomiser Circuit");
                 return true;
             }

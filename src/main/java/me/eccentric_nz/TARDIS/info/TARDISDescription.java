@@ -43,6 +43,7 @@ public enum TARDISDescription {
     OSCILLATOR_INFO("The Oscillator Circuit is used in crafting the Sonic Screwdriver."),
     BIO_CIRCUIT_INFO("The Bio-scanner Circuit is used to upgrade the Sonic Screwdriver."),
     R_CIRCUIT_INFO("The Redstone Activator Circuit is used to upgrade the Sonic Screwdriver."),
+    RANDOMISER_CIRCUIT_INFO("The Randomiser Circuit is used to generate random Time Travel destinations when placed in the Advanced Console."),
     D_CIRCUIT_INFO("The Diamond Disruptor Circuit is used to upgrade the Sonic Screwdriver."),
     E_CIRCUIT_INFO("The Emerald Environment Circuit is used to upgrade the Sonic Screwdriver."),
     A_CIRCUIT_INFO("The Server Admin Circuit is used to upgrade the Sonic Screwdriver."),
