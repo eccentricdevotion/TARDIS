@@ -23,7 +23,7 @@ import me.eccentric_nz.TARDIS.TARDIS;
 /**
  * A TARDIS has fifteen Power Rooms that contain all of the machinery that
  * powers and operates the ship. They are located deep in a TARDIS's interior
- * and serve as the "nerve center" of the capsule.
+ * and serve as the "nerve centre" of the capsule.
  *
  * @author eccentric_nz
  */
@@ -39,10 +39,48 @@ public class TARDISCondensables {
     public void makeCondensables() {
         condensables = new HashMap<String, Integer>();
         if (plugin.getConfig().getBoolean("preferences.use_default_condensables")) {
+            /*
+             condensables.put("ACACIA_DOOR_ITEM", 3);
+             condensables.put("ACACIA_FENCE", 1);
+             condensables.put("ACACIA_FENCE_GATE", 5);
+             condensables.put("ARMOR_STAND", 8);
+             condensables.put("BANNER", 120);
+             condensables.put("BIRCH_DOOR_ITEM", 3);
+             condensables.put("BIRCH_FENCE", 1);
+             condensables.put("BIRCH_FENCE_GATE", 5);
+             condensables.put("COOKED_MUTTON", 7);
+             condensables.put("COOKED_RABBIT", 7);
+             condensables.put("DARK_OAK_DOOR_ITEM", 3);
+             condensables.put("DARK_OAK_FENCE", 1);
+             condensables.put("DARK_OAK_FENCE_GATE", 5);
+             condensables.put("DAYLIGHT_DETECTOR_INVERTED", 130);
+             condensables.put("DOUBLE_STEP_2", 1);
+             condensables.put("IRON_TRAP_DOOR", 88);
+             condensables.put("JUNGLE_DOOR_ITEM", 3);
+             condensables.put("JUNGLE_FENCE", 1);
+             condensables.put("JUNGLE_FENCE_GATE", 5);
+             condensables.put("MUTTON", 3);
+             condensables.put("PRISMARINE", 32);
+             condensables.put("PRISMARINE_CRYSTALS", 16);
+             condensables.put("PRISMARINE_SHARD", 8);
+             condensables.put("RABBIT", 3);
+             condensables.put("RABBIT_FOOT", 100);
+             condensables.put("RABBIT_HIDE", 10);
+             condensables.put("RABBIT_STEW", 33);
+             condensables.put("RED_SANDSTONE", 3);
+             condensables.put("RED_SANDSTONE_STAIRS", 19);
+             condensables.put("SEA_LANTERN", 160);
+             condensables.put("SLIME_BLOCK", 450);
+             condensables.put("SPRUCE_DOOR_ITEM", 3);
+             condensables.put("SPRUCE_FENCE", 1);
+             condensables.put("SPRUCE_FENCE_GATE", 5);
+             condensables.put("STEP_2", 2);
+             */
             condensables.put("ACACIA_STAIRS", 1);
             condensables.put("ANVIL", 200);
             condensables.put("APPLE", 10);
             condensables.put("ARROW", 4);
+            condensables.put("BAKED_POTATO", 14);
             condensables.put("BED", 68);
             condensables.put("BEACON", 700);
             condensables.put("BEDROCK", 100);
@@ -56,7 +94,6 @@ public class TARDISCondensables {
             condensables.put("BOW", 15);
             condensables.put("BOWL", 1);
             condensables.put("BREAD", 30);
-            condensables.put("BREWING_STAND", 200);
             condensables.put("BREWING_STAND_ITEM", 200);
             condensables.put("BRICK", 21);
             condensables.put("BRICK_STAIRS", 21);
@@ -180,7 +217,7 @@ public class TARDISCondensables {
             condensables.put("MELON_SEEDS", 2);
             condensables.put("MILK_BUCKET", 40);
             condensables.put("MINECART", 23);
-            condensables.put("MOSSY_COBBLESTONE", 90);
+            condensables.put("MOSSY_COBBLESTONE", 10);
             condensables.put("MYCEL", 1);
             condensables.put("MUSHROOM_SOUP", 5);
             condensables.put("NETHERRACK", 2);
