@@ -180,6 +180,7 @@ public class TARDISConfiguration {
         artronIntOptions.put("nether_min", 4250);
         artronIntOptions.put("player", 25);
         artronIntOptions.put("random", 75);
+        artronIntOptions.put("random_circuit", 150);
         artronIntOptions.put("recharge_distance", 20);
         artronIntOptions.put("render", 250);
         artronIntOptions.put("standby", 5);

@@ -1,6 +1,7 @@
 # artron energy
 player: 25
 random: 75
+random_circuit: 150
 travel: 100
 comehere: 400
 hide: 500

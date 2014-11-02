@@ -52,6 +52,7 @@ public class TARDISMapChecker {
             server_world = s_world + File.separator + "data" + File.separator;
         }
         String root = container.getAbsolutePath() + File.separator + server_world;
+        boolean opwarn = false;
         for (int i = 1963; i < 1981; i++) {
             String map = "map_" + i + ".dat";
             File file = new File(root, map);
@@ -60,19 +61,22 @@ public class TARDISMapChecker {
                 plugin.getConsole().sendMessage(plugin.getPluginName() + String.format(plugin.getLanguage().getString("MAP_COPYING"), map));
                 plugin.getTardisCopier().copy(map);
                 plugin.getConsole().sendMessage(plugin.getPluginName() + String.format(plugin.getLanguage().getString("MAP_WORLD"), s_world));
+                opwarn = true;
             }
         }
-        plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
-            @Override
-            public void run() {
-                Set<OfflinePlayer> ops = plugin.getServer().getOperators();
-                for (OfflinePlayer olp : ops) {
-                    if (olp.isOnline()) {
-                        Player p = olp.getPlayer();
-                        TARDISMessage.send(p, "MAPS_NOT_FOUND");
+        if (opwarn) {
+            plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
+                @Override
+                public void run() {
+                    Set<OfflinePlayer> ops = plugin.getServer().getOperators();
+                    for (OfflinePlayer olp : ops) {
+                        if (olp.isOnline()) {
+                            Player p = olp.getPlayer();
+                            TARDISMessage.send(p, "MAPS_NOT_FOUND");
+                        }
                     }
                 }
-            }
-        }, 200L);
+            }, 200L);
+        }
     }
 }

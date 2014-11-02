@@ -22,6 +22,7 @@ import java.util.List;
 import java.util.Random;
 import java.util.Set;
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.database.ResultSetPlayerPrefs;
 import me.eccentric_nz.TARDIS.database.ResultSetTravellers;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
@@ -48,28 +49,11 @@ public class TARDISTimeTravel {
     private static final int[] startLoc = new int[6];
     private Location dest;
     private final TARDIS plugin;
-    private final List<Material> goodMaterials = new ArrayList<Material>();
-    private final List<Material> goodWater = new ArrayList<Material>();
     private final int attempts;
 
     public TARDISTimeTravel(TARDIS plugin) {
         this.plugin = plugin;
         // add good materials
-        goodMaterials.add(Material.AIR);
-        goodMaterials.add(Material.BROWN_MUSHROOM);
-        goodMaterials.add(Material.DEAD_BUSH);
-        goodMaterials.add(Material.LONG_GRASS);
-        goodMaterials.add(Material.NETHER_WARTS);
-        goodMaterials.add(Material.RED_MUSHROOM);
-        goodMaterials.add(Material.RED_ROSE);
-        goodMaterials.add(Material.SAPLING);
-        goodMaterials.add(Material.SNOW);
-        goodMaterials.add(Material.SNOW);
-        goodMaterials.add(Material.YELLOW_FLOWER);
-        // add good water
-        goodWater.add(Material.AIR);
-        goodWater.add(Material.WATER);
-        goodWater.add(Material.STATIONARY_WATER);
         this.attempts = plugin.getConfig().getInt("travel.random_attempts");
     }
 
@@ -94,8 +78,10 @@ public class TARDISTimeTravel {
      */
     @SuppressWarnings("deprecation")
     public Location randomDestination(Player p, byte rx, byte rz, byte ry, COMPASS d, String e, World this_world, boolean malfunction, Location current) {
-        int startx, starty, startz, resetx, resetz, listlen, rw;
-        World randworld = null;
+        int startx, starty, startz, resetx, resetz, listlen;
+//        int startx, starty, startz, resetx, resetz, listlen, rw;
+//        World randworld = null;
+        World randworld;
         int count;
         Random rand = new Random();
         // get max_radius from config
@@ -121,12 +107,12 @@ public class TARDISTimeTravel {
                     if (e.equalsIgnoreCase(env)) {
                         if (plugin.getConfig().getBoolean("travel.include_default_world") || !plugin.getConfig().getBoolean("creation.default_world")) {
                             if (plugin.getConfig().getBoolean("worlds." + o) || malfunction) {
-                                allowedWorlds.add(plugin.getServer().getWorld(o));
+                                allowedWorlds.add(ww);
                             }
                         } else {
                             if (!o.equals(plugin.getConfig().getString("creation.default_world_name"))) {
                                 if (plugin.getConfig().getBoolean("worlds." + o) || malfunction) {
-                                    allowedWorlds.add(plugin.getServer().getWorld(o));
+                                    allowedWorlds.add(ww);
                                 }
                             }
                         }
@@ -137,22 +123,24 @@ public class TARDISTimeTravel {
                     }
                     // remove the world if the player doesn't have permission
                     if (allowedWorlds.size() > 1 && plugin.getConfig().getBoolean("travel.per_world_perms") && !p.hasPermission("tardis.travel." + o)) {
-                        allowedWorlds.remove(this_world);
+                        allowedWorlds.remove(ww);
                     }
                 }
             }
         }
         listlen = allowedWorlds.size();
         // random world
-        rw = rand.nextInt(listlen);
-        int i = 0;
-        for (World wobj : allowedWorlds) {
-            if (i == rw) {
-                randworld = wobj;
-            }
-            i += 1;
-        }
-        if (randworld != null && randworld.getEnvironment().equals(Environment.NETHER)) {
+//        rw = rand.nextInt(listlen);
+        randworld = allowedWorlds.get(rand.nextInt(listlen));
+//        int i = 0;
+//        for (World wobj : allowedWorlds) {
+//            if (i == rw) {
+//                randworld = wobj;
+//            }
+//            i++;
+//        }
+//        if (randworld != null && randworld.getEnvironment().equals(Environment.NETHER)) {
+        if (randworld.getEnvironment().equals(Environment.NETHER)) {
             for (int n = 0; n < attempts; n++) {
                 wherex = randomX(rand, range, quarter, rx, ry, e, current);
                 wherez = randomZ(rand, range, quarter, rz, ry, e, current);
@@ -161,7 +149,8 @@ public class TARDISTimeTravel {
                 }
             }
         }
-        if (randworld != null && randworld.getEnvironment().equals(Environment.THE_END)) {
+//        if (randworld != null && randworld.getEnvironment().equals(Environment.THE_END)) {
+        if (randworld.getEnvironment().equals(Environment.THE_END)) {
             for (int n = 0; n < attempts; n++) {
                 wherex = rand.nextInt(240);
                 wherez = rand.nextInt(240);
@@ -198,7 +187,8 @@ public class TARDISTimeTravel {
             dest = (highest > 0) ? new Location(randworld, wherex, highest, wherez) : null;
         }
         // Assume every non-nether/non-END world qualifies as NORMAL.
-        if (randworld != null && !randworld.getEnvironment().equals(Environment.NETHER) && !randworld.getEnvironment().equals(Environment.THE_END)) {
+        if (!randworld.getEnvironment().equals(Environment.NETHER) && !randworld.getEnvironment().equals(Environment.THE_END)) {
+//        if (randworld != null && !randworld.getEnvironment().equals(Environment.NETHER) && !randworld.getEnvironment().equals(Environment.THE_END)) {
             long timeout = System.currentTimeMillis() + (plugin.getConfig().getLong("travel.timeout") * 1000);
             while (true) {
                 if (System.currentTimeMillis() < timeout) {
@@ -239,7 +229,7 @@ public class TARDISTimeTravel {
                                 count = 1;
                             }
                         } else {
-                            if (goodMaterials.contains(currentBlock.getType())) {
+                            if (TARDISConstants.GOOD_MATERIALS.contains(currentBlock.getType())) {
                                 currentBlock = currentBlock.getRelative(BlockFace.DOWN);
                             }
                             Location chunk_loc = currentBlock.getLocation();
@@ -293,7 +283,7 @@ public class TARDISTimeTravel {
      * @return the number of unsafe blocks
      */
     @SuppressWarnings("deprecation")
-    public int safeLocation(int startx, int starty, int startz, int resetx, int resetz, World w, COMPASS d) {
+    public static int safeLocation(int startx, int starty, int startz, int resetx, int resetz, World w, COMPASS d) {
         int level, row, col, rowcount, colcount, count = 0;
         switch (d) {
             case EAST:
@@ -310,7 +300,7 @@ public class TARDISTimeTravel {
             for (row = 0; row < rowcount; row++) {
                 for (col = 0; col < colcount; col++) {
                     Material mat = w.getBlockAt(startx, starty, startz).getType();
-                    if (!goodMaterials.contains(mat)) {
+                    if (!TARDISConstants.GOOD_MATERIALS.contains(mat)) {
                         count++;
                     }
                     startx += 1;
@@ -396,7 +386,7 @@ public class TARDISTimeTravel {
      * @param d the direction the Police Box is facing.
      * @return an array containing x and z coordinates
      */
-    public int[] getStartLocation(Location loc, COMPASS d) {
+    public static int[] getStartLocation(Location loc, COMPASS d) {
         switch (d) {
             case EAST:
                 startLoc[0] = loc.getBlockX() - 2;
@@ -597,7 +587,7 @@ public class TARDISTimeTravel {
             for (row = 0; row < rowcount; row++) {
                 for (col = 0; col < colcount; col++) {
                     Material mat = l.getWorld().getBlockAt(s[0], starty, s[2]).getType();
-                    if (!goodWater.contains(mat)) {
+                    if (!TARDISConstants.GOOD_WATER.contains(mat)) {
                         count++;
                     }
                     s[0] += 1;

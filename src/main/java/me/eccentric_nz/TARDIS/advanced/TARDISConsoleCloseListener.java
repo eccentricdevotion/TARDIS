@@ -28,6 +28,7 @@ import me.eccentric_nz.TARDIS.database.ResultSetCurrentLocation;
 import me.eccentric_nz.TARDIS.database.ResultSetPlayerPrefs;
 import me.eccentric_nz.TARDIS.database.ResultSetTravellers;
 import me.eccentric_nz.TARDIS.enumeration.DISK_CIRCUIT;
+import me.eccentric_nz.TARDIS.travel.TARDISRandomiserCircuit;
 import me.eccentric_nz.TARDIS.travel.TARDISRescue;
 import me.eccentric_nz.TARDIS.travel.TARDISTimeTravel;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
@@ -74,7 +75,6 @@ public class TARDISConsoleCloseListener implements Listener {
             ResultSetTravellers rst = new ResultSetTravellers(plugin, wheret, false);
             if (rst.resultSet()) {
                 int id = rst.getTardis_id();
-                TARDISTimeTravel tt = new TARDISTimeTravel(plugin);
                 // loop through inventory contents and remove any items that are not disks or circuits
                 for (int i = 0; i < 9; i++) {
                     ItemStack is = inv.getItem(i);
@@ -179,10 +179,10 @@ public class TARDISConsoleCloseListener implements Listener {
                                                     while (!bw.getChunkAt(nsob).isLoaded()) {
                                                         bw.getChunkAt(nsob).load();
                                                     }
-                                                    int[] start_loc = tt.getStartLocation(nsob, rsc.getDirection());
+                                                    int[] start_loc = TARDISTimeTravel.getStartLocation(nsob, rsc.getDirection());
                                                     int tmp_y = nsob.getBlockY();
                                                     for (int up = 0; up < 10; up++) {
-                                                        int count = tt.safeLocation(start_loc[0], tmp_y + up, start_loc[2], start_loc[1], start_loc[3], nsob.getWorld(), rsc.getDirection());
+                                                        int count = TARDISTimeTravel.safeLocation(start_loc[0], tmp_y + up, start_loc[2], start_loc[1], start_loc[3], nsob.getWorld(), rsc.getDirection());
                                                         if (count == 0) {
                                                             nsob.setY(tmp_y + up);
                                                             break;
@@ -224,7 +224,7 @@ public class TARDISConsoleCloseListener implements Listener {
                                                     continue;
                                                 }
                                                 TARDISRescue to_player = new TARDISRescue(plugin);
-                                                to_player.rescue(p, toUUID, id, tt, rsc.getDirection(), false, false);
+                                                to_player.rescue(p, toUUID, id, new TARDISTimeTravel(plugin), rsc.getDirection(), false, false);
                                             } else {
                                                 TARDISMessage.send(p, "NO_PERM_PLAYER");
                                                 continue;
@@ -238,7 +238,6 @@ public class TARDISConsoleCloseListener implements Listener {
                                             break;
                                         case RECORD_4: // save
                                             if (p.hasPermission("tardis.save")) {
-                                                ignore = true;
                                                 String world = lore.get(1);
                                                 int x = plugin.getUtils().parseInt(lore.get(2));
                                                 int y = plugin.getUtils().parseInt(lore.get(3));
@@ -282,6 +281,28 @@ public class TARDISConsoleCloseListener implements Listener {
                                 } else {
                                     TARDISMessage.send(p, "ADV_BLANK");
                                 }
+                            }
+                        } else if (mat.equals(Material.MAP) && is.hasItemMeta() && is.getItemMeta().hasDisplayName() && is.getItemMeta().getDisplayName().equals("TARDIS Randomiser Circuit")) {
+                            // Randomiser Circuit
+                            Location l = new TARDISRandomiserCircuit(plugin).getRandomlocation(p, rsc.getDirection());
+                            if (l != null) {
+                                HashMap<String, Object> set_next = new HashMap<String, Object>();
+                                HashMap<String, Object> where_next = new HashMap<String, Object>();
+                                set_next.put("world", l.getWorld().getName());
+                                set_next.put("x", l.getBlockX());
+                                set_next.put("y", l.getBlockY());
+                                set_next.put("z", l.getBlockZ());
+                                set_next.put("direction", rsc.getDirection().toString());
+                                boolean sub = plugin.getTrackerKeeper().getSubmarine().contains(id);
+                                set_next.put("submarine", (sub) ? 1 : 0);
+                                if (plugin.getTrackerKeeper().getSubmarine().contains(id)) {
+                                    plugin.getTrackerKeeper().getSubmarine().remove(id);
+                                }
+                                where_next.put("tardis_id", id);
+                                new QueryFactory(plugin).doUpdate("next", set_next, where_next);
+                                plugin.getTrackerKeeper().getHasDestination().put(id, plugin.getArtronConfig().getInt("random_circuit"));
+                            } else {
+                                TARDISMessage.send(p, "PROTECTED");
                             }
                         }
                     }
