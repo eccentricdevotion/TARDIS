@@ -23,7 +23,7 @@ import java.sql.Statement;
 import me.eccentric_nz.TARDIS.TARDIS;
 
 /**
- * Singleton class to get the database connection.
+ * SQLite database creator and updater.
  *
  * Many facts, figures, and formulas are contained within the Matrix - a
  * supercomputer and micro-universe used by the High Council of the Time Lords

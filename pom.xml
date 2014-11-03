@@ -134,6 +134,21 @@
                     </replacements>
                 </configuration>
             </plugin>
+            <!-- Manifest generation for examiner GUI -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-jar-plugin</artifactId>
+                <version>2.5</version>
+                <configuration>
+                    <archive>
+                        <manifestEntries>
+                            <Main-Class>me.eccentric_nz.TARDIS.databasetool.Main</Main-Class>
+                            <Implementation-Title>${project.name}</Implementation-Title>
+                            <Implementation-Version>${project.version}</Implementation-Version>
+                        </manifestEntries>
+                    </archive>
+                </configuration>
+            </plugin>
         </plugins>
     </build>
     <dependencies>
@@ -418,6 +433,11 @@
             <groupId>me.confuser</groupId>
             <artifactId>BarAPI</artifactId>
             <version>3.2-SNAPSHOT</version>
+        </dependency>
+        <dependency>
+            <groupId>org.swinglabs</groupId>
+            <artifactId>swing-layout</artifactId>
+            <version>1.0.3</version>
         </dependency>
     </dependencies>
 </project>
