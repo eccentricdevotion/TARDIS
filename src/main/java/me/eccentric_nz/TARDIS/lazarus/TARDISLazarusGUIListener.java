@@ -327,7 +327,7 @@ public class TARDISLazarusGUIListener implements Listener {
                                                 break;
                                             case ENDERMAN:
                                                 EndermanWatcher ew = (EndermanWatcher) mobDisguise.getWatcher();
-                                                ew.setAgressive(getBoolean(inv));
+                                                ew.setAggressive(getBoolean(inv));
                                                 break;
                                             case COW:
                                             case DONKEY:
