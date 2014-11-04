@@ -326,7 +326,7 @@ public class TARDISInstaPreset {
                                 }
                             }
                         }
-                        if (colids[yy] == 71 && coldatas[yy] > 8) {
+                        if (colids[yy] == 71 && coldatas[yy] > 8 && !plugin.getPM().isPluginEnabled("Carbon")) {
                             plugin.getUtils().setBlockAndRemember(world, xx, (y + yy), zz, colids[yy], tmd.getDirection().getUpperData(), tmd.getTardisID());
                         } else {
                             if (colids[yy] == 66) {
