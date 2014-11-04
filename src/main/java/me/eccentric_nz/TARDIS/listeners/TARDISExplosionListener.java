@@ -78,18 +78,6 @@ public class TARDISExplosionListener implements Listener {
                 for (HashMap<String, String> map : data) {
                     String location = map.get("location");
                     int id = plugin.getUtils().parseInt(map.get("tardis_id"));
-//                    String[] loc_tmp = location.split(",");
-//                    String[] wStr = loc_tmp[0].split("=");
-//                    String world = wStr[2].substring(0, wStr[2].length() - 1);
-//                    World w = plugin.getServer().getWorld(world);
-//                    if (w != null) {
-//                        String[] xStr = loc_tmp[1].split("=");
-//                        String[] yStr = loc_tmp[2].split("=");
-//                        String[] zStr = loc_tmp[3].split("=");
-//                        int x = plugin.getUtils().parseInt(xStr[1].substring(0, (xStr[1].length() - 2)));
-//                        int y = plugin.getUtils().parseInt(yStr[1].substring(0, (yStr[1].length() - 2)));
-//                        int z = plugin.getUtils().parseInt(zStr[1].substring(0, (zStr[1].length() - 2)));
-//                        Block block = w.getBlockAt(x, y, z);
                     Block block = plugin.getUtils().getLocationFromBukkitString(location).getBlock();
                     // if the block is a TARDIS block then remove it
                     if (e.blockList().contains(block)) {
@@ -141,7 +129,6 @@ public class TARDISExplosionListener implements Listener {
                         idchk = id;
                     }
                 }
-//                }
             }
         }
     }

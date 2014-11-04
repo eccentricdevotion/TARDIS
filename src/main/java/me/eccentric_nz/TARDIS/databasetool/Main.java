@@ -37,6 +37,15 @@ public class Main {
         UserInterface.main(args);
     }
 
+    /**
+     * Reads an SQLite database and dumps the records as SQL statements to a
+     * file.
+     *
+     * @param console the output window of the tool
+     * @param sqlite the SQLite file to migrate
+     * @param mysql the SQL file to write to
+     * @throws IOException
+     */
     public static void process(PrintWriter console, File sqlite, File mysql) throws IOException {
         if (!sqlite.canRead()) {
             console.println("Specified original file " + sqlite + " does not exist or cannot be read!");
