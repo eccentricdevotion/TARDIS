@@ -21,6 +21,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import me.eccentric_nz.TARDIS.utility.Version;
 import me.libraryaddict.disguise.DisguiseAPI;
 import me.libraryaddict.disguise.disguisetypes.AnimalColor;
@@ -33,6 +34,7 @@ import me.libraryaddict.disguise.disguisetypes.watchers.BlazeWatcher;
 import me.libraryaddict.disguise.disguisetypes.watchers.CreeperWatcher;
 import me.libraryaddict.disguise.disguisetypes.watchers.EndermanWatcher;
 import me.libraryaddict.disguise.disguisetypes.watchers.HorseWatcher;
+import me.libraryaddict.disguise.disguisetypes.watchers.LivingWatcher;
 import me.libraryaddict.disguise.disguisetypes.watchers.OcelotWatcher;
 import me.libraryaddict.disguise.disguisetypes.watchers.PigWatcher;
 import me.libraryaddict.disguise.disguisetypes.watchers.SheepWatcher;
@@ -270,9 +272,16 @@ public class TARDISLazarusGUIListener implements Listener {
                                         DisguiseAPI.disguiseToAll(player, playerDisguise);
                                     } else {
                                         MobDisguise mobDisguise = new MobDisguise(dt);
+                                        LivingWatcher livingWatcher;
+                                        try {
+                                            livingWatcher = mobDisguise.getWatcher();
+                                        } catch (NoSuchMethodError e) {
+                                            TARDISMessage.message(player, "LIBS");
+                                            return;
+                                        }
                                         switch (dt) {
                                             case SHEEP:
-                                                SheepWatcher sw = (SheepWatcher) mobDisguise.getWatcher();
+                                                SheepWatcher sw = (SheepWatcher) livingWatcher;
                                                 sw.setColor(getColor(inv));
                                                 sw.setBaby(getBaby(inv));
                                                 if (getBoolean(inv)) {
@@ -281,27 +290,27 @@ public class TARDISLazarusGUIListener implements Listener {
                                                 }
                                                 break;
                                             case HORSE:
-                                                HorseWatcher hw = (HorseWatcher) mobDisguise.getWatcher();
+                                                HorseWatcher hw = (HorseWatcher) livingWatcher;
                                                 hw.setColor(getHorseColor(inv));
                                                 hw.setBaby(getBaby(inv));
                                                 break;
                                             case OCELOT:
-                                                OcelotWatcher ow = (OcelotWatcher) mobDisguise.getWatcher();
+                                                OcelotWatcher ow = (OcelotWatcher) livingWatcher;
                                                 ow.setType(getCatType(inv));
                                                 ow.setBaby(getBaby(inv));
                                                 break;
                                             case PIG:
-                                                PigWatcher pw = (PigWatcher) mobDisguise.getWatcher();
+                                                PigWatcher pw = (PigWatcher) livingWatcher;
                                                 pw.setSaddled(getBoolean(inv));
                                                 pw.setBaby(getBaby(inv));
                                                 break;
                                             case VILLAGER:
-                                                VillagerWatcher vw = (VillagerWatcher) mobDisguise.getWatcher();
+                                                VillagerWatcher vw = (VillagerWatcher) livingWatcher;
                                                 vw.setProfession(getProfession(inv));
                                                 vw.setBaby(getBaby(inv));
                                                 break;
                                             case WOLF:
-                                                WolfWatcher ww = (WolfWatcher) mobDisguise.getWatcher();
+                                                WolfWatcher ww = (WolfWatcher) livingWatcher;
                                                 if (getBoolean(inv)) {
                                                     ww.setTamed(true);
                                                     ww.setCollarColor(getColor(inv));
@@ -310,23 +319,23 @@ public class TARDISLazarusGUIListener implements Listener {
                                                 break;
                                             case SLIME:
                                             case MAGMA_CUBE:
-                                                SlimeWatcher lw = (SlimeWatcher) mobDisguise.getWatcher();
-                                                lw.setSize(getSlimeSize(inv));
+                                                SlimeWatcher slw = (SlimeWatcher) livingWatcher;
+                                                slw.setSize(getSlimeSize(inv));
                                                 break;
                                             case BAT:
-                                                BatWatcher bw = (BatWatcher) mobDisguise.getWatcher();
+                                                BatWatcher bw = (BatWatcher) livingWatcher;
                                                 bw.setFlying(getBoolean(inv));
                                                 break;
                                             case BLAZE:
-                                                BlazeWatcher bbw = (BlazeWatcher) mobDisguise.getWatcher();
+                                                BlazeWatcher bbw = (BlazeWatcher) livingWatcher;
                                                 bbw.setBlazing(getBoolean(inv));
                                                 break;
                                             case CREEPER:
-                                                CreeperWatcher cw = (CreeperWatcher) mobDisguise.getWatcher();
+                                                CreeperWatcher cw = (CreeperWatcher) livingWatcher;
                                                 cw.setPowered(getBoolean(inv));
                                                 break;
                                             case ENDERMAN:
-                                                EndermanWatcher ew = (EndermanWatcher) mobDisguise.getWatcher();
+                                                EndermanWatcher ew = (EndermanWatcher) livingWatcher;
                                                 ew.setAggressive(getBoolean(inv));
                                                 break;
                                             case COW:
@@ -334,12 +343,12 @@ public class TARDISLazarusGUIListener implements Listener {
                                             case MULE:
                                             case SKELETON_HORSE:
                                             case UNDEAD_HORSE:
-                                                AgeableWatcher aw = (AgeableWatcher) mobDisguise.getWatcher();
+                                                AgeableWatcher aw = (AgeableWatcher) livingWatcher;
                                                 aw.setBaby(getBaby(inv));
                                                 break;
                                             case ZOMBIE:
                                             case ZOMBIE_VILLAGER:
-                                                ZombieWatcher zw = (ZombieWatcher) mobDisguise.getWatcher();
+                                                ZombieWatcher zw = (ZombieWatcher) livingWatcher;
                                                 zw.setBaby(getBaby(inv));
                                                 break;
                                             default:
