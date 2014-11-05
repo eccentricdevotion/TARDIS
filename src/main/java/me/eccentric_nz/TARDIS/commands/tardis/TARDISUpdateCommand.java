@@ -18,6 +18,7 @@ package me.eccentric_nz.TARDIS.commands.tardis;
 
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Locale;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.chatGUI.TARDISUpdateChatGUI;
@@ -35,6 +36,7 @@ import org.bukkit.entity.Player;
 public class TARDISUpdateCommand {
 
     private final TARDIS plugin;
+    private final List<String> validBlockNames = Arrays.asList("advanced", "ars", "artron", "back", "backdoor", "button", "chameleon", "condenser", "creeper", "direction", "door", "eps", "farm", "handbrake", "hinge", "info", "keyboard", "light", "rail", "save-sign", "scanner", "stable", "storage", "temporal", "terminal", "toggle_wool", "vault", "village", "world-repeater", "x-repeater", "y-repeater", "z-repeater", "zero");
 
     public TARDISUpdateCommand(TARDIS plugin) {
         this.plugin = plugin;
@@ -43,15 +45,22 @@ public class TARDISUpdateCommand {
     @SuppressWarnings("deprecation")
     public boolean startUpdate(Player player, String[] args) {
         if (player.hasPermission("tardis.update")) {
-            String[] validBlockNames = {"advanced", "ars", "artron", "back", "backdoor", "button", "chameleon", "condenser", "creeper", "direction", "door", "eps", "farm", "handbrake", "hinge", "info", "keyboard", "light", "rail", "save-sign", "scanner", "stable", "storage", "temporal", "terminal", "toggle_wool", "vault", "village", "world-repeater", "x-repeater", "y-repeater", "z-repeater", "zero"};
             if (args.length == 1 && plugin.getPM().isPluginEnabled("ProtocolLib")) {
                 return new TARDISUpdateChatGUI(plugin).showInterface(player, args);
             } else if (args.length < 2) {
                 TARDISMessage.send(player, "TOO_FEW_ARGS");
                 return false;
             }
+            HashMap<String, Object> where = new HashMap<String, Object>();
+            where.put("uuid", player.getUniqueId().toString());
+            ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);
+            if (!rs.resultSet()) {
+                TARDISMessage.send(player, "NOT_A_TIMELORD");
+                return false;
+            }
+            int ownerid = rs.getTardis_id();
             String tardis_block = args[1].toLowerCase(Locale.ENGLISH);
-            if (!Arrays.asList(validBlockNames).contains(tardis_block)) {
+            if (!validBlockNames.contains(tardis_block)) {
                 new TARDISUpdateLister(plugin, player).list();
                 return true;
             }
@@ -95,14 +104,6 @@ public class TARDISUpdateCommand {
                 TARDISMessage.send(player, "UPDATE_NO_PERM", tardis_block);
                 return true;
             }
-            HashMap<String, Object> where = new HashMap<String, Object>();
-            where.put("uuid", player.getUniqueId().toString());
-            ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);
-            if (!rs.resultSet()) {
-                TARDISMessage.send(player, "NOT_A_TIMELORD");
-                return false;
-            }
-            int ownerid = rs.getTardis_id();
             // must grow a room first
             if (tardis_block.equals("farm") || tardis_block.equals("stable") || tardis_block.equals("village") || tardis_block.equals("rail")) {
                 if (tardis_block.equals("farm") && rs.getFarm().isEmpty()) {

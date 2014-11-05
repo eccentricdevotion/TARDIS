@@ -44,6 +44,14 @@ public class TARDISHomeCommand {
     @SuppressWarnings("deprecation")
     public boolean setHome(Player player, String[] args) {
         if (player.hasPermission("tardis.timetravel")) {
+            HashMap<String, Object> where = new HashMap<String, Object>();
+            where.put("uuid", player.getUniqueId().toString());
+            ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);
+            if (!rs.resultSet()) {
+                TARDISMessage.send(player, "NOT_A_TIMELORD");
+                return false;
+            }
+            int id = rs.getTardis_id();
             Location eyeLocation = player.getTargetBlock(plugin.getGeneralKeeper().getTransparent(), 50).getLocation();
             COMPASS player_d = COMPASS.valueOf(plugin.getUtils().getPlayersDirection(player, false));
             if (!plugin.getConfig().getBoolean("travel.include_default_world") && plugin.getConfig().getBoolean("creation.default_world") && eyeLocation.getWorld().getName().equals(plugin.getConfig().getString("creation.default_world_name"))) {
@@ -68,14 +76,6 @@ public class TARDISHomeCommand {
                 TARDISMessage.send(player, "NO_WORLD_TRAVEL");
                 return true;
             }
-            HashMap<String, Object> where = new HashMap<String, Object>();
-            where.put("uuid", player.getUniqueId().toString());
-            ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);
-            if (!rs.resultSet()) {
-                TARDISMessage.send(player, "NOT_A_TIMELORD");
-                return false;
-            }
-            int id = rs.getTardis_id();
             TARDISCircuitChecker tcc = null;
             if (plugin.getConfig().getString("preferences.difficulty").equals("hard") && !plugin.getUtils().inGracePeriod(player, false)) {
                 tcc = new TARDISCircuitChecker(plugin, id);

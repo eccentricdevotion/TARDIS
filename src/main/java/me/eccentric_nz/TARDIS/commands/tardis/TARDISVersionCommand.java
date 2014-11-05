@@ -20,7 +20,6 @@ import me.eccentric_nz.TARDIS.TARDIS;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
-import org.bukkit.entity.Player;
 
 /**
  *
@@ -34,7 +33,7 @@ public class TARDISVersionCommand {
         this.plugin = plugin;
     }
 
-    public boolean displayVersion(CommandSender sender, Player player) {
+    public boolean displayVersion(CommandSender sender) {
         String version = plugin.getPM().getPlugin("TARDIS").getDescription().getVersion();
         String cb = Bukkit.getVersion();
         sender.sendMessage(plugin.getPluginName() + "You are running TARDIS version: " + ChatColor.AQUA + version + ChatColor.RESET + " with CraftBukkit " + cb);

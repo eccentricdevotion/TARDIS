@@ -8,7 +8,6 @@
 5. `/tardis hide` and `/tardis rebuild` has materialisation animation
 6. New underwater temple preset
 7. Siege mode + custom textured block
-8. Test SQLite to MySQL migration tool
 
 ##Future version `3.3+`
 ? SpongeAPI

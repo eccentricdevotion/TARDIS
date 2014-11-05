@@ -804,27 +804,23 @@ public class TARDISUtils {
                         set.put("grace", (grace_count + 1));
                         new QueryFactory(plugin).doUpdate("t_count", set, where);
                     }
-                } else {
+                } else if (plugin.getConfig().getBoolean("allow.player_difficulty") && p.hasPermission("tardis.difficulty")) {
                     // check player difficulty preference
-                    if (plugin.getConfig().getBoolean("allow.player_difficulty") && p.hasPermission("tardis.difficulty")) {
-                        HashMap<String, Object> wherep = new HashMap<String, Object>();
-                        wherep.put("uuid", p.getUniqueId().toString());
-                        ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, wherep);
-                        if (rsp.resultSet()) {
-                            inGracePeriod = rsp.isEasyDifficulty();
-                        }
+                    HashMap<String, Object> wherep = new HashMap<String, Object>();
+                    wherep.put("uuid", p.getUniqueId().toString());
+                    ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, wherep);
+                    if (rsp.resultSet()) {
+                        inGracePeriod = rsp.isEasyDifficulty();
                     }
                 }
             }
-        } else {
+        } else if (plugin.getConfig().getBoolean("allow.player_difficulty") && p.hasPermission("tardis.difficulty")) {
             // check player difficulty preference
-            if (plugin.getConfig().getBoolean("allow.player_difficulty") && p.hasPermission("tardis.difficulty")) {
-                HashMap<String, Object> wherep = new HashMap<String, Object>();
-                wherep.put("uuid", p.getUniqueId().toString());
-                ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, wherep);
-                if (rsp.resultSet()) {
-                    inGracePeriod = rsp.isEasyDifficulty();
-                }
+            HashMap<String, Object> wherep = new HashMap<String, Object>();
+            wherep.put("uuid", p.getUniqueId().toString());
+            ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, wherep);
+            if (rsp.resultSet()) {
+                inGracePeriod = rsp.isEasyDifficulty();
             }
         }
         return inGracePeriod;

@@ -50,8 +50,28 @@ public class TARDISComehereCommand {
 
     @SuppressWarnings("deprecation")
     public boolean doComeHere(Player player) {
-        if (plugin.getConfig().getString("preferences.difficulty").equalsIgnoreCase("easy") || plugin.getUtils().inGracePeriod(player, true)) {
-            if (player.hasPermission("tardis.timetravel")) {
+        if (player.hasPermission("tardis.timetravel")) {
+            // check they are a timelord
+            HashMap<String, Object> where = new HashMap<String, Object>();
+            where.put("uuid", player.getUniqueId().toString());
+            ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);
+            if (!rs.resultSet()) {
+                TARDISMessage.send(player, "NOT_A_TIMELORD");
+                return true;
+            }
+            if (plugin.getConfig().getString("preferences.difficulty").equalsIgnoreCase("easy") || plugin.getUtils().inGracePeriod(player, true)) {
+                final int id = rs.getTardis_id();
+                if (plugin.getConfig().getBoolean("allow.power_down") && !rs.isPowered_on()) {
+                    TARDISMessage.send(player, "POWER_DOWN");
+                    return true;
+                }
+                int level = rs.getArtron_level();
+                boolean chamtmp = false;
+                if (plugin.getConfig().getBoolean("travel.chameleon")) {
+                    chamtmp = rs.isChamele_on();
+                }
+                boolean hidden = rs.isHidden();
+                // get location
                 Location eyeLocation = player.getTargetBlock(plugin.getGeneralKeeper().getTransparent(), 50).getLocation();
                 if (!plugin.getConfig().getBoolean("travel.include_default_world") && plugin.getConfig().getBoolean("creation.default_world") && eyeLocation.getWorld().getName().equals(plugin.getConfig().getString("creation.default_world_name"))) {
                     TARDISMessage.send(player, "NO_WORLD_TRAVEL");
@@ -82,28 +102,6 @@ public class TARDISComehereCommand {
                     TARDISMessage.send(player, "NO_PB_IN_WORLD");
                     return true;
                 }
-                // check they are a timelord
-                HashMap<String, Object> where = new HashMap<String, Object>();
-                where.put("uuid", player.getUniqueId().toString());
-                ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);
-                if (!rs.resultSet()) {
-                    TARDISMessage.send(player, "NOT_A_TIMELORD");
-                    return true;
-                }
-                if (plugin.getConfig().getBoolean("allow.power_down") && !rs.isPowered_on()) {
-                    TARDISMessage.send(player, "POWER_DOWN");
-                    return true;
-                }
-                final int id = rs.getTardis_id();
-//                TARDISCircuitChecker tcc = null;
-//                if (plugin.getConfig().getString("preferences.difficulty").equals("hard")) {
-//                    tcc = new TARDISCircuitChecker(plugin, id);
-//                    tcc.getCircuits();
-//                }
-//                if (tcc != null && !tcc.hasMaterialisation()) {
-//                    TARDISMessage.send(player, "NO_MAT_CIRCUIT");
-//                    return true;
-//                }
                 // check they are not in the tardis
                 HashMap<String, Object> wherettrav = new HashMap<String, Object>();
                 wherettrav.put("uuid", player.getUniqueId().toString());
@@ -117,12 +115,6 @@ public class TARDISComehereCommand {
                     TARDISMessage.send(player, "NOT_WHILE_MAT");
                     return true;
                 }
-                int level = rs.getArtron_level();
-                boolean chamtmp = false;
-                if (plugin.getConfig().getBoolean("travel.chameleon")) {
-                    chamtmp = rs.isChamele_on();
-                }
-                boolean hidden = rs.isHidden();
                 // get current police box location
                 HashMap<String, Object> wherecl = new HashMap<String, Object>();
                 wherecl.put("tardis_id", id);
@@ -257,12 +249,12 @@ public class TARDISComehereCommand {
                 }
                 return true;
             } else {
-                TARDISMessage.send(player, "NO_PERMS");
-                return false;
+                TARDISMessage.send(player, "DIFF_HARD_REMOTE", ChatColor.AQUA + "/tardisrecipe remote" + ChatColor.RESET);
+                return true;
             }
         } else {
-            TARDISMessage.send(player, "DIFF_HARD_REMOTE", ChatColor.AQUA + "/tardisrecipe remote" + ChatColor.RESET);
-            return true;
+            TARDISMessage.send(player, "NO_PERMS");
+            return false;
         }
     }
 }

@@ -19,7 +19,6 @@ package me.eccentric_nz.TARDIS.commands.tardis;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.destroyers.TARDISExterminator;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
-import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 /**
@@ -34,11 +33,8 @@ public class TARDISExterminateCommand {
         this.plugin = plugin;
     }
 
-    public boolean doExterminate(CommandSender sender, Player player) {
-        if (player == null) {
-            TARDISMessage.send(sender, "CMD_PLAYER");
-            return false;
-        }
+    public boolean doExterminate(Player player) {
+
         if (!plugin.getTrackerKeeper().getExterminate().containsKey(player.getUniqueId())) {
             TARDISMessage.send(player, "TARDIS_BREAK_SIGN");
             return false;
