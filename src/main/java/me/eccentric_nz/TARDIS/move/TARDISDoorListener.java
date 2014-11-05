@@ -139,6 +139,9 @@ public class TARDISDoorListener {
                         setTemporalLocation(p, plugin.getTrackerKeeper().getSetTime().get(uuid));
                         plugin.getTrackerKeeper().getSetTime().remove(uuid);
                     }
+                    if (plugin.getTrackerKeeper().getEjecting().containsKey(uuid)) {
+                        plugin.getTrackerKeeper().getEjecting().remove(uuid);
+                    }
                 } else {
                     if (p.isPlayerTimeRelative()) {
                         setTemporalLocation(p, -1);
