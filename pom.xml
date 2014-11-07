@@ -389,7 +389,7 @@
         <dependency>
             <groupId>me.ryanhamshire</groupId>
             <artifactId>GriefPrevention</artifactId>
-            <version>8.6.4</version>
+            <version>8.7</version>
         </dependency>
         <dependency>
             <groupId>com.comphenix.protocol</groupId>
