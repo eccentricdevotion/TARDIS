@@ -44,6 +44,7 @@ import me.eccentric_nz.TARDIS.enumeration.STORAGE;
 import me.eccentric_nz.TARDIS.info.TARDISInfoMenu;
 import me.eccentric_nz.TARDIS.move.TARDISBlackWoolToggler;
 import me.eccentric_nz.TARDIS.rooms.TARDISExteriorRenderer;
+import me.eccentric_nz.TARDIS.siegemode.TARDISSiegeMode;
 import me.eccentric_nz.TARDIS.travel.TARDISTemporalLocatorInventory;
 import me.eccentric_nz.TARDIS.travel.TARDISTerminalInventory;
 import me.eccentric_nz.TARDIS.travel.TARDISTimeTravel;
@@ -73,7 +74,7 @@ public class TARDISButtonListener implements Listener {
 
     private final TARDIS plugin;
     private final List<Material> validBlocks = new ArrayList<Material>();
-    private final List<Integer> onlythese = Arrays.asList(1, 8, 9, 10, 11, 12, 13, 14, 16, 17, 20);
+    private final List<Integer> onlythese = Arrays.asList(1, 8, 9, 10, 11, 12, 13, 14, 16, 17, 20, 21);
     private final List<Integer> allow_unpowered = Arrays.asList(13, 17);
     public ItemStack[] items;
     private final ItemStack[] tars;
@@ -472,6 +473,10 @@ public class TARDISButtonListener implements Listener {
                                 case 20:
                                     // toggle black wool blocks behind door
                                     new TARDISBlackWoolToggler(plugin).toggleBlocks(id, player);
+                                    break;
+                                case 21:
+                                    // toggle siege mode
+                                    new TARDISSiegeMode(plugin).toggle(id, player);
                                     break;
                                 default:
                                     break;

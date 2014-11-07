@@ -108,6 +108,7 @@ public class TARDISSQLiteDatabaseUpdater {
         tardisupdates.add("recharging INTEGER DEFAULT 0");
         tardisupdates.add("renderer TEXT DEFAULT ''");
         tardisupdates.add("scanner TEXT DEFAULT ''");
+        tardisupdates.add("siege_on INTEGER DEFAULT 0");
         tardisupdates.add("stable TEXT DEFAULT ''");
         tardisupdates.add("tardis_init INTEGER DEFAULT 0");
         tardisupdates.add("tips INTEGER DEFAULT '-1'");

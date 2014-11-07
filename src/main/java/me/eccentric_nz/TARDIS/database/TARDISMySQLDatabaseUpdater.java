@@ -57,6 +57,7 @@ public class TARDISMySQLDatabaseUpdater {
         tardisupdates.add("lights_on int(1) DEFAULT '1'");
         tardisupdates.add("powered_on int(1) DEFAULT '0'");
         tardisupdates.add("renderer varchar(512) DEFAULT ''");
+        tardisupdates.add("siege_on int(1) DEFAULT '0'");
         tardisupdates.add("zero varchar(512) DEFAULT ''");
         prefsupdates.add("language varchar(32) DEFAULT 'AUTO_DETECT'");
         prefsupdates.add("build_on int(1) DEFAULT '1'");
