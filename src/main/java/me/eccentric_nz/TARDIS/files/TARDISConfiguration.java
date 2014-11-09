@@ -111,6 +111,11 @@ public class TARDISConfiguration {
         boolOptions.put("preferences.strike_lightning", true);
         boolOptions.put("preferences.use_default_condensables", true);
         boolOptions.put("preferences.walk_in_tardis", true);
+        boolOptions.put("siege.enabled", true);
+        boolOptions.put("siege.butcher", false);
+        boolOptions.put("siege.creeper", false);
+        boolOptions.put("siege.healing", false);
+        boolOptions.put("siege.texture", false);
         boolOptions.put("travel.chameleon", true);
         boolOptions.put("travel.exile", false);
         boolOptions.put("travel.give_key", false);
@@ -224,6 +229,8 @@ public class TARDISConfiguration {
         intOptions.put("preferences.malfunction_end", 3);
         intOptions.put("preferences.malfunction_nether", 3);
         intOptions.put("preferences.sfx_volume", 10);
+        intOptions.put("siege.breeding", 0);
+        intOptions.put("siege.growth", 0);
         intOptions.put("travel.grace_period", 10);
         intOptions.put("travel.manual_flight_delay", 60);
         intOptions.put("travel.random_attempts", 30);

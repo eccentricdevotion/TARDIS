@@ -121,6 +121,15 @@ arch:
     min_time: 20
     switch_inventory: true
     clear_inv_on_death: false
+# siege mode
+siege:
+    enabled: true
+    breeding: 0
+    growth: 0
+    butcher: false
+    creeper: false
+    healing: false
+    texture: false
 # don't touch
 conversions:
     biome_update: true
