@@ -65,7 +65,7 @@ public class TARDISARSMapListener extends TARDISARSMethods implements Listener {
             UUID uuid = player.getUniqueId();
             ids.put(uuid, getTardisId(player.getUniqueId().toString(), player.isOp()));
             int slot = event.getRawSlot();
-            if (slot != 10 && !hasLoadedMap.contains(uuid)) {
+            if (slot != 10 && slot != 45 && !hasLoadedMap.contains(uuid)) {
                 TARDISMessage.send(player, "ARS_LOAD");
                 return;
             }
