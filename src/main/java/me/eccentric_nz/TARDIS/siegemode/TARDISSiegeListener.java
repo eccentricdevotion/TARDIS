@@ -1,0 +1,181 @@
+/*
+ * Copyright (C) 2014 eccentric_nz
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program. If not, see <http://www.gnu.org/licenses/>.
+ */
+package me.eccentric_nz.TARDIS.siegemode;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.UUID;
+import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.database.ResultSetCurrentLocation;
+import me.eccentric_nz.TARDIS.database.ResultSetTardis;
+import me.eccentric_nz.TARDIS.database.ResultSetTravellers;
+import me.eccentric_nz.TARDIS.enumeration.COMPASS;
+import me.eccentric_nz.TARDIS.travel.TARDISTimeTravel;
+import me.eccentric_nz.TARDIS.utility.TARDISMessage;
+import org.bukkit.Location;
+import org.bukkit.Material;
+import org.bukkit.block.Block;
+import org.bukkit.entity.Item;
+import org.bukkit.entity.Player;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.Listener;
+import org.bukkit.event.block.BlockBreakEvent;
+import org.bukkit.event.entity.ItemDespawnEvent;
+import org.bukkit.event.player.PlayerDropItemEvent;
+import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
+
+/**
+ *
+ * @author eccentric_nz
+ */
+public class TARDISSiegeListener implements Listener {
+
+    private final TARDIS plugin;
+
+    public TARDISSiegeListener(TARDIS plugin) {
+        this.plugin = plugin;
+    }
+
+    @EventHandler(ignoreCancelled = true)
+    public void onSiegeCubeDespawn(ItemDespawnEvent event) {
+        ItemStack is = event.getEntity().getItemStack();
+        if (!isSiegeCube(is)) {
+            return;
+        }
+        if (!hasSiegeCubeName(is)) {
+            return;
+        }
+        event.setCancelled(true);
+    }
+
+    @EventHandler(ignoreCancelled = true)
+    public void onSiegeCubeBreak(BlockBreakEvent event) {
+        Block b = event.getBlock();
+        if (!isSiegeCube(b)) {
+            return;
+        }
+        // check location
+        HashMap<String, Object> where = new HashMap<String, Object>();
+        where.put("world", b.getWorld().getName());
+        where.put("x", b.getX());
+        where.put("y", b.getY());
+        where.put("z", b.getZ());
+        ResultSetCurrentLocation rsc = new ResultSetCurrentLocation(plugin, where);
+        if (!rsc.resultSet()) {
+            return;
+        }
+        int id = rsc.getTardis_id();
+        HashMap<String, Object> wheret = new HashMap<String, Object>();
+        wheret.put("tardis_id", id);
+        ResultSetTardis rs = new ResultSetTardis(plugin, wheret, "", false);
+        if (!rs.resultSet()) {
+            return;
+        }
+        // only break if player is owner or companion
+        UUID puuid = event.getPlayer().getUniqueId();
+        UUID tluuid = rs.getUuid();
+        if (!puuid.equals(tluuid)) {
+            boolean isCompanion = false;
+            if (!rs.getCompanions().isEmpty()) {
+                String[] companions = rs.getCompanions().split(":");
+                // check if they are a companion
+                for (String cuuid : companions) {
+                    if (cuuid.equals(puuid.toString())) {
+                        isCompanion = true;
+                        break;
+                    }
+                }
+            }
+            if (!isCompanion) {
+                event.setCancelled(true);
+                return;
+            }
+        }
+        String tl = rs.getOwner();
+        ItemStack is = new ItemStack(Material.HUGE_MUSHROOM_1, 1, (byte) 14);
+        ItemMeta im = is.getItemMeta();
+        im.setDisplayName("TARDIS Siege Cube");
+        List<String> lore = new ArrayList<String>();
+        lore.add("Time Lord: " + tl);
+        // get occupants
+        HashMap<String, Object> wherec = new HashMap<String, Object>();
+        wherec.put("tardis_id", id);
+        ResultSetTravellers rst = new ResultSetTravellers(plugin, wherec, true);
+        if (rst.resultSet()) {
+            for (UUID tuuid : rst.getData()) {
+                Player p = plugin.getServer().getPlayer(tuuid);
+                if (p != null && tuuid != tluuid) {
+                    String c = p.getName();
+                    lore.add("Companion: " + c);
+                }
+            }
+        }
+        im.setLore(lore);
+        is.setItemMeta(im);
+        b.getWorld().dropItemNaturally(b.getLocation(), is);
+        // TODO prevent TARDIS travel, rebuild etc while an item...
+    }
+
+    @EventHandler(ignoreCancelled = true)
+    public void onDropSiegeCube(final PlayerDropItemEvent event) {
+        final Item item = event.getItemDrop();
+        final Player p = event.getPlayer();
+        ItemStack is = item.getItemStack();
+        if (!isSiegeCube(is)) {
+            return;
+        }
+        if (!hasSiegeCubeName(is)) {
+            return;
+        }
+        plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
+            @Override
+            @SuppressWarnings("deprecation")
+            public void run() {
+                // check there is space
+                Location loc = item.getLocation();
+                COMPASS d = COMPASS.valueOf(plugin.getUtils().getPlayersDirection(p, false));
+                int[] start = TARDISTimeTravel.getStartLocation(loc, d);
+                int count = TARDISTimeTravel.safeLocation(start[0], loc.getBlockY(), start[2], start[1], start[3], loc.getWorld(), d);
+                if (count > 0) {
+                    TARDISMessage.send(p, "SIEGE_NO_SPACE");
+                    return;
+                }
+                // turn the drop into a block
+                item.remove();
+                loc.getBlock().setType(Material.HUGE_MUSHROOM_1);
+                loc.getBlock().setData((byte) 14, true);
+                // TODO update the current location
+            }
+        }, 3L);
+    }
+
+    @SuppressWarnings("deprecation")
+    private boolean isSiegeCube(ItemStack is) {
+        return (is.getType().equals(Material.HUGE_MUSHROOM_1) && is.getData().getData() == (byte) 14);
+    }
+
+    @SuppressWarnings("deprecation")
+    private boolean isSiegeCube(Block b) {
+        return (b.getType().equals(Material.HUGE_MUSHROOM_1) && b.getData() == (byte) 14);
+    }
+
+    private boolean hasSiegeCubeName(ItemStack is) {
+        return (is.hasItemMeta() && is.getItemMeta().hasDisplayName() && is.getItemMeta().getDisplayName().equals("TARDIS Siege Cube"));
+    }
+}

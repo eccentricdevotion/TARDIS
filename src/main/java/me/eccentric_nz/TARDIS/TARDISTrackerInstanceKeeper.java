@@ -52,6 +52,7 @@ public class TARDISTrackerInstanceKeeper {
     private final HashMap<Integer, TARDISAntiBuild> antiBuild = new HashMap<Integer, TARDISAntiBuild>();
     private final HashMap<Integer, UUID> rescue = new HashMap<Integer, UUID>();
     private final HashMap<Location, TARDISTeleportLocation> portals = new HashMap<Location, TARDISTeleportLocation>();
+    private final HashMap<String, Integer> siegeBlocks = new HashMap<String, Integer>();
     private final HashMap<String, Sign> sign = new HashMap<String, Sign>();
     private final HashMap<UUID, Block> exterminate = new HashMap<UUID, Block>();
     private final HashMap<UUID, Block> lazarus = new HashMap<UUID, Block>();
@@ -84,6 +85,7 @@ public class TARDISTrackerInstanceKeeper {
     private final HashMap<UUID, UUID> chat = new HashMap<UUID, UUID>();
     private final List<Integer> dematerialising = new ArrayList<Integer>();
     private final List<Integer> hasRandomised = new ArrayList<Integer>();
+    private final List<Integer> inSiegeMode = new ArrayList<Integer>();
     private final List<Integer> inVortex = new ArrayList<Integer>();
     private final List<Integer> materialising = new ArrayList<Integer>();
     private final List<Integer> minecart = new ArrayList<Integer>();
@@ -148,6 +150,10 @@ public class TARDISTrackerInstanceKeeper {
 
     public HashMap<UUID, Long> getRebuildCooldown() {
         return rebuildCooldown;
+    }
+
+    public HashMap<String, Integer> getSiegeBlocks() {
+        return siegeBlocks;
     }
 
     public HashMap<String, Sign> getSign() {
@@ -237,6 +243,10 @@ public class TARDISTrackerInstanceKeeper {
 
     public List<Integer> getHasRandomised() {
         return hasRandomised;
+    }
+
+    public List<Integer> getInSiegeMode() {
+        return inSiegeMode;
     }
 
     public List<Integer> getInVortex() {

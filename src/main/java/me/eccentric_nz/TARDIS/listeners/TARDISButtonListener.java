@@ -475,8 +475,43 @@ public class TARDISButtonListener implements Listener {
                                     new TARDISBlackWoolToggler(plugin).toggleBlocks(id, player);
                                     break;
                                 case 21:
+                                    UUID uuid = player.getUniqueId();
+                                    if (plugin.getTrackerKeeper().getRebuildCooldown().containsKey(uuid)) {
+                                        long now = System.currentTimeMillis();
+                                        long cooldown = plugin.getConfig().getLong("police_box.rebuild_cooldown");
+                                        long then = plugin.getTrackerKeeper().getRebuildCooldown().get(uuid) + cooldown;
+                                        if (now < then) {
+                                            TARDISMessage.send(player.getPlayer(), "COOLDOWN", String.format("%d", cooldown / 1000));
+                                            return;
+                                        }
+                                    }
+                                    plugin.getTrackerKeeper().getRebuildCooldown().put(uuid, System.currentTimeMillis());
+                                    if (plugin.getConfig().getBoolean("allow.power_down") && !rs.isPowered_on()) {
+                                        TARDISMessage.send(player.getPlayer(), "POWER_DOWN");
+                                        return;
+                                    }
+                                    if (tcc != null && !tcc.hasMaterialisation()) {
+                                        TARDISMessage.send(player.getPlayer(), "NO_MAT_CIRCUIT");
+                                        return;
+                                    }
+                                    HashMap<String, Object> wherein = new HashMap<String, Object>();
+                                    wherein.put("uuid", uuid.toString());
+                                    ResultSetTravellers rst = new ResultSetTravellers(plugin, wherein, false);
+                                    if (rst.resultSet() && plugin.getTrackerKeeper().getHasDestination().containsKey(id)) {
+                                        TARDISMessage.send(player.getPlayer(), "TARDIS_NO_REBUILD");
+                                        return;
+                                    }
+                                    if (plugin.getTrackerKeeper().getInVortex().contains(id)) {
+                                        TARDISMessage.send(player.getPlayer(), "NOT_WHILE_MAT");
+                                        return;
+                                    }
+                                    int rebuild = plugin.getArtronConfig().getInt("random");
+                                    if (level < rebuild) {
+                                        TARDISMessage.send(player.getPlayer(), "ENERGY_NO_REBUILD");
+                                        return;
+                                    }
                                     // toggle siege mode
-                                    new TARDISSiegeMode(plugin).toggle(id, player);
+                                    new TARDISSiegeMode(plugin).toggleViaSwitch(id, player);
                                     break;
                                 default:
                                     break;

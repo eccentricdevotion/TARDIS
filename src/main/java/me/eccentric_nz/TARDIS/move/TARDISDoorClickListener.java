@@ -160,6 +160,10 @@ public class TARDISDoorClickListener extends TARDISDoorListener implements Liste
                             }
                             if (action == Action.RIGHT_CLICK_BLOCK && player.isSneaking()) {
                                 final int id = rsd.getTardis_id();
+                                if (plugin.getTrackerKeeper().getInSiegeMode().contains(id)) {
+                                    TARDISMessage.send(player, "SIEGE_NO_EXIT");
+                                    return;
+                                }
                                 if (plugin.getTrackerKeeper().getInVortex().contains(id)) {
                                     TARDISMessage.send(player, "NOT_WHILE_MAT");
                                     return;
@@ -238,6 +242,10 @@ public class TARDISDoorClickListener extends TARDISDoorListener implements Liste
                                     return;
                                 }
                                 int id = rsd.getTardis_id();
+                                if (plugin.getTrackerKeeper().getInSiegeMode().contains(id)) {
+                                    TARDISMessage.send(player, "SIEGE_NO_EXIT");
+                                    return;
+                                }
                                 HashMap<String, Object> tid = new HashMap<String, Object>();
                                 tid.put("tardis_id", id);
                                 ResultSetTardis rs = new ResultSetTardis(plugin, tid, "", false);

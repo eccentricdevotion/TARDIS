@@ -107,6 +107,7 @@ import me.eccentric_nz.TARDIS.move.TARDISDoorClickListener;
 import me.eccentric_nz.TARDIS.move.TARDISDoorWalkListener;
 import me.eccentric_nz.TARDIS.move.TARDISMoveListener;
 import me.eccentric_nz.TARDIS.schematic.TARDISSchematicListener;
+import me.eccentric_nz.TARDIS.siegemode.TARDISSiegeListener;
 import me.eccentric_nz.TARDIS.sonic.TARDISFarmBlockListener;
 import me.eccentric_nz.TARDIS.sonic.TARDISSonicEntityListener;
 import me.eccentric_nz.TARDIS.sonic.TARDISSonicListener;
@@ -213,6 +214,9 @@ public class TARDISListenerRegisterer {
         plugin.getPM().registerEvents(new TARDISSaveSignListener(plugin), plugin);
         plugin.getPM().registerEvents(new TARDISSchematicListener(plugin), plugin);
         plugin.getPM().registerEvents(new TARDISSeedBlockListener(plugin), plugin);
+        if (plugin.getConfig().getBoolean("siege.enabled")) {
+            plugin.getPM().registerEvents(new TARDISSiegeListener(plugin), plugin);
+        }
         plugin.getPM().registerEvents(new TARDISSignListener(plugin), plugin);
         plugin.getPM().registerEvents(new TARDISSonicEntityListener(plugin), plugin);
         plugin.getPM().registerEvents(new TARDISSonicMenuListener(plugin), plugin);
