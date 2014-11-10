@@ -217,6 +217,7 @@ public class TARDIS extends JavaPlugin {
             loadWorldGuard();
             loadPluginRespect();
             loadHorseSpeed();
+            loadSiegeProtect();
             loadBarAPI();
             startZeroHealing();
 

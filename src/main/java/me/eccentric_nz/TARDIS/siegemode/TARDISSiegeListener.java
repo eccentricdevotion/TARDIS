@@ -135,7 +135,7 @@ public class TARDISSiegeListener implements Listener {
         im.setLore(lore);
         is.setItemMeta(im);
         Item item = b.getWorld().dropItemNaturally(b.getLocation(), is);
-        if (plugin.getPM().isPluginEnabled("TARDISSiegeProtect")) {
+        if (plugin.isSiegeProtectOnServer()) {
             TARDISSiegeProtect tsp = (TARDISSiegeProtect) plugin.getPM().getPlugin("TARDISSiegeProtect");
             tsp.protect(item);
         }
