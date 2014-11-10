@@ -264,7 +264,7 @@ public class TARDISButtonListener implements Listener {
                                                     for (String c : companions) {
                                                         // are they online - AND are they travelling
                                                         UUID cuuid = UUID.fromString(c);
-                                                        if (plugin.getServer().getPlayer(cuuid) != null) {
+                                                        if (plugin.getServer().getPlayer(cuuid) != null && !cuuid.equals(ownerUUID)) {
                                                             // are they travelling
                                                             HashMap<String, Object> wherec = new HashMap<String, Object>();
                                                             wherec.put("tardis_id", id);

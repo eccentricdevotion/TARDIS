@@ -825,4 +825,11 @@ public class TARDISUtils {
         }
         return inGracePeriod;
     }
+
+    public String getShortenedName(String name, boolean useDots) {
+        if (name.length() > 16) {
+            name = useDots ? name.substring(0, 14) + ".." : name.substring(0, 16);
+        }
+        return name;
+    }
 }
