@@ -177,16 +177,22 @@
             </exclusions>
         </dependency>
         <dependency>
+            <groupId>me.eccentric_nz.tardissiegeprotect</groupId>
+            <artifactId>TARDISSiegeProtect</artifactId>
+            <version>1.0</version>
+            <type>jar</type>
+            <exclusions>
+                <exclusion>
+                    <artifactId>spigot</artifactId>
+                    <groupId>org.spigotmc</groupId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+        <dependency>
             <groupId>org.spigotmc</groupId>
             <artifactId>spigot-api</artifactId>
             <version>1.7.10-R0.1-SNAPSHOT</version>
         </dependency>
-        <!--<dependency>
-            <groupId>org.bukkit</groupId>
-            <artifactId>bukkit</artifactId>
-            <version>1.7.10-R0.1-SNAPSHOT</version>
-            <type>jar</type>
-        </dependency>-->
         <dependency>
             <groupId>com.sk89q</groupId>
             <artifactId>worldguard</artifactId>

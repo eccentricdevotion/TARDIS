@@ -132,6 +132,7 @@ public class TARDIS extends JavaPlugin {
     private boolean tardisSpawn = false;
     private boolean worldGuardOnServer;
     private boolean horseSpeedOnServer;
+    private boolean siegeProtectOnServer;
     private boolean barAPIOnServer;
     private boolean disguisesOnServer;
     private PluginManager pm;
@@ -149,6 +150,7 @@ public class TARDIS extends JavaPlugin {
     public TARDIS() {
         this.worldGuardOnServer = false;
         this.horseSpeedOnServer = false;
+        this.siegeProtectOnServer = false;
         this.barAPIOnServer = false;
     }
 
@@ -488,6 +490,17 @@ public class TARDIS extends JavaPlugin {
         if (pm.getPlugin("TARDISHorseSpeed") != null) {
             debug("Hooking into TARDISHorseSpeed!");
             horseSpeedOnServer = true;
+        }
+    }
+
+    /**
+     * Checks if the TARDISHorseSpeed plugin is available, and loads support if
+     * it is.
+     */
+    private void loadSiegeProtect() {
+        if (pm.getPlugin("TARDISSiegeProtect") != null) {
+            debug("Hooking into TARDISSiegeProtect!");
+            siegeProtectOnServer = true;
         }
     }
 
@@ -858,6 +871,10 @@ public class TARDIS extends JavaPlugin {
 
     public boolean isHorseSpeedOnServer() {
         return horseSpeedOnServer;
+    }
+
+    public boolean isSiegeProtectOnServer() {
+        return siegeProtectOnServer;
     }
 
     public boolean isBarAPIOnServer() {

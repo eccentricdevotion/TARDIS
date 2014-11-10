@@ -21,12 +21,15 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetCurrentLocation;
+import me.eccentric_nz.TARDIS.database.ResultSetPlayerPrefs;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import me.eccentric_nz.TARDIS.database.ResultSetTravellers;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
 import me.eccentric_nz.TARDIS.travel.TARDISTimeTravel;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
+import me.eccentric_nz.tardissiegeprotect.TARDISSiegeProtect;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
@@ -34,9 +37,11 @@ import org.bukkit.entity.Item;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.block.Action;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.entity.ItemDespawnEvent;
 import org.bukkit.event.player.PlayerDropItemEvent;
+import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
@@ -93,9 +98,8 @@ public class TARDISSiegeListener implements Listener {
         if (!puuid.equals(tluuid)) {
             boolean isCompanion = false;
             if (!rs.getCompanions().isEmpty()) {
-                String[] companions = rs.getCompanions().split(":");
                 // check if they are a companion
-                for (String cuuid : companions) {
+                for (String cuuid : rs.getCompanions().split(":")) {
                     if (cuuid.equals(puuid.toString())) {
                         isCompanion = true;
                         break;
@@ -104,6 +108,7 @@ public class TARDISSiegeListener implements Listener {
             }
             if (!isCompanion) {
                 event.setCancelled(true);
+                TARDISMessage.send(event.getPlayer(), "SIEGE_COMPANION");
                 return;
             }
         }
@@ -113,6 +118,7 @@ public class TARDISSiegeListener implements Listener {
         im.setDisplayName("TARDIS Siege Cube");
         List<String> lore = new ArrayList<String>();
         lore.add("Time Lord: " + tl);
+        lore.add("ID: " + id);
         // get occupants
         HashMap<String, Object> wherec = new HashMap<String, Object>();
         wherec.put("tardis_id", id);
@@ -128,7 +134,11 @@ public class TARDISSiegeListener implements Listener {
         }
         im.setLore(lore);
         is.setItemMeta(im);
-        b.getWorld().dropItemNaturally(b.getLocation(), is);
+        Item item = b.getWorld().dropItemNaturally(b.getLocation(), is);
+        if (plugin.getPM().isPluginEnabled("TARDISSiegeProtect")) {
+            TARDISSiegeProtect tsp = (TARDISSiegeProtect) plugin.getPM().getPlugin("TARDISSiegeProtect");
+            tsp.protect(item);
+        }
         // TODO prevent TARDIS travel, rebuild etc while an item...
     }
 
@@ -136,7 +146,7 @@ public class TARDISSiegeListener implements Listener {
     public void onDropSiegeCube(final PlayerDropItemEvent event) {
         final Item item = event.getItemDrop();
         final Player p = event.getPlayer();
-        ItemStack is = item.getItemStack();
+        final ItemStack is = item.getItemStack();
         if (!isSiegeCube(is)) {
             return;
         }
@@ -156,13 +166,89 @@ public class TARDISSiegeListener implements Listener {
                     TARDISMessage.send(p, "SIEGE_NO_SPACE");
                     return;
                 }
+                List<String> lore = is.getItemMeta().getLore();
+                if (lore == null || lore.size() < 2) {
+                    TARDISMessage.send(p, "SIEGE_NO_ID");
+                    return;
+                }
+                String[] line2 = lore.get(1).split(": ");
+                int id = plugin.getUtils().parseInt(line2[1]);
                 // turn the drop into a block
                 item.remove();
                 loc.getBlock().setType(Material.HUGE_MUSHROOM_1);
                 loc.getBlock().setData((byte) 14, true);
-                // TODO update the current location
+                // update the current location
+                HashMap<String, Object> where = new HashMap<String, Object>();
+                where.put("tardis_id", id);
+                HashMap<String, Object> set = new HashMap<String, Object>();
+                set.put("world", loc.getWorld().getName());
+                set.put("x", loc.getBlockX());
+                set.put("y", loc.getBlockY());
+                set.put("z", loc.getBlockZ());
+                set.put("direction", d.toString());
+                new QueryFactory(plugin).doUpdate("current", set, where);
             }
         }, 3L);
+    }
+
+    @EventHandler(ignoreCancelled = true)
+    public void onSiegeCubeInteract(final PlayerInteractEvent event) {
+        Action action = event.getAction();
+        if (!action.equals(Action.RIGHT_CLICK_BLOCK)) {
+            return;
+        }
+        Block b = event.getClickedBlock();
+        if (!isSiegeCube(b)) {
+            return;
+        }
+        Player p = event.getPlayer();
+        UUID uuid = p.getUniqueId();
+        // check location
+        HashMap<String, Object> wherec = new HashMap<String, Object>();
+        wherec.put("world", b.getWorld().getName());
+        wherec.put("x", b.getX());
+        wherec.put("y", b.getY());
+        wherec.put("z", b.getZ());
+        ResultSetCurrentLocation rsc = new ResultSetCurrentLocation(plugin, wherec);
+        if (!rsc.resultSet()) {
+            return;
+        }
+        // must be the Time Lord or companion of this TARDIS
+        HashMap<String, Object> wheret = new HashMap<String, Object>();
+        wheret.put("tardis_id", rsc.getTardis_id());
+        ResultSetTardis rst = new ResultSetTardis(plugin, wheret, "", false);
+        if (rst.resultSet()) {
+            return;
+        }
+        if (!uuid.equals(rst.getUuid())) {
+            boolean isCompanion = false;
+            if (!rst.getCompanions().isEmpty()) {
+                for (String cuuid : rst.getCompanions().split(":")) {
+                    if (cuuid.equals(uuid.toString())) {
+                        isCompanion = true;
+                        break;
+                    }
+                }
+            }
+            if (!isCompanion) {
+                TARDISMessage.send(p, "SIEGE_COMPANION");
+                return;
+            }
+        }
+        // check player has a prefs record
+        HashMap<String, Object> wherepp = new HashMap<String, Object>();
+        wherepp.put("uuid", uuid.toString());
+        ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, wherepp);
+        if (!rsp.resultSet()) {
+            return;
+        }
+        // check player has enough Time Lord energy - default 10% of full_charge
+        int min = (plugin.getArtronConfig().getInt("full_charge") / 100) * plugin.getArtronConfig().getInt("siege_transfer");
+        int level = rsp.getArtronLevel();
+        if (min > level) {
+            TARDISMessage.send(p, "SIEGE_TRANSFER", String.format("%s", min));
+            return;
+        }
     }
 
     @SuppressWarnings("deprecation")
