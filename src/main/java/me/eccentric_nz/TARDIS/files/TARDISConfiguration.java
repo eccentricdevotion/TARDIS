@@ -188,6 +188,7 @@ public class TARDISConfiguration {
         artronIntOptions.put("random_circuit", 150);
         artronIntOptions.put("recharge_distance", 20);
         artronIntOptions.put("render", 250);
+        artronIntOptions.put("siege_transfer", 10);
         artronIntOptions.put("standby", 5);
         artronIntOptions.put("standby_time", 6000);
         artronIntOptions.put("the_end_min", 5500);

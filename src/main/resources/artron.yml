@@ -14,6 +14,7 @@ full_charge: 5000
 full_charge_item: NETHER_STAR
 autonomous: 100
 backdoor: 100
+siege_transfer: 10
 standby: 5
 standby_time: 6000
 # jettison is a percentage of orginal room cost

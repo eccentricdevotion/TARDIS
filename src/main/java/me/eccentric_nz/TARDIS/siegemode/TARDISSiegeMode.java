@@ -66,6 +66,12 @@ public class TARDISSiegeMode {
         wheres.put("tardis_id", id);
         HashMap<String, Object> set = new HashMap<String, Object>();
         if (rs.isSiege_on()) {
+            // must have at least 10% power
+            int min = (plugin.getArtronConfig().getInt("full_charge") / 100) * plugin.getArtronConfig().getInt("siege_transfer");
+            if (min > rs.getArtron_level()) {
+                TARDISMessage.send(p, "SIEGE_POWER");
+                return;
+            }
             // remove siege block
             siege.setType(Material.AIR);
             // rebuild preset
