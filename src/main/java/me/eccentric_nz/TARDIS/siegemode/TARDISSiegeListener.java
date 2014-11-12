@@ -21,6 +21,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.builders.TARDISMaterialisationData;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetCurrentLocation;
 import me.eccentric_nz.TARDIS.database.ResultSetPlayerPrefs;
@@ -139,7 +140,6 @@ public class TARDISSiegeListener implements Listener {
             TARDISSiegeProtect tsp = (TARDISSiegeProtect) plugin.getPM().getPlugin("TARDISSiegeProtect");
             tsp.protect(item);
         }
-        // TODO prevent TARDIS travel, rebuild etc while an item...
     }
 
     @EventHandler(ignoreCancelled = true)
@@ -220,6 +220,7 @@ public class TARDISSiegeListener implements Listener {
         if (rst.resultSet()) {
             return;
         }
+        int id = rst.getTardis_id();
         if (!uuid.equals(rst.getUuid())) {
             boolean isCompanion = false;
             if (!rst.getCompanions().isEmpty()) {
@@ -235,19 +236,67 @@ public class TARDISSiegeListener implements Listener {
                 return;
             }
         }
-        // check player has a prefs record
-        HashMap<String, Object> wherepp = new HashMap<String, Object>();
-        wherepp.put("uuid", uuid.toString());
-        ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, wherepp);
-        if (!rsp.resultSet()) {
-            return;
-        }
-        // check player has enough Time Lord energy - default 10% of full_charge
         int min = (plugin.getArtronConfig().getInt("full_charge") / 100) * plugin.getArtronConfig().getInt("siege_transfer");
-        int level = rsp.getArtronLevel();
-        if (min > level) {
+        QueryFactory qf = new QueryFactory(plugin);
+        if (!p.isSneaking()) {
+            // attempt to transfer Time Lord energy to the TARDIS
+            // check player has a prefs record
+            HashMap<String, Object> wherepp = new HashMap<String, Object>();
+            wherepp.put("uuid", uuid.toString());
+            ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, wherepp);
+            if (!rsp.resultSet()) {
+                return;
+            }
+            // check player has enough Time Lord energy - default 10% of full_charge
+            int level = rsp.getArtronLevel();
+            if (min > level) {
+                TARDISMessage.send(p, "SIEGE_MIN", String.format("%s", min));
+                return;
+            }
+            // transfer min
+            HashMap<String, Object> wheretl = new HashMap<String, Object>();
+            wheretl.put("uuid", uuid.toString());
+            HashMap<String, Object> wherea = new HashMap<String, Object>();
+            wherea.put("tardis_id", id);
+            qf.alterEnergyLevel("player_prefs", -min, wheretl, p);
+            qf.alterEnergyLevel("tardis", min, wherea, p);
             TARDISMessage.send(p, "SIEGE_TRANSFER", String.format("%s", min));
-            return;
+        } else {
+            // attempt to unsiege the TARDIS
+            // check TARDIS has minimum energy level
+            if (min > rst.getArtron_level()) {
+                TARDISMessage.send(p, "SIEGE_POWER");
+                return;
+            }
+            // rebuild the TARDIS
+            Location current = b.getLocation();
+            final TARDISMaterialisationData pbd = new TARDISMaterialisationData();
+            pbd.setChameleon(rst.isChamele_on());
+            pbd.setDirection(rsc.getDirection());
+            pbd.setLocation(current);
+            pbd.setMalfunction(false);
+            pbd.setOutside(false);
+            pbd.setPlayer(p);
+            pbd.setRebuild(true);
+            pbd.setSubmarine(rsc.isSubmarine());
+            pbd.setTardisID(id);
+            pbd.setBiome(rsc.getBiome());
+            plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
+                @Override
+                public void run() {
+                    plugin.getPresetBuilder().buildPreset(pbd);
+                }
+            }, 10L);
+            HashMap<String, Object> set = new HashMap<String, Object>();
+            set.put("siege_on", 0);
+            HashMap<String, Object> wheres = new HashMap<String, Object>();
+            wheres.put("tardis_id", id);
+            // update the database
+            qf.doUpdate("tardis", set, wheres);
+            if (plugin.getTrackerKeeper().getInSiegeMode().contains(id)) {
+                plugin.getTrackerKeeper().getInSiegeMode().remove(Integer.valueOf(id));
+            }
+            TARDISMessage.send(p, "SIEGE_OFF");
         }
     }
 
