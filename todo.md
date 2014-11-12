@@ -7,10 +7,11 @@
 4. Slimmer TARDIS option?
 5. `/tardis hide` and `/tardis rebuild` has materialisation animation
 6. New underwater temple preset
-7. Siege mode + custom textured block
+7. Siege mode
 
 ##Future version `3.3+`
-? SpongeAPI
+* SpongeAPI
+* Forge mod for custom items and blocks (to tie in with Sponge version)
 
 ##Resource Pack / TARDISWeepingAngels
 

@@ -96,9 +96,6 @@ public class TARDISSiegeMode {
             if (plugin.getTrackerKeeper().getInSiegeMode().contains(id)) {
                 plugin.getTrackerKeeper().getInSiegeMode().remove(Integer.valueOf(id));
             }
-            if (plugin.getTrackerKeeper().getSiegeBlocks().containsKey(current.toString())) {
-                plugin.getTrackerKeeper().getSiegeBlocks().remove(current.toString());
-            }
             TARDISMessage.send(p, "SIEGE_OFF");
         } else {
             // destroy tardis
@@ -119,8 +116,8 @@ public class TARDISSiegeMode {
             siege.setData((byte) 14, true);
             // track this siege block
             plugin.getTrackerKeeper().getInSiegeMode().add(id);
-            plugin.getTrackerKeeper().getSiegeBlocks().put(current.toString(), id);
             set.put("siege_on", 1);
+            // TODO remove any portals
             TARDISMessage.send(p, "SIEGE_ON");
         }
         // update the database

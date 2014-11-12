@@ -150,7 +150,7 @@ public class UserInterface extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void inputFileActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_inputFileActionPerformed
-        // TODO add your handling code here:
+        // add your handling code here:
     }//GEN-LAST:event_inputFileActionPerformed
 
     private void inputButtonMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_inputButtonMouseReleased
