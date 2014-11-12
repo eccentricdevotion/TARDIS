@@ -99,6 +99,10 @@ public class TARDISStattenheimListener implements Listener {
                     return;
                 }
                 final int id = rs.getTardis_id();
+                if (plugin.getTrackerKeeper().getInSiegeMode().contains(id)) {
+                    TARDISMessage.send(player, "SIEGE_NO_CONTROL");
+                    return;
+                }
                 boolean power = rs.isPowered_on();
                 final QueryFactory qf = new QueryFactory(plugin);
                 if (action.equals(Action.RIGHT_CLICK_BLOCK)) {

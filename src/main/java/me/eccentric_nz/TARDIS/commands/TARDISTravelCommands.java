@@ -104,6 +104,10 @@ public class TARDISTravelCommands implements CommandExecutor {
                     return true;
                 }
                 int id = rs.getTardis_id();
+                if (plugin.getTrackerKeeper().getInSiegeMode().contains(id)) {
+                    TARDISMessage.send(player, "SIEGE_NO_CMD");
+                    return true;
+                }
                 int level = rs.getArtron_level();
                 boolean powered = rs.isPowered_on();
                 if (!rs.isHandbrake_on()) {

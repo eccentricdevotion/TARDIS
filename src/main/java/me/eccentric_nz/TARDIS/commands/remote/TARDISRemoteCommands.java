@@ -73,6 +73,11 @@ public class TARDISRemoteCommands implements CommandExecutor {
                 where.put("uuid", uuid.toString());
                 ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);
                 if (rs.resultSet()) {
+                    // not in siege mode
+                    if (plugin.getTrackerKeeper().getInSiegeMode().contains(rs.getTardis_id())) {
+                        TARDISMessage.send(sender, "SIEGE_NO_CMD");
+                        return true;
+                    }
                     // we're good to go
                     final int id = rs.getTardis_id();
                     boolean chameleon = rs.isChamele_on();

@@ -76,6 +76,7 @@ public class TARDISButtonListener implements Listener {
     private final List<Material> validBlocks = new ArrayList<Material>();
     private final List<Integer> onlythese = Arrays.asList(1, 8, 9, 10, 11, 12, 13, 14, 16, 17, 20, 21);
     private final List<Integer> allow_unpowered = Arrays.asList(13, 17);
+    private final List<Integer> no_siege = Arrays.asList(0, 10, 12, 16, 19, 20);
     public ItemStack[] items;
     private final ItemStack[] tars;
     private final ItemStack[] clocks;
@@ -141,6 +142,10 @@ public class TARDISButtonListener implements Listener {
                         }
                         if (plugin.getConfig().getBoolean("allow.power_down") && !rs.isPowered_on() && !allow_unpowered.contains(type)) {
                             TARDISMessage.send(player, "POWER_DOWN");
+                            return;
+                        }
+                        if (plugin.getTrackerKeeper().getInSiegeMode().contains(rs.getTardis_id()) && no_siege.contains(type)) {
+                            TARDISMessage.send(player, "SIEGE_NO_CONTROL");
                             return;
                         }
                         boolean lights = rs.isLights_on();

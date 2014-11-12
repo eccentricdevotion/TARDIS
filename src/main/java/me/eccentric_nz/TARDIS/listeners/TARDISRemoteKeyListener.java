@@ -75,6 +75,10 @@ public class TARDISRemoteKeyListener implements Listener {
                 return;
             }
             final int id = rs.getTardis_id();
+            if (plugin.getTrackerKeeper().getInSiegeMode().contains(id)) {
+                TARDISMessage.send(player, "SIEGE_NO_CONTROL");
+                return;
+            }
             boolean hidden = rs.isHidden();
             if (action.equals(Action.LEFT_CLICK_AIR)) {
                 final boolean powered = rs.isPowered_on();

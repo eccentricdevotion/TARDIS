@@ -119,6 +119,10 @@ public class TARDISSignListener implements Listener {
                             TARDISMessage.send(player, "CHAM_MISSING");
                             return;
                         }
+                        if (plugin.getTrackerKeeper().getInSiegeMode().contains(rs.getTardis_id())) {
+                            TARDISMessage.send(player, "SIEGE_NO_CONTROL");
+                            return;
+                        }
                         // open Chameleon Circuit GUI
                         ItemStack[] cc = new TARDISChameleonInventory(plugin, rs.isChamele_on(), rs.isAdapti_on()).getTerminal();
                         Inventory cc_gui = plugin.getServer().createInventory(player, 54, "§4Chameleon Circuit");

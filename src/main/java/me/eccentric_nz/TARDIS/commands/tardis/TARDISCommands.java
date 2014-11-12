@@ -16,15 +16,14 @@
  */
 package me.eccentric_nz.TARDIS.commands.tardis;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Locale;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.advanced.TARDISDiskWriterCommand;
 import me.eccentric_nz.TARDIS.arch.TARDISArchCommand;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import me.eccentric_nz.TARDIS.enumeration.CMDS;
+import me.eccentric_nz.TARDIS.enumeration.TARDIS_COMMAND;
 import me.eccentric_nz.TARDIS.noteblock.TARDISPlayThemeCommand;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import org.bukkit.ChatColor;
@@ -45,52 +44,9 @@ import org.bukkit.inventory.ItemStack;
 public class TARDISCommands implements CommandExecutor {
 
     private final TARDIS plugin;
-    private final List<String> firstArgs = new ArrayList<String>();
 
     public TARDISCommands(TARDIS plugin) {
         this.plugin = plugin;
-        // add first arguments
-        firstArgs.add("abort");
-        firstArgs.add("add");
-        firstArgs.add("arch_time");
-        firstArgs.add("arsremove");
-        firstArgs.add("chameleon");
-        firstArgs.add("check_loc");
-        firstArgs.add("colourise");
-        firstArgs.add("colorize");
-        firstArgs.add("comehere");
-        firstArgs.add("desktop");
-        firstArgs.add("direction");
-        firstArgs.add("egg");
-        firstArgs.add("eject");
-        firstArgs.add("ep1");
-        firstArgs.add("erase");
-        firstArgs.add("exterminate");
-        firstArgs.add("find");
-        firstArgs.add("help");
-        firstArgs.add("hide");
-        firstArgs.add("home");
-        firstArgs.add("inside");
-        firstArgs.add("jettison");
-        firstArgs.add("lamps");
-        firstArgs.add("list");
-        firstArgs.add("namekey");
-        firstArgs.add("occupy");
-        firstArgs.add("rebuild");
-        firstArgs.add("remove");
-        firstArgs.add("removesave");
-        firstArgs.add("rescue");
-        firstArgs.add("room");
-        firstArgs.add("save");
-        firstArgs.add("save_player");
-        firstArgs.add("secondary");
-        firstArgs.add("section");
-        firstArgs.add("setdest");
-        firstArgs.add("tagtheood");
-        firstArgs.add("theme");
-        firstArgs.add("update");
-        firstArgs.add("upgrade");
-        firstArgs.add("version");
     }
 
     @Override
@@ -108,7 +64,10 @@ public class TARDISCommands implements CommandExecutor {
                 return true;
             }
             // the command list - first argument MUST appear here!
-            if (!firstArgs.contains(args[0].toLowerCase(Locale.ENGLISH))) {
+            TARDIS_COMMAND tc;
+            try {
+                tc = TARDIS_COMMAND.valueOf(args[0].toLowerCase(Locale.ENGLISH));
+            } catch (IllegalArgumentException e) {
                 sender.sendMessage(plugin.getPluginName() + "That command wasn't recognised type " + ChatColor.GREEN + "/tardis help" + ChatColor.RESET + " to see the commands");
                 return false;
             }
@@ -119,6 +78,17 @@ public class TARDISCommands implements CommandExecutor {
                 TARDISMessage.send(sender, "CMD_PLAYER");
                 return false;
             } else {
+                HashMap<String, Object> where = new HashMap<String, Object>();
+                where.put("uuid", player.getUniqueId().toString());
+                ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);
+                if (!rs.resultSet()) {
+                    TARDISMessage.send(player, "NOT_A_TIMELORD");
+                    return true;
+                }
+                if (plugin.getTrackerKeeper().getInSiegeMode().contains(rs.getTardis_id()) && tc.noSiege()) {
+                    TARDISMessage.send(player, "SIEGE_NO_CMD");
+                    return true;
+                }
                 if (args[0].equalsIgnoreCase("add")) {
                     return new TARDISAddCompanionCommand(plugin).doAdd(player, args);
                 }
@@ -223,13 +193,6 @@ public class TARDISCommands implements CommandExecutor {
                 }
                 if (args[0].equalsIgnoreCase("update")) {
                     return new TARDISUpdateCommand(plugin).startUpdate(player, args);
-                }
-                HashMap<String, Object> where = new HashMap<String, Object>();
-                where.put("uuid", player.getUniqueId().toString());
-                ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);
-                if (!rs.resultSet()) {
-                    TARDISMessage.send(player, "NOT_A_TIMELORD");
-                    return true;
                 }
                 if (args[0].equalsIgnoreCase("abort")) {
                     return new TARDISAbortCommand(plugin).doAbort(player, args);

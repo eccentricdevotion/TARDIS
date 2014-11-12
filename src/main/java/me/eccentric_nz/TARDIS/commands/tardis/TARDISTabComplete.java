@@ -21,6 +21,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.enumeration.TARDIS_COMMAND;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabCompleter;
@@ -32,7 +33,7 @@ import org.bukkit.util.StringUtil;
 public class TARDISTabComplete implements TabCompleter {
 
     private final TARDIS plugin;
-    private final List<String> ROOT_SUBS = ImmutableList.of("abort", "add", "arch_time", "arsremove", "chameleon", "colourise", "colorize", "comehere", "desktop", "direction", "eject", "ep1", "erase", "exterminate", "find", "help", "hide", "home", "inside", "jettison", "list", "namekey", "occupy", "rebuild", "remove", "removesave", "rescue", "room", "save", "save_player", "secondary", "setdest", "tagtheood", "theme", "update", "upgrade", "version");
+    private final List<String> ROOT_SUBS;
     private final List<String> CHAM_SUBS = ImmutableList.of("on", "off", "short", "reset");
     private final List<String> DIR_SUBS = ImmutableList.of("north", "west", "south", "east");
     private final List<String> LIST_SUBS = ImmutableList.of("companions", "saves", "areas", "rechargers");
@@ -41,6 +42,11 @@ public class TARDISTabComplete implements TabCompleter {
 
     public TARDISTabComplete(TARDIS plugin) {
         this.plugin = plugin;
+        List<String> tcs = new ArrayList<String>();
+        for (TARDIS_COMMAND tc : TARDIS_COMMAND.values()) {
+            tcs.add(tc.toString());
+        }
+        ROOT_SUBS = ImmutableList.copyOf(tcs);
     }
 
     @Override
