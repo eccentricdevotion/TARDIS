@@ -117,7 +117,6 @@ public class TARDISSiegeMode {
             // track this siege block
             plugin.getTrackerKeeper().getInSiegeMode().add(id);
             set.put("siege_on", 1);
-            // TODO remove any portals
             TARDISMessage.send(p, "SIEGE_ON");
         }
         // update the database

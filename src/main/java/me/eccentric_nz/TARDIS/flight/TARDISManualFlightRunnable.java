@@ -75,7 +75,6 @@ public class TARDISManualFlightRunnable implements Runnable {
             plugin.getTrackerKeeper().getFlight().put(player.getUniqueId(), loc.toString());
         } else {
             int blocks = 10 - plugin.getTrackerKeeper().getCount().get(player.getUniqueId());
-            plugin.debug("You hit the correct control " + plugin.getTrackerKeeper().getCount().get(player.getUniqueId()) + " times out of 10!");
             plugin.getServer().getScheduler().cancelTask(taskID);
             taskID = 0;
             plugin.getTrackerKeeper().getCount().remove(player.getUniqueId());

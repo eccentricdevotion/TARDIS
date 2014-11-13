@@ -146,7 +146,6 @@ public class TARDISBuilderInner {
             startx = pos.getCentreX();
             resetx = pos.getCentreX();
             startz = pos.getCentreZ();
-            plugin.debug("startx: " + startx + ", startz: " + startz);
             resetz = pos.getCentreZ();
             // get the correct chunk for ARS
             Chunk c = world.getChunkAt(new Location(world, startx, starty, startz));
