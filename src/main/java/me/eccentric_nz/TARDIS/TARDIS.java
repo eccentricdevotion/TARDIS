@@ -66,6 +66,7 @@ import me.eccentric_nz.TARDIS.recipes.TARDISShapedRecipe;
 import me.eccentric_nz.TARDIS.recipes.TARDISShapelessRecipe;
 import me.eccentric_nz.TARDIS.rooms.TARDISWalls;
 import me.eccentric_nz.TARDIS.rooms.TARDISZeroRoomRunnable;
+import me.eccentric_nz.TARDIS.siegemode.TARDISSiegePersister;
 import me.eccentric_nz.TARDIS.travel.TARDISArea;
 import me.eccentric_nz.TARDIS.travel.TARDISPluginRespect;
 import me.eccentric_nz.TARDIS.utility.TARDISMapChecker;
@@ -265,6 +266,9 @@ public class TARDIS extends JavaPlugin {
             }
             if (disguisesOnServer && getConfig().getBoolean("arch.enabled")) {
                 new TARDISArchPersister(this).checkAll();
+            }
+            if (getConfig().getBoolean("siege.enabled")) {
+                new TARDISSiegePersister(this).load();
             }
             setDates();
             startStandBy();
