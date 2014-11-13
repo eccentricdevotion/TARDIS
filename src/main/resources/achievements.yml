@@ -34,7 +34,7 @@ kill:
 energy:
   name: Power hungry
   description: Overcharge the Artron Energy Capacitor
-  required: 1000
+  required: 10000
   reward_type: XP
   reward_amount: 100
   enabled: true
