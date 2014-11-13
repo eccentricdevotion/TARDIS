@@ -16,8 +16,12 @@
  */
 package me.eccentric_nz.TARDIS.commands;
 
+import com.google.common.collect.ImmutableList;
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
@@ -29,7 +33,9 @@ import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
+import org.bukkit.command.TabCompleter;
 import org.bukkit.entity.Player;
+import org.bukkit.util.StringUtil;
 
 /**
  * Command /tardisbook [book].
@@ -42,14 +48,17 @@ import org.bukkit.entity.Player;
  *
  * @author eccentric_nz
  */
-public class TARDISBookCommands implements CommandExecutor {
+public class TARDISBookCommands implements CommandExecutor, TabCompleter {
 
     private final TARDIS plugin;
     LinkedHashMap<String, String> books;
+    private final List<String> ROOT_SUBS;
+    private final List<String> DO_SUBS = ImmutableList.of("get", "start");
 
     public TARDISBookCommands(TARDIS plugin) {
         this.plugin = plugin;
         this.books = getAchievements();
+        this.ROOT_SUBS = ImmutableList.copyOf(this.books.keySet());
     }
 
     @Override
@@ -132,11 +141,29 @@ public class TARDISBookCommands implements CommandExecutor {
         LinkedHashMap<String, String> map = new LinkedHashMap<String, String>();
         Set<String> aset = plugin.getAchievementConfig().getRoot().getKeys(false);
         for (String a : aset) {
+            plugin.debug("a: " + a);
             if (plugin.getAchievementConfig().getBoolean(a + ".enabled")) {
                 String title_reward = plugin.getAchievementConfig().getString(a + ".name") + " - " + plugin.getAchievementConfig().getString(a + ".reward_type") + ":" + plugin.getAchievementConfig().getString(a + ".reward_amount");
                 map.put(a, title_reward);
             }
         }
         return map;
+    }
+
+    @Override
+    public List<String> onTabComplete(CommandSender sender, Command command, String label, String[] args) {
+        // Remember that we can return null to default to online player name matching
+        String lastArg = args[args.length - 1];
+
+        if (args.length <= 1) {
+            return partial(args[0], ROOT_SUBS);
+        } else if (args.length == 2) {
+            return partial(lastArg, DO_SUBS);
+        }
+        return ImmutableList.of();
+    }
+
+    private List<String> partial(String token, Collection<String> from) {
+        return StringUtil.copyPartialMatches(token, from, new ArrayList<String>(from.size()));
     }
 }
