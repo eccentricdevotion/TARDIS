@@ -17,18 +17,16 @@
 package me.eccentric_nz.TARDIS.universaltranslator;
 
 import com.google.common.collect.ImmutableList;
-import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
+import me.eccentric_nz.TARDIS.commands.TARDISCompleter;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabCompleter;
-import org.bukkit.util.StringUtil;
 
 /**
  * TabCompleter for /tardissay command
  */
-public class TARDISSayTabComplete implements TabCompleter {
+public class TARDISSayTabComplete extends TARDISCompleter implements TabCompleter {
 
     private final ImmutableList<String> LANGUAGE_SUBS = ImmutableList.of("ARABIC", "BULGARIAN", "CATALAN", "CHINESE_SIMPLIFIED", "CHINESE_TRADITIONAL", "CZECH", "DANISH", "DUTCH", "ENGLISH", "ESTONIAN", "FINNISH", "FRENCH", "GERMAN", "GREEK", "HAITIAN_CREOLE", "HEBREW", "HINDI", "HMONG_DAW", "HUNGARIAN", "INDONESIAN", "ITALIAN", "JAPANESE", "KOREAN", "LATVIAN", "LITHUANIAN", "MALAY", "NORWEGIAN", "PERSIAN", "POLISH", "PORTUGUESE", "ROMANIAN", "RUSSIAN", "SLOVAK", "SLOVENIAN", "SPANISH", "SWEDISH", "THAI", "TURKISH", "UKRAINIAN", "URDU", "VIETNAMESE");
 
@@ -39,9 +37,5 @@ public class TARDISSayTabComplete implements TabCompleter {
             return partial(args[0], LANGUAGE_SUBS);
         }
         return ImmutableList.of();
-    }
-
-    private List<String> partial(String token, Collection<String> from) {
-        return StringUtil.copyPartialMatches(token, from, new ArrayList<String>(from.size()));
     }
 }

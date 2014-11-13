@@ -18,20 +18,19 @@ package me.eccentric_nz.TARDIS.commands.admin;
 
 import com.google.common.collect.ImmutableList;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.commands.TARDISCompleter;
 import me.eccentric_nz.TARDIS.enumeration.PRESET;
 import me.eccentric_nz.TARDIS.utility.TARDISWorldGuardFlag;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabCompleter;
-import org.bukkit.util.StringUtil;
 
 /**
  * TabCompleter for /tardisadmin
  */
-public class TARDISAdminTabComplete implements TabCompleter {
+public class TARDISAdminTabComplete extends TARDISCompleter implements TabCompleter {
 
     private final TARDIS plugin;
     private final ImmutableList<String> DIFFICULTY_SUBS = ImmutableList.of("easy", "hard");
@@ -108,10 +107,6 @@ public class TARDISAdminTabComplete implements TabCompleter {
             }
         }
         return ImmutableList.of();
-    }
-
-    private List<String> partial(String token, Collection<String> from) {
-        return StringUtil.copyPartialMatches(token, from, new ArrayList<String>(from.size()));
     }
 
     private List<String> combineLists() {

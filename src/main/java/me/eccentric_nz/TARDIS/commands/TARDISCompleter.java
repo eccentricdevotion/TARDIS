@@ -16,27 +16,19 @@
  */
 package me.eccentric_nz.TARDIS.commands;
 
-import com.google.common.collect.ImmutableList;
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
-import org.bukkit.command.Command;
-import org.bukkit.command.CommandSender;
-import org.bukkit.command.TabCompleter;
+import org.bukkit.util.StringUtil;
 
 /**
- * TabCompleter for /tardistravel
+ *
+ * @author eccentric_nz
  */
-public class TARDISGravityTabComplete extends TARDISCompleter implements TabCompleter {
+public class TARDISCompleter {
 
-    private final ImmutableList<String> ROOT_SUBS = ImmutableList.of("down", "up", "north", "west", "south", "east", "remove");
-
-    public TARDISGravityTabComplete() {
+    public List<String> partial(String token, Collection<String> from) {
+        return StringUtil.copyPartialMatches(token, from, new ArrayList<String>(from.size()));
     }
 
-    @Override
-    public List<String> onTabComplete(CommandSender sender, Command command, String label, String[] args) {
-        if (args.length <= 1) {
-            return partial(args[0], ROOT_SUBS);
-        }
-        return ImmutableList.of();
-    }
 }

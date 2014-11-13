@@ -18,19 +18,18 @@ package me.eccentric_nz.TARDIS.commands.tardis;
 
 import com.google.common.collect.ImmutableList;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.commands.TARDISCompleter;
 import me.eccentric_nz.TARDIS.enumeration.TARDIS_COMMAND;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabCompleter;
-import org.bukkit.util.StringUtil;
 
 /**
  * TabCompleter for /tardis command
  */
-public class TARDISTabComplete implements TabCompleter {
+public class TARDISTabComplete extends TARDISCompleter implements TabCompleter {
 
     private final TARDIS plugin;
     private final List<String> ROOT_SUBS;
@@ -82,9 +81,5 @@ public class TARDISTabComplete implements TabCompleter {
             }
         }
         return ImmutableList.of();
-    }
-
-    private List<String> partial(String token, Collection<String> from) {
-        return StringUtil.copyPartialMatches(token, from, new ArrayList<String>(from.size()));
     }
 }

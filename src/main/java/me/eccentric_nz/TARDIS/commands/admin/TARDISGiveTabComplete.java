@@ -17,20 +17,18 @@
 package me.eccentric_nz.TARDIS.commands.admin;
 
 import com.google.common.collect.ImmutableList;
-import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 import java.util.Set;
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.commands.TARDISCompleter;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabCompleter;
-import org.bukkit.util.StringUtil;
 
 /**
  * TabCompleter for /tardisgive
  */
-public class TARDISGiveTabComplete implements TabCompleter {
+public class TARDISGiveTabComplete extends TARDISCompleter implements TabCompleter {
 
     private final TARDIS plugin;
     private final ImmutableList<String> GIVE_SUBS = ImmutableList.of("artron", "kit", "a-circuit", "ars-circuit", "bow-tie", "bio-circuit", "biome-disk", "blank", "c-circuit", "cell", "custard", "d-circuit", "e-circuit", "filter", "fish-finger", "glasses", "i-circuit", "jammy-dodger", "jelly-baby", "key", "l-circuit", "locator", "m-circuit", "memory-circuit", "oscillator", "painter", "player-disk", "preset-disk", "p-circuit", "r-circuit", "r-key", "randomiser-circuit", "remote", "s-circuit", "save-disk", "scanner-circuit", "sonic", "t-circuit", "watch");
@@ -57,9 +55,5 @@ public class TARDISGiveTabComplete implements TabCompleter {
             }
         }
         return ImmutableList.of();
-    }
-
-    private List<String> partial(String token, Collection<String> from) {
-        return StringUtil.copyPartialMatches(token, from, new ArrayList<String>(from.size()));
     }
 }
