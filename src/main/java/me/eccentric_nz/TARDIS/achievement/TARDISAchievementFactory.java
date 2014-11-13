@@ -74,7 +74,8 @@ public class TARDISAchievementFactory {
                 }
             } else {
                 int req = plugin.getAchievementConfig().getInt(name + ".required");
-                int have = plugin.getUtils().parseInt(rsa.getAmount());
+                String amount = (rsa.getAmount().isEmpty()) ? "0" : rsa.getAmount();
+                int have = plugin.getUtils().parseInt(amount);
                 int sum = have + (Integer) obj;
                 if (sum >= req) {
                     achieved = true;
