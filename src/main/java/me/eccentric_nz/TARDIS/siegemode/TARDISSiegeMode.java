@@ -99,8 +99,39 @@ public class TARDISSiegeMode {
                 }
             }, 10L);
             set.put("siege_on", 0);
+            // remove trackers
             if (plugin.getTrackerKeeper().getInSiegeMode().contains(id)) {
                 plugin.getTrackerKeeper().getInSiegeMode().remove(Integer.valueOf(id));
+            }
+            if (plugin.getConfig().getInt("siege.breeding") > 0 || plugin.getConfig().getInt("siege.growth") > 0) {
+                String[] chu = rs.getChunk().split(":");
+                String w = chu[0];
+                if (plugin.getConfig().getInt("siege.breeding") > 0) {
+                    List<TARDISSiegeArea> breeding = new ArrayList<TARDISSiegeArea>();
+                    for (TARDISSiegeArea breeding_area : plugin.getTrackerKeeper().getSiegeBreedingAreas().get(w)) {
+                        if (breeding_area.getId() != id) {
+                            breeding.add(breeding_area);
+                        }
+                    }
+                    if (breeding.size() > 0) {
+                        plugin.getTrackerKeeper().getSiegeBreedingAreas().put(w, breeding);
+                    } else {
+                        plugin.getTrackerKeeper().getSiegeBreedingAreas().remove(w);
+                    }
+                }
+                if (plugin.getConfig().getInt("siege.growth") > 0) {
+                    List<TARDISSiegeArea> growth = new ArrayList<TARDISSiegeArea>();
+                    for (TARDISSiegeArea growth_area : plugin.getTrackerKeeper().getSiegeGrowthAreas().get(w)) {
+                        if (growth_area.getId() != id) {
+                            growth.add(growth_area);
+                        }
+                    }
+                    if (growth.size() > 0) {
+                        plugin.getTrackerKeeper().getSiegeGrowthAreas().put(w, growth);
+                    } else {
+                        plugin.getTrackerKeeper().getSiegeGrowthAreas().remove(w);
+                    }
+                }
             }
             TARDISMessage.send(p, "SIEGE_OFF");
         } else {

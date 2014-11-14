@@ -73,4 +73,8 @@ public class TARDISSiegeArea {
         int z = l.getBlockZ();
         return (x >= minX && x <= maxX && y >= minY && y <= maxY && z >= minZ && z <= maxZ);
     }
+
+    public int getId() {
+        return id;
+    }
 }
