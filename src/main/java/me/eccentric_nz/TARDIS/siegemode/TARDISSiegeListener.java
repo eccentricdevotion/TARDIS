@@ -217,7 +217,7 @@ public class TARDISSiegeListener implements Listener {
         HashMap<String, Object> wheret = new HashMap<String, Object>();
         wheret.put("tardis_id", rsc.getTardis_id());
         ResultSetTardis rst = new ResultSetTardis(plugin, wheret, "", false);
-        if (rst.resultSet()) {
+        if (!rst.resultSet()) {
             return;
         }
         int id = rst.getTardis_id();
