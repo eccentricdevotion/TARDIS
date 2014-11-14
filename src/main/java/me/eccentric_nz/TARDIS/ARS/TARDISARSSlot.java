@@ -99,7 +99,7 @@ public class TARDISARSSlot {
         int cz = c.getZ();
         switch (zz) {
             case 0:
-                return c.getWorld().getChunkAt(cz, cz - 4).getBlock(0, 64, 0).getZ();
+                return c.getWorld().getChunkAt(cx, cz - 4).getBlock(0, 64, 0).getZ();
             case 1:
                 return c.getWorld().getChunkAt(cx, cz - 3).getBlock(0, 64, 0).getZ();
             case 2:
