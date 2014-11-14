@@ -20,8 +20,11 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.TARDISDatabaseConnection;
+import org.bukkit.Chunk;
 
 /**
  *
@@ -47,7 +50,30 @@ public class TARDISSiegePersister {
             if (rs.isBeforeFirst()) {
                 while (rs.next()) {
                     if (rs.getBoolean("siege_on")) {
-                        plugin.getTrackerKeeper().getInSiegeMode().add(rs.getInt("tardis_id"));
+                        int id = rs.getInt("tardis_id");
+                        plugin.getTrackerKeeper().getInSiegeMode().add(id);
+                        if (plugin.getConfig().getInt("siege.breeding") > 0 || plugin.getConfig().getInt("siege.growth") > 0) {
+                            Chunk c = plugin.getUtils().getTARDISChunk(id);
+                            TARDISSiegeArea tsa = new TARDISSiegeArea(id, c);
+                            if (plugin.getConfig().getInt("siege.breeding") > 0) {
+                                List<TARDISSiegeArea> breeding_areas = plugin.getTrackerKeeper().getSiegeBreedingAreas().get(c.getWorld().getName());
+                                if (breeding_areas == null) {
+                                    breeding_areas = new ArrayList<TARDISSiegeArea>();
+                                }
+                                breeding_areas.add(tsa);
+                                plugin.getTrackerKeeper().getSiegeBreedingAreas().put(c.getWorld().getName(), breeding_areas);
+                            }
+                            if (plugin.getConfig().getInt("siege.growth") > 0) {
+                                plugin.debug("growth is set higher than 0");
+                                List<TARDISSiegeArea> growth_areas = plugin.getTrackerKeeper().getSiegeGrowthAreas().get(c.getWorld().getName());
+                                if (growth_areas == null) {
+                                    plugin.debug("the list was null");
+                                    growth_areas = new ArrayList<TARDISSiegeArea>();
+                                }
+                                growth_areas.add(tsa);
+                                plugin.getTrackerKeeper().getSiegeGrowthAreas().put(c.getWorld().getName(), growth_areas);
+                            }
+                        }
                         count++;
                     }
                 }

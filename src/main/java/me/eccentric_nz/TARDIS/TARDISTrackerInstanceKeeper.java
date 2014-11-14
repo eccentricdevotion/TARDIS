@@ -29,6 +29,7 @@ import me.eccentric_nz.TARDIS.info.TARDISInfoMenu;
 import me.eccentric_nz.TARDIS.move.TARDISMoveSession;
 import me.eccentric_nz.TARDIS.move.TARDISTeleportLocation;
 import me.eccentric_nz.TARDIS.rooms.TARDISSeedData;
+import me.eccentric_nz.TARDIS.siegemode.TARDISSiegeArea;
 import me.eccentric_nz.TARDIS.utility.TARDISAntiBuild;
 import org.bukkit.Location;
 import org.bukkit.block.Block;
@@ -53,6 +54,8 @@ public class TARDISTrackerInstanceKeeper {
     private final HashMap<Integer, UUID> rescue = new HashMap<Integer, UUID>();
     private final HashMap<Location, TARDISTeleportLocation> portals = new HashMap<Location, TARDISTeleportLocation>();
     private final HashMap<String, Sign> sign = new HashMap<String, Sign>();
+    private final HashMap<String, List<TARDISSiegeArea>> siegeBreedingAreas = new HashMap<String, List<TARDISSiegeArea>>();
+    private final HashMap<String, List<TARDISSiegeArea>> siegeGrowthAreas = new HashMap<String, List<TARDISSiegeArea>>();
     private final HashMap<UUID, Block> exterminate = new HashMap<UUID, Block>();
     private final HashMap<UUID, Block> lazarus = new HashMap<UUID, Block>();
     private final HashMap<UUID, Double[]> gravity = new HashMap<UUID, Double[]>();
@@ -153,6 +156,14 @@ public class TARDISTrackerInstanceKeeper {
 
     public HashMap<String, Sign> getSign() {
         return sign;
+    }
+
+    public HashMap<String, List<TARDISSiegeArea>> getSiegeBreedingAreas() {
+        return siegeBreedingAreas;
+    }
+
+    public HashMap<String, List<TARDISSiegeArea>> getSiegeGrowthAreas() {
+        return siegeGrowthAreas;
     }
 
     public HashMap<UUID, String> getBlock() {

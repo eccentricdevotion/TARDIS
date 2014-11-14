@@ -227,6 +227,27 @@ public class TARDISUtils {
     }
 
     /**
+     * Get the chunk where the interior TARDIS is.
+     *
+     * @param id the database record id of the TARDIS to get the chunk for
+     * @return the TARDIS interior chunk
+     */
+    public Chunk getTARDISChunk(int id) {
+        HashMap<String, Object> where = new HashMap<String, Object>();
+        where.put("tardis_id", id);
+        ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);
+        if (rs.resultSet()) {
+            String c = rs.getChunk();
+            String[] data = c.split(":");
+            World w = plugin.getServer().getWorld(data[0]);
+            int cx = plugin.getUtils().parseInt(data[1]);
+            int cz = plugin.getUtils().parseInt(data[2]);
+            return w.getChunkAt(cx, cz);
+        }
+        return null;
+    }
+
+    /**
      * Gets a start location for building the inner TARDIS.
      *
      * @param id the TARDIS this location belongs to.

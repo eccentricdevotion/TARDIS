@@ -16,16 +16,22 @@
  */
 package me.eccentric_nz.TARDIS.siegemode;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.builders.TARDISMaterialisationData;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetCurrentLocation;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
+import org.bukkit.Chunk;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
+import org.bukkit.entity.Creeper;
+import org.bukkit.entity.Entity;
+import org.bukkit.entity.Monster;
 import org.bukkit.entity.Player;
 
 /**
@@ -118,6 +124,43 @@ public class TARDISSiegeMode {
             plugin.getTrackerKeeper().getInSiegeMode().add(id);
             set.put("siege_on", 1);
             TARDISMessage.send(p, "SIEGE_ON");
+            // butcher hostile mobs?
+            if (plugin.getConfig().getBoolean("seige.butcher")) {
+                TARDISMessage.send(p, "SIEGE_BUTCHER");
+                for (Entity ent : p.getNearbyEntities(72d, 32d, 72d)) {
+                    if (ent instanceof Monster) {
+                        if (ent instanceof Creeper) {
+                            // check it is  not the Artron Capacitor Creeper
+                            Location cl = ent.getLocation();
+                            Location dbl = plugin.getUtils().getLocationFromDB(rs.getCreeper(), 0.0f, 0.0f);
+                            if (cl.getBlockX() == dbl.getBlockX() && cl.getBlockY() == dbl.getBlockY() && cl.getBlockZ() == dbl.getBlockZ()) {
+                                continue;
+                            }
+                        }
+                        ent.remove();
+                    }
+                }
+            }
+            if (plugin.getConfig().getInt("siege.breeding") > 0 || plugin.getConfig().getInt("siege.growth") > 0) {
+                Chunk c = plugin.getUtils().getTARDISChunk(id);
+                TARDISSiegeArea tsa = new TARDISSiegeArea(id, c);
+                if (plugin.getConfig().getInt("siege.breeding") > 0) {
+                    List<TARDISSiegeArea> breeding_areas = plugin.getTrackerKeeper().getSiegeBreedingAreas().get(c.getWorld().getName());
+                    if (breeding_areas == null) {
+                        breeding_areas = new ArrayList<TARDISSiegeArea>();
+                    }
+                    breeding_areas.add(tsa);
+                    plugin.getTrackerKeeper().getSiegeBreedingAreas().put(c.getWorld().getName(), breeding_areas);
+                }
+                if (plugin.getConfig().getInt("siege.growth") > 0) {
+                    List<TARDISSiegeArea> growth_areas = plugin.getTrackerKeeper().getSiegeGrowthAreas().get(c.getWorld().getName());
+                    if (growth_areas == null) {
+                        growth_areas = new ArrayList<TARDISSiegeArea>();
+                    }
+                    growth_areas.add(tsa);
+                    plugin.getTrackerKeeper().getSiegeGrowthAreas().put(c.getWorld().getName(), growth_areas);
+                }
+            }
         }
         // update the database
         new QueryFactory(plugin).doUpdate("tardis", set, wheres);
