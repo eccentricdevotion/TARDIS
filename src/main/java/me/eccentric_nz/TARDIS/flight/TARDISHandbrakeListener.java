@@ -87,6 +87,7 @@ public class TARDISHandbrakeListener implements Listener {
                 where.put("location", hb_loc);
                 ResultSetControls rsc = new ResultSetControls(plugin, where, false);
                 if (rsc.resultSet()) {
+                    event.setCancelled(true);
                     final int id = rsc.getTardis_id();
                     TARDISCircuitChecker tcc = null;
                     if (plugin.getConfig().getString("preferences.difficulty").equals("hard") && !plugin.getUtils().inGracePeriod(player, event.getAction().equals(Action.LEFT_CLICK_BLOCK))) {
@@ -112,7 +113,6 @@ public class TARDISHandbrakeListener implements Listener {
                     final HashMap<String, Object> setdoor = new HashMap<String, Object>();
                     final HashMap<String, Object> wheredoor = new HashMap<String, Object>();
                     if (rs.resultSet()) {
-                        event.setCancelled(true);
                         UUID ownerUUID = rs.getUuid();
                         final UUID uuid = player.getUniqueId();
                         if ((rs.isIso_on() && !uuid.equals(ownerUUID) && event.isCancelled() && !player.hasPermission("tardis.skeletonkey")) || plugin.getTrackerKeeper().getJohnSmith().containsKey(uuid)) {
