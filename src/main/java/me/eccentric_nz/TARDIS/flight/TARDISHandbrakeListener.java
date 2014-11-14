@@ -93,9 +93,12 @@ public class TARDISHandbrakeListener implements Listener {
                         tcc = new TARDISCircuitChecker(plugin, id);
                         tcc.getCircuits();
                     }
-                    String foundcc = (tcc != null) ? "true" : "false";
                     if (tcc != null && !tcc.hasMaterialisation()) {
                         TARDISMessage.send(player, "NO_MAT_CIRCUIT");
+                        return;
+                    }
+                    if (plugin.getTrackerKeeper().getInSiegeMode().contains(id)) {
+                        TARDISMessage.send(player, "SIEGE_NO_CONTROL");
                         return;
                     }
                     HashMap<String, Object> wherei = new HashMap<String, Object>();
