@@ -24,7 +24,7 @@ import me.eccentric_nz.TARDIS.achievement.TARDISAchievementFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
-import me.eccentric_nz.tardishorsespeed.TardisHorseSpeed;
+import me.eccentric_nz.tardishelper.TARDISHelper;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.OfflinePlayer;
@@ -201,8 +201,8 @@ public class TARDISFarmer {
                             tmhor.setHorseInventory(horse.getInventory().getContents());
                             tmhor.setDomesticity(horse.getDomestication());
                             tmhor.setJumpStrength(horse.getJumpStrength());
-                            if (plugin.isHorseSpeedOnServer()) {
-                                TardisHorseSpeed ths = (TardisHorseSpeed) plugin.getPM().getPlugin("TARDISHorseSpeed");
+                            if (plugin.isHelperOnServer()) {
+                                TARDISHelper ths = (TARDISHelper) plugin.getPM().getPlugin("TARDISHelper");
                                 double speed = ths.getHorseSpeed(horse);
                                 tmhor.setSpeed(speed);
                             }
@@ -520,8 +520,8 @@ public class TARDISFarmer {
                                 pinv.addItem(leash);
                                 p.updateInventory();
                             }
-                            if (plugin.isHorseSpeedOnServer()) {
-                                TardisHorseSpeed ths = (TardisHorseSpeed) plugin.getPM().getPlugin("TARDISHorseSpeed");
+                            if (plugin.isHelperOnServer()) {
+                                TARDISHelper ths = (TARDISHelper) plugin.getPM().getPlugin("TARDISHelper");
                                 ths.setHorseSpeed(equine, e.getSpeed());
                             }
                             equine.setRemoveWhenFarAway(false);

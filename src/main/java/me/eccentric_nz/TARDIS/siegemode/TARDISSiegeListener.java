@@ -30,7 +30,7 @@ import me.eccentric_nz.TARDIS.database.ResultSetTravellers;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
 import me.eccentric_nz.TARDIS.travel.TARDISTimeTravel;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
-import me.eccentric_nz.tardissiegeprotect.TARDISSiegeProtect;
+import me.eccentric_nz.tardishelper.TARDISHelper;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
@@ -136,8 +136,8 @@ public class TARDISSiegeListener implements Listener {
         im.setLore(lore);
         is.setItemMeta(im);
         Item item = b.getWorld().dropItemNaturally(b.getLocation(), is);
-        if (plugin.isSiegeProtectOnServer()) {
-            TARDISSiegeProtect tsp = (TARDISSiegeProtect) plugin.getPM().getPlugin("TARDISSiegeProtect");
+        if (plugin.isHelperOnServer()) {
+            TARDISHelper tsp = (TARDISHelper) plugin.getPM().getPlugin("TARDISHelper");
             tsp.protect(item);
         }
     }

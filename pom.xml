@@ -165,20 +165,8 @@
             </exclusions>
         </dependency>
         <dependency>
-            <groupId>me.eccentric_nz.tardishorsespeed</groupId>
-            <artifactId>TARDISHorseSpeed</artifactId>
-            <version>1.0d</version>
-            <type>jar</type>
-            <exclusions>
-                <exclusion>
-                    <artifactId>craftbukkit</artifactId>
-                    <groupId>org.bukkit</groupId>
-                </exclusion>
-            </exclusions>
-        </dependency>
-        <dependency>
-            <groupId>me.eccentric_nz.tardissiegeprotect</groupId>
-            <artifactId>TARDISSiegeProtect</artifactId>
+            <groupId>me.eccentric_nz.tardishelper</groupId>
+            <artifactId>TARDISHelper</artifactId>
             <version>1.0</version>
             <type>jar</type>
             <exclusions>

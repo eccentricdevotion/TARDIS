@@ -26,7 +26,7 @@ import me.eccentric_nz.TARDIS.database.ResultSetTravellers;
 import me.eccentric_nz.TARDIS.mobfarming.TARDISHorse;
 import me.eccentric_nz.TARDIS.travel.TARDISDoorLocation;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
-import me.eccentric_nz.tardishorsespeed.TardisHorseSpeed;
+import me.eccentric_nz.tardishelper.TARDISHelper;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
@@ -122,8 +122,8 @@ public class TARDISHorseListener implements Listener {
                         tmhor.setJumpStrength(h.getJumpStrength());
                         tmhor.setHorseHealth(h.getMaxHealth());
                         tmhor.setHealth(h.getHealth());
-                        if (plugin.isHorseSpeedOnServer()) {
-                            TardisHorseSpeed ths = (TardisHorseSpeed) plugin.getPM().getPlugin("TARDISHorseSpeed");
+                        if (plugin.isHelperOnServer()) {
+                            TARDISHelper ths = (TARDISHelper) plugin.getPM().getPlugin("TARDISHelper");
                             tmhor.setSpeed(ths.getHorseSpeed(h));
                         }
                         // eject player
@@ -168,8 +168,8 @@ public class TARDISHorseListener implements Listener {
                                     equine.getInventory().setArmor(bard);
                                 }
                             }
-                            if (plugin.isHorseSpeedOnServer()) {
-                                TardisHorseSpeed ths = (TardisHorseSpeed) plugin.getPM().getPlugin("TARDISHorseSpeed");
+                            if (plugin.isHelperOnServer()) {
+                                TARDISHelper ths = (TARDISHelper) plugin.getPM().getPlugin("TARDISHelper");
                                 ths.setHorseSpeed(equine, tmhor.getSpeed());
                             }
                             Tameable tamed = (Tameable) equine;

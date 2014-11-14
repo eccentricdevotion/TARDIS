@@ -132,8 +132,7 @@ public class TARDIS extends JavaPlugin {
     private boolean hasVersion = false;
     private boolean tardisSpawn = false;
     private boolean worldGuardOnServer;
-    private boolean horseSpeedOnServer;
-    private boolean siegeProtectOnServer;
+    private boolean helperOnServer;
     private boolean barAPIOnServer;
     private boolean disguisesOnServer;
     private PluginManager pm;
@@ -150,8 +149,7 @@ public class TARDIS extends JavaPlugin {
 
     public TARDIS() {
         this.worldGuardOnServer = false;
-        this.horseSpeedOnServer = false;
-        this.siegeProtectOnServer = false;
+        this.helperOnServer = false;
         this.barAPIOnServer = false;
     }
 
@@ -217,8 +215,7 @@ public class TARDIS extends JavaPlugin {
             startSound();
             loadWorldGuard();
             loadPluginRespect();
-            loadHorseSpeed();
-            loadSiegeProtect();
+            loadHelper();
             loadBarAPI();
             startZeroHealing();
 
@@ -488,24 +485,13 @@ public class TARDIS extends JavaPlugin {
     }
 
     /**
-     * Checks if the TARDISHorseSpeed plugin is available, and loads support if
-     * it is.
+     * Checks if the TARDISHelper plugin is available, and loads support if it
+     * is.
      */
-    private void loadHorseSpeed() {
-        if (pm.getPlugin("TARDISHorseSpeed") != null) {
-            debug("Hooking into TARDISHorseSpeed!");
-            horseSpeedOnServer = true;
-        }
-    }
-
-    /**
-     * Checks if the TARDISHorseSpeed plugin is available, and loads support if
-     * it is.
-     */
-    private void loadSiegeProtect() {
-        if (pm.getPlugin("TARDISSiegeProtect") != null) {
-            debug("Hooking into TARDISSiegeProtect!");
-            siegeProtectOnServer = true;
+    private void loadHelper() {
+        if (pm.getPlugin("TARDISHelper") != null) {
+            debug("Hooking into TARDISHelper!");
+            helperOnServer = true;
         }
     }
 
@@ -874,12 +860,8 @@ public class TARDIS extends JavaPlugin {
         return worldGuardOnServer;
     }
 
-    public boolean isHorseSpeedOnServer() {
-        return horseSpeedOnServer;
-    }
-
-    public boolean isSiegeProtectOnServer() {
-        return siegeProtectOnServer;
+    public boolean isHelperOnServer() {
+        return helperOnServer;
     }
 
     public boolean isBarAPIOnServer() {
