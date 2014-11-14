@@ -510,11 +510,6 @@ public class TARDISButtonListener implements Listener {
                                         TARDISMessage.send(player, "NOT_WHILE_MAT");
                                         return;
                                     }
-                                    int rebuild = plugin.getArtronConfig().getInt("random");
-                                    if (level < rebuild) {
-                                        TARDISMessage.send(player, "ENERGY_NO_REBUILD");
-                                        return;
-                                    }
                                     // toggle siege mode
                                     new TARDISSiegeMode(plugin).toggleViaSwitch(id, player);
                                     break;
