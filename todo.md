@@ -8,6 +8,10 @@
 5. `/tardis hide` and `/tardis rebuild` has materialisation animation
 6. New underwater temple preset
 7. Siege mode
+8. Update the desktop theme runnable so that it _only_ updates the wall and floor blocks and not changing the TARDIS type
+9. Update the desktop theme runnable so that it doesn't close doors to any rooms that have been grown
+10. Update TARDIS schematics to include: light switch, keyboard, siege switch, toggle wool switch and back button by default OR
+11. Make a sign GUI for all controls except repeaters and handbrake
 
 ##Future version `3.3+`
 * SpongeAPI
