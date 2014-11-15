@@ -53,6 +53,7 @@ public enum TARDIS_COMMAND {
     save,
     save_player,
     secondary,
+    section,
     setdest,
     tagtheood,
     theme,
