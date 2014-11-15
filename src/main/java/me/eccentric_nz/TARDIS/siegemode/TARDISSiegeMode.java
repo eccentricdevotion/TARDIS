@@ -19,11 +19,17 @@ package me.eccentric_nz.TARDIS.siegemode;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.builders.TARDISMaterialisationData;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetCurrentLocation;
+import me.eccentric_nz.TARDIS.database.ResultSetPlayerPrefs;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
+import me.eccentric_nz.TARDIS.desktop.TARDISThemeRunnable;
+import me.eccentric_nz.TARDIS.desktop.TARDISUpgradeData;
+import me.eccentric_nz.TARDIS.enumeration.SCHEMATIC;
+import me.eccentric_nz.TARDIS.rooms.TARDISWalls.Pair;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import org.bukkit.Chunk;
 import org.bukkit.Location;
@@ -50,6 +56,7 @@ public class TARDISSiegeMode {
         this.plugin = plugin;
     }
 
+    @SuppressWarnings("deprecation")
     public void toggleViaSwitch(int id, Player p) {
         // get the current siege status
         HashMap<String, Object> where = new HashMap<String, Object>();
@@ -132,6 +139,28 @@ public class TARDISSiegeMode {
                         plugin.getTrackerKeeper().getSiegeGrowthAreas().remove(w);
                     }
                 }
+
+            }
+            if (plugin.getConfig().getBoolean("siege.texture")) {
+                UUID uuid = p.getUniqueId();
+                HashMap<String, Object> wherepp = new HashMap<String, Object>();
+                wherepp.put("uuid", rs.getUuid().toString());
+                ResultSetPlayerPrefs rspp = new ResultSetPlayerPrefs(plugin, wherepp);
+                if (rspp.resultSet()) {
+                    Pair wall = plugin.getTardisWalls().blocks.get(rspp.getWall());
+                    Pair floor = plugin.getTardisWalls().blocks.get(rspp.getFloor());
+                    // change to a saved theme
+                    SCHEMATIC schm = rs.getSchematic();
+                    TARDISUpgradeData tud = new TARDISUpgradeData();
+                    tud.setWall(wall.getType().toString() + ":" + wall.getData());
+                    tud.setFloor(floor.getType().toString() + ":" + floor.getData());
+                    tud.setSchematic(schm);
+                    tud.setPrevious(schm);
+                    // start the rebuild
+                    TARDISThemeRunnable ttr = new TARDISThemeRunnable(plugin, uuid, tud);
+                    int task = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, ttr, 5L, 2L);
+                    ttr.setTaskID(task);
+                }
             }
             TARDISMessage.send(p, "SIEGE_OFF");
         } else {
@@ -191,6 +220,19 @@ public class TARDISSiegeMode {
                     growth_areas.add(tsa);
                     plugin.getTrackerKeeper().getSiegeGrowthAreas().put(c.getWorld().getName(), growth_areas);
                 }
+            }
+            if (plugin.getConfig().getBoolean("siege.texture")) {
+                // change to a dark theme
+                SCHEMATIC schm = rs.getSchematic();
+                TARDISUpgradeData tud = new TARDISUpgradeData();
+                tud.setFloor("WOOL:15");
+                tud.setWall("WOOL:7");
+                tud.setSchematic(schm);
+                tud.setPrevious(schm);
+                // start the rebuild
+                TARDISThemeRunnable ttr = new TARDISThemeRunnable(plugin, p.getUniqueId(), tud);
+                int task = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, ttr, 5L, 2L);
+                ttr.setTaskID(task);
             }
         }
         // update the database
