@@ -229,6 +229,7 @@ public class TARDISCondensables {
             condensables.put("NETHER_WARTS", 2);
             condensables.put("NOTE_BLOCK", 40);
             condensables.put("OBSIDIAN", 130);
+            condensables.put("PACKED_ICE", 100);
             condensables.put("PAINTING", 25);
             condensables.put("PAPER", 10);
             condensables.put("PISTON_BASE", 60);
