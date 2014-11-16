@@ -40,6 +40,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.block.BlockBreakEvent;
+import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.entity.ItemDespawnEvent;
 import org.bukkit.event.player.PlayerDropItemEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
@@ -140,6 +141,8 @@ public class TARDISSiegeListener implements Listener {
             TARDISHelper tsp = (TARDISHelper) plugin.getPM().getPlugin("TARDISHelper");
             tsp.protect(item);
         }
+        // track it
+        plugin.getTrackerKeeper().getIsSiegeCube().add(id);
     }
 
     @EventHandler(ignoreCancelled = true)
@@ -177,6 +180,8 @@ public class TARDISSiegeListener implements Listener {
                 item.remove();
                 loc.getBlock().setType(Material.HUGE_MUSHROOM_1);
                 loc.getBlock().setData((byte) 14, true);
+                // remove tracker
+                plugin.getTrackerKeeper().getIsSiegeCube().remove(Integer.valueOf(id));
                 // update the current location
                 HashMap<String, Object> where = new HashMap<String, Object>();
                 where.put("tardis_id", id);
@@ -189,6 +194,16 @@ public class TARDISSiegeListener implements Listener {
                 new QueryFactory(plugin).doUpdate("current", set, where);
             }
         }, 3L);
+    }
+
+    @EventHandler(ignoreCancelled = true)
+    public void onSiegeCubePlace(final BlockPlaceEvent event) {
+        ItemStack is = event.getItemInHand();
+        if (!isSiegeCube(is)) {
+            plugin.debug("not a siege cube");
+            return;
+        }
+        plugin.debug("siege cube placed");
     }
 
     @EventHandler(ignoreCancelled = true)

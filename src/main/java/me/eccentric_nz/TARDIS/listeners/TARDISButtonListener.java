@@ -510,6 +510,11 @@ public class TARDISButtonListener implements Listener {
                                         TARDISMessage.send(player, "NOT_WHILE_MAT");
                                         return;
                                     }
+                                    // not while a siege cube item
+                                    if (plugin.getTrackerKeeper().getIsSiegeCube().contains(id)) {
+                                        TARDISMessage.send(player, "SIEGE_CUBED");
+                                        return;
+                                    }
                                     // toggle siege mode
                                     new TARDISSiegeMode(plugin).toggleViaSwitch(id, player);
                                     break;
