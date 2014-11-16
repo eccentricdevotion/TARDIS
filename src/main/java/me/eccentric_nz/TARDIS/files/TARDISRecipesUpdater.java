@@ -231,6 +231,9 @@ public class TARDISRecipesUpdater {
             if (i > 0) {
                 plugin.getConsole().sendMessage(plugin.getPluginName() + "Added " + ChatColor.AQUA + i + ChatColor.RESET + " new items to recipes.yml");
             }
+            if (!recipes_config.get("shaped.TARDIS Key.result").equals(plugin.getConfig().getString("preferences.key"))) {
+                plugin.getConsole().sendMessage(plugin.getPluginName() + "The TARDIS Key recipe result (recipes.yml) does not match the configured key preference (config.yml)");
+            }
         } catch (IOException io) {
             plugin.debug("Could not save recipes.yml, " + io);
         }
