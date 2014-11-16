@@ -8,9 +8,7 @@
 5. `/tardis hide` and `/tardis rebuild` has materialisation animation
 6. New underwater temple preset
 7. Siege mode
-    * can't disengage mode if Siege Cube is not a placed block
     * healing boost
-    * artron depletion
     * creeper sacrifice?
 8. Update TARDIS schematics to include: light switch, keyboard, siege switch, toggle wool switch and back button by default OR
 9. Make a sign GUI for all controls except repeaters and handbrake

@@ -67,6 +67,7 @@ import me.eccentric_nz.TARDIS.recipes.TARDISShapelessRecipe;
 import me.eccentric_nz.TARDIS.rooms.TARDISWalls;
 import me.eccentric_nz.TARDIS.rooms.TARDISZeroRoomRunnable;
 import me.eccentric_nz.TARDIS.siegemode.TARDISSiegePersister;
+import me.eccentric_nz.TARDIS.siegemode.TARDISSiegeRunnable;
 import me.eccentric_nz.TARDIS.travel.TARDISArea;
 import me.eccentric_nz.TARDIS.travel.TARDISPluginRespect;
 import me.eccentric_nz.TARDIS.utility.TARDISMapChecker;
@@ -460,6 +461,21 @@ public class TARDIS extends JavaPlugin {
                 return;
             }
             standbyTask = this.getServer().getScheduler().scheduleSyncRepeatingTask(this, new TARDISStandbyMode(this), 6000L, repeat);
+        }
+    }
+
+    /**
+     * Starts a repeating task that removes Artron Energy from the TARDIS while
+     * it is in Siege Mode. Only runs if `siege_ticks` in artron.yml is greater
+     * than 0 (the default is 1500 or every 1 minute 15 seconds).
+     */
+    public void startSiegeTicks() {
+        if (getConfig().getBoolean("siege.enabled")) {
+            long ticks = getArtronConfig().getLong("siege_ticks");
+            if (ticks <= 0) {
+                return;
+            }
+            this.getServer().getScheduler().scheduleSyncRepeatingTask(this, new TARDISSiegeRunnable(this), 1500L, ticks);
         }
     }
 
