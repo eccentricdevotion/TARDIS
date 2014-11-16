@@ -26,8 +26,8 @@ import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetCurrentLocation;
 import me.eccentric_nz.TARDIS.database.ResultSetPlayerPrefs;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
-import me.eccentric_nz.TARDIS.desktop.TARDISThemeRunnable;
 import me.eccentric_nz.TARDIS.desktop.TARDISUpgradeData;
+import me.eccentric_nz.TARDIS.desktop.TARDISWallFloorRunnable;
 import me.eccentric_nz.TARDIS.enumeration.SCHEMATIC;
 import me.eccentric_nz.TARDIS.rooms.TARDISWalls.Pair;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
@@ -157,8 +157,9 @@ public class TARDISSiegeMode {
                     tud.setSchematic(schm);
                     tud.setPrevious(schm);
                     // start the rebuild
-                    TARDISThemeRunnable ttr = new TARDISThemeRunnable(plugin, uuid, tud);
-                    int task = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, ttr, 5L, 2L);
+                    TARDISWallFloorRunnable ttr = new TARDISWallFloorRunnable(plugin, uuid, tud);
+                    long delay = Math.round(20 / plugin.getConfig().getDouble("growth.room_speed"));
+                    int task = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, ttr, 5L, delay);
                     ttr.setTaskID(task);
                 }
             }
@@ -230,8 +231,9 @@ public class TARDISSiegeMode {
                 tud.setSchematic(schm);
                 tud.setPrevious(schm);
                 // start the rebuild
-                TARDISThemeRunnable ttr = new TARDISThemeRunnable(plugin, p.getUniqueId(), tud);
-                int task = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, ttr, 5L, 2L);
+                TARDISWallFloorRunnable ttr = new TARDISWallFloorRunnable(plugin, p.getUniqueId(), tud);
+                long delay = Math.round(20 / plugin.getConfig().getDouble("growth.room_speed"));
+                int task = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, ttr, 5L, delay);
                 ttr.setTaskID(task);
             }
         }
