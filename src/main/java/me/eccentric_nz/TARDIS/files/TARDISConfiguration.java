@@ -324,7 +324,7 @@ public class TARDISConfiguration {
         roomStrOptions.put("rooms.HARMONY.seed", "BRICK_STAIRS");
         roomStrOptions.put("rooms.KITCHEN.seed", "PUMPKIN");
         roomStrOptions.put("rooms.LAZARUS.seed", "FURNACE");
-        roomStrOptions.put("rooms.LIBRARY.seed", "BOOKSHELF");
+        roomStrOptions.put("rooms.LIBRARY.seed", "ENCHANTMENT_TABLE");
         roomStrOptions.put("rooms.MUSHROOM.seed", "GRAVEL");
         roomStrOptions.put("rooms.PASSAGE.seed", "CLAY");
         roomStrOptions.put("rooms.POOL.seed", "SNOW_BLOCK");

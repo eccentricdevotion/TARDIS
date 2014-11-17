@@ -34,7 +34,7 @@ rooms:
     enabled: true
     cost: 550
     offset: -4
-    seed: BOOKSHELF
+    seed: ENCHANTMENT_TABLE
     user: false
   POOL:
     enabled: true
