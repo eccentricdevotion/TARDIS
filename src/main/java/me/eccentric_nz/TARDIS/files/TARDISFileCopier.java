@@ -69,8 +69,10 @@ public class TARDISFileCopier {
         String basepath = plugin.getDataFolder() + File.separator + "schematics" + File.separator;
         String userbasepath = plugin.getDataFolder() + File.separator + "user_schematics" + File.separator;
         for (SCHEMATIC ts : CONSOLES.getByNames().values()) {
-            String str = basepath + ts.getPermission() + ".tschm";
-            copy(str, plugin.getResource(ts.getPermission() + ".tschm"), true);
+            if (!ts.isCustom()) {
+                String str = basepath + ts.getPermission() + ".tschm";
+                copy(str, plugin.getResource(ts.getPermission() + ".tschm"), true);
+            }
         }
         // copy default room files as well
         for (TARDISARS ta : TARDISARS.values()) {

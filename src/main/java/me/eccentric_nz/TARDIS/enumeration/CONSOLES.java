@@ -25,22 +25,9 @@ import org.bukkit.Material;
  */
 public class CONSOLES {
 
-    private static final HashMap<String, SCHEMATIC> byNames = new HashMap<String, SCHEMATIC>();
+    private final static HashMap<String, SCHEMATIC> byNames = new HashMap<String, SCHEMATIC>();
     private final static HashMap<String, SCHEMATIC> byPerms = new HashMap<String, SCHEMATIC>();
     private final static HashMap<String, SCHEMATIC> byMaterials = new HashMap<String, SCHEMATIC>();
-
-    public CONSOLES() {
-        byNames.put("ARS", new SCHEMATIC("QUARTZ_BLOCK", "ars", "ARS Console", true, false, true, false));
-        byNames.put("BIGGER", new SCHEMATIC("GOLD_BLOCK", "bigger", "A Bigger Console", false, false, true, false));
-        byNames.put("BUDGET", new SCHEMATIC("IRON_BLOCK", "budget", "Default Console", true, false, true, false));
-        byNames.put("DELUXE", new SCHEMATIC("DIAMOND_BLOCK", "deluxe", "Supersized Deluxe Consol", false, true, true, false));
-        byNames.put("ELEVENTH", new SCHEMATIC("EMERALD_BLOCK", "eleventh", "11th Doctor's Console", false, true, true, false));
-        byNames.put("PLANK", new SCHEMATIC("BOOKSHELF", "plank", "Wood Console", true, false, false, false));
-        byNames.put("REDSTONE", new SCHEMATIC("REDSTONE_BLOCK", "redstone", "Redstone Console", false, false, true, false));
-        byNames.put("STEAMPUNK", new SCHEMATIC("COAL_BLOCK", "steampunk", "Steampunk Console", true, false, true, false));
-        byNames.put("TOM", new SCHEMATIC("LAPIS_BLOCK", "tom", "4th Doctor's Console", true, false, false, false));
-        byNames.put("WAR", new SCHEMATIC("STAINED_CLAY", "war", "War Doctor's Console", true, false, true, false));
-    }
 
     public static HashMap<String, SCHEMATIC> getByNames() {
         return byNames;
@@ -84,11 +71,4 @@ public class CONSOLES {
     public static HashMap<String, SCHEMATIC> getByMaterials() {
         return byMaterials;
     }
-
-//    static {
-//        for (SCHEMATIC tschm : byNames.values()) {
-//            byPerms.put(tschm.getPermission(), tschm);
-//            byMaterials.put(tschm.getSeed(), tschm);
-//        }
-//    }
 }

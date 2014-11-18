@@ -28,7 +28,7 @@ import org.bukkit.Material;
  *
  * @author eccentric_nz
  */
-public class TARDISCustomLoader {
+public class TARDISConsoleLoader {
 
     private final TARDIS plugin;
     String seed;
@@ -38,11 +38,21 @@ public class TARDISCustomLoader {
     boolean tall;
     boolean beacon;
 
-    public TARDISCustomLoader(TARDIS plugin) {
+    public TARDISConsoleLoader(TARDIS plugin) {
         this.plugin = plugin;
     }
 
     public void addSchematics() {
+        CONSOLES.getByNames().put("ARS", new SCHEMATIC("QUARTZ_BLOCK", "ars", "ARS Console", true, false, true, false));
+        CONSOLES.getByNames().put("BIGGER", new SCHEMATIC("GOLD_BLOCK", "bigger", "A Bigger Console", false, false, true, false));
+        CONSOLES.getByNames().put("BUDGET", new SCHEMATIC("IRON_BLOCK", "budget", "Default Console", true, false, true, false));
+        CONSOLES.getByNames().put("DELUXE", new SCHEMATIC("DIAMOND_BLOCK", "deluxe", "Supersized Deluxe Consol", false, true, true, false));
+        CONSOLES.getByNames().put("ELEVENTH", new SCHEMATIC("EMERALD_BLOCK", "eleventh", "11th Doctor's Console", false, true, true, false));
+        CONSOLES.getByNames().put("PLANK", new SCHEMATIC("BOOKSHELF", "plank", "Wood Console", true, false, false, false));
+        CONSOLES.getByNames().put("REDSTONE", new SCHEMATIC("REDSTONE_BLOCK", "redstone", "Redstone Console", false, false, true, false));
+        CONSOLES.getByNames().put("STEAMPUNK", new SCHEMATIC("COAL_BLOCK", "steampunk", "Steampunk Console", true, false, true, false));
+        CONSOLES.getByNames().put("TOM", new SCHEMATIC("LAPIS_BLOCK", "tom", "4th Doctor's Console", true, false, false, false));
+        CONSOLES.getByNames().put("WAR", new SCHEMATIC("STAINED_CLAY", "war", "War Doctor's Console", true, false, true, false));
         for (final String console : plugin.getCustomConsolesConfig().getKeys(false)) {
             if (plugin.getCustomConsolesConfig().getBoolean(console + ".enabled")) {
                 // check that the .tschm file exists
@@ -84,8 +94,5 @@ public class TARDISCustomLoader {
         }
         // reload lookup maps
         CONSOLES.loadLookups();
-        for (String key : CONSOLES.getByNames().keySet()) {
-            plugin.debug(key);
-        }
     }
 }

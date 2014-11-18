@@ -37,7 +37,7 @@ import me.eccentric_nz.TARDIS.artron.TARDISCondensables;
 import me.eccentric_nz.TARDIS.artron.TARDISCreeperChecker;
 import me.eccentric_nz.TARDIS.artron.TARDISStandbyMode;
 import me.eccentric_nz.TARDIS.builders.TARDISBuilderInner;
-import me.eccentric_nz.TARDIS.builders.TARDISCustomLoader;
+import me.eccentric_nz.TARDIS.builders.TARDISConsoleLoader;
 import me.eccentric_nz.TARDIS.builders.TARDISPresetBuilderFactory;
 import me.eccentric_nz.TARDIS.builders.TARDISSpace;
 import me.eccentric_nz.TARDIS.chameleon.TARDISChameleonPreset;
@@ -209,8 +209,8 @@ public class TARDIS extends JavaPlugin {
             utils = new TARDISUtils(this);
             buildKeeper.setSeeds(getSeeds());
             tardisWalls = new TARDISWalls();
+            new TARDISConsoleLoader(this).addSchematics();
             loadFiles();
-            new TARDISCustomLoader(this).addSchematics();
             this.disguisesOnServer = pm.isPluginEnabled("LibsDisguises");
             generalKeeper = new TARDISGeneralInstanceKeeper(this);
             generalKeeper.setQuotes(quotes());
