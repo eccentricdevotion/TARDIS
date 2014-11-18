@@ -17,7 +17,6 @@
 package me.eccentric_nz.TARDIS.desktop;
 
 import java.util.Set;
-import me.eccentric_nz.TARDIS.ARS.TARDISARS;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.enumeration.CONSOLES;
 import org.bukkit.entity.Player;
@@ -28,7 +27,6 @@ import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryDragEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
 
 /**
  * A control room's look could be changed over time. The process by which an
@@ -71,13 +69,12 @@ public class TARDISThemeMenuListener implements Listener {
                         }
                         // get Display name of selected console
                         ItemStack choice = inv.getItem(slot);
-                        ItemMeta choice_im = choice.getItemMeta();
-                        String choice_name = TARDISARS.ARSFor(choice_im.getDisplayName()).getActualName();
-                        if (p.hasPermission("tardis." + choice_name.toLowerCase())) {
+                        String perm = CONSOLES.SCHEMATICFor(choice.getType()).getPermission();
+                        if (p.hasPermission("tardis." + perm)) {
                             // remember the upgrade choice
                             TARDISUpgradeData tud = plugin.getTrackerKeeper().getUpgrades().get(p.getUniqueId());
-                            if (tud.getLevel() > plugin.getArtronConfig().getInt("upgrades." + choice_name.toLowerCase())) {
-                                tud.setSchematic(CONSOLES.SCHEMATICFor(choice_name.toLowerCase()));
+                            if (tud.getLevel() > plugin.getArtronConfig().getInt("upgrades." + perm)) {
+                                tud.setSchematic(CONSOLES.SCHEMATICFor(perm));
                                 plugin.getTrackerKeeper().getUpgrades().put(p.getUniqueId(), tud);
                                 // open the wall block GUI
                                 wall(p);
