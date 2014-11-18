@@ -174,7 +174,7 @@ public class TARDIS extends JavaPlugin {
             new TARDISRecipesUpdater(this).addRecipes();
             loadLanguage();
             loadDatabase();
-            // update database addSchematics and populate uuid fields
+            // update database add and populate uuid fields
             if (!getConfig().getBoolean("conversions.uuid_conversion_done")) {
                 TARDISUUIDConverter uc = new TARDISUUIDConverter(this);
                 if (!uc.convert()) {

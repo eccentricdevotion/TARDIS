@@ -62,7 +62,6 @@ public class TARDISARSMethods {
 
     public TARDISARSMethods(TARDIS plugin) {
         this.plugin = plugin;
-        //getRoomIdAndNames();
     }
 
     /**
