@@ -16,6 +16,7 @@ autonomous: 100
 backdoor: 100
 siege_transfer: 10
 siege_deplete: 100
+siege_creeper: 150
 siege_ticks: 1500
 standby: 5
 standby_time: 6000
