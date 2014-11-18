@@ -17,6 +17,7 @@
 package me.eccentric_nz.TARDIS.commands.tardis;
 
 import java.util.HashMap;
+import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.advanced.TARDISCircuitChecker;
 import me.eccentric_nz.TARDIS.builders.TARDISMaterialisationData;
@@ -43,6 +44,17 @@ public class TARDISHideCommand {
 
     public boolean hide(OfflinePlayer player) {
         if (player.getPlayer().hasPermission("tardis.rebuild")) {
+            UUID uuid = player.getUniqueId();
+            if (plugin.getTrackerKeeper().getHideCooldown().containsKey(uuid)) {
+                long now = System.currentTimeMillis();
+                long cooldown = plugin.getConfig().getLong("police_box.rebuild_cooldown");
+                long then = plugin.getTrackerKeeper().getHideCooldown().get(uuid) + cooldown;
+                if (now < then) {
+                    TARDISMessage.send(player.getPlayer(), "COOLDOWN_HIDE", String.format("%d", cooldown / 1000));
+                    return true;
+                }
+            }
+            plugin.getTrackerKeeper().getHideCooldown().put(uuid, System.currentTimeMillis());
             int id;
             HashMap<String, Object> where = new HashMap<String, Object>();
             where.put("uuid", player.getUniqueId().toString());
