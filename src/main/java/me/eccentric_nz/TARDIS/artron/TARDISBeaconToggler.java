@@ -36,7 +36,7 @@ import org.bukkit.block.Block;
 public class TARDISBeaconToggler {
 
     private final TARDIS plugin;
-    private final List<SCHEMATIC> no_beacon = Arrays.asList(SCHEMATIC.PLANK, SCHEMATIC.TOM);
+    private final List<String> no_beacon = Arrays.asList("plank", "tom");
 
     public TARDISBeaconToggler(TARDIS plugin) {
         this.plugin = plugin;
@@ -48,7 +48,7 @@ public class TARDISBeaconToggler {
         ResultSetTardis rs = new ResultSetTardis(plugin, whereb, "", false);
         if (rs.resultSet()) {
             SCHEMATIC schm = rs.getSchematic();
-            if (no_beacon.contains(schm)) {
+            if (no_beacon.contains(schm.getPermission())) {
                 // doesn't have a beacon!
                 return;
             }
@@ -58,23 +58,16 @@ public class TARDISBeaconToggler {
             int plusy = 0;
             if (beacon.isEmpty()) {
                 // get the location from the TARDIS size and the creeper location
-                switch (schm) {
-                    case REDSTONE:
-                        plusy = 14;
-                        break;
-                    case ELEVENTH:
-                        plusy = 22;
-                        break;
-                    case DELUXE:
-                        plusy = 23;
-                        break;
-                    case BIGGER:
-                    case ARS:
-                        plusy = 12;
-                        break;
-                    default: // BUDGET, STEAMPUNK, WAR, CUSTOM?
-                        plusy = 11;
-                        break;
+                if (schm.getDescription().equals("redstone")) {
+                    plusy = 14;
+                } else if (schm.getDescription().equals("eleventh")) {
+                    plusy = 22;
+                } else if (schm.getDescription().equals("deluxe")) {
+                    plusy = 23;
+                } else if (schm.getDescription().equals("bigger") || schm.getDescription().equals("ars")) {
+                    plusy = 12;
+                } else { // BUDGET, STEAMPUNK, WAR, CUSTOM?
+                    plusy = 11;
                 }
                 String creeper = rs.getCreeper();
                 beaconData = creeper.split(":");

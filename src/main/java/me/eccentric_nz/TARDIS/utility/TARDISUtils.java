@@ -310,8 +310,8 @@ public class TARDISUtils {
      */
     public boolean checkChunk(String w, int x, int z, SCHEMATIC schm) {
         boolean chunkchk = false;
-        String directory = (schm.equals(SCHEMATIC.CUSTOM)) ? "user_schematics" : "schematics";
-        String path = plugin.getDataFolder() + File.separator + directory + File.separator + schm.getFile();
+        String directory = (schm.isCustom()) ? "user_schematics" : "schematics";
+        String path = plugin.getDataFolder() + File.separator + directory + File.separator + schm.getPermission() + ".tschm";
         // get JSON
         JSONObject obj = TARDISSchematicGZip.unzip(path);
         // get dimensions

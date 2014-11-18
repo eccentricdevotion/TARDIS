@@ -65,8 +65,8 @@ public class TARDISDestroyerInner {
     @SuppressWarnings("deprecation")
     public void destroyInner(SCHEMATIC schm, int id, World w, int i, String p, int slot) {
         // get dimensions
-        String directory = (schm.equals(SCHEMATIC.CUSTOM)) ? "user_schematics" : "schematics";
-        String path = plugin.getDataFolder() + File.separator + directory + File.separator + schm.getFile();
+        String directory = (schm.isCustom()) ? "user_schematics" : "schematics";
+        String path = plugin.getDataFolder() + File.separator + directory + File.separator + schm.getPermission() + ".tschm";
         File file = new File(path);
         if (!file.exists()) {
             plugin.debug(plugin.getPluginName() + "Could not find a schematic with that name!");

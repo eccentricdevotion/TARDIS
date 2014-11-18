@@ -24,6 +24,7 @@ import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.builders.TARDISBuildData;
 import me.eccentric_nz.TARDIS.builders.TARDISSeedBlockProcessor;
 import me.eccentric_nz.TARDIS.database.ResultSetPlayerPrefs;
+import me.eccentric_nz.TARDIS.enumeration.CONSOLES;
 import me.eccentric_nz.TARDIS.enumeration.SCHEMATIC;
 import me.eccentric_nz.TARDIS.rooms.TARDISWalls.Pair;
 import me.eccentric_nz.TARDIS.rooms.TARDISWallsLookup;
@@ -79,7 +80,7 @@ public class TARDISSeedBlockListener implements Listener {
         }
         if (im.getDisplayName().equals("§6TARDIS Seed Block")) {
             List<String> lore = im.getLore();
-            SCHEMATIC schm = SCHEMATIC.valueOf(lore.get(0));
+            SCHEMATIC schm = CONSOLES.getByNames().get(lore.get(0));
             Pair wall_data = getValuesFromWallString(lore.get(1));
             Pair floor_data = getValuesFromWallString(lore.get(2));
             TwoValues cham_data = getValuesFromString(lore.get(3));
@@ -202,6 +203,7 @@ public class TARDISSeedBlockListener implements Listener {
      * @param str the lore stored in the TARDIS Seed block's Item Meta
      * @return an int and a byte stored in a simple data class
      */
+    @SuppressWarnings("deprecation")
     private TwoValues getValuesFromString(String str) {
         TwoValues data = new TwoValues();
         String[] split1 = str.split(": ");

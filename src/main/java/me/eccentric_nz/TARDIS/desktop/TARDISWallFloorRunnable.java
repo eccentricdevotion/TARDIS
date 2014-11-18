@@ -26,7 +26,6 @@ import me.eccentric_nz.TARDIS.builders.TARDISInteriorPostioning;
 import me.eccentric_nz.TARDIS.builders.TARDISTIPSData;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
-import me.eccentric_nz.TARDIS.enumeration.SCHEMATIC;
 import me.eccentric_nz.TARDIS.schematic.TARDISSchematicGZip;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import org.bukkit.Material;
@@ -68,8 +67,8 @@ public class TARDISWallFloorRunnable extends TARDISThemeRunnable implements Runn
     public void run() {
         // initialise
         if (!running) {
-            String directory = (tud.getSchematic().equals(SCHEMATIC.CUSTOM)) ? "user_schematics" : "schematics";
-            String path = plugin.getDataFolder() + File.separator + directory + File.separator + tud.getSchematic().getFile();
+            String directory = (tud.getSchematic().isCustom()) ? "user_schematics" : "schematics";
+            String path = plugin.getDataFolder() + File.separator + directory + File.separator + tud.getSchematic().getPermission() + ".tschm";
             File file = new File(path);
             if (!file.exists()) {
                 plugin.debug(plugin.getPluginName() + "Could not find a schematic with that name!");
@@ -90,7 +89,7 @@ public class TARDISWallFloorRunnable extends TARDISThemeRunnable implements Runn
                 // abort and return energy
                 HashMap<String, Object> wherea = new HashMap<String, Object>();
                 wherea.put("uuid", uuid.toString());
-                int amount = plugin.getArtronConfig().getInt("upgrades." + tud.getSchematic().name().toLowerCase());
+                int amount = plugin.getArtronConfig().getInt("upgrades." + tud.getSchematic().getPermission());
                 qf.alterEnergyLevel("tardis", amount, wherea, player);
             }
             slot = rs.getTIPS();
@@ -109,14 +108,7 @@ public class TARDISWallFloorRunnable extends TARDISThemeRunnable implements Runn
                 startz = gsl[2];
                 resetz = gsl[3];
             }
-            switch (tud.getSchematic()) {
-                case REDSTONE:
-                    starty = 65;
-                    break;
-                default:
-                    starty = 64;
-                    break;
-            }
+            starty = (tud.getSchematic().getPermission().equals("redstone")) ? 65 : 64;
             String[] split = rs.getChunk().split(":");
             world = plugin.getServer().getWorld(split[0]);
             own_world = plugin.getConfig().getBoolean("creation.create_worlds");

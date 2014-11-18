@@ -95,17 +95,14 @@ public class TARDISBuilderInner {
         if (below) {
             starty = 15;
         } else {
-            switch (schm) {
-                case REDSTONE:
-                    starty = 65;
-                    break;
-                default:
-                    starty = 64;
-                    break;
+            if (schm.getPermission().equals("redstone")) {
+                starty = 65;
+            } else {
+                starty = 64;
             }
         }
-        String directory = (schm.equals(SCHEMATIC.CUSTOM)) ? "user_schematics" : "schematics";
-        String path = plugin.getDataFolder() + File.separator + directory + File.separator + schm.getFile();
+        String directory = (schm.isCustom()) ? "user_schematics" : "schematics";
+        String path = plugin.getDataFolder() + File.separator + directory + File.separator + schm.getPermission() + ".tschm";
         File file = new File(path);
         if (!file.exists()) {
             plugin.debug(plugin.getPluginName() + "Could not find a schematic with that name!");
@@ -236,7 +233,7 @@ public class TARDISBuilderInner {
                                 }
                                 break;
                             case 8:
-                                if (!schm.equals(SCHEMATIC.ELEVENTH)) {
+                                if (!schm.getPermission().equals("eleventh")) {
                                     switch (floor_type) {
                                         case LAPIS_BLOCK: // if using the default Lapis Block - then use Light Grey Wool / Stained Clay
                                             if (plugin.getConfig().getBoolean("creation.use_clay")) {
@@ -347,41 +344,7 @@ public class TARDISBuilderInner {
                                         }
                                     }
                                 }
-                                int control = 42;
-                                switch (schm) {
-                                    case DELUXE:
-                                        control = 57;
-                                        break;
-                                    case ELEVENTH:
-                                        control = 133;
-                                        break;
-                                    case BIGGER:
-                                        control = 41;
-                                        break;
-                                    case REDSTONE:
-                                        control = 152;
-                                        break;
-                                    case STEAMPUNK:
-                                        control = 173;
-                                        break;
-                                    case ARS:
-                                        control = 155;
-                                        break;
-                                    case PLANK:
-                                        control = 47;
-                                        break;
-                                    case TOM:
-                                        control = 22;
-                                        break;
-                                    case WAR:
-                                        control = 159;
-                                        break;
-                                    case CUSTOM:
-                                        control = 122;
-                                        break;
-                                    default:
-                                        break;
-                                }
+                                int control = schm.getSeedId();
                                 empty[1][4][4] = control;
                                 if (w > 16) {
                                     empty[1][4][5] = control;
@@ -429,7 +392,7 @@ public class TARDISBuilderInner {
                             qf.doInsert("lamps", setlb);
                         }
                     }
-                    if (type.equals(Material.COMMAND) || ((schm.equals(SCHEMATIC.BIGGER) || schm.equals(SCHEMATIC.DELUXE)) && type.equals(Material.BEACON))) {
+                    if (type.equals(Material.COMMAND) || ((schm.getPermission().equals("bigger") || schm.getPermission().equals("deluxe")) && type.equals(Material.BEACON))) {
                         /*
                          * command block - remember it to spawn the creeper on.
                          * could also be a beacon block, as the creeper sits
@@ -437,18 +400,7 @@ public class TARDISBuilderInner {
                          */
                         String creeploc = world.getName() + ":" + (x + 0.5) + ":" + y + ":" + (z + 0.5);
                         set.put("creeper", creeploc);
-                        switch (schm) {
-                            case CUSTOM:
-                                type = Material.valueOf(plugin.getConfig().getString("creation.custom_creeper_id"));
-                                break;
-                            case BIGGER:
-                            case DELUXE:
-                                type = Material.BEACON;
-                                break;
-                            default:
-                                type = Material.SMOOTH_BRICK;
-                                break;
-                        }
+                        type = (schm.getPermission().equals("bigger") || schm.getPermission().equals("deluxe")) ? Material.BEACON : Material.SMOOTH_BRICK;
                     }
                     if (type.equals(Material.WOOD_BUTTON)) {
                         /*

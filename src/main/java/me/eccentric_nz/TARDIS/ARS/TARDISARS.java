@@ -25,56 +25,44 @@ import java.util.HashMap;
 public enum TARDISARS implements ARS {
 
     // add offsets
-    PASSAGE(82, "PASSAGE", "Passage", 1, false),
-    ARBORETUM(18, "ARBORETUM", "Arboretum", 1, false),
-    BEDROOM(89, "BEDROOM", "Bedroom", 1, false),
-    KITCHEN(86, "KITCHEN", "Kitchen", 1, false),
-    LIBRARY(116, "LIBRARY", "Library", 1, false),
-    LAZARUS(61, "LAZARUS", "Genetic Manipulator", 1, false),
-    POOL(80, "POOL", "Pool", 1, false),
-    VAULT(23, "VAULT", "Storage Vault", 1, false),
-    WORKSHOP(112, "WORKSHOP", "Workshop", 1, false),
-    EMPTY(20, "EMPTY", "Empty", 1, false),
-    FARM(3, "FARM", "Mob Farm", 1, false),
-    WOOD(5, "WOOD", "Wood Secondary Console", 1, false),
-    MUSHROOM(13, "MUSHROOM", "Mycellium", 1, false),
-    VILLAGE(17, "VILLAGE", "Village", 1, false),
-    GRAVITY(48, "GRAVITY", "Gravity Well", 1, false),
-    ANTIGRAVITY(24, "ANTIGRAVITY", "Anti-gravity Well", 1, false),
-    TRENZALORE(45, "TRENZALORE", "Trenzalore", 1, false),
-    RAIL(49, "RAIL", "Rail Transfer Station", 1, false),
-    RENDERER(172, "RENDERER", "Exterior Renderer", 1, false),
-    GREENHOUSE(103, "GREENHOUSE", "Greenhouse", 1, false),
-    HARMONY(109, "HARMONY", "Eye of Harmony", 1, false),
-    BAKER(121, "BAKER", "4th Doctor's Secondary Console", 1, false),
-    STABLE(170, "STABLE", "Horse Stable", 1, false),
-    JETTISON(46, "JETTISON", "Jettison", 0, false),
-    SLOT(1, "SLOT", "Empty slot", 0, false),
-    ARS(155, "ARS", "ARS Console", 0, true),
-    BUDGET(42, "BUDGET", "Default Console", 0, true),
-    DELUXE(57, "DELUXE", "Supersized Deluxe Console", 0, true),
-    ELEVENTH(133, "ELEVENTH", "11th Doctor's Console", 0, true),
-    REDSTONE(152, "REDSTONE", "Redstone Console", 0, true),
-    BIGGER(41, "BIGGER", "A Bigger Console", 0, true),
-    PLANK(47, "PLANK", "Wood Console", 0, true),
-    STEAMPUNK(173, "STEAMPUNK", "Steampunk Console", 0, true),
-    TOM(22, "TOM", "4th Doctor's Console", 0, true),
-    WAR(159, "WAR", "War Doctor's Console", 0, true),
-    CUSTOM(122, "CUSTOM", "Custom Console", 0, true);
+    PASSAGE(82, "PASSAGE", "Passage", 1),
+    ARBORETUM(18, "ARBORETUM", "Arboretum", 1),
+    BEDROOM(89, "BEDROOM", "Bedroom", 1),
+    KITCHEN(86, "KITCHEN", "Kitchen", 1),
+    LIBRARY(116, "LIBRARY", "Library", 1),
+    LAZARUS(61, "LAZARUS", "Genetic Manipulator", 1),
+    POOL(80, "POOL", "Pool", 1),
+    VAULT(23, "VAULT", "Storage Vault", 1),
+    WORKSHOP(112, "WORKSHOP", "Workshop", 1),
+    EMPTY(20, "EMPTY", "Empty", 1),
+    FARM(3, "FARM", "Mob Farm", 1),
+    WOOD(5, "WOOD", "Wood Secondary Console", 1),
+    MUSHROOM(13, "MUSHROOM", "Mycellium", 1),
+    VILLAGE(17, "VILLAGE", "Village", 1),
+    GRAVITY(48, "GRAVITY", "Gravity Well", 1),
+    ANTIGRAVITY(24, "ANTIGRAVITY", "Anti-gravity Well", 1),
+    TRENZALORE(45, "TRENZALORE", "Trenzalore", 1),
+    RAIL(154, "RAIL", "Rail Transfer Station", 1),
+    RENDERER(172, "RENDERER", "Exterior Renderer", 1),
+    GREENHOUSE(103, "GREENHOUSE", "Greenhouse", 1),
+    HARMONY(109, "HARMONY", "Eye of Harmony", 1),
+    BAKER(121, "BAKER", "4th Doctor's Secondary Console", 1),
+    STABLE(170, "STABLE", "Horse Stable", 1),
+    ZERO(2, "ZERO", "Zero Room", 0),
+    JETTISON(46, "JETTISON", "Jettison", 0),
+    SLOT(1, "SLOT", "Empty slot", 0);
     private final int id;
     private final String name;
     private final String descriptiveName;
     private final int offset;
-    private final boolean console;
     private final static HashMap<Integer, ARS> EXTENDED_ID = new HashMap<Integer, ARS>();
     private final static HashMap<String, ARS> EXTENDED_NAME = new HashMap<String, ARS>();
 
-    private TARDISARS(int id, String name, String descriptiveName, int offset, boolean console) {
+    private TARDISARS(int id, String name, String descriptiveName, int offset) {
         this.id = id;
         this.name = name;
         this.descriptiveName = descriptiveName;
         this.offset = offset;
-        this.console = console;
     }
 
     /**
@@ -115,16 +103,6 @@ public enum TARDISARS implements ARS {
     @Override
     public int getOffset() {
         return offset;
-    }
-
-    /**
-     * Gets the whether the room is a console.
-     *
-     * @return true if it is a console, otherwise false
-     */
-    @Override
-    public boolean isConsole() {
-        return console;
     }
 
     static {

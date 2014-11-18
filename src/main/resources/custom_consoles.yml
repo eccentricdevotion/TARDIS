@@ -1,0 +1,7 @@
+# custom console names should preferably be a single word, and cannot contain spaces (use underscores)
+CUSTOM:
+    enabled: false
+    schematic: custom
+    seed: OBSIDIAN
+    has_beacon: true
+    description: Super-duper Custom Console

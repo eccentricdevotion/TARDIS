@@ -85,22 +85,14 @@ public class TARDISLampsCommand {
             if (rsc.resultSet()) {
                 int starty, endy;
                 SCHEMATIC schm = rs.getSchematic();
-                String directory = (schm.equals(SCHEMATIC.CUSTOM)) ? "user_schematics" : "schematics";
-                String path = plugin.getDataFolder() + File.separator + directory + File.separator + schm.getFile();
+                String directory = (schm.isCustom()) ? "user_schematics" : "schematics";
+                String path = plugin.getDataFolder() + File.separator + directory + File.separator + schm.getPermission() + ".tschm";
                 // get JSON
                 JSONObject obj = TARDISSchematicGZip.unzip(path);
                 // get dimensions
                 JSONObject dimensions = (JSONObject) obj.get("dimensions");
                 int h = dimensions.getInt("height");
-                switch (schm) {
-                    case BIGGER:
-                    case REDSTONE:
-                        starty = 65;
-                        break;
-                    default:
-                        starty = 64;
-                        break;
-                }
+                starty = (schm.getPermission().equals("bigger") || schm.getPermission().equals("redstone")) ? 65 : 64;
                 endy = starty + h;
                 ArrayList<HashMap<String, String>> data = rsc.getData();
                 // loop through the chunks

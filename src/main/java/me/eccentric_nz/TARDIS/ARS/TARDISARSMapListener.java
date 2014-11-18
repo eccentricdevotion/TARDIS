@@ -46,7 +46,6 @@ public class TARDISARSMapListener extends TARDISARSMethods implements Listener {
 
     public TARDISARSMapListener(TARDIS plugin) {
         super(plugin);
-        getRoomIdAndNames();
     }
 
     /**

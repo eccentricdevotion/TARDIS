@@ -61,6 +61,13 @@ public class TARDISCraftListener implements Listener {
         t.put(Material.LAPIS_BLOCK, "TOM"); // tom baker
         t.put(Material.BOOKSHELF, "PLANK"); // plank
         t.put(Material.STAINED_CLAY, "WAR"); // war doctor
+        // custom seeds
+        for (String console : plugin.getCustomConsolesConfig().getKeys(false)) {
+            if (plugin.getCustomConsolesConfig().getBoolean(console + ".enabled")) {
+                Material cmat = Material.valueOf(plugin.getCustomConsolesConfig().getString(console + ".seed"));
+                t.put(cmat, console.toUpperCase());
+            }
+        }
         t.put(Material.valueOf(this.plugin.getConfig().getString("creation.custom_schematic_seed")), "CUSTOM"); // custom
         for (Integer i : plugin.getBlocksConfig().getIntegerList("chameleon_blocks")) {
             c.add(i);
@@ -99,10 +106,8 @@ public class TARDISCraftListener implements Listener {
                         if (checkSlots(inv)) {
                             // get the materials in crafting slots
                             Material m5 = inv.getItem(5).getType(); // lamp
-                            //Material m6 = inv.getItem(6).getType(); // wall
                             Material m7 = inv.getItem(7).getType(); // tardis type
                             Material m8 = inv.getItem(8).getType(); // chameleon
-                            //Material m9 = inv.getItem(9).getType(); // floor
                             final ItemStack is = new ItemStack(m7, 1);
                             ItemMeta im = is.getItemMeta();
                             im.setDisplayName("§6TARDIS Seed Block");

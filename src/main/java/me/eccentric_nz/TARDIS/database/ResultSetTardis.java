@@ -27,6 +27,7 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.enumeration.CONSOLES;
 import me.eccentric_nz.TARDIS.enumeration.PRESET;
 import me.eccentric_nz.TARDIS.enumeration.SCHEMATIC;
 
@@ -156,7 +157,7 @@ public class ResultSetTardis {
                     this.owner = rs.getString("owner");
                     this.chunk = rs.getString("chunk");
                     this.tips = rs.getInt("tips");
-                    this.schematic = SCHEMATIC.valueOf(rs.getString("size"));
+                    this.schematic = CONSOLES.SCHEMATICFor(rs.getString("size").toLowerCase());
                     this.replaced = rs.getString("replaced");
                     if (rs.wasNull()) {
                         this.replaced = "";

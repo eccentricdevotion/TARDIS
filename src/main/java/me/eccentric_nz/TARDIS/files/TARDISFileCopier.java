@@ -22,7 +22,9 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import me.eccentric_nz.TARDIS.ARS.TARDISARS;
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.enumeration.CONSOLES;
 import me.eccentric_nz.TARDIS.enumeration.SCHEMATIC;
 
 /**
@@ -66,84 +68,19 @@ public class TARDISFileCopier {
         // load schematic files - copy the default files if they don't exist
         String basepath = plugin.getDataFolder() + File.separator + "schematics" + File.separator;
         String userbasepath = plugin.getDataFolder() + File.separator + "user_schematics" + File.separator;
-        String arsnstr = basepath + SCHEMATIC.ARS.getFile();
-        String bignstr = basepath + SCHEMATIC.BIGGER.getFile();
-        String budnstr = basepath + SCHEMATIC.BUDGET.getFile();
-        String delnstr = basepath + SCHEMATIC.DELUXE.getFile();
-        String elenstr = basepath + SCHEMATIC.ELEVENTH.getFile();
-        String rednstr = basepath + SCHEMATIC.REDSTONE.getFile();
-        String stenstr = basepath + SCHEMATIC.STEAMPUNK.getFile();
-        String planstr = basepath + SCHEMATIC.PLANK.getFile();
-        String tomnstr = basepath + SCHEMATIC.TOM.getFile();
-        String warnstr = basepath + SCHEMATIC.WAR.getFile();
-        copy(arsnstr, plugin.getResource(SCHEMATIC.ARS.getFile()), true);
-        copy(bignstr, plugin.getResource(SCHEMATIC.BIGGER.getFile()), true);
-        copy(budnstr, plugin.getResource(SCHEMATIC.BUDGET.getFile()), true);
-        copy(delnstr, plugin.getResource(SCHEMATIC.DELUXE.getFile()), true);
-        copy(elenstr, plugin.getResource(SCHEMATIC.ELEVENTH.getFile()), true);
-        copy(rednstr, plugin.getResource(SCHEMATIC.REDSTONE.getFile()), true);
-        copy(stenstr, plugin.getResource(SCHEMATIC.STEAMPUNK.getFile()), true);
-        copy(planstr, plugin.getResource(SCHEMATIC.PLANK.getFile()), true);
-        copy(tomnstr, plugin.getResource(SCHEMATIC.TOM.getFile()), true);
-        copy(warnstr, plugin.getResource(SCHEMATIC.WAR.getFile()), true);
-
-        // copy default room files as well
-        String antnstr = basepath + SCHEMATIC.ANTIGRAVITY.getFile();
-        String arbornstr = basepath + SCHEMATIC.ARBORETUM.getFile();
-        String baknstr = basepath + SCHEMATIC.BAKER.getFile();
-        String bednstr = basepath + SCHEMATIC.BEDROOM.getFile();
-        String empnstr = basepath + SCHEMATIC.EMPTY.getFile();
-        String farnstr = basepath + SCHEMATIC.FARM.getFile();
-        String granstr = basepath + SCHEMATIC.GRAVITY.getFile();
-        String grenstr = basepath + SCHEMATIC.GREENHOUSE.getFile();
-        String harnstr = basepath + SCHEMATIC.HARMONY.getFile();
-        String kitnstr = basepath + SCHEMATIC.KITCHEN.getFile();
-        String laznstr = basepath + SCHEMATIC.LAZARUS.getFile();
-        String libnstr = basepath + SCHEMATIC.LIBRARY.getFile();
-        String musnstr = basepath + SCHEMATIC.MUSHROOM.getFile();
-        String passnstr = basepath + SCHEMATIC.PASSAGE.getFile();
-        String poolnstr = basepath + SCHEMATIC.POOL.getFile();
-        String railnstr = basepath + SCHEMATIC.RAIL.getFile();
-        String stbnstr = basepath + SCHEMATIC.STABLE.getFile();
-        String tmpnstr = userbasepath + "template.tschm";
-        String trenstr = basepath + SCHEMATIC.TRENZALORE.getFile();
-        String vaunstr = basepath + SCHEMATIC.VAULT.getFile();
-        String vilnstr = basepath + SCHEMATIC.VILLAGE.getFile();
-        String woonstr = basepath + SCHEMATIC.WOOD.getFile();
-        String wornstr = basepath + SCHEMATIC.WORKSHOP.getFile();
-        String rennstr = basepath + SCHEMATIC.RENDERER.getFile();
-        String zeronstr = basepath + SCHEMATIC.ZERO.getFile();
-        copy(antnstr, plugin.getResource(SCHEMATIC.ANTIGRAVITY.getFile()), false);
-        copy(arbornstr, plugin.getResource(SCHEMATIC.ARBORETUM.getFile()), false);
-        copy(baknstr, plugin.getResource(SCHEMATIC.BAKER.getFile()), false);
-        copy(bednstr, plugin.getResource(SCHEMATIC.BEDROOM.getFile()), false);
-        copy(empnstr, plugin.getResource(SCHEMATIC.EMPTY.getFile()), false);
-        copy(farnstr, plugin.getResource(SCHEMATIC.FARM.getFile()), false);
-        copy(granstr, plugin.getResource(SCHEMATIC.GRAVITY.getFile()), false);
-        copy(grenstr, plugin.getResource(SCHEMATIC.GREENHOUSE.getFile()), false);
-        copy(harnstr, plugin.getResource(SCHEMATIC.HARMONY.getFile()), false);
-        copy(kitnstr, plugin.getResource(SCHEMATIC.KITCHEN.getFile()), false);
-        copy(laznstr, plugin.getResource(SCHEMATIC.LAZARUS.getFile()), false);
-        copy(libnstr, plugin.getResource(SCHEMATIC.LIBRARY.getFile()), false);
-        copy(musnstr, plugin.getResource(SCHEMATIC.MUSHROOM.getFile()), false);
-        copy(passnstr, plugin.getResource(SCHEMATIC.PASSAGE.getFile()), false);
-        copy(poolnstr, plugin.getResource(SCHEMATIC.POOL.getFile()), false);
-        copy(railnstr, plugin.getResource(SCHEMATIC.RAIL.getFile()), false);
-        copy(stbnstr, plugin.getResource(SCHEMATIC.STABLE.getFile()), false);
-        copy(tmpnstr, plugin.getResource("template.tschm"), false);
-        copy(trenstr, plugin.getResource(SCHEMATIC.TRENZALORE.getFile()), false);
-        copy(vaunstr, plugin.getResource(SCHEMATIC.VAULT.getFile()), false);
-        copy(vilnstr, plugin.getResource(SCHEMATIC.VILLAGE.getFile()), false);
-        copy(woonstr, plugin.getResource(SCHEMATIC.WOOD.getFile()), false);
-        copy(wornstr, plugin.getResource(SCHEMATIC.WORKSHOP.getFile()), false);
-        copy(rennstr, plugin.getResource(SCHEMATIC.RENDERER.getFile()), false);
-        copy(zeronstr, plugin.getResource(SCHEMATIC.ZERO.getFile()), false);
-
-        // check custom schematic last
-        File c_file = new File(userbasepath + SCHEMATIC.CUSTOM.getFile());
-        if (plugin.getConfig().getBoolean("creation.custom_schematic") && !c_file.exists()) {
-            plugin.getConsole().sendMessage(plugin.getPluginName() + "CUSTOM console is enabled in the config, but the schematic file was not found in 'user_schematics'!");
+        for (SCHEMATIC ts : CONSOLES.getByNames().values()) {
+            String str = basepath + ts.getPermission() + ".tschm";
+            copy(str, plugin.getResource(ts.getPermission() + ".tschm"), true);
         }
+        // copy default room files as well
+        for (TARDISARS ta : TARDISARS.values()) {
+            if (ta.getOffset() != 0) {
+                String str = basepath + ta.getActualName().toLowerCase() + ".tschm";
+                copy(str, plugin.getResource(ta.getActualName().toLowerCase() + ".tschm"), false);
+            }
+        }
+        String tmpnstr = userbasepath + "template.tschm";
+        copy(tmpnstr, plugin.getResource("template.tschm"), false);
     }
 
     /**

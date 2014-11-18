@@ -26,7 +26,6 @@ import me.eccentric_nz.TARDIS.achievement.TARDISAchievementFactory;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetPlayerPrefs;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
-import me.eccentric_nz.TARDIS.enumeration.SCHEMATIC;
 import me.eccentric_nz.TARDIS.rooms.TARDISCondenserData;
 import me.eccentric_nz.TARDIS.rooms.TARDISRoomBuilder;
 import me.eccentric_nz.TARDIS.rooms.TARDISRoomDirection;
@@ -53,15 +52,16 @@ import org.bukkit.event.player.PlayerInteractEvent;
 public class TARDISRoomSeeder implements Listener {
 
     private final TARDIS plugin;
-    private final List<SCHEMATIC> ars = new ArrayList<SCHEMATIC>();
+    private final List<String> ars = new ArrayList<String>();
 
     public TARDISRoomSeeder(TARDIS plugin) {
         this.plugin = plugin;
-        ars.add(SCHEMATIC.ARS);
-        ars.add(SCHEMATIC.BUDGET);
-        ars.add(SCHEMATIC.PLANK);
-        ars.add(SCHEMATIC.STEAMPUNK);
-        ars.add(SCHEMATIC.TOM);
+        ars.add("ars");
+        ars.add("budget");
+        ars.add("plank");
+        ars.add("steampunk");
+        ars.add("tom");
+        ars.add("war");
     }
 
     /**
@@ -98,15 +98,6 @@ public class TARDISRoomSeeder implements Listener {
             // only proceed if they are clicking a seed block with the TARDIS key!
             if (plugin.getBuildKeeper().getSeeds().containsKey(blockType) && inhand.equals(Material.getMaterial(key))) {
                 // check they are still in the TARDIS world
-//                World world = block.getLocation().getWorld();
-//                String name = world.getName();
-//                ChunkGenerator gen = world.getGenerator();
-//                String dn = "TARDIS_TimeVortex";
-//                if (plugin.getConfig().getBoolean("creation.default_world")) {
-//                    dn = plugin.getConfig().getString("creation.default_world_name");
-//                }
-//                boolean special = (name.equals(dn) && (world.getWorldType().equals(WorldType.FLAT) || gen instanceof TARDISChunkGenerator));
-//                if (!name.equals("TARDIS_WORLD_" + player.getName()) && !special) {
                 if (!plugin.getUtils().inTARDISWorld(player)) {
                     TARDISMessage.send(player, "ROOM_IN_WORLD");
                     return;
@@ -131,7 +122,7 @@ public class TARDISRoomSeeder implements Listener {
                 // get seed data
                 TARDISSeedData sd = plugin.getTrackerKeeper().getRoomSeed().get(uuid);
                 // check they are not in an ARS chunk
-                if (ars.contains(sd.getSchematic()) && sd.hasARS()) {
+                if (ars.contains(sd.getSchematic().getPermission()) && sd.hasARS()) {
                     Chunk c = b.getWorld().getChunkAt(block.getRelative(BlockFace.valueOf(d.toString()), 4));
                     int cx = c.getX();
                     int cy = block.getY();

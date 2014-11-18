@@ -19,7 +19,7 @@ package me.eccentric_nz.TARDIS.desktop;
 import java.util.Set;
 import me.eccentric_nz.TARDIS.ARS.TARDISARS;
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.enumeration.SCHEMATIC;
+import me.eccentric_nz.TARDIS.enumeration.CONSOLES;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -77,7 +77,7 @@ public class TARDISThemeMenuListener implements Listener {
                             // remember the upgrade choice
                             TARDISUpgradeData tud = plugin.getTrackerKeeper().getUpgrades().get(p.getUniqueId());
                             if (tud.getLevel() > plugin.getArtronConfig().getInt("upgrades." + choice_name.toLowerCase())) {
-                                tud.setSchematic(SCHEMATIC.valueOf(choice_name));
+                                tud.setSchematic(CONSOLES.SCHEMATICFor(choice_name.toLowerCase()));
                                 plugin.getTrackerKeeper().getUpgrades().put(p.getUniqueId(), tud);
                                 // open the wall block GUI
                                 wall(p);

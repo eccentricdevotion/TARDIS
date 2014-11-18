@@ -16,8 +16,12 @@
  */
 package me.eccentric_nz.TARDIS.ARS;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Set;
 import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
+import static me.eccentric_nz.TARDIS.commands.preferences.TARDISPrefsCommands.ucfirst;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -39,6 +43,9 @@ import org.bukkit.inventory.meta.ItemMeta;
  * @author eccentric_nz
  */
 public class TARDISARSListener extends TARDISARSMethods implements Listener {
+
+    private List<Integer> room_ids;
+    private List<String> room_names;
 
     public TARDISARSListener(TARDIS plugin) {
         super(plugin);
@@ -147,7 +154,7 @@ public class TARDISARSListener extends TARDISARSMethods implements Listener {
                     case 36:
                         // scroll left
                         int startl;
-                        int max = room_ids.length - 9;
+                        int max = room_ids.size() - 9;
                         if (scroll_start.containsKey(uuid)) {
                             startl = scroll_start.get(uuid) + 1;
                             if (startl >= max) {
@@ -159,7 +166,7 @@ public class TARDISARSListener extends TARDISARSMethods implements Listener {
                         scroll_start.put(uuid, startl);
                         for (int i = 0; i < 9; i++) {
                             // setSlot(Inventory inv, int slot, int id, String room)
-                            setSlot(inv, (45 + i), room_ids[(startl + i)], room_names[(startl + i)], uuid, false);
+                            setSlot(inv, (45 + i), room_ids.get(startl + i), room_names.get(startl + i), uuid, false);
                         }
                         break;
                     case 38:
@@ -176,7 +183,7 @@ public class TARDISARSListener extends TARDISARSMethods implements Listener {
                         scroll_start.put(uuid, startr);
                         for (int i = 0; i < 9; i++) {
                             // setSlot(Inventory inv, int slot, int id, String room)
-                            setSlot(inv, (45 + i), room_ids[(startr + i)], room_names[(startr + i)], uuid, false);
+                            setSlot(inv, (45 + i), room_ids.get(startr + i), room_names.get(startr + i), uuid, false);
                         }
                         break;
                     case 39:
@@ -247,5 +254,96 @@ public class TARDISARSListener extends TARDISARSMethods implements Listener {
                 }
             }
         }
+    }
+
+    /**
+     * Checks the saved map to see whether the selected slot can be reset.
+     *
+     * @param uuid the UUID of the player using the GUI
+     * @param slot the slot that was clicked
+     * @param updown the type id of the block in the slot
+     * @return true or false
+     */
+    public boolean checkSavedGrid(UUID uuid, int slot, int updown) {
+        TARDISARSMapData md = map_data.get(uuid);
+        TARDISARSSaveData sd = save_map_data.get(uuid);
+        int[][][] grid = sd.getData();
+        int yy = md.getY() + updown;
+        // avoid ArrayIndexOutOfBoundsException if gravity well extends beyond ARS area
+        if (yy < 0 || yy > 2) {
+            return true;
+        }
+        int[] coords = getCoords(slot, md);
+        int xx = coords[0];
+        int zz = coords[1];
+        int prior = grid[yy][xx][zz];
+        for (int i : room_ids) {
+            if (prior == i) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /**
+     * Populates arrays of room names and seed IDs for the scrollable room
+     * buttons.
+     */
+    @SuppressWarnings("deprecation")
+    public final void getRoomIdAndNames() {
+        List<String> custom_names = getCustomRoomNames();
+        TARDISARS[] ars = TARDISARS.values();
+        // less non-room types
+        int l = (custom_names.size() + ars.length) - 3;
+        this.room_ids = new ArrayList<Integer>();
+        this.room_names = new ArrayList<String>();
+        for (TARDISARS a : ars) {
+            if (a.getOffset() != 0) {
+                this.room_ids.add(a.getId());
+                this.room_names.add(a.getDescriptiveName());
+            }
+        }
+        for (final String c : custom_names) {
+            this.room_ids.add(Material.valueOf(plugin.getRoomsConfig().getString("rooms." + c + ".seed")).getId());
+            final String uc = ucfirst(c);
+            this.room_names.add(uc);
+            TARDISARS.addNewARS(new ARS() {
+                @Override
+                public int getId() {
+                    return Material.valueOf(plugin.getRoomsConfig().getString("rooms." + c + ".seed")).getId();
+                }
+
+                @Override
+                public String getActualName() {
+                    return c;
+                }
+
+                @Override
+                public String getDescriptiveName() {
+                    return uc;
+                }
+
+                @Override
+                public int getOffset() {
+                    return 1;
+                }
+            });
+        }
+    }
+
+    /**
+     * Checks and gets custom rooms for ARS.
+     *
+     * @return a list of enabled custom room names
+     */
+    public List<String> getCustomRoomNames() {
+        List<String> crooms = new ArrayList<String>();
+        Set<String> names = plugin.getRoomsConfig().getConfigurationSection("rooms").getKeys(false);
+        for (String cr : names) {
+            if (plugin.getRoomsConfig().getBoolean("rooms." + cr + ".user") && plugin.getRoomsConfig().getBoolean("rooms." + cr + ".enabled")) {
+                crooms.add(cr);
+            }
+        }
+        return crooms;
     }
 }

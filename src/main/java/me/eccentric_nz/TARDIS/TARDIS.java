@@ -37,6 +37,7 @@ import me.eccentric_nz.TARDIS.artron.TARDISCondensables;
 import me.eccentric_nz.TARDIS.artron.TARDISCreeperChecker;
 import me.eccentric_nz.TARDIS.artron.TARDISStandbyMode;
 import me.eccentric_nz.TARDIS.builders.TARDISBuilderInner;
+import me.eccentric_nz.TARDIS.builders.TARDISCustomLoader;
 import me.eccentric_nz.TARDIS.builders.TARDISPresetBuilderFactory;
 import me.eccentric_nz.TARDIS.builders.TARDISSpace;
 import me.eccentric_nz.TARDIS.chameleon.TARDISChameleonPreset;
@@ -111,6 +112,7 @@ public class TARDIS extends JavaPlugin {
     private FileConfiguration artronConfig;
     private FileConfiguration blocksConfig;
     private FileConfiguration condensablesConfig;
+    private FileConfiguration customConsolesConfig;
     private FileConfiguration kitsConfig;
     private FileConfiguration language;
     private FileConfiguration recipesConfig;
@@ -172,7 +174,7 @@ public class TARDIS extends JavaPlugin {
             new TARDISRecipesUpdater(this).addRecipes();
             loadLanguage();
             loadDatabase();
-            // update database add and populate uuid fields
+            // update database addSchematics and populate uuid fields
             if (!getConfig().getBoolean("conversions.uuid_conversion_done")) {
                 TARDISUUIDConverter uc = new TARDISUUIDConverter(this);
                 if (!uc.convert()) {
@@ -208,6 +210,7 @@ public class TARDIS extends JavaPlugin {
             buildKeeper.setSeeds(getSeeds());
             tardisWalls = new TARDISWalls();
             loadFiles();
+            new TARDISCustomLoader(this).addSchematics();
             this.disguisesOnServer = pm.isPluginEnabled("LibsDisguises");
             generalKeeper = new TARDISGeneralInstanceKeeper(this);
             generalKeeper.setQuotes(quotes());
@@ -388,6 +391,7 @@ public class TARDIS extends JavaPlugin {
         tardisCopier.copy("recipes.yml");
         tardisCopier.copy("kits.yml");
         tardisCopier.copy("condensables.yml");
+        tardisCopier.copy("custom_consoles.yml");
         this.achievementConfig = YamlConfiguration.loadConfiguration(new File(getDataFolder(), "achievements.yml"));
         if (this.achievementConfig.getString("travel.message").equals("Life of the party!")) {
             this.achievementConfig.set("travel.message", "There and back again!");
@@ -404,6 +408,7 @@ public class TARDIS extends JavaPlugin {
         this.recipesConfig = YamlConfiguration.loadConfiguration(new File(getDataFolder(), "recipes.yml"));
         this.kitsConfig = YamlConfiguration.loadConfiguration(new File(getDataFolder(), "kits.yml"));
         this.condensablesConfig = YamlConfiguration.loadConfiguration(new File(getDataFolder(), "condensables.yml"));
+        this.customConsolesConfig = YamlConfiguration.loadConfiguration(new File(getDataFolder(), "custom_consoles.yml"));
     }
 
     /**
@@ -758,6 +763,10 @@ public class TARDIS extends JavaPlugin {
 
     public FileConfiguration getCondensablesConfig() {
         return condensablesConfig;
+    }
+
+    public FileConfiguration getCustomConsolesConfig() {
+        return customConsolesConfig;
     }
 
     public FileConfiguration getLanguage() {

@@ -29,6 +29,7 @@ import me.eccentric_nz.TARDIS.database.ResultSetCurrentLocation;
 import me.eccentric_nz.TARDIS.database.ResultSetPlayerPrefs;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
+import me.eccentric_nz.TARDIS.enumeration.CONSOLES;
 import me.eccentric_nz.TARDIS.enumeration.SCHEMATIC;
 import me.eccentric_nz.TARDIS.rooms.TARDISWalls.Pair;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
@@ -130,86 +131,14 @@ public class TARDISBlockPlaceListener implements Listener {
                         return;
                     }
                 }
-                switch (blockBottom.getType()) {
-                    case IRON_BLOCK:
-                        schm = SCHEMATIC.BUDGET;
-                        break;
-                    case GOLD_BLOCK:
-                        if (player.hasPermission("tardis.bigger")) {
-                            schm = SCHEMATIC.BIGGER;
-                        } else {
-                            TARDISMessage.send(player, "NO_PERM_TARDIS", "bigger");
-                            return;
-                        }
-                        break;
-                    case DIAMOND_BLOCK:
-                        if (player.hasPermission("tardis.deluxe")) {
-                            schm = SCHEMATIC.DELUXE;
-                        } else {
-                            TARDISMessage.send(player, "NO_PERM_TARDIS", "deluxe");
-                            return;
-                        }
-                        break;
-                    case EMERALD_BLOCK:
-                        if (player.hasPermission("tardis.eleventh")) {
-                            schm = SCHEMATIC.ELEVENTH;
-                        } else {
-                            TARDISMessage.send(player, "NO_PERM_TARDIS", "eleventh Doctor's");
-                            return;
-                        }
-                        break;
-                    case REDSTONE_BLOCK:
-                        if (player.hasPermission("tardis.redstone")) {
-                            schm = SCHEMATIC.REDSTONE;
-                        } else {
-                            TARDISMessage.send(player, "NO_PERM_TARDIS", "redstone");
-                            return;
-                        }
-                        break;
-                    case COAL_BLOCK:
-                        if (player.hasPermission("tardis.steampunk")) {
-                            schm = SCHEMATIC.STEAMPUNK;
-                        } else {
-                            TARDISMessage.send(player, "NO_PERM_TARDIS", "steampunk");
-                            return;
-                        }
-                        break;
-                    case LAPIS_BLOCK:
-                        if (player.hasPermission("tardis.tom")) {
-                            schm = SCHEMATIC.TOM;
-                        } else {
-                            TARDISMessage.send(player, "NO_PERM_TARDIS", "4th Doctor's");
-                            return;
-                        }
-                        break;
-                    case BOOKSHELF:
-                        if (player.hasPermission("tardis.plank")) {
-                            schm = SCHEMATIC.PLANK;
-                        } else {
-                            TARDISMessage.send(player, "NO_PERM_TARDIS", "wood");
-                            return;
-                        }
-                        break;
-                    case QUARTZ_BLOCK:
-                        if (player.hasPermission("tardis.ars")) {
-                            schm = SCHEMATIC.ARS;
-                        } else {
-                            TARDISMessage.send(player, "NO_PERM_TARDIS", "ARS");
-                            return;
-                        }
-                        break;
-                    default:
-                        if (plugin.getConfig().getBoolean("custom_schematic")) {
-                            if (player.hasPermission("tardis.custom") && blockBottom.getType().equals(custom)) {
-                                schm = SCHEMATIC.CUSTOM;
-                            } else {
-                                TARDISMessage.send(player, "NO_PERM_TARDIS", "custom");
-                                return;
-                            }
-                        } else {
-                            schm = SCHEMATIC.BUDGET;
-                        }
-                        break;
+                schm = CONSOLES.SCHEMATICFor(blockBottom.getType());
+                if (schm == null) {
+                    schm = CONSOLES.getByNames().get("BUDGET");
+                }
+                // check perms
+                if (!schm.getPermission().equals("budget") && !player.hasPermission("tardis." + schm.getPermission())) {
+                    TARDISMessage.send(player, "NO_PERM_TARDIS", schm.toString());
+                    return;
                 }
                 if (player.hasPermission("tardis.create")) {
                     String playerNameStr = player.getName();
@@ -268,7 +197,7 @@ public class TARDISBlockPlaceListener implements Listener {
                         set.put("uuid", player.getUniqueId().toString());
                         set.put("owner", playerNameStr);
                         set.put("chunk", chun);
-                        set.put("size", schm.name());
+                        set.put("size", schm.getPermission().toUpperCase());
                         Long now;
                         if (player.hasPermission("tardis.prune.bypass")) {
                             now = Long.MAX_VALUE;

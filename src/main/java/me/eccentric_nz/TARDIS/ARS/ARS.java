@@ -31,6 +31,4 @@ public interface ARS {
     public String getDescriptiveName();
 
     public int getOffset();
-
-    public boolean isConsole();
 }

@@ -432,61 +432,34 @@ public class TARDISUpdateListener implements Listener {
                                 }
                             }
                         }
-                        int control = 42;
-                        switch (schm) {
-                            case DELUXE:
-                                control = 57;
-                                empty[0][4][4] = control;
-                                empty[0][4][5] = control;
-                                empty[0][5][4] = control;
-                                empty[0][5][5] = control;
-                                empty[1][4][5] = control;
-                                empty[1][5][4] = control;
-                                empty[1][5][5] = control;
-                                break;
-                            case ELEVENTH:
-                                control = 133;
-                                empty[0][4][4] = control;
-                                empty[0][4][5] = control;
-                                empty[0][5][4] = control;
-                                empty[0][5][5] = control;
-                                empty[1][4][5] = control;
-                                empty[1][5][4] = control;
-                                empty[1][5][5] = control;
-                                break;
-                            case BIGGER:
-                                control = 41;
-                                empty[1][4][5] = control;
-                                empty[1][5][4] = control;
-                                empty[1][5][5] = control;
-                                break;
-                            case REDSTONE:
-                                control = 152;
-                                empty[1][4][5] = control;
-                                empty[1][5][4] = control;
-                                empty[1][5][5] = control;
-                                break;
-                            case STEAMPUNK:
-                                control = 173;
-                                break;
-                            case ARS:
-                                control = 155;
-                                break;
-                            case PLANK:
-                                control = 47;
-                                break;
-                            case TOM:
-                                control = 22;
-                                break;
-                            case WAR:
-                                control = 159;
-                                break;
-                            default:
-                                break;
+                        int control = schm.getSeedId();
+                        if (schm.getPermission().equals("deluxe")) {
+                            empty[0][4][4] = control;
+                            empty[0][4][5] = control;
+                            empty[0][5][4] = control;
+                            empty[0][5][5] = control;
+                            empty[1][4][5] = control;
+                            empty[1][5][4] = control;
+                            empty[1][5][5] = control;
+                        } else if (schm.getPermission().equals("eleventh")) {
+                            empty[0][4][4] = control;
+                            empty[0][4][5] = control;
+                            empty[0][5][4] = control;
+                            empty[0][5][5] = control;
+                            empty[1][4][5] = control;
+                            empty[1][5][4] = control;
+                            empty[1][5][5] = control;
+                        } else if (schm.getPermission().equals("bigger")) {
+                            empty[1][4][5] = control;
+                            empty[1][5][4] = control;
+                            empty[1][5][5] = control;
+                        } else if (schm.getPermission().equals("redstone")) {
+                            empty[1][4][5] = control;
+                            empty[1][5][4] = control;
+                            empty[1][5][5] = control;
                         }
                         empty[1][4][4] = control;
                         JSONArray json = new JSONArray(empty);
-
                         HashMap<String, Object> seta = new HashMap<String, Object>();
                         seta.put("tardis_id", id);
                         seta.put("uuid", playerUUID);

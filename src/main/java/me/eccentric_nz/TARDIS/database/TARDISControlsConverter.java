@@ -23,6 +23,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.HashMap;
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.enumeration.CONSOLES;
 import me.eccentric_nz.TARDIS.enumeration.SCHEMATIC;
 import org.bukkit.ChatColor;
 
@@ -157,67 +158,61 @@ public class TARDISControlsConverter {
     }
 
     private String estimateHandbrake(String size, String cham) {
-        SCHEMATIC s = SCHEMATIC.valueOf(size);
+        SCHEMATIC s = CONSOLES.SCHEMATICFor(size.toLowerCase());
         String[] data = cham.split(":");
         int x = plugin.getUtils().parseInt(data[1]);
         int y = plugin.getUtils().parseInt(data[2]);
         int z = plugin.getUtils().parseInt(data[3]);
-        switch (s) {
-            case DELUXE:
-                return data[0] + ":" + (x + 1) + ":" + (y + 1) + ":" + (z - 2);
-            default:
-                return data[0] + ":" + (x - 2) + ":" + y + ":" + z;
+        if (s.getPermission().equals("deluxe")) {
+            return data[0] + ":" + (x + 1) + ":" + (y + 1) + ":" + (z - 2);
+        } else {
+            return data[0] + ":" + (x - 2) + ":" + y + ":" + z;
         }
     }
 
     private String estimateButton(String size, String cham) {
-        SCHEMATIC s = SCHEMATIC.valueOf(size);
+        SCHEMATIC s = CONSOLES.SCHEMATICFor(size.toLowerCase());
         String[] data = cham.split(":");
         int x = plugin.getUtils().parseInt(data[1]);
         int y = plugin.getUtils().parseInt(data[2]);
         int z = plugin.getUtils().parseInt(data[3]);
-        switch (s) {
-            case DELUXE:
-                return data[0] + ":" + (x - 1) + ":" + y + ":" + (z - 1);
-            default:
-                return data[0] + ":" + x + ":" + y + ":" + (z + 2);
+        if (s.getPermission().equals("deluxe")) {
+            return data[0] + ":" + (x - 1) + ":" + y + ":" + (z - 1);
+        } else {
+            return data[0] + ":" + x + ":" + y + ":" + (z + 2);
         }
     }
 
     private String estimateArtron(String size, String cham) {
-        SCHEMATIC s = SCHEMATIC.valueOf(size);
+        SCHEMATIC s = CONSOLES.SCHEMATICFor(size.toLowerCase());
         String[] data = cham.split(":");
         int x = plugin.getUtils().parseInt(data[1]);
         int y = plugin.getUtils().parseInt(data[2]);
         int z = plugin.getUtils().parseInt(data[3]);
-        switch (s) {
-            case DELUXE:
-                return data[0] + ":" + (x + 5) + ":" + y + ":" + (z - 1);
-            default:
-                return data[0] + ":" + (x - 2) + ":" + y + ":" + (z + 2);
+        if (s.getPermission().equals("deluxe")) {
+            return data[0] + ":" + (x + 5) + ":" + y + ":" + (z - 1);
+        } else {
+            return data[0] + ":" + (x - 2) + ":" + y + ":" + (z + 2);
         }
     }
 
     private String[] estimateRepeaters(String size, String cham) {
         String[] r = new String[4];
-        SCHEMATIC s = SCHEMATIC.valueOf(size);
+        SCHEMATIC s = CONSOLES.SCHEMATICFor(size.toLowerCase());
         String[] data = cham.split(":");
         int x = plugin.getUtils().parseInt(data[1]);
         int y = plugin.getUtils().parseInt(data[2]);
         int z = plugin.getUtils().parseInt(data[3]);
-        switch (s) {
-            case DELUXE:
-                r[0] = data[0] + ":" + (x + 2) + ":" + (y + 1) + ":" + (z - 3); // environment
-                r[1] = data[0] + ":" + x + ":" + (y + 1) + ":" + (z - 1); // x
-                r[2] = data[0] + ":" + (x + 4) + ":" + (y + 1) + ":" + (z - 1); // z
-                r[3] = data[0] + ":" + (x + 2) + ":" + (y + 1) + ":" + (z + 1); // y
-                break;
-            default:
-                r[0] = data[0] + ":" + (x - 1) + ":" + y + ":" + (z - 1);
-                r[1] = data[0] + ":" + (x - 3) + ":" + y + ":" + (z + 1);
-                r[2] = data[0] + ":" + (x + 1) + ":" + y + ":" + (z + 1);
-                r[3] = data[0] + ":" + (x - 1) + ":" + y + ":" + (z + 3);
-                break;
+        if (s.getPermission().equals("deluxe")) {
+            r[0] = data[0] + ":" + (x + 2) + ":" + (y + 1) + ":" + (z - 3); // environment
+            r[1] = data[0] + ":" + x + ":" + (y + 1) + ":" + (z - 1); // x
+            r[2] = data[0] + ":" + (x + 4) + ":" + (y + 1) + ":" + (z - 1); // z
+            r[3] = data[0] + ":" + (x + 2) + ":" + (y + 1) + ":" + (z + 1); // y
+        } else {
+            r[0] = data[0] + ":" + (x - 1) + ":" + y + ":" + (z - 1);
+            r[1] = data[0] + ":" + (x - 3) + ":" + y + ":" + (z + 1);
+            r[2] = data[0] + ":" + (x + 1) + ":" + y + ":" + (z + 1);
+            r[3] = data[0] + ":" + (x - 1) + ":" + y + ":" + (z + 3);
         }
         return r;
     }

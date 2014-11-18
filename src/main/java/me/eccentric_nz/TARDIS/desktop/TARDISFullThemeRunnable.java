@@ -116,8 +116,8 @@ public class TARDISFullThemeRunnable extends TARDISThemeRunnable implements Runn
         if (!running) {
             set = new HashMap<String, Object>();
             where = new HashMap<String, Object>();
-            String directory = (tud.getSchematic().equals(SCHEMATIC.CUSTOM)) ? "user_schematics" : "schematics";
-            String path = plugin.getDataFolder() + File.separator + directory + File.separator + tud.getSchematic().getFile();
+            String directory = (tud.getSchematic().isCustom()) ? "user_schematics" : "schematics";
+            String path = plugin.getDataFolder() + File.separator + directory + File.separator + tud.getSchematic().getPermission() + ".tschm";
             File file = new File(path);
             if (!file.exists()) {
                 plugin.debug(plugin.getPluginName() + "Could not find a schematic with that name!");
@@ -138,7 +138,7 @@ public class TARDISFullThemeRunnable extends TARDISThemeRunnable implements Runn
                 // abort and return energy
                 HashMap<String, Object> wherea = new HashMap<String, Object>();
                 wherea.put("uuid", uuid.toString());
-                int amount = plugin.getArtronConfig().getInt("upgrades." + tud.getSchematic().name().toLowerCase());
+                int amount = plugin.getArtronConfig().getInt("upgrades." + tud.getSchematic().getPermission());
                 qf.alterEnergyLevel("tardis", amount, wherea, player);
             }
             slot = rs.getTIPS();
@@ -167,14 +167,7 @@ public class TARDISFullThemeRunnable extends TARDISThemeRunnable implements Runn
                 startz = gsl[2];
                 resetz = gsl[3];
             }
-            switch (tud.getSchematic()) {
-                case REDSTONE:
-                    starty = 65;
-                    break;
-                default:
-                    starty = 64;
-                    break;
-            }
+            starty = (tud.getSchematic().getPermission().equals("REDSTONE")) ? 65 : 64;
             downgrade = compare(tud.getPrevious(), tud.getSchematic());
             String[] split = rs.getChunk().split(":");
             world = plugin.getServer().getWorld(split[0]);
@@ -371,8 +364,8 @@ public class TARDISFullThemeRunnable extends TARDISThemeRunnable implements Runn
                     }
                 }
                 // give them back some energy (jettison % * difference in cost)
-                int big = plugin.getArtronConfig().getInt("upgrades." + tud.getPrevious().name().toLowerCase());
-                int small = plugin.getArtronConfig().getInt("upgrades." + tud.getSchematic().name().toLowerCase());
+                int big = plugin.getArtronConfig().getInt("upgrades." + tud.getPrevious().getPermission());
+                int small = plugin.getArtronConfig().getInt("upgrades." + tud.getSchematic().getPermission());
                 int refund = Math.round((plugin.getArtronConfig().getInt("jettison") / 100F) * (big - small));
                 HashMap<String, Object> setr = new HashMap<String, Object>();
                 setr.put("tardis_id", id);
@@ -507,41 +500,7 @@ public class TARDISFullThemeRunnable extends TARDISThemeRunnable implements Runn
                             ResultSetARS rsa = new ResultSetARS(plugin, wherer);
                             if (rsa.resultSet()) {
                                 int[][][] existing = TARDISARSMethods.getGridFromJSON(rsa.getJson());
-                                int control = 42;
-                                switch (tud.getSchematic()) {
-                                    case DELUXE:
-                                        control = 57;
-                                        break;
-                                    case ELEVENTH:
-                                        control = 133;
-                                        break;
-                                    case BIGGER:
-                                        control = 41;
-                                        break;
-                                    case REDSTONE:
-                                        control = 152;
-                                        break;
-                                    case STEAMPUNK:
-                                        control = 173;
-                                        break;
-                                    case ARS:
-                                        control = 155;
-                                        break;
-                                    case PLANK:
-                                        control = 47;
-                                        break;
-                                    case TOM:
-                                        control = 22;
-                                        break;
-                                    case WAR:
-                                        control = 159;
-                                        break;
-                                    case CUSTOM:
-                                        control = 122;
-                                        break;
-                                    default:
-                                        break;
-                                }
+                                int control = tud.getSchematic().getSeedId();
                                 existing[1][4][4] = control;
                                 if (downgrade) {
                                     // reset slots to stone
@@ -602,7 +561,7 @@ public class TARDISFullThemeRunnable extends TARDISThemeRunnable implements Runn
                         qf.doInsert("lamps", setlb);
                     }
                 }
-                if (type.equals(Material.COMMAND) || ((tud.getSchematic().equals(SCHEMATIC.BIGGER) || tud.getSchematic().equals(SCHEMATIC.DELUXE)) && type.equals(Material.BEACON))) {
+                if (type.equals(Material.COMMAND) || ((tud.getSchematic().getPermission().equals("bigger") || tud.getSchematic().getPermission().equals("deluxe")) && type.equals(Material.BEACON))) {
                     /*
                      * command block - remember it to spawn the creeper on.
                      * could also be a beacon block, as the creeper sits
@@ -610,17 +569,10 @@ public class TARDISFullThemeRunnable extends TARDISThemeRunnable implements Runn
                      */
                     String creeploc = world.getName() + ":" + (x + 0.5) + ":" + y + ":" + (z + 0.5);
                     set.put("creeper", creeploc);
-                    switch (tud.getSchematic()) {
-                        case CUSTOM:
-                            type = Material.valueOf(plugin.getConfig().getString("creation.custom_creeper_id"));
-                            break;
-                        case BIGGER:
-                        case DELUXE:
-                            type = Material.BEACON;
-                            break;
-                        default:
-                            type = Material.SMOOTH_BRICK;
-                            break;
+                    if (tud.getSchematic().getPermission().equals("bigger") || tud.getSchematic().getPermission().equals("deluxe")) {
+                        type = Material.BEACON;
+                    } else {
+                        type = Material.SMOOTH_BRICK;
                     }
                 }
                 if (type.equals(Material.WOOD_BUTTON)) {
@@ -737,40 +689,29 @@ public class TARDISFullThemeRunnable extends TARDISThemeRunnable implements Runn
 
     private List<TARDISARSJettison> getJettisons(SCHEMATIC prev, SCHEMATIC next, Chunk chunk) {
         List<TARDISARSJettison> list = new ArrayList<TARDISARSJettison>();
-        switch (prev) {
-            case BIGGER:
-            case REDSTONE:
-                // the 3 chunks on the same level
+        if (prev.getPermission().equals("bigger") || prev.getPermission().equals("redstone")) {
+            // the 3 chunks on the same level
+            list.add(new TARDISARSJettison(chunk, 1, 4, 5));
+            list.add(new TARDISARSJettison(chunk, 1, 5, 4));
+            list.add(new TARDISARSJettison(chunk, 1, 5, 5));
+        } else if (prev.getPermission().equals("deluxe") || prev.getPermission().equals("eleventh")) {
+            if (next.getPermission().equals("bigger") || next.getPermission().equals("redstone")) {
+                // the 4 chunks on the level above
+                list.add(new TARDISARSJettison(chunk, 2, 4, 4));
+                list.add(new TARDISARSJettison(chunk, 2, 4, 5));
+                list.add(new TARDISARSJettison(chunk, 2, 5, 4));
+                list.add(new TARDISARSJettison(chunk, 2, 5, 5));
+            } else {
+                // the 3 chunks on the same level &
+                // the 4 chunks on the level above
                 list.add(new TARDISARSJettison(chunk, 1, 4, 5));
                 list.add(new TARDISARSJettison(chunk, 1, 5, 4));
                 list.add(new TARDISARSJettison(chunk, 1, 5, 5));
-                break;
-            case DELUXE:
-            case ELEVENTH:
-                switch (next) {
-                    case BIGGER:
-                    case REDSTONE:
-                        // the 4 chunks on the level above
-                        list.add(new TARDISARSJettison(chunk, 2, 4, 4));
-                        list.add(new TARDISARSJettison(chunk, 2, 4, 5));
-                        list.add(new TARDISARSJettison(chunk, 2, 5, 4));
-                        list.add(new TARDISARSJettison(chunk, 2, 5, 5));
-                        break;
-                    default:
-                        // the 3 chunks on the same level &
-                        // the 4 chunks on the level above
-                        list.add(new TARDISARSJettison(chunk, 1, 4, 5));
-                        list.add(new TARDISARSJettison(chunk, 1, 5, 4));
-                        list.add(new TARDISARSJettison(chunk, 1, 5, 5));
-                        list.add(new TARDISARSJettison(chunk, 2, 4, 4));
-                        list.add(new TARDISARSJettison(chunk, 2, 4, 5));
-                        list.add(new TARDISARSJettison(chunk, 2, 5, 4));
-                        list.add(new TARDISARSJettison(chunk, 2, 5, 5));
-                        break;
-                }
-                break;
-            default:
-                break;
+                list.add(new TARDISARSJettison(chunk, 2, 4, 4));
+                list.add(new TARDISARSJettison(chunk, 2, 4, 5));
+                list.add(new TARDISARSJettison(chunk, 2, 5, 4));
+                list.add(new TARDISARSJettison(chunk, 2, 5, 5));
+            }
         }
         return list;
     }
