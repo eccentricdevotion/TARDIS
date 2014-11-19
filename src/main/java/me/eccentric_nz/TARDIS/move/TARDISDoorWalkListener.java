@@ -98,10 +98,15 @@ public class TARDISDoorWalkListener extends TARDISDoorListener implements Listen
                     where.put("door_location", doorloc);
                     ResultSetDoors rsd = new ResultSetDoors(plugin, where, false);
                     if (rsd.resultSet()) {
-                        QueryFactory qf = new QueryFactory(plugin);
                         event.setUseInteractedBlock(Event.Result.DENY);
                         event.setUseItemInHand(Event.Result.DENY);
                         event.setCancelled(true);
+                        final int id = rsd.getTardis_id();
+                        if (plugin.getTrackerKeeper().getMaterialising().contains(id) || plugin.getTrackerKeeper().getDematerialising().contains(id)) {
+                            TARDISMessage.send(player, "NOT_WHILE_MAT");
+                            return;
+                        }
+                        QueryFactory qf = new QueryFactory(plugin);
                         COMPASS dd = rsd.getDoor_direction();
                         int doortype = rsd.getDoor_type();
                         int end_doortype;
@@ -137,7 +142,6 @@ public class TARDISDoorWalkListener extends TARDISDoorListener implements Listen
                         Material m = Material.getMaterial(key);
                         if (action == Action.LEFT_CLICK_BLOCK) {
                             // must be the owner
-                            int id = rsd.getTardis_id();
                             HashMap<String, Object> oid = new HashMap<String, Object>();
                             oid.put("uuid", player.getUniqueId().toString());
                             ResultSetTardis rs = new ResultSetTardis(plugin, oid, "", false);
@@ -161,7 +165,6 @@ public class TARDISDoorWalkListener extends TARDISDoorListener implements Listen
                             }
                         }
                         if (action == Action.RIGHT_CLICK_BLOCK && !player.isSneaking()) {
-                            final int id = rsd.getTardis_id();
                             if (plugin.getTrackerKeeper().getInSiegeMode().contains(id)) {
                                 TARDISMessage.send(player, "SIEGE_NO_EXIT");
                                 return;
@@ -257,7 +260,6 @@ public class TARDISDoorWalkListener extends TARDISDoorListener implements Listen
                                 TARDISMessage.send(player, "DOOR_DEADLOCKED");
                                 return;
                             }
-                            int id = rsd.getTardis_id();
                             if (plugin.getTrackerKeeper().getInSiegeMode().contains(id)) {
                                 TARDISMessage.send(player, "SIEGE_NO_EXIT");
                                 return;

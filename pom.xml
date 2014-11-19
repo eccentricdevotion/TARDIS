@@ -16,10 +16,6 @@
     <url>http://eccentricdevotion.github.com/TARDIS/</url>
     <repositories>
         <repository>
-            <id>bukkit-repo</id>
-            <url>http://repo.bukkit.org/content/groups/public</url>
-        </repository>
-        <repository>
             <id>sk89q-repo</id>
             <url>http://maven.sk89q.com/repo/</url>
         </repository>
@@ -155,7 +151,7 @@
         <dependency>
             <groupId>me.eccentric_nz.tardischunkgenerator</groupId>
             <artifactId>TARDISChunkGenerator</artifactId>
-            <version>1.0g</version>
+            <version>1.0f</version>
             <type>jar</type>
             <exclusions>
                 <exclusion>
@@ -305,6 +301,10 @@
                     <groupId>org.bukkit</groupId>
                     <artifactId>bukkit</artifactId>
                 </exclusion>
+                <exclusion>
+                    <groupId>org.mcstats.bukkit</groupId>
+                    <artifactId>metrics</artifactId>
+                </exclusion>
             </exclusions>
         </dependency>
         <dependency>
@@ -328,6 +328,10 @@
                 <exclusion>
                     <artifactId>junit</artifactId>
                     <groupId>junit</groupId>
+                </exclusion>
+                <exclusion>
+                    <groupId>org.bukkit</groupId>
+                    <artifactId>bukkit</artifactId>
                 </exclusion>
             </exclusions>
         </dependency>
@@ -388,7 +392,7 @@
         <dependency>
             <groupId>com.comphenix.protocol</groupId>
             <artifactId>ProtocolLib</artifactId>
-            <version>3.5.0-SNAPSHOT</version>
+            <version>Spigot-3.6.0-SNAPSHOT</version>
             <exclusions>
                 <exclusion>
                     <artifactId>BukkitExecutors</artifactId>
