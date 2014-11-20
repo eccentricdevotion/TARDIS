@@ -143,6 +143,8 @@ public class TARDISSiegeListener implements Listener {
         }
         // track it
         plugin.getTrackerKeeper().getIsSiegeCube().add(id);
+        // track the player as well
+        plugin.getTrackerKeeper().getSiegeCarrying().put(puuid, id);
     }
 
     @EventHandler(ignoreCancelled = true)
@@ -204,6 +206,37 @@ public class TARDISSiegeListener implements Listener {
             return;
         }
         plugin.debug("siege cube placed");
+        Player p = event.getPlayer();
+        UUID uuid = p.getUniqueId();
+        // only if we're tracking this player
+        if (!plugin.getTrackerKeeper().getSiegeCarrying().containsKey(uuid)) {
+            plugin.debug("not carrying a cube");
+            return;
+        }
+        Location loc = event.getBlock().getLocation();
+        // check there is room to expand to a police box
+        COMPASS d = COMPASS.valueOf(plugin.getUtils().getPlayersDirection(p, false));
+        int[] start = TARDISTimeTravel.getStartLocation(loc, d);
+        int count = TARDISTimeTravel.safeLocation(start[0], loc.getBlockY(), start[2], start[1], start[3], loc.getWorld(), d);
+        if (count > 0) {
+            event.setCancelled(true);
+            TARDISMessage.send(p, "SIEGE_NO_SPACE");
+            return;
+        }
+        // update the current location
+        int id = plugin.getTrackerKeeper().getSiegeCarrying().get(uuid);
+        HashMap<String, Object> where = new HashMap<String, Object>();
+        where.put("tardis_id", id);
+        HashMap<String, Object> set = new HashMap<String, Object>();
+        set.put("world", loc.getWorld().getName());
+        set.put("x", loc.getBlockX());
+        set.put("y", loc.getBlockY());
+        set.put("z", loc.getBlockZ());
+        set.put("direction", d.toString());
+        new QueryFactory(plugin).doUpdate("current", set, where);
+        // remove trackers
+        plugin.getTrackerKeeper().getIsSiegeCube().remove(Integer.valueOf(id));
+        plugin.getTrackerKeeper().getSiegeCarrying().remove(uuid);
     }
 
     @EventHandler(ignoreCancelled = true)
