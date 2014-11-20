@@ -480,6 +480,10 @@ public class TARDISButtonListener implements Listener {
                                     new TARDISBlackWoolToggler(plugin).toggleBlocks(id, player);
                                     break;
                                 case 21:
+                                    if (!plugin.getConfig().getBoolean("siege.enabled")) {
+                                        TARDISMessage.send(player, "SIEGE_DISABLED");
+                                        return;
+                                    }
                                     UUID uuid = player.getUniqueId();
                                     if (plugin.getTrackerKeeper().getRebuildCooldown().containsKey(uuid)) {
                                         long now = System.currentTimeMillis();

@@ -64,6 +64,10 @@ public class TARDISUpdateCommand {
                 new TARDISUpdateLister(plugin, player).list();
                 return true;
             }
+            if (tardis_block.equals("siege") && !plugin.getConfig().getBoolean("siege.enabled")) {
+                TARDISMessage.send(player, "SIEGE_DISABLED");
+                return true;
+            }
             if (tardis_block.equals("hinge")) {
                 Block block = player.getTargetBlock(null, 10);
                 if (block.getType().equals(Material.IRON_DOOR_BLOCK)) {
