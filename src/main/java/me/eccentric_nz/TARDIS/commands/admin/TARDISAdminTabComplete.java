@@ -38,6 +38,7 @@ public class TARDISAdminTabComplete extends TARDISCompleter implements TabComple
     private final ImmutableList<String> DB_SUBS = ImmutableList.of("mysql", "sqlite");
     private final ImmutableList<String> TIPS_SUBS = ImmutableList.of("400", "800", "1200", "1600");
     private final ImmutableList<String> TOWNY_SUBS = ImmutableList.of("none", "wilderness", "town", "nation");
+    private final ImmutableList<String> SIEGE_SUBS = ImmutableList.of("enabled", "breeding", "growth", "butcher", "creeper", "healing", "texture", "true", "false");
     private final ImmutableList<String> FLAG_SUBS;
     private final ImmutableList<String> PRESETS;
     private final ImmutableList<String> CONFIG_SUBS = ImmutableList.of("worlds", "rechargers", "storage", "creation", "police_box", "travel", "preferences", "allow", "growth", "rooms");
@@ -82,6 +83,9 @@ public class TARDISAdminTabComplete extends TARDISCompleter implements TabComple
             if (sub.equals("sign_colour")) {
                 return partial(lastArg, COLOURS);
             }
+            if (sub.equals("siege")) {
+                return partial(lastArg, SIEGE_SUBS);
+            }
             if (sub.equals("default_key")) {
                 return partial(lastArg, KEYS);
             }
@@ -105,6 +109,8 @@ public class TARDISAdminTabComplete extends TARDISCompleter implements TabComple
             } else {
                 return partial(lastArg, BOOL_SUBS);
             }
+        } else if (args.length == 3) {
+            return partial(lastArg, BOOL_SUBS);
         }
         return ImmutableList.of();
     }

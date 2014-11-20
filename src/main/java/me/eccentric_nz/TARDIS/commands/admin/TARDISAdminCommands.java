@@ -88,6 +88,7 @@ public class TARDISAdminCommands implements CommandExecutor {
         firstsStr.put("reload", "");
         firstsStr.put("respect_towny", "preferences");
         firstsStr.put("respect_worldguard", "preferences");
+        firstsStr.put("siege", "siege");
         firstsStr.put("sign_colour", "police_box");
         firstsStrArtron.add("full_charge_item");
         firstsStrArtron.add("jettison_seed");
@@ -245,6 +246,9 @@ public class TARDISAdminCommands implements CommandExecutor {
                         return true;
                     }
                     plugin.getConfig().set("database", dbtype);
+                }
+                if (first.equals("siege")) {
+                    return new TARDISSiegeCommand(plugin).setOption(sender, args);
                 }
                 if (first.equals("sign_colour")) {
                     return new TARDISSignColourCommand(plugin).setColour(sender, args);
