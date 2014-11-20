@@ -269,7 +269,9 @@ public class TARDIS extends JavaPlugin {
                 new TARDISArchPersister(this).checkAll();
             }
             if (getConfig().getBoolean("siege.enabled")) {
-                new TARDISSiegePersister(this).load();
+                TARDISSiegePersister tsp = new TARDISSiegePersister(this);
+                tsp.loadSiege();
+                tsp.loadCubes();
             }
             setDates();
             startStandBy();
@@ -307,6 +309,9 @@ public class TARDIS extends JavaPlugin {
             }
             if (disguisesOnServer && getConfig().getBoolean("arch.enabled")) {
                 new TARDISArchPersister(this).saveAll();
+            }
+            if (getConfig().getBoolean("siege.enabled")) {
+                new TARDISSiegePersister(this).saveCubes();
             }
             updateTagStats();
             closeDatabase();

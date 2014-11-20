@@ -21,8 +21,13 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.database.QueryFactory;
+import me.eccentric_nz.TARDIS.database.ResultSetSiege;
 import me.eccentric_nz.TARDIS.database.TARDISDatabaseConnection;
 import org.bukkit.Chunk;
 
@@ -43,7 +48,7 @@ public class TARDISSiegePersister {
         this.plugin = plugin;
     }
 
-    public void load() {
+    public void loadSiege() {
         try {
             ps = connection.prepareStatement("SELECT tardis_id, siege_on FROM tardis");
             rs = ps.executeQuery();
@@ -92,6 +97,30 @@ public class TARDISSiegePersister {
             } catch (SQLException ex) {
                 plugin.debug("Error closing tardis statement or resultset: " + ex.getMessage());
             }
+        }
+    }
+
+    public void loadCubes() {
+        ResultSetSiege rss = new ResultSetSiege(plugin);
+        if (rss.resultSet()) {
+            HashMap<UUID, Integer> data = rss.getData();
+            plugin.getTrackerKeeper().getSiegeCarrying().putAll(data);
+            plugin.getTrackerKeeper().getIsSiegeCube().addAll(data.values());
+        }
+    }
+
+    public void saveCubes() {
+        QueryFactory qf = new QueryFactory(plugin);
+        int i = 0;
+        for (Map.Entry<UUID, Integer> map : plugin.getTrackerKeeper().getSiegeCarrying().entrySet()) {
+            HashMap<String, Object> set = new HashMap<String, Object>();
+            set.put("uuid", map.getKey().toString());
+            set.put("tardis_id", map.getValue());
+            qf.doInsert("siege", set);
+            i++;
+        }
+        if (i > 0) {
+            plugin.debug("Saved " + i + " Siege Cubes");
         }
     }
 }

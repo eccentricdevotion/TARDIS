@@ -130,6 +130,10 @@ public class TARDISSQLiteDatabase {
             String queryPortals = "CREATE TABLE IF NOT EXISTS portals (portal_id INTEGER PRIMARY KEY NOT NULL, portal TEXT DEFAULT '', teleport TEXT DEFAULT '', direction TEXT DEFAULT '', tardis_id INTEGER DEFAULT 0)";
             statement.executeUpdate(queryPortals);
 
+            // Table structure for table 'siege'
+            String querySiege = "CREATE TABLE IF NOT EXISTS siege (siege_id INTEGER PRIMARY KEY NOT NULL, uuid TEXT DEFAULT '', tardis_id INTEGER DEFAULT 0)";
+            statement.executeUpdate(querySiege);
+
             // reset storage table
             String s_query = "SELECT sql FROM sqlite_master WHERE tbl_name = 'storage'";
             ResultSet rss = statement.executeQuery(s_query);
