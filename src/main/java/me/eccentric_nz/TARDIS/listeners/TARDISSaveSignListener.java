@@ -44,11 +44,12 @@ import org.bukkit.inventory.meta.ItemMeta;
  *
  * @author eccentric_nz
  */
-public class TARDISSaveSignListener implements Listener {
+public class TARDISSaveSignListener extends TARDISMenuListener implements Listener {
 
     private final TARDIS plugin;
 
     public TARDISSaveSignListener(TARDIS plugin) {
+        super(plugin);
         this.plugin = plugin;
     }
 
@@ -253,19 +254,5 @@ public class TARDISSaveSignListener implements Listener {
         int y = plugin.getUtils().parseInt(lore.get(2));
         int z = plugin.getUtils().parseInt(lore.get(3));
         return new Location(w, x, y, z);
-    }
-
-    /**
-     * Closes the inventory.
-     *
-     * @param p the player using the GUI
-     */
-    private void close(final Player p) {
-        plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
-            @Override
-            public void run() {
-                p.closeInventory();
-            }
-        }, 1L);
     }
 }

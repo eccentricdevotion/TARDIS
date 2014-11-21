@@ -21,6 +21,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.listeners.TARDISMenuListener;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import me.eccentric_nz.TARDIS.utility.Version;
 import me.libraryaddict.disguise.DisguiseAPI;
@@ -62,7 +63,7 @@ import org.bukkit.inventory.meta.ItemMeta;
  *
  * @author eccentric_nz
  */
-public class TARDISLazarusGUIListener implements Listener {
+public class TARDISLazarusGUIListener extends TARDISMenuListener implements Listener {
 
     private final TARDIS plugin;
     private final HashMap<UUID, String> disguises = new HashMap<UUID, String>();
@@ -79,6 +80,7 @@ public class TARDISLazarusGUIListener implements Listener {
     private int max_slot = 36;
 
     public TARDISLazarusGUIListener(TARDIS plugin) {
+        super(plugin);
         this.plugin = plugin;
         if (this.plugin.getPM().isPluginEnabled("TARDISWeepingAngels")) {
             this.twa = new Version(this.plugin.getPM().getPlugin("TARDISWeepingAngels").getDescription().getVersion());
@@ -389,20 +391,6 @@ public class TARDISLazarusGUIListener implements Listener {
             }
             untrack(uuid);
         }
-    }
-
-    /**
-     * Closes the inventory.
-     *
-     * @param p the player using the GUI
-     */
-    private void close(final Player p) {
-        plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
-            @Override
-            public void run() {
-                p.closeInventory();
-            }
-        }, 1L);
     }
 
     private void untrack(UUID uuid) {
