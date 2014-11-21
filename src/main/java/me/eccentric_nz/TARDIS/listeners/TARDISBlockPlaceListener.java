@@ -137,7 +137,7 @@ public class TARDISBlockPlaceListener implements Listener {
                 }
                 // check perms
                 if (!schm.getPermission().equals("budget") && !player.hasPermission("tardis." + schm.getPermission())) {
-                    TARDISMessage.send(player, "NO_PERM_TARDIS", schm.toString());
+                    TARDISMessage.send(player, "NO_PERM_TARDIS", schm.getPermission().toUpperCase());
                     return;
                 }
                 if (player.hasPermission("tardis.create")) {
