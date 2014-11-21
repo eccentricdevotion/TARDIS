@@ -301,7 +301,12 @@ public class TARDISTimeTravel {
                 for (col = 0; col < colcount; col++) {
                     Material mat = w.getBlockAt(startx, starty, startz).getType();
                     if (!TARDISConstants.GOOD_MATERIALS.contains(mat)) {
-                        count++;
+                        // check for siege cube
+                        if (TARDIS.plugin.getConfig().getBoolean("siege.enabled") && mat.equals(Material.HUGE_MUSHROOM_1) && w.getBlockAt(startx, starty, startz).getData() == (byte) 14) {
+                            continue;
+                        } else {
+                            count++;
+                        }
                     }
                     startx += 1;
                 }

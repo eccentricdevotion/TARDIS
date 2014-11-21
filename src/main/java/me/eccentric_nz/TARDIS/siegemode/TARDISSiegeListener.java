@@ -202,15 +202,12 @@ public class TARDISSiegeListener implements Listener {
     public void onSiegeCubePlace(final BlockPlaceEvent event) {
         ItemStack is = event.getItemInHand();
         if (!isSiegeCube(is)) {
-            plugin.debug("not a siege cube");
             return;
         }
-        plugin.debug("siege cube placed");
         Player p = event.getPlayer();
         UUID uuid = p.getUniqueId();
         // only if we're tracking this player
         if (!plugin.getTrackerKeeper().getSiegeCarrying().containsKey(uuid)) {
-            plugin.debug("not carrying a cube");
             return;
         }
         Location loc = event.getBlock().getLocation();
