@@ -26,7 +26,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetSiege;
 import me.eccentric_nz.TARDIS.database.TARDISDatabaseConnection;
 import org.bukkit.Chunk;
@@ -106,21 +105,47 @@ public class TARDISSiegePersister {
             HashMap<UUID, Integer> data = rss.getData();
             plugin.getTrackerKeeper().getSiegeCarrying().putAll(data);
             plugin.getTrackerKeeper().getIsSiegeCube().addAll(data.values());
+            // clear the table
+            try {
+                ps = connection.prepareStatement("DELETE FROM siege");
+                ps.executeUpdate();
+            } catch (SQLException ex) {
+                plugin.debug("Delete error for siege table: " + ex.getMessage());
+            } finally {
+                try {
+                    if (ps != null) {
+                        ps.close();
+                    }
+                } catch (SQLException ex) {
+                    plugin.debug("Error closing delete siege statement: " + ex.getMessage());
+                }
+            }
         }
     }
 
     public void saveCubes() {
-        QueryFactory qf = new QueryFactory(plugin);
-        int i = 0;
-        for (Map.Entry<UUID, Integer> map : plugin.getTrackerKeeper().getSiegeCarrying().entrySet()) {
-            HashMap<String, Object> set = new HashMap<String, Object>();
-            set.put("uuid", map.getKey().toString());
-            set.put("tardis_id", map.getValue());
-            qf.doInsert("siege", set);
-            i++;
-        }
-        if (i > 0) {
-            plugin.debug("Saved " + i + " Siege Cubes");
+        try {
+            ps = connection.prepareStatement("INSERT INTO siege (uuid, tardis_id) VALUES (?, ?)");
+            int i = 0;
+            for (Map.Entry<UUID, Integer> map : plugin.getTrackerKeeper().getSiegeCarrying().entrySet()) {
+                HashMap<String, Object> set = new HashMap<String, Object>();
+                ps.setString(1, map.getKey().toString());
+                ps.setInt(2, map.getValue());
+                i += ps.executeUpdate();
+            }
+            if (i > 0) {
+                plugin.getConsole().sendMessage(plugin.getPluginName() + "Saved " + i + " Siege Cubes");
+            }
+        } catch (SQLException ex) {
+            plugin.debug("Insert error for siege table: " + ex.getMessage());
+        } finally {
+            try {
+                if (ps != null) {
+                    ps.close();
+                }
+            } catch (SQLException ex) {
+                plugin.debug("Error closing insert siege statement: " + ex.getMessage());
+            }
         }
     }
 }
