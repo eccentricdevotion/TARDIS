@@ -121,7 +121,7 @@ public class TARDISSeedBlockListener implements Listener {
                 ItemMeta im = is.getItemMeta();
                 im.setDisplayName("§6TARDIS Seed Block");
                 List<String> lore = new ArrayList<String>();
-                lore.add(data.getSchematic().toString());
+                lore.add(data.getSchematic().getPermission().toUpperCase());
                 lore.add("Walls: " + twl.wall_lookup.get(data.getWallType() + ":" + data.getWallData()));
                 lore.add("Floors: " + twl.wall_lookup.get(data.getFloorType() + ":" + data.getFloorData()));
                 // do some funky stuff to get data values for wool/stained glass & clay/wood/log/log_2
