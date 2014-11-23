@@ -910,7 +910,7 @@ public class TARDIS extends JavaPlugin {
         return tardisCopier;
     }
 
-    public TARDII getTARDII() {
+    public TARDII getTardisAPI() {
         return new TARDII();
     }
 
