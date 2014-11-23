@@ -75,11 +75,11 @@ public interface TardisAPI {
      *
      * @param worlds a List of world names to search
      * @param environment the world type to search
-     * @param flag a Parameters object determining what flags to check for when
-     * getting the Location
+     * @param params a Parameters object determining what flags to check for
+     * when getting the Location
      * @return a random Location or null if one could not be found
      */
-    public Location getRandomLocation(List<String> worlds, World.Environment environment, Parameters flag);
+    public Location getRandomLocation(List<String> worlds, World.Environment environment, Parameters params);
 
     /**
      * Get a random location from a provided list of worlds in the specified
