@@ -183,7 +183,8 @@ public class TARDISLazarusGUIListener extends TARDISMenuListener implements List
                     @Override
                     public void run() {
                         openDoor(b);
-                        untrack(player.getUniqueId());
+                        untrack(uuid);
+                        plugin.getTrackerKeeper().getGeneticallyModified().remove(uuid);
                     }
                 }, 100L);
             }
@@ -368,7 +369,8 @@ public class TARDISLazarusGUIListener extends TARDISMenuListener implements List
                     @Override
                     public void run() {
                         openDoor(b);
-                        untrack(player.getUniqueId());
+                        untrack(uuid);
+                        plugin.getTrackerKeeper().getGeneticallyModified().add(uuid);
                     }
                 }, 100L);
             }

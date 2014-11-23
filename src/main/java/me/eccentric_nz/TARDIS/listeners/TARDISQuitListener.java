@@ -113,8 +113,13 @@ public class TARDISQuitListener implements Listener {
                 }
             }
             // save arched status
-            if (plugin.isDisguisesOnServer() && plugin.getConfig().getBoolean("arch.enabled") && plugin.getTrackerKeeper().getJohnSmith().containsKey(uuid)) {
-                new TARDISArchPersister(plugin).save(uuid);
+            if (plugin.isDisguisesOnServer()) {
+                if (plugin.getConfig().getBoolean("arch.enabled") && plugin.getTrackerKeeper().getJohnSmith().containsKey(uuid)) {
+                    new TARDISArchPersister(plugin).save(uuid);
+                }
+                if (plugin.getTrackerKeeper().getGeneticallyModified().contains(uuid)) {
+                    plugin.getTrackerKeeper().getGeneticallyModified().remove(uuid);
+                }
             }
         }
     }
