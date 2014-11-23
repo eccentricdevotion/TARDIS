@@ -16,8 +16,6 @@
  */
 package me.eccentric_nz.TARDIS.travel;
 
-import com.wimbli.WorldBorder.BorderData;
-import com.wimbli.WorldBorder.Config;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -25,12 +23,13 @@ import java.util.Random;
 import java.util.Set;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
+import me.eccentric_nz.TARDIS.api.Parameters;
 import me.eccentric_nz.TARDIS.database.ResultSetTravellers;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
+import me.eccentric_nz.TARDIS.enumeration.FLAG;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
-import org.bukkit.World.Environment;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 import org.bukkit.entity.Player;
@@ -56,97 +55,100 @@ public class TARDISRandomiserCircuit {
     public Location getRandomlocation(Player p, COMPASS d) {
         // get a random world
         Set<String> worldlist = plugin.getConfig().getConfigurationSection("worlds").getKeys(false);
-        List<World> allowedWorlds = new ArrayList<World>();
+        List<String> allowedWorlds = new ArrayList<String>();
         for (String o : worldlist) {
             World ww = plugin.getServer().getWorld(o);
             if (ww != null) {
                 if (plugin.getConfig().getBoolean("travel.include_default_world") || !plugin.getConfig().getBoolean("creation.default_world")) {
                     if (plugin.getConfig().getBoolean("worlds." + o)) {
-                        allowedWorlds.add(ww);
+                        allowedWorlds.add(o);
                     }
                 } else {
                     if (!o.equals(plugin.getConfig().getString("creation.default_world_name"))) {
                         if (plugin.getConfig().getBoolean("worlds." + o)) {
-                            allowedWorlds.add(ww);
+                            allowedWorlds.add(o);
                         }
                     }
                 }
                 // remove the world if the player doesn't have permission
                 if (allowedWorlds.size() > 1 && plugin.getConfig().getBoolean("travel.per_world_perms") && !p.hasPermission("tardis.travel." + o)) {
-                    allowedWorlds.remove(ww);
+                    allowedWorlds.remove(o);
                 }
             }
         }
-        int listlen = allowedWorlds.size();
-        // random world
-        World w = allowedWorlds.get(random.nextInt(listlen));
-        // get the limits of the world
-        int minX;
-        int maxX;
-        int minZ;
-        int maxZ;
-        // is WorldBorder enabled?
-        if (plugin.getPM().isPluginEnabled("WorldBorder")) {
-            BorderData border = Config.Border(w.getName());
-            minX = (int) border.getX() - border.getRadiusX();
-            maxX = (int) border.getX() + border.getRadiusX();
-            minZ = (int) border.getZ() - border.getRadiusZ();
-            maxZ = (int) border.getZ() + border.getRadiusZ();
-        } else {
-            // use config
-            int cx = plugin.getConfig().getInt("travel.random_circuit.x");
-            int cz = plugin.getConfig().getInt("travel.random_circuit.z");
-            minX = 0 - cx;
-            maxX = cx;
-            minZ = 0 - cz;
-            maxZ = cz;
-        }
-        // compensate for nether 1:8 ratio if necessary
-        Environment env = w.getEnvironment();
-        if (env.equals(Environment.NETHER)) {
-            minX /= 8;
-            maxX /= 8;
-            minZ /= 8;
-            maxZ /= 8;
-        }
-        // get ranges
-        int rangeX = Math.abs(minX) + maxX;
-        int rangeZ = Math.abs(minZ) + maxZ;
-        // loop till random attempts limit reached
-        test:
-        for (int n = 0; n < plugin.getConfig().getInt("travel.random_attempts"); n++) {
-            // get random values in range
-            int randX = random.nextInt(rangeX);
-            int randZ = random.nextInt(rangeZ);
-            // get the x coord
-            int x = minX + randX;
-            // get the z coord
-            int z = minZ + randZ;
-            switch (env) {
-                case NETHER:
-                    if (safeNether(w, x, z, d, p)) {
-                        break test;
-                    }
-                    break;
-                case THE_END:
-                    if (safeEnd(w, d, p)) {
-                        break test;
-                    }
-                    break;
-                default:
-                    // get the y coord
-                    if (safeOverworld(w, x, z, d, p)) {
-                        if ((dest.getBlock().getRelative(BlockFace.DOWN).getType().equals(Material.WATER) || dest.getBlock().getRelative(BlockFace.DOWN).getType().equals(Material.STATIONARY_WATER)) && plugin.getUtils().isOceanBiome(dest.getBlock().getBiome())) {
-                            if (safeSubmarine(dest, d, p)) {
-                                break test;
-                            }
-                        }
-                        break test;
-                    }
-                    break;
-            }
-        }
-        return dest;
+        Parameters params = new Parameters(p, FLAG.getDefaultFlags());
+        params.setCompass(d);
+        return plugin.getTardisAPI().getRandomLocation(allowedWorlds, null, params);
+//        int listlen = allowedWorlds.size();
+//        // random world
+//        World w = allowedWorlds.get(random.nextInt(listlen));
+//        // get the limits of the world
+//        int minX;
+//        int maxX;
+//        int minZ;
+//        int maxZ;
+//        // is WorldBorder enabled?
+//        if (plugin.getPM().isPluginEnabled("WorldBorder")) {
+//            BorderData border = Config.Border(w.getName());
+//            minX = (int) border.getX() - border.getRadiusX();
+//            maxX = (int) border.getX() + border.getRadiusX();
+//            minZ = (int) border.getZ() - border.getRadiusZ();
+//            maxZ = (int) border.getZ() + border.getRadiusZ();
+//        } else {
+//            // use config
+//            int cx = plugin.getConfig().getInt("travel.random_circuit.x");
+//            int cz = plugin.getConfig().getInt("travel.random_circuit.z");
+//            minX = 0 - cx;
+//            maxX = cx;
+//            minZ = 0 - cz;
+//            maxZ = cz;
+//        }
+//        // compensate for nether 1:8 ratio if necessary
+//        Environment env = w.getEnvironment();
+//        if (env.equals(Environment.NETHER)) {
+//            minX /= 8;
+//            maxX /= 8;
+//            minZ /= 8;
+//            maxZ /= 8;
+//        }
+//        // get ranges
+//        int rangeX = Math.abs(minX) + maxX;
+//        int rangeZ = Math.abs(minZ) + maxZ;
+//        // loop till random attempts limit reached
+//        test:
+//        for (int n = 0; n < plugin.getConfig().getInt("travel.random_attempts"); n++) {
+//            // get random values in range
+//            int randX = random.nextInt(rangeX);
+//            int randZ = random.nextInt(rangeZ);
+//            // get the x coord
+//            int x = minX + randX;
+//            // get the z coord
+//            int z = minZ + randZ;
+//            switch (env) {
+//                case NETHER:
+//                    if (safeNether(w, x, z, d, p)) {
+//                        break test;
+//                    }
+//                    break;
+//                case THE_END:
+//                    if (safeEnd(w, d, p)) {
+//                        break test;
+//                    }
+//                    break;
+//                default:
+//                    // get the y coord
+//                    if (safeOverworld(w, x, z, d, p)) {
+//                        if ((dest.getBlock().getRelative(BlockFace.DOWN).getType().equals(Material.WATER) || dest.getBlock().getRelative(BlockFace.DOWN).getType().equals(Material.STATIONARY_WATER)) && plugin.getUtils().isOceanBiome(dest.getBlock().getBiome())) {
+//                            if (safeSubmarine(dest, d, p)) {
+//                                break test;
+//                            }
+//                        }
+//                        break test;
+//                    }
+//                    break;
+//            }
+//        }
+//        return dest;
     }
 
     public boolean safeNether(World nether, int wherex, int wherez, COMPASS d, Player p) {
@@ -167,7 +169,7 @@ public class TARDISRandomiserCircuit {
             Location netherLocation = startBlock.getLocation();
             int netherLocY = netherLocation.getBlockY();
             netherLocation.setY(netherLocY + 1);
-            if (plugin.getPluginRespect().getRespect(p, netherLocation, false)) {
+            if (plugin.getPluginRespect().getRespect(netherLocation, new Parameters(p, FLAG.getNoMessageFlags()))) {
                 // get start location for checking there is enough space
                 int gsl[] = TARDISTimeTravel.getStartLocation(netherLocation, d);
                 startx = gsl[0];
@@ -200,7 +202,7 @@ public class TARDISRandomiserCircuit {
         if (highest > 40) {
             Block currentBlock = randworld.getBlockAt(wherex, highest, wherez);
             Location chunk_loc = currentBlock.getLocation();
-            if (plugin.getPluginRespect().getRespect(p, chunk_loc, false)) {
+            if (plugin.getPluginRespect().getRespect(chunk_loc, new Parameters(p, FLAG.getNoMessageFlags()))) {
                 while (!randworld.getChunkAt(chunk_loc).isLoaded()) {
                     randworld.getChunkAt(chunk_loc).load();
                 }
@@ -235,7 +237,7 @@ public class TARDISRandomiserCircuit {
                 currentBlock = currentBlock.getRelative(BlockFace.DOWN);
             }
             Location overworld = currentBlock.getLocation();
-            if (plugin.getPluginRespect().getRespect(p, overworld, false)) {
+            if (plugin.getPluginRespect().getRespect(overworld, new Parameters(p, FLAG.getNoMessageFlags()))) {
                 while (!world.getChunkAt(overworld).isLoaded()) {
                     world.getChunkAt(overworld).load();
                 }
