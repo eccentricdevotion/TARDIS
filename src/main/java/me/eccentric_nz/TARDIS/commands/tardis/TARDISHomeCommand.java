@@ -19,10 +19,12 @@ package me.eccentric_nz.TARDIS.commands.tardis;
 import java.util.HashMap;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.advanced.TARDISCircuitChecker;
+import me.eccentric_nz.TARDIS.api.Parameters;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import me.eccentric_nz.TARDIS.database.ResultSetTravellers;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
+import me.eccentric_nz.TARDIS.enumeration.FLAG;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
@@ -62,7 +64,7 @@ public class TARDISHomeCommand {
                 TARDISMessage.send(player, "AREA_NO_HOME", ChatColor.AQUA + "/tardistravel area [area name]");
                 return true;
             }
-            if (!plugin.getPluginRespect().getRespect(player, eyeLocation, true)) {
+            if (!plugin.getPluginRespect().getRespect(eyeLocation, new Parameters(player, FLAG.getDefaultFlags()))) {
                 return true;
             }
             Material m = player.getTargetBlock(plugin.getGeneralKeeper().getTransparent(), 50).getType();

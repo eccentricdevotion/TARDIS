@@ -26,6 +26,7 @@ import java.util.UUID;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.api.Parameters;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetAreas;
 import me.eccentric_nz.TARDIS.database.ResultSetBackLocation;
@@ -35,6 +36,7 @@ import me.eccentric_nz.TARDIS.database.ResultSetHomeLocation;
 import me.eccentric_nz.TARDIS.database.ResultSetPlayerPrefs;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import me.eccentric_nz.TARDIS.database.ResultSetTravellers;
+import me.eccentric_nz.TARDIS.enumeration.FLAG;
 import me.eccentric_nz.TARDIS.travel.TARDISCaveFinder;
 import me.eccentric_nz.TARDIS.travel.TARDISRescue;
 import me.eccentric_nz.TARDIS.travel.TARDISTimeTravel;
@@ -208,7 +210,7 @@ public class TARDISTravelCommands implements CommandExecutor {
                                     return true;
                                 }
                                 // check respect
-                                if (!plugin.getPluginRespect().getRespect(player, cave, true)) {
+                                if (!plugin.getPluginRespect().getRespect(cave, new Parameters(player, FLAG.getDefaultFlags()))) {
                                     return true;
                                 }
                                 set.put("world", cave.getWorld().getName());
@@ -340,7 +342,7 @@ public class TARDISTravelCommands implements CommandExecutor {
                                     TARDISMessage.send(player, "BIOME_NOT_FOUND");
                                     return true;
                                 } else {
-                                    if (!plugin.getPluginRespect().getRespect(player, nsob, true)) {
+                                    if (!plugin.getPluginRespect().getRespect(nsob, new Parameters(player, FLAG.getDefaultFlags()))) {
                                         return true;
                                     }
                                     World bw = nsob.getWorld();
@@ -391,7 +393,7 @@ public class TARDISTravelCommands implements CommandExecutor {
                             World w = plugin.getServer().getWorld(rsd.getWorld());
                             if (w != null) {
                                 Location save_dest = new Location(w, rsd.getX(), rsd.getY(), rsd.getZ());
-                                if (!plugin.getPluginRespect().getRespect(player, save_dest, true)) {
+                                if (!plugin.getPluginRespect().getRespect(save_dest, new Parameters(player, FLAG.getDefaultFlags()))) {
                                     return true;
                                 }
                                 if (!plugin.getTardisArea().areaCheckInExisting(save_dest)) {
@@ -688,7 +690,7 @@ public class TARDISTravelCommands implements CommandExecutor {
             TARDISMessage.send(player, "TRAVEL_IN_AREA", ChatColor.AQUA + "/tardistravel area [area name]");
             return 1;
         }
-        if (!plugin.getPluginRespect().getRespect(player, location, true)) {
+        if (!plugin.getPluginRespect().getRespect(location, new Parameters(player, FLAG.getDefaultFlags()))) {
             return 1;
         }
         HashMap<String, Object> wherecl = new HashMap<String, Object>();

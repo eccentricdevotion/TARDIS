@@ -21,6 +21,7 @@ import java.util.HashMap;
 import java.util.List;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.advanced.TARDISCircuitChecker;
+import me.eccentric_nz.TARDIS.api.Parameters;
 import me.eccentric_nz.TARDIS.artron.TARDISBeaconToggler;
 import me.eccentric_nz.TARDIS.artron.TARDISLampToggler;
 import me.eccentric_nz.TARDIS.artron.TARDISPoliceBoxLampToggler;
@@ -31,6 +32,7 @@ import me.eccentric_nz.TARDIS.database.ResultSetPlayerPrefs;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import me.eccentric_nz.TARDIS.database.ResultSetTravellers;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
+import me.eccentric_nz.TARDIS.enumeration.FLAG;
 import me.eccentric_nz.TARDIS.enumeration.PRESET;
 import me.eccentric_nz.TARDIS.travel.TARDISTimeTravel;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
@@ -117,7 +119,7 @@ public class TARDISStattenheimListener implements Listener {
                             TARDISMessage.send(player, "NO_WORLD_TRAVEL");
                             return;
                         }
-                        if (!plugin.getPluginRespect().getRespect(player, remoteLocation, true)) {
+                        if (!plugin.getPluginRespect().getRespect(remoteLocation, new Parameters(player, FLAG.getDefaultFlags()))) {
                             return;
                         }
                         if (player.hasPermission("tardis.exile") && plugin.getConfig().getBoolean("travel.exile")) {

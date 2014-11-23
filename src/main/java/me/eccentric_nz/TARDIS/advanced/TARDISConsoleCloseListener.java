@@ -21,6 +21,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.api.Parameters;
 import me.eccentric_nz.TARDIS.builders.TARDISEmergencyRelocation;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetAreas;
@@ -28,6 +29,7 @@ import me.eccentric_nz.TARDIS.database.ResultSetCurrentLocation;
 import me.eccentric_nz.TARDIS.database.ResultSetPlayerPrefs;
 import me.eccentric_nz.TARDIS.database.ResultSetTravellers;
 import me.eccentric_nz.TARDIS.enumeration.DISK_CIRCUIT;
+import me.eccentric_nz.TARDIS.enumeration.FLAG;
 import me.eccentric_nz.TARDIS.travel.TARDISRandomiserCircuit;
 import me.eccentric_nz.TARDIS.travel.TARDISRescue;
 import me.eccentric_nz.TARDIS.travel.TARDISTimeTravel;
@@ -171,7 +173,7 @@ public class TARDISConsoleCloseListener implements Listener {
                                                     TARDISMessage.send(p, "BIOME_NOT_FOUND");
                                                     continue;
                                                 } else {
-                                                    if (!plugin.getPluginRespect().getRespect(p, nsob, true)) {
+                                                    if (!plugin.getPluginRespect().getRespect(nsob, new Parameters(p, FLAG.getDefaultFlags()))) {
                                                         continue;
                                                     }
                                                     World bw = nsob.getWorld();

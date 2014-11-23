@@ -20,7 +20,9 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.api.Parameters;
 import me.eccentric_nz.TARDIS.builders.TARDISMaterialisationData;
+import me.eccentric_nz.TARDIS.enumeration.FLAG;
 import me.eccentric_nz.TARDIS.travel.TARDISTimeTravel;
 import org.bukkit.Location;
 import org.bukkit.World;
@@ -79,7 +81,7 @@ public class TARDISFlightAdjustment {
                 }
                 if (safe) {
                     final_location = (data.isSubmarine()) ? sub : adjusted_location;
-                    if (plugin.getPluginRespect().getRespect(data.getPlayer().getPlayer(), final_location, false)) {
+                    if (plugin.getPluginRespect().getRespect(final_location, new Parameters(data.getPlayer().getPlayer(), FLAG.getNoMessageFlags()))) {
                         return final_location;
                     }
                 }

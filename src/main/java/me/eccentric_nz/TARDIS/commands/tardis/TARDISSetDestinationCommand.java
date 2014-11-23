@@ -19,9 +19,11 @@ package me.eccentric_nz.TARDIS.commands.tardis;
 import java.util.HashMap;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.advanced.TARDISCircuitChecker;
+import me.eccentric_nz.TARDIS.api.Parameters;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import me.eccentric_nz.TARDIS.database.ResultSetTravellers;
+import me.eccentric_nz.TARDIS.enumeration.FLAG;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
@@ -97,7 +99,7 @@ public class TARDISSetDestinationCommand {
                     TARDISMessage.send(player, "NO_PB_IN_WORLD");
                     return true;
                 }
-                if (!plugin.getPluginRespect().getRespect(player, l, true)) {
+                if (!plugin.getPluginRespect().getRespect(l, new Parameters(player, FLAG.getDefaultFlags()))) {
                     return true;
                 }
                 if (player.hasPermission("tardis.exile") && plugin.getConfig().getBoolean("travel.exile")) {

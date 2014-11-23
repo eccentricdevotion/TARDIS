@@ -23,9 +23,11 @@ import java.util.Random;
 import java.util.Set;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
+import me.eccentric_nz.TARDIS.api.Parameters;
 import me.eccentric_nz.TARDIS.database.ResultSetPlayerPrefs;
 import me.eccentric_nz.TARDIS.database.ResultSetTravellers;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
+import me.eccentric_nz.TARDIS.enumeration.FLAG;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -162,7 +164,7 @@ public class TARDISTimeTravel {
                 if (highest > 40) {
                     Block currentBlock = randworld.getBlockAt(wherex, highest, wherez);
                     Location chunk_loc = currentBlock.getLocation();
-                    if (plugin.getPluginRespect().getRespect(p, chunk_loc, false)) {
+                    if (plugin.getPluginRespect().getRespect(chunk_loc, new Parameters(p, FLAG.getNoMessageFlags()))) {
                         while (!randworld.getChunkAt(chunk_loc).isLoaded()) {
                             randworld.getChunkAt(chunk_loc).load();
                         }
@@ -233,7 +235,7 @@ public class TARDISTimeTravel {
                                 currentBlock = currentBlock.getRelative(BlockFace.DOWN);
                             }
                             Location chunk_loc = currentBlock.getLocation();
-                            if (plugin.getPluginRespect().getRespect(p, chunk_loc, false)) {
+                            if (plugin.getPluginRespect().getRespect(chunk_loc, new Parameters(p, FLAG.getNoMessageFlags()))) {
                                 while (!randworld.getChunkAt(chunk_loc).isLoaded()) {
                                     randworld.getChunkAt(chunk_loc).load();
                                 }
@@ -256,7 +258,7 @@ public class TARDISTimeTravel {
                         break;
                     }
                 } else {
-                    if (!plugin.getPluginRespect().getRespect(p, new Location(randworld, wherex, highest, wherez), false)) {
+                    if (!plugin.getPluginRespect().getRespect(new Location(randworld, wherex, highest, wherez), new Parameters(p, FLAG.getNoMessageFlags()))) {
                         return null;
                     } else {
                         highest = plugin.getConfig().getInt("travel.timeout_height");
@@ -444,7 +446,7 @@ public class TARDISTimeTravel {
             Location netherLocation = startBlock.getLocation();
             int netherLocY = netherLocation.getBlockY();
             netherLocation.setY(netherLocY + 1);
-            if (plugin.getPluginRespect().getRespect(p, netherLocation, false)) {
+            if (plugin.getPluginRespect().getRespect(netherLocation, new Parameters(p, FLAG.getNoMessageFlags()))) {
                 // get start location for checking there is enough space
                 int gsl[] = getStartLocation(netherLocation, d);
                 startx = gsl[0];

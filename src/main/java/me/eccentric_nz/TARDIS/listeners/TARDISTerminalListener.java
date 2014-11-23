@@ -24,12 +24,14 @@ import java.util.Random;
 import java.util.Set;
 import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.api.Parameters;
 import me.eccentric_nz.TARDIS.builders.TARDISEmergencyRelocation;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetCurrentLocation;
 import me.eccentric_nz.TARDIS.database.ResultSetPlayerPrefs;
 import me.eccentric_nz.TARDIS.database.ResultSetTravellers;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
+import me.eccentric_nz.TARDIS.enumeration.FLAG;
 import me.eccentric_nz.TARDIS.travel.TARDISTimeTravel;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import org.bukkit.Location;
@@ -439,7 +441,7 @@ public class TARDISTerminalListener implements Listener {
                                 int esafe = tt.safeLocation(estart[0], endy, estart[2], estart[1], estart[3], w, d);
                                 if (esafe == 0) {
                                     String save = world + ":" + slotx + ":" + endy + ":" + slotz;
-                                    if (plugin.getPluginRespect().getRespect(p, new Location(w, slotx, endy, slotz), false)) {
+                                    if (plugin.getPluginRespect().getRespect(new Location(w, slotx, endy, slotz), new Parameters(p, FLAG.getNoMessageFlags()))) {
                                         terminalDestination.put(uuid, save);
                                         lore.add(save);
                                         lore.add("is a valid destination!");
@@ -494,7 +496,7 @@ public class TARDISTerminalListener implements Listener {
                             }
                             if (safe == 0) {
                                 String save = world + ":" + slotx + ":" + starty + ":" + slotz;
-                                if (plugin.getPluginRespect().getRespect(p, new Location(w, slotx, starty, slotz), false)) {
+                                if (plugin.getPluginRespect().getRespect(new Location(w, slotx, starty, slotz), new Parameters(p, FLAG.getNoMessageFlags()))) {
                                     terminalDestination.put(uuid, save);
                                     lore.add(save);
                                     lore.add("is a valid destination!");

@@ -20,6 +20,7 @@ import java.util.HashMap;
 import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.advanced.TARDISCircuitChecker;
+import me.eccentric_nz.TARDIS.api.Parameters;
 import me.eccentric_nz.TARDIS.commands.tardis.TARDISHideCommand;
 import me.eccentric_nz.TARDIS.commands.tardis.TARDISRebuildCommand;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
@@ -27,6 +28,7 @@ import me.eccentric_nz.TARDIS.database.ResultSetAreas;
 import me.eccentric_nz.TARDIS.database.ResultSetCurrentLocation;
 import me.eccentric_nz.TARDIS.database.ResultSetHomeLocation;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
+import me.eccentric_nz.TARDIS.enumeration.FLAG;
 import me.eccentric_nz.TARDIS.enumeration.REMOTE;
 import me.eccentric_nz.TARDIS.travel.TARDISTimeTravel;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
@@ -278,7 +280,7 @@ public class TARDISRemoteCommands implements CommandExecutor {
                                     }
                                     // check respect if not admin
                                     if ((sender instanceof Player && !sender.hasPermission("tardis.admin")) || sender instanceof BlockCommandSender) {
-                                        if (!plugin.getPluginRespect().getRespect(p.getPlayer(), location, true)) {
+                                        if (!plugin.getPluginRespect().getRespect(location, new Parameters(p.getPlayer(), FLAG.getDefaultFlags()))) {
                                             return true;
                                         }
                                     }
