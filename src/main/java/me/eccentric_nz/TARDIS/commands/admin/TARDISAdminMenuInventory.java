@@ -53,7 +53,7 @@ public class TARDISAdminMenuInventory {
         Set<String> config = new TreeSet<String>(plugin.getConfig().getKeys(true));
         for (String c : config) {
             String value = plugin.getConfig().getString(c);
-            if ((value.equalsIgnoreCase("true") || value.equalsIgnoreCase("false")) && !c.startsWith("conversions") && !c.startsWith("worlds")) {
+            if ((value.equalsIgnoreCase("true") || value.equalsIgnoreCase("false")) && !c.startsWith("conversions") && !c.startsWith("worlds") && !c.startsWith("siege")) {
                 ItemStack is = new ItemStack(Material.DIODE, 1);
                 ItemMeta im = is.getItemMeta();
                 im.setDisplayName(c);
@@ -62,6 +62,7 @@ public class TARDISAdminMenuInventory {
                 options.add(is);
             }
         }
+        // TODO add another page so we can fit siege options in
         ItemStack[] stack = new ItemStack[54];
         for (int s = 0; s < 53; s++) {
             if (s < options.size()) {
