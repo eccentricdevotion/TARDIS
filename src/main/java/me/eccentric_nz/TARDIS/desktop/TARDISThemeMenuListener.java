@@ -16,15 +16,14 @@
  */
 package me.eccentric_nz.TARDIS.desktop;
 
-import java.util.Set;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.enumeration.CONSOLES;
+import me.eccentric_nz.TARDIS.listeners.TARDISMenuListener;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.ClickType;
 import org.bukkit.event.inventory.InventoryClickEvent;
-import org.bukkit.event.inventory.InventoryDragEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
@@ -35,11 +34,12 @@ import org.bukkit.inventory.ItemStack;
  *
  * @author eccentric_nz
  */
-public class TARDISThemeMenuListener implements Listener {
+public class TARDISThemeMenuListener extends TARDISMenuListener implements Listener {
 
     private final TARDIS plugin;
 
     public TARDISThemeMenuListener(TARDIS plugin) {
+        super(plugin);
         this.plugin = plugin;
     }
 
@@ -99,27 +99,13 @@ public class TARDISThemeMenuListener implements Listener {
         }
     }
 
-    @EventHandler(ignoreCancelled = true)
-    public void onThemeMenuDrag(InventoryDragEvent event) {
-        Inventory inv = event.getInventory();
-        String title = inv.getTitle();
-        if (!title.equals("§4TARDIS Upgrade Menu")) {
-            return;
-        }
-        Set<Integer> slots = event.getRawSlots();
-        for (Integer slot : slots) {
-            if ((slot >= 0 && slot < 27)) {
-                event.setCancelled(true);
-            }
-        }
-    }
-
     /**
      * Closes the inventory.
      *
      * @param p the player using the GUI
      */
-    private void close(final Player p) {
+    @Override
+    public void close(final Player p) {
         plugin.getTrackerKeeper().getUpgrades().remove(p.getUniqueId());
         plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
             @Override

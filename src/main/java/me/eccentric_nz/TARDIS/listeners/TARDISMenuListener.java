@@ -16,8 +16,14 @@
  */
 package me.eccentric_nz.TARDIS.listeners;
 
+import java.util.HashMap;
+import java.util.Set;
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.enumeration.STORAGE;
 import org.bukkit.entity.Player;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.inventory.InventoryDragEvent;
+import org.bukkit.inventory.Inventory;
 
 /**
  *
@@ -26,9 +32,11 @@ import org.bukkit.entity.Player;
 public class TARDISMenuListener {
 
     private final TARDIS plugin;
+    private final HashMap<String, Integer> titles;
 
     public TARDISMenuListener(TARDIS plugin) {
         this.plugin = plugin;
+        this.titles = getTitleMap();
     }
 
     /**
@@ -43,5 +51,46 @@ public class TARDISMenuListener {
                 p.closeInventory();
             }
         }, 1L);
+    }
+
+    @EventHandler(ignoreCancelled = true)
+    public void onMenuDrag(InventoryDragEvent event) {
+        Inventory inv = event.getInventory();
+        String title = inv.getTitle();
+        if (!titles.containsKey(title)) {
+            return;
+        }
+        Set<Integer> slots = event.getRawSlots();
+        for (Integer slot : slots) {
+            if ((slot >= 0 && slot < titles.get(title))) {
+                event.setCancelled(true);
+            }
+        }
+    }
+
+    public final HashMap<String, Integer> getTitleMap() {
+        HashMap<String, Integer> map = new HashMap<String, Integer>();
+        map.put("§4Admin Menu", 54);
+        map.put("§4Architectural Reconfiguration", 54);
+        map.put("§4Chameleon Circuit", 54);
+        map.put("§4Destination Terminal", 54);
+        map.put("§4Genetic Manipulator", 54);
+        map.put("§4More Presets", 54);
+        map.put("§4Player Prefs Menu", 18);
+        map.put("§4Sonic Prefs Menu", 27);
+        map.put("§4TARDIS Console", 9);
+        map.put("§4TARDIS Control Menu", 27);
+        map.put("§4TARDIS Floor Menu", 54);
+        map.put("§4TARDIS Key Prefs Menu", 27);
+        map.put("§4TARDIS Map", 54);
+        map.put("§4TARDIS Upgrade Menu", 27);
+        map.put("§4TARDIS Wall Menu", 54);
+        map.put("§4TARDIS areas", 90);
+        map.put("§4TARDIS saves", 90);
+        map.put("§4Temporal Locator", 27);
+        for (STORAGE s : STORAGE.values()) {
+            map.put(s.getTitle(), 54);
+        }
+        return map;
     }
 }

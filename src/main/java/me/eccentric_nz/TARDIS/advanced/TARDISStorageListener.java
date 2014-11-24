@@ -21,12 +21,12 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
-import java.util.Set;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetDiskStorage;
 import me.eccentric_nz.TARDIS.enumeration.DISK_CIRCUIT;
 import me.eccentric_nz.TARDIS.enumeration.STORAGE;
+import me.eccentric_nz.TARDIS.listeners.TARDISMenuListener;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -35,7 +35,6 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryCloseEvent;
-import org.bukkit.event.inventory.InventoryDragEvent;
 import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.event.player.PlayerDropItemEvent;
 import org.bukkit.inventory.Inventory;
@@ -50,16 +49,17 @@ import org.bukkit.inventory.meta.ItemMeta;
  *
  * @author eccentric_nz
  */
-public class TARDISStorageListener implements Listener {
+public class TARDISStorageListener extends TARDISMenuListener implements Listener {
 
     private final TARDIS plugin;
-    List<String> titles = new ArrayList<String>();
+    List<String> inv_titles = new ArrayList<String>();
     private final List<Material> onlythese = new ArrayList<Material>();
 
     public TARDISStorageListener(TARDIS plugin) {
+        super(plugin);
         this.plugin = plugin;
         for (STORAGE s : STORAGE.values()) {
-            this.titles.add(s.getTitle());
+            this.inv_titles.add(s.getTitle());
         }
         for (DISK_CIRCUIT dc : DISK_CIRCUIT.values()) {
             if (!onlythese.contains(dc.getMaterial())) {
@@ -72,7 +72,7 @@ public class TARDISStorageListener implements Listener {
     public void onDiskStorageClose(InventoryCloseEvent event) {
         Inventory inv = event.getInventory();
         String title = inv.getTitle();
-        if (titles.contains(title)) {
+        if (inv_titles.contains(title)) {
             // which inventory screen is it?
             String[] split = title.split(" ");
             String tmp = split[0].toUpperCase(Locale.ENGLISH);
@@ -106,25 +106,10 @@ public class TARDISStorageListener implements Listener {
     }
 
     @EventHandler(ignoreCancelled = true)
-    public void onDiskStorageInteract(InventoryDragEvent event) {
-        Inventory inv = event.getInventory();
-        String title = inv.getTitle();
-        if (!titles.contains(title)) {
-            return;
-        }
-        Set<Integer> slots = event.getRawSlots();
-        for (Integer slot : slots) {
-            if ((slot >= 0 && slot < 27)) {
-                event.setCancelled(true);
-            }
-        }
-    }
-
-    @EventHandler(ignoreCancelled = true)
     public void onDiskStorageInteract(InventoryClickEvent event) {
         Inventory inv = event.getInventory();
         String title = inv.getTitle();
-        if (!titles.contains(title)) {
+        if (!inv_titles.contains(title)) {
             return;
         }
         int slot = event.getRawSlot();
