@@ -31,6 +31,7 @@ import me.eccentric_nz.TARDIS.database.ResultSetDoors;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import me.eccentric_nz.TARDIS.database.ResultSetTravellers;
 import static me.eccentric_nz.TARDIS.listeners.TARDISScannerListener.getNearbyEntities;
+import me.eccentric_nz.TARDIS.utility.TARDISGriefPreventionChecker;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import me.eccentric_nz.TARDIS.utility.TARDISVector3D;
 import org.bukkit.ChatColor;
@@ -310,6 +311,10 @@ public class TARDISSonicListener implements Listener {
                                 wheredoor.put("door_location", doorloc);
                                 ResultSetDoors rsd = new ResultSetDoors(plugin, wheredoor, false);
                                 if (rsd.resultSet()) {
+                                    return;
+                                }
+                                // not protected doors - WorldGuard / GriefPrevention / Lockette / LWC
+                                if (checkDoorRespect(player, tmp)) {
                                     return;
                                 }
                                 if (!plugin.getTrackerKeeper().getSonicDoors().contains(player.getUniqueId())) {
@@ -721,21 +726,8 @@ public class TARDISSonicListener implements Listener {
                     } else {
                         lowerdoor = targetBlock;
                     }
-                    boolean allow = true;
-                    // is Lockette or LWC on the server?
-                    if (plugin.getPM().isPluginEnabled("Lockette")) {
-                        Lockette Lockette = (Lockette) plugin.getPM().getPlugin("Lockette");
-                        if (Lockette.isProtected(lowerdoor)) {
-                            allow = false;
-                        }
-                    }
-                    if (plugin.getPM().isPluginEnabled("LWC")) {
-                        LWCPlugin lwcplug = (LWCPlugin) plugin.getPM().getPlugin("LWC");
-                        LWC lwc = lwcplug.getLWC();
-                        if (!lwc.canAccessProtection(player, lowerdoor)) {
-                            allow = false;
-                        }
-                    }
+                    // not protected doors - WorldGuard / GriefPrevention / Lockette / LWC
+                    boolean allow = !checkDoorRespect(player, lowerdoor);
                     // is it a TARDIS door?
                     HashMap<String, Object> where = new HashMap<String, Object>();
                     String doorloc = lowerdoor.getLocation().getWorld().getName() + ":" + lowerdoor.getLocation().getBlockX() + ":" + lowerdoor.getLocation().getBlockY() + ":" + lowerdoor.getLocation().getBlockZ();
@@ -832,5 +824,32 @@ public class TARDISSonicListener implements Listener {
         PistonExtensionMaterial extension = (PistonExtensionMaterial) l.getState().getData();
         l.setData(extension.getData());
         l.getState().update();
+    }
+
+    private boolean checkDoorRespect(Player p, Block b) {
+        boolean gpr = false;
+        boolean wgu = false;
+        boolean lke = false;
+        boolean lch = false;
+        // GriefPrevention
+        if (plugin.getPM().isPluginEnabled("GriefPrevention")) {
+            gpr = new TARDISGriefPreventionChecker(plugin, true).isInClaim(p, b.getLocation());
+        }
+        // WorldGuard
+        if (plugin.isWorldGuardOnServer()) {
+            wgu = !plugin.getWorldGuardUtils().canBuild(p, b.getLocation());
+        }
+        // Lockette
+        if (plugin.getPM().isPluginEnabled("Lockette")) {
+            Lockette Lockette = (Lockette) plugin.getPM().getPlugin("Lockette");
+            lke = Lockette.isProtected(b);
+        }
+        // LWC
+        if (plugin.getPM().isPluginEnabled("LWC")) {
+            LWCPlugin lwcplug = (LWCPlugin) plugin.getPM().getPlugin("LWC");
+            LWC lwc = lwcplug.getLWC();
+            lch = !lwc.canAccessProtection(p, b);
+        }
+        return (gpr || wgu || lke || lch);
     }
 }
