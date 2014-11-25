@@ -48,9 +48,9 @@ public class TARDISSQLiteDatabase {
     public void createTables() {
         service.setIsMySQL(false);
         try {
+            statement = connection.createStatement();
 
             // Table structure for table 'ars'
-            statement = connection.createStatement();
             String queryARS = "CREATE TABLE IF NOT EXISTS ars (ars_id INTEGER PRIMARY KEY NOT NULL, tardis_id INTEGER, uuid TEXT DEFAULT '', player TEXT COLLATE NOCASE DEFAULT '', ars_x_east INTEGER DEFAULT 2, ars_z_south INTEGER DEFAULT 2, ars_y_layer INTEGER DEFAULT 1, json TEXT DEFAULT '')";
             statement.executeUpdate(queryARS);
 

@@ -67,7 +67,7 @@ preferences:
     key: GOLD_NUGGET
     walk_in_tardis: true
     use_worldguard: true
-    respect_worldguard: true
+    respect_worldguard: build
     respect_towny: nation
     respect_worldborder: true
     respect_factions: true

@@ -107,7 +107,7 @@ public class TARDISConfiguration {
         boolOptions.put("preferences.respect_factions", true);
         boolOptions.put("preferences.respect_grief_prevention", true);
         boolOptions.put("preferences.respect_worldborder", true);
-        boolOptions.put("preferences.respect_worldguard", true);
+        boolOptions.put("preferences.use_worldguard", true);
         boolOptions.put("preferences.strike_lightning", true);
         boolOptions.put("preferences.use_default_condensables", true);
         boolOptions.put("preferences.walk_in_tardis", true);
@@ -306,7 +306,7 @@ public class TARDISConfiguration {
         strOptions.put("preferences.key", "GOLD_NUGGET");
         strOptions.put("preferences.language", "en");
         strOptions.put("preferences.respect_towny", "nation");
-        strOptions.put("preferences.use_worldguard", "build");
+        strOptions.put("preferences.respect_worldguard", "build");
         strOptions.put("preferences.wand", "BONE");
         strOptions.put("storage.database", "sqlite");
         strOptions.put("storage.mysql.url", "mysql://localhost:3306/TARDIS");
