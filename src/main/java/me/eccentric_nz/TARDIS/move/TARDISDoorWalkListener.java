@@ -416,6 +416,10 @@ public class TARDISDoorWalkListener extends TARDISDoorListener implements Listen
                                                 TARDISFarmer tf = new TARDISFarmer(plugin);
                                                 pets = tf.farmAnimals(block_loc, d, id, player, tmp_loc.getWorld().getName(), playerWorld.getName());
                                             }
+                                            // if WorldGuard is on the server check for TARDIS region protection and add admin as member
+                                            if (plugin.isWorldGuardOnServer() && plugin.getConfig().getBoolean("preferences.use_worldguard") && player.hasPermission("tardis.skeletonkey")) {
+                                                plugin.getWorldGuardUtils().addMemberToRegion(cw, rs.getOwner(), player.getName());
+                                            }
                                             // enter TARDIS!
                                             cw.getChunkAt(tmp_loc).load();
                                             tmp_loc.setPitch(pitch);
