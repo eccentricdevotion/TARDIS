@@ -43,17 +43,17 @@ public class Parameters {
                 case PERMS_THEEND:
                     this.permsTheEnd = true;
                     break;
-                case REPECT_WORLDBORDER:
-                    this.repectWorldBorder = true;
-                    break;
                 case RESPECT_FACTIONS:
                     this.respectFactions = true;
                     break;
-                case RESPECT_GREIFPREVENTION:
+                case RESPECT_GRIEFPREVENTION:
                     this.respectGreifPrevention = true;
                     break;
                 case RESPECT_TOWNY:
                     this.respectTowny = true;
+                    break;
+                case RESPECT_WORLDBORDER:
+                    this.repectWorldBorder = true;
                     break;
                 case RESPECT_WORLDGUARD:
                     this.respectWorldguard = true;
