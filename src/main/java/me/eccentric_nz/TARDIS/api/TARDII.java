@@ -34,6 +34,8 @@ import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import me.eccentric_nz.TARDIS.database.ResultSetTravellers;
 import me.eccentric_nz.TARDIS.database.TARDISDatabaseConnection;
 import me.eccentric_nz.TARDIS.enumeration.FLAG;
+import me.eccentric_nz.TARDIS.travel.TARDISPluginRespect;
+import me.eccentric_nz.TARDIS.utility.TARDISUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.World;
@@ -310,5 +312,15 @@ public class TARDII implements TardisAPI {
     @Override
     public boolean isPlayerGeneticallyModified(UUID uuid) {
         return TARDIS.plugin.getTrackerKeeper().getGeneticallyModified().contains(uuid);
+    }
+
+    @Override
+    public TARDISUtils getUtils() {
+        return TARDIS.plugin.getUtils();
+    }
+
+    @Override
+    public TARDISPluginRespect getRespect() {
+        return TARDIS.plugin.getPluginRespect();
     }
 }

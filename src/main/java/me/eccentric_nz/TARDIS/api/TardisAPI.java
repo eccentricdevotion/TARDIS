@@ -19,6 +19,8 @@ package me.eccentric_nz.TARDIS.api;
 import java.util.HashMap;
 import java.util.List;
 import java.util.UUID;
+import me.eccentric_nz.TARDIS.travel.TARDISPluginRespect;
+import me.eccentric_nz.TARDIS.utility.TARDISUtils;
 import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.entity.Player;
@@ -257,5 +259,19 @@ public interface TardisAPI {
      * @return true if the player is in the Zero room, otherwise false
      */
     public boolean isPlayerGeneticallyModified(UUID uuid);
+
+    /**
+     * Get a handle for the TARDIS utilities.
+     *
+     * @return the TARDIS Utilities instance
+     */
+    public TARDISUtils getUtils();
+
+    /**
+     * Get a handle for the TARDIS Plugin Respect.
+     *
+     * @return the TARDIS Plugin Respect instance
+     */
+    public TARDISPluginRespect getRespect();
 
 }
