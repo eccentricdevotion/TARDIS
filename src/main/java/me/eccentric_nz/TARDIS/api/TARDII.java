@@ -186,7 +186,10 @@ public class TARDII implements TardisAPI {
     public List<String> getWorlds() {
         List<String> worlds = new ArrayList<String>();
         for (World w : Bukkit.getWorlds()) {
-            worlds.add(w.getName());
+            String name = w.getName();
+            if (TARDIS.plugin.getConfig().getBoolean("worlds." + name)) {
+                worlds.add(name);
+            }
         }
         return worlds;
     }
