@@ -1,7 +1,6 @@
 #TODO
 
 ##Current version `3.2-beta-1`
-1. Update for Minecraft / Spigot 1.8
 2. TARDIS invisibility - 1.8 barrier blocks?
 3. Add new blocks / items
 4. Slimmer TARDIS option?

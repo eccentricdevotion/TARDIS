@@ -54,6 +54,7 @@ public enum PRESET {
     PEANUT(Material.HARD_CLAY, "JAR OF", "PEANUT BUTTER", true, false),
     PINE(Material.LEAVES, "PINE", "TREE", false, false),
     PORTAL(Material.WOOD_DOOR, "PORTAL TO", "SOMEWHERE", true, false),
+    PRISMARINE(Material.PRISMARINE, "GUARDIAN", "TEMPLE", true, true),
     PUNKED(Material.PISTON_BASE, "JUST GOT", "PUNKED", false, false),
     RENDER(Material.FIRE, "", "", false, false),
     ROBOT(Material.COBBLE_WALL, "WILL BE", "DELETED", false, false),

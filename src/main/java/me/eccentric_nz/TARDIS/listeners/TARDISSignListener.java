@@ -114,7 +114,7 @@ public class TARDISSignListener implements Listener {
                         tcc = new TARDISCircuitChecker(plugin, rs.getTardis_id());
                         tcc.getCircuits();
                     }
-                    if (line1.equals("Chameleon")) {
+                    if (line1.contains("Chameleon")) {
                         if (tcc != null && !tcc.hasChameleon()) {
                             TARDISMessage.send(player, "CHAM_MISSING");
                             return;

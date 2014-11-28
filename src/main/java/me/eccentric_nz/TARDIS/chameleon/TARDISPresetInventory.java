@@ -119,7 +119,7 @@ public class TARDISPresetInventory {
         ch.setDisplayName("Flaming Torch");
         tor.setItemMeta(ch);
         // Pine Tree
-        ItemStack pine = new ItemStack(Material.LEAVES, 1, (short) 5);
+        ItemStack pine = new ItemStack(Material.LEAVES, 1, (short) 1);
         ItemMeta tree = pine.getItemMeta();
         tree.setDisplayName("Pine Tree");
         pine.setItemMeta(tree);
@@ -134,7 +134,7 @@ public class TARDISPresetInventory {
         tal.setDisplayName("Nether Portal");
         por.setItemMeta(tal);
         // Apperture Science
-        ItemStack app = new ItemStack(Material.PORTAL, 1);
+        ItemStack app = new ItemStack(Material.IRON_TRAPDOOR, 1);
         ItemMeta sci = app.getItemMeta();
         sci.setDisplayName("Apperture Science");
         app.setItemMeta(sci);
