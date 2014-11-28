@@ -398,7 +398,7 @@ public class TARDISDoorClickListener extends TARDISDoorListener implements Liste
                                                 if (plugin.getConfig().getBoolean("allow.mob_farming") && player.hasPermission("tardis.farm") && !plugin.getTrackerKeeper().getFarming().contains(player.getUniqueId())) {
                                                     plugin.getTrackerKeeper().getFarming().add(player.getUniqueId());
                                                     TARDISFarmer tf = new TARDISFarmer(plugin);
-                                                    pets = tf.farmAnimals(block_loc, d, id, player, tmp_loc.getWorld().getName(), playerWorld.getName());
+                                                    pets = tf.farmAnimals(block_loc, d, id, player.getPlayer(), tmp_loc.getWorld().getName(), playerWorld.getName());
                                                 }
                                                 // if WorldGuard is on the server check for TARDIS region protection and add admin as member
                                                 if (plugin.isWorldGuardOnServer() && plugin.getConfig().getBoolean("preferences.use_worldguard") && player.hasPermission("tardis.skeletonkey")) {
