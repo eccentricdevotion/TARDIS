@@ -82,6 +82,7 @@ public class TARDISGiveCommand implements CommandExecutor {
         items.put("save-disk", "Save Storage Disk");
         items.put("sonic", "Sonic Screwdriver");
         items.put("t-circuit", "TARDIS Temporal Circuit");
+        items.put("vortex", "Vortex Manipulator");
         items.put("watch", "Fob Watch");
     }
 
@@ -159,6 +160,10 @@ public class TARDISGiveCommand implements CommandExecutor {
     private boolean giveItem(CommandSender sender, String item, int amount, Player player) {
         if (amount > 64) {
             TARDISMessage.send(sender, "ARG_MAX");
+            return true;
+        }
+        if (item.equals("vortex") && !plugin.getPM().isPluginEnabled("TARDISVortexManipulator")) {
+            TARDISMessage.send(sender, "RECIPE_VORTEX");
             return true;
         }
         String item_to_give = items.get(item);
