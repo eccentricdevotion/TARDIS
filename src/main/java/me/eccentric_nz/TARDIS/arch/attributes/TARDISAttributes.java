@@ -6,7 +6,6 @@ import com.google.common.base.Preconditions;
 import com.google.common.collect.Iterators;
 import java.util.Iterator;
 import java.util.UUID;
-import javax.annotation.Nullable;
 import me.eccentric_nz.TARDIS.arch.attributes.TARDISNbtFactory.NbtCompound;
 import me.eccentric_nz.TARDIS.arch.attributes.TARDISNbtFactory.NbtList;
 import org.bukkit.inventory.ItemStack;
@@ -100,7 +99,7 @@ public class TARDISAttributes {
                 return Iterators.transform(attributes.iterator(),
                         new Function<Object, TARDISAttribute>() {
                             @Override
-                            public TARDISAttribute apply(@Nullable Object element) {
+                            public TARDISAttribute apply(Object element) {
                                 return new TARDISAttribute((NbtCompound) element);
                             }
                         });

@@ -5,7 +5,6 @@ package me.eccentric_nz.TARDIS.arch.attributes;
 
 import com.google.common.base.Preconditions;
 import java.util.UUID;
-import javax.annotation.Nonnull;
 
 /**
  *
@@ -40,7 +39,7 @@ public class TARDISAttribute {
         return TARDISAttributeOperation.fromId(data.getInteger("Operation", 0));
     }
 
-    public final void setOperation(@Nonnull TARDISAttributeOperation operation) {
+    public final void setOperation(TARDISAttributeOperation operation) {
         Preconditions.checkNotNull(operation, "operation cannot be NULL.");
         data.put("Operation", operation.getId());
     }
@@ -49,7 +48,7 @@ public class TARDISAttribute {
         return TARDISAttributeType.fromId(data.getString("AttributeName", null));
     }
 
-    public final void setAttributeType(@Nonnull TARDISAttributeType type) {
+    public final void setAttributeType(TARDISAttributeType type) {
         Preconditions.checkNotNull(type, "type cannot be NULL.");
         data.put("AttributeName", type.getMinecraftId());
     }
@@ -58,7 +57,7 @@ public class TARDISAttribute {
         return data.getString("Name", null);
     }
 
-    public final void setName(@Nonnull String name) {
+    public final void setName(String name) {
         Preconditions.checkNotNull(name, "name cannot be NULL.");
         data.put("Name", name);
     }
@@ -67,7 +66,7 @@ public class TARDISAttribute {
         return new UUID(data.getLong("UUIDMost", null), data.getLong("UUIDLeast", null));
     }
 
-    public final void setUUID(@Nonnull UUID id) {
+    public final void setUUID(UUID id) {
         Preconditions.checkNotNull("id", "id cannot be NULL.");
         data.put("UUIDLeast", id.getLeastSignificantBits());
         data.put("UUIDMost", id.getMostSignificantBits());
