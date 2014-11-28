@@ -166,6 +166,9 @@ public class TARDISGiveCommand implements CommandExecutor {
             TARDISMessage.send(sender, "RECIPE_VORTEX");
             return true;
         }
+        if (item.equals("vortex")) {
+            TARDISMessage.send(sender, "VORTEX_CMD");
+        }
         String item_to_give = items.get(item);
         ItemStack result;
         if (item.equals("save-disk") || item.equals("preset-disk") || item.equals("biome-disk") || item.equals("player-disk") || item.equals("custard") || item.equals("jelly-baby")) {
