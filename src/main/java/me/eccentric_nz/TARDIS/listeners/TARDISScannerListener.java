@@ -302,7 +302,7 @@ public class TARDISScannerListener implements Listener {
                     }
                     scannedentities.clear();
                 } else {
-                    player.sendMessage(plugin.getLanguage().getString("SCAN_NONE"));
+                    TARDISMessage.send(player, true, "SCAN_NONE");
                 }
             }
         }, 140L);
