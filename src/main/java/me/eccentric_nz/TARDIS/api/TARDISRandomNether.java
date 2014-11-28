@@ -60,6 +60,9 @@ public class TARDISRandomNether extends TARDISRandomLocation {
             int startx, starty, startz, resetx, resetz, count;
             int wherey = 100;
             Block startBlock = war.getW().getBlockAt(x, wherey, z);
+            while (!startBlock.getChunk().isLoaded()) {
+                startBlock.getChunk().load();
+            }
             while (!startBlock.getType().equals(Material.AIR)) {
                 startBlock = startBlock.getRelative(BlockFace.DOWN);
             }
