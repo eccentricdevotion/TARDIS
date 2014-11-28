@@ -24,6 +24,8 @@ import me.eccentric_nz.TARDIS.utility.TARDISUtils;
 import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.ShapedRecipe;
+import org.bukkit.inventory.ShapelessRecipe;
 
 /**
  *
@@ -274,4 +276,19 @@ public interface TardisAPI {
      */
     public TARDISPluginRespect getRespect();
 
+    /**
+     * Get the TARDIS shaped recipes.
+     *
+     * @return a HashMap<String, ShapedRecipe> containing the TARDIS shaped
+     * recipes
+     */
+    public HashMap<String, ShapedRecipe> getShapedRecipes();
+
+    /**
+     * Get the TARDIS shapeless recipes.
+     *
+     * @return a HashMap<String, ShapedRecipe> containing the TARDIS shapeless
+     * recipes
+     */
+    public HashMap<String, ShapelessRecipe> getShapelessRecipes();
 }

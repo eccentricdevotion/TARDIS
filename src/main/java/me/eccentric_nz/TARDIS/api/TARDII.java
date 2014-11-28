@@ -41,6 +41,8 @@ import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.World.Environment;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.ShapedRecipe;
+import org.bukkit.inventory.ShapelessRecipe;
 
 /**
  *
@@ -322,5 +324,15 @@ public class TARDII implements TardisAPI {
     @Override
     public TARDISPluginRespect getRespect() {
         return TARDIS.plugin.getPluginRespect();
+    }
+
+    @Override
+    public HashMap<String, ShapedRecipe> getShapedRecipes() {
+        return TARDIS.plugin.getFigura().getShapedRecipes();
+    }
+
+    @Override
+    public HashMap<String, ShapelessRecipe> getShapelessRecipes() {
+        return TARDIS.plugin.getIncomposita().getShapelessRecipes();
     }
 }
