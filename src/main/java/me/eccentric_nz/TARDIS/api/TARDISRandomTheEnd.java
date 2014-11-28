@@ -21,6 +21,7 @@ import java.util.Random;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.travel.TARDISTimeTravel;
 import org.bukkit.Location;
+import org.bukkit.World;
 import org.bukkit.block.Block;
 
 /**
@@ -31,38 +32,39 @@ public class TARDISRandomTheEnd extends TARDISRandomLocation {
 
     private final TARDIS plugin;
     private final Parameters param;
+    private final List<World> worlds;
     private final Random random = new Random();
     private Location dest;
 
     public TARDISRandomTheEnd(TARDIS plugin, List<String> list, Parameters param) {
         super(plugin, list, param);
-        getWorlds(list);
+        worlds = getWorlds(list);
         this.plugin = plugin;
         this.param = param;
     }
 
     @Override
     public Location getlocation() {
-        getWorldandRange();
+        WorldAndRange war = getWorldandRange(worlds);
         // loop till random attempts limit reached
         for (int n = 0; n < plugin.getConfig().getInt("travel.random_attempts"); n++) {
             // get random values in range
-            int randX = random.nextInt(rangeX);
-            int randZ = random.nextInt(rangeZ);
+            int randX = random.nextInt(war.getRangeX());
+            int randZ = random.nextInt(war.getRangeZ());
             // get the x coord
-            int x = minX + randX;
+            int x = war.getMinX() + randX;
             // get the z coord
-            int z = minZ + randZ;
+            int z = war.getMinZ() + randZ;
             // get the spawn point
-            Location endSpawn = w.getSpawnLocation();
-            int highest = w.getHighestBlockYAt(endSpawn.getBlockX() + x, endSpawn.getBlockZ() + z);
+            Location endSpawn = war.getW().getSpawnLocation();
+            int highest = war.getW().getHighestBlockYAt(endSpawn.getBlockX() + x, endSpawn.getBlockZ() + z);
             int startx, starty, startz, resetx, resetz, count;
             if (highest > 40) {
-                Block currentBlock = w.getBlockAt(x, highest, z);
+                Block currentBlock = war.getW().getBlockAt(x, highest, z);
                 Location chunk_loc = currentBlock.getLocation();
                 if (plugin.getPluginRespect().getRespect(chunk_loc, param)) {
-                    while (!w.getChunkAt(chunk_loc).isLoaded()) {
-                        w.getChunkAt(chunk_loc).load();
+                    while (!war.getW().getChunkAt(chunk_loc).isLoaded()) {
+                        war.getW().getChunkAt(chunk_loc).load();
                     }
                     // get start location for checking there is enough space
                     int gsl[] = TARDISTimeTravel.getStartLocation(chunk_loc, param.getCompass());
@@ -71,7 +73,7 @@ public class TARDISRandomTheEnd extends TARDISRandomLocation {
                     starty = chunk_loc.getBlockY() + 1;
                     startz = gsl[2];
                     resetz = gsl[3];
-                    count = TARDISTimeTravel.safeLocation(startx, starty, startz, resetx, resetz, w, param.getCompass());
+                    count = TARDISTimeTravel.safeLocation(startx, starty, startz, resetx, resetz, war.getW(), param.getCompass());
                 } else {
                     count = 1;
                 }
@@ -79,7 +81,7 @@ public class TARDISRandomTheEnd extends TARDISRandomLocation {
                 count = 1;
             }
             if (count == 0) {
-                dest = (highest > 0) ? new Location(w, x, highest, z) : null;
+                dest = (highest > 0) ? new Location(war.getW(), x, highest, z) : null;
             }
             return dest;
         }

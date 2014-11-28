@@ -38,33 +38,33 @@ import org.bukkit.entity.Player;
 public class TARDISRandomOverworld extends TARDISRandomLocation {
 
     private final TARDIS plugin;
-    //private final List<World> worlds = new ArrayList<World>();
     private final Parameters param;
+    private final List<World> worlds;
     private final Random random = new Random();
     private Location dest;
 
     public TARDISRandomOverworld(TARDIS plugin, List<String> list, Parameters param) {
         super(plugin, list, param);
-        getWorlds(list);
+        worlds = getWorlds(list);
         this.plugin = plugin;
         this.param = param;
     }
 
     @Override
     public Location getlocation() {
-        getWorldandRange();
+        WorldAndRange war = getWorldandRange(worlds);
         // loop till random attempts limit reached
         for (int n = 0; n < plugin.getConfig().getInt("travel.random_attempts"); n++) {
             // get random values in range
-            int randX = random.nextInt(rangeX);
-            int randZ = random.nextInt(rangeZ);
+            int randX = random.nextInt(war.getRangeX());
+            int randZ = random.nextInt(war.getRangeZ());
             // get the x coord
-            int x = minX + randX;
+            int x = war.getMinX() + randX;
             // get the z coord
-            int z = minZ + randZ;
+            int z = war.getMinZ() + randZ;
             // get the y coord
             if (param.spaceTardis()) {
-                if (safeOverworld(w, x, z, param.getCompass(), param.getPlayer())) {
+                if (safeOverworld(war.getW(), x, z, param.getCompass(), param.getPlayer())) {
                     if ((dest.getBlock().getRelative(BlockFace.DOWN).getType().equals(Material.WATER) || dest.getBlock().getRelative(BlockFace.DOWN).getType().equals(Material.STATIONARY_WATER)) && plugin.getUtils().isOceanBiome(dest.getBlock().getBiome())) {
                         if (safeSubmarine(dest, param.getCompass(), param.getPlayer())) {
                             break;
@@ -74,8 +74,8 @@ public class TARDISRandomOverworld extends TARDISRandomLocation {
                 }
             } else {
                 // space for a player / check plugin respect
-                int highest = w.getHighestBlockYAt(x, z);
-                Location chk = new Location(w, x, highest, z);
+                int highest = war.getW().getHighestBlockYAt(x, z);
+                Location chk = new Location(war.getW(), x, highest, z);
                 if (plugin.getPluginRespect().getRespect(chk, param)) {
                     return chk;
                 }

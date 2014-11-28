@@ -33,38 +33,38 @@ import org.bukkit.World;
 public class TARDISRandomLocation {
 
     private final TARDIS plugin;
-    private final List<World> worlds = new ArrayList<World>();
     private final Parameters param;
     private final Random random = new Random();
-    World w;
-    int minX;
-    int maxX;
-    int minZ;
-    int maxZ;
-    int rangeX;
-    int rangeZ;
 
     public TARDISRandomLocation(TARDIS plugin, List<String> list, Parameters param) {
         this.plugin = plugin;
         this.param = param;
-        getWorlds(list);
     }
 
     public Location getlocation() {
         return null;
     }
 
-    public final void getWorlds(List<String> list) {
+    public final List<World> getWorlds(List<String> list) {
+        List<World> worlds = new ArrayList<World>();
         for (String s : list) {
             World o = Bukkit.getServer().getWorld(s);
             if (o != null) {
-                this.worlds.add(o);
+                worlds.add(o);
             }
         }
+        return worlds;
     }
 
-    public void getWorldandRange() {
+    public WorldAndRange getWorldandRange(List<World> worlds) {
         int listlen = worlds.size();
+        World w;
+        int minX;
+        int maxX;
+        int minZ;
+        int maxZ;
+        int rangeX;
+        int rangeZ;
         // random world
         w = worlds.get(random.nextInt(listlen));
         World.Environment env = w.getEnvironment();
@@ -112,6 +112,8 @@ public class TARDISRandomLocation {
         // get ranges
         rangeX = Math.abs(minX) + maxX;
         rangeZ = Math.abs(minZ) + maxZ;
+        // WorldAndRange(World w, int minX, int minZ,  int rangeX, int rangeZ)
+        return new WorldAndRange(w, minX, minZ, rangeX, rangeZ);
     }
 
     public boolean checkLocation(Location l) {

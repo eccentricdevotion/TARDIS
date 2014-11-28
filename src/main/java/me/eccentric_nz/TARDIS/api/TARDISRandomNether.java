@@ -22,6 +22,7 @@ import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.travel.TARDISTimeTravel;
 import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.World;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 
@@ -33,31 +34,32 @@ public class TARDISRandomNether extends TARDISRandomLocation {
 
     private final TARDIS plugin;
     private final Parameters param;
+    private final List<World> worlds;
     private final Random random = new Random();
     private Location dest;
 
     public TARDISRandomNether(TARDIS plugin, List<String> list, Parameters param) {
         super(plugin, list, param);
-        getWorlds(list);
+        this.worlds = getWorlds(list);
         this.plugin = plugin;
         this.param = param;
     }
 
     @Override
     public Location getlocation() {
-        getWorldandRange();
+        WorldAndRange war = getWorldandRange(worlds);
         // loop till random attempts limit reached
         for (int n = 0; n < plugin.getConfig().getInt("travel.random_attempts"); n++) {
             // get random values in range
-            int randX = random.nextInt(rangeX);
-            int randZ = random.nextInt(rangeZ);
+            int randX = random.nextInt(war.getRangeX());
+            int randZ = random.nextInt(war.getRangeZ());
             // get the x coord
-            int x = minX + randX;
+            int x = war.getMinX() + randX;
             // get the z coord
-            int z = minZ + randZ;
+            int z = war.getMinZ() + randZ;
             int startx, starty, startz, resetx, resetz, count;
             int wherey = 100;
-            Block startBlock = w.getBlockAt(x, wherey, z);
+            Block startBlock = war.getW().getBlockAt(x, wherey, z);
             while (!startBlock.getType().equals(Material.AIR)) {
                 startBlock = startBlock.getRelative(BlockFace.DOWN);
             }
@@ -80,7 +82,7 @@ public class TARDISRandomNether extends TARDISRandomLocation {
                         starty = dest.getBlockY();
                         startz = gsl[2];
                         resetz = gsl[3];
-                        count = TARDISTimeTravel.safeLocation(startx, starty, startz, resetx, resetz, w, param.getCompass());
+                        count = TARDISTimeTravel.safeLocation(startx, starty, startz, resetx, resetz, war.getW(), param.getCompass());
                     } else {
                         count = 1;
                     }
