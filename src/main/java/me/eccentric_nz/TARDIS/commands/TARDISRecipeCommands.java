@@ -90,6 +90,7 @@ public class TARDISRecipeCommands implements CommandExecutor {
         firstArgs.add("sonic"); // Sonic Screwdriver
         firstArgs.add("t-circuit"); // Temporal Circuit
         firstArgs.add("tardis"); // TARDIS Seed Block
+        firstArgs.add("vortex"); // Vortex Manipulator
         firstArgs.add("watch"); // TARDIS Seed Block
         t.put("BUDGET", Material.IRON_BLOCK); // budget
         t.put("BIGGER", Material.GOLD_BLOCK); // bigger
@@ -289,6 +290,14 @@ public class TARDISRecipeCommands implements CommandExecutor {
             }
             if (args[0].equalsIgnoreCase("watch")) {
                 this.showShapedRecipe(player, "Fob Watch");
+                return true;
+            }
+            if (args[0].equalsIgnoreCase("vortex")) {
+                if (!plugin.getPM().isPluginEnabled("TARDISVortexManipulator")) {
+                    TARDISMessage.send(sender, "RECIPE_VORTEX");
+                    return true;
+                }
+                this.showShapedRecipe(player, "Vortex Manipulator");
                 return true;
             }
         }
