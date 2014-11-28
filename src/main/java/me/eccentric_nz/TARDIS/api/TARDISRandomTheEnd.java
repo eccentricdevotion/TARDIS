@@ -58,7 +58,7 @@ public class TARDISRandomTheEnd extends TARDISRandomLocation {
             // get the spawn point
             Location endSpawn = war.getW().getSpawnLocation();
             int highest = war.getW().getHighestBlockYAt(endSpawn.getBlockX() + x, endSpawn.getBlockZ() + z);
-            int startx, starty, startz, resetx, resetz, count;
+            int startx, starty, startz, resetx, resetz, count = 0;
             if (highest > 40) {
                 Block currentBlock = war.getW().getBlockAt(x, highest, z);
                 Location chunk_loc = currentBlock.getLocation();
@@ -66,14 +66,16 @@ public class TARDISRandomTheEnd extends TARDISRandomLocation {
                     while (!war.getW().getChunkAt(chunk_loc).isLoaded()) {
                         war.getW().getChunkAt(chunk_loc).load();
                     }
-                    // get start location for checking there is enough space
-                    int gsl[] = TARDISTimeTravel.getStartLocation(chunk_loc, param.getCompass());
-                    startx = gsl[0];
-                    resetx = gsl[1];
-                    starty = chunk_loc.getBlockY() + 1;
-                    startz = gsl[2];
-                    resetz = gsl[3];
-                    count = TARDISTimeTravel.safeLocation(startx, starty, startz, resetx, resetz, war.getW(), param.getCompass());
+                    if (param.spaceTardis()) {
+                        // get start location for checking there is enough space
+                        int gsl[] = TARDISTimeTravel.getStartLocation(chunk_loc, param.getCompass());
+                        startx = gsl[0];
+                        resetx = gsl[1];
+                        starty = chunk_loc.getBlockY() + 1;
+                        startz = gsl[2];
+                        resetz = gsl[3];
+                        count = TARDISTimeTravel.safeLocation(startx, starty, startz, resetx, resetz, war.getW(), param.getCompass());
+                    }
                 } else {
                     count = 1;
                 }
