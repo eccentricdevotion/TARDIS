@@ -40,11 +40,11 @@ import org.bukkit.inventory.meta.ItemMeta;
  *
  * @author eccentric_nz
  */
-public class TARDISPresetListener extends TARDISMenuListener implements Listener {
+public class TARDISPageThreeListener extends TARDISMenuListener implements Listener {
 
     private final TARDIS plugin;
 
-    public TARDISPresetListener(TARDIS plugin) {
+    public TARDISPageThreeListener(TARDIS plugin) {
         super(plugin);
         this.plugin = plugin;
     }
@@ -56,10 +56,10 @@ public class TARDISPresetListener extends TARDISMenuListener implements Listener
      * @param event a player clicking an inventory slot
      */
     @EventHandler(ignoreCancelled = true)
-    public void onPresetTerminalClick(InventoryClickEvent event) {
+    public void onPageThreeTerminalClick(InventoryClickEvent event) {
         Inventory inv = event.getInventory();
         String name = inv.getTitle();
-        if (name.equals("§4More Presets")) {
+        if (name.equals("§4Even More Presets")) {
             event.setCancelled(true);
             int slot = event.getRawSlot();
             final Player player = (Player) event.getWhoClicked();
@@ -84,7 +84,7 @@ public class TARDISPresetListener extends TARDISMenuListener implements Listener
                             HashMap<String, Object> wherec = new HashMap<String, Object>();
                             wherec.put("tardis_id", id);
                             switch (slot) {
-                                case 1:
+                                case 0:
                                     // toggle chameleon circuit
                                     String onoff;
                                     String engage;
@@ -105,11 +105,11 @@ public class TARDISPresetListener extends TARDISMenuListener implements Listener
                                     setSign(rs.getChameleon(), 2, onoff, player);
                                     set.put("chamele_on", oo);
                                     break;
-                                case 3:
+                                case 2:
                                     player.performCommand("tardis rebuild");
                                     close(player);
                                     break;
-                                case 5:
+                                case 4:
                                     // toggle biome adaption
                                     String biome;
                                     String to_turn;
@@ -129,127 +129,90 @@ public class TARDISPresetListener extends TARDISMenuListener implements Listener
                                     set.put("adapti_on", ba);
                                     break;
                                 case 8:
-                                    // page three
+                                    // page one
                                     close(player);
                                     plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
                                         @Override
                                         public void run() {
-                                            TARDISPageThreeInventory tci = new TARDISPageThreeInventory(plugin, bool, adapt);
+                                            TARDISChameleonInventory tci = new TARDISChameleonInventory(plugin, bool, adapt);
                                             ItemStack[] items = tci.getTerminal();
-                                            Inventory chaminv = plugin.getServer().createInventory(player, 54, "§4Even More Presets");
+                                            Inventory chaminv = plugin.getServer().createInventory(player, 54, "§4Chameleon Circuit");
                                             chaminv.setContents(items);
                                             player.openInventory(chaminv);
                                         }
                                     }, 2L);
                                     break;
                                 case 18:
-                                    // custom
-                                    set.put("chameleon_preset", "CUSTOM");
-                                    setSign(rs.getChameleon(), 3, "CUSTOM", player);
-
-                                    TARDISMessage.send(player, "CHAM_SET", ChatColor.AQUA + "Server's Custom");
+                                    // Gazebo
+                                    set.put("chameleon_preset", "GAZEBO");
+                                    setSign(rs.getChameleon(), 3, "GAZEBO", player);
+                                    TARDISMessage.send(player, "CHAM_SET", ChatColor.AQUA + "Gazebo");
                                     break;
                                 case 20:
-                                    // Cake
-                                    set.put("chameleon_preset", "CAKE");
-                                    setSign(rs.getChameleon(), 3, "CAKE", player);
-                                    TARDISMessage.send(player, "CHAM_SET", ChatColor.AQUA + "Birthday Cake");
+                                    // Apperture Science
+                                    set.put("chameleon_preset", "APPERTURE");
+                                    setSign(rs.getChameleon(), 3, "APPERTURE", player);
+                                    TARDISMessage.send(player, "CHAM_SET", ChatColor.AQUA + "Apperture Science");
                                     break;
                                 case 22:
-                                    // Gravestone
-                                    set.put("chameleon_preset", "GRAVESTONE");
-                                    setSign(rs.getChameleon(), 3, "GRAVESTONE", player);
-                                    TARDISMessage.send(player, "CHAM_SET", ChatColor.AQUA + "Gravestone");
+                                    // Lighthouse
+                                    set.put("chameleon_preset", "LIGHTHOUSE");
+                                    setSign(rs.getChameleon(), 3, "LIGHTHOUSE", player);
+                                    TARDISMessage.send(player, "CHAM_SET", ChatColor.AQUA + "Tiny Lighthouse");
                                     break;
                                 case 24:
-                                    // Topsy-turvey
-                                    set.put("chameleon_preset", "TOPSYTURVEY");
-                                    setSign(rs.getChameleon(), 3, "TOPSYTURVEY", player);
-                                    TARDISMessage.send(player, "CHAM_SET", ChatColor.AQUA + "Topsy-turvey");
+                                    // Library
+                                    set.put("chameleon_preset", "LIBRARY");
+                                    setSign(rs.getChameleon(), 3, "LIBRARY", player);
+                                    TARDISMessage.send(player, "CHAM_SET", ChatColor.AQUA + "Library");
                                     break;
                                 case 26:
-                                    // Mushroom
-                                    set.put("chameleon_preset", "SHROOM");
-                                    setSign(rs.getChameleon(), 3, "SHROOM", player);
-                                    TARDISMessage.send(player, "CHAM_SET", ChatColor.AQUA + "Mushroom");
+                                    // Snowman
+                                    set.put("chameleon_preset", "SNOWMAN");
+                                    setSign(rs.getChameleon(), 3, "SNOWMAN", player);
+                                    TARDISMessage.send(player, "CHAM_SET", ChatColor.AQUA + "Snowman");
                                     break;
                                 case 28:
-                                    // Rubber Duck
-                                    set.put("chameleon_preset", "DUCK");
-                                    setSign(rs.getChameleon(), 3, "DUCK", player);
-                                    TARDISMessage.send(player, "CHAM_SET", ChatColor.AQUA + "Rubber Duck");
+                                    // Jail Cell
+                                    set.put("chameleon_preset", "JAIL");
+                                    setSign(rs.getChameleon(), 3, "JAIL", player);
+                                    TARDISMessage.send(player, "CHAM_SET", ChatColor.AQUA + "Jail Cell");
                                     break;
                                 case 30:
-                                    // Mineshaft
-                                    set.put("chameleon_preset", "MINESHAFT");
-                                    setSign(rs.getChameleon(), 3, "MINESHAFT", player);
-                                    TARDISMessage.send(player, "CHAM_SET", ChatColor.AQUA + "Mineshaft");
+                                    // Pandorica
+                                    set.put("chameleon_preset", "PANDORICA");
+                                    setSign(rs.getChameleon(), 3, "PANDORICA", player);
+                                    TARDISMessage.send(player, "CHAM_SET", ChatColor.AQUA + "Pandorica");
                                     break;
                                 case 32:
-                                    // Creepy
-                                    set.put("chameleon_preset", "CREEPY");
-                                    setSign(rs.getChameleon(), 3, "CREEPY", player);
-                                    TARDISMessage.send(player, "CHAM_SET", ChatColor.AQUA + "Creepy");
+                                    // double helix
+                                    set.put("chameleon_preset", "HELIX");
+                                    setSign(rs.getChameleon(), 3, "HELIX", player);
+                                    TARDISMessage.send(player, "CHAM_SET", ChatColor.AQUA + "Double Helix");
                                     break;
                                 case 34:
-                                    // Peanut Butter Jar
-                                    set.put("chameleon_preset", "PEANUT");
-                                    setSign(rs.getChameleon(), 3, "PEANUT", player);
-                                    TARDISMessage.send(player, "CHAM_SET", ChatColor.AQUA + "Peanut Butter Jar");
-                                    break;
-                                case 36:
-                                    // Lamp Post
-                                    set.put("chameleon_preset", "LAMP");
-                                    setSign(rs.getChameleon(), 3, "LAMP", player);
-                                    TARDISMessage.send(player, "CHAM_SET", ChatColor.AQUA + "Lamp Post");
+                                    // Prismarine
+                                    set.put("chameleon_preset", "PRISMARINE");
+                                    setSign(rs.getChameleon(), 3, "PRISMARINE", player);
+                                    TARDISMessage.send(player, "CHAM_SET", ChatColor.AQUA + "Guardian Temple");
                                     break;
                                 case 38:
-                                    // Candy Cane
-                                    set.put("chameleon_preset", "CANDY");
-                                    setSign(rs.getChameleon(), 3, "CANDY", player);
-                                    TARDISMessage.send(player, "CHAM_SET", ChatColor.AQUA + "Candy Cane");
+                                    // Andesite
+                                    set.put("chameleon_preset", "ANDESITE");
+                                    setSign(rs.getChameleon(), 3, "ANDESITE", player);
+                                    TARDISMessage.send(player, "CHAM_SET", ChatColor.AQUA + "Andesite Box");
                                     break;
                                 case 40:
-                                    // Toilet
-                                    set.put("chameleon_preset", "TOILET");
-                                    setSign(rs.getChameleon(), 3, "TOILET", player);
-                                    TARDISMessage.send(player, "CHAM_SET", ChatColor.AQUA + "Water Closet");
+                                    // Diorite
+                                    set.put("chameleon_preset", "DIORITE");
+                                    setSign(rs.getChameleon(), 3, "DIORITE", player);
+                                    TARDISMessage.send(player, "CHAM_SET", ChatColor.AQUA + "Diorite Box");
                                     break;
                                 case 42:
-                                    // Robot
-                                    set.put("chameleon_preset", "ROBOT");
-                                    setSign(rs.getChameleon(), 3, "ROBOT", player);
-                                    TARDISMessage.send(player, "CHAM_SET", ChatColor.AQUA + "Robot");
-                                    break;
-                                case 44:
-                                    // Flaming Torch
-                                    set.put("chameleon_preset", "TORCH");
-                                    setSign(rs.getChameleon(), 3, "TORCH", player);
-                                    TARDISMessage.send(player, "CHAM_SET", ChatColor.AQUA + "Flaming Torch");
-                                    break;
-                                case 46:
-                                    // Pine Tree
-                                    set.put("chameleon_preset", "PINE");
-                                    setSign(rs.getChameleon(), 3, "PINE", player);
-                                    TARDISMessage.send(player, "CHAM_SET", ChatColor.AQUA + "Pine Tree");
-                                    break;
-                                case 48:
-                                    // Steam Punked
-                                    set.put("chameleon_preset", "PUNKED");
-                                    setSign(rs.getChameleon(), 3, "PUNKED", player);
-                                    TARDISMessage.send(player, "CHAM_SET", ChatColor.AQUA + "Steam Punked");
-                                    break;
-                                case 50:
-                                    // Random Fence
-                                    set.put("chameleon_preset", "FENCE");
-                                    setSign(rs.getChameleon(), 3, "FENCE", player);
-                                    TARDISMessage.send(player, "CHAM_SET", ChatColor.AQUA + "Random Fence");
-                                    break;
-                                case 52:
-                                    // Nether Portal
-                                    set.put("chameleon_preset", "PORTAL");
-                                    setSign(rs.getChameleon(), 3, "PORTAL", player);
-                                    TARDISMessage.send(player, "CHAM_SET", ChatColor.AQUA + "Nether Portal");
+                                    // Granite
+                                    set.put("chameleon_preset", "GRANITE");
+                                    setSign(rs.getChameleon(), 3, "GRANITE", player);
+                                    TARDISMessage.send(player, "CHAM_SET", ChatColor.AQUA + "Granite Box");
                                     break;
                                 default:
                                     close(player);

@@ -26,6 +26,7 @@ import org.bukkit.Material;
  */
 public enum PRESET {
 
+    ANDESITE(Material.GOLD_INGOT, "ANDESITE", "BOX", true, true),
     ANGEL(Material.FEATHER, "WEEPING", "ANGELS HAVE", false, false),
     APPERTURE(Material.STICK, "APPERTURE", "SCIENCE", false, false),
     CAKE(Material.CAKE, "CAKE AND", "EAT IT TOO", true, true),
@@ -33,11 +34,13 @@ public enum PRESET {
     CHALICE(Material.QUARTZ, "", "", false, false),
     CREEPY(Material.STRING, "HAUNTED", "HOUSE", true, true),
     DESERT(Material.SAND, "", "", true, true),
+    DIORITE(Material.EMERALD, "DIORITE", "BOX", true, true),
     DUCK(Material.WOOD_BUTTON, "", "", false, false),
     FACTORY(Material.IRON_INGOT, "", "", true, true),
     FENCE(Material.IRON_FENCE, "RANDOM", "FENCE", false, false),
     FLOWER(Material.RED_ROSE, "", "", false, false),
     GAZEBO(Material.FENCE, "CHILLED OUT", "GAZEBO", false, false),
+    GRANITE(Material.REDSTONE, "GRANITE", "BOX", true, true),
     GRAVESTONE(Material.ENDER_STONE, "HERE", "LIES", false, false),
     HELIX(Material.SMOOTH_STAIRS, "INDUSTRIAL", "DOUBLE HELIX", false, false),
     JAIL(Material.SMOOTH_BRICK, "$50,000", "REWARD FOR", false, false),
