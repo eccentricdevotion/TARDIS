@@ -43,6 +43,7 @@ public enum PRESET {
     GRANITE(Material.REDSTONE, "GRANITE", "BOX", true, true),
     GRAVESTONE(Material.ENDER_STONE, "HERE", "LIES", false, false),
     HELIX(Material.SMOOTH_STAIRS, "INDUSTRIAL", "DOUBLE HELIX", false, false),
+    INVISIBLE(Material.BARRIER, "", "", true, true),
     JAIL(Material.SMOOTH_BRICK, "$50,000", "REWARD FOR", false, false),
     JUNGLE(Material.VINE, "", "", true, true),
     LAMP(Material.GLOWSTONE_DUST, "LONELY", "LAMP POST", false, false),

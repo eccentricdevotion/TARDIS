@@ -388,8 +388,8 @@
         </dependency>
         <dependency>
             <groupId>com.comphenix.protocol</groupId>
-            <artifactId>ProtocolLib-Spigot</artifactId>
-            <version>3.6.0-SNAPSHOT</version>
+            <artifactId>ProtocolLib</artifactId>
+            <version>3.6.3-SNAPSHOT</version>
             <exclusions>
                 <exclusion>
                     <artifactId>BukkitExecutors</artifactId>

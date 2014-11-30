@@ -204,6 +204,22 @@ shaped:
         result: 'MAP:1980'
         amount: 1
         lore: ""
+    TARDIS Invisibility Circuit:
+        easy_shape: -D-,P-E,-W-
+        easy_ingredients:
+            D: DIAMOND
+            P: 'MAP:1978'
+            E: EMERALD
+            W: 'POTION:8206'
+        hard_shape: -D-,P-E,-W-
+        hard_ingredients:
+            D: DIAMOND
+            P: 'MAP:1978'
+            E: EMERALD
+            W: 'POTION:8270'
+        result: 'MAP:1981'
+        amount: 1
+        lore: ""
     Perception Filter:
         easy_shape: S-S,-S-,RGC
         easy_ingredients:

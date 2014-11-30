@@ -32,6 +32,7 @@ public enum MAP {
     DIAMOND((byte) 1971, "Diamond Disruptor Circuit"),
     EMERALD((byte) 1972, "Emerald Environment Circuit"),
     INPUT((byte) 1976, "TARDIS Input Circuit"),
+    INVISIBILITY((byte) 1981, "TARDIS Invisibility Circuit"),
     LOCATOR((byte) 1965, "TARDIS Locator Circuit"),
     MATERIALISATION((byte) 1964, "TARDIS Materialisation Circuit"),
     MEMORY((byte) 1975, "TARDIS Memory Circuit"),

@@ -30,6 +30,7 @@ public enum DISK_CIRCUIT {
     BIOME("Biome Storage Disk", Material.GREEN_RECORD),
     CHAMELEON("TARDIS Chameleon Circuit", Material.MAP),
     INPUT("TARDIS Input Circuit", Material.MAP),
+    INVISIBILITY("TARDIS Invisiblity Circuit", Material.MAP),
     KEY("TARDIS Key", Material.valueOf(TARDIS.plugin.getRecipesConfig().getString("shaped.TARDIS Key.result"))),
     MATERIALISATION("TARDIS Materialisation Circuit", Material.MAP),
     MEMORY("TARDIS Memory Circuit", Material.MAP),

@@ -36,11 +36,12 @@ public class TARDISCircuitChecker {
     private boolean ars;
     private boolean chameleon;
     private boolean input;
+    private boolean invisibility;
     private boolean materialisation;
     private boolean memory;
+    private boolean randomiser;
     private boolean scanner;
     private boolean temporal;
-    private boolean randomiser;
 
     public TARDISCircuitChecker(TARDIS plugin, int id) {
         this.plugin = plugin;
@@ -48,11 +49,12 @@ public class TARDISCircuitChecker {
         this.ars = false;
         this.chameleon = false;
         this.input = false;
+        this.invisibility = false;
         this.materialisation = false;
         this.memory = false;
+        this.randomiser = false;
         this.scanner = false;
         this.temporal = false;
-        this.randomiser = false;
     }
 
     /**
@@ -80,6 +82,9 @@ public class TARDISCircuitChecker {
                             }
                             if (dn.equals("TARDIS Input Circuit")) {
                                 this.input = true;
+                            }
+                            if (dn.equals("TARDIS Invisibility Circuit")) {
+                                this.invisibility = true;
                             }
                             if (dn.equals("TARDIS Materialisation Circuit")) {
                                 this.materialisation = true;
@@ -115,6 +120,10 @@ public class TARDISCircuitChecker {
 
     public boolean hasInput() {
         return input;
+    }
+
+    public boolean hasInvisibility() {
+        return invisibility;
     }
 
     public boolean hasMaterialisation() {

@@ -68,6 +68,7 @@ public class TARDISRecipeCommands implements CommandExecutor {
         firstArgs.add("fish-finger"); // Fish Finger
         firstArgs.add("glasses"); // 3-D Glasses
         firstArgs.add("i-circuit"); // Input Circuit
+        firstArgs.add("invisible"); // Invisibilty Circuit
         firstArgs.add("key"); // TARDIS key
         firstArgs.add("jammy-dodger"); // Jammy Dodger Biscuit
         firstArgs.add("jelly-baby"); // Jelly Baby
@@ -202,6 +203,10 @@ public class TARDISRecipeCommands implements CommandExecutor {
             }
             if (args[0].equalsIgnoreCase("i-circuit")) {
                 this.showShapedRecipe(player, "TARDIS Input Circuit");
+                return true;
+            }
+            if (args[0].equalsIgnoreCase("invisible")) {
+                this.showShapedRecipe(player, "TARDIS Invisibility Circuit");
                 return true;
             }
             if (args[0].equalsIgnoreCase("key")) {
