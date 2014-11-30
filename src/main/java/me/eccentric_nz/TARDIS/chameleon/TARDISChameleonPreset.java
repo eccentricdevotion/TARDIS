@@ -57,6 +57,7 @@ public class TARDISChameleonPreset {
     public final TARDISGazeboPreset gazebo;
     public final TARDISGranitePreset granite;
     public final TARDISGravestonePreset gravestone;
+    public final TARDISInvisiblePreset invisible;
     public final TARDISJailPreset jail;
     public final TARDISJunglePreset jungle;
     public final TARDISLampPostPreset lamp;
@@ -112,6 +113,7 @@ public class TARDISChameleonPreset {
         this.granite = new TARDISGranitePreset();
         this.gravestone = new TARDISGravestonePreset();
         this.helix = new TARDISDoubleHelixPreset();
+        this.invisible = new TARDISInvisiblePreset();
         this.jail = new TARDISJailPreset();
         this.jungle = new TARDISJunglePreset();
         this.lamp = new TARDISLampPostPreset();
@@ -166,6 +168,7 @@ public class TARDISChameleonPreset {
         granite.makePresets(false, false, false);
         gravestone.makePresets(true, false, false);
         helix.makePresets(false, false, false);
+        invisible.makePresets(true, true, true);
         jail.makePresets(false, false, false);
         jungle.makePresets(false, false, false);
         lamp.makePresets(true, false, true);
@@ -539,6 +542,8 @@ public class TARDISChameleonPreset {
                 return gravestone.getBlueprint().get(d);
             case HELIX:
                 return helix.getBlueprint().get(d);
+            case INVISIBLE:
+                return invisible.getBlueprint().get(d);
             case JAIL:
                 return jail.getBlueprint().get(d);
             case JUNGLE:
@@ -648,6 +653,8 @@ public class TARDISChameleonPreset {
                 return gravestone.getGlass().get(d);
             case HELIX:
                 return helix.getGlass().get(d);
+            case INVISIBLE:
+                return invisible.getGlass().get(d);
             case JAIL:
                 return jail.getGlass().get(d);
             case JUNGLE:
@@ -757,6 +764,8 @@ public class TARDISChameleonPreset {
                 return gravestone.getStained().get(d);
             case HELIX:
                 return helix.getStained().get(d);
+            case INVISIBLE:
+                return invisible.getStained().get(d);
             case JAIL:
                 return jail.getStained().get(d);
             case JUNGLE:
