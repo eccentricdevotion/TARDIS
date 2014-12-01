@@ -18,8 +18,10 @@ package me.eccentric_nz.TARDIS.advanced;
 
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.List;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.ResultSetDiskStorage;
+import org.bukkit.ChatColor;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
@@ -42,6 +44,7 @@ public class TARDISCircuitChecker {
     private boolean randomiser;
     private boolean scanner;
     private boolean temporal;
+    private int invisibilityUses;
 
     public TARDISCircuitChecker(TARDIS plugin, int id) {
         this.plugin = plugin;
@@ -55,6 +58,7 @@ public class TARDISCircuitChecker {
         this.randomiser = false;
         this.scanner = false;
         this.temporal = false;
+        this.invisibilityUses = 0;
     }
 
     /**
@@ -85,6 +89,12 @@ public class TARDISCircuitChecker {
                             }
                             if (dn.equals("TARDIS Invisibility Circuit")) {
                                 this.invisibility = true;
+                                // get uses
+                                List<String> lore = im.getLore();
+                                String stripped = ChatColor.stripColor(lore.get(1));
+                                if (!stripped.equals("unlimited")) {
+                                    invisibilityUses = plugin.getUtils().parseInt(stripped);
+                                }
                             }
                             if (dn.equals("TARDIS Materialisation Circuit")) {
                                 this.materialisation = true;
@@ -144,5 +154,9 @@ public class TARDISCircuitChecker {
 
     public boolean hasTemporal() {
         return temporal;
+    }
+
+    public int getInvisibilityUses() {
+        return invisibilityUses;
     }
 }

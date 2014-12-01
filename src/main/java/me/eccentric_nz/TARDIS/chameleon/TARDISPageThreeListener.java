@@ -19,9 +19,12 @@ package me.eccentric_nz.TARDIS.chameleon;
 import java.util.Arrays;
 import java.util.HashMap;
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.advanced.TARDISCircuitChecker;
+import me.eccentric_nz.TARDIS.advanced.TARDISCircuitDamager;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import me.eccentric_nz.TARDIS.database.ResultSetTravellers;
+import me.eccentric_nz.TARDIS.enumeration.DISK_CIRCUIT;
 import me.eccentric_nz.TARDIS.listeners.TARDISMenuListener;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import org.bukkit.ChatColor;
@@ -213,6 +216,29 @@ public class TARDISPageThreeListener extends TARDISMenuListener implements Liste
                                     set.put("chameleon_preset", "GRANITE");
                                     setSign(rs.getChameleon(), 3, "GRANITE", player);
                                     TARDISMessage.send(player, "CHAM_SET", ChatColor.AQUA + "Granite Box");
+                                    break;
+                                case 49:
+                                    // Invisibility
+                                    // check they have an Invisibility Circuit
+                                    TARDISCircuitChecker tcc = new TARDISCircuitChecker(plugin, id);
+                                    tcc.getCircuits();
+                                    if (plugin.getConfig().getString("preferences.difficulty").equals("hard")) {
+                                        if (!plugin.getUtils().inGracePeriod(player, false) && !tcc.hasInvisibility()) {
+                                            close(player);
+                                            TARDISMessage.send(player, "INVISIBILITY_MISSING");
+                                            break;
+                                        }
+                                        if (plugin.getConfig().getBoolean("circuits.damage") && plugin.getConfig().getInt("preferences.invisibility_uses") > 0) {
+                                            // decrement uses
+                                            int uses_left = tcc.getInvisibilityUses();
+                                            if (uses_left != -1) {
+                                                new TARDISCircuitDamager(plugin, DISK_CIRCUIT.INVISIBILITY, uses_left, id, player).damage();
+                                            }
+                                        }
+                                    }
+                                    set.put("chameleon_preset", "INVISIBLE");
+                                    setSign(rs.getChameleon(), 3, "INVISIBLE", player);
+                                    TARDISMessage.send(player, "CHAM_SET", ChatColor.AQUA + "Invisibility");
                                     break;
                                 default:
                                     close(player);

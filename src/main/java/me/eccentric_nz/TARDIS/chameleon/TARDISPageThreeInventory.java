@@ -17,6 +17,7 @@
 package me.eccentric_nz.TARDIS.chameleon;
 
 import java.util.Arrays;
+import java.util.List;
 import me.eccentric_nz.TARDIS.TARDIS;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -73,26 +74,11 @@ public class TARDISPageThreeInventory {
         Enchantment e = EnchantmentWrapper.ARROW_FIRE;
         one.addEnchant(e, 1, true);
         page.setItemMeta(one);
-        // Andesite
-        ItemStack and = new ItemStack(Material.STONE, 1, (byte) 6);
-        ItemMeta esi = and.getItemMeta();
-        esi.setDisplayName("Andesite Box");
-        and.setItemMeta(esi);
-        // Diorite
-        ItemStack dio = new ItemStack(Material.STONE, 1, (byte) 4);
-        ItemMeta rit = dio.getItemMeta();
-        rit.setDisplayName("Diorite Box");
-        dio.setItemMeta(rit);
-        // Granite
-        ItemStack gra = new ItemStack(Material.STONE, 1, (byte) 2);
-        ItemMeta nit = gra.getItemMeta();
-        nit.setDisplayName("Granite Box");
-        gra.setItemMeta(nit);
-        // Prismarine
-        ItemStack pris = new ItemStack(Material.PRISMARINE, 1);
-        ItemMeta mar = pris.getItemMeta();
-        mar.setDisplayName("Guardian Temple");
-        pris.setItemMeta(mar);
+        // Gazebo
+        ItemStack gaz = new ItemStack(Material.FENCE, 1);
+        ItemMeta ebo = gaz.getItemMeta();
+        ebo.setDisplayName("Gazebo");
+        gaz.setItemMeta(ebo);
         // Apperture Science
         ItemStack app = new ItemStack(Material.IRON_TRAPDOOR, 1);
         ItemMeta sci = app.getItemMeta();
@@ -128,11 +114,40 @@ public class TARDISPageThreeInventory {
         ItemMeta lix = dou.getItemMeta();
         lix.setDisplayName("Double Helix");
         dou.setItemMeta(lix);
-        // Gazebo
-        ItemStack gaz = new ItemStack(Material.FENCE, 1);
-        ItemMeta ebo = gaz.getItemMeta();
-        ebo.setDisplayName("Gazebo");
-        gaz.setItemMeta(ebo);
+        // Prismarine
+        ItemStack pris = new ItemStack(Material.PRISMARINE, 1);
+        ItemMeta mar = pris.getItemMeta();
+        mar.setDisplayName("Guardian Temple");
+        pris.setItemMeta(mar);
+        // Andesite
+        ItemStack and = new ItemStack(Material.STONE, 1, (byte) 6);
+        ItemMeta esi = and.getItemMeta();
+        esi.setDisplayName("Andesite Box");
+        and.setItemMeta(esi);
+        // Diorite
+        ItemStack dio = new ItemStack(Material.STONE, 1, (byte) 4);
+        ItemMeta rit = dio.getItemMeta();
+        rit.setDisplayName("Diorite Box");
+        dio.setItemMeta(rit);
+        // Granite
+        ItemStack gra = new ItemStack(Material.STONE, 1, (byte) 2);
+        ItemMeta nit = gra.getItemMeta();
+        nit.setDisplayName("Granite Box");
+        gra.setItemMeta(nit);
+        // Invivibility
+        ItemStack inv;
+        if (plugin.getConfig().getBoolean("allow.invisibility")) {
+            inv = new ItemStack(Material.GLASS, 1);
+            ItemMeta isi = inv.getItemMeta();
+            isi.setDisplayName("Invisibility");
+            if (plugin.getConfig().getBoolean("circuits.damage") && plugin.getConfig().getInt("preferences.invisibility_uses") > 0) {
+                List<String> warn = Arrays.asList(plugin.getLanguage().getString("INVISIBILITY_LORE_1"), plugin.getLanguage().getString("INVISIBILITY_LORE_2"));
+                isi.setLore(warn);
+            }
+            inv.setItemMeta(isi);
+        } else {
+            inv = null;
+        }
         // Biome
         ItemStack bio = new ItemStack(Material.LOG, 1, (short) 2);
         ItemMeta me = bio.getItemMeta();
@@ -153,7 +168,7 @@ public class TARDISPageThreeInventory {
             gaz, null, app, null, lig, null, lib, null, sno,
             null, jail, null, pan, null, dou, null, pris, null,
             null, null, and, null, dio, null, gra, null, null,
-            null, null, null, null, null, null, null, null, null
+            null, null, null, null, inv, null, null, null, null
         };
         return is;
     }

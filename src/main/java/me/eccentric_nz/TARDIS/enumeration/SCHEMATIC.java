@@ -132,5 +132,4 @@ public class SCHEMATIC {
     public boolean mustUseSonic() {
         return this.permission.equals("budget");
     }
-
 }
