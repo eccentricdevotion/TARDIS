@@ -84,7 +84,7 @@ public class TARDISPresetListener extends TARDISMenuListener implements Listener
                             HashMap<String, Object> wherec = new HashMap<String, Object>();
                             wherec.put("tardis_id", id);
                             switch (slot) {
-                                case 1:
+                                case 0:
                                     // toggle chameleon circuit
                                     String onoff;
                                     String engage;
@@ -105,11 +105,11 @@ public class TARDISPresetListener extends TARDISMenuListener implements Listener
                                     setSign(rs.getChameleon(), 2, onoff, player);
                                     set.put("chamele_on", oo);
                                     break;
-                                case 3:
+                                case 2:
                                     player.performCommand("tardis rebuild");
                                     close(player);
                                     break;
-                                case 5:
+                                case 4:
                                     // toggle biome adaption
                                     String biome;
                                     String to_turn;
