@@ -213,7 +213,7 @@ public class TARDISRecipesUpdater {
             recipes_config.set("shaped.TARDIS Invisibility Circuit.hard_ingredients.W", "POTION:8270");
             recipes_config.set("shaped.TARDIS Invisibility Circuit.result", "MAP:1981");
             recipes_config.set("shaped.TARDIS Invisibility Circuit.amount", 1);
-            recipes_config.set("shaped.TARDIS Invisibility Circuit.lore", "");
+            recipes_config.set("shaped.TARDIS Invisibility Circuit.lore", "Uses left~5");
             i++;
         }
         if (!recipes_config.contains("shaped.Painter Circuit")) {

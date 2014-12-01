@@ -17,11 +17,15 @@
 package me.eccentric_nz.TARDIS.listeners;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.enumeration.CONSOLES;
+import me.eccentric_nz.TARDIS.enumeration.SCHEMATIC;
 import me.eccentric_nz.TARDIS.rooms.TARDISWallsLookup;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
+import org.bukkit.ChatColor;
 import org.bukkit.DyeColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -31,8 +35,10 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryAction;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryType;
+import org.bukkit.event.inventory.PrepareItemCraftEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.Recipe;
 import org.bukkit.inventory.meta.ItemMeta;
 
 /**
@@ -205,29 +211,44 @@ public class TARDISCraftListener implements Listener {
     }
 
     private boolean checkPerms(Player p, Material m) {
-        switch (m) {
-            case DIAMOND_BLOCK:
-                return p.hasPermission("tardis.deluxe");
-            case EMERALD_BLOCK:
-                return p.hasPermission("tardis.eleventh");
-            case GOLD_BLOCK:
-                return p.hasPermission("tardis.bigger");
-            case REDSTONE_BLOCK:
-                return p.hasPermission("tardis.redstone");
-            case COAL_BLOCK:
-                return p.hasPermission("tardis.steampunk");
-            case QUARTZ_BLOCK:
-                return p.hasPermission("tardis.ars");
-            case LAPIS_BLOCK:
-                return p.hasPermission("tardis.tom");
-            case BOOKSHELF:
-                return p.hasPermission("tardis.plank");
-            case STAINED_CLAY:
-                return p.hasPermission("tardis.war");
-            case IRON_BLOCK:
-                return true;
-            default:
-                return p.hasPermission("tardis.custom");
+        SCHEMATIC schm = CONSOLES.getByMaterials().get(m.toString());
+        if (schm != null) {
+            String perm = schm.getPermission();
+            return p.hasPermission("tardis." + perm);
+        } else {
+            return false;
+        }
+    }
+
+    @EventHandler(ignoreCancelled = true)
+    public void onCraftInvisibilityCircuit(PrepareItemCraftEvent event) {
+        Recipe recipe = event.getRecipe();
+        ItemStack is = recipe.getResult();
+        if (is.getType().equals(Material.MAP) && is.hasItemMeta() && is.getItemMeta().hasDisplayName() && is.getItemMeta().getDisplayName().equals("TARDIS Invisibility Circuit")) {
+            plugin.debug("It's a TARDIS Invisibility Circuit");
+            // set the second line of lore
+            ItemMeta im = is.getItemMeta();
+            List<String> lore;
+            String uses = (plugin.getConfig().getString("circuits.uses.invisibility").equals("0") || !plugin.getConfig().getBoolean("circuits.damage")) ? ChatColor.YELLOW + "unlimited" : ChatColor.YELLOW + plugin.getConfig().getString("circuits.uses.invisibility");
+            if (im.hasLore()) {
+                lore = im.getLore();
+                plugin.debug("before");
+                for (String o : lore) {
+                    plugin.debug(o);
+                }
+                lore.set(1, uses);
+            } else {
+                lore = Arrays.asList("Uses left", uses);
+            }
+            plugin.debug("after");
+            for (String o : lore) {
+                plugin.debug(o);
+            }
+            plugin.debug("setting");
+            im.setLore(lore);
+            is.setItemMeta(im);
+            plugin.debug("changing result");
+            event.getInventory().setResult(is);
         }
     }
 }

@@ -219,7 +219,7 @@ shaped:
             W: 'POTION:8270'
         result: 'MAP:1981'
         amount: 1
-        lore: ""
+        lore: "Uses left~5"
     Perception Filter:
         easy_shape: S-S,-S-,RGC
         easy_ingredients:

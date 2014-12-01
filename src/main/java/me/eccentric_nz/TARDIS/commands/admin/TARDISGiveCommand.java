@@ -17,11 +17,13 @@
 package me.eccentric_nz.TARDIS.commands.admin;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
+import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -30,6 +32,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.ShapedRecipe;
 import org.bukkit.inventory.ShapelessRecipe;
+import org.bukkit.inventory.meta.ItemMeta;
 
 /**
  *
@@ -178,6 +181,15 @@ public class TARDISGiveCommand implements CommandExecutor {
         } else {
             ShapedRecipe recipe = plugin.getFigura().getShapedRecipes().get(item_to_give);
             result = recipe.getResult();
+        }
+        if (item.equals("invisible")) {
+            // set the second line of lore
+            ItemMeta im = result.getItemMeta();
+            List<String> lore = im.getLore();
+            String uses = (plugin.getConfig().getString("circuits.uses.invisibility").equals("0") || !plugin.getConfig().getBoolean("circuits.damage")) ? ChatColor.YELLOW + "unlimited" : ChatColor.YELLOW + plugin.getConfig().getString("circuits.uses.invisibility");
+            lore.set(1, uses);
+            im.setLore(lore);
+            result.setItemMeta(im);
         }
         result.setAmount(amount);
         player.getInventory().addItem(result);
