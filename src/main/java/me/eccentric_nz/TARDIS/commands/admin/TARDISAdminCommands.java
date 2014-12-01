@@ -97,7 +97,7 @@ public class TARDISAdminCommands implements CommandExecutor {
         firstsBool.put("add_perms", "creation");
         firstsBool.put("all_blocks", "allow");
         firstsBool.put("autonomous", "allow");
-        firstsBool.put("chameleon", "");
+        firstsBool.put("chameleon", "travel");
         firstsBool.put("create_worlds", "creation");
         firstsBool.put("create_worlds_with_perms", "creation");
         firstsBool.put("custom_schematic", "creation");
@@ -108,6 +108,7 @@ public class TARDISAdminCommands implements CommandExecutor {
         firstsBool.put("external_gravity", "allow");
         firstsBool.put("give_key", "travel");
         firstsBool.put("hads", "allow");
+        firstsBool.put("invisibility", "allow");
         firstsBool.put("include_default_world", "travel");
         firstsBool.put("keep_night", "creation");
         firstsBool.put("land_on_water", "travel");
@@ -148,6 +149,15 @@ public class TARDISAdminCommands implements CommandExecutor {
         firstsInt.put("hads_damage", "preferences");
         firstsInt.put("hads_distance", "preferences");
         firstsInt.put("heal_speed", "preferences");
+        firstsInt.put("ARS", "circuits.uses");
+        firstsInt.put("chameleon_uses", "circuits.uses");
+        firstsInt.put("input", "circuits.uses");
+        firstsInt.put("invisibility_uses", "circuits.uses");
+        firstsInt.put("materialisation", "circuits.uses");
+        firstsInt.put("memory", "circuits.uses");
+        firstsInt.put("randomiser", "circuits.uses");
+        firstsInt.put("scanner", "circuits.uses");
+        firstsInt.put("temporal", "circuits.uses");
         firstsInt.put("malfunction", "preferences");
         firstsInt.put("malfunction_end", "preferences");
         firstsInt.put("malfunction_nether", "preferences");

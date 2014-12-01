@@ -89,6 +89,19 @@ preferences:
     nerf_pistons:
         enabled: false
         only_tardis_worlds: true
+# circuits
+circuits:
+    damage: false
+    uses:
+        ARS: 20
+        chameleon: 25
+        input: 50
+        invisibility: 5
+        materialisation: 50
+        memory: 20
+        randomiser: 50
+        scanner: 20
+        temporal: 20
 # restrictions
 allow:
     mob_farming: true
@@ -97,6 +110,7 @@ allow:
     achievements: true
     autonomous: true
     hads: true
+    invisibility: true
     tp_switch: true
     all_blocks: false
     sfx: true

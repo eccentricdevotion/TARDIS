@@ -53,6 +53,12 @@ public class TARDISSetIntegerCommand {
             TARDISMessage.send(sender, "ARG_LAST_NUMBER");
             return false;
         }
+        if (first.equals("circuits.uses.chameleon_uses")) {
+            first = "circuits.uses.chameleon";
+        }
+        if (first.equals("circuits.uses.invisibility_uses")) {
+            first = "circuits.uses.invisibility";
+        }
         plugin.getConfig().set(first, val);
         if (first.equals("terminal_step")) {
             // reset the terminal inventory

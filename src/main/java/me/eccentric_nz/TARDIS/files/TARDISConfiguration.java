@@ -69,6 +69,7 @@ public class TARDISConfiguration {
         boolOptions.put("allow.emergency_npc", true);
         boolOptions.put("allow.external_gravity", false);
         boolOptions.put("allow.hads", true);
+        boolOptions.put("allow.invisibility", true);
         boolOptions.put("allow.mob_farming", true);
         boolOptions.put("allow.player_difficulty", true);
         boolOptions.put("allow.power_down", false);
@@ -81,6 +82,7 @@ public class TARDISConfiguration {
         boolOptions.put("arch.clear_inv_on_death", false);
         boolOptions.put("arch.enabled", true);
         boolOptions.put("arch.switch_inventory", true);
+        boolOptions.put("circuits.damage", false);
         boolOptions.put("conversions.biome_update", false);
         boolOptions.put("conversions.companion_clearing_done", false);
         boolOptions.put("conversions.condenser_done", false);
@@ -209,6 +211,15 @@ public class TARDISConfiguration {
         artronIntOptions.put("upgrades.war", 5000);
         artronIntOptions.put("upgrades.custom", 10000);
         intOptions.put("arch.min_time", 20);
+        intOptions.put("circuits.uses.ARS", 20);
+        intOptions.put("circuits.uses.chameleon", 25);
+        intOptions.put("circuits.uses.input", 50);
+        intOptions.put("circuits.uses.invisibility", 5);
+        intOptions.put("circuits.uses.materialisation", 50);
+        intOptions.put("circuits.uses.memory", 20);
+        intOptions.put("circuits.uses.randomiser", 50);
+        intOptions.put("circuits.uses.scanner", 20);
+        intOptions.put("circuits.uses.temporal", 20);
         intOptions.put("creation.border_radius", 256);
         intOptions.put("creation.count", 0);
         intOptions.put("creation.inventory_group", 0);
