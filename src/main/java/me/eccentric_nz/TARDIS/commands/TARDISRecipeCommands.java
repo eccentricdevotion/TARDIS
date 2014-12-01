@@ -68,7 +68,7 @@ public class TARDISRecipeCommands implements CommandExecutor {
         firstArgs.add("fish-finger"); // Fish Finger
         firstArgs.add("glasses"); // 3-D Glasses
         firstArgs.add("i-circuit"); // Input Circuit
-        firstArgs.add("invisible"); // Invisibilty Circuit
+        firstArgs.add("invisible"); // Invisibility Circuit
         firstArgs.add("key"); // TARDIS key
         firstArgs.add("jammy-dodger"); // Jammy Dodger Biscuit
         firstArgs.add("jelly-baby"); // Jelly Baby
