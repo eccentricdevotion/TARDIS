@@ -1,1 +1,1 @@
-This product includes software from JNBT (http://jnbt.sourceforge.net/), and from JSON (http://http://www.json.org/java/index.html).
+This product includes software from Memetix (https://github.com/boatmeme/microsoft-translator-java-api), and from JSON (http://http://www.json.org/java/index.html).
