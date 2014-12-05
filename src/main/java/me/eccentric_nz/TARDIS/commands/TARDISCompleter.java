@@ -30,5 +30,4 @@ public class TARDISCompleter {
     public List<String> partial(String token, Collection<String> from) {
         return StringUtil.copyPartialMatches(token, from, new ArrayList<String>(from.size()));
     }
-
 }
