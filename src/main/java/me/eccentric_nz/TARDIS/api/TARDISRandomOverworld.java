@@ -62,6 +62,10 @@ public class TARDISRandomOverworld extends TARDISRandomLocation {
             int x = war.getMinX() + randX;
             // get the z coord
             int z = war.getMinZ() + randZ;
+            Location tmp = new Location(war.getW(), x, 64, z);
+            while (!war.getW().getChunkAt(tmp).isLoaded()) {
+                war.getW().getChunkAt(tmp).load();
+            }
             // get the y coord
             if (param.spaceTardis()) {
                 if (safeOverworld(war.getW(), x, z, param.getCompass(), param.getPlayer())) {
