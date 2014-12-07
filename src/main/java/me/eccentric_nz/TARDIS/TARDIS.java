@@ -29,6 +29,7 @@ import java.util.HashMap;
 import java.util.Properties;
 import java.util.Set;
 import java.util.UUID;
+import java.util.logging.Logger;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import me.eccentric_nz.TARDIS.api.TARDII;
@@ -71,6 +72,7 @@ import me.eccentric_nz.TARDIS.siegemode.TARDISSiegePersister;
 import me.eccentric_nz.TARDIS.siegemode.TARDISSiegeRunnable;
 import me.eccentric_nz.TARDIS.travel.TARDISArea;
 import me.eccentric_nz.TARDIS.travel.TARDISPluginRespect;
+import me.eccentric_nz.TARDIS.utility.TARDISFilter;
 import me.eccentric_nz.TARDIS.utility.TARDISMapChecker;
 import me.eccentric_nz.TARDIS.utility.TARDISMultiverseInventoriesChecker;
 import me.eccentric_nz.TARDIS.utility.TARDISPerceptionFilter;
@@ -104,6 +106,7 @@ public class TARDIS extends JavaPlugin {
     public static TARDIS plugin;
     TARDISDatabaseConnection service = TARDISDatabaseConnection.getInstance();
 //    public TARDISFurnaceRecipe fornacis;
+    private static final Logger log = Logger.getLogger("Minecraft");
     private Calendar afterCal;
     private Calendar beforeCal;
     private ConsoleCommandSender console;
@@ -158,6 +161,8 @@ public class TARDIS extends JavaPlugin {
 
     @Override
     public void onEnable() {
+
+        getServer().getLogger().setFilter(new TARDISFilter());
         pm = this.getServer().getPluginManager();
         pdfFile = getDescription();
         pluginName = ChatColor.GOLD + "[" + pdfFile.getName() + "]" + ChatColor.RESET + " ";

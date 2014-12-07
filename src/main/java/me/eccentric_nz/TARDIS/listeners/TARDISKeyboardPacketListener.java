@@ -47,10 +47,8 @@ public class TARDISKeyboardPacketListener implements Listener {
                     @Override
                     public void onPacketReceiving(PacketEvent event) {
                         Player player = event.getPlayer();
-
                         StructureModifier<Integer> ints = event.getPacket().getIntegers();
                         Location loc = new Location(player.getWorld(), ints.read(0), ints.read(1), ints.read(2));
-
                         // Allow
                         if (Objects.equal(editing.get(player), loc)) {
                             setEditingPlayer((Sign) loc.getBlock().getState(), player);
@@ -64,7 +62,6 @@ public class TARDISKeyboardPacketListener implements Listener {
         if (tileEntityAccessor == null) {
             Class<?> tileEntity = MinecraftReflection.getMinecraftClass("TileEntitySign");
             Class<?> humanClass = MinecraftReflection.getMinecraftClass("EntityHuman");
-
             tileEntityAccessor = Accessors.getFieldAccessor(sign.getClass(), tileEntity, true);
             booleanAccessor = Accessors.getFieldAccessor(tileEntity, boolean.class, true);
             humanAccessor = Accessors.getFieldAccessor(tileEntity, humanClass, true);
