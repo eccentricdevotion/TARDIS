@@ -158,7 +158,7 @@ public class TARDISPresetBuilderFactory {
                     }
                 }, 10L);
             } else {
-                if (plugin.getConfig().getBoolean("police_box.materialise")) {
+                if (plugin.getConfig().getBoolean("police_box.materialise") && !preset.equals(PRESET.INVISIBLE)) {
                     plugin.getTrackerKeeper().getMaterialising().add(pbd.getTardisID());
                     TARDISMaterialisationPreset runnable = new TARDISMaterialisationPreset(plugin, pbd, preset, lamp, cham_id, cham_data, minecart, ctm, add_sign);
                     int taskID = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, runnable, 10L, 20L);
