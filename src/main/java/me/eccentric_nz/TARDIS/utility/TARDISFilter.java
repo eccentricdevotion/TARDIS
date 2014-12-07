@@ -20,6 +20,7 @@ import java.util.logging.Filter;
 import java.util.logging.LogRecord;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import me.eccentric_nz.TARDIS.TARDIS;
 
 /**
  *
@@ -34,9 +35,10 @@ public class TARDISFilter implements Filter {
         Pattern pattern = Pattern.compile("World border is currently (\\d+) blocks wide");
         Matcher matcher = pattern.matcher(message);
         if (matcher.find()) {
+            TARDIS.plugin.debug("Match found");
             // get the number
             String num = matcher.group(1);
-
+            TARDIS.plugin.debug("The worldborder distance was: " + num);
         }
         return true;
     }
