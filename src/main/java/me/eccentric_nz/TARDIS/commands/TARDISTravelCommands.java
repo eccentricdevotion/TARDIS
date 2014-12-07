@@ -337,32 +337,32 @@ public class TARDISTravelCommands implements CommandExecutor {
                                     TARDISMessage.send(player, "CURRENT_NOT_FOUND");
                                     return true;
                                 }
-                                Location nsob = searchBiome(player, id, biome, rsc.getWorld(), rsc.getX(), rsc.getZ());
-                                if (nsob == null) {
+                                Location tb = searchBiome(player, id, biome, rsc.getWorld(), rsc.getX() + 5, rsc.getZ() + 5);
+                                if (tb == null) {
                                     TARDISMessage.send(player, "BIOME_NOT_FOUND");
                                     return true;
                                 } else {
-                                    if (!plugin.getPluginRespect().getRespect(nsob, new Parameters(player, FLAG.getDefaultFlags()))) {
+                                    if (!plugin.getPluginRespect().getRespect(tb, new Parameters(player, FLAG.getDefaultFlags()))) {
                                         return true;
                                     }
-                                    World bw = nsob.getWorld();
+                                    World bw = tb.getWorld();
                                     // check location
-                                    while (!bw.getChunkAt(nsob).isLoaded()) {
-                                        bw.getChunkAt(nsob).load();
+                                    while (!bw.getChunkAt(tb).isLoaded()) {
+                                        bw.getChunkAt(tb).load();
                                     }
-                                    int[] start_loc = tt.getStartLocation(nsob, rsc.getDirection());
-                                    int tmp_y = nsob.getBlockY();
+                                    int[] start_loc = tt.getStartLocation(tb, rsc.getDirection());
+                                    int tmp_y = tb.getBlockY();
                                     for (int up = 0; up < 10; up++) {
-                                        int count = tt.safeLocation(start_loc[0], tmp_y + up, start_loc[2], start_loc[1], start_loc[3], nsob.getWorld(), rsc.getDirection());
+                                        int count = tt.safeLocation(start_loc[0], tmp_y + up, start_loc[2], start_loc[1], start_loc[3], tb.getWorld(), rsc.getDirection());
                                         if (count == 0) {
-                                            nsob.setY(tmp_y + up);
+                                            tb.setY(tmp_y + up);
                                             break;
                                         }
                                     }
-                                    set.put("world", nsob.getWorld().getName());
-                                    set.put("x", nsob.getBlockX());
-                                    set.put("y", nsob.getBlockY());
-                                    set.put("z", nsob.getBlockZ());
+                                    set.put("world", tb.getWorld().getName());
+                                    set.put("x", tb.getBlockX());
+                                    set.put("y", tb.getBlockY());
+                                    set.put("z", tb.getBlockZ());
                                     set.put("direction", rsc.getDirection().toString());
                                     set.put("submarine", 0);
                                     qf.doUpdate("next", set, tid);
