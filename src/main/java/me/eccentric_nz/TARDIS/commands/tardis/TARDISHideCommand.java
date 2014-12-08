@@ -25,6 +25,7 @@ import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetCurrentLocation;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import me.eccentric_nz.TARDIS.database.ResultSetTravellers;
+import me.eccentric_nz.TARDIS.enumeration.PRESET;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
@@ -67,6 +68,10 @@ public class TARDISHideCommand {
                 TARDISMessage.send(player.getPlayer(), "POWER_DOWN");
                 return true;
             }
+            if (rs.getPreset().equals(PRESET.INVISIBLE)) {
+                TARDISMessage.send(player.getPlayer(), "INVISIBILITY_ENGAGED");
+                return true;
+            }
             id = rs.getTardis_id();
             TARDISCircuitChecker tcc = null;
             if (plugin.getConfig().getString("preferences.difficulty").equals("hard") && !plugin.getUtils().inGracePeriod(player.getPlayer(), true)) {
@@ -84,7 +89,6 @@ public class TARDISHideCommand {
                 TARDISMessage.send(player.getPlayer(), "TARDIS_NO_HIDE");
                 return true;
             }
-            int level = rs.getArtron_level();
             if (plugin.getTrackerKeeper().getInVortex().contains(id)) {
                 TARDISMessage.send(player.getPlayer(), "NOT_WHILE_MAT");
                 return true;
@@ -97,9 +101,7 @@ public class TARDISHideCommand {
                 return true;
             }
             Location l = new Location(rsc.getWorld(), rsc.getX(), rsc.getY(), rsc.getZ());
-            HashMap<String, Object> wheret = new HashMap<String, Object>();
-            wheret.put("tardis_id", id);
-            QueryFactory qf = new QueryFactory(plugin);
+            int level = rs.getArtron_level();
             int hide = plugin.getArtronConfig().getInt("hide");
             if (level < hide) {
                 TARDISMessage.send(player.getPlayer(), "ENERGY_NO_HIDE");
@@ -118,6 +120,9 @@ public class TARDISHideCommand {
             pdd.setBiome(rsc.getBiome());
             plugin.getPresetDestroyer().destroyPreset(pdd);
             TARDISMessage.send(player.getPlayer(), "TARDIS_HIDDEN", ChatColor.GREEN + " /tardis rebuild " + ChatColor.RESET);
+            QueryFactory qf = new QueryFactory(plugin);
+            HashMap<String, Object> wheret = new HashMap<String, Object>();
+            wheret.put("tardis_id", id);
             qf.alterEnergyLevel("tardis", -hide, wheret, player.getPlayer());
             // set hidden to true
             HashMap<String, Object> whereh = new HashMap<String, Object>();
