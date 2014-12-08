@@ -1,14 +1,13 @@
 #TODO
 
 ##Current version `3.2-beta-1`
-1. TARDIS invisibility - 1.8 barrier blocks?
-2. `/tardis hide` and `/tardis rebuild` has materialisation animation
-3. Update TARDIS schematics to include: light switch, keyboard, siege switch, toggle wool switch and back button by default AND
-4. Make a sign GUI for all controls except repeaters and handbrake
-5. Add note about custom console offset to docs
-6. Add another page to admin prefs GUI so we can fit siege options in
-7. Twelfth TARDIS
-8. Slimmer TARDIS option?
+1. `/tardis make_her_blue`, `/tardis hide` and `/tardis rebuild` has short materialisation animation
+2. Update TARDIS schematics to include: light switch, keyboard, siege switch, toggle wool switch and back button by default AND
+3. Make a sign GUI for all controls except repeaters and handbrake
+4. Add note about custom console offset to docs
+5. Add another page to admin prefs GUI so we can fit siege options in
+6. Twelfth TARDIS
+7. Slimmer TARDIS option?
 
 ##Future version `3.3+`
 * SpongeAPI
