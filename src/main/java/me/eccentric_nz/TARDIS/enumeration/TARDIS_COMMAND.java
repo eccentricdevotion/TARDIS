@@ -44,6 +44,7 @@ public enum TARDIS_COMMAND {
     jettison,
     lamps,
     list,
+    make_her_blue,
     namekey,
     occupy,
     rebuild,
@@ -75,6 +76,7 @@ public enum TARDIS_COMMAND {
             case hide:
             case home:
             case lamps:
+            case make_her_blue:
             case rebuild:
             case rescue:
             case room:

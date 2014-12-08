@@ -154,6 +154,9 @@ public class TARDISCommands implements CommandExecutor {
                 if (args[0].equalsIgnoreCase("list")) {
                     return new TARDISListCommand(plugin).doList(player, args);
                 }
+                if (args[0].equalsIgnoreCase("make_her_blue")) {
+                    return new TARDISMakeHerBlueCommand(plugin).show(player);
+                }
                 if (args[0].equalsIgnoreCase("namekey")) {
                     return new TARDISNameKeyCommand(plugin).nameKey(player, args);
                 }
