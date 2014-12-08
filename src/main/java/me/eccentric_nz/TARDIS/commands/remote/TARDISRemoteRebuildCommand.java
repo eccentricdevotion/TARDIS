@@ -21,6 +21,8 @@ import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.builders.TARDISMaterialisationData;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetCurrentLocation;
+import me.eccentric_nz.TARDIS.database.ResultSetTardis;
+import me.eccentric_nz.TARDIS.enumeration.PRESET;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import org.bukkit.Location;
 import org.bukkit.OfflinePlayer;
@@ -49,7 +51,11 @@ public class TARDISRemoteRebuildCommand {
         Location l = new Location(rsc.getWorld(), rsc.getX(), rsc.getY(), rsc.getZ());
         HashMap<String, Object> wheret = new HashMap<String, Object>();
         wheret.put("tardis_id", id);
-        // remove the police box first - should fix conflict between wood and iron doors
+        ResultSetTardis rs = new ResultSetTardis(plugin, wheret, "", false);
+        if (rs.resultSet() && rs.getPreset().equals(PRESET.INVISIBLE)) {
+            TARDISMessage.send(player.getPlayer(), "INVISIBILITY_ENGAGED");
+            return true;
+        }
         final TARDISMaterialisationData pbd = new TARDISMaterialisationData();
         pbd.setChameleon(cham);
         pbd.setDirection(rsc.getDirection());

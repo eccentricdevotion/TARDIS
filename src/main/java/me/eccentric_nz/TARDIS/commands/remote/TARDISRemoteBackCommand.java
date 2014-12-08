@@ -59,8 +59,6 @@ public class TARDISRemoteBackCommand {
         set.put("z", rsb.getZ());
         set.put("direction", rsb.getDirection().toString());
         set.put("submarine", (rsb.isSubmarine()) ? 1 : 0);
-        HashMap<String, Object> tid = new HashMap<String, Object>();
-        tid.put("tardis_id", id);
         // get current police box location
         HashMap<String, Object> wherecl = new HashMap<String, Object>();
         wherecl.put("tardis_id", id);
@@ -72,12 +70,14 @@ public class TARDISRemoteBackCommand {
             return true;
         }
         // set hidden false
+        final QueryFactory qf = new QueryFactory(plugin);
         HashMap<String, Object> sett = new HashMap<String, Object>();
         sett.put("hidden", 0);
         HashMap<String, Object> ttid = new HashMap<String, Object>();
         ttid.put("tardis_id", id);
-        final QueryFactory qf = new QueryFactory(plugin);
         qf.doUpdate("tardis", sett, ttid);
+        HashMap<String, Object> tid = new HashMap<String, Object>();
+        tid.put("tardis_id", id);
         qf.doUpdate("current", set, tid);
         plugin.getTrackerKeeper().getInVortex().add(id);
         // destroy the police box
