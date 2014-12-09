@@ -27,6 +27,8 @@ import me.eccentric_nz.TARDIS.enumeration.CMDS;
 import me.eccentric_nz.TARDIS.enumeration.TARDIS_COMMAND;
 import me.eccentric_nz.TARDIS.noteblock.TARDISPlayThemeCommand;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
+import me.eccentric_nz.tardishelper.TARDISHelper;
+import me.eccentric_nz.tardishelper.TARDISWorldBorder;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -79,6 +81,14 @@ public class TARDISCommands implements CommandExecutor {
                 TARDISMessage.send(sender, "CMD_PLAYER");
                 return false;
             } else {
+                if (args[0].equalsIgnoreCase("wb")) {
+                    TARDISHelper tsp = (TARDISHelper) plugin.getPM().getPlugin("TARDISHelper");
+                    TARDISWorldBorder wb = tsp.getBorder(player.getWorld());
+                    plugin.debug("WorldBorder Centre X: " + wb.getCentreX());
+                    plugin.debug("WorldBorder Centre Z: " + wb.getCentreZ());
+                    plugin.debug("WorldBorder Size: " + wb.getSize());
+                    return true;
+                }
                 HashMap<String, Object> where = new HashMap<String, Object>();
                 where.put("uuid", player.getUniqueId().toString());
                 ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);
