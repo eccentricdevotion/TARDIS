@@ -22,8 +22,11 @@ import me.eccentric_nz.TARDIS.utility.TARDISFactionsChecker;
 import me.eccentric_nz.TARDIS.utility.TARDISGriefPreventionChecker;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import me.eccentric_nz.TARDIS.utility.TARDISTownyChecker;
+import me.eccentric_nz.TARDIS.utility.TARDISVanillaBorderChecker;
 import me.eccentric_nz.TARDIS.utility.TARDISWorldBorderChecker;
 import me.eccentric_nz.TARDIS.utility.Version;
+import me.eccentric_nz.tardishelper.TARDISHelper;
+import me.eccentric_nz.tardishelper.TARDISWorldBorder;
 import org.bukkit.Location;
 import org.bukkit.World.Environment;
 
@@ -106,11 +109,23 @@ public class TARDISPluginRespect {
             }
             bool = false;
         }
-        if (flag.repectWorldBorder() && borderOnServer && plugin.getConfig().getBoolean("preferences.respect_worldborder") && !borderchk.isInBorder(l)) {
-            if (flag.messagePlayer()) {
-                TARDISMessage.send(flag.getPlayer(), "WORLDBORDER");
+        if (flag.repectWorldBorder()) {
+            if (plugin.isHelperOnServer()) {
+                TARDISHelper th = (TARDISHelper) plugin.getPM().getPlugin("TARDISHelper");
+                TARDISWorldBorder wb = th.getBorder(l.getWorld());
+                if (!TARDISVanillaBorderChecker.isInBorder(wb, l)) {
+                    if (flag.messagePlayer()) {
+                        TARDISMessage.send(flag.getPlayer(), "WORLDBORDER");
+                    }
+                    bool = false;
+                }
             }
-            bool = false;
+            if (borderOnServer && plugin.getConfig().getBoolean("preferences.respect_worldborder") && !borderchk.isInBorder(l)) {
+                if (flag.messagePlayer()) {
+                    TARDISMessage.send(flag.getPlayer(), "WORLDBORDER");
+                }
+                bool = false;
+            }
         }
         if (flag.respectFactions() && factionsOnServer && plugin.getConfig().getBoolean("preferences.respect_factions") && !factionschk.isInFaction(flag.getPlayer(), l)) {
             if (flag.messagePlayer()) {

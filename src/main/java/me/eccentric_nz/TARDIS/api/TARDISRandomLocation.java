@@ -22,6 +22,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.tardishelper.TARDISHelper;
+import me.eccentric_nz.tardishelper.TARDISWorldBorder;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.World;
@@ -77,6 +79,13 @@ public class TARDISRandomLocation {
             minZ = centre[1] - cz;
             maxZ = centre[1] - cz;
         } else {
+            // set default by using config values
+            int cx = plugin.getConfig().getInt("travel.random_circuit.x");
+            int cz = plugin.getConfig().getInt("travel.random_circuit.z");
+            minX = 0 - cx;
+            maxX = cx;
+            minZ = 0 - cz;
+            maxZ = cz;
             // get the limits of the world
             // is WorldBorder enabled, and is there a border set for this world?
             if (plugin.getPM().isPluginEnabled("WorldBorder") && Config.Border(w.getName()) != null) {
@@ -85,14 +94,18 @@ public class TARDISRandomLocation {
                 maxX = (int) border.getX() + border.getRadiusX();
                 minZ = (int) border.getZ() - border.getRadiusZ();
                 maxZ = (int) border.getZ() + border.getRadiusZ();
-            } else {
-                // use config
-                int cx = plugin.getConfig().getInt("travel.random_circuit.x");
-                int cz = plugin.getConfig().getInt("travel.random_circuit.z");
-                minX = 0 - cx;
-                maxX = cx;
-                minZ = 0 - cz;
-                maxZ = cz;
+            } else if (plugin.isHelperOnServer()) {
+                // check vanilla world border
+                TARDISHelper th = (TARDISHelper) plugin.getPM().getPlugin("TARDISHelper");
+                TARDISWorldBorder twb = th.getBorder(w);
+                // default world border is 60,000,000 blocks wide (in other words not set at all)
+                long size = twb.getSize() / 2;
+                if (size < 30000000) {
+                    minX = (int) (twb.getCentreX() - size);
+                    minZ = (int) (twb.getCentreZ() - size);
+                    maxX = (int) (twb.getCentreX() + size);
+                    maxZ = (int) (twb.getCentreZ() + size);
+                }
             }
             // compensate for nether 1:8 ratio if necessary
             if (env.equals(World.Environment.NETHER)) {

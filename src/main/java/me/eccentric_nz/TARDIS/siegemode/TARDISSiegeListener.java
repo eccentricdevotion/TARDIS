@@ -138,8 +138,8 @@ public class TARDISSiegeListener implements Listener {
         is.setItemMeta(im);
         Item item = b.getWorld().dropItemNaturally(b.getLocation(), is);
         if (plugin.isHelperOnServer()) {
-            TARDISHelper tsp = (TARDISHelper) plugin.getPM().getPlugin("TARDISHelper");
-            tsp.protect(item);
+            TARDISHelper th = (TARDISHelper) plugin.getPM().getPlugin("TARDISHelper");
+            th.protect(item);
         }
         // track it
         plugin.getTrackerKeeper().getIsSiegeCube().add(id);

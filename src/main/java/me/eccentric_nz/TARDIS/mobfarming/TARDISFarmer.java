@@ -202,8 +202,8 @@ public class TARDISFarmer {
                             tmhor.setDomesticity(horse.getDomestication());
                             tmhor.setJumpStrength(horse.getJumpStrength());
                             if (plugin.isHelperOnServer()) {
-                                TARDISHelper ths = (TARDISHelper) plugin.getPM().getPlugin("TARDISHelper");
-                                double speed = ths.getHorseSpeed(horse);
+                                TARDISHelper th = (TARDISHelper) plugin.getPM().getPlugin("TARDISHelper");
+                                double speed = th.getHorseSpeed(horse);
                                 tmhor.setSpeed(speed);
                             }
                             // check the leash
@@ -521,8 +521,8 @@ public class TARDISFarmer {
                                 p.updateInventory();
                             }
                             if (plugin.isHelperOnServer()) {
-                                TARDISHelper ths = (TARDISHelper) plugin.getPM().getPlugin("TARDISHelper");
-                                ths.setHorseSpeed(equine, e.getSpeed());
+                                TARDISHelper th = (TARDISHelper) plugin.getPM().getPlugin("TARDISHelper");
+                                th.setHorseSpeed(equine, e.getSpeed());
                             }
                             equine.setRemoveWhenFarAway(false);
                         }

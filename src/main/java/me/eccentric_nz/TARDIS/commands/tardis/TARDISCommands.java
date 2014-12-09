@@ -82,8 +82,8 @@ public class TARDISCommands implements CommandExecutor {
                 return false;
             } else {
                 if (args[0].equalsIgnoreCase("wb")) {
-                    TARDISHelper tsp = (TARDISHelper) plugin.getPM().getPlugin("TARDISHelper");
-                    TARDISWorldBorder wb = tsp.getBorder(player.getWorld());
+                    TARDISHelper th = (TARDISHelper) plugin.getPM().getPlugin("TARDISHelper");
+                    TARDISWorldBorder wb = th.getBorder(player.getWorld());
                     plugin.debug("WorldBorder Centre X: " + wb.getCentreX());
                     plugin.debug("WorldBorder Centre Z: " + wb.getCentreZ());
                     plugin.debug("WorldBorder Size: " + wb.getSize());

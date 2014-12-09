@@ -123,8 +123,8 @@ public class TARDISHorseListener implements Listener {
                         tmhor.setHorseHealth(h.getMaxHealth());
                         tmhor.setHealth(h.getHealth());
                         if (plugin.isHelperOnServer()) {
-                            TARDISHelper ths = (TARDISHelper) plugin.getPM().getPlugin("TARDISHelper");
-                            tmhor.setSpeed(ths.getHorseSpeed(h));
+                            TARDISHelper th = (TARDISHelper) plugin.getPM().getPlugin("TARDISHelper");
+                            tmhor.setSpeed(th.getHorseSpeed(h));
                         }
                         // eject player
                         // if (p.leaveVehicle()) {
@@ -169,8 +169,8 @@ public class TARDISHorseListener implements Listener {
                                 }
                             }
                             if (plugin.isHelperOnServer()) {
-                                TARDISHelper ths = (TARDISHelper) plugin.getPM().getPlugin("TARDISHelper");
-                                ths.setHorseSpeed(equine, tmhor.getSpeed());
+                                TARDISHelper th = (TARDISHelper) plugin.getPM().getPlugin("TARDISHelper");
+                                th.setHorseSpeed(equine, tmhor.getSpeed());
                             }
                             Tameable tamed = (Tameable) equine;
                             tamed.setTamed(true);
