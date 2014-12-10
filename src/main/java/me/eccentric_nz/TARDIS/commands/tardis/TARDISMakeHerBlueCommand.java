@@ -24,6 +24,7 @@ import me.eccentric_nz.TARDIS.builders.TARDISMaterialisationData;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetCurrentLocation;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
+import me.eccentric_nz.TARDIS.enumeration.PRESET;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
@@ -66,6 +67,10 @@ public class TARDISMakeHerBlueCommand {
         }
         if (plugin.getConfig().getBoolean("allow.power_down") && !rs.isPowered_on()) {
             TARDISMessage.send(player.getPlayer(), "POWER_DOWN");
+            return true;
+        }
+        if (!rs.getPreset().equals(PRESET.INVISIBLE)) {
+            TARDISMessage.send(player.getPlayer(), "INVISIBILITY_NOT");
             return true;
         }
         int id = rs.getTardis_id();
@@ -117,7 +122,7 @@ public class TARDISMakeHerBlueCommand {
         pbd.setMalfunction(false);
         pbd.setOutside(false);
         pbd.setPlayer(player);
-        pbd.setRebuild(false);
+        pbd.setRebuild(true);
         pbd.setSubmarine(rsc.isSubmarine());
         pbd.setTardisID(id);
         pbd.setBiome(rsc.getBiome());

@@ -77,8 +77,7 @@ public class TARDISMaterialisationPreset implements Runnable {
     /**
      * Runnable method to materialise the TARDIS Police Box. Tries to mimic the
      * transparency of materialisation by building the Police Box first with
-     * GLASS, then ICE, then the normall wall block (BLUE WOOL or the chameleon
-     * material).
+     * GLASS, then STAINED_GLASS, then the normal preset wall block.
      *
      * @param plugin instance of the TARDIS plugin
      * @param tmd the Materialisation data
@@ -91,11 +90,12 @@ public class TARDISMaterialisationPreset implements Runnable {
      * @param ctm whether to swap the police box door sign block for a quartz
      * pillar
      * @param add_sign whether to add the TARDIS name sign
+     * @param loops the number of loops to run
      */
-    public TARDISMaterialisationPreset(TARDIS plugin, TARDISMaterialisationData tmd, PRESET preset, int lamp, int cham_id, byte cham_data, boolean minecart, boolean ctm, boolean add_sign) {
+    public TARDISMaterialisationPreset(TARDIS plugin, TARDISMaterialisationData tmd, PRESET preset, int lamp, int cham_id, byte cham_data, boolean minecart, boolean ctm, boolean add_sign, int loops) {
         this.plugin = plugin;
         this.tmd = tmd;
-        this.loops = 18;
+        this.loops = loops;
         this.i = 0;
         this.preset = preset;
         this.lamp = lamp;

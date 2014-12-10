@@ -53,10 +53,9 @@ public class TARDISDematerialisationPreset implements Runnable {
     private byte the_colour;
 
     /**
-     * Runnable method to materialise the TARDIS Police Box. Tries to mimic the
-     * transparency of materialisation by building the Police Box first with
-     * GLASS, then ICE, then the normall wall block (BLUE WOOL or the chameleon
-     * material).
+     * Runnable method to dematerialise the TARDIS Police Box. Tries to mimic
+     * the transparency of dematerialisation by building the Police Box first
+     * with GLASS, then STAINED_GLASS, then the normal preset wall block.
      *
      * @param plugin instance of the TARDIS plugin
      * @param tmd the TARDISMaterialisationData
@@ -64,11 +63,12 @@ public class TARDISDematerialisationPreset implements Runnable {
      * @param lamp the id of the lamp block
      * @param cham_id the chameleon block id for the police box
      * @param cham_data the chameleon block data for the police box
+     * @param loops the number of loops to run
      */
-    public TARDISDematerialisationPreset(TARDIS plugin, TARDISMaterialisationData tmd, PRESET preset, int lamp, int cham_id, byte cham_data) {
+    public TARDISDematerialisationPreset(TARDIS plugin, TARDISMaterialisationData tmd, PRESET preset, int lamp, int cham_id, byte cham_data, int loops) {
         this.plugin = plugin;
         this.tmd = tmd;
-        this.loops = 18;
+        this.loops = loops;
         this.preset = preset;
         this.i = 0;
         this.lamp = lamp;

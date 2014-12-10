@@ -360,6 +360,7 @@ INVISIBILITY_ENGAGED: "You cannot do that now the Invisibility Circuit is engage
 INVISIBILITY_LORE_1: "Clicking this button will damage the circuit,"
 INVISIBILITY_LORE_2: "whether you use invisibility or not!"
 INVISIBILITY_MISSING: "The Invisibility Circuit is missing from the console!"
+INVISIBILITY_NOT: "The TARDIS is not invisible!"
 INVISIBILITY_REMOVED: "The Invisibility Circuit has been disengaged."
 ISO_HANDS_OFF: "The isomorphic security lockout has been engaged... Hands off the controls!"
 ISO_OFF: "Isomorphic controls were turned OFF!"

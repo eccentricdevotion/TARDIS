@@ -1,17 +1,16 @@
 #TODO
 
 ##Current version `3.2-beta-1`
-1. `/tardis make_her_blue`, `/tardis hide` and `/tardis rebuild` has short materialisation animation
-2. Update TARDIS schematics to include: light switch, keyboard, siege switch, toggle wool switch and back button by default AND
-3. Make a sign GUI for all controls except repeaters and handbrake
-4. Add note about custom console offset to docs
-5. Add another page to admin prefs GUI so we can fit siege options in
-6. Twelfth TARDIS
-7. Slimmer TARDIS option?
+1. Update TARDIS schematics to include: light switch, keyboard, siege switch, toggle wool switch and back button by default AND
+2. Make a sign GUI for all controls except repeaters and handbrake
+3. Add note about custom console offset to docs
+4. Add another page to admin prefs GUI so we can fit siege options in
+5. Twelfth TARDIS
 
 ##Future version `3.3+`
 * SpongeAPI
 * Forge mod for custom items and blocks (to tie in with Sponge version)
+* Slimmer TARDIS option?
 
 ##Resource Pack / TARDISWeepingAngels
 
@@ -25,7 +24,7 @@ Re-skin mobs for Resource pack, and add new mob sounds
 * Wolves -> K-9? (All the textures I seen so far just don't work - you shouldn't see the legs...)
 * Slimes -> Adipose
 
-##Waiting on Spigot API
+##Waiting on Bukkit / SpigotAPI
 0. IDs/data are soon to be history... so convert all ID/data use to block states 
 1. Get/set horse speed (Attribute API)
 2. Achievements API is now available, but doesn't allow custom achievements :( [https://bukkit.atlassian.net/browse/BUKKIT-5672](https://bukkit.atlassian.net/browse/BUKKIT-5672)

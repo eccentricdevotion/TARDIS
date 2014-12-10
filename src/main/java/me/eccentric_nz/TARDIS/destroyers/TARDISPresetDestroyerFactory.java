@@ -59,7 +59,7 @@ public class TARDISPresetDestroyerFactory {
             if (!pdd.getLocation().getWorld().isChunkLoaded(pdd.getLocation().getChunk())) {
                 pdd.getLocation().getWorld().loadChunk(pdd.getLocation().getChunk());
             }
-            if (pdd.isDematerialise() && !pdd.isHide()) {
+            if (pdd.isDematerialise() && !demat.equals(PRESET.INVISIBLE)) {
                 int cham_id = rs.getChameleon_id();
                 byte cham_data = rs.getChameleon_data();
                 if (pdd.isChameleon() && (demat.equals(PRESET.NEW) || demat.equals(PRESET.OLD) || demat.equals(PRESET.SUBMERGED))) {
@@ -83,7 +83,11 @@ public class TARDISPresetDestroyerFactory {
                 if (rsp.resultSet()) {
                     lamp = rsp.getLamp();
                 }
-                TARDISDematerialisationPreset runnable = new TARDISDematerialisationPreset(plugin, pdd, demat, lamp, cham_id, cham_data);
+                int loops = 18;
+                if (pdd.isHide()) {
+                    loops = 3;
+                }
+                TARDISDematerialisationPreset runnable = new TARDISDematerialisationPreset(plugin, pdd, demat, lamp, cham_id, cham_data, loops);
                 int taskID = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, runnable, 10L, 20L);
                 runnable.setTask(taskID);
             } else {
