@@ -91,11 +91,11 @@ public class TARDISConsoleSwitchListener implements Listener {
                                                 break;
                                             case (byte) 1973: // ARS circuit
                                                 new_inv = plugin.getServer().createInventory(p, 54, "§4Architectural Reconfiguration");
-                                                stack = new TARDISARSInventory(plugin).getTerminal();
+                                                stack = new TARDISARSInventory(plugin).getARS();
                                                 break;
                                             case (byte) 1974: // Temporal circuit
                                                 new_inv = plugin.getServer().createInventory(p, 27, "§4Temporal Locator");
-                                                stack = new TARDISTemporalLocatorInventory(plugin).getTerminal();
+                                                stack = new TARDISTemporalLocatorInventory(plugin).getTemporal();
                                                 break;
                                             case (byte) 1975: // Memory circuit (saves/areas)
                                                 new_inv = plugin.getServer().createInventory(p, 54, "§4TARDIS saves");

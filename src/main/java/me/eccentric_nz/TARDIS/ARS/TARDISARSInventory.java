@@ -30,12 +30,12 @@ import org.bukkit.inventory.meta.ItemMeta;
  */
 public class TARDISARSInventory {
 
-    private final ItemStack[] terminal;
+    private final ItemStack[] ars;
     private final TARDIS plugin;
 
     public TARDISARSInventory(TARDIS plugin) {
         this.plugin = plugin;
-        this.terminal = getItemStack();
+        this.ars = getItemStack();
     }
 
     /**
@@ -172,7 +172,7 @@ public class TARDISARSInventory {
         return is;
     }
 
-    public ItemStack[] getTerminal() {
-        return terminal;
+    public ItemStack[] getARS() {
+        return ars;
     }
 }

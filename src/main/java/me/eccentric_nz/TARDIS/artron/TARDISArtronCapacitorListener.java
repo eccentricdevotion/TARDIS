@@ -280,7 +280,6 @@ public class TARDISArtronCapacitorListener implements Listener {
                                         }
                                         qf.doUpdate("tardis", setp, wherep);
                                     }
-//                                    TARDISMessage.send(player, "ENERGY_INIT_ONCE");
                                 }
                             } else if (player.isSneaking()) {
                                 if (!init) {
