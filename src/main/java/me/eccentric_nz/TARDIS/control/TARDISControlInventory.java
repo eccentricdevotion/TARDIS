@@ -58,12 +58,14 @@ public class TARDISControlInventory {
         String siege_onoff = "";
         String toggle_openclosed = "";
         String power_onoff = "";
+        String off = plugin.getLanguage().getString("SET_OFF");
+        String on = plugin.getLanguage().getString("SET_ON");
         if (rs.resultSet()) {
-            siege_onoff = (rs.isSiege_on()) ? "ON" : "OFF";
-            lights_onoff = (rs.isLights_on()) ? "ON" : "OFF";
+            siege_onoff = (rs.isSiege_on()) ? on : off;
+            lights_onoff = (rs.isLights_on()) ? on : off;
             boolean open = new TARDISBlackWoolToggler(plugin).isOpen(rs.getTardis_id());
-            toggle_openclosed = (open) ? "OPEN" : "CLOSED";
-            power_onoff = (rs.isPowered_on()) ? "ON" : "OFF";
+            toggle_openclosed = (open) ? plugin.getLanguage().getString("SET_OPEN") : plugin.getLanguage().getString("SET_CLOSED");
+            power_onoff = (rs.isPowered_on()) ? on : off;
         }
         // Cancel / close
         ItemStack close = new ItemStack(Material.BOWL, 1);
