@@ -21,7 +21,6 @@ import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.travel.TARDISTerminalInventory;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import org.bukkit.command.CommandSender;
 
@@ -60,10 +59,10 @@ public class TARDISSetIntegerCommand {
             first = "circuits.uses.invisibility";
         }
         plugin.getConfig().set(first, val);
-        if (first.equals("terminal_step")) {
-            // reset the terminal inventory
-            plugin.getGeneralKeeper().getButtonListener().items = new TARDISTerminalInventory(plugin).getTerminal();
-        }
+//        if (first.equals("terminal_step")) {
+//            // reset the terminal inventory
+//            plugin.getGeneralKeeper().getButtonListener().items = new TARDISTerminalInventory(plugin).getTerminal();
+//        }
         plugin.saveConfig();
         TARDISMessage.send(sender, "CONFIG_UPDATED");
         return true;

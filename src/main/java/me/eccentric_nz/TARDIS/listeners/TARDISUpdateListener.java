@@ -87,6 +87,7 @@ public class TARDISUpdateListener implements Listener {
         // lazarus plate = 19
         controls.put("toggle_wool", 20);
         controls.put("siege", 21);
+        controls.put("control", 22);
         validBlocks.add(Material.LEVER);
         validBlocks.add(Material.REDSTONE_COMPARATOR_OFF);
         validBlocks.add(Material.REDSTONE_COMPARATOR_ON);
@@ -406,6 +407,28 @@ public class TARDISUpdateListener implements Listener {
                     s.setLine(0, "");
                     s.setLine(1, "Destination");
                     s.setLine(2, "Terminal");
+                    s.setLine(3, "");
+                    s.update();
+                }
+            }
+            if (blockName.equalsIgnoreCase("control") && validSigns.contains(blockType)) {
+                HashMap<String, Object> wherec = new HashMap<String, Object>();
+                wherec.put("tardis_id", id);
+                wherec.put("type", 22);
+                ResultSetControls rsc = new ResultSetControls(plugin, wherec, false);
+                if (!rsc.resultSet()) {
+                    // insert control
+                    qf.insertControl(id, 22, blockLocStr, 0);
+                    secondary = true;
+                } else {
+                    set.put("location", blockLocStr);
+                }
+                if (blockType == Material.WALL_SIGN || blockType == Material.SIGN_POST) {
+                    // add text to sign
+                    Sign s = (Sign) block.getState();
+                    s.setLine(0, "");
+                    s.setLine(1, "Control");
+                    s.setLine(2, "Centre");
                     s.setLine(3, "");
                     s.update();
                 }

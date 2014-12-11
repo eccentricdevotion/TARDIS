@@ -157,7 +157,7 @@ public class TARDISPageThreeInventory {
         me.setLore(Arrays.asList(biome, String.format(plugin.getLanguage().getString("CHAM_CLICK"), to_turn)));
         bio.setItemMeta(me);
         // Cancel / close
-        ItemStack close = new ItemStack(Material.WOOL, 1, (short) 15);
+        ItemStack close = new ItemStack(Material.BOWL, 1);
         ItemMeta can = close.getItemMeta();
         can.setDisplayName(plugin.getLanguage().getString("BUTTON_CLOSE"));
         close.setItemMeta(can);

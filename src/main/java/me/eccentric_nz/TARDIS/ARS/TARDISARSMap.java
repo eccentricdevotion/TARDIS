@@ -91,7 +91,7 @@ public class TARDISARSMap {
         der.setDisplayName(plugin.getLanguage().getString("BUTTON_MAP"));
         loa.setItemMeta(der);
         // close
-        ItemStack close = new ItemStack(Material.WOOL, 1, (byte) 6);
+        ItemStack close = new ItemStack(Material.BOWL, 1);
         ItemMeta gui = close.getItemMeta();
         gui.setDisplayName("Close");
         close.setItemMeta(gui);

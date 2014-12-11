@@ -87,7 +87,7 @@ public class TARDISThemeInventory {
             i++;
         }
         // close
-        ItemStack close = new ItemStack(Material.TRAP_DOOR, 1);
+        ItemStack close = new ItemStack(Material.BOWL, 1);
         ItemMeta close_im = close.getItemMeta();
         close_im.setDisplayName("Close");
         close.setItemMeta(close_im);

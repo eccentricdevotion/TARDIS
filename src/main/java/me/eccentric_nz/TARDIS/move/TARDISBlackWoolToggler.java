@@ -67,4 +67,17 @@ public class TARDISBlackWoolToggler {
     private boolean isAir(Block b) {
         return b.getType().equals(Material.AIR);
     }
+
+    public boolean isOpen(int id) {
+        HashMap<String, Object> where = new HashMap<String, Object>();
+        where.put("tardis_id", id);
+        where.put("door_type", 1);
+        ResultSetDoorBlocks rsd = new ResultSetDoorBlocks(plugin, id);
+        if (rsd.resultSet()) {
+            Block b = rsd.getInnerBlock().getRelative(BlockFace.NORTH);
+            return (isAir(b));
+        } else {
+            return false;
+        }
+    }
 }

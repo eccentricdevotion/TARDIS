@@ -17,10 +17,17 @@
 package me.eccentric_nz.TARDIS.control;
 
 import java.util.HashMap;
+import me.eccentric_nz.TARDIS.ARS.TARDISARSInventory;
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.advanced.TARDISCircuitChecker;
+import me.eccentric_nz.TARDIS.artron.TARDISArtronIndicator;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import me.eccentric_nz.TARDIS.database.ResultSetTravellers;
 import me.eccentric_nz.TARDIS.listeners.TARDISMenuListener;
+import me.eccentric_nz.TARDIS.move.TARDISBlackWoolToggler;
+import me.eccentric_nz.TARDIS.travel.TARDISTemporalLocatorInventory;
+import me.eccentric_nz.TARDIS.travel.TARDISTerminalInventory;
+import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -49,7 +56,7 @@ public class TARDISControlMenuListener extends TARDISMenuListener implements Lis
             event.setCancelled(true);
             int slot = event.getRawSlot();
             final Player player = (Player) event.getWhoClicked();
-            if (slot >= 0 && slot < 54) {
+            if (slot >= 0 && slot < 18) {
                 ItemStack is = inv.getItem(slot);
                 if (is != null) {
                     // get the TARDIS the player is in
@@ -62,9 +69,148 @@ public class TARDISControlMenuListener extends TARDISMenuListener implements Lis
                         where.put("tardis_id", id);
                         ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);
                         if (rs.resultSet()) {
+                            // check they initialised
+                            if (!rs.isTardis_init()) {
+                                TARDISMessage.send(player, "ENERGY_NO_INIT");
+                                return;
+                            }
+                            if (plugin.getConfig().getBoolean("allow.power_down") && !rs.isPowered_on()) {
+                                TARDISMessage.send(player, "POWER_DOWN");
+                                return;
+                            }
+                            if (!rs.isHandbrake_on()) {
+                                String message = (slot == 9) ? "ARS_NO_TRAVEL" : "NOT_WHILE_TRAVELLING";
+                                TARDISMessage.send(player, message);
+                                return;
+                            }
+                            boolean lights = rs.isLights_on();
+                            int level = rs.getArtron_level();
+                            TARDISCircuitChecker tcc = null;
+                            if (plugin.getConfig().getString("preferences.difficulty").equals("hard")) {
+                                tcc = new TARDISCircuitChecker(plugin, id);
+                                tcc.getCircuits();
+                            }
                             switch (slot) {
+                                case 0:
+                                    // random location
+                                    close(player);
+                                    if (tcc != null && !tcc.hasInput() && !plugin.getUtils().inGracePeriod(player, false)) {
+                                        TARDISMessage.send(player, "INPUT_MISSING");
+                                        return;
+                                    }
+                                    new TARDISRandomButton(plugin, player, id, level, 0, rs.getCompanions(), rs.getUuid()).clickButton();
+                                    break;
                                 case 1:
-
+                                    // fast return
+                                    close(player);
+                                    if (tcc != null && !tcc.hasInput() && !plugin.getUtils().inGracePeriod(player, false)) {
+                                        TARDISMessage.send(player, "INPUT_MISSING");
+                                        return;
+                                    }
+                                    new TARDISFastReturnButton(plugin, player, id, level).clickButton();
+                                    break;
+                                case 2:
+                                    // destination terminal
+                                    if (level < plugin.getArtronConfig().getInt("travel")) {
+                                        TARDISMessage.send(player, "NOT_ENOUGH_ENERGY");
+                                        return;
+                                    }
+                                    if (tcc != null && !tcc.hasInput() && !plugin.getUtils().inGracePeriod(player, false)) {
+                                        TARDISMessage.send(player, "INPUT_MISSING");
+                                        return;
+                                    }
+                                    ItemStack[] items = new TARDISTerminalInventory(plugin).getTerminal();
+                                    Inventory aec = plugin.getServer().createInventory(player, 54, "§4Destination Terminal");
+                                    aec.setContents(items);
+                                    player.openInventory(aec);
+                                    break;
+                                case 4:
+                                    // artron level
+                                    close(player);
+                                    new TARDISArtronIndicator(plugin).showArtronLevel(player, id, 0);
+                                    break;
+                                case 5:
+                                    // power up/down
+                                    close(player);
+                                    new TARDISPowerButton(plugin, id, player, rs.getPreset(), rs.isPowered_on(), rs.isHidden(), lights, player.getLocation(), level).clickButton();
+                                    break;
+                                case 7:
+                                    // light switch
+                                    close(player);
+                                    if (!lights && plugin.getConfig().getBoolean("allow.power_down") && !rs.isPowered_on()) {
+                                        TARDISMessage.send(player, "POWER_DOWN");
+                                        return;
+                                    }
+                                    new TARDISLightSwitch(plugin, id, lights, player).flickSwitch();
+                                    break;
+                                case 8:
+                                    // toggle wool
+                                    close(player);
+                                    if (plugin.getTrackerKeeper().getInSiegeMode().contains(id)) {
+                                        TARDISMessage.send(player, "SIEGE_NO_CONTROL");
+                                        return;
+                                    }
+                                    new TARDISBlackWoolToggler(plugin).toggleBlocks(id, player);
+                                    break;
+                                case 9:
+                                    // ars
+                                    if (plugin.getTrackerKeeper().getInSiegeMode().contains(id)) {
+                                        TARDISMessage.send(player, "SIEGE_NO_CONTROL");
+                                        return;
+                                    }
+                                    // check they're in a compatible world
+                                    if (!plugin.getUtils().canGrowRooms(rs.getChunk())) {
+                                        TARDISMessage.send(player, "ROOM_OWN_WORLD");
+                                        return;
+                                    }
+                                    if (tcc != null && !tcc.hasARS() && !plugin.getUtils().inGracePeriod(player, true)) {
+                                        TARDISMessage.send(player, "ARS_MISSING");
+                                        return;
+                                    }
+                                    // check they have permission to grow rooms
+                                    if (!player.hasPermission("tardis.ars")) {
+                                        TARDISMessage.send(player, "NO_PERM_ROOMS");
+                                        return;
+                                    }
+                                    ItemStack[] tars = new TARDISARSInventory(plugin).getARS();
+                                    Inventory ars = plugin.getServer().createInventory(player, 54, "§4Architectural Reconfiguration");
+                                    ars.setContents(tars);
+                                    player.openInventory(ars);
+                                    break;
+                                case 10:
+                                    // desktop theme
+                                    new TARDISThemeButton(plugin, player, rs.getSchematic(), level).clickButton();
+                                    break;
+                                case 12:
+                                    // temporal
+                                    if (tcc != null && !tcc.hasTemporal() && !plugin.getUtils().inGracePeriod(player, false)) {
+                                        TARDISMessage.send(player, "TEMP_MISSING");
+                                        return;
+                                    }
+                                    if (player.hasPermission("tardis.temporal")) {
+                                        ItemStack[] clocks = new TARDISTemporalLocatorInventory(plugin).getTemporal();
+                                        Inventory tmpl = plugin.getServer().createInventory(player, 27, "§4Temporal Locator");
+                                        tmpl.setContents(clocks);
+                                        player.openInventory(tmpl);
+                                    }
+                                    break;
+                                case 13:
+                                    // TIS
+                                    new TARDISInfoMenuButton(plugin, player).clickButton();
+                                    close(player);
+                                    break;
+                                case 15:
+                                    // siege
+                                    close(player);
+                                    if (tcc != null && !tcc.hasMaterialisation()) {
+                                        TARDISMessage.send(player, "NO_MAT_CIRCUIT");
+                                        return;
+                                    }
+                                    new TARDISSiegeButton(plugin, player, rs.isPowered_on(), id).clickButton();
+                                    break;
+                                case 17:
+                                    // close
+                                    close(player);
                                     break;
                                 default:
                                     break;
