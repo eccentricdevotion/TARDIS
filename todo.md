@@ -1,10 +1,10 @@
 #TODO
 
 ##Current version `3.2-beta-1`
-1. Update TARDIS schematics to include: light switch, keyboard, siege switch, toggle wool switch and back button by default AND
-2. Add note about custom console offset to docs
-3. Add another page to admin prefs GUI so we can fit siege options in
-4. Twelfth TARDIS
+1. Add note about custom console offset to docs
+2. Add another page to admin prefs GUI so we can fit siege options in
+3. Twelfth TARDIS
+4. Add saves and areas to Control Centre GUI
 
 ##Future version `3.3+`
 * SpongeAPI

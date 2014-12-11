@@ -52,6 +52,7 @@ public class TARDISConsoleLoader {
         CONSOLES.getByNames().put("REDSTONE", new SCHEMATIC("REDSTONE_BLOCK", "redstone", "Redstone Console", false, false, true, false));
         CONSOLES.getByNames().put("STEAMPUNK", new SCHEMATIC("COAL_BLOCK", "steampunk", "Steampunk Console", true, false, true, false));
         CONSOLES.getByNames().put("TOM", new SCHEMATIC("LAPIS_BLOCK", "tom", "4th Doctor's Console", true, false, false, false));
+        CONSOLES.getByNames().put("TWELFTH", new SCHEMATIC("PRISMARINE", "twelfth", "12th Doctor's Console", false, false, true, false));
         CONSOLES.getByNames().put("WAR", new SCHEMATIC("STAINED_CLAY", "war", "War Doctor's Console", true, false, true, false));
         for (final String console : plugin.getCustomConsolesConfig().getKeys(false)) {
             if (plugin.getCustomConsolesConfig().getBoolean(console + ".enabled")) {
@@ -88,7 +89,7 @@ public class TARDISConsoleLoader {
                 small = (w == 16);
                 tall = (h > 16);
                 beacon = plugin.getCustomConsolesConfig().getBoolean(console + ".has_beacon");
-                // addSchematics the schematic
+                // add the schematic
                 CONSOLES.getByNames().put(console.toUpperCase(), new SCHEMATIC(seed, permission, description, small, tall, beacon, true));
             }
         }
