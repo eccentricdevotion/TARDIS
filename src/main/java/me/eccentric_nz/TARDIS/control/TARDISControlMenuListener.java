@@ -25,6 +25,8 @@ import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import me.eccentric_nz.TARDIS.database.ResultSetTravellers;
 import me.eccentric_nz.TARDIS.listeners.TARDISMenuListener;
 import me.eccentric_nz.TARDIS.move.TARDISBlackWoolToggler;
+import me.eccentric_nz.TARDIS.travel.TARDISAreasInventory;
+import me.eccentric_nz.TARDIS.travel.TARDISSaveSignInventory;
 import me.eccentric_nz.TARDIS.travel.TARDISTemporalLocatorInventory;
 import me.eccentric_nz.TARDIS.travel.TARDISTerminalInventory;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
@@ -64,10 +66,10 @@ public class TARDISControlMenuListener extends TARDISMenuListener implements Lis
                     wheres.put("uuid", player.getUniqueId().toString());
                     ResultSetTravellers rst = new ResultSetTravellers(plugin, wheres, false);
                     if (rst.resultSet()) {
-                        int id = rst.getTardis_id();
+                        final int id = rst.getTardis_id();
                         HashMap<String, Object> where = new HashMap<String, Object>();
                         where.put("tardis_id", id);
-                        ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);
+                        final ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);
                         if (rs.resultSet()) {
                             // check they initialised
                             if (!rs.isTardis_init()) {
@@ -84,7 +86,7 @@ public class TARDISControlMenuListener extends TARDISMenuListener implements Lis
                                 return;
                             }
                             boolean lights = rs.isLights_on();
-                            int level = rs.getArtron_level();
+                            final int level = rs.getArtron_level();
                             TARDISCircuitChecker tcc = null;
                             if (plugin.getConfig().getString("preferences.difficulty").equals("hard")) {
                                 tcc = new TARDISCircuitChecker(plugin, id);
@@ -98,7 +100,13 @@ public class TARDISControlMenuListener extends TARDISMenuListener implements Lis
                                         TARDISMessage.send(player, "INPUT_MISSING");
                                         return;
                                     }
-                                    new TARDISRandomButton(plugin, player, id, level, 0, rs.getCompanions(), rs.getUuid()).clickButton();
+                                    // give the GUI time to close first
+                                    plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
+                                        @Override
+                                        public void run() {
+                                            new TARDISRandomButton(plugin, player, id, level, 0, rs.getCompanions(), rs.getUuid()).clickButton();
+                                        }
+                                    }, 2L);
                                     break;
                                 case 1:
                                     // fast return
@@ -124,33 +132,48 @@ public class TARDISControlMenuListener extends TARDISMenuListener implements Lis
                                     aec.setContents(items);
                                     player.openInventory(aec);
                                     break;
+                                case 3:
+                                    // saves
+                                    if (tcc != null && !tcc.hasMemory()) {
+                                        TARDISMessage.send(player, "NO_MEM_CIRCUIT");
+                                        return;
+                                    }
+                                    TARDISSaveSignInventory tssi = new TARDISSaveSignInventory(plugin, rs.getTardis_id());
+                                    ItemStack[] saves = tssi.getTerminal();
+                                    Inventory saved = plugin.getServer().createInventory(player, 54, "§4TARDIS saves");
+                                    saved.setContents(saves);
+                                    player.openInventory(saved);
+                                    break;
                                 case 4:
+                                    // areas
+                                    if (tcc != null && !tcc.hasMemory()) {
+                                        TARDISMessage.send(player, "NO_MEM_CIRCUIT");
+                                        return;
+                                    }
+                                    TARDISAreasInventory tai = new TARDISAreasInventory(plugin, player);
+                                    ItemStack[] areas = tai.getTerminal();
+                                    Inventory areainv = plugin.getServer().createInventory(player, 54, "§4TARDIS areas");
+                                    areainv.setContents(areas);
+                                    player.openInventory(areainv);
+                                    break;
+                                case 6:
                                     // artron level
                                     close(player);
                                     new TARDISArtronIndicator(plugin).showArtronLevel(player, id, 0);
                                     break;
-                                case 5:
+                                case 7:
                                     // power up/down
                                     close(player);
                                     new TARDISPowerButton(plugin, id, player, rs.getPreset(), rs.isPowered_on(), rs.isHidden(), lights, player.getLocation(), level).clickButton();
                                     break;
-                                case 7:
-                                    // light switch
-                                    close(player);
-                                    if (!lights && plugin.getConfig().getBoolean("allow.power_down") && !rs.isPowered_on()) {
-                                        TARDISMessage.send(player, "POWER_DOWN");
-                                        return;
-                                    }
-                                    new TARDISLightSwitch(plugin, id, lights, player).flickSwitch();
-                                    break;
                                 case 8:
-                                    // toggle wool
+                                    // siege
                                     close(player);
-                                    if (plugin.getTrackerKeeper().getInSiegeMode().contains(id)) {
-                                        TARDISMessage.send(player, "SIEGE_NO_CONTROL");
+                                    if (tcc != null && !tcc.hasMaterialisation()) {
+                                        TARDISMessage.send(player, "NO_MAT_CIRCUIT");
                                         return;
                                     }
-                                    new TARDISBlackWoolToggler(plugin).toggleBlocks(id, player);
+                                    new TARDISSiegeButton(plugin, player, rs.isPowered_on(), id).clickButton();
                                     break;
                                 case 9:
                                     // ars
@@ -199,14 +222,23 @@ public class TARDISControlMenuListener extends TARDISMenuListener implements Lis
                                     new TARDISInfoMenuButton(plugin, player).clickButton();
                                     close(player);
                                     break;
-                                case 15:
-                                    // siege
+                                case 14:
+                                    // light switch
                                     close(player);
-                                    if (tcc != null && !tcc.hasMaterialisation()) {
-                                        TARDISMessage.send(player, "NO_MAT_CIRCUIT");
+                                    if (!lights && plugin.getConfig().getBoolean("allow.power_down") && !rs.isPowered_on()) {
+                                        TARDISMessage.send(player, "POWER_DOWN");
                                         return;
                                     }
-                                    new TARDISSiegeButton(plugin, player, rs.isPowered_on(), id).clickButton();
+                                    new TARDISLightSwitch(plugin, id, lights, player).flickSwitch();
+                                    break;
+                                case 15:
+                                    // toggle wool
+                                    close(player);
+                                    if (plugin.getTrackerKeeper().getInSiegeMode().contains(id)) {
+                                        TARDISMessage.send(player, "SIEGE_NO_CONTROL");
+                                        return;
+                                    }
+                                    new TARDISBlackWoolToggler(plugin).toggleBlocks(id, player);
                                     break;
                                 case 17:
                                     // close

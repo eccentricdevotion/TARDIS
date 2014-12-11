@@ -72,6 +72,16 @@ public class TARDISControlInventory {
         ItemMeta can = close.getItemMeta();
         can.setDisplayName(plugin.getLanguage().getString("BUTTON_CLOSE"));
         close.setItemMeta(can);
+        // Saves
+        ItemStack save = new ItemStack(Material.BOWL, 1);
+        ItemMeta locs = save.getItemMeta();
+        locs.setDisplayName(plugin.getLanguage().getString("BUTTON_SAVES"));
+        save.setItemMeta(locs);
+        // Areas
+        ItemStack area = new ItemStack(Material.BOWL, 1);
+        ItemMeta tar = area.getItemMeta();
+        tar.setDisplayName(plugin.getLanguage().getString("BUTTON_AREAS"));
+        area.setItemMeta(tar);
         // random location
         ItemStack ran = new ItemStack(Material.BOWL, 1);
         ItemMeta dom = ran.getItemMeta();
@@ -138,8 +148,8 @@ public class TARDISControlInventory {
         upg.setItemMeta(rade);
 
         ItemStack[] is = {
-            ran, fast, ter, null, art, pow, null, lig, tog,
-            ars, upg, null, temp, info, null, siege, null, close
+            ran, fast, ter, save, area, null, art, pow, siege,
+            ars, upg, null, temp, info, lig, tog, null, close
         };
         return is;
     }
