@@ -87,6 +87,7 @@ public class TARDISSiegeListener implements Listener {
         if (!rsc.resultSet()) {
             return;
         }
+        event.setCancelled(true);
         int id = rsc.getTardis_id();
         HashMap<String, Object> wheret = new HashMap<String, Object>();
         wheret.put("tardis_id", id);
@@ -109,7 +110,6 @@ public class TARDISSiegeListener implements Listener {
                 }
             }
             if (!isCompanion) {
-                event.setCancelled(true);
                 TARDISMessage.send(event.getPlayer(), "SIEGE_COMPANION");
                 return;
             }
@@ -136,13 +136,15 @@ public class TARDISSiegeListener implements Listener {
         }
         im.setLore(lore);
         is.setItemMeta(im);
+        // set block to AIR
+        b.setType(Material.AIR);
         Item item = b.getWorld().dropItemNaturally(b.getLocation(), is);
         if (plugin.isHelperOnServer()) {
             TARDISHelper th = (TARDISHelper) plugin.getPM().getPlugin("TARDISHelper");
             th.protect(item);
         }
         // track it
-        plugin.getTrackerKeeper().getIsSiegeCube().add(id);
+        plugin.getTrackerKeeper().getIsSiegeCube().add(Integer.valueOf(id));
         // track the player as well
         plugin.getTrackerKeeper().getSiegeCarrying().put(puuid, id);
     }
@@ -151,6 +153,11 @@ public class TARDISSiegeListener implements Listener {
     public void onDropSiegeCube(final PlayerDropItemEvent event) {
         final Item item = event.getItemDrop();
         final Player p = event.getPlayer();
+        final UUID uuid = p.getUniqueId();
+        // only if we're tracking this player
+        if (!plugin.getTrackerKeeper().getSiegeCarrying().containsKey(uuid)) {
+            return;
+        }
         final ItemStack is = item.getItemStack();
         if (!isSiegeCube(is)) {
             return;
@@ -182,8 +189,9 @@ public class TARDISSiegeListener implements Listener {
                 item.remove();
                 loc.getBlock().setType(Material.HUGE_MUSHROOM_1);
                 loc.getBlock().setData((byte) 14, true);
-                // remove tracker
+                // remove trackers
                 plugin.getTrackerKeeper().getIsSiegeCube().remove(Integer.valueOf(id));
+                plugin.getTrackerKeeper().getSiegeCarrying().remove(uuid);
                 // update the current location
                 HashMap<String, Object> where = new HashMap<String, Object>();
                 where.put("tardis_id", id);
@@ -195,13 +203,13 @@ public class TARDISSiegeListener implements Listener {
                 set.put("direction", d.toString());
                 new QueryFactory(plugin).doUpdate("current", set, where);
             }
-        }, 3L);
+        }, 10L);
     }
 
     @EventHandler(ignoreCancelled = true)
     public void onSiegeCubePlace(final BlockPlaceEvent event) {
-        ItemStack is = event.getItemInHand();
-        if (!isSiegeCube(is)) {
+        Block b = event.getBlockPlaced();
+        if (!isSiegeCube(b)) {
             return;
         }
         Player p = event.getPlayer();
@@ -347,7 +355,8 @@ public class TARDISSiegeListener implements Listener {
 
     @SuppressWarnings("deprecation")
     private boolean isSiegeCube(ItemStack is) {
-        return (is.getType().equals(Material.HUGE_MUSHROOM_1) && is.getData().getData() == (byte) 14);
+//        return (is.getType().equals(Material.HUGE_MUSHROOM_1) && is.getData().getData() == (byte) 14);
+        return is.getType().equals(Material.HUGE_MUSHROOM_1);
     }
 
     @SuppressWarnings("deprecation")

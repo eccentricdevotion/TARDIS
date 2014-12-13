@@ -78,7 +78,6 @@ public class TARDISAdminCommands implements CommandExecutor {
         firstsStr.put("language", "preferences");
         firstsStr.put("list", "");
         firstsStr.put("make_preset", "");
-        firstsStr.put("modify", "");
         firstsStr.put("playercount", "");
         firstsStr.put("prune", "");
         firstsStr.put("prunelist", "");
@@ -223,9 +222,6 @@ public class TARDISAdminCommands implements CommandExecutor {
                 }
                 if (first.equals("list")) {
                     return new TARDISListTardisesCommand(plugin).listTardises(sender, args);
-                }
-                if (first.equals("modify")) {
-                    return new TARDISModifyCommand(plugin).alterConfig(sender, args);
                 }
                 if (first.equals("purge_portals")) {
                     return new TARDISPortalCommand(plugin).clearAll(sender);
