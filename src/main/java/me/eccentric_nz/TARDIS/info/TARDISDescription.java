@@ -68,6 +68,7 @@ public enum TARDISDescription {
     BIGGER("Big enough to swing a cat."),
     DELUXE("Luxury in a box."),
     ELEVENTH("It’s smaller on the outside..."),
+    TWELFTH("The 12th Doctor's TARDIS."),
     REDSTONE("This one has some redstone in it."),
     STEAMPUNK("Small, but steamy."),
     PLANK("A wood based interior."),

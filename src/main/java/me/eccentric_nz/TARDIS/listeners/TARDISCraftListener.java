@@ -57,15 +57,16 @@ public class TARDISCraftListener implements Listener {
 
     public TARDISCraftListener(TARDIS plugin) {
         this.plugin = plugin;
-        t.put(Material.IRON_BLOCK, "BUDGET"); // budget
-        t.put(Material.GOLD_BLOCK, "BIGGER"); // bigger
+        t.put(Material.BOOKSHELF, "PLANK"); // plank
+        t.put(Material.COAL_BLOCK, "STEAMPUNK"); // steampunk
         t.put(Material.DIAMOND_BLOCK, "DELUXE"); // deluxe
         t.put(Material.EMERALD_BLOCK, "ELEVENTH"); // eleventh
-        t.put(Material.REDSTONE_BLOCK, "REDSTONE"); // redstone
-        t.put(Material.COAL_BLOCK, "STEAMPUNK"); // steampunk
-        t.put(Material.QUARTZ_BLOCK, "ARS"); // ARS
+        t.put(Material.GOLD_BLOCK, "BIGGER"); // bigger
+        t.put(Material.IRON_BLOCK, "BUDGET"); // budget
         t.put(Material.LAPIS_BLOCK, "TOM"); // tom baker
-        t.put(Material.BOOKSHELF, "PLANK"); // plank
+        t.put(Material.PRISMARINE, "TWELFTH"); // twelfth
+        t.put(Material.QUARTZ_BLOCK, "ARS"); // ARS
+        t.put(Material.REDSTONE_BLOCK, "REDSTONE"); // redstone
         t.put(Material.STAINED_CLAY, "WAR"); // war doctor
         // custom seeds
         for (String console : plugin.getCustomConsolesConfig().getKeys(false)) {
@@ -74,7 +75,6 @@ public class TARDISCraftListener implements Listener {
                 t.put(cmat, console.toUpperCase());
             }
         }
-        t.put(Material.valueOf(this.plugin.getConfig().getString("creation.custom_schematic_seed")), "CUSTOM"); // custom
         for (Integer i : plugin.getBlocksConfig().getIntegerList("chameleon_blocks")) {
             c.add(i);
         }

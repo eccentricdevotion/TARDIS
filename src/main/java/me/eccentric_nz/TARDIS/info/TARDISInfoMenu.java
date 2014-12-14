@@ -143,6 +143,7 @@ public enum TARDISInfoMenu {
     BIGGER("TIS|TARDIS Types|Bigger", "TYPES", "i"),
     DELUXE("TIS|TARDIS Types|Deluxe", "TYPES", "D"),
     ELEVENTH("TIS|TARDIS Types|Eleventh", "TYPES", "l"),
+    TWELFTH("TIS|TARDIS Types|Twelfth", "TYPES", "w"),
     REDSTONE("TIS|TARDIS Types|Redstone", "TYPES", "R"),
     STEAMPUNK("TIS|TARDIS Types|Steampunk", "TYPES", "S"),
     PLANK("TIS|TARDIS Types|Plank", "TYPES", "P"),

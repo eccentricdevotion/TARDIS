@@ -93,17 +93,24 @@ public class TARDISRecipeCommands implements CommandExecutor {
         firstArgs.add("tardis"); // TARDIS Seed Block
         firstArgs.add("vortex"); // Vortex Manipulator
         firstArgs.add("watch"); // TARDIS Seed Block
-        t.put("BUDGET", Material.IRON_BLOCK); // budget
+        t.put("ARS", Material.QUARTZ_BLOCK); // ARS
         t.put("BIGGER", Material.GOLD_BLOCK); // bigger
+        t.put("BUDGET", Material.IRON_BLOCK); // budget
         t.put("DELUXE", Material.DIAMOND_BLOCK); // deluxe
         t.put("ELEVENTH", Material.EMERALD_BLOCK); // eleventh
+        t.put("PLANK", Material.BOOKSHELF); // plank
         t.put("REDSTONE", Material.REDSTONE_BLOCK); // redstone
         t.put("STEAMPUNK", Material.COAL_BLOCK); // steampunk
-        t.put("ARS", Material.QUARTZ_BLOCK); // ARS
         t.put("TOM", Material.LAPIS_BLOCK); // tom baker
-        t.put("PLANK", Material.BOOKSHELF); // plank
+        t.put("TWELFTH", Material.PRISMARINE); // twelfth
         t.put("WAR", Material.STAINED_CLAY); // war doctor
-        t.put("CUSTOM", Material.valueOf(this.plugin.getConfig().getString("creation.custom_schematic_seed"))); // custom
+        // custom seeds
+        for (String console : plugin.getCustomConsolesConfig().getKeys(false)) {
+            if (plugin.getCustomConsolesConfig().getBoolean(console + ".enabled")) {
+                Material cmat = Material.valueOf(plugin.getCustomConsolesConfig().getString(console + ".seed"));
+                t.put(console.toUpperCase(), cmat);
+            }
+        }
     }
 
     @Override
