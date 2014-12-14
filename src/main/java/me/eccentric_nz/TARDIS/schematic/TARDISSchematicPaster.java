@@ -61,8 +61,12 @@ public class TARDISSchematicPaster {
                     Material m = Material.valueOf((String) col.get("type"));
                     byte b = col.getByte("data");
                     Block block = world.getBlockAt(x + w, y + h, z + l);
-                    block.setType(m);
-                    block.setData(b, true);
+                    if (m.equals(Material.REDSTONE_TORCH_ON)) {
+                        block.setTypeIdAndData(76, b, true);
+                    } else {
+                        block.setType(m);
+                        block.setData(b, true);
+                    }
                 }
             }
         }

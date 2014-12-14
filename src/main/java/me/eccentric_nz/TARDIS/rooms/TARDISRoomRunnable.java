@@ -187,14 +187,12 @@ public class TARDISRoomRunnable implements Runnable {
             lampblocks.clear();
             // put torches on
             for (Map.Entry<Block, Byte> entry : torchblocks.entrySet()) {
-                entry.getKey().setType(Material.TORCH);
-                entry.getKey().setData(entry.getValue(), true);
+                entry.getKey().setTypeIdAndData(50, entry.getValue(), true);
             }
             torchblocks.clear();
             // put redstone torches on
             for (Map.Entry<Block, Byte> entry : redstoneTorchblocks.entrySet()) {
-                entry.getKey().setType(Material.REDSTONE_TORCH_ON);
-                entry.getKey().setData(entry.getValue(), true);
+                entry.getKey().setTypeIdAndData(76, entry.getValue(), true);
             }
             torchblocks.clear();
             // remove the chunks, so they can unload as normal again

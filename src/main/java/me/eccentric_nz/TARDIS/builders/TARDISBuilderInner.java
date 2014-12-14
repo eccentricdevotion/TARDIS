@@ -118,6 +118,7 @@ public class TARDISBuilderInner {
         byte data;
         String playerUUID = p.getUniqueId().toString();
         HashMap<Block, Byte> postDoorBlocks = new HashMap<Block, Byte>();
+        HashMap<Block, Byte> postRedstoneTorchBlocks = new HashMap<Block, Byte>();
         HashMap<Block, Byte> postTorchBlocks = new HashMap<Block, Byte>();
         HashMap<Block, Byte> postSignBlocks = new HashMap<Block, Byte>();
         HashMap<Block, Byte> postRepeaterBlocks = new HashMap<Block, Byte>();
@@ -270,11 +271,6 @@ public class TARDISBuilderInner {
                         String chest = world.getName() + ":" + x + ":" + y + ":" + z;
                         set.put("condenser", chest);
                     }
-                    if (type.equals(Material.WALL_SIGN)) { // chameleon circuit sign
-                        String chameleonloc = world.getName() + ":" + x + ":" + y + ":" + z;
-                        set.put("chameleon", chameleonloc);
-                        set.put("chamele_on", 0);
-                    }
                     if (type.equals(Material.IRON_DOOR_BLOCK)) {
                         if (data < (byte) 8) { // iron door bottom
                             HashMap<String, Object> setd = new HashMap<String, Object>();
@@ -424,6 +420,8 @@ public class TARDISBuilderInner {
                     if (type.equals(Material.IRON_DOOR_BLOCK)) { // doors
                         postDoorBlocks.put(world.getBlockAt(x, y, z), data);
                     } else if (type.equals(Material.REDSTONE_TORCH_ON)) {
+                        postRedstoneTorchBlocks.put(world.getBlockAt(x, y, z), data);
+                    } else if (type.equals(Material.TORCH)) {
                         postTorchBlocks.put(world.getBlockAt(x, y, z), data);
                     } else if (type.equals(Material.PISTON_STICKY_BASE)) {
                         postStickyPistonBaseBlocks.put(world.getBlockAt(x, y, z), data);
@@ -501,11 +499,15 @@ public class TARDISBuilderInner {
             pdb.setType(Material.IRON_DOOR_BLOCK);
             pdb.setData(pddata, true);
         }
+        for (Map.Entry<Block, Byte> entry : postRedstoneTorchBlocks.entrySet()) {
+            Block ptb = entry.getKey();
+            byte ptdata = entry.getValue();
+            ptb.setTypeIdAndData(76, ptdata, true);
+        }
         for (Map.Entry<Block, Byte> entry : postTorchBlocks.entrySet()) {
             Block ptb = entry.getKey();
             byte ptdata = entry.getValue();
-            ptb.setType(Material.REDSTONE_TORCH_ON);
-            ptb.setData(ptdata, true);
+            ptb.setTypeIdAndData(50, ptdata, true);
         }
         for (Map.Entry<Block, Byte> entry : postRepeaterBlocks.entrySet()) {
             Block prb = entry.getKey();
@@ -533,6 +535,7 @@ public class TARDISBuilderInner {
             ppeb.setType(Material.PISTON_EXTENSION);
             ppeb.setData(ppedata, true);
         }
+        int s = 0;
         for (Map.Entry<Block, Byte> entry : postSignBlocks.entrySet()) {
             final Block psb = entry.getKey();
             byte psdata = entry.getValue();
@@ -540,12 +543,23 @@ public class TARDISBuilderInner {
             psb.setData(psdata, true);
             if (psb.getType().equals(Material.WALL_SIGN)) {
                 Sign cs = (Sign) psb.getState();
-                cs.setLine(0, "Chameleon");
-                cs.setLine(1, "Circuit");
-                cs.setLine(2, ChatColor.RED + "OFF");
-                cs.setLine(3, "NEW");
+                if (s > 0) {
+                    cs.setLine(1, "Control");
+                    cs.setLine(2, "Centre");
+                    String controlloc = psb.getLocation().toString();
+                    qf.insertSyncControl(dbID, 22, controlloc, 0);
+                } else {
+                    cs.setLine(0, "Chameleon");
+                    cs.setLine(1, "Circuit");
+                    cs.setLine(2, ChatColor.RED + "OFF");
+                    cs.setLine(3, "NEW");
+                    String chameleonloc = world.getName() + ":" + psb.getLocation().getBlockX() + ":" + psb.getLocation().getBlockY() + ":" + psb.getLocation().getBlockZ();
+                    set.put("chameleon", chameleonloc);
+                    set.put("chamele_on", 0);
+                }
                 cs.update();
             }
+            s++;
         }
         if (postSaveSignBlock != null) {
             postSaveSignBlock.setType(Material.WALL_SIGN);
