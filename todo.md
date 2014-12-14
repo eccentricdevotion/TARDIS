@@ -3,7 +3,6 @@
 ##Current version `3.2-beta-1`
 1. Add note about custom console offset to docs
 2. Add another page to admin prefs GUI so we can fit siege options in
-3. Twelfth TARDIS
 
 ##Future version `3.3+`
 * SpongeAPI
