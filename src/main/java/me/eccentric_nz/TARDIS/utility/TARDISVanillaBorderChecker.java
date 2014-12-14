@@ -16,8 +16,8 @@
  */
 package me.eccentric_nz.TARDIS.utility;
 
-import me.eccentric_nz.tardishelper.TARDISWorldBorder;
 import org.bukkit.Location;
+import org.bukkit.WorldBorder;
 
 /**
  * The TARDIS grants its passengers the ability to understand and speak other
@@ -36,16 +36,17 @@ public class TARDISVanillaBorderChecker {
      * @return true or false depending on whether the location is within the
      * border
      */
-    public static boolean isInBorder(TARDISWorldBorder border, Location l) {
-        long size = border.getSize() / 2;
+    public static boolean isInBorder(WorldBorder border, Location l) {
+        double size = border.getSize() / 2;
+        Location centre = border.getCenter();
         // default world border is 60,000,000 blocks wide (in other words not set at all)
         if (size > 29999999) {
             return true;
         }
-        double minX = border.getCentreX() - size;
-        double minZ = border.getCentreZ() - size;
-        double maxX = border.getCentreX() + size;
-        double maxZ = border.getCentreZ() + size;
+        double minX = centre.getBlockX() - size;
+        double minZ = centre.getBlockZ() - size;
+        double maxX = centre.getBlockX() + size;
+        double maxZ = centre.getBlockZ() + size;
         double x = l.getX();
         double z = l.getZ();
         return (x > minX && x < maxX && z > minZ && z < maxZ);

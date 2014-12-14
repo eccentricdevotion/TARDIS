@@ -61,8 +61,7 @@ public enum TARDIS_COMMAND {
     theme,
     update,
     upgrade,
-    version,
-    wb;
+    version;
 
     public boolean noSiege() {
         switch (this) {

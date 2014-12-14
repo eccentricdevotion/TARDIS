@@ -25,10 +25,9 @@ import me.eccentric_nz.TARDIS.utility.TARDISTownyChecker;
 import me.eccentric_nz.TARDIS.utility.TARDISVanillaBorderChecker;
 import me.eccentric_nz.TARDIS.utility.TARDISWorldBorderChecker;
 import me.eccentric_nz.TARDIS.utility.Version;
-import me.eccentric_nz.tardishelper.TARDISHelper;
-import me.eccentric_nz.tardishelper.TARDISWorldBorder;
 import org.bukkit.Location;
 import org.bukkit.World.Environment;
+import org.bukkit.WorldBorder;
 
 /**
  * The telepathic password to the TARDIS was "the colour crimson, the number
@@ -111,8 +110,7 @@ public class TARDISPluginRespect {
         }
         if (flag.repectWorldBorder()) {
             if (plugin.isHelperOnServer()) {
-                TARDISHelper th = (TARDISHelper) plugin.getPM().getPlugin("TARDISHelper");
-                TARDISWorldBorder wb = th.getBorder(l.getWorld());
+                WorldBorder wb = l.getWorld().getWorldBorder();
                 if (!TARDISVanillaBorderChecker.isInBorder(wb, l)) {
                     if (flag.messagePlayer()) {
                         TARDISMessage.send(flag.getPlayer(), "WORLDBORDER");
