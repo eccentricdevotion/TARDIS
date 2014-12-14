@@ -16,12 +16,8 @@
     <url>http://eccentricdevotion.github.com/TARDIS/</url>
     <repositories>
         <repository>
-            <id>macgeek</id>
-            <url>http://tardisjenkins.duckdns.org:8888</url>
-        </repository>
-        <repository>
-            <id>Bromley Massive</id>
-            <url>http://tardisjenkins.duckdns.org:8080/plugin/repository/everything/</url>
+            <id>Spigot</id>
+            <url>https://hub.spigotmc.org/nexus/content/groups/public/</url>
         </repository>
         <repository>
             <id>sk89q-repo</id>
@@ -71,6 +67,16 @@
                 <project.build.number>${env.BUILD_NUMBER}</project.build.number>
                 <javadocExecutable>${java.home}/../bin/javadoc</javadocExecutable>
             </properties>
+            <repositories>
+                <repository>
+                    <id>macgeek</id>
+                    <url>http://tardisjenkins.duckdns.org:8888</url>
+                </repository>
+                <repository>
+                    <id>Bromley Massive</id>
+                    <url>http://tardisjenkins.duckdns.org:8080/plugin/repository/everything/</url>
+                </repository>
+            </repositories>
             <build>
                 <plugins>
                     <plugin>
