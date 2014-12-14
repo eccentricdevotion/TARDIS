@@ -85,6 +85,7 @@ public class TARDISGiveCommand implements CommandExecutor {
         items.put("scanner-circuit", "TARDIS Scanner Circuit");
         items.put("save-disk", "Save Storage Disk");
         items.put("sonic", "Sonic Screwdriver");
+        items.put("tachyon", "");
         items.put("t-circuit", "TARDIS Temporal Circuit");
         items.put("vortex", "Vortex Manipulator");
         items.put("watch", "Fob Watch");
@@ -124,6 +125,9 @@ public class TARDISGiveCommand implements CommandExecutor {
                     }
                     TARDISMessage.send(p, "GIVE_KIT", sender.getName(), args[2]);
                     return true;
+                }
+                if (item.equals("tachyon")) {
+                    return this.giveTachyon(sender, args[0], args[2]);
                 }
                 int amount;
                 if (args[2].equals("full")) {
@@ -252,6 +256,31 @@ public class TARDISGiveCommand implements CommandExecutor {
                 qf.doUpdate("tardis", set, wheret);
                 sender.sendMessage(plugin.getPluginName() + player + "'s Artron Energy Level was set to " + set_level);
             }
+            return true;
+        } else {
+            TARDISMessage.send(sender, "UUID_NOT_FOUND", player);
+            return true;
+        }
+    }
+
+    @SuppressWarnings("deprecation")
+    private boolean giveTachyon(CommandSender sender, String player, String amount) {
+        if (!plugin.getPM().isPluginEnabled("TARDISVortexManipulator")) {
+            TARDISMessage.send(sender, "RECIPE_VORTEX");
+            return true;
+        }
+        if (plugin.getServer().getOfflinePlayer(player) == null) {
+            TARDISMessage.send(sender, "COULD_NOT_FIND_NAME");
+            return true;
+        }
+        // Look up this player's UUID
+        UUID uuid = plugin.getServer().getOfflinePlayer(player).getUniqueId();
+        if (uuid == null) {
+            uuid = plugin.getGeneralKeeper().getUUIDCache().getIdOptimistic(player);
+            plugin.getGeneralKeeper().getUUIDCache().getId(player);
+        }
+        if (uuid != null) {
+            plugin.getServer().dispatchCommand(sender, "vmg " + uuid.toString() + " " + amount);
             return true;
         } else {
             TARDISMessage.send(sender, "UUID_NOT_FOUND", player);
