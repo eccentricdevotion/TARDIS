@@ -22,11 +22,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.tardishelper.TARDISHelper;
-import me.eccentric_nz.tardishelper.TARDISWorldBorder;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.World;
+import org.bukkit.WorldBorder;
 
 /**
  *
@@ -94,17 +93,16 @@ public class TARDISRandomLocation {
                 maxX = (int) border.getX() + border.getRadiusX();
                 minZ = (int) border.getZ() - border.getRadiusZ();
                 maxZ = (int) border.getZ() + border.getRadiusZ();
-            } else if (plugin.isHelperOnServer()) {
+            } else {
                 // check vanilla world border
-                TARDISHelper th = (TARDISHelper) plugin.getPM().getPlugin("TARDISHelper");
-                TARDISWorldBorder twb = th.getBorder(w);
-                // default world border is 60,000,000 blocks wide (in other words not set at all)
-                long size = twb.getSize() / 2;
+                WorldBorder wb = w.getWorldBorder();
+                int size = (int) wb.getSize() / 2;
+                Location centre = wb.getCenter();
                 if (size < 30000000) {
-                    minX = (int) (twb.getCentreX() - size);
-                    minZ = (int) (twb.getCentreZ() - size);
-                    maxX = (int) (twb.getCentreX() + size);
-                    maxZ = (int) (twb.getCentreZ() + size);
+                    minX = centre.getBlockX() - size;
+                    minZ = centre.getBlockZ() - size;
+                    maxX = centre.getBlockX() + size;
+                    maxZ = centre.getBlockZ() + size;
                 }
             }
             // compensate for nether 1:8 ratio if necessary
