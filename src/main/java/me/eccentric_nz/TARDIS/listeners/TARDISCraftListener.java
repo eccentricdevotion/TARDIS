@@ -22,6 +22,7 @@ import java.util.HashMap;
 import java.util.List;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.enumeration.CONSOLES;
+import me.eccentric_nz.TARDIS.enumeration.DISK_CIRCUIT;
 import me.eccentric_nz.TARDIS.enumeration.SCHEMATIC;
 import me.eccentric_nz.TARDIS.rooms.TARDISWallsLookup;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
@@ -224,31 +225,32 @@ public class TARDISCraftListener implements Listener {
     public void onCraftInvisibilityCircuit(PrepareItemCraftEvent event) {
         Recipe recipe = event.getRecipe();
         ItemStack is = recipe.getResult();
-        if (is.getType().equals(Material.MAP) && is.hasItemMeta() && is.getItemMeta().hasDisplayName() && is.getItemMeta().getDisplayName().equals("TARDIS Invisibility Circuit")) {
-            plugin.debug("It's a TARDIS Invisibility Circuit");
-            // set the second line of lore
-            ItemMeta im = is.getItemMeta();
-            List<String> lore;
-            String uses = (plugin.getConfig().getString("circuits.uses.invisibility").equals("0") || !plugin.getConfig().getBoolean("circuits.damage")) ? ChatColor.YELLOW + "unlimited" : ChatColor.YELLOW + plugin.getConfig().getString("circuits.uses.invisibility");
-            if (im.hasLore()) {
-                lore = im.getLore();
-                plugin.debug("before");
+        if (is.getType().equals(Material.MAP) && is.hasItemMeta() && is.getItemMeta().hasDisplayName()) {
+            String dn = is.getItemMeta().getDisplayName();
+            if (DISK_CIRCUIT.getCircuitNames().contains(dn)) {
+                plugin.debug("It's a " + dn);
+                // which circuit is it?
+                String[] split = dn.split(" ");
+                String which = split[1].toLowerCase();
+                // set the second line of lore
+                ItemMeta im = is.getItemMeta();
+                List<String> lore;
+                String uses = (plugin.getConfig().getString("circuits.uses." + which).equals("0") || !plugin.getConfig().getBoolean("circuits.damage")) ? ChatColor.YELLOW + "unlimited" : ChatColor.YELLOW + plugin.getConfig().getString("circuits.uses." + which);
+                if (im.hasLore()) {
+                    lore = im.getLore();
+                    lore.set(1, uses);
+                } else {
+                    lore = Arrays.asList("Uses left", uses);
+                }
                 for (String o : lore) {
                     plugin.debug(o);
                 }
-                lore.set(1, uses);
-            } else {
-                lore = Arrays.asList("Uses left", uses);
+                plugin.debug("setting");
+                im.setLore(lore);
+                is.setItemMeta(im);
+                plugin.debug("changing result");
+                event.getInventory().setResult(is);
             }
-            plugin.debug("after");
-            for (String o : lore) {
-                plugin.debug(o);
-            }
-            plugin.debug("setting");
-            im.setLore(lore);
-            is.setItemMeta(im);
-            plugin.debug("changing result");
-            event.getInventory().setResult(is);
         }
     }
 }

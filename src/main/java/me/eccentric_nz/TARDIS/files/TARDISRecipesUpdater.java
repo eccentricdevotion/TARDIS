@@ -34,6 +34,7 @@ public class TARDISRecipesUpdater {
     private FileConfiguration recipes_config = null;
     private final HashMap<String, Integer> flavours = new HashMap<String, Integer>();
     private final HashMap<String, Integer> colours = new HashMap<String, Integer>();
+    private final HashMap<String, Integer> damage = new HashMap<String, Integer>();
 
     public TARDISRecipesUpdater(TARDIS plugin) {
         this.plugin = plugin;
@@ -70,6 +71,14 @@ public class TARDISRecipesUpdater {
         this.colours.put("Green", 13);
         this.colours.put("Red", 14);
         this.colours.put("Black", 15);
+        this.damage.put("shaped.TARDIS ARS Circuit.lore", 20);
+        this.damage.put("shaped.TARDIS Chameleon Circuit.lore", 25);
+        this.damage.put("shaped.TARDIS Input Circuit.lore", 50);
+        this.damage.put("shaped.TARDIS Materialisation Circuit.lore", 50);
+        this.damage.put("shaped.TARDIS Memory Circuit.lore", 20);
+        this.damage.put("shaped.TARDIS Randomiser Circuit.lore", 50);
+        this.damage.put("shaped.TARDIS Scanner Circuit.lore", 20);
+        this.damage.put("shaped.TARDIS Temporal Circuit.lore", 20);
     }
 
     public void addRecipes() {
@@ -197,7 +206,7 @@ public class TARDISRecipesUpdater {
             recipes_config.set("shaped.TARDIS Randomiser Circuit.hard_ingredients.W", "WATER_BUCKET");
             recipes_config.set("shaped.TARDIS Randomiser Circuit.result", "MAP:1980");
             recipes_config.set("shaped.TARDIS Randomiser Circuit.amount", 1);
-            recipes_config.set("shaped.TARDIS Randomiser Circuit.lore", "");
+            recipes_config.set("shaped.TARDIS Randomiser Circuit.lore", "Uses left~50");
             i++;
         }
         if (!recipes_config.contains("shaped.TARDIS Invisibility Circuit")) {
@@ -241,6 +250,11 @@ public class TARDISRecipesUpdater {
             recipes_config.set("shapeless.Painter Upgrade.amount", 1);
             recipes_config.set("shapeless.Painter Upgrade.lore", "");
             i++;
+        }
+        for (Map.Entry<String, Integer> uses : damage.entrySet()) {
+            if (recipes_config.getString(uses.getKey()).isEmpty()) {
+                recipes_config.set(uses.getKey(), "Uses left~" + uses.getValue());
+            }
         }
         try {
             recipes_config.save(new File(plugin.getDataFolder(), "recipes.yml"));
