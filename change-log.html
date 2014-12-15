@@ -32,8 +32,95 @@
     <section>
         <h1>Change log</h1>
         <h2>What&rsquo;s been changed?</h2>
+        <h3>TARDIS v3.2-beta-1</h3>
+        <h4>Requirements</h4>
+        <p style="color:#900;">Do not bother posting comments / tickets if you are not running the appropriate server and plugin versions &mdash; they will be deleted immediately!</p>
+        <h5>Server</h5>
+        <ul style="margin-bottom:0;">
+            <li> <a href="https://dl.dropboxusercontent.com/u/53758864/craftbukkit.jar">CraftBukkit</a> &mdash; version git-Bukkit-07c2162 (MC: 1.8) or newer </li>
+        </ul>
+        <p style="margin-bottom:0;"><em>or</em></p>
+        <ul>
+            <li> <a href="https://dl.dropboxusercontent.com/u/53758864/spigot.jar">Spigot</a> &mdash; version git-Spigot-612de46-07c2162 (MC: 1.8) or newer </li>
+        </ul>
+        <h5>Plugins</h5>
+        <p>If running the the following plugins the <strong>minimum</strong> version required is shown.</p>
+        <ul>
+            <li><a href="http://builds.enginehub.org/job/worldguard?branch=versions%2Fspigot1.8-6.x">WorldGuard</a> &mdash; version 6.0.0-SNAPSHOT (the Spigot build)</li>
+            <li><a href="http://ci.shadowvolt.com/job/ProtocolLib/">ProtocolLib</a> &mdash; version 3.6.3-SNAPSHOT build #50</li>
+            <li><a href="http://ci.md-5.net/job/LibsDisguises/">LibsDisguises</a> &mdash; version 8.2.6-SNAPSHOT build #363</li>
+            <li><a href="http://dev.bukkit.org/bukkit-plugins/factions/">Factions</a> &mdash; version 2.7.4 (+ MassiveCore 2.7.4)</li>
+            <li><a href="http://ci.citizensnpcs.co/job/Citizens2/">Citizens</a> &mdash; version 2.0.14-SNAPSHOT build #1194</li>
+        </ul>
+        <p>TARDISHorseSpeed is now obsolete, you need to use TARDISHelper instead (included in the TARDIS ZIP file download).</p>
+        <h4>Additions</h4>
+        <ul>
+            <li>Added a config option to set default preset on TARDIS creation &mdash; <code>/tardisadmin default_preset [preset]</code></li>
+            <li>Added a Randomiser Circuit:
+                <ul>
+                    <li>to see the recipe use the command <code>/tardisrecipe random-circuit</code></li>
+                    <li>to give the circuit use the command <code>/tardisgive [player] random-circuit [amount]</code></li>
+                    <li>put it in the Advanced Console, a random location will be chosen when the GUI is closed</li>
+                    <li>the scanner is disabled until the random destination has been travelled to</li>
+                    <li>the Artron cost is configurable in <em>artron.yml</em> &mdash; <code>random_circuit: 150</code></li>
+                </ul>
+            </li>
+            <li>Added an SQLite to MySQL conversion tool. Double-clicking the TARDIS JAR file opens the GUI.</li>
+            <li>Added Siege Mode &mdash; see the <a href="siege-mode.html">Siege Mode</a> page for more info</li>
+            <li>Added PACKED_ICE and new 1.8 blocks to artron condensables</li>
+            <li>Added new 1.8 blocks to TARDIS wall / floor choices</li>
+            <li>Added tab completion to <code>/tardisbook</code> command</li>
+            <li>Added a cooldown to the <code>/tardis hide</code> command</li>
+            <li>Added the ability to add multiple custom TARDIS consoles &mdash; see the <a href="custom-consoles.html">Custom consoles</a> page</li>
+            <li>Added a TARDIS API for other plugin developers to hook into &mdash; for example <a href="http://dev.bukkit.org/bukkit-plugins/tardisvortexmanipulator/">TARDISVortexManipulator</a> &mdash; see the <a href="https://dl.dropboxusercontent.com/u/53758864/TARDIS_java_docs/me/eccentric_nz/TARDIS/api/TardisAPI.html">Java Doc</a> and <a href="api.html">API</a> pages for more info</li>
+            <li>Added the Vortex Manipulator to <code>/tardisrecipe</code> and <code>/tardisgive</code> commands &mdash; <code>/tardisrecipe vortex</code> and <code>/tardisgive [player] vortex [amount]</code></li>
+            <li>Added Vortex Manipulator tachyon energy to the give command &mdash; <code>/tardisgive [player] tachyon [amount]</code></li>
+            <li>Added 4 new presets: PRISMARINE, ANDESITE, DIORITE and GRANITE</li>
+            <li>Added an invisibility circuit to enable invisible landing &mdash; see the <a href="invisibility.html">Invisibility</a> page for more info
+                <ul>
+                    <li>to see the recipe use the command <code>/tardisrecipe invisible</code></li>
+                    <li>to give the circuit use the command <code>/tardisgive [player] invisible [amount]</code></li>
+                    <li>put it in the Advanced Console to enable the INVISIBLE chameleon preset</li>
+                    <li>choose the preset to land invisibly on the next time travel</li>
+                    <li>the circuit is damaged after each use &mdash; set the number of uses in the config &mdash; see the <a href="circuit-damage.html">Circuit Damage</a> page for more info</li>
+                </ul>
+            </li>
+            <li>Added a <code>/tardis make_her_blue</code> command to disengage invisibility</li>
+            <li>Added a control panel GUI &mdash; lots of buttons in one place &mdash; use the <code>/tardis update control</code> command to add it to your console</li>
+            <li>Add new 1.8 doors to Sonic interactable blocks</li>
+            <li>Added a new Twelfth Doctor's console &mdash; use the <code>/tardisrecipe twelfth</code> command to see the recipe &mdash; permission <code>tardis.twelfth</code></li>
+        </ul>
+        <h4>Changes</h4>
+        <ul>
+            <li>The plugin only changes the wall and floor blocks when running the Desktop Theme changer and  the TARDIS type is not being changed</li>
+            <li>Changed the default LIBRARY room seed block to match the one in ARS &mdash; this fixes a conflict with the PLANK console seed block</li>
+            <li>Prevent door opening when the TARDIS is materialising</li>
+            <li>The Portal persister now checks for &lsquo;null&rsquo; world entries &mdash; this fixes start-up errors for corrupt database records</li>
+            <li>Players are added to a TARDIS&rsquo; WorldGuard region membership if they have the <code>tardis.skeletonkey</code> permission node</li>
+            <li>The Chameleon GUI now has three pages</li>
+            <li>The Admin config GUI now has two pages</li>
+            <li>The biome search is now starts offset from the current location so that it is possible to find a Deep Ocean biome</li>
+            <li>If <code>respect_worldborder</code> is true the plugin now checks both vanilla and plugin world borders &mdash; the WorldBorder plugin takes precedence over vanilla</li>
+            <li>The <code>/tardis make_her_blue</code>, <code>/tardis hide</code> and <code>/tardis rebuild</code> now have a short materialisation</li>
+            <li>All circuits can be configured to be damagable &mdash; see the <a href="circuit-damage.html">Circuit Damage</a> page for more info</li>
+        </ul>
+        <h4>Bug fixes</h4>
+        <ul>
+            <li>Fixed redstone torches popping off when creating the console and growing rooms</li>
+            <li>The plugin now prevents click-dragging in all TARDIS GUIs (fixes a duplicate items exploit)</li>
+            <li>Fixed Redstone TARDIS schematic so walk in/out portals work</li>
+            <li>Fixed a <code>/tardis eject</code> exploit</li>
+            <li>Fixed having to load the map even if just closing the Map/ARS GUI</li>
+            <li>Fixed the broken <code>/tardisbook</code> command</li>
+            <li>Fixed broken achievements</li>
+            <li>Fixed an incorrect ARS slot location</li>
+            <li>Fixed broken <code>/tardis update</code> chat interface</li>
+            <li>Fixed TARDIS book instructions, been a long time coming lol</li>
+            <li>Fixed incorrect default <code>respect_worldguard</code> config option</li>
+            <li>Fixed breaking the Police Box sign to remove TARDIS</li>
+        </ul>
         <h3>v3.1</h3>
-        <p>There are some breaking changes - please read <em>everything</em> carefully!</p>
+        <p>There are some breaking changes &mdash; please read <em>everything</em> carefully!</p>
         <h4>Additions</h4>
         <ul>
             <li>Added the ability to prevent piston harvesting of TARDIS Police Box and other precious blocks</li>
@@ -55,18 +142,18 @@
         <ul>
             <li>Fixed an <code>ArrayIndexOutOfBoundsException</code> if there is no rail room</li>
             <li>Fixed ICE not being changed to water when growing a room</li>
-            <li>We're now checking to make sure it is a TARDIS JSON schematic being added to  custom rooms - in case the user hasn't read the documentation</li>
+            <li>We're now checking to make sure it is a TARDIS JSON schematic being added to  custom rooms &mdash; in case the user hasn't read the documentation</li>
             <li>The whole stack of Artron Cells is transferred to the Artron capacitor, not just one</li>
             <li>Fixed Grief Prevention claim checking</li>
         </ul>
         <h3>3.1-beta-1</h3>
-        <p style="color:#c00;">Requires CraftBukkit version git-Bukkit-1.7.9-R0.2-24-g07d4558-b3116jnks (MC: 1.7.10) (Implementing API version <a href="https://dl.dropboxusercontent.com/u/53758864/craftbukkit-1.7.10.jar">1.7.10-R0.1-SNAPSHOT</a>) or the <a href="https://dl.dropboxusercontent.com/u/53758864/spigot-1649.jar">Spigot</a> equivalent.</p>
+        <p style="color:#c00;">Requires CraftBukkit version git-Bukkit-1.7.9-R0.2-24-g07d4558-b3116jnks (MC: 1.7.10) (Implementing API version 1.7.10-R0.1-SNAPSHOT) or the Spigot equivalent.</p>
         <h4>Additions</h4>
         <ul>
             <li>Added the ability to change the TARDIS desktop theme &mdash; see: <a href="desktop-theme.html">Desktop Theme</a></li>
             <li>Added <code>/tardis eject</code> command to eject farmed mobs, villagers and companions &mdash; see: <a href="farming.html">Mob farming</a></li>
             <li>Added time rotor glass colouring, use the <code>/tardis colourise</code> or <code>/tardis colorize</code> command, then click the bottom glass block in the time rotor with a dye</li>
-            <li>Added a clickable chat interface for the <code>/tardis update</code> command (just do a /tardis update with no further arguments) &mdash; requires ProtocolLib - the command remains essentially the same otherwise</li>
+            <li>Added a clickable chat interface for the <code>/tardis update</code> command (just do a /tardis update with no further arguments) &mdash; requires ProtocolLib &mdash; the command remains essentially the same otherwise</li>
             <li>Updated the VAULT room to automatically sort items into the chests:
                 <ul>
                     <li>see: <a href="vault.html">Vault room</a></li>
@@ -1006,8 +1093,6 @@
             <li>Added a new config option for <code>custom_creeper_id</code> to set the id of the block under the Artron Energy Creeper in the new &lsquo;custom&rsquo; console schematic</li>
             <li>Added basic MCPC+/Forge support</li>
             <li>You can now delete all companions with the command <code>/tardis remove all</code></li>
-        </ul>
-        </li>
         </ul>
         <h4>Changes</h4>
         <ul>
