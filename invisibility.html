@@ -1,0 +1,60 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="chrome=1">
+<title>TARDIS: Invisibilty</title>
+<link rel="stylesheet" href="stylesheets/styles.css">
+<link rel="stylesheet" href="stylesheets/pygment_trac.css">
+<script src="javascripts/scale.fix.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+<!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-53340539-1', 'auto');
+  ga('send', 'pageview');
+</script>
+</head>
+<body>
+<div class="wrapper">
+    <header>
+        <h1>TARDIS</h1>
+        <p>A Bukkit plugin for all Doctor Who fans &mdash; create and use a TARDIS! It&rsquo;s bigger on the inside!</p>
+        <p class="view"><a href="https://github.com/eccentricdevotion/TARDIS">View the Project on GitHub <small>eccentricdevotion/TARDIS</small></a></p>
+        <ul>
+            <li><a href="/TARDIS/">Back <strong>home</strong></a></li>
+            <li><a href="contents.html"><strong>Contents</strong> page</a></li>
+        </ul>
+    </header>
+    <section>
+        <h1>TARDIS invisibilty</h1>
+        <p>When inserted in the Advanced Console, and the INVISIBLE Chameleon preset is chosen, then the TARDIS will land invisibly.</p>
+        <p>The TARDIS Police Box will be made up of invisible blocks that cannot be walked through. The walk in / out portal will function as normal so that the Time Lord and their companions can still enter and exit the TARDIS while it is invisible.</p>
+        <p><img src="images/docs/invisible_preset.jpg" alt="Invisiblity preset" /></p>
+        <p>If <code>circuits.damage</code> is set to true in the TARDIS config, then the Invisibilty circuit is damaged with each use.<br>
+            <strong>Warning:</strong> Clicking the Invisibilty button in the Chameleon presets GUI will damage the circuit, whether you use invisibility or not!
+        <h3>Recipe</h3>
+        <p>DIAMOND, Perception Filter, Emerald, and Invisibility Potion in shape shown below.</p>
+        <p><img src="https://dl.dropboxusercontent.com/u/53758864/invisibility_crafting.jpg" alt="Invisibility circuit recipe" /></p>
+        <h3>Configuration</h3>
+        <p>In <em>config.yml</em>:</p>
+        <pre><code>circuits:
+    damage: true
+    uses:
+        invisibility: 5</code></pre>
+        <p>If <code>damage</code> is set to true, then <code>uses.invisibilty</code> sets the number of times the Invisibilty circuit can be used before it vapourises.</p>
+        <pre><code>allow:
+    invisibility: true</code></pre>
+        <p>Whether players can make their TARDIS invisible.</p>
+    </section>
+</div>
+<footer>
+    <p>Project maintained by <a href="https://github.com/eccentricdevotion">eccentricdevotion</a></p>
+    <p>Hosted on GitHub Pages &mdash; Theme by <a href="https://github.com/orderedlist">orderedlist</a></p>
+</footer>
+<!--[if !IE]><script>fixScale(document);</script><![endif]-->
+</body>
+</html>
