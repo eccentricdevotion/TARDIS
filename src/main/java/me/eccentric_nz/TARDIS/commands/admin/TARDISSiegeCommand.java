@@ -31,7 +31,6 @@ public class TARDISSiegeCommand {
     private final TARDIS plugin;
     private final List<String> siegeArgs = Arrays.asList("enabled", "breeding", "growth", "butcher", "creeper", "healing", "texture");
     private final List<String> siegeBool = Arrays.asList("enabled", "butcher", "creeper", "healing", "texture");
-    private final List<String> siegeInt = Arrays.asList("breeding", "growth");
 
     public TARDISSiegeCommand(TARDIS plugin) {
         this.plugin = plugin;

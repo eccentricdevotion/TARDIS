@@ -100,6 +100,7 @@ public class TARDISAdminCommands implements CommandExecutor {
         firstsBool.put("create_worlds", "creation");
         firstsBool.put("create_worlds_with_perms", "creation");
         firstsBool.put("custom_schematic", "creation");
+        firstsBool.put("damage", "circuits");
         firstsBool.put("debug", "");
         firstsBool.put("default_world", "creation");
         firstsBool.put("emergency_npc", "allow");
