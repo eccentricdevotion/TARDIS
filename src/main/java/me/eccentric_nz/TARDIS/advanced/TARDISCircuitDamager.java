@@ -37,7 +37,7 @@ public class TARDISCircuitDamager {
 
     private final TARDIS plugin;
     private final DISK_CIRCUIT circuit;
-    private final int uses_left;
+    private int uses_left;
     private final int id;
     private final Player p;
 
@@ -50,6 +50,9 @@ public class TARDISCircuitDamager {
     }
 
     public void damage() {
+        if (uses_left == 0) {
+            uses_left = plugin.getConfig().getInt("circuits.uses." + circuit.toString().toLowerCase());
+        }
         if ((uses_left - 1) == 0) {
             // destroy
             setCircuitDamage(circuit.getName(), 0, true);
@@ -57,7 +60,7 @@ public class TARDISCircuitDamager {
         } else {
             // decrement
             int decremented = uses_left - 1;
-            setCircuitDamage(circuit.getName(), decremented, true);
+            setCircuitDamage(circuit.getName(), decremented, false);
             TARDISMessage.send(p, "CIRCUIT_USES", circuit.getName(), String.format("%d", decremented));
         }
     }

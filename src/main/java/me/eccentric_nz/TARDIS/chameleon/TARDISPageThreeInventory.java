@@ -140,7 +140,7 @@ public class TARDISPageThreeInventory {
             inv = new ItemStack(Material.GLASS, 1);
             ItemMeta isi = inv.getItemMeta();
             isi.setDisplayName("Invisibility");
-            if (plugin.getConfig().getBoolean("circuits.damage") && plugin.getConfig().getInt("preferences.invisibility_uses") > 0) {
+            if (plugin.getConfig().getBoolean("circuits.damage") && plugin.getConfig().getInt("circuits.uses.invisibility") > 0) {
                 List<String> warn = Arrays.asList(plugin.getLanguage().getString("INVISIBILITY_LORE_1"), plugin.getLanguage().getString("INVISIBILITY_LORE_2"));
                 isi.setLore(warn);
             }

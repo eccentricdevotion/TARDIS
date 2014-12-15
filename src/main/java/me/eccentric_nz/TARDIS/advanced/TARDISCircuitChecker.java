@@ -90,10 +90,12 @@ public class TARDISCircuitChecker {
                             if (dn.equals("TARDIS Invisibility Circuit")) {
                                 this.invisibility = true;
                                 // get uses
-                                List<String> lore = im.getLore();
-                                String stripped = ChatColor.stripColor(lore.get(1));
-                                if (!stripped.equals("unlimited")) {
-                                    invisibilityUses = plugin.getUtils().parseInt(stripped);
+                                if (im.hasLore()) {
+                                    List<String> lore = im.getLore();
+                                    String stripped = ChatColor.stripColor(lore.get(1));
+                                    if (!stripped.equals("unlimited")) {
+                                        invisibilityUses = plugin.getUtils().parseInt(stripped);
+                                    }
                                 }
                             }
                             if (dn.equals("TARDIS Materialisation Circuit")) {

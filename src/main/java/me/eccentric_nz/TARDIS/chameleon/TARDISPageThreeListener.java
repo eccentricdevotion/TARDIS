@@ -228,12 +228,12 @@ public class TARDISPageThreeListener extends TARDISMenuListener implements Liste
                                             TARDISMessage.send(player, "INVISIBILITY_MISSING");
                                             break;
                                         }
-                                        if (plugin.getConfig().getBoolean("circuits.damage") && plugin.getConfig().getInt("preferences.invisibility_uses") > 0) {
-                                            // decrement uses
-                                            int uses_left = tcc.getInvisibilityUses();
-                                            if (uses_left != -1) {
-                                                new TARDISCircuitDamager(plugin, DISK_CIRCUIT.INVISIBILITY, uses_left, id, player).damage();
-                                            }
+                                    }
+                                    if (plugin.getConfig().getBoolean("circuits.damage") && (plugin.getConfig().getString("preferences.difficulty").equals("hard") || plugin.getConfig().getString("circuits.level").equals("easy")) && plugin.getConfig().getInt("circuits.uses.invisibility") > 0) {
+                                        // decrement uses
+                                        int uses_left = tcc.getInvisibilityUses();
+                                        if (uses_left != -1) {
+                                            new TARDISCircuitDamager(plugin, DISK_CIRCUIT.INVISIBILITY, uses_left, id, player).damage();
                                         }
                                     }
                                     set.put("chameleon_preset", "INVISIBLE");

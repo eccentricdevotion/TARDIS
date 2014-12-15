@@ -18,6 +18,7 @@ package me.eccentric_nz.TARDIS;
 
 import me.eccentric_nz.TARDIS.ARS.TARDISARSListener;
 import me.eccentric_nz.TARDIS.ARS.TARDISARSMapListener;
+import me.eccentric_nz.TARDIS.advanced.TARDISCircuitRepairListener;
 import me.eccentric_nz.TARDIS.advanced.TARDISConsoleCloseListener;
 import me.eccentric_nz.TARDIS.advanced.TARDISConsoleListener;
 import me.eccentric_nz.TARDIS.advanced.TARDISConsoleSwitchListener;
@@ -174,6 +175,9 @@ public class TARDISListenerRegisterer {
         plugin.getPM().registerEvents(new TARDISChameleonListener(plugin), plugin);
         plugin.getPM().registerEvents(new TARDISChatListener(plugin), plugin);
         plugin.getPM().registerEvents(new TARDISChunkListener(plugin), plugin);
+        if (plugin.getConfig().getBoolean("circuits.damage")) {
+            plugin.getPM().registerEvents(new TARDISCircuitRepairListener(plugin), plugin);
+        }
         plugin.getPM().registerEvents(new TARDISCondenserListener(plugin), plugin);
         plugin.getPM().registerEvents(new TARDISConsoleCloseListener(plugin), plugin);
         plugin.getPM().registerEvents(new TARDISConsoleListener(plugin), plugin);

@@ -211,7 +211,7 @@ public class TARDISConfiguration {
         artronIntOptions.put("upgrades.war", 5000);
         artronIntOptions.put("upgrades.custom", 10000);
         intOptions.put("arch.min_time", 20);
-        intOptions.put("circuits.uses.ARS", 20);
+        intOptions.put("circuits.uses.ars", 20);
         intOptions.put("circuits.uses.chameleon", 25);
         intOptions.put("circuits.uses.input", 50);
         intOptions.put("circuits.uses.invisibility", 5);

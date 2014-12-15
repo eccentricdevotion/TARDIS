@@ -93,7 +93,7 @@ preferences:
 circuits:
     damage: false
     uses:
-        ARS: 20
+        ars: 20
         chameleon: 25
         input: 50
         invisibility: 5
