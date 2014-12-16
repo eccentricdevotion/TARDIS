@@ -241,6 +241,11 @@ public class TARDISInstaPreset {
                 if (yy == 0 && i == 8 && !plugin.getPresetBuilder().no_block_under_door.contains(preset)) {
                     plugin.getUtils().setUnderDoorBlock(world, xx, (y - 1), zz, platform_id, platform_data, tmd.getTardisID(), true);
                 }
+                // update door location if invisible
+                if (yy == 0 && (i == 1 || i == 3 || i == 5 || i == 7) && preset.equals(PRESET.INVISIBLE) && colids[yy] == 0) {
+                    String invisible_door = world.getName() + ":" + xx + ":" + y + ":" + zz;
+                    processDoor(invisible_door, qf);
+                }
                 switch (colids[yy]) {
                     case 2:
                     case 3:
@@ -296,23 +301,7 @@ public class TARDISInstaPreset {
                             if (colids[yy] != 66) {
                                 // remember the door location
                                 String doorloc = world.getName() + ":" + xx + ":" + (y + yy) + ":" + zz;
-                                // should insert the door when tardis is first made, and then update the location there after!
-                                HashMap<String, Object> whered = new HashMap<String, Object>();
-                                whered.put("door_type", 0);
-                                whered.put("tardis_id", tmd.getTardisID());
-                                ResultSetDoors rsd = new ResultSetDoors(plugin, whered, false);
-                                HashMap<String, Object> setd = new HashMap<String, Object>();
-                                setd.put("door_location", doorloc);
-                                setd.put("door_direction", tmd.getDirection().toString());
-                                if (rsd.resultSet()) {
-                                    HashMap<String, Object> whereid = new HashMap<String, Object>();
-                                    whereid.put("door_id", rsd.getDoor_id());
-                                    qf.doUpdate("doors", setd, whereid);
-                                } else {
-                                    setd.put("tardis_id", tmd.getTardisID());
-                                    setd.put("door_type", 0);
-                                    qf.doInsert("doors", setd);
-                                }
+                                processDoor(doorloc, qf);
                             }
                             // place block under door if block is in list of blocks an iron door cannot go on
                             if (yy == 0) {
@@ -485,6 +474,26 @@ public class TARDISInstaPreset {
         }
         plugin.getTrackerKeeper().getMaterialising().remove(Integer.valueOf(tmd.getTardisID()));
         plugin.getTrackerKeeper().getInVortex().remove(Integer.valueOf(tmd.getTardisID()));
+    }
+
+    private void processDoor(String doorloc, QueryFactory qf) {
+        // should insert the door when tardis is first made, and then update the location there after!
+        HashMap<String, Object> whered = new HashMap<String, Object>();
+        whered.put("door_type", 0);
+        whered.put("tardis_id", tmd.getTardisID());
+        ResultSetDoors rsd = new ResultSetDoors(plugin, whered, false);
+        HashMap<String, Object> setd = new HashMap<String, Object>();
+        setd.put("door_location", doorloc);
+        setd.put("door_direction", tmd.getDirection().toString());
+        if (rsd.resultSet()) {
+            HashMap<String, Object> whereid = new HashMap<String, Object>();
+            whereid.put("door_id", rsd.getDoor_id());
+            qf.doUpdate("doors", setd, whereid);
+        } else {
+            setd.put("tardis_id", tmd.getTardisID());
+            setd.put("door_type", 0);
+            qf.doInsert("doors", setd);
+        }
     }
 
     private class ProblemBlock {
