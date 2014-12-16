@@ -17,6 +17,7 @@
 package me.eccentric_nz.TARDIS.advanced;
 
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import me.eccentric_nz.TARDIS.TARDIS;
@@ -50,6 +51,7 @@ public class TARDISCircuitDamager {
     }
 
     public void damage() {
+        plugin.debug("uses_left = " + uses_left);
         if (uses_left == 0) {
             uses_left = plugin.getConfig().getInt("circuits.uses." + circuit.toString().toLowerCase());
         }
@@ -60,6 +62,7 @@ public class TARDISCircuitDamager {
         } else {
             // decrement
             int decremented = uses_left - 1;
+            plugin.debug("decremented = " + decremented);
             setCircuitDamage(circuit.getName(), decremented, false);
             TARDISMessage.send(p, "CIRCUIT_USES", circuit.getName(), String.format("%d", decremented));
         }
@@ -86,6 +89,9 @@ public class TARDISCircuitDamager {
                                 } else {
                                     // set uses
                                     List<String> lore = im.getLore();
+                                    if (lore == null) {
+                                        lore = Arrays.asList("Uses left", "");
+                                    }
                                     String stripped = ChatColor.YELLOW + "" + decremented;
                                     lore.set(1, stripped);
                                     im.setLore(lore);

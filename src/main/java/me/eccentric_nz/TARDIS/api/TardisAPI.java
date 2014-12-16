@@ -183,6 +183,22 @@ public interface TardisAPI {
     public String getTARDISPlayerIsIn(UUID uuid);
 
     /**
+     * Get the id of the TARDIS a player is in.
+     *
+     * @param p the player to query
+     * @return the id of the TARDIS the player is in
+     */
+    public int getIdOfTARDISPlayerIsIn(Player p);
+
+    /**
+     * Get the id of the TARDIS a player is in.
+     *
+     * @param uuid the UUID of the player
+     * @return the id of the TARDIS the player is in
+     */
+    public int getIdOfTARDISPlayerIsIn(UUID uuid);
+
+    /**
      * Get the players in a TARDIS.
      *
      * @param id the tardis_id of the TARDIS

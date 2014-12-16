@@ -221,6 +221,22 @@ public class TARDII implements TardisAPI {
     }
 
     @Override
+    public int getIdOfTARDISPlayerIsIn(Player p) {
+        return getIdOfTARDISPlayerIsIn(p.getUniqueId());
+    }
+
+    @Override
+    public int getIdOfTARDISPlayerIsIn(UUID uuid) {
+        HashMap<String, Object> where = new HashMap<String, Object>();
+        where.put("uuid", uuid.toString());
+        ResultSetTravellers rs = new ResultSetTravellers(TARDIS.plugin, where, false);
+        if (rs.resultSet()) {
+            return rs.getTardis_id();
+        }
+        return -1;
+    }
+
+    @Override
     public List<String> getPlayersInTARDIS(int id) {
         List<String> list = new ArrayList<String>();
         HashMap<String, Object> where = new HashMap<String, Object>();

@@ -19,9 +19,12 @@ package me.eccentric_nz.TARDIS.chameleon;
 import java.util.Arrays;
 import java.util.HashMap;
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.advanced.TARDISCircuitChecker;
+import me.eccentric_nz.TARDIS.advanced.TARDISCircuitDamager;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import me.eccentric_nz.TARDIS.database.ResultSetTravellers;
+import me.eccentric_nz.TARDIS.enumeration.DISK_CIRCUIT;
 import me.eccentric_nz.TARDIS.listeners.TARDISMenuListener;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import org.bukkit.ChatColor;
@@ -108,6 +111,14 @@ public class TARDISPresetListener extends TARDISMenuListener implements Listener
                                 case 2:
                                     player.performCommand("tardis rebuild");
                                     close(player);
+                                    // damage the circuit if configured
+                                    if (plugin.getConfig().getBoolean("circuits.damage") && plugin.getConfig().getString("preferences.difficulty").equals("hard") && plugin.getConfig().getInt("circuits.uses.chameleon") > 0) {
+                                        TARDISCircuitChecker tcc = new TARDISCircuitChecker(plugin, id);
+                                        tcc.getCircuits();
+                                        // decrement uses
+                                        int uses_left = tcc.getChameleonUses();
+                                        new TARDISCircuitDamager(plugin, DISK_CIRCUIT.CHAMELEON, uses_left, id, player).damage();
+                                    }
                                     break;
                                 case 4:
                                     // toggle biome adaption

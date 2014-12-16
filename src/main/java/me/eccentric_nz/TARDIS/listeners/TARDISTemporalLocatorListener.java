@@ -18,6 +18,9 @@ package me.eccentric_nz.TARDIS.listeners;
 
 import java.util.List;
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.advanced.TARDISCircuitChecker;
+import me.eccentric_nz.TARDIS.advanced.TARDISCircuitDamager;
+import me.eccentric_nz.TARDIS.enumeration.DISK_CIRCUIT;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -62,6 +65,15 @@ public class TARDISTemporalLocatorListener extends TARDISMenuListener implements
                     long time = getTime(lore);
                     plugin.getTrackerKeeper().getSetTime().put(player.getUniqueId(), time);
                     TARDISMessage.send(player, "TEMPORAL_SET", String.format("%d", time));
+                    // damage the circuit if configured
+                    if (plugin.getConfig().getBoolean("circuits.damage") && plugin.getConfig().getString("preferences.difficulty").equals("hard") && plugin.getConfig().getInt("circuits.uses.temporal") > 0) {
+                        int id = plugin.getTardisAPI().getIdOfTARDISPlayerIsIn(player.getUniqueId());
+                        TARDISCircuitChecker tcc = new TARDISCircuitChecker(plugin, id);
+                        tcc.getCircuits();
+                        // decrement uses
+                        int uses_left = tcc.getTemporalUses();
+                        new TARDISCircuitDamager(plugin, DISK_CIRCUIT.TEMPORAL, uses_left, id, player).damage();
+                    }
                 }
                 close(player);
             }

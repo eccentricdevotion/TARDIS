@@ -24,12 +24,15 @@ import java.util.Map;
 import java.util.UUID;
 import me.eccentric_nz.TARDIS.JSON.JSONArray;
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.advanced.TARDISCircuitChecker;
+import me.eccentric_nz.TARDIS.advanced.TARDISCircuitDamager;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetARS;
 import me.eccentric_nz.TARDIS.database.ResultSetCondenser;
 import me.eccentric_nz.TARDIS.database.ResultSetPlayerPrefs;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import me.eccentric_nz.TARDIS.database.ResultSetTravellers;
+import me.eccentric_nz.TARDIS.enumeration.DISK_CIRCUIT;
 import me.eccentric_nz.TARDIS.rooms.TARDISWalls.Pair;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import org.bukkit.Material;
@@ -335,6 +338,16 @@ public class TARDISARSMethods {
                                 TARDISARSRunnable ar = new TARDISARSRunnable(plugin, map.getKey(), map.getValue(), p, ids.get(uuid));
                                 plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, ar, delay);
                                 delay += period;
+                            }
+                            // damage the circuit if configured
+                            if (plugin.getConfig().getBoolean("circuits.damage") && plugin.getConfig().getString("preferences.difficulty").equals("hard") && plugin.getConfig().getInt("circuits.uses.ars") > 0) {
+                                // get the id of the TARDIS this player is in
+                                int id = plugin.getTardisAPI().getIdOfTARDISPlayerIsIn(uuid);
+                                TARDISCircuitChecker tcc = new TARDISCircuitChecker(plugin, id);
+                                tcc.getCircuits();
+                                // decrement uses
+                                int uses_left = tcc.getArsUses();
+                                new TARDISCircuitDamager(plugin, DISK_CIRCUIT.ARS, uses_left, id, p).damage();
                             }
                         } else {
                             // reset map to the previous version

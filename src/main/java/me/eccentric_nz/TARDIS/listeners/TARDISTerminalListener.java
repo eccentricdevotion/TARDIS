@@ -24,6 +24,8 @@ import java.util.Random;
 import java.util.Set;
 import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.advanced.TARDISCircuitChecker;
+import me.eccentric_nz.TARDIS.advanced.TARDISCircuitDamager;
 import me.eccentric_nz.TARDIS.api.Parameters;
 import me.eccentric_nz.TARDIS.builders.TARDISEmergencyRelocation;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
@@ -31,6 +33,7 @@ import me.eccentric_nz.TARDIS.database.ResultSetCurrentLocation;
 import me.eccentric_nz.TARDIS.database.ResultSetPlayerPrefs;
 import me.eccentric_nz.TARDIS.database.ResultSetTravellers;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
+import me.eccentric_nz.TARDIS.enumeration.DISK_CIRCUIT;
 import me.eccentric_nz.TARDIS.enumeration.FLAG;
 import me.eccentric_nz.TARDIS.travel.TARDISTimeTravel;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
@@ -141,6 +144,7 @@ public class TARDISTerminalListener implements Listener {
                             checkSettings(inv, player);
                             break;
                         case 49:
+                            // set destination
                             if (terminalDestination.containsKey(uuid)) {
                                 HashMap<String, Object> set = new HashMap<String, Object>();
                                 String[] data = terminalDestination.get(uuid).split(":");
@@ -159,6 +163,14 @@ public class TARDISTerminalListener implements Listener {
                                 }
                                 close(player);
                                 TARDISMessage.send(player, "DEST_SET", true);
+                                // damage the circuit if configured
+                                if (plugin.getConfig().getBoolean("circuits.damage") && plugin.getConfig().getString("preferences.difficulty").equals("hard") && plugin.getConfig().getInt("circuits.uses.input") > 0) {
+                                    TARDISCircuitChecker tcc = new TARDISCircuitChecker(plugin, terminalIDs.get(uuid));
+                                    tcc.getCircuits();
+                                    // decrement uses
+                                    int uses_left = tcc.getInputUses();
+                                    new TARDISCircuitDamager(plugin, DISK_CIRCUIT.INPUT, uses_left, terminalIDs.get(uuid), player).damage();
+                                }
                             } else {
                                 // set lore
                                 ItemStack is = inv.getItem(49);

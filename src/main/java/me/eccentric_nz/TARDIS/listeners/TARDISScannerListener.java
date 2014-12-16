@@ -23,12 +23,14 @@ import java.util.Map;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.advanced.TARDISCircuitChecker;
+import me.eccentric_nz.TARDIS.advanced.TARDISCircuitDamager;
 import me.eccentric_nz.TARDIS.advanced.TARDISScannerData;
 import me.eccentric_nz.TARDIS.database.ResultSetCurrentLocation;
 import me.eccentric_nz.TARDIS.database.ResultSetNextLocation;
 import me.eccentric_nz.TARDIS.database.ResultSetPlayerPrefs;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
+import me.eccentric_nz.TARDIS.enumeration.DISK_CIRCUIT;
 import me.eccentric_nz.TARDIS.rooms.TARDISExteriorRenderer;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import org.bukkit.Location;
@@ -159,7 +161,7 @@ public class TARDISScannerListener implements Listener {
         return radiusEntities;
     }
 
-    public TARDISScannerData scan(final Player player, int id, BukkitScheduler bsched) {
+    public TARDISScannerData scan(final Player player, final int id, BukkitScheduler bsched) {
         TARDISScannerData data = new TARDISScannerData();
         plugin.getUtils().playTARDISSound(player.getLocation(), player, "tardis_scanner");
         final Location scan_loc;
@@ -303,6 +305,14 @@ public class TARDISScannerListener implements Listener {
                     scannedentities.clear();
                 } else {
                     TARDISMessage.send(player, true, "SCAN_NONE");
+                }
+                // damage the circuit if configured
+                if (plugin.getConfig().getBoolean("circuits.damage") && plugin.getConfig().getString("preferences.difficulty").equals("hard") && plugin.getConfig().getInt("circuits.uses.scanner") > 0) {
+                    TARDISCircuitChecker tcc = new TARDISCircuitChecker(plugin, id);
+                    tcc.getCircuits();
+                    // decrement uses
+                    int uses_left = tcc.getScannerUses();
+                    new TARDISCircuitDamager(plugin, DISK_CIRCUIT.SCANNER, uses_left, id, player).damage();
                 }
             }
         }, 140L);

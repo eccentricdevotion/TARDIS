@@ -280,6 +280,13 @@ public class TARDISConsoleCloseListener implements Listener {
                                     if (plugin.getTrackerKeeper().getRescue().containsKey(id)) {
                                         plugin.getTrackerKeeper().getRescue().remove(id);
                                     }
+                                    if (plugin.getConfig().getBoolean("circuits.damage") && plugin.getConfig().getString("preferences.difficulty").equals("hard") && plugin.getConfig().getInt("circuits.uses.memory") > 0) {
+                                        TARDISCircuitChecker tcc = new TARDISCircuitChecker(plugin, id);
+                                        tcc.getCircuits();
+                                        // decrement uses
+                                        int uses_left = tcc.getMemoryUses();
+                                        new TARDISCircuitDamager(plugin, DISK_CIRCUIT.MEMORY, uses_left, id, p).damage();
+                                    }
                                 } else {
                                     TARDISMessage.send(p, "ADV_BLANK");
                                 }
@@ -305,6 +312,13 @@ public class TARDISConsoleCloseListener implements Listener {
                                 plugin.getTrackerKeeper().getHasDestination().put(id, plugin.getArtronConfig().getInt("random_circuit"));
                                 plugin.getTrackerKeeper().getHasRandomised().add(id);
                                 TARDISMessage.send(p, "RANDOMISER");
+                                if (plugin.getConfig().getBoolean("circuits.damage") && plugin.getConfig().getString("preferences.difficulty").equals("hard") && plugin.getConfig().getInt("circuits.uses.randomiser") > 0) {
+                                    TARDISCircuitChecker tcc = new TARDISCircuitChecker(plugin, id);
+                                    tcc.getCircuits();
+                                    // decrement uses
+                                    int uses_left = tcc.getRandomiserUses();
+                                    new TARDISCircuitDamager(plugin, DISK_CIRCUIT.RANDOMISER, uses_left, id, p).damage();
+                                }
                             } else {
                                 TARDISMessage.send(p, "PROTECTED");
                             }

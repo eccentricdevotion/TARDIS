@@ -111,6 +111,13 @@ public class TARDISPageThreeListener extends TARDISMenuListener implements Liste
                                 case 2:
                                     player.performCommand("tardis rebuild");
                                     close(player);
+                                    if (plugin.getConfig().getBoolean("circuits.damage") && plugin.getConfig().getString("preferences.difficulty").equals("hard") && plugin.getConfig().getInt("circuits.uses.chameleon") > 0) {
+                                        TARDISCircuitChecker tcc = new TARDISCircuitChecker(plugin, id);
+                                        tcc.getCircuits();
+                                        // decrement uses
+                                        int uses_left = tcc.getChameleonUses();
+                                        new TARDISCircuitDamager(plugin, DISK_CIRCUIT.CHAMELEON, uses_left, id, player).damage();
+                                    }
                                     break;
                                 case 4:
                                     // toggle biome adaption
@@ -229,12 +236,10 @@ public class TARDISPageThreeListener extends TARDISMenuListener implements Liste
                                             break;
                                         }
                                     }
-                                    if (plugin.getConfig().getBoolean("circuits.damage") && (plugin.getConfig().getString("preferences.difficulty").equals("hard") || plugin.getConfig().getString("circuits.level").equals("easy")) && plugin.getConfig().getInt("circuits.uses.invisibility") > 0) {
+                                    if (plugin.getConfig().getBoolean("circuits.damage") && plugin.getConfig().getString("preferences.difficulty").equals("hard") && plugin.getConfig().getInt("circuits.uses.invisibility") > 0) {
                                         // decrement uses
                                         int uses_left = tcc.getInvisibilityUses();
-                                        if (uses_left != -1) {
-                                            new TARDISCircuitDamager(plugin, DISK_CIRCUIT.INVISIBILITY, uses_left, id, player).damage();
-                                        }
+                                        new TARDISCircuitDamager(plugin, DISK_CIRCUIT.INVISIBILITY, uses_left, id, player).damage();
                                     }
                                     set.put("chameleon_preset", "INVISIBLE");
                                     setSign(rs.getChameleon(), 3, "INVISIBLE", player);

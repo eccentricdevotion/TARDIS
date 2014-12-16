@@ -21,6 +21,7 @@ import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.achievement.TARDISAchievementFactory;
 import me.eccentric_nz.TARDIS.advanced.TARDISCircuitChecker;
+import me.eccentric_nz.TARDIS.advanced.TARDISCircuitDamager;
 import me.eccentric_nz.TARDIS.artron.TARDISArtronIndicator;
 import me.eccentric_nz.TARDIS.artron.TARDISArtronLevels;
 import me.eccentric_nz.TARDIS.builders.TARDISMaterialisationData;
@@ -32,6 +33,7 @@ import me.eccentric_nz.TARDIS.database.ResultSetNextLocation;
 import me.eccentric_nz.TARDIS.database.ResultSetPlayerPrefs;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
+import me.eccentric_nz.TARDIS.enumeration.DISK_CIRCUIT;
 import me.eccentric_nz.TARDIS.travel.TARDISMalfunction;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import org.bukkit.Location;
@@ -424,6 +426,12 @@ public class TARDISHandbrakeListener implements Listener {
                                     if (plugin.getTrackerKeeper().getHasRandomised().contains(id)) {
                                         plugin.getTrackerKeeper().getHasRandomised().remove(Integer.valueOf(id));
                                     }
+                                    // damage the circuit if configured
+                                    if (tcc != null && plugin.getConfig().getBoolean("circuits.damage") && plugin.getConfig().getInt("circuits.uses.materialisation") > 0) {
+                                        // decrement uses
+                                        int uses_left = tcc.getMaterialisationUses();
+                                        new TARDISCircuitDamager(plugin, DISK_CIRCUIT.MATERIALISATION, uses_left, id, player).damage();
+                                    }
                                 } else {
                                     TARDISMessage.send(player, "HANDBRAKE_ON_ERR");
                                     error = true;
@@ -433,11 +441,6 @@ public class TARDISHandbrakeListener implements Listener {
                                 HashMap<String, Object> whereh = new HashMap<String, Object>();
                                 whereh.put("tardis_id", id);
                                 qf.doUpdate("tardis", set, whereh);
-//                                if (setcurrent.size() > 0) {
-//                                    qf.doUpdate("current", setcurrent, wherecurrent);
-//                                    qf.doUpdate("back", setback, whereback);
-//                                    qf.doUpdate("doors", setdoor, wheredoor);
-//                                }
                             }
                         }
                     }
