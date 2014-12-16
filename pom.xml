@@ -39,7 +39,17 @@
             <id>comphenix-repo</id>
             <name>Comphenix Repository</name>
             <url>http://repo.comphenix.net/content/groups/public</url>
+        </repository>
+        <repository>
+            <id>mcstats.releases</id>
+            <name>mcstats.org releases</name>
+            <url>http://repo.mcstats.org/content/repositories/releases/</url>
         </repository>-->
+        <repository>
+            <id>mcstats.snapshots</id>
+            <name>mcstats.org snapshots</name>
+            <url>http://repo.mcstats.org/content/repositories/snapshots/</url>
+        </repository>
         <repository>
             <id>bar-api-repo</id>
             <url>http://ci.frostcast.net/plugin/repository/everything</url>
@@ -385,6 +395,72 @@
             <groupId>com.griefcraft</groupId>
             <artifactId>lwc</artifactId>
             <version>4.5.0-SNAPSHOT</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>BOSEconomy</groupId>
+                    <artifactId>BOSEconomy</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>CreeperHeal</groupId>
+                    <artifactId>CreeperHeal</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>Essentials</groupId>
+                    <artifactId>Essentials</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>Heroes</groupId>
+                    <artifactId>Heroes</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>MobArena</groupId>
+                    <artifactId>MobArena</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>PermissionsBukkit</groupId>
+                    <artifactId>PermissionsBukkit</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>PermissionsEx</groupId>
+                    <artifactId>PermissionsEx</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>Showcase</groupId>
+                    <artifactId>Showcase</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>Towny</groupId>
+                    <artifactId>Towny</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>Towny_Advanced</groupId>
+                    <artifactId>Towny_Advanced</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>net.milkbowl.vault</groupId>
+                    <artifactId>Vault</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>WorldEdit</groupId>
+                    <artifactId>WorldEdit</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>WorldGuard</groupId>
+                    <artifactId>WorldGuard</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>iConomy5</groupId>
+                    <artifactId>iConomy5</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>iConomy6</groupId>
+                    <artifactId>iConomy6</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>de.bananaco</groupId>
+                    <artifactId>bPermissions</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
         <dependency>
             <groupId>org.yi.acru.bukkit</groupId>
