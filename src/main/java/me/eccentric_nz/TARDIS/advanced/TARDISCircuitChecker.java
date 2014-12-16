@@ -218,18 +218,14 @@ public class TARDISCircuitChecker {
      * @return the number of uses
      */
     private int getUses(ItemMeta im) {
-        plugin.debug("DN: " + im.getDisplayName());
         int uses = 0;
         if (im.hasLore()) {
-            plugin.debug("has lore");
             List<String> lore = im.getLore();
             String stripped = ChatColor.stripColor(lore.get(1));
-            plugin.debug("stripped: " + stripped);
             if (!stripped.equals("unlimited")) {
                 uses = plugin.getUtils().parseInt(stripped);
             }
         }
-        plugin.debug("getting uses: " + uses);
         return uses;
     }
 }

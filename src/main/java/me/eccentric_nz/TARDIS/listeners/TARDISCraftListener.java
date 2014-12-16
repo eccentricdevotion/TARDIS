@@ -228,7 +228,6 @@ public class TARDISCraftListener implements Listener {
         if (is.getType().equals(Material.MAP) && is.hasItemMeta() && is.getItemMeta().hasDisplayName()) {
             String dn = is.getItemMeta().getDisplayName();
             if (DISK_CIRCUIT.getCircuitNames().contains(dn)) {
-                plugin.debug("It's a " + dn);
                 // which circuit is it?
                 String[] split = dn.split(" ");
                 String which = split[1].toLowerCase();
@@ -242,13 +241,8 @@ public class TARDISCraftListener implements Listener {
                 } else {
                     lore = Arrays.asList("Uses left", uses);
                 }
-                for (String o : lore) {
-                    plugin.debug(o);
-                }
-                plugin.debug("setting");
                 im.setLore(lore);
                 is.setItemMeta(im);
-                plugin.debug("changing result");
                 event.getInventory().setResult(is);
             }
         }

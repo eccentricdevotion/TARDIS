@@ -51,7 +51,6 @@ public class TARDISCircuitDamager {
     }
 
     public void damage() {
-        plugin.debug("uses_left = " + uses_left);
         if (uses_left == 0) {
             uses_left = plugin.getConfig().getInt("circuits.uses." + circuit.toString().toLowerCase());
         }
@@ -62,7 +61,6 @@ public class TARDISCircuitDamager {
         } else {
             // decrement
             int decremented = uses_left - 1;
-            plugin.debug("decremented = " + decremented);
             setCircuitDamage(circuit.getName(), decremented, false);
             TARDISMessage.send(p, "CIRCUIT_USES", circuit.getName(), String.format("%d", decremented));
         }

@@ -92,7 +92,6 @@ public class TARDISRandomOverworld extends TARDISRandomLocation {
         boolean safe = false;
         int count;
         int highest = world.getHighestBlockYAt(wherex, wherez);
-        plugin.debug("Highest Y: " + highest);
         if (highest > 3) {
             Block currentBlock = world.getBlockAt(wherex, highest, wherez);
             if (TARDISConstants.GOOD_MATERIALS.contains(currentBlock.getType())) {
