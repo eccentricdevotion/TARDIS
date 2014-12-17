@@ -94,6 +94,7 @@
                         <version>2.10.1</version>
                         <configuration>
                             <additionalparam>-Xdoclint:none</additionalparam>
+                            <quiet/>
                         </configuration>
                         <executions>
                             <execution>
