@@ -1,11 +1,12 @@
 #TODO
 
-##Current version `3.2-beta-1`
+##Current version `3.2`
 1. Add note about custom console offset to docs
-2. Add another page to admin prefs GUI so we can fit siege options in
-3. Implement circuit damage and repair
 
-##Future version `3.3+`
+##Upcoming version `3.3`
+1. ?
+
+##Future version `3.4+`
 * SpongeAPI
 * Forge mod for custom items and blocks (to tie in with Sponge version)
 * Slimmer TARDIS option?
