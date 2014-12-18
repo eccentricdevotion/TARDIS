@@ -20,38 +20,38 @@
 </head>
 <body>
 <div class="wrapper">
-	<header>
-		<h1>TARDIS</h1>
-		<p>A Bukkit plugin for all Doctor Who fans &mdash; create and use a TARDIS! It&rsquo;s bigger on the inside!</p>
-		<p class="view"><a href="https://github.com/eccentricdevotion/TARDIS">View the Project on GitHub <small>eccentricdevotion/TARDIS</small></a></p>
-		<ul>
-			<li><a href="/TARDIS/">Back <strong>home</strong></a></li>
-			<li><a href="site-map.html"><strong>Index</strong> File</a></li>
-		</ul>
-	</header>
-	<section>
-		<h1>Permissions</h1>
-		<blockquote>
-			<p><strong>Quote from eccentric_nz:</strong></p>
-			<p>If you are getting the error:</p>
-			<blockquote>
-				<p><code style="color:#900;">Your exile status does not allow you to bring the TARDIS to this&hellip;</code></p>
-			</blockquote>
-			<p>or</p>
-			<blockquote>
-				<p><code style="color:#900;">Your travel has been restricted to the [] area!</code></p>
-			</blockquote>
-			<p>Update the plugin!</p>
-		</blockquote>
-		<h2>Setting permissions for TARDIS worlds</h2>
-		<p>To automatically set permissions for TARDIS worlds when they are created go read the <a href="add-permissions.html">Add permissions page</a>.</p>
-		<hr />
-		<p>Tested with PermissionsBukkit, there are a number of self explanatory permissions:</p>
-		<h2>General</h2>
-		<p>Allow players to use a TARDIS</p>
-		<pre><code>tardis.use</code></pre>
-		<p>There are a number of (probably unnecessary and self explanatory) child nodes. This means that if you have given players <code>tardis.use</code> you <em>DON&rsquo;T</em> need to give any of the permissions below.</p>
-		<pre><code>tardis.create
+    <header>
+        <h1>TARDIS</h1>
+        <p>A Bukkit plugin for all Doctor Who fans &mdash; create and use a TARDIS! It&rsquo;s bigger on the inside!</p>
+        <p class="view"><a href="https://github.com/eccentricdevotion/TARDIS">View the Project on GitHub <small>eccentricdevotion/TARDIS</small></a></p>
+        <ul>
+            <li><a href="/TARDIS/">Back <strong>home</strong></a></li>
+            <li><a href="site-map.html"><strong>Index</strong> File</a></li>
+        </ul>
+    </header>
+    <section>
+        <h1>Permissions</h1>
+        <blockquote>
+            <p><strong>Quote from eccentric_nz:</strong></p>
+            <p>If you are getting the error:</p>
+            <blockquote>
+                <p><code style="color:#900;">Your exile status does not allow you to bring the TARDIS to this&hellip;</code></p>
+            </blockquote>
+            <p>or</p>
+            <blockquote>
+                <p><code style="color:#900;">Your travel has been restricted to the [] area!</code></p>
+            </blockquote>
+            <p>Update the plugin!</p>
+        </blockquote>
+        <h2>Setting permissions for TARDIS worlds</h2>
+        <p>To automatically set permissions for TARDIS worlds when they are created go read the <a href="add-permissions.html">Add permissions page</a>.</p>
+        <hr />
+        <p>Tested with PermissionsBukkit, there are a number of self explanatory permissions:</p>
+        <h2>General</h2>
+        <p>Allow players to use a TARDIS</p>
+        <pre><code>tardis.use</code></pre>
+        <p>There are a number of (probably unnecessary and self explanatory) child nodes. This means that if you have given players <code>tardis.use</code> you <em>DON&rsquo;T</em> need to give any of the permissions below.</p>
+        <pre><code>tardis.create
 tardis.exterminate
 tardis.timetravel
 tardis.list
@@ -68,9 +68,9 @@ tardis.storage
 tardis.gravity
 tardis.texture
 tardis.temporal</code></pre>
-		<h2>TARDIS build sizes</h2>
-		<p>In order to be able to create a &lsquo;bigger&rsquo;, &lsquo;deluxe&rsquo;, &lsquo;eleventh&rsquo;, &lsquo;redstone&rsquo;, &lsquo;steampunk&rsquo;, &lsquo;ARS&rsquo;, &lsquo;tom&rsquo;, &lsquo;plank&rsquo; or &lsquo;custom&rsquo;TARDIS, players will need:</p>
-		<pre><code>tardis.bigger
+        <h2>TARDIS build sizes</h2>
+        <p>In order to be able to create a &lsquo;bigger&rsquo;, &lsquo;deluxe&rsquo;, &lsquo;eleventh&rsquo;, &lsquo;redstone&rsquo;, &lsquo;steampunk&rsquo;, &lsquo;ARS&rsquo;, &lsquo;tom&rsquo;, &lsquo;plank&rsquo; or &lsquo;custom&rsquo;TARDIS, players will need:</p>
+        <pre><code>tardis.bigger
 tardis.deluxe
 tardis.eleventh
 tardis.redstone
@@ -80,14 +80,14 @@ tardis.tom
 tardis.plank
 tardis.war
 tardis.custom</code></pre>
-		<h2>TARDIS world creation</h2>
-		<p>If a server is set up to use a default world (and <code>create_worlds_with_perms: true</code> is set on the config), players can be allowed to create a TARDIS in its own world if they have:</p>
-		<pre><code>tardis.create_world</code></pre>
-		<h2>TARDIS rooms</h2>
-		<p>To allow players to grow new TARDIS rooms, they will need the permission for each room type. To be able to grow all room types (including custom ones), use:</p>
-		<pre><code>tardis.room</code></pre>
-		<p>Otherwise there are individual nodes for for each room:</p>
-		<pre><code>tardis.room.antigravity
+        <h2>TARDIS world creation</h2>
+        <p>If a server is set up to use a default world (and <code>create_worlds_with_perms: true</code> is set on the config), players can be allowed to create a TARDIS in its own world if they have:</p>
+        <pre><code>tardis.create_world</code></pre>
+        <h2>TARDIS rooms</h2>
+        <p>To allow players to grow new TARDIS rooms, they will need the permission for each room type. To be able to grow all room types (including custom ones), use:</p>
+        <pre><code>tardis.room</code></pre>
+        <p>Otherwise there are individual nodes for for each room:</p>
+        <pre><code>tardis.room.antigravity
 tardis.room.antigravity
 tardis.room.arboretum
 tardis.room.baker
@@ -111,120 +111,133 @@ tardis.room.village
 tardis.room.wood
 tardis.room.workshop
 tardis.room.zero</code></pre>
-		<h2 id="ttperms">Time travel</h2>
-		<p>There are a some time travel specific nodes:</p>
-		<p>Allow travel to player locations</p>
-		<pre><code>tardis.timetravel.player</code></pre>
-		<p>Allow travel to specified co-ordinates</p>
-		<pre><code>tardis.timetravel.location</code></pre>
-		<p>Allow travel to a specified biome</p>
-		<pre><code>tardis.timetravel.biome</code></pre>
-		<p>Allow travel to caves</p>
-		<pre><code>tardis.timetravel.cave</code></pre>
-		<h2>Per world travel</h2>
-		<p>If the TARDIS config option <code>per_world_perms</code> is <code>true</code>, then players will need the appropriate permission to time travel to a world. The permission format is:</p>
-		<pre><code>tardis.travel.[world]</code></pre>
-		<p>Where <code>[world]</code> is the name of the world they will have access to.</p>
-		<h2>Environment</h2>
-		<p>There are a couple of world environment specific nodes:</p>
-		<p>Allow travel to <strong>Nether</strong> worlds</p>
-		<pre><code>tardis.nether</code></pre>
-		<p>Allow travel to <strong>The End</strong> worlds</p>
-		<pre><code>tardis.end</code></pre>
-		<h2>Kits</h2>
-		<p>There are two TARDIS Item Kit specific nodes:</p>
-		<p>Allow players to recieve a kit when they <strong>join</strong></p>
-		<pre><code>tardis.kit.join</code></pre>
-		<p>Allow players to recieve a kit when they <strong>create</strong> a TARDIS</p>
-		<pre><code>tardis.kit.create</code></pre>
-		<h2>Advanced Console</h2>
-		<p>There are two Advanced Console specific nodes:</p>
-		<p>Allow players to use the advanced console</p>
-		<pre><code>tardis.advanced</code></pre>
-		<p>Allow players to store items in the Disk Storage Container</p>
-		<pre><code>tardis.storage</code></pre>
-		<h2>Artron Energy Cells</h2>
-		<p>Allow players to store Artron Energy in Artron Energy Cells:</p>
-		<pre><code>tardis.store</code></pre>
-		<h2>Temporal Locator</h2>
-		<p>Allow players to use the Temporal Locator:</p>
-		<pre><code>tardis.temporal</code></pre>
-		<h2>Perception Filter</h2>
-		<p>Allow players to use the Perception Filter:</p>
-		<pre><code>tardis.filter</code></pre>
-		<h2>ARS</h2>
-		<p>Allow players to use the Architectural Reconfiguration System:</p>
-		<pre><code>tardis.ars</code></pre>
-		<h2>TARDIS autonomous homing function</h2>
-		<p>Allow TARDISes to automatically return to the nearest of the &lsquo;Home&rsquo; location or the nearby recharge area:</p>
-		<pre><code>tardis.autonomous</code></pre>
-		<h2>TARDIS mob farming</h2>
-		<p>To allow players to farm mobs:</p>
-		<pre><code>tardis.farm</code></pre>
-		<h2>Entity ejection</h2>
-		<p>To allow players to eject entities (players and mobs &mdash; except horses):</p>
-		<pre><code>tardis.eject</code></pre>
-		<h2>TARDIS back doors</h2>
-		<p>To allow players to to add a TARDIS back door:</p>
-		<pre><code>tardis.backdoor</code></pre>
-		<h2>Sonic Screwdrivers</h2>
-		<p>Each sonic upgrade has its own permission:</p>
-		<pre><code>tardis.sonic.standard
+        <h2 id="ttperms">Time travel</h2>
+        <p>There are a some time travel specific nodes:</p>
+        <p>Allow travel to player locations</p>
+        <pre><code>tardis.timetravel.player</code></pre>
+        <p>Allow travel to specified co-ordinates</p>
+        <pre><code>tardis.timetravel.location</code></pre>
+        <p>Allow travel to a specified biome</p>
+        <pre><code>tardis.timetravel.biome</code></pre>
+        <p>Allow travel to caves</p>
+        <pre><code>tardis.timetravel.cave</code></pre>
+        <h2>Per world travel</h2>
+        <p>If the TARDIS config option <code>per_world_perms</code> is <code>true</code>, then players will need the appropriate permission to time travel to a world. The permission format is:</p>
+        <pre><code>tardis.travel.[world]</code></pre>
+        <p>Where <code>[world]</code> is the name of the world they will have access to.</p>
+        <h2>Environment</h2>
+        <p>There are a couple of world environment specific nodes:</p>
+        <p>Allow travel to <strong>Nether</strong> worlds</p>
+        <pre><code>tardis.nether</code></pre>
+        <p>Allow travel to <strong>The End</strong> worlds</p>
+        <pre><code>tardis.end</code></pre>
+        <h2>Kits</h2>
+        <p>There are two TARDIS Item Kit specific nodes:</p>
+        <p>Allow players to recieve a kit when they <strong>join</strong></p>
+        <pre><code>tardis.kit.join</code></pre>
+        <p>Allow players to recieve a kit when they <strong>create</strong> a TARDIS</p>
+        <pre><code>tardis.kit.create</code></pre>
+        <h2>Advanced Console</h2>
+        <p>There are two Advanced Console specific nodes:</p>
+        <p>Allow players to use the advanced console</p>
+        <pre><code>tardis.advanced</code></pre>
+        <p>Allow players to store items in the Disk Storage Container</p>
+        <pre><code>tardis.storage</code></pre>
+        <h2>Artron Energy Cells</h2>
+        <p>Allow players to store Artron Energy in Artron Energy Cells:</p>
+        <pre><code>tardis.store</code></pre>
+        <h2>Temporal Locator</h2>
+        <p>Allow players to use the Temporal Locator:</p>
+        <pre><code>tardis.temporal</code></pre>
+        <h2>Perception Filter</h2>
+        <p>Allow players to use the Perception Filter:</p>
+        <pre><code>tardis.filter</code></pre>
+        <h2>ARS</h2>
+        <p>Allow players to use the Architectural Reconfiguration System:</p>
+        <pre><code>tardis.ars</code></pre>
+        <h2>TARDIS autonomous homing function</h2>
+        <p>Allow TARDISes to automatically return to the nearest of the &lsquo;Home&rsquo; location or the nearby recharge area:</p>
+        <pre><code>tardis.autonomous</code></pre>
+        <h2>TARDIS mob farming</h2>
+        <p>To allow players to farm mobs:</p>
+        <pre><code>tardis.farm</code></pre>
+        <h2>Entity ejection</h2>
+        <p>To allow players to eject entities (players and mobs &mdash; except horses):</p>
+        <pre><code>tardis.eject</code></pre>
+        <h2>Lazarus device / Genetic manipulator / Immortality Gate</h2>
+        <p>To allow players to use the TARDIS Genetic Manipulator and reverse the polarity of the TARDIS Genetic Manipulator turning it into the Immortality Gate:</p>
+        <pre><code>tardis.lazarus
+tardis.themaster</code></pre>
+        <h2>Chameleon Arch</h2>
+        <p>To allow players to use the Chameleon Arch:</p>
+        <pre><code>tardis.chameleonarch</code></pre>
+        <h2>TARDIS upgrades / desktop theme</h2>
+        <p>To allow players to use the desktop themer / upgrade GUI:</p>
+        <pre><code>tardis.upgrade</code></pre>
+        <h2>Vault sorter</h2>
+        <p>To allow players to have an automatic vault room chest sorter:</p>
+        <pre><code>tardis.vault</code></pre>
+        <h2>TARDIS back doors</h2>
+        <p>To allow players to to add a TARDIS back door:</p>
+        <pre><code>tardis.backdoor</code></pre>
+        <h2>Sonic Screwdrivers</h2>
+        <p>Each sonic upgrade has its own permission:</p>
+        <pre><code>tardis.sonic.standard
 tardis.sonic.bio
 tardis.sonic.redstone
 tardis.sonic.emerald
 tardis.sonic.diamond
 tardis.sonic.paint
 tardis.sonic.admin</code></pre>
-		<p>The Bio-scanner Sonic has an extra permission to allow player freezing:</p>
-		<pre><code>tardis.sonic.freeze</code></pre>
-		<p>The Emerald Environment Sonic has an extra permission to allow automatic replanting of crops (if the player has the correct seed item in their inventory):</p>
-		<pre><code>tardis.sonic.plant</code></pre>
-		<p>The Diamond Disruptor Sonic has an extra permission to allow silk touch block drops:</p>
-		<pre><code>tardis.sonic.silktouch</code></pre>
-		<h2>TARDIS books and achievements</h2>
-		<p>To allow players to get books and gain achievements:</p>
-		<pre><code>tardis.book</code></pre>
-		<h2>TARDIS Universal Translator</h2>
-		<p>To allow players to use the <code>/tardissay</code> command:</p>
-		<pre><code>tardis.translate</code></pre>
-		<h2>TARDIS texture pack switching</h2>
-		<p>To allow players to use the <code>/tardistexture</code> command and switch texture packs when entering/exiting the TARDIS:</p>
-		<pre><code>tardis.texture</code></pre>
-		<h2>TARDIS gravity wells</h2>
-		<p>To allow players to use the <code>/tardisgravity</code> command:</p>
-		<pre><code>tardis.gravity</code></pre>
-		<h2>TARDIS difficulty level</h2>
-		<p>To allow players to use the <code>/tardisprefs difficulty [easy|hard]</code> command:</p>
-		<pre><code>tardis.difficulty</code></pre>
-		<h2>TARDIS areas</h2>
-		<p>To allow access to TARDIS areas, users/groups must be given the permission:</p>
-		<pre><code>tardis.area.[name_of_area]</code></pre>
-		<p>eg. to give access to the &ldquo;airport&rdquo; area, the permission would be:</p>
-		<pre><code>tardis.area.airport</code></pre>
-		<p>To restrict a player to a specific area, the player must have the permission:</p>
-		<pre><code>tardis.exile</code></pre>
-		<p>AND the permission for the area they are restricted to.</p>
-		<h2>Bypass TARDIS pruning</h2>
-		<p>To allow players to bypass the abandoned TARDIS pruning feature:</p>
-		<pre><code>tardis.prune.bypass</code></pre>
-		<h2>Admin/moderator</h2>
-		<p>Allow players to do administration stuff</p>
-		<pre><code>tardis.admin
+        <p>The Bio-scanner Sonic has an extra permission to allow player freezing:</p>
+        <pre><code>tardis.sonic.freeze</code></pre>
+        <p>The Emerald Environment Sonic has an extra permission to allow automatic replanting of crops (if the player has the correct seed item in their inventory):</p>
+        <pre><code>tardis.sonic.plant</code></pre>
+        <p>The Diamond Disruptor Sonic has an extra permission to allow silk touch block drops:</p>
+        <pre><code>tardis.sonic.silktouch</code></pre>
+        <h2>TARDIS books and achievements</h2>
+        <p>To allow players to get books and gain achievements:</p>
+        <pre><code>tardis.book</code></pre>
+        <h2>TARDIS Universal Translator</h2>
+        <p>To allow players to use the <code>/tardissay</code> command:</p>
+        <pre><code>tardis.translate</code></pre>
+        <h2>TARDIS texture pack switching</h2>
+        <p>To allow players to use the <code>/tardistexture</code> command and switch texture packs when entering/exiting the TARDIS:</p>
+        <pre><code>tardis.texture</code></pre>
+        <h2>TARDIS gravity wells</h2>
+        <p>To allow players to use the <code>/tardisgravity</code> command:</p>
+        <pre><code>tardis.gravity</code></pre>
+        <h2>TARDIS difficulty level</h2>
+        <p>To allow players to use the <code>/tardisprefs difficulty [easy|hard]</code> command:</p>
+        <pre><code>tardis.difficulty</code></pre>
+        <h2>TARDIS areas</h2>
+        <p>To allow access to TARDIS areas, users/groups must be given the permission:</p>
+        <pre><code>tardis.area.[name_of_area]</code></pre>
+        <p>eg. to give access to the &ldquo;airport&rdquo; area, the permission would be:</p>
+        <pre><code>tardis.area.airport</code></pre>
+        <p>To restrict a player to a specific area, the player must have the permission:</p>
+        <pre><code>tardis.exile</code></pre>
+        <p>AND the permission for the area they are restricted to.</p>
+        <h2>Bypass TARDIS pruning</h2>
+        <p>To allow players to bypass the abandoned TARDIS pruning feature:</p>
+        <pre><code>tardis.prune.bypass</code></pre>
+        <h2>Admin/moderator</h2>
+        <p>Allow players to do administration stuff</p>
+        <pre><code>tardis.admin
 tardis.delete
 tardis.skeletonkey</code></pre>
-		<h3>Deleting any TARDIS</h3>
-		<p>The node <code>tardis.delete</code> will allow admin users to remove any TARDIS by breaking the sign on the front of the Police Box, or using the <code>/tardisadmin delete [player]</code> command.</p>
-		<p>When breaking the sign, the TARDIS must not be occupied (including offline players).</p>
-		<p>The permission is set to <strong>false</strong> by default, so will have to explicitly given!</p>
-		<h3>Entering any TARDIS</h3>
-		<p>The node <code>tardis.skeletonkey</code> will allow admin users to enter and use any TARDIS (either via the door, or via the <code>/tardisadmin enter [player]</code> command.</p>
-		<p>The permission is set to <strong>false</strong> by default, so will have to explicitly given!</p>
-	</section>
+        <h3>Deleting any TARDIS</h3>
+        <p>The node <code>tardis.delete</code> will allow admin users to remove any TARDIS by breaking the sign on the front of the Police Box, or using the <code>/tardisadmin delete [player]</code> command.</p>
+        <p>When breaking the sign, the TARDIS must not be occupied (including offline players).</p>
+        <p>The permission is set to <strong>false</strong> by default, so will have to explicitly given!</p>
+        <h3>Entering any TARDIS</h3>
+        <p>The node <code>tardis.skeletonkey</code> will allow admin users to enter and use any TARDIS (either via the door, or via the <code>/tardisadmin enter [player]</code> command.</p>
+        <p>The permission is set to <strong>false</strong> by default, so will have to explicitly given!</p>
+    </section>
 </div>
 <footer>
-	<p>Project maintained by <a href="https://github.com/eccentricdevotion">eccentricdevotion</a></p>
-	<p>Hosted on GitHub Pages &mdash; Theme by <a href="https://github.com/orderedlist">orderedlist</a></p>
+    <p>Project maintained by <a href="https://github.com/eccentricdevotion">eccentricdevotion</a></p>
+    <p>Hosted on GitHub Pages &mdash; Theme by <a href="https://github.com/orderedlist">orderedlist</a></p>
 </footer>
 <!--[if !IE]><script>fixScale(document);</script><![endif]-->
 </body>

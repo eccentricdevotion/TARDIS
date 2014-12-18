@@ -52,7 +52,7 @@
             <li>The Artron creeper is sacrificed for the good of the TARDIS, and gives an amount of Artron energy</li>
         </ul>
         <p>All these features can be configured, see details below.</p>
-        <h2>Configuration</h2>
+        <h2 id="config">Configuration</h2>
         <p><em>config.yml</em> contains a <code>siege</code> configuration section with the following defaults:</p>
         <pre><code>siege:
     enabled: true
@@ -81,7 +81,7 @@ siege_ticks: 1500</code></pre>
         <ul>
             <li><code>siege_deplete: [percentage]</code> &mdash; the percentage of maximum (<code>full_charge</code>) energy the TARDIS needs to be able to disengage Siege mode. Also the minimum amount of energy that can be transferred to the TARDIS by clicking the Siege Cube</li>
             <li><code>siege_deplete: [amount]</code> &mdash; the amount of energy the TARDIS loses every cycle it is in Siege mode</li>
-            <li><code>siege_ticks: [ticks]</code> &mdash; the time cycle in ticks, the plugin will deplete energy from the TARDIS while in Siege mode</li>
+            <li><code>siege_ticks: [ticks]</code> &mdash; the time cycle in ticks, the plugin will deplete energy from the TARDIS / heal players while in Siege mode</li>
             <li><code>siege_creeper: [amount]</code> &mdash;  the amount of energy boost the TARDIS gets when the Artron creeper is sacrificed</li>
         </ul>
         <h2>The Siege Cube</h2>

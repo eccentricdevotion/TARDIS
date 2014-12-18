@@ -83,6 +83,32 @@ the_end_min: [amount] - default: 5500</code></pre>
 		<pre><code>standby_time: [ticks]</code></pre>
 		<p>The default is <code>6000</code> or every 5 minutes.</p>
 		<p>If <code>standby_time</code> is set to <code>0</code>, then no energy is removed in standby mode.</p>
+        <h2>Siege mode</h2>
+        <p>Set siege mode related values.</p>
+        <pre><code>siege_transfer: [percent]
+siege_deplete: [amount]
+siege_creeper: [amount]
+siege_ticks: [ticks]</code></pre>
+<p><code>siege_transfer</code> &mdash; the minimum amount of Time Lord energy needed to transfer to the Siege block. This is a percentage of <code>full_charge</code>. Default is 10% (500).</p>
+<p><code>siege_deplete</code> &mdash; the amount of energy needed Siege mode uses every cycle. Default is <code>100</code>.</p>
+<p><code>siege_creeper</code> &mdash; the amount of energy gained when the Artron Creeper is sacrificed. The default is <code>150</code>. Only relevant if the main config option <code>siege.creeper</code> is set to true.</p>
+<p><code>siege_ticks</code> &mdash; the amount of time in server ticks that the energy depletion / siege mode healing cycle takes. The default is <code>1500</code> (or every 1.25 minutes).</p>
+		<h2>TARDIS Upgrades</h2>
+        <p>Set the energy cost to upgrade / crossgrade to a different console when using the Desktop Theme changer. If a player is just changing the walls and floor, then <code>just_wall_floor</code> sets the percentage the cost is reduced.</p>
+        <pre><code>upgrades:
+    ars: [amount] - default: 5000
+    budget: [amount] - default: 5000
+    deluxe: [amount] - default: 10000
+    eleventh: [amount] - default: 10000
+    redstone: [amount] - default: 7500
+    bigger: [amount] - default: 7500
+    plank: [amount] - default: 5000
+    steampunk: [amount] - default: 5000
+    tom: [amount] - default: 5000
+    twelfth: [amount] - default: 7500
+    war: [amount] - default: 5000
+    custom: [amount] - default: 10000
+just_wall_floor: [percentage] - default: 50</code></pre>
 		<h1>Rechargers configuration section</h1>
 		<p><strong>NB:</strong> The rechargers configuration section is found in the file: <code>config.yml</code></p>
 		<p>The rechargers section holds the locations of the TARDIS recharge beacons.</p>
