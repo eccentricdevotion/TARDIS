@@ -106,6 +106,9 @@ permissions:
   tardis.eleventh:
     description: Allow players to build the 'eleventh' TARDIS.
     default: op
+  tardis.twelfth:
+    description: Allow players to build the 'twelfth' TARDIS.
+    default: op
   tardis.redstone:
     description: Allow players to build the 'redstone' TARDIS.
     default: op
@@ -575,7 +578,7 @@ commands:
   tardisrecipe:
     aliases: [trecipe, trep]
     description: View TARDIS item recipes.
-    usage: /<command> [a-circuit|ars-circuit|bio-circuit|biome-disk|blank|c-circuit|cell|d-circuit|e-circuit|filter|i-circuit|key|l-circuit|locator|m-circuit|mem-circuit|oscillator|player-disk|preset-disk|p-circuit|r-circuit|remote|s-circuit|save-disk|scan-circuit|sonic|t-circuit]
+    usage: /<command> [item] - use /<command> list - to see all the items
     permission: tardis.help
     permission-message: You don't have the permission <permission> to use this command
   tardissay:
