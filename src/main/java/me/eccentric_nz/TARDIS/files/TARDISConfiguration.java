@@ -200,14 +200,15 @@ public class TARDISConfiguration {
         artronIntOptions.put("travel", 100);
         artronIntOptions.put("zero", 250);
         artronIntOptions.put("upgrades.ars", 5000);
+        artronIntOptions.put("upgrades.bigger", 7500);
         artronIntOptions.put("upgrades.budget", 5000);
         artronIntOptions.put("upgrades.deluxe", 10000);
         artronIntOptions.put("upgrades.eleventh", 10000);
-        artronIntOptions.put("upgrades.redstone", 7500);
-        artronIntOptions.put("upgrades.bigger", 7500);
         artronIntOptions.put("upgrades.plank", 5000);
+        artronIntOptions.put("upgrades.redstone", 7500);
         artronIntOptions.put("upgrades.steampunk", 5000);
         artronIntOptions.put("upgrades.tom", 5000);
+        artronIntOptions.put("upgrades.twelfth", 7500);
         artronIntOptions.put("upgrades.war", 5000);
         artronIntOptions.put("upgrades.custom", 10000);
         intOptions.put("arch.min_time", 20);
