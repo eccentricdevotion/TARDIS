@@ -1,10 +1,11 @@
 #TODO
 
 ##Current version `3.2`
-1. Add note about custom console offset to docs
+1. Fix bugs for release
 
 ##Upcoming version `3.3`
-1. ?
+1. Junk TARDIS
+2. ?
 
 ##Future version `3.4+`
 * SpongeAPI

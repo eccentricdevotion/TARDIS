@@ -81,8 +81,6 @@ public class TARDISTimeTravel {
     @SuppressWarnings("deprecation")
     public Location randomDestination(Player p, byte rx, byte rz, byte ry, COMPASS d, String e, World this_world, boolean malfunction, Location current) {
         int startx, starty, startz, resetx, resetz, listlen;
-//        int startx, starty, startz, resetx, resetz, listlen, rw;
-//        World randworld = null;
         World randworld;
         int count;
         Random rand = new Random();
@@ -132,16 +130,7 @@ public class TARDISTimeTravel {
         }
         listlen = allowedWorlds.size();
         // random world
-//        rw = rand.nextInt(listlen);
         randworld = allowedWorlds.get(rand.nextInt(listlen));
-//        int i = 0;
-//        for (World wobj : allowedWorlds) {
-//            if (i == rw) {
-//                randworld = wobj;
-//            }
-//            i++;
-//        }
-//        if (randworld != null && randworld.getEnvironment().equals(Environment.NETHER)) {
         if (randworld.getEnvironment().equals(Environment.NETHER)) {
             for (int n = 0; n < attempts; n++) {
                 wherex = randomX(rand, range, quarter, rx, ry, e, current);
@@ -151,7 +140,6 @@ public class TARDISTimeTravel {
                 }
             }
         }
-//        if (randworld != null && randworld.getEnvironment().equals(Environment.THE_END)) {
         if (randworld.getEnvironment().equals(Environment.THE_END)) {
             for (int n = 0; n < attempts; n++) {
                 wherex = rand.nextInt(240);
@@ -190,7 +178,6 @@ public class TARDISTimeTravel {
         }
         // Assume every non-nether/non-END world qualifies as NORMAL.
         if (!randworld.getEnvironment().equals(Environment.NETHER) && !randworld.getEnvironment().equals(Environment.THE_END)) {
-//        if (randworld != null && !randworld.getEnvironment().equals(Environment.NETHER) && !randworld.getEnvironment().equals(Environment.THE_END)) {
             long timeout = System.currentTimeMillis() + (plugin.getConfig().getLong("travel.timeout") * 1000);
             while (true) {
                 if (System.currentTimeMillis() < timeout) {

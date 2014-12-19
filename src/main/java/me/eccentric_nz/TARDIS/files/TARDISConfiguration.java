@@ -125,6 +125,7 @@ public class TARDISConfiguration {
         boolOptions.put("travel.land_on_water", true);
         boolOptions.put("travel.nether", false);
         boolOptions.put("travel.per_world_perms", false);
+        boolOptions.put("travel.terminal.redefine", false);
         boolOptions.put("travel.the_end", false);
         roomBoolOptions.put("rooms.ANTIGRAVITY.enabled", true);
         roomBoolOptions.put("rooms.ANTIGRAVITY.user", false);
@@ -324,6 +325,8 @@ public class TARDISConfiguration {
         strOptions.put("storage.mysql.url", "mysql://localhost:3306/TARDIS");
         strOptions.put("storage.mysql.user", "bukkit");
         strOptions.put("storage.mysql.password", "mysecurepassword");
+        strOptions.put("travel.terminal.nether", "world");
+        strOptions.put("travel.terminal.the_end", "world");
         artronStrOptions.put("jettison_seed", "TNT");
         artronStrOptions.put("full_charge_item", "NETHER_STAR");
         roomStrOptions.put("rooms.ARBORETUM.seed", "LEAVES");

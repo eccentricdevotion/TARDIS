@@ -14,7 +14,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package me.eccentric_nz.TARDIS.listeners;
+package me.eccentric_nz.TARDIS.travel;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -35,7 +35,6 @@ import me.eccentric_nz.TARDIS.database.ResultSetTravellers;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
 import me.eccentric_nz.TARDIS.enumeration.DISK_CIRCUIT;
 import me.eccentric_nz.TARDIS.enumeration.FLAG;
-import me.eccentric_nz.TARDIS.travel.TARDISTimeTravel;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -334,11 +333,19 @@ public class TARDISTerminalListener implements Listener {
                         break;
                     case 40:
                         // get a nether world
-                        lore = Arrays.asList(getWorld("NETHER", current, p));
+                        if (plugin.getConfig().getBoolean("travel.nether") || !plugin.getConfig().getBoolean("travel.terminal.redefine")) {
+                            lore = Arrays.asList(getWorld("NETHER", current, p));
+                        } else {
+                            lore = Arrays.asList(getWorld(plugin.getConfig().getString("travel.terminal.nether"), current, p));
+                        }
                         break;
                     case 42:
                         // get an end world
-                        lore = Arrays.asList(getWorld("THE_END", current, p));
+                        if (plugin.getConfig().getBoolean("travel.the_end") || !plugin.getConfig().getBoolean("travel.terminal.redefine")) {
+                            lore = Arrays.asList(getWorld("THE_END", current, p));
+                        } else {
+                            lore = Arrays.asList(getWorld(plugin.getConfig().getString("travel.terminal.the_end"), current, p));
+                        }
                         break;
                     default:
                         lore = Arrays.asList(current);
@@ -449,8 +456,8 @@ public class TARDISTerminalListener implements Listener {
                             int endy = w.getHighestBlockYAt(slotx, slotz);
                             if (endy > 40) {
                                 Location loc = new Location(w, slotx, 0, slotz);
-                                int[] estart = tt.getStartLocation(loc, d);
-                                int esafe = tt.safeLocation(estart[0], endy, estart[2], estart[1], estart[3], w, d);
+                                int[] estart = TARDISTimeTravel.getStartLocation(loc, d);
+                                int esafe = TARDISTimeTravel.safeLocation(estart[0], endy, estart[2], estart[1], estart[3], w, d);
                                 if (esafe == 0) {
                                     String save = world + ":" + slotx + ":" + endy + ":" + slotz;
                                     if (plugin.getPluginRespect().getRespect(new Location(w, slotx, endy, slotz), new Parameters(p, FLAG.getNoMessageFlags()))) {
@@ -484,7 +491,7 @@ public class TARDISTerminalListener implements Listener {
                             break;
                         default:
                             Location loc = new Location(w, slotx, 0, slotz);
-                            int[] start = tt.getStartLocation(loc, d);
+                            int[] start = TARDISTimeTravel.getStartLocation(loc, d);
                             int starty = w.getHighestBlockYAt(slotx, slotz);
                             // allow room for under door block
                             if (starty <= 0) {
@@ -504,7 +511,7 @@ public class TARDISTerminalListener implements Listener {
                                     safe = 1;
                                 }
                             } else {
-                                safe = tt.safeLocation(start[0], starty, start[2], start[1], start[3], w, d);
+                                safe = TARDISTimeTravel.safeLocation(start[0], starty, start[2], start[1], start[3], w, d);
                             }
                             if (safe == 0) {
                                 String save = world + ":" + slotx + ":" + starty + ":" + slotz;

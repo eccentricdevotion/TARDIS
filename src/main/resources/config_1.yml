@@ -49,6 +49,10 @@ travel:
     give_key: false
     the_end: false
     nether: false
+    terminal:
+        redefine: false
+        nether: world
+        end: world
     land_on_water: true
     timeout: 5
     timeout_height: 135

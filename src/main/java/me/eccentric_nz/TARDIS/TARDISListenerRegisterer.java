@@ -99,7 +99,7 @@ import me.eccentric_nz.TARDIS.listeners.TARDISTagListener;
 import me.eccentric_nz.TARDIS.listeners.TARDISTeleportListener;
 import me.eccentric_nz.TARDIS.listeners.TARDISTemporalListener;
 import me.eccentric_nz.TARDIS.listeners.TARDISTemporalLocatorListener;
-import me.eccentric_nz.TARDIS.listeners.TARDISTerminalListener;
+import me.eccentric_nz.TARDIS.travel.TARDISTerminalListener;
 import me.eccentric_nz.TARDIS.listeners.TARDISTimeLordDeathListener;
 import me.eccentric_nz.TARDIS.listeners.TARDISUpdateListener;
 import me.eccentric_nz.TARDIS.listeners.TARDISVaultListener;
