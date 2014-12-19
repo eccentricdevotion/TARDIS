@@ -413,7 +413,14 @@ public class TARDISSonicListener implements Listener {
                             case REDSTONE_LAMP_ON:
                                 if (blockType.equals(Material.REDSTONE_LAMP_OFF)) {
                                     plugin.getGeneralKeeper().getSonicLamps().add(b.getLocation().toString());
-                                    b.setType(Material.REDSTONE_LAMP_ON);
+                                    for (BlockFace f : faces) {
+                                        if (b.getRelative(f).getType().equals(Material.AIR)) {
+                                            b.getRelative(f).setTypeIdAndData(152, (byte) 0, true);
+                                            b.setType(Material.REDSTONE_LAMP_ON);
+                                            b.getRelative(f).setTypeIdAndData(0, (byte) 0, true);
+                                            break;
+                                        }
+                                    }
                                 } else if (plugin.getGeneralKeeper().getSonicLamps().contains(b.getLocation().toString())) {
                                     plugin.getGeneralKeeper().getSonicLamps().remove(b.getLocation().toString());
                                     b.setType(Material.REDSTONE_LAMP_OFF);
