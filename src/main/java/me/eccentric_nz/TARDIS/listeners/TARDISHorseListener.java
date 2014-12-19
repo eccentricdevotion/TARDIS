@@ -26,7 +26,6 @@ import me.eccentric_nz.TARDIS.database.ResultSetTravellers;
 import me.eccentric_nz.TARDIS.mobfarming.TARDISHorse;
 import me.eccentric_nz.TARDIS.travel.TARDISDoorLocation;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
-import me.eccentric_nz.tardishelper.TARDISHelper;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
@@ -123,8 +122,7 @@ public class TARDISHorseListener implements Listener {
                         tmhor.setHorseHealth(h.getMaxHealth());
                         tmhor.setHealth(h.getHealth());
                         if (plugin.isHelperOnServer()) {
-                            TARDISHelper th = (TARDISHelper) plugin.getPM().getPlugin("TARDISHelper");
-                            tmhor.setSpeed(th.getHorseSpeed(h));
+                            tmhor.setSpeed(plugin.getTardisHelper().getHorseSpeed(h));
                         }
                         // eject player
                         // if (p.leaveVehicle()) {
@@ -169,8 +167,7 @@ public class TARDISHorseListener implements Listener {
                                 }
                             }
                             if (plugin.isHelperOnServer()) {
-                                TARDISHelper th = (TARDISHelper) plugin.getPM().getPlugin("TARDISHelper");
-                                th.setHorseSpeed(equine, tmhor.getSpeed());
+                                plugin.getTardisHelper().setHorseSpeed(equine, tmhor.getSpeed());
                             }
                             Tameable tamed = (Tameable) equine;
                             tamed.setTamed(true);

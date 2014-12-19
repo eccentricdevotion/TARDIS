@@ -79,6 +79,7 @@ import me.eccentric_nz.TARDIS.utility.TARDISUtils;
 import me.eccentric_nz.TARDIS.utility.TARDISVaultChecker;
 import me.eccentric_nz.TARDIS.utility.TARDISWorldGuardUtils;
 import me.eccentric_nz.TARDIS.utility.Version;
+import me.eccentric_nz.tardishelper.TARDISHelper;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.command.ConsoleCommandSender;
@@ -149,6 +150,7 @@ public class TARDIS extends JavaPlugin {
     private final TARDISPresetDestroyerFactory presetDestroyer = new TARDISPresetDestroyerFactory(this);
     private final TARDISTrackerInstanceKeeper trackerKeeper = new TARDISTrackerInstanceKeeper();
     private final TARDISChatGUIJSON jsonKeeper = new TARDISChatGUIJSON();
+    private TARDISHelper tardisHelper = null;
 
     public TARDIS() {
         this.worldGuardOnServer = false;
@@ -519,7 +521,12 @@ public class TARDIS extends JavaPlugin {
         if (pm.getPlugin("TARDISHelper") != null) {
             debug("Hooking into TARDISHelper!");
             helperOnServer = true;
+            tardisHelper = (TARDISHelper) plugin.getPM().getPlugin("TARDISHelper");
         }
+    }
+
+    public TARDISHelper getTardisHelper() {
+        return tardisHelper;
     }
 
     /**

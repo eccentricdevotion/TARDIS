@@ -24,7 +24,6 @@ import me.eccentric_nz.TARDIS.achievement.TARDISAchievementFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
-import me.eccentric_nz.tardishelper.TARDISHelper;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.OfflinePlayer;
@@ -202,8 +201,7 @@ public class TARDISFarmer {
                             tmhor.setDomesticity(horse.getDomestication());
                             tmhor.setJumpStrength(horse.getJumpStrength());
                             if (plugin.isHelperOnServer()) {
-                                TARDISHelper th = (TARDISHelper) plugin.getPM().getPlugin("TARDISHelper");
-                                double speed = th.getHorseSpeed(horse);
+                                double speed = plugin.getTardisHelper().getHorseSpeed(horse);
                                 tmhor.setSpeed(speed);
                             }
                             // check the leash
@@ -521,8 +519,7 @@ public class TARDISFarmer {
                                 p.updateInventory();
                             }
                             if (plugin.isHelperOnServer()) {
-                                TARDISHelper th = (TARDISHelper) plugin.getPM().getPlugin("TARDISHelper");
-                                th.setHorseSpeed(equine, e.getSpeed());
+                                plugin.getTardisHelper().setHorseSpeed(equine, e.getSpeed());
                             }
                             equine.setRemoveWhenFarAway(false);
                         }
