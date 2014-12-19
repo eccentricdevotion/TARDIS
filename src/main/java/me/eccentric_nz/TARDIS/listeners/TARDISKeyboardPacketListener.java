@@ -6,10 +6,12 @@ import com.comphenix.protocol.events.PacketAdapter;
 import com.comphenix.protocol.events.PacketContainer;
 import com.comphenix.protocol.events.PacketEvent;
 import com.comphenix.protocol.injector.BukkitUnwrapper;
+import com.comphenix.protocol.reflect.FieldAccessException;
 import com.comphenix.protocol.reflect.StructureModifier;
 import com.comphenix.protocol.reflect.accessors.Accessors;
 import com.comphenix.protocol.reflect.accessors.FieldAccessor;
 import com.comphenix.protocol.utility.MinecraftReflection;
+import com.comphenix.protocol.wrappers.BlockPosition;
 import com.google.common.base.Objects;
 import com.google.common.collect.MapMaker;
 import java.lang.reflect.InvocationTargetException;
@@ -47,8 +49,8 @@ public class TARDISKeyboardPacketListener implements Listener {
                     @Override
                     public void onPacketReceiving(PacketEvent event) {
                         Player player = event.getPlayer();
-                        StructureModifier<Integer> ints = event.getPacket().getIntegers();
-                        Location loc = new Location(player.getWorld(), ints.read(0), ints.read(1), ints.read(2));
+                        StructureModifier<BlockPosition> ints = event.getPacket().getBlockPositionModifier();
+                        Location loc = new Location(player.getWorld(), (double) ints.read(0).getX(), (double) ints.read(0).getY(), (double) ints.read(0).getZ());
                         // Allow
                         if (Objects.equal(editing.get(player), loc)) {
                             setEditingPlayer((Sign) loc.getBlock().getState(), player);
@@ -111,7 +113,13 @@ public class TARDISKeyboardPacketListener implements Listener {
 
         // Permit this
         editing.put(player, sign.getLocation());
-        editSignPacket.getIntegers().write(0, sign.getX()).write(1, sign.getY()).write(2, sign.getZ());
+        try {
+            BlockPosition bp = new BlockPosition(sign.getX(), sign.getY(), sign.getZ());
+            editSignPacket.getBlockPositionModifier().write(0, bp);
+        } catch (FieldAccessException e) {
+            plugin.debug("Keyboard error: " + e.getMessage());
+            return;
+        }
 
         try {
             ProtocolLibrary.getProtocolManager().sendServerPacket(player, editSignPacket);
