@@ -80,6 +80,9 @@ public class TARDISThemeInventory {
             }
             if (current_console.equals(a.getPermission().toUpperCase())) {
                 lore.add(ChatColor.GREEN + plugin.getLanguage().getString("CURRENT_CONSOLE"));
+            } else {
+                lore.add(ChatColor.GREEN + plugin.getLanguage().getString("RESET"));
+                lore.add(ChatColor.GREEN + plugin.getLanguage().getString("REMEMBER"));
             }
             im.setLore(lore);
             is.setItemMeta(im);

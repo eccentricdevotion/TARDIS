@@ -82,7 +82,7 @@ public class TARDISWallsInventory {
         scroll_down.setItemMeta(dim);
         stack[35] = scroll_down;
         // close
-        ItemStack close = new ItemStack(Material.TRAP_DOOR, 1);
+        ItemStack close = new ItemStack(Material.BOWL, 1);
         ItemMeta close_im = close.getItemMeta();
         close_im.setDisplayName("Abort upgrade");
         close.setItemMeta(close_im);
