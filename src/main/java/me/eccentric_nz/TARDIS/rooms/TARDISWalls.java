@@ -40,6 +40,8 @@ public class TARDISWalls {
         blocks.put("MOSSY_COBBLESTONE", new Pair(Material.MOSSY_COBBLESTONE, (byte) 0));
         blocks.put("ENDER_STONE", new Pair(Material.ENDER_STONE, (byte) 0));
         blocks.put("DIRT", new Pair(Material.DIRT, (byte) 0));
+        blocks.put("COARSE_DIRT", new Pair(Material.DIRT, (byte) 1));
+        blocks.put("PODZOL", new Pair(Material.DIRT, (byte) 2));
         blocks.put("OAK_WOOD", new Pair(Material.WOOD, (byte) 0));
         blocks.put("PINE_WOOD", new Pair(Material.WOOD, (byte) 1));
         blocks.put("SPRUCE_WOOD", new Pair(Material.WOOD, (byte) 1));
