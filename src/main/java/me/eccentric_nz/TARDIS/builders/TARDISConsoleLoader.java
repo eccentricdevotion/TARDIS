@@ -46,7 +46,7 @@ public class TARDISConsoleLoader {
         CONSOLES.getByNames().put("ARS", new SCHEMATIC("QUARTZ_BLOCK", "ars", "ARS Console", true, false, true, false));
         CONSOLES.getByNames().put("BIGGER", new SCHEMATIC("GOLD_BLOCK", "bigger", "A Bigger Console", false, false, true, false));
         CONSOLES.getByNames().put("BUDGET", new SCHEMATIC("IRON_BLOCK", "budget", "Default Console", true, false, true, false));
-        CONSOLES.getByNames().put("DELUXE", new SCHEMATIC("DIAMOND_BLOCK", "deluxe", "Supersized Deluxe Consol", false, true, true, false));
+        CONSOLES.getByNames().put("DELUXE", new SCHEMATIC("DIAMOND_BLOCK", "deluxe", "Supersized Deluxe Console", false, true, true, false));
         CONSOLES.getByNames().put("ELEVENTH", new SCHEMATIC("EMERALD_BLOCK", "eleventh", "11th Doctor's Console", false, true, true, false));
         CONSOLES.getByNames().put("PLANK", new SCHEMATIC("BOOKSHELF", "plank", "Wood Console", true, false, false, false));
         CONSOLES.getByNames().put("REDSTONE", new SCHEMATIC("REDSTONE_BLOCK", "redstone", "Redstone Console", false, false, true, false));
