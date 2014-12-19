@@ -22,6 +22,9 @@ import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.arch.TARDISArchInventory;
 import me.eccentric_nz.TARDIS.arch.TARDISArchPersister;
+import me.eccentric_nz.TARDIS.artron.TARDISBeaconToggler;
+import me.eccentric_nz.TARDIS.artron.TARDISLampToggler;
+import me.eccentric_nz.TARDIS.artron.TARDISPoliceBoxLampToggler;
 import me.eccentric_nz.TARDIS.builders.TARDISMaterialisationData;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetAreas;
@@ -31,7 +34,9 @@ import me.eccentric_nz.TARDIS.database.ResultSetPlayerPrefs;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import me.eccentric_nz.TARDIS.database.ResultSetTravellers;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
+import me.eccentric_nz.TARDIS.enumeration.PRESET;
 import me.eccentric_nz.TARDIS.travel.TARDISEPSRunnable;
+import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.entity.Player;
@@ -72,13 +77,13 @@ public class TARDISTimeLordDeathListener implements Listener {
                 where.put("uuid", playerUUID.toString());
                 ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);
                 // are they a time lord?
-                if (rs.resultSet()) {
-                    int id = rs.getTardis_id();
+                if (rs.resultSet() && rs.isPowered_on()) {
+                    final int id = rs.getTardis_id();
                     String eps = rs.getEps();
                     String creeper = rs.getCreeper();
-                    HashMap<String, Object> wherep = new HashMap<String, Object>();
-                    wherep.put("uuid", playerUUID.toString());
-                    ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, wherep);
+                    HashMap<String, Object> whereu = new HashMap<String, Object>();
+                    whereu.put("uuid", playerUUID.toString());
+                    ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, whereu);
                     if (rsp.resultSet()) {
                         // do they have the autonomous circuit on?
                         if (rsp.isAutoOn()) {
@@ -223,8 +228,34 @@ public class TARDISTimeLordDeathListener implements Listener {
                                 wherea.put("tardis_id", id);
                                 int amount = plugin.getArtronConfig().getInt("autonomous") * -1;
                                 qf.alterEnergyLevel("tardis", amount, wherea, player);
+                                // power down?
+                                if (plugin.getConfig().getBoolean("allow.power_down")) {
+                                    HashMap<String, Object> wherep = new HashMap<String, Object>();
+                                    wherep.put("tardis_id", id);
+                                    HashMap<String, Object> setp = new HashMap<String, Object>();
+                                    // power down
+                                    setp.put("powered_on", 0);
+                                    // police box lamp, delay it incase the TARDIS needs rebuilding
+                                    if (rs.getPreset().equals(PRESET.NEW) || rs.getPreset().equals(PRESET.OLD)) {
+                                        plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
+                                            @Override
+                                            public void run() {
+                                                new TARDISPoliceBoxLampToggler(plugin).toggleLamp(id, false);
+                                            }
+                                        }, 1L);
+                                    }
+                                    // if lights are on, turn them off
+                                    new TARDISLampToggler(plugin).flickSwitch(id, player.getUniqueId(), true);
+                                    // if beacon is on turn it off
+                                    new TARDISBeaconToggler(plugin).flickSwitch(player.getUniqueId(), false);
+                                    qf.doUpdate("tardis", setp, wherep);
+                                }
                             }
                         }
+                    }
+                } else {
+                    if (player.isOnline()) {
+                        TARDISMessage.send(player, "AUTO_POWER");
                     }
                 }
             }
