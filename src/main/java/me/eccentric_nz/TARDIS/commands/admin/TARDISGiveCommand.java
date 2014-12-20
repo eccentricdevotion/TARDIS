@@ -16,14 +16,18 @@
  */
 package me.eccentric_nz.TARDIS.commands.admin;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
+import me.eccentric_nz.TARDIS.enumeration.CONSOLES;
+import me.eccentric_nz.TARDIS.enumeration.SCHEMATIC;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import org.bukkit.ChatColor;
+import org.bukkit.Material;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -43,13 +47,14 @@ public class TARDISGiveCommand implements CommandExecutor {
     private final TARDIS plugin;
     private final int full;
     private final HashMap<String, String> items = new HashMap<String, String>();
+    private final HashMap<String, Material> seeds = new HashMap<String, Material>();
 
     public TARDISGiveCommand(TARDIS plugin) {
         this.plugin = plugin;
         this.full = this.plugin.getArtronConfig().getInt("full_charge");
-        items.put("artron", "");
         items.put("a-circuit", "Server Admin Circuit");
         items.put("ars-circuit", "TARDIS ARS Circuit");
+        items.put("artron", "");
         items.put("bio-circuit", "Bio-scanner Circuit");
         items.put("biome-disk", "Biome Storage Disk");
         items.put("blank", "Blank Storage Disk");
@@ -82,11 +87,12 @@ public class TARDISGiveCommand implements CommandExecutor {
         items.put("randomiser-circuit", "TARDIS Randomiser Circuit");
         items.put("remote", "Stattenheim Remote");
         items.put("s-circuit", "TARDIS Stattenheim Circuit");
-        items.put("scanner-circuit", "TARDIS Scanner Circuit");
         items.put("save-disk", "Save Storage Disk");
+        items.put("scanner-circuit", "TARDIS Scanner Circuit");
+        items.put("seed", "");
         items.put("sonic", "Sonic Screwdriver");
-        items.put("tachyon", "");
         items.put("t-circuit", "TARDIS Temporal Circuit");
+        items.put("tachyon", "");
         items.put("vortex", "Vortex Manipulator");
         items.put("watch", "Fob Watch");
     }
@@ -125,6 +131,9 @@ public class TARDISGiveCommand implements CommandExecutor {
                     }
                     TARDISMessage.send(p, "GIVE_KIT", sender.getName(), args[2]);
                     return true;
+                }
+                if (item.equals("seed")) {
+                    return this.giveSeed(sender, args[0], args[2].toUpperCase());
                 }
                 if (item.equals("tachyon")) {
                     return this.giveTachyon(sender, args[0], args[2]);
@@ -261,6 +270,35 @@ public class TARDISGiveCommand implements CommandExecutor {
             TARDISMessage.send(sender, "UUID_NOT_FOUND", player);
             return true;
         }
+    }
+
+    @SuppressWarnings("deprecation")
+    private boolean giveSeed(CommandSender sender, String p, String type) {
+        if (plugin.getServer().getPlayer(p) == null) {
+            TARDISMessage.send(sender, "COULD_NOT_FIND_NAME");
+            return true;
+        }
+        Player player = plugin.getServer().getPlayer(p);
+        ItemStack is;
+        if (CONSOLES.getByNames().containsKey(type)) {
+            SCHEMATIC schm = CONSOLES.getByNames().get(type);
+            is = new ItemStack(schm.getSeedMaterial(), 1);
+            // set display name
+            ItemMeta im = is.getItemMeta();
+            im.setDisplayName("§6TARDIS Seed Block");
+            List<String> lore = new ArrayList<String>();
+            lore.add(type);
+            lore.add("Walls: ORANGE_WOOL");
+            lore.add("Floors: LIGHT_GRAY_WOOL");
+            lore.add("Chameleon block: BLUE WOOL");
+            lore.add("Lamp: REDSTONE_LAMP_OFF");
+            im.setLore(lore);
+            is.setItemMeta(im);
+            player.getInventory().addItem(is);
+            player.updateInventory();
+            TARDISMessage.send(player, "GIVE_ITEM", sender.getName(), "a " + type + " seed block");
+        }
+        return true;
     }
 
     @SuppressWarnings("deprecation")

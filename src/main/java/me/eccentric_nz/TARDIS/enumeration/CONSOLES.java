@@ -29,10 +29,6 @@ public class CONSOLES {
     private final static HashMap<String, SCHEMATIC> byPerms = new HashMap<String, SCHEMATIC>();
     private final static HashMap<String, SCHEMATIC> byMaterials = new HashMap<String, SCHEMATIC>();
 
-    public static HashMap<String, SCHEMATIC> getByNames() {
-        return byNames;
-    }
-
     /**
      * Attempts to get the SCHEMATIC with the given name.
      *
@@ -62,6 +58,10 @@ public class CONSOLES {
                 byMaterials.put(ts.getSeed(), ts);
             }
         }
+    }
+
+    public static HashMap<String, SCHEMATIC> getByNames() {
+        return byNames;
     }
 
     public static HashMap<String, SCHEMATIC> getByPerms() {
