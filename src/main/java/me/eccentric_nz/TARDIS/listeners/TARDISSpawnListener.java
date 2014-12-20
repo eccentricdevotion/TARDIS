@@ -67,6 +67,9 @@ public class TARDISSpawnListener implements Listener {
     public void onEntitySpawn(CreatureSpawnEvent event) {
         Location l = event.getLocation();
         if (l.getWorld().getName().contains("TARDIS")) {
+            if (event.getEntityType().equals(EntityType.ARMOR_STAND)) {
+                return;
+            }
             if (plugin.isTardisSpawn()) {
                 plugin.setTardisSpawn(false);
                 return;
