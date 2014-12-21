@@ -1,11 +1,11 @@
 #TODO
 
-##Current version `3.2`
-1. Fix bugs for release
+##Current version `3.2.1`
+1. Fix bugs
 
 ##Upcoming version `3.3`
 1. Junk TARDIS
-2. If insufficient power to move the TARDIS, HADS should engage siehe mode instead
+2. If insufficient power to move the TARDIS, HADS should engage siege mode instead
 
 ##Future version `3.4+`
 * SpongeAPI
