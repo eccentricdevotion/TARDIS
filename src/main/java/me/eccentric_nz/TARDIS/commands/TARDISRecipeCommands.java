@@ -334,7 +334,6 @@ public class TARDISRecipeCommands implements CommandExecutor {
                     im.setDisplayName(getDisplayName(item.getData().getData()));
                     item.setItemMeta(im);
                 }
-                item.setAmount(0);
                 view.getTopInventory().setItem(j * 3 + k + 1, item);
             }
         }
