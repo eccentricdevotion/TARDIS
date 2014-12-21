@@ -170,121 +170,128 @@ public class TARDIS extends JavaPlugin {
         Version minversion = new Version("1.8");
         // check CraftBukkit version
         if (bukkitversion.compareTo(minversion) >= 0) {
-            hasVersion = true;
-            saveDefaultConfig();
-            loadCustomConfigs();
-            new TARDISConfiguration(this).checkConfig();
-            new TARDISRecipesUpdater(this).addRecipes();
-            loadLanguage();
-            loadDatabase();
-            // update database add and populate uuid fields
-            if (!getConfig().getBoolean("conversions.uuid_conversion_done")) {
-                TARDISUUIDConverter uc = new TARDISUUIDConverter(this);
-                if (!uc.convert()) {
-                    // conversion failed
-                    console.sendMessage(pluginName + ChatColor.RED + "UUID conversion failed, disabling...");
-                    hasVersion = false;
-                    pm.disablePlugin(this);
-                    return;
-                } else {
-                    getConfig().set("conversions.uuid_conversion_done", true);
-                    saveConfig();
-                    console.sendMessage(pluginName + "UUID conversion successful :)");
+            // check for WorldBorder class
+            try {
+                Class.forName("org.bukkit.WorldBorder");
+                hasVersion = true;
+                saveDefaultConfig();
+                loadCustomConfigs();
+                new TARDISConfiguration(this).checkConfig();
+                new TARDISRecipesUpdater(this).addRecipes();
+                loadLanguage();
+                loadDatabase();
+                // update database add and populate uuid fields
+                if (!getConfig().getBoolean("conversions.uuid_conversion_done")) {
+                    TARDISUUIDConverter uc = new TARDISUUIDConverter(this);
+                    if (!uc.convert()) {
+                        // conversion failed
+                        console.sendMessage(pluginName + ChatColor.RED + "UUID conversion failed, disabling...");
+                        hasVersion = false;
+                        pm.disablePlugin(this);
+                        return;
+                    } else {
+                        getConfig().set("conversions.uuid_conversion_done", true);
+                        saveConfig();
+                        console.sendMessage(pluginName + "UUID conversion successful :)");
+                    }
                 }
-            }
-            // update database clear companions to UUIDs
-            if (!getConfig().getBoolean("conversions.companion_clearing_done")) {
-                TARDISCompanionClearer cc = new TARDISCompanionClearer(this);
-                if (!cc.clear()) {
-                    // clearing failed
-                    console.sendMessage(pluginName + ChatColor.RED + "Companion clearing failed, disabling...");
-                    hasVersion = false;
-                    pm.disablePlugin(this);
-                    return;
-                } else {
-                    getConfig().set("conversions.companion_clearing_done", true);
-                    saveConfig();
-                    console.sendMessage(pluginName + "Cleared companion lists as they now use UUIDs!");
+                // update database clear companions to UUIDs
+                if (!getConfig().getBoolean("conversions.companion_clearing_done")) {
+                    TARDISCompanionClearer cc = new TARDISCompanionClearer(this);
+                    if (!cc.clear()) {
+                        // clearing failed
+                        console.sendMessage(pluginName + ChatColor.RED + "Companion clearing failed, disabling...");
+                        hasVersion = false;
+                        pm.disablePlugin(this);
+                        return;
+                    } else {
+                        getConfig().set("conversions.companion_clearing_done", true);
+                        saveConfig();
+                        console.sendMessage(pluginName + "Cleared companion lists as they now use UUIDs!");
+                    }
                 }
-            }
-            checkTCG();
-            checkDefaultWorld();
-            utils = new TARDISUtils(this);
-            buildKeeper.setSeeds(getSeeds());
-            tardisWalls = new TARDISWalls();
-            new TARDISConsoleLoader(this).addSchematics();
-            loadFiles();
-            this.disguisesOnServer = pm.isPluginEnabled("LibsDisguises");
-            generalKeeper = new TARDISGeneralInstanceKeeper(this);
-            generalKeeper.setQuotes(quotes());
-            new TARDISListenerRegisterer(this).registerListeners();
-            new TARDISCommandSetter(this).loadCommands();
-            startSound();
-            loadWorldGuard();
-            loadPluginRespect();
-            loadHelper();
-            loadBarAPI();
-            startZeroHealing();
+                checkTCG();
+                checkDefaultWorld();
+                utils = new TARDISUtils(this);
+                buildKeeper.setSeeds(getSeeds());
+                tardisWalls = new TARDISWalls();
+                new TARDISConsoleLoader(this).addSchematics();
+                loadFiles();
+                this.disguisesOnServer = pm.isPluginEnabled("LibsDisguises");
+                generalKeeper = new TARDISGeneralInstanceKeeper(this);
+                generalKeeper.setQuotes(quotes());
+                new TARDISListenerRegisterer(this).registerListeners();
+                new TARDISCommandSetter(this).loadCommands();
+                startSound();
+                loadWorldGuard();
+                loadPluginRespect();
+                loadHelper();
+                loadBarAPI();
+                startZeroHealing();
 
-            new TARDISCreeperChecker(this).startCreeperCheck();
-            if (pm.isPluginEnabled("TARDISChunkGenerator")) {
-                TARDISSpace alwaysNight = new TARDISSpace(this);
-                if (getConfig().getBoolean("creation.keep_night")) {
-                    alwaysNight.keepNight();
+                new TARDISCreeperChecker(this).startCreeperCheck();
+                if (pm.isPluginEnabled("TARDISChunkGenerator")) {
+                    TARDISSpace alwaysNight = new TARDISSpace(this);
+                    if (getConfig().getBoolean("creation.keep_night")) {
+                        alwaysNight.keepNight();
+                    }
                 }
-            }
-            TARDISBlockLoader bl = new TARDISBlockLoader(this);
-            bl.loadProtectBlocks();
-            bl.loadGravityWells();
-            if (worldGuardOnServer && getConfig().getBoolean("allow.wg_flag_set")) {
-                bl.loadAntiBuild();
-            }
-            loadPerms();
-            loadBooks();
-            if (!getConfig().getBoolean("conversions.conversion_done")) {
-                new TARDISControlsConverter(this).convertControls();
-            }
-            if (!getConfig().getBoolean("conversions.location_conversion_done")) {
-                new TARDISLocationsConverter(this).convert();
-            }
-            if (!getConfig().getBoolean("conversions.condenser_done")) {
-                new TARDISMaterialIDConverter(this).convert();
-            }
-            resourcePack = getServerTP();
-            // copy maps
-            new TARDISMapChecker(this).checkMaps();
-            // register recipes
-            figura = new TARDISShapedRecipe(this);
-            figura.addShapedRecipes();
-            incomposita = new TARDISShapelessRecipe(this);
-            incomposita.addShapelessRecipes();
+                TARDISBlockLoader bl = new TARDISBlockLoader(this);
+                bl.loadProtectBlocks();
+                bl.loadGravityWells();
+                if (worldGuardOnServer && getConfig().getBoolean("allow.wg_flag_set")) {
+                    bl.loadAntiBuild();
+                }
+                loadPerms();
+                loadBooks();
+                if (!getConfig().getBoolean("conversions.conversion_done")) {
+                    new TARDISControlsConverter(this).convertControls();
+                }
+                if (!getConfig().getBoolean("conversions.location_conversion_done")) {
+                    new TARDISLocationsConverter(this).convert();
+                }
+                if (!getConfig().getBoolean("conversions.condenser_done")) {
+                    new TARDISMaterialIDConverter(this).convert();
+                }
+                resourcePack = getServerTP();
+                // copy maps
+                new TARDISMapChecker(this).checkMaps();
+                // register recipes
+                figura = new TARDISShapedRecipe(this);
+                figura.addShapedRecipes();
+                incomposita = new TARDISShapelessRecipe(this);
+                incomposita.addShapelessRecipes();
 
-            presets = new TARDISChameleonPreset();
-            presets.makePresets();
-            if (pm.isPluginEnabled("Multiverse-Inventories")) {
-                TMIChecker = new TARDISMultiverseInventoriesChecker(this);
+                presets = new TARDISChameleonPreset();
+                presets.makePresets();
+                if (pm.isPluginEnabled("Multiverse-Inventories")) {
+                    TMIChecker = new TARDISMultiverseInventoriesChecker(this);
+                }
+                if (getConfig().getBoolean("preferences.walk_in_tardis")) {
+                    new TARDISPortalPersister(this).load();
+                    this.getServer().getScheduler().scheduleSyncRepeatingTask(this, new TARDISMonsterRunnable(this), 2400L, 2400L);
+                }
+                if (disguisesOnServer && getConfig().getBoolean("arch.enabled")) {
+                    new TARDISArchPersister(this).checkAll();
+                }
+                if (getConfig().getBoolean("siege.enabled")) {
+                    TARDISSiegePersister tsp = new TARDISSiegePersister(this);
+                    tsp.loadSiege();
+                    tsp.loadCubes();
+                }
+                setDates();
+                startStandBy();
+                filter = new TARDISPerceptionFilter(this);
+                filter.createPerceptionFilter();
+                TARDISCondensables cond = new TARDISCondensables(this);
+                cond.makeCondensables();
+                condensables = cond.getCondensables();
+                checkBiomes();
+                checkDropChests();
+            } catch (ClassNotFoundException e) {
+                console.sendMessage(pluginName + ChatColor.RED + "You need to update CraftBukkit/Spigot, disabling...");
+                pm.disablePlugin(this);
             }
-            if (getConfig().getBoolean("preferences.walk_in_tardis")) {
-                new TARDISPortalPersister(this).load();
-                this.getServer().getScheduler().scheduleSyncRepeatingTask(this, new TARDISMonsterRunnable(this), 2400L, 2400L);
-            }
-            if (disguisesOnServer && getConfig().getBoolean("arch.enabled")) {
-                new TARDISArchPersister(this).checkAll();
-            }
-            if (getConfig().getBoolean("siege.enabled")) {
-                TARDISSiegePersister tsp = new TARDISSiegePersister(this);
-                tsp.loadSiege();
-                tsp.loadCubes();
-            }
-            setDates();
-            startStandBy();
-            filter = new TARDISPerceptionFilter(this);
-            filter.createPerceptionFilter();
-            TARDISCondensables cond = new TARDISCondensables(this);
-            cond.makeCondensables();
-            condensables = cond.getCondensables();
-            checkBiomes();
-            checkDropChests();
         } else {
             console.sendMessage(pluginName + ChatColor.RED + "This plugin requires CraftBukkit/Spigot 1.8 or higher, disabling...");
             pm.disablePlugin(this);
