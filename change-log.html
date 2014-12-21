@@ -32,7 +32,41 @@
     <section>
         <h1>Change log</h1>
         <h2>What&rsquo;s been changed?</h2>
-        <h3>TARDIS v3.2-beta-1</h3>
+        <h3>v3.2</h3>
+        <h4>Additions</h4>
+        <ul>
+            <li>Added new fence gates to the Sonic Screwdriver interactable block list</li>
+            <li>Added COARSE_DIRT and PODZOL to wall / floor blocks</li>
+            <li>Added basic seed blocks to the <code>/tardisgive</code> command - <code>/tardisgive [player] seed [type]</code></li>
+            <li>Added an upgrade warning when changing TARDIS console types (chests and items will be deleted!)</li>
+            <li>
+                <p>You can now redefine the End and Nether buttons in the Destination Terminal to specific worlds when travel to those environments is disabled</p>
+                <pre><code>travel:
+    the_end: false
+    nether: false
+    terminal:
+        redefine: [true|false]
+        nether: [world]
+        end: [world]
+</code></pre>
+            </li>
+        </ul>
+        <h4>Changes</h4>
+        <ul>
+            <li>Autonomous homing is disabled if the TARDIS is powered down</li>
+            <li>The TARDIS will power down after returning home autonomously (and <code>allow.power_down: true</code>)</li>
+        </ul>
+        <h4>Bug fixes</h4>
+        <ul>
+            <li>Added missing 'e' in upgrade GUI</li>
+            <li>Fixed not being able to place armour stands in TARDIS worlds</li>
+            <li>Fixed a few misspellings in <em>en.yml</em></li>
+            <li>Fixed ProtocolLib Keyboard packet listener not working and throwing errors on sign placement</li>
+            <li>Fixed the redstone upgraded Sonic Screwdriver not powering LAMPS</li>
+            <li>Fixed the seed block not recognising ANDESITE, DIORITE, GRANITE and their POLISHED variants as valid Chameleon blocks when crafted</li>
+            <li>Fixed grid not clearing when crafting a seed block</li>
+        </ul>
+        <h3>v3.2-beta-1</h3>
         <h4>Requirements</h4>
         <p style="color:#900;">Do not bother posting comments / tickets if you are not running the appropriate server and plugin versions &mdash; they will be deleted immediately!</p>
         <h5>Server</h5>
