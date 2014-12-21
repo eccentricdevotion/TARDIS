@@ -576,6 +576,34 @@ public class TARDISUtils {
         egg.remove();
     }
 
+    public String getStoneType(byte d) {
+        String type;
+        switch (d) {
+            case 1:
+                type = "GRANITE";
+                break;
+            case 2:
+                type = "POLISHED GRANITE";
+                break;
+            case 3:
+                type = "DIORITE";
+                break;
+            case 4:
+                type = "POLISHED DIORITE";
+                break;
+            case 5:
+                type = "ANDESITE";
+                break;
+            case 6:
+                type = "POLISHED ANDESITE";
+                break;
+            default:
+                type = "STONE";
+                break;
+        }
+        return type;
+    }
+
     public String getWoodType(Material m, byte d) {
         String type;
         switch (m) {

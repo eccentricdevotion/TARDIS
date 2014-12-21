@@ -5,7 +5,7 @@
 
 ##Upcoming version `3.3`
 1. Junk TARDIS
-2. ?
+2. If insufficient power to move the TARDIS, HADS should engage siehe mode instead
 
 ##Future version `3.4+`
 * SpongeAPI

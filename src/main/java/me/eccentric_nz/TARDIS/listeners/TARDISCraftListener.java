@@ -88,7 +88,9 @@ public class TARDISCraftListener implements Listener {
         hasColour.add(Material.WOOD);
         hasColour.add(Material.LOG);
         hasColour.add(Material.LOG_2);
+        hasColour.add(Material.STONE);
         twl = new TARDISWallsLookup(plugin);
+        actions.add(InventoryAction.PICKUP_ALL);
         actions.add(InventoryAction.PLACE_ALL);
         actions.add(InventoryAction.PLACE_ONE);
         actions.add(InventoryAction.PLACE_SOME);
@@ -104,7 +106,7 @@ public class TARDISCraftListener implements Listener {
     @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
     public void onSeedBlockCraft(final InventoryClickEvent event) {
         final Inventory inv = event.getInventory();
-        int slot = event.getRawSlot();
+        final int slot = event.getRawSlot();
         if (inv.getType().equals(InventoryType.WORKBENCH) && slot < 10) {
             if (actions.contains(event.getAction())) {
                 plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
@@ -130,6 +132,9 @@ public class TARDISCraftListener implements Listener {
                                     case STAINED_GLASS:
                                         lore.add("Chameleon block: " + DyeColor.getByWoolData(inv.getItem(8).getData().getData()) + " " + m8.toString());
                                         break;
+                                    case STONE:
+                                        lore.add("Chameleon block: " + plugin.getUtils().getStoneType(inv.getItem(8).getData().getData()));
+                                        break;
                                     default:
                                         lore.add("Chameleon block: " + plugin.getUtils().getWoodType(m8, inv.getItem(8).getData().getData()) + " " + m8.toString());
                                 }
@@ -139,11 +144,24 @@ public class TARDISCraftListener implements Listener {
                             lore.add("Lamp: " + m5.toString());
                             im.setLore(lore);
                             is.setItemMeta(im);
-                            Player player = (Player) event.getWhoClicked();
+                            final Player player = (Player) event.getWhoClicked();
                             if (checkPerms(player, m7)) {
                                 TARDISMessage.send(player, "SEED_VALID");
                                 inv.setItem(0, is);
                                 player.updateInventory();
+                                // fix slots not clearing in 1.8
+                                if (slot == 0 && event.getAction().equals(InventoryAction.PICKUP_ALL)) {
+                                    plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
+                                        @Override
+                                        public void run() {
+                                            // clear the other slots
+                                            for (int i = 1; i < 10; i++) {
+                                                inv.setItem(i, null);
+                                            }
+                                            player.setItemOnCursor(is);
+                                        }
+                                    }, 2L);
+                                }
                             } else {
                                 TARDISMessage.send(player, "NO_PERMS");
                             }

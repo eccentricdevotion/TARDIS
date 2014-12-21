@@ -209,12 +209,37 @@ public class TARDISSeedBlockListener implements Listener {
         String[] split1 = str.split(": ");
         String[] split2 = split1[1].split(" ");
         if (split2.length > 1) {
-            Material m = Material.getMaterial(split2[1]);
+            String mat = split2[1];
+            if (mat.equals("ANDESITE") || mat.equals("DIORITE") || mat.equals("GRANITE")) {
+                mat = "STONE";
+            }
+            Material m = Material.getMaterial(mat);
             data.setId(m.getId());
-            if (m.equals(Material.WOOL) || m.equals(Material.STAINED_CLAY) || m.equals(Material.STAINED_GLASS)) {
+            if (m.equals(Material.STONE)) {
+                if (split2[1].endsWith("ANDESITE")) {
+                    data.setData((byte) 6);
+                }
+                if (split2[1].endsWith("DIORITE")) {
+                    data.setData((byte) 4);
+                }
+                if (split2[1].endsWith("GRANITE")) {
+                    data.setData((byte) 2);
+                }
+            } else if (m.equals(Material.WOOL) || m.equals(Material.STAINED_CLAY) || m.equals(Material.STAINED_GLASS)) {
                 data.setData(DyeColor.valueOf(split2[0]).getWoolData());
             } else {
                 data.setData(getWoodDataType(m, split2[0]));
+            }
+        } else if (split1[1].equals("ANDESITE") || split1[1].equals("DIORITE") || split1[1].equals("GRANITE")) {
+            data.setId(1);
+            if (split2[1].endsWith("ANDESITE")) {
+                data.setData((byte) 5);
+            }
+            if (split2[1].endsWith("DIORITE")) {
+                data.setData((byte) 3);
+            }
+            if (split2[1].endsWith("GRANITE")) {
+                data.setData((byte) 1);
             }
         } else {
             data.setId(Material.getMaterial(split1[1]).getId());
