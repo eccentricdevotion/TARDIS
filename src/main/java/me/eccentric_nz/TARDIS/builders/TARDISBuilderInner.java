@@ -388,7 +388,7 @@ public class TARDISBuilderInner {
                             qf.doInsert("lamps", setlb);
                         }
                     }
-                    if (type.equals(Material.COMMAND) || ((schm.getPermission().equals("bigger") || schm.getPermission().equals("deluxe")) && type.equals(Material.BEACON))) {
+                    if (type.equals(Material.COMMAND) || ((schm.getPermission().equals("bigger") || schm.getPermission().equals("deluxe") || schm.getPermission().equals("twelfth")) && type.equals(Material.BEACON))) {
                         /*
                          * command block - remember it to spawn the creeper on.
                          * could also be a beacon block, as the creeper sits
@@ -396,7 +396,7 @@ public class TARDISBuilderInner {
                          */
                         String creeploc = world.getName() + ":" + (x + 0.5) + ":" + y + ":" + (z + 0.5);
                         set.put("creeper", creeploc);
-                        type = (schm.getPermission().equals("bigger") || schm.getPermission().equals("deluxe")) ? Material.BEACON : Material.SMOOTH_BRICK;
+                        type = (schm.getPermission().equals("bigger") || schm.getPermission().equals("deluxe") || schm.getPermission().equals("twelfth")) ? Material.BEACON : Material.SMOOTH_BRICK;
                     }
                     if (type.equals(Material.WOOD_BUTTON)) {
                         /*
@@ -500,9 +500,9 @@ public class TARDISBuilderInner {
             pdb.setData(pddata, true);
         }
         for (Map.Entry<Block, Byte> entry : postRedstoneTorchBlocks.entrySet()) {
-            Block ptb = entry.getKey();
+            Block prtb = entry.getKey();
             byte ptdata = entry.getValue();
-            ptb.setTypeIdAndData(76, ptdata, true);
+            prtb.setTypeIdAndData(76, ptdata, true);
         }
         for (Map.Entry<Block, Byte> entry : postTorchBlocks.entrySet()) {
             Block ptb = entry.getKey();
