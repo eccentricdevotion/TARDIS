@@ -85,6 +85,7 @@ public class TARDISAdminCommands implements CommandExecutor {
         firstsStr.put("purge_portals", "");
         firstsStr.put("recharger", "");
         firstsStr.put("reload", "");
+        firstsStr.put("remove_flag", "");
         firstsStr.put("respect_towny", "preferences");
         firstsStr.put("respect_worldguard", "preferences");
         firstsStr.put("siege", "siege");
@@ -220,6 +221,9 @@ public class TARDISAdminCommands implements CommandExecutor {
                     }
                     if (first.equals("add_regions")) {
                         return new TARDISAddRegionsCommand(plugin).doCheck(sender);
+                    }
+                    if (first.equals("remove_flag")) {
+                        return new TARDISRemoveMobSpawnDeny(plugin).doAllowMobSpawning(sender);
                     }
                 }
                 if (first.equals("list")) {
