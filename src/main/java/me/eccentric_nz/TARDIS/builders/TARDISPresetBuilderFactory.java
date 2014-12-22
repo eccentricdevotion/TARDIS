@@ -150,13 +150,6 @@ public class TARDISPresetBuilderFactory {
                     TARDISDeinstaPreset deinsta = new TARDISDeinstaPreset(plugin);
                     deinsta.instaDestroyPreset(pbd, false, demat);
                 }
-                final TARDISInstaPreset trp = new TARDISInstaPreset(plugin, pbd, preset, lamp, cham_id, cham_data, true, minecart, ctm, add_sign);
-                plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
-                    @Override
-                    public void run() {
-                        trp.buildPreset();
-                    }
-                }, 10L);
                 plugin.getTrackerKeeper().getMaterialising().add(pbd.getTardisID());
                 TARDISMaterialisationPreset runnable = new TARDISMaterialisationPreset(plugin, pbd, preset, lamp, cham_id, cham_data, minecart, ctm, add_sign, 3);
                 int taskID = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, runnable, 10L, 20L);
