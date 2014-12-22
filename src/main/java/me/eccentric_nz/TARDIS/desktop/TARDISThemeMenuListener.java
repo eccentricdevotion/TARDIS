@@ -63,10 +63,8 @@ public class TARDISThemeMenuListener extends TARDISMenuListener implements Liste
                     case 8:
                     case 9:
                     case 10:
+                    case 11:
                         event.setCancelled(true);
-                        if (slot == 10 && !plugin.getConfig().getBoolean("creation.custom_schematic")) {
-                            return;
-                        }
                         // get Display name of selected console
                         ItemStack choice = inv.getItem(slot);
                         String perm = CONSOLES.SCHEMATICFor(choice.getType()).getPermission();
