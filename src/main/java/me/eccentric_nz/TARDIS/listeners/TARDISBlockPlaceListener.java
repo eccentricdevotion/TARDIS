@@ -72,14 +72,20 @@ public class TARDISBlockPlaceListener implements Listener {
         blocks.add(Material.REDSTONE_BLOCK); // redstone
         blocks.add(Material.QUARTZ_BLOCK); // ARS
         blocks.add(Material.COAL_BLOCK); // steampunk
-        if (plugin.getConfig().getBoolean("creation.custom_schematic")) {
-            custom = Material.valueOf(plugin.getConfig().getString("creation.custom_schematic_seed"));
-            blocks.add(custom); // custom
+        for (final String console : plugin.getCustomConsolesConfig().getKeys(false)) {
+            if (plugin.getCustomConsolesConfig().getBoolean(console + ".enabled")) {
+                try {
+                    custom = Material.valueOf(plugin.getCustomConsolesConfig().getString(console + ".seed"));
+                    blocks.add(custom); // custom
+                } catch (IllegalArgumentException e) {
+                    plugin.debug(plugin.getPluginName() + "Invalid custom seed block material for " + console + "!");
+                }
+            }
         }
     }
 
     /**
-     * Listens for player block placing. If the player place a stack of blocks
+     * Listens for player block placing. If the player places a stack of blocks
      * in a certain pattern for example (but not limited to): IRON_BLOCK,
      * LAPIS_BLOCK, RESTONE_TORCH the pattern of blocks is turned into a TARDIS.
      *
