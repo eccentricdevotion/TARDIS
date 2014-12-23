@@ -69,7 +69,9 @@ public class TARDISFullThemeRunnable extends TARDISThemeRunnable implements Runn
     World world;
     private final List<Block> lampblocks = new ArrayList<Block>();
     private final List<Material> precious = new ArrayList<Material>();
+    private List<Chunk> chunks;
     private final HashMap<Block, Byte> postDoorBlocks = new HashMap<Block, Byte>();
+    private final HashMap<Block, Byte> postRedstoneTorchBlocks = new HashMap<Block, Byte>();
     private final HashMap<Block, Byte> postTorchBlocks = new HashMap<Block, Byte>();
     private final HashMap<Block, Byte> postSignBlocks = new HashMap<Block, Byte>();
     private final HashMap<Block, Byte> postRepeaterBlocks = new HashMap<Block, Byte>();
@@ -144,6 +146,7 @@ public class TARDISFullThemeRunnable extends TARDISThemeRunnable implements Runn
             slot = rs.getTIPS();
             id = rs.getTardis_id();
             chunk = getChunk(rs.getChunk());
+            chunks = getChunks(chunk, tud.getSchematic());
             // remove the charged creeper
             Location creeper = getCreeperLocation(rs.getCreeper());
             Entity ent = creeper.getWorld().spawnEntity(creeper, EntityType.EGG);
@@ -167,7 +170,7 @@ public class TARDISFullThemeRunnable extends TARDISThemeRunnable implements Runn
                 startz = gsl[2];
                 resetz = gsl[3];
             }
-            starty = (tud.getSchematic().getPermission().equals("REDSTONE")) ? 65 : 64;
+            starty = (tud.getSchematic().getPermission().equals("redstone")) ? 65 : 64;
             downgrade = compare(tud.getPrevious(), tud.getSchematic());
             String[] split = rs.getChunk().split(":");
             world = plugin.getServer().getWorld(split[0]);
@@ -197,15 +200,27 @@ public class TARDISFullThemeRunnable extends TARDISThemeRunnable implements Runn
             player = plugin.getServer().getPlayer(uuid);
             // remove upgrade data
             plugin.getTrackerKeeper().getUpgrades().remove(uuid);
-            if (downgrade) {
-                TARDISMessage.send(player, "UPGRADE_TELEPORT");
-                // teleport player to safe location
-                Location loc = chunk.getBlock(8, 69, 4).getLocation();
-                player.teleport(loc);
+            // teleport player to safe location
+            TARDISMessage.send(player, "UPGRADE_TELEPORT");
+            Location loc;
+            if (tud.getSchematic().getPermission().equals("twelfth") || tud.getPrevious().getPermission().equals("twelfth")) {
+                loc = chunk.getBlock(9, 69, 3).getLocation();
+            } else {
+                loc = chunk.getBlock(8, 69, 4).getLocation();
             }
+            player.teleport(loc);
         }
         if (level == (h - 1) && row == (w - 1)) {
             // we're finished
+            // remove items
+            for (Chunk chink : chunks) {
+                // remove dropped items
+                for (Entity e : chink.getEntities()) {
+                    if (e instanceof Item) {
+                        e.remove();
+                    }
+                }
+            }
             // put on the door, redstone torches, signs, and the repeaters
             for (Map.Entry<Block, Byte> entry : postDoorBlocks.entrySet()) {
                 Block pdb = entry.getKey();
@@ -213,11 +228,16 @@ public class TARDISFullThemeRunnable extends TARDISThemeRunnable implements Runn
                 pdb.setType(Material.IRON_DOOR_BLOCK);
                 pdb.setData(pddata, true);
             }
+            for (Map.Entry<Block, Byte> entry : postRedstoneTorchBlocks.entrySet()) {
+                Block prtb = entry.getKey();
+                byte ptdata = entry.getValue();
+                prtb.setType(Material.REDSTONE_TORCH_ON);
+                prtb.setData(ptdata, true);
+            }
             for (Map.Entry<Block, Byte> entry : postTorchBlocks.entrySet()) {
                 Block ptb = entry.getKey();
                 byte ptdata = entry.getValue();
-                ptb.setType(Material.REDSTONE_TORCH_ON);
-                ptb.setData(ptdata, true);
+                ptb.setTypeIdAndData(50, ptdata, true);
             }
             for (Map.Entry<Block, Byte> entry : postRepeaterBlocks.entrySet()) {
                 Block prb = entry.getKey();
@@ -245,6 +265,7 @@ public class TARDISFullThemeRunnable extends TARDISThemeRunnable implements Runn
                 ppeb.setType(Material.PISTON_EXTENSION);
                 ppeb.setData(ppedata, true);
             }
+            int s = 0;
             for (Map.Entry<Block, Byte> entry : postSignBlocks.entrySet()) {
                 final Block psb = entry.getKey();
                 byte psdata = entry.getValue();
@@ -252,12 +273,23 @@ public class TARDISFullThemeRunnable extends TARDISThemeRunnable implements Runn
                 psb.setData(psdata, true);
                 if (psb.getType().equals(Material.WALL_SIGN)) {
                     Sign cs = (Sign) psb.getState();
-                    cs.setLine(0, "Chameleon");
-                    cs.setLine(1, "Circuit");
-                    cs.setLine(2, ChatColor.RED + "OFF");
-                    cs.setLine(3, "NEW");
+                    if (s > 0) {
+                        cs.setLine(1, "Control");
+                        cs.setLine(2, "Centre");
+                        String controlloc = psb.getLocation().toString();
+                        qf.insertSyncControl(id, 22, controlloc, 0);
+                    } else {
+                        cs.setLine(0, "Chameleon");
+                        cs.setLine(1, "Circuit");
+                        cs.setLine(2, ChatColor.RED + "OFF");
+                        cs.setLine(3, "NEW");
+                        String chameleonloc = world.getName() + ":" + psb.getLocation().getBlockX() + ":" + psb.getLocation().getBlockY() + ":" + psb.getLocation().getBlockZ();
+                        set.put("chameleon", chameleonloc);
+                        set.put("chamele_on", 0);
+                    }
                     cs.update();
                 }
+                s++;
             }
             if (postSaveSignBlock != null) {
                 postSaveSignBlock.setType(Material.WALL_SIGN);
@@ -419,7 +451,7 @@ public class TARDISFullThemeRunnable extends TARDISThemeRunnable implements Runn
                     }
                 }
                 if (type.equals(Material.MOB_SPAWNER)) { // scanner button
-                         /*
+                     /*
                      * mob spawner will be converted to the correct id by
                      * setBlock(), but remember it for the scanner.
                      */
@@ -430,11 +462,6 @@ public class TARDISFullThemeRunnable extends TARDISThemeRunnable implements Runn
                     // remember the location of the condenser chest
                     String chest = world.getName() + ":" + x + ":" + y + ":" + z;
                     set.put("condenser", chest);
-                }
-                if (type.equals(Material.WALL_SIGN)) { // chameleon circuit sign
-                    String chameleonloc = world.getName() + ":" + x + ":" + y + ":" + z;
-                    set.put("chameleon", chameleonloc);
-                    set.put("chamele_on", 0);
                 }
                 if (type.equals(Material.IRON_DOOR_BLOCK)) {
                     if (data < (byte) 8) { // iron door bottom
@@ -561,7 +588,7 @@ public class TARDISFullThemeRunnable extends TARDISThemeRunnable implements Runn
                         qf.doInsert("lamps", setlb);
                     }
                 }
-                if (type.equals(Material.COMMAND) || ((tud.getSchematic().getPermission().equals("bigger") || tud.getSchematic().getPermission().equals("deluxe")) && type.equals(Material.BEACON))) {
+                if (type.equals(Material.COMMAND) || ((tud.getSchematic().getPermission().equals("bigger") || tud.getSchematic().getPermission().equals("deluxe") || tud.getSchematic().getPermission().equals("twelfth")) && type.equals(Material.BEACON))) {
                     /*
                      * command block - remember it to spawn the creeper on.
                      * could also be a beacon block, as the creeper sits
@@ -569,7 +596,7 @@ public class TARDISFullThemeRunnable extends TARDISThemeRunnable implements Runn
                      */
                     String creeploc = world.getName() + ":" + (x + 0.5) + ":" + y + ":" + (z + 0.5);
                     set.put("creeper", creeploc);
-                    if (tud.getSchematic().getPermission().equals("bigger") || tud.getSchematic().getPermission().equals("deluxe")) {
+                    if (tud.getSchematic().getPermission().equals("bigger") || tud.getSchematic().getPermission().equals("deluxe") || tud.getSchematic().getPermission().equals("twelfth")) {
                         type = Material.BEACON;
                     } else {
                         type = Material.SMOOTH_BRICK;
@@ -597,6 +624,8 @@ public class TARDISFullThemeRunnable extends TARDISThemeRunnable implements Runn
                 if (type.equals(Material.IRON_DOOR_BLOCK)) { // doors
                     postDoorBlocks.put(world.getBlockAt(x, y, z), data);
                 } else if (type.equals(Material.REDSTONE_TORCH_ON)) {
+                    postRedstoneTorchBlocks.put(world.getBlockAt(x, y, z), data);
+                } else if (type.equals(Material.TORCH)) {
                     postTorchBlocks.put(world.getBlockAt(x, y, z), data);
                 } else if (type.equals(Material.PISTON_STICKY_BASE)) {
                     postStickyPistonBaseBlocks.put(world.getBlockAt(x, y, z), data);
@@ -659,10 +688,13 @@ public class TARDISFullThemeRunnable extends TARDISThemeRunnable implements Runn
                     plugin.getUtils().setBlock(world, x, y, z, type, data);
                 }
             }
-            // remove dropped items
-            for (Entity e : chunk.getEntities()) {
-                if (e instanceof Item) {
-                    e.remove();
+            // remove items
+            for (Chunk chink : chunks) {
+                // remove dropped items
+                for (Entity e : chink.getEntities()) {
+                    if (e instanceof Item) {
+                        e.remove();
+                    }
                 }
             }
             if (row < w) {
@@ -689,13 +721,13 @@ public class TARDISFullThemeRunnable extends TARDISThemeRunnable implements Runn
 
     private List<TARDISARSJettison> getJettisons(SCHEMATIC prev, SCHEMATIC next, Chunk chunk) {
         List<TARDISARSJettison> list = new ArrayList<TARDISARSJettison>();
-        if (prev.getPermission().equals("bigger") || prev.getPermission().equals("redstone")) {
+        if (prev.getPermission().equals("bigger") || prev.getPermission().equals("redstone") || prev.getPermission().equals("twelfth")) {
             // the 3 chunks on the same level
             list.add(new TARDISARSJettison(chunk, 1, 4, 5));
             list.add(new TARDISARSJettison(chunk, 1, 5, 4));
             list.add(new TARDISARSJettison(chunk, 1, 5, 5));
         } else if (prev.getPermission().equals("deluxe") || prev.getPermission().equals("eleventh")) {
-            if (next.getPermission().equals("bigger") || next.getPermission().equals("redstone")) {
+            if (next.getPermission().equals("bigger") || next.getPermission().equals("redstone") || next.getPermission().equals("twelfth")) {
                 // the 4 chunks on the level above
                 list.add(new TARDISARSJettison(chunk, 2, 4, 4));
                 list.add(new TARDISARSJettison(chunk, 2, 4, 5));
@@ -734,5 +766,16 @@ public class TARDISFullThemeRunnable extends TARDISThemeRunnable implements Runn
         float cy = plugin.getUtils().parseFloat(creeperData[2]) + 1;
         float cz = plugin.getUtils().parseFloat(creeperData[3]);
         return new Location(cw, cx, cy, cz);
+    }
+
+    private List<Chunk> getChunks(Chunk c, SCHEMATIC s) {
+        List<Chunk> chinks = new ArrayList<Chunk>();
+        chinks.add(c);
+        if (!s.isSmall()) {
+            chinks.add(c.getWorld().getChunkAt(c.getX() + 1, c.getZ()));
+            chinks.add(c.getWorld().getChunkAt(c.getX(), c.getZ() + 1));
+            chinks.add(c.getWorld().getChunkAt(c.getX() + 1, c.getZ() + 1));
+        }
+        return chinks;
     }
 }
