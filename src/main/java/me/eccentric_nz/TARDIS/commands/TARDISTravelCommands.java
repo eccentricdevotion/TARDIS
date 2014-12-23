@@ -540,7 +540,19 @@ public class TARDISTravelCommands implements CommandExecutor {
                         }
                         // must be a location then
                         int x, y, z;
-                        World w = plugin.getServer().getWorld(w_str);
+                        World w;
+                        if (args[0].equals("~")) {
+                            HashMap<String, Object> wherecl = new HashMap<String, Object>();
+                            wherecl.put("tardis_id", id);
+                            ResultSetCurrentLocation rsc = new ResultSetCurrentLocation(plugin, wherecl);
+                            if (!rsc.resultSet()) {
+                                TARDISMessage.send(player, "CURRENT_NOT_FOUND");
+                                return true;
+                            }
+                            w = rsc.getWorld();
+                        } else {
+                            w = plugin.getServer().getWorld(w_str);
+                        }
                         if (w == null) {
                             TARDISMessage.send(player, "WORLD_NOT_FOUND");
                             return true;
