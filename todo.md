@@ -1,19 +1,16 @@
 #TODO
 
-##Current version `3.1`
-1. TARDIS up/cross-grades (change the desktop theme)
-2. Saved biome disks able to be extended
-3. Update the VAULT room to automatically sort items into the chests
-   * one chest is set as the drop chest
-   * all other chests in the 16x16x16 chunk are set as storage chests
-   * place at least 1 block/item into the storage chests
-   * blocks/items placed in the drop chest will automatically be sent to the chest with the same block/item in it
-   * add commands to update existing VAULT rooms to the new system
-4. Slimmer TARDIS option?
-5. Find the Multiverse problem that prevents the Rail room from functioning properly
+##Current version `3.2.1`
+1. Fix bugs
 
-##Future version `3.2+`
-* ?
+##Upcoming version `3.3`
+1. Junk TARDIS
+2. If insufficient power to move the TARDIS, HADS should engage siehe mode instead
+
+##Future version `3.4+`
+* SpongeAPI
+* Forge mod for custom items and blocks (to tie in with Sponge version)
+* Slimmer TARDIS option?
 
 ##Resource Pack / TARDISWeepingAngels
 
@@ -23,16 +20,11 @@ Re-skin mobs for Resource pack, and add new mob sounds
 * Villagers -> Hath
 * Endermen -> The Silence
 * Iron Golem -> Gunslinger
-* Witches -> Slitheen?
+* Witches -> Slitheen / Whispermen?
 * Wolves -> K-9? (All the textures I seen so far just don't work - you shouldn't see the legs...)
 * Slimes -> Adipose
 
-##Waiting on Minecraft/Bukkit update
-
-1. TARDIS invisibility - 1.8 barrier blocks?
-2. Add new blocks / items
-
-##Waiting on Bukkit API
+##Waiting on Bukkit / SpigotAPI
 0. IDs/data are soon to be history... so convert all ID/data use to block states 
 1. Get/set horse speed (Attribute API)
 2. Achievements API is now available, but doesn't allow custom achievements :( [https://bukkit.atlassian.net/browse/BUKKIT-5672](https://bukkit.atlassian.net/browse/BUKKIT-5672)
