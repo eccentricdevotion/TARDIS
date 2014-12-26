@@ -125,6 +125,7 @@ public class TARDISBuilderInner {
         HashMap<Block, Byte> postPistonBaseBlocks = new HashMap<Block, Byte>();
         HashMap<Block, Byte> postStickyPistonBaseBlocks = new HashMap<Block, Byte>();
         HashMap<Block, Byte> postPistonExtensionBlocks = new HashMap<Block, Byte>();
+        HashMap<Block, Byte> postLeverBlocks = new HashMap<Block, Byte>();
         Block postSaveSignBlock = null;
         Block postTerminalBlock = null;
         Block postARSBlock = null;
@@ -429,6 +430,8 @@ public class TARDISBuilderInner {
                         postPistonBaseBlocks.put(world.getBlockAt(x, y, z), data);
                     } else if (type.equals(Material.PISTON_EXTENSION)) {
                         postPistonExtensionBlocks.put(world.getBlockAt(x, y, z), data);
+                    } else if (type.equals(Material.LEVER)) {
+                        postLeverBlocks.put(world.getBlockAt(x, y, z), data);
                     } else if (type.equals(Material.WALL_SIGN)) {
                         postSignBlocks.put(world.getBlockAt(x, y, z), data);
                     } else if (type.equals(Material.MONSTER_EGGS)) { // monster egg stone for controls
@@ -534,6 +537,12 @@ public class TARDISBuilderInner {
             byte ppedata = entry.getValue();
             ppeb.setType(Material.PISTON_EXTENSION);
             ppeb.setData(ppedata, true);
+        }
+        for (Map.Entry<Block, Byte> entry : postLeverBlocks.entrySet()) {
+            Block plb = entry.getKey();
+            byte pldata = entry.getValue();
+            plb.setType(Material.LEVER);
+            plb.setData(pldata, true);
         }
         int s = 0;
         for (Map.Entry<Block, Byte> entry : postSignBlocks.entrySet()) {

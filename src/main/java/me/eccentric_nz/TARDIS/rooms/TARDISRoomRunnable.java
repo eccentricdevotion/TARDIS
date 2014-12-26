@@ -71,6 +71,7 @@ public class TARDISRoomRunnable implements Runnable {
     List<Material> notThese = new ArrayList<Material>();
     HashMap<Block, Byte> cocoablocks = new HashMap<Block, Byte>();
     HashMap<Block, Byte> doorblocks = new HashMap<Block, Byte>();
+    HashMap<Block, Byte> leverblocks = new HashMap<Block, Byte>();
     HashMap<Block, Byte> torchblocks = new HashMap<Block, Byte>();
     HashMap<Block, Byte> redstoneTorchblocks = new HashMap<Block, Byte>();
     HashMap<Block, Byte> mushroomblocks = new HashMap<Block, Byte>();
@@ -103,6 +104,7 @@ public class TARDISRoomRunnable implements Runnable {
         this.repeaterOrder.put(4, 5);
         this.repeaterOrder.put(5, 4);
         this.notThese.add(Material.COCOA);
+        this.notThese.add(Material.LEVER);
         this.notThese.add(Material.PISTON_EXTENSION);
         this.notThese.add(Material.REDSTONE_TORCH_ON);
         this.notThese.add(Material.SUGAR_CANE_BLOCK);
@@ -179,6 +181,11 @@ public class TARDISRoomRunnable implements Runnable {
                 }
                 doorblocks.clear();
             }
+            // put levers on
+            for (Map.Entry<Block, Byte> entry : leverblocks.entrySet()) {
+                entry.getKey().setTypeIdAndData(69, entry.getValue(), true);
+            }
+            leverblocks.clear();
             // update lamp block states
             TARDISMessage.send(p, "ROOM_POWER");
             for (Block lamp : lampblocks) {
@@ -353,6 +360,11 @@ public class TARDISRoomRunnable implements Runnable {
             if (type.equals(Material.TORCH)) {
                 Block torch = world.getBlockAt(startx, starty, startz);
                 torchblocks.put(torch, data);
+            }
+            // remember torches
+            if (type.equals(Material.LEVER)) {
+                Block lever = world.getBlockAt(startx, starty, startz);
+                leverblocks.put(lever, data);
             }
             // remember redstone torches
             if (type.equals(Material.REDSTONE_TORCH_ON)) {
