@@ -59,6 +59,12 @@ public class TARDISChameleonCircuit {
         if (TARDISConstants.CHAMELEON_BLOCKS_CHANGE.contains((Integer) chameleonType)) {
             wall_block = swapId(chameleonType);
             switch (chameleonType) {
+                case 12:
+                    if (b.getData() == (byte) 1) {
+                        wall_block = 179;
+                        chameleonData = 0;
+                    }
+                    break;
                 case 22:
                     chameleonData = 11;
                     break;
