@@ -61,6 +61,7 @@ public class TARDISPrefsMenuListener implements Listener {
         lookup.put("Connected Textures", "ctm_on");
         lookup.put("Preset Sign", "sign_on");
         lookup.put("Travel Bar", "travelbar_on");
+        lookup.put("Mob Farming", "farm_on");
     }
 
     @EventHandler(ignoreCancelled = true)
@@ -70,13 +71,13 @@ public class TARDISPrefsMenuListener implements Listener {
         if (name.equals("§4Player Prefs Menu")) {
             event.setCancelled(true);
             int slot = event.getRawSlot();
-            if (slot >= 0 && slot < 18) {
+            if (slot >= 0 && slot < 27) {
                 ItemStack is = inv.getItem(slot);
                 if (is != null) {
                     final Player p = (Player) event.getWhoClicked();
                     UUID uuid = p.getUniqueId();
                     ItemMeta im = is.getItemMeta();
-                    if ((slot == 16 || slot == 17) && im.getDisplayName().equals("TARDIS Map")) {
+                    if (slot == 17 && im.getDisplayName().equals("TARDIS Map")) {
                         // must be in the TARDIS
                         HashMap<String, Object> where = new HashMap<String, Object>();
                         where.put("uuid", uuid.toString());
@@ -99,7 +100,7 @@ public class TARDISPrefsMenuListener implements Listener {
                         }
                         return;
                     }
-                    if (slot == 17 && im.getDisplayName().equals("Admin Menu")) {
+                    if (slot == 22 && im.getDisplayName().equals("Admin Menu")) {
                         // close this gui and load the Admin Menu
                         plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
                             @Override

@@ -57,6 +57,7 @@ public class TARDISMySQLDatabaseUpdater {
         tardisupdates.add("lights_on int(1) DEFAULT '1'");
         tardisupdates.add("powered_on int(1) DEFAULT '0'");
         tardisupdates.add("renderer varchar(512) DEFAULT ''");
+        tardisupdates.add("hutch varchar(512) DEFAULT ''");
         tardisupdates.add("siege_on int(1) DEFAULT '0'");
         tardisupdates.add("zero varchar(512) DEFAULT ''");
         prefsupdates.add("language varchar(32) DEFAULT 'AUTO_DETECT'");
@@ -64,6 +65,7 @@ public class TARDISMySQLDatabaseUpdater {
         prefsupdates.add("ctm_on int(1) DEFAULT '0'");
         prefsupdates.add("difficulty int(1) DEFAULT '0'");
         prefsupdates.add("flying_mode int(1) DEFAULT '1'");
+        prefsupdates.add("farm_on int(1) DEFAULT '0'");
         prefsupdates.add("minecart_on int(1) DEFAULT '0'");
         prefsupdates.add("renderer_on int(1) DEFAULT '1'");
         prefsupdates.add("sign_on int(1) DEFAULT '1'");

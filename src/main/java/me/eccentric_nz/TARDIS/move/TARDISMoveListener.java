@@ -99,9 +99,10 @@ public class TARDISMoveListener implements Listener {
                 boolean hasPrefs = rsp.resultSet();
                 boolean minecart = (hasPrefs) ? rsp.isMinecartOn() : false;
                 boolean userQuotes = (hasPrefs) ? rsp.isQuotesOn() : false;
+                boolean willFarm = (hasPrefs) ? rsp.isFarmOn() : false;
                 // check for entities near the police box
                 List<TARDISMob> pets = null;
-                if (plugin.getConfig().getBoolean("allow.mob_farming") && p.hasPermission("tardis.farm") && !plugin.getTrackerKeeper().getFarming().contains(uuid)) {
+                if (plugin.getConfig().getBoolean("allow.mob_farming") && p.hasPermission("tardis.farm") && !plugin.getTrackerKeeper().getFarming().contains(uuid) && willFarm) {
                     plugin.getTrackerKeeper().getFarming().add(uuid);
                     TARDISFarmer tf = new TARDISFarmer(plugin);
                     pets = tf.farmAnimals(l, d, id, p, tpl.getLocation().getWorld().getName(), l.getWorld().getName());

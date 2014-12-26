@@ -85,7 +85,7 @@ public class TARDISAdminMenuListener implements Listener {
                     plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
                         @Override
                         public void run() {
-                            Inventory ppm = plugin.getServer().createInventory(p, 18, "§4Player Prefs Menu");
+                            Inventory ppm = plugin.getServer().createInventory(p, 27, "§4Player Prefs Menu");
                             ppm.setContents(new TARDISPrefsMenuInventory(plugin, p.getUniqueId()).getMenu());
                             p.openInventory(ppm);
                         }

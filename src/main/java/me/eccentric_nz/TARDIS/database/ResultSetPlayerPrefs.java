@@ -64,6 +64,7 @@ public class ResultSetPlayerPrefs {
     private boolean ctmOn;
     private boolean signOn;
     private boolean travelbarOn;
+    private boolean farmOn;
     private int flightMode;
     private boolean easyDifficulty;
 
@@ -153,6 +154,7 @@ public class ResultSetPlayerPrefs {
                 this.ctmOn = rs.getBoolean("ctm_on");
                 this.signOn = rs.getBoolean("sign_on");
                 this.travelbarOn = rs.getBoolean("travelbar_on");
+                this.farmOn = rs.getBoolean("farm_on");
                 this.flightMode = rs.getInt("flying_mode");
                 this.easyDifficulty = rs.getBoolean("difficulty");
             } else {
@@ -282,6 +284,10 @@ public class ResultSetPlayerPrefs {
 
     public boolean isTravelbarOn() {
         return travelbarOn;
+    }
+
+    public boolean isFarmOn() {
+        return farmOn;
     }
 
     public int getFlightMode() {

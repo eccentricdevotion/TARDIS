@@ -103,9 +103,11 @@ public class TARDISDoorClickListener extends TARDISDoorListener implements Liste
                     ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, wherepp);
                     String key;
                     boolean hasPrefs = false;
+                    boolean willFarm = false;
                     if (rsp.resultSet()) {
                         hasPrefs = true;
                         key = (!rsp.getKey().isEmpty()) ? rsp.getKey() : plugin.getConfig().getString("preferences.key");
+                        willFarm = rsp.isFarmOn();
                     } else {
                         key = plugin.getConfig().getString("preferences.key");
                     }
@@ -395,7 +397,7 @@ public class TARDISDoorClickListener extends TARDISDoorListener implements Liste
                                                 COMPASS innerD = idl.getD();
                                                 // check for entities near the police box
                                                 List<TARDISMob> pets = null;
-                                                if (plugin.getConfig().getBoolean("allow.mob_farming") && player.hasPermission("tardis.farm") && !plugin.getTrackerKeeper().getFarming().contains(player.getUniqueId())) {
+                                                if (plugin.getConfig().getBoolean("allow.mob_farming") && player.hasPermission("tardis.farm") && !plugin.getTrackerKeeper().getFarming().contains(player.getUniqueId()) && willFarm) {
                                                     plugin.getTrackerKeeper().getFarming().add(player.getUniqueId());
                                                     TARDISFarmer tf = new TARDISFarmer(plugin);
                                                     pets = tf.farmAnimals(block_loc, d, id, player.getPlayer(), tmp_loc.getWorld().getName(), playerWorld.getName());

@@ -85,6 +85,7 @@ public class TARDISSQLiteDatabaseUpdater {
         prefsupdates.add("texture_on INTEGER DEFAULT 0");
         prefsupdates.add("texture_out TEXT DEFAULT 'default'");
         prefsupdates.add("travelbar_on INTEGER DEFAULT 0");
+        prefsupdates.add("farm_on INTEGER DEFAULT 0");
         prefsupdates.add("wall TEXT DEFAULT 'ORANGE_WOOL'");
         prefsupdates.add("wool_lights_on INTEGER DEFAULT 0");
         tardisupdates.add("adapti_on INTEGER DEFAULT 0");
@@ -99,6 +100,7 @@ public class TARDISSQLiteDatabaseUpdater {
         tardisupdates.add("eps TEXT DEFAULT ''");
         tardisupdates.add("farm TEXT DEFAULT ''");
         tardisupdates.add("handbrake_on INTEGER DEFAULT 1");
+        tardisupdates.add("hutch TEXT DEFAULT ''");
         tardisupdates.add("hidden INTEGER DEFAULT 0");
         tardisupdates.add("iso_on INTEGER DEFAULT 0");
         tardisupdates.add("lastuse INTEGER DEFAULT " + now);

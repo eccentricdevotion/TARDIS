@@ -193,26 +193,33 @@ public class TARDISPrefsMenuInventory {
                 bar.setItemMeta(api);
                 options.add(bar);
             }
+            // mob farming
+            if (plugin.getConfig().getBoolean("allow.mob_farming")) {
+                ItemStack far = new ItemStack(Material.DIODE, 1);
+                ItemMeta ming = far.getItemMeta();
+                ming.setDisplayName("Mob Farming");
+                String farm_value = (rsp.isFarmOn()) ? "ON" : "OFF";
+                ming.setLore(Arrays.asList(farm_value));
+                far.setItemMeta(ming);
+                options.add(far);
+            }
         }
-        ItemStack[] stack = new ItemStack[18];
-        for (int s = 0; s < 16; s++) {
+        ItemStack[] stack = new ItemStack[27];
+        for (int s = 0; s < 17; s++) {
             if (s < options.size()) {
                 stack[s] = options.get(s);
             } else {
                 stack[s] = null;
             }
         }
+        stack[17] = tt;
         if (plugin.getServer().getPlayer(uuid).hasPermission("tardis.admin")) {
-            stack[16] = tt;
             // admin
             ItemStack ad = new ItemStack(Material.NETHER_STAR, 1);
             ItemMeta min = ad.getItemMeta();
             min.setDisplayName("Admin Menu");
             ad.setItemMeta(min);
-            stack[17] = ad;
-        } else {
-            stack[16] = null;
-            stack[17] = tt;
+            stack[22] = ad;
         }
         return stack;
     }
