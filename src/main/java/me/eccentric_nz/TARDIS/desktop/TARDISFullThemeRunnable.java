@@ -73,6 +73,7 @@ public class TARDISFullThemeRunnable extends TARDISThemeRunnable implements Runn
     private final HashMap<Block, Byte> postDoorBlocks = new HashMap<Block, Byte>();
     private final HashMap<Block, Byte> postRedstoneTorchBlocks = new HashMap<Block, Byte>();
     private final HashMap<Block, Byte> postTorchBlocks = new HashMap<Block, Byte>();
+    private final HashMap<Block, Byte> postLeverBlocks = new HashMap<Block, Byte>();
     private final HashMap<Block, Byte> postSignBlocks = new HashMap<Block, Byte>();
     private final HashMap<Block, Byte> postRepeaterBlocks = new HashMap<Block, Byte>();
     private final HashMap<Block, Byte> postPistonBaseBlocks = new HashMap<Block, Byte>();
@@ -233,6 +234,12 @@ public class TARDISFullThemeRunnable extends TARDISThemeRunnable implements Runn
                 byte ptdata = entry.getValue();
                 prtb.setType(Material.REDSTONE_TORCH_ON);
                 prtb.setData(ptdata, true);
+            }
+            for (Map.Entry<Block, Byte> entry : postLeverBlocks.entrySet()) {
+                Block plb = entry.getKey();
+                byte pldata = entry.getValue();
+                plb.setType(Material.LEVER);
+                plb.setData(pldata, true);
             }
             for (Map.Entry<Block, Byte> entry : postTorchBlocks.entrySet()) {
                 Block ptb = entry.getKey();
@@ -623,6 +630,8 @@ public class TARDISFullThemeRunnable extends TARDISThemeRunnable implements Runn
                 // if it's the door, don't set it just remember its block then do it at the end
                 if (type.equals(Material.IRON_DOOR_BLOCK)) { // doors
                     postDoorBlocks.put(world.getBlockAt(x, y, z), data);
+                } else if (type.equals(Material.LEVER)) {
+                    postLeverBlocks.put(world.getBlockAt(x, y, z), data);
                 } else if (type.equals(Material.REDSTONE_TORCH_ON)) {
                     postRedstoneTorchBlocks.put(world.getBlockAt(x, y, z), data);
                 } else if (type.equals(Material.TORCH)) {
