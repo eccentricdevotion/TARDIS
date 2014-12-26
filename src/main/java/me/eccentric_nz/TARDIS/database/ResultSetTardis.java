@@ -79,6 +79,7 @@ public class ResultSetTardis {
     private String village;
     private String renderer;
     private String zero;
+    private String hutch;
     private boolean powered_on;
     private boolean lights_on;
     private boolean siege_on;
@@ -195,6 +196,7 @@ public class ResultSetTardis {
                     if (rs.wasNull()) {
                         this.zero = "";
                     }
+                    this.hutch = rs.getString("hutch");
                     this.powered_on = rs.getBoolean("powered_on");
                     this.lights_on = rs.getBoolean("lights_on");
                     this.siege_on = rs.getBoolean("siege_on");
@@ -355,6 +357,10 @@ public class ResultSetTardis {
 
     public String getZero() {
         return zero;
+    }
+
+    public String getHutch() {
+        return hutch;
     }
 
     public boolean isPowered_on() {

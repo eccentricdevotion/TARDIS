@@ -31,6 +31,7 @@ public enum ROOM {
     GRAVITY,
     GREENHOUSE,
     HARMONY,
+    HUTCH,
     KITCHEN,
     LIBRARY,
     MUSHROOM,
