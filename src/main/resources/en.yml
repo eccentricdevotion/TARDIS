@@ -314,6 +314,7 @@ EXILE_NO_SAVE: "Your exile status does not allow you to save the TARDIS to this 
 EXILE_NO_TRAVEL: "Your exile status does not allow you to bring the TARDIS to this location!"
 FACTIONS: "That location is in another faction's claim!"
 FARM: "You need to grow a farm room before you can farm mobs!"
+FARM_HUTCH: "You need to grow a rabbit hutch room before you can farm rabbits!"
 FARM_STABLE: "You need to grow a stable room before you can farm horses!"
 FARM_VILLAGE: "You need to grow a village room before you can farm villagers!"
 FILE_SAVED: "File saved to 'plugins/TARDIS/TARDIS_list.txt'"

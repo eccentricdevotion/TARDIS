@@ -41,6 +41,7 @@ import org.bukkit.entity.MushroomCow;
 import org.bukkit.entity.Ocelot;
 import org.bukkit.entity.Pig;
 import org.bukkit.entity.Player;
+import org.bukkit.entity.Rabbit;
 import org.bukkit.entity.Sheep;
 import org.bukkit.entity.Tameable;
 import org.bukkit.entity.Villager;
@@ -114,6 +115,7 @@ public class TARDISFarmer {
             List<TARDISMob> old_macd_had_a_sheep = new ArrayList<TARDISMob>();
             List<TARDISMob> old_macd_had_a_mooshroom = new ArrayList<TARDISMob>();
             List<TARDISHorse> old_macd_had_a_horse = new ArrayList<TARDISHorse>();
+            List<TARDISRabbit> old_macd_had_a_rabbit = new ArrayList<TARDISRabbit>();
             List<TARDISVillager> old_macd_had_a_villager = new ArrayList<TARDISVillager>();
             // are we doing an achievement?
             TARDISAchievementFactory taf = null;
@@ -124,6 +126,8 @@ public class TARDISFarmer {
             int farmtotal = 0;
             // count total horses
             int horsetotal = 0;
+            // count total rabbits
+            int rabbittotal = 0;
             // count total villagers
             int villagertotal = 0;
             // count total pets
@@ -135,6 +139,7 @@ public class TARDISFarmer {
             if (rs.resultSet()) {
                 String farm = rs.getFarm();
                 String stable = rs.getStable();
+                String hutch = rs.getHutch();
                 String village = rs.getVillage();
                 // collate the mobs
                 for (Entity e : mobs) {
@@ -237,6 +242,20 @@ public class TARDISFarmer {
                                 taf.doAchievement("PIG");
                             }
                             farmtotal++;
+                            break;
+                        case RABBIT:
+                            TARDISRabbit tmrabbit = new TARDISRabbit();
+                            tmrabbit.setAge(((Rabbit) e).getAge());
+                            tmrabbit.setBaby(!((Rabbit) e).isAdult());
+                            tmrabbit.setName(((Rabbit) e).getCustomName());
+                            tmrabbit.setBunnyType(((Rabbit) e).getRabbitType());
+                            if (!hutch.isEmpty() || (hutch.isEmpty() && plugin.getConfig().getBoolean("allow.spawn_eggs"))) {
+                                e.remove();
+                            }
+                            if (taf != null) {
+                                taf.doAchievement("RABBIT");
+                            }
+                            rabbittotal++;
                             break;
                         case SHEEP:
                             TARDISMob tmshp = new TARDISMob();
@@ -534,6 +553,46 @@ public class TARDISFarmer {
                         }
                     } else if (horsetotal > 0) {
                         TARDISMessage.send(p, "FARM_STABLE");
+                    }
+                }
+                if (!hutch.isEmpty()) {
+                    // get location of hutch room
+                    String[] data = hutch.split(":");
+                    World world = plugin.getServer().getWorld(data[0]);
+                    int x = plugin.getUtils().parseInt(data[1]);
+                    int y = plugin.getUtils().parseInt(data[2]) + 1;
+                    int z = plugin.getUtils().parseInt(data[3]);
+                    if (old_macd_had_a_rabbit.size() > 0) {
+                        Location rabbit_hutch = new Location(world, x + 0.5F, y, z + 0.5F);
+                        while (!world.getChunkAt(rabbit_hutch).isLoaded()) {
+                            world.getChunkAt(rabbit_hutch).load();
+                        }
+                        for (TARDISRabbit e : old_macd_had_a_rabbit) {
+                            plugin.setTardisSpawn(true);
+                            Entity rabbit = world.spawnEntity(rabbit_hutch, EntityType.RABBIT);
+                            Rabbit bunny = (Rabbit) rabbit;
+                            bunny.setAge(e.getAge());
+                            if (e.isBaby()) {
+                                bunny.setBaby();
+                            }
+                            String name = e.getName();
+                            if (name != null && !name.isEmpty()) {
+                                bunny.setCustomName(name);
+                            }
+                            bunny.setRabbitType(e.getBunnyType());
+                            bunny.setRemoveWhenFarAway(false);
+                        }
+                    }
+                } else {
+                    if (plugin.getConfig().getBoolean("allow.spawn_eggs")) {
+                        Inventory inv = p.getInventory();
+                        if (old_macd_had_a_rabbit.size() > 0) {
+                            ItemStack is = new ItemStack(Material.MONSTER_EGG, old_macd_had_a_rabbit.size(), (short) 101);
+                            inv.addItem(is);
+                            p.updateInventory();
+                        }
+                    } else if (rabbittotal > 0) {
+                        TARDISMessage.send(p, "FARM_HUTCH");
                     }
                 }
                 if (!village.isEmpty()) {
