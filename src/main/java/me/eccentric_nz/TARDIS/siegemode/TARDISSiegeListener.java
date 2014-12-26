@@ -163,6 +163,10 @@ public class TARDISSiegeListener implements Listener {
         if (!hasSiegeCubeName(is)) {
             return;
         }
+        if (plugin.getUtils().inTARDISWorld(p)) {
+            event.setCancelled(true);
+            TARDISMessage.send(p, "SIEGE_NO_TARDIS");
+        }
         plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
             @Override
             @SuppressWarnings("deprecation")
@@ -216,6 +220,10 @@ public class TARDISSiegeListener implements Listener {
         if (!plugin.getTrackerKeeper().getSiegeCarrying().containsKey(uuid)) {
             return;
         }
+        if (plugin.getUtils().inTARDISWorld(p)) {
+            event.setCancelled(true);
+            TARDISMessage.send(p, "SIEGE_NO_TARDIS");
+        }
         Location loc = event.getBlock().getLocation();
         // check there is room to expand to a police box
         COMPASS d = COMPASS.valueOf(plugin.getUtils().getPlayersDirection(p, false));
@@ -253,6 +261,10 @@ public class TARDISSiegeListener implements Listener {
             return;
         }
         Player p = event.getPlayer();
+        if (plugin.getUtils().inTARDISWorld(p)) {
+            event.setCancelled(true);
+            TARDISMessage.send(p, "SIEGE_NO_TARDIS");
+        }
         UUID uuid = p.getUniqueId();
         // check location
         HashMap<String, Object> wherec = new HashMap<String, Object>();

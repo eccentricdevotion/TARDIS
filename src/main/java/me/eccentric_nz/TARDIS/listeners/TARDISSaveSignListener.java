@@ -101,6 +101,11 @@ public class TARDISSaveSignListener extends TARDISMenuListener implements Listen
                             List<String> lore = im.getLore();
                             Location save_dest = getLocation(lore);
                             if (save_dest != null) {
+                                if (lore.get(0).startsWith("TARDIS_")) {
+                                    close(player);
+                                    TARDISMessage.send(player, "SAVE_NO_TARDIS");
+                                    return;
+                                }
                                 // check the player is allowed!
                                 if (!plugin.getPluginRespect().getRespect(save_dest, new Parameters(player, FLAG.getDefaultFlags()))) {
                                     close(player);

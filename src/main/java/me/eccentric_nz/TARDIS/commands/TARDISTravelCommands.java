@@ -392,6 +392,10 @@ public class TARDISTravelCommands implements CommandExecutor {
                             }
                             World w = plugin.getServer().getWorld(rsd.getWorld());
                             if (w != null) {
+                                if (w.getName().startsWith("TARDIS_")) {
+                                    TARDISMessage.send(player, "SAVE_NO_TARDIS");
+                                    return true;
+                                }
                                 Location save_dest = new Location(w, rsd.getX(), rsd.getY(), rsd.getZ());
                                 if (!plugin.getPluginRespect().getRespect(save_dest, new Parameters(player, FLAG.getDefaultFlags()))) {
                                     return true;
