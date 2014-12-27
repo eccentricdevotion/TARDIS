@@ -240,6 +240,9 @@ public class TARDISEjectListener implements Listener {
                 if (vilname != null && !vilname.isEmpty()) {
                     villager.setCustomName(vilname);
                 }
+                if (plugin.isHelperOnServer()) {
+                    plugin.getTardisHelper().setTrades(villager, plugin.getTardisHelper().getTrades(v, player));
+                }
                 ent.remove();
                 break;
             default:

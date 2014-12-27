@@ -294,6 +294,9 @@ public class TARDISFarmer {
                             tv.setHealth(v.getHealth());
                             tv.setBaby(!v.isAdult());
                             tv.setName(((LivingEntity) v).getCustomName());
+                            if (plugin.isHelperOnServer()) {
+                                tv.setTrades(plugin.getTardisHelper().getTrades(v, p));
+                            }
                             old_macd_had_a_villager.add(tv);
                             if (!village.isEmpty() || (village.isEmpty() && plugin.getConfig().getBoolean("allow.spawn_eggs"))) {
                                 e.remove();
@@ -620,6 +623,9 @@ public class TARDISFarmer {
                             String name = e.getName();
                             if (name != null && !name.isEmpty()) {
                                 npc.setCustomName(name);
+                            }
+                            if (plugin.isHelperOnServer()) {
+                                plugin.getTardisHelper().setTrades(npc, e.getTrades());
                             }
                             npc.setRemoveWhenFarAway(false);
                         }
