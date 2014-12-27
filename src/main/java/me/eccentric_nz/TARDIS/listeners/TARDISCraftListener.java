@@ -95,6 +95,7 @@ public class TARDISCraftListener implements Listener {
         actions.add(InventoryAction.PLACE_ONE);
         actions.add(InventoryAction.PLACE_SOME);
         actions.add(InventoryAction.SWAP_WITH_CURSOR);
+        actions.add(InventoryAction.MOVE_TO_OTHER_INVENTORY);
     }
 
     /**
@@ -108,7 +109,8 @@ public class TARDISCraftListener implements Listener {
         final Inventory inv = event.getInventory();
         final int slot = event.getRawSlot();
         if (inv.getType().equals(InventoryType.WORKBENCH) && slot < 10) {
-            if (actions.contains(event.getAction())) {
+            final InventoryAction a = event.getAction();
+            if (actions.contains(a)) {
                 plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
                     @Override
                     public void run() {
@@ -150,7 +152,7 @@ public class TARDISCraftListener implements Listener {
                                 inv.setItem(0, is);
                                 player.updateInventory();
                                 // fix slots not clearing in 1.8
-                                if (slot == 0 && event.getAction().equals(InventoryAction.PICKUP_ALL)) {
+                                if (slot == 0 && (a.equals(InventoryAction.PICKUP_ALL) || a.equals(InventoryAction.MOVE_TO_OTHER_INVENTORY))) {
                                     plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
                                         @Override
                                         public void run() {
@@ -158,7 +160,9 @@ public class TARDISCraftListener implements Listener {
                                             for (int i = 1; i < 10; i++) {
                                                 inv.setItem(i, null);
                                             }
-                                            player.setItemOnCursor(is);
+                                            if (!a.equals(InventoryAction.MOVE_TO_OTHER_INVENTORY)) {
+                                                player.setItemOnCursor(is);
+                                            }
                                         }
                                     }, 2L);
                                 }
