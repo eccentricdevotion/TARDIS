@@ -76,7 +76,7 @@ public class TARDISControlMenuListener extends TARDISMenuListener implements Lis
                                 TARDISMessage.send(player, "ENERGY_NO_INIT");
                                 return;
                             }
-                            if (plugin.getConfig().getBoolean("allow.power_down") && !rs.isPowered_on()) {
+                            if (plugin.getConfig().getBoolean("allow.power_down") && !rs.isPowered_on() && slot != 6 && slot != 7) {
                                 TARDISMessage.send(player, "POWER_DOWN");
                                 return;
                             }
