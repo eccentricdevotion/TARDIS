@@ -33,6 +33,7 @@ import org.bukkit.entity.MushroomCow;
 import org.bukkit.entity.Ocelot;
 import org.bukkit.entity.Pig;
 import org.bukkit.entity.Player;
+import org.bukkit.entity.Rabbit;
 import org.bukkit.entity.Sheep;
 import org.bukkit.entity.Tameable;
 import org.bukkit.entity.Villager;
@@ -184,6 +185,20 @@ public class TARDISEjectListener implements Listener {
                     sheep.setCustomName(sheepname);
                 }
                 sheep.setColor(s.getColor());
+                ent.remove();
+                break;
+            case RABBIT:
+                Rabbit r = (Rabbit) ent;
+                Rabbit bunny = (Rabbit) l.getWorld().spawnEntity(l, EntityType.SHEEP);
+                bunny.setTicksLived(r.getTicksLived());
+                if ((!r.isAdult())) {
+                    bunny.setBaby();
+                }
+                String rabbitname = ((LivingEntity) ent).getCustomName();
+                if (rabbitname != null && !rabbitname.isEmpty()) {
+                    bunny.setCustomName(rabbitname);
+                }
+                bunny.setRabbitType(r.getRabbitType());
                 ent.remove();
                 break;
             case WOLF:
