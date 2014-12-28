@@ -57,6 +57,7 @@ public class TARDISTrackerInstanceKeeper {
     private final HashMap<String, List<TARDISSiegeArea>> siegeBreedingAreas = new HashMap<String, List<TARDISSiegeArea>>();
     private final HashMap<String, List<TARDISSiegeArea>> siegeGrowthAreas = new HashMap<String, List<TARDISSiegeArea>>();
     private final HashMap<UUID, Block> exterminate = new HashMap<UUID, Block>();
+    private final HashMap<UUID, Block> invisibleDoors = new HashMap<UUID, Block>();
     private final HashMap<UUID, Block> lazarus = new HashMap<UUID, Block>();
     private final HashMap<UUID, Double[]> gravity = new HashMap<UUID, Double[]>();
     private final HashMap<UUID, Integer> binder = new HashMap<UUID, Integer>();
@@ -136,6 +137,10 @@ public class TARDISTrackerInstanceKeeper {
 
     public HashMap<UUID, Block> getExterminate() {
         return exterminate;
+    }
+
+    public HashMap<UUID, Block> getInvisibleDoors() {
+        return invisibleDoors;
     }
 
     public HashMap<UUID, Block> getLazarus() {

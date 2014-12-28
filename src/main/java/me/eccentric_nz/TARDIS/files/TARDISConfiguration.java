@@ -63,6 +63,7 @@ public class TARDISConfiguration {
         this.blocks_config = plugin.getBlocksConfig();
         this.rooms_config = plugin.getRoomsConfig();
         // boolean
+        boolOptions.put("allow.3d_doors", false);
         boolOptions.put("allow.achievements", true);
         boolOptions.put("allow.all_blocks", false);
         boolOptions.put("allow.autonomous", true);

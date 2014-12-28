@@ -53,7 +53,7 @@ public class TARDISDoorOpener {
         // inner
         final ResultSetDoorBlocks rs = new ResultSetDoorBlocks(plugin, id);
         if (rs.resultSet()) {
-            open(rs.getInnerBlock(), true, rs.getInnerDirection());
+            open(rs.getInnerBlock(), rs.getOuterBlock(), true, rs.getInnerDirection());
             // outer
             if (!rs.getOuterBlock().getChunk().isLoaded()) {
                 rs.getOuterBlock().getChunk().load();
@@ -61,7 +61,7 @@ public class TARDISDoorOpener {
             plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
                 @Override
                 public void run() {
-                    open(rs.getOuterBlock(), false, rs.getOuterDirection());
+                    open(rs.getOuterBlock(), rs.getInnerBlock(), false, rs.getOuterDirection());
                 }
             }, 5L);
         }
@@ -69,9 +69,10 @@ public class TARDISDoorOpener {
 
     /**
      * Open the door.
+     *
      */
     @SuppressWarnings("deprecation")
-    private void open(Block block, boolean add, COMPASS dd) {
+    private void open(Block block, Block other, boolean add, COMPASS dd) {
         if (block.getType().equals(Material.IRON_DOOR_BLOCK) || block.getType().equals(Material.WOODEN_DOOR)) {
             byte door_data = block.getData();
             switch (dd) {
@@ -191,6 +192,10 @@ public class TARDISDoorOpener {
                     // locations
                     if (preset != null && preset.hasPortal()) {
                         plugin.getTrackerKeeper().getPortals().put(exportal, tp_in);
+                        if (preset.equals(PRESET.INVISIBLE) && plugin.getConfig().getBoolean("allow.3d_doors")) {
+                            // remember door location
+                            plugin.getTrackerKeeper().getInvisibleDoors().put(rs.getUuid(), other);
+                        }
                     }
                     plugin.getTrackerKeeper().getPortals().put(inportal, tp_out);
                 }

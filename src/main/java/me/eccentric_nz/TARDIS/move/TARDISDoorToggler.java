@@ -54,12 +54,6 @@ public class TARDISDoorToggler {
     @SuppressWarnings("deprecation")
     public void toggleDoors() {
         UUID uuid = player.getUniqueId();
-//        // get bottom door block
-//        Block door_bottom;
-//        Door door = (Door) block.getState().getData();
-//        door_bottom = (door.isTopHalf()) ? block.getRelative(BlockFace.DOWN) : block;
-//        // is door open?
-//        boolean open = plugin.getUtils().isOpen(door_bottom, dd);
         if (open) {
             new TARDISDoorCloser(plugin, uuid, id).closeDoors();
         } else {

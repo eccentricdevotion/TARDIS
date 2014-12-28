@@ -93,6 +93,7 @@ public class TARDISAdminCommands implements CommandExecutor {
         firstsStrArtron.add("full_charge_item");
         firstsStrArtron.add("jettison_seed");
         // boolean
+        firstsBool.put("3d_doors", "allow");
         firstsBool.put("achievements", "allow");
         firstsBool.put("add_perms", "creation");
         firstsBool.put("all_blocks", "allow");

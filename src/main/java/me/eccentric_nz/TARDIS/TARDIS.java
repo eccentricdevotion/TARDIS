@@ -63,6 +63,7 @@ import me.eccentric_nz.TARDIS.files.TARDISRecipesUpdater;
 import me.eccentric_nz.TARDIS.files.TARDISRoomMap;
 import me.eccentric_nz.TARDIS.move.TARDISMonsterRunnable;
 import me.eccentric_nz.TARDIS.move.TARDISPortalPersister;
+import me.eccentric_nz.TARDIS.move.TARDISSpectaclesRunnable;
 import me.eccentric_nz.TARDIS.recipes.TARDISShapedRecipe;
 import me.eccentric_nz.TARDIS.recipes.TARDISShapelessRecipe;
 import me.eccentric_nz.TARDIS.rooms.TARDISWalls;
@@ -270,6 +271,9 @@ public class TARDIS extends JavaPlugin {
                 if (getConfig().getBoolean("preferences.walk_in_tardis")) {
                     new TARDISPortalPersister(this).load();
                     this.getServer().getScheduler().scheduleSyncRepeatingTask(this, new TARDISMonsterRunnable(this), 2400L, 2400L);
+                }
+                if (getConfig().getBoolean("allow.3d_doors")) {
+                    this.getServer().getScheduler().scheduleSyncRepeatingTask(this, new TARDISSpectaclesRunnable(this), 120L, 100L);
                 }
                 if (disguisesOnServer && getConfig().getBoolean("arch.enabled")) {
                     new TARDISArchPersister(this).checkAll();

@@ -124,6 +124,7 @@ allow:
     power_down: false
     power_down_on_quit: false
     player_difficulty: true
+    3d_doors: false
 # room related
 growth:
     gravity_max_distance: 15
