@@ -16,6 +16,8 @@
  */
 package me.eccentric_nz.TARDIS.desktop;
 
+import java.util.Arrays;
+import java.util.List;
 import java.util.Map;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.rooms.TARDISWalls.Pair;
@@ -36,7 +38,7 @@ public class TARDISWallsInventory {
 
     private final ItemStack[] menu;
     private final TARDIS plugin;
-    //private final ItemStack[][] walls = new ItemStack[6][8];
+    private final List<String> notthese = Arrays.asList("PINE_WOOD", "PINE_LOG", "GREY_WOOL", "LIGHT_GREY_WOOL", "GREY_CLAY", "LIGHT_GREY_CLAY", "STONE_BRICK", "CHISELED_STONE");
 
     public TARDISWallsInventory(TARDIS plugin) {
         this.plugin = plugin;
@@ -57,7 +59,7 @@ public class TARDISWallsInventory {
             if (i > 52) {
                 break;
             }
-            if (!entry.getKey().equals("STONE_BRICK")) {
+            if (!notthese.contains(entry.getKey())) {
                 Pair value = entry.getValue();
                 ItemStack is = new ItemStack(value.getType(), 1, value.getData());
                 stack[i] = is;
