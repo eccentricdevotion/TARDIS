@@ -55,7 +55,7 @@ public class TARDISThemeButton {
         tud.setLevel(level);
         plugin.getTrackerKeeper().getUpgrades().put(player.getUniqueId(), tud);
         // open the upgrade menu
-        ItemStack[] consoles = new TARDISThemeInventory(plugin, player, current_console.toString(), level).getMenu();
+        ItemStack[] consoles = new TARDISThemeInventory(plugin, player, current_console.getPermission(), level).getMenu();
         Inventory upg = plugin.getServer().createInventory(player, 27, "§4TARDIS Upgrade Menu");
         upg.setContents(consoles);
         player.openInventory(upg);
