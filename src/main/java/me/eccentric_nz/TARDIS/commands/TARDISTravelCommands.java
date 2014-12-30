@@ -258,8 +258,8 @@ public class TARDISTravelCommands implements CommandExecutor {
                                     TARDISMessage.send(player, "DND", args[0]);
                                     return true;
                                 }
-                                TARDISRescue to_player = new TARDISRescue(plugin);
-                                return to_player.rescue(player, saved.getUniqueId(), id, tt, rsc.getDirection(), false, false);
+                                new TARDISRescue(plugin).rescue(player, saved.getUniqueId(), id, tt, rsc.getDirection(), false, false);
+                                return true;
                             } else {
                                 TARDISMessage.send(player, "NO_PERM_PLAYER");
                                 return true;
