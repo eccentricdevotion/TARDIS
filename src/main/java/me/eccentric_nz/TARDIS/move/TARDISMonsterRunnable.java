@@ -71,76 +71,79 @@ public class TARDISMonsterRunnable implements Runnable {
         // get open portals
         for (Map.Entry<Location, TARDISTeleportLocation> map : plugin.getTrackerKeeper().getPortals().entrySet()) {
             // only portals in police box worlds
-            if (!map.getKey().getWorld().getName().contains("TARDIS") && new ResultSetHidden(plugin, map.getValue().getTardisId()).isVisible()) {
-                Entity ent = map.getKey().getWorld().spawnEntity(map.getKey(), EntityType.EXPERIENCE_ORB);
-                List<Entity> entities = ent.getNearbyEntities(16, 16, 16);
-                ent.remove();
-                boolean found = false;
-                if (entities.size() > 0) {
-                    // check if a Time Lord or companion is near
-                    boolean take_action = true;
-                    for (Entity e : entities) {
-                        if (e instanceof Player && isTimelord(map.getValue(), e)) {
-                            take_action = false;
-                            break;
-                        }
-                    }
-                    // nobody there so continue
-                    if (take_action) {
+            if (!map.getKey().getWorld().getName().contains("TARDIS")) {
+                // only police boxes that are not hidden
+                boolean hidden = new ResultSetHidden(plugin, map.getValue().getTardisId()).isVisible();
+                if (!hidden) {
+                    Entity ent = map.getKey().getWorld().spawnEntity(map.getKey(), EntityType.EXPERIENCE_ORB);
+                    List<Entity> entities = ent.getNearbyEntities(16, 16, 16);
+                    ent.remove();
+                    boolean found = false;
+                    if (entities.size() > 0) {
+                        // check if a Time Lord or companion is near
+                        boolean take_action = true;
                         for (Entity e : entities) {
-                            EntityType type = e.getType();
-                            TARDISMonster tm = new TARDISMonster();
-                            if (monsters.contains(type)) {
-                                found = true;
-                                switch (type) {
-                                    case CREEPER:
-                                        Creeper creeper = (Creeper) e;
-                                        tm.setCharged(creeper.isPowered());
-                                        break;
-                                    case ENDERMAN:
-                                        Enderman enderman = (Enderman) e;
-                                        tm.setCarried(enderman.getCarriedMaterial());
-                                        break;
-                                    case PIG_ZOMBIE:
-                                        PigZombie pigzombie = (PigZombie) e;
-                                        tm.setAggressive(pigzombie.isAngry());
-                                        tm.setAnger(pigzombie.getAnger());
-                                        tm.setEquipment(pigzombie.getEquipment());
-                                        break;
-                                    case SKELETON:
-                                        Skeleton skeleton = (Skeleton) e;
-                                        tm.setEquipment(skeleton.getEquipment());
-                                        break;
-                                    case SLIME:
-                                        Slime slime = (Slime) e;
-                                        tm.setSize(slime.getSize());
-                                        break;
-                                    case ZOMBIE:
-                                        Zombie zombie = (Zombie) e;
-                                        tm.setVillager(zombie.isVillager());
-                                        tm.setBaby(zombie.isBaby());
-                                        tm.setEquipment(zombie.getEquipment());
-                                        break;
+                            if (e instanceof Player && isTimelord(map.getValue(), e)) {
+                                take_action = false;
+                                break;
+                            }
+                        }
+                        // nobody there so continue
+                        if (take_action) {
+                            for (Entity e : entities) {
+                                EntityType type = e.getType();
+                                TARDISMonster tm = new TARDISMonster();
+                                if (monsters.contains(type)) {
+                                    found = true;
+                                    switch (type) {
+                                        case CREEPER:
+                                            Creeper creeper = (Creeper) e;
+                                            tm.setCharged(creeper.isPowered());
+                                            break;
+                                        case ENDERMAN:
+                                            Enderman enderman = (Enderman) e;
+                                            tm.setCarried(enderman.getCarriedMaterial());
+                                            break;
+                                        case PIG_ZOMBIE:
+                                            PigZombie pigzombie = (PigZombie) e;
+                                            tm.setAggressive(pigzombie.isAngry());
+                                            tm.setAnger(pigzombie.getAnger());
+                                            tm.setEquipment(pigzombie.getEquipment());
+                                            break;
+                                        case SKELETON:
+                                            Skeleton skeleton = (Skeleton) e;
+                                            tm.setEquipment(skeleton.getEquipment());
+                                            break;
+                                        case SLIME:
+                                            Slime slime = (Slime) e;
+                                            tm.setSize(slime.getSize());
+                                            break;
+                                        case ZOMBIE:
+                                            Zombie zombie = (Zombie) e;
+                                            tm.setVillager(zombie.isVillager());
+                                            tm.setBaby(zombie.isBaby());
+                                            tm.setEquipment(zombie.getEquipment());
+                                            break;
+                                    }
+                                    tm.setType(type);
+                                    tm.setAge(e.getTicksLived());
+                                    tm.setHealth(((LivingEntity) e).getHealth());
+                                    tm.setName(((LivingEntity) e).getCustomName());
+                                    moveMonster(map.getValue(), tm, e);
                                 }
-                                tm.setType(type);
-                                tm.setAge(e.getTicksLived());
-                                tm.setHealth(((LivingEntity) e).getHealth());
-                                tm.setName(((LivingEntity) e).getCustomName());
-                                moveMonster(map.getValue(), tm, e);
                             }
                         }
                     }
-                }
-                if (found == false) {
-                    // spawn a random mob inside TARDIS?
-                    Random r = new Random();
-                    // 25% chance + must not be peaceful, a Mooshroom biome or WG mob-spawning: deny
-                    if (r.nextInt(4) == 0 && canSpawn(map.getKey(), r.nextInt(4))) {
-                        TARDISMonster rtm = new TARDISMonster();
-                        // choose a random monster
-                        rtm.setType(monsters.get(r.nextInt(monsters.size())));
-                        plugin.debug("Spawning a random mob! " + rtm.getType().toString());
-                        moveMonster(map.getValue(), rtm, null);
+                    if (found == false) {
+                        // spawn a random mob inside TARDIS?
+                        Random r = new Random();
+                        // 25% chance + must not be peaceful, a Mooshroom biome or WG mob-spawning: deny
+                        if (r.nextInt(4) == 0 && canSpawn(map.getKey(), r.nextInt(4))) {
+                            TARDISMonster rtm = new TARDISMonster();
+                            // choose a random monster
+                            rtm.setType(monsters.get(r.nextInt(monsters.size())));
+                            moveMonster(map.getValue(), rtm, null);
+                        }
                     }
                 }
             }
