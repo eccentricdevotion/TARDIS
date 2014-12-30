@@ -32,6 +32,18 @@
     <section>
         <h1>Change log</h1>
         <h2>What&rsquo;s been changed?</h2>
+        <h3>v3.2.5</h3>
+        <p><a href="#reqs">View requirements for this version</a></p>
+        <ul>
+            <li>Added an option to allow TARDIS owners to see their door when it is INVISIBLE &mdash; must be wearing 3D Glasses and looking at the block that the door would normally be placed on &mdash; <code>/tardisadmin 3d_doors [true|false]</code></li>
+            <li>Allow the Remote Key to toggle the door open and closed when TARDIS is invisible &mdash; RIGHT-click air</li>
+            <li>Fixed TWELFTH schematic sponge blocks interfering with door circuits when upgrading</li>
+            <li>Fixed the Upgrade GUI showing incorrect lore for current console</li>
+            <li>Removed duplicate blocks in wall / floor upgrade GUI</li>
+            <li>Fixed monsters not entering TARDIS if the door is left open</li>
+            <li>Fixed door and sign popping off when autonomous homing</li>
+            <li>Fixed exceptions in the 3D Glasses Listener</li>
+        </ul>
         <h3>v3.2.4</h3>
         <p><a href="#reqs">View requirements for this version</a></p>
         <ul>
@@ -122,11 +134,11 @@
         <h5>Server</h5>
         <p>A new WorldBorder API was addedd to CraftBukkit / Spigot on the 13 December 2014. This means if your server JAR was built before then it <strong>WILL NOT WORK</strong> with TARDIS. You should use Spigot&rsquo;s <a href="https://hub.spigotmc.org/jenkins/job/BuildTools/">BuildTools</a> to compile a new server JAR &mdash; instructions for doing this can be found here: <a href="build-tools.html">How to use BuildTools</a>.</p>
         <ul style="margin-bottom:0;">
-            <li> <a href="https://dl.dropboxusercontent.com/u/53758864/craftbukkit.jar">CraftBukkit</a> &mdash; version git-Bukkit-07c2162 (MC: 1.8) or newer </li>
+            <li> <a href="https://dl.dropboxusercontent.com/u/53758864/craftbukkit.jar">CraftBukkit</a> &mdash; version git-Bukkit-0899683 (MC: 1.8) or newer </li>
         </ul>
         <p style="margin-bottom:0;"><em>or</em></p>
         <ul>
-            <li> <a href="https://dl.dropboxusercontent.com/u/53758864/spigot.jar">Spigot</a> &mdash; version git-Spigot-612de46-07c2162 (MC: 1.8) or newer </li>
+            <li> <a href="https://dl.dropboxusercontent.com/u/53758864/spigot.jar">Spigot</a> &mdash; version git-Spigot-eb39b47-0899683 (MC: 1.8) or newer </li>
         </ul>
         <h5>Plugins</h5>
         <p>If running the following plugins the <strong>minimum</strong> version required is shown.</p>
