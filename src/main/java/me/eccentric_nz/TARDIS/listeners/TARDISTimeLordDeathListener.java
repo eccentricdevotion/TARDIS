@@ -210,7 +210,7 @@ public class TARDISTimeLordDeathListener implements Listener {
                                             // rebuild police box - needs to be a delay
                                             plugin.getPresetBuilder().buildPreset(pbd);
                                         }
-                                    }, 200L);
+                                    }, 500L);
                                     // set current
                                     HashMap<String, Object> setc = new HashMap<String, Object>();
                                     setc.put("world", goto_loc.getWorld().getName());
