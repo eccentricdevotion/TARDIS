@@ -16,9 +16,7 @@
  */
 package me.eccentric_nz.TARDIS.listeners;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
@@ -52,16 +50,9 @@ import org.bukkit.event.player.PlayerInteractEvent;
 public class TARDISRoomSeeder implements Listener {
 
     private final TARDIS plugin;
-    private final List<String> ars = new ArrayList<String>();
 
     public TARDISRoomSeeder(TARDIS plugin) {
         this.plugin = plugin;
-        ars.add("ars");
-        ars.add("budget");
-        ars.add("plank");
-        ars.add("steampunk");
-        ars.add("tom");
-        ars.add("war");
     }
 
     /**
@@ -122,7 +113,7 @@ public class TARDISRoomSeeder implements Listener {
                 // get seed data
                 TARDISSeedData sd = plugin.getTrackerKeeper().getRoomSeed().get(uuid);
                 // check they are not in an ARS chunk
-                if (ars.contains(sd.getSchematic().getPermission()) && sd.hasARS()) {
+                if (sd.hasARS()) {
                     Chunk c = b.getWorld().getChunkAt(block.getRelative(BlockFace.valueOf(d.toString()), 4));
                     int cx = c.getX();
                     int cy = block.getY();
