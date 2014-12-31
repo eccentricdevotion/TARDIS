@@ -107,6 +107,7 @@ public class TARDISConfiguration {
         boolOptions.put("police_box.set_biome", true);
         boolOptions.put("preferences.nerf_pistons.enabled", false);
         boolOptions.put("preferences.nerf_pistons.only_tardis_worlds", true);
+        boolOptions.put("preferences.render_entities", false);
         boolOptions.put("preferences.respect_factions", true);
         boolOptions.put("preferences.respect_grief_prevention", true);
         boolOptions.put("preferences.respect_worldborder", true);

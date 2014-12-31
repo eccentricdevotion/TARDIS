@@ -21,6 +21,7 @@ import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.ResultSetDoors;
 import me.eccentric_nz.TARDIS.database.ResultSetTravellers;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
+import me.eccentric_nz.TARDIS.utility.TARDISEntityTracker;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import org.bukkit.Location;
 import org.bukkit.Sound;
@@ -46,7 +47,7 @@ public class TARDISRenderRoomListener implements Listener {
     @EventHandler
     public void onInteract(PlayerInteractEvent event) {
         final Player player = event.getPlayer();
-        if (plugin.getTrackerKeeper().getTransmat().contains(player.getUniqueId())) {
+        if (plugin.getTrackerKeeper().getRenderRoomOccupants().contains(player.getUniqueId())) {
             event.setCancelled(true);
             if (event.getAction().equals(Action.RIGHT_CLICK_BLOCK) || event.getAction().equals(Action.RIGHT_CLICK_AIR)) {
                 // tp the player back to the TARDIS console
@@ -108,7 +109,10 @@ public class TARDISRenderRoomListener implements Listener {
                     public void run() {
                         p.playSound(tp_loc, Sound.ENDERMAN_TELEPORT, 1.0f, 1.0f);
                         p.teleport(tp_loc);
-                        plugin.getTrackerKeeper().getTransmat().remove(p.getUniqueId());
+                        plugin.getTrackerKeeper().getRenderRoomOccupants().remove(p.getUniqueId());
+                        if (plugin.getTrackerKeeper().getRenderedNPCs().containsKey(p.getUniqueId()) && plugin.getPM().isPluginEnabled("Citizens")) {
+                            new TARDISEntityTracker(plugin).removeNPCs(p.getUniqueId());
+                        }
                     }
                 }, 10L);
             } else {

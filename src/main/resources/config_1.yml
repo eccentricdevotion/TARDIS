@@ -93,6 +93,7 @@ preferences:
     nerf_pistons:
         enabled: false
         only_tardis_worlds: true
+    render_entities: false
 # circuits
 circuits:
     damage: false

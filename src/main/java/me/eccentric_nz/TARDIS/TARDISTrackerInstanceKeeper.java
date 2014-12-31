@@ -65,6 +65,7 @@ public class TARDISTrackerInstanceKeeper {
     private final HashMap<UUID, Integer> ejecting = new HashMap<UUID, Integer>();
     private final HashMap<UUID, Integer> siegeCarrying = new HashMap<UUID, Integer>();
     private final HashMap<UUID, JSONObject> pastes = new HashMap<UUID, JSONObject>();
+    private final HashMap<UUID, List<Integer>> renderedNPCs = new HashMap<UUID, List<Integer>>();
     private final HashMap<UUID, List<Location>> repeaters = new HashMap<UUID, List<Location>>();
     private final HashMap<UUID, Location> startLocation = new HashMap<UUID, Location>();
     private final HashMap<UUID, Location> endLocation = new HashMap<UUID, Location>();
@@ -108,7 +109,7 @@ public class TARDISTrackerInstanceKeeper {
     private final List<UUID> recipeView = new ArrayList<UUID>();
     private final List<UUID> sonicDoors = new ArrayList<UUID>();
     private final List<UUID> spectacleWearers = new ArrayList<UUID>();
-    private final List<UUID> transmat = new ArrayList<UUID>();
+    private final List<UUID> renderRoomOccupants = new ArrayList<UUID>();
     private final List<UUID> zeroRoomOccupants = new ArrayList<UUID>();
 
     public HashMap<Integer, Integer> getDamage() {
@@ -205,6 +206,10 @@ public class TARDISTrackerInstanceKeeper {
 
     public HashMap<UUID, List<Location>> getRepeaters() {
         return repeaters;
+    }
+
+    public HashMap<UUID, List<Integer>> getRenderedNPCs() {
+        return renderedNPCs;
     }
 
     public HashMap<UUID, String> getEnd() {
@@ -344,8 +349,8 @@ public class TARDISTrackerInstanceKeeper {
         return reset;
     }
 
-    public List<UUID> getTransmat() {
-        return transmat;
+    public List<UUID> getRenderRoomOccupants() {
+        return renderRoomOccupants;
     }
 
     public List<UUID> getZeroRoomOccupants() {

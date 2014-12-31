@@ -22,6 +22,7 @@ import me.eccentric_nz.TARDIS.chameleon.TARDISChameleonColumn;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
 import me.eccentric_nz.TARDIS.enumeration.PRESET;
+import me.eccentric_nz.TARDIS.utility.TARDISEntityTracker;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -270,12 +271,17 @@ public class TARDISExteriorRenderer {
                 }
             }
         }
+        // if enabled add static entities
+        if (plugin.getPM().isPluginEnabled("Citizens") && plugin.getConfig().getBoolean("preferences.render_entities")) {
+            plugin.debug("rendering entities");
+            new TARDISEntityTracker(plugin).addNPCs(exterior, location, p.getUniqueId());
+        }
         // charge artron energy for the render
         HashMap<String, Object> where = new HashMap<String, Object>();
         where.put("tardis_id", id);
         new QueryFactory(plugin).alterEnergyLevel("tardis", -plugin.getArtronConfig().getInt("render"), where, p);
         // tp the player inside the room
-        plugin.getTrackerKeeper().getTransmat().add(p.getUniqueId());
+        plugin.getTrackerKeeper().getRenderRoomOccupants().add(p.getUniqueId());
         plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
             @Override
             public void run() {
