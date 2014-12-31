@@ -18,17 +18,22 @@ package me.eccentric_nz.TARDIS.commands;
 
 import com.google.common.collect.ImmutableList;
 import java.util.List;
+import me.eccentric_nz.TARDIS.TARDIS;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabCompleter;
 
 /**
- * TabCompleter for /tardisprefs
+ * TabCompleter for /tardisroom
  */
-public class TARDISTextureTabComplete extends TARDISCompleter implements TabCompleter {
+public class TARDISRoomTabComplete extends TARDISCompleter implements TabCompleter {
 
-    private final ImmutableList<String> ROOT_SUBS = ImmutableList.of("in", "out", "on", "off");
-    private final ImmutableList<String> OFF_SUB = ImmutableList.of("default");
+    private final TARDIS plugin;
+    private final ImmutableList<String> ROOT_SUBS = ImmutableList.of("add", "blocks", "required");
+
+    public TARDISRoomTabComplete(TARDIS plugin) {
+        this.plugin = plugin;
+    }
 
     @Override
     public List<String> onTabComplete(CommandSender sender, Command command, String label, String[] args) {
@@ -39,8 +44,8 @@ public class TARDISTextureTabComplete extends TARDISCompleter implements TabComp
             return partial(args[0], ROOT_SUBS);
         } else if (args.length == 2) {
             String sub = args[0];
-            if (sub.equals("off")) {
-                return partial(lastArg, OFF_SUB);
+            if (sub.equals("required")) {
+                return partial(lastArg, plugin.getRoomsConfig().getConfigurationSection("rooms").getKeys(false));
             }
         }
         return ImmutableList.of();
