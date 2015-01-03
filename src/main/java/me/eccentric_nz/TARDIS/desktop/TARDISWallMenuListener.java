@@ -17,6 +17,7 @@
 package me.eccentric_nz.TARDIS.desktop;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -47,6 +48,7 @@ public class TARDISWallMenuListener extends TARDISMenuListener implements Listen
     private final List<UUID> scrolling = new ArrayList<UUID>();
     private final ItemStack[][] blocks;
     private final int rows;
+    private final List<String> notthese = Arrays.asList("PINE_WOOD", "PINE_LOG", "GREY_WOOL", "LIGHT_GREY_WOOL", "GREY_CLAY", "LIGHT_GREY_CLAY", "STONE_BRICK", "CHISELED_STONE", "HUGE_MUSHROOM_STEM");
 
     public TARDISWallMenuListener(TARDIS plugin) {
         super(plugin);
@@ -57,8 +59,11 @@ public class TARDISWallMenuListener extends TARDISMenuListener implements Listen
 
     @EventHandler
     public void onWallMenuOpen(InventoryOpenEvent event) {
-        Player p = (Player) event.getPlayer();
-        scroll.put(p.getUniqueId(), 0);
+        String name = event.getInventory().getTitle();
+        if (name.equals("§4TARDIS Wall Menu") || name.equals("§4TARDIS Floor Menu")) {
+            Player p = (Player) event.getPlayer();
+            scroll.put(p.getUniqueId(), 0);
+        }
     }
 
     @EventHandler(ignoreCancelled = true)
@@ -192,7 +197,7 @@ public class TARDISWallMenuListener extends TARDISMenuListener implements Listen
         int r = 0;
         int c = 0;
         for (Map.Entry<String, Pair> entry : plugin.getTardisWalls().blocks.entrySet()) {
-            if (!entry.getKey().equals("STONE_BRICK") && !entry.getKey().equals("HUGE_MUSHROOM_STEM")) {
+            if (!notthese.contains(entry.getKey())) {
                 Pair value = entry.getValue();
                 ItemStack is = new ItemStack(value.getType(), 1, value.getData());
                 stacks[r][c] = is;
