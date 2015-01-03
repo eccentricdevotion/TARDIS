@@ -71,6 +71,14 @@ public class TARDISPrefsMenuInventory {
             a_im.setLore(Arrays.asList(a_value));
             auto.setItemMeta(a_im);
             options.add(auto);
+            // Autonomous siege
+            ItemStack sie = new ItemStack(Material.DIODE, 1);
+            ItemMeta ge_im = sie.getItemMeta();
+            ge_im.setDisplayName("Autonomous Siege");
+            String ge_value = (rsp.isAutoSiegeOn()) ? "ON" : "OFF";
+            ge_im.setLore(Arrays.asList(ge_value));
+            sie.setItemMeta(ge_im);
+            options.add(sie);
             // Beacon
             ItemStack beacon = new ItemStack(Material.DIODE, 1);
             ItemMeta b_im = beacon.getItemMeta();
@@ -205,21 +213,21 @@ public class TARDISPrefsMenuInventory {
             }
         }
         ItemStack[] stack = new ItemStack[27];
-        for (int s = 0; s < 17; s++) {
+        for (int s = 0; s < 19; s++) {
             if (s < options.size()) {
                 stack[s] = options.get(s);
             } else {
                 stack[s] = null;
             }
         }
-        stack[17] = tt;
+        stack[22] = tt;
         if (plugin.getServer().getPlayer(uuid).hasPermission("tardis.admin")) {
             // admin
             ItemStack ad = new ItemStack(Material.NETHER_STAR, 1);
             ItemMeta min = ad.getItemMeta();
             min.setDisplayName("Admin Menu");
             ad.setItemMeta(min);
-            stack[22] = ad;
+            stack[26] = ad;
         }
         return stack;
     }

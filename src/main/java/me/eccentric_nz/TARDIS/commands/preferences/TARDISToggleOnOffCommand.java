@@ -36,7 +36,7 @@ public class TARDISToggleOnOffCommand {
 
     public TARDISToggleOnOffCommand(TARDIS plugin) {
         this.plugin = plugin;
-        this.was = Arrays.asList("auto", "beacon", "ctm", "dnd", "eps", "hads", "minecart", "renderer", "submarine", "travelbar");
+        this.was = Arrays.asList("auto", "auto_siege", "beacon", "build", "ctm", "difficulty", "dnd", "eps", "farm", "hads", "minecart", "renderer", "submarine", "travelbar");
     }
 
     public boolean toggle(Player player, String[] args, QueryFactory qf) {

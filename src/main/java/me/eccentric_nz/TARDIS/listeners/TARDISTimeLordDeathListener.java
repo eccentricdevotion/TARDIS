@@ -260,7 +260,7 @@ public class TARDISTimeLordDeathListener implements Listener {
                                         qf.doUpdate("tardis", setp, wherep);
                                     }
                                 }
-                            } else if (plugin.getConfig().getBoolean("siege.enabled")) {
+                            } else if (plugin.getConfig().getBoolean("siege.enabled") && rsp.isAutoSiegeOn()) {
                                 // enter siege mode
                                 // where is the TARDIS Police Box?
                                 HashMap<String, Object> wherecl = new HashMap<String, Object>();

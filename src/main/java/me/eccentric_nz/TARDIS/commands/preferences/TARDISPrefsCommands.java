@@ -50,6 +50,7 @@ public class TARDISPrefsCommands implements CommandExecutor {
     public TARDISPrefsCommands(TARDIS plugin) {
         this.plugin = plugin;
         firstArgs.add("auto");
+        firstArgs.add("auto_siege");
         firstArgs.add("beacon");
         firstArgs.add("build");
         firstArgs.add("ctm");

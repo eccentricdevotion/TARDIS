@@ -46,6 +46,7 @@ public class TARDISPrefsMenuListener implements Listener {
     public TARDISPrefsMenuListener(TARDIS plugin) {
         this.plugin = plugin;
         lookup.put("Autonomous", "auto_on");
+        lookup.put("Autonomous Siege", "auto_siege_on");
         lookup.put("Beacon", "beacon_on");
         lookup.put("Do Not Disturb", "dnd_on");
         lookup.put("Emergency Programme One", "eps_on");
@@ -77,7 +78,7 @@ public class TARDISPrefsMenuListener implements Listener {
                     final Player p = (Player) event.getWhoClicked();
                     UUID uuid = p.getUniqueId();
                     ItemMeta im = is.getItemMeta();
-                    if (slot == 17 && im.getDisplayName().equals("TARDIS Map")) {
+                    if (slot == 22 && im.getDisplayName().equals("TARDIS Map")) {
                         // must be in the TARDIS
                         HashMap<String, Object> where = new HashMap<String, Object>();
                         where.put("uuid", uuid.toString());
@@ -100,7 +101,7 @@ public class TARDISPrefsMenuListener implements Listener {
                         }
                         return;
                     }
-                    if (slot == 22 && im.getDisplayName().equals("Admin Menu")) {
+                    if (slot == 26 && im.getDisplayName().equals("Admin Menu")) {
                         // close this gui and load the Admin Menu
                         plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
                             @Override

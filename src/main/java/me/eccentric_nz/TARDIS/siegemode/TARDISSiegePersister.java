@@ -128,7 +128,6 @@ public class TARDISSiegePersister {
             ps = connection.prepareStatement("INSERT INTO siege (uuid, tardis_id) VALUES (?, ?)");
             int i = 0;
             for (Map.Entry<UUID, Integer> map : plugin.getTrackerKeeper().getSiegeCarrying().entrySet()) {
-                HashMap<String, Object> set = new HashMap<String, Object>();
                 ps.setString(1, map.getKey().toString());
                 ps.setInt(2, map.getValue());
                 i += ps.executeUpdate();

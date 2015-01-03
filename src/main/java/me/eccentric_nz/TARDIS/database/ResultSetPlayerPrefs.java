@@ -43,6 +43,7 @@ public class ResultSetPlayerPrefs {
     private boolean sfxOn;
     private boolean quotesOn;
     private boolean autoOn;
+    private boolean autoSiegeOn;
     private boolean beaconOn;
     private boolean hadsOn;
     private boolean submarineOn;
@@ -123,6 +124,7 @@ public class ResultSetPlayerPrefs {
                 this.sfxOn = rs.getBoolean("sfx_on");
                 this.quotesOn = rs.getBoolean("quotes_on");
                 this.autoOn = rs.getBoolean("auto_on");
+                this.autoSiegeOn = rs.getBoolean("auto_siege_on");
                 this.beaconOn = rs.getBoolean("beacon_on");
                 this.hadsOn = rs.getBoolean("hads_on");
                 this.submarineOn = rs.getBoolean("submarine_on");
@@ -200,6 +202,10 @@ public class ResultSetPlayerPrefs {
 
     public boolean isAutoOn() {
         return autoOn;
+    }
+
+    public boolean isAutoSiegeOn() {
+        return autoSiegeOn;
     }
 
     public boolean isBeaconOn() {
