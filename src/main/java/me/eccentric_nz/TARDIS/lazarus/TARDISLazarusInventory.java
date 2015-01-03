@@ -60,6 +60,7 @@ public class TARDISLazarusInventory {
         disguises.put("OCELOT", (short) 98);
         disguises.put("PIG", (short) 90);
         disguises.put("PIG_ZOMBIE", (short) 57);
+        disguises.put("RABBIT", (short) 101);
         disguises.put("SHEEP", (short) 91);
         disguises.put("SILVERFISH", (short) 60);
         disguises.put("SKELETON", (short) 51);
@@ -191,7 +192,7 @@ public class TARDISLazarusInventory {
         col.setLore(Arrays.asList("WHITE"));
         typ.setItemMeta(col);
         eggs[48] = typ;
-        ItemStack tamed = new ItemStack(Material.LEASH, 1, (byte) 6);
+        ItemStack tamed = new ItemStack(Material.LEASH, 1);
         ItemMeta tf = tamed.getItemMeta();
         tf.setDisplayName(plugin.getLanguage().getString("BUTTON_OPTS"));
         tf.setLore(Arrays.asList("FALSE"));

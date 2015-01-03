@@ -29,6 +29,7 @@ import me.libraryaddict.disguise.disguisetypes.AnimalColor;
 import me.libraryaddict.disguise.disguisetypes.DisguiseType;
 import me.libraryaddict.disguise.disguisetypes.MobDisguise;
 import me.libraryaddict.disguise.disguisetypes.PlayerDisguise;
+import me.libraryaddict.disguise.disguisetypes.RabbitType;
 import me.libraryaddict.disguise.disguisetypes.watchers.AgeableWatcher;
 import me.libraryaddict.disguise.disguisetypes.watchers.BatWatcher;
 import me.libraryaddict.disguise.disguisetypes.watchers.BlazeWatcher;
@@ -38,6 +39,7 @@ import me.libraryaddict.disguise.disguisetypes.watchers.HorseWatcher;
 import me.libraryaddict.disguise.disguisetypes.watchers.LivingWatcher;
 import me.libraryaddict.disguise.disguisetypes.watchers.OcelotWatcher;
 import me.libraryaddict.disguise.disguisetypes.watchers.PigWatcher;
+import me.libraryaddict.disguise.disguisetypes.watchers.RabbitWatcher;
 import me.libraryaddict.disguise.disguisetypes.watchers.SheepWatcher;
 import me.libraryaddict.disguise.disguisetypes.watchers.SlimeWatcher;
 import me.libraryaddict.disguise.disguisetypes.watchers.VillagerWatcher;
@@ -70,6 +72,7 @@ public class TARDISLazarusGUIListener extends TARDISMenuListener implements List
     private final HashMap<UUID, Integer> horses = new HashMap<UUID, Integer>();
     private final HashMap<UUID, Integer> sheep = new HashMap<UUID, Integer>();
     private final HashMap<UUID, Integer> cats = new HashMap<UUID, Integer>();
+    private final HashMap<UUID, Integer> rabbits = new HashMap<UUID, Integer>();
     private final HashMap<UUID, Integer> professions = new HashMap<UUID, Integer>();
     private final HashMap<UUID, Integer> slimes = new HashMap<UUID, Integer>();
     private final List<Integer> slimeSizes = Arrays.asList(1, 2, 4);
@@ -307,6 +310,11 @@ public class TARDISLazarusGUIListener extends TARDISMenuListener implements List
                                                 pw.setSaddled(getBoolean(inv));
                                                 pw.setBaby(getBaby(inv));
                                                 break;
+                                            case RABBIT:
+                                                RabbitWatcher rw = (RabbitWatcher) livingWatcher;
+                                                rw.setType(getRabbitType(inv));
+                                                rw.setBaby(getBaby(inv));
+                                                break;
                                             case VILLAGER:
                                                 VillagerWatcher vw = (VillagerWatcher) livingWatcher;
                                                 vw.setProfession(getProfession(inv));
@@ -458,6 +466,15 @@ public class TARDISLazarusGUIListener extends TARDISMenuListener implements List
             t = Type.values()[o].toString();
             cats.put(uuid, o);
         }
+        if (d.equals("RABBIT")) {
+            if (rabbits.containsKey(uuid)) {
+                o = (rabbits.get(uuid) + 1 < 7) ? rabbits.get(uuid) + 1 : 0;
+            } else {
+                o = 0;
+            }
+            t = RabbitType.values()[o].toString();
+            rabbits.put(uuid, o);
+        }
         if (d.equals("VILLAGER")) {
             if (professions.containsKey(uuid)) {
                 o = (professions.get(uuid) + 1 < 5) ? professions.get(uuid) + 1 : 0;
@@ -517,6 +534,16 @@ public class TARDISLazarusGUIListener extends TARDISMenuListener implements List
             return Type.valueOf(im.getLore().get(0));
         } catch (IllegalArgumentException e) {
             return Type.WILD_OCELOT;
+        }
+    }
+
+    private RabbitType getRabbitType(Inventory i) {
+        ItemStack is = i.getItem(48);
+        ItemMeta im = is.getItemMeta();
+        try {
+            return RabbitType.valueOf(im.getLore().get(0));
+        } catch (IllegalArgumentException e) {
+            return RabbitType.BROWN;
         }
     }
 
