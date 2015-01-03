@@ -69,6 +69,7 @@ public class TARDISSiegeCommand {
             }
             plugin.getConfig().set("siege." + args[1].toLowerCase(), val);
         }
+        TARDISMessage.send(sender, "CONFIG_UPDATED");
         plugin.saveConfig();
         return true;
     }
