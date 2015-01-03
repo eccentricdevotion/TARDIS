@@ -50,6 +50,8 @@ public class TARDISLazarusInventory {
         disguises.put("COW", (short) 92);
         disguises.put("CREEPER", (short) 50);
         disguises.put("ENDERMAN", (short) 58);
+        disguises.put("ENDERMITE", (short) 67);
+        disguises.put("GUARDIAN", (short) 68);
         disguises.put("HORSE", (short) 100);
         disguises.put("DONKEY", (short) 100);
         disguises.put("MULE", (short) 100);

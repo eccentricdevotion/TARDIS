@@ -18,6 +18,7 @@ Re-skin mobs for Resource pack, and add new mob sounds
 * Villagers -> Ood - _started_
 * Villagers -> Hath
 * Endermen -> The Silence
+* Endermites -> Cybermats
 * Iron Golem -> Gunslinger
 * Witches -> Slitheen / Whispermen?
 * Wolves -> K-9? (All the textures I seen so far just don't work - you shouldn't see the legs...)

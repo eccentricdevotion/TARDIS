@@ -157,7 +157,7 @@ public class TARDISLazarusGUIListener extends TARDISMenuListener implements List
                     setSlotFourtyOne(inv, disguises.get(uuid), uuid);
                 }
             }
-            if (slot == 49) { // Tamed / Flying / Blazing / Powered / Agressive : TRUE | FALSE
+            if (slot == 49) { // Tamed / Flying / Blazing / Powered / Agressive / Beaming : TRUE | FALSE
                 ItemStack is = inv.getItem(slot);
                 ItemMeta im = is.getItemMeta();
                 String truefalse = (im.getLore().get(0).equals("FALSE")) ? "TRUE" : "FALSE";
@@ -295,6 +295,10 @@ public class TARDISLazarusGUIListener extends TARDISMenuListener implements List
                                                     sw.setCustomNameVisible(true);
                                                 }
                                                 break;
+//                                            case GUARDIAN:
+//                                                GuardianWatcher gw = (GuardianWatcher) livingWatcher;
+//                                                gw.setBeam(getBoolean(inv));
+//                                                break;
                                             case HORSE:
                                                 HorseWatcher hw = (HorseWatcher) livingWatcher;
                                                 hw.setColor(getHorseColor(inv));
