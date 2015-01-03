@@ -44,6 +44,10 @@ import me.eccentric_nz.TARDIS.desktop.TARDISWallMenuListener;
 import me.eccentric_nz.TARDIS.flight.TARDISHandbrakeListener;
 import me.eccentric_nz.TARDIS.flight.TARDISManualFlightListener;
 import me.eccentric_nz.TARDIS.flight.TARDISRegulatorListener;
+import me.eccentric_nz.TARDIS.howto.TARDISChameleonWallMenuListener;
+import me.eccentric_nz.TARDIS.howto.TARDISRecipeMenuListener;
+import me.eccentric_nz.TARDIS.howto.TARDISSeedMenuListener;
+import me.eccentric_nz.TARDIS.howto.TARDISWallFloorMenuListener;
 import me.eccentric_nz.TARDIS.info.TARDISInformationSystemListener;
 import me.eccentric_nz.TARDIS.lazarus.TARDISLazarusGUIListener;
 import me.eccentric_nz.TARDIS.lazarus.TARDISLazarusListener;
@@ -72,7 +76,6 @@ import me.eccentric_nz.TARDIS.listeners.TARDISHorseListener;
 import me.eccentric_nz.TARDIS.listeners.TARDISHotbarListener;
 import me.eccentric_nz.TARDIS.listeners.TARDISIceMeltListener;
 import me.eccentric_nz.TARDIS.listeners.TARDISItemFrameListener;
-import me.eccentric_nz.TARDIS.rooms.TARDISJettisonSeeder;
 import me.eccentric_nz.TARDIS.listeners.TARDISJoinListener;
 import me.eccentric_nz.TARDIS.listeners.TARDISKeyboardListener;
 import me.eccentric_nz.TARDIS.listeners.TARDISKeyboardPacketListener;
@@ -88,7 +91,6 @@ import me.eccentric_nz.TARDIS.listeners.TARDISRecipeListener;
 import me.eccentric_nz.TARDIS.listeners.TARDISRedstoneListener;
 import me.eccentric_nz.TARDIS.listeners.TARDISRemoteKeyListener;
 import me.eccentric_nz.TARDIS.listeners.TARDISRenderRoomListener;
-import me.eccentric_nz.TARDIS.rooms.TARDISRoomSeeder;
 import me.eccentric_nz.TARDIS.listeners.TARDISSaveSignListener;
 import me.eccentric_nz.TARDIS.listeners.TARDISScannerListener;
 import me.eccentric_nz.TARDIS.listeners.TARDISSeedBlockListener;
@@ -99,7 +101,6 @@ import me.eccentric_nz.TARDIS.listeners.TARDISTagListener;
 import me.eccentric_nz.TARDIS.listeners.TARDISTeleportListener;
 import me.eccentric_nz.TARDIS.listeners.TARDISTemporalListener;
 import me.eccentric_nz.TARDIS.listeners.TARDISTemporalLocatorListener;
-import me.eccentric_nz.TARDIS.travel.TARDISTerminalListener;
 import me.eccentric_nz.TARDIS.listeners.TARDISTimeLordDeathListener;
 import me.eccentric_nz.TARDIS.listeners.TARDISUpdateListener;
 import me.eccentric_nz.TARDIS.listeners.TARDISVaultListener;
@@ -109,6 +110,8 @@ import me.eccentric_nz.TARDIS.listeners.TARDISZeroRoomPacketListener;
 import me.eccentric_nz.TARDIS.move.TARDISDoorClickListener;
 import me.eccentric_nz.TARDIS.move.TARDISDoorWalkListener;
 import me.eccentric_nz.TARDIS.move.TARDISMoveListener;
+import me.eccentric_nz.TARDIS.rooms.TARDISJettisonSeeder;
+import me.eccentric_nz.TARDIS.rooms.TARDISRoomSeeder;
 import me.eccentric_nz.TARDIS.schematic.TARDISSchematicListener;
 import me.eccentric_nz.TARDIS.siegemode.TARDISBreedingListener;
 import me.eccentric_nz.TARDIS.siegemode.TARDISGrowthListener;
@@ -119,6 +122,7 @@ import me.eccentric_nz.TARDIS.sonic.TARDISSonicListener;
 import me.eccentric_nz.TARDIS.sonic.TARDISSonicMenuListener;
 import me.eccentric_nz.TARDIS.sonic.TARDISSonicSorterListener;
 import me.eccentric_nz.TARDIS.sonic.TARDISSonicUpgradeListener;
+import me.eccentric_nz.TARDIS.travel.TARDISTerminalListener;
 
 /**
  * Registers all the listeners for the various events required to use the
@@ -251,6 +255,11 @@ public class TARDISListenerRegisterer {
         plugin.getPM().registerEvents(new TARDISUpdateListener(plugin), plugin);
         plugin.getPM().registerEvents(new TARDISVaultListener(plugin), plugin);
         plugin.getPM().registerEvents(new TARDISWallMenuListener(plugin), plugin);
+        // howto
+        plugin.getPM().registerEvents(new TARDISWallFloorMenuListener(plugin), plugin);
+        plugin.getPM().registerEvents(new TARDISChameleonWallMenuListener(plugin), plugin);
+        plugin.getPM().registerEvents(new TARDISRecipeMenuListener(plugin), plugin);
+        plugin.getPM().registerEvents(new TARDISSeedMenuListener(plugin), plugin);
         if (getNPCManager()) {
             plugin.getPM().registerEvents(new TARDISNPCListener(plugin), plugin);
         }
