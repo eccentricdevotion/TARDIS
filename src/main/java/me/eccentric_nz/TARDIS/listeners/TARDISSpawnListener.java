@@ -45,6 +45,7 @@ public class TARDISSpawnListener implements Listener {
         good_spawns.add(SpawnReason.BREEDING);
         good_spawns.add(SpawnReason.BUILD_IRONGOLEM);
         good_spawns.add(SpawnReason.BUILD_SNOWMAN);
+        good_spawns.add(SpawnReason.CUSTOM);
         good_spawns.add(SpawnReason.EGG);
         good_spawns.add(SpawnReason.SPAWNER_EGG);
         biomes.add(Biome.DEEP_OCEAN);
