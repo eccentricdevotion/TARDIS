@@ -152,7 +152,9 @@ public class TARDISCraftListener implements Listener {
                                         for (int i = 1; i < 10; i++) {
                                             inv.setItem(i, null);
                                         }
-                                        player.setItemOnCursor(is);
+                                        if (!event.getAction().equals(InventoryAction.MOVE_TO_OTHER_INVENTORY)) {
+                                            player.setItemOnCursor(is);
+                                        }
                                     }
                                 }, 2L);
                             }
