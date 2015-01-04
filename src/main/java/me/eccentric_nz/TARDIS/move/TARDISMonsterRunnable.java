@@ -57,6 +57,7 @@ public class TARDISMonsterRunnable implements Runnable {
         monsters.add(EntityType.CAVE_SPIDER);
         monsters.add(EntityType.CREEPER);
         monsters.add(EntityType.ENDERMAN);
+        monsters.add(EntityType.ENDERMITE);
         monsters.add(EntityType.PIG_ZOMBIE);
         monsters.add(EntityType.SILVERFISH);
         monsters.add(EntityType.SKELETON);
