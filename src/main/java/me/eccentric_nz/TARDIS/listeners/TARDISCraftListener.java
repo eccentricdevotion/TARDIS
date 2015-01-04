@@ -90,12 +90,6 @@ public class TARDISCraftListener implements Listener {
         hasColour.add(Material.LOG_2);
         hasColour.add(Material.STONE);
         twl = new TARDISWallsLookup(plugin);
-        actions.add(InventoryAction.PICKUP_ALL);
-        actions.add(InventoryAction.PLACE_ALL);
-        actions.add(InventoryAction.PLACE_ONE);
-        actions.add(InventoryAction.PLACE_SOME);
-        actions.add(InventoryAction.SWAP_WITH_CURSOR);
-        actions.add(InventoryAction.MOVE_TO_OTHER_INVENTORY);
     }
 
     /**
@@ -109,70 +103,65 @@ public class TARDISCraftListener implements Listener {
         final Inventory inv = event.getInventory();
         final int slot = event.getRawSlot();
         if (inv.getType().equals(InventoryType.WORKBENCH) && slot < 10) {
-            final InventoryAction a = event.getAction();
-            if (actions.contains(a)) {
-                plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
-                    @Override
-                    public void run() {
-                        if (checkSlots(inv)) {
-                            // get the materials in crafting slots
-                            Material m5 = inv.getItem(5).getType(); // lamp
-                            Material m7 = inv.getItem(7).getType(); // tardis type
-                            Material m8 = inv.getItem(8).getType(); // chameleon
-                            final ItemStack is = new ItemStack(m7, 1);
-                            ItemMeta im = is.getItemMeta();
-                            im.setDisplayName("§6TARDIS Seed Block");
-                            List<String> lore = new ArrayList<String>();
-                            lore.add(t.get(m7));
-                            lore.add("Walls: " + twl.wall_lookup.get(inv.getItem(6).getType().toString() + ":" + inv.getItem(6).getData().getData()));
-                            lore.add("Floors: " + twl.wall_lookup.get(inv.getItem(9).getType().toString() + ":" + inv.getItem(9).getData().getData()));
-                            // do some funky stuff to get data values for wool/stained glass & clay/wood/log/log_2
-                            if (hasColour.contains(m8)) {
-                                switch (m8) {
-                                    case WOOL:
-                                    case STAINED_CLAY:
-                                    case STAINED_GLASS:
-                                        lore.add("Chameleon block: " + DyeColor.getByWoolData(inv.getItem(8).getData().getData()) + " " + m8.toString());
-                                        break;
-                                    case STONE:
-                                        lore.add("Chameleon block: " + plugin.getUtils().getStoneType(inv.getItem(8).getData().getData()));
-                                        break;
-                                    default:
-                                        lore.add("Chameleon block: " + plugin.getUtils().getWoodType(m8, inv.getItem(8).getData().getData()) + " " + m8.toString());
-                                }
-                            } else {
-                                lore.add("Chameleon block: " + m8.toString());
+            plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
+                @Override
+                public void run() {
+                    if (checkSlots(inv)) {
+                        // get the materials in crafting slots
+                        Material m5 = inv.getItem(5).getType(); // lamp
+                        Material m7 = inv.getItem(7).getType(); // tardis type
+                        Material m8 = inv.getItem(8).getType(); // chameleon
+                        final ItemStack is = new ItemStack(m7, 1);
+                        ItemMeta im = is.getItemMeta();
+                        im.setDisplayName("§6TARDIS Seed Block");
+                        List<String> lore = new ArrayList<String>();
+                        lore.add(t.get(m7));
+                        lore.add("Walls: " + twl.wall_lookup.get(inv.getItem(6).getType().toString() + ":" + inv.getItem(6).getData().getData()));
+                        lore.add("Floors: " + twl.wall_lookup.get(inv.getItem(9).getType().toString() + ":" + inv.getItem(9).getData().getData()));
+                        // do some funky stuff to get data values for wool/stained glass & clay/wood/log/log_2
+                        if (hasColour.contains(m8)) {
+                            switch (m8) {
+                                case WOOL:
+                                case STAINED_CLAY:
+                                case STAINED_GLASS:
+                                    lore.add("Chameleon block: " + DyeColor.getByWoolData(inv.getItem(8).getData().getData()) + " " + m8.toString());
+                                    break;
+                                case STONE:
+                                    lore.add("Chameleon block: " + plugin.getUtils().getStoneType(inv.getItem(8).getData().getData()));
+                                    break;
+                                default:
+                                    lore.add("Chameleon block: " + plugin.getUtils().getWoodType(m8, inv.getItem(8).getData().getData()) + " " + m8.toString());
                             }
-                            lore.add("Lamp: " + m5.toString());
-                            im.setLore(lore);
-                            is.setItemMeta(im);
-                            final Player player = (Player) event.getWhoClicked();
-                            if (checkPerms(player, m7)) {
-                                TARDISMessage.send(player, "SEED_VALID");
-                                inv.setItem(0, is);
-                                player.updateInventory();
-                                // fix slots not clearing in 1.8
-                                if (slot == 0 && (a.equals(InventoryAction.PICKUP_ALL) || a.equals(InventoryAction.MOVE_TO_OTHER_INVENTORY))) {
-                                    plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
-                                        @Override
-                                        public void run() {
-                                            // clear the other slots
-                                            for (int i = 1; i < 10; i++) {
-                                                inv.setItem(i, null);
-                                            }
-                                            if (!a.equals(InventoryAction.MOVE_TO_OTHER_INVENTORY)) {
-                                                player.setItemOnCursor(is);
-                                            }
+                        } else {
+                            lore.add("Chameleon block: " + m8.toString());
+                        }
+                        lore.add("Lamp: " + m5.toString());
+                        im.setLore(lore);
+                        is.setItemMeta(im);
+                        final Player player = (Player) event.getWhoClicked();
+                        if (checkPerms(player, m7)) {
+                            TARDISMessage.send(player, "SEED_VALID");
+                            inv.setItem(0, is);
+                            player.updateInventory();
+                            if (slot == 0) {
+                                event.setCancelled(true);
+                                plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        // clear the other slots
+                                        for (int i = 1; i < 10; i++) {
+                                            inv.setItem(i, null);
                                         }
-                                    }, 2L);
-                                }
-                            } else {
-                                TARDISMessage.send(player, "NO_PERMS");
+                                        player.setItemOnCursor(is);
+                                    }
+                                }, 2L);
                             }
+                        } else {
+                            TARDISMessage.send(player, "NO_PERMS");
                         }
                     }
-                }, 2L);
-            }
+                }
+            }, 2L);
         }
     }
 
