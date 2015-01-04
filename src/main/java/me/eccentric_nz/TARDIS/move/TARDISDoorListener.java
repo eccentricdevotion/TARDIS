@@ -439,6 +439,7 @@ public class TARDISDoorListener {
                     public void run() {
                         p.setPlayerTime(calculatedtime, true);
                         plugin.getFilter().addPerceptionFilter(p);
+                        plugin.getTrackerKeeper().getTemporallyLocated().add(p.getUniqueId());
                     }
                 }, 10L);
             } else {
@@ -450,8 +451,9 @@ public class TARDISDoorListener {
                         remove = false;
                     }
                 }
-                if (remove) {
+                if (remove && plugin.getTrackerKeeper().getTemporallyLocated().contains(p.getUniqueId())) {
                     plugin.getFilter().removePerceptionFilter(p);
+                    plugin.getTrackerKeeper().getTemporallyLocated().remove(p.getUniqueId());
                 }
             }
         }

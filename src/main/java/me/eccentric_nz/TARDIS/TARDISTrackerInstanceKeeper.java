@@ -110,6 +110,7 @@ public class TARDISTrackerInstanceKeeper {
     private final List<UUID> recipeView = new ArrayList<UUID>();
     private final List<UUID> sonicDoors = new ArrayList<UUID>();
     private final List<UUID> spectacleWearers = new ArrayList<UUID>();
+    private final List<UUID> temporallyLocated = new ArrayList<UUID>();
     private final List<UUID> renderRoomOccupants = new ArrayList<UUID>();
     private final List<UUID> zeroRoomOccupants = new ArrayList<UUID>();
 
@@ -352,6 +353,10 @@ public class TARDISTrackerInstanceKeeper {
 
     public List<String> getReset() {
         return reset;
+    }
+
+    public List<UUID> getTemporallyLocated() {
+        return temporallyLocated;
     }
 
     public List<UUID> getRenderRoomOccupants() {
