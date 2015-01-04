@@ -255,7 +255,7 @@ public class TARDISMonsterRunnable implements Runnable {
         if (m.getAge() > 0) {
             ((LivingEntity) ent).setTicksLived(m.getAge());
         }
-        if (m.getHealth() > 0) {
+        if (m.getHealth() > 0 && m.getHealth() <= 20.0d) {
             ((LivingEntity) ent).setHealth(m.getHealth());
         }
         if (m.getName() != null && !m.getName().isEmpty()) {
