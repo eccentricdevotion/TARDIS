@@ -40,3 +40,5 @@ upgrades:
     war: 5000
     custom: 10000
 just_wall_floor: 50
+# artron furnace
+#artron_cook_time: 100

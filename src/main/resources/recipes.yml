@@ -400,6 +400,20 @@ shaped:
         result: BUCKET
         amount: 1
         lore: "Charge Level~0"
+    TARDIS Artron Furnace:
+        easy_shape: ---,OFO,RRR
+        easy_ingredients:
+            O: OBSIDIAN
+            F: FURNACE
+            R: REDSTONE
+        hard_shape: ---,OFO,RRR
+        hard_ingredients:
+            O: OBSIDIAN
+            F: FURNACE
+            R: REDSTONE
+        result: FURNACE
+        amount: 1
+        lore: ""
     Jammy Dodger:
         easy_shape: ---,WRW,---
         easy_ingredients:

@@ -180,6 +180,7 @@ public class TARDISConfiguration {
         roomBoolOptions.put("rooms.ZERO.enabled", true);
         roomBoolOptions.put("rooms.ZERO.user", false);
         // integer
+//        artronIntOptions.put("artron_cook_time", 100);
         artronIntOptions.put("autonomous", 100);
         artronIntOptions.put("backdoor", 100);
         artronIntOptions.put("comehere", 400);

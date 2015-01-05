@@ -31,6 +31,7 @@ import me.eccentric_nz.TARDIS.arch.TARDISMVIHelper;
 import me.eccentric_nz.TARDIS.arch.TARDISRespawnListener;
 import me.eccentric_nz.TARDIS.arch.TARDISSelectWatchListener;
 import me.eccentric_nz.TARDIS.artron.TARDISArtronCapacitorListener;
+import me.eccentric_nz.TARDIS.artron.TARDISArtronFurnaceListener;
 import me.eccentric_nz.TARDIS.artron.TARDISCondenserListener;
 import me.eccentric_nz.TARDIS.chameleon.TARDISChameleonListener;
 import me.eccentric_nz.TARDIS.chameleon.TARDISPageThreeListener;
@@ -172,6 +173,9 @@ public class TARDISListenerRegisterer {
         plugin.getPM().registerEvents(new TARDISAreaListener(plugin), plugin);
         plugin.getPM().registerEvents(new TARDISAreaSignListener(plugin), plugin);
         plugin.getPM().registerEvents(new TARDISArtronCapacitorListener(plugin), plugin);
+        if (plugin.isHelperOnServer()) {
+            plugin.getPM().registerEvents(new TARDISArtronFurnaceListener(plugin), plugin);
+        }
         plugin.getPM().registerEvents(new TARDISBeaconColouringListener(plugin), plugin);
         plugin.getPM().registerEvents(new TARDISBindListener(plugin), plugin);
         plugin.getPM().registerEvents(new TARDISBlockDamageListener(plugin), plugin);

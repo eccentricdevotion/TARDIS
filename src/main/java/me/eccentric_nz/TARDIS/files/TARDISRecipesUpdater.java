@@ -251,6 +251,20 @@ public class TARDISRecipesUpdater {
             recipes_config.set("shapeless.Painter Upgrade.lore", "");
             i++;
         }
+        if (!recipes_config.contains("shaped.TARDIS Artron Furnace")) {
+            recipes_config.set("shaped.TARDIS Artron Furnace.easy_shape", "---,OFO,RRR");
+            recipes_config.set("shaped.TARDIS Artron Furnace.easy_ingredients.O", "OBSIDIAN");
+            recipes_config.set("shaped.TARDIS Artron Furnace.easy_ingredients.F", "FURNACE");
+            recipes_config.set("shaped.TARDIS Artron Furnace.easy_ingredients.R", "REDSTONE");
+            recipes_config.set("shaped.TARDIS Artron Furnace.hard_shape", "---,OFO,RRR");
+            recipes_config.set("shaped.TARDIS Artron Furnace.hard_ingredients.O", "OBSIDIAN");
+            recipes_config.set("shaped.TARDIS Artron Furnace.hard_ingredients.F", "FURNACE");
+            recipes_config.set("shaped.TARDIS Artron Furnace.hard_ingredients.R", "REDSTONE");
+            recipes_config.set("shaped.TARDIS Artron Furnace.result", "FURNACE");
+            recipes_config.set("shaped.TARDIS Artron Furnace.amount", 1);
+            recipes_config.set("shaped.TARDIS Artron Furnace.lore", "");
+            i++;
+        }
         for (Map.Entry<String, Integer> uses : damage.entrySet()) {
             if (recipes_config.getString(uses.getKey()).isEmpty()) {
                 recipes_config.set(uses.getKey(), "Uses left~" + uses.getValue());

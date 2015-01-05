@@ -221,12 +221,12 @@ public class TARDIS extends JavaPlugin {
                 this.disguisesOnServer = pm.isPluginEnabled("LibsDisguises");
                 generalKeeper = new TARDISGeneralInstanceKeeper(this);
                 generalKeeper.setQuotes(quotes());
+                loadHelper();
                 new TARDISListenerRegisterer(this).registerListeners();
                 new TARDISCommandSetter(this).loadCommands();
                 startSound();
                 loadWorldGuard();
                 loadPluginRespect();
-                loadHelper();
                 loadBarAPI();
                 startZeroHealing();
 

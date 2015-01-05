@@ -66,6 +66,7 @@ public class TARDISRecipeCommands implements CommandExecutor {
         firstArgs.add("e-circuit"); // Emerald Circuit
         firstArgs.add("filter"); // Perception Filter
         firstArgs.add("fish-finger"); // Fish Finger
+        firstArgs.add("furnace"); // TARDIS Artron Furnace
         firstArgs.add("glasses"); // 3-D Glasses
         firstArgs.add("i-circuit"); // Input Circuit
         firstArgs.add("invisible"); // Invisibility Circuit
