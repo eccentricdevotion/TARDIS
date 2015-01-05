@@ -47,7 +47,6 @@ public class TARDISArtronFurnaceListener implements Listener {
     @EventHandler(ignoreCancelled = true)
     public void onArtronFurnaceBurn(FurnaceBurnEvent event) {
         final Furnace furnace = (Furnace) event.getBlock().getState();
-        plugin.debug("Cook time: " + furnace.getCookTime());
         if (furnace.getInventory().getTitle().equals("TARDIS Artron Furnace")) {
             final ItemStack is = event.getFuel().clone();
             if (is.hasItemMeta()) {

@@ -205,6 +205,10 @@ public class TARDISRecipeCommands implements CommandExecutor {
                 this.showShapedRecipe(player, "Fish Finger");
                 return true;
             }
+            if (args[0].equalsIgnoreCase("furnace")) {
+                this.showShapedRecipe(player, "TARDIS Artron Furnace");
+                return true;
+            }
             if (args[0].equalsIgnoreCase("glasses")) {
                 this.showShapedRecipe(player, "3-D Glasses");
                 return true;
