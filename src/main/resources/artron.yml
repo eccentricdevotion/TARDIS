@@ -41,4 +41,8 @@ upgrades:
     custom: 10000
 just_wall_floor: 50
 # artron furnace
-#artron_cook_time: 100
+artron_furnace:
+    burn_limit: 100000
+    burn_time: 0.5
+    cook_time: 0.5
+    set_biome: true

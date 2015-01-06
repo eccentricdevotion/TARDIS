@@ -16,10 +16,15 @@
  */
 package me.eccentric_nz.TARDIS.artron;
 
+import java.util.Arrays;
 import java.util.List;
 import me.eccentric_nz.TARDIS.TARDIS;
+import org.bukkit.Chunk;
 import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.block.Biome;
+import org.bukkit.block.Block;
+import org.bukkit.block.BlockFace;
 import org.bukkit.block.Furnace;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.event.EventHandler;
@@ -27,6 +32,9 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.inventory.FurnaceBurnEvent;
+import org.bukkit.event.inventory.FurnaceSmeltEvent;
+import org.bukkit.event.inventory.InventoryClickEvent;
+import org.bukkit.inventory.FurnaceInventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
@@ -37,11 +45,14 @@ import org.bukkit.inventory.meta.ItemMeta;
 public class TARDISArtronFurnaceListener implements Listener {
 
     private final TARDIS plugin;
-//    private final short cookTime;
+    private final double burnFactor;
+    private final short cookTime;
+    private final List<BlockFace> surrounding = Arrays.asList(BlockFace.EAST, BlockFace.SOUTH, BlockFace.WEST, BlockFace.NORTH, BlockFace.NORTH_EAST, BlockFace.NORTH_WEST, BlockFace.SOUTH_EAST, BlockFace.SOUTH_WEST);
 
     public TARDISArtronFurnaceListener(TARDIS plugin) {
         this.plugin = plugin;
-//        this.cookTime = (short) this.plugin.getArtronConfig().getInt("artron_cook_time");
+        this.burnFactor = plugin.getArtronConfig().getInt("artron_furnace.burn_limit") * plugin.getArtronConfig().getDouble("artron_furnace.burn_time");
+        this.cookTime = (short) (200 * this.plugin.getArtronConfig().getDouble("artron_furnace.cook_time"));
     }
 
     @EventHandler(ignoreCancelled = true)
@@ -54,12 +65,13 @@ public class TARDISArtronFurnaceListener implements Listener {
                 if (im.hasDisplayName() && im.getDisplayName().equals("Artron Storage Cell")) {
                     final List<String> lore = im.getLore();
                     if (!lore.get(1).equals("0")) {
+                        // get charge level
                         int charge_level = plugin.getUtils().parseInt(lore.get(1));
-                        // 1 coal = 1600 burn time, and 1 coal = 8 artron, then burn time = charge level * 200
-                        // if full_charge = 5000, then burn time = 1,000,000!
-                        int burnTime = charge_level * 20;
+                        double percentage = charge_level / plugin.getArtronConfig().getDouble("full_charge");
+                        // determine burn time
+                        int burnTime = (int) (percentage * burnFactor);
                         event.setBurnTime(burnTime);
-//                        furnace.setCookTime(cookTime);
+                        furnace.setCookTime(cookTime);
                         // return an empty cell
                         plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
                             @Override
@@ -77,28 +89,30 @@ public class TARDISArtronFurnaceListener implements Listener {
         }
     }
 
-//    @EventHandler
-//    public void furnaceSmeltEvent(FurnaceSmeltEvent event) {
-//        // Setting cookTime after cooking an item (and the fuel is still burning)
-//        Furnace furnace = (Furnace) event.getBlock().getState();
-//        if (furnace.getInventory().getTitle().equals("TARDIS Artron Furnace")) {
-//            furnace.setCookTime(cookTime);
-//        }
-//    }
-//
-//    @EventHandler
-//    public void onInventoryClick(InventoryClickEvent event) {
-//        if (!(event.getInventory() instanceof FurnaceInventory)) {
-//            return;
-//        }
-//        Furnace furnace = (Furnace) (event.getWhoClicked().getTargetBlock(null, 10)).getState();
-//        // Setting cookTime when the furnace is empty but already burning
-//        if (furnace.getInventory().getTitle().equals("TARDIS Artron Furnace") && (event.getSlot() == 0 || event.getSlot() == 1) // Click in one of the two slots
-//                && event.getCursor().getType() != Material.AIR // With an item
-//                && furnace.getCookTime() > cookTime) {         // The furnace is not already burning something
-//            furnace.setCookTime(cookTime);
-//        }
-//    }
+    @EventHandler(ignoreCancelled = true)
+    public void furnaceSmeltEvent(FurnaceSmeltEvent event) {
+        // Setting cookTime after cooking an item (and the fuel is still burning)
+        Furnace furnace = (Furnace) event.getBlock().getState();
+        if (furnace.getInventory().getTitle().equals("TARDIS Artron Furnace")) {
+            furnace.setCookTime(cookTime);
+        }
+    }
+
+    @SuppressWarnings("deprecation")
+    @EventHandler(ignoreCancelled = true)
+    public void onInventoryClick(InventoryClickEvent event) {
+        if (!(event.getInventory() instanceof FurnaceInventory)) {
+            return;
+        }
+        Furnace furnace = (Furnace) (event.getWhoClicked().getTargetBlock(null, 10)).getState();
+        // Setting cookTime when the furnace is empty but already burning
+        if (furnace.getInventory().getTitle().equals("TARDIS Artron Furnace") && (event.getSlot() == 0 || event.getSlot() == 1) // Click in one of the two slots
+                && event.getCursor().getType() != Material.AIR // With an item
+                && furnace.getCookTime() > cookTime) {         // The furnace is not already burning something
+            furnace.setCookTime(cookTime);
+        }
+    }
+
     @EventHandler(ignoreCancelled = true)
     public void onArtronFurnacePlace(BlockPlaceEvent event) {
         if (!event.getBlock().getType().equals(Material.FURNACE)) {
@@ -114,6 +128,13 @@ public class TARDISArtronFurnaceListener implements Listener {
             return;
         }
         plugin.getTardisHelper().nameFurnaceGUI(event.getBlock(), "TARDIS Artron Furnace");
+        if (plugin.getArtronConfig().getBoolean("artron_furnace.set_biome")) {
+            Location l = event.getBlock().getLocation();
+            // set biome
+            l.getWorld().setBiome(l.getBlockX(), l.getBlockZ(), Biome.DEEP_OCEAN);
+            Chunk c = l.getChunk();
+            l.getWorld().refreshChunk(c.getX(), c.getZ());
+        }
     }
 
     @EventHandler(ignoreCancelled = true)
@@ -124,13 +145,30 @@ public class TARDISArtronFurnaceListener implements Listener {
         Furnace furnace = (Furnace) event.getBlock().getState();
         if (furnace.getInventory().getTitle().equals("TARDIS Artron Furnace")) {
             event.setCancelled(true);
+            Block block = event.getBlock();
             ItemStack is = new ItemStack(Material.FURNACE, 1);
             ItemMeta im = is.getItemMeta();
             im.setDisplayName("TARDIS Artron Furnace");
             is.setItemMeta(im);
-            Location l = event.getBlock().getLocation();
-            event.getBlock().setType(Material.AIR);
-            event.getBlock().getWorld().dropItemNaturally(l, is);
+            Location l = block.getLocation();
+            l.add(0.5, 0.0, 0.5);
+            block.setType(Material.AIR);
+            block.getWorld().dropItemNaturally(l, is);
+            if (plugin.getArtronConfig().getBoolean("artron_furnace.set_biome")) {
+                // reset biome
+                Biome b = Biome.DEEP_OCEAN;
+                if (l.getBlock().getBiome().equals(Biome.DEEP_OCEAN)) {
+                    for (BlockFace f : surrounding) {
+                        b = block.getRelative(f).getBiome();
+                        if (!b.equals(Biome.DEEP_OCEAN)) {
+                            break;
+                        }
+                    }
+                    l.getWorld().setBiome(l.getBlockX(), l.getBlockZ(), b);
+                    Chunk c = l.getChunk();
+                    l.getWorld().refreshChunk(c.getX(), c.getZ());
+                }
+            }
         }
     }
 }
