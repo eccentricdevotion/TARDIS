@@ -260,6 +260,9 @@ permissions:
   tardis.upgrade:
     description: Allows a player to upgrade their TARDIS.
     default: op
+  tardis.furnace:
+    description: Allows a player to have a TARDIS Artron Furnace.
+    default: op
 commands:
   tardis:
     aliases: [tt,ttardis,/tardis,timelord]
