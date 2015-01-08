@@ -150,20 +150,19 @@ public class TARDISArtronFurnaceListener implements Listener {
             ItemMeta im = is.getItemMeta();
             im.setDisplayName("TARDIS Artron Furnace");
             is.setItemMeta(im);
-            Location l = block.getLocation();
-            l.add(0.5, 0.0, 0.5);
             block.setType(Material.AIR);
-            block.getWorld().dropItemNaturally(l, is);
+            block.getWorld().dropItemNaturally(event.getPlayer().getLocation(), is);
             if (plugin.getArtronConfig().getBoolean("artron_furnace.set_biome")) {
                 // reset biome
                 Biome b = Biome.DEEP_OCEAN;
-                if (l.getBlock().getBiome().equals(Biome.DEEP_OCEAN)) {
+                if (block.getBiome().equals(Biome.DEEP_OCEAN)) {
                     for (BlockFace f : surrounding) {
                         b = block.getRelative(f).getBiome();
                         if (!b.equals(Biome.DEEP_OCEAN)) {
                             break;
                         }
                     }
+                    Location l = block.getLocation();
                     l.getWorld().setBiome(l.getBlockX(), l.getBlockZ(), b);
                     Chunk c = l.getChunk();
                     l.getWorld().refreshChunk(c.getX(), c.getZ());
