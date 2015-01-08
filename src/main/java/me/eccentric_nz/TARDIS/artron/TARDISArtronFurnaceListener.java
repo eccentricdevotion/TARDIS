@@ -66,6 +66,7 @@ public class TARDISArtronFurnaceListener implements Listener {
                 if (im.hasDisplayName() && im.getDisplayName().equals("Artron Storage Cell")) {
                     final List<String> lore = im.getLore();
                     if (!lore.get(1).equals("0")) {
+                        plugin.getUtils().playTARDISSoundNearby(furnace.getLocation(), "artron_furnace");
                         // get charge level
                         int charge_level = plugin.getUtils().parseInt(lore.get(1));
                         double percentage = charge_level / plugin.getArtronConfig().getDouble("full_charge");
