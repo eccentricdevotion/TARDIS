@@ -29,6 +29,7 @@ import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetAchievements;
 import me.eccentric_nz.TARDIS.enumeration.SCHEMATIC;
+import static me.eccentric_nz.TARDIS.schematic.TARDISBannerSetter.setBanners;
 import me.eccentric_nz.TARDIS.schematic.TARDISSchematicGZip;
 import me.eccentric_nz.tardischunkgenerator.TARDISChunkGenerator;
 import org.bukkit.ChatColor;
@@ -126,6 +127,8 @@ public class TARDISBuilderInner {
         HashMap<Block, Byte> postStickyPistonBaseBlocks = new HashMap<Block, Byte>();
         HashMap<Block, Byte> postPistonExtensionBlocks = new HashMap<Block, Byte>();
         HashMap<Block, Byte> postLeverBlocks = new HashMap<Block, Byte>();
+        HashMap<Block, JSONObject> postStandingBanners = new HashMap<Block, JSONObject>();
+        HashMap<Block, JSONObject> postWallBanners = new HashMap<Block, JSONObject>();
         Block postSaveSignBlock = null;
         Block postTerminalBlock = null;
         Block postARSBlock = null;
@@ -434,6 +437,15 @@ public class TARDISBuilderInner {
                         postLeverBlocks.put(world.getBlockAt(x, y, z), data);
                     } else if (type.equals(Material.WALL_SIGN)) {
                         postSignBlocks.put(world.getBlockAt(x, y, z), data);
+                    } else if (type.equals(Material.STANDING_BANNER) || type.equals(Material.WALL_BANNER)) {
+                        JSONObject state = c.optJSONObject("banner");
+                        if (state != null) {
+                            if (type.equals(Material.STANDING_BANNER)) {
+                                postStandingBanners.put(world.getBlockAt(x, y, z), state);
+                            } else {
+                                postWallBanners.put(world.getBlockAt(x, y, z), state);
+                            }
+                        }
                     } else if (type.equals(Material.MONSTER_EGGS)) { // monster egg stone for controls
                         switch (data) {
                             case 0:
@@ -646,6 +658,8 @@ public class TARDISBuilderInner {
             lamp.setType(Material.REDSTONE_LAMP_ON);
         }
         lampblocks.clear();
+        setBanners(176, postStandingBanners);
+        setBanners(177, postWallBanners);
         if (plugin.isWorldGuardOnServer() && plugin.getConfig().getBoolean("preferences.use_worldguard")) {
             if (tips) {
                 if (pos != null) {

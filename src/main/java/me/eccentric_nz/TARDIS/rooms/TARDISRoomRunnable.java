@@ -29,6 +29,7 @@ import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
 import me.eccentric_nz.TARDIS.enumeration.ROOM;
+import static me.eccentric_nz.TARDIS.schematic.TARDISBannerSetter.setBanners;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import org.bukkit.Chunk;
 import org.bukkit.Location;
@@ -75,6 +76,8 @@ public class TARDISRoomRunnable implements Runnable {
     HashMap<Block, Byte> torchblocks = new HashMap<Block, Byte>();
     HashMap<Block, Byte> redstoneTorchblocks = new HashMap<Block, Byte>();
     HashMap<Block, Byte> mushroomblocks = new HashMap<Block, Byte>();
+    HashMap<Block, JSONObject> standingBanners = new HashMap<Block, JSONObject>();
+    HashMap<Block, JSONObject> wallBanners = new HashMap<Block, JSONObject>();
     byte[] repeaterData = new byte[6];
     HashMap<Integer, Integer> repeaterOrder = new HashMap<Integer, Integer>();
     JSONArray arr;
@@ -202,6 +205,9 @@ public class TARDISRoomRunnable implements Runnable {
                 entry.getKey().setTypeIdAndData(76, entry.getValue(), true);
             }
             torchblocks.clear();
+            // set banners
+            setBanners(176, standingBanners);
+            setBanners(177, wallBanners);
             // remove the chunks, so they can unload as normal again
             if (chunkList.size() > 0) {
                 for (Chunk ch : chunkList) {
@@ -370,6 +376,18 @@ public class TARDISRoomRunnable implements Runnable {
             if (type.equals(Material.REDSTONE_TORCH_ON)) {
                 Block torch = world.getBlockAt(startx, starty, startz);
                 redstoneTorchblocks.put(torch, data);
+            }
+            // remember banners
+            if (type.equals(Material.STANDING_BANNER) || type.equals(Material.WALL_BANNER)) {
+                Block banner = world.getBlockAt(startx, starty, startz);
+                JSONObject state = v.optJSONObject("banner");
+                if (state != null) {
+                    if (type.equals(Material.STANDING_BANNER)) {
+                        standingBanners.put(banner, state);
+                    } else {
+                        wallBanners.put(banner, state);
+                    }
+                }
             }
             // set farmland hydrated
             if (type.equals(Material.SOIL) && data == 0) {
