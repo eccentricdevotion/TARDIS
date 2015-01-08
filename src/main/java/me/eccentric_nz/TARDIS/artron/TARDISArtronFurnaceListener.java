@@ -19,6 +19,7 @@ package me.eccentric_nz.TARDIS.artron;
 import java.util.Arrays;
 import java.util.List;
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import org.bukkit.Chunk;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -127,13 +128,18 @@ public class TARDISArtronFurnaceListener implements Listener {
         if (!event.getItemInHand().getItemMeta().getDisplayName().equals("TARDIS Artron Furnace")) {
             return;
         }
-        plugin.getTardisHelper().nameFurnaceGUI(event.getBlock(), "TARDIS Artron Furnace");
-        if (plugin.getArtronConfig().getBoolean("artron_furnace.set_biome")) {
-            Location l = event.getBlock().getLocation();
-            // set biome
-            l.getWorld().setBiome(l.getBlockX(), l.getBlockZ(), Biome.DEEP_OCEAN);
-            Chunk c = l.getChunk();
-            l.getWorld().refreshChunk(c.getX(), c.getZ());
+        if (event.getPlayer().hasPermission("tardis.furnace")) {
+            plugin.getTardisHelper().nameFurnaceGUI(event.getBlock(), "TARDIS Artron Furnace");
+            if (plugin.getArtronConfig().getBoolean("artron_furnace.set_biome")) {
+                Location l = event.getBlock().getLocation();
+                // set biome
+                l.getWorld().setBiome(l.getBlockX(), l.getBlockZ(), Biome.DEEP_OCEAN);
+                Chunk c = l.getChunk();
+                l.getWorld().refreshChunk(c.getX(), c.getZ());
+            }
+        } else {
+            event.setCancelled(true);
+            TARDISMessage.send(event.getPlayer(), "NO_PERM_FURNACE");
         }
     }
 

@@ -4,7 +4,6 @@
 1. Fix bugs
 2. Artron Furnace SFX and permission
 3. Fix 3D-glasses
-4. `/ts paste` should do post blocks as well
 
 ##Upcoming version `3.3`
 1. Junk TARDIS
