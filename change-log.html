@@ -32,6 +32,43 @@
     <section>
         <h1>Change log</h1>
         <h2>What&rsquo;s been changed?</h2>
+        <h3>v3.2.7</h3>
+        <p><a href="#reqs">View requirements for this version</a></p>
+        <h4>Additions</h4>
+        <ul>
+            <li>
+                <p>Added a TARDIS Artron Furnace &mdash; requires TARDISHelper v1.2 (included in ZIP file)</p>
+                <ul>
+                    <li><code>/tardisrecipe furnace</code></li>
+                    <li>permission to place a furnace: <code>tardis.furnace</code></li>
+                    <li>Custom texture &mdash; update the <a href="https://github.com/eccentricdevotion/TARDIS-MCP" target="_blank">TARDIS-MCP</a> resource pack</li>
+                    <li>Custom sound when burning starts &mdash; update the <a href="https://github.com/eccentricdevotion/TARDIS-SoundResourcePack" target="_blank">TARDISSound</a> resource pack</li>
+                    <li>set config options in <strong>artron.yml</strong>:</li>
+                </ul>
+                <pre><code>    artron_furnace:
+        burn_limit: 100000
+        burn_time: 0.5
+        cook_time: 0.5
+        set_biome: true</code></pre>
+                <ul>
+                    <li><code>set_biome [true|false]</code> &mdash; whether to set the biome so that custom textures work on the furnace block</li>
+                    <li><code>cook_time: [time ratio]</code> &mdash; sets the cook time for items smelted with Artron Storage Cells &mdash; <code>0.5</code> is half the normal time, <code>2.0</code> would be twice normal speed (longer), 1 = normal cook time (same as coal)
+                    <li><code>burn_time: [time ratio]</code> &mdash; sets the length of time an Artron Storage Cell will burn for &mdash; as above fractions (<code>0.5</code>) will give shorter life to the cells, > 1 will extend the burn time, 1 = normal burn time (same as coal)</li>
+                    <li><code>burn_limit: [amount]</code> &mdash; the maximum amount of burn time a fully charged Artron Storage Cell can have.</li>
+                    <li>The actual maximum amount given is <code>burn_limit * burn_time * (cell_charge_level / full_charge)</code></li>
+                    <li>default settings mean that the Artron Furnace cooks quickly but doesn't burn as long.</li>
+                </ul>
+            </li>
+            <li>Added support for banner colours and patterns in TARDIS schematics</li>
+        </ul>
+        <h4>Bug fixes</h4>
+        <ul>
+            <li>Fixed item duplication exploit when crafting seed blocks (again)</li>
+            <li>Fixed invisibility potions being removed when not temporally located</li>
+            <li>Fixed rabbit farming (and <a href="https://hub.spigotmc.org/jira/browse/SPIGOT-392" target="_blank">found a CraftBukkit bug</a>!)</li>
+            <li>Fixed some missing arguments to the <code>/tardisrecipe</code> command tab completion</li>
+            <li>Fixed missing 1.8 mobs in the Monster runnable</li>
+        </ul>
         <h3>v3.2.6</h3>
         <p><a href="#reqs">View requirements for this version</a></p>
         <ul>
@@ -85,7 +122,7 @@
             <li>Added a rabbit HUTCH room</li>
             <li>Added rabbits to TARDIS mob farming &mdash; you must grow a HUTCH room first</li>
             <li>Added a mob farming player preference &mdash; must be on to farm mobs &mdash; <code>/tardisprefs farm [on|off]</code> or use the sonic prefs menu</li>
-            <li>Villagers now keep their trades when farming them &mdash; requires TARDISHelper v1.1 or higher</li>
+            <li>Villagers now keep their trades when farming them &mdash; requires TARDISHelper v1.2 or higher</li>
             <li>You can now eject rabbits from the TARDIS</li>
             <li>The Chameleon circuit now uses red sandstone when landing on red sand</li>
             <li>You can now power up and check energy levels from the Control Centre GUI when the TARDIS is powered down</li>
@@ -133,7 +170,7 @@
         <ul>
             <li>Added new fence gates to the Sonic Screwdriver interactable block list</li>
             <li>Added COARSE_DIRT and PODZOL to wall / floor blocks</li>
-            <li>Added basic seed blocks to the <code>/tardisgive</code> command - <code>/tardisgive [player] seed [type]</code></li>
+            <li>Added basic seed blocks to the <code>/tardisgive</code> command &mdash; <code>/tardisgive [player] seed [type]</code></li>
             <li>Added an upgrade warning when changing TARDIS console types (chests and items will be deleted!)</li>
             <li>
                 <p>You can now redefine the End and Nether buttons in the Destination Terminal to specific worlds when travel to those environments is disabled</p>
@@ -168,11 +205,11 @@
         <h5>Server</h5>
         <p>A new WorldBorder API was addedd to CraftBukkit / Spigot on the 13 December 2014. This means if your server JAR was built before then it <strong>WILL NOT WORK</strong> with TARDIS. You should use Spigot&rsquo;s <a href="https://hub.spigotmc.org/jenkins/job/BuildTools/">BuildTools</a> to compile a new server JAR &mdash; instructions for doing this can be found here: <a href="build-tools.html">How to use BuildTools</a>.</p>
         <ul style="margin-bottom:0;">
-            <li> <a href="https://dl.dropboxusercontent.com/u/53758864/craftbukkit.jar">CraftBukkit</a> &mdash; version git-Bukkit-0899683 (MC: 1.8) or newer</li>
+            <li> <a href="https://dl.dropboxusercontent.com/u/53758864/craftbukkit.jar">CraftBukkit</a> &mdash; version git-Bukkit-4470462 (MC: 1.8) or newer</li>
         </ul>
         <p style="margin-bottom:0;"><em>or</em></p>
         <ul>
-            <li> <a href="https://dl.dropboxusercontent.com/u/53758864/spigot.jar">Spigot</a> &mdash; version git-Spigot-eb39b47-0899683 (MC: 1.8) or newer</li>
+            <li> <a href="https://dl.dropboxusercontent.com/u/53758864/spigot.jar">Spigot</a> &mdash; version git-Spigot-081dfa5-4470462 (MC: 1.8) or newer</li>
         </ul>
         <h5>Plugins</h5>
         <p>If running the following plugins the <strong>minimum</strong> version required is shown.</p>
@@ -184,7 +221,7 @@
             <li><a href="http://ci.citizensnpcs.co/job/Citizens2/">Citizens</a> &mdash; version 2.0.14-SNAPSHOT build #1194</li>
             <li><a href="https://dl.dropboxusercontent.com/u/53758864/BarAPI.jar">BarAPI</a> &mdash; version 3.3-SNAPSHOT (the Bromley Massive unofficial update)</li>
         </ul>
-        <p>TARDISHorseSpeed is now obsolete, you need to use TARDISHelper v1.1 instead (included in the TARDIS ZIP file download).</p>
+        <p>TARDISHorseSpeed is now obsolete, you need to use TARDISHelper v1.2 instead (included in the TARDIS ZIP file download).</p>
         <h4>Additions</h4>
         <ul>
             <li>Added a config option to set the default preset on TARDIS creation &mdash; <code>/tardisadmin default_preset [preset]</code></li>
