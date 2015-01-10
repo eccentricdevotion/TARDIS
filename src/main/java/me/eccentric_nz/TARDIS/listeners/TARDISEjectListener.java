@@ -198,11 +198,7 @@ public class TARDISEjectListener implements Listener {
                 if (rabbitname != null && !rabbitname.isEmpty()) {
                     bunny.setCustomName(rabbitname);
                 }
-                Rabbit.Type rtype = r.getRabbitType();
-                if (rtype == null) {
-                    rtype = Rabbit.Type.BROWN;
-                }
-                bunny.setRabbitType(rtype);
+                bunny.setRabbitType(r.getRabbitType());
                 ent.remove();
                 break;
             case WOLF:

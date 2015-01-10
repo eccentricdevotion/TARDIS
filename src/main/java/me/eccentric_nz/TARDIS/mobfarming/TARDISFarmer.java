@@ -249,12 +249,7 @@ public class TARDISFarmer {
                             tmrabbit.setAge(rabbit.getAge());
                             tmrabbit.setBaby(!rabbit.isAdult());
                             tmrabbit.setName(rabbit.getCustomName());
-                            Rabbit.Type rtype = rabbit.getRabbitType();
-                            if (rtype == null) {
-                                rtype = Rabbit.Type.BROWN;
-                            }
-                            plugin.debug("Rabbit type: " + rtype.toString());
-                            tmrabbit.setBunnyType(rtype);
+                            tmrabbit.setBunnyType(rabbit.getRabbitType());
                             old_macd_had_a_rabbit.add(tmrabbit);
                             if (!hutch.isEmpty() || (hutch.isEmpty() && plugin.getConfig().getBoolean("allow.spawn_eggs"))) {
                                 e.remove();
