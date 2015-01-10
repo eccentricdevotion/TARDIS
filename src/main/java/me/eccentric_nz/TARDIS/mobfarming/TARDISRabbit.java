@@ -16,7 +16,7 @@
  */
 package me.eccentric_nz.TARDIS.mobfarming;
 
-import org.bukkit.entity.Rabbit.Type;
+import org.bukkit.entity.Rabbit;
 
 /**
  * Alien is a broad, subjective term. It can be applied as a noun or an
@@ -30,14 +30,13 @@ import org.bukkit.entity.Rabbit.Type;
  */
 public class TARDISRabbit extends TARDISMob {
 
-    private Type bunnyType;
+    private Rabbit.Type bunnyType;
 
-    public Type getBunnyType() {
+    public Rabbit.Type getBunnyType() {
         return bunnyType;
     }
 
-    public void setBunnyType(Type bunnyType) {
+    public void setBunnyType(Rabbit.Type bunnyType) {
         this.bunnyType = bunnyType;
     }
-
 }

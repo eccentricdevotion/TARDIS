@@ -244,13 +244,21 @@ public class TARDISFarmer {
                             farmtotal++;
                             break;
                         case RABBIT:
+                            Rabbit rabbit = (Rabbit) e;
                             TARDISRabbit tmrabbit = new TARDISRabbit();
-                            tmrabbit.setAge(((Rabbit) e).getAge());
-                            tmrabbit.setBaby(!((Rabbit) e).isAdult());
-                            tmrabbit.setName(((Rabbit) e).getCustomName());
-                            tmrabbit.setBunnyType(((Rabbit) e).getRabbitType());
+                            tmrabbit.setAge(rabbit.getAge());
+                            tmrabbit.setBaby(!rabbit.isAdult());
+                            tmrabbit.setName(rabbit.getCustomName());
+                            Rabbit.Type rtype = rabbit.getRabbitType();
+                            if (rtype == null) {
+                                rtype = Rabbit.Type.BROWN;
+                            }
+                            plugin.debug("Rabbit type: " + rtype.toString());
+                            tmrabbit.setBunnyType(rtype);
+                            old_macd_had_a_rabbit.add(tmrabbit);
                             if (!hutch.isEmpty() || (hutch.isEmpty() && plugin.getConfig().getBoolean("allow.spawn_eggs"))) {
                                 e.remove();
+                                plugin.debug("removing bunny");
                             }
                             if (taf != null) {
                                 taf.doAchievement("RABBIT");
