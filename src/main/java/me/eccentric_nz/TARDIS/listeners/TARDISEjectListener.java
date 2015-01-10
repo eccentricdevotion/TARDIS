@@ -189,7 +189,7 @@ public class TARDISEjectListener implements Listener {
                 break;
             case RABBIT:
                 Rabbit r = (Rabbit) ent;
-                Rabbit bunny = (Rabbit) l.getWorld().spawnEntity(l, EntityType.SHEEP);
+                Rabbit bunny = (Rabbit) l.getWorld().spawnEntity(l, EntityType.RABBIT);
                 bunny.setTicksLived(r.getTicksLived());
                 if ((!r.isAdult())) {
                     bunny.setBaby();
@@ -198,7 +198,11 @@ public class TARDISEjectListener implements Listener {
                 if (rabbitname != null && !rabbitname.isEmpty()) {
                     bunny.setCustomName(rabbitname);
                 }
-                bunny.setRabbitType(r.getRabbitType());
+                Rabbit.Type rtype = r.getRabbitType();
+                if (rtype == null) {
+                    rtype = Rabbit.Type.BROWN;
+                }
+                bunny.setRabbitType(rtype);
                 ent.remove();
                 break;
             case WOLF:
