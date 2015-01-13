@@ -67,6 +67,7 @@ public class TARDISAdminCommands implements CommandExecutor {
         firstsStr.put("default_sonic", "preferences");
         firstsStr.put("default_world_name", "creation");
         firstsStr.put("delete", "");
+        firstsStr.put("desiege", "");
         firstsStr.put("difficulty", "preferences");
         firstsStr.put("enter", "");
         firstsStr.put("exclude", "");
@@ -246,6 +247,9 @@ public class TARDISAdminCommands implements CommandExecutor {
                 }
                 if (first.equals("config")) {
                     return new TARDISConfigCommand(plugin).showConfigOptions(sender, args);
+                }
+                if (first.equals("desiege")) {
+                    return new TARDISDesiegeCommand(plugin).restore(sender, args);
                 }
                 if (first.equals("language")) {
                     return new TARDISLanguageCommand(plugin).setLanguage(sender, args);

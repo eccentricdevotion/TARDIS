@@ -46,6 +46,7 @@ public class TARDISAdminTabComplete extends TARDISCompleter implements TabComple
     private final ImmutableList<String> SONICS = ImmutableList.of("mark_1", "mark_2", "mark_3", "mark_4", "eighth", "ninth", "ninth_open", "tenth", "tenth_open", "eleventh", "eleventh_open", "master", "sarah_jane", "river_song", "war");
     private final ImmutableList<String> KEYS = ImmutableList.of("first", "second", "third", "fifth", "seventh", "ninth", "tenth", "eleventh", "susan", "rose", "sally", "perception", "gold");
     private final ImmutableList<String> LANG_SUBS = ImmutableList.of("ar", "bg", "ca", "zh", "cs", "da", "nl", "en", "et", "fi", "fr", "de", "el", "ht", "he", "hi", "mww", "hu", "id", "it", "ja", "ko", "lv", "lt", "ms", "no", "fa", "pl", "pt", "ro", "ru", "sk", "sl", "es", "sv", "th", "tr", "uk", "ur", "vi");
+    private final ImmutableList<String> ROOT_SUBS;
 
     public TARDISAdminTabComplete(TARDIS plugin) {
         this.plugin = plugin;
@@ -59,13 +60,14 @@ public class TARDISAdminTabComplete extends TARDISCompleter implements TabComple
             tmpPresets.add(p.toString());
         }
         this.PRESETS = ImmutableList.copyOf(tmpPresets);
+        this.ROOT_SUBS = ImmutableList.copyOf(combineLists());
     }
 
     @Override
     public List<String> onTabComplete(CommandSender sender, Command command, String label, String[] args) {
         String lastArg = args[args.length - 1];
         if (args.length <= 1) {
-            return partial(args[0], combineLists());
+            return partial(args[0], ROOT_SUBS);
         } else if (args.length == 2) {
             String sub = args[0];
             if (sub.equals("config")) {
@@ -104,7 +106,7 @@ public class TARDISAdminTabComplete extends TARDISCompleter implements TabComple
             if (sub.equals("tips_limit")) {
                 return partial(lastArg, TIPS_SUBS);
             }
-            if (sub.equals("delete") || sub.equals("enter") || sub.equals("purge")) { // return null to default to online player name matching
+            if (sub.equals("delete") || sub.equals("enter") || sub.equals("purge") || sub.equals("desiege")) { // return null to default to online player name matching
                 return null;
             } else {
                 return partial(lastArg, BOOL_SUBS);
