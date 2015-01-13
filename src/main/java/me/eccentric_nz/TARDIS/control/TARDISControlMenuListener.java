@@ -163,8 +163,12 @@ public class TARDISControlMenuListener extends TARDISMenuListener implements Lis
                                     break;
                                 case 7:
                                     // power up/down
-                                    close(player);
-                                    new TARDISPowerButton(plugin, id, player, rs.getPreset(), rs.isPowered_on(), rs.isHidden(), lights, player.getLocation(), level).clickButton();
+                                    if (plugin.getConfig().getBoolean("allow.power_down")) {
+                                        close(player);
+                                        new TARDISPowerButton(plugin, id, player, rs.getPreset(), rs.isPowered_on(), rs.isHidden(), lights, player.getLocation(), level).clickButton();
+                                    } else {
+                                        TARDISMessage.send(player, "POWER_DOWN_DISABLED");
+                                    }
                                     break;
                                 case 8:
                                     // siege
