@@ -30,6 +30,7 @@ public enum TARDIS_COMMAND {
     colourise,
     colorize,
     comehere,
+    cube,
     desktop,
     direction,
     eject,

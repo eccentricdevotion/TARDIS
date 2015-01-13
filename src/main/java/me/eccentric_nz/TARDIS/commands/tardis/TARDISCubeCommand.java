@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2014 eccentric_nz
+ * Copyright (C) 2015 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -17,26 +17,27 @@
 package me.eccentric_nz.TARDIS.commands.tardis;
 
 import java.util.HashMap;
+import java.util.Map;
+import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.database.ResultSetCurrentLocation;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
-import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 
 /**
  *
  * @author eccentric_nz
  */
-public class TARDISFindCommand {
+public class TARDISCubeCommand {
 
     private final TARDIS plugin;
 
-    public TARDISFindCommand(TARDIS plugin) {
+    public TARDISCubeCommand(TARDIS plugin) {
         this.plugin = plugin;
     }
 
-    public boolean findTARDIS(Player player, String[] args) {
+    public boolean whoHasCube(Player player) {
+        // check they have TARDIS
         if (player.hasPermission("tardis.find")) {
             HashMap<String, Object> where = new HashMap<String, Object>();
             where.put("uuid", player.getUniqueId().toString());
@@ -45,22 +46,21 @@ public class TARDISFindCommand {
                 TARDISMessage.send(player, "NO_TARDIS");
                 return true;
             }
-            if (plugin.getConfig().getString("preferences.difficulty").equalsIgnoreCase("easy") || plugin.getUtils().inGracePeriod(player, true)) {
-
-                HashMap<String, Object> wherecl = new HashMap<String, Object>();
-                wherecl.put("tardis_id", rs.getTardis_id());
-                ResultSetCurrentLocation rsc = new ResultSetCurrentLocation(plugin, wherecl);
-                if (rsc.resultSet()) {
-                    TARDISMessage.send(player, "TARDIS_FIND", rsc.getWorld().getName() + " at x: " + rsc.getX() + " y: " + rsc.getY() + " z: " + rsc.getZ());
-                    return true;
-                } else {
-                    TARDISMessage.send(player, "CURRENT_NOT_FOUND");
-                    return true;
-                }
-            } else {
-                TARDISMessage.send(player, "DIFF_HARD_FIND", ChatColor.AQUA + "/tardisrecipe locator" + ChatColor.RESET);
+            if (!plugin.getTrackerKeeper().getIsSiegeCube().contains(rs.getTardis_id())) {
+                TARDISMessage.send(player, "SIEGE_NOT_SIEGED");
                 return true;
             }
+            // get the player who is carrying the Siege cube
+            for (Map.Entry<UUID, Integer> map : plugin.getTrackerKeeper().getSiegeCarrying().entrySet()) {
+                if (map.getValue() == rs.getTardis_id()) {
+                    String p = plugin.getServer().getPlayer(map.getKey()).getName();
+                    TARDISMessage.send(player, "SIEGE_CARRIER", p);
+                    return true;
+                }
+            }
+            // not found
+            TARDISMessage.send(player, "SIEGE_CARRIER", "no one!");
+            return true;
         } else {
             TARDISMessage.send(player, "NO_PERMS");
             return false;
