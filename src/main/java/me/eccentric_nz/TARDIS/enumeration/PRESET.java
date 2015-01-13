@@ -66,7 +66,7 @@ public enum PRESET {
     SNOWMAN(Material.SNOW_BALL, "TAKES ONE", "TO SNOW ONE", false, false),
     STONE(Material.STONE, "STONE BRICK", "COLUMN", true, true),
     SUBMERGED(Material.DIRT, "", "", false, false),
-    SWAMP(Material.WATER_LILY, "SIGN ABOVE", "THE DOOR", false, false),
+    SWAMP(Material.WATER_LILY, "SIGN ABOVE", "THE DOOR", true, true),
     TELEPHONE(Material.GLASS, "TELEPHONE", "BOX", true, true),
     THEEND(Material.BEDROCK, "DRAGON", "SLAYING", true, true),
     TOILET(Material.LEVER, "", "", false, false),
