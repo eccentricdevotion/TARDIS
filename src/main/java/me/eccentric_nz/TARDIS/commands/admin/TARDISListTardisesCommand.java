@@ -22,10 +22,13 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.ResultSetCurrentLocation;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
+import me.eccentric_nz.TARDIS.move.TARDISTeleportLocation;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
+import org.bukkit.Location;
 import org.bukkit.command.CommandSender;
 
 /**
@@ -41,32 +44,39 @@ public class TARDISListTardisesCommand {
     }
 
     public boolean listTardises(CommandSender sender, String[] args) {
-        if (args.length > 1 && args[1].equalsIgnoreCase("save")) {
-            ResultSetTardis rsl = new ResultSetTardis(plugin, null, "", true);
-            if (rsl.resultSet()) {
-                ArrayList<HashMap<String, String>> data = rsl.getData();
-                String file = plugin.getDataFolder() + File.separator + "TARDIS_list.txt";
-                try {
-                    BufferedWriter bw = new BufferedWriter(new FileWriter(file, false));
-                    for (HashMap<String, String> map : data) {
-                        HashMap<String, Object> wherecl = new HashMap<String, Object>();
-                        wherecl.put("tardis_id", plugin.getUtils().parseInt(map.get("tardis_id")));
-                        ResultSetCurrentLocation rsc = new ResultSetCurrentLocation(plugin, wherecl);
-                        if (!rsc.resultSet()) {
-                            TARDISMessage.send(sender, "CURRENT_NOT_FOUND");
-                            return true;
+        if (args.length > 1 && (args[1].equalsIgnoreCase("save") || args[1].equalsIgnoreCase("portals"))) {
+            if (args[1].equalsIgnoreCase("save")) {
+                ResultSetTardis rsl = new ResultSetTardis(plugin, null, "", true);
+                if (rsl.resultSet()) {
+                    ArrayList<HashMap<String, String>> data = rsl.getData();
+                    String file = plugin.getDataFolder() + File.separator + "TARDIS_list.txt";
+                    try {
+                        BufferedWriter bw = new BufferedWriter(new FileWriter(file, false));
+                        for (HashMap<String, String> map : data) {
+                            HashMap<String, Object> wherecl = new HashMap<String, Object>();
+                            wherecl.put("tardis_id", plugin.getUtils().parseInt(map.get("tardis_id")));
+                            ResultSetCurrentLocation rsc = new ResultSetCurrentLocation(plugin, wherecl);
+                            if (!rsc.resultSet()) {
+                                TARDISMessage.send(sender, "CURRENT_NOT_FOUND");
+                                return true;
+                            }
+                            String line = "Time Lord: " + map.get("owner") + ", Location: " + rsc.getWorld().getName() + ":" + rsc.getX() + ":" + rsc.getY() + ":" + rsc.getZ();
+                            bw.write(line);
+                            bw.newLine();
                         }
-                        String line = "Time Lord: " + map.get("owner") + ", Location: " + rsc.getWorld().getName() + ":" + rsc.getX() + ":" + rsc.getY() + ":" + rsc.getZ();
-                        bw.write(line);
-                        bw.newLine();
+                        bw.close();
+                    } catch (IOException e) {
+                        plugin.debug("Could not create and write to TARDIS_list.txt! " + e.getMessage());
                     }
-                    bw.close();
-                } catch (IOException e) {
-                    plugin.debug("Could not create and write to TARDIS_list.txt! " + e.getMessage());
                 }
+                TARDISMessage.send(sender, "FILE_SAVED");
+                return true;
+            } else {
+                for (Map.Entry<Location, TARDISTeleportLocation> map : plugin.getTrackerKeeper().getPortals().entrySet()) {
+                    sender.sendMessage("TARDIS id: " + map.getValue().getTardisId() + " has a portal open at: " + map.getKey().toString());
+                }
+                return true;
             }
-            TARDISMessage.send(sender, "FILE_SAVED");
-            return true;
         } else {
             // get all tardis positions - max 18
             int start = 0, end = 18;
