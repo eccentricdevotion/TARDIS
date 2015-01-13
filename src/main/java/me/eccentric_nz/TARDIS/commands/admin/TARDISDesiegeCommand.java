@@ -76,7 +76,7 @@ public class TARDISDesiegeCommand {
                 HashMap<String, Object> wherec = new HashMap<String, Object>();
                 wherec.put("tardis_id", id);
                 HashMap<String, Object> setc = new HashMap<String, Object>();
-                setc.put("world", rsh.getWorld().toString());
+                setc.put("world", rsh.getWorld().getName());
                 setc.put("x", rsh.getX());
                 setc.put("y", rsh.getY());
                 setc.put("z", rsh.getZ());

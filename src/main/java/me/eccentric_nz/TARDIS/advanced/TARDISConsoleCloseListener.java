@@ -244,7 +244,7 @@ public class TARDISConsoleCloseListener implements Listener {
                                                 int x = plugin.getUtils().parseInt(lore.get(2));
                                                 int y = plugin.getUtils().parseInt(lore.get(3));
                                                 int z = plugin.getUtils().parseInt(lore.get(4));
-                                                if (current.getWorld().toString().equals(world) && current.getBlockX() == x && current.getBlockZ() == z) {
+                                                if (current.getWorld().getName().equals(world) && current.getBlockX() == x && current.getBlockZ() == z) {
                                                     continue;
                                                 }
                                                 // read the lore from the disk
