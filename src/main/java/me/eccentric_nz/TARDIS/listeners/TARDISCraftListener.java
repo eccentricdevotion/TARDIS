@@ -53,7 +53,6 @@ public class TARDISCraftListener implements Listener {
     private final List<Integer> l = new ArrayList<Integer>();
     private final HashMap<Material, String> t = new HashMap<Material, String>();
     private final List<Material> hasColour = new ArrayList<Material>();
-    private final List<InventoryAction> actions = new ArrayList<InventoryAction>();
     private final TARDISWallsLookup twl;
 
     public TARDISCraftListener(TARDIS plugin) {

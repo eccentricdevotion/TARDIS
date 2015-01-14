@@ -44,14 +44,12 @@ public class TARDISSonicUpgradeListener implements Listener {
 
     private final TARDIS plugin;
     private final Material sonicMaterial;
-    private final Material rkey;
     private final HashMap<String, String> upgrades = new HashMap<String, String>();
 
     public TARDISSonicUpgradeListener(TARDIS plugin) {
         this.plugin = plugin;
         String[] split = this.plugin.getRecipesConfig().getString("shaped.Sonic Screwdriver.result").split(":");
         this.sonicMaterial = Material.valueOf(split[0]);
-        this.rkey = Material.valueOf(this.plugin.getRecipesConfig().getString("shaped.TARDIS Remote Key.result"));
         this.upgrades.put("Admin Upgrade", "admin");
         this.upgrades.put("Bio-scanner Upgrade", "bio");
         this.upgrades.put("Redstone Upgrade", "redstone");
