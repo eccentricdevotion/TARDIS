@@ -339,6 +339,11 @@ public class TARDISRecipeCommands implements CommandExecutor {
                     im.setDisplayName(getDisplayName(item.getData().getData()));
                     item.setItemMeta(im);
                 }
+                if (str.equals("TARDIS Remote Key") && item.getType().equals(Material.GOLD_NUGGET)) {
+                    ItemMeta im = item.getItemMeta();
+                    im.setDisplayName("TARDIS Key");
+                    item.setItemMeta(im);
+                }
                 view.getTopInventory().setItem(j * 3 + k + 1, item);
             }
         }
