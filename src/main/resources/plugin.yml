@@ -24,6 +24,7 @@ permissions:
   tardis.use:
     description: Allow players to create & delete a TARDIS, and teleport to destinations.
     children:
+      tardis.budget: true
       tardis.create: true
       tardis.exterminate: true
       tardis.timetravel: true
