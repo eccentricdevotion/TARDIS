@@ -52,7 +52,7 @@ travel:
     terminal:
         redefine: false
         nether: world
-        end: world
+        the_end: world
     land_on_water: true
     timeout: 5
     timeout_height: 135
@@ -76,7 +76,7 @@ preferences:
     respect_worldborder: true
     respect_factions: true
     respect_grief_prevention: true
-    sfx_volume: 10;
+    sfx_volume: 10
     difficulty: hard
     strike_lightning: true
     freeze_cooldown: 60

@@ -102,6 +102,12 @@ rooms:
     offset: -4
     seed: MELON_BLOCK
     user: false
+  HUTCH:
+    enabled: true
+    cost: 450
+    offset: -4
+    seed: LOG_2
+    user: false
   MUSHROOM:
     enabled: true
     cost: 350
