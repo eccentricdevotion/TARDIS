@@ -32,6 +32,36 @@
     <section>
         <h1>Change log</h1>
         <h2>What&rsquo;s been changed?</h2>
+        <h3>v3.2.8</h3>
+        <h3>Additions</h3>
+        <ul>
+            <li>Added a <code>/tardisadmin desiege [player]</code> command
+                <ul>
+                    <li>Stop tracking the siege cube</li>
+                    <li>Set siege mode to OFF</li>
+                    <li>Rebuild the TARDIS at the home location</li>
+                </ul>
+            </li>
+            <li>Added a <code>/tardis cube</code> command to see which player is carrying the Siege Cube</li>
+            <li>Added a <code>/tardisadmin list portals</code> command (primarily for debugging)</li>
+            <li>Added a check / warning if GOLD_NUGGET ingredient in the Remote Key recipe is different from the result of crafting the TARDIS Key &mdash; <em>if you have changed the recipe result of the TARDIS Key to something other than a GOLD_NUGGET, then you will also need to change the matching ingredient in the Remote Key recipe!</em></li>
+        </ul>
+        <h3>Changes</h3>
+        <ul>
+            <li>Swamp Hut preset now has a walk in portal</li>
+            <li>You can no longer power down using the Control Centre sign if <code>allow.power_down</code> is <code>false</code> in the config</li>
+            <li>Added <code>tardis.budget</code> as a child node of the <code>tardis.use</code> permission</li>
+            <li>A TARDIS Key is now shown in the TARDIS Remote Key recipe (<code>/tardisrecipe r-key</code>) - <em>if you have changed the recipe result of the TARDIS Key to something other than a GOLD_NUGGET, then you will also need to change the matching ingredient in the Remote Key recipe!</em></li>
+        </ul>
+        <h3>Bug fixes</h3>
+        <ul>
+            <li>Fixed rabbit ejecting &mdash; Rabbits are not Sheep!</li>
+            <li>Temporary fix for Swamp Hut preset popping the door off, waiting on CraftBukkit/Spigot for bugs fixed in Minecraft itself (toggable blocks poppng off half slabs)</li>
+            <li>Fixed some cases where the world name was not being read/set correctly</li>
+            <li>Fixed / added some missing default config options</li>
+            <li>Fixed the permissions check when crafting a BUDGET seed block</li>
+            <li>Fixed the 3-D Glasses not being white anymore &mdash; update your TARDIS resource pack</li>
+        </ul>
         <h3>v3.2.7</h3>
         <p><a href="#reqs">View requirements for this version</a></p>
         <h4>Additions</h4>
