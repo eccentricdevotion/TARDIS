@@ -27,6 +27,7 @@ import me.eccentric_nz.TARDIS.enumeration.SCHEMATIC;
 import me.eccentric_nz.TARDIS.rooms.TARDISWallsLookup;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import org.bukkit.ChatColor;
+import org.bukkit.Color;
 import org.bukkit.DyeColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -41,6 +42,7 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.Recipe;
 import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.inventory.meta.LeatherArmorMeta;
 
 /**
  *
@@ -237,24 +239,31 @@ public class TARDISCraftListener implements Listener {
     public void onCraftInvisibilityCircuit(PrepareItemCraftEvent event) {
         Recipe recipe = event.getRecipe();
         ItemStack is = recipe.getResult();
-        if (is.getType().equals(Material.MAP) && is.hasItemMeta() && is.getItemMeta().hasDisplayName()) {
+        if (is.hasItemMeta() && is.getItemMeta().hasDisplayName()) {
             String dn = is.getItemMeta().getDisplayName();
-            if (DISK_CIRCUIT.getCircuitNames().contains(dn)) {
-                // which circuit is it?
-                String[] split = dn.split(" ");
-                String which = split[1].toLowerCase();
-                // set the second line of lore
-                ItemMeta im = is.getItemMeta();
-                List<String> lore;
-                String uses = (plugin.getConfig().getString("circuits.uses." + which).equals("0") || !plugin.getConfig().getBoolean("circuits.damage")) ? ChatColor.YELLOW + "unlimited" : ChatColor.YELLOW + plugin.getConfig().getString("circuits.uses." + which);
-                if (im.hasLore()) {
-                    lore = im.getLore();
-                    lore.set(1, uses);
-                } else {
-                    lore = Arrays.asList("Uses left", uses);
+            if (is.getType().equals(Material.MAP)) {
+                if (DISK_CIRCUIT.getCircuitNames().contains(dn)) {
+                    // which circuit is it?
+                    String[] split = dn.split(" ");
+                    String which = split[1].toLowerCase();
+                    // set the second line of lore
+                    ItemMeta im = is.getItemMeta();
+                    List<String> lore;
+                    String uses = (plugin.getConfig().getString("circuits.uses." + which).equals("0") || !plugin.getConfig().getBoolean("circuits.damage")) ? ChatColor.YELLOW + "unlimited" : ChatColor.YELLOW + plugin.getConfig().getString("circuits.uses." + which);
+                    if (im.hasLore()) {
+                        lore = im.getLore();
+                        lore.set(1, uses);
+                    } else {
+                        lore = Arrays.asList("Uses left", uses);
+                    }
+                    im.setLore(lore);
+                    is.setItemMeta(im);
+                    event.getInventory().setResult(is);
                 }
-                im.setLore(lore);
-                is.setItemMeta(im);
+            } else if (is.getType().equals(Material.LEATHER_HELMET) && dn.equals("3-D Glasses")) {
+                LeatherArmorMeta lam = (LeatherArmorMeta) is.getItemMeta();
+                lam.setColor(Color.WHITE);
+                is.setItemMeta(lam);
                 event.getInventory().setResult(is);
             }
         }

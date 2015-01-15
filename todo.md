@@ -1,9 +1,7 @@
 #TODO
 
-##Current version `3.2.8`
+##Current version `3.2.9`
 1. Fix bugs
-2. Fix 3D-glasses
-3. Add check / warning if GOLD_NUGGET ingredient in the Remote Key recipe is different from the result of the TARDIS Key
 
 ##Upcoming version `3.3`
 1. Junk TARDIS
