@@ -275,8 +275,13 @@ public class TARDISRecipesUpdater {
             if (i > 0) {
                 plugin.getConsole().sendMessage(plugin.getPluginName() + "Added " + ChatColor.AQUA + i + ChatColor.RESET + " new items to recipes.yml");
             }
-            if (!recipes_config.get("shaped.TARDIS Key.result").equals(plugin.getConfig().getString("preferences.key"))) {
+            String key = recipes_config.getString("shaped.TARDIS Key.result");
+            if (!key.equals(plugin.getConfig().getString("preferences.key"))) {
                 plugin.getConsole().sendMessage(plugin.getPluginName() + "The TARDIS Key recipe result (recipes.yml) does not match the configured key preference (config.yml)");
+            }
+            String r_key_5 = recipes_config.getString("shaped.TARDIS Remote Key.easy_ingredients.K");
+            if (r_key_5 != null && !key.equals(r_key_5)) {
+                plugin.getConsole().sendMessage(plugin.getPluginName() + "The TARDIS Key ingredient (" + r_key_5 + ") in the 'TARDIS Remote Key' recipe does not match the crafting result of the 'TARDIS Key' recipe (" + key + ") - they should be the same!");
             }
         } catch (IOException io) {
             plugin.debug("Could not save recipes.yml, " + io);
