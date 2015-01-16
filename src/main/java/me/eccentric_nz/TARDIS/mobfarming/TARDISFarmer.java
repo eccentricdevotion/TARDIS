@@ -253,7 +253,6 @@ public class TARDISFarmer {
                             old_macd_had_a_rabbit.add(tmrabbit);
                             if (!hutch.isEmpty() || (hutch.isEmpty() && plugin.getConfig().getBoolean("allow.spawn_eggs"))) {
                                 e.remove();
-                                plugin.debug("removing bunny");
                             }
                             if (taf != null) {
                                 taf.doAchievement("RABBIT");
