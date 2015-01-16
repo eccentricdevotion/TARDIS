@@ -167,6 +167,9 @@ public class TARDISSiegeListener implements Listener {
             event.setCancelled(true);
             TARDISMessage.send(p, "SIEGE_NO_TARDIS");
         }
+        if (plugin.isHelperOnServer()) {
+            plugin.getTardisHelper().protect(item);
+        }
         plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
             @Override
             @SuppressWarnings("deprecation")
