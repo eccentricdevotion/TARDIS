@@ -166,6 +166,7 @@ public class TARDISSiegeListener implements Listener {
         if (plugin.getUtils().inTARDISWorld(p)) {
             event.setCancelled(true);
             TARDISMessage.send(p, "SIEGE_NO_TARDIS");
+            return;
         }
         if (plugin.isHelperOnServer()) {
             plugin.getTardisHelper().protect(item);
