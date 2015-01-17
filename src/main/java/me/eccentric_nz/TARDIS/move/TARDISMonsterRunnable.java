@@ -60,6 +60,7 @@ public class TARDISMonsterRunnable implements Runnable {
 
     private final TARDIS plugin;
     private final List<EntityType> monsters = new ArrayList<EntityType>();
+    private final List<EntityType> random_monsters = new ArrayList<EntityType>();
 
     public TARDISMonsterRunnable(TARDIS plugin) {
         this.plugin = plugin;
@@ -67,7 +68,6 @@ public class TARDISMonsterRunnable implements Runnable {
         monsters.add(EntityType.CREEPER);
         monsters.add(EntityType.ENDERMAN);
         monsters.add(EntityType.ENDERMITE);
-        monsters.add(EntityType.GUARDIAN);
         monsters.add(EntityType.PIG_ZOMBIE);
         monsters.add(EntityType.SILVERFISH);
         monsters.add(EntityType.SKELETON);
@@ -75,6 +75,12 @@ public class TARDISMonsterRunnable implements Runnable {
         monsters.add(EntityType.SPIDER);
         monsters.add(EntityType.WITCH);
         monsters.add(EntityType.ZOMBIE);
+        if (this.plugin.getConfig().getBoolean("allow.guardians")) {
+            monsters.add(EntityType.GUARDIAN);
+        } else {
+            random_monsters.add(EntityType.GUARDIAN);
+        }
+        random_monsters.addAll(monsters);
     }
 
     @Override
@@ -154,7 +160,7 @@ public class TARDISMonsterRunnable implements Runnable {
                         if (r.nextInt(4) == 0 && canSpawn(map.getKey(), r.nextInt(4))) {
                             TARDISMonster rtm = new TARDISMonster();
                             // choose a random monster
-                            rtm.setType(monsters.get(r.nextInt(monsters.size())));
+                            rtm.setType(random_monsters.get(r.nextInt(random_monsters.size())));
                             moveMonster(map.getValue(), rtm, null);
                         }
                     }

@@ -70,6 +70,7 @@ public class TARDISConfiguration {
         boolOptions.put("allow.autonomous", true);
         boolOptions.put("allow.emergency_npc", true);
         boolOptions.put("allow.external_gravity", false);
+        boolOptions.put("allow.guardians", false);
         boolOptions.put("allow.hads", true);
         boolOptions.put("allow.invisibility", true);
         boolOptions.put("allow.mob_farming", true);

@@ -114,6 +114,7 @@ allow:
     emergency_npc: true
     achievements: true
     autonomous: true
+    guardians: false
     hads: true
     invisibility: true
     tp_switch: true
