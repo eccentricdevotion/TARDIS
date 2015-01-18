@@ -84,6 +84,7 @@ public class TARDISManualFlightRunnable implements Runnable {
                 Location adjusted = new TARDISFlightAdjustment(plugin).getLocation(plugin.getTrackerKeeper().getFlightData().get(uuid), blocks);
                 plugin.getTrackerKeeper().getFlightData().get(uuid).setLocation(adjusted);
             }
+            plugin.getTrackerKeeper().getRepeaters().remove(uuid);
         }
     }
 
