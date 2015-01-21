@@ -31,10 +31,8 @@ import me.eccentric_nz.TARDIS.database.ResultSetControls;
 import me.eccentric_nz.TARDIS.database.ResultSetHidden;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import me.eccentric_nz.TARDIS.database.ResultSetTravellers;
+import me.eccentric_nz.TARDIS.utility.TARDISDalekDisguiser;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
-import me.libraryaddict.disguise.DisguiseAPI;
-import me.libraryaddict.disguise.disguisetypes.DisguiseType;
-import me.libraryaddict.disguise.disguisetypes.MobDisguise;
 import org.bukkit.Difficulty;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -299,8 +297,7 @@ public class TARDISMonsterRunnable implements Runnable {
                         es.setArmorContents(m.getEquipment().getArmorContents());
                         es.setItemInHand(m.getEquipment().getItemInHand());
                         if (m.getEquipment().getHelmet().getType().equals(Material.VINE) && plugin.getPM().isPluginEnabled("LibsDisguises")) {
-                            MobDisguise mobDisguise = new MobDisguise(DisguiseType.SNOWMAN);
-                            DisguiseAPI.disguiseToAll(skeleton, mobDisguise);
+                            TARDISDalekDisguiser.dalekanium(skeleton);
                         }
                     }
                     break;
