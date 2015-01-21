@@ -76,57 +76,59 @@ public class TARDISExplosionListener implements Listener {
             if (rs.resultSet()) {
                 ArrayList<HashMap<String, String>> data = rs.getData();
                 for (HashMap<String, String> map : data) {
-                    String location = map.get("location");
                     int id = plugin.getUtils().parseInt(map.get("tardis_id"));
-                    Block block = plugin.getUtils().getLocationFromBukkitString(location).getBlock();
-                    // if the block is a TARDIS block then remove it
-                    if (e.blockList().contains(block)) {
-                        e.blockList().remove(block);
-                    }
-                    if (id != idchk) {
-                        HashMap<String, Object> where = new HashMap<String, Object>();
-                        where.put("tardis_id", id);
-                        ResultSetDoors rsd = new ResultSetDoors(plugin, where, true);
-                        if (rsd.resultSet()) {
-                            String doorLoc[] = rsd.getDoor_location().split(":");
-                            COMPASS d = rsd.getDoor_direction();
-                            World w = plugin.getServer().getWorld(doorLoc[0]);
-                            int dx = plugin.getUtils().parseInt(doorLoc[1]);
-                            int dy = plugin.getUtils().parseInt(doorLoc[2]);
-                            int dz = plugin.getUtils().parseInt(doorLoc[3]);
-                            Block door_bottom = w.getBlockAt(dx, dy, dz);
-                            Block door_under = door_bottom.getRelative(BlockFace.DOWN);
-                            Block door_top = door_bottom.getRelative(BlockFace.UP);
-                            BlockFace bf;
-                            switch (d) {
-                                case NORTH:
-                                    bf = BlockFace.WEST;
-                                    break;
-                                case WEST:
-                                    bf = BlockFace.SOUTH;
-                                    break;
-                                case SOUTH:
-                                    bf = BlockFace.EAST;
-                                    break;
-                                default:
-                                    bf = BlockFace.NORTH;
-                                    break;
-                            }
-                            Block sign = door_top.getRelative(BlockFace.UP).getRelative(bf);
-                            if (e.blockList().contains(sign)) {
-                                e.blockList().remove(sign);
-                            }
-                            if (e.blockList().contains(door_under)) {
-                                e.blockList().remove(door_under);
-                            }
-                            if (e.blockList().contains(door_bottom)) {
-                                e.blockList().remove(door_bottom);
-                            }
-                            if (e.blockList().contains(door_top)) {
-                                e.blockList().remove(door_top);
-                            }
+                    Location loc = plugin.getUtils().getLocationFromBukkitString(map.get("location"));
+                    if (loc != null) {
+                        Block block = loc.getBlock();
+                        // if the block is a TARDIS block then remove it
+                        if (e.blockList().contains(block)) {
+                            e.blockList().remove(block);
                         }
-                        idchk = id;
+                        if (id != idchk) {
+                            HashMap<String, Object> where = new HashMap<String, Object>();
+                            where.put("tardis_id", id);
+                            ResultSetDoors rsd = new ResultSetDoors(plugin, where, true);
+                            if (rsd.resultSet()) {
+                                String doorLoc[] = rsd.getDoor_location().split(":");
+                                COMPASS d = rsd.getDoor_direction();
+                                World w = plugin.getServer().getWorld(doorLoc[0]);
+                                int dx = plugin.getUtils().parseInt(doorLoc[1]);
+                                int dy = plugin.getUtils().parseInt(doorLoc[2]);
+                                int dz = plugin.getUtils().parseInt(doorLoc[3]);
+                                Block door_bottom = w.getBlockAt(dx, dy, dz);
+                                Block door_under = door_bottom.getRelative(BlockFace.DOWN);
+                                Block door_top = door_bottom.getRelative(BlockFace.UP);
+                                BlockFace bf;
+                                switch (d) {
+                                    case NORTH:
+                                        bf = BlockFace.WEST;
+                                        break;
+                                    case WEST:
+                                        bf = BlockFace.SOUTH;
+                                        break;
+                                    case SOUTH:
+                                        bf = BlockFace.EAST;
+                                        break;
+                                    default:
+                                        bf = BlockFace.NORTH;
+                                        break;
+                                }
+                                Block sign = door_top.getRelative(BlockFace.UP).getRelative(bf);
+                                if (e.blockList().contains(sign)) {
+                                    e.blockList().remove(sign);
+                                }
+                                if (e.blockList().contains(door_under)) {
+                                    e.blockList().remove(door_under);
+                                }
+                                if (e.blockList().contains(door_bottom)) {
+                                    e.blockList().remove(door_bottom);
+                                }
+                                if (e.blockList().contains(door_top)) {
+                                    e.blockList().remove(door_top);
+                                }
+                            }
+                            idchk = id;
+                        }
                     }
                 }
             }
