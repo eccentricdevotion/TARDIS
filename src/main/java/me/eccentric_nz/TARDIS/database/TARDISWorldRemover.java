@@ -54,6 +54,14 @@ public class TARDISWorldRemover {
             }
         } catch (SQLException e) {
             plugin.debug("ResultSet error for areas table! " + e.getMessage());
+        } finally {
+            try {
+                if (statement != null) {
+                    statement.close();
+                }
+            } catch (SQLException e) {
+                plugin.debug("Error closing statement! " + e.getMessage());
+            }
         }
     }
 }
