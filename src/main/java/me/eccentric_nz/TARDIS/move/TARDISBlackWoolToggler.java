@@ -19,6 +19,7 @@ package me.eccentric_nz.TARDIS.move;
 import java.util.HashMap;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.ResultSetDoorBlocks;
+import me.eccentric_nz.TARDIS.utility.TARDISStaticUtils;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
@@ -57,7 +58,7 @@ public class TARDISBlackWoolToggler {
             b.setData(data);
             b.getRelative(BlockFace.UP).setType(mat);
             b.getRelative(BlockFace.UP).setData(data);
-            if (plugin.getUtils().isOpen(b.getRelative(BlockFace.SOUTH), rsd.getInnerDirection())) {
+            if (TARDISStaticUtils.isOpen(b.getRelative(BlockFace.SOUTH), rsd.getInnerDirection())) {
                 // toggle doors shut
                 new TARDISDoorToggler(plugin, b.getRelative(BlockFace.SOUTH), rsd.getInnerDirection(), player, false, true, id).toggleDoors();
             }

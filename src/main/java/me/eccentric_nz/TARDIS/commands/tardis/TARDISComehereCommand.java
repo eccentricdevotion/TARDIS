@@ -28,6 +28,7 @@ import me.eccentric_nz.TARDIS.enumeration.COMPASS;
 import me.eccentric_nz.TARDIS.enumeration.FLAG;
 import me.eccentric_nz.TARDIS.travel.TARDISTimeTravel;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
+import me.eccentric_nz.TARDIS.utility.TARDISStaticUtils;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -125,7 +126,7 @@ public class TARDISComehereCommand {
                     hidden = true;
                 }
                 COMPASS d = rsc.getDirection();
-                COMPASS player_d = COMPASS.valueOf(plugin.getUtils().getPlayersDirection(player, false));
+                COMPASS player_d = COMPASS.valueOf(TARDISStaticUtils.getPlayersDirection(player, false));
                 Biome biome = rsc.getBiome();
                 TARDISTimeTravel tt = new TARDISTimeTravel(plugin);
                 int count;

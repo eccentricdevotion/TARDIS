@@ -27,6 +27,7 @@ import me.eccentric_nz.TARDIS.enumeration.COMPASS;
 import me.eccentric_nz.TARDIS.mobfarming.TARDISFarmer;
 import me.eccentric_nz.TARDIS.mobfarming.TARDISMob;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
+import me.eccentric_nz.TARDIS.utility.TARDISStaticUtils;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -88,7 +89,7 @@ public class TARDISMoveListener implements Listener {
                 }
                 // adjust player yaw for to
                 float yaw = (exit) ? p.getLocation().getYaw() + 180.0f : p.getLocation().getYaw();
-                COMPASS d = COMPASS.valueOf(plugin.getUtils().getPlayersDirection(p, false));
+                COMPASS d = COMPASS.valueOf(TARDISStaticUtils.getPlayersDirection(p, false));
                 if (!tpl.getDirection().equals(d)) {
                     yaw += plugin.getGeneralKeeper().getDoorListener().adjustYaw(d, tpl.getDirection());
                 }

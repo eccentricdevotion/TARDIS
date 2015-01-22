@@ -33,6 +33,7 @@ import me.eccentric_nz.TARDIS.enumeration.CONSOLES;
 import me.eccentric_nz.TARDIS.enumeration.SCHEMATIC;
 import me.eccentric_nz.TARDIS.rooms.TARDISWalls.Pair;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
+import me.eccentric_nz.TARDIS.utility.TARDISStaticUtils;
 import org.bukkit.ChatColor;
 import org.bukkit.Chunk;
 import org.bukkit.Location;
@@ -187,13 +188,13 @@ public class TARDISBlockPlaceListener implements Listener {
                             }
                             cx = chunk.getX();
                             cz = chunk.getZ();
-                            if (!plugin.getConfig().getBoolean("creation.default_world") && plugin.getUtils().checkChunk(cw, cx, cz, schm)) {
+                            if (!plugin.getConfig().getBoolean("creation.default_world") && plugin.getLocationUtils().checkChunk(cw, cx, cz, schm)) {
                                 TARDISMessage.send(player, "TARDIS_EXISTS");
                                 return;
                             }
                         }
                         // get player direction
-                        String d = plugin.getUtils().getPlayersDirection(player, false);
+                        String d = TARDISStaticUtils.getPlayersDirection(player, false);
                         // save data to database (tardis table)
                         Location block_loc = blockBottom.getLocation();
                         final String biome = block_loc.getBlock().getBiome().toString();

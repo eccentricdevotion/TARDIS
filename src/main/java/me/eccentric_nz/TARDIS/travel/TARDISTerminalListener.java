@@ -36,6 +36,7 @@ import me.eccentric_nz.TARDIS.enumeration.COMPASS;
 import me.eccentric_nz.TARDIS.enumeration.DISK_CIRCUIT;
 import me.eccentric_nz.TARDIS.enumeration.FLAG;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
+import me.eccentric_nz.TARDIS.utility.TARDISStaticUtils;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
@@ -501,7 +502,7 @@ public class TARDISTerminalListener implements Listener {
                             // check submarine
                             ItemMeta subim = inv.getItem(44).getItemMeta();
                             loc.setY(starty);
-                            if (subim.hasLore() && subim.getLore().get(0).equals("true") && plugin.getUtils().isOceanBiome(loc.getBlock().getBiome())) {
+                            if (subim.hasLore() && subim.getLore().get(0).equals("true") && TARDISStaticUtils.isOceanBiome(loc.getBlock().getBiome())) {
                                 Location subloc = tt.submarine(loc.getBlock(), d);
                                 if (subloc != null) {
                                     safe = 0;

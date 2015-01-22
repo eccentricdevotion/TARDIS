@@ -26,6 +26,7 @@ import me.eccentric_nz.TARDIS.enumeration.DISK_CIRCUIT;
 import me.eccentric_nz.TARDIS.enumeration.SCHEMATIC;
 import me.eccentric_nz.TARDIS.rooms.TARDISWallsLookup;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
+import me.eccentric_nz.TARDIS.utility.TARDISStaticUtils;
 import org.bukkit.ChatColor;
 import org.bukkit.Color;
 import org.bukkit.DyeColor;
@@ -128,10 +129,10 @@ public class TARDISCraftListener implements Listener {
                                     lore.add("Chameleon block: " + DyeColor.getByWoolData(inv.getItem(8).getData().getData()) + " " + m8.toString());
                                     break;
                                 case STONE:
-                                    lore.add("Chameleon block: " + plugin.getUtils().getStoneType(inv.getItem(8).getData().getData()));
+                                    lore.add("Chameleon block: " + TARDISStaticUtils.getStoneType(inv.getItem(8).getData().getData()));
                                     break;
                                 default:
-                                    lore.add("Chameleon block: " + plugin.getUtils().getWoodType(m8, inv.getItem(8).getData().getData()) + " " + m8.toString());
+                                    lore.add("Chameleon block: " + TARDISStaticUtils.getWoodType(m8, inv.getItem(8).getData().getData()) + " " + m8.toString());
                             }
                         } else {
                             lore.add("Chameleon block: " + m8.toString());

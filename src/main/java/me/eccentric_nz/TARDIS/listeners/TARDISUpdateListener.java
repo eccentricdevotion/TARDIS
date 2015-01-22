@@ -33,6 +33,7 @@ import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import me.eccentric_nz.TARDIS.database.ResultSetTravellers;
 import me.eccentric_nz.TARDIS.enumeration.SCHEMATIC;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
+import me.eccentric_nz.TARDIS.utility.TARDISStaticUtils;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -184,7 +185,7 @@ public class TARDISUpdateListener implements Listener {
             }
             if ((blockName.equalsIgnoreCase("backdoor") || (blockName.equalsIgnoreCase("door") && secondary)) && blockType == Material.IRON_DOOR_BLOCK) {
                 // get door data - this should let us determine the direction
-                String d = plugin.getUtils().getPlayersDirection(player, true);
+                String d = TARDISStaticUtils.getPlayersDirection(player, true);
                 table = "doors";
                 set.put("door_location", blockLocStr);
                 set.put("door_direction", d);

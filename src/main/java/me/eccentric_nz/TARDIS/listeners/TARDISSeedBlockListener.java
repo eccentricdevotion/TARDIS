@@ -29,6 +29,7 @@ import me.eccentric_nz.TARDIS.enumeration.SCHEMATIC;
 import me.eccentric_nz.TARDIS.rooms.TARDISWalls.Pair;
 import me.eccentric_nz.TARDIS.rooms.TARDISWallsLookup;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
+import me.eccentric_nz.TARDIS.utility.TARDISStaticUtils;
 import org.bukkit.DyeColor;
 import org.bukkit.GameMode;
 import org.bukkit.Location;
@@ -133,7 +134,7 @@ public class TARDISSeedBlockListener implements Listener {
                             lore.add("Chameleon block: " + DyeColor.getByWoolData(data.getBox_data()) + " " + Material.getMaterial(data.getBox_id()).toString());
                             break;
                         default:
-                            lore.add("Chameleon block: " + plugin.getUtils().getWoodType(Material.getMaterial(data.getBox_id()), data.getBox_data()) + " " + Material.getMaterial(data.getBox_id()).toString());
+                            lore.add("Chameleon block: " + TARDISStaticUtils.getWoodType(Material.getMaterial(data.getBox_id()), data.getBox_data()) + " " + Material.getMaterial(data.getBox_id()).toString());
                     }
                 } else {
                     lore.add("Chameleon block: " + Material.getMaterial(data.getBox_id()).toString());

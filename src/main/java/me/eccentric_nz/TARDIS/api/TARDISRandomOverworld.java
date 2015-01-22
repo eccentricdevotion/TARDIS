@@ -24,6 +24,7 @@ import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.database.ResultSetTravellers;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
 import me.eccentric_nz.TARDIS.travel.TARDISTimeTravel;
+import me.eccentric_nz.TARDIS.utility.TARDISStaticUtils;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
@@ -69,7 +70,7 @@ public class TARDISRandomOverworld extends TARDISRandomLocation {
             // get the y coord
             if (param.spaceTardis()) {
                 if (safeOverworld(war.getW(), x, z, param.getCompass(), param.getPlayer())) {
-                    if ((dest.getBlock().getRelative(BlockFace.DOWN).getType().equals(Material.WATER) || dest.getBlock().getRelative(BlockFace.DOWN).getType().equals(Material.STATIONARY_WATER)) && plugin.getUtils().isOceanBiome(dest.getBlock().getBiome())) {
+                    if ((dest.getBlock().getRelative(BlockFace.DOWN).getType().equals(Material.WATER) || dest.getBlock().getRelative(BlockFace.DOWN).getType().equals(Material.STATIONARY_WATER)) && TARDISStaticUtils.isOceanBiome(dest.getBlock().getBiome())) {
                         if (safeSubmarine(dest, param.getCompass(), param.getPlayer())) {
                             break;
                         }
