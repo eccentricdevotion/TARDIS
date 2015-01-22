@@ -7,6 +7,7 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Set;
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.utility.TARDISNumberParsers;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.ShapelessRecipe;
@@ -47,7 +48,7 @@ public class TARDISShapelessRecipe {
         int amount = plugin.getRecipesConfig().getInt("shapeless." + s + ".amount");
         ItemStack is;
         if (result_iddata.length == 2) {
-            short result_data = plugin.getUtils().parseShort(result_iddata[1]);
+            short result_data = TARDISNumberParsers.parseShort(result_iddata[1]);
             is = new ItemStack(mat, amount, result_data);
         } else {
             is = new ItemStack(mat, amount);
@@ -63,7 +64,7 @@ public class TARDISShapelessRecipe {
             String[] recipe_idata = i.split(":");
             Material m = Material.valueOf(recipe_idata[0]);
             if (recipe_idata.length == 2) {
-                int recipe_data = plugin.getUtils().parseInt(recipe_idata[1]);
+                int recipe_data = TARDISNumberParsers.parseInt(recipe_idata[1]);
                 r.addIngredient(m, recipe_data);
             } else {
                 r.addIngredient(m);

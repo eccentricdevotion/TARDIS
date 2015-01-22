@@ -23,6 +23,7 @@ import java.util.Map;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetAchievements;
+import me.eccentric_nz.TARDIS.utility.TARDISNumberParsers;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -75,7 +76,7 @@ public class TARDISAchievementFactory {
                 }
             } else {
                 int req = plugin.getAchievementConfig().getInt(name + ".required");
-                int have = plugin.getUtils().parseInt(amount);
+                int have = TARDISNumberParsers.parseInt(amount);
                 int sum = have + (Integer) obj;
                 if (sum >= req) {
                     achieved = true;
@@ -108,7 +109,7 @@ public class TARDISAchievementFactory {
                         qf.doUpdate("achievements", seta, wherem);
                     }
                 } else {
-                    seta.put("amount", plugin.getUtils().parseInt(amount) + (Integer) obj);
+                    seta.put("amount", TARDISNumberParsers.parseInt(amount) + (Integer) obj);
                     qf.doUpdate("achievements", seta, wherem);
                 }
             }

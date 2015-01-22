@@ -35,6 +35,7 @@ import me.eccentric_nz.TARDIS.database.ResultSetTravellers;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
 import me.eccentric_nz.TARDIS.enumeration.SCHEMATIC;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
+import me.eccentric_nz.TARDIS.utility.TARDISNumberParsers;
 import me.eccentric_nz.tardischunkgenerator.TARDISChunkGenerator;
 import org.bukkit.Location;
 import org.bukkit.World;
@@ -292,7 +293,7 @@ public class TARDISExterminator {
         if (rsg.resultSet()) {
             ArrayList<HashMap<String, String>> gdata = rsg.getData();
             for (HashMap<String, String> gmap : gdata) {
-                int direction = plugin.getUtils().parseInt(gmap.get("direction"));
+                int direction = TARDISNumberParsers.parseInt(gmap.get("direction"));
                 switch (direction) {
                     case 1:
                         plugin.getGeneralKeeper().getGravityUpList().remove(gmap.get("location"));

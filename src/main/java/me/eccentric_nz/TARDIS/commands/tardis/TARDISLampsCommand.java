@@ -28,6 +28,7 @@ import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import me.eccentric_nz.TARDIS.enumeration.SCHEMATIC;
 import me.eccentric_nz.TARDIS.schematic.TARDISSchematicGZip;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
+import me.eccentric_nz.TARDIS.utility.TARDISNumberParsers;
 import org.bukkit.Chunk;
 import org.bukkit.Material;
 import org.bukkit.World;
@@ -99,8 +100,8 @@ public class TARDISLampsCommand {
                 for (HashMap<String, String> map : data) {
                     String w = map.get("world");
                     World world = plugin.getServer().getWorld(w);
-                    int x = plugin.getUtils().parseInt(map.get("x"));
-                    int z = plugin.getUtils().parseInt(map.get("z"));
+                    int x = TARDISNumberParsers.parseInt(map.get("x"));
+                    int z = TARDISNumberParsers.parseInt(map.get("z"));
                     Chunk chunk = world.getChunkAt(x, z);
                     // find the lamps in the chunks
                     int bx = chunk.getX() << 4;

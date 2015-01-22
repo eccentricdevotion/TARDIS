@@ -22,6 +22,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
+import me.eccentric_nz.TARDIS.utility.TARDISNumberParsers;
 import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.block.Block;
@@ -74,9 +75,9 @@ public class ResultSetDoorBlocks {
                     // get block
                     String[] split = rs.getString("door_location").split(":");
                     World cw = plugin.getServer().getWorld(split[0]);
-                    int cx = plugin.getUtils().parseInt(split[1]);
-                    int cy = plugin.getUtils().parseInt(split[2]);
-                    int cz = plugin.getUtils().parseInt(split[3]);
+                    int cx = TARDISNumberParsers.parseInt(split[1]);
+                    int cy = TARDISNumberParsers.parseInt(split[2]);
+                    int cz = TARDISNumberParsers.parseInt(split[3]);
                     if (rs.getInt("door_type") == 0) {
                         this.outerBlock = new Location(cw, cx, cy, cz).getBlock();
                         this.outerDirection = COMPASS.valueOf(rs.getString("door_direction"));

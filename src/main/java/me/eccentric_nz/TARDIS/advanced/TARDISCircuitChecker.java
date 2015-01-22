@@ -21,6 +21,7 @@ import java.util.HashMap;
 import java.util.List;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.ResultSetDiskStorage;
+import me.eccentric_nz.TARDIS.utility.TARDISNumberParsers;
 import org.bukkit.ChatColor;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -223,7 +224,7 @@ public class TARDISCircuitChecker {
             List<String> lore = im.getLore();
             String stripped = ChatColor.stripColor(lore.get(1));
             if (!stripped.equals("unlimited")) {
-                uses = plugin.getUtils().parseInt(stripped);
+                uses = TARDISNumberParsers.parseInt(stripped);
             }
         }
         return uses;

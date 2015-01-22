@@ -21,6 +21,7 @@ import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetCount;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
+import me.eccentric_nz.TARDIS.utility.TARDISNumberParsers;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.command.CommandSender;
 
@@ -50,7 +51,7 @@ public class TARDISPlayerCountCommand {
         if (rsc.resultSet()) {
             if (args.length == 3) {
                 // set count
-                int count = plugin.getUtils().parseInt(args[2]);
+                int count = TARDISNumberParsers.parseInt(args[2]);
                 HashMap<String, Object> setc = new HashMap<String, Object>();
                 setc.put("count", count);
                 HashMap<String, Object> wherec = new HashMap<String, Object>();

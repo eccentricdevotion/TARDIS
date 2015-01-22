@@ -34,6 +34,7 @@ import me.eccentric_nz.TARDIS.travel.TARDISRandomiserCircuit;
 import me.eccentric_nz.TARDIS.travel.TARDISRescue;
 import me.eccentric_nz.TARDIS.travel.TARDISTimeTravel;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
+import me.eccentric_nz.TARDIS.utility.TARDISNumberParsers;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -241,9 +242,9 @@ public class TARDISConsoleCloseListener implements Listener {
                                         case RECORD_4: // save
                                             if (p.hasPermission("tardis.save")) {
                                                 String world = lore.get(1);
-                                                int x = plugin.getUtils().parseInt(lore.get(2));
-                                                int y = plugin.getUtils().parseInt(lore.get(3));
-                                                int z = plugin.getUtils().parseInt(lore.get(4));
+                                                int x = TARDISNumberParsers.parseInt(lore.get(2));
+                                                int y = TARDISNumberParsers.parseInt(lore.get(3));
+                                                int z = TARDISNumberParsers.parseInt(lore.get(4));
                                                 if (current.getWorld().getName().equals(world) && current.getBlockX() == x && current.getBlockZ() == z) {
                                                     continue;
                                                 }

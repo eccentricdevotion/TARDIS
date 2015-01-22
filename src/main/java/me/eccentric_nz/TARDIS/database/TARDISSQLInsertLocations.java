@@ -22,6 +22,7 @@ import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.utility.TARDISNumberParsers;
 
 /**
  *
@@ -76,7 +77,7 @@ public class TARDISSQLInsertLocations implements Runnable {
                     if (entry.getValue().getClass().equals(String.class)) {
                         ps.setString(i, entry.getValue().toString());
                     } else {
-                        ps.setInt(i, plugin.getUtils().parseInt(entry.getValue().toString()));
+                        ps.setInt(i, TARDISNumberParsers.parseInt(entry.getValue().toString()));
                     }
                     i++;
                 }

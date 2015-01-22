@@ -25,6 +25,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.utility.TARDISNumberParsers;
 import org.bukkit.entity.Player;
 
 /**
@@ -86,12 +87,12 @@ public class QueryFactory {
                     ps.setString(i, entry.getValue().toString());
                 } else {
                     if (entry.getValue().getClass().getName().contains("Double")) {
-                        ps.setDouble(i, plugin.getUtils().parseDouble(entry.getValue().toString()));
+                        ps.setDouble(i, TARDISNumberParsers.parseDouble(entry.getValue().toString()));
                     }
                     if (entry.getValue().getClass().getName().contains("Long")) {
-                        ps.setLong(i, plugin.getUtils().parseLong(entry.getValue().toString()));
+                        ps.setLong(i, TARDISNumberParsers.parseLong(entry.getValue().toString()));
                     } else {
-                        ps.setInt(i, plugin.getUtils().parseInt(entry.getValue().toString()));
+                        ps.setInt(i, TARDISNumberParsers.parseInt(entry.getValue().toString()));
                     }
                 }
                 i++;

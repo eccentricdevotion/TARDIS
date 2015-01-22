@@ -32,6 +32,8 @@ import me.eccentric_nz.TARDIS.mobfarming.TARDISMob;
 import me.eccentric_nz.TARDIS.travel.TARDISDoorLocation;
 import me.eccentric_nz.TARDIS.utility.TARDISItemRenamer;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
+import me.eccentric_nz.TARDIS.utility.TARDISNumberParsers;
+import me.eccentric_nz.TARDIS.utility.TARDISSounds;
 import multiworld.MultiWorldPlugin;
 import multiworld.api.MultiWorldAPI;
 import multiworld.api.MultiWorldWorldData;
@@ -146,7 +148,7 @@ public class TARDISDoorListener {
                     if (p.isPlayerTimeRelative()) {
                         setTemporalLocation(p, -1);
                     }
-                    plugin.getUtils().playTARDISSound(p.getLocation(), p, "tardis_hum");
+                    TARDISSounds.playTARDISSound(p.getLocation(), p, "tardis_hum");
                 }
                 // give a key
                 giveKey(p);
@@ -325,9 +327,9 @@ public class TARDISDoorListener {
             String[] split = doorLocStr.split(":");
             World cw = plugin.getServer().getWorld(split[0]);
             tdl.setW(cw);
-            int cx = plugin.getUtils().parseInt(split[1]);
-            int cy = plugin.getUtils().parseInt(split[2]);
-            int cz = plugin.getUtils().parseInt(split[3]);
+            int cx = TARDISNumberParsers.parseInt(split[1]);
+            int cy = TARDISNumberParsers.parseInt(split[2]);
+            int cz = TARDISNumberParsers.parseInt(split[3]);
             Location tmp_loc = new Location(cw, cx, cy, cz);
             int getx = tmp_loc.getBlockX();
             int getz = tmp_loc.getBlockZ();
@@ -370,21 +372,21 @@ public class TARDISDoorListener {
         switch (sound) {
             case 1:
                 if (!m) {
-                    plugin.getUtils().playTARDISSound(l, p, "tardis_door_open");
+                    TARDISSounds.playTARDISSound(l, p, "tardis_door_open");
                 } else {
                     p.playSound(p.getLocation(), Sound.DOOR_OPEN, 1.0F, 1.0F);
                 }
                 break;
             case 2:
                 if (!m) {
-                    plugin.getUtils().playTARDISSound(l, p, "tardis_door_close");
+                    TARDISSounds.playTARDISSound(l, p, "tardis_door_close");
                 } else {
                     p.playSound(p.getLocation(), Sound.DOOR_OPEN, 1.0F, 1.0F);
                 }
                 break;
             case 3:
                 if (!m) {
-                    plugin.getUtils().playTARDISSound(l, p, "tardis_enter");
+                    TARDISSounds.playTARDISSound(l, p, "tardis_enter");
                 } else {
                     p.playSound(p.getLocation(), Sound.ENDERMAN_TELEPORT, 1.0F, 1.0F);
                 }

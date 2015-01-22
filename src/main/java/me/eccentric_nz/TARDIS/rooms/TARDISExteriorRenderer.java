@@ -22,8 +22,10 @@ import me.eccentric_nz.TARDIS.chameleon.TARDISChameleonColumn;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
 import me.eccentric_nz.TARDIS.enumeration.PRESET;
+import me.eccentric_nz.TARDIS.utility.TARDISBlockSetters;
 import me.eccentric_nz.TARDIS.utility.TARDISEntityTracker;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
+import me.eccentric_nz.TARDIS.utility.TARDISNumberParsers;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.Sound;
@@ -56,9 +58,9 @@ public class TARDISExteriorRenderer {
         String isRendered = ew.getName() + ":" + epbx + ":" + epby + ":" + epbz;
         String[] idata = interior.split(":");
         World iw = plugin.getServer().getWorld(idata[0]);
-        int ipbx = plugin.getUtils().parseInt(idata[1]);
-        int ipby = plugin.getUtils().parseInt(idata[2]) + 2;
-        int ipbz = plugin.getUtils().parseInt(idata[3]);
+        int ipbx = TARDISNumberParsers.parseInt(idata[1]);
+        int ipby = TARDISNumberParsers.parseInt(idata[2]) + 2;
+        int ipbz = TARDISNumberParsers.parseInt(idata[3]);
         final Location location = new Location(iw, ipbx, ipby, ipbz);
         if (plugin.getTrackerKeeper().getRenderer().containsKey(id) && plugin.getTrackerKeeper().getRenderer().get(id).equals(isRendered)) {
             TARDISMessage.send(p, "DEST_NO_CHANGE");
@@ -167,7 +169,7 @@ public class TARDISExteriorRenderer {
                         break;
                 }
                 for (int py = 0; py < 4; py++) {
-                    plugin.getUtils().setBlock(iw, px, (y + py), pz, colids[py], coldatas[py]);
+                    TARDISBlockSetters.setBlock(iw, px, (y + py), pz, colids[py], coldatas[py]);
                 }
             }
             // change the black/blue/green wool to blue/black/ to reflect time of day and environment

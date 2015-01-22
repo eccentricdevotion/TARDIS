@@ -24,6 +24,8 @@ import me.eccentric_nz.TARDIS.database.ResultSetDoors;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
+import me.eccentric_nz.TARDIS.utility.TARDISNumberParsers;
+import me.eccentric_nz.TARDIS.utility.TARDISStaticUtils;
 import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.command.CommandSender;
@@ -75,9 +77,9 @@ public class TARDISEnterCommand {
                     String doorLocStr = rsi.getDoor_location();
                     String[] split = doorLocStr.split(":");
                     World cw = plugin.getServer().getWorld(split[0]);
-                    int cx = plugin.getUtils().parseInt(split[1]);
-                    int cy = plugin.getUtils().parseInt(split[2]);
-                    int cz = plugin.getUtils().parseInt(split[3]);
+                    int cx = TARDISNumberParsers.parseInt(split[1]);
+                    int cy = TARDISNumberParsers.parseInt(split[2]);
+                    int cz = TARDISNumberParsers.parseInt(split[3]);
                     Location tmp_loc = cw.getBlockAt(cx, cy, cz).getLocation();
                     int getx = tmp_loc.getBlockX();
                     int getz = tmp_loc.getBlockZ();
@@ -113,7 +115,7 @@ public class TARDISEnterCommand {
                     float pitch = player.getLocation().getPitch();
                     tmp_loc.setPitch(pitch);
                     // get players direction so we can adjust yaw if necessary
-                    COMPASS d = COMPASS.valueOf(plugin.getUtils().getPlayersDirection(player, false));
+                    COMPASS d = COMPASS.valueOf(TARDISStaticUtils.getPlayersDirection(player, false));
                     if (!innerD.equals(d)) {
                         switch (d) {
                             case NORTH:

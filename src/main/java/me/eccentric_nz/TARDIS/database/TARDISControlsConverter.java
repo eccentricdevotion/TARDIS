@@ -25,6 +25,8 @@ import java.util.HashMap;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.enumeration.CONSOLES;
 import me.eccentric_nz.TARDIS.enumeration.SCHEMATIC;
+import me.eccentric_nz.TARDIS.utility.TARDISLocationGetters;
+import me.eccentric_nz.TARDIS.utility.TARDISNumberParsers;
 import org.bukkit.ChatColor;
 
 /**
@@ -63,7 +65,7 @@ public class TARDISControlsConverter {
                 // insert values from tardis table
                 ps = connection.prepareStatement("INSERT INTO controls (tardis_id, type, location) VALUES (?,?,?)");
                 for (HashMap<String, String> map : data) {
-                    int id = plugin.getUtils().parseInt(map.get("tardis_id"));
+                    int id = TARDISNumberParsers.parseInt(map.get("tardis_id"));
                     String tmph;
                     if (map.get("handbrake") == null || map.get("handbrake").isEmpty()) {
                         tmph = estimateHandbrake(map.get("size"), map.get("chameleon"));
@@ -95,9 +97,9 @@ public class TARDISControlsConverter {
                         tmpr[2] = map.get("repeater2");
                         tmpr[3] = map.get("repeater3");
                     }
-                    String hb = plugin.getUtils().makeLocationStr(tmph);
-                    String bn = plugin.getUtils().makeLocationStr(tmpb);
-                    String ab = plugin.getUtils().makeLocationStr(tmpa);
+                    String hb = TARDISLocationGetters.makeLocationStr(tmph);
+                    String bn = TARDISLocationGetters.makeLocationStr(tmpb);
+                    String ab = TARDISLocationGetters.makeLocationStr(tmpa);
                     ps.setInt(1, id);
                     ps.setInt(2, 0);
                     ps.setString(3, hb);
@@ -160,9 +162,9 @@ public class TARDISControlsConverter {
     private String estimateHandbrake(String size, String cham) {
         SCHEMATIC s = CONSOLES.SCHEMATICFor(size.toLowerCase());
         String[] data = cham.split(":");
-        int x = plugin.getUtils().parseInt(data[1]);
-        int y = plugin.getUtils().parseInt(data[2]);
-        int z = plugin.getUtils().parseInt(data[3]);
+        int x = TARDISNumberParsers.parseInt(data[1]);
+        int y = TARDISNumberParsers.parseInt(data[2]);
+        int z = TARDISNumberParsers.parseInt(data[3]);
         if (s.getPermission().equals("deluxe")) {
             return data[0] + ":" + (x + 1) + ":" + (y + 1) + ":" + (z - 2);
         } else {
@@ -173,9 +175,9 @@ public class TARDISControlsConverter {
     private String estimateButton(String size, String cham) {
         SCHEMATIC s = CONSOLES.SCHEMATICFor(size.toLowerCase());
         String[] data = cham.split(":");
-        int x = plugin.getUtils().parseInt(data[1]);
-        int y = plugin.getUtils().parseInt(data[2]);
-        int z = plugin.getUtils().parseInt(data[3]);
+        int x = TARDISNumberParsers.parseInt(data[1]);
+        int y = TARDISNumberParsers.parseInt(data[2]);
+        int z = TARDISNumberParsers.parseInt(data[3]);
         if (s.getPermission().equals("deluxe")) {
             return data[0] + ":" + (x - 1) + ":" + y + ":" + (z - 1);
         } else {
@@ -186,9 +188,9 @@ public class TARDISControlsConverter {
     private String estimateArtron(String size, String cham) {
         SCHEMATIC s = CONSOLES.SCHEMATICFor(size.toLowerCase());
         String[] data = cham.split(":");
-        int x = plugin.getUtils().parseInt(data[1]);
-        int y = plugin.getUtils().parseInt(data[2]);
-        int z = plugin.getUtils().parseInt(data[3]);
+        int x = TARDISNumberParsers.parseInt(data[1]);
+        int y = TARDISNumberParsers.parseInt(data[2]);
+        int z = TARDISNumberParsers.parseInt(data[3]);
         if (s.getPermission().equals("deluxe")) {
             return data[0] + ":" + (x + 5) + ":" + y + ":" + (z - 1);
         } else {
@@ -200,9 +202,9 @@ public class TARDISControlsConverter {
         String[] r = new String[4];
         SCHEMATIC s = CONSOLES.SCHEMATICFor(size.toLowerCase());
         String[] data = cham.split(":");
-        int x = plugin.getUtils().parseInt(data[1]);
-        int y = plugin.getUtils().parseInt(data[2]);
-        int z = plugin.getUtils().parseInt(data[3]);
+        int x = TARDISNumberParsers.parseInt(data[1]);
+        int y = TARDISNumberParsers.parseInt(data[2]);
+        int z = TARDISNumberParsers.parseInt(data[3]);
         if (s.getPermission().equals("deluxe")) {
             r[0] = data[0] + ":" + (x + 2) + ":" + (y + 1) + ":" + (z - 3); // environment
             r[1] = data[0] + ":" + x + ":" + (y + 1) + ":" + (z - 1); // x

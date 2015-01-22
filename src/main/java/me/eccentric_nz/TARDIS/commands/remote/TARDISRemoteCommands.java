@@ -32,6 +32,7 @@ import me.eccentric_nz.TARDIS.enumeration.FLAG;
 import me.eccentric_nz.TARDIS.enumeration.REMOTE;
 import me.eccentric_nz.TARDIS.travel.TARDISTimeTravel;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
+import me.eccentric_nz.TARDIS.utility.TARDISNumberParsers;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.OfflinePlayer;
@@ -265,13 +266,13 @@ public class TARDISRemoteCommands implements CommandExecutor {
                                         TARDISMessage.send(sender, "NO_WORLD_TRAVEL");
                                         return true;
                                     }
-                                    x = plugin.getUtils().parseInt(args[args.length - 3]);
-                                    y = plugin.getUtils().parseInt(args[args.length - 2]);
+                                    x = TARDISNumberParsers.parseInt(args[args.length - 3]);
+                                    y = TARDISNumberParsers.parseInt(args[args.length - 2]);
                                     if (y == 0) {
                                         TARDISMessage.send(sender, "Y_NOT_VALID");
                                         return true;
                                     }
-                                    z = plugin.getUtils().parseInt(args[args.length - 1]);
+                                    z = TARDISNumberParsers.parseInt(args[args.length - 1]);
                                     Location location = new Location(w, x, y, z);
                                     // check location
                                     if (!plugin.getTardisArea().areaCheckInExisting(location)) {

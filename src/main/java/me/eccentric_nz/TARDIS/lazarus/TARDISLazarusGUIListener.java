@@ -23,6 +23,8 @@ import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.listeners.TARDISMenuListener;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
+import me.eccentric_nz.TARDIS.utility.TARDISNumberParsers;
+import me.eccentric_nz.TARDIS.utility.TARDISSounds;
 import me.eccentric_nz.TARDIS.utility.Version;
 import me.libraryaddict.disguise.DisguiseAPI;
 import me.libraryaddict.disguise.disguisetypes.AnimalColor;
@@ -169,7 +171,7 @@ public class TARDISLazarusGUIListener extends TARDISMenuListener implements List
                 close(player);
                 // animate the manipulator walls
                 plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, new TARDISLazarusRunnable(plugin, b), 6L, 6L);
-                plugin.getUtils().playTARDISSound(player.getLocation(), player, "lazarus_machine");
+                TARDISSounds.playTARDISSound(player.getLocation(), player, "lazarus_machine");
                 // undisguise the player
                 plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
                     @Override
@@ -196,7 +198,7 @@ public class TARDISLazarusGUIListener extends TARDISMenuListener implements List
                 close(player);
                 // animate the manipulator walls
                 plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, new TARDISLazarusRunnable(plugin, b), 6L, 6L);
-                plugin.getUtils().playTARDISSound(player.getLocation(), player, "lazarus_machine");
+                TARDISSounds.playTARDISSound(player.getLocation(), player, "lazarus_machine");
                 // disguise the player
                 plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
                     @Override
@@ -564,7 +566,7 @@ public class TARDISLazarusGUIListener extends TARDISMenuListener implements List
     private int getSlimeSize(Inventory i) {
         ItemStack is = i.getItem(48);
         ItemMeta im = is.getItemMeta();
-        int size = plugin.getUtils().parseInt(im.getLore().get(0));
+        int size = TARDISNumberParsers.parseInt(im.getLore().get(0));
         return (size == 0) ? 2 : size;
     }
 

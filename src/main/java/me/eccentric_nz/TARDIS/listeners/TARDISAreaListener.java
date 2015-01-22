@@ -21,6 +21,7 @@ import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
+import me.eccentric_nz.TARDIS.utility.TARDISNumberParsers;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.block.Block;
@@ -86,24 +87,24 @@ public class TARDISAreaListener implements Listener {
                         return;
                     }
                     int y = block_loc.getBlockY();
-                    if (y != (plugin.getUtils().parseInt(firstblock[2]))) {
+                    if (y != (TARDISNumberParsers.parseInt(firstblock[2]))) {
                         TARDISMessage.send(player, "AREA_Y");
                         return;
                     }
                     int minx, minz, maxx, maxz;
-                    if (plugin.getUtils().parseInt(firstblock[1]) < block_loc.getBlockX()) {
-                        minx = plugin.getUtils().parseInt(firstblock[1]);
+                    if (TARDISNumberParsers.parseInt(firstblock[1]) < block_loc.getBlockX()) {
+                        minx = TARDISNumberParsers.parseInt(firstblock[1]);
                         maxx = block_loc.getBlockX();
                     } else {
                         minx = block_loc.getBlockX();
-                        maxx = plugin.getUtils().parseInt(firstblock[1]);
+                        maxx = TARDISNumberParsers.parseInt(firstblock[1]);
                     }
-                    if (plugin.getUtils().parseInt(firstblock[3]) < block_loc.getBlockZ()) {
-                        minz = plugin.getUtils().parseInt(firstblock[3]);
+                    if (TARDISNumberParsers.parseInt(firstblock[3]) < block_loc.getBlockZ()) {
+                        minz = TARDISNumberParsers.parseInt(firstblock[3]);
                         maxz = block_loc.getBlockZ();
                     } else {
                         minz = block_loc.getBlockZ();
-                        maxz = plugin.getUtils().parseInt(firstblock[3]);
+                        maxz = TARDISNumberParsers.parseInt(firstblock[3]);
                     }
                     String n = plugin.getTrackerKeeper().getArea().get(uuid);
                     QueryFactory qf = new QueryFactory(plugin);

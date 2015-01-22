@@ -23,6 +23,7 @@ import me.eccentric_nz.TARDIS.database.ResultSetDoors;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
+import me.eccentric_nz.TARDIS.utility.TARDISNumberParsers;
 import org.bukkit.Chunk;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -131,9 +132,9 @@ public class TARDISMinecartListener implements Listener {
                         }
                     }
                     World w = plugin.getServer().getWorld(data[0]);
-                    int x = plugin.getUtils().parseInt(data[1]);
-                    int y = plugin.getUtils().parseInt(data[2]);
-                    int z = plugin.getUtils().parseInt(data[3]);
+                    int x = TARDISNumberParsers.parseInt(data[1]);
+                    int y = TARDISNumberParsers.parseInt(data[2]);
+                    int z = TARDISNumberParsers.parseInt(data[3]);
                     Location in_out = new Location(w, x, y, z);
                     if (mat.equals(Material.IRON_DOOR_BLOCK)) {
                         d = getDirection(in_out);

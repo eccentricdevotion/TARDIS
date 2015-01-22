@@ -24,6 +24,7 @@ import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import me.eccentric_nz.TARDIS.enumeration.SCHEMATIC;
+import me.eccentric_nz.TARDIS.utility.TARDISNumberParsers;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
@@ -79,13 +80,13 @@ public class TARDISBeaconToggler {
             int bx, bz;
             // get rid of decimal places due to incorrectly copied values from creeper field...
             if (stuffed) {
-                bx = (int) plugin.getUtils().parseFloat(beaconData[1]) * 1;
-                bz = (int) plugin.getUtils().parseFloat(beaconData[3]) * 1;
+                bx = (int) TARDISNumberParsers.parseFloat(beaconData[1]) * 1;
+                bz = (int) TARDISNumberParsers.parseFloat(beaconData[3]) * 1;
             } else {
-                bx = plugin.getUtils().parseInt(beaconData[1]);
-                bz = plugin.getUtils().parseInt(beaconData[3]);
+                bx = TARDISNumberParsers.parseInt(beaconData[1]);
+                bz = TARDISNumberParsers.parseInt(beaconData[3]);
             }
-            int by = (int) plugin.getUtils().parseFloat(beaconData[2]) * 1 + plusy;
+            int by = (int) TARDISNumberParsers.parseFloat(beaconData[2]) * 1 + plusy;
             if (beacon.isEmpty() || stuffed) {
                 // update the tardis table so we don't have to do this again
                 String beacon_loc = beaconData[0] + ":" + bx + ":" + by + ":" + bz;

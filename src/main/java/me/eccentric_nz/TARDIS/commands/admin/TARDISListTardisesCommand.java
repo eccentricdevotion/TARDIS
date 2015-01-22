@@ -28,6 +28,7 @@ import me.eccentric_nz.TARDIS.database.ResultSetCurrentLocation;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import me.eccentric_nz.TARDIS.move.TARDISTeleportLocation;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
+import me.eccentric_nz.TARDIS.utility.TARDISNumberParsers;
 import org.bukkit.Location;
 import org.bukkit.command.CommandSender;
 
@@ -54,7 +55,7 @@ public class TARDISListTardisesCommand {
                         BufferedWriter bw = new BufferedWriter(new FileWriter(file, false));
                         for (HashMap<String, String> map : data) {
                             HashMap<String, Object> wherecl = new HashMap<String, Object>();
-                            wherecl.put("tardis_id", plugin.getUtils().parseInt(map.get("tardis_id")));
+                            wherecl.put("tardis_id", TARDISNumberParsers.parseInt(map.get("tardis_id")));
                             ResultSetCurrentLocation rsc = new ResultSetCurrentLocation(plugin, wherecl);
                             if (!rsc.resultSet()) {
                                 TARDISMessage.send(sender, "CURRENT_NOT_FOUND");
@@ -81,7 +82,7 @@ public class TARDISListTardisesCommand {
             // get all tardis positions - max 18
             int start = 0, end = 18;
             if (args.length > 1) {
-                int tmp = plugin.getUtils().parseInt(args[1]);
+                int tmp = TARDISNumberParsers.parseInt(args[1]);
                 start = (tmp * 18) - 18;
                 end = tmp * 18;
             }
@@ -92,7 +93,7 @@ public class TARDISListTardisesCommand {
                 ArrayList<HashMap<String, String>> data = rsl.getData();
                 for (HashMap<String, String> map : data) {
                     HashMap<String, Object> wherecl = new HashMap<String, Object>();
-                    wherecl.put("tardis_id", plugin.getUtils().parseInt(map.get("tardis_id")));
+                    wherecl.put("tardis_id", TARDISNumberParsers.parseInt(map.get("tardis_id")));
                     ResultSetCurrentLocation rsc = new ResultSetCurrentLocation(plugin, wherecl);
                     if (!rsc.resultSet()) {
                         TARDISMessage.send(sender, "CURRENT_NOT_FOUND");

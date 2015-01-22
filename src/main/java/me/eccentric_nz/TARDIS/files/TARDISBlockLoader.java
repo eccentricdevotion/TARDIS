@@ -28,6 +28,7 @@ import me.eccentric_nz.TARDIS.database.ResultSetBlocks;
 import me.eccentric_nz.TARDIS.database.ResultSetGravity;
 import me.eccentric_nz.TARDIS.database.TARDISDatabaseConnection;
 import me.eccentric_nz.TARDIS.utility.TARDISAntiBuild;
+import me.eccentric_nz.TARDIS.utility.TARDISNumberParsers;
 import org.bukkit.util.Vector;
 
 /**
@@ -70,7 +71,7 @@ public class TARDISBlockLoader {
         if (rsg.resultSet()) {
             ArrayList<HashMap<String, String>> data = rsg.getData();
             for (HashMap<String, String> map : data) {
-                int i = plugin.getUtils().parseInt(map.get("direction"));
+                int i = TARDISNumberParsers.parseInt(map.get("direction"));
                 Double[] values = new Double[3];
                 values[0] = Double.valueOf(map.get("direction"));
                 values[1] = Double.valueOf(map.get("distance"));

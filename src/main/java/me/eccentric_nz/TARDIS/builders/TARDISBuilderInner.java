@@ -31,6 +31,9 @@ import me.eccentric_nz.TARDIS.database.ResultSetAchievements;
 import me.eccentric_nz.TARDIS.enumeration.SCHEMATIC;
 import static me.eccentric_nz.TARDIS.schematic.TARDISBannerSetter.setBanners;
 import me.eccentric_nz.TARDIS.schematic.TARDISSchematicGZip;
+import me.eccentric_nz.TARDIS.utility.TARDISBlockSetters;
+import me.eccentric_nz.TARDIS.utility.TARDISLocationGetters;
+import me.eccentric_nz.TARDIS.utility.TARDISNumberParsers;
 import me.eccentric_nz.tardischunkgenerator.TARDISChunkGenerator;
 import org.bukkit.ChatColor;
 import org.bukkit.Chunk;
@@ -154,7 +157,7 @@ public class TARDISBuilderInner {
             String chun = world.getName() + ":" + c.getX() + ":" + c.getZ();
             set.put("chunk", chun);
         } else {
-            int gsl[] = plugin.getUtils().getStartLocation(dbID);
+            int gsl[] = plugin.getLocationUtils().getStartLocation(dbID);
             startx = gsl[0];
             resetx = gsl[1];
             startz = gsl[2];
@@ -179,7 +182,7 @@ public class TARDISBuilderInner {
             for (level = 0; level < h; level++) {
                 for (row = 0; row < w; row++) {
                     for (col = 0; col < l; col++) {
-                        plugin.getUtils().setBlock(world, startx, starty, startz, 0, (byte) 0);
+                        TARDISBlockSetters.setBlock(world, startx, starty, startz, 0, (byte) 0);
                         startx += 1;
                     }
                     startx = resetx;
@@ -220,7 +223,7 @@ public class TARDISBuilderInner {
                     }
                     if (type.equals(Material.NOTE_BLOCK)) {
                         // remember the location of this Disk Storage
-                        String storage = plugin.getUtils().makeLocationStr(world, x, y, z);
+                        String storage = TARDISLocationGetters.makeLocationStr(world, x, y, z);
                         qf.insertSyncControl(dbID, 14, storage, 0);
                     }
                     if (type.equals(Material.WOOL)) {
@@ -305,12 +308,12 @@ public class TARDISBuilderInner {
                     }
                     if (type.equals(Material.STONE_BUTTON)) { // random button
                         // remember the location of this button
-                        String button = plugin.getUtils().makeLocationStr(world, x, y, z);
+                        String button = TARDISLocationGetters.makeLocationStr(world, x, y, z);
                         qf.insertSyncControl(dbID, 1, button, 0);
                     }
                     if (type.equals(Material.JUKEBOX)) {
                         // remember the location of this Advanced Console
-                        String advanced = plugin.getUtils().makeLocationStr(world, x, y, z);
+                        String advanced = TARDISLocationGetters.makeLocationStr(world, x, y, z);
                         qf.insertSyncControl(dbID, 15, advanced, 0);
                         // check if player has storage record, and update the tardis_id field
                         plugin.getUtils().updateStorageId(playerUUID, dbID, qf);
@@ -320,7 +323,7 @@ public class TARDISBuilderInner {
                          * This block will be converted to a lever by
                          * setBlock(), but remember it so we can use it as the handbrake!
                          */
-                        String handbrakeloc = plugin.getUtils().makeLocationStr(world, x, y, z);
+                        String handbrakeloc = TARDISLocationGetters.makeLocationStr(world, x, y, z);
                         qf.insertSyncControl(dbID, 0, handbrakeloc, 0);
                     }
                     if (type.equals(Material.MONSTER_EGGS)) { // silverfish stone
@@ -407,13 +410,13 @@ public class TARDISBuilderInner {
                          * wood button will be coverted to the correct id by
                          * setBlock(), but remember it for the Artron Energy Capacitor.
                          */
-                        String woodbuttonloc = plugin.getUtils().makeLocationStr(world, x, y, z);
+                        String woodbuttonloc = TARDISLocationGetters.makeLocationStr(world, x, y, z);
                         qf.insertSyncControl(dbID, 6, woodbuttonloc, 0);
                     }
                     // if it's an iron/gold/diamond/emerald/beacon/redstone block put it in the blocks table
                     if (precious.contains(type)) {
                         HashMap<String, Object> setpb = new HashMap<String, Object>();
-                        String loc = plugin.getUtils().makeLocationStr(world, x, y, z);
+                        String loc = TARDISLocationGetters.makeLocationStr(world, x, y, z);
                         setpb.put("tardis_id", dbID);
                         setpb.put("location", loc);
                         setpb.put("police_box", 0);
@@ -500,9 +503,9 @@ public class TARDISBuilderInner {
                         } else {
                             swap = Material.STONE;
                         }
-                        plugin.getUtils().setBlock(world, x, y, z, swap, data);
+                        TARDISBlockSetters.setBlock(world, x, y, z, swap, data);
                     } else {
-                        plugin.getUtils().setBlock(world, x, y, z, type, data);
+                        TARDISBlockSetters.setBlock(world, x, y, z, type, data);
                     }
                 }
             }
@@ -705,8 +708,8 @@ public class TARDISBuilderInner {
      */
     public List<Chunk> getChunks(World w, int x, int z, int wid, int len) {
         List<Chunk> chunks = new ArrayList<Chunk>();
-        int cw = plugin.getUtils().roundUp(wid, 16);
-        int cl = plugin.getUtils().roundUp(len, 16);
+        int cw = TARDISNumberParsers.roundUp(wid, 16);
+        int cl = TARDISNumberParsers.roundUp(len, 16);
         // check all the chunks that will be used by the schematic
         for (int cx = 0; cx < cw; cx++) {
             for (int cz = 0; cz < cl; cz++) {

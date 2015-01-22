@@ -35,7 +35,10 @@ import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
 import me.eccentric_nz.TARDIS.enumeration.DISK_CIRCUIT;
 import me.eccentric_nz.TARDIS.travel.TARDISMalfunction;
+import me.eccentric_nz.TARDIS.utility.TARDISLocationGetters;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
+import me.eccentric_nz.TARDIS.utility.TARDISNumberParsers;
+import me.eccentric_nz.TARDIS.utility.TARDISSounds;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.Sound;
@@ -163,7 +166,7 @@ public class TARDISHandbrakeListener implements Listener {
                                             TARDISMessage.send(player, "DOOR_CLOSE");
                                             return;
                                         }
-                                        plugin.getUtils().playTARDISSound(handbrake_loc, player, "tardis_handbrake_release");
+                                        TARDISSounds.playTARDISSound(handbrake_loc, player, "tardis_handbrake_release");
                                         if (!beac_on && !beacon.isEmpty()) {
                                             toggleBeacon(beacon, true);
                                         }
@@ -209,13 +212,13 @@ public class TARDISHandbrakeListener implements Listener {
                                                         plugin.getTrackerKeeper().getHasDestination().remove(id);
                                                     }
                                                     // play tardis crash sound
-                                                    plugin.getUtils().playTARDISSound(handbrake_loc, player, "tardis_malfunction");
+                                                    TARDISSounds.playTARDISSound(handbrake_loc, player, "tardis_malfunction");
                                                     // add a potion effect to the player
                                                     player.addPotionEffect(new PotionEffect(PotionEffectType.CONFUSION, 150, 5));
                                                     plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
                                                         @Override
                                                         public void run() {
-                                                            plugin.getUtils().playTARDISSound(handbrake_loc, player, "tardis_cloister_bell");
+                                                            TARDISSounds.playTARDISSound(handbrake_loc, player, "tardis_cloister_bell");
                                                         }
                                                     }, 300L);
                                                 } else {
@@ -242,10 +245,10 @@ public class TARDISHandbrakeListener implements Listener {
                                             set.put("handbrake_on", 0);
                                             TARDISMessage.send(player, "HANDBRAKE_OFF");
                                             if (!minecart) {
-                                                plugin.getUtils().playTARDISSound(handbrake_loc, player, "tardis_takeoff");
+                                                TARDISSounds.playTARDISSound(handbrake_loc, player, "tardis_takeoff");
                                                 // play sound at current TARDIS location
                                                 if (l != null) {
-                                                    plugin.getUtils().playTARDISSoundNearby(l, "tardis_takeoff");
+                                                    TARDISSounds.playTARDISSoundNearby(l, "tardis_takeoff");
                                                 }
                                             } else {
                                                 handbrake_loc.getWorld().playSound(handbrake_loc, Sound.MINECART_INSIDE, 1.0F, 0.0F);
@@ -313,8 +316,8 @@ public class TARDISHandbrakeListener implements Listener {
                                                     Location final_location = m_data.getLocation();
                                                     plugin.getPresetBuilder().buildPreset(m_data);
                                                     if (!mine_sound) {
-                                                        plugin.getUtils().playTARDISSound(handbrake_loc, player, "tardis_land");
-                                                        plugin.getUtils().playTARDISSoundNearby(final_location, "tardis_land");
+                                                        TARDISSounds.playTARDISSound(handbrake_loc, player, "tardis_land");
+                                                        TARDISSounds.playTARDISSoundNearby(final_location, "tardis_land");
                                                     } else {
                                                         handbrake_loc.getWorld().playSound(handbrake_loc, Sound.MINECART_INSIDE, 1.0F, 0.0F);
                                                     }
@@ -396,7 +399,7 @@ public class TARDISHandbrakeListener implements Listener {
                             }
                             if (action == Action.LEFT_CLICK_BLOCK) {
                                 if (!rs.isHandbrake_on()) {
-                                    plugin.getUtils().playTARDISSound(handbrake_loc, player, "tardis_handbrake_engage");
+                                    TARDISSounds.playTARDISSound(handbrake_loc, player, "tardis_handbrake_engage");
                                     // Changes the lever to on
                                     lever.setPowered(true);
                                     state.setData(lever);
@@ -452,9 +455,9 @@ public class TARDISHandbrakeListener implements Listener {
     private void toggleBeacon(String str, boolean on) {
         String[] beaconData = str.split(":");
         World w = plugin.getServer().getWorld(beaconData[0]);
-        int bx = plugin.getUtils().parseInt(beaconData[1]);
-        int by = plugin.getUtils().parseInt(beaconData[2]);
-        int bz = plugin.getUtils().parseInt(beaconData[3]);
+        int bx = TARDISNumberParsers.parseInt(beaconData[1]);
+        int by = TARDISNumberParsers.parseInt(beaconData[2]);
+        int bz = TARDISNumberParsers.parseInt(beaconData[3]);
         Location bl = new Location(w, bx, by, bz);
         Block b = bl.getBlock();
         b.setType((on) ? Material.GLASS : Material.BEDROCK);
@@ -467,7 +470,7 @@ public class TARDISHandbrakeListener implements Listener {
         where.put("door_type", 1);
         ResultSetDoors rs = new ResultSetDoors(plugin, where, false);
         if (rs.resultSet()) {
-            byte data = plugin.getUtils().getLocationFromDB(rs.getDoor_location(), 0.0f, 0.0f).getBlock().getData();
+            byte data = TARDISLocationGetters.getLocationFromDB(rs.getDoor_location(), 0.0f, 0.0f).getBlock().getData();
             return plugin.getGeneralKeeper().getDoorListener().isDoorOpen(data, rs.getDoor_direction());
         }
         return false;

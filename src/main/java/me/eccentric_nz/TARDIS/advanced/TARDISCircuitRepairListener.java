@@ -20,6 +20,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.utility.TARDISNumberParsers;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.event.EventHandler;
@@ -78,7 +79,7 @@ public class TARDISCircuitRepairListener implements Listener {
                             String stripped = ChatColor.stripColor(flore.get(1));
                             if (!stripped.equals("unlimited")) {
                                 // get the uses left
-                                int left = plugin.getUtils().parseInt(stripped);
+                                int left = TARDISNumberParsers.parseInt(stripped);
                                 // get max uses for this circuit
                                 int uses = plugin.getConfig().getInt("circuits.uses." + circuits.get(first.getData().getData()));
                                 // is it used?

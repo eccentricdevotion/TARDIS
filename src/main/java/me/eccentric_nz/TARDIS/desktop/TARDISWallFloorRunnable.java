@@ -27,7 +27,9 @@ import me.eccentric_nz.TARDIS.builders.TARDISTIPSData;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import me.eccentric_nz.TARDIS.schematic.TARDISSchematicGZip;
+import me.eccentric_nz.TARDIS.utility.TARDISBlockSetters;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
+import me.eccentric_nz.TARDIS.utility.TARDISNumberParsers;
 import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.block.Biome;
@@ -102,7 +104,7 @@ public class TARDISWallFloorRunnable extends TARDISThemeRunnable implements Runn
                 startz = pos.getCentreZ();
                 resetz = pos.getCentreZ();
             } else {
-                int gsl[] = plugin.getUtils().getStartLocation(rs.getTardis_id());
+                int gsl[] = plugin.getLocationUtils().getStartLocation(rs.getTardis_id());
                 startx = gsl[0];
                 resetx = gsl[1];
                 startz = gsl[2];
@@ -117,8 +119,8 @@ public class TARDISWallFloorRunnable extends TARDISThemeRunnable implements Runn
             String floor[] = tud.getFloor().split(":");
             wall_type = Material.valueOf(wall[0]);
             floor_type = Material.valueOf(floor[0]);
-            wall_data = plugin.getUtils().parseByte(wall[1]);
-            floor_data = plugin.getUtils().parseByte(floor[1]);
+            wall_data = TARDISNumberParsers.parseByte(wall[1]);
+            floor_data = TARDISNumberParsers.parseByte(floor[1]);
             // get input array
             arr = (JSONArray) obj.get("input");
             // set running
@@ -160,7 +162,7 @@ public class TARDISWallFloorRunnable extends TARDISThemeRunnable implements Runn
                         default:
                             break;
                     }
-                    plugin.getUtils().setBlock(world, x, y, z, type, data);
+                    TARDISBlockSetters.setBlock(world, x, y, z, type, data);
                 }
             }
             if (row < w) {

@@ -24,6 +24,7 @@ import me.eccentric_nz.TARDIS.achievement.TARDISAchievementFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
+import me.eccentric_nz.TARDIS.utility.TARDISNumberParsers;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.OfflinePlayer;
@@ -349,9 +350,9 @@ public class TARDISFarmer {
                     // get location of farm room
                     String[] data = farm.split(":");
                     World world = plugin.getServer().getWorld(data[0]);
-                    int x = plugin.getUtils().parseInt(data[1]);
-                    int y = plugin.getUtils().parseInt(data[2]) + 1;
-                    int z = plugin.getUtils().parseInt(data[3]);
+                    int x = TARDISNumberParsers.parseInt(data[1]);
+                    int y = TARDISNumberParsers.parseInt(data[2]) + 1;
+                    int z = TARDISNumberParsers.parseInt(data[3]);
                     if (old_macd_had_a_chicken.size() > 0) {
                         Location chicken_pen = new Location(world, x + 3, y, z - 3);
                         while (!world.getChunkAt(chicken_pen).isLoaded()) {
@@ -487,9 +488,9 @@ public class TARDISFarmer {
                     // get location of stable room
                     String[] data = stable.split(":");
                     World world = plugin.getServer().getWorld(data[0]);
-                    int x = plugin.getUtils().parseInt(data[1]);
-                    int y = plugin.getUtils().parseInt(data[2]) + 1;
-                    int z = plugin.getUtils().parseInt(data[3]);
+                    int x = TARDISNumberParsers.parseInt(data[1]);
+                    int y = TARDISNumberParsers.parseInt(data[2]) + 1;
+                    int z = TARDISNumberParsers.parseInt(data[3]);
                     if (old_macd_had_a_horse.size() > 0) {
                         Location horse_pen = new Location(world, x + 0.5F, y, z + 0.5F);
                         while (!world.getChunkAt(horse_pen).isLoaded()) {
@@ -564,9 +565,9 @@ public class TARDISFarmer {
                     // get location of hutch room
                     String[] data = hutch.split(":");
                     World world = plugin.getServer().getWorld(data[0]);
-                    int x = plugin.getUtils().parseInt(data[1]);
-                    int y = plugin.getUtils().parseInt(data[2]) + 1;
-                    int z = plugin.getUtils().parseInt(data[3]);
+                    int x = TARDISNumberParsers.parseInt(data[1]);
+                    int y = TARDISNumberParsers.parseInt(data[2]) + 1;
+                    int z = TARDISNumberParsers.parseInt(data[3]);
                     if (old_macd_had_a_rabbit.size() > 0) {
                         Location rabbit_hutch = new Location(world, x + 0.5F, y, z + 0.5F);
                         while (!world.getChunkAt(rabbit_hutch).isLoaded()) {
@@ -604,9 +605,9 @@ public class TARDISFarmer {
                     // get location of village room
                     String[] data = village.split(":");
                     World world = plugin.getServer().getWorld(data[0]);
-                    int x = plugin.getUtils().parseInt(data[1]);
-                    int y = plugin.getUtils().parseInt(data[2]) + 1;
-                    int z = plugin.getUtils().parseInt(data[3]);
+                    int x = TARDISNumberParsers.parseInt(data[1]);
+                    int y = TARDISNumberParsers.parseInt(data[2]) + 1;
+                    int z = TARDISNumberParsers.parseInt(data[3]);
                     if (old_macd_had_a_villager.size() > 0) {
                         Location v_room = new Location(world, x + 0.5F, y, z + 0.5F);
                         while (!world.getChunkAt(v_room).isLoaded()) {

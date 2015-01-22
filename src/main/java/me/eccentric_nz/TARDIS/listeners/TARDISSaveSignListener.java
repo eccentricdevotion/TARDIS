@@ -28,6 +28,7 @@ import me.eccentric_nz.TARDIS.database.ResultSetTravellers;
 import me.eccentric_nz.TARDIS.enumeration.FLAG;
 import me.eccentric_nz.TARDIS.travel.TARDISAreasInventory;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
+import me.eccentric_nz.TARDIS.utility.TARDISNumberParsers;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -143,9 +144,9 @@ public class TARDISSaveSignListener extends TARDISMenuListener implements Listen
                                 if (!save_dest.equals(current)) {
                                     HashMap<String, Object> set = new HashMap<String, Object>();
                                     set.put("world", lore.get(0));
-                                    set.put("x", plugin.getUtils().parseInt(lore.get(1)));
-                                    set.put("y", plugin.getUtils().parseInt(lore.get(2)));
-                                    set.put("z", plugin.getUtils().parseInt(lore.get(3)));
+                                    set.put("x", TARDISNumberParsers.parseInt(lore.get(1)));
+                                    set.put("y", TARDISNumberParsers.parseInt(lore.get(2)));
+                                    set.put("z", TARDISNumberParsers.parseInt(lore.get(3)));
                                     int l_size = lore.size();
                                     if (l_size >= 5) {
                                         if (!lore.get(4).isEmpty() && !lore.get(4).equals("§6Current location")) {
@@ -257,9 +258,9 @@ public class TARDISSaveSignListener extends TARDISMenuListener implements Listen
         if (w == null) {
             return null;
         }
-        int x = plugin.getUtils().parseInt(lore.get(1));
-        int y = plugin.getUtils().parseInt(lore.get(2));
-        int z = plugin.getUtils().parseInt(lore.get(3));
+        int x = TARDISNumberParsers.parseInt(lore.get(1));
+        int y = TARDISNumberParsers.parseInt(lore.get(2));
+        int z = TARDISNumberParsers.parseInt(lore.get(3));
         return new Location(w, x, y, z);
     }
 }

@@ -26,6 +26,8 @@ import me.eccentric_nz.TARDIS.database.ResultSetControls;
 import me.eccentric_nz.TARDIS.database.ResultSetPlayerPrefs;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
+import me.eccentric_nz.TARDIS.utility.TARDISNumberParsers;
+import me.eccentric_nz.TARDIS.utility.TARDISSounds;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
@@ -155,7 +157,7 @@ public class TARDISArtronCapacitorListener implements Listener {
                                             return;
                                         }
                                         List<String> lore = im.getLore();
-                                        int charge = plugin.getUtils().parseInt(lore.get(1)) * is.getAmount();
+                                        int charge = TARDISNumberParsers.parseInt(lore.get(1)) * is.getAmount();
                                         if (charge <= 0) {
                                             TARDISMessage.send(player, "CELL_NOT_CHARGED");
                                             return;
@@ -178,7 +180,7 @@ public class TARDISArtronCapacitorListener implements Listener {
                                 // has the TARDIS been initialised?
                                 if (!init) {
                                     // kickstart the TARDIS Artron Energy Capacitor
-                                    plugin.getUtils().playTARDISSound(block.getLocation(), player, "power_up");
+                                    TARDISSounds.playTARDISSound(block.getLocation(), player, "power_up");
                                     // get locations from database
                                     String creeper = rs.getCreeper();
                                     String beacon = rs.getBeacon();
@@ -187,13 +189,13 @@ public class TARDISArtronCapacitorListener implements Listener {
                                         String[] beaconData = beacon.split(":");
                                         World w = block.getLocation().getWorld();
                                         int bx = 0, by = 0, bz = 0;
-                                        float cx = plugin.getUtils().parseFloat(creeperData[1]);
-                                        float cy = plugin.getUtils().parseFloat(creeperData[2]) + 1;
-                                        float cz = plugin.getUtils().parseFloat(creeperData[3]);
+                                        float cx = TARDISNumberParsers.parseFloat(creeperData[1]);
+                                        float cy = TARDISNumberParsers.parseFloat(creeperData[2]) + 1;
+                                        float cz = TARDISNumberParsers.parseFloat(creeperData[3]);
                                         if (beaconData.length > 2) {
-                                            bx = plugin.getUtils().parseInt(beaconData[1]);
-                                            by = plugin.getUtils().parseInt(beaconData[2]);
-                                            bz = plugin.getUtils().parseInt(beaconData[3]);
+                                            bx = TARDISNumberParsers.parseInt(beaconData[1]);
+                                            by = TARDISNumberParsers.parseInt(beaconData[2]);
+                                            bz = TARDISNumberParsers.parseInt(beaconData[3]);
                                         }
                                         Location cl = new Location(w, cx, cy, cz);
                                         plugin.setTardisSpawn(true);

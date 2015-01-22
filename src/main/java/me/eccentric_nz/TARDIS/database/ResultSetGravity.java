@@ -26,6 +26,7 @@ import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.utility.TARDISNumberParsers;
 
 /**
  * Anti-gravity was the process of creating objects free from or releasing
@@ -93,9 +94,9 @@ public class ResultSetGravity {
                         statement.setString(s, entry.getValue().toString());
                     } else {
                         if (entry.getValue().getClass().getName().contains("Double")) {
-                            statement.setDouble(s, plugin.getUtils().parseDouble(entry.getValue().toString()));
+                            statement.setDouble(s, TARDISNumberParsers.parseDouble(entry.getValue().toString()));
                         } else {
-                            statement.setInt(s, plugin.getUtils().parseInt(entry.getValue().toString()));
+                            statement.setInt(s, TARDISNumberParsers.parseInt(entry.getValue().toString()));
                         }
                     }
                     s++;

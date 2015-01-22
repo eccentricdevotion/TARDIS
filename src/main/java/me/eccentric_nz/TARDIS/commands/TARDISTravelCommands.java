@@ -42,6 +42,7 @@ import me.eccentric_nz.TARDIS.travel.TARDISRescue;
 import me.eccentric_nz.TARDIS.travel.TARDISTimeTravel;
 import me.eccentric_nz.TARDIS.travel.TARDISTravelRequest;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
+import me.eccentric_nz.TARDIS.utility.TARDISNumberParsers;
 import me.eccentric_nz.TARDIS.utility.TARDISWorldBorderChecker;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
@@ -569,13 +570,13 @@ public class TARDISTravelCommands implements CommandExecutor {
                             TARDISMessage.send(player, "NO_WORLD_TRAVEL");
                             return true;
                         }
-                        x = plugin.getUtils().parseInt(args[args.length - 3]);
-                        y = plugin.getUtils().parseInt(args[args.length - 2]);
+                        x = TARDISNumberParsers.parseInt(args[args.length - 3]);
+                        y = TARDISNumberParsers.parseInt(args[args.length - 2]);
                         if (y == 0 || y > 250) {
                             TARDISMessage.send(player, "Y_NOT_VALID");
                             return true;
                         }
-                        z = plugin.getUtils().parseInt(args[args.length - 1]);
+                        z = TARDISNumberParsers.parseInt(args[args.length - 1]);
                         if (x > 15000000 || x < -15000000 || z > 15000000 || z < -15000000) {
                             TARDISMessage.send(player, "XZ_NOT_VALID");
                             return true;

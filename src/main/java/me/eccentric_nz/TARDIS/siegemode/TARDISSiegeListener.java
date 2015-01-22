@@ -30,6 +30,8 @@ import me.eccentric_nz.TARDIS.database.ResultSetTravellers;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
 import me.eccentric_nz.TARDIS.travel.TARDISTimeTravel;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
+import me.eccentric_nz.TARDIS.utility.TARDISNumberParsers;
+import me.eccentric_nz.TARDIS.utility.TARDISStaticUtils;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
@@ -177,7 +179,7 @@ public class TARDISSiegeListener implements Listener {
             public void run() {
                 // check there is space
                 Location loc = item.getLocation();
-                COMPASS d = COMPASS.valueOf(plugin.getUtils().getPlayersDirection(p, false));
+                COMPASS d = COMPASS.valueOf(TARDISStaticUtils.getPlayersDirection(p, false));
                 int[] start = TARDISTimeTravel.getStartLocation(loc, d);
                 int count = TARDISTimeTravel.safeLocation(start[0], loc.getBlockY(), start[2], start[1], start[3], loc.getWorld(), d);
                 if (count > 0) {
@@ -190,7 +192,7 @@ public class TARDISSiegeListener implements Listener {
                     return;
                 }
                 String[] line2 = lore.get(1).split(": ");
-                int id = plugin.getUtils().parseInt(line2[1]);
+                int id = TARDISNumberParsers.parseInt(line2[1]);
                 // turn the drop into a block
                 item.remove();
                 loc.getBlock().setType(Material.HUGE_MUSHROOM_1);
@@ -230,7 +232,7 @@ public class TARDISSiegeListener implements Listener {
         }
         Location loc = event.getBlock().getLocation();
         // check there is room to expand to a police box
-        COMPASS d = COMPASS.valueOf(plugin.getUtils().getPlayersDirection(p, false));
+        COMPASS d = COMPASS.valueOf(TARDISStaticUtils.getPlayersDirection(p, false));
         int[] start = TARDISTimeTravel.getStartLocation(loc, d);
         int count = TARDISTimeTravel.safeLocation(start[0], loc.getBlockY(), start[2], start[1], start[3], loc.getWorld(), d);
         if (count > 0) {

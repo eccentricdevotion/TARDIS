@@ -36,7 +36,10 @@ import me.eccentric_nz.TARDIS.database.ResultSetARS;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import me.eccentric_nz.TARDIS.enumeration.SCHEMATIC;
 import me.eccentric_nz.TARDIS.schematic.TARDISSchematicGZip;
+import me.eccentric_nz.TARDIS.utility.TARDISBlockSetters;
+import me.eccentric_nz.TARDIS.utility.TARDISLocationGetters;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
+import me.eccentric_nz.TARDIS.utility.TARDISNumberParsers;
 import org.bukkit.ChatColor;
 import org.bukkit.Chunk;
 import org.bukkit.Location;
@@ -165,7 +168,7 @@ public class TARDISFullThemeRunnable extends TARDISThemeRunnable implements Runn
                 startz = pos.getCentreZ();
                 resetz = pos.getCentreZ();
             } else {
-                int gsl[] = plugin.getUtils().getStartLocation(rs.getTardis_id());
+                int gsl[] = plugin.getLocationUtils().getStartLocation(rs.getTardis_id());
                 startx = gsl[0];
                 resetx = gsl[1];
                 startz = gsl[2];
@@ -183,8 +186,8 @@ public class TARDISFullThemeRunnable extends TARDISThemeRunnable implements Runn
             String floor[] = tud.getFloor().split(":");
             wall_type = Material.valueOf(wall[0]);
             floor_type = Material.valueOf(floor[0]);
-            wall_data = plugin.getUtils().parseByte(wall[1]);
-            floor_data = plugin.getUtils().parseByte(floor[1]);
+            wall_data = TARDISNumberParsers.parseByte(wall[1]);
+            floor_data = TARDISNumberParsers.parseByte(floor[1]);
             // get input array
             arr = (JSONArray) obj.get("input");
             // clear existing lamp blocks
@@ -440,7 +443,7 @@ public class TARDISFullThemeRunnable extends TARDISThemeRunnable implements Runn
                 }
                 if (type.equals(Material.NOTE_BLOCK)) {
                     // remember the location of this Disk Storage
-                    String storage = plugin.getUtils().makeLocationStr(world, x, y, z);
+                    String storage = TARDISLocationGetters.makeLocationStr(world, x, y, z);
                     qf.insertSyncControl(id, 14, storage, 0);
                 }
                 if (type.equals(Material.WOOL)) {
@@ -500,12 +503,12 @@ public class TARDISFullThemeRunnable extends TARDISThemeRunnable implements Runn
                 }
                 if (type.equals(Material.STONE_BUTTON)) { // random button
                     // remember the location of this button
-                    String button = plugin.getUtils().makeLocationStr(world, x, y, z);
+                    String button = TARDISLocationGetters.makeLocationStr(world, x, y, z);
                     qf.insertSyncControl(id, 1, button, 0);
                 }
                 if (type.equals(Material.JUKEBOX)) {
                     // remember the location of this Advanced Console
-                    String advanced = plugin.getUtils().makeLocationStr(world, x, y, z);
+                    String advanced = TARDISLocationGetters.makeLocationStr(world, x, y, z);
                     qf.insertSyncControl(id, 15, advanced, 0);
                 }
                 if (type.equals(Material.CAKE_BLOCK)) {
@@ -513,7 +516,7 @@ public class TARDISFullThemeRunnable extends TARDISThemeRunnable implements Runn
                      * This block will be converted to a lever by
                      * setBlock(), but remember it so we can use it as the handbrake!
                      */
-                    String handbrakeloc = plugin.getUtils().makeLocationStr(world, x, y, z);
+                    String handbrakeloc = TARDISLocationGetters.makeLocationStr(world, x, y, z);
                     qf.insertSyncControl(id, 0, handbrakeloc, 0);
                 }
                 if (type.equals(Material.MONSTER_EGGS)) { // silverfish stone
@@ -614,13 +617,13 @@ public class TARDISFullThemeRunnable extends TARDISThemeRunnable implements Runn
                      * wood button will be coverted to the correct id by
                      * setBlock(), but remember it for the Artron Energy Capacitor.
                      */
-                    String woodbuttonloc = plugin.getUtils().makeLocationStr(world, x, y, z);
+                    String woodbuttonloc = TARDISLocationGetters.makeLocationStr(world, x, y, z);
                     qf.insertSyncControl(id, 6, woodbuttonloc, 0);
                 }
                 // if it's an iron/gold/diamond/emerald/beacon/redstone block put it in the blocks table
                 if (precious.contains(type)) {
                     HashMap<String, Object> setpb = new HashMap<String, Object>();
-                    String loc = plugin.getUtils().makeLocationStr(world, x, y, z);
+                    String loc = TARDISLocationGetters.makeLocationStr(world, x, y, z);
                     setpb.put("tardis_id", id);
                     setpb.put("location", loc);
                     setpb.put("police_box", 0);
@@ -692,9 +695,9 @@ public class TARDISFullThemeRunnable extends TARDISThemeRunnable implements Runn
                         j++;
                     }
                 } else if (type.equals(Material.SPONGE)) {
-                    plugin.getUtils().setBlock(world, x, y, z, Material.AIR, (byte) 0);
+                    TARDISBlockSetters.setBlock(world, x, y, z, Material.AIR, (byte) 0);
                 } else {
-                    plugin.getUtils().setBlock(world, x, y, z, type, data);
+                    TARDISBlockSetters.setBlock(world, x, y, z, type, data);
                 }
             }
             // remove items
@@ -719,8 +722,8 @@ public class TARDISFullThemeRunnable extends TARDISThemeRunnable implements Runn
     private Chunk getChunk(String str) {
         String[] split = str.split(":");
         World cw = plugin.getServer().getWorld(split[0]);
-        int cx = plugin.getUtils().parseInt(split[1]);
-        int cz = plugin.getUtils().parseInt(split[2]);
+        int cx = TARDISNumberParsers.parseInt(split[1]);
+        int cz = TARDISNumberParsers.parseInt(split[2]);
         return cw.getChunkAt(cx, cz);
     }
 
@@ -771,9 +774,9 @@ public class TARDISFullThemeRunnable extends TARDISThemeRunnable implements Runn
     private Location getCreeperLocation(String str) {
         String[] creeperData = str.split(":");
         World cw = plugin.getServer().getWorld(creeperData[0]);
-        float cx = plugin.getUtils().parseFloat(creeperData[1]);
-        float cy = plugin.getUtils().parseFloat(creeperData[2]) + 1;
-        float cz = plugin.getUtils().parseFloat(creeperData[3]);
+        float cx = TARDISNumberParsers.parseFloat(creeperData[1]);
+        float cy = TARDISNumberParsers.parseFloat(creeperData[2]) + 1;
+        float cz = TARDISNumberParsers.parseFloat(creeperData[3]);
         return new Location(cw, cx, cy, cz);
     }
 

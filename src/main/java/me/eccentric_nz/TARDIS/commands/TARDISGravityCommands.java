@@ -22,6 +22,7 @@ import java.util.List;
 import java.util.Locale;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
+import me.eccentric_nz.TARDIS.utility.TARDISNumberParsers;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -110,7 +111,7 @@ public class TARDISGravityCommands implements CommandExecutor {
                     values[1] = 0D;
                 }
                 if (args.length == 3) {
-                    values[2] = plugin.getUtils().parseDouble(args[2]);
+                    values[2] = TARDISNumberParsers.parseDouble(args[2]);
                     if (values[2] > plugin.getConfig().getDouble("growth.gravity_max_velocity")) {
                         TARDISMessage.send(player, "GRAVITY_FAST");
                         return true;

@@ -24,6 +24,7 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.utility.TARDISNumberParsers;
 
 /**
  * Many facts, figures, and formulas are contained within the Matrix,
@@ -109,9 +110,9 @@ public class TARDISLocationsConverter {
         HashMap<String, Object> set = new HashMap<String, Object>();
         set.put("tardis_id", id);
         set.put("world", data[0]);
-        set.put("x", plugin.getUtils().parseInt(data[1]));
-        set.put("y", plugin.getUtils().parseInt(data[2]));
-        set.put("z", plugin.getUtils().parseInt(data[3]));
+        set.put("x", TARDISNumberParsers.parseInt(data[1]));
+        set.put("y", TARDISNumberParsers.parseInt(data[2]));
+        set.put("z", TARDISNumberParsers.parseInt(data[3]));
         int l = data.length;
         set.put("direction", (l > 4 && directions.contains(data[4])) ? data[4] : d);
         set.put("submarine", (l > 5 && data[5].equals("true")) ? 1 : 0);

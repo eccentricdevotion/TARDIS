@@ -20,6 +20,8 @@ import java.util.Arrays;
 import java.util.List;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
+import me.eccentric_nz.TARDIS.utility.TARDISNumberParsers;
+import me.eccentric_nz.TARDIS.utility.TARDISSounds;
 import org.bukkit.Chunk;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -66,9 +68,9 @@ public class TARDISArtronFurnaceListener implements Listener {
                 if (im.hasDisplayName() && im.getDisplayName().equals("Artron Storage Cell")) {
                     final List<String> lore = im.getLore();
                     if (!lore.get(1).equals("0")) {
-                        plugin.getUtils().playTARDISSoundNearby(furnace.getLocation(), "artron_furnace");
+                        TARDISSounds.playTARDISSoundNearby(furnace.getLocation(), "artron_furnace");
                         // get charge level
-                        int charge_level = plugin.getUtils().parseInt(lore.get(1));
+                        int charge_level = TARDISNumberParsers.parseInt(lore.get(1));
                         double percentage = charge_level / plugin.getArtronConfig().getDouble("full_charge");
                         // determine burn time
                         int burnTime = (int) (percentage * burnFactor);

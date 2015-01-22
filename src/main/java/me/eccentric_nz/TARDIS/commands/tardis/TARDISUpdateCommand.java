@@ -25,6 +25,7 @@ import me.eccentric_nz.TARDIS.chatGUI.TARDISUpdateChatGUI;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import me.eccentric_nz.TARDIS.database.ResultSetTravellers;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
+import me.eccentric_nz.TARDIS.utility.TARDISNumberParsers;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
@@ -72,7 +73,7 @@ public class TARDISUpdateCommand {
                 Block block = player.getTargetBlock(null, 10);
                 if (block.getType().equals(Material.IRON_DOOR_BLOCK)) {
                     if (args.length == 3) {
-                        byte b = plugin.getUtils().parseByte(args[2]);
+                        byte b = TARDISNumberParsers.parseByte(args[2]);
                         block.setData(b, true);
                     } else {
                         byte blockData = block.getData();

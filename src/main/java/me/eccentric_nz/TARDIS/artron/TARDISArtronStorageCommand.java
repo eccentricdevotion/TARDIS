@@ -25,6 +25,7 @@ import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetPlayerPrefs;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
+import me.eccentric_nz.TARDIS.utility.TARDISNumberParsers;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -133,7 +134,7 @@ public class TARDISArtronStorageCommand implements CommandExecutor {
                 }
             }
             List<String> lore = im.getLore();
-            int level = plugin.getUtils().parseInt(lore.get(1));
+            int level = TARDISNumberParsers.parseInt(lore.get(1));
             int new_amount = amount + level;
             int max = plugin.getArtronConfig().getInt("full_charge");
             if (new_amount > max) {

@@ -20,6 +20,7 @@ import java.io.File;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.destroyers.TARDISPruner;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
+import me.eccentric_nz.TARDIS.utility.TARDISNumberParsers;
 import org.bukkit.command.CommandSender;
 import org.bukkit.util.FileUtil;
 
@@ -59,7 +60,7 @@ public class TARDISPruneCommand {
     }
 
     public boolean listPrunes(CommandSender sender, String[] args) {
-        int days = plugin.getUtils().parseInt(args[1]);
+        int days = TARDISNumberParsers.parseInt(args[1]);
         TARDISPruner pruner = new TARDISPruner(plugin);
         pruner.list(sender, days);
         return true;

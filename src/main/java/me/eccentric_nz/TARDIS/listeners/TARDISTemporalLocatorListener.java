@@ -22,6 +22,7 @@ import me.eccentric_nz.TARDIS.advanced.TARDISCircuitChecker;
 import me.eccentric_nz.TARDIS.advanced.TARDISCircuitDamager;
 import me.eccentric_nz.TARDIS.enumeration.DISK_CIRCUIT;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
+import me.eccentric_nz.TARDIS.utility.TARDISNumberParsers;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -89,6 +90,6 @@ public class TARDISTemporalLocatorListener extends TARDISMenuListener implements
      */
     private long getTime(List<String> lore) {
         String[] data = lore.get(0).split(" ");
-        return plugin.getUtils().parseLong(data[0]);
+        return TARDISNumberParsers.parseLong(data[0]);
     }
 }
