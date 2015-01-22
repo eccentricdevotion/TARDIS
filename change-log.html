@@ -32,7 +32,39 @@
     <section>
         <h1>Change log</h1>
         <h2>What&rsquo;s been changed?</h2>
+        <h3>v3.2.9</h3>
+        <p><a href="#reqs">View requirements for this version</a></p>
+        <h3>Additions</h3>
+        <ul>
+            <li>Added a console warning if Remote Key ingredient does not = TARDIS Key result</li>
+            <li>Added Siege Cube protection when dropping the cube from the player's inventory (as well as the existing case of when it is mined)</li>
+            <li>
+                <p>Added a config option to allow Guardians to be pulled into the TARDIS if the door is left open - it's <code>false</code> by default:</p>
+                <pre><code>allow:
+    guardians: [true|false]       
+</code></pre>
+                <ul>
+                    <li>regardless of the setting, guardians will not be spawned in the TARDIS if there is <em>no POOL room</em></li>
+                    <li>if set to <code>true</code> - any guardians within a 16 blocks radius of the open TARDIS door will be sucked into the pool</li>
+                    <li>if set to <code>false</code> - there is still a 25% chance that a random monster will spawn in the TARDIS, and a 1 in 12 chance that it will be a guardian</li>
+                    <li>toggle the setting with <code>/tardisadmin guardians [true|false]</code></li>
+                </ul>
+            </li>
+        </ul>
+        <h3>Changes</h3>
+        <ul>
+            <li>Daleks (from the TARDISWeepingAngels plugin) spawned in the TARDIS (when the door is open) will now be redisguised after teleportation</li>
+            <li>If a world is deleted from the server, the plugin now attempts to clean the database of invalid block and portal records</li>
+        </ul>
+        <h3>Bug fixes</h3>
+        <ul>
+            <li>Added missing return statement that caused the TARDIS to unsiege inside itself</li>
+            <li>Fixed some NPEs with the Artron Furnace</li>
+            <li>Fixed repeaters not being reset after manual flight</li>
+            <li>Blocks and portals that belong to non-existent worlds are no longer loaded</li>
+        </ul>
         <h3>v3.2.8</h3>
+        <p><a href="#reqs">View requirements for this version</a></p>
         <h3>Additions</h3>
         <ul>
             <li>Added a <code>/tardisadmin desiege [player]</code> command
@@ -235,16 +267,16 @@
         <h5>Server</h5>
         <p>A new WorldBorder API was addedd to CraftBukkit / Spigot on the 13 December 2014. This means if your server JAR was built before then it <strong>WILL NOT WORK</strong> with TARDIS. You should use Spigot&rsquo;s <a href="https://hub.spigotmc.org/jenkins/job/BuildTools/">BuildTools</a> to compile a new server JAR &mdash; instructions for doing this can be found here: <a href="build-tools.html">How to use BuildTools</a>.</p>
         <ul style="margin-bottom:0;">
-            <li> <a href="https://dl.dropboxusercontent.com/u/53758864/craftbukkit.jar">CraftBukkit</a> &mdash; version git-Bukkit-4470462 (MC: 1.8) or newer</li>
+            <li> <a href="https://dl.dropboxusercontent.com/u/53758864/craftbukkit.jar">CraftBukkit</a> &mdash; version git-Bukkit-1092acb (MC: 1.8) or newer</li>
         </ul>
         <p style="margin-bottom:0;"><em>or</em></p>
         <ul>
-            <li> <a href="https://dl.dropboxusercontent.com/u/53758864/spigot.jar">Spigot</a> &mdash; version git-Spigot-081dfa5-4470462 (MC: 1.8) or newer</li>
+            <li> <a href="https://dl.dropboxusercontent.com/u/53758864/spigot.jar">Spigot</a> &mdash; version git-Spigot-b1e6da1-1092acb (MC: 1.8) or newer</li>
         </ul>
         <h5>Plugins</h5>
         <p>If running the following plugins the <strong>minimum</strong> version required is shown.</p>
         <ul>
-            <li><a href="http://builds.enginehub.org/job/worldguard?branch=versions%2Fspigot1.8-6.x">WorldGuard</a> &mdash; version 6.0.0-SNAPSHOT (the Spigot build)</li>
+            <li><a href="http://dev.bukkit.org/bukkit-plugins/worldguard/files/45-world-guard-6-0-beta-5/">WorldGuard</a> &mdash; version 6.0 beta 5</li>
             <li><a href="http://ci.shadowvolt.com/job/ProtocolLib/">ProtocolLib</a> &mdash; version 3.6.3-SNAPSHOT build #50</li>
             <li><a href="http://ci.md-5.net/job/LibsDisguises/">LibsDisguises</a> &mdash; version 8.2.6-SNAPSHOT build #363</li>
             <li><a href="http://dev.bukkit.org/bukkit-plugins/factions/">Factions</a> &mdash; version 2.7.4 (+ MassiveCore 2.7.4)</li>
