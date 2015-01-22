@@ -18,6 +18,7 @@ package me.eccentric_nz.TARDIS.flight;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
+import me.eccentric_nz.TARDIS.utility.TARDISSounds;
 import org.bukkit.entity.Player;
 
 /**
@@ -50,6 +51,6 @@ public class TARDISManualFlightStarter implements Runnable {
         int taskid = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, mfr, 10L, delay);
         mfr.setTaskID(taskid);
         // play inflight sound
-        plugin.getUtils().playTARDISSound(player.getLocation(), player, "interior_flight");
+        TARDISSounds.playTARDISSound(player.getLocation(), player, "interior_flight");
     }
 }

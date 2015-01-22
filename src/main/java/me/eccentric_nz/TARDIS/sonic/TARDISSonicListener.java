@@ -33,6 +33,8 @@ import me.eccentric_nz.TARDIS.database.ResultSetTravellers;
 import static me.eccentric_nz.TARDIS.listeners.TARDISScannerListener.getNearbyEntities;
 import me.eccentric_nz.TARDIS.utility.TARDISGriefPreventionChecker;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
+import me.eccentric_nz.TARDIS.utility.TARDISSounds;
+import me.eccentric_nz.TARDIS.utility.TARDISStaticUtils;
 import me.eccentric_nz.TARDIS.utility.TARDISVector3D;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
@@ -566,7 +568,7 @@ public class TARDISSonicListener implements Listener {
             im.addEnchant(Enchantment.DURABILITY, 1, true);
             player.getItemInHand().setItemMeta(im);
             timeout.put(player.getUniqueId(), now + cooldown);
-            plugin.getUtils().playTARDISSound(player.getLocation(), player, sound);
+            TARDISSounds.playTARDISSound(player.getLocation(), player, sound);
             plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
                 @Override
                 public void run() {
@@ -657,7 +659,7 @@ public class TARDISSonicListener implements Listener {
             }
         }
         final long time = scan_loc.getWorld().getTime();
-        final String daynight = plugin.getUtils().getTime(time);
+        final String daynight = TARDISStaticUtils.getTime(time);
         // message the player
         TARDISMessage.send(player, "SONIC_SCAN");
         BukkitScheduler bsched = plugin.getServer().getScheduler();

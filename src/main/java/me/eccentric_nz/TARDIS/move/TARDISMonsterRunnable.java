@@ -32,7 +32,9 @@ import me.eccentric_nz.TARDIS.database.ResultSetHidden;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import me.eccentric_nz.TARDIS.database.ResultSetTravellers;
 import me.eccentric_nz.TARDIS.utility.TARDISDalekDisguiser;
+import me.eccentric_nz.TARDIS.utility.TARDISLocationGetters;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
+import me.eccentric_nz.TARDIS.utility.TARDISSounds;
 import org.bukkit.Difficulty;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -239,7 +241,7 @@ public class TARDISMonsterRunnable implements Runnable {
             where.put("tardis_id", tpl.getTardisId());
             ResultSetTravellers rs = new ResultSetTravellers(plugin, where, false);
             if (rs.resultSet()) {
-                plugin.getUtils().playTARDISSoundNearby(loc, "tardis_cloister_bell");
+                TARDISSounds.playTARDISSoundNearby(loc, "tardis_cloister_bell");
             } else {
                 // else message the Time Lord
                 HashMap<String, Object> wheret = new HashMap<String, Object>();
@@ -258,7 +260,7 @@ public class TARDISMonsterRunnable implements Runnable {
                 ResultSetControls rsc = new ResultSetControls(plugin, wherer, false);
                 if (rsc.resultSet()) {
                     // move the location to the y-repeater
-                    loc = plugin.getUtils().getLocationFromDB(rsc.getLocation(), 0.0f, 0.0f);
+                    loc = TARDISLocationGetters.getLocationFromDB(rsc.getLocation(), 0.0f, 0.0f);
                     loc.setY(loc.getY() + 0.125d);
                 }
             }

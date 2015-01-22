@@ -19,6 +19,7 @@ package me.eccentric_nz.TARDIS.move;
 import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
+import me.eccentric_nz.TARDIS.utility.TARDISSounds;
 import org.bukkit.Location;
 import org.bukkit.Sound;
 import org.bukkit.block.Block;
@@ -74,13 +75,13 @@ public class TARDISDoorToggler {
     private void playDoorSound(Player p, boolean open, Location l, boolean m) {
         if (open) {
             if (!m) {
-                plugin.getUtils().playTARDISSound(l, p, "tardis_door_close");
+                TARDISSounds.playTARDISSound(l, p, "tardis_door_close");
             } else {
                 p.playSound(p.getLocation(), Sound.DOOR_CLOSE, 1.0F, 1.0F);
             }
         } else {
             if (!m) {
-                plugin.getUtils().playTARDISSound(l, p, "tardis_door_open");
+                TARDISSounds.playTARDISSound(l, p, "tardis_door_open");
             } else {
                 p.playSound(p.getLocation(), Sound.DOOR_OPEN, 1.0F, 1.0F);
             }

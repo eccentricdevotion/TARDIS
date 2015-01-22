@@ -25,6 +25,7 @@ import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetPlayerPrefs;
 import me.eccentric_nz.TARDIS.enumeration.PRESET;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
+import me.eccentric_nz.TARDIS.utility.TARDISSounds;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 
@@ -65,7 +66,7 @@ public class TARDISPowerButton {
                 TARDISMessage.send(player, "POWER_NO");
                 return;
             }
-            plugin.getUtils().playTARDISSound(loc, player, "power_down");
+            TARDISSounds.playTARDISSound(loc, player, "power_down");
             // power down
             setp.put("powered_on", 0);
             TARDISMessage.send(player, "POWER_OFF");
@@ -97,7 +98,7 @@ public class TARDISPowerButton {
                 TARDISMessage.send(player, "POWER_LOW");
                 return;
             }
-            plugin.getUtils().playTARDISSound(loc, player, "power_up");
+            TARDISSounds.playTARDISSound(loc, player, "power_up");
             // power up
             setp.put("powered_on", 1);
             TARDISMessage.send(player, "POWER_ON");

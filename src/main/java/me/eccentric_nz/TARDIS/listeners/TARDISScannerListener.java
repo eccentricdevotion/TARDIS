@@ -33,6 +33,8 @@ import me.eccentric_nz.TARDIS.enumeration.COMPASS;
 import me.eccentric_nz.TARDIS.enumeration.DISK_CIRCUIT;
 import me.eccentric_nz.TARDIS.rooms.TARDISExteriorRenderer;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
+import me.eccentric_nz.TARDIS.utility.TARDISSounds;
+import me.eccentric_nz.TARDIS.utility.TARDISStaticUtils;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Biome;
@@ -163,7 +165,7 @@ public class TARDISScannerListener implements Listener {
 
     public TARDISScannerData scan(final Player player, final int id, BukkitScheduler bsched) {
         TARDISScannerData data = new TARDISScannerData();
-        plugin.getUtils().playTARDISSound(player.getLocation(), player, "tardis_scanner");
+        TARDISSounds.playTARDISSound(player.getLocation(), player, "tardis_scanner");
         final Location scan_loc;
         String whereisit;
         final COMPASS tardisDirection;
@@ -213,7 +215,7 @@ public class TARDISScannerListener implements Listener {
         }
         final long time = scan_loc.getWorld().getTime();
         data.setTime(time);
-        final String daynight = plugin.getUtils().getTime(time);
+        final String daynight = TARDISStaticUtils.getTime(time);
         // message the player
         TARDISMessage.send(player, "SCAN_RESULT", whereisit);
         TARDISMessage.send(player, true, "SCAN_WORLD", scan_loc.getWorld().getName());
