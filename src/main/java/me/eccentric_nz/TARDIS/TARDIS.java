@@ -26,6 +26,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Properties;
 import java.util.Set;
 import java.util.UUID;
@@ -52,6 +53,7 @@ import me.eccentric_nz.TARDIS.database.TARDISMaterialIDConverter;
 import me.eccentric_nz.TARDIS.database.TARDISMySQLDatabase;
 import me.eccentric_nz.TARDIS.database.TARDISSQLiteDatabase;
 import me.eccentric_nz.TARDIS.database.TARDISUUIDConverter;
+import me.eccentric_nz.TARDIS.database.TARDISWorldRemover;
 import me.eccentric_nz.TARDIS.destroyers.TARDISDestroyerInner;
 import me.eccentric_nz.TARDIS.destroyers.TARDISPresetDestroyerFactory;
 import me.eccentric_nz.TARDIS.enumeration.LANGUAGE;
@@ -72,6 +74,8 @@ import me.eccentric_nz.TARDIS.siegemode.TARDISSiegePersister;
 import me.eccentric_nz.TARDIS.siegemode.TARDISSiegeRunnable;
 import me.eccentric_nz.TARDIS.travel.TARDISArea;
 import me.eccentric_nz.TARDIS.travel.TARDISPluginRespect;
+import me.eccentric_nz.TARDIS.utility.TARDISBlockSetters;
+import me.eccentric_nz.TARDIS.utility.TARDISLocationGetters;
 import me.eccentric_nz.TARDIS.utility.TARDISMapChecker;
 import me.eccentric_nz.TARDIS.utility.TARDISMultiverseInventoriesChecker;
 import me.eccentric_nz.TARDIS.utility.TARDISPerceptionFilter;
@@ -132,6 +136,8 @@ public class TARDIS extends JavaPlugin {
     private TARDISShapedRecipe figura;
     private TARDISShapelessRecipe incomposita;
     private TARDISUtils utils;
+    private TARDISLocationGetters locationUtils;
+    private TARDISBlockSetters blockUtils;
     private TARDISWalls tardisWalls;
     private TARDISWorldGuardUtils worldGuardUtils;
     private boolean hasVersion = false;
@@ -152,6 +158,7 @@ public class TARDIS extends JavaPlugin {
     private final TARDISTrackerInstanceKeeper trackerKeeper = new TARDISTrackerInstanceKeeper();
     private final TARDISChatGUIJSON jsonKeeper = new TARDISChatGUIJSON();
     private TARDISHelper tardisHelper = null;
+    private final List<String> cleanUpWorlds = new ArrayList<String>();
 
     public TARDIS() {
         this.worldGuardOnServer = false;
@@ -213,7 +220,10 @@ public class TARDIS extends JavaPlugin {
                 }
                 checkTCG();
                 checkDefaultWorld();
+                cleanUpWorlds();
                 utils = new TARDISUtils(this);
+                locationUtils = new TARDISLocationGetters(this);
+                blockUtils = new TARDISBlockSetters(this);
                 buildKeeper.setSeeds(getSeeds());
                 tardisWalls = new TARDISWalls();
                 new TARDISConsoleLoader(this).addSchematics();
@@ -643,6 +653,12 @@ public class TARDIS extends JavaPlugin {
         }
     }
 
+    private void cleanUpWorlds() {
+        for (String w : getCleanUpWorlds()) {
+            new TARDISWorldRemover(plugin).cleanWorld(w);
+        }
+    }
+
     /**
      * Gets the server default resource pack. Will use the Minecraft default
      * pack if none is specified. Until Minecraft/Bukkit lets us set the RP back
@@ -805,6 +821,14 @@ public class TARDIS extends JavaPlugin {
         return utils;
     }
 
+    public TARDISLocationGetters getLocationUtils() {
+        return locationUtils;
+    }
+
+    public TARDISBlockSetters getBlockUtils() {
+        return blockUtils;
+    }
+
     public TARDISPluginRespect getPluginRespect() {
         return pluginRespect;
     }
@@ -935,5 +959,9 @@ public class TARDIS extends JavaPlugin {
 
     public int getStandbyTask() {
         return standbyTask;
+    }
+
+    public List<String> getCleanUpWorlds() {
+        return cleanUpWorlds;
     }
 }

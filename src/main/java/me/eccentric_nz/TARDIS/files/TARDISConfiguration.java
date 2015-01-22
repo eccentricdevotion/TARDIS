@@ -463,6 +463,9 @@ public class TARDISConfiguration {
             if (plugin.getServer().getWorld(cw) == null) {
                 plugin.getConfig().set("worlds." + cw, null);
                 plugin.getConsole().sendMessage(plugin.getPluginName() + "Removed '" + cw + " from config.yml");
+                // remove records from database that may contain
+                // the removed world
+                plugin.getCleanUpWorlds().add(cw);
             }
         }
     }
