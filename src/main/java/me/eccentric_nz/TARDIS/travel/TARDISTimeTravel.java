@@ -28,7 +28,9 @@ import me.eccentric_nz.TARDIS.database.ResultSetPlayerPrefs;
 import me.eccentric_nz.TARDIS.database.ResultSetTravellers;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
 import me.eccentric_nz.TARDIS.enumeration.FLAG;
+import me.eccentric_nz.TARDIS.utility.TARDISBlockSetters;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
+import me.eccentric_nz.TARDIS.utility.TARDISStaticUtils;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
@@ -195,7 +197,7 @@ public class TARDISTimeTravel {
                             wheres.put("uuid", p.getUniqueId().toString());
                             ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, wheres);
                             if (rsp.resultSet()) {
-                                if (rsp.isSubmarineOn() && plugin.getUtils().isOceanBiome(currentBlock.getBiome())) {
+                                if (rsp.isSubmarineOn() && TARDISStaticUtils.isOceanBiome(currentBlock.getBiome())) {
                                     // get submarine location
                                     TARDISMessage.send(p, "SUB_SEARCH");
                                     Location underwater = submarine(currentBlock, d);
@@ -350,25 +352,25 @@ public class TARDISTimeTravel {
         final int c = col;
         final int startx = sx;
         final int startz = sz;
-        plugin.getUtils().setBlock(w, startx, starty, startz, 80, (byte) 0);
-        plugin.getUtils().setBlock(w, startx, starty, startz + row, 80, (byte) 0);
-        plugin.getUtils().setBlock(w, startx + col, starty, startz, 80, (byte) 0);
-        plugin.getUtils().setBlock(w, startx + col, starty, startz + row, 80, (byte) 0);
-        plugin.getUtils().setBlock(w, startx, starty + 3, startz, 80, (byte) 0);
-        plugin.getUtils().setBlock(w, startx + col, starty + 3, startz, 80, (byte) 0);
-        plugin.getUtils().setBlock(w, startx, starty + 3, startz + row, 80, (byte) 0);
-        plugin.getUtils().setBlock(w, startx + col, starty + 3, startz + row, 80, (byte) 0);
+        TARDISBlockSetters.setBlock(w, startx, starty, startz, 80, (byte) 0);
+        TARDISBlockSetters.setBlock(w, startx, starty, startz + row, 80, (byte) 0);
+        TARDISBlockSetters.setBlock(w, startx + col, starty, startz, 80, (byte) 0);
+        TARDISBlockSetters.setBlock(w, startx + col, starty, startz + row, 80, (byte) 0);
+        TARDISBlockSetters.setBlock(w, startx, starty + 3, startz, 80, (byte) 0);
+        TARDISBlockSetters.setBlock(w, startx + col, starty + 3, startz, 80, (byte) 0);
+        TARDISBlockSetters.setBlock(w, startx, starty + 3, startz + row, 80, (byte) 0);
+        TARDISBlockSetters.setBlock(w, startx + col, starty + 3, startz + row, 80, (byte) 0);
         plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
             @Override
             public void run() {
-                plugin.getUtils().setBlock(w, startx, starty, startz, 0, (byte) 0);
-                plugin.getUtils().setBlock(w, startx, starty, startz + r, 0, (byte) 0);
-                plugin.getUtils().setBlock(w, startx + c, starty, startz, 0, (byte) 0);
-                plugin.getUtils().setBlock(w, startx + c, starty, startz + r, 0, (byte) 0);
-                plugin.getUtils().setBlock(w, startx, starty + 3, startz, 0, (byte) 0);
-                plugin.getUtils().setBlock(w, startx + c, starty + 3, startz, 0, (byte) 0);
-                plugin.getUtils().setBlock(w, startx, starty + 3, startz + r, 0, (byte) 0);
-                plugin.getUtils().setBlock(w, startx + c, starty + 3, startz + r, 0, (byte) 0);
+                TARDISBlockSetters.setBlock(w, startx, starty, startz, 0, (byte) 0);
+                TARDISBlockSetters.setBlock(w, startx, starty, startz + r, 0, (byte) 0);
+                TARDISBlockSetters.setBlock(w, startx + c, starty, startz, 0, (byte) 0);
+                TARDISBlockSetters.setBlock(w, startx + c, starty, startz + r, 0, (byte) 0);
+                TARDISBlockSetters.setBlock(w, startx, starty + 3, startz, 0, (byte) 0);
+                TARDISBlockSetters.setBlock(w, startx + c, starty + 3, startz, 0, (byte) 0);
+                TARDISBlockSetters.setBlock(w, startx, starty + 3, startz + r, 0, (byte) 0);
+                TARDISBlockSetters.setBlock(w, startx + c, starty + 3, startz + r, 0, (byte) 0);
             }
         }, 300L);
     }

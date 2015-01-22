@@ -30,6 +30,8 @@ import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
 import me.eccentric_nz.TARDIS.enumeration.ROOM;
 import static me.eccentric_nz.TARDIS.schematic.TARDISBannerSetter.setBanners;
+import me.eccentric_nz.TARDIS.utility.TARDISBlockSetters;
+import me.eccentric_nz.TARDIS.utility.TARDISLocationGetters;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import org.bukkit.Chunk;
 import org.bukkit.Location;
@@ -480,9 +482,9 @@ public class TARDISRoomRunnable implements Runnable {
             }
             if (!notThese.contains(type) && !(type.equals(Material.HUGE_MUSHROOM_2) && data == (byte) 15)) {
                 if (type.equals(Material.STATIONARY_WATER)) {
-                    plugin.getUtils().setBlock(world, startx, starty, startz, 79, (byte) 0);
+                    TARDISBlockSetters.setBlock(world, startx, starty, startz, 79, (byte) 0);
                 } else {
-                    plugin.getUtils().setBlock(world, startx, starty, startz, type, data);
+                    TARDISBlockSetters.setBlock(world, startx, starty, startz, type, data);
                 }
             }
             // remember ice blocks
@@ -534,7 +536,7 @@ public class TARDISRoomRunnable implements Runnable {
                     switch (this.type) {
                         case STONE_BUTTON: // stone button - random
                             ctype = 1;
-                            loc_str = plugin.getUtils().makeLocationStr(world, startx, starty, startz);
+                            loc_str = TARDISLocationGetters.makeLocationStr(world, startx, starty, startz);
                             break;
                         case HUGE_MUSHROOM_2: // repeater
                             ctype = repeaterOrder.get(r);
@@ -545,11 +547,11 @@ public class TARDISRoomRunnable implements Runnable {
                             break;
                         case WOOD_BUTTON: // wood button - artron
                             ctype = 6;
-                            loc_str = plugin.getUtils().makeLocationStr(world, startx, starty, startz);
+                            loc_str = TARDISLocationGetters.makeLocationStr(world, startx, starty, startz);
                             break;
                         default: // cake - handbrake
                             ctype = 0;
-                            loc_str = plugin.getUtils().makeLocationStr(world, startx, starty, startz);
+                            loc_str = TARDISLocationGetters.makeLocationStr(world, startx, starty, startz);
                     }
                     qf.insertControl(tardis_id, ctype, loc_str, secondary);
                 }
@@ -558,7 +560,7 @@ public class TARDISRoomRunnable implements Runnable {
                 // remember the button
                 String loc_str;
                 if (type.equals(Material.WOOD_BUTTON)) {
-                    loc_str = plugin.getUtils().makeLocationStr(world, startx, starty, startz);
+                    loc_str = TARDISLocationGetters.makeLocationStr(world, startx, starty, startz);
                     qf.insertControl(tardis_id, 17, loc_str, 0);
                 }
             }
