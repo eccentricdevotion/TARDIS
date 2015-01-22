@@ -23,6 +23,7 @@ import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import me.eccentric_nz.TARDIS.database.ResultSetTravellers;
+import me.eccentric_nz.TARDIS.utility.TARDISLocationGetters;
 import org.bukkit.Location;
 import org.bukkit.entity.Creeper;
 import org.bukkit.entity.Entity;
@@ -60,7 +61,7 @@ public class TARDISSiegeRunnable implements Runnable {
                     whered.put("tardis_id", id);
                     qf.alterEnergyLevel("tardis", deplete, whered, null);
                 } else if (plugin.getConfig().getBoolean("siege.creeper")) {
-                    Location l = plugin.getUtils().getLocationFromDB(rs.getCreeper(), 0.0f, 0.0f);
+                    Location l = TARDISLocationGetters.getLocationFromDB(rs.getCreeper(), 0.0f, 0.0f);
                     // spawn an entity so we can check for the creeper
                     Entity ent = l.getWorld().spawnEntity(l, EntityType.EGG);
                     List<Entity> creeps = ent.getNearbyEntities(1d, 1d, 1d);

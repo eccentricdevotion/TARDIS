@@ -23,6 +23,7 @@ import java.util.Random;
 import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.ResultSetRepeaters;
+import me.eccentric_nz.TARDIS.utility.TARDISLocationGetters;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import org.bukkit.Effect;
 import org.bukkit.Location;
@@ -94,7 +95,7 @@ public class TARDISManualFlightRunnable implements Runnable {
         if (rsr.resultSet()) {
             List<String> locs = rsr.getLocations();
             for (String l : locs) {
-                repeaters.add(plugin.getUtils().getLocationFromDB(l, 0.0f, 0.0f));
+                repeaters.add(TARDISLocationGetters.getLocationFromDB(l, 0.0f, 0.0f));
             }
         }
         return repeaters;

@@ -32,8 +32,10 @@ import me.eccentric_nz.TARDIS.enumeration.PRESET;
 import me.eccentric_nz.TARDIS.mobfarming.TARDISFarmer;
 import me.eccentric_nz.TARDIS.mobfarming.TARDISMob;
 import me.eccentric_nz.TARDIS.travel.TARDISDoorLocation;
+import me.eccentric_nz.TARDIS.utility.TARDISLocationGetters;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import me.eccentric_nz.TARDIS.utility.TARDISResourcePackChanger;
+import me.eccentric_nz.TARDIS.utility.TARDISStaticUtils;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
@@ -191,7 +193,7 @@ public class TARDISDoorWalkListener extends TARDISDoorListener implements Listen
                                         // toogle the door open/closed
                                         if (blockType.equals(Material.IRON_DOOR_BLOCK) || blockType.equals(Material.WOODEN_DOOR)) {
                                             if (doortype == 0 || doortype == 1) {
-                                                boolean open = plugin.getUtils().isOpen(block, dd);
+                                                boolean open = TARDISStaticUtils.isOpen(block, dd);
                                                 if (!material.equals(m) && doortype == 0 && !open) {
                                                     // must use key to open the outer door
                                                     String[] split = plugin.getRecipesConfig().getString("shaped.Sonic Screwdriver.result").split(":");
@@ -298,7 +300,7 @@ public class TARDISDoorWalkListener extends TARDISDoorListener implements Listen
                                     userTP = false;
                                 }
                                 // get players direction
-                                COMPASS pd = COMPASS.valueOf(plugin.getUtils().getPlayersDirection(player, false));
+                                COMPASS pd = COMPASS.valueOf(TARDISStaticUtils.getPlayersDirection(player, false));
                                 // get the other door direction
                                 final COMPASS d;
                                 HashMap<String, Object> other = new HashMap<String, Object>();
@@ -325,7 +327,7 @@ public class TARDISDoorWalkListener extends TARDISDoorListener implements Listen
                                         door_bottom = (door.isTopHalf()) ? block.getRelative(BlockFace.DOWN) : block;
                                         boolean opened = isDoorOpen(door_bottom.getData(), dd);
                                         if (opened && preset.hasDoor()) {
-                                            exitLoc = plugin.getUtils().getLocationFromDB(rse.getDoor_location(), 0.0f, 0.0f);
+                                            exitLoc = TARDISLocationGetters.getLocationFromDB(rse.getDoor_location(), 0.0f, 0.0f);
                                         } else {
                                             exitLoc = new Location(rsc.getWorld(), rsc.getX(), rsc.getY(), rsc.getZ(), yaw, pitch);
                                         }
@@ -462,7 +464,7 @@ public class TARDISDoorWalkListener extends TARDISDoorListener implements Listen
                                             return;
                                         }
                                         COMPASS ibdd = ibdl.getD();
-                                        COMPASS ipd = COMPASS.valueOf(plugin.getUtils().getPlayersDirection(player, true));
+                                        COMPASS ipd = COMPASS.valueOf(TARDISStaticUtils.getPlayersDirection(player, true));
                                         if (!ibdd.equals(ipd)) {
                                             yaw += adjustYaw(ipd, ibdd) + 180F;
                                         }
@@ -507,7 +509,7 @@ public class TARDISDoorWalkListener extends TARDISDoorListener implements Listen
                                             return;
                                         }
                                         COMPASS obdd = obdl.getD();
-                                        COMPASS opd = COMPASS.valueOf(plugin.getUtils().getPlayersDirection(player, false));
+                                        COMPASS opd = COMPASS.valueOf(TARDISStaticUtils.getPlayersDirection(player, false));
                                         if (!obdd.equals(opd)) {
                                             yaw += adjustYaw(opd, obdd);
                                         }

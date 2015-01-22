@@ -86,15 +86,17 @@ public class TARDISPortalPersister {
                     String t = rs.getString("teleport");
                     // check for null worlds
                     if (!p.contains("null") && !t.contains("null")) {
-                        Location portal = plugin.getUtils().getLocationFromBukkitString(p);
-                        Location teleport = plugin.getUtils().getLocationFromBukkitString(t);
-                        COMPASS direction = COMPASS.valueOf(rs.getString("direction"));
-                        TARDISTeleportLocation ttpl = new TARDISTeleportLocation();
-                        ttpl.setLocation(teleport);
-                        ttpl.setDirection(direction);
-                        ttpl.setTardisId(rs.getInt("tardis_id"));
-                        plugin.getTrackerKeeper().getPortals().put(portal, ttpl);
-                        count++;
+                        Location portal = plugin.getLocationUtils().getLocationFromBukkitString(p);
+                        Location teleport = plugin.getLocationUtils().getLocationFromBukkitString(t);
+                        if (portal != null && teleport != null) {
+                            COMPASS direction = COMPASS.valueOf(rs.getString("direction"));
+                            TARDISTeleportLocation ttpl = new TARDISTeleportLocation();
+                            ttpl.setLocation(teleport);
+                            ttpl.setDirection(direction);
+                            ttpl.setTardisId(rs.getInt("tardis_id"));
+                            plugin.getTrackerKeeper().getPortals().put(portal, ttpl);
+                            count++;
+                        }
                     }
                 }
             }

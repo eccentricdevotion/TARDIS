@@ -23,6 +23,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.utility.TARDISLocationGetters;
 
 /**
  * The sonic screwdriver is a highly versatile tool used by many, but not all,
@@ -105,10 +106,10 @@ public class ResultSetRepeaters {
     public byte[] getRepeaters() {
         if (locations.size() == 4) {
             // get repeater settings
-            diodes[0] = plugin.getUtils().getLocationFromDB(locations.get(0), 0, 0).getBlock().getData();
-            diodes[1] = plugin.getUtils().getLocationFromDB(locations.get(1), 0, 0).getBlock().getData();
-            diodes[2] = plugin.getUtils().getLocationFromDB(locations.get(2), 0, 0).getBlock().getData();
-            diodes[3] = plugin.getUtils().getLocationFromDB(locations.get(3), 0, 0).getBlock().getData();
+            diodes[0] = TARDISLocationGetters.getLocationFromDB(locations.get(0), 0, 0).getBlock().getData();
+            diodes[1] = TARDISLocationGetters.getLocationFromDB(locations.get(1), 0, 0).getBlock().getData();
+            diodes[2] = TARDISLocationGetters.getLocationFromDB(locations.get(2), 0, 0).getBlock().getData();
+            diodes[3] = TARDISLocationGetters.getLocationFromDB(locations.get(3), 0, 0).getBlock().getData();
         } else {
             diodes[0] = (byte) -1;
         }

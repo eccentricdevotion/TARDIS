@@ -43,6 +43,7 @@ import me.eccentric_nz.TARDIS.move.TARDISBlackWoolToggler;
 import me.eccentric_nz.TARDIS.rooms.TARDISExteriorRenderer;
 import me.eccentric_nz.TARDIS.travel.TARDISTemporalLocatorInventory;
 import me.eccentric_nz.TARDIS.travel.TARDISTerminalInventory;
+import me.eccentric_nz.TARDIS.utility.TARDISLocationGetters;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -314,7 +315,7 @@ public class TARDISButtonListener implements Listener {
             TARDISMessage.send(player, "NOT_ENOUGH_ZERO_ENERGY");
             return;
         }
-        final Location zero = plugin.getUtils().getLocationFromDB(z, 0.0F, 0.0F);
+        final Location zero = TARDISLocationGetters.getLocationFromDB(z, 0.0F, 0.0F);
         if (zero != null) {
             TARDISMessage.send(player, "ZERO_READY");
             plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {

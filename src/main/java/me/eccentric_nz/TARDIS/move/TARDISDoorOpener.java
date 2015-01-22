@@ -27,6 +27,7 @@ import me.eccentric_nz.TARDIS.database.ResultSetPortals;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
 import me.eccentric_nz.TARDIS.enumeration.PRESET;
+import me.eccentric_nz.TARDIS.utility.TARDISLocationGetters;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
@@ -135,7 +136,7 @@ public class TARDISDoorOpener {
                 ResultSetPortals rsp = new ResultSetPortals(plugin, id);
                 rsp.resultSet();
                 for (HashMap<String, String> map : rsp.getData()) {
-                    Location tmp_loc = plugin.getUtils().getLocationFromDB(map.get("door_location"), 0.0f, 0.0f);
+                    Location tmp_loc = TARDISLocationGetters.getLocationFromDB(map.get("door_location"), 0.0f, 0.0f);
                     COMPASS tmp_direction = COMPASS.valueOf(map.get("door_direction"));
                     if (map.get("door_type").equals("1")) {
                         // clone it because we're going to change it!

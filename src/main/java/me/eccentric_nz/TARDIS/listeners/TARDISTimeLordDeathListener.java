@@ -295,7 +295,7 @@ public class TARDISTimeLordDeathListener implements Listener {
                                 plugin.getTrackerKeeper().getInSiegeMode().add(id);
                                 set.put("siege_on", 1);
                                 if (plugin.getConfig().getInt("siege.breeding") > 0 || plugin.getConfig().getInt("siege.growth") > 0) {
-                                    Chunk c = plugin.getUtils().getTARDISChunk(id);
+                                    Chunk c = plugin.getLocationUtils().getTARDISChunk(id);
                                     TARDISSiegeArea tsa = new TARDISSiegeArea(id, c);
                                     if (plugin.getConfig().getInt("siege.breeding") > 0) {
                                         List<TARDISSiegeArea> breeding_areas = plugin.getTrackerKeeper().getSiegeBreedingAreas().get(c.getWorld().getName());

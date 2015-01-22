@@ -27,6 +27,7 @@ import me.eccentric_nz.TARDIS.database.ResultSetLamps;
 import me.eccentric_nz.TARDIS.database.ResultSetPlayerPrefs;
 import me.eccentric_nz.TARDIS.database.ResultSetTravellers;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
+import me.eccentric_nz.TARDIS.utility.TARDISLocationGetters;
 import org.bukkit.Location;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
@@ -119,7 +120,7 @@ public class TARDISMalfunction {
             // flicker lights
             ArrayList<HashMap<String, String>> data = rsl.getData();
             for (HashMap<String, String> map : data) {
-                Location loc = plugin.getUtils().getLocationFromDB(map.get("location"), 0.0F, 0.0F);
+                Location loc = TARDISLocationGetters.getLocationFromDB(map.get("location"), 0.0F, 0.0F);
                 lamps.add(loc.getBlock());
             }
             // get player prefs

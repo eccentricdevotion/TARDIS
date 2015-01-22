@@ -30,6 +30,7 @@ import me.eccentric_nz.TARDIS.desktop.TARDISUpgradeData;
 import me.eccentric_nz.TARDIS.desktop.TARDISWallFloorRunnable;
 import me.eccentric_nz.TARDIS.enumeration.SCHEMATIC;
 import me.eccentric_nz.TARDIS.rooms.TARDISWalls.Pair;
+import me.eccentric_nz.TARDIS.utility.TARDISLocationGetters;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import org.bukkit.Chunk;
 import org.bukkit.Location;
@@ -193,7 +194,7 @@ public class TARDISSiegeMode {
                         if (ent instanceof Creeper) {
                             // check it is  not the Artron Capacitor Creeper
                             Location cl = ent.getLocation();
-                            Location dbl = plugin.getUtils().getLocationFromDB(rs.getCreeper(), 0.0f, 0.0f);
+                            Location dbl = TARDISLocationGetters.getLocationFromDB(rs.getCreeper(), 0.0f, 0.0f);
                             if (cl.getBlockX() == dbl.getBlockX() && cl.getBlockY() == dbl.getBlockY() && cl.getBlockZ() == dbl.getBlockZ()) {
                                 continue;
                             }
@@ -203,7 +204,7 @@ public class TARDISSiegeMode {
                 }
             }
             if (plugin.getConfig().getInt("siege.breeding") > 0 || plugin.getConfig().getInt("siege.growth") > 0) {
-                Chunk c = plugin.getUtils().getTARDISChunk(id);
+                Chunk c = plugin.getLocationUtils().getTARDISChunk(id);
                 TARDISSiegeArea tsa = new TARDISSiegeArea(id, c);
                 if (plugin.getConfig().getInt("siege.breeding") > 0) {
                     List<TARDISSiegeArea> breeding_areas = plugin.getTrackerKeeper().getSiegeBreedingAreas().get(c.getWorld().getName());

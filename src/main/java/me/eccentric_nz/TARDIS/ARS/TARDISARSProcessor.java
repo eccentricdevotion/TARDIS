@@ -46,7 +46,7 @@ public class TARDISARSProcessor {
     public boolean compare3DArray(int[][][] start, int[][][] end) {
         changed = new HashMap<TARDISARSSlot, ARS>();
         jettison = new HashMap<TARDISARSJettison, ARS>();
-        Chunk c = plugin.getUtils().getTARDISChunk(id);
+        Chunk c = plugin.getLocationUtils().getTARDISChunk(id);
         for (int l = 0; l < 3; l++) {
             for (int x = 0; x < 9; x++) {
                 for (int z = 0; z < 9; z++) {
