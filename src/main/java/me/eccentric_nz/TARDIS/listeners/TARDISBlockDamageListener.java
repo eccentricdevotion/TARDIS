@@ -45,12 +45,10 @@ import org.bukkit.inventory.ItemStack;
 public class TARDISBlockDamageListener implements Listener {
 
     private final TARDIS plugin;
-    private final boolean HADS;
     private final List<Material> doors = Arrays.asList(Material.IRON_DOOR_BLOCK, Material.WOODEN_DOOR, Material.TRAP_DOOR);
 
     public TARDISBlockDamageListener(TARDIS plugin) {
         this.plugin = plugin;
-        this.HADS = this.plugin.getConfig().getBoolean("allow.hads");
     }
 
     /**
@@ -82,7 +80,7 @@ public class TARDISBlockDamageListener implements Listener {
             }
             boolean m = false;
             boolean isDoor = false;
-            if (HADS && !plugin.getTrackerKeeper().getInVortex().contains(id) && isOwnerOnline(id)) {
+            if (plugin.getConfig().getBoolean("allow.hads") && !plugin.getTrackerKeeper().getInVortex().contains(id) && isOwnerOnline(id)) {
                 if (doors.contains(b.getType())) {
                     if (isOwner(id, p.getUniqueId().toString())) {
                         isDoor = true;
