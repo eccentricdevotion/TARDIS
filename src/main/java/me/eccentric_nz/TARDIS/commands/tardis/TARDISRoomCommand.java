@@ -181,7 +181,7 @@ public class TARDISRoomCommand {
         if (room.equals("ZERO")) {
             return new TARDISZeroRoomBuilder(plugin).build(player, tips, id);
         }
-        TARDISSeedData sd = new TARDISSeedData(plugin);
+        TARDISSeedData sd = new TARDISSeedData();
         sd.setId(id);
         sd.setRoom(room);
         sd.setSchematic(schm);

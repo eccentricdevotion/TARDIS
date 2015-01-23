@@ -16,7 +16,6 @@
  */
 package me.eccentric_nz.TARDIS.rooms;
 
-import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.enumeration.SCHEMATIC;
 import me.eccentric_nz.TARDIS.utility.TARDISNumberParsers;
 
@@ -26,7 +25,6 @@ import me.eccentric_nz.TARDIS.utility.TARDISNumberParsers;
  */
 public class TARDISSeedData {
 
-    private final TARDIS plugin;
     private int id;
     private SCHEMATIC schematic;
     private String room;
@@ -35,10 +33,6 @@ public class TARDISSeedData {
     private int minz;
     private int maxz;
     private boolean ARS;
-
-    public TARDISSeedData(TARDIS plugin) {
-        this.plugin = plugin;
-    }
 
     public int getId() {
         return id;

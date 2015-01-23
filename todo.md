@@ -1,6 +1,6 @@
 #TODO
 
-##Current version `3.2.9`
+##Current version `3.2.10`
 1. Fix bugs
 
 ##Upcoming version `3.3`
