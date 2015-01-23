@@ -381,7 +381,7 @@
         <dependency>
             <groupId>multiworld</groupId>
             <artifactId>MultiWorld</artifactId>
-            <version>5.2.5</version>
+            <version>5.2.6</version>
             <type>jar</type>
         </dependency>
         <dependency>
