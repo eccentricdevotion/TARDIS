@@ -63,7 +63,8 @@ public class TARDISAreaCommands implements CommandExecutor {
         // check there is the right number of arguments
         if (cmd.getName().equalsIgnoreCase("tardisarea")) {
             if (args.length == 0) {
-                return false;
+                new TARDISCommandHelper(plugin).getCommand("tardisarea", sender);
+                return true;
             }
             if (player == null) {
                 TARDISMessage.send(sender, "CMD_PLAYER");

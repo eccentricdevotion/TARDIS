@@ -70,7 +70,8 @@ public class TARDISNetherPortalCommand implements CommandExecutor {
             if (player == null) {
                 // must provide coords
                 if (args.length < 4) {
-                    return false;
+                    new TARDISCommandHelper(plugin).getCommand("tardisnetherportal", sender);
+                    return true;
                 }
                 int x = TARDISNumberParsers.parseInt(args[0]);
                 int y = TARDISNumberParsers.parseInt(args[1]);

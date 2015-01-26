@@ -58,7 +58,8 @@ public class TARDISTextureCommands implements CommandExecutor {
         }
         if (cmd.getName().equalsIgnoreCase("tardistexture")) {
             if (args.length == 0) {
-                return false;
+                new TARDISCommandHelper(plugin).getCommand("tardistexture", sender);
+                return true;
             }
             String pref = args[0].toLowerCase(Locale.ENGLISH);
             if (!firstArgs.contains(pref)) {

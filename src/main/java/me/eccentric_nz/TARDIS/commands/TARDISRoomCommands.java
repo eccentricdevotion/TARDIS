@@ -70,8 +70,8 @@ public class TARDISRoomCommands implements CommandExecutor {
     public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
         if (cmd.getName().equalsIgnoreCase("tardisroom")) {
             if (args.length < 2) {
-                TARDISMessage.send(sender, "TOO_FEW_ARGS");
-                return false;
+                new TARDISCommandHelper(plugin).getCommand("tardisroom", sender);
+                return true;
             }
             if (args[0].toLowerCase(Locale.ENGLISH).equals("blocks")) {
                 String name = args[1].toUpperCase(Locale.ENGLISH);

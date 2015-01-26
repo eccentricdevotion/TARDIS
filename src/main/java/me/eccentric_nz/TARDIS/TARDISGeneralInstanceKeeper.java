@@ -16,6 +16,9 @@
  */
 package me.eccentric_nz.TARDIS;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -23,6 +26,9 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.UUID;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import me.eccentric_nz.TARDIS.commands.TARDISCommandHelper;
 import me.eccentric_nz.TARDIS.commands.TARDISTravelCommands;
 import me.eccentric_nz.TARDIS.commands.admin.TARDISAdminCommands;
 import me.eccentric_nz.TARDIS.listeners.TARDISButtonListener;
@@ -39,6 +45,8 @@ import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
+import org.bukkit.configuration.InvalidConfigurationException;
+import org.bukkit.configuration.file.YamlConfiguration;
 
 /**
  * Keeps instances of various classes, maps and lists for easy access in other
@@ -80,6 +88,7 @@ public class TARDISGeneralInstanceKeeper {
     private final List<String> sonicWires = new ArrayList<String>();
     private final TARDIS plugin;
     private final TARDISUUIDCache UUIDCache;
+    private final YamlConfiguration pluginYAML;
 
     public TARDISGeneralInstanceKeeper(TARDIS plugin) {
         this.plugin = plugin;
@@ -88,6 +97,16 @@ public class TARDISGeneralInstanceKeeper {
         this.UUIDCache = new TARDISUUIDCache(plugin);
         this.doorListener = new TARDISDoorListener(plugin);
         setRechargers();
+        InputStream is = plugin.getResource("plugin.yml");
+        InputStreamReader reader = new InputStreamReader(is);
+        this.pluginYAML = new YamlConfiguration();
+        try {
+            this.pluginYAML.load(reader);
+        } catch (IOException ex) {
+            Logger.getLogger(TARDISCommandHelper.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (InvalidConfigurationException ex) {
+            Logger.getLogger(TARDISCommandHelper.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     public List<String> getQuotes() {
@@ -252,6 +271,10 @@ public class TARDISGeneralInstanceKeeper {
 
     public List<Location> getRechargers() {
         return rechargers;
+    }
+
+    public YamlConfiguration getPluginYAML() {
+        return pluginYAML;
     }
 
     private void setRechargers() {

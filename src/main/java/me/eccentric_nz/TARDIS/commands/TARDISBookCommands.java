@@ -63,7 +63,8 @@ public class TARDISBookCommands extends TARDISCompleter implements CommandExecut
         // If the player typed /tardisbook then do the following...
         if (cmd.getName().equalsIgnoreCase("tardisbook")) {
             if (args.length < 1) {
-                return false;
+                new TARDISCommandHelper(plugin).getCommand("tardisbook", sender);
+                return true;
             }
             if (sender.hasPermission("tardis.book")) {
                 String first = args[0].toLowerCase(Locale.ENGLISH);

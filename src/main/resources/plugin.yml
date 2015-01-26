@@ -267,15 +267,15 @@ permissions:
 commands:
   tardis:
     aliases: [tt,ttardis,/tardis,timelord]
-    description: Manipulate TARDISs (TARDII?) with various arguments (list, save, find, help, etc). Type /TARDIS help - to see more.
+    description: Manipulate TARDISs (TARDII?) with various arguments (list, save, find, help, etc).
     chameleon:
       description: Toggle the TARDIS Chameleon Circuit on and off.
       usage: /<command> chameleon [on|off|short|reset]
       permission: tardis.timetravel
       permission-message: You don't have the permission <permission> to use this command
     list:
-      description: List saved time travel locations.
-      usage: /<command> list
+      description: List saved time travel locations, companions, areas and rechargers.
+      usage: /<command> list [saves|companions|areas|rechargers]
       permission: tardis.list
       permission-message: You don't have the permission <permission> to use this command
     save:
@@ -349,6 +349,7 @@ commands:
     exterminate:
       description: Delete your TARDIS.
       usage: /<command> exterminate
+      permission: tardis.exterminate
     hide:
       description: Hide the TARDIS Police Box.
       usage: /<command> hide
@@ -406,9 +407,11 @@ commands:
     player:
       description: Time travel to the specified player.
       usage: /<command> [player]
+      permission: tardis.timetravel.player
     coords:
       description: Time travel to the specified coordinates.
       usage: /<command> [world x y z]
+      permission: tardis.timetravel.location
     dest:
       description: Time travel to a saved destination.
       usage: /<command> dest [save name]
@@ -418,6 +421,11 @@ commands:
     biome:
       description: Time travel to the closest specified biome type.
       usage: /<command> biome [biome type]
+      permission: tardis.timetravel.biome
+    cave:
+      description: Time travel to an underground cave.
+      usage: /<command> cave
+      permission: tardis.timetravel.cave
   tardisadmin:
     aliases: tadmin
     description: Set TARDIS configuration options.
@@ -436,21 +444,29 @@ commands:
     usage: /<command> add [name] or /<command> [name] [boolean|integer|string] or /<command> blocks [name|save] or /<command> required [room]
     permission: tardis.create
     permission-message: You don't have the permission <permission> to use this command
+    required:
+      description: List the blocks needed to grow a room.
+      usage: /<command> required [room name]
     add:
       description: Add a new custom room schematic.
       usage: /<command> add [schematic name]
+      permission: tardis.admin
     seed:
       description: Set the seed block of a custom room.
       usage: /<command> [schematic name] [material]
+      permission: tardis.admin
     cost:
       description: Set the cost of a custom room.
       usage: /<command> add [schematic name]
+      permission: tardis.admin
     offset:
       description: Set the offset of a custom room.
       usage: /<command> [schematic name] [negative amount]
+      permission: tardis.admin
     enabled:
       description: Set the custom room as active/inactive.
       usage: /<command> [schematic name] [true|false]
+      permission: tardis.admin
   tardisprefs:
     aliases: tprefs
     description: Set player preferences.
@@ -601,6 +617,15 @@ commands:
     aliases: [tschematic, ts]
     description: Save, load or paste a TARDIS schematic.
     usage: /<command> [save|load|paste] [name]
+    save:
+      description: Save a TARDIS schematic.
+      usage: /<command> save [name]
+    load:
+      description: Load a TARDIS schematic.
+      usage: /<command> load [name]
+    paste:
+      description: Paste a loaded TARDIS schematic.
+      usage: /<command> paste
     permission: tardis.admin
     permission-message: You don't have the permission <permission> to use this command
   tardisnetherportal:
@@ -609,3 +634,7 @@ commands:
     usage: /<command> [x] [y] [z] [overworld|nether]
     permission: tardis.help
     permission-message: You don't have the permission <permission> to use this command
+  'tardis?':
+    aliases: ['t?', tardishelp]
+    description: Get help with TARDIS commands.
+    usage: /<command> [command] [argument]

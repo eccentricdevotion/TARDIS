@@ -21,6 +21,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.commands.TARDISCommandHelper;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetPlayerPrefs;
 import me.eccentric_nz.TARDIS.sonic.TARDISSonicMenuInventory;
@@ -89,7 +90,8 @@ public class TARDISPrefsCommands implements CommandExecutor {
         // check there is the right number of arguments
         if (cmd.getName().equalsIgnoreCase("tardisprefs")) {
             if (args.length == 0) {
-                return false;
+                new TARDISCommandHelper(plugin).getCommand("tardisprefs", sender);
+                return true;
             }
             if (player == null) {
                 TARDISMessage.send(sender, "CMD_PLAYER");

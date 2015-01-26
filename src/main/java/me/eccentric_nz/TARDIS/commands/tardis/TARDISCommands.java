@@ -22,8 +22,8 @@ import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.advanced.TARDISDiskWriterCommand;
 import me.eccentric_nz.TARDIS.arch.TARDISArchCommand;
 import me.eccentric_nz.TARDIS.chatGUI.TARDISUpdateChatGUI;
+import me.eccentric_nz.TARDIS.commands.TARDISCommandHelper;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
-import me.eccentric_nz.TARDIS.enumeration.CMDS;
 import me.eccentric_nz.TARDIS.enumeration.TARDIS_COMMAND;
 import me.eccentric_nz.TARDIS.noteblock.TARDISPlayThemeCommand;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
@@ -61,7 +61,7 @@ public class TARDISCommands implements CommandExecutor {
                 player = (Player) sender;
             }
             if (args.length == 0) {
-                sender.sendMessage(CMDS.COMMANDS.getHelp().split("\n"));
+                new TARDISCommandHelper(plugin).getCommand("", sender);
                 return true;
             }
             // the command list - first argument MUST appear here!
@@ -74,6 +74,9 @@ public class TARDISCommands implements CommandExecutor {
             }
             if (args[0].equalsIgnoreCase("version")) {
                 return new TARDISVersionCommand(plugin).displayVersion(sender);
+            }
+            if (args[0].equalsIgnoreCase("help")) {
+                return new TARDISHelpCommand(plugin).showHelp(sender, args);
             }
             if (player == null) {
                 TARDISMessage.send(sender, "CMD_PLAYER");
@@ -135,9 +138,6 @@ public class TARDISCommands implements CommandExecutor {
                 }
                 if (args[0].equalsIgnoreCase("find")) {
                     return new TARDISFindCommand(plugin).findTARDIS(player, args);
-                }
-                if (args[0].equalsIgnoreCase("help")) {
-                    return new TARDISHelpCommand(plugin).showHelp(player, args);
                 }
                 if (args[0].equalsIgnoreCase("hide")) {
                     return new TARDISHideCommand(plugin).hide(player);

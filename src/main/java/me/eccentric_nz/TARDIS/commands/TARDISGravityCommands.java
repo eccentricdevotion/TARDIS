@@ -87,7 +87,8 @@ public class TARDISGravityCommands implements CommandExecutor {
             }
             // check there is the right number of arguments
             if (args.length < 1) {
-                return false;
+                new TARDISCommandHelper(plugin).getCommand("tardisgravity", sender);
+                return true;
             }
             String dir = args[0].toLowerCase(Locale.ENGLISH);
             if (directions.contains(dir)) {

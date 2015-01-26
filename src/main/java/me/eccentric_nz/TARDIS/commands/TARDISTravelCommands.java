@@ -93,8 +93,8 @@ public class TARDISTravelCommands implements CommandExecutor {
             }
             if (player.hasPermission("tardis.timetravel")) {
                 if (args.length < 1) {
-                    TARDISMessage.send(player, "TOO_FEW_ARGS");
-                    return false;
+                    new TARDISCommandHelper(plugin).getCommand("tardistravel", sender);
+                    return true;
                 }
                 QueryFactory qf = new QueryFactory(plugin);
                 TARDISTimeTravel tt = new TARDISTimeTravel(plugin);
