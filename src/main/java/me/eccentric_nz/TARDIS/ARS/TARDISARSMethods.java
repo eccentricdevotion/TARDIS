@@ -526,21 +526,13 @@ public class TARDISARSMethods {
         return hasRequired;
     }
 
-    public int getTardisId(String uuid, boolean isOP) {
+    public int getTardisId(String uuid) {
         int id = 0;
         HashMap<String, Object> where = new HashMap<String, Object>();
-        if (isOP) {
-            where.put("uuid", uuid);
-            ResultSetTravellers rs = new ResultSetTravellers(plugin, where, false);
-            if (rs.resultSet()) {
-                id = rs.getTardis_id();
-            }
-        } else {
-            where.put("uuid", uuid);
-            ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);
-            if (rs.resultSet()) {
-                id = rs.getTardis_id();
-            }
+        where.put("uuid", uuid);
+        ResultSetTravellers rs = new ResultSetTravellers(plugin, where, false);
+        if (rs.resultSet()) {
+            id = rs.getTardis_id();
         }
         return id;
     }
