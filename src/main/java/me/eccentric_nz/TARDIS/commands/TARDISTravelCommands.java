@@ -450,10 +450,6 @@ public class TARDISTravelCommands implements CommandExecutor {
                     }
                     if (args.length == 2 && args[0].equalsIgnoreCase("area")) {
                         // we're thinking this is admin defined area name
-                        if (plugin.getConfig().getString("preferences.difficulty").equals("hard") && mustUseAdvanced.contains(args[0].toLowerCase()) && !plugin.getUtils().inGracePeriod(player, false)) {
-                            TARDISMessage.send(player, "ADV_AREA");
-                            return true;
-                        }
                         HashMap<String, Object> wherea = new HashMap<String, Object>();
                         wherea.put("area_name", args[1]);
                         ResultSetAreas rsa = new ResultSetAreas(plugin, wherea, false);
@@ -463,6 +459,10 @@ public class TARDISTravelCommands implements CommandExecutor {
                         }
                         if ((!player.hasPermission("tardis.area." + args[1]) && !player.hasPermission("tardis.area.*")) || (!player.isPermissionSet("tardis.area." + args[1]) && !player.isPermissionSet("tardis.area.*"))) {
                             TARDISMessage.send(player, "TRAVEL_NO_AREA_PERM", args[1]);
+                            return true;
+                        }
+                        if (plugin.getConfig().getString("preferences.difficulty").equals("hard") && mustUseAdvanced.contains(args[0].toLowerCase()) && !plugin.getUtils().inGracePeriod(player, false)) {
+                            TARDISMessage.send(player, "ADV_AREA");
                             return true;
                         }
                         Location l = plugin.getTardisArea().getNextSpot(rsa.getArea_name());

@@ -20,7 +20,6 @@ import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.desktop.TARDISThemeInventory;
 import me.eccentric_nz.TARDIS.desktop.TARDISUpgradeData;
 import me.eccentric_nz.TARDIS.enumeration.SCHEMATIC;
-import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
@@ -44,11 +43,6 @@ public class TARDISThemeButton {
     }
 
     public void clickButton() {
-        // check they have permission to change the desktop
-        if (!player.hasPermission("tardis.upgrade")) {
-            TARDISMessage.send(player, "NO_PERM_UPGRADE");
-            return;
-        }
         // get player's current console
         TARDISUpgradeData tud = new TARDISUpgradeData();
         tud.setPrevious(current_console);

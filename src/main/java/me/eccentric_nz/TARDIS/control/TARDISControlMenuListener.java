@@ -190,13 +190,13 @@ public class TARDISControlMenuListener extends TARDISMenuListener implements Lis
                                         TARDISMessage.send(player, "ROOM_OWN_WORLD");
                                         return;
                                     }
-                                    if (tcc != null && !tcc.hasARS() && !plugin.getUtils().inGracePeriod(player, true)) {
-                                        TARDISMessage.send(player, "ARS_MISSING");
-                                        return;
-                                    }
                                     // check they have permission to grow rooms
                                     if (!player.hasPermission("tardis.ars")) {
                                         TARDISMessage.send(player, "NO_PERM_ROOMS");
+                                        return;
+                                    }
+                                    if (tcc != null && !tcc.hasARS() && !plugin.getUtils().inGracePeriod(player, true)) {
+                                        TARDISMessage.send(player, "ARS_MISSING");
                                         return;
                                     }
                                     ItemStack[] tars = new TARDISARSInventory(plugin).getARS();
@@ -210,16 +210,18 @@ public class TARDISControlMenuListener extends TARDISMenuListener implements Lis
                                     break;
                                 case 12:
                                     // temporal
+                                    if (!player.hasPermission("tardis.temporal")) {
+                                        TARDISMessage.send(player, "NO_PERM_TEMPORAL");
+                                        return;
+                                    }
                                     if (tcc != null && !tcc.hasTemporal() && !plugin.getUtils().inGracePeriod(player, false)) {
                                         TARDISMessage.send(player, "TEMP_MISSING");
                                         return;
                                     }
-                                    if (player.hasPermission("tardis.temporal")) {
-                                        ItemStack[] clocks = new TARDISTemporalLocatorInventory(plugin).getTemporal();
-                                        Inventory tmpl = plugin.getServer().createInventory(player, 27, "§4Temporal Locator");
-                                        tmpl.setContents(clocks);
-                                        player.openInventory(tmpl);
-                                    }
+                                    ItemStack[] clocks = new TARDISTemporalLocatorInventory(plugin).getTemporal();
+                                    Inventory tmpl = plugin.getServer().createInventory(player, 27, "§4Temporal Locator");
+                                    tmpl.setContents(clocks);
+                                    player.openInventory(tmpl);
                                     break;
                                 case 13:
                                     // TIS

@@ -5,6 +5,8 @@
 
 ##Upcoming version `3.3`
 1. Junk TARDIS
+2. Player configurable choice of (2) blocks that are changed during siege mode engagement
+   * Should default to wall / floor if not configured
 
 ##Future version `4+`
 * SpongeAPI

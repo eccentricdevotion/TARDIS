@@ -195,17 +195,26 @@ public class TARDISButtonListener implements Listener {
                                         TARDISMessage.send(player, "ROOM_OWN_WORLD");
                                         return;
                                     }
-                                    if (tcc != null && !tcc.hasARS() && !plugin.getUtils().inGracePeriod(player, true)) {
-                                        TARDISMessage.send(player, "ARS_MISSING");
-                                        return;
-                                    }
                                     if (player.isSneaking()) {
+                                        // check they have permission to change the desktop
+                                        if (!player.hasPermission("tardis.upgrade")) {
+                                            TARDISMessage.send(player, "NO_PERM_UPGRADE");
+                                            return;
+                                        }
+                                        if (tcc != null && !tcc.hasARS() && !plugin.getUtils().inGracePeriod(player, true)) {
+                                            TARDISMessage.send(player, "ARS_MISSING");
+                                            return;
+                                        }
                                         // upgrade menu
                                         new TARDISThemeButton(plugin, player, rs.getSchematic(), level).clickButton();
                                     } else {
                                         // check they have permission to grow rooms
                                         if (!player.hasPermission("tardis.ars")) {
                                             TARDISMessage.send(player, "NO_PERM_ROOMS");
+                                            return;
+                                        }
+                                        if (tcc != null && !tcc.hasARS() && !plugin.getUtils().inGracePeriod(player, true)) {
+                                            TARDISMessage.send(player, "ARS_MISSING");
                                             return;
                                         }
                                         ItemStack[] tars = new TARDISARSInventory(this.plugin).getARS();
@@ -215,16 +224,18 @@ public class TARDISButtonListener implements Listener {
                                     }
                                     break;
                                 case 11: // Temporal Locator sign
+                                    if (!player.hasPermission("tardis.temporal")) {
+                                        TARDISMessage.send(player, "NO_PERM_TEMPORAL");
+                                        return;
+                                    }
                                     if (tcc != null && !tcc.hasTemporal() && !plugin.getUtils().inGracePeriod(player, false)) {
                                         TARDISMessage.send(player, "TEMP_MISSING");
                                         return;
                                     }
-                                    if (player.hasPermission("tardis.temporal")) {
-                                        ItemStack[] clocks = new TARDISTemporalLocatorInventory(this.plugin).getTemporal();
-                                        Inventory tmpl = plugin.getServer().createInventory(player, 27, "§4Temporal Locator");
-                                        tmpl.setContents(clocks);
-                                        player.openInventory(tmpl);
-                                    }
+                                    ItemStack[] clocks = new TARDISTemporalLocatorInventory(this.plugin).getTemporal();
+                                    Inventory tmpl = plugin.getServer().createInventory(player, 27, "§4Temporal Locator");
+                                    tmpl.setContents(clocks);
+                                    player.openInventory(tmpl);
                                     break;
                                 case 12: // Control room light switch
                                     new TARDISLightSwitch(plugin, id, lights, player).flickSwitch();
