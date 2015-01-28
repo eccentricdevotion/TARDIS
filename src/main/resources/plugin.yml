@@ -266,7 +266,7 @@ permissions:
     default: op
 commands:
   tardis:
-    aliases: [tt,ttardis,/tardis,timelord]
+    aliases: [tt, ttardis, /tardis, timelord]
     description: Manipulate TARDISs (TARDII?) with various arguments (list, save, find, help, etc).
     chameleon:
       description: Toggle the TARDIS Chameleon Circuit on and off.
@@ -433,7 +433,7 @@ commands:
     permission: tardis.admin
     permission-message: You don't have the permission <permission> to use this command
   tardisgive:
-    aliases: [tgive]
+    aliases: tgive
     description: Give TARDIS items to a player.
     usage: /<command> [player] [item] [amount]
     permission: tardis.admin
@@ -537,7 +537,7 @@ commands:
       permission: tardis.admin
       permission-message: You don't have the permission <permission> to use this command
   tardisartron:
-    aliases: [tartron,artron]
+    aliases: [tartron, artron]
     description: Transfer Artron Energy to an Artron Storage Cell
     permission: tardis.store
     permission-message: You don't have the permission <permission> to use this command
@@ -578,7 +578,7 @@ commands:
     permission: tardis.book
     permission-message: You don't have the permission <permission> to use this command
   tardistexture:
-    aliases: [tardisresource,tresource,ttexture,trp,ttp]
+    aliases: [tardisresource, tresource, ttexture, trp, ttp]
     description: Set texure pack preferences.
     usage: /<command> [on|off|in|out] [url]
     permission: tardis.texture
@@ -629,9 +629,9 @@ commands:
     permission: tardis.admin
     permission-message: You don't have the permission <permission> to use this command
   tardisnetherportal:
-    aliases: [tnether, tnp, o2n, n2o]
+    aliases: [tnp, tnether, o2n, n2o]
     description: Get coordinates for linking Nether Portals.
-    usage: /<command> [x] [y] [z] [overworld|nether]
+    usage: /<command>
     permission: tardis.help
     permission-message: You don't have the permission <permission> to use this command
   'tardis?':
