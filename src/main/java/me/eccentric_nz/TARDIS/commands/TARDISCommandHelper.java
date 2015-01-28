@@ -40,6 +40,7 @@ public class TARDISCommandHelper {
         if (c.isEmpty()) {
             sender.sendMessage("------");
             sender.sendMessage(ChatColor.GOLD + "TARDIS commands - use " + ChatColor.AQUA + "/tardis? <command> " + ChatColor.RESET + "for more info");
+            sender.sendMessage(ChatColor.GRAY + "Online: " + ChatColor.RESET + "http://goo.gl/f8lWbP");
             for (String o : plugin.getGeneralKeeper().getPluginYAML().getConfigurationSection("commands").getKeys(false)) {
                 if (!o.equals("tardis?")) {
                     sender.sendMessage("/" + o);
@@ -72,6 +73,7 @@ public class TARDISCommandHelper {
                     Set<String> args = plugin.getGeneralKeeper().getPluginYAML().getConfigurationSection("commands." + root.toString()).getKeys(false);
                     if (args.size() > 5) {
                         sender.sendMessage(ChatColor.GOLD + "/" + root.toString() + ChatColor.RESET + " commands - use " + ChatColor.AQUA + "/tardis? " + root.toString() + " <argument> " + ChatColor.RESET + "for more info");
+                        sender.sendMessage(ChatColor.GRAY + "Online: " + ChatColor.RESET + root.URL);
                         sender.sendMessage(ChatColor.GRAY + "Description: " + ChatColor.RESET + plugin.getGeneralKeeper().getPluginYAML().getString("commands." + root.toString() + ".description"));
                         sender.sendMessage(ChatColor.GRAY + "Aliases: " + ChatColor.RESET + plugin.getGeneralKeeper().getPluginYAML().getString("commands." + root.toString() + ".aliases"));
                         for (String m : args) {
@@ -81,6 +83,7 @@ public class TARDISCommandHelper {
                         }
                     } else {
                         sender.sendMessage("Command: " + ChatColor.GOLD + "/" + root.toString());
+                        sender.sendMessage(ChatColor.GRAY + "Online: " + ChatColor.RESET + root.URL);
                         sender.sendMessage(ChatColor.GRAY + "Description: " + ChatColor.RESET + plugin.getGeneralKeeper().getPluginYAML().getString("commands." + root.toString() + ".description"));
                         sender.sendMessage(ChatColor.GRAY + "Aliases: " + ChatColor.RESET + plugin.getGeneralKeeper().getPluginYAML().getString("commands." + root.toString() + ".aliases"));
                         sender.sendMessage(ChatColor.GRAY + "Usage: " + ChatColor.RESET + plugin.getGeneralKeeper().getPluginYAML().getString("commands." + root.toString() + ".usage").replace("<command>", root.toString()));
@@ -96,6 +99,28 @@ public class TARDISCommandHelper {
 
     public static enum ROOT_COMMAND {
 
-        tardis, tardistravel, tardisadmin, tardisgive, tardisroom, tardisprefs, tardisarea, tardisartron, tardisbind, tardisgravity, tardisbook, tardistexture, tardisrecipe, tardissay, tardisremote, tardisschematic, tardisnetherportal
+        tardis("http://goo.gl/55uTqL"),
+        tardistravel("http://goo.gl/5rZR1T"),
+        tardisadmin("http://goo.gl/jWFyLX"),
+        tardisgive("http://goo.gl/LGQgy5"),
+        tardisroom("http://goo.gl/zh9RKK"),
+        tardisprefs("http://goo.gl/6k3RqD"),
+        tardisarea("http://goo.gl/AJM2i3"),
+        tardisartron("http://goo.gl/00ueX0"),
+        tardisbind("http://goo.gl/sedpK4"),
+        tardisgravity("http://goo.gl/vczqjf"),
+        tardisbook("http://goo.gl/BGPh3t"),
+        tardistexture("http://goo.gl/FPuxoa"),
+        tardisrecipe("http://goo.gl/WSHA6N"),
+        tardissay("http://goo.gl/iphcoM"),
+        tardisremote("http://goo.gl/8GpxUV"),
+        tardisschematic("http://goo.gl/BG4TtW"),
+        tardisnetherportal("http://goo.gl/B2M36Y");
+
+        final String URL;
+
+        private ROOT_COMMAND(String URL) {
+            this.URL = URL;
+        }
     }
 }
