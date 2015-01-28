@@ -16,6 +16,8 @@
  */
 package me.eccentric_nz.TARDIS.control;
 
+import com.onarandombox.MultiverseCore.MultiverseCore;
+import com.onarandombox.MultiverseCore.api.MultiverseWorld;
 import java.util.HashMap;
 import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
@@ -29,6 +31,7 @@ import me.eccentric_nz.TARDIS.travel.TARDISTimeTravel;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
+import org.bukkit.plugin.Plugin;
 
 /**
  *
@@ -143,7 +146,20 @@ public class TARDISRandomButton {
                     set.put("direction", dir.toString());
                     set.put("submarine", (plugin.getTrackerKeeper().getSubmarine().contains(id)) ? 1 : 0);
                     plugin.getTrackerKeeper().getSubmarine().remove(Integer.valueOf(id));
-                    String dchat = rand.getWorld().getName() + " at x: " + rand.getBlockX() + " y: " + rand.getBlockY() + " z: " + rand.getBlockZ();
+                    String worldname;
+                    if (plugin.getPM().isPluginEnabled("Multiverse-Core")) {
+                        Plugin mvplugin = plugin.getPM().getPlugin("Multiverse-Core");
+                        if (mvplugin instanceof MultiverseCore) {
+                            MultiverseCore mvc = (MultiverseCore) mvplugin;
+                            MultiverseWorld foundWorld = mvc.getMVWorldManager().getMVWorld(rand.getWorld());
+                            worldname = foundWorld.getAlias();
+                        } else {
+                            worldname = rand.getWorld().getName();
+                        }
+                    } else {
+                        worldname = rand.getWorld().getName();
+                    }
+                    String dchat = worldname + " at x: " + rand.getBlockX() + " y: " + rand.getBlockY() + " z: " + rand.getBlockZ();
                     boolean isTL = true;
                     if (comps != null && !comps.isEmpty()) {
                         String[] companions = comps.split(":");
