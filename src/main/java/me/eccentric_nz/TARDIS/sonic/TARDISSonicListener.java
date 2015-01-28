@@ -233,7 +233,7 @@ public class TARDISSonicListener implements Listener {
                         return;
                     }
                 }
-                if (action.equals(Action.RIGHT_CLICK_AIR) && player.isSneaking()) {
+                if (action.equals(Action.RIGHT_CLICK_AIR) && player.isSneaking() && player.hasPermission("tardis.sonic.standard")) {
                     Inventory ppm = plugin.getServer().createInventory(player, 27, "§4Player Prefs Menu");
                     ppm.setContents(new TARDISPrefsMenuInventory(plugin, player.getUniqueId()).getMenu());
                     player.openInventory(ppm);

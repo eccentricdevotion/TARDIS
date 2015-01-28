@@ -204,6 +204,9 @@ permissions:
   tardis.prune.bypass:
     description: Ignore /tardisadmin prune [days] command to remove unused TARDISes.
     default: op
+  tardis.sonic.standard:
+    description: Allows a player to use a basic Sonic Screwdriver.
+    default: op
   tardis.sonic.admin:
     description: Allows the sonic screwdriver to be upgraded with Admin abilities.
     default: op
