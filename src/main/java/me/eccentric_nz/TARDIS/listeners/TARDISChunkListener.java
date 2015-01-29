@@ -48,7 +48,7 @@ public class TARDISChunkListener implements Listener {
     @EventHandler(ignoreCancelled = true)
     public void onChunkUnload(ChunkUnloadEvent event) {
         Chunk c = event.getChunk();
-        if (plugin.getGeneralKeeper().getTardisChunkList().contains(c) || plugin.getGeneralKeeper().getRoomChunkList().contains(c)) {
+        if (plugin.getGeneralKeeper().getTardisChunkList().contains(c) || plugin.getGeneralKeeper().getRoomChunkList().contains(c) || plugin.getGeneralKeeper().getRailChunkList().contains(c)) {
             event.setCancelled(true);
         }
     }

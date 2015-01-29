@@ -161,10 +161,26 @@ public class TARDISMinecartListener implements Listener {
         // get minecart's speed
         double speed = minecart.getVelocity().length();
         // simulate teleport minecart...
-        Chunk thisChunk = trackLocation.getChunk();
+        final Chunk thisChunk = trackLocation.getChunk();
         while (!thisChunk.isLoaded()) {
             thisChunk.load();
         }
+        // keep the chunk loaded until the cart has finished unloading
+        plugin.getGeneralKeeper().getRailChunkList().add(thisChunk);
+        // determine how long to keep it loaded (at a rate of approx 1 item per 8 ticks)
+        long delay = 200L; // add an initial 10 second buffer
+        for (ItemStack is : inv) {
+            if (is != null) {
+                delay += is.getAmount() * 8L;
+            }
+        }
+        // start a delayed task to remove the chunk
+        plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
+            @Override
+            public void run() {
+                plugin.getGeneralKeeper().getRailChunkList().remove(thisChunk);
+            }
+        }, delay);
         minecart.remove();
         Entity e = trackLocation.getWorld().spawnEntity(trackLocation, cart);
         InventoryHolder smc = (InventoryHolder) e;
