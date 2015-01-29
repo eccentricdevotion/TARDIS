@@ -241,6 +241,11 @@ public class TARDIS extends JavaPlugin {
                 new TARDISCommandSetter(this).loadCommands();
                 startSound();
                 loadMultiverse();
+                if (!checkWorldGuardVersion()) {
+                    console.sendMessage(pluginName + ChatColor.RED + "This plugin requires WorldGuard to be v6.0.x or higher, disabling...");
+                    pm.disablePlugin(this);
+                    return;
+                }
                 loadWorldGuard();
                 loadPluginRespect();
                 loadBarAPI();
@@ -329,6 +334,18 @@ public class TARDIS extends JavaPlugin {
             v = "1.7.10";
         }
         return new Version(v);
+    }
+
+    private boolean checkWorldGuardVersion() {
+        if (pm.isPluginEnabled("WorldGuard")) {
+            Plugin worldguard = pm.getPlugin("WorldGuard");
+            Version minwgv = new Version("6.0.0");
+            String[] split = worldguard.getDescription().getVersion().split("-");
+            Version wgv = new Version(split[0]);
+            return (wgv.compareTo(minwgv) >= 0);
+        } else {
+            return true;
+        }
     }
 
     @Override
