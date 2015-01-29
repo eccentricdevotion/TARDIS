@@ -33,6 +33,7 @@ import static me.eccentric_nz.TARDIS.schematic.TARDISBannerSetter.setBanners;
 import me.eccentric_nz.TARDIS.utility.TARDISBlockSetters;
 import me.eccentric_nz.TARDIS.utility.TARDISLocationGetters;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
+import me.eccentric_nz.TARDIS.utility.TARDISNumberParsers;
 import org.bukkit.Chunk;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -578,6 +579,10 @@ public class TARDISRoomRunnable implements Runnable {
                 startx = resetx;
                 startz = resetz;
                 starty += 1;
+                int percent = TARDISNumberParsers.roundUp(level * 100, h);
+                if (percent > 0) {
+                    TARDISMessage.send(p, "ROOM_PERCENT", room, String.format("%d", percent));
+                }
                 level++;
             }
         }
