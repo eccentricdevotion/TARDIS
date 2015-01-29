@@ -3,6 +3,7 @@
 ##Current version `3.2.10`
 1. Fix bugs
 2. Debug and fix the guardian spawn location again
+3. Rail room chunk unloading
 
 ##Upcoming version `3.3`
 1. Junk TARDIS

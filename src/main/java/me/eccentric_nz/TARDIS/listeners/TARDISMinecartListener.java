@@ -33,10 +33,12 @@ import org.bukkit.block.BlockFace;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Vehicle;
+import org.bukkit.entity.minecart.HopperMinecart;
 import org.bukkit.entity.minecart.StorageMinecart;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.vehicle.VehicleBlockCollisionEvent;
+import org.bukkit.inventory.InventoryHolder;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.util.Vector;
 
@@ -54,12 +56,12 @@ public class TARDISMinecartListener implements Listener {
 
     @EventHandler(ignoreCancelled = true)
     public void onVehicleBlockCollision(VehicleBlockCollisionEvent event) {
-        if (event.getVehicle() instanceof StorageMinecart) {
+        if (event.getVehicle() instanceof StorageMinecart || event.getVehicle() instanceof HopperMinecart) {
             Block b = event.getBlock();
             Material mat = b.getType();
             if (mat.equals(Material.IRON_DOOR_BLOCK) || mat.equals(Material.FENCE)) {
                 Vehicle minecart = event.getVehicle();
-                ItemStack[] inv = ((StorageMinecart) minecart).getInventory().getContents();
+                ItemStack[] inv = ((InventoryHolder) minecart).getInventory().getContents();
                 String[] data = null;
                 UUID playerUUID = null;
                 int id = 0;
@@ -144,13 +146,13 @@ public class TARDISMinecartListener implements Listener {
                     } else {
                         plugin.getGeneralKeeper().getTardisChunkList().remove(w.getChunkAt(in_out));
                     }
-                    teleportMinecart(minecart, in_out, d, inv);
+                    teleportMinecart(minecart, in_out, d, inv, minecart.getType());
                 }
             }
         }
     }
 
-    private void teleportMinecart(Vehicle minecart, Location targetLocation, COMPASS d, ItemStack[] inv) {
+    private void teleportMinecart(Vehicle minecart, Location targetLocation, COMPASS d, ItemStack[] inv, EntityType cart) {
         // search for minecart tracks around the target waypoint
         Location trackLocation = findTrack(targetLocation);
         if (trackLocation == null) {
@@ -164,8 +166,8 @@ public class TARDISMinecartListener implements Listener {
             thisChunk.load();
         }
         minecart.remove();
-        Entity e = trackLocation.getWorld().spawnEntity(trackLocation, EntityType.MINECART_CHEST);
-        StorageMinecart smc = (StorageMinecart) e;
+        Entity e = trackLocation.getWorld().spawnEntity(trackLocation, cart);
+        InventoryHolder smc = (InventoryHolder) e;
         smc.getInventory().setContents(inv);
         // calculate new velocity
         switch (d) {
