@@ -43,7 +43,6 @@ import org.bukkit.entity.Creeper;
 import org.bukkit.entity.Enderman;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
-import org.bukkit.entity.Guardian;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.PigZombie;
 import org.bukkit.entity.Player;
@@ -148,7 +147,7 @@ public class TARDISMonsterRunnable implements Runnable {
                                     tm.setAge(e.getTicksLived());
                                     tm.setHealth(((LivingEntity) e).getHealth());
                                     tm.setName(((LivingEntity) e).getCustomName());
-                                    moveMonster(map.getValue(), tm, e);
+                                    moveMonster(map.getValue(), tm, e, type.equals(EntityType.GUARDIAN));
                                 }
                             }
                         }
@@ -160,8 +159,9 @@ public class TARDISMonsterRunnable implements Runnable {
                         if (r.nextInt(4) == 0 && canSpawn(map.getKey(), r.nextInt(4))) {
                             TARDISMonster rtm = new TARDISMonster();
                             // choose a random monster
-                            rtm.setType(random_monsters.get(r.nextInt(random_monsters.size())));
-                            moveMonster(map.getValue(), rtm, null);
+                            EntityType type = random_monsters.get(r.nextInt(random_monsters.size()));
+                            rtm.setType(type);
+                            moveMonster(map.getValue(), rtm, null, type.equals(EntityType.GUARDIAN));
                         }
                     }
                 }
@@ -183,9 +183,9 @@ public class TARDISMonsterRunnable implements Runnable {
         return !l.getWorld().getDifficulty().equals(Difficulty.PEACEFUL);
     }
 
-    private void moveMonster(TARDISTeleportLocation tpl, TARDISMonster m, Entity e) {
+    private void moveMonster(TARDISTeleportLocation tpl, TARDISMonster m, Entity e, boolean guardian) {
         Location loc = null;
-        if (e instanceof Guardian) {
+        if (guardian) {
             // check for pool
             HashMap<String, Object> wherea = new HashMap<String, Object>();
             wherea.put("tardis_id", tpl.getTardisId());
