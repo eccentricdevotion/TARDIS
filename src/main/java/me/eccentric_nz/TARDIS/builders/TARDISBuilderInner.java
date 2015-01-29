@@ -16,8 +16,6 @@
  */
 package me.eccentric_nz.TARDIS.builders;
 
-import com.onarandombox.MultiverseCore.MultiverseCore;
-import com.onarandombox.MultiverseCore.api.MultiverseWorld;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -45,7 +43,6 @@ import org.bukkit.block.Biome;
 import org.bukkit.block.Block;
 import org.bukkit.block.Sign;
 import org.bukkit.entity.Player;
-import org.bukkit.plugin.Plugin;
 
 /**
  * The TARDIS was prone to a number of technical faults, ranging from depleted
@@ -289,14 +286,8 @@ public class TARDISBuilderInner {
                             qf.doInsert("doors", setd);
                             // if create_worlds is true, set the world spawn
                             if (own_world) {
-                                if (plugin.getPM().isPluginEnabled("Multiverse-Core")) {
-                                    Plugin mvplugin = plugin.getPM().getPlugin("Multiverse-Core");
-                                    if (mvplugin instanceof MultiverseCore) {
-                                        MultiverseCore mvc = (MultiverseCore) mvplugin;
-                                        MultiverseWorld foundWorld = mvc.getMVWorldManager().getMVWorld(world.getName());
-                                        Location spawn = new Location(world, (x + 0.5), y, (z + 1.5), 0, 0);
-                                        foundWorld.setSpawnLocation(spawn);
-                                    }
+                                if (plugin.isMVOnServer()) {
+                                    plugin.getMVHelper().setSpawnLocation(world, x, y, z);
                                 } else {
                                     world.setSpawnLocation(x, y, (z + 1));
                                 }

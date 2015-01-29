@@ -16,8 +16,6 @@
  */
 package me.eccentric_nz.TARDIS.desktop;
 
-import com.onarandombox.MultiverseCore.MultiverseCore;
-import com.onarandombox.MultiverseCore.api.MultiverseWorld;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -53,7 +51,6 @@ import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Item;
 import org.bukkit.entity.Player;
-import org.bukkit.plugin.Plugin;
 
 /**
  * There was also a safety mechanism for when TARDIS rooms were deleted,
@@ -484,14 +481,8 @@ public class TARDISFullThemeRunnable extends TARDISThemeRunnable implements Runn
                         qf.doUpdate("doors", setd, whered);
                         // if create_worlds is true, set the world spawn
                         if (own_world) {
-                            if (plugin.getPM().isPluginEnabled("Multiverse-Core")) {
-                                Plugin mvplugin = plugin.getPM().getPlugin("Multiverse-Core");
-                                if (mvplugin instanceof MultiverseCore) {
-                                    MultiverseCore mvc = (MultiverseCore) mvplugin;
-                                    MultiverseWorld foundWorld = mvc.getMVWorldManager().getMVWorld(world.getName());
-                                    Location spawn = new Location(world, (x + 0.5), y, (z + 1.5), 0, 0);
-                                    foundWorld.setSpawnLocation(spawn);
-                                }
+                            if (plugin.isMVOnServer()) {
+                                plugin.getMVHelper().setSpawnLocation(world, x, y, z);
                             } else {
                                 world.setSpawnLocation(x, y, (z + 1));
                             }

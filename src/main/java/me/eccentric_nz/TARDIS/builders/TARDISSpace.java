@@ -64,7 +64,7 @@ public class TARDISSpace {
                     plugin.getServer().dispatchCommand(plugin.getConsole(), "mw setflag " + name + " CreativeWorld true");
                 }
                 tardisWorld = plugin.getServer().getWorld(name);
-            } else if (plugin.getPM().isPluginEnabled("Multiverse-Core")) {
+            } else if (plugin.isMVOnServer()) {
                 plugin.getServer().dispatchCommand(plugin.getConsole(), "mv create " + name + " NORMAL -g TARDISChunkGenerator -t FLAT");
                 plugin.getServer().dispatchCommand(plugin.getConsole(), "mv modify set hidden true " + name);
                 plugin.getServer().dispatchCommand(plugin.getConsole(), "mv modify set weather false " + name);
@@ -155,7 +155,7 @@ public class TARDISSpace {
             plugin.getServer().dispatchCommand(plugin.getConsole(), "mw create " + name + " plugin:TARDISChunkGenerator");
             plugin.getServer().dispatchCommand(plugin.getConsole(), "mw load " + name);
             plugin.getServer().dispatchCommand(plugin.getConsole(), "mw setflag " + name + " PvP false");
-        } else if (plugin.getPM().isPluginEnabled("Multiverse-Core")) {
+        } else if (plugin.isMVOnServer()) {
             plugin.getServer().dispatchCommand(plugin.getConsole(), "mv create " + name + " NORMAL -g TARDISChunkGenerator -t FLAT");
             plugin.getServer().dispatchCommand(plugin.getConsole(), "mv modify set hidden true " + name);
             plugin.getServer().dispatchCommand(plugin.getConsole(), "mv modify set weather false " + name);

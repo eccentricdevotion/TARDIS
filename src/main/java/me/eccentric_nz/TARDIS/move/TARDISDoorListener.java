@@ -16,8 +16,6 @@
  */
 package me.eccentric_nz.TARDIS.move;
 
-import com.onarandombox.MultiverseCore.MultiverseCore;
-import com.onarandombox.MultiverseCore.api.MultiverseWorld;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Random;
@@ -164,13 +162,8 @@ public class TARDISDoorListener {
      */
     private boolean checkSurvival(World w) {
         boolean bool = false;
-        if (plugin.getPM().isPluginEnabled("Multiverse-Core")) {
-            MultiverseCore mv = (MultiverseCore) plugin.getPM().getPlugin("Multiverse-Core");
-            MultiverseWorld mvw = mv.getCore().getMVWorldManager().getMVWorld(w);
-            GameMode gm = mvw.getGameMode();
-            if (gm.equals(GameMode.SURVIVAL)) {
-                bool = true;
-            }
+        if (plugin.isMVOnServer()) {
+            bool = plugin.getMVHelper().isWorldSurvival(w);
         }
         if (plugin.getPM().isPluginEnabled("MultiWorld")) {
             MultiWorldAPI mw = ((MultiWorldPlugin) plugin.getPM().getPlugin("MultiWorld")).getApi();

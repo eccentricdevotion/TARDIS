@@ -133,7 +133,7 @@ public class TARDISDeleteCommand {
                             for (Player p : players) {
                                 p.kickPlayer("World scheduled for deletion!");
                             }
-                            if (plugin.getPM().isPluginEnabled("Multiverse-Core")) {
+                            if (plugin.isMVOnServer()) {
                                 plugin.getServer().dispatchCommand(plugin.getConsole(), "mv remove " + name);
                             }
                             if (plugin.getPM().isPluginEnabled("MultiWorld")) {

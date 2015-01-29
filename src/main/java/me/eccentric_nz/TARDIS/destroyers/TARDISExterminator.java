@@ -344,7 +344,7 @@ public class TARDISExterminator {
                 TARDISMessage.send(p, "WORLD_RESET");
                 p.teleport(spawn);
             }
-            if (plugin.getPM().isPluginEnabled("Multiverse-Core")) {
+            if (plugin.isMVOnServer()) {
                 plugin.getServer().dispatchCommand(plugin.getConsole(), "mv remove " + name);
             }
             if (plugin.getPM().isPluginEnabled("MultiWorld")) {
