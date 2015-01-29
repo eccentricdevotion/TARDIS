@@ -77,6 +77,7 @@ import me.eccentric_nz.TARDIS.travel.TARDISPluginRespect;
 import me.eccentric_nz.TARDIS.utility.TARDISBlockSetters;
 import me.eccentric_nz.TARDIS.utility.TARDISLocationGetters;
 import me.eccentric_nz.TARDIS.utility.TARDISMapChecker;
+import me.eccentric_nz.TARDIS.utility.TARDISMultiverseHelper;
 import me.eccentric_nz.TARDIS.utility.TARDISMultiverseInventoriesChecker;
 import me.eccentric_nz.TARDIS.utility.TARDISPerceptionFilter;
 import me.eccentric_nz.TARDIS.utility.TARDISSounds;
@@ -91,6 +92,7 @@ import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
+import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.PluginDescriptionFile;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -146,6 +148,7 @@ public class TARDIS extends JavaPlugin {
     private boolean helperOnServer;
     private boolean barAPIOnServer;
     private boolean disguisesOnServer;
+    private boolean mvOnServer;
     private PluginManager pm;
     private final TARDISArea tardisArea = new TARDISArea(this);
     private final TARDISBuilderInner interiorBuilder = new TARDISBuilderInner(this);
@@ -158,12 +161,14 @@ public class TARDIS extends JavaPlugin {
     private final TARDISTrackerInstanceKeeper trackerKeeper = new TARDISTrackerInstanceKeeper();
     private final TARDISChatGUIJSON jsonKeeper = new TARDISChatGUIJSON();
     private TARDISHelper tardisHelper = null;
+    private TARDISMultiverseHelper mvHelper = null;
     private final List<String> cleanUpWorlds = new ArrayList<String>();
 
     public TARDIS() {
         this.worldGuardOnServer = false;
         this.helperOnServer = false;
         this.barAPIOnServer = false;
+        this.mvOnServer = false;
     }
 
     @Override
@@ -235,6 +240,7 @@ public class TARDIS extends JavaPlugin {
                 new TARDISListenerRegisterer(this).registerListeners();
                 new TARDISCommandSetter(this).loadCommands();
                 startSound();
+                loadMultiverse();
                 loadWorldGuard();
                 loadPluginRespect();
                 loadBarAPI();
@@ -535,6 +541,27 @@ public class TARDIS extends JavaPlugin {
     }
 
     /**
+     * Checks if the Multiverse-Core plugin is available, and loads support if
+     * it is.
+     */
+    private void loadMultiverse() {
+        if (pm.isPluginEnabled("Multiverse-Core")) {
+            Plugin mvplugin = pm.getPlugin("Multiverse-Core");
+            debug("Hooking into Multiverse-Core!");
+            this.mvHelper = new TARDISMultiverseHelper(mvplugin);
+            this.mvOnServer = true;
+        }
+    }
+
+    public boolean isMVOnServer() {
+        return mvOnServer;
+    }
+
+    public TARDISMultiverseHelper getMVHelper() {
+        return mvHelper;
+    }
+
+    /**
      * Checks if the TARDISHelper plugin is available, and loads support if it
      * is.
      */
@@ -551,7 +578,7 @@ public class TARDIS extends JavaPlugin {
     }
 
     /**
-     * Checks if the BARAPI plugin is available, and loads support if it is.
+     * Checks if the BarAPI plugin is available, and loads support if it is.
      */
     private void loadBarAPI() {
         if (pm.getPlugin("BarAPI") != null) {
