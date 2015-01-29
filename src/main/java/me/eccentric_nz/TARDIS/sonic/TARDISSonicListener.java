@@ -660,13 +660,20 @@ public class TARDISSonicListener implements Listener {
         }
         final long time = scan_loc.getWorld().getTime();
         final String daynight = TARDISStaticUtils.getTime(time);
+        String worldname;
+        if (plugin.isMVOnServer()) {
+            worldname = plugin.getMVHelper().getAlias(scan_loc.getWorld());
+        } else {
+            worldname = scan_loc.getWorld().getName();
+        }
+        final String wn = worldname;
         // message the player
         TARDISMessage.send(player, "SONIC_SCAN");
         BukkitScheduler bsched = plugin.getServer().getScheduler();
         bsched.scheduleSyncDelayedTask(plugin, new Runnable() {
             @Override
             public void run() {
-                TARDISMessage.send(player, true, "SCAN_WORLD", scan_loc.getWorld().getName());
+                TARDISMessage.send(player, true, "SCAN_WORLD", wn);
                 TARDISMessage.send(player, true, "SONIC_COORDS", scan_loc.getBlockX() + ":" + scan_loc.getBlockY() + ":" + scan_loc.getBlockZ());
             }
         }, 20L);

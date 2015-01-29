@@ -218,7 +218,13 @@ public class TARDISScannerListener implements Listener {
         final String daynight = TARDISStaticUtils.getTime(time);
         // message the player
         TARDISMessage.send(player, "SCAN_RESULT", whereisit);
-        TARDISMessage.send(player, true, "SCAN_WORLD", scan_loc.getWorld().getName());
+        String worldname;
+        if (plugin.isMVOnServer()) {
+            worldname = plugin.getMVHelper().getAlias(scan_loc.getWorld());
+        } else {
+            worldname = scan_loc.getWorld().getName();
+        }
+        TARDISMessage.send(player, true, "SCAN_WORLD", worldname);
         TARDISMessage.send(player, true, "SONIC_COORDS", scan_loc.getBlockX() + ":" + scan_loc.getBlockY() + ":" + scan_loc.getBlockZ());
         bsched.scheduleSyncDelayedTask(plugin, new Runnable() {
             @Override
