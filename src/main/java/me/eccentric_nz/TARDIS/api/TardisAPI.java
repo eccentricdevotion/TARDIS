@@ -20,6 +20,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.UUID;
 import me.eccentric_nz.TARDIS.travel.TARDISPluginRespect;
+import me.eccentric_nz.TARDIS.utility.TARDISBlockSetters;
+import me.eccentric_nz.TARDIS.utility.TARDISLocationGetters;
 import me.eccentric_nz.TARDIS.utility.TARDISUtils;
 import org.bukkit.Location;
 import org.bukkit.World;
@@ -284,6 +286,20 @@ public interface TardisAPI {
      * @return the TARDIS Utilities instance
      */
     public TARDISUtils getUtils();
+
+    /**
+     * Get a handle for the TARDIS utilities.
+     *
+     * @return the TARDIS Utilities instance
+     */
+    public TARDISLocationGetters getLocationUtils();
+
+    /**
+     * Get a handle for the TARDIS utilities.
+     *
+     * @return the TARDIS Utilities instance
+     */
+    public TARDISBlockSetters getBlockUtils();
 
     /**
      * Get a handle for the TARDIS Plugin Respect.

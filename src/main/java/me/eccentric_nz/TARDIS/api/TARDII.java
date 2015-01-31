@@ -35,6 +35,8 @@ import me.eccentric_nz.TARDIS.database.ResultSetTravellers;
 import me.eccentric_nz.TARDIS.database.TARDISDatabaseConnection;
 import me.eccentric_nz.TARDIS.enumeration.FLAG;
 import me.eccentric_nz.TARDIS.travel.TARDISPluginRespect;
+import me.eccentric_nz.TARDIS.utility.TARDISBlockSetters;
+import me.eccentric_nz.TARDIS.utility.TARDISLocationGetters;
 import me.eccentric_nz.TARDIS.utility.TARDISUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
@@ -338,6 +340,16 @@ public class TARDII implements TardisAPI {
     @Override
     public TARDISUtils getUtils() {
         return TARDIS.plugin.getUtils();
+    }
+
+    @Override
+    public TARDISLocationGetters getLocationUtils() {
+        return TARDIS.plugin.getLocationUtils();
+    }
+
+    @Override
+    public TARDISBlockSetters getBlockUtils() {
+        return TARDIS.plugin.getBlockUtils();
     }
 
     @Override
