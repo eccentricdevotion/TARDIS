@@ -297,10 +297,6 @@ public class TARDISLazarusGUIListener extends TARDISMenuListener implements List
                                                     sw.setCustomNameVisible(true);
                                                 }
                                                 break;
-//                                            case GUARDIAN:
-//                                                GuardianWatcher gw = (GuardianWatcher) livingWatcher;
-//                                                gw.setBeam(getBoolean(inv));
-//                                                break;
                                             case HORSE:
                                                 HorseWatcher hw = (HorseWatcher) livingWatcher;
                                                 hw.setColor(getHorseColor(inv));

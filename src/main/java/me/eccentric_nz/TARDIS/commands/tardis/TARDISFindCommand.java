@@ -46,12 +46,15 @@ public class TARDISFindCommand {
                 return true;
             }
             if (plugin.getConfig().getString("preferences.difficulty").equalsIgnoreCase("easy") || plugin.getUtils().inGracePeriod(player, true)) {
-
                 HashMap<String, Object> wherecl = new HashMap<String, Object>();
                 wherecl.put("tardis_id", rs.getTardis_id());
                 ResultSetCurrentLocation rsc = new ResultSetCurrentLocation(plugin, wherecl);
                 if (rsc.resultSet()) {
-                    TARDISMessage.send(player, "TARDIS_FIND", rsc.getWorld().getName() + " at x: " + rsc.getX() + " y: " + rsc.getY() + " z: " + rsc.getZ());
+                    String world = rsc.getWorld().getName();
+                    if (plugin.isMVOnServer()) {
+                        world = plugin.getMVHelper().getAlias(rsc.getWorld());
+                    }
+                    TARDISMessage.send(player, "TARDIS_FIND", world + " at x: " + rsc.getX() + " y: " + rsc.getY() + " z: " + rsc.getZ());
                     return true;
                 } else {
                     TARDISMessage.send(player, "CURRENT_NOT_FOUND");
