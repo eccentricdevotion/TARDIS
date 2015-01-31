@@ -35,7 +35,7 @@
         <p>As of TARDIS v3.2-beta-1 the API can be accessed in your plugin like so:</p>
         <pre><code>public class ExamplePlugin extends JavaPlugin {
 
-    private TardisAPI tardisapi;
+    private TardisAPI tardisAPI;
     private TARDIS tardis;
 
     @Override
@@ -45,15 +45,16 @@
         Plugin p = pm.getPlugin("TARDIS");
         if (p == null) {
             System.err.println("Cannot find TARDIS!");
+            pm.disablePlugin(this);
             return;
         }
         tardis = (TARDIS) p;
         // get the API
-        tardisapi = tardis.getTardisAPI();
+        tardisAPI = tardis.getTardisAPI();
     }
     
     public TardisAPI getTardisAPI() {
-        return tardisapi;
+        return tardisAPI;
     }
 }</code></pre>
 <p>You can auto-generate a plugin that hooks into the TARDIS API at the <a href="http://www.thenosefairy.co.nz/plugin_starter.php" target="_blank">Bukkit plugin starter</a> page. Make sure to select the <em>TARDIS API</em> checkbox.</p>
