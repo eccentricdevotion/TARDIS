@@ -32,6 +32,29 @@
     <section>
         <h1>Change log</h1>
         <h2>What&rsquo;s been changed?</h2>
+        <h3>v3.2.10</h3>
+        <h3>Additions</h3>
+        <ul>
+            <li>Added a <code>/tardis?</code> command (alias <code>/t?</code>) to replace the old outdated help messages</li>
+            <li>Added Hopper Minecarts to the RAIL room</li>
+            <li>Added progress messages when growing a room</li>
+        </ul>
+        <h3>Changes</h3>
+        <ul>
+            <li>Updated the achievement XP rewarder to cope with huge amounts of XP</li>
+            <li>Made it so disabling HADS doesn&rsquo;t require a restart to take effect</li>
+            <li>Vastly improved the <code>/tardis help</code> command &mdash; it now shows pages and includes links to online documentation</li>
+            <li>The plugin now uses Multiverse world name aliases (if they are set) when showing the scanner results, find location, and random destination messages</li>
+            <li>Player permissions are now checked before the grace period on hard mode</li>
+            <li>When accessing ARS the plugin always gets the ARS Map of the TARDIS the player is in, but only processes it if they are the Time Lord of that TARDIS</li>
+            <li>Minor changes to the TARDIS API &mdash; this means that you will need to update the TARDISVortexMainpulator plugin as well (if you use it)</li>
+        </ul>
+        <h3>Bug fixes</h3>
+        <ul>
+            <li>The plugin is now disabled at startup if the installed WorldGuard plugin is the wrong version</li>
+            <li>Fixed Guardians spawning in the TARDIS when there is no POOL room</li>
+            <li>Fixed the minecart not returning from the RAIL room because the chunk unloads</li>
+        </ul>
         <h3>v3.2.9</h3>
         <p><a href="#reqs">View requirements for this version</a></p>
         <h3>Additions</h3>
