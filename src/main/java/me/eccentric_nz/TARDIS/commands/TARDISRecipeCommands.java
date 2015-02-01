@@ -58,6 +58,8 @@ public class TARDISRecipeCommands implements CommandExecutor {
         firstArgs.add("bio-circuit"); // Bio-scanner Circuit
         firstArgs.add("biome-disk"); // Biome Storage Disk
         firstArgs.add("blank"); // Blank Storage Disk
+        firstArgs.add("battery"); // Blaster Battery
+        firstArgs.add("blaster"); // Sonic Blaster
         firstArgs.add("bow-tie"); // Bow Tie
         firstArgs.add("c-circuit"); // Chameleon Circuit
         firstArgs.add("cell"); // Artron Energy Cell
@@ -78,6 +80,7 @@ public class TARDISRecipeCommands implements CommandExecutor {
         firstArgs.add("m-circuit"); // Materialisation Circuit
         firstArgs.add("memory-circuit"); // Memory Circuit
         firstArgs.add("oscillator"); // Sonic Oscillator
+        firstArgs.add("pad"); // Landing Pad
         firstArgs.add("painter"); // Painter Circuit
         firstArgs.add("p-circuit"); // Perception Circuit
         firstArgs.add("player-disk"); // Player Storage Disk
@@ -317,6 +320,22 @@ public class TARDISRecipeCommands implements CommandExecutor {
                 this.showShapedRecipe(player, "Vortex Manipulator");
                 return true;
             }
+            if ((args[0].equalsIgnoreCase("battery") || args[0].equalsIgnoreCase("blaster") || args[0].equalsIgnoreCase("pad")) && !plugin.getPM().isPluginEnabled("TARDISSonicBlaster")) {
+                TARDISMessage.send(sender, "RECIPE_BLASTER");
+                return true;
+            }
+            if (args[0].equalsIgnoreCase("battery")) {
+                this.showShapedRecipe(player, "Blaster Battery");
+                return true;
+            }
+            if (args[0].equalsIgnoreCase("blaster")) {
+                this.showShapedRecipe(player, "Sonic Blaster");
+                return true;
+            }
+            if (args[0].equalsIgnoreCase("pad")) {
+                this.showShapedRecipe(player, "Landing Pad");
+                return true;
+            }
         }
         return false;
     }
@@ -342,6 +361,11 @@ public class TARDISRecipeCommands implements CommandExecutor {
                 if (str.equals("TARDIS Remote Key") && item.getType().equals(Material.GOLD_NUGGET)) {
                     ItemMeta im = item.getItemMeta();
                     im.setDisplayName("TARDIS Key");
+                    item.setItemMeta(im);
+                }
+                if (str.equals("Sonic Blaster") && item.getType().equals(Material.BUCKET)) {
+                    ItemMeta im = item.getItemMeta();
+                    im.setDisplayName("Blaster Battery");
                     item.setItemMeta(im);
                 }
                 view.getTopInventory().setItem(j * 3 + k + 1, item);

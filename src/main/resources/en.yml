@@ -522,6 +522,7 @@ Q_DELETE: "Are you sure you want to delete the TARDIS? Type %s within %s seconds
 Q_FLY: "Are you sure you know how to fly this thing!"
 RANDOMISER: "Random location set, scanner disabled until TARDIS has travelled and dematerialised."
 REBUILD_FAIL: "Try using the Stattenheim Remote, or the /tardis comehere command."
+RECIPE_BLASTER: "The TARDIS Sonic Blaster plugin is not installed on this server!"
 RECIPE_VIEW: "You can view the following recipes:"
 RECIPE_VORTEX: "The TARDIS Vortex Manipulator plugin is not installed on this server!"
 RELATIVE_NOT_FOUND: "Could not get relative location! Check all arguments start with '~'."
