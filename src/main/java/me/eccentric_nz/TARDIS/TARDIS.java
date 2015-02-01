@@ -414,7 +414,7 @@ public class TARDIS extends JavaPlugin {
             }
         }
         // always copy English default
-        tardisCopier.copy(getDataFolder() + File.separator + "language" + File.separator + "en.yml", getResource("en.yml"), true);
+        TARDISFileCopier.copy(getDataFolder() + File.separator + "language" + File.separator + "en.yml", getResource("en.yml"), true, pluginName);
         // get configured language
         String lang = getConfig().getString("preferences.language");
         // check file exists
@@ -489,7 +489,7 @@ public class TARDIS extends JavaPlugin {
         }
         Set<String> booknames = achievementConfig.getKeys(false);
         for (String b : booknames) {
-            tardisCopier.copy(getDataFolder() + File.separator + "books" + File.separator + b + ".txt", getResource(b + ".txt"), false);
+            TARDISFileCopier.copy(getDataFolder() + File.separator + "books" + File.separator + b + ".txt", getResource(b + ".txt"), false, pluginName);
         }
     }
 

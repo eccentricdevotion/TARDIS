@@ -71,20 +71,20 @@ public class TARDISFileCopier {
         for (SCHEMATIC ts : CONSOLES.getByNames().values()) {
             if (!ts.isCustom()) {
                 String str = basepath + ts.getPermission() + ".tschm";
-                copy(str, plugin.getResource(ts.getPermission() + ".tschm"), true);
+                copy(str, plugin.getResource(ts.getPermission() + ".tschm"), true, plugin.getPluginName());
             }
         }
         // copy default room files as well
         for (TARDISARS ta : TARDISARS.values()) {
             if (ta.getOffset() != 0) {
                 String str = basepath + ta.getActualName().toLowerCase() + ".tschm";
-                copy(str, plugin.getResource(ta.getActualName().toLowerCase() + ".tschm"), false);
+                copy(str, plugin.getResource(ta.getActualName().toLowerCase() + ".tschm"), false, plugin.getPluginName());
             }
         }
         String zeronstr = basepath + "zero.tschm";
-        copy(zeronstr, plugin.getResource("zero.tschm"), false);
+        copy(zeronstr, plugin.getResource("zero.tschm"), false, plugin.getPluginName());
         String tmpnstr = userbasepath + "template.tschm";
-        copy(tmpnstr, plugin.getResource("template.tschm"), false);
+        copy(tmpnstr, plugin.getResource("template.tschm"), false, plugin.getPluginName());
     }
 
     /**
@@ -94,9 +94,10 @@ public class TARDISFileCopier {
      * @param filepath the path to the file to write to
      * @param in the input file to read from
      * @param overwrite whether to overwrite the file
+     * @param pluginName the name of the plugin doing the copy
      * @return a File
      */
-    public File copy(String filepath, InputStream in, boolean overwrite) {
+    public static File copy(String filepath, InputStream in, boolean overwrite, String pluginName) {
         File file = new File(filepath);
         if (overwrite || !file.exists()) {
             OutputStream out = null;
@@ -109,7 +110,7 @@ public class TARDISFileCopier {
                         out.write(buf, 0, len);
                     }
                 } catch (IOException io) {
-                    plugin.getConsole().sendMessage(plugin.getPluginName() + "Could not save the file (" + file.toString() + ").");
+                    System.err.println(pluginName + "Could not save the file (" + file.toString() + ").");
                 } finally {
                     try {
                         out.close();
@@ -117,7 +118,7 @@ public class TARDISFileCopier {
                     }
                 }
             } catch (FileNotFoundException e) {
-                plugin.getConsole().sendMessage(plugin.getPluginName() + "File not found.");
+                System.err.println(pluginName + "File not found.");
             } finally {
                 if (in != null) {
                     try {
@@ -140,6 +141,6 @@ public class TARDISFileCopier {
     public File copy(String filename) {
         String filepath = plugin.getDataFolder() + File.separator + filename;
         InputStream in = plugin.getResource(filename);
-        return copy(filepath, in, false);
+        return copy(filepath, in, false, plugin.getPluginName());
     }
 }
