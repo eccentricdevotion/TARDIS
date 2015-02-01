@@ -127,7 +127,6 @@ public class TARDISSonicUpgradeListener implements Listener {
                         ci.setResult(is);
                     } else {
                         ci.setResult(null);
-                        TARDISMessage.send(p, "REMOTE_KEY");
                     }
                 }
             }
@@ -138,6 +137,7 @@ public class TARDISSonicUpgradeListener implements Listener {
             ItemStack key = ci.getItem(5);
             if (!key.hasItemMeta() || !key.getItemMeta().hasDisplayName() || !ChatColor.stripColor(key.getItemMeta().getDisplayName()).equals("TARDIS Key")) {
                 ci.setResult(null);
+                TARDISMessage.send(event.getView().getPlayer(), "REMOTE_KEY");
             }
         }
     }
