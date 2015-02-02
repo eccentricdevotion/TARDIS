@@ -41,6 +41,7 @@ import me.eccentric_nz.TARDIS.travel.TARDISCaveFinder;
 import me.eccentric_nz.TARDIS.travel.TARDISRescue;
 import me.eccentric_nz.TARDIS.travel.TARDISTimeTravel;
 import me.eccentric_nz.TARDIS.travel.TARDISTravelRequest;
+import me.eccentric_nz.TARDIS.travel.TARDISVillageTravel;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import me.eccentric_nz.TARDIS.utility.TARDISNumberParsers;
 import me.eccentric_nz.TARDIS.utility.TARDISWorldBorderChecker;
@@ -221,7 +222,7 @@ public class TARDISTravelCommands implements CommandExecutor {
                                 set.put("submarine", 0);
                                 which = "Cave";
                             } else {
-                                if (!plugin.getConfig().getBoolean("allow.village_travel") || !plugin.getPM().isPluginEnabled("PowerNBT")) {
+                                if (!plugin.getConfig().getBoolean("allow.village_travel")) {
                                     TARDISMessage.send(player, "TRAVEL_NO_VILLAGE");
                                     return true;
                                 }
