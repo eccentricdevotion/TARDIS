@@ -57,19 +57,22 @@ permissions:
     description: Allow players to delete their own TARDIS.
     default: op
   tardis.timetravel:
-    description: Allow players to teleport to random locations and saved destinations.
+    description: Allow players to travel to random locations and saved destinations.
     default: op
   tardis.timetravel.player:
-    description: Allow players to teleport to player locations.
+    description: Allow players to travel to player locations.
     default: op
   tardis.timetravel.location:
-    description: Allow players to teleport to coordinates.
+    description: Allow players to travel to coordinates.
     default: op
   tardis.timetravel.biome:
-    description: Allow players to teleport to coordinates.
+    description: Allow players to travel to specific biomes.
     default: op
   tardis.timetravel.cave:
-    description: Allow players to teleport to caves.
+    description: Allow players to travel to caves.
+    default: op
+  tardis.timetravel.village:
+    description: Allow players to travel to villages.
     default: op
   tardis.list:
     description: Allow players to list saved time travel destinations.

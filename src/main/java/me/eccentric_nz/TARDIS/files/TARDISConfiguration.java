@@ -80,6 +80,7 @@ public class TARDISConfiguration {
         boolOptions.put("allow.sfx", true);
         boolOptions.put("allow.spawn_eggs", true);
         boolOptions.put("allow.tp_switch", true);
+        boolOptions.put("allow.village_travel", false);
         boolOptions.put("allow.wg_flag_set", true);
         boolOptions.put("allow.zero_room", false);
         boolOptions.put("arch.clear_inv_on_death", false);

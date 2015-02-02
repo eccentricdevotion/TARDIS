@@ -7,7 +7,6 @@ import com.google.common.collect.Lists;
 import com.google.common.collect.MapMaker;
 import com.google.common.io.Closeables;
 import com.google.common.io.Files;
-import com.google.common.io.InputSupplier;
 import com.google.common.io.OutputSupplier;
 import com.google.common.primitives.Primitives;
 import java.io.BufferedInputStream;
@@ -460,20 +459,17 @@ public class TARDISNbtFactory {
      * Use {@link Files#newInputStreamSupplier(java.io.File)} to provide a
      * stream from a file.
      *
-     * @param stream - the stream supplier.
-     * @param option - whether or not to decompress the input stream.
+     * @param stream - the input stream.
      * @return The decoded NBT compound.
      * @throws IOException If anything went wrong.
      */
-    public static NbtCompound fromStream(InputSupplier<? extends InputStream> stream, StreamOptions option) throws IOException {
-        InputStream input = null;
+    public static NbtCompound fromCompressedStream(InputStream stream) throws IOException {
         DataInputStream data = null;
         boolean suppress = true;
 
         try {
-            input = stream.getInput();
             data = new DataInputStream(new BufferedInputStream(
-                    option == StreamOptions.GZIP_COMPRESSION ? new GZIPInputStream(input) : input
+                    new GZIPInputStream(stream)
             ));
 
             NbtCompound result = fromCompound(get().LOAD_COMPOUND.loadNbt(data));
@@ -483,8 +479,8 @@ public class TARDISNbtFactory {
         } finally {
             if (data != null) {
                 Closeables.close(data, suppress);
-            } else if (input != null) {
-                Closeables.close(input, suppress);
+            } else if (stream != null) {
+                Closeables.close(stream, suppress);
             }
         }
     }

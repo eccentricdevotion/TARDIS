@@ -165,7 +165,7 @@ public class TARDISTravelCommands implements CommandExecutor {
                 } else {
                     if (args.length == 1) {
                         // we're thinking this is a player's name or home / back / cave
-                        if (args[0].equalsIgnoreCase("home") || args[0].equalsIgnoreCase("back") || args[0].equalsIgnoreCase("cave")) {
+                        if (args[0].equalsIgnoreCase("home") || args[0].equalsIgnoreCase("back") || args[0].equalsIgnoreCase("cave") || args[0].equalsIgnoreCase("village")) {
                             String which;
                             if (args[0].equalsIgnoreCase("home")) {
                                 // get home location
@@ -199,7 +199,7 @@ public class TARDISTravelCommands implements CommandExecutor {
                                 set.put("direction", rsb.getDirection().toString());
                                 set.put("submarine", (rsb.isSubmarine()) ? 1 : 0);
                                 which = "Fast Return";
-                            } else {
+                            } else if (args[0].equalsIgnoreCase("cave")) {
                                 if (!player.hasPermission("tardis.timetravel.cave")) {
                                     TARDISMessage.send(player, "TRAVEL_NO_PERM_CAVE");
                                     return true;
@@ -220,6 +220,31 @@ public class TARDISTravelCommands implements CommandExecutor {
                                 set.put("z", cave.getBlockZ());
                                 set.put("submarine", 0);
                                 which = "Cave";
+                            } else {
+                                if (!plugin.getConfig().getBoolean("allow.village_travel") || !plugin.getPM().isPluginEnabled("PowerNBT")) {
+                                    TARDISMessage.send(player, "TRAVEL_NO_VILLAGE");
+                                    return true;
+                                }
+                                if (!player.hasPermission("tardis.timetravel.village")) {
+                                    TARDISMessage.send(player, "TRAVEL_NO_PERM_VILLAGE");
+                                    return true;
+                                }
+                                // find a village
+                                Location village = new TARDISVillageTravel(plugin).getRandomVillage(player, id);
+                                if (village == null) {
+                                    TARDISMessage.send(player, "CAVE_NOT_FOUND");
+                                    return true;
+                                }
+                                // check respect
+                                if (!plugin.getPluginRespect().getRespect(village, new Parameters(player, FLAG.getDefaultFlags()))) {
+                                    return true;
+                                }
+                                set.put("world", village.getWorld().getName());
+                                set.put("x", village.getBlockX());
+                                set.put("y", village.getBlockY());
+                                set.put("z", village.getBlockZ());
+                                set.put("submarine", 0);
+                                which = "Village";
                             }
                             qf.doUpdate("next", set, tid);
                             TARDISMessage.send(player, "TRAVEL_LOADED", which, true);
