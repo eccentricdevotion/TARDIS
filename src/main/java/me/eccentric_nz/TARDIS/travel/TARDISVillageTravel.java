@@ -34,6 +34,7 @@ import me.eccentric_nz.TARDIS.utility.TARDISNumberParsers;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
+import org.bukkit.World.Environment;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 import org.bukkit.entity.Player;
@@ -58,6 +59,15 @@ public class TARDISVillageTravel {
         ResultSetCurrentLocation rs = new ResultSetCurrentLocation(plugin, where);
         if (rs.resultSet()) {
             World world = rs.getWorld();
+            Environment env = world.getEnvironment();
+            if (env.equals(Environment.NETHER)) {
+                TARDISMessage.send(p, "VILLAGE_NO_NETHER");
+                return null;
+            }
+            if (env.equals(Environment.THE_END)) {
+                TARDISMessage.send(p, "VILLAGE_NO_END");
+                return null;
+            }
             // get path to world data folder
             File container = plugin.getServer().getWorldContainer();
             // check for MCPC+
@@ -93,13 +103,15 @@ public class TARDISVillageTravel {
                 Block b = loc.getBlock();
                 boolean unsafe = true;
                 while (unsafe) {
+                    boolean clear = true;
                     for (BlockFace f : plugin.getGeneralKeeper().getSurrounding()) {
                         if (!b.getRelative(f).getType().equals(Material.AIR)) {
                             b = b.getRelative(BlockFace.UP);
+                            clear = false;
                             break;
                         }
                     }
-                    unsafe = false;
+                    unsafe = !clear;
                 }
                 loc.setY(b.getY());
                 return loc;
