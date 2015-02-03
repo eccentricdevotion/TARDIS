@@ -26,13 +26,13 @@ import java.util.Random;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.arch.attributes.TARDISNbtFactory;
 import me.eccentric_nz.TARDIS.arch.attributes.TARDISNbtFactory.NbtCompound;
 import me.eccentric_nz.TARDIS.database.ResultSetCurrentLocation;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import me.eccentric_nz.TARDIS.utility.TARDISNumberParsers;
 import org.bukkit.Location;
-import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.World.Environment;
 import org.bukkit.block.Block;
@@ -105,7 +105,7 @@ public class TARDISVillageTravel {
                 while (unsafe) {
                     boolean clear = true;
                     for (BlockFace f : plugin.getGeneralKeeper().getSurrounding()) {
-                        if (!b.getRelative(f).getType().equals(Material.AIR)) {
+                        if (!TARDISConstants.GOOD_MATERIALS.contains(b.getRelative(f).getType())) {
                             b = b.getRelative(BlockFace.UP);
                             clear = false;
                             break;
