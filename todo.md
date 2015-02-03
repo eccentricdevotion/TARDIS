@@ -2,6 +2,7 @@
 
 ##Current version `3.2.11`
 1. Fix bugs
+2. When ckecking for clear space in village travel, ignore the usual blocks e.g. grass
 
 ##Upcoming version `3.3`
 1. Junk TARDIS
