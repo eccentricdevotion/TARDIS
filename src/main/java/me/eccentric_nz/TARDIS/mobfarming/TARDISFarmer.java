@@ -180,7 +180,7 @@ public class TARDISFarmer {
                             horse.eject();
                             // don't farm other player's tamed horses
                             if (brokenin.isTamed()) {
-                                Player owner = (Player) brokenin.getOwner();
+                                OfflinePlayer owner = (OfflinePlayer) brokenin.getOwner();
                                 if (owner != null && !owner.getUniqueId().equals(p.getUniqueId())) {
                                     break;
                                 }
