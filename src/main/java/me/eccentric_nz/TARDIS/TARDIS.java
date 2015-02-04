@@ -27,6 +27,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Properties;
 import java.util.Set;
 import java.util.UUID;
@@ -163,12 +164,28 @@ public class TARDIS extends JavaPlugin {
     private TARDISHelper tardisHelper = null;
     private TARDISMultiverseHelper mvHelper = null;
     private final List<String> cleanUpWorlds = new ArrayList<String>();
+    private final HashMap<String, String> versions = new HashMap<String, String>();
 
     public TARDIS() {
         this.worldGuardOnServer = false;
         this.helperOnServer = false;
         this.barAPIOnServer = false;
         this.mvOnServer = false;
+        this.versions.put("BarAPI", "3.3");
+        this.versions.put("Citizens", "2.0.14");
+        this.versions.put("Factions", "2.7.4");
+        this.versions.put("GriefPrevention", "10");
+        this.versions.put("LibsDisguises", "8.2.6");
+        this.versions.put("MultiWorld", "5.2");
+        this.versions.put("Multiverse-Adventure", "2.5");
+        this.versions.put("Multiverse-Core", "2.5");
+        this.versions.put("Multiverse-Inventories", "2.5");
+        this.versions.put("My Worlds", "1.67");
+        this.versions.put("ProtocolLib", "3.6.3");
+        this.versions.put("TARDISHelper", "1.3");
+        this.versions.put("Towny", "0.89");
+        this.versions.put("WorldBorder", "1.8.1");
+        this.versions.put("WorldGuard", "6.0.0");
     }
 
     @Override
@@ -187,6 +204,14 @@ public class TARDIS extends JavaPlugin {
             try {
                 Class.forName("org.bukkit.WorldBorder");
                 hasVersion = true;
+                for (Map.Entry<String, String> plg : versions.entrySet()) {
+                    if (!checkPluginVersion(plg.getKey(), plg.getValue())) {
+                        console.sendMessage(pluginName + ChatColor.RED + "This plugin requires " + plg.getKey() + " to be v" + plg.getValue() + " or higher, disabling...");
+                        hasVersion = false;
+                        pm.disablePlugin(this);
+                        return;
+                    }
+                }
                 saveDefaultConfig();
                 loadCustomConfigs();
                 new TARDISConfiguration(this).checkConfig();
@@ -241,11 +266,6 @@ public class TARDIS extends JavaPlugin {
                 new TARDISCommandSetter(this).loadCommands();
                 startSound();
                 loadMultiverse();
-                if (!checkWorldGuardVersion()) {
-                    console.sendMessage(pluginName + ChatColor.RED + "This plugin requires WorldGuard to be v6.0.x or higher, disabling...");
-                    pm.disablePlugin(this);
-                    return;
-                }
                 loadWorldGuard();
                 loadPluginRespect();
                 loadBarAPI();
@@ -336,13 +356,13 @@ public class TARDIS extends JavaPlugin {
         return new Version(v);
     }
 
-    private boolean checkWorldGuardVersion() {
-        if (pm.isPluginEnabled("WorldGuard")) {
-            Plugin worldguard = pm.getPlugin("WorldGuard");
-            Version minwgv = new Version("6.0.0");
-            String[] split = worldguard.getDescription().getVersion().split("-");
-            Version wgv = new Version(split[0]);
-            return (wgv.compareTo(minwgv) >= 0);
+    private boolean checkPluginVersion(String plg, String min) {
+        if (pm.isPluginEnabled(plg)) {
+            Plugin check = pm.getPlugin(plg);
+            Version minver = new Version(min);
+            String[] split = check.getDescription().getVersion().split("-");
+            Version ver = new Version(split[0]);
+            return (ver.compareTo(minver) >= 0);
         } else {
             return true;
         }
