@@ -143,6 +143,8 @@ public class TARDISJoinListener implements Listener {
         ResultSetTardis rs = new ResultSetTardis(plugin, wherep, "", false);
         if (rs.resultSet()) {
             int id = rs.getTardis_id();
+            String owner = rs.getOwner();
+            String last_known_name = rs.getLastKnownName();
             HashMap<String, Object> wherecl = new HashMap<String, Object>();
             wherecl.put("tardis_id", id);
             ResultSetCurrentLocation rsc = new ResultSetCurrentLocation(plugin, wherecl);
@@ -164,8 +166,16 @@ public class TARDISJoinListener implements Listener {
             }
             HashMap<String, Object> set = new HashMap<String, Object>();
             set.put("lastuse", now);
-            // TODO update the player's name as it may have changed
-            //set.put("owner", player.getName());
+            if (!last_known_name.equals(player.getName())) {
+                // update the player's name WG region as it may have changed
+                if (plugin.isWorldGuardOnServer() && plugin.getConfig().getBoolean("preferences.use_worldguard")) {
+                    String[] chunkworld = rs.getChunk().split(":");
+                    World cw = plugin.getServer().getWorld(chunkworld[0]);
+                    // tardis region
+                    plugin.getWorldGuardUtils().updateRegionForNameChange(cw, owner, player.getUniqueId(), "tardis");
+                }
+                set.put("last_known_name", player.getName());
+            }
             HashMap<String, Object> wherel = new HashMap<String, Object>();
             wherel.put("tardis_id", id);
             qf.doUpdate("tardis", set, wherel);

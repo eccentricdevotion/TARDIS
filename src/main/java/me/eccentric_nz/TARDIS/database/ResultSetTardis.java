@@ -49,6 +49,7 @@ public class ResultSetTardis {
     private int tardis_id;
     private UUID uuid;
     private String owner;
+    private String lastKnownName;
     private String chunk;
     private int tips;
     private SCHEMATIC schematic;
@@ -157,6 +158,7 @@ public class ResultSetTardis {
                     this.tardis_id = rs.getInt("tardis_id");
                     this.uuid = UUID.fromString(rs.getString("uuid"));
                     this.owner = rs.getString("owner");
+                    this.lastKnownName = rs.getString("last_known_name");
                     this.chunk = rs.getString("chunk");
                     this.tips = rs.getInt("tips");
                     this.schematic = CONSOLES.SCHEMATICFor(rs.getString("size").toLowerCase());
@@ -334,6 +336,10 @@ public class ResultSetTardis {
 
     public long getLastuse() {
         return lastuse;
+    }
+
+    public String getLastKnownName() {
+        return lastKnownName;
     }
 
     public boolean isIso_on() {

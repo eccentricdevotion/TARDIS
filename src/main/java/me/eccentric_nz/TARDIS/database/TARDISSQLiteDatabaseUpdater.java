@@ -117,6 +117,7 @@ public class TARDISSQLiteDatabaseUpdater {
         tardisupdates.add("tips INTEGER DEFAULT '-1'");
         tardisupdates.add("village TEXT DEFAULT ''");
         tardisupdates.add("zero TEXT DEFAULT ''");
+        tardisupdates.add("last_known_name TEXT COLLATE NOCASE DEFAULT ''");
         inventoryupdates.add("attributes TEXT DEFAULT ''");
         inventoryupdates.add("armour_attributes TEXT DEFAULT ''");
     }

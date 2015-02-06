@@ -126,7 +126,6 @@ public class TARDISExterminator {
     @SuppressWarnings("deprecation")
     public boolean exterminate(final Player player, Block block) {
         int signx = 0, signz = 0;
-        String playerNameStr = player.getName();
         Location sign_loc = block.getLocation();
         HashMap<String, Object> where = new HashMap<String, Object>();
         if (player.hasPermission("tardis.delete")) {
@@ -168,6 +167,7 @@ public class TARDISExterminator {
         ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);
         if (rs.resultSet()) {
             final int id = rs.getTardis_id();
+            String owner = rs.getOwner();
             String chunkLoc = rs.getChunk();
             int tips = rs.getTIPS();
             boolean hasZero = (!rs.getZero().isEmpty());
@@ -237,9 +237,9 @@ public class TARDISExterminator {
                 }
                 int restore = getRestore(cw);
                 if (!cw.getName().contains("TARDIS_WORLD_")) {
-                    plugin.getInteriorDestroyer().destroyInner(schm, id, cw, restore, playerNameStr, tips);
+                    plugin.getInteriorDestroyer().destroyInner(schm, id, cw, restore, owner, tips);
                 }
-                cleanWorlds(cw, playerNameStr);
+                cleanWorlds(cw, owner);
                 removeZeroRoom(tips, hasZero);
                 plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
                     @Override

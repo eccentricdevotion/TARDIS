@@ -49,6 +49,7 @@ import me.eccentric_nz.TARDIS.database.TARDISBiomeUpdater;
 import me.eccentric_nz.TARDIS.database.TARDISCompanionClearer;
 import me.eccentric_nz.TARDIS.database.TARDISControlsConverter;
 import me.eccentric_nz.TARDIS.database.TARDISDatabaseConnection;
+import me.eccentric_nz.TARDIS.database.TARDISLastKnownNameUpdater;
 import me.eccentric_nz.TARDIS.database.TARDISLocationsConverter;
 import me.eccentric_nz.TARDIS.database.TARDISMaterialIDConverter;
 import me.eccentric_nz.TARDIS.database.TARDISMySQLDatabase;
@@ -247,6 +248,12 @@ public class TARDIS extends JavaPlugin {
                         saveConfig();
                         console.sendMessage(pluginName + "Cleared companion lists as they now use UUIDs!");
                     }
+                }
+                // update database add and populate uuid fields
+                if (!getConfig().getBoolean("conversions.lastknownname_conversion_done")) {
+                    TARDISLastKnownNameUpdater up = new TARDISLastKnownNameUpdater(this);
+                    up.update();
+                    getConfig().set("conversions.lastknownname_conversion_done", true);
                 }
                 checkTCG();
                 checkDefaultWorld();
