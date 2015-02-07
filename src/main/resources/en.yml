@@ -551,6 +551,7 @@ ROOM_ADDED: "Room added, please set the COST, SEED BLOCK and OFFSET, and then en
 ROOM_BLOCKS: "%s blocks:"
 ROOM_CANCEL: "To cancel growing this room use the command /tardis abort %s"
 ROOM_COST: "The %s cost was set to %s!"
+ROOM_ENERGY: "A %s requires %s Artron energy to grow."
 ROOM_EXISTS: "That room name already exists!"
 ROOM_FAILED: "Room addition failed, probably because the file was not a TARDIS JSON schematic."
 ROOM_FILE_SAVED: "File saved to 'plugins/TARDIS/%s_block_list.txt'"

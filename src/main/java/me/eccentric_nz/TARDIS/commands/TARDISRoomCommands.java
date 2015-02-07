@@ -216,6 +216,7 @@ public class TARDISRoomCommands implements CommandExecutor {
                     if (total == 0) {
                         TARDISMessage.send(player, "CONDENSE_NONE");
                     }
+                    TARDISMessage.send(player, "ROOM_ENERGY", name, plugin.getRoomsConfig().getString("rooms." + name + ".cost"));
                     return true;
                 } else {
                     TARDISMessage.send(player, "ID_NOT_FOUND");
