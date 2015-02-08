@@ -242,7 +242,11 @@ public class TARDISAdminCommands implements CommandExecutor {
                     return false;
                 }
                 if (first.equals("arch")) {
-                    return new TARDISArchCommand(plugin).whois(sender, args);
+                    if (args.length > 2) {
+                        return new TARDISArchCommand(plugin).force(sender, args);
+                    } else {
+                        return new TARDISArchCommand(plugin).whois(sender, args);
+                    }
                 }
                 if (first.equals("area")) {
                     plugin.getConfig().set("creation.area", args[1]);
