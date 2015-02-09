@@ -307,13 +307,13 @@ public class TARDISWorldGuardUtils {
      * Adds a player to a region's membership.
      *
      * @param w the world the region is located in
-     * @param p the player whose region it is
+     * @param owner the player whose region it is
      * @param a the player to add
      */
-    public void addMemberToRegion(World w, String p, String a) {
+    public void addMemberToRegion(World w, String owner, String a) {
         RegionManager rm = wg.getRegionManager(w);
-        if (rm.hasRegion("tardis_" + p)) {
-            plugin.getServer().dispatchCommand(plugin.getConsole(), "rg addmember tardis_" + p + " " + a + " -w " + w.getName());
+        if (rm.hasRegion("tardis_" + owner)) {
+            plugin.getServer().dispatchCommand(plugin.getConsole(), "rg addmember tardis_" + owner + " " + a + " -w " + w.getName());
         }
     }
 
@@ -321,13 +321,13 @@ public class TARDISWorldGuardUtils {
      * Removes a player from a region's membership.
      *
      * @param w the world the region is located in
-     * @param p the player whose region it is
+     * @param owner the player whose region it is
      * @param a the player to add
      */
-    public void removeMemberFromRegion(World w, String p, String a) {
+    public void removeMemberFromRegion(World w, String owner, String a) {
         RegionManager rm = wg.getRegionManager(w);
-        if (rm.hasRegion("tardis_" + p)) {
-            plugin.getServer().dispatchCommand(plugin.getConsole(), "rg removemember tardis_" + p + " " + a + " -w " + w.getName());
+        if (rm.hasRegion("tardis_" + owner)) {
+            plugin.getServer().dispatchCommand(plugin.getConsole(), "rg removemember tardis_" + owner + " " + a + " -w " + w.getName());
         }
     }
 

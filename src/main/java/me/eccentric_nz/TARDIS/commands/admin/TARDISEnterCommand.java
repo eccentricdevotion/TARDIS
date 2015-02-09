@@ -68,6 +68,7 @@ public class TARDISEnterCommand {
             ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);
             if (rs.resultSet()) {
                 int id = rs.getTardis_id();
+                String owner = rs.getOwner();
                 HashMap<String, Object> wherei = new HashMap<String, Object>();
                 wherei.put("door_type", 1);
                 wherei.put("tardis_id", id);
@@ -107,7 +108,7 @@ public class TARDISEnterCommand {
                     }
                     // if WorldGuard is on the server check for TARDIS region protection and add admin as member
                     if (plugin.isWorldGuardOnServer() && plugin.getConfig().getBoolean("preferences.use_worldguard")) {
-                        plugin.getWorldGuardUtils().addMemberToRegion(cw, args[1], player.getName());
+                        plugin.getWorldGuardUtils().addMemberToRegion(cw, owner, player.getName());
                     }
                     // enter TARDIS!
                     cw.getChunkAt(tmp_loc).load();
