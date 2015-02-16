@@ -23,6 +23,7 @@ import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.enchantments.EnchantmentWrapper;
+import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
@@ -73,6 +74,7 @@ public class TARDISPageThreeInventory {
         one.setDisplayName(plugin.getLanguage().getString("BUTTON_PAGE_1"));
         Enchantment e = EnchantmentWrapper.ARROW_FIRE;
         one.addEnchant(e, 1, true);
+        one.addItemFlags(ItemFlag.values());
         page.setItemMeta(one);
         // Gazebo
         ItemStack gaz = new ItemStack(Material.FENCE, 1);
