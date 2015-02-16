@@ -56,7 +56,7 @@ import org.bukkit.configuration.file.YamlConfiguration;
  */
 public class TARDISGeneralInstanceKeeper {
 
-    private HashSet<Byte> transparent = new HashSet<Byte>();
+    private HashSet<Material> transparent = new HashSet<Material>();
     private List<Block> doorPistons = new ArrayList<Block>();
     private List<Integer> npcIDs = new ArrayList<Integer>();
     private List<String> quotes = new ArrayList<String>();
@@ -259,7 +259,7 @@ public class TARDISGeneralInstanceKeeper {
         return roomArgs;
     }
 
-    public HashSet<Byte> getTransparent() {
+    public HashSet<Material> getTransparent() {
         return transparent;
     }
 
@@ -301,18 +301,19 @@ public class TARDISGeneralInstanceKeeper {
         }
     }
 
-    private HashSet<Byte> buildTransparent() {
-        HashSet<Byte> trans = new HashSet<Byte>();
+    private HashSet<Material> buildTransparent() {
+        HashSet<Material> trans = new HashSet<Material>();
         // add transparent blocks
-        trans.add((byte) 0); // AIR
-        trans.add((byte) 8); // WATER
-        trans.add((byte) 9); // STATIONARY_WATER
-        trans.add((byte) 31); // LONG_GRASS
-        trans.add((byte) 32); // DEAD_BUSH
-        trans.add((byte) 55); // REDSTONE_WIRE
-        trans.add((byte) 78); // SNOW
-        trans.add((byte) 101); // IRON_FENCE
-        trans.add((byte) 106); // VINE
+        trans.add(Material.AIR);
+        trans.add(Material.WATER);
+        trans.add(Material.STATIONARY_WATER);
+        trans.add(Material.LONG_GRASS);
+        trans.add(Material.DEAD_BUSH);
+        trans.add(Material.DOUBLE_PLANT);
+        trans.add(Material.REDSTONE_WIRE);
+        trans.add(Material.SNOW);
+        trans.add(Material.IRON_FENCE);
+        trans.add(Material.VINE);
         return trans;
     }
 

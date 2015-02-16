@@ -20,6 +20,7 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
+import java.util.Set;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.chatGUI.TARDISUpdateChatGUI;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
@@ -38,6 +39,7 @@ public class TARDISUpdateCommand {
 
     private final TARDIS plugin;
     private final List<String> validBlockNames = Arrays.asList("advanced", "ars", "artron", "back", "backdoor", "button", "chameleon", "condenser", "control", "creeper", "direction", "door", "eps", "farm", "handbrake", "hinge", "info", "keyboard", "light", "rail", "save-sign", "scanner", "siege", "stable", "storage", "temporal", "terminal", "toggle_wool", "vault", "village", "world-repeater", "x-repeater", "y-repeater", "z-repeater", "zero");
+    Set<Material> transparent = null;
 
     public TARDISUpdateCommand(TARDIS plugin) {
         this.plugin = plugin;
@@ -70,7 +72,7 @@ public class TARDISUpdateCommand {
                 return true;
             }
             if (tardis_block.equals("hinge")) {
-                Block block = player.getTargetBlock(null, 10);
+                Block block = player.getTargetBlock(transparent, 10);
                 if (block.getType().equals(Material.IRON_DOOR_BLOCK)) {
                     if (args.length == 3) {
                         byte b = TARDISNumberParsers.parseByte(args[2]);
