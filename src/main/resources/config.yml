@@ -9,9 +9,9 @@ storage:
         password: mysecurepassword
 # inner TARDIS
 creation:
-    create_worlds: true
+    create_worlds: false
     create_worlds_with_perms: false
-    default_world: false
+    default_world: true
     default_world_name: TARDIS_TimeVortex
     tips_limit: 400
     border_radius: 256
