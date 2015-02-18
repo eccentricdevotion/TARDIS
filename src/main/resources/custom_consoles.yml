@@ -4,4 +4,5 @@ CUSTOM:
     schematic: custom
     seed: OBSIDIAN
     has_beacon: true
+    has_lanterns: false
     description: Super-duper Custom Console

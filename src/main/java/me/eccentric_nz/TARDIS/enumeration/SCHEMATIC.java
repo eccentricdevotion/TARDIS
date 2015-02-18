@@ -30,15 +30,17 @@ public class SCHEMATIC {
     boolean small;
     boolean tall;
     boolean beacon;
+    boolean lanterns;
     boolean custom;
 
-    public SCHEMATIC(String seed, String permission, String description, boolean small, boolean tall, boolean beacon, boolean custom) {
+    public SCHEMATIC(String seed, String permission, String description, boolean small, boolean tall, boolean beacon, boolean lanterns, boolean custom) {
         this.seed = seed;
         this.permission = permission;
         this.description = description;
         this.small = small;
         this.tall = tall;
         this.beacon = beacon;
+        this.lanterns = lanterns;
         this.custom = custom;
     }
 
@@ -116,6 +118,15 @@ public class SCHEMATIC {
     }
 
     /**
+     * Checks if this SCHEMATIC has a sea lanterns.
+     *
+     * @return true if this SCHEMATIC has a sea lanterns.
+     */
+    public boolean hasLanterns() {
+        return lanterns;
+    }
+
+    /**
      * Checks if this is a custom SCHEMATIC.
      *
      * @return true if this SCHEMATIC is custom.
@@ -125,9 +136,9 @@ public class SCHEMATIC {
     }
 
     /**
-     * Checks if this SCHEMATIC has a beacon.
+     * Checks if players must use the sonic to change the beacon glass colour.
      *
-     * @return true if this SCHEMATIC has a beacon.
+     * @return true or false.
      */
     public boolean mustUseSonic() {
         return this.permission.equals("budget");
