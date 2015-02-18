@@ -41,7 +41,7 @@ public class TARDISLampToggler {
     }
 
     @SuppressWarnings("deprecation")
-    public void flickSwitch(int id, UUID uuid, boolean on) {
+    public void flickSwitch(int id, UUID uuid, boolean on, boolean lantern) {
         HashMap<String, Object> wherel = new HashMap<String, Object>();
         wherel.put("tardis_id", id);
         ResultSetLamps rsl = new ResultSetLamps(plugin, wherel, true);
@@ -56,6 +56,7 @@ public class TARDISLampToggler {
                 }
             }
         }
+        Material onlamp = (lantern) ? Material.SEA_LANTERN : Material.REDSTONE_LAMP_ON;
         HashMap<String, Object> wherepp = new HashMap<String, Object>();
         wherepp.put("uuid", uuid.toString());
         ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, wherepp);
@@ -68,17 +69,19 @@ public class TARDISLampToggler {
                 b.getChunk().load();
             }
             if (on) {
-                if (b.getType().equals(Material.REDSTONE_LAMP_ON)) {
+                if (b.getType().equals(Material.SEA_LANTERN) || (b.getType().equals(Material.REDSTONE_LAMP_ON))) {
                     if (use_wool) {
                         b.setType(Material.WOOL);
                         b.setData((byte) 15);
+                    } else if (lantern) {
+                        b.setType(Material.MONSTER_EGGS);
                     } else {
                         b.setType(Material.SPONGE);
                     }
                 }
             } else {
-                if (b.getType().equals(Material.SPONGE) || (b.getType().equals(Material.WOOL) && b.getData() == (byte) 15)) {
-                    b.setType(Material.REDSTONE_LAMP_ON);
+                if (b.getType().equals(Material.SPONGE) || b.getType().equals(Material.MONSTER_EGGS) || (b.getType().equals(Material.WOOL) && b.getData() == (byte) 15)) {
+                    b.setType(onlamp);
                 }
             }
         }

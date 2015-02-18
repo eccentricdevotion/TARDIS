@@ -238,7 +238,7 @@ public class TARDISButtonListener implements Listener {
                                     player.openInventory(tmpl);
                                     break;
                                 case 12: // Control room light switch
-                                    new TARDISLightSwitch(plugin, id, lights, player).flickSwitch();
+                                    new TARDISLightSwitch(plugin, id, lights, player, rs.getSchematic().hasLanterns()).flickSwitch();
                                     break;
                                 case 13: // TIS
                                     new TARDISInfoMenuButton(plugin, player).clickButton();

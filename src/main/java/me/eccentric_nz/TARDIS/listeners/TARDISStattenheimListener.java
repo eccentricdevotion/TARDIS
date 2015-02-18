@@ -324,7 +324,7 @@ public class TARDISStattenheimListener implements Listener {
                         TARDISMessage.send(player, "POWER_ON");
                         // if lights are off, turn them on
                         if (rs.isLights_on()) {
-                            new TARDISLampToggler(plugin).flickSwitch(id, player.getUniqueId(), false);
+                            new TARDISLampToggler(plugin).flickSwitch(id, player.getUniqueId(), false, rs.getSchematic().hasLanterns());
                         }
                         // if beacon is off turn it on
                         if (beacon_on) {

@@ -165,7 +165,7 @@ public class TARDISControlMenuListener extends TARDISMenuListener implements Lis
                                     // power up/down
                                     if (plugin.getConfig().getBoolean("allow.power_down")) {
                                         close(player);
-                                        new TARDISPowerButton(plugin, id, player, rs.getPreset(), rs.isPowered_on(), rs.isHidden(), lights, player.getLocation(), level).clickButton();
+                                        new TARDISPowerButton(plugin, id, player, rs.getPreset(), rs.isPowered_on(), rs.isHidden(), lights, player.getLocation(), level, rs.getSchematic().hasLanterns()).clickButton();
                                     } else {
                                         TARDISMessage.send(player, "POWER_DOWN_DISABLED");
                                     }
@@ -235,7 +235,7 @@ public class TARDISControlMenuListener extends TARDISMenuListener implements Lis
                                         TARDISMessage.send(player, "POWER_DOWN");
                                         return;
                                     }
-                                    new TARDISLightSwitch(plugin, id, lights, player).flickSwitch();
+                                    new TARDISLightSwitch(plugin, id, lights, player, rs.getSchematic().hasLanterns()).flickSwitch();
                                     break;
                                 case 15:
                                     // toggle wool

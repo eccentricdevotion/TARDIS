@@ -218,7 +218,7 @@ public class TARDISArtronCapacitorListener implements Listener {
                                 } else {
                                     // toggle power
                                     if (plugin.getConfig().getBoolean("allow.power_down")) {
-                                        new TARDISPowerButton(plugin, id, player, rs.getPreset(), rs.isPowered_on(), rs.isHidden(), lights, player.getLocation(), current_level).clickButton();
+                                        new TARDISPowerButton(plugin, id, player, rs.getPreset(), rs.isPowered_on(), rs.isHidden(), lights, player.getLocation(), current_level, rs.getSchematic().hasLanterns()).clickButton();
                                     }
                                 }
                             } else if (player.isSneaking()) {

@@ -32,12 +32,14 @@ public class TARDISLightSwitch {
     private final int id;
     private final boolean lights;
     private final Player player;
+    private final boolean lanterns;
 
-    public TARDISLightSwitch(TARDIS plugin, int id, boolean lights, Player player) {
+    public TARDISLightSwitch(TARDIS plugin, int id, boolean lights, Player player, boolean lanterns) {
         this.plugin = plugin;
         this.id = id;
         this.lights = lights;
         this.player = player;
+        this.lanterns = lanterns;
     }
 
     public void flickSwitch() {
@@ -45,11 +47,10 @@ public class TARDISLightSwitch {
         wherel.put("tardis_id", id);
         HashMap<String, Object> setl = new HashMap<String, Object>();
         if (lights) {
-            new TARDISLampToggler(plugin).flickSwitch(id, player.getUniqueId(), true);
+            new TARDISLampToggler(plugin).flickSwitch(id, player.getUniqueId(), true, lanterns);
             setl.put("lights_on", 0);
         } else {
-
-            new TARDISLampToggler(plugin).flickSwitch(id, player.getUniqueId(), false);
+            new TARDISLampToggler(plugin).flickSwitch(id, player.getUniqueId(), false, lanterns);
             setl.put("lights_on", 1);
         }
         new QueryFactory(plugin).doUpdate("tardis", setl, wherel);

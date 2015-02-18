@@ -100,7 +100,7 @@ public class TARDISQuitListener implements Listener {
                     }
                     // if lights are on, turn them off
                     if (lights) {
-                        new TARDISLampToggler(plugin).flickSwitch(id, uuid, true);
+                        new TARDISLampToggler(plugin).flickSwitch(id, uuid, true, rs.getSchematic().hasLanterns());
                     }
                     // if beacon is on turn it off
                     new TARDISBeaconToggler(plugin).flickSwitch(uuid, false);

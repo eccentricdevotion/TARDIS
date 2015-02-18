@@ -44,8 +44,9 @@ public class TARDISPowerButton {
     private final boolean lights;
     private final Location loc;
     private final int level;
+    private final boolean lanterns;
 
-    public TARDISPowerButton(TARDIS plugin, int id, Player player, PRESET preset, boolean powered, boolean hidden, boolean lights, Location loc, int level) {
+    public TARDISPowerButton(TARDIS plugin, int id, Player player, PRESET preset, boolean powered, boolean hidden, boolean lights, Location loc, int level, boolean lanterns) {
         this.plugin = plugin;
         this.id = id;
         this.player = player;
@@ -55,6 +56,7 @@ public class TARDISPowerButton {
         this.lights = lights;
         this.loc = loc;
         this.level = level;
+        this.lanterns = lanterns;
     }
 
     public void clickButton() {
@@ -88,7 +90,7 @@ public class TARDISPowerButton {
             }
             // if lights are on, turn them off
             if (lights) {
-                new TARDISLampToggler(plugin).flickSwitch(id, player.getUniqueId(), true);
+                new TARDISLampToggler(plugin).flickSwitch(id, player.getUniqueId(), true, lanterns);
             }
             // if beacon is on turn it off
             new TARDISBeaconToggler(plugin).flickSwitch(player.getUniqueId(), false);
@@ -104,7 +106,7 @@ public class TARDISPowerButton {
             TARDISMessage.send(player, "POWER_ON");
             // if lights are off, turn them on
             if (lights) {
-                new TARDISLampToggler(plugin).flickSwitch(id, player.getUniqueId(), false);
+                new TARDISLampToggler(plugin).flickSwitch(id, player.getUniqueId(), false, lanterns);
             }
             // determine beacon prefs
             HashMap<String, Object> wherek = new HashMap<String, Object>();

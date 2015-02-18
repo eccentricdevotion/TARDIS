@@ -254,7 +254,7 @@ public class TARDISTimeLordDeathListener implements Listener {
                                             }, 1L);
                                         }
                                         // if lights are on, turn them off
-                                        new TARDISLampToggler(plugin).flickSwitch(id, player.getUniqueId(), true);
+                                        new TARDISLampToggler(plugin).flickSwitch(id, player.getUniqueId(), true, rs.getSchematic().hasLanterns());
                                         // if beacon is on turn it off
                                         new TARDISBeaconToggler(plugin).flickSwitch(player.getUniqueId(), false);
                                         qf.doUpdate("tardis", setp, wherep);
