@@ -271,7 +271,7 @@ public class TARDISARSListener extends TARDISARSMethods implements Listener {
         int yy = md.getY() + updown;
         // avoid ArrayIndexOutOfBoundsException if gravity well extends beyond ARS area
         if (yy < 0 || yy > 2) {
-            return true;
+            return false;
         }
         int[] coords = getCoords(slot, md);
         int xx = coords[0];
