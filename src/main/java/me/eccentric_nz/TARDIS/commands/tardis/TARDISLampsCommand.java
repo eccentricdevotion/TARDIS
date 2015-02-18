@@ -86,6 +86,7 @@ public class TARDISLampsCommand {
             if (rsc.resultSet()) {
                 int starty, endy;
                 SCHEMATIC schm = rs.getSchematic();
+                Material lampon = (schm.hasLanterns()) ? Material.SEA_LANTERN : Material.REDSTONE_LAMP_ON;
                 String directory = (schm.isCustom()) ? "user_schematics" : "schematics";
                 String path = plugin.getDataFolder() + File.separator + directory + File.separator + schm.getPermission() + ".tschm";
                 // get JSON
@@ -109,8 +110,8 @@ public class TARDISLampsCommand {
                     for (int xx = bx; xx < bx + 16; xx++) {
                         for (int zz = bz; zz < bz + 16; zz++) {
                             for (int yy = starty; yy < endy; yy++) {
-                                Material typeId = world.getBlockAt(xx, yy, zz).getType();
-                                if (typeId.equals(Material.REDSTONE_LAMP_ON)) {
+                                Material mat = world.getBlockAt(xx, yy, zz).getType();
+                                if (mat.equals(lampon)) {
                                     String lamp = w + ":" + xx + ":" + yy + ":" + zz;
                                     HashMap<String, Object> set = new HashMap<String, Object>();
                                     set.put("tardis_id", id);
