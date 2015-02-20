@@ -2,7 +2,6 @@
 
 ##Current version `3.2.11`
 1. Fix bugs
-2. Set config to default to shared TARDIS_TimeVortex world - auto create it on first start
 
 ##Upcoming version `3.3`
 1. Junk TARDIS
