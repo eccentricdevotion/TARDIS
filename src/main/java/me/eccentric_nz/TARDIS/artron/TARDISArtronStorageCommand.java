@@ -145,7 +145,9 @@ public class TARDISArtronStorageCommand implements CommandExecutor {
             lore.set(1, "" + new_amount);
             im.setLore(lore);
             im.addEnchant(Enchantment.DURABILITY, 1, true);
-            im.addItemFlags(ItemFlag.values());
+            if (!plugin.getPM().isPluginEnabled("Multiverse-Inventories")) {
+                im.addItemFlags(ItemFlag.values());
+            }
             is.setItemMeta(im);
             // remove the energy from the tardis/timelord
             HashMap<String, Object> where = new HashMap<String, Object>();

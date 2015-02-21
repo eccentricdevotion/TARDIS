@@ -567,7 +567,9 @@ public class TARDISSonicListener implements Listener {
         if ((!timeout.containsKey(player.getUniqueId()) || timeout.get(player.getUniqueId()) < now)) {
             ItemMeta im = player.getItemInHand().getItemMeta();
             im.addEnchant(Enchantment.DURABILITY, 1, true);
-            im.addItemFlags(ItemFlag.values());
+            if (!plugin.getPM().isPluginEnabled("Multiverse-Inventories")) {
+                im.addItemFlags(ItemFlag.values());
+            }
             player.getItemInHand().setItemMeta(im);
             timeout.put(player.getUniqueId(), now + cooldown);
             TARDISSounds.playTARDISSound(player.getLocation(), player, sound);
