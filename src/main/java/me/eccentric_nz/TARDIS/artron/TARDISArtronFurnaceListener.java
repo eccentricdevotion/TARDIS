@@ -16,7 +16,6 @@
  */
 package me.eccentric_nz.TARDIS.artron;
 
-import java.util.Arrays;
 import java.util.List;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
@@ -50,7 +49,6 @@ public class TARDISArtronFurnaceListener implements Listener {
     private final TARDIS plugin;
     private final double burnFactor;
     private final short cookTime;
-    private final List<BlockFace> surrounding = Arrays.asList(BlockFace.EAST, BlockFace.SOUTH, BlockFace.WEST, BlockFace.NORTH, BlockFace.NORTH_EAST, BlockFace.NORTH_WEST, BlockFace.SOUTH_EAST, BlockFace.SOUTH_WEST);
 
     public TARDISArtronFurnaceListener(TARDIS plugin) {
         this.plugin = plugin;
@@ -75,7 +73,11 @@ public class TARDISArtronFurnaceListener implements Listener {
                         // determine burn time
                         int burnTime = (int) (percentage * burnFactor);
                         event.setBurnTime(burnTime);
-                        furnace.setCookTime(cookTime);
+                        if (plugin.isHelperOnServer()) {
+                            plugin.getTardisHelper().setCookTimeTotal(event.getBlock(), cookTime);
+                        } else {
+                            furnace.setCookTime(cookTime);
+                        }
                         // return an empty cell
                         plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
                             @Override
@@ -98,7 +100,11 @@ public class TARDISArtronFurnaceListener implements Listener {
         // Setting cookTime after cooking an item (and the fuel is still burning)
         Furnace furnace = (Furnace) event.getBlock().getState();
         if (furnace.getInventory().getTitle().equals("TARDIS Artron Furnace")) {
-            furnace.setCookTime(cookTime);
+            if (plugin.isHelperOnServer()) {
+                plugin.getTardisHelper().setCookTimeTotal(event.getBlock(), cookTime);
+            } else {
+                furnace.setCookTime(cookTime);
+            }
         }
     }
 
@@ -113,7 +119,11 @@ public class TARDISArtronFurnaceListener implements Listener {
         if (furnace.getInventory().getTitle().equals("TARDIS Artron Furnace") && (event.getSlot() == 0 || event.getSlot() == 1) // Click in one of the two slots
                 && event.getCursor().getType() != Material.AIR // With an item
                 && furnace.getCookTime() > cookTime) {         // The furnace is not already burning something
-            furnace.setCookTime(cookTime);
+            if (plugin.isHelperOnServer()) {
+                plugin.getTardisHelper().setCookTimeTotal(furnace.getBlock(), cookTime);
+            } else {
+                furnace.setCookTime(cookTime);
+            }
         }
     }
 
@@ -165,7 +175,7 @@ public class TARDISArtronFurnaceListener implements Listener {
                 // reset biome
                 Biome b = Biome.DEEP_OCEAN;
                 if (block.getBiome().equals(Biome.DEEP_OCEAN)) {
-                    for (BlockFace f : surrounding) {
+                    for (BlockFace f : plugin.getGeneralKeeper().getSurrounding()) {
                         b = block.getRelative(f).getBiome();
                         if (!b.equals(Biome.DEEP_OCEAN)) {
                             break;
