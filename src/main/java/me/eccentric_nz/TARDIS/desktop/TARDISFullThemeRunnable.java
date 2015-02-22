@@ -576,7 +576,7 @@ public class TARDISFullThemeRunnable extends TARDISThemeRunnable implements Runn
                             break;
                     }
                 }
-                if (type.equals(Material.REDSTONE_LAMP_ON)) {
+                if (type.equals(Material.REDSTONE_LAMP_ON) || type.equals(Material.SEA_LANTERN)) {
                     // remember lamp blocks
                     Block lamp = world.getBlockAt(x, y, z);
                     lampblocks.add(lamp);
