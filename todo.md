@@ -2,6 +2,7 @@
 
 ##Current version `3.2.11`
 1. Fix bugs
+2. Change all consoles to use redstone blocks instead of levers to power lamps, so that the `lanterns_on` player preference will work.
 
 ##Upcoming version `3.3`
 1. Junk TARDIS

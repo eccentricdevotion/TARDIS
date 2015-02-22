@@ -170,6 +170,7 @@ public class TARDISSeedBlockProcessor {
                 setpp.put("wall", getWallKey(wall_type, wall_data));
                 setpp.put("floor", getWallKey(floor_type, floor_data));
                 setpp.put("lamp", seed.getLamp());
+                setpp.put("lanterns_on", (schm.getPermission().equals("eleventh") || schm.getPermission().equals("twelfth")) ? 1 : 0);
                 final int lastInsertId = qf.doSyncInsert("tardis", set);
                 // insert/update  player prefs
                 HashMap<String, Object> wherep = new HashMap<String, Object>();

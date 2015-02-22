@@ -56,14 +56,15 @@ public class TARDISLampToggler {
                 }
             }
         }
-        Material onlamp = (lantern) ? Material.SEA_LANTERN : Material.REDSTONE_LAMP_ON;
         HashMap<String, Object> wherepp = new HashMap<String, Object>();
         wherepp.put("uuid", uuid.toString());
         ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, wherepp);
         boolean use_wool = false;
         if (rsp.resultSet()) {
             use_wool = rsp.isWoolLightsOn();
+            lantern = rsp.isLanternsOn();
         }
+        Material onlamp = (lantern) ? Material.SEA_LANTERN : Material.REDSTONE_LAMP_ON;
         for (Block b : lamps) {
             while (!b.getChunk().isLoaded()) {
                 b.getChunk().load();
