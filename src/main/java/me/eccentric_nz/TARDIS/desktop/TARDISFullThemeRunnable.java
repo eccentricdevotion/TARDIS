@@ -371,7 +371,8 @@ public class TARDISFullThemeRunnable extends TARDISThemeRunnable implements Runn
                 }
             }
             for (Block lamp : lampblocks) {
-                lamp.setType(Material.REDSTONE_LAMP_ON);
+                Material l = (tud.getSchematic().getPermission().equals("eleventh") || tud.getSchematic().getPermission().equals("twelfth")) ? Material.SEA_LANTERN : Material.REDSTONE_LAMP_ON;
+                lamp.setType(l);
             }
             lampblocks.clear();
             if (postBedrock != null) {

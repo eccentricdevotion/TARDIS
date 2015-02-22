@@ -649,7 +649,8 @@ public class TARDISBuilderInner {
             }
         }
         for (Block lamp : lampblocks) {
-            lamp.setType(Material.REDSTONE_LAMP_ON);
+            Material lantern = (schm.getPermission().equals("eleventh") || schm.getPermission().equals("twelfth")) ? Material.SEA_LANTERN : Material.REDSTONE_LAMP_ON;
+            lamp.setType(lantern);
         }
         lampblocks.clear();
         setBanners(176, postStandingBanners);
