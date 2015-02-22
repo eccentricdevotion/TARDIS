@@ -2,7 +2,6 @@
 
 ##Current version `3.2.11`
 1. Fix bugs
-2. Fix the ARS gui showing different rooms after the room scroll buttons are clicked
 
 ##Upcoming version `3.3`
 1. Junk TARDIS
