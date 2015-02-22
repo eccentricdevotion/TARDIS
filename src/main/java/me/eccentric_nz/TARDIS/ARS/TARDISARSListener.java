@@ -225,7 +225,7 @@ public class TARDISARSListener extends TARDISARSMethods implements Listener {
                                     break;
                                 }
                                 if (room.equals("GRAVITY") || room.equals("ANTIGRAVITY")) {
-                                    int updown = (room.equals("Gravity Well")) ? -1 : 1;
+                                    int updown = (room.equals("GRAVITY")) ? -1 : 1;
                                     if (checkSavedGrid(uuid, selected_slot.get(uuid), updown)) {
                                         setLore(inv, slot, "Using a gravity well here would overwrite an existing room!");
                                         break;
