@@ -42,6 +42,7 @@ CUSTOM:
     schematic: custom
     seed: OBSIDIAN
     has_beacon: true
+    has_lanterns: false
     description: Super-duper Custom Console</code></pre>
         <p>You can add as many custom consoles as you wish, all you need to do is duplicate the CUSTOM entry and then change it to suit as needed. The settings are explained below:</p>
         <ul>
@@ -49,6 +50,7 @@ CUSTOM:
             <li><code>schematic: [sometext]</code> &mdash; this affects the schematic filename, the permission node and the artron upgrade cost &mdash; best shown by example &mdash; if this is set to <code>rani</code>, then the schematic filename needs to <em>&lsquo;rani.tschm&rsquo;</em>, the permission to create this TARDIS will be <em>&lsquo;tardis.rani&rsquo;</em> and there needs to be a corresponding entry in <em>artron.yml</em> in the <code>upgrades</code> section e.g. <code>rani: 8000</code></li>
             <li><code>seed: [Material]</code> &mdash; this will determine the type of seed block this TARDIS uses &mdash; <code>[Material]</code> must be a valid Bukkit <a href="https://github.com/Bukkit/Bukkit/blob/master/src/main/java/org/bukkit/Material.java" target="_blank">Material</a> enum</li>
             <li><code>has_beacon: [true|false]</code> &mdash; again pretty self-explanatory, whether this TARDIS has a beacon in it</li>
+            <li><code>has_lanterns: [true|false]</code> &mdash; again pretty self-explanatory, whether this TARDIS has a sea lanterns for lights</li>
             <li><code>description: [some other text]</code> &mdash; this is the display name that appears when you hover over the block in the ARS and Desktop Theme GUIs</li>
         </ul>
         <p>When you have created your TARDIS schematic, you will need to put it in the <em>plugins/TARDIS/user_schematics</em> folder, and then restart the server.</p>

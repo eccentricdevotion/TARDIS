@@ -54,6 +54,8 @@
 			<li>Connected Textures</li>
 			<li>Travel Bar</li>
 			<li>Difficulty</li>
+			<li>Farming</li>
+			<li>Lanterns</li>
 		</ul>
 		<p>Each preference can be set with a command, and some of them can be set via an inventory based GUI (if the player has a Sonic Screwdriver, sneaking and right-clicking air will open the Player Preferences GUI).</p>
 		<h2>Player preference commands</h2>
@@ -105,6 +107,13 @@
 		<h3 id="diff"><code>/tardisprefs difficulty</code></h3>
 		<p>If allowed by the plugin configuration (and the server difficulty is set to <code>hard</code>), you can choose a TARDIS difficulty level with this command, type:</p>
 		<pre><code>/tardisprefs difficulty [easy|hard]</code></pre>
+		<h3><code>/tardisprefs farm</code></h3>
+		<p>Turn on TARDIS mob farming (requires the appropriate room, or <code>allow.spawn_eggs: true</code> in the config) with this command, type:</p>
+		<pre><code>/tardisprefs farm [on|off]</code></pre>
+		<h3><code>/tardisprefs lanterns</code></h3>
+		<p>Set whether your TARDIS console uses lanterns or redstone lamps with this command, type:</p>
+		<pre><code>/tardisprefs lanterns [on|off]</code></pre>
+        <p>ON means that the console will use sea lanterns, toggle the lights off and on to see the change.</p>
 		<h2>Other preferences</h2>
 		<h3><code>/tardis chameleon</code></h3>
 		<p>You can toggle the Chameleon Circuit on or off with this command, type:</p>

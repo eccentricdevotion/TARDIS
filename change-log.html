@@ -32,6 +32,62 @@
     <section>
         <h1>Change log</h1>
         <h2>What&rsquo;s been changed?</h2>
+        <h3>v3.2.11</h3>
+        <h4>Additions</h4>
+        <ul>
+            <li>Added upcoming TARDIS Sonic Blaster recipes to <code>/tardisrecipe</code> command</li>
+            <li>Added <code>/tardistravel village</code> command
+                <ul>
+                    <li>Config: <code>allow.village_travel: [true|false]</code></li>
+                    <li>Permission: <code>tardis.timetravel.village</code></li>
+                </ul>
+            </li>
+            <li>Added a room cost message to the <code>/tardisroom required</code> command</li>
+            <li>Added a <code>/tardisadmin arch [player] force</code> command to allow an admin to toggle a player&rsquo;s &lsquo;arched&rsquo; status</li>
+            <li>Added a player preference for whether consoles use lamps or lanterns for console lights
+                <ul>
+                    <li><code>/tardisprefs lanterns [on|off]</code></li>
+                    <li>The player preference is <code>off</code> by default, but will be automatically set to <code>true</code> when creating or upgrading to an ELEVENTH or TWELFTH console</li>
+                    <li>It is best left <strong>OFF</strong> for <em>existing consoles</em> as the levers that power lamps cannot be placed on lanterns &mdash; therefore breaking the lights if they are then switched back to lamps &mdash; to get around this, up-, down- or cross-grade your console first &mdash; this version contains new schematics to rectify the problem</li>
+                </ul>
+            </li>
+        </ul>
+        <h4>Changes</h4>
+        <ul>
+            <li>By default the config option <code>default_world</code> is now <strong>true</strong> for new installs &mdash; this will automatically create the <em>TARDIS_TimeVortex</em> world &mdash; <code>create_worlds</code> is now defaulted to false</li>
+            <li>The plugin now persists Villager careers when mob farming &mdash; <strong>requires TARDISHelper v1.4</strong></li>
+            <li>The plugin now checks that any dependent plugins that are on the server are the correct version for <em>this version of TARDIS</em> &mdash; if not, TARDIS is disabled until they are updated</li>
+            <li>TARDIS WorldGuard regions are updated if the player name has changed</li>
+            <li>The plugin now uses new <code>player.getTargetBlock()</code> and <code>itemMeta.addItemFlags()</code> methods &mdash; requires an updated CraftBukkit / Spigot build</li>
+            <li>Enchantment text is now hidden on Sonic Screwdrivers, Artron Storage Cells and the arrows in the Chameleon GUI
+                <ul>
+                    <li>Requires the latest CraftBukkit / Spigot build</li>
+                    <li>Not compatible with Multiverse-Inventories (they need to update) &mdash; change will not be applied if Multiverse-Inventories is enabled</li>
+                </ul>
+            </li>
+            <li>Updated the ELEVENTH and TWELFTH console schematics to use sea lanterns
+                <ul>
+                    <li>Existing consoles can also use lanterns if you set the player preference for lanterns (see above)</li>
+                </ul>
+            </li>
+            <li>Custom consoles now have a <code>has_lanterns: [true|false]</code> config option* </li>
+            <li>Sea lantern can now be used as the Police Box lamp</li>
+            <li>The plugin now sets the <code>CookTimeTotal</code> furnace entity tag in Artron Furnaces (for better burn animations) &mdash; <strong>requires TARDISHelper v1.4</strong></li>
+        </ul>
+        <h4>Bug fixes</h4>
+        <ul>
+            <li>Fixed a TARDIS Remote Key message</li>
+            <li>Fixed a misspelled ZERO room message</li>
+            <li>Removed an extra word &lsquo;command&rsquo; in the <code>/tardisarea</code> command message</li>
+            <li>Fix anti/gravity room growing
+                <ul>
+                    <li>Anti-Gravity / Gravity rooms now properly grow outside of the ARS grid</li>
+                    <li>Gravity rooms will now grow under rooms in the level above </li>
+                </ul>
+            </li>
+            <li>The plugin now makes sure the furnace is powered by Artron Energy before altering the cook time</li>
+            <li>Fixed the ARS GUI showing a different rooms after the room scroll buttons were clicked</li>
+        </ul>
         <h3>v3.2.10</h3>
         <h3>Additions</h3>
         <ul>
@@ -60,16 +116,16 @@
         <h3>Additions</h3>
         <ul>
             <li>Added a console warning if Remote Key ingredient does not = TARDIS Key result</li>
-            <li>Added Siege Cube protection when dropping the cube from the player's inventory (as well as the existing case of when it is mined)</li>
+            <li>Added Siege Cube protection when dropping the cube from the player&rsquo;s inventory (as well as the existing case of when it is mined)</li>
             <li>
-                <p>Added a config option to allow Guardians to be pulled into the TARDIS if the door is left open - it's <code>false</code> by default:</p>
+                <p>Added a config option to allow Guardians to be pulled into the TARDIS if the door is left open &mdash; it&rsquo;s <code>false</code> by default:</p>
                 <pre><code>allow:
     guardians: [true|false]       
 </code></pre>
                 <ul>
                     <li>regardless of the setting, guardians will not be spawned in the TARDIS if there is <em>no POOL room</em></li>
-                    <li>if set to <code>true</code> - any guardians within a 16 blocks radius of the open TARDIS door will be sucked into the pool</li>
-                    <li>if set to <code>false</code> - there is still a 25% chance that a random monster will spawn in the TARDIS, and a 1 in 12 chance that it will be a guardian</li>
+                    <li>if set to <code>true</code> &mdash; any guardians within a 16 blocks radius of the open TARDIS door will be sucked into the pool</li>
+                    <li>if set to <code>false</code> &mdash; there is still a 25% chance that a random monster will spawn in the TARDIS, and a 1 in 12 chance that it will be a guardian</li>
                     <li>toggle the setting with <code>/tardisadmin guardians [true|false]</code></li>
                 </ul>
             </li>
@@ -106,7 +162,7 @@
             <li>Swamp Hut preset now has a walk in portal</li>
             <li>You can no longer power down using the Control Centre sign if <code>allow.power_down</code> is <code>false</code> in the config</li>
             <li>Added <code>tardis.budget</code> as a child node of the <code>tardis.use</code> permission</li>
-            <li>A TARDIS Key is now shown in the TARDIS Remote Key recipe (<code>/tardisrecipe r-key</code>) - <em>if you have changed the recipe result of the TARDIS Key to something other than a GOLD_NUGGET, then you will also need to change the matching ingredient in the Remote Key recipe!</em></li>
+            <li>A TARDIS Key is now shown in the TARDIS Remote Key recipe (<code>/tardisrecipe r-key</code>) &mdash; <em>if you have changed the recipe result of the TARDIS Key to something other than a GOLD_NUGGET, then you will also need to change the matching ingredient in the Remote Key recipe!</em></li>
         </ul>
         <h3>Bug fixes</h3>
         <ul>
@@ -141,7 +197,7 @@
                     <li><code>burn_time: [time ratio]</code> &mdash; sets the length of time an Artron Storage Cell will burn for &mdash; as above fractions (<code>0.5</code>) will give shorter life to the cells, > 1 will extend the burn time, 1 = normal burn time (same as coal)</li>
                     <li><code>burn_limit: [amount]</code> &mdash; the maximum amount of burn time a fully charged Artron Storage Cell can have.</li>
                     <li>The actual maximum amount given is <code>burn_limit * burn_time * (cell_charge_level / full_charge)</code></li>
-                    <li>default settings mean that the Artron Furnace cooks quickly but doesn't burn as long.</li>
+                    <li>default settings mean that the Artron Furnace cooks quickly but doesn&rsquo;t burn as long.</li>
                 </ul>
             </li>
             <li>Added support for banner colours and patterns in TARDIS schematics</li>
@@ -396,7 +452,7 @@
         <ul>
             <li>Fixed an <code>ArrayIndexOutOfBoundsException</code> if there is no rail room</li>
             <li>Fixed ICE not being changed to water when growing a room</li>
-            <li>We're now checking to make sure it is a TARDIS JSON schematic being added to  custom rooms &mdash; in case the user hasn't read the documentation</li>
+            <li>We&rsquo;re now checking to make sure it is a TARDIS JSON schematic being added to  custom rooms &mdash; in case the user hasn&rsquo;t read the documentation</li>
             <li>The whole stack of Artron Cells is transferred to the Artron capacitor, not just one</li>
             <li>Fixed Grief Prevention claim checking</li>
         </ul>
@@ -425,7 +481,7 @@
         <ul>
             <li>Updated the creation help message to use Seed blocks rather than block stacks</li>
             <li>Updated the Lazarus Device to support TARDISWeepingAngels v2.0.2</li>
-            <li>The Emergency Programme One message can now be set to the contents of the book in the player's hand (the command remains essentially the same)</li>
+            <li>The Emergency Programme One message can now be set to the contents of the book in the player&rsquo;s hand (the command remains essentially the same)</li>
             <li>There is now a 15 million block limit to coordinates travel</li>
             <li>Saved biome disks can now be extended by combining them with a ladder</li>
         </ul>
@@ -478,7 +534,7 @@
         <ul>
             <li>Fixed TARDIS Remote Key recipe in <code>easy</code> difficulty mode</li>
             <li>Fixed trying to parse a string float as an integer when determining the location of the console BEDROCK block, and also now getting the correct location for the BEDROCK block in the new schematics</li>
-            <li>Fixed trying to toggle the beacon on/off in the PLANK and TOM TARDISes (there isn't one)</li>
+            <li>Fixed trying to toggle the beacon on/off in the PLANK and TOM TARDISes (there isn&rsquo;t one)</li>
             <li>Fixed a NPE in the Chameleon Arch</li>
             <li>Fixed grace period count records not being created when needed</li>
             <li>Fixed player difficulty settings not taking affect because of the bug above</li>
