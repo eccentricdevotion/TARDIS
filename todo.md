@@ -1,13 +1,14 @@
 #TODO
 
-##Current version `3.2.11`
+##Current version `3.3-beta-1`
 1. Fix bugs
-
-##Upcoming version `3.3`
-1. Junk TARDIS
-2. Player configurable choice of (2) blocks that are changed during siege mode engagement
+2. Junk TARDIS
+3. Player configurable choice of (2) blocks that are changed during siege mode engagement
    * Should default to wall / floor if not configured
-3. TARDISSonicBlaster addon
+4. TARDISSonicBlaster addon
+
+##Upcoming version `3.4`
+* ?
 
 ##Future version `4+`
 * SpongeAPI
