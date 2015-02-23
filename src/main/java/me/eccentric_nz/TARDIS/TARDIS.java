@@ -203,7 +203,7 @@ public class TARDIS extends JavaPlugin {
         if (bukkitversion.compareTo(minversion) >= 0) {
             // check for WorldBorder class
             try {
-                Class.forName("org.bukkit.WorldBorder");
+                Class.forName("org.bukkit.inventory.ItemFlag");
                 hasVersion = true;
                 for (Map.Entry<String, String> plg : versions.entrySet()) {
                     if (!checkPluginVersion(plg.getKey(), plg.getValue())) {
