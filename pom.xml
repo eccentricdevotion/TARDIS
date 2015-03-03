@@ -35,19 +35,20 @@
             <id>shadowvolt-repo</id>
             <url>http://ci.shadowvolt.com/plugin/repository/everything/</url>
         </repository>
-        <!--<repository>
+        <!--
+        <repository>
             <id>mcstats.releases</id>
             <name>mcstats.org releases</name>
             <url>http://repo.mcstats.org/content/repositories/releases/</url>
-        </repository>-->
+        </repository>        <repository>
+            <id>bar-api-repo</id>
+            <url>http://ci.frostcast.net/plugin/repository/everything</url>
+        </repository>
+        -->
         <repository>
             <id>mcstats.snapshots</id>
             <name>mcstats.org snapshots</name>
             <url>http://repo.mcstats.org/content/repositories/snapshots/</url>
-        </repository>
-        <repository>
-            <id>bar-api-repo</id>
-            <url>http://ci.frostcast.net/plugin/repository/everything</url>
         </repository>
     </repositories>
     <scm>
@@ -238,6 +239,10 @@
                     <groupId>org.bukkit</groupId>
                     <artifactId>bukkit</artifactId>
                 </exclusion>
+                <exclusion>
+                    <groupId>com.sk89q.spigot</groupId>
+                    <artifactId>bukkit</artifactId>
+                </exclusion>
             </exclusions>
         </dependency>
         <dependency>
@@ -273,7 +278,7 @@
         <dependency>
             <groupId>com.wimbli.WorldBorder</groupId>
             <artifactId>WorldBorder</artifactId>
-            <version>1.8.1</version>
+            <version>1.8.2</version>
             <type>jar</type>
             <exclusions>
                 <exclusion>
@@ -387,13 +392,13 @@
         <dependency>
             <groupId>com.massivecraft</groupId>
             <artifactId>factions</artifactId>
-            <version>2.7.4</version>
+            <version>2.7.5</version>
             <type>jar</type>
         </dependency>
         <dependency>
             <groupId>com.massivecraft</groupId>
             <artifactId>massivecore</artifactId>
-            <version>2.7.4</version>
+            <version>2.7.5</version>
             <type>jar</type>
         </dependency>
         <dependency>
@@ -475,12 +480,12 @@
         <dependency>
             <groupId>org.yi.acru.bukkit</groupId>
             <artifactId>lockette</artifactId>
-            <version>1.8.6</version>
+            <version>1.8.14</version>
         </dependency>
         <dependency>
             <groupId>me.ryanhamshire</groupId>
             <artifactId>GriefPrevention</artifactId>
-            <version>10.5.2</version>
+            <version>10.9</version>
         </dependency>
         <dependency>
             <groupId>com.comphenix.protocol</groupId>
