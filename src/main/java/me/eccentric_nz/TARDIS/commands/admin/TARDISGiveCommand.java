@@ -58,6 +58,8 @@ public class TARDISGiveCommand implements CommandExecutor {
         items.put("bio-circuit", "Bio-scanner Circuit");
         items.put("biome-disk", "Biome Storage Disk");
         items.put("blank", "Blank Storage Disk");
+        items.put("battery", "Blaster Battery");
+        items.put("blaster", "Sonic Blaster");
         items.put("bow-tie", "Red Bow Tie");
         items.put("c-circuit", "TARDIS Chameleon Circuit");
         items.put("cell", "Artron Storage Cell");
@@ -178,6 +180,10 @@ public class TARDISGiveCommand implements CommandExecutor {
     private boolean giveItem(CommandSender sender, String item, int amount, Player player) {
         if (amount > 64) {
             TARDISMessage.send(sender, "ARG_MAX");
+            return true;
+        }
+        if ((item.equals("battery") || item.equals("blaster")) && !plugin.getPM().isPluginEnabled("TARDISSonicBlaster")) {
+            TARDISMessage.send(sender, "RECIPE_BLASTER");
             return true;
         }
         if (item.equals("vortex") && !plugin.getPM().isPluginEnabled("TARDISVortexManipulator")) {
