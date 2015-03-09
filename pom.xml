@@ -44,12 +44,12 @@
             <id>bar-api-repo</id>
             <url>http://ci.frostcast.net/plugin/repository/everything</url>
         </repository>
-        -->
         <repository>
             <id>mcstats.snapshots</id>
             <name>mcstats.org snapshots</name>
             <url>http://repo.mcstats.org/content/repositories/snapshots/</url>
         </repository>
+        -->
     </repositories>
     <scm>
         <connection>scm:git:ssh://github.com/eccentricdevotion/TARDIS</connection>
@@ -175,7 +175,7 @@
         <dependency>
             <groupId>me.eccentric_nz.tardishelper</groupId>
             <artifactId>TARDISHelper</artifactId>
-            <version>1.4</version>
+            <version>1.5</version>
             <type>jar</type>
             <exclusions>
                 <exclusion>
@@ -187,7 +187,7 @@
         <dependency>
             <groupId>org.bukkit</groupId>
             <artifactId>bukkit</artifactId>
-            <version>1.8-R0.1-SNAPSHOT</version>
+            <version>1.8.3-R0.1-SNAPSHOT</version>
             <type>jar</type>
             <scope>compile</scope>
             <exclusions>
