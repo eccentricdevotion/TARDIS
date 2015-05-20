@@ -501,6 +501,10 @@
                     <artifactId>cglib-nodep</artifactId>
                     <groupId>cglib</groupId>
                 </exclusion>
+                <exclusion>
+                    <groupId>io.netty</groupId>
+                    <artifactId>netty-all</artifactId>
+                </exclusion>
             </exclusions>
         </dependency>
         <dependency>
