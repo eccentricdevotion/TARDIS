@@ -176,7 +176,7 @@
         <dependency>
             <groupId>me.eccentric_nz.tardishelper</groupId>
             <artifactId>TARDISHelper</artifactId>
-            <version>1.5</version>
+            <version>1.6</version>
             <type>jar</type>
             <exclusions>
                 <exclusion>
@@ -188,7 +188,7 @@
         <dependency>
             <groupId>org.bukkit</groupId>
             <artifactId>bukkit</artifactId>
-            <version>1.8.3-R0.1-SNAPSHOT</version>
+            <version>1.8.4-R0.1-SNAPSHOT</version>
             <type>jar</type>
             <scope>compile</scope>
             <exclusions>
@@ -506,7 +506,7 @@
         <dependency>
             <groupId>LibsDisguises</groupId>
             <artifactId>LibsDisguises</artifactId>
-            <version>8.3</version>
+            <version>8.3.1</version>
             <exclusions>
                 <exclusion>
                     <artifactId>craftbukkit</artifactId>
