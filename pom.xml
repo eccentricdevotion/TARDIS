@@ -176,7 +176,7 @@
         <dependency>
             <groupId>me.eccentric_nz.tardishelper</groupId>
             <artifactId>TARDISHelper</artifactId>
-            <version>1.6</version>
+            <version>1.7</version>
             <type>jar</type>
             <exclusions>
                 <exclusion>
