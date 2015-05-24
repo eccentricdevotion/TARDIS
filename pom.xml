@@ -29,7 +29,7 @@
         </repository>
         <repository>
             <id>shadowvolt-repo</id>
-            <url>http://ci.shadowvolt.com/plugin/repository/everything/</url>
+            <url>http://repo.dmulloy2.net/content/groups/public/</url>
         </repository>
         <!--
         <repository>
