@@ -164,7 +164,7 @@
         <dependency>
             <groupId>me.eccentric_nz.tardischunkgenerator</groupId>
             <artifactId>TARDISChunkGenerator</artifactId>
-            <version>1.0f</version>
+            <version>1.0g</version>
             <type>jar</type>
             <exclusions>
                 <exclusion>
