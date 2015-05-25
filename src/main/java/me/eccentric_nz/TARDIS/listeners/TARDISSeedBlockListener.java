@@ -120,6 +120,9 @@ public class TARDISSeedBlockListener implements Listener {
                 World w = l.getWorld();
                 ItemStack is = new ItemStack(event.getBlock().getType(), 1);
                 ItemMeta im = is.getItemMeta();
+                if (im == null) {
+                    return;
+                }
                 im.setDisplayName("§6TARDIS Seed Block");
                 List<String> lore = new ArrayList<String>();
                 lore.add(data.getSchematic().getPermission().toUpperCase());
