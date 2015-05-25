@@ -76,7 +76,7 @@ public class TARDISQuitListener implements Listener {
                 if (rs.isPowered_on()) {
                     // not if flying or uninitialised
                     final int id = rs.getTardis_id();
-                    if (!rs.isTardis_init() || isTravelling(id)) {
+                    if (!rs.isTardis_init() || isTravelling(id) || !rs.isHandbrake_on()) {
                         return;
                     }
                     // power off
