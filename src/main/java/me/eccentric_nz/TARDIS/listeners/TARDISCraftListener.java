@@ -109,6 +109,9 @@ public class TARDISCraftListener implements Listener {
                 @Override
                 public void run() {
                     if (checkSlots(inv)) {
+                        if (slot == 0) {
+                            event.setCancelled(true);
+                        }
                         // get the materials in crafting slots
                         Material m5 = inv.getItem(5).getType(); // lamp
                         Material m7 = inv.getItem(7).getType(); // tardis type
