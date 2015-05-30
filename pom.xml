@@ -249,7 +249,7 @@
         <dependency>
             <groupId>com.sk89q</groupId>
             <artifactId>worldedit</artifactId>
-            <version>6.1.1-SNAPSHOT</version>
+            <version>6.0.2-SNAPSHOT</version>
             <type>jar</type>
             <exclusions>
                 <exclusion>
