@@ -128,6 +128,7 @@ allow:
     player_difficulty: true
     3d_doors: false
     village_travel: false
+    perception_filter: true
 # room related
 growth:
     gravity_max_distance: 15

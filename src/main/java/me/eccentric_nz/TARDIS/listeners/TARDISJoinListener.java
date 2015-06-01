@@ -188,6 +188,8 @@ public class TARDISJoinListener implements Listener {
         if (plugin.isDisguisesOnServer() && plugin.getConfig().getBoolean("arch.enabled")) {
             new TARDISArchPersister(plugin).reArch(player.getUniqueId());
         }
-        plugin.getFilter().addPlayer(player);
+        if (plugin.getConfig().getBoolean("allow.perception_filter")) {
+            plugin.getFilter().addPlayer(player);
+        }
     }
 }

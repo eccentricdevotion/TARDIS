@@ -433,7 +433,9 @@ public class TARDISDoorListener {
                     @Override
                     public void run() {
                         p.setPlayerTime(calculatedtime, true);
-                        plugin.getFilter().addPerceptionFilter(p);
+                        if (plugin.getConfig().getBoolean("allow.perception_filter")) {
+                            plugin.getFilter().addPerceptionFilter(p);
+                        }
                         plugin.getTrackerKeeper().getTemporallyLocated().add(p.getUniqueId());
                     }
                 }, 10L);
@@ -447,7 +449,9 @@ public class TARDISDoorListener {
                     }
                 }
                 if (remove && plugin.getTrackerKeeper().getTemporallyLocated().contains(p.getUniqueId())) {
-                    plugin.getFilter().removePerceptionFilter(p);
+                    if (plugin.getConfig().getBoolean("allow.perception_filter")) {
+                        plugin.getFilter().removePerceptionFilter(p);
+                    }
                     plugin.getTrackerKeeper().getTemporallyLocated().remove(p.getUniqueId());
                 }
             }

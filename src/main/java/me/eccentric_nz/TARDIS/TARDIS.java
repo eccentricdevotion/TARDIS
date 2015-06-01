@@ -333,8 +333,10 @@ public class TARDIS extends JavaPlugin {
                 }
                 setDates();
                 startStandBy();
-                filter = new TARDISPerceptionFilter(this);
-                filter.createPerceptionFilter();
+                if (getConfig().getBoolean("allow.perception_filter")) {
+                    filter = new TARDISPerceptionFilter(this);
+                    filter.createPerceptionFilter();
+                }
                 TARDISCondensables cond = new TARDISCondensables(this);
                 cond.makeCondensables();
                 condensables = cond.getCondensables();

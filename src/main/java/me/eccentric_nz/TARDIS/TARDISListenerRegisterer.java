@@ -219,7 +219,9 @@ public class TARDISListenerRegisterer {
         plugin.getPM().registerEvents(new TARDISManualFlightListener(plugin), plugin);
         plugin.getPM().registerEvents(new TARDISMinecartListener(plugin), plugin);
         plugin.getPM().registerEvents(new TARDISPageThreeListener(plugin), plugin);
-        plugin.getPM().registerEvents(new TARDISPerceptionFilterListener(plugin), plugin);
+        if (plugin.getConfig().getBoolean("allow.perception_filter")) {
+            plugin.getPM().registerEvents(new TARDISPerceptionFilterListener(plugin), plugin);
+        }
         plugin.getPM().registerEvents(new TARDISPistonListener(plugin), plugin);
         plugin.getPM().registerEvents(new TARDISPrefsMenuListener(plugin), plugin);
         plugin.getPM().registerEvents(new TARDISPresetListener(plugin), plugin);
