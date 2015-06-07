@@ -255,6 +255,7 @@ public class TARDIS extends JavaPlugin {
                     up.update();
                     getConfig().set("conversions.lastknownname_conversion_done", true);
                 }
+                loadMultiverse();
                 checkTCG();
                 checkDefaultWorld();
                 cleanUpWorlds();
@@ -272,7 +273,6 @@ public class TARDIS extends JavaPlugin {
                 new TARDISListenerRegisterer(this).registerListeners();
                 new TARDISCommandSetter(this).loadCommands();
                 startSound();
-                loadMultiverse();
                 loadWorldGuard();
                 loadPluginRespect();
                 loadBarAPI();
