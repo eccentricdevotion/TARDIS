@@ -20,6 +20,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
+import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.enumeration.CONSOLES;
 import me.eccentric_nz.TARDIS.enumeration.DISK_CIRCUIT;
@@ -31,12 +32,15 @@ import org.bukkit.ChatColor;
 import org.bukkit.Color;
 import org.bukkit.DyeColor;
 import org.bukkit.Material;
+import org.bukkit.entity.Entity;
+import org.bukkit.entity.Item;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryAction;
 import org.bukkit.event.inventory.InventoryClickEvent;
+import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.event.inventory.PrepareItemCraftEvent;
 import org.bukkit.inventory.Inventory;
@@ -57,6 +61,7 @@ public class TARDISCraftListener implements Listener {
     private final HashMap<Material, String> t = new HashMap<Material, String>();
     private final List<Material> hasColour = new ArrayList<Material>();
     private final TARDISWallsLookup twl;
+    private final List<UUID> crafters = new ArrayList<UUID>();
 
     public TARDISCraftListener(TARDIS plugin) {
         this.plugin = plugin;
@@ -94,6 +99,28 @@ public class TARDISCraftListener implements Listener {
         twl = new TARDISWallsLookup(plugin);
     }
 
+    @EventHandler
+    public void onInventoryClose(InventoryCloseEvent event) {
+        final Player p = (Player) event.getPlayer();
+        UUID uuid = p.getUniqueId();
+        Inventory inv = event.getInventory();
+        if (crafters.contains(uuid) && inv.getType().equals(InventoryType.WORKBENCH)) {
+            plugin.debug("inventory closed after crafting seed");
+            // remove dropped items around workbench
+            plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
+                @Override
+                public void run() {
+                    for (Entity e : p.getNearbyEntities(6, 6, 6)) {
+                        if (e instanceof Item) {
+                            e.remove();
+                        }
+                    }
+                }
+            }, 1L);
+            crafters.remove(uuid);
+        }
+    }
+
     /**
      * Places a configured TARDIS Seed block in the crafting result slot.
      *
@@ -105,10 +132,14 @@ public class TARDISCraftListener implements Listener {
         final Inventory inv = event.getInventory();
         final int slot = event.getRawSlot();
         if (inv.getType().equals(InventoryType.WORKBENCH) && slot < 10) {
+            final UUID uuid = ((Player) inv.getHolder()).getUniqueId();
             plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
                 @Override
                 public void run() {
                     if (checkSlots(inv)) {
+                        if (!crafters.contains(uuid)) {
+                            crafters.add(uuid);
+                        }
                         if (slot == 0) {
                             event.setCancelled(true);
                         }
@@ -159,6 +190,7 @@ public class TARDISCraftListener implements Listener {
                                         }
                                         if (!event.getAction().equals(InventoryAction.MOVE_TO_OTHER_INVENTORY)) {
                                             player.setItemOnCursor(is);
+                                            crafters.remove(uuid);
                                         }
                                     }
                                 }, 2L);
