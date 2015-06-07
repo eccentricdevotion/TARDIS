@@ -132,7 +132,8 @@ public class TARDISCraftListener implements Listener {
         final Inventory inv = event.getInventory();
         final int slot = event.getRawSlot();
         if (inv.getType().equals(InventoryType.WORKBENCH) && slot < 10) {
-            final UUID uuid = ((Player) inv.getHolder()).getUniqueId();
+            final Player player = (Player) event.getWhoClicked();
+            final UUID uuid = player.getUniqueId();
             plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
                 @Override
                 public void run() {
@@ -174,7 +175,6 @@ public class TARDISCraftListener implements Listener {
                         lore.add("Lamp: " + m5.toString());
                         im.setLore(lore);
                         is.setItemMeta(im);
-                        final Player player = (Player) event.getWhoClicked();
                         if (checkPerms(player, m7)) {
                             TARDISMessage.send(player, "SEED_VALID");
                             inv.setItem(0, is);
