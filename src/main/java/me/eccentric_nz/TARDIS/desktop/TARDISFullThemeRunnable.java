@@ -281,13 +281,13 @@ public class TARDISFullThemeRunnable extends TARDISThemeRunnable implements Runn
                 if (psb.getType().equals(Material.WALL_SIGN)) {
                     Sign cs = (Sign) psb.getState();
                     if (s > 0) {
-                        cs.setLine(1, "Control");
-                        cs.setLine(2, "Centre");
+                        cs.setLine(1, plugin.getSigns().getStringList("control").get(0));
+                        cs.setLine(2, plugin.getSigns().getStringList("control").get(1));
                         String controlloc = psb.getLocation().toString();
                         qf.insertSyncControl(id, 22, controlloc, 0);
                     } else {
-                        cs.setLine(0, "Chameleon");
-                        cs.setLine(1, "Circuit");
+                        cs.setLine(0, plugin.getSigns().getStringList("chameleon").get(0));
+                        cs.setLine(1, plugin.getSigns().getStringList("chameleon").get(1));
                         cs.setLine(2, ChatColor.RED + plugin.getLanguage().getString("SET_OFF"));
                         cs.setLine(3, "NEW");
                         String chameleonloc = world.getName() + ":" + psb.getLocation().getBlockX() + ":" + psb.getLocation().getBlockY() + ":" + psb.getLocation().getBlockZ();
@@ -304,8 +304,8 @@ public class TARDISFullThemeRunnable extends TARDISThemeRunnable implements Runn
                 if (postSaveSignBlock.getType().equals(Material.WALL_SIGN)) {
                     Sign ss = (Sign) postSaveSignBlock.getState();
                     ss.setLine(0, "TARDIS");
-                    ss.setLine(1, "Saved");
-                    ss.setLine(2, "Locations");
+                    ss.setLine(1, plugin.getSigns().getStringList("saves").get(0));
+                    ss.setLine(2, plugin.getSigns().getStringList("saves").get(1));
                     ss.setLine(3, "");
                     ss.update();
                 }
@@ -316,8 +316,8 @@ public class TARDISFullThemeRunnable extends TARDISThemeRunnable implements Runn
                 if (postTerminalBlock.getType().equals(Material.WALL_SIGN)) {
                     Sign ts = (Sign) postTerminalBlock.getState();
                     ts.setLine(0, "");
-                    ts.setLine(1, "Destination");
-                    ts.setLine(2, "Terminal");
+                    ts.setLine(1, plugin.getSigns().getStringList("terminal").get(0));
+                    ts.setLine(2, plugin.getSigns().getStringList("terminal").get(1));
                     ts.setLine(3, "");
                     ts.update();
                 }
@@ -328,9 +328,9 @@ public class TARDISFullThemeRunnable extends TARDISThemeRunnable implements Runn
                 if (postARSBlock.getType().equals(Material.WALL_SIGN)) {
                     Sign as = (Sign) postARSBlock.getState();
                     as.setLine(0, "TARDIS");
-                    as.setLine(1, "Architectural");
-                    as.setLine(2, "Reconfiguration");
-                    as.setLine(3, "System");
+                    as.setLine(1, plugin.getSigns().getStringList("ars").get(0));
+                    as.setLine(2, plugin.getSigns().getStringList("ars").get(1));
+                    as.setLine(3, plugin.getSigns().getStringList("ars").get(2));
                     as.update();
                 }
             }
@@ -341,8 +341,8 @@ public class TARDISFullThemeRunnable extends TARDISThemeRunnable implements Runn
                     Sign is = (Sign) postTISBlock.getState();
                     is.setLine(0, "-----");
                     is.setLine(1, "TARDIS");
-                    is.setLine(2, "Information");
-                    is.setLine(3, "System");
+                    is.setLine(2, plugin.getSigns().getStringList("info").get(0));
+                    is.setLine(3, plugin.getSigns().getStringList("info").get(0));
                     is.update();
                 }
             }
@@ -352,8 +352,8 @@ public class TARDISFullThemeRunnable extends TARDISThemeRunnable implements Runn
                 if (postTemporalBlock.getType().equals(Material.WALL_SIGN)) {
                     Sign ms = (Sign) postTemporalBlock.getState();
                     ms.setLine(0, "");
-                    ms.setLine(1, "Temporal");
-                    ms.setLine(2, "Locator");
+                    ms.setLine(1, plugin.getSigns().getStringList("temporal").get(0));
+                    ms.setLine(2, plugin.getSigns().getStringList("temporal").get(1));
                     ms.setLine(3, "");
                     ms.update();
                 }
@@ -363,7 +363,7 @@ public class TARDISFullThemeRunnable extends TARDISThemeRunnable implements Runn
                 postKeyboardBlock.setData((byte) 3, true);
                 if (postKeyboardBlock.getType().equals(Material.WALL_SIGN)) {
                     Sign ks = (Sign) postKeyboardBlock.getState();
-                    ks.setLine(0, "Keyboard");
+                    ks.setLine(0, plugin.getSigns().getStringList("keyboard").get(0));
                     for (int i = 1; i < 4; i++) {
                         ks.setLine(i, "");
                     }

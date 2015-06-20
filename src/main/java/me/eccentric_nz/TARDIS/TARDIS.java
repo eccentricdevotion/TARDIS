@@ -125,6 +125,7 @@ public class TARDIS extends JavaPlugin {
     private FileConfiguration customConsolesConfig;
     private FileConfiguration kitsConfig;
     private FileConfiguration language;
+    private FileConfiguration signs;
     private FileConfiguration recipesConfig;
     private FileConfiguration roomsConfig;
     private FileConfiguration tagConfig;
@@ -218,6 +219,7 @@ public class TARDIS extends JavaPlugin {
                 new TARDISConfiguration(this).checkConfig();
                 new TARDISRecipesUpdater(this).addRecipes();
                 loadLanguage();
+                loadSigns();
                 loadDatabase();
                 // update database add and populate uuid fields
                 if (!getConfig().getBoolean("conversions.uuid_conversion_done")) {
@@ -458,6 +460,22 @@ public class TARDIS extends JavaPlugin {
         this.language = YamlConfiguration.loadConfiguration(file);
         // update the language configuration
         new TARDISLanguageUpdater(this).update();
+    }
+
+    /**
+     * Loads the signs file.
+     */
+    private void loadSigns() {
+        // check file exists
+        File file;
+        file = new File(getDataFolder() + File.separator + "language" + File.separator + "signs.yml");
+        if (!file.exists()) {
+            // copy sign file
+            TARDISFileCopier.copy(getDataFolder() + File.separator + "language" + File.separator + "signs.yml", getResource("signs.yml"), true, pluginName);
+            file = new File(getDataFolder() + File.separator + "language" + File.separator + "signs.yml");
+        }
+        // load the language
+        this.signs = YamlConfiguration.loadConfiguration(file);
     }
 
     /**
@@ -888,6 +906,10 @@ public class TARDIS extends JavaPlugin {
 
     public void setLanguage(FileConfiguration language) {
         this.language = language;
+    }
+
+    public FileConfiguration getSigns() {
+        return signs;
     }
 
     public TARDISUtils getUtils() {

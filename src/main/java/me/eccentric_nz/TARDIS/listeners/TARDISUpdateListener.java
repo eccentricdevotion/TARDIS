@@ -323,8 +323,8 @@ public class TARDISUpdateListener implements Listener {
                 if (blockType == Material.WALL_SIGN || blockType == Material.SIGN_POST) {
                     // add text to sign
                     Sign s = (Sign) block.getState();
-                    s.setLine(0, "Chameleon");
-                    s.setLine(1, "Circuit");
+                    s.setLine(0, plugin.getSigns().getStringList("chameleon").get(0));
+                    s.setLine(1, plugin.getSigns().getStringList("chameleon").get(1));
                     s.setLine(2, ChatColor.RED + plugin.getLanguage().getString("SET_OFF"));
                     s.setLine(3, preset);
                     s.update();
@@ -336,8 +336,8 @@ public class TARDISUpdateListener implements Listener {
                     // add text to sign
                     Sign s = (Sign) block.getState();
                     s.setLine(0, "TARDIS");
-                    s.setLine(1, "Saved");
-                    s.setLine(2, "Locations");
+                    s.setLine(1, plugin.getSigns().getStringList("saves").get(0));
+                    s.setLine(2, plugin.getSigns().getStringList("saves").get(1));
                     s.setLine(3, "");
                     s.update();
                 }
@@ -355,7 +355,7 @@ public class TARDISUpdateListener implements Listener {
                 }
                 // add text to sign
                 Sign s = (Sign) block.getState();
-                s.setLine(0, "Keyboard");
+                s.setLine(0, plugin.getSigns().getStringList("keyboard").get(0));
                 for (int i = 1; i < 4; i++) {
                     s.setLine(i, "");
                 }
@@ -406,8 +406,8 @@ public class TARDISUpdateListener implements Listener {
                     // add text to sign
                     Sign s = (Sign) block.getState();
                     s.setLine(0, "");
-                    s.setLine(1, "Destination");
-                    s.setLine(2, "Terminal");
+                    s.setLine(1, plugin.getSigns().getStringList("terminal").get(0));
+                    s.setLine(2, plugin.getSigns().getStringList("terminal").get(1));
                     s.setLine(3, "");
                     s.update();
                 }
@@ -428,8 +428,8 @@ public class TARDISUpdateListener implements Listener {
                     // add text to sign
                     Sign s = (Sign) block.getState();
                     s.setLine(0, "");
-                    s.setLine(1, "Control");
-                    s.setLine(2, "Centre");
+                    s.setLine(1, plugin.getSigns().getStringList("control").get(0));
+                    s.setLine(2, plugin.getSigns().getStringList("control").get(1));
                     s.setLine(3, "");
                     s.update();
                 }
@@ -498,9 +498,9 @@ public class TARDISUpdateListener implements Listener {
                     // add text to sign
                     Sign s = (Sign) block.getState();
                     s.setLine(0, "TARDIS");
-                    s.setLine(1, "Architectural");
-                    s.setLine(2, "Reconfiguration");
-                    s.setLine(3, "System");
+                    s.setLine(1, plugin.getSigns().getStringList("ars").get(0));
+                    s.setLine(2, plugin.getSigns().getStringList("ars").get(1));
+                    s.setLine(3, plugin.getSigns().getStringList("ars").get(2));
                     s.update();
                 }
             }
@@ -520,8 +520,8 @@ public class TARDISUpdateListener implements Listener {
                     // add text to sign
                     Sign s = (Sign) block.getState();
                     s.setLine(0, "");
-                    s.setLine(1, "Temporal");
-                    s.setLine(2, "Locator");
+                    s.setLine(1, plugin.getSigns().getStringList("temporal").get(0));
+                    s.setLine(2, plugin.getSigns().getStringList("temporal").get(1));
                     s.setLine(3, "");
                     s.update();
                 }
@@ -542,8 +542,8 @@ public class TARDISUpdateListener implements Listener {
                     Sign s = (Sign) block.getState();
                     s.setLine(0, "-----");
                     s.setLine(1, "TARDIS");
-                    s.setLine(2, "Information");
-                    s.setLine(3, "System");
+                    s.setLine(2, plugin.getSigns().getStringList("info").get(0));
+                    s.setLine(3, plugin.getSigns().getStringList("info").get(0));
                     s.update();
                 }
             }

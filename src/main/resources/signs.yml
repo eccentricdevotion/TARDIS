@@ -1,0 +1,24 @@
+chameleon:
+    - Chameleon
+    - Circuit
+info:
+    - Information
+    - System
+ars:
+    - Architectural
+    - Reconfiguration
+    - System
+temporal:
+    - Temporal
+    - Locator
+terminal:
+    - Destination
+    - Terminal
+saves:
+    - Saved
+    - Locations
+control:
+    - Control
+    - Centre
+keyboard:
+    - Keyboard
