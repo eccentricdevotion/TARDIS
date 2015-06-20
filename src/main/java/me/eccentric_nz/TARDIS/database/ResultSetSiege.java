@@ -36,6 +36,7 @@ public class ResultSetSiege {
     private final Connection connection = service.getConnection();
     private final TARDIS plugin;
     private final HashMap<UUID, Integer> data = new HashMap<UUID, Integer>();
+    private final String prefix;
 
     /**
      * Creates a class instance that can be used to retrieve an SQL ResultSet
@@ -45,6 +46,7 @@ public class ResultSetSiege {
      */
     public ResultSetSiege(TARDIS plugin) {
         this.plugin = plugin;
+        this.prefix = this.plugin.getPrefix();
     }
 
     /**
@@ -57,7 +59,7 @@ public class ResultSetSiege {
     public boolean resultSet() {
         PreparedStatement statement = null;
         ResultSet rs = null;
-        String query = "SELECT * FROM siege";
+        String query = "SELECT * FROM " + prefix + "siege";
         try {
             service.testConnection(connection);
             statement = connection.prepareStatement(query);

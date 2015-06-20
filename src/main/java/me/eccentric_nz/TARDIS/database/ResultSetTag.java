@@ -38,6 +38,7 @@ public class ResultSetTag {
     private final Connection connection = service.getConnection();
     private final TARDIS plugin;
     private final ArrayList<HashMap<String, String>> data = new ArrayList<HashMap<String, String>>();
+    private final String prefix;
 
     /**
      * Creates a class instance that can be used to retrieve an SQL ResultSet
@@ -47,6 +48,7 @@ public class ResultSetTag {
      */
     public ResultSetTag(TARDIS plugin) {
         this.plugin = plugin;
+        this.prefix = this.plugin.getPrefix();
     }
 
     /**
@@ -59,7 +61,7 @@ public class ResultSetTag {
     public boolean resultSet() {
         PreparedStatement statement = null;
         ResultSet rs = null;
-        String query = "SELECT * FROM tag ORDER BY time DESC LIMIT 5";
+        String query = "SELECT * FROM " + prefix + "tag ORDER BY time DESC LIMIT 5";
         try {
             service.testConnection(connection);
             statement = connection.prepareStatement(query);

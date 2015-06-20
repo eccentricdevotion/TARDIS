@@ -49,6 +49,7 @@ public class ResultSetDoors {
     private COMPASS door_direction;
     private boolean locked;
     private final ArrayList<HashMap<String, String>> data = new ArrayList<HashMap<String, String>>();
+    private final String prefix;
 
     /**
      * Creates a class instance that can be used to retrieve an SQL ResultSet
@@ -64,6 +65,7 @@ public class ResultSetDoors {
         this.plugin = plugin;
         this.where = where;
         this.multiple = multiple;
+        this.prefix = this.plugin.getPrefix();
     }
 
     /**
@@ -84,7 +86,7 @@ public class ResultSetDoors {
             }
             wheres = " WHERE " + sbw.toString().substring(0, sbw.length() - 5);
         }
-        String query = "SELECT * FROM doors" + wheres;
+        String query = "SELECT * FROM " + prefix + "doors" + wheres;
         try {
             service.testConnection(connection);
             statement = connection.prepareStatement(query);

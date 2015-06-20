@@ -50,6 +50,7 @@ public class ResultSetARS {
     private int south;
     private int layer;
     private String json;
+    private final String prefix;
 
     /**
      * Creates a class instance that can be used to retrieve an SQL ResultSet
@@ -62,6 +63,7 @@ public class ResultSetARS {
     public ResultSetARS(TARDIS plugin, HashMap<String, Object> where) {
         this.plugin = plugin;
         this.where = where;
+        this.prefix = this.plugin.getPrefix();
     }
 
     /**
@@ -82,7 +84,7 @@ public class ResultSetARS {
             }
             wheres = " WHERE " + sbw.toString().substring(0, sbw.length() - 5);
         }
-        String query = "SELECT * FROM ars" + wheres;
+        String query = "SELECT * FROM " + prefix + "ars" + wheres;
         try {
             service.testConnection(connection);
             statement = connection.prepareStatement(query);
@@ -145,9 +147,6 @@ public class ResultSetARS {
         return uuid;
     }
 
-//    public String getPlayer() {
-//        return player;
-//    }
     public int getEast() {
         return east;
     }

@@ -41,6 +41,7 @@ public class TARDISSQLAlterEnergy implements Runnable {
     private final int amount;
     private final HashMap<String, Object> where;
     private final Player p;
+    private final String prefix;
 
     /**
      * Adds or removes Artron Energy from an SQLite database table. This method
@@ -61,6 +62,7 @@ public class TARDISSQLAlterEnergy implements Runnable {
         this.amount = amount;
         this.where = where;
         this.p = p;
+        this.prefix = this.plugin.getPrefix();
     }
 
     @Override
@@ -83,7 +85,7 @@ public class TARDISSQLAlterEnergy implements Runnable {
         final int id = tmp;
         where.clear();
         wheres = sbw.toString().substring(0, sbw.length() - 5);
-        String query = "UPDATE " + table + " SET artron_level = artron_level + " + amount + " WHERE " + wheres;
+        String query = "UPDATE " + prefix + table + " SET artron_level = artron_level + " + amount + " WHERE " + wheres;
         if (amount < 0 && p != null) {
             new BukkitRunnable() {
                 @Override

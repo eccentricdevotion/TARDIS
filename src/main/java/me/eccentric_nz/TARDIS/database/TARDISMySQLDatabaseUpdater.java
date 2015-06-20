@@ -43,9 +43,11 @@ public class TARDISMySQLDatabaseUpdater {
     private final HashMap<String, String> uuidUpdates = new HashMap<String, String>();
     private final Statement statement;
     private final TARDIS plugin;
+    private final String prefix;
 
     public TARDISMySQLDatabaseUpdater(TARDIS plugin, Statement statement) {
         this.plugin = plugin;
+        this.prefix = this.plugin.getPrefix();
         this.statement = statement;
         uuidUpdates.put("achievements", "a_id");
         uuidUpdates.put("ars", "tardis_id");
@@ -87,70 +89,70 @@ public class TARDISMySQLDatabaseUpdater {
         int i = 0;
         try {
             for (Map.Entry<String, String> u : uuidUpdates.entrySet()) {
-                String a_query = "SHOW COLUMNS FROM " + u.getKey() + " LIKE 'uuid'";
+                String a_query = "SHOW COLUMNS FROM " + prefix + u.getKey() + " LIKE 'uuid'";
                 ResultSet rsu = statement.executeQuery(a_query);
                 if (!rsu.next()) {
                     i++;
-                    String u_alter = "ALTER TABLE " + u.getKey() + " ADD uuid VARCHAR(48) DEFAULT '' AFTER " + u.getValue();
+                    String u_alter = "ALTER TABLE " + prefix + u.getKey() + " ADD uuid VARCHAR(48) DEFAULT '' AFTER " + u.getValue();
                     statement.executeUpdate(u_alter);
                 }
             }
             for (String t : tardisupdates) {
                 String[] tsplit = t.split(" ");
-                String t_query = "SHOW COLUMNS FROM tardis LIKE '" + tsplit[0] + "'";
+                String t_query = "SHOW COLUMNS FROM " + prefix + "tardis LIKE '" + tsplit[0] + "'";
                 ResultSet rst = statement.executeQuery(t_query);
                 if (!rst.next()) {
                     i++;
-                    String t_alter = "ALTER TABLE tardis ADD " + t;
+                    String t_alter = "ALTER TABLE " + prefix + "tardis ADD " + t;
                     statement.executeUpdate(t_alter);
                 }
             }
             for (String p : prefsupdates) {
                 String[] psplit = p.split(" ");
-                String p_query = "SHOW COLUMNS FROM player_prefs LIKE '" + psplit[0] + "'";
+                String p_query = "SHOW COLUMNS FROM " + prefix + "player_prefs LIKE '" + psplit[0] + "'";
                 ResultSet rsp = statement.executeQuery(p_query);
                 if (!rsp.next()) {
                     i++;
-                    String p_alter = "ALTER TABLE player_prefs ADD " + p;
+                    String p_alter = "ALTER TABLE " + prefix + "player_prefs ADD " + p;
                     statement.executeUpdate(p_alter);
                 }
             }
             for (String d : destsupdates) {
                 String[] dsplit = d.split(" ");
-                String d_query = "SHOW COLUMNS FROM destinations LIKE '" + dsplit[0] + "'";
+                String d_query = "SHOW COLUMNS FROM " + prefix + "destinations LIKE '" + dsplit[0] + "'";
                 ResultSet rsd = statement.executeQuery(d_query);
                 if (!rsd.next()) {
                     i++;
-                    String d_alter = "ALTER TABLE destinations ADD " + d;
+                    String d_alter = "ALTER TABLE " + prefix + "destinations ADD " + d;
                     statement.executeUpdate(d_alter);
                 }
             }
             for (String c : countupdates) {
                 String[] csplit = c.split(" ");
-                String c_query = "SHOW COLUMNS FROM t_count LIKE '" + csplit[0] + "'";
+                String c_query = "SHOW COLUMNS FROM " + prefix + "t_count LIKE '" + csplit[0] + "'";
                 ResultSet rsc = statement.executeQuery(c_query);
                 if (!rsc.next()) {
                     i++;
-                    String c_alter = "ALTER TABLE t_count ADD " + c;
+                    String c_alter = "ALTER TABLE " + prefix + "t_count ADD " + c;
                     statement.executeUpdate(c_alter);
                 }
             }
             for (String v : inventoryupdates) {
                 String[] vsplit = v.split(" ");
-                String v_query = "SHOW COLUMNS FROM inventories LIKE '" + vsplit[0] + "'";
+                String v_query = "SHOW COLUMNS FROM " + prefix + "inventories LIKE '" + vsplit[0] + "'";
                 ResultSet rsv = statement.executeQuery(v_query);
                 if (!rsv.next()) {
                     i++;
-                    String v_alter = "ALTER TABLE inventories ADD " + v;
+                    String v_alter = "ALTER TABLE " + prefix + "inventories ADD " + v;
                     statement.executeUpdate(v_alter);
                 }
             }
             // add biome to current location
-            String bio_query = "SHOW COLUMNS FROM current LIKE 'biome'";
+            String bio_query = "SHOW COLUMNS FROM " + prefix + "current LIKE 'biome'";
             ResultSet rsbio = statement.executeQuery(bio_query);
             if (!rsbio.next()) {
                 i++;
-                String bio_alter = "ALTER TABLE current ADD biome varchar(64) DEFAULT ''";
+                String bio_alter = "ALTER TABLE " + prefix + "current ADD biome varchar(64) DEFAULT ''";
                 statement.executeUpdate(bio_alter);
             }
         } catch (SQLException e) {

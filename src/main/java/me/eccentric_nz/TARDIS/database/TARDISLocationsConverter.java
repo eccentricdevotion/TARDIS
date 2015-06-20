@@ -38,8 +38,7 @@ public class TARDISLocationsConverter {
     private final Connection connection = service.getConnection();
     private final TARDIS plugin;
     private final List<String> directions = Arrays.asList("NORTH", "SOUTH", "EAST", "WEST");
-
-    ;
+    private final String prefix;
 
     /**
      * Creates a class instance that can be used to retrieve an SQL ResultSet
@@ -49,6 +48,7 @@ public class TARDISLocationsConverter {
      */
     public TARDISLocationsConverter(TARDIS plugin) {
         this.plugin = plugin;
+        this.prefix = this.plugin.getPrefix();
     }
 
     /**
@@ -59,7 +59,7 @@ public class TARDISLocationsConverter {
         QueryFactory qf = new QueryFactory(this.plugin);
         PreparedStatement statement = null;
         ResultSet rs = null;
-        String query = "SELECT tardis_id, direction, home, save, current, fast_return FROM tardis";
+        String query = "SELECT tardis_id, direction, home, save, current, fast_return FROM " + prefix + "tardis";
         int i = 0;
         try {
             service.testConnection(connection);

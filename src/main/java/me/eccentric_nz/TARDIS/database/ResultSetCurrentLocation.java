@@ -49,6 +49,7 @@ public class ResultSetCurrentLocation {
     private COMPASS direction;
     private boolean submarine;
     private Biome biome;
+    private final String prefix;
 
     /**
      * Creates a class instance that can be used to retrieve an SQL ResultSet
@@ -61,6 +62,7 @@ public class ResultSetCurrentLocation {
     public ResultSetCurrentLocation(TARDIS plugin, HashMap<String, Object> where) {
         this.plugin = plugin;
         this.where = where;
+        this.prefix = this.plugin.getPrefix();
     }
 
     /**
@@ -81,7 +83,7 @@ public class ResultSetCurrentLocation {
             }
             wheres = " WHERE " + sbw.toString().substring(0, sbw.length() - 5);
         }
-        String query = "SELECT * FROM current" + wheres;
+        String query = "SELECT * FROM " + prefix + "current" + wheres;
         try {
             service.testConnection(connection);
             statement = connection.prepareStatement(query);

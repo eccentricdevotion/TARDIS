@@ -48,6 +48,7 @@ public class ResultSetLamps {
     private int tardis_id;
     private String location;
     private final ArrayList<HashMap<String, String>> data = new ArrayList<HashMap<String, String>>();
+    private final String prefix;
 
     /**
      * Creates a class instance that can be used to retrieve an SQL ResultSet
@@ -63,6 +64,7 @@ public class ResultSetLamps {
         this.plugin = plugin;
         this.where = where;
         this.multiple = multiple;
+        this.prefix = this.plugin.getPrefix();
     }
 
     /**
@@ -83,7 +85,7 @@ public class ResultSetLamps {
             }
             wheres = " WHERE " + sbw.toString().substring(0, sbw.length() - 5);
         }
-        String query = "SELECT * FROM lamps" + wheres;
+        String query = "SELECT * FROM " + prefix + "lamps" + wheres;
         try {
             service.testConnection(connection);
             statement = connection.prepareStatement(query);
@@ -119,7 +121,7 @@ public class ResultSetLamps {
                 return false;
             }
         } catch (SQLException e) {
-            plugin.debug("ResultSet error for blocks table! " + e.getMessage());
+            plugin.debug("ResultSet error for lamps table! " + e.getMessage());
             return false;
         } finally {
             try {
@@ -130,7 +132,7 @@ public class ResultSetLamps {
                     statement.close();
                 }
             } catch (SQLException e) {
-                plugin.debug("Error closing blocks table! " + e.getMessage());
+                plugin.debug("Error closing lamps table! " + e.getMessage());
             }
         }
         return true;

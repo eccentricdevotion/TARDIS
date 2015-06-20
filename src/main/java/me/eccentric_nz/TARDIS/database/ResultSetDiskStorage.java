@@ -57,6 +57,7 @@ public class ResultSetDiskStorage {
     private String presetsTwo;
     private String circuits;
     private String console;
+    private final String prefix;
 
     /**
      * Creates a class instance that can be used to retrieve an SQL ResultSet
@@ -69,6 +70,7 @@ public class ResultSetDiskStorage {
     public ResultSetDiskStorage(TARDIS plugin, HashMap<String, Object> where) {
         this.plugin = plugin;
         this.where = where;
+        this.prefix = this.plugin.getPrefix();
     }
 
     /**
@@ -89,7 +91,7 @@ public class ResultSetDiskStorage {
             }
             wheres = " WHERE " + sbw.toString().substring(0, sbw.length() - 5);
         }
-        String query = "SELECT * FROM storage" + wheres;
+        String query = "SELECT * FROM " + prefix + "storage" + wheres;
         try {
             service.testConnection(connection);
             statement = connection.prepareStatement(query);

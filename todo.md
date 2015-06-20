@@ -6,6 +6,7 @@
 3. Player configurable choice of (2) blocks that are changed during siege mode engagement
    * Should default to wall / floor if not configured
 4. TARDISSonicBlaster addon
+5. MySQL table prefix
 
 ##Upcoming version `3.4`
 * ?

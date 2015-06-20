@@ -36,6 +36,7 @@ public class ResultSetPoliceBox {
     private final TARDISDatabaseConnection service = TARDISDatabaseConnection.getInstance();
     private final Connection connection = service.getConnection();
     private final TARDIS plugin;
+    private final String prefix;
 
     /**
      * Creates a class instance that can be used to retrieve an SQL ResultSet
@@ -45,6 +46,7 @@ public class ResultSetPoliceBox {
      */
     public ResultSetPoliceBox(TARDIS plugin) {
         this.plugin = plugin;
+        this.prefix = this.plugin.getPrefix();
     }
 
     /**
@@ -55,7 +57,7 @@ public class ResultSetPoliceBox {
     public void loadChunks() {
         PreparedStatement statement = null;
         ResultSet rs = null;
-        String query = "SELECT * FROM current";
+        String query = "SELECT * FROM " + prefix + "current";
         try {
             service.testConnection(connection);
             statement = connection.prepareStatement(query);

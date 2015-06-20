@@ -39,15 +39,17 @@ public class TARDISPortalPersister {
     private PreparedStatement ps = null;
     private ResultSet rs = null;
     private int count = 0;
+    private final String prefix;
 
     public TARDISPortalPersister(TARDIS plugin) {
         this.plugin = plugin;
+        this.prefix = this.plugin.getPrefix();
     }
 
     public void save() {
         try {
             // save the portals
-            ps = connection.prepareStatement("INSERT INTO portals (portal, teleport, direction, tardis_id) VALUES (?,?,?,?)");
+            ps = connection.prepareStatement("INSERT INTO " + prefix + "portals (portal, teleport, direction, tardis_id) VALUES (?,?,?,?)");
             for (Map.Entry<Location, TARDISTeleportLocation> map : plugin.getTrackerKeeper().getPortals().entrySet()) {
                 TARDISTeleportLocation ttpl = map.getValue();
                 ps.setString(1, map.getKey().toString());
@@ -58,7 +60,7 @@ public class TARDISPortalPersister {
             }
             plugin.getConsole().sendMessage(plugin.getPluginName() + "Saved " + count + " portals.");
             // save the players
-            ps = connection.prepareStatement("INSERT INTO movers (uuid) VALUES (?)");
+            ps = connection.prepareStatement("INSERT INTO " + prefix + "movers (uuid) VALUES (?)");
             for (UUID uuid : plugin.getTrackerKeeper().getMover()) {
                 ps.setString(1, uuid.toString());
                 ps.executeUpdate();
@@ -78,7 +80,7 @@ public class TARDISPortalPersister {
 
     public void load() {
         try {
-            ps = connection.prepareStatement("SELECT * FROM portals");
+            ps = connection.prepareStatement("SELECT * FROM " + prefix + "portals");
             rs = ps.executeQuery();
             if (rs.isBeforeFirst()) {
                 while (rs.next()) {
@@ -102,10 +104,10 @@ public class TARDISPortalPersister {
             }
             plugin.getConsole().sendMessage(plugin.getPluginName() + "Loaded " + count + " portals.");
             // clear the portals table so we don't get any duplicates when saving them
-            ps = connection.prepareStatement("DELETE FROM portals");
+            ps = connection.prepareStatement("DELETE FROM " + prefix + "portals");
             ps.executeUpdate();
             // load the players associated with the portals
-            ps = connection.prepareStatement("SELECT uuid FROM movers");
+            ps = connection.prepareStatement("SELECT uuid FROM " + prefix + "movers");
             rs = ps.executeQuery();
             if (rs.isBeforeFirst()) {
                 while (rs.next()) {
@@ -113,7 +115,7 @@ public class TARDISPortalPersister {
                 }
             }
             // clear the movers table so we don't get any duplicates when saving them
-            ps = connection.prepareStatement("DELETE FROM movers");
+            ps = connection.prepareStatement("DELETE FROM " + prefix + "movers");
             ps.executeUpdate();
         } catch (SQLException ex) {
             plugin.debug("ResultSet error for portals table: " + ex.getMessage());

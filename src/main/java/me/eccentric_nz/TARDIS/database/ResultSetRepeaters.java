@@ -44,6 +44,7 @@ public class ResultSetRepeaters {
     private final int secondary;
     private final byte[] diodes = new byte[4];
     List<String> locations = new ArrayList<String>();
+    private final String prefix;
 
     /**
      * Creates a class instance that can be used to retrieve an SQL ResultSet
@@ -57,6 +58,7 @@ public class ResultSetRepeaters {
         this.plugin = plugin;
         this.id = id;
         this.secondary = secondary;
+        this.prefix = this.plugin.getPrefix();
     }
 
     /**
@@ -70,7 +72,7 @@ public class ResultSetRepeaters {
         int i = 0;
         PreparedStatement statement = null;
         ResultSet rs = null;
-        String query = "SELECT DISTINCT location FROM controls WHERE tardis_id = ? AND type IN (2,3,4,5) AND secondary = ? ORDER BY type";
+        String query = "SELECT DISTINCT location FROM " + prefix + "controls WHERE tardis_id = ? AND type IN (2,3,4,5) AND secondary = ? ORDER BY type";
         try {
             service.testConnection(connection);
             statement = connection.prepareStatement(query);

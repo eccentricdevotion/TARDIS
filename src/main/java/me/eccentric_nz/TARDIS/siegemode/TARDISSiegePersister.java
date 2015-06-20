@@ -42,14 +42,16 @@ public class TARDISSiegePersister {
     private PreparedStatement ps = null;
     private ResultSet rs = null;
     private int count = 0;
+    private final String prefix;
 
     public TARDISSiegePersister(TARDIS plugin) {
         this.plugin = plugin;
+        this.prefix = this.plugin.getPrefix();
     }
 
     public void loadSiege() {
         try {
-            ps = connection.prepareStatement("SELECT tardis_id, siege_on FROM tardis");
+            ps = connection.prepareStatement("SELECT tardis_id, siege_on FROM " + prefix + "tardis");
             rs = ps.executeQuery();
             if (rs.isBeforeFirst()) {
                 while (rs.next()) {
@@ -107,7 +109,7 @@ public class TARDISSiegePersister {
             plugin.getTrackerKeeper().getIsSiegeCube().addAll(data.values());
             // clear the table
             try {
-                ps = connection.prepareStatement("DELETE FROM siege");
+                ps = connection.prepareStatement("DELETE FROM " + prefix + "siege");
                 ps.executeUpdate();
             } catch (SQLException ex) {
                 plugin.debug("Delete error for siege table: " + ex.getMessage());
@@ -125,7 +127,7 @@ public class TARDISSiegePersister {
 
     public void saveCubes() {
         try {
-            ps = connection.prepareStatement("INSERT INTO siege (uuid, tardis_id) VALUES (?, ?)");
+            ps = connection.prepareStatement("INSERT INTO " + prefix + "siege (uuid, tardis_id) VALUES (?, ?)");
             int i = 0;
             for (Map.Entry<UUID, Integer> map : plugin.getTrackerKeeper().getSiegeCarrying().entrySet()) {
                 ps.setString(1, map.getKey().toString());

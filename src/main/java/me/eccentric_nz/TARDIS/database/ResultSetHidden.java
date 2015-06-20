@@ -34,6 +34,7 @@ public class ResultSetHidden {
     private final Connection connection = service.getConnection();
     private final TARDIS plugin;
     private final int id;
+    private final String prefix;
 
     /**
      * Creates a class instance that can be used to retrieve an SQL ResultSet
@@ -45,6 +46,7 @@ public class ResultSetHidden {
     public ResultSetHidden(TARDIS plugin, int id) {
         this.plugin = plugin;
         this.id = id;
+        this.prefix = this.plugin.getPrefix();
     }
 
     /**
@@ -55,7 +57,7 @@ public class ResultSetHidden {
     public boolean isVisible() {
         PreparedStatement statement = null;
         ResultSet rs = null;
-        String query = "SELECT hidden FROM tardis WHERE tardis_id =" + id;
+        String query = "SELECT hidden FROM " + prefix + "tardis WHERE tardis_id =" + id;
         try {
             service.testConnection(connection);
             statement = connection.prepareStatement(query);

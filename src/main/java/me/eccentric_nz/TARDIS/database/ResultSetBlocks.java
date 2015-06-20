@@ -48,6 +48,7 @@ public class ResultSetBlocks {
     private byte blockData;
     private boolean police_box;
     private final ArrayList<HashMap<String, String>> data = new ArrayList<HashMap<String, String>>();
+    private final String prefix;
 
     /**
      * Creates a class instance that can be used to retrieve an SQL ResultSet
@@ -63,6 +64,7 @@ public class ResultSetBlocks {
         this.plugin = plugin;
         this.where = where;
         this.multiple = multiple;
+        this.prefix = this.plugin.getPrefix();
     }
 
     /**
@@ -83,7 +85,7 @@ public class ResultSetBlocks {
             }
             wheres = " WHERE " + sbw.toString().substring(0, sbw.length() - 5);
         }
-        String query = "SELECT * FROM blocks" + wheres;
+        String query = "SELECT * FROM " + prefix + "blocks" + wheres;
         try {
             service.testConnection(connection);
             statement = connection.prepareStatement(query);

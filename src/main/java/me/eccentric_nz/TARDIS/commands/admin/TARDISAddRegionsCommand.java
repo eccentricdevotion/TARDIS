@@ -40,9 +40,11 @@ public class TARDISAddRegionsCommand {
     private final TARDISDatabaseConnection service = TARDISDatabaseConnection.getInstance();
     private final Connection connection = service.getConnection();
     private WorldGuardPlugin wg;
+    private final String prefix;
 
     public TARDISAddRegionsCommand(TARDIS plugin) {
         this.plugin = plugin;
+        this.prefix = this.plugin.getPrefix();
         if (plugin.isWorldGuardOnServer()) {
             wg = (WorldGuardPlugin) plugin.getPM().getPlugin("WorldGuard");
         }
@@ -69,7 +71,7 @@ public class TARDISAddRegionsCommand {
         // get all TARDISes
         Statement statement = null;
         ResultSet rs = null;
-        String query = "SELECT owner, tips FROM tardis";
+        String query = "SELECT owner, tips FROM " + prefix + "tardis";
         try {
             service.testConnection(connection);
             statement = connection.createStatement();

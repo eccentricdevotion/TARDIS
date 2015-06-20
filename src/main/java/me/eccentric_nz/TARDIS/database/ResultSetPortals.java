@@ -39,6 +39,7 @@ public class ResultSetPortals {
     private final TARDIS plugin;
     private final int id;
     private final ArrayList<HashMap<String, String>> data = new ArrayList<HashMap<String, String>>();
+    private final String prefix;
 
     /**
      * Creates a class instance that can be used to retrieve an SQL ResultSet
@@ -50,6 +51,7 @@ public class ResultSetPortals {
     public ResultSetPortals(TARDIS plugin, int id) {
         this.plugin = plugin;
         this.id = id;
+        this.prefix = this.plugin.getPrefix();
     }
 
     /**
@@ -62,7 +64,7 @@ public class ResultSetPortals {
     public boolean resultSet() {
         PreparedStatement statement = null;
         ResultSet rs = null;
-        String query = "SELECT * FROM doors WHERE tardis_id = " + id + " AND door_type IN (0,1)";
+        String query = "SELECT * FROM " + prefix + "doors WHERE tardis_id = " + id + " AND door_type IN (0,1)";
         try {
             service.testConnection(connection);
             statement = connection.prepareStatement(query);

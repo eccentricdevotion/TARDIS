@@ -42,9 +42,11 @@ public class TARDISControlsConverter {
     private final TARDIS plugin;
     private final TARDISDatabaseConnection service = TARDISDatabaseConnection.getInstance();
     private final Connection connection = service.getConnection();
+    private final String prefix;
 
     public TARDISControlsConverter(TARDIS plugin) {
         this.plugin = plugin;
+        this.prefix = this.plugin.getPrefix();
     }
 
     /**
@@ -61,9 +63,9 @@ public class TARDISControlsConverter {
                 service.testConnection(connection);
                 // clear the controls table first - just incase they have reset `conversion_done` in the config
                 del = connection.createStatement();
-                del.executeUpdate("DELETE FROM controls");
+                del.executeUpdate("DELETE FROM " + prefix + "controls");
                 // insert values from tardis table
-                ps = connection.prepareStatement("INSERT INTO controls (tardis_id, type, location) VALUES (?,?,?)");
+                ps = connection.prepareStatement("INSERT INTO " + prefix + "controls (tardis_id, type, location) VALUES (?,?,?)");
                 for (HashMap<String, String> map : data) {
                     int id = TARDISNumberParsers.parseInt(map.get("tardis_id"));
                     String tmph;

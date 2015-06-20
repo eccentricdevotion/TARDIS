@@ -22,8 +22,6 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.ArrayList;
-import java.util.List;
 import me.eccentric_nz.TARDIS.TARDIS;
 import org.bukkit.util.FileUtil;
 
@@ -36,10 +34,11 @@ public class TARDISCompanionClearer {
     private final TARDIS plugin;
     private final TARDISDatabaseConnection service = TARDISDatabaseConnection.getInstance();
     private final Connection connection = service.getConnection();
-    private final List<String> timelords = new ArrayList<String>();
+    private final String prefix;
 
     public TARDISCompanionClearer(TARDIS plugin) {
         this.plugin = plugin;
+        this.prefix = this.plugin.getPrefix();
     }
 
     public boolean clear() {
@@ -52,8 +51,8 @@ public class TARDISCompanionClearer {
         Statement statement = null;
         PreparedStatement ps = null;
         ResultSet rs = null;
-        String query = "SELECT tardis_id FROM tardis";
-        String update = "UPDATE tardis SET companions = '' WHERE tardis_id = ?";
+        String query = "SELECT tardis_id FROM " + prefix + "tardis";
+        String update = "UPDATE " + prefix + "tardis SET companions = '' WHERE tardis_id = ?";
         try {
             service.testConnection(connection);
             statement = connection.createStatement();

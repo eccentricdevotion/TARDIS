@@ -49,6 +49,7 @@ public class ResultSetCount {
     private int count;
     private int grace;
     private final ArrayList<HashMap<String, String>> data = new ArrayList<HashMap<String, String>>();
+    private final String prefix;
 
     /**
      * Creates a class instance that can be used to retrieve an SQL ResultSet
@@ -64,6 +65,7 @@ public class ResultSetCount {
         this.plugin = plugin;
         this.where = where;
         this.multiple = multiple;
+        this.prefix = this.plugin.getPrefix();
     }
 
     /**
@@ -84,7 +86,7 @@ public class ResultSetCount {
             }
             wheres = " WHERE " + sbw.toString().substring(0, sbw.length() - 5);
         }
-        String query = "SELECT * FROM t_count" + wheres;
+        String query = "SELECT * FROM " + prefix + "t_count" + wheres;
         try {
             service.testConnection(connection);
             statement = connection.prepareStatement(query);

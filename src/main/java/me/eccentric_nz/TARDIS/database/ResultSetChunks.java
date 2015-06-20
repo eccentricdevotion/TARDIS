@@ -47,6 +47,7 @@ public class ResultSetChunks {
     private int x;
     private int z;
     private final ArrayList<HashMap<String, String>> data = new ArrayList<HashMap<String, String>>();
+    private final String prefix;
 
     /**
      * Creates a class instance that can be used to retrieve an SQL ResultSet
@@ -62,6 +63,7 @@ public class ResultSetChunks {
         this.plugin = plugin;
         this.where = where;
         this.multiple = multiple;
+        this.prefix = this.plugin.getPrefix();
     }
 
     /**
@@ -82,7 +84,7 @@ public class ResultSetChunks {
             }
             wheres = " WHERE " + sbw.toString().substring(0, sbw.length() - 5);
         }
-        String query = "SELECT * FROM chunks" + wheres;
+        String query = "SELECT * FROM " + prefix + "chunks" + wheres;
         try {
             service.testConnection(connection);
             statement = connection.prepareStatement(query);

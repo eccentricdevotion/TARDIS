@@ -45,9 +45,11 @@ public class TARDISUUIDConverter {
     private final TARDISDatabaseConnection service = TARDISDatabaseConnection.getInstance();
     private final Connection connection = service.getConnection();
     private final List<String> timelords = new ArrayList<String>();
+    private final String prefix;
 
     public TARDISUUIDConverter(TARDIS plugin) {
         this.plugin = plugin;
+        this.prefix = this.plugin.getPrefix();
     }
 
     public boolean convert() {
@@ -79,20 +81,20 @@ public class TARDISUUIDConverter {
         ResultSet rss = null;
         ResultSet rst = null;
         ResultSet rsv = null;
-        String querya = "SELECT player FROM achievements";
-        String queryc = "SELECT player FROM t_count";
-        String queryp = "SELECT player FROM player_prefs";
-        String queryr = "SELECT player FROM ars";
-        String querys = "SELECT owner FROM storage";
-        String queryt = "SELECT owner FROM tardis";
-        String queryv = "SELECT player FROM travellers";
-        String a_update = "UPDATE achievements SET uuid = ? WHERE player = ?";
-        String c_update = "UPDATE t_count SET uuid = ? WHERE player = ?";
-        String p_update = "UPDATE player_prefs SET uuid = ? WHERE player = ?";
-        String r_update = "UPDATE ars SET uuid = ? WHERE player = ?";
-        String s_update = "UPDATE storage SET uuid = ? WHERE owner = ?";
-        String t_update = "UPDATE tardis SET uuid = ? WHERE owner = ?";
-        String v_update = "UPDATE travellers SET uuid = ? WHERE player = ?";
+        String querya = "SELECT player FROM " + prefix + "achievements";
+        String queryc = "SELECT player FROM " + prefix + "t_count";
+        String queryp = "SELECT player FROM " + prefix + "player_prefs";
+        String queryr = "SELECT player FROM " + prefix + "ars";
+        String querys = "SELECT owner FROM " + prefix + "storage";
+        String queryt = "SELECT owner FROM " + prefix + "tardis";
+        String queryv = "SELECT player FROM " + prefix + "travellers";
+        String a_update = "UPDATE " + prefix + "achievements SET uuid = ? WHERE player = ?";
+        String c_update = "UPDATE " + prefix + "t_count SET uuid = ? WHERE player = ?";
+        String p_update = "UPDATE " + prefix + "player_prefs SET uuid = ? WHERE player = ?";
+        String r_update = "UPDATE " + prefix + "ars SET uuid = ? WHERE player = ?";
+        String s_update = "UPDATE " + prefix + "storage SET uuid = ? WHERE owner = ?";
+        String t_update = "UPDATE " + prefix + "tardis SET uuid = ? WHERE owner = ?";
+        String v_update = "UPDATE " + prefix + "travellers SET uuid = ? WHERE player = ?";
         int count = 0;
         // we need to query all tables as there are potentially players in some table that aren't in others
         try {

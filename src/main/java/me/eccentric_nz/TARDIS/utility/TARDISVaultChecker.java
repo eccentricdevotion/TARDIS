@@ -39,16 +39,18 @@ public class TARDISVaultChecker implements Runnable {
     private final TARDISDatabaseConnection service = TARDISDatabaseConnection.getInstance();
     private final Connection connection = service.getConnection();
     List<Material> chests = Arrays.asList(Material.CHEST, Material.TRAPPED_CHEST);
+    private final String prefix;
 
     public TARDISVaultChecker(TARDIS plugin) {
         this.plugin = plugin;
+        this.prefix = this.plugin.getPrefix();
     }
 
     @Override
     public void run() {
         Statement statement = null;
         ResultSet rs = null;
-        String query = "SELECT * FROM vaults";
+        String query = "SELECT * FROM " + prefix + "vaults";
         QueryFactory qf = new QueryFactory(plugin);
         int i = 0;
         try {

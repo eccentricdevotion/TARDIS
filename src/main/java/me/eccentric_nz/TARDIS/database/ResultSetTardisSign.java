@@ -44,6 +44,7 @@ public class ResultSetTardisSign {
     private boolean adapti_on;
     private boolean iso_on;
     private boolean powered_on;
+    private final String prefix;
 
     /**
      * Creates a class instance that can be used to retrieve an SQL ResultSet
@@ -55,6 +56,7 @@ public class ResultSetTardisSign {
     public ResultSetTardisSign(TARDIS plugin, String where) {
         this.plugin = plugin;
         this.where = where;
+        this.prefix = this.plugin.getPrefix();
     }
 
     /**
@@ -67,7 +69,7 @@ public class ResultSetTardisSign {
     public boolean resultSet() {
         PreparedStatement statement = null;
         ResultSet rs = null;
-        String query = "SELECT * FROM tardis WHERE chameleon = ? OR save_sign = ?";
+        String query = "SELECT * FROM " + prefix + "tardis WHERE chameleon = ? OR save_sign = ?";
         try {
             service.testConnection(connection);
             statement = connection.prepareStatement(query);

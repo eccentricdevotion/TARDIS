@@ -34,9 +34,11 @@ public class TARDISPortalCommand {
     private final TARDISDatabaseConnection service = TARDISDatabaseConnection.getInstance();
     private final Connection connection = service.getConnection();
     private Statement statement = null;
+    private final String prefix;
 
     public TARDISPortalCommand(TARDIS plugin) {
         this.plugin = plugin;
+        this.prefix = this.plugin.getPrefix();
     }
 
     public boolean clearAll(CommandSender sender) {
@@ -47,7 +49,7 @@ public class TARDISPortalCommand {
         // clear the portals table
         try {
             statement = connection.createStatement();
-            String query = "DELETE FROM portals";
+            String query = "DELETE FROM " + prefix + "portals";
             statement.executeUpdate(query);
         } catch (SQLException e) {
             plugin.debug("Error deleting from portals table! " + e.getMessage());

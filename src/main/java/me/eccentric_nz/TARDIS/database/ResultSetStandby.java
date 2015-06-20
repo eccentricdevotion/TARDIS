@@ -36,16 +36,18 @@ public class ResultSetStandby {
     private final TARDISDatabaseConnection service = TARDISDatabaseConnection.getInstance();
     private final Connection connection = service.getConnection();
     private final TARDIS plugin;
+    private final String prefix;
 
     public ResultSetStandby(TARDIS plugin) {
         this.plugin = plugin;
+        this.prefix = this.plugin.getPrefix();
     }
 
     public HashMap<Integer, StandbyData> onStandby() {
         HashMap<Integer, StandbyData> ids = new HashMap<Integer, StandbyData>();
         PreparedStatement statement = null;
         ResultSet rs = null;
-        String query = "SELECT tardis_id, artron_level, chameleon_preset, size, hidden, lights_on, uuid FROM tardis WHERE powered_on = 1";
+        String query = "SELECT tardis_id, artron_level, chameleon_preset, size, hidden, lights_on, uuid FROM " + prefix + "tardis WHERE powered_on = 1";
         try {
             service.testConnection(connection);
             statement = connection.prepareStatement(query);

@@ -51,6 +51,7 @@ public class ResultSetTravellers {
     private UUID uuid;
     private String player;
     private final List<UUID> data = new ArrayList<UUID>();
+    private final String prefix;
 
     /**
      * Creates a class instance that can be used to retrieve an SQL ResultSet
@@ -66,6 +67,7 @@ public class ResultSetTravellers {
         this.plugin = plugin;
         this.where = where;
         this.multiple = multiple;
+        this.prefix = this.plugin.getPrefix();
     }
 
     /**
@@ -86,7 +88,7 @@ public class ResultSetTravellers {
             }
             wheres = " WHERE " + sbw.toString().substring(0, sbw.length() - 5);
         }
-        String query = "SELECT * FROM travellers" + wheres;
+        String query = "SELECT * FROM " + prefix + "travellers" + wheres;
         try {
             service.testConnection(connection);
             statement = connection.prepareStatement(query);

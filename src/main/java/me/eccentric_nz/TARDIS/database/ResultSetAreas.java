@@ -50,6 +50,7 @@ public class ResultSetAreas {
     private int maxz;
     private int y;
     private final ArrayList<HashMap<String, String>> data = new ArrayList<HashMap<String, String>>();
+    private final String prefix;
 
     /**
      * Creates a class instance that can be used to retrieve an SQL ResultSet
@@ -65,6 +66,7 @@ public class ResultSetAreas {
         this.plugin = plugin;
         this.where = where;
         this.multiple = multiple;
+        this.prefix = this.plugin.getPrefix();
     }
 
     /**
@@ -85,7 +87,7 @@ public class ResultSetAreas {
             }
             wheres = " WHERE " + sbw.toString().substring(0, sbw.length() - 5);
         }
-        String query = "SELECT * FROM areas" + wheres;
+        String query = "SELECT * FROM " + prefix + "areas" + wheres;
         try {
             service.testConnection(connection);
             statement = connection.prepareStatement(query);

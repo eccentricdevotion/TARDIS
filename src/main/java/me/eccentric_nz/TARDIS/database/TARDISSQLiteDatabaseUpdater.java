@@ -47,9 +47,11 @@ public class TARDISSQLiteDatabaseUpdater {
     private final long now = System.currentTimeMillis();
     private final Statement statement;
     private final TARDIS plugin;
+    private final String prefix;
 
     public TARDISSQLiteDatabaseUpdater(TARDIS plugin, Statement statement) {
         this.plugin = plugin;
+        this.prefix = this.plugin.getPrefix();
         this.statement = statement;
         areaupdates.add("y INTEGER");
         blockupdates.add("police_box INTEGER DEFAULT 0");
@@ -130,112 +132,112 @@ public class TARDISSQLiteDatabaseUpdater {
         int i = 0;
         try {
             for (String u : uuidUpdates) {
-                String a_query = "SELECT sql FROM sqlite_master WHERE tbl_name = '" + u + "' AND sql LIKE '%uuid%'";
+                String a_query = "SELECT sql FROM sqlite_master WHERE tbl_name = '" + prefix + u + "' AND sql LIKE '%uuid%'";
                 ResultSet rsu = statement.executeQuery(a_query);
                 if (!rsu.next()) {
                     i++;
-                    String u_alter = "ALTER TABLE " + u + " ADD uuid TEXT DEFAULT ''";
+                    String u_alter = "ALTER TABLE " + prefix + u + " ADD uuid TEXT DEFAULT ''";
                     statement.executeUpdate(u_alter);
                 }
             }
             for (String a : areaupdates) {
                 String[] asplit = a.split(" ");
                 String acheck = asplit[0] + " " + asplit[1].substring(0, 3);
-                String a_query = "SELECT sql FROM sqlite_master WHERE tbl_name = 'areas' AND sql LIKE '%" + acheck + "%'";
+                String a_query = "SELECT sql FROM sqlite_master WHERE tbl_name = '" + prefix + "areas' AND sql LIKE '%" + acheck + "%'";
                 ResultSet rsa = statement.executeQuery(a_query);
                 if (!rsa.next()) {
                     i++;
-                    String a_alter = "ALTER TABLE areas ADD " + a;
+                    String a_alter = "ALTER TABLE " + prefix + "areas ADD " + a;
                     statement.executeUpdate(a_alter);
                 }
             }
             for (String b : blockupdates) {
                 String[] bsplit = b.split(" ");
-                String b_query = "SELECT sql FROM sqlite_master WHERE tbl_name = 'blocks' AND sql LIKE '%" + bsplit[0] + "%'";
+                String b_query = "SELECT sql FROM sqlite_master WHERE tbl_name = '" + prefix + "blocks' AND sql LIKE '%" + bsplit[0] + "%'";
                 ResultSet rsb = statement.executeQuery(b_query);
                 if (!rsb.next()) {
                     i++;
-                    String b_alter = "ALTER TABLE blocks ADD " + b;
+                    String b_alter = "ALTER TABLE " + prefix + "blocks ADD " + b;
                     statement.executeUpdate(b_alter);
                 }
             }
             for (String c : countupdates) {
                 String[] csplit = c.split(" ");
-                String c_query = "SELECT sql FROM sqlite_master WHERE tbl_name = 't_count' AND sql LIKE '%" + csplit[0] + "%'";
+                String c_query = "SELECT sql FROM sqlite_master WHERE tbl_name = '" + prefix + "t_count' AND sql LIKE '%" + csplit[0] + "%'";
                 ResultSet rsc = statement.executeQuery(c_query);
                 if (!rsc.next()) {
                     i++;
-                    String c_alter = "ALTER TABLE t_count ADD " + c;
+                    String c_alter = "ALTER TABLE " + prefix + "t_count ADD " + c;
                     statement.executeUpdate(c_alter);
                 }
             }
             for (String d : destupdates) {
                 String[] dsplit = d.split(" ");
-                String d_query = "SELECT sql FROM sqlite_master WHERE tbl_name = 'destinations' AND sql LIKE '%" + dsplit[0] + "%'";
+                String d_query = "SELECT sql FROM sqlite_master WHERE tbl_name = '" + prefix + "destinations' AND sql LIKE '%" + dsplit[0] + "%'";
                 ResultSet rsd = statement.executeQuery(d_query);
                 if (!rsd.next()) {
                     i++;
-                    String d_alter = "ALTER TABLE destinations ADD " + d;
+                    String d_alter = "ALTER TABLE " + prefix + "destinations ADD " + d;
                     statement.executeUpdate(d_alter);
                 }
             }
             for (String o : doorupdates) {
                 String[] osplit = o.split(" ");
-                String o_query = "SELECT sql FROM sqlite_master WHERE tbl_name = 'doors' AND sql LIKE '%" + osplit[0] + "%'";
+                String o_query = "SELECT sql FROM sqlite_master WHERE tbl_name = '" + prefix + "doors' AND sql LIKE '%" + osplit[0] + "%'";
                 ResultSet rso = statement.executeQuery(o_query);
                 if (!rso.next()) {
                     i++;
-                    String o_alter = "ALTER TABLE doors ADD " + o;
+                    String o_alter = "ALTER TABLE " + prefix + "doors ADD " + o;
                     statement.executeUpdate(o_alter);
                 }
             }
             for (String g : gravityupdates) {
                 String[] gsplit = g.split(" ");
-                String g_query = "SELECT sql FROM sqlite_master WHERE tbl_name = 'gravity_well' AND sql LIKE '%" + gsplit[0] + "%'";
+                String g_query = "SELECT sql FROM sqlite_master WHERE tbl_name = '" + prefix + "gravity_well' AND sql LIKE '%" + gsplit[0] + "%'";
                 ResultSet rsg = statement.executeQuery(g_query);
                 if (!rsg.next()) {
                     i++;
-                    String g_alter = "ALTER TABLE gravity_well ADD " + g;
+                    String g_alter = "ALTER TABLE " + prefix + "gravity_well ADD " + g;
                     statement.executeUpdate(g_alter);
                 }
             }
             for (String p : prefsupdates) {
                 String[] psplit = p.split(" ");
                 String pcheck = psplit[0] + " " + psplit[1].substring(0, 3);
-                String p_query = "SELECT sql FROM sqlite_master WHERE tbl_name = 'player_prefs' AND sql LIKE '%" + pcheck + "%'";
+                String p_query = "SELECT sql FROM sqlite_master WHERE tbl_name = '" + prefix + "player_prefs' AND sql LIKE '%" + pcheck + "%'";
                 ResultSet rsp = statement.executeQuery(p_query);
                 if (!rsp.next()) {
                     i++;
-                    String p_alter = "ALTER TABLE player_prefs ADD " + p;
+                    String p_alter = "ALTER TABLE " + prefix + "player_prefs ADD " + p;
                     statement.executeUpdate(p_alter);
                 }
             }
             for (String t : tardisupdates) {
                 String[] tsplit = t.split(" ");
-                String t_query = "SELECT sql FROM sqlite_master WHERE tbl_name = 'tardis' AND sql LIKE '%" + tsplit[0] + "%'";
+                String t_query = "SELECT sql FROM sqlite_master WHERE tbl_name = '" + prefix + "tardis' AND sql LIKE '%" + tsplit[0] + "%'";
                 ResultSet rst = statement.executeQuery(t_query);
                 if (!rst.next()) {
                     i++;
-                    String t_alter = "ALTER TABLE tardis ADD " + t;
+                    String t_alter = "ALTER TABLE " + prefix + "tardis ADD " + t;
                     statement.executeUpdate(t_alter);
                 }
             }
             for (String v : inventoryupdates) {
                 String[] vsplit = v.split(" ");
-                String v_query = "SELECT sql FROM sqlite_master WHERE tbl_name = 'inventories' AND sql LIKE '%" + vsplit[0] + "%'";
+                String v_query = "SELECT sql FROM sqlite_master WHERE tbl_name = '" + prefix + "inventories' AND sql LIKE '%" + vsplit[0] + "%'";
                 ResultSet rsv = statement.executeQuery(v_query);
                 if (!rsv.next()) {
                     i++;
-                    String v_alter = "ALTER TABLE inventories ADD " + v;
+                    String v_alter = "ALTER TABLE " + prefix + "inventories ADD " + v;
                     statement.executeUpdate(v_alter);
                 }
             }
             // add biome to current location
-            String bio_query = "SELECT sql FROM sqlite_master WHERE tbl_name = 'current' AND sql LIKE '%biome%'";
+            String bio_query = "SELECT sql FROM sqlite_master WHERE tbl_name = '" + prefix + "current' AND sql LIKE '%biome%'";
             ResultSet rsbio = statement.executeQuery(bio_query);
             if (!rsbio.next()) {
                 i++;
-                String bio_alter = "ALTER TABLE current ADD biome TEXT DEFAULT ''";
+                String bio_alter = "ALTER TABLE " + prefix + "current ADD biome TEXT DEFAULT ''";
                 statement.executeUpdate(bio_alter);
             }
         } catch (SQLException e) {

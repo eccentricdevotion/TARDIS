@@ -70,6 +70,7 @@ public class ResultSetPlayerPrefs {
     private boolean lanternsOn;
     private int flightMode;
     private boolean easyDifficulty;
+    private final String prefix;
 
     /**
      * Creates a class instance that can be used to retrieve an SQL ResultSet
@@ -82,6 +83,7 @@ public class ResultSetPlayerPrefs {
     public ResultSetPlayerPrefs(TARDIS plugin, HashMap<String, Object> where) {
         this.plugin = plugin;
         this.where = where;
+        this.prefix = this.plugin.getPrefix();
     }
 
     /**
@@ -102,7 +104,7 @@ public class ResultSetPlayerPrefs {
             }
             wheres = " WHERE " + sbw.toString().substring(0, sbw.length() - 5);
         }
-        String query = "SELECT * FROM player_prefs" + wheres;
+        String query = "SELECT * FROM " + prefix + "player_prefs" + wheres;
         try {
             service.testConnection(connection);
             statement = connection.prepareStatement(query);

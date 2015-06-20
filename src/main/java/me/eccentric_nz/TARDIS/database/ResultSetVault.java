@@ -46,6 +46,7 @@ public class ResultSetVault {
     private int x;
     private int y;
     private int z;
+    private final String prefix;
 
     /**
      * Creates a class instance that can be used to retrieve an SQL ResultSet
@@ -58,6 +59,7 @@ public class ResultSetVault {
     public ResultSetVault(TARDIS plugin, HashMap<String, Object> where) {
         this.plugin = plugin;
         this.where = where;
+        this.prefix = this.plugin.getPrefix();
     }
 
     /**
@@ -78,7 +80,7 @@ public class ResultSetVault {
             }
             wheres = " WHERE " + sbw.toString().substring(0, sbw.length() - 5);
         }
-        String query = "SELECT * FROM vaults" + wheres;
+        String query = "SELECT * FROM " + prefix + "vaults" + wheres;
         try {
             service.testConnection(connection);
             statement = connection.prepareStatement(query);

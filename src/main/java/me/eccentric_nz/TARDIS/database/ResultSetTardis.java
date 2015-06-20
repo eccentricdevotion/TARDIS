@@ -86,6 +86,7 @@ public class ResultSetTardis {
     private boolean lights_on;
     private boolean siege_on;
     private final ArrayList<HashMap<String, String>> data = new ArrayList<HashMap<String, String>>();
+    private final String prefix;
 
     /**
      * Creates a class instance that can be used to retrieve an SQL ResultSet
@@ -103,6 +104,7 @@ public class ResultSetTardis {
         this.where = where;
         this.limit = limit;
         this.multiple = multiple;
+        this.prefix = this.plugin.getPrefix();
     }
 
     /**
@@ -127,7 +129,7 @@ public class ResultSetTardis {
         if (!limit.isEmpty()) {
             thelimit = " LIMIT " + limit;
         }
-        String query = "SELECT * FROM tardis" + wheres + thelimit;
+        String query = "SELECT * FROM " + prefix + "tardis" + wheres + thelimit;
         try {
             service.testConnection(connection);
             statement = connection.prepareStatement(query);

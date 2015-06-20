@@ -167,6 +167,7 @@ public class TARDIS extends JavaPlugin {
     private TARDISMultiverseHelper mvHelper = null;
     private final List<String> cleanUpWorlds = new ArrayList<String>();
     private final HashMap<String, String> versions = new HashMap<String, String>();
+    private String prefix;
 
     public TARDIS() {
         this.worldGuardOnServer = false;
@@ -220,6 +221,7 @@ public class TARDIS extends JavaPlugin {
                 new TARDISRecipesUpdater(this).addRecipes();
                 loadLanguage();
                 loadSigns();
+                prefix = getConfig().getString("storage.mysql.prefix");
                 loadDatabase();
                 // update database add and populate uuid fields
                 if (!getConfig().getBoolean("conversions.uuid_conversion_done")) {
@@ -396,6 +398,10 @@ public class TARDIS extends JavaPlugin {
             resetTime();
             getServer().getScheduler().cancelTasks(this);
         }
+    }
+
+    public String getPrefix() {
+        return prefix;
     }
 
     /**

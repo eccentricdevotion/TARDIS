@@ -34,6 +34,7 @@ public class TARDISSQLCondenserUpdate implements Runnable {
     private final Connection connection = service.getConnection();
     private final int amount;
     private final HashMap<String, Object> where;
+    private final String prefix;
 
     /**
      * Removes condenser block counts from an SQLite database table. This method
@@ -49,6 +50,7 @@ public class TARDISSQLCondenserUpdate implements Runnable {
         this.plugin = plugin;
         this.amount = amount;
         this.where = where;
+        this.prefix = this.plugin.getPrefix();
     }
 
     @Override
@@ -66,7 +68,7 @@ public class TARDISSQLCondenserUpdate implements Runnable {
         }
         where.clear();
         wheres = sbw.toString().substring(0, sbw.length() - 5);
-        String query = "UPDATE condenser SET block_count = block_count - " + amount + " WHERE " + wheres;
+        String query = "UPDATE " + prefix + "condenser SET block_count = block_count - " + amount + " WHERE " + wheres;
         try {
             service.testConnection(connection);
             statement = connection.createStatement();

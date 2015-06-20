@@ -43,6 +43,7 @@ public class ResultSetDoorBlocks {
     private Block outerBlock;
     private COMPASS innerDirection;
     private COMPASS outerDirection;
+    private final String prefix;
 
     /**
      * Creates a class instance that can be used to retrieve an SQL ResultSet
@@ -54,6 +55,7 @@ public class ResultSetDoorBlocks {
     public ResultSetDoorBlocks(TARDIS plugin, int id) {
         this.plugin = plugin;
         this.id = id;
+        this.prefix = this.plugin.getPrefix();
     }
 
     /**
@@ -64,7 +66,7 @@ public class ResultSetDoorBlocks {
     public boolean resultSet() {
         PreparedStatement statement = null;
         ResultSet rs = null;
-        String query = "SELECT * FROM doors WHERE door_type IN (0,1) AND tardis_id = ?";
+        String query = "SELECT * FROM " + prefix + "doors WHERE door_type IN (0,1) AND tardis_id = ?";
         try {
             service.testConnection(connection);
             statement = connection.prepareStatement(query);

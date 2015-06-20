@@ -38,6 +38,7 @@ public class ResultSetCompanions {
     private final TARDIS plugin;
     private final int id;
     private final List<UUID> companions = new ArrayList<UUID>();
+    private final String prefix;
 
     /**
      * Creates a class instance that can be used to retrieve an SQL ResultSet
@@ -49,6 +50,7 @@ public class ResultSetCompanions {
     public ResultSetCompanions(TARDIS plugin, int id) {
         this.plugin = plugin;
         this.id = id;
+        this.prefix = this.plugin.getPrefix();
     }
 
     /**
@@ -59,7 +61,7 @@ public class ResultSetCompanions {
     public List<UUID> getCompanions() {
         PreparedStatement statement = null;
         ResultSet rs = null;
-        String query = "SELECT uuid, companions FROM tardis WHERE tardis_id =" + id;
+        String query = "SELECT uuid, companions FROM " + prefix + "tardis WHERE tardis_id =" + id;
         try {
             service.testConnection(connection);
             statement = connection.prepareStatement(query);

@@ -40,17 +40,19 @@ public class TARDISArchPersister {
     private PreparedStatement ps = null;
     private ResultSet rs = null;
     private int count = 0;
+    private final String prefix;
 
     public TARDISArchPersister(TARDIS plugin) {
         this.plugin = plugin;
+        this.prefix = this.plugin.getPrefix();
     }
 
     public void saveAll() {
         try {
             // save the arched players
-            ps = connection.prepareStatement("INSERT INTO arched (uuid, arch_name, arch_time) VALUES (?, ?, ?)");
+            ps = connection.prepareStatement("INSERT INTO " + prefix + "arched (uuid, arch_name, arch_time) VALUES (?, ?, ?)");
             for (Map.Entry<UUID, TARDISWatchData> map : plugin.getTrackerKeeper().getJohnSmith().entrySet()) {
-                ps = connection.prepareStatement("SELECT uuid FROM arched WHERE uuid = ?");
+                ps = connection.prepareStatement("SELECT uuid FROM " + prefix + "arched WHERE uuid = ?");
                 ps.setString(1, map.getKey().toString());
                 rs = ps.executeQuery();
                 TARDISWatchData twd = map.getValue();
@@ -62,13 +64,13 @@ public class TARDISArchPersister {
                 }
                 if (rs.next()) {
                     // update the existing record
-                    ps = connection.prepareStatement("UPDATE arched SET arch_name = ?, arch_time = ? WHERE uuid = ?");
+                    ps = connection.prepareStatement("UPDATE " + prefix + "arched SET arch_name = ?, arch_time = ? WHERE uuid = ?");
                     ps.setString(1, twd.getName());
                     ps.setLong(2, time);
                     ps.setString(3, map.getKey().toString());
                 } else {
                     // save the arched player
-                    ps = connection.prepareStatement("INSERT INTO arched (uuid, arch_name, arch_time) VALUES (?, ?, ?)");
+                    ps = connection.prepareStatement("INSERT INTO " + prefix + "arched (uuid, arch_name, arch_time) VALUES (?, ?, ?)");
                     ps.setString(1, map.getKey().toString());
                     ps.setString(2, twd.getName());
                     ps.setLong(3, time);
@@ -94,7 +96,7 @@ public class TARDISArchPersister {
 
     public void save(UUID uuid) {
         try {
-            ps = connection.prepareStatement("SELECT uuid FROM arched WHERE uuid = ?");
+            ps = connection.prepareStatement("SELECT uuid FROM " + prefix + "arched WHERE uuid = ?");
             ps.setString(1, uuid.toString());
             rs = ps.executeQuery();
             TARDISWatchData twd = plugin.getTrackerKeeper().getJohnSmith().get(uuid);
@@ -106,13 +108,13 @@ public class TARDISArchPersister {
             }
             if (rs.next()) {
                 // update the existing record
-                ps = connection.prepareStatement("UPDATE arched SET arch_name = ?, arch_time = ? WHERE uuid = ?");
+                ps = connection.prepareStatement("UPDATE " + prefix + "arched SET arch_name = ?, arch_time = ? WHERE uuid = ?");
                 ps.setString(1, twd.getName());
                 ps.setLong(2, time);
                 ps.setString(3, uuid.toString());
             } else {
                 // save the arched player
-                ps = connection.prepareStatement("INSERT INTO arched (uuid, arch_name, arch_time) VALUES (?, ?, ?)");
+                ps = connection.prepareStatement("INSERT INTO " + prefix + "arched (uuid, arch_name, arch_time) VALUES (?, ?, ?)");
                 ps.setString(1, uuid.toString());
                 ps.setString(2, twd.getName());
                 ps.setLong(3, time);
@@ -137,7 +139,7 @@ public class TARDISArchPersister {
 
     public void reArch(UUID uuid) {
         try {
-            ps = connection.prepareStatement("SELECT * FROM arched WHERE uuid = ?");
+            ps = connection.prepareStatement("SELECT * FROM " + prefix + "arched WHERE uuid = ?");
             ps.setString(1, uuid.toString());
             rs = ps.executeQuery();
             if (rs.next()) {
@@ -180,7 +182,7 @@ public class TARDISArchPersister {
             @Override
             public void run() {
                 try {
-                    ps = connection.prepareStatement("SELECT * FROM arched");
+                    ps = connection.prepareStatement("SELECT * FROM " + prefix + "arched");
                     rs = ps.executeQuery();
                     if (rs.isBeforeFirst()) {
                         while (rs.next()) {
@@ -222,7 +224,7 @@ public class TARDISArchPersister {
 
     public void removeArch(UUID uuid) {
         try {
-            ps = connection.prepareStatement("DELETE FROM arched WHERE uuid = ?");
+            ps = connection.prepareStatement("DELETE FROM " + prefix + "arched WHERE uuid = ?");
             ps.setString(1, uuid.toString());
             ps.executeUpdate();
         } catch (SQLException ex) {

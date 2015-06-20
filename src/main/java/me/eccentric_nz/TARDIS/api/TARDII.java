@@ -27,7 +27,6 @@ import java.util.List;
 import java.util.Random;
 import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
-import static me.eccentric_nz.TARDIS.TARDIS.plugin;
 import me.eccentric_nz.TARDIS.database.ResultSetCurrentLocation;
 import me.eccentric_nz.TARDIS.database.ResultSetNextLocation;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
@@ -62,7 +61,7 @@ public class TARDII implements TardisAPI {
         timelords = new HashMap<String, Integer>();
         Statement statement = null;
         ResultSet rs = null;
-        String query = "SELECT tardis_id, owner FROM tardis";
+        String query = "SELECT tardis_id, owner FROM " + TARDIS.plugin.getPrefix() + "tardis";
         try {
             service.testConnection(connection);
             statement = connection.createStatement();
@@ -136,11 +135,11 @@ public class TARDII implements TardisAPI {
         }
         switch (environment) {
             case NETHER:
-                return new TARDISRandomNether(plugin, worlds, param).getlocation();
+                return new TARDISRandomNether(TARDIS.plugin, worlds, param).getlocation();
             case THE_END:
-                return new TARDISRandomTheEnd(plugin, worlds, param).getlocation();
+                return new TARDISRandomTheEnd(TARDIS.plugin, worlds, param).getlocation();
             default:
-                return new TARDISRandomOverworld(plugin, worlds, param).getlocation();
+                return new TARDISRandomOverworld(TARDIS.plugin, worlds, param).getlocation();
         }
     }
 
@@ -212,7 +211,7 @@ public class TARDII implements TardisAPI {
             if (rs.resultSet()) {
                 HashMap<String, Object> wheret = new HashMap<String, Object>();
                 wheret.put("tardis_id", rs.getTardis_id());
-                ResultSetTardis rst = new ResultSetTardis(plugin, wheret, "", false);
+                ResultSetTardis rst = new ResultSetTardis(TARDIS.plugin, wheret, "", false);
                 if (rst.resultSet()) {
                     str = " is in " + rst.getOwner() + "'s TARDIS.";
                 }
@@ -264,7 +263,7 @@ public class TARDII implements TardisAPI {
     public List<String> getPlayersInTARDIS(UUID uuid) {
         HashMap<String, Object> where = new HashMap<String, Object>();
         where.put("uuid", uuid.toString());
-        ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);
+        ResultSetTardis rs = new ResultSetTardis(TARDIS.plugin, where, "", false);
         if (rs.resultSet()) {
             return getPlayersInTARDIS(rs.getTardis_id());
         } else {
@@ -277,7 +276,7 @@ public class TARDII implements TardisAPI {
         List<String> list = new ArrayList<String>();
         HashMap<String, Object> where = new HashMap<String, Object>();
         where.put("tardis_id", id);
-        ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);
+        ResultSetTardis rs = new ResultSetTardis(TARDIS.plugin, where, "", false);
         if (rs.resultSet()) {
             String companions = rs.getCompanions();
             if (!companions.isEmpty()) {
@@ -302,7 +301,7 @@ public class TARDII implements TardisAPI {
         List<String> list = new ArrayList<String>();
         HashMap<String, Object> where = new HashMap<String, Object>();
         where.put("uuid", uuid.toString());
-        ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);
+        ResultSetTardis rs = new ResultSetTardis(TARDIS.plugin, where, "", false);
         if (rs.resultSet()) {
             String companions = rs.getCompanions();
             if (!companions.isEmpty()) {

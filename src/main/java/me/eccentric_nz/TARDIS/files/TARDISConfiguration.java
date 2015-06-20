@@ -339,6 +339,7 @@ public class TARDISConfiguration {
         strOptions.put("storage.mysql.url", "mysql://localhost:3306/TARDIS");
         strOptions.put("storage.mysql.user", "bukkit");
         strOptions.put("storage.mysql.password", "mysecurepassword");
+        strOptions.put("storage.mysql.prefix", "");
         strOptions.put("travel.terminal.nether", "world");
         strOptions.put("travel.terminal.the_end", "world");
         artronStrOptions.put("jettison_seed", "TNT");

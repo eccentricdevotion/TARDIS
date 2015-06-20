@@ -30,14 +30,16 @@ public class TARDISLastKnownNameUpdater {
     private final TARDIS plugin;
     private final TARDISDatabaseConnection service = TARDISDatabaseConnection.getInstance();
     private final Connection connection = service.getConnection();
+    private final String prefix;
 
     public TARDISLastKnownNameUpdater(TARDIS plugin) {
         this.plugin = plugin;
+        this.prefix = this.plugin.getPrefix();
     }
 
     public void update() {
         try {
-            String update = "UPDATE tardis SET last_known_name = owner";
+            String update = "UPDATE " + prefix + "tardis SET last_known_name = owner";
             Statement statement = connection.createStatement();
             statement.executeUpdate(update);
         } catch (SQLException ex) {
