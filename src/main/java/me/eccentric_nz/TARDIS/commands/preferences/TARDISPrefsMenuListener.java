@@ -114,8 +114,8 @@ public class TARDISPrefsMenuListener implements Listener {
                         return;
                     }
                     List<String> lore = im.getLore();
-                    boolean bool = (lore.get(0).equals("ON"));
-                    String value = (bool) ? "OFF" : "ON";
+                    boolean bool = (lore.get(0).equals(plugin.getLanguage().getString("SET_ON")));
+                    String value = (bool) ? plugin.getLanguage().getString("SET_OFF") : plugin.getLanguage().getString("SET_ON");
                     int b = (bool) ? 0 : 1;
                     if (im.getDisplayName().equals("Companion Build")) {
                         String[] args = new String[2];

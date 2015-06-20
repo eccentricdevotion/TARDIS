@@ -137,7 +137,7 @@ public class TARDISLazarusGUIListener extends TARDISMenuListener implements List
                 ItemMeta im = is.getItemMeta();
                 if (player.hasPermission("tardis.themaster")) {
                     if (plugin.getTrackerKeeper().getImmortalityGate().equals("")) {
-                        String onoff = (im.getLore().get(0).equals("OFF")) ? "ON" : "OFF";
+                        String onoff = (im.getLore().get(0).equals(plugin.getLanguage().getString("SET_OFF"))) ? plugin.getLanguage().getString("SET_ON") : plugin.getLanguage().getString("SET_OFF");
                         im.setLore(Arrays.asList(onoff));
                     } else {
                         im.setLore(Arrays.asList("The Master Race is already", " set to " + plugin.getTrackerKeeper().getImmortalityGate() + "!", "Try again later."));
@@ -506,7 +506,7 @@ public class TARDISLazarusGUIListener extends TARDISMenuListener implements List
     private boolean isReversedPolarity(Inventory i) {
         ItemStack is = i.getItem(45);
         ItemMeta im = is.getItemMeta();
-        return im.getLore().get(0).equals("ON");
+        return im.getLore().get(0).equals(plugin.getLanguage().getString("SET_ON"));
     }
 
     private AnimalColor getColor(Inventory i) {

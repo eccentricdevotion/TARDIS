@@ -566,7 +566,7 @@ public class TARDISBuilderInner {
                 } else {
                     cs.setLine(0, "Chameleon");
                     cs.setLine(1, "Circuit");
-                    cs.setLine(2, ChatColor.RED + "OFF");
+                    cs.setLine(2, ChatColor.RED + plugin.getLanguage().getString("SET_OFF"));
                     cs.setLine(3, "NEW");
                     String chameleonloc = world.getName() + ":" + psb.getLocation().getBlockX() + ":" + psb.getLocation().getBlockY() + ":" + psb.getLocation().getBlockZ();
                     set.put("chameleon", chameleonloc);

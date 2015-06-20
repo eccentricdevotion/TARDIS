@@ -325,7 +325,7 @@ public class TARDISUpdateListener implements Listener {
                     Sign s = (Sign) block.getState();
                     s.setLine(0, "Chameleon");
                     s.setLine(1, "Circuit");
-                    s.setLine(2, ChatColor.RED + "OFF");
+                    s.setLine(2, ChatColor.RED + plugin.getLanguage().getString("SET_OFF"));
                     s.setLine(3, preset);
                     s.update();
                 }

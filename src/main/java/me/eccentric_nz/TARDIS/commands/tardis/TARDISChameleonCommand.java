@@ -96,13 +96,13 @@ public class TARDISChameleonCommand {
                             set.put("chamele_on", 1);
                             qf.doUpdate("tardis", set, tid);
                             TARDISMessage.send(player, "CHAM_ON");
-                            cs.setLine(3, ChatColor.GREEN + "ON");
+                            cs.setLine(3, ChatColor.GREEN + plugin.getLanguage().getString("SET_ON"));
                         }
                         if (args[1].equalsIgnoreCase("off")) {
                             set.put("chamele_on", 0);
                             qf.doUpdate("tardis", set, tid);
                             TARDISMessage.send(player, "CHAM_OFF");
-                            cs.setLine(3, ChatColor.RED + "OFF");
+                            cs.setLine(3, ChatColor.RED + plugin.getLanguage().getString("SET_OFF"));
                         }
                         cs.update();
                     }

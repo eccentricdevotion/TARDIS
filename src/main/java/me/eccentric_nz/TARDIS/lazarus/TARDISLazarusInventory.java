@@ -179,7 +179,7 @@ public class TARDISLazarusInventory {
         ItemStack the = new ItemStack(Material.REDSTONE_COMPARATOR, 1);
         ItemMeta master = the.getItemMeta();
         master.setDisplayName(plugin.getLanguage().getString("BUTTON_MASTER"));
-        master.setLore(Arrays.asList("OFF"));
+        master.setLore(Arrays.asList(plugin.getLanguage().getString("SET_OFF")));
         the.setItemMeta(master);
         eggs[45] = the;
         ItemStack adult = new ItemStack(Material.HOPPER, 1);
