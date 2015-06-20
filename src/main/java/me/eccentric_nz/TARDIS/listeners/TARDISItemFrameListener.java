@@ -128,21 +128,27 @@ public class TARDISItemFrameListener implements Listener {
                         player.performCommand("tardis direction " + direction);
                         plugin.getConsole().sendMessage(player.getName() + " issued server command: /tardis direction " + direction);
                     } else {
+                        Rotation r;
                         // set the rotation
                         switch (frame.getRotation()) {
                             case FLIPPED:
+                                r = Rotation.FLIPPED_45;
                                 direction = "EAST";
                                 break;
                             case COUNTER_CLOCKWISE:
+                                r = Rotation.COUNTER_CLOCKWISE_45;
                                 direction = "SOUTH";
                                 break;
                             case NONE:
+                                r = Rotation.CLOCKWISE_45;
                                 direction = "WEST";
                                 break;
                             default:
+                                r = Rotation.CLOCKWISE_135;
                                 direction = "NORTH";
                                 break;
                         }
+                        frame.setRotation(r);
                         TARDISMessage.send(player, "DIRECTON_SET", direction);
                     }
                 } else {
