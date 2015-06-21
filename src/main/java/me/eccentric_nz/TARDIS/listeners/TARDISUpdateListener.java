@@ -543,7 +543,7 @@ public class TARDISUpdateListener implements Listener {
                     s.setLine(0, "-----");
                     s.setLine(1, "TARDIS");
                     s.setLine(2, plugin.getSigns().getStringList("info").get(0));
-                    s.setLine(3, plugin.getSigns().getStringList("info").get(0));
+                    s.setLine(3, plugin.getSigns().getStringList("info").get(1));
                     s.update();
                 }
             }

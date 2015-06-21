@@ -620,7 +620,7 @@ public class TARDISBuilderInner {
                 is.setLine(0, "-----");
                 is.setLine(1, "TARDIS");
                 is.setLine(2, plugin.getSigns().getStringList("info").get(0));
-                is.setLine(3, plugin.getSigns().getStringList("info").get(0));
+                is.setLine(3, plugin.getSigns().getStringList("info").get(1));
                 is.update();
             }
         }
