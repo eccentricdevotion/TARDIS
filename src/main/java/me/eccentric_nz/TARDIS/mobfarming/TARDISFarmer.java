@@ -300,6 +300,7 @@ public class TARDISFarmer {
                             if (plugin.isHelperOnServer()) {
                                 tv.setTrades(plugin.getTardisHelper().getTrades(v, p));
                                 tv.setCareer(plugin.getTardisHelper().getVillagerCareer(v));
+                                tv.setWilling(plugin.getTardisHelper().getVillagerWilling(v));
                             }
                             old_macd_had_a_villager.add(tv);
                             if (!village.isEmpty() || (village.isEmpty() && plugin.getConfig().getBoolean("allow.spawn_eggs"))) {
@@ -631,6 +632,7 @@ public class TARDISFarmer {
                             if (plugin.isHelperOnServer()) {
                                 plugin.getTardisHelper().setTrades(npc, e.getTrades());
                                 plugin.getTardisHelper().setVillagerCareer(npc, e.getCareer());
+                                plugin.getTardisHelper().setVillagerWilling(npc, e.isWilling());
                             }
                             npc.setRemoveWhenFarAway(false);
                         }

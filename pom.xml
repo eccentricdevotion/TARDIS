@@ -176,7 +176,7 @@
         <dependency>
             <groupId>me.eccentric_nz.tardishelper</groupId>
             <artifactId>TARDISHelper</artifactId>
-            <version>1.7.2</version>
+            <version>1.7.3</version>
             <type>jar</type>
             <exclusions>
                 <exclusion>
@@ -486,7 +486,7 @@
         <dependency>
             <groupId>me.ryanhamshire</groupId>
             <artifactId>GriefPrevention</artifactId>
-            <version>11.6.2</version>
+            <version>11.7</version>
         </dependency>
         <dependency>
             <groupId>com.comphenix.protocol</groupId>

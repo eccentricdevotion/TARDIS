@@ -29,6 +29,7 @@ public class TARDISVillager extends TARDISMob {
     private Profession profession;
     private ArrayList trades;
     private int career;
+    private boolean willing;
 
     /**
      * Data storage class for TARDIS villagers.
@@ -60,5 +61,13 @@ public class TARDISVillager extends TARDISMob {
 
     public void setCareer(int career) {
         this.career = career;
+    }
+
+    public boolean isWilling() {
+        return willing;
+    }
+
+    public void setWilling(boolean willing) {
+        this.willing = willing;
     }
 }
