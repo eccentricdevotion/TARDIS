@@ -31,6 +31,10 @@
             <id>shadowvolt-repo</id>
             <url>http://repo.dmulloy2.net/content/groups/public/</url>
         </repository>
+        <repository>
+            <id>libsdisguises-repo</id>
+            <url>http://psmc.ca/repo/</url>
+        </repository>
         <!--
         <repository>
             <id>onarandombox</id>
@@ -243,6 +247,14 @@
                 <exclusion>
                     <groupId>com.sk89q.spigot</groupId>
                     <artifactId>bukkit</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>org.avaje</groupId>
+                    <artifactId>ebean</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>javax.persistence</groupId>
+                    <artifactId>persistence-api</artifactId>
                 </exclusion>
             </exclusions>
         </dependency>
@@ -510,7 +522,7 @@
         <dependency>
             <groupId>LibsDisguises</groupId>
             <artifactId>LibsDisguises</artifactId>
-            <version>8.4</version>
+            <version>8.5.1-SNAPSHOT</version>
             <exclusions>
                 <exclusion>
                     <artifactId>craftbukkit</artifactId>
