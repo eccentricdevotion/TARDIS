@@ -175,6 +175,7 @@ public class TARDISLazarusGUIListener extends TARDISMenuListener implements List
                         } else {
                             twaOff(player);
                         }
+                        TARDISMessage.send(player, "GENETICS_RESTORED");
                     }
                 }, 80L);
                 // open the door
@@ -352,6 +353,7 @@ public class TARDISLazarusGUIListener extends TARDISMenuListener implements List
                                         DisguiseAPI.disguiseToAll(player, mobDisguise);
                                     }
                                 }
+                                TARDISMessage.send(player, "GENETICS_MODIFIED", disguise);
                             }
                         }
                     }
