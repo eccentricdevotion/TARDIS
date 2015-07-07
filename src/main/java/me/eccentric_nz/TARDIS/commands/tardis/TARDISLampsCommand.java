@@ -24,6 +24,7 @@ import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetChunks;
 import me.eccentric_nz.TARDIS.database.ResultSetLamps;
+import me.eccentric_nz.TARDIS.database.ResultSetPlayerPrefs;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import me.eccentric_nz.TARDIS.enumeration.SCHEMATIC;
 import me.eccentric_nz.TARDIS.schematic.TARDISSchematicGZip;
@@ -87,6 +88,13 @@ public class TARDISLampsCommand {
                 int starty, endy;
                 SCHEMATIC schm = rs.getSchematic();
                 Material lampon = (schm.hasLanterns()) ? Material.SEA_LANTERN : Material.REDSTONE_LAMP_ON;
+                // player preference
+                HashMap<String, Object> wherepp = new HashMap<String, Object>();
+                wherepp.put("uuid", owner.getUniqueId().toString());
+                ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, wherepp);
+                if (rsp.resultSet() && rsp.isLanternsOn()) {
+                    lampon = Material.SEA_LANTERN;
+                }
                 String directory = (schm.isCustom()) ? "user_schematics" : "schematics";
                 String path = plugin.getDataFolder() + File.separator + directory + File.separator + schm.getPermission() + ".tschm";
                 // get JSON
