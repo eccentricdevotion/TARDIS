@@ -32,6 +32,58 @@
     <section>
         <h1>Change log</h1>
         <h2>What&rsquo;s been changed?</h2>
+        <h3>TARDIS v3.3</h3>
+        <p>Requires <em>CraftBukkit/Spigot 1.8.7, TARDISHelper 1.7.3</em> (included in the TARDIS ZIP file download), and if installed, <em>TARDISWeepingAngels v2.0.7</em></p>
+        <p>ALWAYS run BuildTools to get the latest server JARs before installing/updating TARDIS!</p>
+        <h4>Additions</h4>
+        <ul>
+            <li>Added the Sonic Blaster and Blaster Battery to the <code>/tardisgive</code> command</li>
+            <li>Made perception filter configurable &mdash; <code>allow.perception_filter</code></li>
+            <li>Made TARDIS sign text configurable</li>
+            <li>Added a configuration option for a MySQL database prefix &mdash; <code>storage.mysql.prefix</code></li>
+            <li>Added the ability to Get/Set a Villager&rsquo;s willingness to breed/trade &mdash; requires TARDISHelper v1.7.3</li>
+            <li>Add messages when modifying genetic material using the Lazarus Room</li>
+            <li>Made the Artron HUD localisable &mdash; edit the <code>ARTRON_XXXX</code> entries in your language file</li>
+        </ul>
+        <h4>Changes</h4>
+        <ul>
+            <li>Updated Bukkit dependency to 1.8.7</li>
+            <li>Mobs can now spawn inside the TARDIS via dispensers</li>
+            <li>The TARDIS will not auto power down if the handbrake is off</li>
+            <li>Use translation file for &lsquo;ON&rsquo; and &lsquo;OFF&rsquo; where used throughout the plugin</li>
+            <li>The plugin now runs the <code>/twad</code> command via the console when genetically modifying players &mdash; requires TARDISWeepingAngels v2.0.7</li>
+            <li>Allow the sonic to work on players with both the bio-scanner and admin upgrades &mdash; the Admin upgrade to view a player&rsquo;s inventory requires the admin to be sneaking while clicking the player</li>
+        </ul>
+        <h4>Bug fixes</h4>
+        <ul>
+            <li>Fixed a spelling mistake in the recipe lister</li>
+            <li>Fixed <code>/tardis rebuild</code> block duplication exploit</li>
+            <li>Fix seed block crafting duplication exploit</li>
+            <li>Fixed doors not opening on 2x2x2 TARDIS interiors</li>
+            <li>Load Multiverse before checking for the default world creation &mdash; fixes NPE on fresh installs when trying to enter TARDIS</li>
+            <li>Only rotate the TARDIS direction frame in 90 deg angles</li>
+            <li>Now checking the LANTERN player preference when using the <code>/tardis lamps</code> command</li>
+        </ul>
+        <h4>Dependent plugin versions</h4>
+        <p>If running any of these plugins with TARDIS they must be equal to or <em>greater than</em> the versions listed here:</p>
+        <ul>
+            <li>BarAPI &mdash; v3.3</li>
+            <li>Citizens &mdash; v2.0.15</li>
+            <li>Factions &mdash; v2.7.4</li>
+            <li>GriefPrevention &mdash; v10</li>
+            <li>LibsDisguises &mdash; v8.5.1</li>
+            <li>MultiWorld &mdash; v5.2</li>
+            <li>Multiverse-Adventure &mdash; v2.5</li>
+            <li>Multiverse-Core &mdash; v2.5</li>
+            <li>Multiverse-Inventories &mdash; v2.5</li>
+            <li>My Worlds &mdash; v1.67</li>
+            <li>ProtocolLib &mdash; v3.6.3</li>
+            <li>TARDISHelper &mdash; v1.7.3</li>
+            <li>TARDISWeepingAngels &mdash; v2.0.7</li>
+            <li>Towny &mdash; v0.89</li>
+            <li>WorldBorder &mdash; v1.8.1</li>
+            <li>WorldGuard &mdash; v6.0.0</li>
+        </ul>
         <h3>v3.2.11</h3>
         <h4>Additions</h4>
         <ul>
