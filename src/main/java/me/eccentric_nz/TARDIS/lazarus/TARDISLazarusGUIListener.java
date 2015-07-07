@@ -99,7 +99,7 @@ public class TARDISLazarusGUIListener extends TARDISMenuListener implements List
         if (name.equals("§4Genetic Manipulator")) {
             event.setCancelled(true);
             if (plugin.checkTWA()) {
-                max_slot = 44;
+                max_slot = 45;
             }
             int slot = event.getRawSlot();
             final Player player = (Player) event.getWhoClicked();
