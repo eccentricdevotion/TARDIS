@@ -2,7 +2,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>me.eccentric_nz.TARDIS</groupId>
     <artifactId>TARDIS</artifactId>
-    <version>3.3-beta-1</version>
+    <version>3.3</version>
     <name>TARDIS</name>
     <description>A Doctor Who Plugin</description>
     <properties>
@@ -28,7 +28,7 @@
             <url>http://repo.md-5.net/content/groups/public</url>
         </repository>
         <repository>
-            <id>shadowvolt-repo</id>
+            <id>dmulloy2-repo</id>
             <url>http://repo.dmulloy2.net/content/groups/public/</url>
         </repository>
         <repository>
@@ -503,7 +503,7 @@
         <dependency>
             <groupId>com.comphenix.protocol</groupId>
             <artifactId>ProtocolLib</artifactId>
-            <version>3.6.3-SNAPSHOT</version>
+            <version>3.6.4-SNAPSHOT</version>
             <exclusions>
                 <exclusion>
                     <artifactId>BukkitExecutors</artifactId>
