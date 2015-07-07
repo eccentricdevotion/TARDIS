@@ -175,10 +175,10 @@ public class TARDIS extends JavaPlugin {
         this.barAPIOnServer = false;
         this.mvOnServer = false;
         this.versions.put("BarAPI", "3.3");
-        this.versions.put("Citizens", "2.0.15");
+        this.versions.put("Citizens", "2.0.16");
         this.versions.put("Factions", "2.7.4");
         this.versions.put("GriefPrevention", "10");
-        this.versions.put("LibsDisguises", "8.3");
+        this.versions.put("LibsDisguises", "8.5.1");
         this.versions.put("MultiWorld", "5.2");
         this.versions.put("Multiverse-Adventure", "2.5");
         this.versions.put("Multiverse-Core", "2.5");
