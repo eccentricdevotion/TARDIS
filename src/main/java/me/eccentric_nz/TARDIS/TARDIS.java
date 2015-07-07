@@ -860,6 +860,21 @@ public class TARDIS extends JavaPlugin {
     }
 
     /**
+     * Gets whether TARDISWeepingAngels is the correct version
+     *
+     * @return true if TWA is the correct version
+     */
+    public boolean checkTWA() {
+        if (getPM().isPluginEnabled("TARDISWeepingAngels")) {
+            Plugin twa = plugin.getPM().getPlugin("TARDISWeepingAngels");
+            Version version = new Version(twa.getDescription().getVersion());
+            return (version.compareTo(new Version("2.0.7")) >= 0);
+        } else {
+            return false;
+        }
+    }
+
+    /**
      * Outputs a message to the console. Requires debug: true in config.yml
      *
      * @param o the Object to print to the console

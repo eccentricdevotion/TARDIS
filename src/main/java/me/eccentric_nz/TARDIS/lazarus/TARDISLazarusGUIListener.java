@@ -25,7 +25,6 @@ import me.eccentric_nz.TARDIS.listeners.TARDISMenuListener;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import me.eccentric_nz.TARDIS.utility.TARDISNumberParsers;
 import me.eccentric_nz.TARDIS.utility.TARDISSounds;
-import me.eccentric_nz.TARDIS.utility.Version;
 import me.libraryaddict.disguise.DisguiseAPI;
 import me.libraryaddict.disguise.disguisetypes.AnimalColor;
 import me.libraryaddict.disguise.disguisetypes.DisguiseType;
@@ -80,19 +79,11 @@ public class TARDISLazarusGUIListener extends TARDISMenuListener implements List
     private final List<Integer> slimeSizes = Arrays.asList(1, 2, 4);
     private final List<String> twaMonsters = Arrays.asList("WEEPING ANGEL", "CYBERMAN", "ICE WARRIOR", "EMPTY CHILD", "SILURIAN", "SONTARAN", "STRAX", "VASHTA NERADA", "ZYGON");
     private final List<String> twaChests = Arrays.asList("Weeping Angel Chest", "Cyberman Chest", "Ice Warrior Chest", "Empty Child Chest", "Silurian Chest", "Sontaran Chest", "Strax Chest", "Vashta Nerada Chest", "Zygon Chest");
-    private final Version min = new Version("2.0");
-    private Version twa = null;
     private int max_slot = 36;
 
     public TARDISLazarusGUIListener(TARDIS plugin) {
         super(plugin);
         this.plugin = plugin;
-        if (this.plugin.getPM().isPluginEnabled("TARDISWeepingAngels")) {
-            this.twa = new Version(this.plugin.getPM().getPlugin("TARDISWeepingAngels").getDescription().getVersion());
-        }
-        if (min.compareTo(this.twa) >= 0) {
-            max_slot = 42;
-        }
     }
 
     /**
@@ -107,6 +98,9 @@ public class TARDISLazarusGUIListener extends TARDISMenuListener implements List
         String name = inv.getTitle();
         if (name.equals("§4Genetic Manipulator")) {
             event.setCancelled(true);
+            if (plugin.checkTWA()) {
+                max_slot = 44;
+            }
             int slot = event.getRawSlot();
             final Player player = (Player) event.getWhoClicked();
             final UUID uuid = player.getUniqueId();
@@ -121,12 +115,12 @@ public class TARDISLazarusGUIListener extends TARDISMenuListener implements List
                     ItemMeta im = is.getItemMeta();
                     // remember selection
                     String display = im.getDisplayName();
-                    if (twaMonsters.contains(display) && !plugin.getPM().isPluginEnabled("TARDISWeepingAngels")) {
+                    if (twaMonsters.contains(display) && !plugin.checkTWA()) {
                         im.setLore(Arrays.asList("Genetic modification not available!"));
                         is.setItemMeta(im);
                     } else {
                         disguises.put(uuid, display);
-                        setSlotFourtyOne(inv, display, uuid);
+                        setSlotFourtyEight(inv, display, uuid);
                     }
                 } else {
                     disguises.put(uuid, "PLAYER");
@@ -156,7 +150,7 @@ public class TARDISLazarusGUIListener extends TARDISMenuListener implements List
             }
             if (slot == 48) { // type / colour
                 if (disguises.containsKey(uuid)) {
-                    setSlotFourtyOne(inv, disguises.get(uuid), uuid);
+                    setSlotFourtyEight(inv, disguises.get(uuid), uuid);
                 }
             }
             if (slot == 49) { // Tamed / Flying / Blazing / Powered / Agressive / Beaming : TRUE | FALSE
@@ -235,43 +229,31 @@ public class TARDISLazarusGUIListener extends TARDISMenuListener implements List
                                 twaOff(player);
                                 if (twaMonsters.contains(disguise)) {
                                     if (disguise.equals("WEEPING ANGEL")) {
-                                        if (min.compareTo(twa) < 0) {
-                                            player.performCommand("angeldisguise on");
-                                        } else {
-                                            player.performCommand("twad ANGEL on");
-                                        }
+                                        plugin.getServer().dispatchCommand(plugin.getConsole(), "twad ANGEL on " + player.getUniqueId());
                                     }
                                     if (disguise.equals("CYBERMAN")) {
-                                        if (min.compareTo(twa) < 0) {
-                                            player.performCommand("cyberdisguise on");
-                                        } else {
-                                            player.performCommand("twad CYBERMAN on");
-                                        }
+                                        plugin.getServer().dispatchCommand(plugin.getConsole(), "twad CYBERMAN on " + player.getUniqueId());
                                     }
                                     if (disguise.equals("ICE WARRIOR")) {
-                                        if (min.compareTo(twa) < 0) {
-                                            player.performCommand("icedisguise on");
-                                        } else {
-                                            player.performCommand("twad ICE on");
-                                        }
+                                        plugin.getServer().dispatchCommand(plugin.getConsole(), "twad ICE on " + player.getUniqueId());
                                     }
                                     if (disguise.equals("EMPTY CHILD")) {
-                                        player.performCommand("twad EMPTY on");
+                                        plugin.getServer().dispatchCommand(plugin.getConsole(), "twad EMPTY on " + player.getUniqueId());
                                     }
                                     if (disguise.equals("SILURIAN")) {
-                                        player.performCommand("twad SILURIAN on");
+                                        plugin.getServer().dispatchCommand(plugin.getConsole(), "twad SILURIAN on " + player.getUniqueId());
                                     }
                                     if (disguise.equals("SONTARAN")) {
-                                        player.performCommand("twad SONTARAN on");
+                                        plugin.getServer().dispatchCommand(plugin.getConsole(), "twad SONTARAN on " + player.getUniqueId());
                                     }
                                     if (disguise.equals("STRAX")) {
-                                        player.performCommand("twad STRAX on");
+                                        plugin.getServer().dispatchCommand(plugin.getConsole(), "twad STRAX on " + player.getUniqueId());
                                     }
                                     if (disguise.equals("VASHTA NERADA")) {
-                                        player.performCommand("twad VASHTA on");
+                                        plugin.getServer().dispatchCommand(plugin.getConsole(), "twad VASHTA on " + player.getUniqueId());
                                     }
                                     if (disguise.equals("ZYGON")) {
-                                        player.performCommand("twad ZYGON on");
+                                        plugin.getServer().dispatchCommand(plugin.getConsole(), "twad ZYGON on " + player.getUniqueId());
                                     }
                                 } else {
                                     DisguiseType dt = DisguiseType.valueOf(disguise);
@@ -438,7 +420,7 @@ public class TARDISLazarusGUIListener extends TARDISMenuListener implements List
         b.getRelative(BlockFace.SOUTH).getRelative(BlockFace.UP).setType(Material.AIR);
     }
 
-    private void setSlotFourtyOne(Inventory i, String d, UUID uuid) {
+    private void setSlotFourtyEight(Inventory i, String d, UUID uuid) {
         String t = null;
         int o;
         if (d.equals("SHEEP") || d.equals("WOLF")) {
@@ -583,19 +565,7 @@ public class TARDISLazarusGUIListener extends TARDISMenuListener implements List
         if (chest != null && chest.hasItemMeta() && chest.getItemMeta().hasDisplayName()) {
             String metaName = chest.getItemMeta().getDisplayName();
             if (twaChests.contains(metaName)) {
-                if (min.compareTo(twa) >= 0) {
-                    player.performCommand("twad ANGEL off");
-                } else {
-                    if (metaName.equals("Weeping Angel Chest")) {
-                        player.performCommand("angeldisguise off");
-                    }
-                    if (metaName.equals("Cyberman Chest")) {
-                        player.performCommand("cyberdisguise off");
-                    }
-                    if (metaName.equals("Ice Warrior Chest")) {
-                        player.performCommand("icedisguise off");
-                    }
-                }
+                plugin.getServer().dispatchCommand(plugin.getConsole(), "twad ANGEL off " + player.getUniqueId());
             }
         }
     }
