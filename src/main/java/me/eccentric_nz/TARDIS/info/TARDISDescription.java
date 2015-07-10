@@ -55,7 +55,7 @@ public enum TARDISDescription {
     ARS_CIRCUIT_INFO("The ARS Circuit is a component of the TARDIS Advanced Console and is required to use the Architectural Reconfiguration System."),
     SCANNER_CIRCUIT_INFO("The Scanner Circuit is a component of the TARDIS Advanced Console and is required to use the TARDIS Scanner and Exterior Rendering room."),
     P_CIRCUIT_INFO("The Perception Circuit is used in crafting the Perception Filter."),
-    PAINTER_CIRCUIT_INFO("The Painter Circuit upgrades the Sonic Screwdriver so that you can change the colour of blocks."),
+    PAINTER_INFO("The Painter Circuit upgrades the Sonic Screwdriver so that you can change the colour of blocks."),
     FILTER_INFO("The Perception Filter is used to make yourself less noticeable."),
     AREA_DISK("An Area Storage Disk lets you travel to a TARDIS Area. These disks are not craftable, but are stored automatically in the Disk Storage Container for the areas you have permission to travel to."),
     BLANK_INFO("A Blank Storage Disk is a craftable disk that is the base disk for crafting into another sort of TARDIS disk."),
