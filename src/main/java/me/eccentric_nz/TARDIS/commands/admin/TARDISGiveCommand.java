@@ -82,6 +82,7 @@ public class TARDISGiveCommand implements CommandExecutor {
         items.put("memory-circuit", "TARDIS Memory Circuit");
         items.put("oscillator", "Sonic Oscillator");
         items.put("p-circuit", "Perception Circuit");
+        items.put("pad", "Landing Pad");
         items.put("painter", "Painter Circuit");
         items.put("player-disk", "Player Storage Disk");
         items.put("preset-disk", "Preset Storage Disk");
@@ -182,7 +183,7 @@ public class TARDISGiveCommand implements CommandExecutor {
             TARDISMessage.send(sender, "ARG_MAX");
             return true;
         }
-        if ((item.equals("battery") || item.equals("blaster")) && !plugin.getPM().isPluginEnabled("TARDISSonicBlaster")) {
+        if ((item.equals("battery") || item.equals("blaster") || item.equals("pad")) && !plugin.getPM().isPluginEnabled("TARDISSonicBlaster")) {
             TARDISMessage.send(sender, "RECIPE_BLASTER");
             return true;
         }

@@ -110,10 +110,15 @@ public class TARDISGiveLister {
         List<String> accessories = new ArrayList<String>();
         accessories.add(ChatColor.GREEN + "bow-tie" + ChatColor.RESET + " - " + ChatColor.DARK_GREEN + "Bow Tie");
         accessories.add(ChatColor.GREEN + "glasses" + ChatColor.RESET + " - " + ChatColor.DARK_GREEN + "3-D Glasses");
-        accessories.add(ChatColor.GREEN + "blaster" + ChatColor.RESET + " - " + ChatColor.DARK_GREEN + "Sonic Blaster");
-        accessories.add(ChatColor.GREEN + "battery" + ChatColor.RESET + " - " + ChatColor.DARK_GREEN + "Blaster Battery");
-        accessories.add(ChatColor.GREEN + "tachyon" + ChatColor.RESET + " - " + ChatColor.DARK_GREEN + "Vortex Manipulator Tachyon Energy");
-        accessories.add(ChatColor.GREEN + "vortex" + ChatColor.RESET + " - " + ChatColor.DARK_GREEN + "Vortex Manipulator");
+        if (plugin.getPM().isPluginEnabled("TARDISSonicBlaster")) {
+            accessories.add(ChatColor.GREEN + "blaster" + ChatColor.RESET + " - " + ChatColor.DARK_GREEN + "Sonic Blaster");
+            accessories.add(ChatColor.GREEN + "battery" + ChatColor.RESET + " - " + ChatColor.DARK_GREEN + "Blaster Battery");
+            accessories.add(ChatColor.GREEN + "pad" + ChatColor.RESET + " - " + ChatColor.DARK_GREEN + "Landing Pad");
+        }
+        if (plugin.getPM().isPluginEnabled("TARDISVortexManipulator")) {
+            accessories.add(ChatColor.GREEN + "tachyon" + ChatColor.RESET + " - " + ChatColor.DARK_GREEN + "Vortex Manipulator Tachyon Energy");
+            accessories.add(ChatColor.GREEN + "vortex" + ChatColor.RESET + " - " + ChatColor.DARK_GREEN + "Vortex Manipulator");
+        }
         accessories.add(ChatColor.GREEN + "watch" + ChatColor.RESET + " - " + ChatColor.DARK_GREEN + "Chameleon Arch Fob Watch");
         give_options.put("Accessories", accessories);
         return give_options;
