@@ -522,7 +522,7 @@
         <dependency>
             <groupId>LibsDisguises</groupId>
             <artifactId>LibsDisguises</artifactId>
-            <version>8.5.1-SNAPSHOT</version>
+            <version>8.6.1-SNAPSHOT</version>
             <exclusions>
                 <exclusion>
                     <artifactId>craftbukkit</artifactId>
