@@ -32,7 +32,9 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.ConsoleCommandSender;
+import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.ShapedRecipe;
 import org.bukkit.inventory.ShapelessRecipe;
@@ -167,7 +169,11 @@ public class TARDISGiveCommand implements CommandExecutor {
                         TARDISMessage.send(sender, "COULD_NOT_FIND_NAME");
                         return true;
                     }
-                    return this.giveItem(sender, item, amount, p);
+                    if (args[1].equalsIgnoreCase("cell") && args.length == 4 && args[3].equalsIgnoreCase("full")) {
+                        return this.giveFullCell(sender, amount, p);
+                    } else {
+                        return this.giveItem(sender, item, amount, p);
+                    }
                 }
             } else {
                 TARDISMessage.send(sender, "NO_PERMS");
@@ -332,5 +338,31 @@ public class TARDISGiveCommand implements CommandExecutor {
             TARDISMessage.send(sender, "UUID_NOT_FOUND", player);
             return true;
         }
+    }
+
+    @SuppressWarnings("deprecation")
+    private boolean giveFullCell(CommandSender sender, int amount, Player player) {
+        if (amount > 64) {
+            TARDISMessage.send(sender, "ARG_MAX");
+            return true;
+        }
+        ShapedRecipe recipe = plugin.getFigura().getShapedRecipes().get("Artron Storage Cell");
+        ItemStack result = recipe.getResult();
+        result.setAmount(amount);
+        // add lore and enchantment
+        ItemMeta im = result.getItemMeta();
+        List<String> lore = im.getLore();
+        int max = plugin.getArtronConfig().getInt("full_charge");
+        lore.set(1, "" + max);
+        im.setLore(lore);
+        im.addEnchant(Enchantment.DURABILITY, 1, true);
+        if (!plugin.getPM().isPluginEnabled("Multiverse-Inventories")) {
+            im.addItemFlags(ItemFlag.values());
+        }
+        result.setItemMeta(im);
+        player.getInventory().addItem(result);
+        player.updateInventory();
+        TARDISMessage.send(player, "GIVE_ITEM", sender.getName(), amount + " Full Artron Storage Cell");
+        return true;
     }
 }
