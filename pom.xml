@@ -498,7 +498,7 @@
         <dependency>
             <groupId>me.ryanhamshire</groupId>
             <artifactId>GriefPrevention</artifactId>
-            <version>11.7</version>
+            <version>11.8</version>
         </dependency>
         <dependency>
             <groupId>com.comphenix.protocol</groupId>
@@ -522,7 +522,7 @@
         <dependency>
             <groupId>LibsDisguises</groupId>
             <artifactId>LibsDisguises</artifactId>
-            <version>8.6.1-SNAPSHOT</version>
+            <version>8.6.2-SNAPSHOT</version>
             <exclusions>
                 <exclusion>
                     <artifactId>craftbukkit</artifactId>
