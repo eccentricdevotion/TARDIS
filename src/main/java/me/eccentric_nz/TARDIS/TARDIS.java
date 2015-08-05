@@ -31,6 +31,7 @@ import java.util.Map;
 import java.util.Properties;
 import java.util.Set;
 import java.util.UUID;
+import java.util.logging.Level;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import me.eccentric_nz.TARDIS.api.TARDII;
@@ -373,9 +374,18 @@ public class TARDIS extends JavaPlugin {
         if (pm.isPluginEnabled(plg)) {
             Plugin check = pm.getPlugin(plg);
             Version minver = new Version(min);
-            String[] split = check.getDescription().getVersion().split("-");
-            Version ver = new Version(split[0]);
-            return (ver.compareTo(minver) >= 0);
+            String preSplit = check.getDescription().getVersion();
+            String[] split = preSplit.split("-");
+            try {
+                Version ver = new Version(split[0]);
+                return (ver.compareTo(minver) >= 0);
+            } catch (IllegalArgumentException e) {
+                getServer().getLogger().log(Level.WARNING, "TARDIS failed to get the version for {0}.", plg);
+                getServer().getLogger().log(Level.WARNING, "This could cause issues with enabling the plugin.");
+                getServer().getLogger().log(Level.WARNING, "Please check you have at least v{0}", min);
+                getServer().getLogger().log(Level.WARNING, "The invalid version format was {0}", preSplit);
+                return true;
+            }
         } else {
             return true;
         }
