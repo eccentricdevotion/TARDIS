@@ -76,6 +76,7 @@ public class TARDISCraftListener implements Listener {
         t.put(Material.QUARTZ_BLOCK, "ARS"); // ARS
         t.put(Material.REDSTONE_BLOCK, "REDSTONE"); // redstone
         t.put(Material.STAINED_CLAY, "WAR"); // war doctor
+        t.put(Material.SANDSTONE_STAIRS, "PYRAMID"); // pyramid
         // custom seeds
         for (String console : plugin.getCustomConsolesConfig().getKeys(false)) {
             if (plugin.getCustomConsolesConfig().getBoolean(console + ".enabled")) {

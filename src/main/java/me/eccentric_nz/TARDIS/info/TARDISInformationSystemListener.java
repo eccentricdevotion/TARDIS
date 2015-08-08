@@ -435,7 +435,7 @@ public class TARDISInformationSystemListener implements Listener {
                         if (chat.equalsIgnoreCase("l")) {
                             showInfo(p, TARDISInfoMenu.ELEVENTH);
                         }
-                        if (chat.equalsIgnoreCase("w")) {
+                        if (chat.equalsIgnoreCase("f")) {
                             showInfo(p, TARDISInfoMenu.TWELFTH);
                         }
                         if (chat.equalsIgnoreCase("R")) {
@@ -452,6 +452,12 @@ public class TARDISInformationSystemListener implements Listener {
                         }
                         if (chat.equalsIgnoreCase("A")) {
                             showInfo(p, TARDISInfoMenu.ARS);
+                        }
+                        if (chat.equalsIgnoreCase("W")) {
+                            showInfo(p, TARDISInfoMenu.WAR);
+                        }
+                        if (chat.equalsIgnoreCase("P")) {
+                            showInfo(p, TARDISInfoMenu.PYRAMID);
                         }
                         if (chat.equalsIgnoreCase("C")) {
                             showInfo(p, TARDISInfoMenu.CUSTOM);

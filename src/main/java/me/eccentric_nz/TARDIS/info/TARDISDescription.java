@@ -74,6 +74,8 @@ public enum TARDISDescription {
     PLANK("A wood based interior."),
     TOM("The 4th Doctor's TARDIS."),
     ARS("The Architectural Reconfiguration System TARDIS."),
+    WAR("The War Doctor's TARDIS."),
+    PYRAMID("A sandstone pyramid TARDIS."),
     CUSTOM("A custom designed server TARDIS"),
     ANTIGRAVITY("Going up..."),
     ARBORETUM("A room full of plants."),

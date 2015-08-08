@@ -108,6 +108,7 @@ public class TARDISRecipeCommands implements CommandExecutor {
         t.put("TOM", Material.LAPIS_BLOCK); // tom baker
         t.put("TWELFTH", Material.PRISMARINE); // twelfth
         t.put("WAR", Material.STAINED_CLAY); // war doctor
+        t.put("PYRAMID", Material.SANDSTONE_STAIRS); // pyramid
         // custom seeds
         for (String console : plugin.getCustomConsolesConfig().getKeys(false)) {
             if (plugin.getCustomConsolesConfig().getBoolean(console + ".enabled")) {
