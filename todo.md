@@ -1,17 +1,5 @@
 #TODO
 
-
-##Current version `3.3.1`
-1. Update for Minecraft / Bukkit 1.8
-2. Slimmer TARDIS option?
-3. Find the Multiverse problem that prevents the Rail room from functioning properly
-4. Use new Wall menu for `/tardisprefs [wall|floor]` command?
-5. `/tardis hide` and `/tardis rebuild` has materialisation animation
-
-##Future version `3.2+`
-* SpongeAPI?
-* Glowstone
-
 ##Current version `3.3-beta-1`
 1. Fix bugs
 2. Junk TARDIS
