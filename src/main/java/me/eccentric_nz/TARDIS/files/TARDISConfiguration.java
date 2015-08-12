@@ -93,11 +93,7 @@ public class TARDISConfiguration {
         boolOptions.put("conversions.conversion_done", false);
         boolOptions.put("conversions.location_conversion_done", false);
         boolOptions.put("conversions.uuid_conversion_done", false);
-<<<<<<< HEAD
-        boolOptions.put("conversions.companion_clearing_done", false);
-=======
         boolOptions.put("conversions.lastknownname_conversion_done", false);
->>>>>>> v3.0
         boolOptions.put("creation.add_perms", true);
         boolOptions.put("creation.create_worlds", true);
         boolOptions.put("creation.create_worlds_with_perms", false);
@@ -484,9 +480,6 @@ public class TARDISConfiguration {
             if (!rooms_config.contains(entry.getKey())) {
                 rooms_config.set(entry.getKey(), entry.getValue());
                 i++;
-            }
-            if (entry.getKey().equals("rooms.STABLE.enabled")) {
-                rooms_config.set(entry.getKey(), false);
             }
         }
         // int values
