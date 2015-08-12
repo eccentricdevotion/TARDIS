@@ -27,6 +27,7 @@ import me.eccentric_nz.TARDIS.database.ResultSetPortals;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
 import me.eccentric_nz.TARDIS.enumeration.PRESET;
+import me.eccentric_nz.TARDIS.utility.TARDISLocationGetters;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
@@ -53,7 +54,7 @@ public class TARDISDoorOpener {
         // inner
         final ResultSetDoorBlocks rs = new ResultSetDoorBlocks(plugin, id);
         if (rs.resultSet()) {
-            open(rs.getInnerBlock(), true, rs.getInnerDirection());
+            open(rs.getInnerBlock(), rs.getOuterBlock(), true, rs.getInnerDirection());
             // outer
             if (!rs.getOuterBlock().getChunk().isLoaded()) {
                 rs.getOuterBlock().getChunk().load();
@@ -61,7 +62,7 @@ public class TARDISDoorOpener {
             plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
                 @Override
                 public void run() {
-                    open(rs.getOuterBlock(), false, rs.getOuterDirection());
+                    open(rs.getOuterBlock(), rs.getInnerBlock(), false, rs.getOuterDirection());
                 }
             }, 5L);
         }
@@ -69,9 +70,10 @@ public class TARDISDoorOpener {
 
     /**
      * Open the door.
+     *
      */
     @SuppressWarnings("deprecation")
-    private void open(Block block, boolean add, COMPASS dd) {
+    private void open(Block block, Block other, boolean add, COMPASS dd) {
         if (block.getType().equals(Material.IRON_DOOR_BLOCK) || block.getType().equals(Material.WOODEN_DOOR)) {
             byte door_data = block.getData();
             switch (dd) {
@@ -120,6 +122,9 @@ public class TARDISDoorOpener {
                 ResultSetCurrentLocation rsc = new ResultSetCurrentLocation(plugin, where_exportal);
                 rsc.resultSet();
                 Location exportal = new Location(rsc.getWorld(), rsc.getX(), rsc.getY(), rsc.getZ());
+                if (preset != null && preset.equals(PRESET.SWAMP)) {
+                    exportal.add(0.0d, 1.0d, 0.0d);
+                }
                 // interior teleport location
                 Location indoor = null;
                 COMPASS indirection = COMPASS.SOUTH;
@@ -131,7 +136,7 @@ public class TARDISDoorOpener {
                 ResultSetPortals rsp = new ResultSetPortals(plugin, id);
                 rsp.resultSet();
                 for (HashMap<String, String> map : rsp.getData()) {
-                    Location tmp_loc = plugin.getUtils().getLocationFromDB(map.get("door_location"), 0.0f, 0.0f);
+                    Location tmp_loc = TARDISLocationGetters.getLocationFromDB(map.get("door_location"), 0.0f, 0.0f);
                     COMPASS tmp_direction = COMPASS.valueOf(map.get("door_direction"));
                     if (map.get("door_type").equals("1")) {
                         // clone it because we're going to change it!
@@ -191,6 +196,10 @@ public class TARDISDoorOpener {
                     // locations
                     if (preset != null && preset.hasPortal()) {
                         plugin.getTrackerKeeper().getPortals().put(exportal, tp_in);
+                        if (preset.equals(PRESET.INVISIBLE) && plugin.getConfig().getBoolean("allow.3d_doors")) {
+                            // remember door location
+                            plugin.getTrackerKeeper().getInvisibleDoors().put(rs.getUuid(), other);
+                        }
                     }
                     plugin.getTrackerKeeper().getPortals().put(inportal, tp_out);
                 }

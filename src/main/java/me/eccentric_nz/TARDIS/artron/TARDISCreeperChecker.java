@@ -20,6 +20,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
+import me.eccentric_nz.TARDIS.utility.TARDISNumberParsers;
 import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.entity.Creeper;
@@ -68,9 +69,9 @@ public class TARDISCreeperChecker {
                         String[] creeperData = map.get("creeper").split(":");
                         World w = plugin.getServer().getWorld(creeperData[0]);
                         if (w != null) {
-                            float cx = plugin.getUtils().parseFloat(creeperData[1]);
-                            float cy = plugin.getUtils().parseFloat(creeperData[2]) + 1;
-                            float cz = plugin.getUtils().parseFloat(creeperData[3]);
+                            float cx = TARDISNumberParsers.parseFloat(creeperData[1]);
+                            float cy = TARDISNumberParsers.parseFloat(creeperData[2]) + 1;
+                            float cz = TARDISNumberParsers.parseFloat(creeperData[3]);
                             Location l = new Location(w, cx, cy, cz);
                             plugin.setTardisSpawn(true);
                             Entity e = w.spawnEntity(l, EntityType.CREEPER);

@@ -58,6 +58,8 @@ public class TARDISRecipeCommands implements CommandExecutor {
         firstArgs.add("bio-circuit"); // Bio-scanner Circuit
         firstArgs.add("biome-disk"); // Biome Storage Disk
         firstArgs.add("blank"); // Blank Storage Disk
+        firstArgs.add("battery"); // Blaster Battery
+        firstArgs.add("blaster"); // Sonic Blaster
         firstArgs.add("bow-tie"); // Bow Tie
         firstArgs.add("c-circuit"); // Chameleon Circuit
         firstArgs.add("cell"); // Artron Energy Cell
@@ -66,8 +68,10 @@ public class TARDISRecipeCommands implements CommandExecutor {
         firstArgs.add("e-circuit"); // Emerald Circuit
         firstArgs.add("filter"); // Perception Filter
         firstArgs.add("fish-finger"); // Fish Finger
+        firstArgs.add("furnace"); // TARDIS Artron Furnace
         firstArgs.add("glasses"); // 3-D Glasses
         firstArgs.add("i-circuit"); // Input Circuit
+        firstArgs.add("invisible"); // Invisibility Circuit
         firstArgs.add("key"); // TARDIS key
         firstArgs.add("jammy-dodger"); // Jammy Dodger Biscuit
         firstArgs.add("jelly-baby"); // Jelly Baby
@@ -76,12 +80,14 @@ public class TARDISRecipeCommands implements CommandExecutor {
         firstArgs.add("m-circuit"); // Materialisation Circuit
         firstArgs.add("memory-circuit"); // Memory Circuit
         firstArgs.add("oscillator"); // Sonic Oscillator
+        firstArgs.add("pad"); // Landing Pad
         firstArgs.add("painter"); // Painter Circuit
         firstArgs.add("p-circuit"); // Perception Circuit
         firstArgs.add("player-disk"); // Player Storage Disk
         firstArgs.add("preset-disk"); // Preset Storage Disk
         firstArgs.add("r-circuit"); // Redstone Circuit
         firstArgs.add("r-key"); // TARDIS Remote Key
+        firstArgs.add("randomiser-circuit"); // Randomiser Circuit
         firstArgs.add("remote"); // Stattenheim Remote
         firstArgs.add("s-circuit"); // Stattenheim Circuit
         firstArgs.add("save-disk"); // Save Storage Disk
@@ -89,18 +95,27 @@ public class TARDISRecipeCommands implements CommandExecutor {
         firstArgs.add("sonic"); // Sonic Screwdriver
         firstArgs.add("t-circuit"); // Temporal Circuit
         firstArgs.add("tardis"); // TARDIS Seed Block
+        firstArgs.add("vortex"); // Vortex Manipulator
         firstArgs.add("watch"); // TARDIS Seed Block
-        t.put("BUDGET", Material.IRON_BLOCK); // budget
+        t.put("ARS", Material.QUARTZ_BLOCK); // ARS
         t.put("BIGGER", Material.GOLD_BLOCK); // bigger
+        t.put("BUDGET", Material.IRON_BLOCK); // budget
         t.put("DELUXE", Material.DIAMOND_BLOCK); // deluxe
         t.put("ELEVENTH", Material.EMERALD_BLOCK); // eleventh
+        t.put("PLANK", Material.BOOKSHELF); // plank
         t.put("REDSTONE", Material.REDSTONE_BLOCK); // redstone
         t.put("STEAMPUNK", Material.COAL_BLOCK); // steampunk
-        t.put("ARS", Material.QUARTZ_BLOCK); // ARS
         t.put("TOM", Material.LAPIS_BLOCK); // tom baker
-        t.put("PLANK", Material.BOOKSHELF); // plank
+        t.put("TWELFTH", Material.PRISMARINE); // twelfth
         t.put("WAR", Material.STAINED_CLAY); // war doctor
-        t.put("CUSTOM", Material.valueOf(this.plugin.getConfig().getString("creation.custom_schematic_seed"))); // custom
+        t.put("PYRAMID", Material.SANDSTONE_STAIRS); // pyramid
+        // custom seeds
+        for (String console : plugin.getCustomConsolesConfig().getKeys(false)) {
+            if (plugin.getCustomConsolesConfig().getBoolean(console + ".enabled")) {
+                Material cmat = Material.valueOf(plugin.getCustomConsolesConfig().getString(console + ".seed"));
+                t.put(console.toUpperCase(), cmat);
+            }
+        }
     }
 
     @Override
@@ -194,12 +209,20 @@ public class TARDISRecipeCommands implements CommandExecutor {
                 this.showShapedRecipe(player, "Fish Finger");
                 return true;
             }
+            if (args[0].equalsIgnoreCase("furnace")) {
+                this.showShapedRecipe(player, "TARDIS Artron Furnace");
+                return true;
+            }
             if (args[0].equalsIgnoreCase("glasses")) {
                 this.showShapedRecipe(player, "3-D Glasses");
                 return true;
             }
             if (args[0].equalsIgnoreCase("i-circuit")) {
                 this.showShapedRecipe(player, "TARDIS Input Circuit");
+                return true;
+            }
+            if (args[0].equalsIgnoreCase("invisible")) {
+                this.showShapedRecipe(player, "TARDIS Invisibility Circuit");
                 return true;
             }
             if (args[0].equalsIgnoreCase("key")) {
@@ -258,6 +281,10 @@ public class TARDISRecipeCommands implements CommandExecutor {
                 this.showShapedRecipe(player, "TARDIS Remote Key");
                 return true;
             }
+            if (args[0].equalsIgnoreCase("randomiser-circuit")) {
+                this.showShapedRecipe(player, "TARDIS Randomiser Circuit");
+                return true;
+            }
             if (args[0].equalsIgnoreCase("remote")) {
                 showShapedRecipe(player, "Stattenheim Remote");
                 return true;
@@ -286,6 +313,30 @@ public class TARDISRecipeCommands implements CommandExecutor {
                 this.showShapedRecipe(player, "Fob Watch");
                 return true;
             }
+            if (args[0].equalsIgnoreCase("vortex")) {
+                if (!plugin.getPM().isPluginEnabled("TARDISVortexManipulator")) {
+                    TARDISMessage.send(sender, "RECIPE_VORTEX");
+                    return true;
+                }
+                this.showShapedRecipe(player, "Vortex Manipulator");
+                return true;
+            }
+            if ((args[0].equalsIgnoreCase("battery") || args[0].equalsIgnoreCase("blaster") || args[0].equalsIgnoreCase("pad")) && !plugin.getPM().isPluginEnabled("TARDISSonicBlaster")) {
+                TARDISMessage.send(sender, "RECIPE_BLASTER");
+                return true;
+            }
+            if (args[0].equalsIgnoreCase("battery")) {
+                this.showShapedRecipe(player, "Blaster Battery");
+                return true;
+            }
+            if (args[0].equalsIgnoreCase("blaster")) {
+                this.showShapedRecipe(player, "Sonic Blaster");
+                return true;
+            }
+            if (args[0].equalsIgnoreCase("pad")) {
+                this.showShapedRecipe(player, "Landing Pad");
+                return true;
+            }
         }
         return false;
     }
@@ -308,7 +359,16 @@ public class TARDISRecipeCommands implements CommandExecutor {
                     im.setDisplayName(getDisplayName(item.getData().getData()));
                     item.setItemMeta(im);
                 }
-                item.setAmount(0);
+                if (str.equals("TARDIS Remote Key") && item.getType().equals(Material.GOLD_NUGGET)) {
+                    ItemMeta im = item.getItemMeta();
+                    im.setDisplayName("TARDIS Key");
+                    item.setItemMeta(im);
+                }
+                if (str.equals("Sonic Blaster") && item.getType().equals(Material.BUCKET)) {
+                    ItemMeta im = item.getItemMeta();
+                    im.setDisplayName("Blaster Battery");
+                    item.setItemMeta(im);
+                }
                 view.getTopInventory().setItem(j * 3 + k + 1, item);
             }
         }

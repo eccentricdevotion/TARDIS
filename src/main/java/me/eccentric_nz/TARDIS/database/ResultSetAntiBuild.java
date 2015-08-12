@@ -36,6 +36,7 @@ public class ResultSetAntiBuild {
     private final TARDIS plugin;
     private final String uuid;
     private Integer tardis_id;
+    private final String prefix;
 
     /**
      * Creates a class instance that can be used to retrieve an SQL ResultSet
@@ -47,6 +48,7 @@ public class ResultSetAntiBuild {
     public ResultSetAntiBuild(TARDIS plugin, UUID uuid) {
         this.plugin = plugin;
         this.uuid = uuid.toString();
+        this.prefix = this.plugin.getPrefix();
     }
 
     /**
@@ -59,7 +61,7 @@ public class ResultSetAntiBuild {
     public boolean resultSet() {
         PreparedStatement statement = null;
         ResultSet rs = null;
-        String query = "SELECT tardis.tardis_id FROM tardis, travellers, player_prefs WHERE travellers.uuid = ? AND tardis.uuid != ? AND player_prefs.build_on = 0 AND tardis.tardis_id = travellers.tardis_id AND tardis.uuid = player_prefs.uuid";
+        String query = "SELECT " + prefix + "tardis.tardis_id FROM " + prefix + "tardis, " + prefix + "travellers, " + prefix + "player_prefs WHERE " + prefix + "travellers.uuid = ? AND " + prefix + "tardis.uuid != ? AND " + prefix + "player_prefs.build_on = 0 AND " + prefix + "tardis.tardis_id = " + prefix + "travellers.tardis_id AND " + prefix + "tardis.uuid = " + prefix + "player_prefs.uuid";
         try {
             service.testConnection(connection);
             statement = connection.prepareStatement(query);

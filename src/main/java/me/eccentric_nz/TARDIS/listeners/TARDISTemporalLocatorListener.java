@@ -18,7 +18,11 @@ package me.eccentric_nz.TARDIS.listeners;
 
 import java.util.List;
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.advanced.TARDISCircuitChecker;
+import me.eccentric_nz.TARDIS.advanced.TARDISCircuitDamager;
+import me.eccentric_nz.TARDIS.enumeration.DISK_CIRCUIT;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
+import me.eccentric_nz.TARDIS.utility.TARDISNumberParsers;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -31,11 +35,12 @@ import org.bukkit.inventory.meta.ItemMeta;
  *
  * @author eccentric_nz
  */
-public class TARDISTemporalLocatorListener implements Listener {
+public class TARDISTemporalLocatorListener extends TARDISMenuListener implements Listener {
 
     private final TARDIS plugin;
 
     public TARDISTemporalLocatorListener(TARDIS plugin) {
+        super(plugin);
         this.plugin = plugin;
     }
 
@@ -61,6 +66,15 @@ public class TARDISTemporalLocatorListener implements Listener {
                     long time = getTime(lore);
                     plugin.getTrackerKeeper().getSetTime().put(player.getUniqueId(), time);
                     TARDISMessage.send(player, "TEMPORAL_SET", String.format("%d", time));
+                    // damage the circuit if configured
+                    if (plugin.getConfig().getBoolean("circuits.damage") && plugin.getConfig().getString("preferences.difficulty").equals("hard") && plugin.getConfig().getInt("circuits.uses.temporal") > 0) {
+                        int id = plugin.getTardisAPI().getIdOfTARDISPlayerIsIn(player.getUniqueId());
+                        TARDISCircuitChecker tcc = new TARDISCircuitChecker(plugin, id);
+                        tcc.getCircuits();
+                        // decrement uses
+                        int uses_left = tcc.getTemporalUses();
+                        new TARDISCircuitDamager(plugin, DISK_CIRCUIT.TEMPORAL, uses_left, id, player).damage();
+                    }
                 }
                 close(player);
             }
@@ -76,20 +90,6 @@ public class TARDISTemporalLocatorListener implements Listener {
      */
     private long getTime(List<String> lore) {
         String[] data = lore.get(0).split(" ");
-        return plugin.getUtils().parseLong(data[0]);
-    }
-
-    /**
-     * Closes the inventory.
-     *
-     * @param p the player using the GUI
-     */
-    private void close(final Player p) {
-        plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
-            @Override
-            public void run() {
-                p.closeInventory();
-            }
-        }, 1L);
+        return TARDISNumberParsers.parseLong(data[0]);
     }
 }

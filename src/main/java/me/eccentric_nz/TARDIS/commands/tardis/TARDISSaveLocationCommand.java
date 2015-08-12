@@ -55,15 +55,6 @@ public class TARDISSaveLocationCommand {
                 return false;
             } else {
                 int id = rs.getTardis_id();
-//                TARDISCircuitChecker tcc = null;
-//                if (plugin.getConfig().getString("preferences.difficulty").equals("hard") && !plugin.getUtils().inGracePeriod(player, false)) {
-//                    tcc = new TARDISCircuitChecker(plugin, id);
-//                    tcc.getCircuits();
-//                }
-//                if (tcc != null && !tcc.hasMemory()) {
-//                    TARDISMessage.send(player, "NO_MEM_CIRCUIT");
-//                    return true;
-//                }
                 // check has unique name
                 HashMap<String, Object> wherename = new HashMap<String, Object>();
                 wherename.put("tardis_id", id);
@@ -82,11 +73,16 @@ public class TARDISSaveLocationCommand {
                     TARDISMessage.send(player, "CURRENT_NOT_FOUND");
                     return true;
                 }
+                String w = rsc.getWorld().getName();
+                if (w.startsWith("TARDIS_")) {
+                    TARDISMessage.send(player, "SAVE_NO_TARDIS");
+                    return true;
+                }
                 QueryFactory qf = new QueryFactory(plugin);
                 HashMap<String, Object> set = new HashMap<String, Object>();
                 set.put("tardis_id", id);
                 set.put("dest_name", args[1]);
-                set.put("world", rsc.getWorld().getName());
+                set.put("world", w);
                 set.put("x", rsc.getX());
                 set.put("y", rsc.getY());
                 set.put("z", rsc.getZ());

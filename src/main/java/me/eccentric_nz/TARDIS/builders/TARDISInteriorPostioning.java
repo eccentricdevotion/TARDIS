@@ -37,9 +37,11 @@ public class TARDISInteriorPostioning {
     private final TARDISDatabaseConnection service = TARDISDatabaseConnection.getInstance();
     private final Connection connection = service.getConnection();
     private final TARDIS plugin;
+    private final String prefix;
 
     public TARDISInteriorPostioning(TARDIS plugin) {
         this.plugin = plugin;
+        this.prefix = this.plugin.getPrefix();
     }
 
     /**
@@ -106,7 +108,7 @@ public class TARDISInteriorPostioning {
         List<Integer> usedSlots = new ArrayList<Integer>();
         Statement statement = null;
         ResultSet rs = null;
-        String query = "SELECT tips FROM tardis";
+        String query = "SELECT tips FROM " + prefix + "tardis";
         try {
             statement = connection.createStatement();
             rs = statement.executeQuery(query);

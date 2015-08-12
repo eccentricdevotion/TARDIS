@@ -27,6 +27,8 @@ import me.eccentric_nz.TARDIS.database.ResultSetPlayerPrefs;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
 import me.eccentric_nz.TARDIS.enumeration.PRESET;
+import me.eccentric_nz.TARDIS.utility.TARDISBlockSetters;
+import me.eccentric_nz.TARDIS.utility.TARDISLocationGetters;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
@@ -59,7 +61,7 @@ public class TARDISPresetDestroyerFactory {
             if (!pdd.getLocation().getWorld().isChunkLoaded(pdd.getLocation().getChunk())) {
                 pdd.getLocation().getWorld().loadChunk(pdd.getLocation().getChunk());
             }
-            if (pdd.isDematerialise() && !pdd.isHide()) {
+            if (pdd.isDematerialise() && !demat.equals(PRESET.INVISIBLE)) {
                 int cham_id = rs.getChameleon_id();
                 byte cham_data = rs.getChameleon_data();
                 if (pdd.isChameleon() && (demat.equals(PRESET.NEW) || demat.equals(PRESET.OLD) || demat.equals(PRESET.SUBMERGED))) {
@@ -83,7 +85,11 @@ public class TARDISPresetDestroyerFactory {
                 if (rsp.resultSet()) {
                     lamp = rsp.getLamp();
                 }
-                TARDISDematerialisationPreset runnable = new TARDISDematerialisationPreset(plugin, pdd, demat, lamp, cham_id, cham_data);
+                int loops = 18;
+                if (pdd.isHide()) {
+                    loops = 3;
+                }
+                TARDISDematerialisationPreset runnable = new TARDISDematerialisationPreset(plugin, pdd, demat, lamp, cham_id, cham_data, loops);
                 int taskID = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, runnable, 10L, 20L);
                 runnable.setTask(taskID);
             } else {
@@ -100,7 +106,7 @@ public class TARDISPresetDestroyerFactory {
         if (rsd.resultSet()) {
             String dl = rsd.getDoor_location();
             float f = 0.0F;
-            Block b = plugin.getUtils().getLocationFromDB(dl, f, f).getBlock();
+            Block b = TARDISLocationGetters.getLocationFromDB(dl, f, f).getBlock();
             b.setType(Material.AIR);
             b.getRelative(BlockFace.UP).setType(Material.AIR);
         }
@@ -216,9 +222,9 @@ public class TARDISPresetDestroyerFactory {
                 signy = 2;
                 break;
         }
-        plugin.getUtils().setBlock(w, l.getBlockX() + signx, l.getBlockY() + signy, l.getBlockZ() + signz, 0, (byte) 0);
+        TARDISBlockSetters.setBlock(w, l.getBlockX() + signx, l.getBlockY() + signy, l.getBlockZ() + signz, 0, (byte) 0);
         if (p.equals(PRESET.SWAMP)) {
-            plugin.getUtils().setBlock(w, l.getBlockX() + signx, l.getBlockY(), l.getBlockZ() + signz, 0, (byte) 0);
+            TARDISBlockSetters.setBlock(w, l.getBlockX() + signx, l.getBlockY(), l.getBlockZ() + signz, 0, (byte) 0);
         }
     }
 
@@ -230,11 +236,11 @@ public class TARDISPresetDestroyerFactory {
         if (p.equals(PRESET.CAKE)) {
             for (int i = (tx - 1); i < (tx + 2); i++) {
                 for (int j = (tz - 1); j < (tz + 2); j++) {
-                    plugin.getUtils().setBlock(w, i, ty, j, 0, (byte) 0);
+                    TARDISBlockSetters.setBlock(w, i, ty, j, 0, (byte) 0);
                 }
             }
         } else {
-            plugin.getUtils().setBlock(w, tx, ty, tz, 0, (byte) 0);
+            TARDISBlockSetters.setBlock(w, tx, ty, tz, 0, (byte) 0);
         }
     }
 
@@ -268,8 +274,8 @@ public class TARDISPresetDestroyerFactory {
                 rightz = l.getBlockZ() + 1;
                 break;
         }
-        plugin.getUtils().setBlock(w, leftx, eyey, leftz, 0, (byte) 0);
-        plugin.getUtils().setBlock(w, rightx, eyey, rightz, 0, (byte) 0);
+        TARDISBlockSetters.setBlock(w, leftx, eyey, leftz, 0, (byte) 0);
+        TARDISBlockSetters.setBlock(w, rightx, eyey, rightz, 0, (byte) 0);
     }
 
     public void destroyMineshaftTorches(Location l, COMPASS d) {
@@ -291,8 +297,8 @@ public class TARDISPresetDestroyerFactory {
                 rightz = l.getBlockZ() + 1;
                 break;
         }
-        plugin.getUtils().setBlock(w, leftx, eyey, leftz, 0, (byte) 0);
-        plugin.getUtils().setBlock(w, rightx, eyey, rightz, 0, (byte) 0);
+        TARDISBlockSetters.setBlock(w, leftx, eyey, leftz, 0, (byte) 0);
+        TARDISBlockSetters.setBlock(w, rightx, eyey, rightz, 0, (byte) 0);
     }
 
     public void removeBlockProtection(int id, QueryFactory qf) {

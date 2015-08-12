@@ -18,8 +18,9 @@ package me.eccentric_nz.TARDIS.desktop;
 
 import java.util.ArrayList;
 import java.util.List;
-import me.eccentric_nz.TARDIS.ARS.TARDISARS;
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.enumeration.CONSOLES;
+import me.eccentric_nz.TARDIS.enumeration.SCHEMATIC;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -61,38 +62,35 @@ public class TARDISThemeInventory {
         ItemStack[] stack = new ItemStack[27];
         int i = 0;
         // get consoles
-        for (TARDISARS a : TARDISARS.values()) {
-            if (a.isConsole()) {
-                if (a.equals(TARDISARS.CUSTOM) && !plugin.getConfig().getBoolean("creation.custom_schematic")) {
-                    // don't add a custom console if it is disabled in the config
-                    continue;
-                }
-                Material m = Material.getMaterial(a.getId());
-                ItemStack is = new ItemStack(m, 1);
-                ItemMeta im = is.getItemMeta();
-                im.setDisplayName(a.getDescriptiveName());
-                int cost = plugin.getArtronConfig().getInt("upgrades." + a.getActualName().toLowerCase());
-                if (current_console.equals(a.getActualName())) {
-                    cost = Math.round((plugin.getArtronConfig().getInt("just_wall_floor") / 100F) * cost);
-                }
-                List<String> lore = new ArrayList<String>();
-                lore.add("Cost: " + cost);
-                if (!player.hasPermission("tardis." + a.getActualName().toLowerCase())) {
-                    lore.add(ChatColor.RED + plugin.getLanguage().getString("NO_PERM_CONSOLE"));
-                } else if (level < cost && !current_console.equals(a.getActualName())) {
-                    lore.add(plugin.getLanguage().getString("UPGRADE_ABORT_ENERGY"));
-                }
-                if (current_console.equals(a.getActualName())) {
-                    lore.add(ChatColor.GREEN + plugin.getLanguage().getString("CURRENT_CONSOLE"));
-                }
-                im.setLore(lore);
-                is.setItemMeta(im);
-                stack[i] = is;
-                i++;
+        for (SCHEMATIC a : CONSOLES.getByNames().values()) {
+            Material m = Material.getMaterial(a.getSeed());
+            ItemStack is = new ItemStack(m, 1);
+            ItemMeta im = is.getItemMeta();
+            im.setDisplayName(a.getDescription());
+            int cost = plugin.getArtronConfig().getInt("upgrades." + a.getPermission());
+            if (current_console.equals(a.getPermission())) {
+                cost = Math.round((plugin.getArtronConfig().getInt("just_wall_floor") / 100F) * cost);
             }
+            List<String> lore = new ArrayList<String>();
+            lore.add("Cost: " + cost);
+            if (!player.hasPermission("tardis." + a.getPermission())) {
+                lore.add(ChatColor.RED + plugin.getLanguage().getString("NO_PERM_CONSOLE"));
+            } else if (level < cost && !current_console.equals(a.getPermission())) {
+                lore.add(plugin.getLanguage().getString("UPGRADE_ABORT_ENERGY"));
+            }
+            if (current_console.equals(a.getPermission())) {
+                lore.add(ChatColor.GREEN + plugin.getLanguage().getString("CURRENT_CONSOLE"));
+            } else {
+                lore.add(ChatColor.GREEN + plugin.getLanguage().getString("RESET"));
+                lore.add(ChatColor.GREEN + plugin.getLanguage().getString("REMEMBER"));
+            }
+            im.setLore(lore);
+            is.setItemMeta(im);
+            stack[i] = is;
+            i++;
         }
         // close
-        ItemStack close = new ItemStack(Material.TRAP_DOOR, 1);
+        ItemStack close = new ItemStack(Material.BOWL, 1);
         ItemMeta close_im = close.getItemMeta();
         close_im.setDisplayName("Close");
         close.setItemMeta(close_im);

@@ -22,7 +22,10 @@ import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.advanced.TARDISCircuitChecker;
 import me.eccentric_nz.TARDIS.database.ResultSetAreas;
 import me.eccentric_nz.TARDIS.database.ResultSetControls;
+import me.eccentric_nz.TARDIS.database.ResultSetCurrentLocation;
 import me.eccentric_nz.TARDIS.database.ResultSetDestinations;
+import me.eccentric_nz.TARDIS.database.ResultSetHomeLocation;
+import me.eccentric_nz.TARDIS.database.ResultSetTravellers;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import org.bukkit.GameMode;
 import org.bukkit.Material;
@@ -130,8 +133,35 @@ public class TARDISKeyboardListener implements Listener {
         }
         // home?
         if (event.getLine(0).equalsIgnoreCase("home")) {
-            p.performCommand("tardistravel home");
-            plugin.getConsole().sendMessage(p.getName() + " issued server command: /tardistravel home");
+            // check not already at home location
+            HashMap<String, Object> where = new HashMap<String, Object>();
+            where.put("uuid", p.getUniqueId().toString());
+            ResultSetTravellers rs = new ResultSetTravellers(plugin, where, false);
+            if (rs.resultSet()) {
+                int id = rs.getTardis_id();
+                HashMap<String, Object> whereh = new HashMap<String, Object>();
+                whereh.put("tardis_id", id);
+                ResultSetHomeLocation rsh = new ResultSetHomeLocation(plugin, whereh);
+                if (rsh.resultSet()) {
+                    HashMap<String, Object> wherec = new HashMap<String, Object>();
+                    wherec.put("tardis_id", id);
+                    ResultSetCurrentLocation rsc = new ResultSetCurrentLocation(plugin, wherec);
+                    if (rsc.resultSet()) {
+                        if (currentIsNotHome(rsh, rsc)) {
+                            p.performCommand("tardistravel home");
+                            plugin.getConsole().sendMessage(p.getName() + " issued server command: /tardistravel home");
+                        } else {
+                            TARDISMessage.send(p, "HOME_ALREADY");
+                        }
+                    } else {
+                        TARDISMessage.send(p, "CURRENT_NOT_FOUND");
+                    }
+                } else {
+                    TARDISMessage.send(p, "HOME_NOT_FOUND");
+                }
+            } else {
+                plugin.debug("Player is not in a TARDIS!");
+            }
             return;
         }
         // biome ?
@@ -165,5 +195,18 @@ public class TARDISKeyboardListener implements Listener {
             return;
         }
         TARDISMessage.send(p, "KEYBOARD_ERROR");
+    }
+
+    private boolean currentIsNotHome(ResultSetHomeLocation rsh, ResultSetCurrentLocation rsc) {
+        if (rsh.getWorld() != rsc.getWorld()) {
+            return true;
+        }
+        if (rsh.getY() != rsc.getY()) {
+            return true;
+        }
+        if (rsh.getX() != rsc.getX()) {
+            return true;
+        }
+        return rsh.getZ() != rsc.getZ();
     }
 }

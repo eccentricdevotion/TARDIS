@@ -22,6 +22,7 @@ import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetControls;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
+import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.block.Sign;
@@ -55,19 +56,22 @@ public class TARDISARSRemoveCommand {
         wheres.put("type", 10);
         ResultSetControls rsc = new ResultSetControls(plugin, wheres, false);
         if (rsc.resultSet()) {
-            Block b = plugin.getUtils().getLocationFromBukkitString(rsc.getLocation()).getBlock();
-            if (b.getType().equals(Material.WALL_SIGN) || b.getType().equals(Material.SIGN_POST)) {
-                Sign sign = (Sign) b.getState();
-                for (int i = 0; i < 4; i++) {
-                    sign.setLine(i, "");
+            Location l = plugin.getLocationUtils().getLocationFromBukkitString(rsc.getLocation());
+            if (l != null) {
+                Block b = l.getBlock();
+                if (b.getType().equals(Material.WALL_SIGN) || b.getType().equals(Material.SIGN_POST)) {
+                    Sign sign = (Sign) b.getState();
+                    for (int i = 0; i < 4; i++) {
+                        sign.setLine(i, "");
+                    }
+                    sign.update();
                 }
-                sign.update();
+                HashMap<String, Object> del = new HashMap<String, Object>();
+                del.put("tardis_id", id);
+                del.put("type", 10);
+                new QueryFactory(plugin).doDelete("controls", del);
+                TARDISMessage.send(player, "ARS_REMOVED");
             }
-            HashMap<String, Object> del = new HashMap<String, Object>();
-            del.put("tardis_id", id);
-            del.put("type", 10);
-            new QueryFactory(plugin).doDelete("controls", del);
-            TARDISMessage.send(player, "ARS_REMOVED");
             return true;
         } else {
             TARDISMessage.send(player, "NO_ARS");

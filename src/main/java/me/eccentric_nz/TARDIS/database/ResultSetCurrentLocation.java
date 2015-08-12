@@ -24,6 +24,7 @@ import java.util.HashMap;
 import java.util.Map;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
+import me.eccentric_nz.TARDIS.utility.TARDISNumberParsers;
 import org.bukkit.World;
 import org.bukkit.block.Biome;
 
@@ -48,6 +49,7 @@ public class ResultSetCurrentLocation {
     private COMPASS direction;
     private boolean submarine;
     private Biome biome;
+    private final String prefix;
 
     /**
      * Creates a class instance that can be used to retrieve an SQL ResultSet
@@ -60,6 +62,7 @@ public class ResultSetCurrentLocation {
     public ResultSetCurrentLocation(TARDIS plugin, HashMap<String, Object> where) {
         this.plugin = plugin;
         this.where = where;
+        this.prefix = this.plugin.getPrefix();
     }
 
     /**
@@ -80,7 +83,7 @@ public class ResultSetCurrentLocation {
             }
             wheres = " WHERE " + sbw.toString().substring(0, sbw.length() - 5);
         }
-        String query = "SELECT * FROM current" + wheres;
+        String query = "SELECT * FROM " + prefix + "current" + wheres;
         try {
             service.testConnection(connection);
             statement = connection.prepareStatement(query);
@@ -90,7 +93,7 @@ public class ResultSetCurrentLocation {
                     if (entry.getValue().getClass().equals(String.class)) {
                         statement.setString(s, entry.getValue().toString());
                     } else {
-                        statement.setInt(s, plugin.getUtils().parseInt(entry.getValue().toString()));
+                        statement.setInt(s, TARDISNumberParsers.parseInt(entry.getValue().toString()));
                     }
                     s++;
                 }

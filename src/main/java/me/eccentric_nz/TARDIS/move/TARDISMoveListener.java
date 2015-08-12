@@ -27,6 +27,7 @@ import me.eccentric_nz.TARDIS.enumeration.COMPASS;
 import me.eccentric_nz.TARDIS.mobfarming.TARDISFarmer;
 import me.eccentric_nz.TARDIS.mobfarming.TARDISMob;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
+import me.eccentric_nz.TARDIS.utility.TARDISStaticUtils;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -88,7 +89,7 @@ public class TARDISMoveListener implements Listener {
                 }
                 // adjust player yaw for to
                 float yaw = (exit) ? p.getLocation().getYaw() + 180.0f : p.getLocation().getYaw();
-                COMPASS d = COMPASS.valueOf(plugin.getUtils().getPlayersDirection(p, false));
+                COMPASS d = COMPASS.valueOf(TARDISStaticUtils.getPlayersDirection(p, false));
                 if (!tpl.getDirection().equals(d)) {
                     yaw += plugin.getGeneralKeeper().getDoorListener().adjustYaw(d, tpl.getDirection());
                 }
@@ -99,9 +100,10 @@ public class TARDISMoveListener implements Listener {
                 boolean hasPrefs = rsp.resultSet();
                 boolean minecart = (hasPrefs) ? rsp.isMinecartOn() : false;
                 boolean userQuotes = (hasPrefs) ? rsp.isQuotesOn() : false;
+                boolean willFarm = (hasPrefs) ? rsp.isFarmOn() : false;
                 // check for entities near the police box
                 List<TARDISMob> pets = null;
-                if (plugin.getConfig().getBoolean("allow.mob_farming") && p.hasPermission("tardis.farm") && !plugin.getTrackerKeeper().getFarming().contains(uuid)) {
+                if (plugin.getConfig().getBoolean("allow.mob_farming") && p.hasPermission("tardis.farm") && !plugin.getTrackerKeeper().getFarming().contains(uuid) && willFarm) {
                     plugin.getTrackerKeeper().getFarming().add(uuid);
                     TARDISFarmer tf = new TARDISFarmer(plugin);
                     pets = tf.farmAnimals(l, d, id, p, tpl.getLocation().getWorld().getName(), l.getWorld().getName());

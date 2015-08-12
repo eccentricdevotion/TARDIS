@@ -19,14 +19,17 @@ package me.eccentric_nz.TARDIS.commands.remote;
 import java.util.HashMap;
 import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.api.Parameters;
 import me.eccentric_nz.TARDIS.builders.TARDISMaterialisationData;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetCurrentLocation;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import me.eccentric_nz.TARDIS.database.ResultSetTravellers;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
+import me.eccentric_nz.TARDIS.enumeration.FLAG;
 import me.eccentric_nz.TARDIS.travel.TARDISTimeTravel;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
+import me.eccentric_nz.TARDIS.utility.TARDISStaticUtils;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -55,7 +58,7 @@ public class TARDISRemoteComehereCommand {
             TARDISMessage.send(player, "NO_WORLD_TRAVEL");
             return true;
         }
-        if (!plugin.getPluginRespect().getRespect(player, eyeLocation, true)) {
+        if (!plugin.getPluginRespect().getRespect(eyeLocation, new Parameters(player, FLAG.getDefaultFlags()))) {
             return true;
         }
         if (!plugin.getTardisArea().areaCheckInExisting(eyeLocation)) {
@@ -108,7 +111,7 @@ public class TARDISRemoteComehereCommand {
             hidden = true;
         }
         COMPASS d = rsc.getDirection();
-        COMPASS player_d = COMPASS.valueOf(plugin.getUtils().getPlayersDirection(player, false));
+        COMPASS player_d = COMPASS.valueOf(TARDISStaticUtils.getPlayersDirection(player, false));
         Biome biome = rsc.getBiome();
         TARDISTimeTravel tt = new TARDISTimeTravel(plugin);
         int count;

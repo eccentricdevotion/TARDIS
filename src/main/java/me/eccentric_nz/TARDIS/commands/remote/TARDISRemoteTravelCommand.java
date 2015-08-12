@@ -25,6 +25,7 @@ import me.eccentric_nz.TARDIS.database.ResultSetNextLocation;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
+import me.eccentric_nz.TARDIS.utility.TARDISSounds;
 import org.bukkit.Location;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.block.Biome;
@@ -115,7 +116,7 @@ public class TARDISRemoteTravelCommand {
                 @Override
                 public void run() {
                     plugin.getPresetBuilder().buildPreset(pbd);
-                    plugin.getUtils().playTARDISSoundNearby(pbd.getLocation(), "tardis_land");
+                    TARDISSounds.playTARDISSoundNearby(pbd.getLocation(), "tardis_land");
                 }
             }, delay);
             if (plugin.getTrackerKeeper().getDamage().containsKey(id)) {

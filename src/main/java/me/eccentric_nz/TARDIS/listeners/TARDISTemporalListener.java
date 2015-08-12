@@ -16,6 +16,8 @@
  */
 package me.eccentric_nz.TARDIS.listeners;
 
+import java.util.Arrays;
+import java.util.List;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import org.bukkit.Material;
@@ -33,6 +35,7 @@ import org.bukkit.inventory.ItemStack;
 public class TARDISTemporalListener implements Listener {
 
     private final TARDIS plugin;
+    private final List<String> notthese = Arrays.asList("Fob Watch", "Vortex Manipulator");
 
     public TARDISTemporalListener(TARDIS plugin) {
         this.plugin = plugin;
@@ -43,7 +46,7 @@ public class TARDISTemporalListener implements Listener {
         Player p = event.getPlayer();
         ItemStack inhand = p.getItemInHand();
         if (event.getAction().equals(Action.RIGHT_CLICK_AIR) && inhand.getType().equals(Material.WATCH) && p.hasPermission("tardis.temporal")) {
-            if (inhand.hasItemMeta() && inhand.getItemMeta().hasDisplayName() && inhand.getItemMeta().getDisplayName().equals("Fob Watch")) {
+            if (inhand.hasItemMeta() && inhand.getItemMeta().hasDisplayName() && notthese.contains(inhand.getItemMeta().getDisplayName())) {
                 return;
             }
             p.resetPlayerTime();

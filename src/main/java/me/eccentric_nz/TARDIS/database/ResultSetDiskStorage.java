@@ -24,6 +24,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.utility.TARDISNumberParsers;
 
 /**
  * Tricky van Baalen was the youngest and the smartest of the van Baalen
@@ -56,6 +57,7 @@ public class ResultSetDiskStorage {
     private String presetsTwo;
     private String circuits;
     private String console;
+    private final String prefix;
 
     /**
      * Creates a class instance that can be used to retrieve an SQL ResultSet
@@ -68,6 +70,7 @@ public class ResultSetDiskStorage {
     public ResultSetDiskStorage(TARDIS plugin, HashMap<String, Object> where) {
         this.plugin = plugin;
         this.where = where;
+        this.prefix = this.plugin.getPrefix();
     }
 
     /**
@@ -88,7 +91,7 @@ public class ResultSetDiskStorage {
             }
             wheres = " WHERE " + sbw.toString().substring(0, sbw.length() - 5);
         }
-        String query = "SELECT * FROM storage" + wheres;
+        String query = "SELECT * FROM " + prefix + "storage" + wheres;
         try {
             service.testConnection(connection);
             statement = connection.prepareStatement(query);
@@ -98,7 +101,7 @@ public class ResultSetDiskStorage {
                     if (entry.getValue().getClass().equals(String.class) || entry.getValue().getClass().equals(UUID.class)) {
                         statement.setString(s, entry.getValue().toString());
                     } else {
-                        statement.setInt(s, plugin.getUtils().parseInt(entry.getValue().toString()));
+                        statement.setInt(s, TARDISNumberParsers.parseInt(entry.getValue().toString()));
                     }
                     s++;
                 }

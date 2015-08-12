@@ -22,6 +22,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
+import me.eccentric_nz.TARDIS.utility.TARDISNumberParsers;
 import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.block.Block;
@@ -42,6 +43,7 @@ public class ResultSetDoorBlocks {
     private Block outerBlock;
     private COMPASS innerDirection;
     private COMPASS outerDirection;
+    private final String prefix;
 
     /**
      * Creates a class instance that can be used to retrieve an SQL ResultSet
@@ -53,6 +55,7 @@ public class ResultSetDoorBlocks {
     public ResultSetDoorBlocks(TARDIS plugin, int id) {
         this.plugin = plugin;
         this.id = id;
+        this.prefix = this.plugin.getPrefix();
     }
 
     /**
@@ -63,7 +66,7 @@ public class ResultSetDoorBlocks {
     public boolean resultSet() {
         PreparedStatement statement = null;
         ResultSet rs = null;
-        String query = "SELECT * FROM doors WHERE door_type IN (0,1) AND tardis_id = ?";
+        String query = "SELECT * FROM " + prefix + "doors WHERE door_type IN (0,1) AND tardis_id = ?";
         try {
             service.testConnection(connection);
             statement = connection.prepareStatement(query);
@@ -74,9 +77,9 @@ public class ResultSetDoorBlocks {
                     // get block
                     String[] split = rs.getString("door_location").split(":");
                     World cw = plugin.getServer().getWorld(split[0]);
-                    int cx = plugin.getUtils().parseInt(split[1]);
-                    int cy = plugin.getUtils().parseInt(split[2]);
-                    int cz = plugin.getUtils().parseInt(split[3]);
+                    int cx = TARDISNumberParsers.parseInt(split[1]);
+                    int cy = TARDISNumberParsers.parseInt(split[2]);
+                    int cz = TARDISNumberParsers.parseInt(split[3]);
                     if (rs.getInt("door_type") == 0) {
                         this.outerBlock = new Location(cw, cx, cy, cz).getBlock();
                         this.outerDirection = COMPASS.valueOf(rs.getString("door_direction"));

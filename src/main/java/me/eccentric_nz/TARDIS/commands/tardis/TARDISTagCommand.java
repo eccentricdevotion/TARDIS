@@ -21,6 +21,7 @@ import java.util.HashMap;
 import java.util.concurrent.TimeUnit;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.ResultSetTag;
+import me.eccentric_nz.TARDIS.utility.TARDISNumberParsers;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 
@@ -48,7 +49,7 @@ public class TARDISTagCommand {
             ArrayList<HashMap<String, String>> data = rs.getData();
             for (HashMap<String, String> map : data) {
                 String p = map.get("player");
-                long t = plugin.getUtils().parseLong(map.get("time"));
+                long t = TARDISNumberParsers.parseLong(map.get("time"));
                 player.sendMessage(p + ": " + ChatColor.GREEN + getHoursMinutesSeconds(t));
             }
         } else {

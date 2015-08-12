@@ -22,6 +22,7 @@ import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.ResultSetDoors;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
+import me.eccentric_nz.TARDIS.utility.TARDISNumberParsers;
 import net.citizensnpcs.api.CitizensAPI;
 import net.citizensnpcs.api.npc.NPC;
 import net.citizensnpcs.api.npc.NPCRegistry;
@@ -61,7 +62,6 @@ public class TARDISEPSRunnable implements Runnable {
     @Override
     public void run() {
         Location l = getSpawnLocation(id);
-        plugin.debug("Location:" + l);
         if (l != null) {
             try {
                 plugin.setTardisSpawn(true);
@@ -70,8 +70,8 @@ public class TARDISEPSRunnable implements Runnable {
                 // set yaw if npc spawn location has been changed
                 if (!eps.isEmpty()) {
                     String[] creep = creeper.split(":");
-                    double cx = plugin.getUtils().parseDouble(creep[1]);
-                    double cz = plugin.getUtils().parseDouble(creep[3]);
+                    double cx = TARDISNumberParsers.parseDouble(creep[1]);
+                    double cz = TARDISNumberParsers.parseDouble(creep[3]);
                     float yaw = getCorrectYaw(cx, cz, l.getX(), l.getZ());
                     l.setYaw(yaw);
                 }
@@ -108,9 +108,9 @@ public class TARDISEPSRunnable implements Runnable {
         if (!eps.isEmpty()) {
             String[] npc = eps.split(":");
             World w = plugin.getServer().getWorld(npc[0]);
-            int x = plugin.getUtils().parseInt(npc[1]);
-            int y = plugin.getUtils().parseInt(npc[2]);
-            int z = plugin.getUtils().parseInt(npc[3]);
+            int x = TARDISNumberParsers.parseInt(npc[1]);
+            int y = TARDISNumberParsers.parseInt(npc[2]);
+            int z = TARDISNumberParsers.parseInt(npc[3]);
             return new Location(w, x, y, z);
         } else {
             if (plugin.getConfig().getBoolean("creation.create_worlds")) {
@@ -124,9 +124,9 @@ public class TARDISEPSRunnable implements Runnable {
                 if (rsd.resultSet()) {
                     String[] door = rsd.getDoor_location().split(":");
                     World w = plugin.getServer().getWorld(door[0]);
-                    int x = plugin.getUtils().parseInt(door[1]);
-                    int y = plugin.getUtils().parseInt(door[2]);
-                    int z = plugin.getUtils().parseInt(door[3]);
+                    int x = TARDISNumberParsers.parseInt(door[1]);
+                    int y = TARDISNumberParsers.parseInt(door[2]);
+                    int z = TARDISNumberParsers.parseInt(door[3]);
                     switch (rsd.getDoor_direction()) {
                         case NORTH:
                             z -= 2;

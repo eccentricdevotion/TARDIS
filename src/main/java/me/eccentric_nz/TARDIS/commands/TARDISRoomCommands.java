@@ -34,6 +34,7 @@ import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import me.eccentric_nz.TARDIS.files.TARDISRoomMap;
 import me.eccentric_nz.TARDIS.rooms.TARDISWalls.Pair;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
+import me.eccentric_nz.TARDIS.utility.TARDISNumberParsers;
 import org.bukkit.Material;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -69,8 +70,8 @@ public class TARDISRoomCommands implements CommandExecutor {
     public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
         if (cmd.getName().equalsIgnoreCase("tardisroom")) {
             if (args.length < 2) {
-                TARDISMessage.send(sender, "TOO_FEW_ARGS");
-                return false;
+                new TARDISCommandHelper(plugin).getCommand("tardisroom", sender);
+                return true;
             }
             if (args[0].toLowerCase(Locale.ENGLISH).equals("blocks")) {
                 String name = args[1].toUpperCase(Locale.ENGLISH);
@@ -88,7 +89,7 @@ public class TARDISRoomCommands implements CommandExecutor {
                             BufferedWriter bw = new BufferedWriter(new FileWriter(file, false));
                             for (Map.Entry<String, Integer> entry : blockIDs.entrySet()) {
                                 String[] data = entry.getKey().split(":");
-                                int bid = plugin.getUtils().parseInt(data[0]);
+                                int bid = TARDISNumberParsers.parseInt(data[0]);
                                 String mat = Material.getMaterial(bid).toString();
                                 String line = mat + " (" + entry.getKey() + "), " + entry.getValue();
                                 bw.write(line);
@@ -129,7 +130,7 @@ public class TARDISRoomCommands implements CommandExecutor {
                     TARDISMessage.send(sender, "ROOM_BLOCKS", name);
                     for (Map.Entry<String, Integer> entry : blockIDs.entrySet()) {
                         String[] block_data = entry.getKey().split(":");
-                        int bid = plugin.getUtils().parseInt(block_data[0]);
+                        int bid = TARDISNumberParsers.parseInt(block_data[0]);
                         String mat;
                         if (hasPrefs && block_data.length == 2 && (block_data[1].equals("1") || block_data[1].equals("8"))) {
                             mat = (block_data[1].equals("1")) ? wall : floor;
@@ -215,6 +216,7 @@ public class TARDISRoomCommands implements CommandExecutor {
                     if (total == 0) {
                         TARDISMessage.send(player, "CONDENSE_NONE");
                     }
+                    TARDISMessage.send(player, "ROOM_ENERGY", name, plugin.getRoomsConfig().getString("rooms." + name + ".cost"));
                     return true;
                 } else {
                     TARDISMessage.send(player, "ID_NOT_FOUND");

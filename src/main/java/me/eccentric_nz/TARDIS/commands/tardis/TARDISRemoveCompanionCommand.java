@@ -46,6 +46,7 @@ public class TARDISRemoveCompanionCommand {
             String comps;
             int id;
             String[] data;
+            String owner;
             if (!rs.resultSet()) {
                 TARDISMessage.send(player, "NO_TARDIS");
                 return false;
@@ -57,6 +58,7 @@ public class TARDISRemoveCompanionCommand {
                 }
                 id = rs.getTardis_id();
                 data = rs.getChunk().split(":");
+                owner = rs.getOwner();
             }
             if (args.length < 2) {
                 TARDISMessage.send(player, "TOO_FEW_ARGS");
@@ -106,7 +108,7 @@ public class TARDISRemoveCompanionCommand {
                 if (plugin.isWorldGuardOnServer() && plugin.getConfig().getBoolean("preferences.use_worldguard")) {
                     World w = plugin.getServer().getWorld(data[0]);
                     if (w != null) {
-                        plugin.getWorldGuardUtils().removeMemberFromRegion(w, player.getName(), args[1].toLowerCase(Locale.ENGLISH));
+                        plugin.getWorldGuardUtils().removeMemberFromRegion(w, owner, args[1].toLowerCase(Locale.ENGLISH));
                     }
                 }
                 if (!args[1].equals("all")) {

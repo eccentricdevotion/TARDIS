@@ -16,19 +16,16 @@
  */
 package me.eccentric_nz.TARDIS.desktop;
 
-import java.util.Set;
-import me.eccentric_nz.TARDIS.ARS.TARDISARS;
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.enumeration.SCHEMATIC;
+import me.eccentric_nz.TARDIS.enumeration.CONSOLES;
+import me.eccentric_nz.TARDIS.listeners.TARDISMenuListener;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.ClickType;
 import org.bukkit.event.inventory.InventoryClickEvent;
-import org.bukkit.event.inventory.InventoryDragEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
 
 /**
  * A control room's look could be changed over time. The process by which an
@@ -37,11 +34,12 @@ import org.bukkit.inventory.meta.ItemMeta;
  *
  * @author eccentric_nz
  */
-public class TARDISThemeMenuListener implements Listener {
+public class TARDISThemeMenuListener extends TARDISMenuListener implements Listener {
 
     private final TARDIS plugin;
 
     public TARDISThemeMenuListener(TARDIS plugin) {
+        super(plugin);
         this.plugin = plugin;
     }
 
@@ -65,19 +63,16 @@ public class TARDISThemeMenuListener implements Listener {
                     case 8:
                     case 9:
                     case 10:
+                    case 11:
                         event.setCancelled(true);
-                        if (slot == 10 && !plugin.getConfig().getBoolean("creation.custom_schematic")) {
-                            return;
-                        }
                         // get Display name of selected console
                         ItemStack choice = inv.getItem(slot);
-                        ItemMeta choice_im = choice.getItemMeta();
-                        String choice_name = TARDISARS.ARSFor(choice_im.getDisplayName()).getActualName();
-                        if (p.hasPermission("tardis." + choice_name.toLowerCase())) {
+                        String perm = CONSOLES.SCHEMATICFor(choice.getType()).getPermission();
+                        if (p.hasPermission("tardis." + perm)) {
                             // remember the upgrade choice
                             TARDISUpgradeData tud = plugin.getTrackerKeeper().getUpgrades().get(p.getUniqueId());
-                            if (tud.getLevel() > plugin.getArtronConfig().getInt("upgrades." + choice_name.toLowerCase())) {
-                                tud.setSchematic(SCHEMATIC.valueOf(choice_name));
+                            if (tud.getLevel() > plugin.getArtronConfig().getInt("upgrades." + perm)) {
+                                tud.setSchematic(CONSOLES.SCHEMATICFor(perm));
                                 plugin.getTrackerKeeper().getUpgrades().put(p.getUniqueId(), tud);
                                 // open the wall block GUI
                                 wall(p);
@@ -102,27 +97,13 @@ public class TARDISThemeMenuListener implements Listener {
         }
     }
 
-    @EventHandler(ignoreCancelled = true)
-    public void onThemeMenuDrag(InventoryDragEvent event) {
-        Inventory inv = event.getInventory();
-        String title = inv.getTitle();
-        if (!title.equals("§4TARDIS Upgrade Menu")) {
-            return;
-        }
-        Set<Integer> slots = event.getRawSlots();
-        for (Integer slot : slots) {
-            if ((slot >= 0 && slot < 27)) {
-                event.setCancelled(true);
-            }
-        }
-    }
-
     /**
      * Closes the inventory.
      *
      * @param p the player using the GUI
      */
-    private void close(final Player p) {
+    @Override
+    public void close(final Player p) {
         plugin.getTrackerKeeper().getUpgrades().remove(p.getUniqueId());
         plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
             @Override

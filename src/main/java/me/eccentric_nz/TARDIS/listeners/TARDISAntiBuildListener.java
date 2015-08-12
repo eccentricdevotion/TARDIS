@@ -137,7 +137,6 @@ public class TARDISAntiBuildListener implements Listener {
             b.getState().update();
             for (BlockFace f : plugin.getGeneralKeeper().getFaces()) {
                 if (b.getRelative(f).getType().equals(Material.AIR)) {
-                    plugin.debug("face " + f.toString());
                     b.getRelative(f).setTypeIdAndData(20, (byte) 0, true);
                     b.getRelative(f).setTypeIdAndData(0, (byte) 0, true);
                     break;

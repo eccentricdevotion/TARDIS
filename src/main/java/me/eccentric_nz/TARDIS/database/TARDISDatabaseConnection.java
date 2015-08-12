@@ -65,7 +65,6 @@ public class TARDISDatabaseConnection {
             connection = DriverManager.getConnection(host, user, pass);
             connection.setAutoCommit(true);
         } catch (SQLException e) {
-            e.printStackTrace();
             throw new RuntimeException("Cannot connect the database!", e);
         }
     }

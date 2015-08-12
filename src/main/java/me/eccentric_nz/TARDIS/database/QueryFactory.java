@@ -25,6 +25,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.utility.TARDISNumberParsers;
 import org.bukkit.entity.Player;
 
 /**
@@ -37,9 +38,11 @@ public class QueryFactory {
     private final TARDIS plugin;
     TARDISDatabaseConnection service = TARDISDatabaseConnection.getInstance();
     Connection connection = service.getConnection();
+    private final String prefix;
 
     public QueryFactory(TARDIS plugin) {
         this.plugin = plugin;
+        this.prefix = this.plugin.getPrefix();
     }
 
     /**
@@ -79,19 +82,19 @@ public class QueryFactory {
         questions = sbq.toString().substring(0, sbq.length() - 1);
         try {
             service.testConnection(connection);
-            ps = connection.prepareStatement("INSERT INTO " + table + " (" + fields + ") VALUES (" + questions + ")", PreparedStatement.RETURN_GENERATED_KEYS);
+            ps = connection.prepareStatement("INSERT INTO " + prefix + table + " (" + fields + ") VALUES (" + questions + ")", PreparedStatement.RETURN_GENERATED_KEYS);
             int i = 1;
             for (Map.Entry<String, Object> entry : data.entrySet()) {
                 if (entry.getValue().getClass().equals(String.class) || entry.getValue().getClass().equals(UUID.class)) {
                     ps.setString(i, entry.getValue().toString());
                 } else {
                     if (entry.getValue().getClass().getName().contains("Double")) {
-                        ps.setDouble(i, plugin.getUtils().parseDouble(entry.getValue().toString()));
+                        ps.setDouble(i, TARDISNumberParsers.parseDouble(entry.getValue().toString()));
                     }
                     if (entry.getValue().getClass().getName().contains("Long")) {
-                        ps.setLong(i, plugin.getUtils().parseLong(entry.getValue().toString()));
+                        ps.setLong(i, TARDISNumberParsers.parseLong(entry.getValue().toString()));
                     } else {
-                        ps.setInt(i, plugin.getUtils().parseInt(entry.getValue().toString()));
+                        ps.setInt(i, TARDISNumberParsers.parseInt(entry.getValue().toString()));
                     }
                 }
                 i++;
@@ -168,7 +171,7 @@ public class QueryFactory {
         }
         where.clear();
         values = sbw.toString().substring(0, sbw.length() - 5);
-        String query = "DELETE FROM " + table + " WHERE " + values;
+        String query = "DELETE FROM " + prefix + table + " WHERE " + values;
         try {
             service.testConnection(connection);
             statement = connection.createStatement();
@@ -244,15 +247,15 @@ public class QueryFactory {
         try {
             service.testConnection(connection);
             statement = connection.createStatement();
-            String select = "SELECT c_id FROM controls WHERE tardis_id = " + id + " AND type = " + type + " AND secondary = " + s;
+            String select = "SELECT c_id FROM " + prefix + "controls WHERE tardis_id = " + id + " AND type = " + type + " AND secondary = " + s;
             ResultSet rs = statement.executeQuery(select);
             if (rs.isBeforeFirst()) {
                 // update
-                String update = "UPDATE controls SET location = '" + l + "' WHERE c_id = " + rs.getInt("c_id");
+                String update = "UPDATE " + prefix + "controls SET location = '" + l + "' WHERE c_id = " + rs.getInt("c_id");
                 statement.executeUpdate(update);
             } else {
                 // insert
-                String insert = "INSERT INTO controls (tardis_id, type, location, secondary) VALUES (" + id + ", " + type + ", '" + l + "', " + s + ")";
+                String insert = "INSERT INTO " + prefix + "controls (tardis_id, type, location, secondary) VALUES (" + id + ", " + type + ", '" + l + "', " + s + ")";
                 statement.executeUpdate(insert);
             }
         } catch (SQLException e) {
@@ -291,7 +294,7 @@ public class QueryFactory {
      */
     public void updateCondensedBlockCount(int new_size, int id, String block_data) {
         Statement statement = null;
-        String query = "UPDATE condenser SET block_count = " + new_size + " WHERE tardis_id = " + id + " AND block_data = '" + block_data + "'";
+        String query = "UPDATE " + prefix + "condenser SET block_count = " + new_size + " WHERE tardis_id = " + id + " AND block_data = '" + block_data + "'";
         try {
             service.testConnection(connection);
             statement = connection.createStatement();
@@ -319,7 +322,7 @@ public class QueryFactory {
      */
     public void saveBiome(int id, String biome) {
         PreparedStatement ps = null;
-        String query = "UPDATE current SET biome = ? WHERE tardis_id = ?";
+        String query = "UPDATE " + prefix + "current SET biome = ? WHERE tardis_id = ?";
         try {
             service.testConnection(connection);
             ps = connection.prepareStatement(query);

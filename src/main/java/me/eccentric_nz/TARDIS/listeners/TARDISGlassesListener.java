@@ -76,25 +76,28 @@ public class TARDISGlassesListener implements Listener {
             public void run() {
                 for (UUID uuid : plugin.getTrackerKeeper().getSpectacleWearers()) {
                     Player p = plugin.getServer().getPlayer(uuid);
-                    PlayerInventory pi = p.getInventory();
-                    ItemStack is = pi.getHelmet();
-                    boolean g = is3DGlasses(is);
-                    if ((is == null || !g) && p.hasPotionEffect(PotionEffectType.NIGHT_VISION)) {
-                        p.removePotionEffect(PotionEffectType.NIGHT_VISION);
-                        plugin.getTrackerKeeper().getSpectacleWearers().remove(uuid);
-                    } else if (is != null && g) {
-                        // damage the glasses so they run out
-                        short d = (short) (is.getDurability() + 1);
-                        if (d >= 56) {
-                            // if run out then remove them and the potion effect
-                            pi.setHelmet(null);
+                    if (p != null && p.isOnline()) {
+                        PlayerInventory pi = p.getInventory();
+                        ItemStack is = pi.getHelmet();
+                        boolean g = is3DGlasses(is);
+                        if ((is == null || !g) && p.hasPotionEffect(PotionEffectType.NIGHT_VISION)) {
                             p.removePotionEffect(PotionEffectType.NIGHT_VISION);
-                            TARDISMessage.send(p, "GLASSES_DONE");
-                            p.getWorld().dropItemNaturally(p.getLocation(), new ItemStack(Material.PAPER, 1));
-                        } else {
-                            is.setDurability(d);
+                            plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new removeFromMap(uuid), 20L);
+                        } else if (is != null && g) {
+                            // damage the glasses so they run out
+                            short d = (short) (is.getDurability() + 1);
+                            if (d >= 56) {
+                                // if run out then remove them and the potion effect
+                                pi.setHelmet(null);
+                                p.removePotionEffect(PotionEffectType.NIGHT_VISION);
+                                TARDISMessage.send(p, "GLASSES_DONE");
+                                p.getWorld().dropItemNaturally(p.getLocation(), new ItemStack(Material.PAPER, 1));
+                                plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new removeFromMap(uuid), 20L);
+                            } else {
+                                is.setDurability(d);
+                            }
+                            p.updateInventory();
                         }
-                        p.updateInventory();
                     }
                 }
             }
@@ -102,12 +105,26 @@ public class TARDISGlassesListener implements Listener {
     }
 
     private boolean is3DGlasses(ItemStack is) {
-        if (is.hasItemMeta()) {
+        if (is != null && is.hasItemMeta()) {
             ItemMeta im = is.getItemMeta();
             if (im.hasDisplayName() && im.getDisplayName().equals("3-D Glasses")) {
                 return true;
             }
         }
         return false;
+    }
+
+    public class removeFromMap implements Runnable {
+
+        UUID uuid;
+
+        public removeFromMap(UUID uuid) {
+            this.uuid = uuid;
+        }
+
+        @Override
+        public void run() {
+            plugin.getTrackerKeeper().getSpectacleWearers().remove(uuid);
+        }
     }
 }

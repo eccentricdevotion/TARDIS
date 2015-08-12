@@ -16,15 +16,20 @@
  */
 package me.eccentric_nz.TARDIS.mobfarming;
 
+import java.util.ArrayList;
 import org.bukkit.entity.Villager.Profession;
 
 /**
  *
  * @author eccentric_nz
  */
+@SuppressWarnings("rawtypes")
 public class TARDISVillager extends TARDISMob {
 
     private Profession profession;
+    private ArrayList trades;
+    private int career;
+    private boolean willing;
 
     /**
      * Data storage class for TARDIS villagers.
@@ -38,5 +43,31 @@ public class TARDISVillager extends TARDISMob {
 
     public void setProfession(Profession profession) {
         this.profession = profession;
+    }
+
+    @SuppressWarnings("rawtypes")
+    public ArrayList getTrades() {
+        return trades;
+    }
+
+    @SuppressWarnings("rawtypes")
+    public void setTrades(ArrayList trades) {
+        this.trades = trades;
+    }
+
+    public int getCareer() {
+        return career;
+    }
+
+    public void setCareer(int career) {
+        this.career = career;
+    }
+
+    public boolean isWilling() {
+        return willing;
+    }
+
+    public void setWilling(boolean willing) {
+        this.willing = willing;
     }
 }

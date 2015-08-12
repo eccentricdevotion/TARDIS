@@ -34,6 +34,7 @@ public class TARDISRecipesUpdater {
     private FileConfiguration recipes_config = null;
     private final HashMap<String, Integer> flavours = new HashMap<String, Integer>();
     private final HashMap<String, Integer> colours = new HashMap<String, Integer>();
+    private final HashMap<String, Integer> damage = new HashMap<String, Integer>();
 
     public TARDISRecipesUpdater(TARDIS plugin) {
         this.plugin = plugin;
@@ -70,6 +71,14 @@ public class TARDISRecipesUpdater {
         this.colours.put("Green", 13);
         this.colours.put("Red", 14);
         this.colours.put("Black", 15);
+        this.damage.put("shaped.TARDIS ARS Circuit.lore", 20);
+        this.damage.put("shaped.TARDIS Chameleon Circuit.lore", 25);
+        this.damage.put("shaped.TARDIS Input Circuit.lore", 50);
+        this.damage.put("shaped.TARDIS Materialisation Circuit.lore", 50);
+        this.damage.put("shaped.TARDIS Memory Circuit.lore", 20);
+        this.damage.put("shaped.TARDIS Randomiser Circuit.lore", 50);
+        this.damage.put("shaped.TARDIS Scanner Circuit.lore", 20);
+        this.damage.put("shaped.TARDIS Temporal Circuit.lore", 20);
     }
 
     public void addRecipes() {
@@ -182,6 +191,40 @@ public class TARDISRecipesUpdater {
                 i++;
             }
         }
+        if (!recipes_config.contains("shaped.TARDIS Randomiser Circuit")) {
+            recipes_config.set("shaped.TARDIS Randomiser Circuit.easy_shape", "-D-,NCE,-W-");
+            recipes_config.set("shaped.TARDIS Randomiser Circuit.easy_ingredients.D", "DIRT");
+            recipes_config.set("shaped.TARDIS Randomiser Circuit.easy_ingredients.N", "NETHERRACK");
+            recipes_config.set("shaped.TARDIS Randomiser Circuit.easy_ingredients.C", "COMPASS");
+            recipes_config.set("shaped.TARDIS Randomiser Circuit.easy_ingredients.E", "ENDER_STONE");
+            recipes_config.set("shaped.TARDIS Randomiser Circuit.easy_ingredients.W", "WATER_BUCKET");
+            recipes_config.set("shaped.TARDIS Randomiser Circuit.hard_shape", "-D-,NCE,-W-");
+            recipes_config.set("shaped.TARDIS Randomiser Circuit.hard_ingredients.D", "DIRT");
+            recipes_config.set("shaped.TARDIS Randomiser Circuit.hard_ingredients.N", "NETHERRACK");
+            recipes_config.set("shaped.TARDIS Randomiser Circuit.hard_ingredients.C", "COMPASS");
+            recipes_config.set("shaped.TARDIS Randomiser Circuit.hard_ingredients.E", "ENDER_STONE");
+            recipes_config.set("shaped.TARDIS Randomiser Circuit.hard_ingredients.W", "WATER_BUCKET");
+            recipes_config.set("shaped.TARDIS Randomiser Circuit.result", "MAP:1980");
+            recipes_config.set("shaped.TARDIS Randomiser Circuit.amount", 1);
+            recipes_config.set("shaped.TARDIS Randomiser Circuit.lore", "Uses left~50");
+            i++;
+        }
+        if (!recipes_config.contains("shaped.TARDIS Invisibility Circuit")) {
+            recipes_config.set("shaped.TARDIS Invisibility Circuit.easy_shape", "-D-,P-E,-W-");
+            recipes_config.set("shaped.TARDIS Invisibility Circuit.easy_ingredients.D", "DIAMOND");
+            recipes_config.set("shaped.TARDIS Invisibility Circuit.easy_ingredients.P", "MAP:1978");
+            recipes_config.set("shaped.TARDIS Invisibility Circuit.easy_ingredients.E", "EMERALD");
+            recipes_config.set("shaped.TARDIS Invisibility Circuit.easy_ingredients.W", "POTION:8206");
+            recipes_config.set("shaped.TARDIS Invisibility Circuit.hard_shape", "-D-,P-E,-W-");
+            recipes_config.set("shaped.TARDIS Invisibility Circuit.hard_ingredients.D", "DIAMOND");
+            recipes_config.set("shaped.TARDIS Invisibility Circuit.hard_ingredients.P", "MAP:1978");
+            recipes_config.set("shaped.TARDIS Invisibility Circuit.hard_ingredients.E", "EMERALD");
+            recipes_config.set("shaped.TARDIS Invisibility Circuit.hard_ingredients.W", "POTION:8270");
+            recipes_config.set("shaped.TARDIS Invisibility Circuit.result", "MAP:1981");
+            recipes_config.set("shaped.TARDIS Invisibility Circuit.amount", 1);
+            recipes_config.set("shaped.TARDIS Invisibility Circuit.lore", "Uses left~5");
+            i++;
+        }
         if (!recipes_config.contains("shaped.Painter Circuit")) {
             recipes_config.set("shaped.Painter Circuit.easy_shape", "-I-,DGD,-I-");
             recipes_config.set("shaped.Painter Circuit.easy_ingredients.I", "INK_SACK:0");
@@ -208,10 +251,37 @@ public class TARDISRecipesUpdater {
             recipes_config.set("shapeless.Painter Upgrade.lore", "");
             i++;
         }
+        if (!recipes_config.contains("shaped.TARDIS Artron Furnace")) {
+            recipes_config.set("shaped.TARDIS Artron Furnace.easy_shape", "---,OFO,RRR");
+            recipes_config.set("shaped.TARDIS Artron Furnace.easy_ingredients.O", "OBSIDIAN");
+            recipes_config.set("shaped.TARDIS Artron Furnace.easy_ingredients.F", "FURNACE");
+            recipes_config.set("shaped.TARDIS Artron Furnace.easy_ingredients.R", "REDSTONE");
+            recipes_config.set("shaped.TARDIS Artron Furnace.hard_shape", "---,OFO,RRR");
+            recipes_config.set("shaped.TARDIS Artron Furnace.hard_ingredients.O", "OBSIDIAN");
+            recipes_config.set("shaped.TARDIS Artron Furnace.hard_ingredients.F", "FURNACE");
+            recipes_config.set("shaped.TARDIS Artron Furnace.hard_ingredients.R", "REDSTONE");
+            recipes_config.set("shaped.TARDIS Artron Furnace.result", "FURNACE");
+            recipes_config.set("shaped.TARDIS Artron Furnace.amount", 1);
+            recipes_config.set("shaped.TARDIS Artron Furnace.lore", "");
+            i++;
+        }
+        for (Map.Entry<String, Integer> uses : damage.entrySet()) {
+            if (recipes_config.getString(uses.getKey()).isEmpty()) {
+                recipes_config.set(uses.getKey(), "Uses left~" + uses.getValue());
+            }
+        }
         try {
             recipes_config.save(new File(plugin.getDataFolder(), "recipes.yml"));
             if (i > 0) {
                 plugin.getConsole().sendMessage(plugin.getPluginName() + "Added " + ChatColor.AQUA + i + ChatColor.RESET + " new items to recipes.yml");
+            }
+            String key = recipes_config.getString("shaped.TARDIS Key.result");
+            if (!key.equals(plugin.getConfig().getString("preferences.key"))) {
+                plugin.getConsole().sendMessage(plugin.getPluginName() + "The TARDIS Key recipe result (recipes.yml) does not match the configured key preference (config.yml)");
+            }
+            String r_key_5 = recipes_config.getString("shaped.TARDIS Remote Key.easy_ingredients.K");
+            if (r_key_5 != null && !key.equals(r_key_5)) {
+                plugin.getConsole().sendMessage(plugin.getPluginName() + "The TARDIS Key ingredient (" + r_key_5 + ") in the 'TARDIS Remote Key' recipe does not match the crafting result of the 'TARDIS Key' recipe (" + key + ") - they should be the same!");
             }
         } catch (IOException io) {
             plugin.debug("Could not save recipes.yml, " + io);

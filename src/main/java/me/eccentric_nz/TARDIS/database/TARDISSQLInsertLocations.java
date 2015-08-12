@@ -22,6 +22,7 @@ import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.utility.TARDISNumberParsers;
 
 /**
  *
@@ -35,6 +36,7 @@ public class TARDISSQLInsertLocations implements Runnable {
     private final HashMap<String, Object> data;
     private final String biome;
     private final int id;
+    private final String prefix;
 
     /**
      * Inserts data into an SQLite database table. This method builds a prepared
@@ -51,6 +53,7 @@ public class TARDISSQLInsertLocations implements Runnable {
         this.data = data;
         this.biome = biome;
         this.id = id;
+        this.prefix = this.plugin.getPrefix();
     }
 
     @Override
@@ -70,13 +73,13 @@ public class TARDISSQLInsertLocations implements Runnable {
         try {
             service.testConnection(connection);
             for (String s : tables) {
-                ps = connection.prepareStatement("INSERT INTO " + s + " (" + fields + ") VALUES (" + questions + ")");
+                ps = connection.prepareStatement("INSERT INTO " + prefix + s + " (" + fields + ") VALUES (" + questions + ")");
                 int i = 1;
                 for (Map.Entry<String, Object> entry : data.entrySet()) {
                     if (entry.getValue().getClass().equals(String.class)) {
                         ps.setString(i, entry.getValue().toString());
                     } else {
-                        ps.setInt(i, plugin.getUtils().parseInt(entry.getValue().toString()));
+                        ps.setInt(i, TARDISNumberParsers.parseInt(entry.getValue().toString()));
                     }
                     i++;
                 }
@@ -85,7 +88,7 @@ public class TARDISSQLInsertLocations implements Runnable {
             // set the biome if necessary
             if (plugin.getConfig().getBoolean("police_box.set_biome")) {
                 // remember the current biome
-                String query = "UPDATE current SET biome = ? WHERE tardis_id = ?";
+                String query = "UPDATE " + prefix + "current SET biome = ? WHERE tardis_id = ?";
                 service.testConnection(connection);
                 ps = connection.prepareStatement(query);
                 ps.setString(1, biome);

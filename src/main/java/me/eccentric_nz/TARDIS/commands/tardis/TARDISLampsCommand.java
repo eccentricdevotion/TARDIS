@@ -24,10 +24,12 @@ import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetChunks;
 import me.eccentric_nz.TARDIS.database.ResultSetLamps;
+import me.eccentric_nz.TARDIS.database.ResultSetPlayerPrefs;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import me.eccentric_nz.TARDIS.enumeration.SCHEMATIC;
 import me.eccentric_nz.TARDIS.schematic.TARDISSchematicGZip;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
+import me.eccentric_nz.TARDIS.utility.TARDISNumberParsers;
 import org.bukkit.Chunk;
 import org.bukkit.Material;
 import org.bukkit.World;
@@ -85,30 +87,30 @@ public class TARDISLampsCommand {
             if (rsc.resultSet()) {
                 int starty, endy;
                 SCHEMATIC schm = rs.getSchematic();
-                String directory = (schm.equals(SCHEMATIC.CUSTOM)) ? "user_schematics" : "schematics";
-                String path = plugin.getDataFolder() + File.separator + directory + File.separator + schm.getFile();
+                Material lampon = (schm.hasLanterns()) ? Material.SEA_LANTERN : Material.REDSTONE_LAMP_ON;
+                // player preference
+                HashMap<String, Object> wherepp = new HashMap<String, Object>();
+                wherepp.put("uuid", owner.getUniqueId().toString());
+                ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, wherepp);
+                if (rsp.resultSet() && rsp.isLanternsOn()) {
+                    lampon = Material.SEA_LANTERN;
+                }
+                String directory = (schm.isCustom()) ? "user_schematics" : "schematics";
+                String path = plugin.getDataFolder() + File.separator + directory + File.separator + schm.getPermission() + ".tschm";
                 // get JSON
                 JSONObject obj = TARDISSchematicGZip.unzip(path);
                 // get dimensions
                 JSONObject dimensions = (JSONObject) obj.get("dimensions");
                 int h = dimensions.getInt("height");
-                switch (schm) {
-                    case BIGGER:
-                    case REDSTONE:
-                        starty = 65;
-                        break;
-                    default:
-                        starty = 64;
-                        break;
-                }
+                starty = (schm.getPermission().equals("bigger") || schm.getPermission().equals("redstone")) ? 65 : 64;
                 endy = starty + h;
                 ArrayList<HashMap<String, String>> data = rsc.getData();
                 // loop through the chunks
                 for (HashMap<String, String> map : data) {
                     String w = map.get("world");
                     World world = plugin.getServer().getWorld(w);
-                    int x = plugin.getUtils().parseInt(map.get("x"));
-                    int z = plugin.getUtils().parseInt(map.get("z"));
+                    int x = TARDISNumberParsers.parseInt(map.get("x"));
+                    int z = TARDISNumberParsers.parseInt(map.get("z"));
                     Chunk chunk = world.getChunkAt(x, z);
                     // find the lamps in the chunks
                     int bx = chunk.getX() << 4;
@@ -116,8 +118,8 @@ public class TARDISLampsCommand {
                     for (int xx = bx; xx < bx + 16; xx++) {
                         for (int zz = bz; zz < bz + 16; zz++) {
                             for (int yy = starty; yy < endy; yy++) {
-                                Material typeId = world.getBlockAt(xx, yy, zz).getType();
-                                if (typeId.equals(Material.REDSTONE_LAMP_ON)) {
+                                Material mat = world.getBlockAt(xx, yy, zz).getType();
+                                if (mat.equals(lampon)) {
                                     String lamp = w + ":" + xx + ":" + yy + ":" + zz;
                                     HashMap<String, Object> set = new HashMap<String, Object>();
                                     set.put("tardis_id", id);

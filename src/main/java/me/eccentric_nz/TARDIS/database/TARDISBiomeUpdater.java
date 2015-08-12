@@ -35,9 +35,11 @@ public class TARDISBiomeUpdater implements Runnable {
     private final TARDISDatabaseConnection service = TARDISDatabaseConnection.getInstance();
     private final Connection connection = service.getConnection();
     private final TARDIS plugin;
+    private final String prefix;
 
     public TARDISBiomeUpdater(TARDIS plugin) {
         this.plugin = plugin;
+        this.prefix = this.plugin.getPrefix();
     }
 
     @Override
@@ -46,7 +48,7 @@ public class TARDISBiomeUpdater implements Runnable {
         QueryFactory qf = new QueryFactory(this.plugin);
         PreparedStatement statement = null;
         ResultSet rs = null;
-        String query = "SELECT * FROM current";
+        String query = "SELECT * FROM " + prefix + "current";
         try {
             service.testConnection(connection);
             statement = connection.prepareStatement(query);

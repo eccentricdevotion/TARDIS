@@ -14,11 +14,9 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package me.eccentric_nz.TARDIS.listeners;
+package me.eccentric_nz.TARDIS.rooms;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
@@ -26,11 +24,6 @@ import me.eccentric_nz.TARDIS.achievement.TARDISAchievementFactory;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetPlayerPrefs;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
-import me.eccentric_nz.TARDIS.enumeration.SCHEMATIC;
-import me.eccentric_nz.TARDIS.rooms.TARDISCondenserData;
-import me.eccentric_nz.TARDIS.rooms.TARDISRoomBuilder;
-import me.eccentric_nz.TARDIS.rooms.TARDISRoomDirection;
-import me.eccentric_nz.TARDIS.rooms.TARDISSeedData;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import org.bukkit.Chunk;
 import org.bukkit.Location;
@@ -53,15 +46,9 @@ import org.bukkit.event.player.PlayerInteractEvent;
 public class TARDISRoomSeeder implements Listener {
 
     private final TARDIS plugin;
-    private final List<SCHEMATIC> ars = new ArrayList<SCHEMATIC>();
 
     public TARDISRoomSeeder(TARDIS plugin) {
         this.plugin = plugin;
-        ars.add(SCHEMATIC.ARS);
-        ars.add(SCHEMATIC.BUDGET);
-        ars.add(SCHEMATIC.PLANK);
-        ars.add(SCHEMATIC.STEAMPUNK);
-        ars.add(SCHEMATIC.TOM);
     }
 
     /**
@@ -98,17 +85,9 @@ public class TARDISRoomSeeder implements Listener {
             // only proceed if they are clicking a seed block with the TARDIS key!
             if (plugin.getBuildKeeper().getSeeds().containsKey(blockType) && inhand.equals(Material.getMaterial(key))) {
                 // check they are still in the TARDIS world
-//                World world = block.getLocation().getWorld();
-//                String name = world.getName();
-//                ChunkGenerator gen = world.getGenerator();
-//                String dn = "TARDIS_TimeVortex";
-//                if (plugin.getConfig().getBoolean("creation.default_world")) {
-//                    dn = plugin.getConfig().getString("creation.default_world_name");
-//                }
-//                boolean special = (name.equals(dn) && (world.getWorldType().equals(WorldType.FLAT) || gen instanceof TARDISChunkGenerator));
-//                if (!name.equals("TARDIS_WORLD_" + player.getName()) && !special) {
                 if (!plugin.getUtils().inTARDISWorld(player)) {
                     TARDISMessage.send(player, "ROOM_IN_WORLD");
+                    plugin.getTrackerKeeper().getRoomSeed().remove(uuid);
                     return;
                 }
                 // get clicked block location
@@ -118,6 +97,7 @@ public class TARDISRoomSeeder implements Listener {
                 trd.getDirection();
                 if (!trd.isFound()) {
                     TARDISMessage.send(player, "PLATE_NOT_FOUND");
+                    plugin.getTrackerKeeper().getRoomSeed().remove(uuid);
                     return;
                 }
                 COMPASS d = trd.getCompass();
@@ -126,18 +106,20 @@ public class TARDISRoomSeeder implements Listener {
                 Block check_block = b.getBlock().getRelative(BlockFace.DOWN).getRelative(facing, 9);
                 if (!check_block.getType().equals(Material.AIR)) {
                     TARDISMessage.send(player, "ROOM_VOID");
+                    plugin.getTrackerKeeper().getRoomSeed().remove(uuid);
                     return;
                 }
                 // get seed data
                 TARDISSeedData sd = plugin.getTrackerKeeper().getRoomSeed().get(uuid);
                 // check they are not in an ARS chunk
-                if (ars.contains(sd.getSchematic()) && sd.hasARS()) {
+                if (sd.hasARS()) {
                     Chunk c = b.getWorld().getChunkAt(block.getRelative(BlockFace.valueOf(d.toString()), 4));
                     int cx = c.getX();
                     int cy = block.getY();
                     int cz = c.getZ();
                     if ((cx >= sd.getMinx() && cx <= sd.getMaxx()) && (cy >= 48 && cy <= 96) && (cz >= sd.getMinz() && cz <= sd.getMaxz())) {
                         TARDISMessage.send(player, "ROOM_USE_ARS");
+                        plugin.getTrackerKeeper().getRoomSeed().remove(uuid);
                         return;
                     }
                 }
@@ -146,14 +128,15 @@ public class TARDISRoomSeeder implements Listener {
                 // check that the blockType is the same as the one they ran the /tardis room [type] command for
                 if (!sd.getRoom().equals(r)) {
                     TARDISMessage.send(player, "ROOM_SEED_NOT_VALID", plugin.getTrackerKeeper().getRoomSeed().get(uuid).getRoom());
+                    plugin.getTrackerKeeper().getRoomSeed().remove(uuid);
                     return;
                 }
-                // adjust the location three/four blocks out
+                // adjust the location three blocks out
                 Location l = block.getRelative(facing, 3).getLocation();
                 // build the room
                 TARDISRoomBuilder builder = new TARDISRoomBuilder(plugin, r, l, d, player);
                 if (builder.build()) {
-                    // remove seed block and set block above it to AIR as well
+                    // remove seed block and set door blocks to AIR as well
                     block.setType(Material.AIR);
                     Block doorway = block.getRelative(facing, 2);
                     doorway.setType(Material.AIR);

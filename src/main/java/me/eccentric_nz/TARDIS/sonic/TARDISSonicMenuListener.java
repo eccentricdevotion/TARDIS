@@ -16,8 +16,8 @@
  */
 package me.eccentric_nz.TARDIS.sonic;
 
-import java.util.Set;
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.listeners.TARDISMenuListener;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -26,7 +26,6 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.ClickType;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryCloseEvent;
-import org.bukkit.event.inventory.InventoryDragEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -38,11 +37,12 @@ import org.bukkit.inventory.meta.ItemMeta;
  *
  * @author eccentric_nz
  */
-public class TARDISSonicMenuListener implements Listener {
+public class TARDISSonicMenuListener extends TARDISMenuListener implements Listener {
 
     private final TARDIS plugin;
 
     public TARDISSonicMenuListener(TARDIS plugin) {
+        super(plugin);
         this.plugin = plugin;
     }
 
@@ -105,21 +105,6 @@ public class TARDISSonicMenuListener implements Listener {
     }
 
     @EventHandler(ignoreCancelled = true)
-    public void onSonicMenuDrag(InventoryDragEvent event) {
-        Inventory inv = event.getInventory();
-        String title = inv.getTitle();
-        if (!title.equals("§4Sonic Prefs Menu")) {
-            return;
-        }
-        Set<Integer> slots = event.getRawSlots();
-        for (Integer slot : slots) {
-            if ((slot >= 0 && slot < 27)) {
-                event.setCancelled(true);
-            }
-        }
-    }
-
-    @EventHandler(ignoreCancelled = true)
     public void onSonicMenuClose(InventoryCloseEvent event) {
         Inventory inv = event.getInventory();
         String title = inv.getTitle();
@@ -133,19 +118,5 @@ public class TARDISSonicMenuListener implements Listener {
             loc.getWorld().dropItemNaturally(loc, sonic);
             inv.setItem(18, new ItemStack(Material.AIR));
         }
-    }
-
-    /**
-     * Closes the inventory.
-     *
-     * @param p the player using the GUI
-     */
-    private void close(final Player p) {
-        plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
-            @Override
-            public void run() {
-                p.closeInventory();
-            }
-        }, 1L);
     }
 }

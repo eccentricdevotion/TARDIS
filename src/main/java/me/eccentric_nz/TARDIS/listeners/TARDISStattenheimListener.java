@@ -21,6 +21,7 @@ import java.util.HashMap;
 import java.util.List;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.advanced.TARDISCircuitChecker;
+import me.eccentric_nz.TARDIS.api.Parameters;
 import me.eccentric_nz.TARDIS.artron.TARDISBeaconToggler;
 import me.eccentric_nz.TARDIS.artron.TARDISLampToggler;
 import me.eccentric_nz.TARDIS.artron.TARDISPoliceBoxLampToggler;
@@ -31,9 +32,11 @@ import me.eccentric_nz.TARDIS.database.ResultSetPlayerPrefs;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import me.eccentric_nz.TARDIS.database.ResultSetTravellers;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
+import me.eccentric_nz.TARDIS.enumeration.FLAG;
 import me.eccentric_nz.TARDIS.enumeration.PRESET;
 import me.eccentric_nz.TARDIS.travel.TARDISTimeTravel;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
+import me.eccentric_nz.TARDIS.utility.TARDISStaticUtils;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -99,6 +102,10 @@ public class TARDISStattenheimListener implements Listener {
                     return;
                 }
                 final int id = rs.getTardis_id();
+                if (plugin.getTrackerKeeper().getInSiegeMode().contains(id)) {
+                    TARDISMessage.send(player, "SIEGE_NO_CONTROL");
+                    return;
+                }
                 boolean power = rs.isPowered_on();
                 final QueryFactory qf = new QueryFactory(plugin);
                 if (action.equals(Action.RIGHT_CLICK_BLOCK)) {
@@ -113,7 +120,7 @@ public class TARDISStattenheimListener implements Listener {
                             TARDISMessage.send(player, "NO_WORLD_TRAVEL");
                             return;
                         }
-                        if (!plugin.getPluginRespect().getRespect(player, remoteLocation, true)) {
+                        if (!plugin.getPluginRespect().getRespect(remoteLocation, new Parameters(player, FLAG.getDefaultFlags()))) {
                             return;
                         }
                         if (player.hasPermission("tardis.exile") && plugin.getConfig().getBoolean("travel.exile")) {
@@ -174,7 +181,7 @@ public class TARDISStattenheimListener implements Listener {
                             hidden = true;
                         }
                         COMPASS d = rsc.getDirection();
-                        COMPASS player_d = COMPASS.valueOf(plugin.getUtils().getPlayersDirection(player, false));
+                        COMPASS player_d = COMPASS.valueOf(TARDISStaticUtils.getPlayersDirection(player, false));
                         TARDISTimeTravel tt = new TARDISTimeTravel(plugin);
                         int count;
                         boolean sub = false;
@@ -317,7 +324,7 @@ public class TARDISStattenheimListener implements Listener {
                         TARDISMessage.send(player, "POWER_ON");
                         // if lights are off, turn them on
                         if (rs.isLights_on()) {
-                            new TARDISLampToggler(plugin).flickSwitch(id, player.getUniqueId(), false);
+                            new TARDISLampToggler(plugin).flickSwitch(id, player.getUniqueId(), false, rs.getSchematic().hasLanterns());
                         }
                         // if beacon is off turn it on
                         if (beacon_on) {

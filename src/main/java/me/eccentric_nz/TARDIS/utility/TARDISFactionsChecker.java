@@ -16,9 +16,9 @@
  */
 package me.eccentric_nz.TARDIS.utility;
 
-import com.massivecraft.factions.entity.BoardColls;
+import com.massivecraft.factions.entity.BoardColl;
 import com.massivecraft.factions.entity.Faction;
-import com.massivecraft.factions.entity.UPlayer;
+import com.massivecraft.factions.entity.MPlayer;
 import com.massivecraft.massivecore.ps.PS;
 import me.eccentric_nz.TARDIS.TARDIS;
 import org.bukkit.Location;
@@ -48,9 +48,9 @@ public class TARDISFactionsChecker {
      */
     public boolean isInFaction(Player p, Location l) {
         boolean bool = true;
-        UPlayer uplayer = UPlayer.get(p);
+        MPlayer uplayer = MPlayer.get(p);
         Faction ufac = uplayer.getFaction();
-        Faction lfac = BoardColls.get().getFactionAt(PS.valueOf(l));
+        Faction lfac = BoardColl.get().getFactionAt(PS.valueOf(l));
         if (!ufac.equals(lfac) && !lfac.isNone()) {
             bool = false;
         }

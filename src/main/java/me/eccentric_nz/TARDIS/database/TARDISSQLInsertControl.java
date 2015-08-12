@@ -35,6 +35,7 @@ public class TARDISSQLInsertControl implements Runnable {
     private final int type;
     private final String l;
     private final int s;
+    private final String prefix;
 
     /**
      * Updates data in an SQLite database table. This method builds an SQL query
@@ -52,6 +53,7 @@ public class TARDISSQLInsertControl implements Runnable {
         this.type = type;
         this.l = l;
         this.s = s;
+        this.prefix = this.plugin.getPrefix();
     }
 
     @Override
@@ -60,15 +62,15 @@ public class TARDISSQLInsertControl implements Runnable {
         try {
             service.testConnection(connection);
             statement = connection.createStatement();
-            String select = "SELECT c_id FROM controls WHERE tardis_id = " + id + " AND type = " + type + " AND secondary = " + s;
+            String select = "SELECT c_id FROM " + prefix + "controls WHERE tardis_id = " + id + " AND type = " + type + " AND secondary = " + s;
             ResultSet rs = statement.executeQuery(select);
             if (rs.isBeforeFirst()) {
                 // update
-                String update = "UPDATE controls SET location = '" + l + "' WHERE c_id = " + rs.getInt("c_id");
+                String update = "UPDATE " + prefix + "controls SET location = '" + l + "' WHERE c_id = " + rs.getInt("c_id");
                 statement.executeUpdate(update);
             } else {
                 // insert
-                String insert = "INSERT INTO controls (tardis_id, type, location, secondary) VALUES (" + id + ", " + type + ", '" + l + "', " + s + ")";
+                String insert = "INSERT INTO " + prefix + "controls (tardis_id, type, location, secondary) VALUES (" + id + ", " + type + ", '" + l + "', " + s + ")";
                 statement.executeUpdate(insert);
             }
         } catch (SQLException e) {

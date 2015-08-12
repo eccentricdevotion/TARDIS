@@ -48,7 +48,7 @@ public class TARDISBlockBreakListener implements Listener {
         int i = 0;
         for (PRESET p : PRESET.values()) {
             if (!p.getFirstLine().isEmpty() && !sign_lookup.containsKey(p.getFirstLine())) {
-                sign_lookup.put(getSignColour() + p.getFirstLine(), getSignColour() + p.getSecondLine());
+                sign_lookup.put(p.getFirstLine(), p.getSecondLine());
             }
         }
     }
@@ -73,8 +73,8 @@ public class TARDISBlockBreakListener implements Listener {
         if (blockType == Material.WALL_SIGN) {
             // check the text on the sign
             Sign sign = (Sign) block.getState();
-            String line1 = sign.getLine(1);
-            String line2 = sign.getLine(2);
+            String line1 = ChatColor.stripColor(sign.getLine(1));
+            String line2 = ChatColor.stripColor(sign.getLine(2));
             if (sign_lookup.containsKey(line1) && line2.equals(sign_lookup.get(line1))) {
                 event.setCancelled(true);
                 sign.update();
@@ -95,16 +95,5 @@ public class TARDISBlockBreakListener implements Listener {
                 }
             }
         }
-    }
-
-    private ChatColor getSignColour() {
-        ChatColor colour;
-        String cc = plugin.getConfig().getString("police_box.sign_colour");
-        try {
-            colour = ChatColor.valueOf(cc);
-        } catch (IllegalArgumentException e) {
-            colour = ChatColor.WHITE;
-        }
-        return colour;
     }
 }

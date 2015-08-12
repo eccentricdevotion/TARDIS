@@ -34,7 +34,7 @@ import org.bukkit.inventory.meta.ItemMeta;
  */
 public class TARDISTemporalLocatorInventory {
 
-    private final ItemStack[] terminal;
+    private final ItemStack[] temporal;
     private final TARDIS plugin;
     List<String> time = new ArrayList<String>();
 
@@ -67,7 +67,7 @@ public class TARDISTemporalLocatorInventory {
         time.add("3 AM");
         time.add("4 AM");
         time.add("5 AM");
-        this.terminal = getItemStack();
+        this.temporal = getItemStack();
     }
 
     /**
@@ -122,7 +122,7 @@ public class TARDISTemporalLocatorInventory {
         return clocks;
     }
 
-    public ItemStack[] getTerminal() {
-        return terminal;
+    public ItemStack[] getTemporal() {
+        return temporal;
     }
 }

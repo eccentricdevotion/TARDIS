@@ -16,56 +16,78 @@
  */
 package me.eccentric_nz.TARDIS.enumeration;
 
+import org.bukkit.Material;
+
 /**
  *
  * @author eccentric_nz
  */
-public enum SCHEMATIC {
+public class SCHEMATIC {
 
-    ANTIGRAVITY("antigravity.tschm"),
-    ARBORETUM("arboretum.tschm"),
-    ARS("ars.tschm"),
-    BAKER("baker.tschm"),
-    BEDROOM("bedroom.tschm"),
-    BIGGER("bigger.tschm"),
-    BUDGET("budget.tschm"),
-    CUSTOM("custom.tschm"),
-    DELUXE("deluxe.tschm"),
-    ELEVENTH("eleventh.tschm"),
-    EMPTY("empty.tschm"),
-    FARM("farm.tschm"),
-    GRAVITY("gravity.tschm"),
-    GREENHOUSE("greenhouse.tschm"),
-    HARMONY("harmony.tschm"),
-    KITCHEN("kitchen.tschm"),
-    LAZARUS("lazarus.tschm"),
-    LIBRARY("library.tschm"),
-    MUSHROOM("mushroom.tschm"),
-    PASSAGE("passage.tschm"),
-    PLANK("plank.tschm"),
-    POOL("pool.tschm"),
-    RAIL("rail.tschm"),
-    REDSTONE("redstone.tschm"),
-    RENDERER("renderer.tschm"),
-    STABLE("stable.tschm"),
-    STEAMPUNK("steampunk.tschm"),
-    TOM("tom.tschm"),
-    TRENZALORE("trenzalore.tschm"),
-    VAULT("vault.tschm"),
-    VILLAGE("village.tschm"),
-    WAR("war.tschm"),
-    WOOD("wood.tschm"),
-    WORKSHOP("workshop.tschm"),
-    ZERO("zero.tschm");
+    String seed;
+    String permission;
+    String description;
+    boolean small;
+    boolean tall;
+    boolean beacon;
+    boolean lanterns;
+    boolean custom;
 
-    String file;
-
-    public String getFile() {
-        return file;
+    public SCHEMATIC(String seed, String permission, String description, boolean small, boolean tall, boolean beacon, boolean lanterns, boolean custom) {
+        this.seed = seed;
+        this.permission = permission;
+        this.description = description;
+        this.small = small;
+        this.tall = tall;
+        this.beacon = beacon;
+        this.lanterns = lanterns;
+        this.custom = custom;
     }
 
-    private SCHEMATIC(String file) {
-        this.file = file;
+    /**
+     * Gets the seed block Material.
+     *
+     * @return the Material.toString().
+     */
+    public String getSeed() {
+        return seed;
+    }
+
+    /**
+     * Gets the block type of this SCHEMATIC.
+     *
+     * @return a block type.
+     */
+    public Material getSeedMaterial() {
+        return Material.valueOf(seed);
+    }
+
+    /**
+     * Gets the block id of this SCHEMATIC.
+     *
+     * @return a block id.
+     */
+    @SuppressWarnings("deprecation")
+    public int getSeedId() {
+        return Material.valueOf(seed).getId();
+    }
+
+    /**
+     * Gets the SCHEMATIC permission node.
+     *
+     * @return the Material.toString().
+     */
+    public String getPermission() {
+        return permission;
+    }
+
+    /**
+     * Gets the SCHEMATIC description.
+     *
+     * @return the description.
+     */
+    public String getDescription() {
+        return description;
     }
 
     /**
@@ -74,17 +96,7 @@ public enum SCHEMATIC {
      * @return true if this SCHEMATIC is 1 chunk wide.
      */
     public boolean isSmall() {
-        switch (this) {
-            case ARS:
-            case BUDGET:
-            case PLANK:
-            case STEAMPUNK:
-            case TOM:
-            case WAR:
-                return true;
-            default:
-                return false;
-        }
+        return small;
     }
 
     /**
@@ -93,13 +105,7 @@ public enum SCHEMATIC {
      * @return true if this SCHEMATIC is 2 chunks high.
      */
     public boolean isTall() {
-        switch (this) {
-            case DELUXE:
-            case ELEVENTH:
-                return true;
-            default:
-                return false;
-        }
+        return tall;
     }
 
     /**
@@ -108,32 +114,33 @@ public enum SCHEMATIC {
      * @return true if this SCHEMATIC has a beacon.
      */
     public boolean hasBeacon() {
-        switch (this) {
-            case ARS:
-            case BUDGET:
-            case BIGGER:
-            case DELUXE:
-            case ELEVENTH:
-            case REDSTONE:
-            case STEAMPUNK:
-            case WAR:
-                return true;
-            default:
-                return false;
-        }
+        return beacon;
     }
 
     /**
-     * Checks if this SCHEMATIC has a beacon.
+     * Checks if this SCHEMATIC has a sea lanterns.
      *
-     * @return true if this SCHEMATIC has a beacon.
+     * @return true if this SCHEMATIC has a sea lanterns.
+     */
+    public boolean hasLanterns() {
+        return lanterns;
+    }
+
+    /**
+     * Checks if this is a custom SCHEMATIC.
+     *
+     * @return true if this SCHEMATIC is custom.
+     */
+    public boolean isCustom() {
+        return custom;
+    }
+
+    /**
+     * Checks if players must use the sonic to change the beacon glass colour.
+     *
+     * @return true or false.
      */
     public boolean mustUseSonic() {
-        switch (this) {
-            case BUDGET:
-                return true;
-            default:
-                return false;
-        }
+        return this.permission.equals("budget");
     }
 }

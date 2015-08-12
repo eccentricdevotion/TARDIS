@@ -18,29 +18,34 @@ package me.eccentric_nz.TARDIS.commands.tardis;
 
 import com.google.common.collect.ImmutableList;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.commands.TARDISCompleter;
+import me.eccentric_nz.TARDIS.enumeration.TARDIS_COMMAND;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabCompleter;
-import org.bukkit.util.StringUtil;
 
 /**
  * TabCompleter for /tardis command
  */
-public class TARDISTabComplete implements TabCompleter {
+public class TARDISTabComplete extends TARDISCompleter implements TabCompleter {
 
     private final TARDIS plugin;
-    private final List<String> ROOT_SUBS = ImmutableList.of("abort", "add", "arch_time", "arsremove", "chameleon", "colourise", "colorize", "comehere", "desktop", "direction", "eject", "ep1", "erase", "exterminate", "find", "help", "hide", "home", "inside", "jettison", "list", "namekey", "occupy", "rebuild", "remove", "removesave", "rescue", "room", "save", "save_player", "secondary", "setdest", "tagtheood", "theme", "update", "upgrade", "version");
+    private final List<String> ROOT_SUBS;
     private final List<String> CHAM_SUBS = ImmutableList.of("on", "off", "short", "reset");
     private final List<String> DIR_SUBS = ImmutableList.of("north", "west", "south", "east");
     private final List<String> LIST_SUBS = ImmutableList.of("companions", "saves", "areas", "rechargers");
     private final List<String> SEC_SUBS = ImmutableList.of("button", "world-repeater", "x-repeater", "z-repeater", "y-repeater", "artron", "handbrake", "door", "back");
-    private final List<String> UPD_SUBS = ImmutableList.of("advanced", "ars", "artron", "back", "backdoor", "button", "chameleon", "condenser", "creeper", "direction", "door", "eps", "farm", "handbrake", "info", "keyboard", "light", "rail", "save-sign", "scanner", "stable", "storage", "temporal", "terminal", "toggle_wool", "vault", "village", "world-repeater", "x-repeater", "y-repeater", "z-repeater", "zero");
+    private final List<String> UPD_SUBS = ImmutableList.of("advanced", "ars", "artron", "back", "backdoor", "button", "chameleon", "condenser", "control", "creeper", "direction", "door", "eps", "farm", "handbrake", "info", "keyboard", "light", "rail", "save-sign", "scanner", "siege", "stable", "storage", "temporal", "terminal", "toggle_wool", "vault", "village", "world-repeater", "x-repeater", "y-repeater", "z-repeater", "zero");
 
     public TARDISTabComplete(TARDIS plugin) {
         this.plugin = plugin;
+        List<String> tcs = new ArrayList<String>();
+        for (TARDIS_COMMAND tc : TARDIS_COMMAND.values()) {
+            tcs.add(tc.toString());
+        }
+        ROOT_SUBS = ImmutableList.copyOf(tcs);
     }
 
     @Override
@@ -76,9 +81,5 @@ public class TARDISTabComplete implements TabCompleter {
             }
         }
         return ImmutableList.of();
-    }
-
-    private List<String> partial(String token, Collection<String> from) {
-        return StringUtil.copyPartialMatches(token, from, new ArrayList<String>(from.size()));
     }
 }

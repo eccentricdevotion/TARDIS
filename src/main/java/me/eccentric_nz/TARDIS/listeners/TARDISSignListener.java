@@ -107,16 +107,20 @@ public class TARDISSignListener implements Listener {
                         Sign s = (Sign) block.getState();
                         line1 = s.getLine(0);
                     } else {
-                        line1 = (signloc.equals(rs.getChameleon())) ? "Chameleon" : "Save Sign";
+                        line1 = (signloc.equals(rs.getChameleon())) ? plugin.getSigns().getStringList("chameleon").get(0) : "Save Sign";
                     }
                     TARDISCircuitChecker tcc = null;
                     if (plugin.getConfig().getString("preferences.difficulty").equals("hard") && !plugin.getUtils().inGracePeriod(player, false)) {
                         tcc = new TARDISCircuitChecker(plugin, rs.getTardis_id());
                         tcc.getCircuits();
                     }
-                    if (line1.equals("Chameleon")) {
+                    if (line1.contains(plugin.getSigns().getStringList("chameleon").get(0))) {
                         if (tcc != null && !tcc.hasChameleon()) {
                             TARDISMessage.send(player, "CHAM_MISSING");
+                            return;
+                        }
+                        if (plugin.getTrackerKeeper().getInSiegeMode().contains(rs.getTardis_id())) {
+                            TARDISMessage.send(player, "SIEGE_NO_CONTROL");
                             return;
                         }
                         // open Chameleon Circuit GUI

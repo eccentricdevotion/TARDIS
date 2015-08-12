@@ -20,6 +20,8 @@ import java.util.ArrayList;
 import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
+import me.libraryaddict.disguise.DisguiseAPI;
+import me.libraryaddict.disguise.disguisetypes.PlayerDisguise;
 import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
@@ -63,6 +65,53 @@ public class TARDISArchCommand {
             }
         }
         TARDISMessage.send(sender, "COULD_NOT_FIND_NAME");
+        return true;
+    }
+
+    public boolean force(CommandSender sender, String[] args) {
+        if (args[2].length() < 2) {
+            TARDISMessage.send(sender, "TOO_FEW_ARGS");
+            return true;
+        }
+        Player player = plugin.getServer().getPlayer(args[1]);
+        if (player == null) {
+            TARDISMessage.send(sender, "COULD_NOT_FIND_NAME");
+            return true;
+        }
+        UUID uuid = player.getUniqueId();
+        boolean inv = plugin.getConfig().getBoolean("arch.switch_inventory");
+        if (!plugin.getTrackerKeeper().getJohnSmith().containsKey(uuid)) {
+            final String name = TARDISRandomName.name();
+            long time = System.currentTimeMillis() + plugin.getConfig().getLong("arch.min_time") * 60000L;
+            TARDISWatchData twd = new TARDISWatchData(name, time);
+            plugin.getTrackerKeeper().getJohnSmith().put(uuid, twd);
+            if (DisguiseAPI.isDisguised(player)) {
+                DisguiseAPI.undisguiseToAll(player);
+            }
+            player.getWorld().strikeLightningEffect(player.getLocation());
+            player.setHealth(player.getMaxHealth() / 10.0d);
+            if (inv) {
+                new TARDISArchInventory().switchInventories(player, 0);
+            }
+            PlayerDisguise playerDisguise = new PlayerDisguise(name);
+            playerDisguise.setHideHeldItemFromSelf(false);
+            playerDisguise.setViewSelfDisguise(false);
+            DisguiseAPI.disguiseToAll(player, playerDisguise);
+            player.setDisplayName(name);
+            player.setPlayerListName(name);
+        } else {
+            if (DisguiseAPI.isDisguised(player)) {
+                DisguiseAPI.undisguiseToAll(player);
+            }
+            if (inv) {
+                new TARDISArchInventory().switchInventories(player, 1);
+            }
+            player.getWorld().strikeLightningEffect(player.getLocation());
+            plugin.getTrackerKeeper().getJohnSmith().remove(uuid);
+            player.setPlayerListName(player.getName());
+            // remove player from arched table
+            new TARDISArchPersister(plugin).removeArch(uuid);
+        }
         return true;
     }
 }

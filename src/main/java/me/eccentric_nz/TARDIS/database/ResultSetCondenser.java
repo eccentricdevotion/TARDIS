@@ -26,6 +26,7 @@ import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.utility.TARDISNumberParsers;
 
 /**
  * Many facts, figures, and formulas are contained within the Matrix,
@@ -45,6 +46,7 @@ public class ResultSetCondenser {
     private String block_data;
     private int block_count;
     private final ArrayList<HashMap<String, String>> data = new ArrayList<HashMap<String, String>>();
+    private final String prefix;
 
     /**
      * Creates a class instance that can be used to retrieve an SQL ResultSet
@@ -60,6 +62,7 @@ public class ResultSetCondenser {
         this.plugin = plugin;
         this.where = where;
         this.multiple = multiple;
+        this.prefix = this.plugin.getPrefix();
     }
 
     /**
@@ -80,7 +83,7 @@ public class ResultSetCondenser {
             }
             wheres = " WHERE " + sbw.toString().substring(0, sbw.length() - 5);
         }
-        String query = "SELECT * FROM condenser" + wheres;
+        String query = "SELECT * FROM " + prefix + "condenser" + wheres;
         try {
             service.testConnection(connection);
             statement = connection.prepareStatement(query);
@@ -90,7 +93,7 @@ public class ResultSetCondenser {
                     if (entry.getValue().getClass().equals(String.class)) {
                         statement.setString(s, entry.getValue().toString());
                     } else {
-                        statement.setInt(s, plugin.getUtils().parseInt(entry.getValue().toString()));
+                        statement.setInt(s, TARDISNumberParsers.parseInt(entry.getValue().toString()));
                     }
                     s++;
                 }

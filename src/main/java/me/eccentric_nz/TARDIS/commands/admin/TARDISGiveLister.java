@@ -56,11 +56,13 @@ public class TARDISGiveLister {
         List<String> art_kits = new ArrayList<String>();
         art_kits.add(ChatColor.YELLOW + "artron" + ChatColor.RESET + " - " + ChatColor.GOLD + "Artron Energy");
         art_kits.add(ChatColor.YELLOW + "kit" + ChatColor.RESET + " - " + ChatColor.GOLD + "TARDIS Item Kit");
-        give_options.put("Artron and Kits", art_kits);
+        art_kits.add(ChatColor.YELLOW + "seed" + ChatColor.RESET + " - " + ChatColor.GOLD + "TARDIS Seed Block");
+        give_options.put("Artron, Kits and Seeds", art_kits);
         List<String> items = new ArrayList<String>();
         items.add(ChatColor.GREEN + "key" + ChatColor.RESET + " - " + ChatColor.DARK_GREEN + "TARDIS Key");
         items.add(ChatColor.GREEN + "locator" + ChatColor.RESET + " - " + ChatColor.DARK_GREEN + "TARDIS Locator");
         items.add(ChatColor.GREEN + "cell" + ChatColor.RESET + " - " + ChatColor.DARK_GREEN + "Artron Energy Cell");
+        items.add(ChatColor.GREEN + "furnace" + ChatColor.RESET + " - " + ChatColor.DARK_GREEN + "TARDIS Artron Furnace");
         items.add(ChatColor.GREEN + "filter" + ChatColor.RESET + " - " + ChatColor.DARK_GREEN + "Perception Filter");
         items.add(ChatColor.GREEN + "sonic" + ChatColor.RESET + " - " + ChatColor.DARK_GREEN + "Sonic Screwdriver");
         items.add(ChatColor.GREEN + "remote" + ChatColor.RESET + " - " + ChatColor.DARK_GREEN + "Stattenheim Remote");
@@ -85,8 +87,10 @@ public class TARDISGiveLister {
         console_circuits.add(ChatColor.LIGHT_PURPLE + "ars-circuit" + ChatColor.RESET + " - " + ChatColor.DARK_PURPLE + "ARS Circuit");
         console_circuits.add(ChatColor.LIGHT_PURPLE + "c-circuit" + ChatColor.RESET + " - " + ChatColor.DARK_PURPLE + "Chameleon Circuit");
         console_circuits.add(ChatColor.LIGHT_PURPLE + "i-circuit" + ChatColor.RESET + " - " + ChatColor.DARK_PURPLE + "Input Circuit");
+        console_circuits.add(ChatColor.LIGHT_PURPLE + "invisible" + ChatColor.RESET + " - " + ChatColor.DARK_PURPLE + "Invisibility Circuit");
         console_circuits.add(ChatColor.LIGHT_PURPLE + "m-circuit" + ChatColor.RESET + " - " + ChatColor.DARK_PURPLE + "Materialisation Circuit");
         console_circuits.add(ChatColor.LIGHT_PURPLE + "memory-circuit" + ChatColor.RESET + " - " + ChatColor.DARK_PURPLE + "Memory Circuit");
+        console_circuits.add(ChatColor.LIGHT_PURPLE + "randomiser-circuit" + ChatColor.RESET + " - " + ChatColor.DARK_PURPLE + "Randomiser Circuit");
         console_circuits.add(ChatColor.LIGHT_PURPLE + "scanner-circuit" + ChatColor.RESET + " - " + ChatColor.DARK_PURPLE + "Scanner Circuit");
         console_circuits.add(ChatColor.LIGHT_PURPLE + "t-circuit" + ChatColor.RESET + " - " + ChatColor.DARK_PURPLE + "Temporal Circuit");
         give_options.put("Advanced Console Circuits", console_circuits);
@@ -106,6 +110,15 @@ public class TARDISGiveLister {
         List<String> accessories = new ArrayList<String>();
         accessories.add(ChatColor.GREEN + "bow-tie" + ChatColor.RESET + " - " + ChatColor.DARK_GREEN + "Bow Tie");
         accessories.add(ChatColor.GREEN + "glasses" + ChatColor.RESET + " - " + ChatColor.DARK_GREEN + "3-D Glasses");
+        if (plugin.getPM().isPluginEnabled("TARDISSonicBlaster")) {
+            accessories.add(ChatColor.GREEN + "blaster" + ChatColor.RESET + " - " + ChatColor.DARK_GREEN + "Sonic Blaster");
+            accessories.add(ChatColor.GREEN + "battery" + ChatColor.RESET + " - " + ChatColor.DARK_GREEN + "Blaster Battery");
+            accessories.add(ChatColor.GREEN + "pad" + ChatColor.RESET + " - " + ChatColor.DARK_GREEN + "Landing Pad");
+        }
+        if (plugin.getPM().isPluginEnabled("TARDISVortexManipulator")) {
+            accessories.add(ChatColor.GREEN + "tachyon" + ChatColor.RESET + " - " + ChatColor.DARK_GREEN + "Vortex Manipulator Tachyon Energy");
+            accessories.add(ChatColor.GREEN + "vortex" + ChatColor.RESET + " - " + ChatColor.DARK_GREEN + "Vortex Manipulator");
+        }
         accessories.add(ChatColor.GREEN + "watch" + ChatColor.RESET + " - " + ChatColor.DARK_GREEN + "Chameleon Arch Fob Watch");
         give_options.put("Accessories", accessories);
         return give_options;

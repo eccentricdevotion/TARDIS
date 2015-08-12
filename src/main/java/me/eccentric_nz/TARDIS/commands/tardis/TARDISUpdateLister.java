@@ -63,6 +63,7 @@ public class TARDISUpdateLister {
         controls.add(ChatColor.GREEN + "x-repeater" + ChatColor.RESET + " - " + ChatColor.DARK_GREEN + "Random x coordinate setter");
         controls.add(ChatColor.GREEN + "y-repeater" + ChatColor.RESET + " - " + ChatColor.DARK_GREEN + "Distance multipler");
         controls.add(ChatColor.GREEN + "z-repeater" + ChatColor.RESET + " - " + ChatColor.DARK_GREEN + "Random z coordinate setter");
+        controls.add(ChatColor.GREEN + "control" + ChatColor.RESET + " - " + ChatColor.DARK_GREEN + "TARDIS Control Menu");
         update_options.put("TARDIS Controls", controls);
         List<String> guis = new ArrayList<String>();
         guis.add(ChatColor.RED + "advanced" + ChatColor.RESET + " - " + ChatColor.DARK_RED + "TARDIS Advanced Console");

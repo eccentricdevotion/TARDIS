@@ -24,6 +24,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.utility.TARDISNumberParsers;
 
 /**
  * Many facts, figures, and formulas are contained within the Matrix,
@@ -43,6 +44,7 @@ public class ResultSetPlayerPrefs {
     private boolean sfxOn;
     private boolean quotesOn;
     private boolean autoOn;
+    private boolean autoSiegeOn;
     private boolean beaconOn;
     private boolean hadsOn;
     private boolean submarineOn;
@@ -64,8 +66,11 @@ public class ResultSetPlayerPrefs {
     private boolean ctmOn;
     private boolean signOn;
     private boolean travelbarOn;
+    private boolean farmOn;
+    private boolean lanternsOn;
     private int flightMode;
     private boolean easyDifficulty;
+    private final String prefix;
 
     /**
      * Creates a class instance that can be used to retrieve an SQL ResultSet
@@ -78,6 +83,7 @@ public class ResultSetPlayerPrefs {
     public ResultSetPlayerPrefs(TARDIS plugin, HashMap<String, Object> where) {
         this.plugin = plugin;
         this.where = where;
+        this.prefix = this.plugin.getPrefix();
     }
 
     /**
@@ -98,7 +104,7 @@ public class ResultSetPlayerPrefs {
             }
             wheres = " WHERE " + sbw.toString().substring(0, sbw.length() - 5);
         }
-        String query = "SELECT * FROM player_prefs" + wheres;
+        String query = "SELECT * FROM " + prefix + "player_prefs" + wheres;
         try {
             service.testConnection(connection);
             statement = connection.prepareStatement(query);
@@ -108,7 +114,7 @@ public class ResultSetPlayerPrefs {
                     if (entry.getValue().getClass().equals(String.class) || entry.getValue().getClass().equals(UUID.class)) {
                         statement.setString(s, entry.getValue().toString());
                     } else {
-                        statement.setInt(s, plugin.getUtils().parseInt(entry.getValue().toString()));
+                        statement.setInt(s, TARDISNumberParsers.parseInt(entry.getValue().toString()));
                     }
                     s++;
                 }
@@ -122,6 +128,7 @@ public class ResultSetPlayerPrefs {
                 this.sfxOn = rs.getBoolean("sfx_on");
                 this.quotesOn = rs.getBoolean("quotes_on");
                 this.autoOn = rs.getBoolean("auto_on");
+                this.autoSiegeOn = rs.getBoolean("auto_siege_on");
                 this.beaconOn = rs.getBoolean("beacon_on");
                 this.hadsOn = rs.getBoolean("hads_on");
                 this.submarineOn = rs.getBoolean("submarine_on");
@@ -153,6 +160,8 @@ public class ResultSetPlayerPrefs {
                 this.ctmOn = rs.getBoolean("ctm_on");
                 this.signOn = rs.getBoolean("sign_on");
                 this.travelbarOn = rs.getBoolean("travelbar_on");
+                this.farmOn = rs.getBoolean("farm_on");
+                this.lanternsOn = rs.getBoolean("lanterns_on");
                 this.flightMode = rs.getInt("flying_mode");
                 this.easyDifficulty = rs.getBoolean("difficulty");
             } else {
@@ -198,6 +207,10 @@ public class ResultSetPlayerPrefs {
 
     public boolean isAutoOn() {
         return autoOn;
+    }
+
+    public boolean isAutoSiegeOn() {
+        return autoSiegeOn;
     }
 
     public boolean isBeaconOn() {
@@ -282,6 +295,14 @@ public class ResultSetPlayerPrefs {
 
     public boolean isTravelbarOn() {
         return travelbarOn;
+    }
+
+    public boolean isFarmOn() {
+        return farmOn;
+    }
+
+    public boolean isLanternsOn() {
+        return lanternsOn;
     }
 
     public int getFlightMode() {

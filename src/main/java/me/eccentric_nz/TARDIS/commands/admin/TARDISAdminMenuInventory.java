@@ -53,7 +53,7 @@ public class TARDISAdminMenuInventory {
         Set<String> config = new TreeSet<String>(plugin.getConfig().getKeys(true));
         for (String c : config) {
             String value = plugin.getConfig().getString(c);
-            if ((value.equalsIgnoreCase("true") || value.equalsIgnoreCase("false")) && !c.startsWith("conversions") && !c.startsWith("worlds")) {
+            if ((value.equalsIgnoreCase("true") || value.equalsIgnoreCase("false")) && !c.startsWith("circuits") && !c.startsWith("conversions") && !c.startsWith("debug") && !c.startsWith("siege") && !c.startsWith("travel") && !c.startsWith("worlds")) {
                 ItemStack is = new ItemStack(Material.DIODE, 1);
                 ItemMeta im = is.getItemMeta();
                 im.setDisplayName(c);
@@ -63,13 +63,19 @@ public class TARDISAdminMenuInventory {
             }
         }
         ItemStack[] stack = new ItemStack[54];
-        for (int s = 0; s < 53; s++) {
+        for (int s = 0; s < 52; s++) {
             if (s < options.size()) {
                 stack[s] = options.get(s);
             } else {
                 stack[s] = null;
             }
         }
+        // next page
+        ItemStack next = new ItemStack(Material.BOWL, 1);
+        ItemMeta page = next.getItemMeta();
+        page.setDisplayName("Next page");
+        next.setItemMeta(page);
+        stack[52] = next;
         // player prefs
         ItemStack play = new ItemStack(Material.NETHER_STAR, 1);
         ItemMeta prefs = play.getItemMeta();

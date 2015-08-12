@@ -16,20 +16,29 @@
  */
 package me.eccentric_nz.TARDIS.commands.admin;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
+import me.eccentric_nz.TARDIS.enumeration.CONSOLES;
+import me.eccentric_nz.TARDIS.enumeration.SCHEMATIC;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
+import org.bukkit.ChatColor;
+import org.bukkit.Material;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.ConsoleCommandSender;
+import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.ShapedRecipe;
 import org.bukkit.inventory.ShapelessRecipe;
+import org.bukkit.inventory.meta.ItemMeta;
 
 /**
  *
@@ -40,16 +49,19 @@ public class TARDISGiveCommand implements CommandExecutor {
     private final TARDIS plugin;
     private final int full;
     private final HashMap<String, String> items = new HashMap<String, String>();
+    private final HashMap<String, Material> seeds = new HashMap<String, Material>();
 
     public TARDISGiveCommand(TARDIS plugin) {
         this.plugin = plugin;
         this.full = this.plugin.getArtronConfig().getInt("full_charge");
-        items.put("artron", "");
         items.put("a-circuit", "Server Admin Circuit");
         items.put("ars-circuit", "TARDIS ARS Circuit");
+        items.put("artron", "");
         items.put("bio-circuit", "Bio-scanner Circuit");
         items.put("biome-disk", "Biome Storage Disk");
         items.put("blank", "Blank Storage Disk");
+        items.put("battery", "Blaster Battery");
+        items.put("blaster", "Sonic Blaster");
         items.put("bow-tie", "Red Bow Tie");
         items.put("c-circuit", "TARDIS Chameleon Circuit");
         items.put("cell", "Artron Storage Cell");
@@ -58,8 +70,10 @@ public class TARDISGiveCommand implements CommandExecutor {
         items.put("e-circuit", "Emerald Environment Circuit");
         items.put("filter", "Perception Filter");
         items.put("fish-finger", "Fish Finger");
+        items.put("furnace", "TARDIS Artron Furnace");
         items.put("glasses", "3-D Glasses");
         items.put("i-circuit", "TARDIS Input Circuit");
+        items.put("invisible", "TARDIS Invisibility Circuit");
         items.put("jammy-dodger", "Jammy Dodger");
         items.put("jelly-baby", "Orange Jelly Baby");
         items.put("key", "TARDIS Key");
@@ -70,17 +84,22 @@ public class TARDISGiveCommand implements CommandExecutor {
         items.put("memory-circuit", "TARDIS Memory Circuit");
         items.put("oscillator", "Sonic Oscillator");
         items.put("p-circuit", "Perception Circuit");
+        items.put("pad", "Landing Pad");
         items.put("painter", "Painter Circuit");
         items.put("player-disk", "Player Storage Disk");
         items.put("preset-disk", "Preset Storage Disk");
         items.put("r-circuit", "Redstone Activator Circuit");
         items.put("r-key", "TARDIS Remote Key");
+        items.put("randomiser-circuit", "TARDIS Randomiser Circuit");
         items.put("remote", "Stattenheim Remote");
         items.put("s-circuit", "TARDIS Stattenheim Circuit");
-        items.put("scanner-circuit", "TARDIS Scanner Circuit");
         items.put("save-disk", "Save Storage Disk");
+        items.put("scanner-circuit", "TARDIS Scanner Circuit");
+        items.put("seed", "");
         items.put("sonic", "Sonic Screwdriver");
         items.put("t-circuit", "TARDIS Temporal Circuit");
+        items.put("tachyon", "");
+        items.put("vortex", "Vortex Manipulator");
         items.put("watch", "Fob Watch");
     }
 
@@ -119,6 +138,12 @@ public class TARDISGiveCommand implements CommandExecutor {
                     TARDISMessage.send(p, "GIVE_KIT", sender.getName(), args[2]);
                     return true;
                 }
+                if (item.equals("seed")) {
+                    return this.giveSeed(sender, args[0], args[2].toUpperCase());
+                }
+                if (item.equals("tachyon")) {
+                    return this.giveTachyon(sender, args[0], args[2]);
+                }
                 int amount;
                 if (args[2].equals("full")) {
                     amount = full;
@@ -144,7 +169,11 @@ public class TARDISGiveCommand implements CommandExecutor {
                         TARDISMessage.send(sender, "COULD_NOT_FIND_NAME");
                         return true;
                     }
-                    return this.giveItem(sender, item, amount, p);
+                    if (args[1].equalsIgnoreCase("cell") && args.length == 4 && args[3].equalsIgnoreCase("full")) {
+                        return this.giveFullCell(sender, amount, p);
+                    } else {
+                        return this.giveItem(sender, item, amount, p);
+                    }
                 }
             } else {
                 TARDISMessage.send(sender, "NO_PERMS");
@@ -160,6 +189,17 @@ public class TARDISGiveCommand implements CommandExecutor {
             TARDISMessage.send(sender, "ARG_MAX");
             return true;
         }
+        if ((item.equals("battery") || item.equals("blaster") || item.equals("pad")) && !plugin.getPM().isPluginEnabled("TARDISSonicBlaster")) {
+            TARDISMessage.send(sender, "RECIPE_BLASTER");
+            return true;
+        }
+        if (item.equals("vortex") && !plugin.getPM().isPluginEnabled("TARDISVortexManipulator")) {
+            TARDISMessage.send(sender, "RECIPE_VORTEX");
+            return true;
+        }
+        if (item.equals("vortex")) {
+            TARDISMessage.send(sender, "VORTEX_CMD");
+        }
         String item_to_give = items.get(item);
         ItemStack result;
         if (item.equals("save-disk") || item.equals("preset-disk") || item.equals("biome-disk") || item.equals("player-disk") || item.equals("custard") || item.equals("jelly-baby")) {
@@ -168,6 +208,15 @@ public class TARDISGiveCommand implements CommandExecutor {
         } else {
             ShapedRecipe recipe = plugin.getFigura().getShapedRecipes().get(item_to_give);
             result = recipe.getResult();
+        }
+        if (item.equals("invisible")) {
+            // set the second line of lore
+            ItemMeta im = result.getItemMeta();
+            List<String> lore = im.getLore();
+            String uses = (plugin.getConfig().getString("circuits.uses.invisibility").equals("0") || !plugin.getConfig().getBoolean("circuits.damage")) ? ChatColor.YELLOW + "unlimited" : ChatColor.YELLOW + plugin.getConfig().getString("circuits.uses.invisibility");
+            lore.set(1, uses);
+            im.setLore(lore);
+            result.setItemMeta(im);
         }
         result.setAmount(amount);
         player.getInventory().addItem(result);
@@ -235,5 +284,85 @@ public class TARDISGiveCommand implements CommandExecutor {
             TARDISMessage.send(sender, "UUID_NOT_FOUND", player);
             return true;
         }
+    }
+
+    @SuppressWarnings("deprecation")
+    private boolean giveSeed(CommandSender sender, String p, String type) {
+        if (plugin.getServer().getPlayer(p) == null) {
+            TARDISMessage.send(sender, "COULD_NOT_FIND_NAME");
+            return true;
+        }
+        Player player = plugin.getServer().getPlayer(p);
+        ItemStack is;
+        if (CONSOLES.getByNames().containsKey(type)) {
+            SCHEMATIC schm = CONSOLES.getByNames().get(type);
+            is = new ItemStack(schm.getSeedMaterial(), 1);
+            // set display name
+            ItemMeta im = is.getItemMeta();
+            im.setDisplayName("§6TARDIS Seed Block");
+            List<String> lore = new ArrayList<String>();
+            lore.add(type);
+            lore.add("Walls: ORANGE_WOOL");
+            lore.add("Floors: LIGHT_GRAY_WOOL");
+            lore.add("Chameleon block: BLUE WOOL");
+            lore.add("Lamp: REDSTONE_LAMP_OFF");
+            im.setLore(lore);
+            is.setItemMeta(im);
+            player.getInventory().addItem(is);
+            player.updateInventory();
+            TARDISMessage.send(player, "GIVE_ITEM", sender.getName(), "a " + type + " seed block");
+        }
+        return true;
+    }
+
+    @SuppressWarnings("deprecation")
+    private boolean giveTachyon(CommandSender sender, String player, String amount) {
+        if (!plugin.getPM().isPluginEnabled("TARDISVortexManipulator")) {
+            TARDISMessage.send(sender, "RECIPE_VORTEX");
+            return true;
+        }
+        if (plugin.getServer().getOfflinePlayer(player) == null) {
+            TARDISMessage.send(sender, "COULD_NOT_FIND_NAME");
+            return true;
+        }
+        // Look up this player's UUID
+        UUID uuid = plugin.getServer().getOfflinePlayer(player).getUniqueId();
+        if (uuid == null) {
+            uuid = plugin.getGeneralKeeper().getUUIDCache().getIdOptimistic(player);
+            plugin.getGeneralKeeper().getUUIDCache().getId(player);
+        }
+        if (uuid != null) {
+            plugin.getServer().dispatchCommand(sender, "vmg " + uuid.toString() + " " + amount);
+            return true;
+        } else {
+            TARDISMessage.send(sender, "UUID_NOT_FOUND", player);
+            return true;
+        }
+    }
+
+    @SuppressWarnings("deprecation")
+    private boolean giveFullCell(CommandSender sender, int amount, Player player) {
+        if (amount > 64) {
+            TARDISMessage.send(sender, "ARG_MAX");
+            return true;
+        }
+        ShapedRecipe recipe = plugin.getFigura().getShapedRecipes().get("Artron Storage Cell");
+        ItemStack result = recipe.getResult();
+        result.setAmount(amount);
+        // add lore and enchantment
+        ItemMeta im = result.getItemMeta();
+        List<String> lore = im.getLore();
+        int max = plugin.getArtronConfig().getInt("full_charge");
+        lore.set(1, "" + max);
+        im.setLore(lore);
+        im.addEnchant(Enchantment.DURABILITY, 1, true);
+        if (!plugin.getPM().isPluginEnabled("Multiverse-Inventories")) {
+            im.addItemFlags(ItemFlag.values());
+        }
+        result.setItemMeta(im);
+        player.getInventory().addItem(result);
+        player.updateInventory();
+        TARDISMessage.send(player, "GIVE_ITEM", sender.getName(), amount + " Full Artron Storage Cell");
+        return true;
     }
 }

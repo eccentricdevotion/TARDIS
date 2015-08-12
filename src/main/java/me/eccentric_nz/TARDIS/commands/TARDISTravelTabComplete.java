@@ -18,7 +18,6 @@ package me.eccentric_nz.TARDIS.commands;
 
 import com.google.common.collect.ImmutableList;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import me.eccentric_nz.TARDIS.TARDIS;
@@ -27,15 +26,14 @@ import org.bukkit.block.Biome;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabCompleter;
-import org.bukkit.util.StringUtil;
 
 /**
  * TabCompleter for /tardistravel
  */
-public class TARDISTravelTabComplete implements TabCompleter {
+public class TARDISTravelTabComplete extends TARDISCompleter implements TabCompleter {
 
     TARDIS plugin;
-    private final List<String> ROOT_SUBS = ImmutableList.of("home", "biome", "dest", "area", "back", "cave");
+    private final List<String> ROOT_SUBS = ImmutableList.of("home", "biome", "dest", "area", "back", "cave", "village");
     private final List<String> BIOME_SUBS = new ArrayList<String>();
 
     public TARDISTravelTabComplete(TARDIS plugin) {
@@ -63,10 +61,6 @@ public class TARDISTravelTabComplete implements TabCompleter {
             }
         }
         return ImmutableList.of();
-    }
-
-    private List<String> partial(String token, Collection<String> from) {
-        return StringUtil.copyPartialMatches(token, from, new ArrayList<String>(from.size()));
     }
 
     private List<String> getAreas() {

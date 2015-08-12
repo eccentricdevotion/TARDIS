@@ -33,6 +33,7 @@ import org.bukkit.entity.MushroomCow;
 import org.bukkit.entity.Ocelot;
 import org.bukkit.entity.Pig;
 import org.bukkit.entity.Player;
+import org.bukkit.entity.Rabbit;
 import org.bukkit.entity.Sheep;
 import org.bukkit.entity.Tameable;
 import org.bukkit.entity.Villager;
@@ -58,6 +59,11 @@ public class TARDISEjectListener implements Listener {
         final Player player = event.getPlayer();
         UUID uuid = player.getUniqueId();
         if (!plugin.getTrackerKeeper().getEjecting().containsKey(uuid)) {
+            return;
+        }
+        // check they are still in the TARDIS world - they could have exited after running the command
+        if (!plugin.getUtils().inTARDISWorld(player)) {
+            TARDISMessage.send(player, "EJECT_WORLD");
             return;
         }
         Entity ent = event.getRightClicked();
@@ -95,8 +101,14 @@ public class TARDISEjectListener implements Listener {
                     TARDISMessage.send(player, "EJECT_PLAYER");
                     return;
                 }
+                // check the clicked player is in a TARDIS world
+                if (!plugin.getUtils().inTARDISWorld(p)) {
+                    TARDISMessage.send(player, "EJECT_WORLD");
+                    return;
+                }
                 // teleport player and remove from travellers table
                 plugin.getGeneralKeeper().getDoorListener().movePlayer(p, l, true, p.getWorld(), false, 0, true);
+                TARDISMessage.send(p, "EJECT_MESSAGE", player.getName());
                 HashMap<String, Object> where = new HashMap<String, Object>();
                 where.put("uuid", p.getUniqueId().toString());
                 new QueryFactory(plugin).doDelete("travellers", where);
@@ -175,6 +187,20 @@ public class TARDISEjectListener implements Listener {
                 sheep.setColor(s.getColor());
                 ent.remove();
                 break;
+            case RABBIT:
+                Rabbit r = (Rabbit) ent;
+                Rabbit bunny = (Rabbit) l.getWorld().spawnEntity(l, EntityType.RABBIT);
+                bunny.setTicksLived(r.getTicksLived());
+                if ((!r.isAdult())) {
+                    bunny.setBaby();
+                }
+                String rabbitname = ((LivingEntity) ent).getCustomName();
+                if (rabbitname != null && !rabbitname.isEmpty()) {
+                    bunny.setCustomName(rabbitname);
+                }
+                bunny.setRabbitType(r.getRabbitType());
+                ent.remove();
+                break;
             case WOLF:
                 Tameable wtamed = (Tameable) ent;
                 if (wtamed.isTamed() && ((OfflinePlayer) wtamed.getOwner()).getUniqueId().equals(player.getUniqueId())) {
@@ -228,6 +254,9 @@ public class TARDISEjectListener implements Listener {
                 String vilname = ((LivingEntity) ent).getCustomName();
                 if (vilname != null && !vilname.isEmpty()) {
                     villager.setCustomName(vilname);
+                }
+                if (plugin.isHelperOnServer()) {
+                    plugin.getTardisHelper().setTrades(villager, plugin.getTardisHelper().getTrades(v, player));
                 }
                 ent.remove();
                 break;

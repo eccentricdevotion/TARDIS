@@ -132,7 +132,7 @@ public class TARDISKeyMenuInventory {
         info_im.setLore(lore);
         info.setItemMeta(info_im);
         // close
-        ItemStack close = new ItemStack(Material.TRAP_DOOR, 1);
+        ItemStack close = new ItemStack(Material.BOWL, 1);
         ItemMeta close_im = close.getItemMeta();
         close_im.setDisplayName("Close");
         close.setItemMeta(close_im);

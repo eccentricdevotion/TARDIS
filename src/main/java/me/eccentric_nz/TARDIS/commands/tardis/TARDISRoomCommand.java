@@ -53,11 +53,6 @@ public class TARDISRoomCommand {
             return false;
         }
         String room = args[1].toUpperCase(Locale.ENGLISH);
-        StringBuilder buf = new StringBuilder();
-        for (String rl : plugin.getGeneralKeeper().getRoomArgs()) {
-            buf.append(rl).append(", ");
-        }
-        String roomlist = buf.toString().substring(0, buf.length() - 2);
         if (room.equals("HELP") || !plugin.getGeneralKeeper().getRoomArgs().contains(room)) {
             new TARDISRoomLister(plugin, player).list();
             return true;
@@ -186,7 +181,7 @@ public class TARDISRoomCommand {
         if (room.equals("ZERO")) {
             return new TARDISZeroRoomBuilder(plugin).build(player, tips, id);
         }
-        TARDISSeedData sd = new TARDISSeedData(plugin);
+        TARDISSeedData sd = new TARDISSeedData();
         sd.setId(id);
         sd.setRoom(room);
         sd.setSchematic(schm);

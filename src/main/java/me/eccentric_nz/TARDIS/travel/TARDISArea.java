@@ -22,6 +22,7 @@ import java.util.Set;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.ResultSetAreas;
 import me.eccentric_nz.TARDIS.database.ResultSetCurrentLocation;
+import me.eccentric_nz.TARDIS.utility.TARDISNumberParsers;
 import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.entity.Player;
@@ -58,10 +59,10 @@ public class TARDISArea {
         if (rsa.resultSet()) {
             ArrayList<HashMap<String, String>> data = rsa.getData();
             for (HashMap<String, String> map : data) {
-                int minx = plugin.getUtils().parseInt(map.get("minx"));
-                int minz = plugin.getUtils().parseInt(map.get("minz"));
-                int maxx = plugin.getUtils().parseInt(map.get("maxx"));
-                int maxz = plugin.getUtils().parseInt(map.get("maxz"));
+                int minx = TARDISNumberParsers.parseInt(map.get("minx"));
+                int minz = TARDISNumberParsers.parseInt(map.get("minz"));
+                int maxx = TARDISNumberParsers.parseInt(map.get("maxx"));
+                int maxz = TARDISNumberParsers.parseInt(map.get("maxz"));
                 // is clicked block within a defined TARDIS area?
                 if (l.getX() <= maxx && l.getZ() <= maxz && l.getX() >= minx && l.getZ() >= minz) {
                     chk = false;
@@ -118,10 +119,10 @@ public class TARDISArea {
             ArrayList<HashMap<String, String>> data = rsa.getData();
             for (HashMap<String, String> map : data) {
                 String n = map.get("area_name");
-                int minx = plugin.getUtils().parseInt(map.get("minx"));
-                int minz = plugin.getUtils().parseInt(map.get("minz"));
-                int maxx = plugin.getUtils().parseInt(map.get("maxx"));
-                int maxz = plugin.getUtils().parseInt(map.get("maxz"));
+                int minx = TARDISNumberParsers.parseInt(map.get("minx"));
+                int minz = TARDISNumberParsers.parseInt(map.get("minz"));
+                int maxx = TARDISNumberParsers.parseInt(map.get("maxx"));
+                int maxz = TARDISNumberParsers.parseInt(map.get("maxz"));
                 // is time travel destination within a defined TARDIS area?
                 if (l.getX() <= maxx && l.getZ() <= maxz && l.getX() >= minx && l.getZ() >= minz) {
                     // does the player have permmission to travel here

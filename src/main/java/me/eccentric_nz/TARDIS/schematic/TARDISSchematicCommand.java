@@ -10,8 +10,11 @@ import me.eccentric_nz.TARDIS.JSON.JSONObject;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import org.bukkit.ChatColor;
+import org.bukkit.Material;
 import org.bukkit.World;
+import org.bukkit.block.Banner;
 import org.bukkit.block.Block;
+import org.bukkit.block.banner.Pattern;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -119,7 +122,26 @@ public class TARDISSchematicCommand implements CommandExecutor {
                             JSONObject obj = new JSONObject();
                             Block b = w.getBlockAt(r, l, c);
                             obj.put("type", b.getType().toString());
-                            obj.put("data", b.getData());
+                            byte d = b.getData();
+                            obj.put("data", d);
+                            // banners
+                            if (b.getType().equals(Material.STANDING_BANNER) || b.getType().equals(Material.WALL_BANNER)) {
+                                JSONObject state = new JSONObject();
+                                Banner banner = (Banner) b.getState();
+                                state.put("colour", banner.getBaseColor().toString());
+                                JSONArray patterns = new JSONArray();
+                                if (banner.numberOfPatterns() > 0) {
+                                    for (Pattern p : banner.getPatterns()) {
+                                        JSONObject pattern = new JSONObject();
+                                        pattern.put("pattern", p.getPattern().toString());
+                                        pattern.put("pattern_colour", p.getColor().toString());
+                                        patterns.put(pattern);
+                                    }
+                                }
+                                state.put("patterns", patterns);
+                                state.put("bdata", d);
+                                obj.put("banner", state);
+                            }
                             columns.put(obj);
                         }
                         rows.put(columns);
@@ -153,7 +175,7 @@ public class TARDISSchematicCommand implements CommandExecutor {
                 }
                 JSONObject sch = TARDISSchematicGZip.unzip(instr);
                 plugin.getTrackerKeeper().getPastes().put(uuid, sch);
-                TARDISMessage.send(player, "SCHM_LOADED", ChatColor.GREEN + "/ts paste" + ChatColor.RESET + " command");
+                TARDISMessage.send(player, "SCHM_LOADED", ChatColor.GREEN + "/ts paste" + ChatColor.RESET);
                 return true;
             }
         }

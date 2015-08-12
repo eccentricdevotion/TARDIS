@@ -24,6 +24,7 @@ import java.util.HashMap;
 import java.util.Map;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
+import me.eccentric_nz.TARDIS.utility.TARDISNumberParsers;
 import org.bukkit.World;
 
 /**
@@ -46,6 +47,7 @@ public class ResultSetHomeLocation {
     private int z;
     private COMPASS direction;
     private boolean submarine;
+    private final String prefix;
 
     /**
      * Creates a class instance that can be used to retrieve an SQL ResultSet
@@ -58,6 +60,7 @@ public class ResultSetHomeLocation {
     public ResultSetHomeLocation(TARDIS plugin, HashMap<String, Object> where) {
         this.plugin = plugin;
         this.where = where;
+        this.prefix = this.plugin.getPrefix();
     }
 
     /**
@@ -78,7 +81,7 @@ public class ResultSetHomeLocation {
             }
             wheres = " WHERE " + sbw.toString().substring(0, sbw.length() - 5);
         }
-        String query = "SELECT * FROM homes" + wheres;
+        String query = "SELECT * FROM " + prefix + "homes" + wheres;
         try {
             service.testConnection(connection);
             statement = connection.prepareStatement(query);
@@ -88,7 +91,7 @@ public class ResultSetHomeLocation {
                     if (entry.getValue().getClass().equals(String.class)) {
                         statement.setString(s, entry.getValue().toString());
                     } else {
-                        statement.setInt(s, plugin.getUtils().parseInt(entry.getValue().toString()));
+                        statement.setInt(s, TARDISNumberParsers.parseInt(entry.getValue().toString()));
                     }
                     s++;
                 }
@@ -110,7 +113,7 @@ public class ResultSetHomeLocation {
                 return false;
             }
         } catch (SQLException e) {
-            plugin.debug("ResultSet error for destinations table! " + e.getMessage());
+            plugin.debug("ResultSet error for homes table! " + e.getMessage());
             return false;
         } finally {
             try {
@@ -121,7 +124,7 @@ public class ResultSetHomeLocation {
                     statement.close();
                 }
             } catch (SQLException e) {
-                plugin.debug("Error closing destinations table! " + e.getMessage());
+                plugin.debug("Error closing homes table! " + e.getMessage());
             }
         }
         return this.world != null;

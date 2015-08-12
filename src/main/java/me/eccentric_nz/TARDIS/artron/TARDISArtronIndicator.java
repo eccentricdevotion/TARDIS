@@ -70,11 +70,11 @@ public class TARDISArtronIndicator {
                 Scoreboard board = manager.getNewScoreboard();
                 Objective objective = board.registerNewObjective("TARDIS", "Artron");
                 objective.setDisplaySlot(DisplaySlot.SIDEBAR);
-                objective.setDisplayName("Artron Energy");
+                objective.setDisplayName(plugin.getLanguage().getString("ARTRON_DISPLAY"));
                 if (used == 0) {
-                    Score max = objective.getScore(ChatColor.AQUA + "Maximum:");
+                    Score max = objective.getScore(ChatColor.AQUA + plugin.getLanguage().getString("ARTRON_MAX") + ":");
                     max.setScore(fc);
-                    Score timelord = objective.getScore(ChatColor.YELLOW + "Time Lord:");
+                    Score timelord = objective.getScore(ChatColor.YELLOW + plugin.getLanguage().getString("ARTRON_TL") + ":");
                     HashMap<String, Object> wherep = new HashMap<String, Object>();
                     wherep.put("uuid", p.getUniqueId().toString());
                     ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, wherep);
@@ -82,10 +82,10 @@ public class TARDISArtronIndicator {
                         timelord.setScore(rsp.getArtronLevel());
                     }
                 }
-                Score current = objective.getScore(ChatColor.GREEN + "Remaining:");
-                Score percentage = objective.getScore(ChatColor.LIGHT_PURPLE + "Percent:");
+                Score current = objective.getScore(ChatColor.GREEN + plugin.getLanguage().getString("ARTRON_REMAINING") + ":");
+                Score percentage = objective.getScore(ChatColor.LIGHT_PURPLE + plugin.getLanguage().getString("ARTRON_PERCENT") + ":");
                 if (used > 0) {
-                    Score amount_used = objective.getScore(ChatColor.RED + "Used:");
+                    Score amount_used = objective.getScore(ChatColor.RED + plugin.getLanguage().getString("ARTRON_USED") + ":");
                     amount_used.setScore(used);
                 }
                 current.setScore(current_level);

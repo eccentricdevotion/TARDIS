@@ -32,8 +32,10 @@ import me.eccentric_nz.TARDIS.enumeration.PRESET;
 import me.eccentric_nz.TARDIS.mobfarming.TARDISFarmer;
 import me.eccentric_nz.TARDIS.mobfarming.TARDISMob;
 import me.eccentric_nz.TARDIS.travel.TARDISDoorLocation;
+import me.eccentric_nz.TARDIS.utility.TARDISLocationGetters;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import me.eccentric_nz.TARDIS.utility.TARDISResourcePackChanger;
+import me.eccentric_nz.TARDIS.utility.TARDISStaticUtils;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
@@ -103,9 +105,11 @@ public class TARDISDoorClickListener extends TARDISDoorListener implements Liste
                     ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, wherepp);
                     String key;
                     boolean hasPrefs = false;
+                    boolean willFarm = false;
                     if (rsp.resultSet()) {
                         hasPrefs = true;
                         key = (!rsp.getKey().isEmpty()) ? rsp.getKey() : plugin.getConfig().getString("preferences.key");
+                        willFarm = rsp.isFarmOn();
                     } else {
                         key = plugin.getConfig().getString("preferences.key");
                     }
@@ -118,6 +122,11 @@ public class TARDISDoorClickListener extends TARDISDoorListener implements Liste
                         event.setUseInteractedBlock(Event.Result.DENY);
                         event.setUseItemInHand(Event.Result.DENY);
                         event.setCancelled(true);
+                        final int id = rsd.getTardis_id();
+                        if (plugin.getTrackerKeeper().getMaterialising().contains(id) || plugin.getTrackerKeeper().getDematerialising().contains(id)) {
+                            TARDISMessage.send(player, "NOT_WHILE_MAT");
+                            return;
+                        }
                         if (material.equals(m)) {
                             COMPASS dd = rsd.getDoor_direction();
                             int doortype = rsd.getDoor_type();
@@ -138,7 +147,6 @@ public class TARDISDoorClickListener extends TARDISDoorListener implements Liste
                             }
                             if (action == Action.LEFT_CLICK_BLOCK) {
                                 // must be the owner
-                                int id = rsd.getTardis_id();
                                 HashMap<String, Object> oid = new HashMap<String, Object>();
                                 oid.put("uuid", player.getUniqueId().toString());
                                 ResultSetTardis rs = new ResultSetTardis(plugin, oid, "", false);
@@ -159,7 +167,10 @@ public class TARDISDoorClickListener extends TARDISDoorListener implements Liste
                                 }
                             }
                             if (action == Action.RIGHT_CLICK_BLOCK && player.isSneaking()) {
-                                final int id = rsd.getTardis_id();
+                                if (plugin.getTrackerKeeper().getInSiegeMode().contains(id)) {
+                                    TARDISMessage.send(player, "SIEGE_NO_EXIT");
+                                    return;
+                                }
                                 if (plugin.getTrackerKeeper().getInVortex().contains(id)) {
                                     TARDISMessage.send(player, "NOT_WHILE_MAT");
                                     return;
@@ -180,7 +191,7 @@ public class TARDISDoorClickListener extends TARDISDoorListener implements Liste
                                             // toogle the door open/closed
                                             if (blockType.equals(Material.IRON_DOOR_BLOCK) || blockType.equals(Material.WOODEN_DOOR)) {
                                                 if (doortype == 0 || doortype == 1) {
-                                                    boolean open = plugin.getUtils().isOpen(block, dd);
+                                                    boolean open = TARDISStaticUtils.isOpen(block, dd);
                                                     // toggle the doors
                                                     new TARDISDoorToggler(plugin, block, dd, player, minecart, open, id).toggleDoors();
                                                 }
@@ -237,7 +248,10 @@ public class TARDISDoorClickListener extends TARDISDoorListener implements Liste
                                     TARDISMessage.send(player, "DOOR_DEADLOCKED");
                                     return;
                                 }
-                                int id = rsd.getTardis_id();
+                                if (plugin.getTrackerKeeper().getInSiegeMode().contains(id)) {
+                                    TARDISMessage.send(player, "SIEGE_NO_EXIT");
+                                    return;
+                                }
                                 HashMap<String, Object> tid = new HashMap<String, Object>();
                                 tid.put("tardis_id", id);
                                 ResultSetTardis rs = new ResultSetTardis(plugin, tid, "", false);
@@ -270,7 +284,7 @@ public class TARDISDoorClickListener extends TARDISDoorListener implements Liste
                                         userTP = false;
                                     }
                                     // get players direction
-                                    COMPASS pd = COMPASS.valueOf(plugin.getUtils().getPlayersDirection(player, false));
+                                    COMPASS pd = COMPASS.valueOf(TARDISStaticUtils.getPlayersDirection(player, false));
                                     // get the other door direction
                                     final COMPASS d;
                                     HashMap<String, Object> other = new HashMap<String, Object>();
@@ -297,7 +311,7 @@ public class TARDISDoorClickListener extends TARDISDoorListener implements Liste
                                             door_bottom = (door.isTopHalf()) ? block.getRelative(BlockFace.DOWN) : block;
                                             boolean opened = isDoorOpen(door_bottom.getData(), dd);
                                             if (opened && preset.hasDoor()) {
-                                                exitLoc = plugin.getUtils().getLocationFromDB(rse.getDoor_location(), 0.0f, 0.0f);
+                                                exitLoc = TARDISLocationGetters.getLocationFromDB(rse.getDoor_location(), 0.0f, 0.0f);
                                             } else {
                                                 exitLoc = new Location(rsc.getWorld(), rsc.getX(), rsc.getY(), rsc.getZ(), yaw, pitch);
                                             }
@@ -385,10 +399,14 @@ public class TARDISDoorClickListener extends TARDISDoorListener implements Liste
                                                 COMPASS innerD = idl.getD();
                                                 // check for entities near the police box
                                                 List<TARDISMob> pets = null;
-                                                if (plugin.getConfig().getBoolean("allow.mob_farming") && player.hasPermission("tardis.farm") && !plugin.getTrackerKeeper().getFarming().contains(player.getUniqueId())) {
+                                                if (plugin.getConfig().getBoolean("allow.mob_farming") && player.hasPermission("tardis.farm") && !plugin.getTrackerKeeper().getFarming().contains(player.getUniqueId()) && willFarm) {
                                                     plugin.getTrackerKeeper().getFarming().add(player.getUniqueId());
                                                     TARDISFarmer tf = new TARDISFarmer(plugin);
-                                                    pets = tf.farmAnimals(block_loc, d, id, player, tmp_loc.getWorld().getName(), playerWorld.getName());
+                                                    pets = tf.farmAnimals(block_loc, d, id, player.getPlayer(), tmp_loc.getWorld().getName(), playerWorld.getName());
+                                                }
+                                                // if WorldGuard is on the server check for TARDIS region protection and add admin as member
+                                                if (plugin.isWorldGuardOnServer() && plugin.getConfig().getBoolean("preferences.use_worldguard") && player.hasPermission("tardis.skeletonkey")) {
+                                                    plugin.getWorldGuardUtils().addMemberToRegion(cw, rs.getOwner(), player.getName());
                                                 }
                                                 // enter TARDIS!
                                                 cw.getChunkAt(tmp_loc).load();
@@ -430,7 +448,7 @@ public class TARDISDoorClickListener extends TARDISDoorListener implements Liste
                                                 return;
                                             }
                                             COMPASS ibdd = ibdl.getD();
-                                            COMPASS ipd = COMPASS.valueOf(plugin.getUtils().getPlayersDirection(player, true));
+                                            COMPASS ipd = COMPASS.valueOf(TARDISStaticUtils.getPlayersDirection(player, true));
                                             if (!ibdd.equals(ipd)) {
                                                 yaw += adjustYaw(ipd, ibdd) + 180F;
                                             }
@@ -475,7 +493,7 @@ public class TARDISDoorClickListener extends TARDISDoorListener implements Liste
                                                 return;
                                             }
                                             COMPASS obdd = obdl.getD();
-                                            COMPASS opd = COMPASS.valueOf(plugin.getUtils().getPlayersDirection(player, false));
+                                            COMPASS opd = COMPASS.valueOf(TARDISStaticUtils.getPlayersDirection(player, false));
                                             if (!obdd.equals(opd)) {
                                                 yaw += adjustYaw(opd, obdd);
                                             }

@@ -108,14 +108,30 @@ public class TARDISTerminalInventory {
         wim.setDisplayName(plugin.getLanguage().getString("BUTTON_NORM"));
         w.setItemMeta(wim);
         // nether
-        ItemStack r = new ItemStack(Material.NETHERRACK, 1);
+        ItemStack r;
+        String ndn;
+        if (plugin.getConfig().getBoolean("travel.nether") || !plugin.getConfig().getBoolean("travel.terminal.redefine")) {
+            r = new ItemStack(Material.NETHERRACK, 1);
+            ndn = "Nether";
+        } else {
+            r = new ItemStack(Material.DIRT, 1, (byte) 1);
+            ndn = plugin.getConfig().getString("travel.terminal.nether");
+        }
         ItemMeta rim = r.getItemMeta();
-        rim.setDisplayName("Nether");
+        rim.setDisplayName(ndn);
         r.setItemMeta(rim);
         // the end
-        ItemStack e = new ItemStack(Material.ENDER_STONE, 1);
+        ItemStack e;
+        String edn;
+        if (plugin.getConfig().getBoolean("travel.nether") || !plugin.getConfig().getBoolean("travel.terminal.redefine")) {
+            e = new ItemStack(Material.ENDER_STONE, 1);
+            edn = "The End";
+        } else {
+            e = new ItemStack(Material.DIRT, 1, (byte) 2);
+            edn = plugin.getConfig().getString("travel.terminal.the_end");
+        }
         ItemMeta eim = e.getItemMeta();
-        eim.setDisplayName("The End");
+        eim.setDisplayName(edn);
         e.setItemMeta(eim);
         // submarine
         ItemStack sub = new ItemStack(Material.WATER_BUCKET, 1);

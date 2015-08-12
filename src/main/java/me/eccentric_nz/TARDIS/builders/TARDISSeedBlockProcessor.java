@@ -29,6 +29,7 @@ import me.eccentric_nz.TARDIS.enumeration.SCHEMATIC;
 import me.eccentric_nz.TARDIS.rooms.TARDISWalls;
 import me.eccentric_nz.TARDIS.rooms.TARDISWalls.Pair;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
+import me.eccentric_nz.TARDIS.utility.TARDISStaticUtils;
 import org.bukkit.ChatColor;
 import org.bukkit.Chunk;
 import org.bukkit.Location;
@@ -88,72 +89,10 @@ public class TARDISSeedBlockProcessor {
             ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);
             if (!rs.resultSet()) {
                 SCHEMATIC schm = seed.getSchematic();
-                switch (schm) {
-                    case CUSTOM:
-                        if (!plugin.getConfig().getBoolean("creation.custom_schematic")) {
-                            TARDISMessage.send(player, "CUSTOM_NO");
-                            return false;
-                        } else if (!player.hasPermission("tardis.custom")) {
-                            TARDISMessage.send(player, "NO_PERM_TARDIS", "custom");
-                            return false;
-                        }
-                        break;
-                    case BIGGER:
-                        if (!player.hasPermission("tardis.bigger")) {
-                            TARDISMessage.send(player, "NO_PERM_TARDIS", "bigger");
-                            return false;
-                        }
-                        break;
-                    case DELUXE:
-                        if (!player.hasPermission("tardis.deluxe")) {
-                            TARDISMessage.send(player, "NO_PERM_TARDIS", "deluxe");
-                            return false;
-                        }
-                        break;
-                    case ELEVENTH:
-                        if (!player.hasPermission("tardis.eleventh")) {
-                            TARDISMessage.send(player, "NO_PERM_TARDIS", "eleventh");
-                            return false;
-                        }
-                        break;
-                    case REDSTONE:
-                        if (!player.hasPermission("tardis.redstone")) {
-                            TARDISMessage.send(player, "NO_PERM_TARDIS", "redstone");
-                            return false;
-                        }
-                        break;
-                    case STEAMPUNK:
-                        if (!player.hasPermission("tardis.steampunk")) {
-                            TARDISMessage.send(player, "NO_PERM_TARDIS", "steampunk");
-                            return false;
-                        }
-                        break;
-                    case TOM:
-                        if (!player.hasPermission("tardis.tom")) {
-                            TARDISMessage.send(player, "NO_PERM_TARDIS", "tom");
-                            return false;
-                        }
-                        break;
-                    case PLANK:
-                        if (!player.hasPermission("tardis.plank")) {
-                            TARDISMessage.send(player, "NO_PERM_TARDIS", "wood");
-                            return false;
-                        }
-                        break;
-                    case ARS:
-                        if (!player.hasPermission("tardis.ars")) {
-                            TARDISMessage.send(player, "NO_PERM_TARDIS", "ARS");
-                            return false;
-                        }
-                        break;
-                    case WAR:
-                        if (!player.hasPermission("tardis.war")) {
-                            TARDISMessage.send(player, "NO_PERM_TARDIS", "WAR");
-                            return false;
-                        }
-                        break;
-                    default:
-                        break;
+                // check perms
+                if (!schm.getPermission().equals("budget") && !player.hasPermission("tardis." + schm.getPermission())) {
+                    TARDISMessage.send(player, "NO_PERM_TARDIS", schm.getPermission().toUpperCase());
+                    return false;
                 }
                 int cx;
                 int cz;
@@ -189,14 +128,14 @@ public class TARDISSeedBlockProcessor {
                     // get this chunk co-ords
                     cx = chunk.getX();
                     cz = chunk.getZ();
-                    if (!plugin.getConfig().getBoolean("creation.default_world") && plugin.getUtils().checkChunk(cw, cx, cz, schm)) {
+                    if (!plugin.getConfig().getBoolean("creation.default_world") && plugin.getLocationUtils().checkChunk(cw, cx, cz, schm)) {
                         TARDISMessage.send(player, "TARDIS_EXISTS");
                         return false;
                     }
                 }
                 final String biome = l.getBlock().getBiome().toString();
                 // get player direction
-                String d = plugin.getUtils().getPlayersDirection(player, false);
+                String d = TARDISStaticUtils.getPlayersDirection(player, false);
                 // save data to database (tardis table)
                 String chun = cw + ":" + cx + ":" + cz;
                 final QueryFactory qf = new QueryFactory(plugin);
@@ -204,7 +143,7 @@ public class TARDISSeedBlockProcessor {
                 set.put("uuid", player.getUniqueId().toString());
                 set.put("owner", playerNameStr);
                 set.put("chunk", chun);
-                set.put("size", schm.name());
+                set.put("size", schm.getPermission().toUpperCase());
                 HashMap<String, Object> setpp = new HashMap<String, Object>();
                 Material wall_type = seed.getWallType();
                 byte wall_data = seed.getWallData();
@@ -221,10 +160,17 @@ public class TARDISSeedBlockProcessor {
                     now = System.currentTimeMillis();
                 }
                 set.put("lastuse", now);
+                // set preset if default is not 'NEW'
+                String preset = plugin.getConfig().getString("police_box.default_preset").toUpperCase();
+                if (!preset.equals("NEW")) {
+                    set.put("chameleon_preset", preset);
+                    set.put("chameleon_demat", preset);
+                }
                 // determine wall block material from HashMap
                 setpp.put("wall", getWallKey(wall_type, wall_data));
                 setpp.put("floor", getWallKey(floor_type, floor_data));
                 setpp.put("lamp", seed.getLamp());
+                setpp.put("lanterns_on", (schm.getPermission().equals("eleventh") || schm.getPermission().equals("twelfth")) ? 1 : 0);
                 final int lastInsertId = qf.doSyncInsert("tardis", set);
                 // insert/update  player prefs
                 HashMap<String, Object> wherep = new HashMap<String, Object>();

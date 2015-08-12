@@ -23,6 +23,7 @@ import java.util.Map;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetAchievements;
+import me.eccentric_nz.TARDIS.utility.TARDISNumberParsers;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -66,15 +67,16 @@ public class TARDISAchievementFactory {
             boolean achieved = false;
             // check if the achievement has been reached
             List<String> data = null;
+            String amount = (rsa.getAmount().isEmpty()) ? "0" : rsa.getAmount();
             if (obj.getClass().equals(String.class)) {
                 // farm mobs & rooms - have they got this type before?
-                data = Arrays.asList(rsa.getAmount().split(":"));
+                data = Arrays.asList(amount.split(":"));
                 if ((data.size() + 1) == size) {
                     achieved = true;
                 }
             } else {
                 int req = plugin.getAchievementConfig().getInt(name + ".required");
-                int have = plugin.getUtils().parseInt(rsa.getAmount());
+                int have = TARDISNumberParsers.parseInt(amount);
                 int sum = have + (Integer) obj;
                 if (sum >= req) {
                     achieved = true;
@@ -103,11 +105,11 @@ public class TARDISAchievementFactory {
             } else {
                 if (obj.getClass().equals(String.class)) {
                     if (data != null && !data.contains((String) obj)) {
-                        seta.put("amount", rsa.getAmount() + ":" + obj);
+                        seta.put("amount", amount + ":" + obj);
                         qf.doUpdate("achievements", seta, wherem);
                     }
                 } else {
-                    seta.put("amount", plugin.getUtils().parseInt(rsa.getAmount()) + (Integer) obj);
+                    seta.put("amount", TARDISNumberParsers.parseInt(amount) + (Integer) obj);
                     qf.doUpdate("achievements", seta, wherem);
                 }
             }

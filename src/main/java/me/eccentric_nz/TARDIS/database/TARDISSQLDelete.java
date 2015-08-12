@@ -35,6 +35,7 @@ public class TARDISSQLDelete implements Runnable {
     private final Connection connection = service.getConnection();
     private final String table;
     private final HashMap<String, Object> where;
+    private final String prefix;
 
     /**
      * Deletes rows from an SQLite database table. This method builds an SQL
@@ -49,6 +50,7 @@ public class TARDISSQLDelete implements Runnable {
         this.plugin = plugin;
         this.table = table;
         this.where = where;
+        this.prefix = this.plugin.getPrefix();
     }
 
     @Override
@@ -66,7 +68,7 @@ public class TARDISSQLDelete implements Runnable {
         }
         where.clear();
         values = sbw.toString().substring(0, sbw.length() - 5);
-        String query = "DELETE FROM " + table + " WHERE " + values;
+        String query = "DELETE FROM " + prefix + table + " WHERE " + values;
         try {
             service.testConnection(connection);
             statement = connection.createStatement();

@@ -24,6 +24,7 @@ import java.util.HashMap;
 import java.util.Map;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
+import me.eccentric_nz.TARDIS.utility.TARDISNumberParsers;
 import org.bukkit.World;
 
 /**
@@ -46,6 +47,7 @@ public class ResultSetBackLocation {
     private int z;
     private COMPASS direction;
     private boolean submarine;
+    private final String prefix;
 
     /**
      * Creates a class instance that can be used to retrieve an SQL ResultSet
@@ -58,6 +60,7 @@ public class ResultSetBackLocation {
     public ResultSetBackLocation(TARDIS plugin, HashMap<String, Object> where) {
         this.plugin = plugin;
         this.where = where;
+        this.prefix = this.plugin.getPrefix();
     }
 
     /**
@@ -78,7 +81,7 @@ public class ResultSetBackLocation {
             }
             wheres = " WHERE " + sbw.toString().substring(0, sbw.length() - 5);
         }
-        String query = "SELECT * FROM back" + wheres;
+        String query = "SELECT * FROM " + prefix + "back" + wheres;
         try {
             service.testConnection(connection);
             statement = connection.prepareStatement(query);
@@ -88,7 +91,7 @@ public class ResultSetBackLocation {
                     if (entry.getValue().getClass().equals(String.class)) {
                         statement.setString(s, entry.getValue().toString());
                     } else {
-                        statement.setInt(s, plugin.getUtils().parseInt(entry.getValue().toString()));
+                        statement.setInt(s, TARDISNumberParsers.parseInt(entry.getValue().toString()));
                     }
                     s++;
                 }

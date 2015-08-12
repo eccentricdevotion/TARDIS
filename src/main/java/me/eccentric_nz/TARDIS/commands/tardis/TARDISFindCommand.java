@@ -37,32 +37,36 @@ public class TARDISFindCommand {
     }
 
     public boolean findTARDIS(Player player, String[] args) {
-        if (plugin.getConfig().getString("preferences.difficulty").equalsIgnoreCase("easy") || plugin.getUtils().inGracePeriod(player, true)) {
-            if (player.hasPermission("tardis.find")) {
-                HashMap<String, Object> where = new HashMap<String, Object>();
-                where.put("uuid", player.getUniqueId().toString());
-                ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);
-                if (!rs.resultSet()) {
-                    TARDISMessage.send(player, "NO_TARDIS");
-                    return false;
-                }
+        if (player.hasPermission("tardis.find")) {
+            HashMap<String, Object> where = new HashMap<String, Object>();
+            where.put("uuid", player.getUniqueId().toString());
+            ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);
+            if (!rs.resultSet()) {
+                TARDISMessage.send(player, "NO_TARDIS");
+                return true;
+            }
+            if (plugin.getConfig().getString("preferences.difficulty").equalsIgnoreCase("easy") || plugin.getUtils().inGracePeriod(player, true)) {
                 HashMap<String, Object> wherecl = new HashMap<String, Object>();
                 wherecl.put("tardis_id", rs.getTardis_id());
                 ResultSetCurrentLocation rsc = new ResultSetCurrentLocation(plugin, wherecl);
                 if (rsc.resultSet()) {
-                    TARDISMessage.send(player, "TARDIS_FIND", rsc.getWorld().getName() + " at x: " + rsc.getX() + " y: " + rsc.getY() + " z: " + rsc.getZ());
+                    String world = rsc.getWorld().getName();
+                    if (plugin.isMVOnServer()) {
+                        world = plugin.getMVHelper().getAlias(rsc.getWorld());
+                    }
+                    TARDISMessage.send(player, "TARDIS_FIND", world + " at x: " + rsc.getX() + " y: " + rsc.getY() + " z: " + rsc.getZ());
                     return true;
                 } else {
                     TARDISMessage.send(player, "CURRENT_NOT_FOUND");
                     return true;
                 }
             } else {
-                TARDISMessage.send(player, "NO_PERMS");
-                return false;
+                TARDISMessage.send(player, "DIFF_HARD_FIND", ChatColor.AQUA + "/tardisrecipe locator" + ChatColor.RESET);
+                return true;
             }
         } else {
-            TARDISMessage.send(player, "DIFF_HARD_FIND", ChatColor.AQUA + "/tardisrecipe locator" + ChatColor.RESET);
-            return true;
+            TARDISMessage.send(player, "NO_PERMS");
+            return false;
         }
     }
 }

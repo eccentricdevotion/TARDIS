@@ -19,6 +19,7 @@ package me.eccentric_nz.TARDIS.move;
 import java.util.HashMap;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.ResultSetDoorBlocks;
+import me.eccentric_nz.TARDIS.utility.TARDISStaticUtils;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
@@ -57,7 +58,7 @@ public class TARDISBlackWoolToggler {
             b.setData(data);
             b.getRelative(BlockFace.UP).setType(mat);
             b.getRelative(BlockFace.UP).setData(data);
-            if (plugin.getUtils().isOpen(b.getRelative(BlockFace.SOUTH), rsd.getInnerDirection())) {
+            if (TARDISStaticUtils.isOpen(b.getRelative(BlockFace.SOUTH), rsd.getInnerDirection())) {
                 // toggle doors shut
                 new TARDISDoorToggler(plugin, b.getRelative(BlockFace.SOUTH), rsd.getInnerDirection(), player, false, true, id).toggleDoors();
             }
@@ -66,5 +67,18 @@ public class TARDISBlackWoolToggler {
 
     private boolean isAir(Block b) {
         return b.getType().equals(Material.AIR);
+    }
+
+    public boolean isOpen(int id) {
+        HashMap<String, Object> where = new HashMap<String, Object>();
+        where.put("tardis_id", id);
+        where.put("door_type", 1);
+        ResultSetDoorBlocks rsd = new ResultSetDoorBlocks(plugin, id);
+        if (rsd.resultSet()) {
+            Block b = rsd.getInnerBlock().getRelative(BlockFace.NORTH);
+            return (isAir(b));
+        } else {
+            return false;
+        }
     }
 }

@@ -26,6 +26,7 @@ import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.utility.TARDISNumberParsers;
 
 /**
  * Many facts, figures, and formulas are contained within the Matrix,
@@ -53,6 +54,7 @@ public class ResultSetDestinations {
     private boolean submarine;
     private int slot;
     private final ArrayList<HashMap<String, String>> data = new ArrayList<HashMap<String, String>>();
+    private final String prefix;
 
     /**
      * Creates a class instance that can be used to retrieve an SQL ResultSet
@@ -68,6 +70,7 @@ public class ResultSetDestinations {
         this.plugin = plugin;
         this.where = where;
         this.multiple = multiple;
+        this.prefix = this.plugin.getPrefix();
     }
 
     /**
@@ -88,7 +91,7 @@ public class ResultSetDestinations {
             }
             wheres = " WHERE " + sbw.toString().substring(0, sbw.length() - 5);
         }
-        String query = "SELECT * FROM destinations" + wheres;
+        String query = "SELECT * FROM " + prefix + "destinations" + wheres;
         try {
             service.testConnection(connection);
             statement = connection.prepareStatement(query);
@@ -98,7 +101,7 @@ public class ResultSetDestinations {
                     if (entry.getValue().getClass().equals(String.class)) {
                         statement.setString(s, entry.getValue().toString());
                     } else {
-                        statement.setInt(s, plugin.getUtils().parseInt(entry.getValue().toString()));
+                        statement.setInt(s, TARDISNumberParsers.parseInt(entry.getValue().toString()));
                     }
                     s++;
                 }

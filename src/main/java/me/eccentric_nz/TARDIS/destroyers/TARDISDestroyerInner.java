@@ -26,6 +26,7 @@ import me.eccentric_nz.TARDIS.builders.TARDISTIPSData;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.enumeration.SCHEMATIC;
 import me.eccentric_nz.TARDIS.schematic.TARDISSchematicGZip;
+import me.eccentric_nz.TARDIS.utility.TARDISBlockSetters;
 import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.block.Block;
@@ -65,8 +66,8 @@ public class TARDISDestroyerInner {
     @SuppressWarnings("deprecation")
     public void destroyInner(SCHEMATIC schm, int id, World w, int i, String p, int slot) {
         // get dimensions
-        String directory = (schm.equals(SCHEMATIC.CUSTOM)) ? "user_schematics" : "schematics";
-        String path = plugin.getDataFolder() + File.separator + directory + File.separator + schm.getFile();
+        String directory = (schm.isCustom()) ? "user_schematics" : "schematics";
+        String path = plugin.getDataFolder() + File.separator + directory + File.separator + schm.getPermission() + ".tschm";
         File file = new File(path);
         if (!file.exists()) {
             plugin.debug(plugin.getPluginName() + "Could not find a schematic with that name!");
@@ -84,7 +85,7 @@ public class TARDISDestroyerInner {
         if (below) {
             int level, row, col, startx, startz, starty, resetx, resetz;
             // calculate startx, starty, startz
-            int gsl[] = plugin.getUtils().getStartLocation(id);
+            int gsl[] = plugin.getLocationUtils().getStartLocation(id);
             startx = gsl[0];
             resetx = gsl[1];
             starty = 14 + h;
@@ -117,7 +118,7 @@ public class TARDISDestroyerInner {
                         }
                         if (!m.equals(Material.CHEST)) {
                             if (w.getBlockAt(startx, starty, startz).getTypeId() != i) {
-                                plugin.getUtils().setBlock(w, startx, starty, startz, i, (byte) 0);
+                                TARDISBlockSetters.setBlock(w, startx, starty, startz, i, (byte) 0);
                             }
                         }
                         startx += 1;

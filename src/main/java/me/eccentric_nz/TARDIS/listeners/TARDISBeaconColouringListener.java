@@ -121,7 +121,6 @@ public class TARDISBeaconColouringListener implements Listener {
             plugin.getTrackerKeeper().getBeaconColouring().remove(uuid);
             return;
         }
-        plugin.debug("durability: " + dye.getDurability());
         if (amount > needed) {
             player.getInventory().getItemInHand().setAmount(amount - needed);
         } else {

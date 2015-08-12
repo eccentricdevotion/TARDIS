@@ -48,6 +48,7 @@ public class TARDISAddCompanionCommand {
             String comps;
             int id;
             String[] data;
+            String owner;
             if (!rs.resultSet()) {
                 TARDISMessage.send(player, "NO_TARDIS");
                 return true;
@@ -55,6 +56,7 @@ public class TARDISAddCompanionCommand {
                 id = rs.getTardis_id();
                 comps = rs.getCompanions();
                 data = rs.getChunk().split(":");
+                owner = rs.getOwner();
             }
             if (args.length < 2) {
                 TARDISMessage.send(player, "TOO_FEW_ARGS");
@@ -93,7 +95,7 @@ public class TARDISAddCompanionCommand {
                     if (plugin.isWorldGuardOnServer() && plugin.getConfig().getBoolean("preferences.use_worldguard")) {
                         World w = plugin.getServer().getWorld(data[0]);
                         if (w != null) {
-                            plugin.getWorldGuardUtils().addMemberToRegion(w, player.getName(), args[1].toLowerCase(Locale.ENGLISH));
+                            plugin.getWorldGuardUtils().addMemberToRegion(w, owner, args[1].toLowerCase(Locale.ENGLISH));
                         }
                     }
                     return true;

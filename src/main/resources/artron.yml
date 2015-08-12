@@ -1,6 +1,7 @@
 # artron energy
 player: 25
 random: 75
+random_circuit: 150
 travel: 100
 comehere: 400
 hide: 500
@@ -13,6 +14,10 @@ full_charge: 5000
 full_charge_item: NETHER_STAR
 autonomous: 100
 backdoor: 100
+siege_transfer: 10
+siege_deplete: 100
+siege_creeper: 150
+siege_ticks: 1500
 standby: 5
 standby_time: 6000
 # jettison is a percentage of orginal room cost
@@ -31,6 +36,13 @@ upgrades:
     plank: 5000
     steampunk: 5000
     tom: 5000
+    twelfth: 7500
     war: 5000
     custom: 10000
 just_wall_floor: 50
+# artron furnace
+artron_furnace:
+    burn_limit: 100000
+    burn_time: 0.5
+    cook_time: 0.5
+    set_biome: true

@@ -24,10 +24,12 @@ import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.builders.TARDISBuildData;
 import me.eccentric_nz.TARDIS.builders.TARDISSeedBlockProcessor;
 import me.eccentric_nz.TARDIS.database.ResultSetPlayerPrefs;
+import me.eccentric_nz.TARDIS.enumeration.CONSOLES;
 import me.eccentric_nz.TARDIS.enumeration.SCHEMATIC;
 import me.eccentric_nz.TARDIS.rooms.TARDISWalls.Pair;
 import me.eccentric_nz.TARDIS.rooms.TARDISWallsLookup;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
+import me.eccentric_nz.TARDIS.utility.TARDISStaticUtils;
 import org.bukkit.DyeColor;
 import org.bukkit.GameMode;
 import org.bukkit.Location;
@@ -79,7 +81,7 @@ public class TARDISSeedBlockListener implements Listener {
         }
         if (im.getDisplayName().equals("§6TARDIS Seed Block")) {
             List<String> lore = im.getLore();
-            SCHEMATIC schm = SCHEMATIC.valueOf(lore.get(0));
+            SCHEMATIC schm = CONSOLES.getByNames().get(lore.get(0));
             Pair wall_data = getValuesFromWallString(lore.get(1));
             Pair floor_data = getValuesFromWallString(lore.get(2));
             TwoValues cham_data = getValuesFromString(lore.get(3));
@@ -118,9 +120,12 @@ public class TARDISSeedBlockListener implements Listener {
                 World w = l.getWorld();
                 ItemStack is = new ItemStack(event.getBlock().getType(), 1);
                 ItemMeta im = is.getItemMeta();
+                if (im == null) {
+                    return;
+                }
                 im.setDisplayName("§6TARDIS Seed Block");
                 List<String> lore = new ArrayList<String>();
-                lore.add(data.getSchematic().toString());
+                lore.add(data.getSchematic().getPermission().toUpperCase());
                 lore.add("Walls: " + twl.wall_lookup.get(data.getWallType() + ":" + data.getWallData()));
                 lore.add("Floors: " + twl.wall_lookup.get(data.getFloorType() + ":" + data.getFloorData()));
                 // do some funky stuff to get data values for wool/stained glass & clay/wood/log/log_2
@@ -132,7 +137,7 @@ public class TARDISSeedBlockListener implements Listener {
                             lore.add("Chameleon block: " + DyeColor.getByWoolData(data.getBox_data()) + " " + Material.getMaterial(data.getBox_id()).toString());
                             break;
                         default:
-                            lore.add("Chameleon block: " + plugin.getUtils().getWoodType(Material.getMaterial(data.getBox_id()), data.getBox_data()) + " " + Material.getMaterial(data.getBox_id()).toString());
+                            lore.add("Chameleon block: " + TARDISStaticUtils.getWoodType(Material.getMaterial(data.getBox_id()), data.getBox_data()) + " " + Material.getMaterial(data.getBox_id()).toString());
                     }
                 } else {
                     lore.add("Chameleon block: " + Material.getMaterial(data.getBox_id()).toString());
@@ -202,17 +207,43 @@ public class TARDISSeedBlockListener implements Listener {
      * @param str the lore stored in the TARDIS Seed block's Item Meta
      * @return an int and a byte stored in a simple data class
      */
+    @SuppressWarnings("deprecation")
     private TwoValues getValuesFromString(String str) {
         TwoValues data = new TwoValues();
         String[] split1 = str.split(": ");
         String[] split2 = split1[1].split(" ");
         if (split2.length > 1) {
-            Material m = Material.getMaterial(split2[1]);
+            String mat = split2[1];
+            if (mat.equals("ANDESITE") || mat.equals("DIORITE") || mat.equals("GRANITE")) {
+                mat = "STONE";
+            }
+            Material m = Material.getMaterial(mat);
             data.setId(m.getId());
-            if (m.equals(Material.WOOL) || m.equals(Material.STAINED_CLAY) || m.equals(Material.STAINED_GLASS)) {
+            if (m.equals(Material.STONE)) {
+                if (split2[1].endsWith("ANDESITE")) {
+                    data.setData((byte) 6);
+                }
+                if (split2[1].endsWith("DIORITE")) {
+                    data.setData((byte) 4);
+                }
+                if (split2[1].endsWith("GRANITE")) {
+                    data.setData((byte) 2);
+                }
+            } else if (m.equals(Material.WOOL) || m.equals(Material.STAINED_CLAY) || m.equals(Material.STAINED_GLASS)) {
                 data.setData(DyeColor.valueOf(split2[0]).getWoolData());
             } else {
                 data.setData(getWoodDataType(m, split2[0]));
+            }
+        } else if (split1[1].equals("ANDESITE") || split1[1].equals("DIORITE") || split1[1].equals("GRANITE")) {
+            data.setId(1);
+            if (split2[1].endsWith("ANDESITE")) {
+                data.setData((byte) 5);
+            }
+            if (split2[1].endsWith("DIORITE")) {
+                data.setData((byte) 3);
+            }
+            if (split2[1].endsWith("GRANITE")) {
+                data.setData((byte) 1);
             }
         } else {
             data.setId(Material.getMaterial(split1[1]).getId());

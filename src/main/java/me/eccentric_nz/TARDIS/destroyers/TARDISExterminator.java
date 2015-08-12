@@ -35,6 +35,7 @@ import me.eccentric_nz.TARDIS.database.ResultSetTravellers;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
 import me.eccentric_nz.TARDIS.enumeration.SCHEMATIC;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
+import me.eccentric_nz.TARDIS.utility.TARDISNumberParsers;
 import me.eccentric_nz.tardischunkgenerator.TARDISChunkGenerator;
 import org.bukkit.Location;
 import org.bukkit.World;
@@ -125,7 +126,6 @@ public class TARDISExterminator {
     @SuppressWarnings("deprecation")
     public boolean exterminate(final Player player, Block block) {
         int signx = 0, signz = 0;
-        String playerNameStr = player.getName();
         Location sign_loc = block.getLocation();
         HashMap<String, Object> where = new HashMap<String, Object>();
         if (player.hasPermission("tardis.delete")) {
@@ -167,6 +167,7 @@ public class TARDISExterminator {
         ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);
         if (rs.resultSet()) {
             final int id = rs.getTardis_id();
+            String owner = rs.getOwner();
             String chunkLoc = rs.getChunk();
             int tips = rs.getTIPS();
             boolean hasZero = (!rs.getZero().isEmpty());
@@ -236,9 +237,9 @@ public class TARDISExterminator {
                 }
                 int restore = getRestore(cw);
                 if (!cw.getName().contains("TARDIS_WORLD_")) {
-                    plugin.getInteriorDestroyer().destroyInner(schm, id, cw, restore, playerNameStr, tips);
+                    plugin.getInteriorDestroyer().destroyInner(schm, id, cw, restore, owner, tips);
                 }
-                cleanWorlds(cw, playerNameStr);
+                cleanWorlds(cw, owner);
                 removeZeroRoom(tips, hasZero);
                 plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
                     @Override
@@ -292,7 +293,7 @@ public class TARDISExterminator {
         if (rsg.resultSet()) {
             ArrayList<HashMap<String, String>> gdata = rsg.getData();
             for (HashMap<String, String> gmap : gdata) {
-                int direction = plugin.getUtils().parseInt(gmap.get("direction"));
+                int direction = TARDISNumberParsers.parseInt(gmap.get("direction"));
                 switch (direction) {
                     case 1:
                         plugin.getGeneralKeeper().getGravityUpList().remove(gmap.get("location"));
@@ -343,7 +344,7 @@ public class TARDISExterminator {
                 TARDISMessage.send(p, "WORLD_RESET");
                 p.teleport(spawn);
             }
-            if (plugin.getPM().isPluginEnabled("Multiverse-Core")) {
+            if (plugin.isMVOnServer()) {
                 plugin.getServer().dispatchCommand(plugin.getConsole(), "mv remove " + name);
             }
             if (plugin.getPM().isPluginEnabled("MultiWorld")) {

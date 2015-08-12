@@ -29,9 +29,11 @@ import me.eccentric_nz.TARDIS.database.ResultSetCurrentLocation;
 import me.eccentric_nz.TARDIS.database.ResultSetPlayerPrefs;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
+import me.eccentric_nz.TARDIS.enumeration.CONSOLES;
 import me.eccentric_nz.TARDIS.enumeration.SCHEMATIC;
 import me.eccentric_nz.TARDIS.rooms.TARDISWalls.Pair;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
+import me.eccentric_nz.TARDIS.utility.TARDISStaticUtils;
 import org.bukkit.ChatColor;
 import org.bukkit.Chunk;
 import org.bukkit.Location;
@@ -71,14 +73,20 @@ public class TARDISBlockPlaceListener implements Listener {
         blocks.add(Material.REDSTONE_BLOCK); // redstone
         blocks.add(Material.QUARTZ_BLOCK); // ARS
         blocks.add(Material.COAL_BLOCK); // steampunk
-        if (plugin.getConfig().getBoolean("creation.custom_schematic")) {
-            custom = Material.valueOf(plugin.getConfig().getString("creation.custom_schematic_seed"));
-            blocks.add(custom); // custom
+        for (final String console : plugin.getCustomConsolesConfig().getKeys(false)) {
+            if (plugin.getCustomConsolesConfig().getBoolean(console + ".enabled")) {
+                try {
+                    custom = Material.valueOf(plugin.getCustomConsolesConfig().getString(console + ".seed"));
+                    blocks.add(custom); // custom
+                } catch (IllegalArgumentException e) {
+                    plugin.debug(plugin.getPluginName() + "Invalid custom seed block material for " + console + "!");
+                }
+            }
         }
     }
 
     /**
-     * Listens for player block placing. If the player place a stack of blocks
+     * Listens for player block placing. If the player places a stack of blocks
      * in a certain pattern for example (but not limited to): IRON_BLOCK,
      * LAPIS_BLOCK, RESTONE_TORCH the pattern of blocks is turned into a TARDIS.
      *
@@ -118,7 +126,6 @@ public class TARDISBlockPlaceListener implements Listener {
                 int player_count = 0;
                 int grace_count = 0;
                 boolean has_count = false;
-//                if (max_count > 0) {
                 HashMap<String, Object> wherec = new HashMap<String, Object>();
                 wherec.put("uuid", player.getUniqueId().toString());
                 ResultSetCount rsc = new ResultSetCount(plugin, wherec, false);
@@ -131,87 +138,14 @@ public class TARDISBlockPlaceListener implements Listener {
                         return;
                     }
                 }
-//                }
-                switch (blockBottom.getType()) {
-                    case IRON_BLOCK:
-                        schm = SCHEMATIC.BUDGET;
-                        break;
-                    case GOLD_BLOCK:
-                        if (player.hasPermission("tardis.bigger")) {
-                            schm = SCHEMATIC.BIGGER;
-                        } else {
-                            TARDISMessage.send(player, "NO_PERM_TARDIS", "bigger");
-                            return;
-                        }
-                        break;
-                    case DIAMOND_BLOCK:
-                        if (player.hasPermission("tardis.deluxe")) {
-                            schm = SCHEMATIC.DELUXE;
-                        } else {
-                            TARDISMessage.send(player, "NO_PERM_TARDIS", "deluxe");
-                            return;
-                        }
-                        break;
-                    case EMERALD_BLOCK:
-                        if (player.hasPermission("tardis.eleventh")) {
-                            schm = SCHEMATIC.ELEVENTH;
-                        } else {
-                            TARDISMessage.send(player, "NO_PERM_TARDIS", "eleventh Doctor's");
-                            return;
-                        }
-                        break;
-                    case REDSTONE_BLOCK:
-                        if (player.hasPermission("tardis.redstone")) {
-                            schm = SCHEMATIC.REDSTONE;
-                        } else {
-                            TARDISMessage.send(player, "NO_PERM_TARDIS", "redstone");
-                            return;
-                        }
-                        break;
-                    case COAL_BLOCK:
-                        if (player.hasPermission("tardis.steampunk")) {
-                            schm = SCHEMATIC.STEAMPUNK;
-                        } else {
-                            TARDISMessage.send(player, "NO_PERM_TARDIS", "steampunk");
-                            return;
-                        }
-                        break;
-                    case LAPIS_BLOCK:
-                        if (player.hasPermission("tardis.tom")) {
-                            schm = SCHEMATIC.TOM;
-                        } else {
-                            TARDISMessage.send(player, "NO_PERM_TARDIS", "4th Doctor's");
-                            return;
-                        }
-                        break;
-                    case BOOKSHELF:
-                        if (player.hasPermission("tardis.plank")) {
-                            schm = SCHEMATIC.PLANK;
-                        } else {
-                            TARDISMessage.send(player, "NO_PERM_TARDIS", "wood");
-                            return;
-                        }
-                        break;
-                    case QUARTZ_BLOCK:
-                        if (player.hasPermission("tardis.ars")) {
-                            schm = SCHEMATIC.ARS;
-                        } else {
-                            TARDISMessage.send(player, "NO_PERM_TARDIS", "ARS");
-                            return;
-                        }
-                        break;
-                    default:
-                        if (plugin.getConfig().getBoolean("custom_schematic")) {
-                            if (player.hasPermission("tardis.custom") && blockBottom.getType().equals(custom)) {
-                                schm = SCHEMATIC.CUSTOM;
-                            } else {
-                                TARDISMessage.send(player, "NO_PERM_TARDIS", "custom");
-                                return;
-                            }
-                        } else {
-                            schm = SCHEMATIC.BUDGET;
-                        }
-                        break;
+                schm = CONSOLES.SCHEMATICFor(blockBottom.getType());
+                if (schm == null) {
+                    schm = CONSOLES.getByNames().get("BUDGET");
+                }
+                // check perms
+                if (!schm.getPermission().equals("budget") && !player.hasPermission("tardis." + schm.getPermission())) {
+                    TARDISMessage.send(player, "NO_PERM_TARDIS", schm.getPermission().toUpperCase());
+                    return;
                 }
                 if (player.hasPermission("tardis.create")) {
                     String playerNameStr = player.getName();
@@ -254,13 +188,13 @@ public class TARDISBlockPlaceListener implements Listener {
                             }
                             cx = chunk.getX();
                             cz = chunk.getZ();
-                            if (!plugin.getConfig().getBoolean("creation.default_world") && plugin.getUtils().checkChunk(cw, cx, cz, schm)) {
+                            if (!plugin.getConfig().getBoolean("creation.default_world") && plugin.getLocationUtils().checkChunk(cw, cx, cz, schm)) {
                                 TARDISMessage.send(player, "TARDIS_EXISTS");
                                 return;
                             }
                         }
                         // get player direction
-                        String d = plugin.getUtils().getPlayersDirection(player, false);
+                        String d = TARDISStaticUtils.getPlayersDirection(player, false);
                         // save data to database (tardis table)
                         Location block_loc = blockBottom.getLocation();
                         final String biome = block_loc.getBlock().getBiome().toString();
@@ -270,7 +204,7 @@ public class TARDISBlockPlaceListener implements Listener {
                         set.put("uuid", player.getUniqueId().toString());
                         set.put("owner", playerNameStr);
                         set.put("chunk", chun);
-                        set.put("size", schm.name());
+                        set.put("size", schm.getPermission().toUpperCase());
                         Long now;
                         if (player.hasPermission("tardis.prune.bypass")) {
                             now = Long.MAX_VALUE;
@@ -278,6 +212,12 @@ public class TARDISBlockPlaceListener implements Listener {
                             now = System.currentTimeMillis();
                         }
                         set.put("lastuse", now);
+                        // set preset if default is not 'NEW'
+                        String preset = plugin.getConfig().getString("police_box.default_preset").toUpperCase();
+                        if (!preset.equals("NEW")) {
+                            set.put("chameleon_preset", preset);
+                            set.put("chameleon_demat", preset);
+                        }
                         HashMap<String, Object> setpp = new HashMap<String, Object>();
                         if (wall_type.equals(Material.LAPIS_BLOCK)) {
                             if (blockBottom.getType().equals(Material.EMERALD_BLOCK)) {
@@ -289,6 +229,7 @@ public class TARDISBlockPlaceListener implements Listener {
                             // determine wall block material from HashMap
                             setpp.put("wall", getWallKey(wall_type, wall_data));
                         }
+                        setpp.put("lanterns_on", (schm.getPermission().equals("eleventh") || schm.getPermission().equals("twelfth")) ? 1 : 0);
                         final int lastInsertId = qf.doSyncInsert("tardis", set);
                         // insert/update  player prefs
                         HashMap<String, Object> wherep = new HashMap<String, Object>();

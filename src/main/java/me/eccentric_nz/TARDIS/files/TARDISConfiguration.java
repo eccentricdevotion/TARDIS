@@ -53,6 +53,7 @@ public class TARDISConfiguration {
     HashMap<String, Integer> roomIntOptions = new HashMap<String, Integer>();
     HashMap<String, Boolean> roomBoolOptions = new HashMap<String, Boolean>();
     HashMap<String, String> artronStrOptions = new HashMap<String, String>();
+    HashMap<String, Double> artronDoubleOptions = new HashMap<String, Double>();
     HashMap<String, Integer> artronIntOptions = new HashMap<String, Integer>();
 
     public TARDISConfiguration(TARDIS plugin) {
@@ -63,12 +64,15 @@ public class TARDISConfiguration {
         this.blocks_config = plugin.getBlocksConfig();
         this.rooms_config = plugin.getRoomsConfig();
         // boolean
+        boolOptions.put("allow.3d_doors", false);
         boolOptions.put("allow.achievements", true);
         boolOptions.put("allow.all_blocks", false);
         boolOptions.put("allow.autonomous", true);
         boolOptions.put("allow.emergency_npc", true);
         boolOptions.put("allow.external_gravity", false);
+        boolOptions.put("allow.guardians", false);
         boolOptions.put("allow.hads", true);
+        boolOptions.put("allow.invisibility", true);
         boolOptions.put("allow.mob_farming", true);
         boolOptions.put("allow.player_difficulty", true);
         boolOptions.put("allow.power_down", false);
@@ -76,18 +80,24 @@ public class TARDISConfiguration {
         boolOptions.put("allow.sfx", true);
         boolOptions.put("allow.spawn_eggs", true);
         boolOptions.put("allow.tp_switch", true);
+        boolOptions.put("allow.village_travel", false);
         boolOptions.put("allow.wg_flag_set", true);
         boolOptions.put("allow.zero_room", false);
         boolOptions.put("arch.clear_inv_on_death", false);
         boolOptions.put("arch.enabled", true);
         boolOptions.put("arch.switch_inventory", true);
+        boolOptions.put("circuits.damage", false);
         boolOptions.put("conversions.biome_update", false);
         boolOptions.put("conversions.companion_clearing_done", false);
         boolOptions.put("conversions.condenser_done", false);
         boolOptions.put("conversions.conversion_done", false);
         boolOptions.put("conversions.location_conversion_done", false);
         boolOptions.put("conversions.uuid_conversion_done", false);
+<<<<<<< HEAD
         boolOptions.put("conversions.companion_clearing_done", false);
+=======
+        boolOptions.put("conversions.lastknownname_conversion_done", false);
+>>>>>>> v3.0
         boolOptions.put("creation.add_perms", true);
         boolOptions.put("creation.create_worlds", true);
         boolOptions.put("creation.create_worlds_with_perms", false);
@@ -105,13 +115,19 @@ public class TARDISConfiguration {
         boolOptions.put("police_box.set_biome", true);
         boolOptions.put("preferences.nerf_pistons.enabled", false);
         boolOptions.put("preferences.nerf_pistons.only_tardis_worlds", true);
+        boolOptions.put("preferences.render_entities", false);
         boolOptions.put("preferences.respect_factions", true);
         boolOptions.put("preferences.respect_grief_prevention", true);
         boolOptions.put("preferences.respect_worldborder", true);
-        boolOptions.put("preferences.respect_worldguard", true);
+        boolOptions.put("preferences.use_worldguard", true);
         boolOptions.put("preferences.strike_lightning", true);
         boolOptions.put("preferences.use_default_condensables", true);
         boolOptions.put("preferences.walk_in_tardis", true);
+        boolOptions.put("siege.enabled", true);
+        boolOptions.put("siege.butcher", false);
+        boolOptions.put("siege.creeper", false);
+        boolOptions.put("siege.healing", false);
+        boolOptions.put("siege.texture", false);
         boolOptions.put("travel.chameleon", true);
         boolOptions.put("travel.exile", false);
         boolOptions.put("travel.give_key", false);
@@ -119,6 +135,7 @@ public class TARDISConfiguration {
         boolOptions.put("travel.land_on_water", true);
         boolOptions.put("travel.nether", false);
         boolOptions.put("travel.per_world_perms", false);
+        boolOptions.put("travel.terminal.redefine", false);
         boolOptions.put("travel.the_end", false);
         roomBoolOptions.put("rooms.ANTIGRAVITY.enabled", true);
         roomBoolOptions.put("rooms.ANTIGRAVITY.user", false);
@@ -138,6 +155,8 @@ public class TARDISConfiguration {
         roomBoolOptions.put("rooms.GREENHOUSE.user", false);
         roomBoolOptions.put("rooms.HARMONY.enabled", true);
         roomBoolOptions.put("rooms.HARMONY.user", false);
+        roomBoolOptions.put("rooms.HUTCH.enabled", true);
+        roomBoolOptions.put("rooms.HUTCH.user", false);
         roomBoolOptions.put("rooms.KITCHEN.enabled", true);
         roomBoolOptions.put("rooms.KITCHEN.user", false);
         roomBoolOptions.put("rooms.LAZARUS.enabled", true);
@@ -168,7 +187,11 @@ public class TARDISConfiguration {
         roomBoolOptions.put("rooms.WORKSHOP.user", false);
         roomBoolOptions.put("rooms.ZERO.enabled", true);
         roomBoolOptions.put("rooms.ZERO.user", false);
+        // double
+        artronDoubleOptions.put("artron_furnace.burn_time", 0.5);
+        artronDoubleOptions.put("artron_furnace.cook_time", 0.5);
         // integer
+        artronIntOptions.put("artron_furnace.burn_limit", 100000);
         artronIntOptions.put("autonomous", 100);
         artronIntOptions.put("backdoor", 100);
         artronIntOptions.put("comehere", 400);
@@ -181,25 +204,40 @@ public class TARDISConfiguration {
         artronIntOptions.put("nether_min", 4250);
         artronIntOptions.put("player", 25);
         artronIntOptions.put("random", 75);
+        artronIntOptions.put("random_circuit", 150);
         artronIntOptions.put("recharge_distance", 20);
         artronIntOptions.put("render", 250);
+        artronIntOptions.put("siege_creeper", 150);
+        artronIntOptions.put("siege_deplete", 100);
+        artronIntOptions.put("siege_ticks", 1500);
+        artronIntOptions.put("siege_transfer", 10);
         artronIntOptions.put("standby", 5);
         artronIntOptions.put("standby_time", 6000);
         artronIntOptions.put("the_end_min", 5500);
         artronIntOptions.put("travel", 100);
         artronIntOptions.put("zero", 250);
         artronIntOptions.put("upgrades.ars", 5000);
+        artronIntOptions.put("upgrades.bigger", 7500);
         artronIntOptions.put("upgrades.budget", 5000);
         artronIntOptions.put("upgrades.deluxe", 10000);
         artronIntOptions.put("upgrades.eleventh", 10000);
-        artronIntOptions.put("upgrades.redstone", 7500);
-        artronIntOptions.put("upgrades.bigger", 7500);
         artronIntOptions.put("upgrades.plank", 5000);
+        artronIntOptions.put("upgrades.redstone", 7500);
         artronIntOptions.put("upgrades.steampunk", 5000);
         artronIntOptions.put("upgrades.tom", 5000);
+        artronIntOptions.put("upgrades.twelfth", 7500);
         artronIntOptions.put("upgrades.war", 5000);
         artronIntOptions.put("upgrades.custom", 10000);
         intOptions.put("arch.min_time", 20);
+        intOptions.put("circuits.uses.ars", 20);
+        intOptions.put("circuits.uses.chameleon", 25);
+        intOptions.put("circuits.uses.input", 50);
+        intOptions.put("circuits.uses.invisibility", 5);
+        intOptions.put("circuits.uses.materialisation", 50);
+        intOptions.put("circuits.uses.memory", 20);
+        intOptions.put("circuits.uses.randomiser", 50);
+        intOptions.put("circuits.uses.scanner", 20);
+        intOptions.put("circuits.uses.temporal", 20);
         intOptions.put("creation.border_radius", 256);
         intOptions.put("creation.count", 0);
         intOptions.put("creation.inventory_group", 0);
@@ -224,6 +262,8 @@ public class TARDISConfiguration {
         intOptions.put("preferences.malfunction_end", 3);
         intOptions.put("preferences.malfunction_nether", 3);
         intOptions.put("preferences.sfx_volume", 10);
+        intOptions.put("siege.breeding", 0);
+        intOptions.put("siege.growth", 0);
         intOptions.put("travel.grace_period", 10);
         intOptions.put("travel.manual_flight_delay", 60);
         intOptions.put("travel.random_attempts", 30);
@@ -231,6 +271,8 @@ public class TARDISConfiguration {
         intOptions.put("travel.timeout", 5);
         intOptions.put("travel.timeout_height", 135);
         intOptions.put("travel.tp_radius", 256);
+        intOptions.put("travel.random_circuit.x", 5000);
+        intOptions.put("travel.random_circuit.z", 5000);
         roomIntOptions.put("rooms.ANTIGRAVITY.cost", 625);
         roomIntOptions.put("rooms.ANTIGRAVITY.offset", -4);
         roomIntOptions.put("rooms.ARBORETUM.cost", 325);
@@ -249,6 +291,8 @@ public class TARDISConfiguration {
         roomIntOptions.put("rooms.GREENHOUSE.offset", -4);
         roomIntOptions.put("rooms.HARMONY.cost", 450);
         roomIntOptions.put("rooms.HARMONY.offset", -4);
+        roomIntOptions.put("rooms.HUTCH.cost", 450);
+        roomIntOptions.put("rooms.HUTCH.offset", -4);
         roomIntOptions.put("rooms.KITCHEN.cost", 450);
         roomIntOptions.put("rooms.KITCHEN.offset", -4);
         roomIntOptions.put("rooms.LAZARUS.cost", 750);
@@ -285,6 +329,7 @@ public class TARDISConfiguration {
         strOptions.put("creation.custom_schematic_seed", "OBSIDIAN");
         strOptions.put("creation.default_world_name", "TARDIS_TimeVortex");
         strOptions.put("creation.gamemode", "survival");
+        strOptions.put("police_box.default_preset", "NEW");
         strOptions.put("police_box.sign_colour", "WHITE");
         strOptions.put("preferences.default_key", "eleventh");
         strOptions.put("preferences.default_sonic", "eleventh");
@@ -292,12 +337,15 @@ public class TARDISConfiguration {
         strOptions.put("preferences.key", "GOLD_NUGGET");
         strOptions.put("preferences.language", "en");
         strOptions.put("preferences.respect_towny", "nation");
-        strOptions.put("preferences.use_worldguard", "build");
+        strOptions.put("preferences.respect_worldguard", "build");
         strOptions.put("preferences.wand", "BONE");
         strOptions.put("storage.database", "sqlite");
         strOptions.put("storage.mysql.url", "mysql://localhost:3306/TARDIS");
         strOptions.put("storage.mysql.user", "bukkit");
         strOptions.put("storage.mysql.password", "mysecurepassword");
+        strOptions.put("storage.mysql.prefix", "");
+        strOptions.put("travel.terminal.nether", "world");
+        strOptions.put("travel.terminal.the_end", "world");
         artronStrOptions.put("jettison_seed", "TNT");
         artronStrOptions.put("full_charge_item", "NETHER_STAR");
         roomStrOptions.put("rooms.ARBORETUM.seed", "LEAVES");
@@ -309,9 +357,10 @@ public class TARDISConfiguration {
         roomStrOptions.put("rooms.ANTIGRAVITY.seed", "SANDSTONE");
         roomStrOptions.put("rooms.GREENHOUSE.seed", "MELON_BLOCK");
         roomStrOptions.put("rooms.HARMONY.seed", "BRICK_STAIRS");
+        roomStrOptions.put("rooms.HUTCH.seed", "LOG_2");
         roomStrOptions.put("rooms.KITCHEN.seed", "PUMPKIN");
         roomStrOptions.put("rooms.LAZARUS.seed", "FURNACE");
-        roomStrOptions.put("rooms.LIBRARY.seed", "BOOKSHELF");
+        roomStrOptions.put("rooms.LIBRARY.seed", "ENCHANTMENT_TABLE");
         roomStrOptions.put("rooms.MUSHROOM.seed", "GRAVEL");
         roomStrOptions.put("rooms.PASSAGE.seed", "CLAY");
         roomStrOptions.put("rooms.POOL.seed", "SNOW_BLOCK");
@@ -421,6 +470,9 @@ public class TARDISConfiguration {
             if (plugin.getServer().getWorld(cw) == null) {
                 plugin.getConfig().set("worlds." + cw, null);
                 plugin.getConsole().sendMessage(plugin.getPluginName() + "Removed '" + cw + " from config.yml");
+                // remove records from database that may contain
+                // the removed world
+                plugin.getCleanUpWorlds().add(cw);
             }
         }
     }
@@ -517,7 +569,7 @@ public class TARDISConfiguration {
             }
         }
         if (!blocks_config.contains("chameleon_blocks")) {
-            List<Integer> CHAM_BLOCKS = Arrays.asList(1, 3, 4, 5, 7, 14, 15, 16, 17, 18, 19, 20, 21, 22, 24, 25, 35, 41, 42, 43, 45, 46, 47, 48, 49, 56, 57, 58, 73, 74, 79, 80, 82, 84, 86, 87, 88, 89, 91, 98, 99, 100, 103, 110, 112, 121, 123, 124, 129, 133, 155, 159, 161, 162, 170, 172, 173, 174);
+            List<Integer> CHAM_BLOCKS = Arrays.asList(1, 3, 4, 5, 7, 14, 15, 16, 17, 18, 19, 20, 21, 22, 24, 25, 35, 41, 42, 45, 46, 47, 48, 49, 56, 57, 58, 73, 79, 80, 82, 84, 86, 87, 88, 89, 91, 98, 99, 100, 103, 110, 112, 121, 123, 129, 133, 155, 159, 161, 162, 170, 172, 173, 174);
             blocks_config.set("chameleon_blocks", CHAM_BLOCKS);
             i++;
         } else {
@@ -537,12 +589,30 @@ public class TARDISConfiguration {
                 blocks_config.set("chameleon_blocks", cblocs);
                 i++;
             }
+            if (!cblocs.contains(179)) {
+                cblocs.add(179);
+                blocks_config.set("chameleon_blocks", cblocs);
+                i++;
+            }
+            if (cblocs.contains(43)) {
+                cblocs.remove(Integer.valueOf(43));
+                cblocs.remove(Integer.valueOf(74));
+                cblocs.remove(Integer.valueOf(124));
+                blocks_config.set("chameleon_blocks", cblocs);
+            }
         }
         // add lamp blocks
         if (!blocks_config.contains("lamp_blocks")) {
-            List<Integer> LAMP_BLOCKS = Arrays.asList(50, 76, 89, 91, 123);
+            List<Integer> LAMP_BLOCKS = Arrays.asList(50, 76, 89, 91, 123, 169);
             blocks_config.set("lamp_blocks", LAMP_BLOCKS);
             i++;
+        } else {
+            List<Integer> lblocs = blocks_config.getIntegerList("lamp_blocks");
+            if (!lblocs.contains(169)) {
+                lblocs.add(169);
+                blocks_config.set("lamp_blocks", lblocs);
+                i++;
+            }
         }
         if (!blocks_config.contains("under_door_blocks")) {
             List<Integer> UNDER_BLOCKS = Arrays.asList(0, 6, 8, 9, 10, 11, 18, 20, 26, 27, 28, 29, 30, 31, 32, 33, 34, 37, 38, 39, 40, 44, 46, 50, 51, 53, 54, 55, 58, 59, 60, 61, 62, 63, 64, 65, 66, 67, 68, 69, 70, 71, 72, 75, 76, 77, 78, 79, 81, 83, 85, 89, 92, 93, 94, 96, 101, 102, 104, 105, 106, 107, 108, 109, 111, 113, 114, 115, 116, 117, 118, 119, 120, 122, 126, 128, 130, 131, 132, 134, 135, 136, 161, 171);
@@ -577,6 +647,18 @@ public class TARDISConfiguration {
 
     private void checkArtronConfig() {
         int i = 0;
+        // boolean values
+        if (!artron_config.contains("artron_furnace.set_biome")) {
+            artron_config.set("artron_furnace.set_biome", true);
+            i++;
+        }
+        // double values
+        for (Map.Entry<String, Double> entry : artronDoubleOptions.entrySet()) {
+            if (!artron_config.contains(entry.getKey())) {
+                artron_config.set(entry.getKey(), entry.getValue());
+                i++;
+            }
+        }
         // int values
         for (Map.Entry<String, Integer> entry : artronIntOptions.entrySet()) {
             if (!artron_config.contains(entry.getKey())) {

@@ -27,6 +27,7 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.utility.TARDISNumberParsers;
 
 /**
  * Chronomium was a time-active element that displaced time around it. In its
@@ -50,6 +51,7 @@ public class ResultSetAchievements {
     private String amount;
     private boolean completed;
     private final ArrayList<HashMap<String, String>> data = new ArrayList<HashMap<String, String>>();
+    private final String prefix;
 
     /**
      * Creates a class instance that can be used to retrieve an SQL ResultSet
@@ -64,6 +66,7 @@ public class ResultSetAchievements {
         this.plugin = plugin;
         this.where = where;
         this.multiple = multiple;
+        this.prefix = this.plugin.getPrefix();
     }
 
     /**
@@ -83,7 +86,7 @@ public class ResultSetAchievements {
             }
             wheres = " WHERE " + sbw.toString().substring(0, sbw.length() - 5);
         }
-        String query = "SELECT * FROM achievements" + wheres;
+        String query = "SELECT * FROM " + prefix + "achievements" + wheres;
         try {
             service.testConnection(connection);
             statement = connection.prepareStatement(query);
@@ -93,7 +96,7 @@ public class ResultSetAchievements {
                     if (entry.getValue().getClass().equals(String.class) || entry.getValue().getClass().equals(UUID.class)) {
                         statement.setString(s, entry.getValue().toString());
                     } else {
-                        statement.setInt(s, plugin.getUtils().parseInt(entry.getValue().toString()));
+                        statement.setInt(s, TARDISNumberParsers.parseInt(entry.getValue().toString()));
                     }
                     s++;
                 }

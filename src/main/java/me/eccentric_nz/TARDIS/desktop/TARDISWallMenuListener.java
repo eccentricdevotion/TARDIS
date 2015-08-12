@@ -17,19 +17,19 @@
 package me.eccentric_nz.TARDIS.desktop;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.listeners.TARDISMenuListener;
 import me.eccentric_nz.TARDIS.rooms.TARDISWalls.Pair;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.ClickType;
 import org.bukkit.event.inventory.InventoryClickEvent;
-import org.bukkit.event.inventory.InventoryDragEvent;
 import org.bukkit.event.inventory.InventoryOpenEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
@@ -41,15 +41,17 @@ import org.bukkit.inventory.ItemStack;
  *
  * @author eccentric_nz
  */
-public class TARDISWallMenuListener implements Listener {
+public class TARDISWallMenuListener extends TARDISMenuListener implements Listener {
 
     private final TARDIS plugin;
     private final HashMap<UUID, Integer> scroll = new HashMap<UUID, Integer>();
     private final List<UUID> scrolling = new ArrayList<UUID>();
     private final ItemStack[][] blocks;
     private final int rows;
+    private final List<String> notthese = Arrays.asList("PINE_WOOD", "PINE_LOG", "GREY_WOOL", "LIGHT_GREY_WOOL", "GREY_CLAY", "LIGHT_GREY_CLAY", "STONE_BRICK", "CHISELED_STONE", "HUGE_MUSHROOM_STEM");
 
     public TARDISWallMenuListener(TARDIS plugin) {
+        super(plugin);
         this.plugin = plugin;
         this.rows = this.plugin.getTardisWalls().blocks.size() / 8 + 1;
         this.blocks = getWallBlocks();
@@ -57,8 +59,11 @@ public class TARDISWallMenuListener implements Listener {
 
     @EventHandler
     public void onWallMenuOpen(InventoryOpenEvent event) {
-        Player p = (Player) event.getPlayer();
-        scroll.put(p.getUniqueId(), 0);
+        String name = event.getInventory().getTitle();
+        if (name.equals("§4TARDIS Wall Menu") || name.equals("§4TARDIS Floor Menu")) {
+            Player p = (Player) event.getPlayer();
+            scroll.put(p.getUniqueId(), 0);
+        }
     }
 
     @EventHandler(ignoreCancelled = true)
@@ -127,27 +132,13 @@ public class TARDISWallMenuListener implements Listener {
         }
     }
 
-    @EventHandler(ignoreCancelled = true)
-    public void onWallMenuDrag(InventoryDragEvent event) {
-        Inventory inv = event.getInventory();
-        String title = inv.getTitle();
-        if (!title.equals("§4TARDIS Wall Menu") && !title.equals("§4TARDIS Floor Menu")) {
-            return;
-        }
-        Set<Integer> slots = event.getRawSlots();
-        for (Integer slot : slots) {
-            if ((slot >= 0 && slot < 54)) {
-                event.setCancelled(true);
-            }
-        }
-    }
-
     /**
      * Closes the inventory.
      *
      * @param p the player using the GUI
+     * @param remove whether to stop tracking the upgrade
      */
-    private void close(final Player p, boolean remove) {
+    public void close(final Player p, boolean remove) {
         if (remove) {
             plugin.getTrackerKeeper().getUpgrades().remove(p.getUniqueId());
         }
@@ -206,7 +197,7 @@ public class TARDISWallMenuListener implements Listener {
         int r = 0;
         int c = 0;
         for (Map.Entry<String, Pair> entry : plugin.getTardisWalls().blocks.entrySet()) {
-            if (!entry.getKey().equals("STONE_BRICK") && !entry.getKey().equals("HUGE_MUSHROOM_STEM")) {
+            if (!notthese.contains(entry.getKey())) {
                 Pair value = entry.getValue();
                 ItemStack is = new ItemStack(value.getType(), 1, value.getData());
                 stacks[r][c] = is;

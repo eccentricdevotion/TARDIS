@@ -44,15 +44,17 @@ public class TARDISPruner {
     private final TARDISDatabaseConnection service = TARDISDatabaseConnection.getInstance();
     private final Connection connection = service.getConnection();
     private final TARDIS plugin;
+    private final String prefix;
 
     public TARDISPruner(TARDIS plugin) {
         this.plugin = plugin;
+        this.prefix = this.plugin.getPrefix();
     }
 
     public void list(CommandSender sender, int days) {
         long millis = getTime(days);
         Timestamp prune = getTimestamp(millis);
-        String query = "SELECT * FROM tardis WHERE lastuse < " + millis;
+        String query = "SELECT * FROM " + prefix + "tardis WHERE lastuse < " + millis;
         Statement statement = null;
         ResultSet rs = null;
         try {
@@ -108,7 +110,7 @@ public class TARDISPruner {
     public void prune(CommandSender sender, int days) {
         long millis = getTime(days);
         Timestamp prune = getTimestamp(millis);
-        String query = "SELECT * FROM tardis WHERE lastuse < " + millis;
+        String query = "SELECT * FROM " + prefix + "tardis WHERE lastuse < " + millis;
         Statement statement = null;
         ResultSet rs = null;
         try {

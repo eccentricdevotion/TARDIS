@@ -22,6 +22,7 @@ import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.enchantments.EnchantmentWrapper;
+import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
@@ -69,9 +70,10 @@ public class TARDISPresetInventory {
         // page one
         ItemStack page = new ItemStack(Material.ARROW, 1);
         ItemMeta one = page.getItemMeta();
-        one.setDisplayName(plugin.getLanguage().getString("BUTTON_PAGE_1"));
+        one.setDisplayName(plugin.getLanguage().getString("BUTTON_PAGE_3"));
         Enchantment e = EnchantmentWrapper.ARROW_FIRE;
         one.addEnchant(e, 1, true);
+        one.addItemFlags(ItemFlag.values());
         page.setItemMeta(one);
         // Rubber duck
         ItemStack rub = new ItemStack(Material.STAINED_CLAY, 1, (short) 4);
@@ -119,7 +121,7 @@ public class TARDISPresetInventory {
         ch.setDisplayName("Flaming Torch");
         tor.setItemMeta(ch);
         // Pine Tree
-        ItemStack pine = new ItemStack(Material.LEAVES, 1, (short) 5);
+        ItemStack pine = new ItemStack(Material.LEAVES, 1, (short) 1);
         ItemMeta tree = pine.getItemMeta();
         tree.setDisplayName("Pine Tree");
         pine.setItemMeta(tree);
@@ -133,51 +135,30 @@ public class TARDISPresetInventory {
         ItemMeta tal = por.getItemMeta();
         tal.setDisplayName("Nether Portal");
         por.setItemMeta(tal);
-        // Apperture Science
-        ItemStack app = new ItemStack(Material.PORTAL, 1);
-        ItemMeta sci = app.getItemMeta();
-        sci.setDisplayName("Apperture Science");
-        app.setItemMeta(sci);
-        // Lighthouse
-        ItemStack lig = new ItemStack(Material.REDSTONE_LAMP_OFF, 1);
-        ItemMeta hou = lig.getItemMeta();
-        hou.setDisplayName("Tiny Lighthouse");
-        lig.setItemMeta(hou);
-        // Library
-        ItemStack lib = new ItemStack(Material.BOOK, 1);
-        ItemMeta rar = lib.getItemMeta();
-        rar.setDisplayName("Library");
-        lib.setItemMeta(rar);
-        // Snowman
-        ItemStack sno = new ItemStack(Material.SNOW_BLOCK, 1);
-        ItemMeta man = sno.getItemMeta();
-        man.setDisplayName("Snowman");
-        sno.setItemMeta(man);
-        // Jail
-        ItemStack jail = new ItemStack(Material.IRON_FENCE, 1);
-        ItemMeta gaol = jail.getItemMeta();
-        gaol.setDisplayName("Jail Cell");
-        jail.setItemMeta(gaol);
-        // Pandorica
-        ItemStack pan = new ItemStack(Material.BEDROCK, 1);
-        ItemMeta dor = pan.getItemMeta();
-        dor.setDisplayName("Pandorica");
-        pan.setItemMeta(dor);
-        // Double Helix
-        ItemStack dou = new ItemStack(Material.SMOOTH_STAIRS, 1);
-        ItemMeta lix = dou.getItemMeta();
-        lix.setDisplayName("Double Helix");
-        dou.setItemMeta(lix);
+        // cake
+        ItemStack cake = new ItemStack(Material.WOOL, 1, (short) 12);
+        ItemMeta candle = cake.getItemMeta();
+        candle.setDisplayName("Birthday Cake");
+        cake.setItemMeta(candle);
+        // grave
+        ItemStack grave = new ItemStack(Material.ENDER_STONE, 1);
+        ItemMeta epitaph = grave.getItemMeta();
+        epitaph.setDisplayName("Gravestone");
+        grave.setItemMeta(epitaph);
+        // topsy
+        ItemStack topsy = new ItemStack(Material.WOOL, 1, (short) 6);
+        ItemMeta turvey = topsy.getItemMeta();
+        turvey.setDisplayName("Topsy-turvey");
+        topsy.setItemMeta(turvey);
+        // mushroom
+        ItemStack mush = new ItemStack(Material.HUGE_MUSHROOM_1, 1);
+        ItemMeta shroom = mush.getItemMeta();
+        shroom.setDisplayName("Mushroom");
+        mush.setItemMeta(shroom);
         // Random Fence
         ItemStack fen = new ItemStack(Material.BRICK, 1, (short) 6);
         ItemMeta cer = fen.getItemMeta();
         cer.setDisplayName("Random Fence");
-        fen.setItemMeta(cer);
-        // Gazebo
-        ItemStack gaz = new ItemStack(Material.FENCE, 1);
-        ItemMeta ebo = gaz.getItemMeta();
-        ebo.setDisplayName("Gazebo");
-        gaz.setItemMeta(ebo);
         // custom
         ItemStack custom = new ItemStack(Material.ENDER_CHEST, 1);
         ItemMeta pre = custom.getItemMeta();
@@ -192,18 +173,19 @@ public class TARDISPresetInventory {
         me.setLore(Arrays.asList(biome, String.format(plugin.getLanguage().getString("CHAM_CLICK"), to_turn)));
         bio.setItemMeta(me);
         // Cancel / close
-        ItemStack close = new ItemStack(Material.WOOL, 1, (short) 15);
+        ItemStack close = new ItemStack(Material.BOWL, 1);
         ItemMeta can = close.getItemMeta();
         can.setDisplayName(plugin.getLanguage().getString("BUTTON_CLOSE"));
         close.setItemMeta(can);
 
         ItemStack[] is = {
-            null, con, null, apply, null, bio, null, close, null,
-            custom, null, rub, null, mine, null, cre, null, pea,
-            null, lamp, null, candy, null, toi, null, rob, null,
-            tor, null, pine, null, pun, null, fen, null, por,
-            null, gaz, null, app, null, lig, null, lib, null,
-            sno, null, jail, null, pan, null, dou, null, page
+            con, null, apply, null, bio, null, close, null, page,
+            null, null, null, null, null, null, null, null, null,
+            custom, null, cake, null, grave, null, topsy, null, mush,
+            null, rub, null, mine, null, cre, null, pea, null,
+            lamp, null, candy, null, toi, null, rob, null, tor,
+            null, pine, null, pun, null, fen, null, por, null
+
         };
         return is;
     }

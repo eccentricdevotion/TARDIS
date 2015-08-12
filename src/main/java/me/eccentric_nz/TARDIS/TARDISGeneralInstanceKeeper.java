@@ -16,6 +16,9 @@
  */
 package me.eccentric_nz.TARDIS;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -23,6 +26,9 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.UUID;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import me.eccentric_nz.TARDIS.commands.TARDISCommandHelper;
 import me.eccentric_nz.TARDIS.commands.TARDISTravelCommands;
 import me.eccentric_nz.TARDIS.commands.admin.TARDISAdminCommands;
 import me.eccentric_nz.TARDIS.listeners.TARDISButtonListener;
@@ -39,6 +45,8 @@ import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
+import org.bukkit.configuration.InvalidConfigurationException;
+import org.bukkit.configuration.file.YamlConfiguration;
 
 /**
  * Keeps instances of various classes, maps and lists for easy access in other
@@ -48,7 +56,7 @@ import org.bukkit.block.BlockFace;
  */
 public class TARDISGeneralInstanceKeeper {
 
-    private HashSet<Byte> transparent = new HashSet<Byte>();
+    private HashSet<Material> transparent = new HashSet<Material>();
     private List<Block> doorPistons = new ArrayList<Block>();
     private List<Integer> npcIDs = new ArrayList<Integer>();
     private List<String> quotes = new ArrayList<String>();
@@ -67,8 +75,10 @@ public class TARDISGeneralInstanceKeeper {
     private final HashMap<String, Integer> protectBlockMap = new HashMap<String, Integer>();
     private final HashMap<UUID, TARDISCondenserData> roomCondenserData = new HashMap<UUID, TARDISCondenserData>();
     private final List<BlockFace> faces = Arrays.asList(BlockFace.NORTH, BlockFace.WEST, BlockFace.SOUTH, BlockFace.EAST);
+    private final List<BlockFace> surrounding = Arrays.asList(BlockFace.EAST, BlockFace.SOUTH, BlockFace.WEST, BlockFace.NORTH, BlockFace.NORTH_EAST, BlockFace.NORTH_WEST, BlockFace.SOUTH_EAST, BlockFace.SOUTH_WEST);
     private final List<Chunk> roomChunkList = new ArrayList<Chunk>();
     private final List<Chunk> tardisChunkList = new ArrayList<Chunk>();
+    private final List<Chunk> railChunkList = new ArrayList<Chunk>();
     private final List<Location> rechargers = new ArrayList<Location>();
     private final List<Material> rails = Arrays.asList(Material.POWERED_RAIL, Material.RAILS, Material.DETECTOR_RAIL, Material.ACTIVATOR_RAIL);
     private final List<Material> goodNether = Arrays.asList(Material.NETHERRACK, Material.SOUL_SAND, Material.GLOWSTONE, Material.NETHER_BRICK, Material.NETHER_FENCE, Material.NETHER_BRICK_STAIRS);
@@ -80,6 +90,7 @@ public class TARDISGeneralInstanceKeeper {
     private final List<String> sonicWires = new ArrayList<String>();
     private final TARDIS plugin;
     private final TARDISUUIDCache UUIDCache;
+    private final YamlConfiguration pluginYAML;
 
     public TARDISGeneralInstanceKeeper(TARDIS plugin) {
         this.plugin = plugin;
@@ -88,6 +99,16 @@ public class TARDISGeneralInstanceKeeper {
         this.UUIDCache = new TARDISUUIDCache(plugin);
         this.doorListener = new TARDISDoorListener(plugin);
         setRechargers();
+        InputStream is = plugin.getResource("plugin.yml");
+        InputStreamReader reader = new InputStreamReader(is);
+        this.pluginYAML = new YamlConfiguration();
+        try {
+            this.pluginYAML.load(reader);
+        } catch (IOException ex) {
+            Logger.getLogger(TARDISCommandHelper.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (InvalidConfigurationException ex) {
+            Logger.getLogger(TARDISCommandHelper.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     public List<String> getQuotes() {
@@ -102,12 +123,20 @@ public class TARDISGeneralInstanceKeeper {
         return faces;
     }
 
+    public List<BlockFace> getSurrounding() {
+        return surrounding;
+    }
+
     public List<Chunk> getTardisChunkList() {
         return tardisChunkList;
     }
 
     public List<Chunk> getRoomChunkList() {
         return roomChunkList;
+    }
+
+    public List<Chunk> getRailChunkList() {
+        return railChunkList;
     }
 
     public List<Material> getRails() {
@@ -230,7 +259,7 @@ public class TARDISGeneralInstanceKeeper {
         return roomArgs;
     }
 
-    public HashSet<Byte> getTransparent() {
+    public HashSet<Material> getTransparent() {
         return transparent;
     }
 
@@ -254,6 +283,10 @@ public class TARDISGeneralInstanceKeeper {
         return rechargers;
     }
 
+    public YamlConfiguration getPluginYAML() {
+        return pluginYAML;
+    }
+
     private void setRechargers() {
         if (plugin.getConfig().isConfigurationSection("rechargers")) {
             Set<String> therechargers = plugin.getConfig().getConfigurationSection("rechargers").getKeys(false);
@@ -268,18 +301,19 @@ public class TARDISGeneralInstanceKeeper {
         }
     }
 
-    private HashSet<Byte> buildTransparent() {
-        HashSet<Byte> trans = new HashSet<Byte>();
+    private HashSet<Material> buildTransparent() {
+        HashSet<Material> trans = new HashSet<Material>();
         // add transparent blocks
-        trans.add((byte) 0); // AIR
-        trans.add((byte) 8); // WATER
-        trans.add((byte) 9); // STATIONARY_WATER
-        trans.add((byte) 31); // LONG_GRASS
-        trans.add((byte) 32); // DEAD_BUSH
-        trans.add((byte) 55); // REDSTONE_WIRE
-        trans.add((byte) 78); // SNOW
-        trans.add((byte) 101); // IRON_FENCE
-        trans.add((byte) 106); // VINE
+        trans.add(Material.AIR);
+        trans.add(Material.WATER);
+        trans.add(Material.STATIONARY_WATER);
+        trans.add(Material.LONG_GRASS);
+        trans.add(Material.DEAD_BUSH);
+        trans.add(Material.DOUBLE_PLANT);
+        trans.add(Material.REDSTONE_WIRE);
+        trans.add(Material.SNOW);
+        trans.add(Material.IRON_FENCE);
+        trans.add(Material.VINE);
         return trans;
     }
 

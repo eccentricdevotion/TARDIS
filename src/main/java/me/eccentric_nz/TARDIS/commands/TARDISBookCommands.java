@@ -16,8 +16,10 @@
  */
 package me.eccentric_nz.TARDIS.commands;
 
+import com.google.common.collect.ImmutableList;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
@@ -29,6 +31,7 @@ import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
+import org.bukkit.command.TabCompleter;
 import org.bukkit.entity.Player;
 
 /**
@@ -42,14 +45,17 @@ import org.bukkit.entity.Player;
  *
  * @author eccentric_nz
  */
-public class TARDISBookCommands implements CommandExecutor {
+public class TARDISBookCommands extends TARDISCompleter implements CommandExecutor, TabCompleter {
 
     private final TARDIS plugin;
     LinkedHashMap<String, String> books;
+    private final List<String> ROOT_SUBS;
+    private final List<String> DO_SUBS = ImmutableList.of("get", "start");
 
     public TARDISBookCommands(TARDIS plugin) {
         this.plugin = plugin;
         this.books = getAchievements();
+        this.ROOT_SUBS = ImmutableList.copyOf(this.books.keySet());
     }
 
     @Override
@@ -57,7 +63,8 @@ public class TARDISBookCommands implements CommandExecutor {
         // If the player typed /tardisbook then do the following...
         if (cmd.getName().equalsIgnoreCase("tardisbook")) {
             if (args.length < 1) {
-                return false;
+                new TARDISCommandHelper(plugin).getCommand("tardisbook", sender);
+                return true;
             }
             if (sender.hasPermission("tardis.book")) {
                 String first = args[0].toLowerCase(Locale.ENGLISH);
@@ -82,31 +89,31 @@ public class TARDISBookCommands implements CommandExecutor {
                     TARDISMessage.send(player, "BOOK_NEED");
                     return false;
                 }
-                String bookname = args[1].toLowerCase(Locale.ENGLISH);
-                if (!books.containsKey(bookname)) {
+                if (!books.containsKey(first)) {
                     TARDISMessage.send(player, "BOOK_NOT_FOUND");
                     return true;
                 }
-                if (first.equals("get")) {
+                String second = args[1].toLowerCase(Locale.ENGLISH);
+                if (second.equals("get")) {
                     // need to check whether they already have been given the book
                     TARDISBook book = new TARDISBook(plugin);
                     // title, author, filename, player
-                    book.writeBook(books.get(bookname), "Rassilon", bookname, player);
+                    book.writeBook(books.get(first), "Rassilon", first, player);
                     return true;
                 }
-                if (first.equals("start")) {
-                    if (plugin.getAchievementConfig().getBoolean(bookname + ".auto")) {
+                if (second.equals("start")) {
+                    if (plugin.getAchievementConfig().getBoolean(first + ".auto")) {
                         TARDISMessage.send(player, "ACHIEVE_AUTO");
                         return true;
                     }
                     // check they have not already started the achievement
                     HashMap<String, Object> where = new HashMap<String, Object>();
                     where.put("uuid", player.getUniqueId().toString());
-                    where.put("name", bookname);
+                    where.put("name", first);
                     ResultSetAchievements rsa = new ResultSetAchievements(plugin, where, false);
                     if (rsa.resultSet()) {
                         if (rsa.isCompleted()) {
-                            if (!plugin.getAchievementConfig().getBoolean(bookname + ".repeatable")) {
+                            if (!plugin.getAchievementConfig().getBoolean(first + ".repeatable")) {
                                 TARDISMessage.send(player, "ACHIEVE_ONCE");
                                 return true;
                             }
@@ -117,10 +124,10 @@ public class TARDISBookCommands implements CommandExecutor {
                     }
                     HashMap<String, Object> set = new HashMap<String, Object>();
                     set.put("uuid", player.getUniqueId().toString());
-                    set.put("name", bookname);
+                    set.put("name", first);
                     QueryFactory qf = new QueryFactory(plugin);
                     qf.doInsert("achievements", set);
-                    TARDISMessage.send(player, "ACHIEVE_STARTED", bookname);
+                    TARDISMessage.send(player, "ACHIEVE_STARTED", first);
                     return true;
                 }
             }
@@ -138,5 +145,18 @@ public class TARDISBookCommands implements CommandExecutor {
             }
         }
         return map;
+    }
+
+    @Override
+    public List<String> onTabComplete(CommandSender sender, Command command, String label, String[] args) {
+        // Remember that we can return null to default to online player name matching
+        String lastArg = args[args.length - 1];
+
+        if (args.length <= 1) {
+            return partial(args[0], ROOT_SUBS);
+        } else if (args.length == 2) {
+            return partial(lastArg, DO_SUBS);
+        }
+        return ImmutableList.of();
     }
 }

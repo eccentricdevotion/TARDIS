@@ -18,12 +18,15 @@ package me.eccentric_nz.TARDIS.commands.tardis;
 
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Locale;
+import java.util.Set;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.chatGUI.TARDISUpdateChatGUI;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import me.eccentric_nz.TARDIS.database.ResultSetTravellers;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
+import me.eccentric_nz.TARDIS.utility.TARDISNumberParsers;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
@@ -35,6 +38,8 @@ import org.bukkit.entity.Player;
 public class TARDISUpdateCommand {
 
     private final TARDIS plugin;
+    private final List<String> validBlockNames = Arrays.asList("advanced", "ars", "artron", "back", "backdoor", "button", "chameleon", "condenser", "control", "creeper", "direction", "door", "eps", "farm", "handbrake", "hinge", "info", "keyboard", "light", "rail", "save-sign", "scanner", "siege", "stable", "storage", "temporal", "terminal", "toggle_wool", "vault", "village", "world-repeater", "x-repeater", "y-repeater", "z-repeater", "zero");
+    Set<Material> transparent = null;
 
     public TARDISUpdateCommand(TARDIS plugin) {
         this.plugin = plugin;
@@ -43,23 +48,34 @@ public class TARDISUpdateCommand {
     @SuppressWarnings("deprecation")
     public boolean startUpdate(Player player, String[] args) {
         if (player.hasPermission("tardis.update")) {
-            String[] validBlockNames = {"advanced", "ars", "artron", "back", "backdoor", "button", "chameleon", "condenser", "creeper", "direction", "door", "eps", "farm", "handbrake", "hinge", "info", "keyboard", "light", "rail", "save-sign", "scanner", "stable", "storage", "temporal", "terminal", "toggle_wool", "vault", "village", "world-repeater", "x-repeater", "y-repeater", "z-repeater", "zero"};
             if (args.length == 1 && plugin.getPM().isPluginEnabled("ProtocolLib")) {
                 return new TARDISUpdateChatGUI(plugin).showInterface(player, args);
             } else if (args.length < 2) {
                 TARDISMessage.send(player, "TOO_FEW_ARGS");
                 return false;
             }
+            HashMap<String, Object> where = new HashMap<String, Object>();
+            where.put("uuid", player.getUniqueId().toString());
+            ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);
+            if (!rs.resultSet()) {
+                TARDISMessage.send(player, "NOT_A_TIMELORD");
+                return false;
+            }
+            int ownerid = rs.getTardis_id();
             String tardis_block = args[1].toLowerCase(Locale.ENGLISH);
-            if (!Arrays.asList(validBlockNames).contains(tardis_block)) {
+            if (!validBlockNames.contains(tardis_block)) {
                 new TARDISUpdateLister(plugin, player).list();
                 return true;
             }
+            if (tardis_block.equals("siege") && !plugin.getConfig().getBoolean("siege.enabled")) {
+                TARDISMessage.send(player, "SIEGE_DISABLED");
+                return true;
+            }
             if (tardis_block.equals("hinge")) {
-                Block block = player.getTargetBlock(null, 10);
+                Block block = player.getTargetBlock(transparent, 10);
                 if (block.getType().equals(Material.IRON_DOOR_BLOCK)) {
                     if (args.length == 3) {
-                        byte b = plugin.getUtils().parseByte(args[2]);
+                        byte b = TARDISNumberParsers.parseByte(args[2]);
                         block.setData(b, true);
                     } else {
                         byte blockData = block.getData();
@@ -95,14 +111,6 @@ public class TARDISUpdateCommand {
                 TARDISMessage.send(player, "UPDATE_NO_PERM", tardis_block);
                 return true;
             }
-            HashMap<String, Object> where = new HashMap<String, Object>();
-            where.put("uuid", player.getUniqueId().toString());
-            ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);
-            if (!rs.resultSet()) {
-                TARDISMessage.send(player, "NOT_A_TIMELORD");
-                return false;
-            }
-            int ownerid = rs.getTardis_id();
             // must grow a room first
             if (tardis_block.equals("farm") || tardis_block.equals("stable") || tardis_block.equals("village") || tardis_block.equals("rail")) {
                 if (tardis_block.equals("farm") && rs.getFarm().isEmpty()) {

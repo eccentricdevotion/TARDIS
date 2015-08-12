@@ -46,7 +46,6 @@ public class TARDISARSMapListener extends TARDISARSMethods implements Listener {
 
     public TARDISARSMapListener(TARDIS plugin) {
         super(plugin);
-        getRoomIdAndNames();
     }
 
     /**
@@ -63,9 +62,9 @@ public class TARDISARSMapListener extends TARDISARSMethods implements Listener {
             event.setCancelled(true);
             final Player player = (Player) event.getWhoClicked();
             UUID uuid = player.getUniqueId();
-            ids.put(uuid, getTardisId(player.getUniqueId().toString(), player.isOp()));
+            ids.put(uuid, getTardisId(player.getUniqueId().toString()));
             int slot = event.getRawSlot();
-            if (slot != 10 && !hasLoadedMap.contains(uuid)) {
+            if (slot != 10 && slot != 45 && !hasLoadedMap.contains(uuid)) {
                 TARDISMessage.send(player, "ARS_LOAD");
                 return;
             }

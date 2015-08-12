@@ -40,6 +40,8 @@ public class TARDISWalls {
         blocks.put("MOSSY_COBBLESTONE", new Pair(Material.MOSSY_COBBLESTONE, (byte) 0));
         blocks.put("ENDER_STONE", new Pair(Material.ENDER_STONE, (byte) 0));
         blocks.put("DIRT", new Pair(Material.DIRT, (byte) 0));
+        blocks.put("COARSE_DIRT", new Pair(Material.DIRT, (byte) 1));
+        blocks.put("PODZOL", new Pair(Material.DIRT, (byte) 2));
         blocks.put("OAK_WOOD", new Pair(Material.WOOD, (byte) 0));
         blocks.put("PINE_WOOD", new Pair(Material.WOOD, (byte) 1));
         blocks.put("SPRUCE_WOOD", new Pair(Material.WOOD, (byte) 1));
@@ -113,6 +115,18 @@ public class TARDISWalls {
         blocks.put("QUARTZ_PILLAR", new Pair(Material.QUARTZ_BLOCK, (byte) 2));
         blocks.put("HAY", new Pair(Material.HAY_BLOCK, (byte) 0));
         blocks.put("PACKED_ICE", new Pair(Material.PACKED_ICE, (byte) 0));
+        blocks.put("PRISMARINE", new Pair(Material.PRISMARINE, (byte) 0));
+        blocks.put("PRISMARINE_BRICKS", new Pair(Material.PRISMARINE, (byte) 1));
+        blocks.put("DARK_PRISMARINE", new Pair(Material.PRISMARINE, (byte) 2));
+        blocks.put("RED_SANDSTONE", new Pair(Material.RED_SANDSTONE, (byte) 0));
+        blocks.put("CHISELED_RED_SANDSTONE", new Pair(Material.RED_SANDSTONE, (byte) 1));
+        blocks.put("SMOOTH_RED_SANDSTONE", new Pair(Material.RED_SANDSTONE, (byte) 2));
+        blocks.put("GRANITE", new Pair(Material.STONE, (byte) 1));
+        blocks.put("POLISHED_GRANITE", new Pair(Material.STONE, (byte) 2));
+        blocks.put("DIORITE", new Pair(Material.STONE, (byte) 3));
+        blocks.put("POLISHED_DIORITE", new Pair(Material.STONE, (byte) 4));
+        blocks.put("ANDESITE", new Pair(Material.STONE, (byte) 5));
+        blocks.put("POLISHED_ANDESITE", new Pair(Material.STONE, (byte) 6));
         if (TARDIS.plugin.getConfig().getBoolean("allow.all_blocks")) {
             blocks.put("BEDROCK", new Pair(Material.BEDROCK, (byte) 0));
             blocks.put("COAL_ORE", new Pair(Material.COAL_ORE, (byte) 0));
@@ -133,6 +147,7 @@ public class TARDISWalls {
             blocks.put("PUMPKIN", new Pair(Material.PUMPKIN, (byte) 0));
             blocks.put("REDSTONE_BLOCK", new Pair(Material.REDSTONE_BLOCK, (byte) 0));
             blocks.put("REDSTONE_ORE", new Pair(Material.REDSTONE_ORE, (byte) 0));
+            blocks.put("SEA_LANTERN", new Pair(Material.SEA_LANTERN, (byte) 0));
         }
     }
 

@@ -21,7 +21,6 @@ import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.travel.TARDISTerminalInventory;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import org.bukkit.command.CommandSender;
 
@@ -53,11 +52,17 @@ public class TARDISSetIntegerCommand {
             TARDISMessage.send(sender, "ARG_LAST_NUMBER");
             return false;
         }
-        plugin.getConfig().set(first, val);
-        if (first.equals("terminal_step")) {
-            // reset the terminal inventory
-            plugin.getGeneralKeeper().getButtonListener().items = new TARDISTerminalInventory(plugin).getTerminal();
+        if (first.equals("circuits.uses.chameleon_uses")) {
+            first = "circuits.uses.chameleon";
         }
+        if (first.equals("circuits.uses.invisibility_uses")) {
+            first = "circuits.uses.invisibility";
+        }
+        plugin.getConfig().set(first, val);
+//        if (first.equals("terminal_step")) {
+//            // reset the terminal inventory
+//            plugin.getGeneralKeeper().getButtonListener().items = new TARDISTerminalInventory(plugin).getTerminal();
+//        }
         plugin.saveConfig();
         TARDISMessage.send(sender, "CONFIG_UPDATED");
         return true;
@@ -76,10 +81,32 @@ public class TARDISSetIntegerCommand {
         }
         plugin.getArtronConfig().set(first, val);
         try {
-            plugin.getArtronConfig().save(new File(plugin.getDataFolder(), "artron.yml"));
+            plugin.getArtronConfig().save(new File(plugin.getDataFolder(), "config.yml"));
         } catch (IOException io) {
             plugin.debug("Could not save artron.yml, " + io);
         }
+        TARDISMessage.send(sender, "CONFIG_UPDATED");
+        return true;
+    }
+
+    public boolean setRandomInt(CommandSender sender, String[] args) {
+        String first = args[0];
+        String which = args[1];
+        if (!which.equalsIgnoreCase("x") || !which.equalsIgnoreCase("z")) {
+            TARDISMessage.send(sender, "ARG_DIRECTION");
+            return true;
+        }
+        String a = args[2];
+        int val;
+        try {
+            val = Integer.parseInt(a);
+        } catch (NumberFormatException nfe) {
+            // not a number
+            TARDISMessage.send(sender, "ARG_LAST_NUMBER");
+            return false;
+        }
+        plugin.getConfig().set("travel." + first + "." + which.toLowerCase(), val);
+        plugin.saveConfig();
         TARDISMessage.send(sender, "CONFIG_UPDATED");
         return true;
     }

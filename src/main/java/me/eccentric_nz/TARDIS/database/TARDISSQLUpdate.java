@@ -36,6 +36,7 @@ public class TARDISSQLUpdate implements Runnable {
     private final String table;
     private final HashMap<String, Object> data;
     private final HashMap<String, Object> where;
+    private final String prefix;
 
     /**
      * Updates data in an SQLite database table. This method builds an SQL query
@@ -52,6 +53,7 @@ public class TARDISSQLUpdate implements Runnable {
         this.table = table;
         this.data = data;
         this.where = where;
+        this.prefix = this.plugin.getPrefix();
     }
 
     @Override
@@ -75,7 +77,7 @@ public class TARDISSQLUpdate implements Runnable {
         where.clear();
         updates = sbu.toString().substring(0, sbu.length() - 1);
         wheres = sbw.toString().substring(0, sbw.length() - 5);
-        String query = "UPDATE " + table + " SET " + updates + " WHERE " + wheres;
+        String query = "UPDATE " + prefix + table + " SET " + updates + " WHERE " + wheres;
         try {
             service.testConnection(connection);
             ps = connection.prepareStatement(query);

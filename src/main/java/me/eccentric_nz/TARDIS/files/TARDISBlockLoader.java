@@ -28,6 +28,7 @@ import me.eccentric_nz.TARDIS.database.ResultSetBlocks;
 import me.eccentric_nz.TARDIS.database.ResultSetGravity;
 import me.eccentric_nz.TARDIS.database.TARDISDatabaseConnection;
 import me.eccentric_nz.TARDIS.utility.TARDISAntiBuild;
+import me.eccentric_nz.TARDIS.utility.TARDISNumberParsers;
 import org.bukkit.util.Vector;
 
 /**
@@ -70,7 +71,7 @@ public class TARDISBlockLoader {
         if (rsg.resultSet()) {
             ArrayList<HashMap<String, String>> data = rsg.getData();
             for (HashMap<String, String> map : data) {
-                int i = plugin.getUtils().parseInt(map.get("direction"));
+                int i = TARDISNumberParsers.parseInt(map.get("direction"));
                 Double[] values = new Double[3];
                 values[0] = Double.valueOf(map.get("direction"));
                 values[1] = Double.valueOf(map.get("distance"));
@@ -114,7 +115,8 @@ public class TARDISBlockLoader {
         Connection connection = service.getConnection();
         Statement statement = null;
         ResultSet rs = null;
-        String query = "SELECT tardis.tardis_id, tardis.owner, tardis.chunk FROM tardis, player_prefs WHERE player_prefs.build_on = 0 AND player_prefs.player = tardis.owner";
+        String prefix = plugin.getPrefix();
+        String query = "SELECT " + prefix + "tardis.tardis_id, " + prefix + "tardis.owner, " + prefix + "tardis.chunk FROM " + prefix + "tardis, " + prefix + "player_prefs WHERE " + prefix + "player_prefs.build_on = 0 AND " + prefix + "player_prefs.player = " + prefix + "tardis.owner";
         try {
             service.testConnection(connection);
             statement = connection.createStatement();

@@ -19,6 +19,7 @@ package me.eccentric_nz.TARDIS.commands.admin;
 import java.util.Locale;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
+import me.eccentric_nz.TARDIS.utility.TARDISStaticUtils;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
@@ -44,7 +45,7 @@ public class TARDISMakePresetCommand {
             return true;
         }
         // check they are facing east
-        String yaw = plugin.getUtils().getPlayersDirection(player, false);
+        String yaw = TARDISStaticUtils.getPlayersDirection(player, false);
         if (!yaw.equals("EAST")) {
             TARDISMessage.send(player, "PRESET_DIRECTION");
             return true;

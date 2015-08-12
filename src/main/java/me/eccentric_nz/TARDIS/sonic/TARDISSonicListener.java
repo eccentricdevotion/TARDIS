@@ -31,7 +31,10 @@ import me.eccentric_nz.TARDIS.database.ResultSetDoors;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import me.eccentric_nz.TARDIS.database.ResultSetTravellers;
 import static me.eccentric_nz.TARDIS.listeners.TARDISScannerListener.getNearbyEntities;
+import me.eccentric_nz.TARDIS.utility.TARDISGriefPreventionChecker;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
+import me.eccentric_nz.TARDIS.utility.TARDISSounds;
+import me.eccentric_nz.TARDIS.utility.TARDISStaticUtils;
 import me.eccentric_nz.TARDIS.utility.TARDISVector3D;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
@@ -52,6 +55,7 @@ import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.inventory.Inventory;
+import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -101,14 +105,25 @@ public class TARDISSonicListener implements Listener {
         distance.add(Material.STONE_BUTTON);
         distance.add(Material.WOODEN_DOOR);
         distance.add(Material.WOOD_BUTTON);
+        doors.add(Material.ACACIA_DOOR);
+        doors.add(Material.BIRCH_DOOR);
+        doors.add(Material.DARK_OAK_DOOR);
         doors.add(Material.IRON_DOOR_BLOCK);
+        doors.add(Material.JUNGLE_DOOR);
+        doors.add(Material.SPRUCE_DOOR);
         doors.add(Material.TRAP_DOOR);
         doors.add(Material.WOODEN_DOOR);
+        interactables.add(Material.ACACIA_DOOR);
+        interactables.add(Material.ACACIA_FENCE_GATE);
         interactables.add(Material.ANVIL);
         interactables.add(Material.BEACON);
         interactables.add(Material.BED_BLOCK);
+        interactables.add(Material.BIRCH_DOOR);
+        interactables.add(Material.BIRCH_FENCE_GATE);
         interactables.add(Material.BURNING_FURNACE);
         interactables.add(Material.CHEST);
+        interactables.add(Material.DARK_OAK_DOOR);
+        interactables.add(Material.DARK_OAK_FENCE_GATE);
         interactables.add(Material.DIODE_BLOCK_OFF);
         interactables.add(Material.DIODE_BLOCK_ON);
         interactables.add(Material.DISPENSER);
@@ -118,10 +133,14 @@ public class TARDISSonicListener implements Listener {
         interactables.add(Material.HOPPER);
         interactables.add(Material.IRON_DOOR_BLOCK);
         interactables.add(Material.JUKEBOX);
+        interactables.add(Material.JUNGLE_DOOR);
+        interactables.add(Material.JUNGLE_FENCE_GATE);
         interactables.add(Material.LEVER);
         interactables.add(Material.NOTE_BLOCK);
         interactables.add(Material.REDSTONE_COMPARATOR_OFF);
         interactables.add(Material.REDSTONE_COMPARATOR_ON);
+        interactables.add(Material.SPRUCE_DOOR);
+        interactables.add(Material.SPRUCE_FENCE_GATE);
         interactables.add(Material.STONE_BUTTON);
         interactables.add(Material.TRAPPED_CHEST);
         interactables.add(Material.TRAP_DOOR);
@@ -215,8 +234,8 @@ public class TARDISSonicListener implements Listener {
                         return;
                     }
                 }
-                if (action.equals(Action.RIGHT_CLICK_AIR) && player.isSneaking()) {
-                    Inventory ppm = plugin.getServer().createInventory(player, 18, "§4Player Prefs Menu");
+                if (action.equals(Action.RIGHT_CLICK_AIR) && player.isSneaking() && player.hasPermission("tardis.sonic.standard")) {
+                    Inventory ppm = plugin.getServer().createInventory(player, 27, "§4Player Prefs Menu");
                     ppm.setContents(new TARDISPrefsMenuInventory(plugin, player.getUniqueId()).getMenu());
                     player.openInventory(ppm);
                     return;
@@ -312,6 +331,10 @@ public class TARDISSonicListener implements Listener {
                                 if (rsd.resultSet()) {
                                     return;
                                 }
+                                // not protected doors - WorldGuard / GriefPrevention / Lockette / LWC
+                                if (checkDoorRespect(player, tmp)) {
+                                    return;
+                                }
                                 if (!plugin.getTrackerKeeper().getSonicDoors().contains(player.getUniqueId())) {
                                     plugin.getTrackerKeeper().getSonicDoors().add(player.getUniqueId());
                                     final Block door_bottom = tmp;
@@ -393,7 +416,14 @@ public class TARDISSonicListener implements Listener {
                             case REDSTONE_LAMP_ON:
                                 if (blockType.equals(Material.REDSTONE_LAMP_OFF)) {
                                     plugin.getGeneralKeeper().getSonicLamps().add(b.getLocation().toString());
-                                    b.setType(Material.REDSTONE_LAMP_ON);
+                                    for (BlockFace f : faces) {
+                                        if (b.getRelative(f).getType().equals(Material.AIR)) {
+                                            b.getRelative(f).setTypeIdAndData(152, (byte) 0, true);
+                                            b.setType(Material.REDSTONE_LAMP_ON);
+                                            b.getRelative(f).setTypeIdAndData(0, (byte) 0, true);
+                                            break;
+                                        }
+                                    }
                                 } else if (plugin.getGeneralKeeper().getSonicLamps().contains(b.getLocation().toString())) {
                                     plugin.getGeneralKeeper().getSonicLamps().remove(b.getLocation().toString());
                                     b.setType(Material.REDSTONE_LAMP_OFF);
@@ -537,9 +567,12 @@ public class TARDISSonicListener implements Listener {
         if ((!timeout.containsKey(player.getUniqueId()) || timeout.get(player.getUniqueId()) < now)) {
             ItemMeta im = player.getItemInHand().getItemMeta();
             im.addEnchant(Enchantment.DURABILITY, 1, true);
+            if (!plugin.getPM().isPluginEnabled("Multiverse-Inventories")) {
+                im.addItemFlags(ItemFlag.values());
+            }
             player.getItemInHand().setItemMeta(im);
             timeout.put(player.getUniqueId(), now + cooldown);
-            plugin.getUtils().playTARDISSound(player.getLocation(), player, sound);
+            TARDISSounds.playTARDISSound(player.getLocation(), player, sound);
             plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
                 @Override
                 public void run() {
@@ -630,14 +663,21 @@ public class TARDISSonicListener implements Listener {
             }
         }
         final long time = scan_loc.getWorld().getTime();
-        final String daynight = plugin.getUtils().getTime(time);
+        final String daynight = TARDISStaticUtils.getTime(time);
+        String worldname;
+        if (plugin.isMVOnServer()) {
+            worldname = plugin.getMVHelper().getAlias(scan_loc.getWorld());
+        } else {
+            worldname = scan_loc.getWorld().getName();
+        }
+        final String wn = worldname;
         // message the player
         TARDISMessage.send(player, "SONIC_SCAN");
         BukkitScheduler bsched = plugin.getServer().getScheduler();
         bsched.scheduleSyncDelayedTask(plugin, new Runnable() {
             @Override
             public void run() {
-                TARDISMessage.send(player, true, "SCAN_WORLD", scan_loc.getWorld().getName());
+                TARDISMessage.send(player, true, "SCAN_WORLD", wn);
                 TARDISMessage.send(player, true, "SONIC_COORDS", scan_loc.getBlockX() + ":" + scan_loc.getBlockY() + ":" + scan_loc.getBlockZ());
             }
         }, 20L);
@@ -700,7 +740,7 @@ public class TARDISSonicListener implements Listener {
                     }
                     scannedentities.clear();
                 } else {
-                    player.sendMessage(plugin.getLanguage().getString("SCAN_NONE"));
+                    TARDISMessage.send(player, true, "SCAN_NONE");
                 }
             }
         }, 140L);
@@ -721,21 +761,8 @@ public class TARDISSonicListener implements Listener {
                     } else {
                         lowerdoor = targetBlock;
                     }
-                    boolean allow = true;
-                    // is Lockette or LWC on the server?
-                    if (plugin.getPM().isPluginEnabled("Lockette")) {
-                        Lockette Lockette = (Lockette) plugin.getPM().getPlugin("Lockette");
-                        if (Lockette.isProtected(lowerdoor)) {
-                            allow = false;
-                        }
-                    }
-                    if (plugin.getPM().isPluginEnabled("LWC")) {
-                        LWCPlugin lwcplug = (LWCPlugin) plugin.getPM().getPlugin("LWC");
-                        LWC lwc = lwcplug.getLWC();
-                        if (!lwc.canAccessProtection(player, lowerdoor)) {
-                            allow = false;
-                        }
-                    }
+                    // not protected doors - WorldGuard / GriefPrevention / Lockette / LWC
+                    boolean allow = !checkDoorRespect(player, lowerdoor);
                     // is it a TARDIS door?
                     HashMap<String, Object> where = new HashMap<String, Object>();
                     String doorloc = lowerdoor.getLocation().getWorld().getName() + ":" + lowerdoor.getLocation().getBlockX() + ":" + lowerdoor.getLocation().getBlockY() + ":" + lowerdoor.getLocation().getBlockZ();
@@ -832,5 +859,32 @@ public class TARDISSonicListener implements Listener {
         PistonExtensionMaterial extension = (PistonExtensionMaterial) l.getState().getData();
         l.setData(extension.getData());
         l.getState().update();
+    }
+
+    private boolean checkDoorRespect(Player p, Block b) {
+        boolean gpr = false;
+        boolean wgu = false;
+        boolean lke = false;
+        boolean lch = false;
+        // GriefPrevention
+        if (plugin.getPM().isPluginEnabled("GriefPrevention")) {
+            gpr = new TARDISGriefPreventionChecker(plugin, true).isInClaim(p, b.getLocation());
+        }
+        // WorldGuard
+        if (plugin.isWorldGuardOnServer()) {
+            wgu = !plugin.getWorldGuardUtils().canBuild(p, b.getLocation());
+        }
+        // Lockette
+        if (plugin.getPM().isPluginEnabled("Lockette")) {
+            Lockette Lockette = (Lockette) plugin.getPM().getPlugin("Lockette");
+            lke = Lockette.isProtected(b);
+        }
+        // LWC
+        if (plugin.getPM().isPluginEnabled("LWC")) {
+            LWCPlugin lwcplug = (LWCPlugin) plugin.getPM().getPlugin("LWC");
+            LWC lwc = lwcplug.getLWC();
+            lch = !lwc.canAccessProtection(p, b);
+        }
+        return (gpr || wgu || lke || lch);
     }
 }

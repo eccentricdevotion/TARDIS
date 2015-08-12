@@ -33,6 +33,7 @@ import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import me.eccentric_nz.TARDIS.database.ResultSetTravellers;
 import me.eccentric_nz.TARDIS.enumeration.SCHEMATIC;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
+import me.eccentric_nz.TARDIS.utility.TARDISStaticUtils;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -81,11 +82,13 @@ public class TARDISUpdateListener implements Listener {
         controls.put("info", 13);
         controls.put("storage", 14);
         controls.put("advanced", 15);
-        controls.put("zero", 16); // enter control
+        controls.put("zero", 16); // entry control
         // zero room exit control = 17
         // direction item frame = 18
         // lazarus plate = 19
         controls.put("toggle_wool", 20);
+        controls.put("siege", 21);
+        controls.put("control", 22);
         validBlocks.add(Material.LEVER);
         validBlocks.add(Material.REDSTONE_COMPARATOR_OFF);
         validBlocks.add(Material.REDSTONE_COMPARATOR_ON);
@@ -182,7 +185,7 @@ public class TARDISUpdateListener implements Listener {
             }
             if ((blockName.equalsIgnoreCase("backdoor") || (blockName.equalsIgnoreCase("door") && secondary)) && blockType == Material.IRON_DOOR_BLOCK) {
                 // get door data - this should let us determine the direction
-                String d = plugin.getUtils().getPlayersDirection(player, true);
+                String d = TARDISStaticUtils.getPlayersDirection(player, true);
                 table = "doors";
                 set.put("door_location", blockLocStr);
                 set.put("door_direction", d);
@@ -320,9 +323,9 @@ public class TARDISUpdateListener implements Listener {
                 if (blockType == Material.WALL_SIGN || blockType == Material.SIGN_POST) {
                     // add text to sign
                     Sign s = (Sign) block.getState();
-                    s.setLine(0, "Chameleon");
-                    s.setLine(1, "Circuit");
-                    s.setLine(2, ChatColor.RED + "OFF");
+                    s.setLine(0, plugin.getSigns().getStringList("chameleon").get(0));
+                    s.setLine(1, plugin.getSigns().getStringList("chameleon").get(1));
+                    s.setLine(2, ChatColor.RED + plugin.getLanguage().getString("SET_OFF"));
                     s.setLine(3, preset);
                     s.update();
                 }
@@ -333,8 +336,8 @@ public class TARDISUpdateListener implements Listener {
                     // add text to sign
                     Sign s = (Sign) block.getState();
                     s.setLine(0, "TARDIS");
-                    s.setLine(1, "Saved");
-                    s.setLine(2, "Locations");
+                    s.setLine(1, plugin.getSigns().getStringList("saves").get(0));
+                    s.setLine(2, plugin.getSigns().getStringList("saves").get(1));
                     s.setLine(3, "");
                     s.update();
                 }
@@ -352,7 +355,7 @@ public class TARDISUpdateListener implements Listener {
                 }
                 // add text to sign
                 Sign s = (Sign) block.getState();
-                s.setLine(0, "Keyboard");
+                s.setLine(0, plugin.getSigns().getStringList("keyboard").get(0));
                 for (int i = 1; i < 4; i++) {
                     s.setLine(i, "");
                 }
@@ -403,8 +406,30 @@ public class TARDISUpdateListener implements Listener {
                     // add text to sign
                     Sign s = (Sign) block.getState();
                     s.setLine(0, "");
-                    s.setLine(1, "Destination");
-                    s.setLine(2, "Terminal");
+                    s.setLine(1, plugin.getSigns().getStringList("terminal").get(0));
+                    s.setLine(2, plugin.getSigns().getStringList("terminal").get(1));
+                    s.setLine(3, "");
+                    s.update();
+                }
+            }
+            if (blockName.equalsIgnoreCase("control") && validSigns.contains(blockType)) {
+                HashMap<String, Object> wherec = new HashMap<String, Object>();
+                wherec.put("tardis_id", id);
+                wherec.put("type", 22);
+                ResultSetControls rsc = new ResultSetControls(plugin, wherec, false);
+                if (!rsc.resultSet()) {
+                    // insert control
+                    qf.insertControl(id, 22, blockLocStr, 0);
+                    secondary = true;
+                } else {
+                    set.put("location", blockLocStr);
+                }
+                if (blockType == Material.WALL_SIGN || blockType == Material.SIGN_POST) {
+                    // add text to sign
+                    Sign s = (Sign) block.getState();
+                    s.setLine(0, "");
+                    s.setLine(1, plugin.getSigns().getStringList("control").get(0));
+                    s.setLine(2, plugin.getSigns().getStringList("control").get(1));
                     s.setLine(3, "");
                     s.update();
                 }
@@ -431,61 +456,34 @@ public class TARDISUpdateListener implements Listener {
                                 }
                             }
                         }
-                        int control = 42;
-                        switch (schm) {
-                            case DELUXE:
-                                control = 57;
-                                empty[0][4][4] = control;
-                                empty[0][4][5] = control;
-                                empty[0][5][4] = control;
-                                empty[0][5][5] = control;
-                                empty[1][4][5] = control;
-                                empty[1][5][4] = control;
-                                empty[1][5][5] = control;
-                                break;
-                            case ELEVENTH:
-                                control = 133;
-                                empty[0][4][4] = control;
-                                empty[0][4][5] = control;
-                                empty[0][5][4] = control;
-                                empty[0][5][5] = control;
-                                empty[1][4][5] = control;
-                                empty[1][5][4] = control;
-                                empty[1][5][5] = control;
-                                break;
-                            case BIGGER:
-                                control = 41;
-                                empty[1][4][5] = control;
-                                empty[1][5][4] = control;
-                                empty[1][5][5] = control;
-                                break;
-                            case REDSTONE:
-                                control = 152;
-                                empty[1][4][5] = control;
-                                empty[1][5][4] = control;
-                                empty[1][5][5] = control;
-                                break;
-                            case STEAMPUNK:
-                                control = 173;
-                                break;
-                            case ARS:
-                                control = 155;
-                                break;
-                            case PLANK:
-                                control = 47;
-                                break;
-                            case TOM:
-                                control = 22;
-                                break;
-                            case WAR:
-                                control = 159;
-                                break;
-                            default:
-                                break;
+                        int control = schm.getSeedId();
+                        if (schm.getPermission().equals("deluxe")) {
+                            empty[0][4][4] = control;
+                            empty[0][4][5] = control;
+                            empty[0][5][4] = control;
+                            empty[0][5][5] = control;
+                            empty[1][4][5] = control;
+                            empty[1][5][4] = control;
+                            empty[1][5][5] = control;
+                        } else if (schm.getPermission().equals("eleventh")) {
+                            empty[0][4][4] = control;
+                            empty[0][4][5] = control;
+                            empty[0][5][4] = control;
+                            empty[0][5][5] = control;
+                            empty[1][4][5] = control;
+                            empty[1][5][4] = control;
+                            empty[1][5][5] = control;
+                        } else if (schm.getPermission().equals("bigger")) {
+                            empty[1][4][5] = control;
+                            empty[1][5][4] = control;
+                            empty[1][5][5] = control;
+                        } else if (schm.getPermission().equals("redstone")) {
+                            empty[1][4][5] = control;
+                            empty[1][5][4] = control;
+                            empty[1][5][5] = control;
                         }
                         empty[1][4][4] = control;
                         JSONArray json = new JSONArray(empty);
-
                         HashMap<String, Object> seta = new HashMap<String, Object>();
                         seta.put("tardis_id", id);
                         seta.put("uuid", playerUUID);
@@ -500,9 +498,9 @@ public class TARDISUpdateListener implements Listener {
                     // add text to sign
                     Sign s = (Sign) block.getState();
                     s.setLine(0, "TARDIS");
-                    s.setLine(1, "Architectural");
-                    s.setLine(2, "Reconfiguration");
-                    s.setLine(3, "System");
+                    s.setLine(1, plugin.getSigns().getStringList("ars").get(0));
+                    s.setLine(2, plugin.getSigns().getStringList("ars").get(1));
+                    s.setLine(3, plugin.getSigns().getStringList("ars").get(2));
                     s.update();
                 }
             }
@@ -522,8 +520,8 @@ public class TARDISUpdateListener implements Listener {
                     // add text to sign
                     Sign s = (Sign) block.getState();
                     s.setLine(0, "");
-                    s.setLine(1, "Temporal");
-                    s.setLine(2, "Locator");
+                    s.setLine(1, plugin.getSigns().getStringList("temporal").get(0));
+                    s.setLine(2, plugin.getSigns().getStringList("temporal").get(1));
                     s.setLine(3, "");
                     s.update();
                 }
@@ -544,8 +542,8 @@ public class TARDISUpdateListener implements Listener {
                     Sign s = (Sign) block.getState();
                     s.setLine(0, "-----");
                     s.setLine(1, "TARDIS");
-                    s.setLine(2, "Information");
-                    s.setLine(3, "System");
+                    s.setLine(2, plugin.getSigns().getStringList("info").get(0));
+                    s.setLine(3, plugin.getSigns().getStringList("info").get(1));
                     s.update();
                 }
             }
@@ -594,7 +592,7 @@ public class TARDISUpdateListener implements Listener {
                 // check if player has storage record, and update the tardis_id field
                 plugin.getUtils().updateStorageId(playerUUID, id, qf);
             }
-            if ((blockName.equalsIgnoreCase("light") || blockName.equalsIgnoreCase("toggle_wool")) && validBlocks.contains(blockType)) {
+            if ((blockName.equalsIgnoreCase("light") || blockName.equalsIgnoreCase("siege") || blockName.equalsIgnoreCase("toggle_wool")) && validBlocks.contains(blockType)) {
                 HashMap<String, Object> wherel = new HashMap<String, Object>();
                 wherel.put("tardis_id", id);
                 wherel.put("type", controls.get(blockName));

@@ -25,6 +25,7 @@ import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.database.ResultSetDestinations;
 import me.eccentric_nz.TARDIS.database.ResultSetHomeLocation;
+import me.eccentric_nz.TARDIS.utility.TARDISNumberParsers;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -106,7 +107,7 @@ public class TARDISSaveSignInventory {
                         is.setItemMeta(im);
                         int slot;
                         if (!map.get("slot").equals("-1")) {
-                            slot = plugin.getUtils().parseInt(map.get("slot"));
+                            slot = TARDISNumberParsers.parseInt(map.get("slot"));
                         } else {
                             slot = slots.get(0);
                         }

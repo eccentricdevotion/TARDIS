@@ -16,8 +16,6 @@
  */
 package me.eccentric_nz.TARDIS.builders;
 
-import com.onarandombox.MultiverseCore.MultiverseCore;
-import com.onarandombox.MultiverseCore.api.MultiverseWorld;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -29,7 +27,11 @@ import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetAchievements;
 import me.eccentric_nz.TARDIS.enumeration.SCHEMATIC;
+import static me.eccentric_nz.TARDIS.schematic.TARDISBannerSetter.setBanners;
 import me.eccentric_nz.TARDIS.schematic.TARDISSchematicGZip;
+import me.eccentric_nz.TARDIS.utility.TARDISBlockSetters;
+import me.eccentric_nz.TARDIS.utility.TARDISLocationGetters;
+import me.eccentric_nz.TARDIS.utility.TARDISNumberParsers;
 import me.eccentric_nz.tardischunkgenerator.TARDISChunkGenerator;
 import org.bukkit.ChatColor;
 import org.bukkit.Chunk;
@@ -41,7 +43,6 @@ import org.bukkit.block.Biome;
 import org.bukkit.block.Block;
 import org.bukkit.block.Sign;
 import org.bukkit.entity.Player;
-import org.bukkit.plugin.Plugin;
 
 /**
  * The TARDIS was prone to a number of technical faults, ranging from depleted
@@ -71,7 +72,7 @@ public class TARDISBuilderInner {
      * Builds the inside of the TARDIS.
      *
      * @param schm the name of the schematic file to use can be DEFAULT, BIGGER,
-     * ELEVENTH, REDSTONE, COAL, DELUXE, PLANK, TOM, ARS, WAR or CUSTOM.
+     * ELEVENTH, REDSTONE, COAL, DELUXE, PLANK, TOM, ARS, WAR or a CUSTOM name.
      * @param world the world where the TARDIS is to be built.
      * @param dbID the unique key of the record for this TARDIS in the database.
      * @param p an instance of the player who owns the TARDIS.
@@ -95,17 +96,14 @@ public class TARDISBuilderInner {
         if (below) {
             starty = 15;
         } else {
-            switch (schm) {
-                case REDSTONE:
-                    starty = 65;
-                    break;
-                default:
-                    starty = 64;
-                    break;
+            if (schm.getPermission().equals("redstone")) {
+                starty = 65;
+            } else {
+                starty = 64;
             }
         }
-        String directory = (schm.equals(SCHEMATIC.CUSTOM)) ? "user_schematics" : "schematics";
-        String path = plugin.getDataFolder() + File.separator + directory + File.separator + schm.getFile();
+        String directory = (schm.isCustom()) ? "user_schematics" : "schematics";
+        String path = plugin.getDataFolder() + File.separator + directory + File.separator + schm.getPermission() + ".tschm";
         File file = new File(path);
         if (!file.exists()) {
             plugin.debug(plugin.getPluginName() + "Could not find a schematic with that name!");
@@ -121,12 +119,16 @@ public class TARDISBuilderInner {
         byte data;
         String playerUUID = p.getUniqueId().toString();
         HashMap<Block, Byte> postDoorBlocks = new HashMap<Block, Byte>();
+        HashMap<Block, Byte> postRedstoneTorchBlocks = new HashMap<Block, Byte>();
         HashMap<Block, Byte> postTorchBlocks = new HashMap<Block, Byte>();
         HashMap<Block, Byte> postSignBlocks = new HashMap<Block, Byte>();
         HashMap<Block, Byte> postRepeaterBlocks = new HashMap<Block, Byte>();
         HashMap<Block, Byte> postPistonBaseBlocks = new HashMap<Block, Byte>();
         HashMap<Block, Byte> postStickyPistonBaseBlocks = new HashMap<Block, Byte>();
         HashMap<Block, Byte> postPistonExtensionBlocks = new HashMap<Block, Byte>();
+        HashMap<Block, Byte> postLeverBlocks = new HashMap<Block, Byte>();
+        HashMap<Block, JSONObject> postStandingBanners = new HashMap<Block, JSONObject>();
+        HashMap<Block, JSONObject> postWallBanners = new HashMap<Block, JSONObject>();
         Block postSaveSignBlock = null;
         Block postTerminalBlock = null;
         Block postARSBlock = null;
@@ -146,14 +148,13 @@ public class TARDISBuilderInner {
             startx = pos.getCentreX();
             resetx = pos.getCentreX();
             startz = pos.getCentreZ();
-            plugin.debug("startx: " + startx + ", startz: " + startz);
             resetz = pos.getCentreZ();
             // get the correct chunk for ARS
             Chunk c = world.getChunkAt(new Location(world, startx, starty, startz));
             String chun = world.getName() + ":" + c.getX() + ":" + c.getZ();
             set.put("chunk", chun);
         } else {
-            int gsl[] = plugin.getUtils().getStartLocation(dbID);
+            int gsl[] = plugin.getLocationUtils().getStartLocation(dbID);
             startx = gsl[0];
             resetx = gsl[1];
             startz = gsl[2];
@@ -178,7 +179,7 @@ public class TARDISBuilderInner {
             for (level = 0; level < h; level++) {
                 for (row = 0; row < w; row++) {
                     for (col = 0; col < l; col++) {
-                        plugin.getUtils().setBlock(world, startx, starty, startz, 0, (byte) 0);
+                        TARDISBlockSetters.setBlock(world, startx, starty, startz, 0, (byte) 0);
                         startx += 1;
                     }
                     startx = resetx;
@@ -219,7 +220,7 @@ public class TARDISBuilderInner {
                     }
                     if (type.equals(Material.NOTE_BLOCK)) {
                         // remember the location of this Disk Storage
-                        String storage = plugin.getUtils().makeLocationStr(world, x, y, z);
+                        String storage = TARDISLocationGetters.makeLocationStr(world, x, y, z);
                         qf.insertSyncControl(dbID, 14, storage, 0);
                     }
                     if (type.equals(Material.WOOL)) {
@@ -237,7 +238,7 @@ public class TARDISBuilderInner {
                                 }
                                 break;
                             case 8:
-                                if (!schm.equals(SCHEMATIC.ELEVENTH)) {
+                                if (!schm.getPermission().equals("eleventh")) {
                                     switch (floor_type) {
                                         case LAPIS_BLOCK: // if using the default Lapis Block - then use Light Grey Wool / Stained Clay
                                             if (plugin.getConfig().getBoolean("creation.use_clay")) {
@@ -274,11 +275,6 @@ public class TARDISBuilderInner {
                         String chest = world.getName() + ":" + x + ":" + y + ":" + z;
                         set.put("condenser", chest);
                     }
-                    if (type.equals(Material.WALL_SIGN)) { // chameleon circuit sign
-                        String chameleonloc = world.getName() + ":" + x + ":" + y + ":" + z;
-                        set.put("chameleon", chameleonloc);
-                        set.put("chamele_on", 0);
-                    }
                     if (type.equals(Material.IRON_DOOR_BLOCK)) {
                         if (data < (byte) 8) { // iron door bottom
                             HashMap<String, Object> setd = new HashMap<String, Object>();
@@ -290,14 +286,8 @@ public class TARDISBuilderInner {
                             qf.doInsert("doors", setd);
                             // if create_worlds is true, set the world spawn
                             if (own_world) {
-                                if (plugin.getPM().isPluginEnabled("Multiverse-Core")) {
-                                    Plugin mvplugin = plugin.getPM().getPlugin("Multiverse-Core");
-                                    if (mvplugin instanceof MultiverseCore) {
-                                        MultiverseCore mvc = (MultiverseCore) mvplugin;
-                                        MultiverseWorld foundWorld = mvc.getMVWorldManager().getMVWorld(world.getName());
-                                        Location spawn = new Location(world, (x + 0.5), y, (z + 1.5), 0, 0);
-                                        foundWorld.setSpawnLocation(spawn);
-                                    }
+                                if (plugin.isMVOnServer()) {
+                                    plugin.getMVHelper().setSpawnLocation(world, x, y, z);
                                 } else {
                                     world.setSpawnLocation(x, y, (z + 1));
                                 }
@@ -309,12 +299,12 @@ public class TARDISBuilderInner {
                     }
                     if (type.equals(Material.STONE_BUTTON)) { // random button
                         // remember the location of this button
-                        String button = plugin.getUtils().makeLocationStr(world, x, y, z);
+                        String button = TARDISLocationGetters.makeLocationStr(world, x, y, z);
                         qf.insertSyncControl(dbID, 1, button, 0);
                     }
                     if (type.equals(Material.JUKEBOX)) {
                         // remember the location of this Advanced Console
-                        String advanced = plugin.getUtils().makeLocationStr(world, x, y, z);
+                        String advanced = TARDISLocationGetters.makeLocationStr(world, x, y, z);
                         qf.insertSyncControl(dbID, 15, advanced, 0);
                         // check if player has storage record, and update the tardis_id field
                         plugin.getUtils().updateStorageId(playerUUID, dbID, qf);
@@ -324,7 +314,7 @@ public class TARDISBuilderInner {
                          * This block will be converted to a lever by
                          * setBlock(), but remember it so we can use it as the handbrake!
                          */
-                        String handbrakeloc = plugin.getUtils().makeLocationStr(world, x, y, z);
+                        String handbrakeloc = TARDISLocationGetters.makeLocationStr(world, x, y, z);
                         qf.insertSyncControl(dbID, 0, handbrakeloc, 0);
                     }
                     if (type.equals(Material.MONSTER_EGGS)) { // silverfish stone
@@ -348,41 +338,7 @@ public class TARDISBuilderInner {
                                         }
                                     }
                                 }
-                                int control = 42;
-                                switch (schm) {
-                                    case DELUXE:
-                                        control = 57;
-                                        break;
-                                    case ELEVENTH:
-                                        control = 133;
-                                        break;
-                                    case BIGGER:
-                                        control = 41;
-                                        break;
-                                    case REDSTONE:
-                                        control = 152;
-                                        break;
-                                    case STEAMPUNK:
-                                        control = 173;
-                                        break;
-                                    case ARS:
-                                        control = 155;
-                                        break;
-                                    case PLANK:
-                                        control = 47;
-                                        break;
-                                    case TOM:
-                                        control = 22;
-                                        break;
-                                    case WAR:
-                                        control = 159;
-                                        break;
-                                    case CUSTOM:
-                                        control = 122;
-                                        break;
-                                    default:
-                                        break;
-                                }
+                                int control = schm.getSeedId();
                                 empty[1][4][4] = control;
                                 if (w > 16) {
                                     empty[1][4][5] = control;
@@ -417,7 +373,7 @@ public class TARDISBuilderInner {
                                 break;
                         }
                     }
-                    if (type.equals(Material.REDSTONE_LAMP_ON)) {
+                    if (type.equals(Material.REDSTONE_LAMP_ON) || type.equals(Material.SEA_LANTERN)) {
                         // remember lamp blocks
                         Block lamp = world.getBlockAt(x, y, z);
                         lampblocks.add(lamp);
@@ -430,7 +386,7 @@ public class TARDISBuilderInner {
                             qf.doInsert("lamps", setlb);
                         }
                     }
-                    if (type.equals(Material.COMMAND) || ((schm.equals(SCHEMATIC.BIGGER) || schm.equals(SCHEMATIC.DELUXE)) && type.equals(Material.BEACON))) {
+                    if (type.equals(Material.COMMAND) || ((schm.getPermission().equals("bigger") || schm.getPermission().equals("deluxe") || schm.getPermission().equals("twelfth")) && type.equals(Material.BEACON))) {
                         /*
                          * command block - remember it to spawn the creeper on.
                          * could also be a beacon block, as the creeper sits
@@ -438,31 +394,20 @@ public class TARDISBuilderInner {
                          */
                         String creeploc = world.getName() + ":" + (x + 0.5) + ":" + y + ":" + (z + 0.5);
                         set.put("creeper", creeploc);
-                        switch (schm) {
-                            case CUSTOM:
-                                type = Material.valueOf(plugin.getConfig().getString("creation.custom_creeper_id"));
-                                break;
-                            case BIGGER:
-                            case DELUXE:
-                                type = Material.BEACON;
-                                break;
-                            default:
-                                type = Material.SMOOTH_BRICK;
-                                break;
-                        }
+                        type = (schm.getPermission().equals("bigger") || schm.getPermission().equals("deluxe") || schm.getPermission().equals("twelfth")) ? Material.BEACON : Material.SMOOTH_BRICK;
                     }
                     if (type.equals(Material.WOOD_BUTTON)) {
                         /*
                          * wood button will be coverted to the correct id by
                          * setBlock(), but remember it for the Artron Energy Capacitor.
                          */
-                        String woodbuttonloc = plugin.getUtils().makeLocationStr(world, x, y, z);
+                        String woodbuttonloc = TARDISLocationGetters.makeLocationStr(world, x, y, z);
                         qf.insertSyncControl(dbID, 6, woodbuttonloc, 0);
                     }
                     // if it's an iron/gold/diamond/emerald/beacon/redstone block put it in the blocks table
                     if (precious.contains(type)) {
                         HashMap<String, Object> setpb = new HashMap<String, Object>();
-                        String loc = plugin.getUtils().makeLocationStr(world, x, y, z);
+                        String loc = TARDISLocationGetters.makeLocationStr(world, x, y, z);
                         setpb.put("tardis_id", dbID);
                         setpb.put("location", loc);
                         setpb.put("police_box", 0);
@@ -473,6 +418,8 @@ public class TARDISBuilderInner {
                     if (type.equals(Material.IRON_DOOR_BLOCK)) { // doors
                         postDoorBlocks.put(world.getBlockAt(x, y, z), data);
                     } else if (type.equals(Material.REDSTONE_TORCH_ON)) {
+                        postRedstoneTorchBlocks.put(world.getBlockAt(x, y, z), data);
+                    } else if (type.equals(Material.TORCH)) {
                         postTorchBlocks.put(world.getBlockAt(x, y, z), data);
                     } else if (type.equals(Material.PISTON_STICKY_BASE)) {
                         postStickyPistonBaseBlocks.put(world.getBlockAt(x, y, z), data);
@@ -480,8 +427,19 @@ public class TARDISBuilderInner {
                         postPistonBaseBlocks.put(world.getBlockAt(x, y, z), data);
                     } else if (type.equals(Material.PISTON_EXTENSION)) {
                         postPistonExtensionBlocks.put(world.getBlockAt(x, y, z), data);
+                    } else if (type.equals(Material.LEVER)) {
+                        postLeverBlocks.put(world.getBlockAt(x, y, z), data);
                     } else if (type.equals(Material.WALL_SIGN)) {
                         postSignBlocks.put(world.getBlockAt(x, y, z), data);
+                    } else if (type.equals(Material.STANDING_BANNER) || type.equals(Material.WALL_BANNER)) {
+                        JSONObject state = c.optJSONObject("banner");
+                        if (state != null) {
+                            if (type.equals(Material.STANDING_BANNER)) {
+                                postStandingBanners.put(world.getBlockAt(x, y, z), state);
+                            } else {
+                                postWallBanners.put(world.getBlockAt(x, y, z), state);
+                            }
+                        }
                     } else if (type.equals(Material.MONSTER_EGGS)) { // monster egg stone for controls
                         switch (data) {
                             case 0:
@@ -536,9 +494,9 @@ public class TARDISBuilderInner {
                         } else {
                             swap = Material.STONE;
                         }
-                        plugin.getUtils().setBlock(world, x, y, z, swap, data);
+                        TARDISBlockSetters.setBlock(world, x, y, z, swap, data);
                     } else {
-                        plugin.getUtils().setBlock(world, x, y, z, type, data);
+                        TARDISBlockSetters.setBlock(world, x, y, z, type, data);
                     }
                 }
             }
@@ -550,11 +508,15 @@ public class TARDISBuilderInner {
             pdb.setType(Material.IRON_DOOR_BLOCK);
             pdb.setData(pddata, true);
         }
+        for (Map.Entry<Block, Byte> entry : postRedstoneTorchBlocks.entrySet()) {
+            Block prtb = entry.getKey();
+            byte ptdata = entry.getValue();
+            prtb.setTypeIdAndData(76, ptdata, true);
+        }
         for (Map.Entry<Block, Byte> entry : postTorchBlocks.entrySet()) {
             Block ptb = entry.getKey();
             byte ptdata = entry.getValue();
-            ptb.setType(Material.REDSTONE_TORCH_ON);
-            ptb.setData(ptdata, true);
+            ptb.setTypeIdAndData(50, ptdata, true);
         }
         for (Map.Entry<Block, Byte> entry : postRepeaterBlocks.entrySet()) {
             Block prb = entry.getKey();
@@ -582,6 +544,13 @@ public class TARDISBuilderInner {
             ppeb.setType(Material.PISTON_EXTENSION);
             ppeb.setData(ppedata, true);
         }
+        for (Map.Entry<Block, Byte> entry : postLeverBlocks.entrySet()) {
+            Block plb = entry.getKey();
+            byte pldata = entry.getValue();
+            plb.setType(Material.LEVER);
+            plb.setData(pldata, true);
+        }
+        int s = 0;
         for (Map.Entry<Block, Byte> entry : postSignBlocks.entrySet()) {
             final Block psb = entry.getKey();
             byte psdata = entry.getValue();
@@ -589,12 +558,23 @@ public class TARDISBuilderInner {
             psb.setData(psdata, true);
             if (psb.getType().equals(Material.WALL_SIGN)) {
                 Sign cs = (Sign) psb.getState();
-                cs.setLine(0, "Chameleon");
-                cs.setLine(1, "Circuit");
-                cs.setLine(2, ChatColor.RED + "OFF");
-                cs.setLine(3, "NEW");
+                if (s > 0) {
+                    cs.setLine(1, plugin.getSigns().getStringList("control").get(0));
+                    cs.setLine(2, plugin.getSigns().getStringList("control").get(1));
+                    String controlloc = psb.getLocation().toString();
+                    qf.insertSyncControl(dbID, 22, controlloc, 0);
+                } else {
+                    cs.setLine(0, plugin.getSigns().getStringList("chameleon").get(0));
+                    cs.setLine(1, plugin.getSigns().getStringList("chameleon").get(1));
+                    cs.setLine(2, ChatColor.RED + plugin.getLanguage().getString("SET_OFF"));
+                    cs.setLine(3, "NEW");
+                    String chameleonloc = world.getName() + ":" + psb.getLocation().getBlockX() + ":" + psb.getLocation().getBlockY() + ":" + psb.getLocation().getBlockZ();
+                    set.put("chameleon", chameleonloc);
+                    set.put("chamele_on", 0);
+                }
                 cs.update();
             }
+            s++;
         }
         if (postSaveSignBlock != null) {
             postSaveSignBlock.setType(Material.WALL_SIGN);
@@ -602,8 +582,8 @@ public class TARDISBuilderInner {
             if (postSaveSignBlock.getType().equals(Material.WALL_SIGN)) {
                 Sign ss = (Sign) postSaveSignBlock.getState();
                 ss.setLine(0, "TARDIS");
-                ss.setLine(1, "Saved");
-                ss.setLine(2, "Locations");
+                ss.setLine(1, plugin.getSigns().getStringList("saves").get(0));
+                ss.setLine(2, plugin.getSigns().getStringList("saves").get(1));
                 ss.setLine(3, "");
                 ss.update();
             }
@@ -614,8 +594,8 @@ public class TARDISBuilderInner {
             if (postTerminalBlock.getType().equals(Material.WALL_SIGN)) {
                 Sign ts = (Sign) postTerminalBlock.getState();
                 ts.setLine(0, "");
-                ts.setLine(1, "Destination");
-                ts.setLine(2, "Terminal");
+                ts.setLine(1, plugin.getSigns().getStringList("terminal").get(0));
+                ts.setLine(2, plugin.getSigns().getStringList("terminal").get(1));
                 ts.setLine(3, "");
                 ts.update();
             }
@@ -626,9 +606,9 @@ public class TARDISBuilderInner {
             if (postARSBlock.getType().equals(Material.WALL_SIGN)) {
                 Sign as = (Sign) postARSBlock.getState();
                 as.setLine(0, "TARDIS");
-                as.setLine(1, "Architectural");
-                as.setLine(2, "Reconfiguration");
-                as.setLine(3, "System");
+                as.setLine(1, plugin.getSigns().getStringList("ars").get(0));
+                as.setLine(2, plugin.getSigns().getStringList("ars").get(1));
+                as.setLine(3, plugin.getSigns().getStringList("ars").get(2));
                 as.update();
             }
         }
@@ -639,8 +619,8 @@ public class TARDISBuilderInner {
                 Sign is = (Sign) postTISBlock.getState();
                 is.setLine(0, "-----");
                 is.setLine(1, "TARDIS");
-                is.setLine(2, "Information");
-                is.setLine(3, "System");
+                is.setLine(2, plugin.getSigns().getStringList("info").get(0));
+                is.setLine(3, plugin.getSigns().getStringList("info").get(1));
                 is.update();
             }
         }
@@ -650,8 +630,8 @@ public class TARDISBuilderInner {
             if (postTemporalBlock.getType().equals(Material.WALL_SIGN)) {
                 Sign ms = (Sign) postTemporalBlock.getState();
                 ms.setLine(0, "");
-                ms.setLine(1, "Temporal");
-                ms.setLine(2, "Locator");
+                ms.setLine(1, plugin.getSigns().getStringList("temporal").get(0));
+                ms.setLine(2, plugin.getSigns().getStringList("temporal").get(1));
                 ms.setLine(3, "");
                 ms.update();
             }
@@ -661,7 +641,7 @@ public class TARDISBuilderInner {
             postKeyboardBlock.setData((byte) 3, true);
             if (postKeyboardBlock.getType().equals(Material.WALL_SIGN)) {
                 Sign ks = (Sign) postKeyboardBlock.getState();
-                ks.setLine(0, "Keyboard");
+                ks.setLine(0, plugin.getSigns().getStringList("keyboard").get(0));
                 for (int i = 1; i < 4; i++) {
                     ks.setLine(i, "");
                 }
@@ -669,9 +649,12 @@ public class TARDISBuilderInner {
             }
         }
         for (Block lamp : lampblocks) {
-            lamp.setType(Material.REDSTONE_LAMP_ON);
+            Material lantern = (schm.getPermission().equals("eleventh") || schm.getPermission().equals("twelfth")) ? Material.SEA_LANTERN : Material.REDSTONE_LAMP_ON;
+            lamp.setType(lantern);
         }
         lampblocks.clear();
+        setBanners(176, postStandingBanners);
+        setBanners(177, postWallBanners);
         if (plugin.isWorldGuardOnServer() && plugin.getConfig().getBoolean("preferences.use_worldguard")) {
             if (tips) {
                 if (pos != null) {
@@ -717,8 +700,8 @@ public class TARDISBuilderInner {
      */
     public List<Chunk> getChunks(World w, int x, int z, int wid, int len) {
         List<Chunk> chunks = new ArrayList<Chunk>();
-        int cw = plugin.getUtils().roundUp(wid, 16);
-        int cl = plugin.getUtils().roundUp(len, 16);
+        int cw = TARDISNumberParsers.roundUp(wid, 16);
+        int cl = TARDISNumberParsers.roundUp(len, 16);
         // check all the chunks that will be used by the schematic
         for (int cx = 0; cx < cw; cx++) {
             for (int cz = 0; cz < cl; cz++) {

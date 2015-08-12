@@ -23,6 +23,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.utility.TARDISNumberParsers;
 
 /**
  *
@@ -35,6 +36,7 @@ public class TARDISSQLInsert implements Runnable {
     private final Connection connection = service.getConnection();
     private final String table;
     private final HashMap<String, Object> data;
+    private final String prefix;
 
     /**
      * Inserts data into an SQLite database table. This method builds a prepared
@@ -49,6 +51,7 @@ public class TARDISSQLInsert implements Runnable {
         this.plugin = plugin;
         this.table = table;
         this.data = data;
+        this.prefix = this.plugin.getPrefix();
     }
 
     @Override
@@ -66,16 +69,16 @@ public class TARDISSQLInsert implements Runnable {
         questions = sbq.toString().substring(0, sbq.length() - 1);
         try {
             service.testConnection(connection);
-            ps = connection.prepareStatement("INSERT INTO " + table + " (" + fields + ") VALUES (" + questions + ")");
+            ps = connection.prepareStatement("INSERT INTO " + prefix + table + " (" + fields + ") VALUES (" + questions + ")");
             int i = 1;
             for (Map.Entry<String, Object> entry : data.entrySet()) {
                 if (entry.getValue().getClass().equals(String.class) || entry.getValue().getClass().equals(UUID.class)) {
                     ps.setString(i, entry.getValue().toString());
                 } else {
                     if (entry.getValue().getClass().getName().contains("Double")) {
-                        ps.setDouble(i, plugin.getUtils().parseDouble(entry.getValue().toString()));
+                        ps.setDouble(i, TARDISNumberParsers.parseDouble(entry.getValue().toString()));
                     } else {
-                        ps.setInt(i, plugin.getUtils().parseInt(entry.getValue().toString()));
+                        ps.setInt(i, TARDISNumberParsers.parseInt(entry.getValue().toString()));
                     }
                 }
                 i++;

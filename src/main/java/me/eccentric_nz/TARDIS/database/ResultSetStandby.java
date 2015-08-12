@@ -23,6 +23,7 @@ import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.enumeration.CONSOLES;
 import me.eccentric_nz.TARDIS.enumeration.PRESET;
 
 /**
@@ -35,23 +36,25 @@ public class ResultSetStandby {
     private final TARDISDatabaseConnection service = TARDISDatabaseConnection.getInstance();
     private final Connection connection = service.getConnection();
     private final TARDIS plugin;
+    private final String prefix;
 
     public ResultSetStandby(TARDIS plugin) {
         this.plugin = plugin;
+        this.prefix = this.plugin.getPrefix();
     }
 
     public HashMap<Integer, StandbyData> onStandby() {
         HashMap<Integer, StandbyData> ids = new HashMap<Integer, StandbyData>();
         PreparedStatement statement = null;
         ResultSet rs = null;
-        String query = "SELECT tardis_id, artron_level, chameleon_preset, hidden, lights_on, uuid FROM tardis WHERE powered_on = 1";
+        String query = "SELECT tardis_id, artron_level, chameleon_preset, size, hidden, lights_on, uuid FROM " + prefix + "tardis WHERE powered_on = 1";
         try {
             service.testConnection(connection);
             statement = connection.prepareStatement(query);
             rs = statement.executeQuery();
             if (rs.isBeforeFirst()) {
                 while (rs.next()) {
-                    StandbyData sd = new StandbyData(rs.getInt("artron_level"), UUID.fromString(rs.getString("uuid")), rs.getBoolean("hidden"), rs.getBoolean("lights_on"), PRESET.valueOf(rs.getString("chameleon_preset")));
+                    StandbyData sd = new StandbyData(rs.getInt("artron_level"), UUID.fromString(rs.getString("uuid")), rs.getBoolean("hidden"), rs.getBoolean("lights_on"), PRESET.valueOf(rs.getString("chameleon_preset")), CONSOLES.getByNames().get(rs.getString("size")).hasLanterns());
                     ids.put(rs.getInt("tardis_id"), sd);
                 }
             }
@@ -79,13 +82,15 @@ public class ResultSetStandby {
         boolean hidden;
         boolean lights;
         PRESET preset;
+        boolean lanterns;
 
-        public StandbyData(int level, UUID uuid, boolean hidden, boolean lights, PRESET preset) {
+        public StandbyData(int level, UUID uuid, boolean hidden, boolean lights, PRESET preset, boolean lanterns) {
             this.level = level;
             this.uuid = uuid;
             this.hidden = hidden;
             this.lights = lights;
             this.preset = preset;
+            this.lanterns = lanterns;
         }
 
         public int getLevel() {
@@ -106,6 +111,10 @@ public class ResultSetStandby {
 
         public PRESET getPreset() {
             return preset;
+        }
+
+        public boolean isLanterns() {
+            return lanterns;
         }
     }
 }

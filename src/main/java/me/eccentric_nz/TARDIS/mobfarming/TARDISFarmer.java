@@ -24,7 +24,7 @@ import me.eccentric_nz.TARDIS.achievement.TARDISAchievementFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
-import me.eccentric_nz.tardishorsespeed.TardisHorseSpeed;
+import me.eccentric_nz.TARDIS.utility.TARDISNumberParsers;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.OfflinePlayer;
@@ -42,6 +42,7 @@ import org.bukkit.entity.MushroomCow;
 import org.bukkit.entity.Ocelot;
 import org.bukkit.entity.Pig;
 import org.bukkit.entity.Player;
+import org.bukkit.entity.Rabbit;
 import org.bukkit.entity.Sheep;
 import org.bukkit.entity.Tameable;
 import org.bukkit.entity.Villager;
@@ -115,6 +116,7 @@ public class TARDISFarmer {
             List<TARDISMob> old_macd_had_a_sheep = new ArrayList<TARDISMob>();
             List<TARDISMob> old_macd_had_a_mooshroom = new ArrayList<TARDISMob>();
             List<TARDISHorse> old_macd_had_a_horse = new ArrayList<TARDISHorse>();
+            List<TARDISRabbit> old_macd_had_a_rabbit = new ArrayList<TARDISRabbit>();
             List<TARDISVillager> old_macd_had_a_villager = new ArrayList<TARDISVillager>();
             // are we doing an achievement?
             TARDISAchievementFactory taf = null;
@@ -125,6 +127,8 @@ public class TARDISFarmer {
             int farmtotal = 0;
             // count total horses
             int horsetotal = 0;
+            // count total rabbits
+            int rabbittotal = 0;
             // count total villagers
             int villagertotal = 0;
             // count total pets
@@ -136,6 +140,7 @@ public class TARDISFarmer {
             if (rs.resultSet()) {
                 String farm = rs.getFarm();
                 String stable = rs.getStable();
+                String hutch = rs.getHutch();
                 String village = rs.getVillage();
                 // collate the mobs
                 for (Entity e : mobs) {
@@ -175,7 +180,7 @@ public class TARDISFarmer {
                             horse.eject();
                             // don't farm other player's tamed horses
                             if (brokenin.isTamed()) {
-                                Player owner = (Player) brokenin.getOwner();
+                                OfflinePlayer owner = (OfflinePlayer) brokenin.getOwner();
                                 if (owner != null && !owner.getUniqueId().equals(p.getUniqueId())) {
                                     break;
                                 }
@@ -201,9 +206,8 @@ public class TARDISFarmer {
                             tmhor.setHorseInventory(horse.getInventory().getContents());
                             tmhor.setDomesticity(horse.getDomestication());
                             tmhor.setJumpStrength(horse.getJumpStrength());
-                            if (plugin.isHorseSpeedOnServer()) {
-                                TardisHorseSpeed ths = (TardisHorseSpeed) plugin.getPM().getPlugin("TARDISHorseSpeed");
-                                double speed = ths.getHorseSpeed(horse);
+                            if (plugin.isHelperOnServer()) {
+                                double speed = plugin.getTardisHelper().getHorseSpeed(horse);
                                 tmhor.setSpeed(speed);
                             }
                             // check the leash
@@ -239,6 +243,22 @@ public class TARDISFarmer {
                                 taf.doAchievement("PIG");
                             }
                             farmtotal++;
+                            break;
+                        case RABBIT:
+                            Rabbit rabbit = (Rabbit) e;
+                            TARDISRabbit tmrabbit = new TARDISRabbit();
+                            tmrabbit.setAge(rabbit.getAge());
+                            tmrabbit.setBaby(!rabbit.isAdult());
+                            tmrabbit.setName(rabbit.getCustomName());
+                            tmrabbit.setBunnyType(rabbit.getRabbitType());
+                            old_macd_had_a_rabbit.add(tmrabbit);
+                            if (!hutch.isEmpty() || (hutch.isEmpty() && plugin.getConfig().getBoolean("allow.spawn_eggs"))) {
+                                e.remove();
+                            }
+                            if (taf != null) {
+                                taf.doAchievement("RABBIT");
+                            }
+                            rabbittotal++;
                             break;
                         case SHEEP:
                             TARDISMob tmshp = new TARDISMob();
@@ -277,6 +297,11 @@ public class TARDISFarmer {
                             tv.setHealth(v.getHealth());
                             tv.setBaby(!v.isAdult());
                             tv.setName(((LivingEntity) v).getCustomName());
+                            if (plugin.isHelperOnServer()) {
+                                tv.setTrades(plugin.getTardisHelper().getTrades(v, p));
+                                tv.setCareer(plugin.getTardisHelper().getVillagerCareer(v));
+                                tv.setWilling(plugin.getTardisHelper().getVillagerWilling(v));
+                            }
                             old_macd_had_a_villager.add(tv);
                             if (!village.isEmpty() || (village.isEmpty() && plugin.getConfig().getBoolean("allow.spawn_eggs"))) {
                                 e.remove();
@@ -327,9 +352,9 @@ public class TARDISFarmer {
                     // get location of farm room
                     String[] data = farm.split(":");
                     World world = plugin.getServer().getWorld(data[0]);
-                    int x = plugin.getUtils().parseInt(data[1]);
-                    int y = plugin.getUtils().parseInt(data[2]) + 1;
-                    int z = plugin.getUtils().parseInt(data[3]);
+                    int x = TARDISNumberParsers.parseInt(data[1]);
+                    int y = TARDISNumberParsers.parseInt(data[2]) + 1;
+                    int z = TARDISNumberParsers.parseInt(data[3]);
                     if (old_macd_had_a_chicken.size() > 0) {
                         Location chicken_pen = new Location(world, x + 3, y, z - 3);
                         while (!world.getChunkAt(chicken_pen).isLoaded()) {
@@ -465,9 +490,9 @@ public class TARDISFarmer {
                     // get location of stable room
                     String[] data = stable.split(":");
                     World world = plugin.getServer().getWorld(data[0]);
-                    int x = plugin.getUtils().parseInt(data[1]);
-                    int y = plugin.getUtils().parseInt(data[2]) + 1;
-                    int z = plugin.getUtils().parseInt(data[3]);
+                    int x = TARDISNumberParsers.parseInt(data[1]);
+                    int y = TARDISNumberParsers.parseInt(data[2]) + 1;
+                    int z = TARDISNumberParsers.parseInt(data[3]);
                     if (old_macd_had_a_horse.size() > 0) {
                         Location horse_pen = new Location(world, x + 0.5F, y, z + 0.5F);
                         while (!world.getChunkAt(horse_pen).isLoaded()) {
@@ -520,9 +545,8 @@ public class TARDISFarmer {
                                 pinv.addItem(leash);
                                 p.updateInventory();
                             }
-                            if (plugin.isHorseSpeedOnServer()) {
-                                TardisHorseSpeed ths = (TardisHorseSpeed) plugin.getPM().getPlugin("TARDISHorseSpeed");
-                                ths.setHorseSpeed(equine, e.getSpeed());
+                            if (plugin.isHelperOnServer()) {
+                                plugin.getTardisHelper().setHorseSpeed(equine, e.getSpeed());
                             }
                             equine.setRemoveWhenFarAway(false);
                         }
@@ -539,13 +563,53 @@ public class TARDISFarmer {
                         TARDISMessage.send(p, "FARM_STABLE");
                     }
                 }
+                if (!hutch.isEmpty()) {
+                    // get location of hutch room
+                    String[] data = hutch.split(":");
+                    World world = plugin.getServer().getWorld(data[0]);
+                    int x = TARDISNumberParsers.parseInt(data[1]);
+                    int y = TARDISNumberParsers.parseInt(data[2]) + 1;
+                    int z = TARDISNumberParsers.parseInt(data[3]);
+                    if (old_macd_had_a_rabbit.size() > 0) {
+                        Location rabbit_hutch = new Location(world, x + 0.5F, y, z + 0.5F);
+                        while (!world.getChunkAt(rabbit_hutch).isLoaded()) {
+                            world.getChunkAt(rabbit_hutch).load();
+                        }
+                        for (TARDISRabbit e : old_macd_had_a_rabbit) {
+                            plugin.setTardisSpawn(true);
+                            Entity rabbit = world.spawnEntity(rabbit_hutch, EntityType.RABBIT);
+                            Rabbit bunny = (Rabbit) rabbit;
+                            bunny.setAge(e.getAge());
+                            if (e.isBaby()) {
+                                bunny.setBaby();
+                            }
+                            String name = e.getName();
+                            if (name != null && !name.isEmpty()) {
+                                bunny.setCustomName(name);
+                            }
+                            bunny.setRabbitType(e.getBunnyType());
+                            bunny.setRemoveWhenFarAway(false);
+                        }
+                    }
+                } else {
+                    if (plugin.getConfig().getBoolean("allow.spawn_eggs")) {
+                        Inventory inv = p.getInventory();
+                        if (old_macd_had_a_rabbit.size() > 0) {
+                            ItemStack is = new ItemStack(Material.MONSTER_EGG, old_macd_had_a_rabbit.size(), (short) 101);
+                            inv.addItem(is);
+                            p.updateInventory();
+                        }
+                    } else if (rabbittotal > 0) {
+                        TARDISMessage.send(p, "FARM_HUTCH");
+                    }
+                }
                 if (!village.isEmpty()) {
                     // get location of village room
                     String[] data = village.split(":");
                     World world = plugin.getServer().getWorld(data[0]);
-                    int x = plugin.getUtils().parseInt(data[1]);
-                    int y = plugin.getUtils().parseInt(data[2]) + 1;
-                    int z = plugin.getUtils().parseInt(data[3]);
+                    int x = TARDISNumberParsers.parseInt(data[1]);
+                    int y = TARDISNumberParsers.parseInt(data[2]) + 1;
+                    int z = TARDISNumberParsers.parseInt(data[3]);
                     if (old_macd_had_a_villager.size() > 0) {
                         Location v_room = new Location(world, x + 0.5F, y, z + 0.5F);
                         while (!world.getChunkAt(v_room).isLoaded()) {
@@ -564,6 +628,11 @@ public class TARDISFarmer {
                             String name = e.getName();
                             if (name != null && !name.isEmpty()) {
                                 npc.setCustomName(name);
+                            }
+                            if (plugin.isHelperOnServer()) {
+                                plugin.getTardisHelper().setTrades(npc, e.getTrades());
+                                plugin.getTardisHelper().setVillagerCareer(npc, e.getCareer());
+                                plugin.getTardisHelper().setVillagerWilling(npc, e.isWilling());
                             }
                             npc.setRemoveWhenFarAway(false);
                         }

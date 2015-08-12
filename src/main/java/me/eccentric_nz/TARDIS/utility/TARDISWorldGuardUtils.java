@@ -33,6 +33,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.builders.TARDISTIPSData;
 import org.bukkit.Location;
@@ -306,13 +307,13 @@ public class TARDISWorldGuardUtils {
      * Adds a player to a region's membership.
      *
      * @param w the world the region is located in
-     * @param p the player whose region it is
+     * @param owner the player whose region it is
      * @param a the player to add
      */
-    public void addMemberToRegion(World w, String p, String a) {
+    public void addMemberToRegion(World w, String owner, String a) {
         RegionManager rm = wg.getRegionManager(w);
-        if (rm.hasRegion("tardis_" + p)) {
-            plugin.getServer().dispatchCommand(plugin.getConsole(), "rg addmember tardis_" + p + " " + a + " -w " + w.getName());
+        if (rm.hasRegion("tardis_" + owner)) {
+            plugin.getServer().dispatchCommand(plugin.getConsole(), "rg addmember tardis_" + owner + " " + a + " -w " + w.getName());
         }
     }
 
@@ -320,13 +321,37 @@ public class TARDISWorldGuardUtils {
      * Removes a player from a region's membership.
      *
      * @param w the world the region is located in
-     * @param p the player whose region it is
+     * @param owner the player whose region it is
      * @param a the player to add
      */
-    public void removeMemberFromRegion(World w, String p, String a) {
+    public void removeMemberFromRegion(World w, String owner, String a) {
         RegionManager rm = wg.getRegionManager(w);
-        if (rm.hasRegion("tardis_" + p)) {
-            plugin.getServer().dispatchCommand(plugin.getConsole(), "rg removemember tardis_" + p + " " + a + " -w " + w.getName());
+        if (rm.hasRegion("tardis_" + owner)) {
+            plugin.getServer().dispatchCommand(plugin.getConsole(), "rg removemember tardis_" + owner + " " + a + " -w " + w.getName());
+        }
+    }
+
+    /**
+     * Updates the TARDIS WorldGuard region when the player name has changed.
+     *
+     * @param w the world the region is located in
+     * @param o the owner's name
+     * @param uuid the UUID of the player
+     * @param which the region type to update
+     */
+    public void updateRegionForNameChange(World w, String o, UUID uuid, String which) {
+        RegionManager rm = wg.getRegionManager(w);
+        String region = which + "_" + o;
+        if (rm.hasRegion(region)) {
+            ProtectedRegion pr = rm.getRegion(region);
+            DefaultDomain dd = pr.getOwners();
+            dd.addPlayer(uuid);
+            pr.setOwners(dd);
+            try {
+                rm.save();
+            } catch (StorageException e) {
+                plugin.getConsole().sendMessage(plugin.getPluginName() + "Could not update WorldGuard Protection for TARDIS owner name change! " + e.getMessage());
+            }
         }
     }
 

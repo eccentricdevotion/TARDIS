@@ -1,5 +1,6 @@
 #TODO
 
+<<<<<<< HEAD
 ##Current version `3.1`
 1. Update for Minecraft / Bukkit 1.8
 2. Slimmer TARDIS option?
@@ -10,25 +11,39 @@
 ##Future version `3.2+`
 * SpongeAPI?
 * Glowstone
+=======
+##Current version `3.3-beta-1`
+1. Fix bugs
+2. Junk TARDIS
+3. Player configurable choice of (2) blocks that are changed during siege mode engagement
+   * Should default to wall / floor if not configured
+4. TARDISSonicBlaster addon
+5. MySQL table prefix
+
+##Upcoming version `3.4`
+* ?
+
+##Future version `4+`
+* SpongeAPI
+* Forge mod for custom items and blocks (to tie in with Sponge version)
+* Slimmer TARDIS option?
+>>>>>>> v3.0
 
 ##Resource Pack / TARDISWeepingAngels
 
-Re-skin mobs for Resource pack, and add new mob sounds
+1. Don't teleport player to the top of the world when touched by an Angel in the Nether
+2. Re-skin mobs for Resource pack, and add new mob sounds
 
-* Villagers -> Ood - _started_
-* Villagers -> Hath
-* Endermen -> The Silence
-* Iron Golem -> Gunslinger
-* Witches -> Slitheen / Whispermen?
-* Wolves -> K-9? (All the textures I seen so far just don't work - you shouldn't see the legs...)
-* Slimes -> Adipose
+   * Villagers -> Ood - _started_
+   * Villagers -> Hath
+   * Endermen -> The Silence
+   * Endermites -> Cybermats
+   * Iron Golem -> Gunslinger
+   * Witches -> Slitheen / Whispermen?
+   * Wolves -> K-9? (All the textures I seen so far just don't work - you shouldn't see the legs...)
+   * Slimes -> Adipose
 
-##Waiting on Minecraft/Bukkit update
-
-1. TARDIS invisibility - 1.8 barrier blocks?
-2. Add new blocks / items
-
-##Waiting on Bukkit API
+##Waiting on Bukkit / SpigotAPI
 0. IDs/data are soon to be history... so convert all ID/data use to block states 
 1. Get/set horse speed (Attribute API)
 2. Achievements API is now available, but doesn't allow custom achievements :( [https://bukkit.atlassian.net/browse/BUKKIT-5672](https://bukkit.atlassian.net/browse/BUKKIT-5672)

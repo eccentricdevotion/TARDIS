@@ -46,6 +46,7 @@ public class TARDISPrefsMenuListener implements Listener {
     public TARDISPrefsMenuListener(TARDIS plugin) {
         this.plugin = plugin;
         lookup.put("Autonomous", "auto_on");
+        lookup.put("Autonomous Siege", "auto_siege_on");
         lookup.put("Beacon", "beacon_on");
         lookup.put("Do Not Disturb", "dnd_on");
         lookup.put("Emergency Programme One", "eps_on");
@@ -61,6 +62,7 @@ public class TARDISPrefsMenuListener implements Listener {
         lookup.put("Connected Textures", "ctm_on");
         lookup.put("Preset Sign", "sign_on");
         lookup.put("Travel Bar", "travelbar_on");
+        lookup.put("Mob Farming", "farm_on");
     }
 
     @EventHandler(ignoreCancelled = true)
@@ -70,13 +72,13 @@ public class TARDISPrefsMenuListener implements Listener {
         if (name.equals("§4Player Prefs Menu")) {
             event.setCancelled(true);
             int slot = event.getRawSlot();
-            if (slot >= 0 && slot < 18) {
+            if (slot >= 0 && slot < 27) {
                 ItemStack is = inv.getItem(slot);
                 if (is != null) {
                     final Player p = (Player) event.getWhoClicked();
                     UUID uuid = p.getUniqueId();
                     ItemMeta im = is.getItemMeta();
-                    if ((slot == 16 || slot == 17) && im.getDisplayName().equals("TARDIS Map")) {
+                    if (slot == 22 && im.getDisplayName().equals("TARDIS Map")) {
                         // must be in the TARDIS
                         HashMap<String, Object> where = new HashMap<String, Object>();
                         where.put("uuid", uuid.toString());
@@ -99,7 +101,7 @@ public class TARDISPrefsMenuListener implements Listener {
                         }
                         return;
                     }
-                    if (slot == 17 && im.getDisplayName().equals("Admin Menu")) {
+                    if (slot == 26 && im.getDisplayName().equals("Admin Menu")) {
                         // close this gui and load the Admin Menu
                         plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
                             @Override
@@ -112,8 +114,8 @@ public class TARDISPrefsMenuListener implements Listener {
                         return;
                     }
                     List<String> lore = im.getLore();
-                    boolean bool = (lore.get(0).equals("ON"));
-                    String value = (bool) ? "OFF" : "ON";
+                    boolean bool = (lore.get(0).equals(plugin.getLanguage().getString("SET_ON")));
+                    String value = (bool) ? plugin.getLanguage().getString("SET_OFF") : plugin.getLanguage().getString("SET_ON");
                     int b = (bool) ? 0 : 1;
                     if (im.getDisplayName().equals("Companion Build")) {
                         String[] args = new String[2];

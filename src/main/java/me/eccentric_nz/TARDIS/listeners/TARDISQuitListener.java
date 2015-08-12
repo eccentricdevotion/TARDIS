@@ -76,7 +76,7 @@ public class TARDISQuitListener implements Listener {
                 if (rs.isPowered_on()) {
                     // not if flying or uninitialised
                     final int id = rs.getTardis_id();
-                    if (!rs.isTardis_init() || isTravelling(id)) {
+                    if (!rs.isTardis_init() || isTravelling(id) || !rs.isHandbrake_on()) {
                         return;
                     }
                     // power off
@@ -100,7 +100,7 @@ public class TARDISQuitListener implements Listener {
                     }
                     // if lights are on, turn them off
                     if (lights) {
-                        new TARDISLampToggler(plugin).flickSwitch(id, uuid, true);
+                        new TARDISLampToggler(plugin).flickSwitch(id, uuid, true, rs.getSchematic().hasLanterns());
                     }
                     // if beacon is on turn it off
                     new TARDISBeaconToggler(plugin).flickSwitch(uuid, false);
@@ -113,8 +113,13 @@ public class TARDISQuitListener implements Listener {
                 }
             }
             // save arched status
-            if (plugin.isDisguisesOnServer() && plugin.getConfig().getBoolean("arch.enabled") && plugin.getTrackerKeeper().getJohnSmith().containsKey(uuid)) {
-                new TARDISArchPersister(plugin).save(uuid);
+            if (plugin.isDisguisesOnServer()) {
+                if (plugin.getConfig().getBoolean("arch.enabled") && plugin.getTrackerKeeper().getJohnSmith().containsKey(uuid)) {
+                    new TARDISArchPersister(plugin).save(uuid);
+                }
+                if (plugin.getTrackerKeeper().getGeneticallyModified().contains(uuid)) {
+                    plugin.getTrackerKeeper().getGeneticallyModified().remove(uuid);
+                }
             }
         }
     }

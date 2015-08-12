@@ -19,6 +19,8 @@ package me.eccentric_nz.TARDIS.commands;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
+import me.eccentric_nz.TARDIS.utility.TARDISNumberParsers;
+import me.eccentric_nz.TARDIS.utility.TARDISStaticUtils;
 import org.bukkit.Location;
 import org.bukkit.World.Environment;
 import org.bukkit.command.Command;
@@ -68,11 +70,12 @@ public class TARDISNetherPortalCommand implements CommandExecutor {
             if (player == null) {
                 // must provide coords
                 if (args.length < 4) {
-                    return false;
+                    new TARDISCommandHelper(plugin).getCommand("tardisnetherportal", sender);
+                    return true;
                 }
-                int x = plugin.getUtils().parseInt(args[0]);
-                int y = plugin.getUtils().parseInt(args[1]);
-                int z = plugin.getUtils().parseInt(args[2]);
+                int x = TARDISNumberParsers.parseInt(args[0]);
+                int y = TARDISNumberParsers.parseInt(args[1]);
+                int z = TARDISNumberParsers.parseInt(args[2]);
                 return o2n(sender, x, y, z, args[3].equalsIgnoreCase("overworld"));
             } else {
                 // get player's coords and environment
@@ -95,7 +98,7 @@ public class TARDISNetherPortalCommand implements CommandExecutor {
             return false;
         }
         // get player direction
-        String d = plugin.getUtils().getPlayersDirection(player, false);
+        String d = TARDISStaticUtils.getPlayersDirection(player, false);
         String message = (overworld) ? "O2N_COORDS_N" : "O2N_COORDS_O";
         // get destination coords
         if (overworld) {

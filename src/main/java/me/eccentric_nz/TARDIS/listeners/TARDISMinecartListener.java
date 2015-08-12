@@ -23,6 +23,7 @@ import me.eccentric_nz.TARDIS.database.ResultSetDoors;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
+import me.eccentric_nz.TARDIS.utility.TARDISNumberParsers;
 import org.bukkit.Chunk;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -32,10 +33,12 @@ import org.bukkit.block.BlockFace;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Vehicle;
+import org.bukkit.entity.minecart.HopperMinecart;
 import org.bukkit.entity.minecart.StorageMinecart;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.vehicle.VehicleBlockCollisionEvent;
+import org.bukkit.inventory.InventoryHolder;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.util.Vector;
 
@@ -53,12 +56,12 @@ public class TARDISMinecartListener implements Listener {
 
     @EventHandler(ignoreCancelled = true)
     public void onVehicleBlockCollision(VehicleBlockCollisionEvent event) {
-        if (event.getVehicle() instanceof StorageMinecart) {
+        if (event.getVehicle() instanceof StorageMinecart || event.getVehicle() instanceof HopperMinecart) {
             Block b = event.getBlock();
             Material mat = b.getType();
             if (mat.equals(Material.IRON_DOOR_BLOCK) || mat.equals(Material.FENCE)) {
                 Vehicle minecart = event.getVehicle();
-                ItemStack[] inv = ((StorageMinecart) minecart).getInventory().getContents();
+                ItemStack[] inv = ((InventoryHolder) minecart).getInventory().getContents();
                 String[] data = null;
                 UUID playerUUID = null;
                 int id = 0;
@@ -131,9 +134,9 @@ public class TARDISMinecartListener implements Listener {
                         }
                     }
                     World w = plugin.getServer().getWorld(data[0]);
-                    int x = plugin.getUtils().parseInt(data[1]);
-                    int y = plugin.getUtils().parseInt(data[2]);
-                    int z = plugin.getUtils().parseInt(data[3]);
+                    int x = TARDISNumberParsers.parseInt(data[1]);
+                    int y = TARDISNumberParsers.parseInt(data[2]);
+                    int z = TARDISNumberParsers.parseInt(data[3]);
                     Location in_out = new Location(w, x, y, z);
                     if (mat.equals(Material.IRON_DOOR_BLOCK)) {
                         d = getDirection(in_out);
@@ -143,13 +146,13 @@ public class TARDISMinecartListener implements Listener {
                     } else {
                         plugin.getGeneralKeeper().getTardisChunkList().remove(w.getChunkAt(in_out));
                     }
-                    teleportMinecart(minecart, in_out, d, inv);
+                    teleportMinecart(minecart, in_out, d, inv, minecart.getType());
                 }
             }
         }
     }
 
-    private void teleportMinecart(Vehicle minecart, Location targetLocation, COMPASS d, ItemStack[] inv) {
+    private void teleportMinecart(Vehicle minecart, Location targetLocation, COMPASS d, ItemStack[] inv, EntityType cart) {
         // search for minecart tracks around the target waypoint
         Location trackLocation = findTrack(targetLocation);
         if (trackLocation == null) {
@@ -158,13 +161,29 @@ public class TARDISMinecartListener implements Listener {
         // get minecart's speed
         double speed = minecart.getVelocity().length();
         // simulate teleport minecart...
-        Chunk thisChunk = trackLocation.getChunk();
+        final Chunk thisChunk = trackLocation.getChunk();
         while (!thisChunk.isLoaded()) {
             thisChunk.load();
         }
+        // keep the chunk loaded until the cart has finished unloading
+        plugin.getGeneralKeeper().getRailChunkList().add(thisChunk);
+        // determine how long to keep it loaded (at a rate of approx 1 item per 8 ticks)
+        long delay = 200L; // add an initial 10 second buffer
+        for (ItemStack is : inv) {
+            if (is != null) {
+                delay += is.getAmount() * 8L;
+            }
+        }
+        // start a delayed task to remove the chunk
+        plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
+            @Override
+            public void run() {
+                plugin.getGeneralKeeper().getRailChunkList().remove(thisChunk);
+            }
+        }, delay);
         minecart.remove();
-        Entity e = trackLocation.getWorld().spawnEntity(trackLocation, EntityType.MINECART_CHEST);
-        StorageMinecart smc = (StorageMinecart) e;
+        Entity e = trackLocation.getWorld().spawnEntity(trackLocation, cart);
+        InventoryHolder smc = (InventoryHolder) e;
         smc.getInventory().setContents(inv);
         // calculate new velocity
         switch (d) {

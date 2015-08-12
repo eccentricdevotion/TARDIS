@@ -27,8 +27,10 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.enumeration.CONSOLES;
 import me.eccentric_nz.TARDIS.enumeration.PRESET;
 import me.eccentric_nz.TARDIS.enumeration.SCHEMATIC;
+import me.eccentric_nz.TARDIS.utility.TARDISNumberParsers;
 
 /**
  * Many facts, figures, and formulas are contained within the Matrix,
@@ -47,6 +49,7 @@ public class ResultSetTardis {
     private int tardis_id;
     private UUID uuid;
     private String owner;
+    private String lastKnownName;
     private String chunk;
     private int tips;
     private SCHEMATIC schematic;
@@ -78,9 +81,12 @@ public class ResultSetTardis {
     private String village;
     private String renderer;
     private String zero;
+    private String hutch;
     private boolean powered_on;
     private boolean lights_on;
+    private boolean siege_on;
     private final ArrayList<HashMap<String, String>> data = new ArrayList<HashMap<String, String>>();
+    private final String prefix;
 
     /**
      * Creates a class instance that can be used to retrieve an SQL ResultSet
@@ -98,6 +104,7 @@ public class ResultSetTardis {
         this.where = where;
         this.limit = limit;
         this.multiple = multiple;
+        this.prefix = this.plugin.getPrefix();
     }
 
     /**
@@ -122,7 +129,7 @@ public class ResultSetTardis {
         if (!limit.isEmpty()) {
             thelimit = " LIMIT " + limit;
         }
-        String query = "SELECT * FROM tardis" + wheres + thelimit;
+        String query = "SELECT * FROM " + prefix + "tardis" + wheres + thelimit;
         try {
             service.testConnection(connection);
             statement = connection.prepareStatement(query);
@@ -132,7 +139,7 @@ public class ResultSetTardis {
                     if (entry.getValue().getClass().equals(String.class) || entry.getValue().getClass().equals(UUID.class)) {
                         statement.setString(s, entry.getValue().toString());
                     } else {
-                        statement.setInt(s, plugin.getUtils().parseInt(entry.getValue().toString()));
+                        statement.setInt(s, TARDISNumberParsers.parseInt(entry.getValue().toString()));
                     }
                     s++;
                 }
@@ -153,9 +160,10 @@ public class ResultSetTardis {
                     this.tardis_id = rs.getInt("tardis_id");
                     this.uuid = UUID.fromString(rs.getString("uuid"));
                     this.owner = rs.getString("owner");
+                    this.lastKnownName = rs.getString("last_known_name");
                     this.chunk = rs.getString("chunk");
                     this.tips = rs.getInt("tips");
-                    this.schematic = SCHEMATIC.valueOf(rs.getString("size"));
+                    this.schematic = CONSOLES.SCHEMATICFor(rs.getString("size").toLowerCase());
                     this.replaced = rs.getString("replaced");
                     if (rs.wasNull()) {
                         this.replaced = "";
@@ -190,8 +198,13 @@ public class ResultSetTardis {
                     this.village = rs.getString("village");
                     this.renderer = rs.getString("renderer");
                     this.zero = rs.getString("zero");
+                    if (rs.wasNull()) {
+                        this.zero = "";
+                    }
+                    this.hutch = rs.getString("hutch");
                     this.powered_on = rs.getBoolean("powered_on");
                     this.lights_on = rs.getBoolean("lights_on");
+                    this.siege_on = rs.getBoolean("siege_on");
                 }
             } else {
                 return false;
@@ -327,6 +340,10 @@ public class ResultSetTardis {
         return lastuse;
     }
 
+    public String getLastKnownName() {
+        return lastKnownName;
+    }
+
     public boolean isIso_on() {
         return iso_on;
     }
@@ -351,12 +368,20 @@ public class ResultSetTardis {
         return zero;
     }
 
+    public String getHutch() {
+        return hutch;
+    }
+
     public boolean isPowered_on() {
         return powered_on;
     }
 
     public boolean isLights_on() {
         return lights_on;
+    }
+
+    public boolean isSiege_on() {
+        return siege_on;
     }
 
     public ArrayList<HashMap<String, String>> getData() {

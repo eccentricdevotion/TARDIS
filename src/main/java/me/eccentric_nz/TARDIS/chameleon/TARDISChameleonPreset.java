@@ -39,6 +39,7 @@ import me.eccentric_nz.TARDIS.utility.recalculators.TARDISTrapdoorRecalculator;
 public class TARDISChameleonPreset {
 
     private final List<Integer> problemBlocks = Arrays.asList(50, 53, 63, 64, 66, 67, 68, 69, 71, 77, 91, 96, 99, 106, 108, 109, 114, 128, 134, 135, 136, 143, 145, 156, 163, 164);
+    public final TARDISAndesitePreset andesite;
     public final TARDISAngelDownPreset angeld;
     public final TARDISAngelUpPreset angelu;
     public final TARDISAppertureSciencePreset apperture;
@@ -48,12 +49,15 @@ public class TARDISChameleonPreset {
     public final TARDISColumnPreset column;
     public final TARDISCreepyPreset creepy;
     public final TARDISDesertPreset desert;
+    public final TARDISDioritePreset diorite;
     public final TARDISDoubleHelixPreset helix;
     public final TARDISFactoryPreset factory;
     public final TARDISFencePreset fence;
     public final TARDISFlowerPreset flower;
     public final TARDISGazeboPreset gazebo;
+    public final TARDISGranitePreset granite;
     public final TARDISGravestonePreset gravestone;
+    public final TARDISInvisiblePreset invisible;
     public final TARDISJailPreset jail;
     public final TARDISJunglePreset jungle;
     public final TARDISLampPostPreset lamp;
@@ -68,6 +72,7 @@ public class TARDISChameleonPreset {
     public final TARDISPineTreePreset pine;
     public final TARDISPoliceBoxPreset police;
     public final TARDISPortalPreset portal;
+    public final TARDISPrismarinePreset prismarine;
     public final TARDISPunkedPreset punked;
     public final TARDISRobotPreset robot;
     public final TARDISRubberDuckPreset duck;
@@ -89,6 +94,7 @@ public class TARDISChameleonPreset {
     int r;
 
     public TARDISChameleonPreset() {
+        this.andesite = new TARDISAndesitePreset();
         this.angeld = new TARDISAngelDownPreset();
         this.angelu = new TARDISAngelUpPreset();
         this.apperture = new TARDISAppertureSciencePreset();
@@ -98,13 +104,16 @@ public class TARDISChameleonPreset {
         this.column = new TARDISColumnPreset();
         this.creepy = new TARDISCreepyPreset();
         this.desert = new TARDISDesertPreset();
+        this.diorite = new TARDISDioritePreset();
         this.duck = new TARDISRubberDuckPreset();
         this.factory = new TARDISFactoryPreset();
         this.fence = new TARDISFencePreset();
         this.flower = new TARDISFlowerPreset();
         this.gazebo = new TARDISGazeboPreset();
+        this.granite = new TARDISGranitePreset();
         this.gravestone = new TARDISGravestonePreset();
         this.helix = new TARDISDoubleHelixPreset();
+        this.invisible = new TARDISInvisiblePreset();
         this.jail = new TARDISJailPreset();
         this.jungle = new TARDISJunglePreset();
         this.lamp = new TARDISLampPostPreset();
@@ -118,6 +127,7 @@ public class TARDISChameleonPreset {
         this.pine = new TARDISPineTreePreset();
         this.police = new TARDISPoliceBoxPreset();
         this.portal = new TARDISPortalPreset();
+        this.prismarine = new TARDISPrismarinePreset();
         this.punked = new TARDISPunkedPreset();
         this.robot = new TARDISRobotPreset();
         this.shroom = new TARDISMushroomPreset();
@@ -139,6 +149,7 @@ public class TARDISChameleonPreset {
     }
 
     public void makePresets() {
+        andesite.makePresets(false, false, false);
         angeld.makePresets(true, false, false);
         angelu.makePresets(true, false, false);
         apperture.makePresets(false, false, false);
@@ -148,13 +159,16 @@ public class TARDISChameleonPreset {
         column.makePresets(false, false, false);
         creepy.makePresets(false, false, false);
         desert.makePresets(false, false, false);
+        diorite.makePresets(false, false, false);
         duck.makePresets(true, true, false);
         factory.makePresets(false, false, false);
         fence.makePresets(true, false, false);
         flower.makePresets(false, false, false);
         gazebo.makePresets(false, false, false);
+        granite.makePresets(false, false, false);
         gravestone.makePresets(true, false, false);
         helix.makePresets(false, false, false);
+        invisible.makePresets(true, true, true);
         jail.makePresets(false, false, false);
         jungle.makePresets(false, false, false);
         lamp.makePresets(true, false, true);
@@ -168,6 +182,7 @@ public class TARDISChameleonPreset {
         pine.makePresets(false, false, false);
         police.makePresets(false, false, false);
         portal.makePresets(false, false, false);
+        prismarine.makePresets(false, false, false);
         punked.makePresets(false, false, false);
         robot.makePresets(true, false, false);
         shroom.makePresets(false, false, false);
@@ -489,6 +504,8 @@ public class TARDISChameleonPreset {
 
     public TARDISChameleonColumn getColumn(PRESET p, COMPASS d) {
         switch (p) {
+            case ANDESITE:
+                return andesite.getBlueprint().get(d);
             case ANGEL:
                 if (r == 0) {
                     return angelu.getBlueprint().get(d);
@@ -507,6 +524,8 @@ public class TARDISChameleonPreset {
                 return creepy.getBlueprint().get(d);
             case DESERT:
                 return desert.getBlueprint().get(d);
+            case DIORITE:
+                return diorite.getBlueprint().get(d);
             case DUCK:
                 return duck.getBlueprint().get(d);
             case FACTORY:
@@ -517,10 +536,14 @@ public class TARDISChameleonPreset {
                 return flower.getBlueprint().get(d);
             case GAZEBO:
                 return gazebo.getBlueprint().get(d);
+            case GRANITE:
+                return granite.getBlueprint().get(d);
             case GRAVESTONE:
                 return gravestone.getBlueprint().get(d);
             case HELIX:
                 return helix.getBlueprint().get(d);
+            case INVISIBLE:
+                return invisible.getBlueprint().get(d);
             case JAIL:
                 return jail.getBlueprint().get(d);
             case JUNGLE:
@@ -547,6 +570,8 @@ public class TARDISChameleonPreset {
                 return pine.getBlueprint().get(d);
             case PORTAL:
                 return portal.getBlueprint().get(d);
+            case PRISMARINE:
+                return prismarine.getBlueprint().get(d);
             case PUNKED:
                 return punked.getBlueprint().get(d);
             case RENDER:
@@ -590,6 +615,8 @@ public class TARDISChameleonPreset {
 
     public TARDISChameleonColumn getGlass(PRESET p, COMPASS d) {
         switch (p) {
+            case ANDESITE:
+                return andesite.getGlass().get(d);
             case ANGEL:
                 if (r == 0) {
                     return angelu.getGlass().get(d);
@@ -608,6 +635,8 @@ public class TARDISChameleonPreset {
                 return creepy.getGlass().get(d);
             case DESERT:
                 return desert.getGlass().get(d);
+            case DIORITE:
+                return diorite.getGlass().get(d);
             case DUCK:
                 return duck.getGlass().get(d);
             case FACTORY:
@@ -618,10 +647,14 @@ public class TARDISChameleonPreset {
                 return flower.getGlass().get(d);
             case GAZEBO:
                 return gazebo.getGlass().get(d);
+            case GRANITE:
+                return granite.getGlass().get(d);
             case GRAVESTONE:
                 return gravestone.getGlass().get(d);
             case HELIX:
                 return helix.getGlass().get(d);
+            case INVISIBLE:
+                return invisible.getGlass().get(d);
             case JAIL:
                 return jail.getGlass().get(d);
             case JUNGLE:
@@ -648,6 +681,8 @@ public class TARDISChameleonPreset {
                 return pine.getGlass().get(d);
             case PORTAL:
                 return portal.getGlass().get(d);
+            case PRISMARINE:
+                return prismarine.getGlass().get(d);
             case PUNKED:
                 return punked.getGlass().get(d);
             case RENDER:
@@ -691,6 +726,8 @@ public class TARDISChameleonPreset {
 
     public TARDISChameleonColumn getStained(PRESET p, COMPASS d) {
         switch (p) {
+            case ANDESITE:
+                return andesite.getStained().get(d);
             case ANGEL:
                 if (r == 0) {
                     return angelu.getStained().get(d);
@@ -709,6 +746,8 @@ public class TARDISChameleonPreset {
                 return creepy.getStained().get(d);
             case DESERT:
                 return desert.getStained().get(d);
+            case DIORITE:
+                return diorite.getStained().get(d);
             case DUCK:
                 return duck.getStained().get(d);
             case FACTORY:
@@ -719,10 +758,14 @@ public class TARDISChameleonPreset {
                 return flower.getStained().get(d);
             case GAZEBO:
                 return gazebo.getStained().get(d);
+            case GRANITE:
+                return granite.getStained().get(d);
             case GRAVESTONE:
                 return gravestone.getStained().get(d);
             case HELIX:
                 return helix.getStained().get(d);
+            case INVISIBLE:
+                return invisible.getStained().get(d);
             case JAIL:
                 return jail.getStained().get(d);
             case JUNGLE:
@@ -749,6 +792,8 @@ public class TARDISChameleonPreset {
                 return pine.getStained().get(d);
             case PORTAL:
                 return portal.getStained().get(d);
+            case PRISMARINE:
+                return prismarine.getStained().get(d);
             case PUNKED:
                 return punked.getStained().get(d);
             case RENDER:

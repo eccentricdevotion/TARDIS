@@ -16,8 +16,6 @@
  */
 package me.eccentric_nz.TARDIS.chameleon;
 
-import java.util.Arrays;
-import java.util.List;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
@@ -59,6 +57,12 @@ public class TARDISChameleonCircuit {
         if (TARDISConstants.CHAMELEON_BLOCKS_CHANGE.contains((Integer) chameleonType)) {
             wall_block = swapId(chameleonType);
             switch (chameleonType) {
+                case 12:
+                    if (b.getData() == (byte) 1) {
+                        wall_block = 179;
+                        chameleonData = 0;
+                    }
+                    break;
                 case 22:
                     chameleonData = 11;
                     break;
@@ -89,9 +93,8 @@ public class TARDISChameleonCircuit {
             }
         }
         if (TARDISConstants.CHAMELEON_BLOCKS_NEXT.contains((Integer) chameleonType)) {
-            List<BlockFace> surrounding = Arrays.asList(BlockFace.EAST, BlockFace.SOUTH, BlockFace.WEST, BlockFace.NORTH, BlockFace.NORTH_EAST, BlockFace.NORTH_WEST, BlockFace.SOUTH_EAST, BlockFace.SOUTH_WEST);
             // try the surrounding blocks
-            for (BlockFace bf : surrounding) {
+            for (BlockFace bf : plugin.getGeneralKeeper().getSurrounding()) {
                 Block surroundblock = b.getRelative(bf);
                 int eid = surroundblock.getTypeId();
                 if (TARDISConstants.CHAMELEON_BLOCKS_VALID.contains((Integer) eid)) {

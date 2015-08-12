@@ -21,7 +21,6 @@ import java.util.Map;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import org.bukkit.Chunk;
-import org.bukkit.World;
 
 /**
  * Preprocessor for checking changes in the Architectural Reconfiguration
@@ -47,7 +46,7 @@ public class TARDISARSProcessor {
     public boolean compare3DArray(int[][][] start, int[][][] end) {
         changed = new HashMap<TARDISARSSlot, ARS>();
         jettison = new HashMap<TARDISARSJettison, ARS>();
-        Chunk c = getTARDISChunk(id);
+        Chunk c = plugin.getLocationUtils().getTARDISChunk(id);
         for (int l = 0; l < 3; l++) {
             for (int x = 0; x < 9; x++) {
                 for (int z = 0; z < 9; z++) {
@@ -61,9 +60,9 @@ public class TARDISARSProcessor {
                             slot.setZ(z);
                             jettison.put(slot, TARDISARS.ARSFor(start[l][x][z]));
                         } else {
-                            if (end[l][x][z] == 48) {
-                                if (l == 2 || ((l + 1) < 3 && end[l + 1][x][z] == 48)) {
-                                    // only remember the bottom slot of an anti-gravity well
+                            if (end[l][x][z] == 24) {
+                                if (l == 2 || ((l + 1) < 3 && end[l + 1][x][z] == 24)) {
+                                    // only remember the bottom slot of a anti-gravity well
                                     TARDISARSSlot slot = new TARDISARSSlot();
                                     slot.setChunk(c);
                                     slot.setY(l);
@@ -71,9 +70,9 @@ public class TARDISARSProcessor {
                                     slot.setZ(z);
                                     changed.put(slot, TARDISARS.ARSFor(end[l][x][z]));
                                 }
-                            } else if (end[l][x][z] == 24) {
-                                if (l == 0 || ((l - 1) > 0 && end[l - 1][x][z] == 24)) {
-                                    // only remember the top slot of a gravity well
+                            } else if (end[l][x][z] == 48) {
+                                if (l == 0 || ((l - 1) > 0 && end[l - 1][x][z] == 48)) {
+                                    // only remember the top slot of an gravity well
                                     TARDISARSSlot slot = new TARDISARSSlot();
                                     slot.setChunk(c);
                                     slot.setY(l - 1);
@@ -139,20 +138,5 @@ public class TARDISARSProcessor {
 
     public String getError() {
         return error;
-    }
-
-    private Chunk getTARDISChunk(int id) {
-        HashMap<String, Object> where = new HashMap<String, Object>();
-        where.put("tardis_id", id);
-        ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);
-        if (rs.resultSet()) {
-            String c = rs.getChunk();
-            String[] data = c.split(":");
-            World w = plugin.getServer().getWorld(data[0]);
-            int cx = plugin.getUtils().parseInt(data[1]);
-            int cz = plugin.getUtils().parseInt(data[2]);
-            return w.getChunkAt(cx, cz);
-        }
-        return null;
     }
 }

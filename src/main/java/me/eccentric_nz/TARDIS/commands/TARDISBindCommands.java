@@ -79,6 +79,7 @@ public class TARDISBindCommands implements CommandExecutor {
             }
             if (args.length < 1) {
                 TARDISMessage.send(player, "TOO_FEW_ARGS");
+                new TARDISCommandHelper(plugin).getCommand("tardisbind", sender);
                 return false;
             }
             if (!firstArgs.contains(args[0].toLowerCase(Locale.ENGLISH))) {

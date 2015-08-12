@@ -17,18 +17,15 @@
 package me.eccentric_nz.TARDIS.commands;
 
 import com.google.common.collect.ImmutableList;
-import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabCompleter;
-import org.bukkit.util.StringUtil;
 
 /**
  * TabCompleter for /tardisbind command
  */
-public class TARDISBindTabComplete implements TabCompleter {
+public class TARDISBindTabComplete extends TARDISCompleter implements TabCompleter {
 
     private final List<String> ROOT_SUBS = ImmutableList.of("save", "cmd", "player", "area", "biome", "remove", "update");
     private final ImmutableList<String> T1_SUBS = ImmutableList.of("hide", "rebuild", "home", "cave");
@@ -52,9 +49,5 @@ public class TARDISBindTabComplete implements TabCompleter {
             }
         }
         return ImmutableList.of();
-    }
-
-    private List<String> partial(String token, Collection<String> from) {
-        return StringUtil.copyPartialMatches(token, from, new ArrayList<String>(from.size()));
     }
 }

@@ -3,7 +3,7 @@ description: A plugin for all Doctor Who fans - create and use a TARDIS! Telepor
 main: me.eccentric_nz.TARDIS.TARDIS
 name: TARDIS
 load: POSTWORLD
-softdepend: [Multiverse-Core,Multiverse-Adventure,Multiverse-Inventories,MultiWorld,My Worlds,WorldGuard,WorldBorder,Towny,Citizens,ProtocolLib,LibsDisguises,ProjectRassilon,GriefPrevention,BarAPI]
+softdepend: [Multiverse-Core,Multiverse-Adventure,Multiverse-Inventories,MultiWorld,My Worlds,WorldGuard,WorldBorder,Towny,Citizens,ProtocolLib,LibsDisguises,GriefPrevention,BarAPI,TARDISHelper]
 website: http://dev.bukkit.org/bukkit-plugins/tardis/
 dev-url: http://dev.bukkit.org/bukkit-plugins/tardis/
 url: http://eccentricdevotion.github.io/TARDIS/
@@ -24,6 +24,7 @@ permissions:
   tardis.use:
     description: Allow players to create & delete a TARDIS, and teleport to destinations.
     children:
+      tardis.budget: true
       tardis.create: true
       tardis.exterminate: true
       tardis.timetravel: true
@@ -56,19 +57,22 @@ permissions:
     description: Allow players to delete their own TARDIS.
     default: op
   tardis.timetravel:
-    description: Allow players to teleport to random locations and saved destinations.
+    description: Allow players to travel to random locations and saved destinations.
     default: op
   tardis.timetravel.player:
-    description: Allow players to teleport to player locations.
+    description: Allow players to travel to player locations.
     default: op
   tardis.timetravel.location:
-    description: Allow players to teleport to coordinates.
+    description: Allow players to travel to coordinates.
     default: op
   tardis.timetravel.biome:
-    description: Allow players to teleport to coordinates.
+    description: Allow players to travel to specific biomes.
     default: op
   tardis.timetravel.cave:
-    description: Allow players to teleport to caves.
+    description: Allow players to travel to caves.
+    default: op
+  tardis.timetravel.village:
+    description: Allow players to travel to villages.
     default: op
   tardis.list:
     description: Allow players to list saved time travel destinations.
@@ -106,6 +110,9 @@ permissions:
   tardis.eleventh:
     description: Allow players to build the 'eleventh' TARDIS.
     default: op
+  tardis.twelfth:
+    description: Allow players to build the 'twelfth' TARDIS.
+    default: op
   tardis.redstone:
     description: Allow players to build the 'redstone' TARDIS.
     default: op
@@ -117,6 +124,9 @@ permissions:
     default: op
   tardis.war:
     description: Allow players to build the 'War Doctor's TARDIS.
+    default: op
+  tardis.pyramid:
+    description: Allow players to build the 'Sandstone Pyramid TARDIS.
     default: op
   tardis.storage:
     description: Allow players to utilise the TARDIS Disk Storage.
@@ -200,6 +210,9 @@ permissions:
   tardis.prune.bypass:
     description: Ignore /tardisadmin prune [days] command to remove unused TARDISes.
     default: op
+  tardis.sonic.standard:
+    description: Allows a player to use a basic Sonic Screwdriver.
+    default: op
   tardis.sonic.admin:
     description: Allows the sonic screwdriver to be upgraded with Admin abilities.
     default: op
@@ -257,18 +270,21 @@ permissions:
   tardis.upgrade:
     description: Allows a player to upgrade their TARDIS.
     default: op
+  tardis.furnace:
+    description: Allows a player to have a TARDIS Artron Furnace.
+    default: op
 commands:
   tardis:
-    aliases: [tt,ttardis,/tardis,timelord]
-    description: Manipulate TARDISs (TARDII?) with various arguments (list, save, find, help, etc). Type /TARDIS help - to see more.
+    aliases: [tt, ttardis, /tardis, timelord]
+    description: Manipulate TARDISs (TARDII?) with various arguments (list, save, find, help, etc).
     chameleon:
       description: Toggle the TARDIS Chameleon Circuit on and off.
       usage: /<command> chameleon [on|off|short|reset]
       permission: tardis.timetravel
       permission-message: You don't have the permission <permission> to use this command
     list:
-      description: List saved time travel locations.
-      usage: /<command> list
+      description: List saved time travel locations, companions, areas and rechargers.
+      usage: /<command> list [saves|companions|areas|rechargers]
       permission: tardis.list
       permission-message: You don't have the permission <permission> to use this command
     save:
@@ -342,6 +358,7 @@ commands:
     exterminate:
       description: Delete your TARDIS.
       usage: /<command> exterminate
+      permission: tardis.exterminate
     hide:
       description: Hide the TARDIS Police Box.
       usage: /<command> hide
@@ -399,9 +416,11 @@ commands:
     player:
       description: Time travel to the specified player.
       usage: /<command> [player]
+      permission: tardis.timetravel.player
     coords:
       description: Time travel to the specified coordinates.
       usage: /<command> [world x y z]
+      permission: tardis.timetravel.location
     dest:
       description: Time travel to a saved destination.
       usage: /<command> dest [save name]
@@ -411,6 +430,11 @@ commands:
     biome:
       description: Time travel to the closest specified biome type.
       usage: /<command> biome [biome type]
+      permission: tardis.timetravel.biome
+    cave:
+      description: Time travel to an underground cave.
+      usage: /<command> cave
+      permission: tardis.timetravel.cave
   tardisadmin:
     aliases: tadmin
     description: Set TARDIS configuration options.
@@ -418,7 +442,7 @@ commands:
     permission: tardis.admin
     permission-message: You don't have the permission <permission> to use this command
   tardisgive:
-    aliases: [tgive]
+    aliases: tgive
     description: Give TARDIS items to a player.
     usage: /<command> [player] [item] [amount]
     permission: tardis.admin
@@ -429,21 +453,29 @@ commands:
     usage: /<command> add [name] or /<command> [name] [boolean|integer|string] or /<command> blocks [name|save] or /<command> required [room]
     permission: tardis.create
     permission-message: You don't have the permission <permission> to use this command
+    required:
+      description: List the blocks needed to grow a room.
+      usage: /<command> required [room name]
     add:
       description: Add a new custom room schematic.
       usage: /<command> add [schematic name]
+      permission: tardis.admin
     seed:
       description: Set the seed block of a custom room.
       usage: /<command> [schematic name] [material]
+      permission: tardis.admin
     cost:
       description: Set the cost of a custom room.
       usage: /<command> add [schematic name]
+      permission: tardis.admin
     offset:
       description: Set the offset of a custom room.
       usage: /<command> [schematic name] [negative amount]
+      permission: tardis.admin
     enabled:
       description: Set the custom room as active/inactive.
       usage: /<command> [schematic name] [true|false]
+      permission: tardis.admin
   tardisprefs:
     aliases: tprefs
     description: Set player preferences.
@@ -514,7 +546,7 @@ commands:
       permission: tardis.admin
       permission-message: You don't have the permission <permission> to use this command
   tardisartron:
-    aliases: [tartron,artron]
+    aliases: [tartron, artron]
     description: Transfer Artron Energy to an Artron Storage Cell
     permission: tardis.store
     permission-message: You don't have the permission <permission> to use this command
@@ -555,7 +587,7 @@ commands:
     permission: tardis.book
     permission-message: You don't have the permission <permission> to use this command
   tardistexture:
-    aliases: [tardisresource,tresource,ttexture,trp,ttp]
+    aliases: [tardisresource, tresource, ttexture, trp, ttp]
     description: Set texure pack preferences.
     usage: /<command> [on|off|in|out] [url]
     permission: tardis.texture
@@ -575,7 +607,7 @@ commands:
   tardisrecipe:
     aliases: [trecipe, trep]
     description: View TARDIS item recipes.
-    usage: /<command> [a-circuit|ars-circuit|bio-circuit|biome-disk|blank|c-circuit|cell|d-circuit|e-circuit|filter|i-circuit|key|l-circuit|locator|m-circuit|mem-circuit|oscillator|player-disk|preset-disk|p-circuit|r-circuit|remote|s-circuit|save-disk|scan-circuit|sonic|t-circuit]
+    usage: /<command> [item] - use /<command> list - to see all the items
     permission: tardis.help
     permission-message: You don't have the permission <permission> to use this command
   tardissay:
@@ -594,11 +626,24 @@ commands:
     aliases: [tschematic, ts]
     description: Save, load or paste a TARDIS schematic.
     usage: /<command> [save|load|paste] [name]
+    save:
+      description: Save a TARDIS schematic.
+      usage: /<command> save [name]
+    load:
+      description: Load a TARDIS schematic.
+      usage: /<command> load [name]
+    paste:
+      description: Paste a loaded TARDIS schematic.
+      usage: /<command> paste
     permission: tardis.admin
     permission-message: You don't have the permission <permission> to use this command
   tardisnetherportal:
-    aliases: [tnether, tnp, o2n, n2o]
+    aliases: [tnp, tnether, o2n, n2o]
     description: Get coordinates for linking Nether Portals.
-    usage: /<command> [x] [y] [z] [overworld|nether]
+    usage: /<command>
     permission: tardis.help
     permission-message: You don't have the permission <permission> to use this command
+  'tardis?':
+    aliases: ['t?', tardishelp]
+    description: Get help with TARDIS commands.
+    usage: /<command> [command] [argument]

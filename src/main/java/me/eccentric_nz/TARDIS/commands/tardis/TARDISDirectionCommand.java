@@ -155,31 +155,33 @@ public class TARDISDirectionCommand {
             ResultSetControls rsdf = new ResultSetControls(plugin, wheredf, false);
             if (rsdf.resultSet()) {
                 String locToCheck = rsdf.getLocation();
-                Location dfl = plugin.getUtils().getLocationFromBukkitString(locToCheck);
-                Chunk chunk = dfl.getChunk();
-                if (!chunk.isLoaded()) {
-                    chunk.load();
-                }
-                for (Entity e : chunk.getEntities()) {
-                    if (e instanceof ItemFrame && e.getLocation().toString().equals(locToCheck)) {
-                        ItemFrame frame = (ItemFrame) e;
-                        Rotation r;
-                        switch (d) {
-                            case EAST:
-                                r = Rotation.COUNTER_CLOCKWISE;
-                                break;
-                            case SOUTH:
-                                r = Rotation.NONE;
-                                break;
-                            case WEST:
-                                r = Rotation.CLOCKWISE;
-                                break;
-                            default:
-                                r = Rotation.FLIPPED;
-                                break;
+                Location dfl = plugin.getLocationUtils().getLocationFromBukkitString(locToCheck);
+                if (dfl != null) {
+                    Chunk chunk = dfl.getChunk();
+                    if (!chunk.isLoaded()) {
+                        chunk.load();
+                    }
+                    for (Entity e : chunk.getEntities()) {
+                        if (e instanceof ItemFrame && e.getLocation().toString().equals(locToCheck)) {
+                            ItemFrame frame = (ItemFrame) e;
+                            Rotation r;
+                            switch (d) {
+                                case EAST:
+                                    r = Rotation.COUNTER_CLOCKWISE;
+                                    break;
+                                case SOUTH:
+                                    r = Rotation.NONE;
+                                    break;
+                                case WEST:
+                                    r = Rotation.CLOCKWISE;
+                                    break;
+                                default:
+                                    r = Rotation.FLIPPED;
+                                    break;
+                            }
+                            frame.setRotation(r);
+                            break;
                         }
-                        frame.setRotation(r);
-                        break;
                     }
                 }
             }

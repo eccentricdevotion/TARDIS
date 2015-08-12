@@ -22,6 +22,7 @@ import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.enchantments.EnchantmentWrapper;
+import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
@@ -72,6 +73,7 @@ public class TARDISChameleonInventory {
         two.setDisplayName(plugin.getLanguage().getString("BUTTON_PAGE_2"));
         Enchantment e = EnchantmentWrapper.ARROW_FIRE;
         two.addEnchant(e, 1, true);
+        two.addItemFlags(ItemFlag.values());
         page.setItemMeta(two);
         // New Police Box
         ItemStack box = new ItemStack(Material.WOOL, 1, (short) 11);
@@ -163,26 +165,6 @@ public class TARDISChameleonInventory {
         ItemMeta ivy = well.getItemMeta();
         ivy.setDisplayName("Mossy Well");
         well.setItemMeta(ivy);
-        // cake
-        ItemStack cake = new ItemStack(Material.WOOL, 1, (short) 12);
-        ItemMeta candle = cake.getItemMeta();
-        candle.setDisplayName("Birthday Cake");
-        cake.setItemMeta(candle);
-        // grave
-        ItemStack grave = new ItemStack(Material.ENDER_STONE, 1);
-        ItemMeta epitaph = grave.getItemMeta();
-        epitaph.setDisplayName("Gravestone");
-        grave.setItemMeta(epitaph);
-        // topsy
-        ItemStack topsy = new ItemStack(Material.WOOL, 1, (short) 6);
-        ItemMeta turvey = topsy.getItemMeta();
-        turvey.setDisplayName("Topsy-turvey");
-        topsy.setItemMeta(turvey);
-        // mushroom
-        ItemStack mush = new ItemStack(Material.HUGE_MUSHROOM_1, 1);
-        ItemMeta shroom = mush.getItemMeta();
-        shroom.setDisplayName("Mushroom");
-        mush.setItemMeta(shroom);
         // Biome
         ItemStack bio = new ItemStack(Material.LOG, 1, (short) 2);
         ItemMeta me = bio.getItemMeta();
@@ -192,18 +174,18 @@ public class TARDISChameleonInventory {
         me.setLore(Arrays.asList(biome, String.format(plugin.getLanguage().getString("CHAM_CLICK"), to_turn)));
         bio.setItemMeta(me);
         // Cancel / close
-        ItemStack close = new ItemStack(Material.WOOL, 1, (short) 15);
+        ItemStack close = new ItemStack(Material.BOWL, 1);
         ItemMeta can = close.getItemMeta();
         can.setDisplayName(plugin.getLanguage().getString("BUTTON_CLOSE"));
         close.setItemMeta(can);
 
         ItemStack[] is = {
-            null, con, null, apply, null, bio, null, close, null,
+            con, null, apply, null, bio, null, close, null, page,
+            null, null, null, null, null, null, null, null, null,
             box, null, off, null, jungle, null, nether, null, def,
             null, swamp, null, tent, null, village, null, yellow, null,
             tel, null, ang, null, sub, null, flo, null, stone,
-            null, chal, null, desert, null, well, null, win, null,
-            cake, null, grave, null, topsy, null, mush, null, page
+            null, chal, null, desert, null, well, null, win, null
         };
         return is;
     }

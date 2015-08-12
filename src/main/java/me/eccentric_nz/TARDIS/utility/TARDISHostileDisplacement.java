@@ -22,12 +22,14 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.api.Parameters;
 import me.eccentric_nz.TARDIS.builders.TARDISMaterialisationData;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetCurrentLocation;
 import me.eccentric_nz.TARDIS.database.ResultSetPlayerPrefs;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
+import me.eccentric_nz.TARDIS.enumeration.FLAG;
 import me.eccentric_nz.TARDIS.travel.TARDISTimeTravel;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
@@ -109,7 +111,7 @@ public class TARDISHostileDisplacement {
                             }
                             if (safe) {
                                 Location fl = (rsc.isSubmarine()) ? sub : l;
-                                if (plugin.getPluginRespect().getRespect(player, fl, false)) {
+                                if (plugin.getPluginRespect().getRespect(fl, new Parameters(player, FLAG.getNoMessageFlags()))) {
                                     // set current
                                     QueryFactory qf = new QueryFactory(plugin);
                                     HashMap<String, Object> tid = new HashMap<String, Object>();

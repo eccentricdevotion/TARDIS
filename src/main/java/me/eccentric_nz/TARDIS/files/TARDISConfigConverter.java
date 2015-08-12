@@ -125,7 +125,7 @@ public class TARDISConfigConverter {
         this.config = YamlConfiguration.loadConfiguration(newFile);
         // copy the new config to the old config file
         oldFile.delete();
-        plugin.getTardisCopier().copy(plugin.getDataFolder() + File.separator + "config.yml", plugin.getResource("config_1.yml"), false);
+        TARDISFileCopier.copy(plugin.getDataFolder() + File.separator + "config.yml", plugin.getResource("config_1.yml"), false, plugin.getPluginName());
         // update the new file with the old settings
         File newConfigFile = new File(plugin.getDataFolder() + File.separator + "config.yml");
         FileConfiguration newConfig = YamlConfiguration.loadConfiguration(newConfigFile);

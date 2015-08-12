@@ -32,9 +32,11 @@ public class TARDISMaterialIDConverter {
     private final TARDISDatabaseConnection service = TARDISDatabaseConnection.getInstance();
     private final Connection connection = service.getConnection();
     private final TARDIS plugin;
+    private final String prefix;
 
     public TARDISMaterialIDConverter(TARDIS plugin) {
         this.plugin = plugin;
+        this.prefix = this.plugin.getPrefix();
     }
 
     @SuppressWarnings("deprecation")
@@ -42,8 +44,8 @@ public class TARDISMaterialIDConverter {
         PreparedStatement statement = null;
         PreparedStatement ps = null;
         ResultSet rs = null;
-        String query = "SELECT c_id, block_data FROM condenser";
-        String update = "UPDATE condenser SET block_data = ? WHERE c_id = ?";
+        String query = "SELECT c_id, block_data FROM " + prefix + "condenser";
+        String update = "UPDATE " + prefix + "condenser SET block_data = ? WHERE c_id = ?";
         int i = 0;
         try {
             service.testConnection(connection);

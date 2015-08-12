@@ -7,11 +7,12 @@ storage:
         url: mysql://localhost:3306/TARDIS
         user: bukkit
         password: mysecurepassword
+        prefix: 
 # inner TARDIS
 creation:
-    create_worlds: true
+    create_worlds: false
     create_worlds_with_perms: false
-    default_world: false
+    default_world: true
     default_world_name: TARDIS_TimeVortex
     tips_limit: 400
     border_radius: 256
@@ -29,6 +30,7 @@ creation:
     area: none
 # outer TARDIS
 police_box:
+    default_preset: NEW
     name_tardis: false
     wall_id: 35
     wall_data: 11
@@ -48,6 +50,10 @@ travel:
     give_key: false
     the_end: false
     nether: false
+    terminal:
+        redefine: false
+        nether: world
+        the_end: world
     land_on_water: true
     timeout: 5
     timeout_height: 135
@@ -57,17 +63,18 @@ travel:
     terminal_step: 1
     manual_flight_delay: 60
     grace_period: 10
+# general preferences
 preferences:
     language: en
     key: GOLD_NUGGET
     walk_in_tardis: true
     use_worldguard: true
-    respect_worldguard: true
+    respect_worldguard: build
     respect_towny: nation
     respect_worldborder: true
     respect_factions: true
     respect_grief_prevention: true
-    sfx_volume: 10;
+    sfx_volume: 10
     difficulty: hard
     strike_lightning: true
     freeze_cooldown: 60
@@ -84,6 +91,20 @@ preferences:
     nerf_pistons:
         enabled: false
         only_tardis_worlds: true
+    render_entities: false
+# circuits
+circuits:
+    damage: false
+    uses:
+        ARS: 20
+        chameleon: 25
+        input: 50
+        invisibility: 5
+        materialisation: 50
+        memory: 20
+        randomiser: 50
+        scanner: 20
+        temporal: 20
 # restrictions
 allow:
     mob_farming: true
@@ -91,7 +112,9 @@ allow:
     emergency_npc: true
     achievements: true
     autonomous: true
+    guardians: false
     hads: true
+    invisibility: true
     tp_switch: true
     all_blocks: false
     sfx: true
@@ -101,6 +124,9 @@ allow:
     power_down: false
     power_down_on_quit: false
     player_difficulty: true
+    3d_doors: false
+    village_travel: false
+    perception_filter: true
 # room related
 growth:
     gravity_max_distance: 15
@@ -116,6 +142,15 @@ arch:
     min_time: 20
     switch_inventory: true
     clear_inv_on_death: false
+# siege mode
+siege:
+    enabled: true
+    breeding: 0
+    growth: 0
+    butcher: false
+    creeper: false
+    healing: false
+    texture: false
 # don't touch
 conversions:
     biome_update: false
@@ -124,4 +159,8 @@ conversions:
     uuid_conversion_done: false
     companion_clearing_done: false
     condenser_done: false
+<<<<<<< HEAD
     
+=======
+    lastknownname_conversion_done: false
+>>>>>>> v3.0

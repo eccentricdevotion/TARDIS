@@ -18,25 +18,24 @@ package me.eccentric_nz.TARDIS.commands.preferences;
 
 import com.google.common.collect.ImmutableList;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.commands.TARDISCompleter;
 import me.eccentric_nz.TARDIS.rooms.TARDISWalls;
 import me.eccentric_nz.TARDIS.rooms.TARDISWalls.Pair;
 import org.bukkit.Material;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabCompleter;
-import org.bukkit.util.StringUtil;
 
 /**
  * TabCompleter for /tardisprefs
  */
-public class TARDISPrefsTabComplete implements TabCompleter {
+public class TARDISPrefsTabComplete extends TARDISCompleter implements TabCompleter {
 
     private final TARDIS plugin;
-    private final ImmutableList<String> ROOT_SUBS = ImmutableList.of("auto", "build", "beacon", "ctm", "difficulty", "dnd", "eps", "eps_message", "flight", "floor", "hads", "isomorphic", "key", "key_menu", "lamp", "language", "minecart", "quotes", "renderer", "sfx", "sign", "sonic", "submarine", "travelbar", "wall", "wool_lights");
+    private final ImmutableList<String> ROOT_SUBS = ImmutableList.of("auto", "auto_siege", "build", "beacon", "ctm", "difficulty", "dnd", "eps", "eps_message", "farm", "flight", "floor", "hads", "isomorphic", "key", "key_menu", "lamp", "language", "lanterns", "minecart", "quotes", "renderer", "sfx", "sign", "sonic", "submarine", "travelbar", "wall", "wool_lights");
     private final ImmutableList<String> DIFF_SUBS = ImmutableList.of("easy", "hard");
     private final ImmutableList<String> ONOFF_SUBS = ImmutableList.of("on", "off");
     private final ImmutableList<String> FLIGHT_SUBS = ImmutableList.of("normal", "regulator", "manual");
@@ -91,9 +90,5 @@ public class TARDISPrefsTabComplete implements TabCompleter {
             }
         }
         return ImmutableList.of();
-    }
-
-    private List<String> partial(String token, Collection<String> from) {
-        return StringUtil.copyPartialMatches(token, from, new ArrayList<String>(from.size()));
     }
 }

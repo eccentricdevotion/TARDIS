@@ -45,8 +45,10 @@ public class TARDISSpawnListener implements Listener {
         good_spawns.add(SpawnReason.BREEDING);
         good_spawns.add(SpawnReason.BUILD_IRONGOLEM);
         good_spawns.add(SpawnReason.BUILD_SNOWMAN);
+        good_spawns.add(SpawnReason.CUSTOM);
         good_spawns.add(SpawnReason.EGG);
         good_spawns.add(SpawnReason.SPAWNER_EGG);
+        good_spawns.add(SpawnReason.DISPENSE_EGG);
         biomes.add(Biome.DEEP_OCEAN);
         biomes.add(Biome.HELL);
         biomes.add(Biome.MUSHROOM_ISLAND);
@@ -67,6 +69,9 @@ public class TARDISSpawnListener implements Listener {
     public void onEntitySpawn(CreatureSpawnEvent event) {
         Location l = event.getLocation();
         if (l.getWorld().getName().contains("TARDIS")) {
+            if (event.getEntityType().equals(EntityType.ARMOR_STAND)) {
+                return;
+            }
             if (plugin.isTardisSpawn()) {
                 plugin.setTardisSpawn(false);
                 return;

@@ -62,7 +62,7 @@ public class TARDISSonicEntityListener implements Listener {
                 if (ent instanceof Player) {
                     final Player scanned = (Player) ent;
                     plugin.getGeneralKeeper().getSonicListener().playSonicSound(player, now, 3050L, "sonic_screwdriver");
-                    if (player.hasPermission("tardis.sonic.admin") && lore != null && lore.contains("Admin Upgrade")) {
+                    if (player.hasPermission("tardis.sonic.admin") && lore != null && lore.contains("Admin Upgrade") && player.isSneaking()) {
                         TARDISMessage.send(player, "SONIC_INV");
                         plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
                             @Override

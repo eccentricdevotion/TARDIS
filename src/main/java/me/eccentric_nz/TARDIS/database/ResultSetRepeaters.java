@@ -23,6 +23,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.utility.TARDISLocationGetters;
 
 /**
  * The sonic screwdriver is a highly versatile tool used by many, but not all,
@@ -43,6 +44,7 @@ public class ResultSetRepeaters {
     private final int secondary;
     private final byte[] diodes = new byte[4];
     List<String> locations = new ArrayList<String>();
+    private final String prefix;
 
     /**
      * Creates a class instance that can be used to retrieve an SQL ResultSet
@@ -56,6 +58,7 @@ public class ResultSetRepeaters {
         this.plugin = plugin;
         this.id = id;
         this.secondary = secondary;
+        this.prefix = this.plugin.getPrefix();
     }
 
     /**
@@ -69,7 +72,7 @@ public class ResultSetRepeaters {
         int i = 0;
         PreparedStatement statement = null;
         ResultSet rs = null;
-        String query = "SELECT DISTINCT location FROM controls WHERE tardis_id = ? AND type IN (2,3,4,5) AND secondary = ? ORDER BY type";
+        String query = "SELECT DISTINCT location FROM " + prefix + "controls WHERE tardis_id = ? AND type IN (2,3,4,5) AND secondary = ? ORDER BY type";
         try {
             service.testConnection(connection);
             statement = connection.prepareStatement(query);
@@ -105,10 +108,10 @@ public class ResultSetRepeaters {
     public byte[] getRepeaters() {
         if (locations.size() == 4) {
             // get repeater settings
-            diodes[0] = plugin.getUtils().getLocationFromDB(locations.get(0), 0, 0).getBlock().getData();
-            diodes[1] = plugin.getUtils().getLocationFromDB(locations.get(1), 0, 0).getBlock().getData();
-            diodes[2] = plugin.getUtils().getLocationFromDB(locations.get(2), 0, 0).getBlock().getData();
-            diodes[3] = plugin.getUtils().getLocationFromDB(locations.get(3), 0, 0).getBlock().getData();
+            diodes[0] = TARDISLocationGetters.getLocationFromDB(locations.get(0), 0, 0).getBlock().getData();
+            diodes[1] = TARDISLocationGetters.getLocationFromDB(locations.get(1), 0, 0).getBlock().getData();
+            diodes[2] = TARDISLocationGetters.getLocationFromDB(locations.get(2), 0, 0).getBlock().getData();
+            diodes[3] = TARDISLocationGetters.getLocationFromDB(locations.get(3), 0, 0).getBlock().getData();
         } else {
             diodes[0] = (byte) -1;
         }

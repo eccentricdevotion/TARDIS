@@ -20,12 +20,15 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.api.Parameters;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetCurrentLocation;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import me.eccentric_nz.TARDIS.database.ResultSetTravellers;
+import me.eccentric_nz.TARDIS.enumeration.FLAG;
 import me.eccentric_nz.TARDIS.travel.TARDISAreasInventory;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
+import me.eccentric_nz.TARDIS.utility.TARDISNumberParsers;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -44,11 +47,12 @@ import org.bukkit.inventory.meta.ItemMeta;
  *
  * @author eccentric_nz
  */
-public class TARDISSaveSignListener implements Listener {
+public class TARDISSaveSignListener extends TARDISMenuListener implements Listener {
 
     private final TARDIS plugin;
 
     public TARDISSaveSignListener(TARDIS plugin) {
+        super(plugin);
         this.plugin = plugin;
     }
 
@@ -98,8 +102,13 @@ public class TARDISSaveSignListener implements Listener {
                             List<String> lore = im.getLore();
                             Location save_dest = getLocation(lore);
                             if (save_dest != null) {
+                                if (lore.get(0).startsWith("TARDIS_")) {
+                                    close(player);
+                                    TARDISMessage.send(player, "SAVE_NO_TARDIS");
+                                    return;
+                                }
                                 // check the player is allowed!
-                                if (!plugin.getPluginRespect().getRespect(player, save_dest, true)) {
+                                if (!plugin.getPluginRespect().getRespect(save_dest, new Parameters(player, FLAG.getDefaultFlags()))) {
                                     close(player);
                                     return;
                                 }
@@ -135,9 +144,9 @@ public class TARDISSaveSignListener implements Listener {
                                 if (!save_dest.equals(current)) {
                                     HashMap<String, Object> set = new HashMap<String, Object>();
                                     set.put("world", lore.get(0));
-                                    set.put("x", plugin.getUtils().parseInt(lore.get(1)));
-                                    set.put("y", plugin.getUtils().parseInt(lore.get(2)));
-                                    set.put("z", plugin.getUtils().parseInt(lore.get(3)));
+                                    set.put("x", TARDISNumberParsers.parseInt(lore.get(1)));
+                                    set.put("y", TARDISNumberParsers.parseInt(lore.get(2)));
+                                    set.put("z", TARDISNumberParsers.parseInt(lore.get(3)));
                                     int l_size = lore.size();
                                     if (l_size >= 5) {
                                         if (!lore.get(4).isEmpty() && !lore.get(4).equals("§6Current location")) {
@@ -249,23 +258,9 @@ public class TARDISSaveSignListener implements Listener {
         if (w == null) {
             return null;
         }
-        int x = plugin.getUtils().parseInt(lore.get(1));
-        int y = plugin.getUtils().parseInt(lore.get(2));
-        int z = plugin.getUtils().parseInt(lore.get(3));
+        int x = TARDISNumberParsers.parseInt(lore.get(1));
+        int y = TARDISNumberParsers.parseInt(lore.get(2));
+        int z = TARDISNumberParsers.parseInt(lore.get(3));
         return new Location(w, x, y, z);
-    }
-
-    /**
-     * Closes the inventory.
-     *
-     * @param p the player using the GUI
-     */
-    private void close(final Player p) {
-        plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
-            @Override
-            public void run() {
-                p.closeInventory();
-            }
-        }, 1L);
     }
 }

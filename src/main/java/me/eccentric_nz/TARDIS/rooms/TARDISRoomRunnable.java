@@ -29,7 +29,11 @@ import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
 import me.eccentric_nz.TARDIS.enumeration.ROOM;
+import static me.eccentric_nz.TARDIS.schematic.TARDISBannerSetter.setBanners;
+import me.eccentric_nz.TARDIS.utility.TARDISBlockSetters;
+import me.eccentric_nz.TARDIS.utility.TARDISLocationGetters;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
+import me.eccentric_nz.TARDIS.utility.TARDISNumberParsers;
 import org.bukkit.Chunk;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -71,9 +75,12 @@ public class TARDISRoomRunnable implements Runnable {
     List<Material> notThese = new ArrayList<Material>();
     HashMap<Block, Byte> cocoablocks = new HashMap<Block, Byte>();
     HashMap<Block, Byte> doorblocks = new HashMap<Block, Byte>();
+    HashMap<Block, Byte> leverblocks = new HashMap<Block, Byte>();
     HashMap<Block, Byte> torchblocks = new HashMap<Block, Byte>();
     HashMap<Block, Byte> redstoneTorchblocks = new HashMap<Block, Byte>();
     HashMap<Block, Byte> mushroomblocks = new HashMap<Block, Byte>();
+    HashMap<Block, JSONObject> standingBanners = new HashMap<Block, JSONObject>();
+    HashMap<Block, JSONObject> wallBanners = new HashMap<Block, JSONObject>();
     byte[] repeaterData = new byte[6];
     HashMap<Integer, Integer> repeaterOrder = new HashMap<Integer, Integer>();
     JSONArray arr;
@@ -103,6 +110,7 @@ public class TARDISRoomRunnable implements Runnable {
         this.repeaterOrder.put(4, 5);
         this.repeaterOrder.put(5, 4);
         this.notThese.add(Material.COCOA);
+        this.notThese.add(Material.LEVER);
         this.notThese.add(Material.PISTON_EXTENSION);
         this.notThese.add(Material.REDSTONE_TORCH_ON);
         this.notThese.add(Material.SUGAR_CANE_BLOCK);
@@ -179,6 +187,11 @@ public class TARDISRoomRunnable implements Runnable {
                 }
                 doorblocks.clear();
             }
+            // put levers on
+            for (Map.Entry<Block, Byte> entry : leverblocks.entrySet()) {
+                entry.getKey().setTypeIdAndData(69, entry.getValue(), true);
+            }
+            leverblocks.clear();
             // update lamp block states
             TARDISMessage.send(p, "ROOM_POWER");
             for (Block lamp : lampblocks) {
@@ -187,16 +200,17 @@ public class TARDISRoomRunnable implements Runnable {
             lampblocks.clear();
             // put torches on
             for (Map.Entry<Block, Byte> entry : torchblocks.entrySet()) {
-                entry.getKey().setType(Material.TORCH);
-                entry.getKey().setData(entry.getValue(), true);
+                entry.getKey().setTypeIdAndData(50, entry.getValue(), true);
             }
             torchblocks.clear();
             // put redstone torches on
             for (Map.Entry<Block, Byte> entry : redstoneTorchblocks.entrySet()) {
-                entry.getKey().setType(Material.REDSTONE_TORCH_ON);
-                entry.getKey().setData(entry.getValue(), true);
+                entry.getKey().setTypeIdAndData(76, entry.getValue(), true);
             }
             torchblocks.clear();
+            // set banners
+            setBanners(176, standingBanners);
+            setBanners(177, wallBanners);
             // remove the chunks, so they can unload as normal again
             if (chunkList.size() > 0) {
                 for (Chunk ch : chunkList) {
@@ -313,7 +327,7 @@ public class TARDISRoomRunnable implements Runnable {
                 qf.insertControl(tardis_id, 19, plate, 0);
             }
             // set stable
-            if (type.equals(Material.SOUL_SAND) && (room.equals("STABLE") || room.equals("VILLAGE") || room.equals("RENDERER") || room.equals("ZERO"))) {
+            if (type.equals(Material.SOUL_SAND) && (room.equals("STABLE") || room.equals("VILLAGE") || room.equals("RENDERER") || room.equals("ZERO") || room.equals("HUTCH"))) {
                 HashMap<String, Object> sets = new HashMap<String, Object>();
                 sets.put(room.toLowerCase(Locale.ENGLISH), world.getName() + ":" + startx + ":" + starty + ":" + startz);
                 HashMap<String, Object> wheres = new HashMap<String, Object>();
@@ -325,6 +339,7 @@ public class TARDISRoomRunnable implements Runnable {
                         type = Material.COBBLESTONE;
                         data = 0;
                         break;
+                    case HUTCH:
                     case STABLE:
                         type = Material.GRASS;
                         data = 0;
@@ -355,10 +370,27 @@ public class TARDISRoomRunnable implements Runnable {
                 Block torch = world.getBlockAt(startx, starty, startz);
                 torchblocks.put(torch, data);
             }
+            // remember torches
+            if (type.equals(Material.LEVER)) {
+                Block lever = world.getBlockAt(startx, starty, startz);
+                leverblocks.put(lever, data);
+            }
             // remember redstone torches
             if (type.equals(Material.REDSTONE_TORCH_ON)) {
                 Block torch = world.getBlockAt(startx, starty, startz);
                 redstoneTorchblocks.put(torch, data);
+            }
+            // remember banners
+            if (type.equals(Material.STANDING_BANNER) || type.equals(Material.WALL_BANNER)) {
+                Block banner = world.getBlockAt(startx, starty, startz);
+                JSONObject state = v.optJSONObject("banner");
+                if (state != null) {
+                    if (type.equals(Material.STANDING_BANNER)) {
+                        standingBanners.put(banner, state);
+                    } else {
+                        wallBanners.put(banner, state);
+                    }
+                }
             }
             // set farmland hydrated
             if (type.equals(Material.SOIL) && data == 0) {
@@ -451,9 +483,9 @@ public class TARDISRoomRunnable implements Runnable {
             }
             if (!notThese.contains(type) && !(type.equals(Material.HUGE_MUSHROOM_2) && data == (byte) 15)) {
                 if (type.equals(Material.STATIONARY_WATER)) {
-                    plugin.getUtils().setBlock(world, startx, starty, startz, 79, (byte) 0);
+                    TARDISBlockSetters.setBlock(world, startx, starty, startz, 79, (byte) 0);
                 } else {
-                    plugin.getUtils().setBlock(world, startx, starty, startz, type, data);
+                    TARDISBlockSetters.setBlock(world, startx, starty, startz, type, data);
                 }
             }
             // remember ice blocks
@@ -500,12 +532,12 @@ public class TARDISRoomRunnable implements Runnable {
                 int r = 2;
                 int ctype;
                 String loc_str;
-                List<Material> controls = Arrays.asList(Material.LEVER, Material.STONE_BUTTON, Material.HUGE_MUSHROOM_2, Material.WOOD_BUTTON);
+                List<Material> controls = Arrays.asList(Material.CAKE_BLOCK, Material.STONE_BUTTON, Material.HUGE_MUSHROOM_2, Material.WOOD_BUTTON);
                 if (controls.contains(this.type)) {
                     switch (this.type) {
                         case STONE_BUTTON: // stone button - random
                             ctype = 1;
-                            loc_str = plugin.getUtils().makeLocationStr(world, startx, starty, startz);
+                            loc_str = TARDISLocationGetters.makeLocationStr(world, startx, starty, startz);
                             break;
                         case HUGE_MUSHROOM_2: // repeater
                             ctype = repeaterOrder.get(r);
@@ -516,11 +548,11 @@ public class TARDISRoomRunnable implements Runnable {
                             break;
                         case WOOD_BUTTON: // wood button - artron
                             ctype = 6;
-                            loc_str = plugin.getUtils().makeLocationStr(world, startx, starty, startz);
+                            loc_str = TARDISLocationGetters.makeLocationStr(world, startx, starty, startz);
                             break;
                         default: // cake - handbrake
                             ctype = 0;
-                            loc_str = plugin.getUtils().makeLocationStr(world, startx, starty, startz);
+                            loc_str = TARDISLocationGetters.makeLocationStr(world, startx, starty, startz);
                     }
                     qf.insertControl(tardis_id, ctype, loc_str, secondary);
                 }
@@ -529,7 +561,7 @@ public class TARDISRoomRunnable implements Runnable {
                 // remember the button
                 String loc_str;
                 if (type.equals(Material.WOOD_BUTTON)) {
-                    loc_str = plugin.getUtils().makeLocationStr(world, startx, starty, startz);
+                    loc_str = TARDISLocationGetters.makeLocationStr(world, startx, starty, startz);
                     qf.insertControl(tardis_id, 17, loc_str, 0);
                 }
             }
@@ -547,6 +579,10 @@ public class TARDISRoomRunnable implements Runnable {
                 startx = resetx;
                 startz = resetz;
                 starty += 1;
+                int percent = TARDISNumberParsers.roundUp(level * 100, h);
+                if (percent > 0) {
+                    TARDISMessage.send(p, "ROOM_PERCENT", room, String.format("%d", percent));
+                }
                 level++;
             }
         }

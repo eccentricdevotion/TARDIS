@@ -17,6 +17,7 @@
 package me.eccentric_nz.TARDIS.utility;
 
 import com.wimbli.WorldBorder.BorderData;
+import com.wimbli.WorldBorder.Config;
 import com.wimbli.WorldBorder.WorldBorder;
 import me.eccentric_nz.TARDIS.TARDIS;
 import org.bukkit.Location;
@@ -65,7 +66,7 @@ public class TARDISWorldBorderChecker {
     public int[] getBorderDistance(String world) {
         int[] distance = new int[2];
         if (border != null) {
-            BorderData bd = border.GetWorldBorder(world);
+            BorderData bd = Config.Border(world);
             if (bd != null) {
                 distance[0] = bd.getRadiusX();
                 distance[1] = bd.getRadiusZ();

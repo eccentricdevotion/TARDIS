@@ -26,9 +26,12 @@ import me.eccentric_nz.TARDIS.commands.TARDISBookCommands;
 import me.eccentric_nz.TARDIS.commands.TARDISGravityCommands;
 import me.eccentric_nz.TARDIS.commands.TARDISGravityTabComplete;
 import me.eccentric_nz.TARDIS.commands.TARDISNetherPortalCommand;
+import me.eccentric_nz.TARDIS.commands.TARDISQuestionMarkCommand;
+import me.eccentric_nz.TARDIS.commands.TARDISQuestionTabComplete;
 import me.eccentric_nz.TARDIS.commands.TARDISRecipeCommands;
 import me.eccentric_nz.TARDIS.commands.TARDISRecipeTabComplete;
 import me.eccentric_nz.TARDIS.commands.TARDISRoomCommands;
+import me.eccentric_nz.TARDIS.commands.TARDISRoomTabComplete;
 import me.eccentric_nz.TARDIS.commands.TARDISTextureCommands;
 import me.eccentric_nz.TARDIS.commands.TARDISTextureTabComplete;
 import me.eccentric_nz.TARDIS.commands.TARDISTravelCommands;
@@ -85,6 +88,7 @@ public class TARDISCommandSetter {
         plugin.getCommand("tardisrecipe").setExecutor(new TARDISRecipeCommands(plugin));
         plugin.getCommand("tardisrecipe").setTabCompleter(new TARDISRecipeTabComplete());
         plugin.getCommand("tardisroom").setExecutor(new TARDISRoomCommands(plugin));
+        plugin.getCommand("tardisroom").setTabCompleter(new TARDISRoomTabComplete(plugin));
         plugin.getCommand("tardisschematic").setExecutor(new TARDISSchematicCommand(plugin));
         plugin.getCommand("tardistexture").setExecutor(new TARDISTextureCommands(plugin));
         plugin.getCommand("tardistexture").setTabCompleter(new TARDISTextureTabComplete());
@@ -96,5 +100,7 @@ public class TARDISCommandSetter {
         plugin.getCommand("tardissay").setTabCompleter(new TARDISSayTabComplete());
         plugin.getCommand("tardisremote").setExecutor(new TARDISRemoteCommands(plugin));
         plugin.getCommand("tardisnetherportal").setExecutor(new TARDISNetherPortalCommand(plugin));
+        plugin.getCommand("tardis?").setExecutor(new TARDISQuestionMarkCommand(plugin));
+        plugin.getCommand("tardis?").setTabCompleter(new TARDISQuestionTabComplete(plugin));
     }
 }

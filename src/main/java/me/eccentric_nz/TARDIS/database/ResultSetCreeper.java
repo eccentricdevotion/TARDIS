@@ -34,6 +34,7 @@ public class ResultSetCreeper {
     private final Connection connection = service.getConnection();
     private final TARDIS plugin;
     private final String location;
+    private final String prefix;
 
     /**
      * Creates a class instance that can be used to retrieve an SQL ResultSet
@@ -45,6 +46,7 @@ public class ResultSetCreeper {
     public ResultSetCreeper(TARDIS plugin, String location) {
         this.plugin = plugin;
         this.location = location;
+        this.prefix = this.plugin.getPrefix();
     }
 
     /**
@@ -57,7 +59,7 @@ public class ResultSetCreeper {
     public boolean resultSet() {
         PreparedStatement statement = null;
         ResultSet rs = null;
-        String query = "SELECT creeper FROM tardis WHERE creeper = '" + location + "'";
+        String query = "SELECT creeper FROM " + prefix + "tardis WHERE creeper = '" + location + "'";
         try {
             service.testConnection(connection);
             statement = connection.prepareStatement(query);
