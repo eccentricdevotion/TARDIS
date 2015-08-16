@@ -62,7 +62,7 @@ public class TARDISARSProcessor {
                         } else {
                             if (end[l][x][z] == 24) {
                                 if (l == 2 || ((l + 1) < 3 && end[l + 1][x][z] == 24)) {
-                                    // only remember the bottom slot of a anti-gravity well
+                                    // only remember the bottom slot of an anti-gravity well
                                     TARDISARSSlot slot = new TARDISARSSlot();
                                     slot.setChunk(c);
                                     slot.setY(l);
@@ -72,10 +72,10 @@ public class TARDISARSProcessor {
                                 }
                             } else if (end[l][x][z] == 48) {
                                 if (l == 0 || ((l - 1) > 0 && end[l - 1][x][z] == 48)) {
-                                    // only remember the top slot of an gravity well
+                                    // only remember the top slot of a gravity well
                                     TARDISARSSlot slot = new TARDISARSSlot();
                                     slot.setChunk(c);
-                                    slot.setY(l - 1);
+                                    slot.setY(l);
                                     slot.setX(x);
                                     slot.setZ(z);
                                     changed.put(slot, TARDISARS.ARSFor(end[l][x][z]));
