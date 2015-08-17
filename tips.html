@@ -36,10 +36,11 @@
 		<p>If WorldGuard is also installed on the server, the entire plot is made a protected region, with the Time Lord of the TARDIS its owner. Access to the region is set to DENY for other players, so travel between plots is stopped. When a Time Lord adds a companion, they are added as a region member.</p>
 		<p>If configured (<code>allow: wg_flag_set: true</code>), Time Lords can grant or deny build rights to their companions by issuing the command <code>/tardisprefs build [on|off]</code></p>
 		<h3>T.I.P.S and Factions</h3>
-		<p>Because T.I.P.S uses WorldGuard to protect the TARDIS, claiming Factions in the TARDIS_TimeVortex will cause issues when the TARDIS is deleted. It is suggested that you disable Faction claiming in the TARDIS_TimeVortex world. To do this, edit the <code>worldsNoClaiming</code> setting in the Factions config file (found in <em>server/mstore/factions_mconf/instance.json</em>) &mdash; it should look something like this:</p>
-		<pre><code>"worldsNoClaiming": [
-    "TARDIS_TimeVortex"
-  ],</code></pre>
+		<p>Because T.I.P.S uses WorldGuard to protect the TARDIS, claiming Factions in the TARDIS_TimeVortex will cause issues when the TARDIS is deleted. It is suggested that you disable Faction claiming in the TARDIS_TimeVortex world. To do this, edit the <code>worldsClaimingEnabled</code> setting in the Factions config file (found in <em>server/mstore/factions_mconf/instance.json</em>) &mdash; it should look something like this:</p>
+		<pre><code>"worldsClaimingEnabled": {
+    "standard": true,
+    "exceptions": ["TARDIS_TimeVortex"]
+  },</code></pre>
 	</section>
 </div>
 <footer>
