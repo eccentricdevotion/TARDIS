@@ -61,7 +61,10 @@ public class TARDISARSProcessor {
                             jettison.put(slot, TARDISARS.ARSFor(start[l][x][z]));
                         } else {
                             if (end[l][x][z] == 24) {
-                                if (l == 2 || ((l + 1) < 3 && end[l + 1][x][z] == 24)) {
+                                if (l == 0
+                                        || (l == 1 && end[l - 1][x][z] != 24)
+                                        || (l == 2 && end[l - 1][x][z] != 24)
+                                        || (l == 2 && end[l - 1][x][z] == 24 && end[l - 2][x][z] == 24)) {
                                     // only remember the bottom slot of an anti-gravity well
                                     TARDISARSSlot slot = new TARDISARSSlot();
                                     slot.setChunk(c);
@@ -71,7 +74,10 @@ public class TARDISARSProcessor {
                                     changed.put(slot, TARDISARS.ARSFor(end[l][x][z]));
                                 }
                             } else if (end[l][x][z] == 48) {
-                                if (l == 0 || ((l - 1) > 0 && end[l - 1][x][z] == 48)) {
+                                if (l == 2
+                                        || (l == 1 && end[l + 1][x][z] != 48)
+                                        || (l == 0 && end[l + 1][x][z] != 48)
+                                        || (l == 0 && end[l + 1][x][z] == 48 && end[l + 2][x][z] == 48)) {
                                     // only remember the top slot of a gravity well
                                     TARDISARSSlot slot = new TARDISARSSlot();
                                     slot.setChunk(c);
