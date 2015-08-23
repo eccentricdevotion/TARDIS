@@ -52,6 +52,7 @@ public class TARDISConfiguration {
     HashMap<String, String> roomStrOptions = new HashMap<String, String>();
     HashMap<String, Integer> roomIntOptions = new HashMap<String, Integer>();
     HashMap<String, Boolean> roomBoolOptions = new HashMap<String, Boolean>();
+    HashMap<String, Boolean> artronBoolOptions = new HashMap<String, Boolean>();
     HashMap<String, String> artronStrOptions = new HashMap<String, String>();
     HashMap<String, Double> artronDoubleOptions = new HashMap<String, Double>();
     HashMap<String, Integer> artronIntOptions = new HashMap<String, Integer>();
@@ -183,6 +184,9 @@ public class TARDISConfiguration {
         roomBoolOptions.put("rooms.WORKSHOP.user", false);
         roomBoolOptions.put("rooms.ZERO.enabled", true);
         roomBoolOptions.put("rooms.ZERO.user", false);
+        // boolean
+        artronBoolOptions.put("artron_furnace.particles", true);
+        artronBoolOptions.put("artron_furnace.set_biome", true);
         // double
         artronDoubleOptions.put("artron_furnace.burn_time", 0.5);
         artronDoubleOptions.put("artron_furnace.cook_time", 0.5);
@@ -641,9 +645,11 @@ public class TARDISConfiguration {
     private void checkArtronConfig() {
         int i = 0;
         // boolean values
-        if (!artron_config.contains("artron_furnace.set_biome")) {
-            artron_config.set("artron_furnace.set_biome", true);
-            i++;
+        for (Map.Entry<String, Boolean> entry : artronBoolOptions.entrySet()) {
+            if (!artron_config.contains(entry.getKey())) {
+                artron_config.set(entry.getKey(), entry.getValue());
+                i++;
+            }
         }
         // double values
         for (Map.Entry<String, Double> entry : artronDoubleOptions.entrySet()) {

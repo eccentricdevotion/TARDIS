@@ -149,9 +149,13 @@ public class TARDISArtronFurnaceListener implements Listener {
             return;
         }
         if (event.getPlayer().hasPermission("tardis.furnace")) {
-            plugin.getTardisHelper().nameFurnaceGUI(event.getBlock(), "TARDIS Artron Furnace");
+            Block b = event.getBlock();
+            if (plugin.getArtronConfig().getBoolean("artron_furnace.particles")) {
+                plugin.getGeneralKeeper().getArtronFurnaces().add(b);
+            }
+            plugin.getTardisHelper().nameFurnaceGUI(b, "TARDIS Artron Furnace");
             if (plugin.getArtronConfig().getBoolean("artron_furnace.set_biome")) {
-                Location l = event.getBlock().getLocation();
+                Location l = b.getLocation();
                 // set biome
                 l.getWorld().setBiome(l.getBlockX(), l.getBlockZ(), Biome.DEEP_OCEAN);
                 Chunk c = l.getChunk();
@@ -165,13 +169,16 @@ public class TARDISArtronFurnaceListener implements Listener {
 
     @EventHandler(ignoreCancelled = true)
     public void onArtronFurnaceBreak(BlockBreakEvent event) {
-        if (!event.getBlock().getType().equals(Material.FURNACE)) {
+        Block block = event.getBlock();
+        if (!block.getType().equals(Material.FURNACE) && !block.getType().equals(Material.BURNING_FURNACE)) {
             return;
         }
         Furnace furnace = (Furnace) event.getBlock().getState();
         if (furnace.getInventory().getTitle().equals("TARDIS Artron Furnace")) {
             event.setCancelled(true);
-            Block block = event.getBlock();
+            if (plugin.getArtronConfig().getBoolean("artron_furnace.particles")) {
+                plugin.getGeneralKeeper().getArtronFurnaces().remove(block);
+            }
             ItemStack is = new ItemStack(Material.FURNACE, 1);
             ItemMeta im = is.getItemMeta();
             im.setDisplayName("TARDIS Artron Furnace");

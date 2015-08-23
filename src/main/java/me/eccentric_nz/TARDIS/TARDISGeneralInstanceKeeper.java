@@ -74,6 +74,7 @@ public class TARDISGeneralInstanceKeeper {
     private final HashMap<String, Double[]> gravityWestList = new HashMap<String, Double[]>();
     private final HashMap<String, Integer> protectBlockMap = new HashMap<String, Integer>();
     private final HashMap<UUID, TARDISCondenserData> roomCondenserData = new HashMap<UUID, TARDISCondenserData>();
+    private final List<Block> artronFurnaces = new ArrayList<Block>();
     private final List<BlockFace> faces = Arrays.asList(BlockFace.NORTH, BlockFace.WEST, BlockFace.SOUTH, BlockFace.EAST);
     private final List<BlockFace> surrounding = Arrays.asList(BlockFace.EAST, BlockFace.SOUTH, BlockFace.WEST, BlockFace.NORTH, BlockFace.NORTH_EAST, BlockFace.NORTH_WEST, BlockFace.SOUTH_EAST, BlockFace.SOUTH_WEST);
     private final List<Chunk> roomChunkList = new ArrayList<Chunk>();
@@ -117,6 +118,10 @@ public class TARDISGeneralInstanceKeeper {
 
     public void setQuotes(ArrayList<String> quotes) {
         this.quotes = quotes;
+    }
+
+    public List<Block> getArtronFurnaces() {
+        return artronFurnaces;
     }
 
     public List<BlockFace> getFaces() {
