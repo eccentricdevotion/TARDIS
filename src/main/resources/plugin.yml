@@ -243,6 +243,9 @@ permissions:
   tardis.sonic.sort:
     description: Allows a player to use the chest sorting function of the sonic screwdriver.
     default: op
+  tardis.sonic.ignite:
+    description: Allows a player to use the ignite function of the sonic screwdriver.
+    default: op
   tardis.store:
     description: Allows the Artron Energy to be stored in an Artron Storage Cell.
     default: op

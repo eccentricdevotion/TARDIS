@@ -73,6 +73,7 @@ public class TARDISGiveCommand implements CommandExecutor {
         items.put("furnace", "TARDIS Artron Furnace");
         items.put("glasses", "3-D Glasses");
         items.put("i-circuit", "TARDIS Input Circuit");
+        items.put("ignite-circuit", "Ignite Circuit");
         items.put("invisible", "TARDIS Invisibility Circuit");
         items.put("jammy-dodger", "Jammy Dodger");
         items.put("jelly-baby", "Orange Jelly Baby");

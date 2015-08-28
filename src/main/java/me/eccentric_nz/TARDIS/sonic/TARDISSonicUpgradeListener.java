@@ -56,6 +56,7 @@ public class TARDISSonicUpgradeListener implements Listener {
         this.upgrades.put("Diamond Upgrade", "diamond");
         this.upgrades.put("Emerald Upgrade", "emerald");
         this.upgrades.put("Painter Upgrade", "paint");
+        this.upgrades.put("Ignite Upgrade", "ignite");
     }
 
     /**

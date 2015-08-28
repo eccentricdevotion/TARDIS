@@ -386,6 +386,19 @@ shaped:
         result: 'MAP:1979'
         amount: 1
         lore: ""
+    Ignite Circuit:
+        easy_shape: -N-,NFN,-N-
+        easy_ingredients:
+            N: NETHERRACK
+            F: FLINT_AND_STEEL
+        hard_shape: LN-,NFN,-NL
+        hard_ingredients:
+            N: NETHERRACK
+            F: FLINT_AND_STEEL
+            L: LAVA_BUCKET
+        result: 'MAP:1982'
+        amount: 1
+        lore: ""
     Artron Storage Cell:
         easy_shape: -B-,-R-,-L-
         easy_ingredients:
@@ -744,6 +757,11 @@ shapeless:
         lore: ""
     Painter Upgrade:
         recipe: 'BLAZE_ROD,MAP:1979'
+        result: BLAZE_ROD
+        amount: 1
+        lore: ""
+    Ignite Upgrade:
+        recipe: 'BLAZE_ROD,MAP:1982'
         result: BLAZE_ROD
         amount: 1
         lore: ""

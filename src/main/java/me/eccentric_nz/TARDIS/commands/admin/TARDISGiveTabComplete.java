@@ -32,7 +32,7 @@ import org.bukkit.command.TabCompleter;
 public class TARDISGiveTabComplete extends TARDISCompleter implements TabCompleter {
 
     private final TARDIS plugin;
-    private final ImmutableList<String> GIVE_SUBS = ImmutableList.of("artron", "kit", "a-circuit", "ars-circuit", "battery", "blaster", "bow-tie", "bio-circuit", "biome-disk", "blank", "c-circuit", "cell", "custard", "d-circuit", "e-circuit", "filter", "fish-finger", "furnace", "glasses", "i-circuit", "invisible", "jammy-dodger", "jelly-baby", "key", "l-circuit", "locator", "m-circuit", "memory-circuit", "oscillator", "pad", "painter", "player-disk", "preset-disk", "p-circuit", "r-circuit", "r-key", "randomiser-circuit", "remote", "s-circuit", "save-disk", "scanner-circuit", "seed", "sonic", "t-circuit", "tachyon", "vortex", "watch");
+    private final ImmutableList<String> GIVE_SUBS = ImmutableList.of("artron", "kit", "a-circuit", "ars-circuit", "battery", "blaster", "bow-tie", "bio-circuit", "biome-disk", "blank", "c-circuit", "cell", "custard", "d-circuit", "e-circuit", "filter", "fish-finger", "furnace", "glasses", "i-circuit", "ignite-circuit", "invisible", "jammy-dodger", "jelly-baby", "key", "l-circuit", "locator", "m-circuit", "memory-circuit", "oscillator", "pad", "painter", "player-disk", "preset-disk", "p-circuit", "r-circuit", "r-key", "randomiser-circuit", "remote", "s-circuit", "save-disk", "scanner-circuit", "seed", "sonic", "t-circuit", "tachyon", "vortex", "watch");
     private final Set<String> kits;
     private final ImmutableList<String> KIT_SUBS;
     private final ImmutableList<String> SEED_SUBS;

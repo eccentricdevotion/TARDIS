@@ -251,6 +251,26 @@ public class TARDISRecipesUpdater {
             recipes_config.set("shapeless.Painter Upgrade.lore", "");
             i++;
         }
+        if (!recipes_config.contains("shaped.Ignite Circuit")) {
+            recipes_config.set("shaped.Ignite Circuit.easy_shape", "-N-,NFN,-N-");
+            recipes_config.set("shaped.Ignite Circuit.easy_ingredients.N", "NETHERRACK");
+            recipes_config.set("shaped.Ignite Circuit.easy_ingredients.F", "FLINT_AND_STEEL");
+            recipes_config.set("shaped.Ignite Circuit.hard_shape", "LN-,NFN,-NL");
+            recipes_config.set("shaped.Ignite Circuit.hard_ingredients.N", "NETHERRACK");
+            recipes_config.set("shaped.Ignite Circuit.hard_ingredients.F", "FLINT_AND_STEEL");
+            recipes_config.set("shaped.Ignite Circuit.hard_ingredients.L", "LAVA_BUCKET");
+            recipes_config.set("shaped.Ignite Circuit.result", "MAP:1982");
+            recipes_config.set("shaped.Ignite Circuit.amount", 1);
+            recipes_config.set("shaped.Ignite Circuit.lore", "");
+            i++;
+        }
+        if (!recipes_config.contains("shapeless.Ignite Upgrade")) {
+            recipes_config.set("shapeless.Ignite Upgrade.recipe", "BLAZE_ROD,MAP:1982");
+            recipes_config.set("shapeless.Ignite Upgrade.result", "BLAZE_ROD");
+            recipes_config.set("shapeless.Ignite Upgrade.amount", 1);
+            recipes_config.set("shapeless.Ignite Upgrade.lore", "");
+            i++;
+        }
         if (!recipes_config.contains("shaped.TARDIS Artron Furnace")) {
             recipes_config.set("shaped.TARDIS Artron Furnace.easy_shape", "---,OFO,RRR");
             recipes_config.set("shaped.TARDIS Artron Furnace.easy_ingredients.O", "OBSIDIAN");

@@ -53,7 +53,7 @@ public class TARDISMapChecker {
         }
         String root = container.getAbsolutePath() + File.separator + server_world;
         boolean opwarn = false;
-        for (int i = 1963; i < 1982; i++) {
+        for (int i = 1963; i < 1983; i++) {
             String map = "map_" + i + ".dat";
             File file = new File(root, map);
             if (!file.exists()) {

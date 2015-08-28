@@ -27,7 +27,7 @@ import org.bukkit.command.TabCompleter;
  */
 public class TARDISRecipeTabComplete extends TARDISCompleter implements TabCompleter {
 
-    private final List<String> ROOT_SUBS = ImmutableList.of("a-circuit", "ars-circuit", "battery", "blaster", "bow-tie", "bio-circuit", "biome-disk", "blank", "c-circuit", "cell", "custard", "d-circuit", "e-circuit", "filter", "fish-finger", "furnace", "glasses", "i-circuit", "invisible", "jammy-dodger", "jelly-baby", "key", "l-circuit", "locator", "m-circuit", "memory-circuit", "oscillator", "pad", "painter", "player-disk", "preset-disk", "p-circuit", "r-circuit", "r-key", "randomiser-circuit", "remote", "s-circuit", "save-disk", "scanner-circuit", "sonic", "t-circuit", "tardis", "vortex", "watch");
+    private final List<String> ROOT_SUBS = ImmutableList.of("a-circuit", "ars-circuit", "battery", "blaster", "bow-tie", "bio-circuit", "biome-disk", "blank", "c-circuit", "cell", "custard", "d-circuit", "e-circuit", "filter", "fish-finger", "furnace", "glasses", "i-circuit", "ignite-circuit", "invisible", "jammy-dodger", "jelly-baby", "key", "l-circuit", "locator", "m-circuit", "memory-circuit", "oscillator", "pad", "painter", "player-disk", "preset-disk", "p-circuit", "r-circuit", "r-key", "randomiser-circuit", "remote", "s-circuit", "save-disk", "scanner-circuit", "sonic", "t-circuit", "tardis", "vortex", "watch");
     private final List<String> TARDIS_TYPES = ImmutableList.of("ars", "bigger", "budget", "custom", "deluxe", "eleventh", "redstone", "steampunk", "tom", "twelfth", "war", "wood");
 
     public TARDISRecipeTabComplete() {

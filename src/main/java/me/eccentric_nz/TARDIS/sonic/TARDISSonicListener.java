@@ -52,6 +52,8 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
+import org.bukkit.event.block.BlockIgniteEvent;
+import org.bukkit.event.block.BlockIgniteEvent.IgniteCause;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.inventory.Inventory;
@@ -332,7 +334,7 @@ public class TARDISSonicListener implements Listener {
                                     return;
                                 }
                                 // not protected doors - WorldGuard / GriefPrevention / Lockette / LWC
-                                if (checkDoorRespect(player, tmp)) {
+                                if (checkBlockRespect(player, tmp)) {
                                     return;
                                 }
                                 if (!plugin.getTrackerKeeper().getSonicDoors().contains(player.getUniqueId())) {
@@ -456,6 +458,11 @@ public class TARDISSonicListener implements Listener {
                 if (action.equals(Action.LEFT_CLICK_BLOCK)) {
                     Block b = event.getClickedBlock();
                     if (!player.isSneaking()) {
+                        if ((b.getType().isBurnable() || b.getType().equals(Material.NETHERRACK)) && player.hasPermission("tardis.sonic.ignite") && lore != null && lore.contains("Ignite Upgrade")) {
+                            playSonicSound(player, now, 3050L, "sonic_short");
+                            // ignite block
+                            this.ignite(b, player);
+                        }
                         if (diamond.contains(b.getType()) && player.hasPermission("tardis.sonic.diamond") && lore != null && lore.contains("Diamond Upgrade")) {
                             // check the block is not protected by WorldGuard
                             if (plugin.isWorldGuardOnServer()) {
@@ -536,7 +543,7 @@ public class TARDISSonicListener implements Listener {
                             PlayerInventory inv = player.getInventory();
                             ItemStack dye = inv.getItem(8);
                             if (dye == null || !dye.getType().equals(Material.INK_SACK)) {
-                                player.sendMessage("There must be a dye in your last hotbar slot!");
+                                TARDISMessage.send(player, "SONIC_DYE");
                                 return;
                             }
                             byte dye_data = dye.getData().getData();
@@ -762,7 +769,7 @@ public class TARDISSonicListener implements Listener {
                         lowerdoor = targetBlock;
                     }
                     // not protected doors - WorldGuard / GriefPrevention / Lockette / LWC
-                    boolean allow = !checkDoorRespect(player, lowerdoor);
+                    boolean allow = !checkBlockRespect(player, lowerdoor);
                     // is it a TARDIS door?
                     HashMap<String, Object> where = new HashMap<String, Object>();
                     String doorloc = lowerdoor.getLocation().getWorld().getName() + ":" + lowerdoor.getLocation().getBlockX() + ":" + lowerdoor.getLocation().getBlockY() + ":" + lowerdoor.getLocation().getBlockZ();
@@ -861,7 +868,24 @@ public class TARDISSonicListener implements Listener {
         l.getState().update();
     }
 
-    private boolean checkDoorRespect(Player p, Block b) {
+    private void ignite(final Block b, Player p) {
+        if (!checkBlockRespect(p, b)) {
+            Block above = b.getRelative(BlockFace.UP);
+            if (b.getType().equals(Material.TNT)) {
+                b.setType(Material.AIR);
+                b.getWorld().spawnEntity(b.getLocation().add(0.5d, 0.5d, 0.5d), EntityType.PRIMED_TNT);
+                plugin.getPM().callEvent(new BlockIgniteEvent(b, IgniteCause.FLINT_AND_STEEL, (Entity) p));
+                return;
+            }
+            if (above.getType().equals(Material.AIR)) {
+                above.setType(Material.FIRE);
+                // call a block ignite event
+                plugin.getPM().callEvent(new BlockIgniteEvent(b, IgniteCause.FLINT_AND_STEEL, (Entity) p));
+            }
+        }
+    }
+
+    private boolean checkBlockRespect(Player p, Block b) {
         boolean gpr = false;
         boolean wgu = false;
         boolean lke = false;

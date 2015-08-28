@@ -49,6 +49,7 @@ public enum TARDISDescription {
     A_CIRCUIT_INFO("The Server Admin Circuit is used to upgrade the Sonic Screwdriver."),
     C_CIRCUIT_INFO("The Chamelon Circuit is used in crafting the Preset Storage Disks and is a component of the TARDIS Advanced Console."),
     I_CIRCUIT_INFO("The Input Circuit is a component of the TARDIS Advanced Console and is required to use the Destination Terminal and the TARDIS Keyboard."),
+    IGNITE_CIRCUIT_INFO("The Ignite Circuit upgrades the Sonic Screwdriver so that you can ignite flammable blocks."),
     INVISIBLE_INFO("The Invisibility Circuit is a component of the TARDIS Advanced Console and is required to make the TARDIS invisible."),
     MEMORY_CIRCUIT_INFO("The Memory Circuit is a component of the TARDIS Advanced Console and is required to use the Save Sign."),
     T_CIRCUIT_INFO("The Temporal Circuit is a component of the TARDIS Advanced Console and is required to use the Temporal Locator."),

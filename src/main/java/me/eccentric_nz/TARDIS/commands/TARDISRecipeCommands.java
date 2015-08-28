@@ -71,6 +71,7 @@ public class TARDISRecipeCommands implements CommandExecutor {
         firstArgs.add("furnace"); // TARDIS Artron Furnace
         firstArgs.add("glasses"); // 3-D Glasses
         firstArgs.add("i-circuit"); // Input Circuit
+        firstArgs.add("ignite-circuit"); // Ignite Circuit
         firstArgs.add("invisible"); // Invisibility Circuit
         firstArgs.add("key"); // TARDIS key
         firstArgs.add("jammy-dodger"); // Jammy Dodger Biscuit
@@ -219,6 +220,10 @@ public class TARDISRecipeCommands implements CommandExecutor {
             }
             if (args[0].equalsIgnoreCase("i-circuit")) {
                 this.showShapedRecipe(player, "TARDIS Input Circuit");
+                return true;
+            }
+            if (args[0].equalsIgnoreCase("ignite-circuit")) {
+                this.showShapedRecipe(player, "Ignite Circuit");
                 return true;
             }
             if (args[0].equalsIgnoreCase("invisible")) {

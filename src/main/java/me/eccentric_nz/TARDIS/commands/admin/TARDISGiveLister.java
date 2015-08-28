@@ -82,6 +82,7 @@ public class TARDISGiveLister {
         sonic_circuits.add(ChatColor.BLUE + "e-circuit" + ChatColor.RESET + " - " + ChatColor.DARK_BLUE + "Emerald Circuit");
         sonic_circuits.add(ChatColor.BLUE + "r-circuit" + ChatColor.RESET + " - " + ChatColor.DARK_BLUE + "Redstone Circuit");
         sonic_circuits.add(ChatColor.BLUE + "painter" + ChatColor.RESET + " - " + ChatColor.DARK_BLUE + "Painter Circuit");
+        sonic_circuits.add(ChatColor.BLUE + "ignite-circuit" + ChatColor.RESET + " - " + ChatColor.DARK_BLUE + "Ignite Circuit");
         give_options.put("Sonic Circuits", sonic_circuits);
         List<String> console_circuits = new ArrayList<String>();
         console_circuits.add(ChatColor.LIGHT_PURPLE + "ars-circuit" + ChatColor.RESET + " - " + ChatColor.DARK_PURPLE + "ARS Circuit");
