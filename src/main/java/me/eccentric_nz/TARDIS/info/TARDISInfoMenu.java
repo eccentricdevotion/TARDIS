@@ -94,7 +94,7 @@ public enum TARDISInfoMenu {
     I_CIRCUIT("TIS|Components|Input Circuit", "COMPONENTS", "I"),
     I_CIRCUIT_INFO("TIS|Components|Input Circuit|Info", "I_CIRCUIT", "I"),
     I_CIRCUIT_RECIPE("TIS|Components|Input Circuit|Recipe", "I_CIRCUIT", "R"),
-    IGNITE_CIRCUIT("TIS|Sonic Components|Ignite Circuit", "COMPONENTS", "I"),
+    IGNITE_CIRCUIT("TIS|Sonic Components|Ignite Circuit", "SONIC_COMPONENTS", "I"),
     IGNITE_CIRCUIT_INFO("TIS|Sonic Components|Ignite Circuit|Info", "IGNITE_CIRCUIT", "I"),
     IGNITE_CIRCUIT_RECIPE("TIS|Sonic Components|Ignite Circuit|Recipe", "IGNITE_CIRCUIT", "R"),
     INVISIBLE_CIRCUIT("TIS|Components|Invisibility Circuit", "COMPONENTS", "v"),

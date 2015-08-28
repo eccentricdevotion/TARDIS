@@ -611,6 +611,14 @@ public class TARDISInformationSystemListener implements Listener {
                             showRecipe(p, TARDISInfoMenu.I_CIRCUIT_RECIPE);
                         }
                         break;
+                    case IGNITE_CIRCUIT:
+                        if (chat.equalsIgnoreCase("I")) {
+                            showInfo(p, TARDISInfoMenu.IGNITE_CIRCUIT_INFO);
+                        }
+                        if (chat.equalsIgnoreCase("R")) {
+                            showRecipe(p, TARDISInfoMenu.IGNITE_CIRCUIT_RECIPE);
+                        }
+                        break;
                     case INVISIBLE_CIRCUIT:
                         if (chat.equalsIgnoreCase("I")) {
                             showInfo(p, TARDISInfoMenu.INVISIBLE_INFO);
