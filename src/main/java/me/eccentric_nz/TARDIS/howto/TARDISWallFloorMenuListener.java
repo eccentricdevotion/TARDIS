@@ -103,7 +103,7 @@ public class TARDISWallFloorMenuListener extends TARDISMenuListener implements L
                 }
             } else {
                 ClickType click = event.getClick();
-                if (click.equals(ClickType.SHIFT_RIGHT) || click.equals(ClickType.SHIFT_LEFT)) {
+                if (click.equals(ClickType.SHIFT_RIGHT) || click.equals(ClickType.SHIFT_LEFT) || click.equals(ClickType.DOUBLE_CLICK)) {
                     event.setCancelled(true);
                 }
             }
