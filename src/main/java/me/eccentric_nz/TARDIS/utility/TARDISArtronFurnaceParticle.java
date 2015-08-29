@@ -48,10 +48,10 @@ public class TARDISArtronFurnaceParticle {
     }
 
     private boolean isArtronFurnace(Block b) {
-        if (!b.getType().equals(Material.BURNING_FURNACE) && !b.getType().equals(Material.FURNACE)) {
+        if (b == null || (!b.getType().equals(Material.BURNING_FURNACE) && !b.getType().equals(Material.FURNACE))) {
             return false;
         }
         Furnace furnace = (Furnace) b.getState();
-        return (furnace.getInventory().getTitle().equals("TARDIS Artron Furnace"));
+        return (furnace != null && furnace.getInventory().getTitle().equals("TARDIS Artron Furnace"));
     }
 }
