@@ -20,9 +20,6 @@ import java.util.Arrays;
 import me.eccentric_nz.TARDIS.TARDIS;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
-import org.bukkit.enchantments.Enchantment;
-import org.bukkit.enchantments.EnchantmentWrapper;
-import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
@@ -69,12 +66,9 @@ public class TARDISPresetInventory {
         apply.setItemMeta(now);
         // page one
         ItemStack page = new ItemStack(Material.ARROW, 1);
-        ItemMeta one = page.getItemMeta();
-        one.setDisplayName(plugin.getLanguage().getString("BUTTON_PAGE_3"));
-        Enchantment e = EnchantmentWrapper.ARROW_FIRE;
-        one.addEnchant(e, 1, true);
-        one.addItemFlags(ItemFlag.values());
-        page.setItemMeta(one);
+        ItemMeta two = page.getItemMeta();
+        two.setDisplayName(plugin.getLanguage().getString("BUTTON_PAGE_3"));
+        page.setItemMeta(two);
         // Rubber duck
         ItemStack rub = new ItemStack(Material.STAINED_CLAY, 1, (short) 4);
         ItemMeta ber = rub.getItemMeta();

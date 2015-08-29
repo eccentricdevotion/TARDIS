@@ -20,9 +20,6 @@ import java.util.Arrays;
 import me.eccentric_nz.TARDIS.TARDIS;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
-import org.bukkit.enchantments.Enchantment;
-import org.bukkit.enchantments.EnchantmentWrapper;
-import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
@@ -71,9 +68,6 @@ public class TARDISChameleonInventory {
         ItemStack page = new ItemStack(Material.ARROW, 1);
         ItemMeta two = page.getItemMeta();
         two.setDisplayName(plugin.getLanguage().getString("BUTTON_PAGE_2"));
-        Enchantment e = EnchantmentWrapper.ARROW_FIRE;
-        two.addEnchant(e, 1, true);
-        two.addItemFlags(ItemFlag.values());
         page.setItemMeta(two);
         // New Police Box
         ItemStack box = new ItemStack(Material.WOOL, 1, (short) 11);
