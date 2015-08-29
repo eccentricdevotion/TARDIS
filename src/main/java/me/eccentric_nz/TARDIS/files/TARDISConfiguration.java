@@ -600,14 +600,20 @@ public class TARDISConfiguration {
         }
         // add lamp blocks
         if (!blocks_config.contains("lamp_blocks")) {
-            List<Integer> LAMP_BLOCKS = Arrays.asList(50, 76, 89, 91, 123, 169);
+            List<String> LAMP_BLOCKS = Arrays.asList("TORCH", "REDSTONE_TORCH_ON", "GLOWSTONE", "JACK_O_LANTERN", "REDSTONE_LAMP_OFF", "SEA_LANTERN");
             blocks_config.set("lamp_blocks", LAMP_BLOCKS);
             i++;
         } else {
-            List<Integer> lblocs = blocks_config.getIntegerList("lamp_blocks");
-            if (!lblocs.contains(169)) {
-                lblocs.add(169);
-                blocks_config.set("lamp_blocks", lblocs);
+            if (blocks_config.getStringList("lamp_blocks").get(0).equals("50")) {
+                List<String> lstrs = new ArrayList<String>();
+                for (int l : blocks_config.getIntegerList("lamp_blocks")) {
+                    try {
+                        lstrs.add(Material.getMaterial(l).toString());
+                    } catch (Exception e) {
+                        plugin.debug("Invalid Material ID in lamp_blocks section.");
+                    }
+                }
+                blocks_config.set("lamp_blocks", lstrs);
                 i++;
             }
         }

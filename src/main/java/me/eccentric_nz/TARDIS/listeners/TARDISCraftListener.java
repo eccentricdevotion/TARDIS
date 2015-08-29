@@ -57,7 +57,7 @@ public class TARDISCraftListener implements Listener {
 
     private final TARDIS plugin;
     private final List<Integer> c = new ArrayList<Integer>();
-    private final List<Integer> l = new ArrayList<Integer>();
+    private final List<Material> l = new ArrayList<Material>();
     private final HashMap<Material, String> t = new HashMap<Material, String>();
     private final List<Material> hasColour = new ArrayList<Material>();
     private final TARDISWallsLookup twl;
@@ -87,8 +87,12 @@ public class TARDISCraftListener implements Listener {
         for (Integer i : plugin.getBlocksConfig().getIntegerList("chameleon_blocks")) {
             c.add(i);
         }
-        for (Integer a : plugin.getBlocksConfig().getIntegerList("lamp_blocks")) {
-            l.add(a);
+        for (String a : plugin.getBlocksConfig().getStringList("lamp_blocks")) {
+            try {
+                l.add(Material.valueOf(a));
+            } catch (IllegalArgumentException e) {
+                plugin.debug("Invalid Material in lamp_blocks section.");
+            }
         }
         hasColour.add(Material.WOOL);
         hasColour.add(Material.STAINED_CLAY);
@@ -235,7 +239,7 @@ public class TARDISCraftListener implements Listener {
                     break;
                 case 5:
                     // must be a valid lamp block
-                    if (!l.contains(id)) {
+                    if (!l.contains(m)) {
                         return false;
                     }
                     break;

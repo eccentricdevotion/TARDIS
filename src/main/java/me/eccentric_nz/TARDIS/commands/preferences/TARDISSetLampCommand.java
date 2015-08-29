@@ -21,6 +21,7 @@ import java.util.List;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
+import org.bukkit.Material;
 import org.bukkit.entity.Player;
 
 /**
@@ -40,21 +41,21 @@ public class TARDISSetLampCommand {
             TARDISMessage.send(player, "LAMP_NEED");
             return false;
         }
-        int lamp;
+        Material lamp;
         try {
-            lamp = Integer.parseInt(args[1]);
-        } catch (NumberFormatException nfe) {
-            TARDISMessage.send(player, "LAMP_NOT_NUMBER");
+            lamp = Material.valueOf(args[1]);
+        } catch (IllegalArgumentException e) {
+            TARDISMessage.send(player, "LAMP_NOT_MATERIAL");
             return true;
         }
         // check it's an allowed block
-        List<Integer> allowed_ids = plugin.getBlocksConfig().getIntegerList("lamp_blocks");
-        if (!allowed_ids.contains(lamp)) {
+        List<String> allowed_strs = plugin.getBlocksConfig().getStringList("lamp_blocks");
+        if (!allowed_strs.contains(lamp.toString())) {
             TARDISMessage.send(player, "LAMP_NO_SET");
             return true;
         }
         HashMap<String, Object> setl = new HashMap<String, Object>();
-        setl.put("lamp", lamp);
+        setl.put("lamp", lamp.toString());
         HashMap<String, Object> where = new HashMap<String, Object>();
         where.put("uuid", player.getUniqueId().toString());
         qf.doUpdate("player_prefs", setl, where);
