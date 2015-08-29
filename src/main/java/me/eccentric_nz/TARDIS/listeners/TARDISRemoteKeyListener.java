@@ -135,7 +135,7 @@ public class TARDISRemoteKeyListener implements Listener {
                         COMPASS dd = rsd.getDoor_direction();
                         boolean open = TARDISStaticUtils.isOpen(block, dd);
                         // toggle door / portals
-                        new TARDISDoorToggler(plugin, block, dd, player, false, open, id).toggleDoors();
+                        new TARDISDoorToggler(plugin, block, player, false, open, id).toggleDoors();
                         String message = (open) ? "DOOR_CLOSED" : "DOOR_OPENED";
                         TARDISMessage.send(player, message);
                     }

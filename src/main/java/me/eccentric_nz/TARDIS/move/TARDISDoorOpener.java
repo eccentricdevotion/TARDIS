@@ -74,7 +74,7 @@ public class TARDISDoorOpener {
      */
     @SuppressWarnings("deprecation")
     private void open(Block block, Block other, boolean add, COMPASS dd) {
-        if (block.getType().equals(Material.IRON_DOOR_BLOCK) || block.getType().equals(Material.WOODEN_DOOR)) {
+        if (plugin.getGeneralKeeper().getDoors().contains(block.getType())) {
             byte door_data = block.getData();
             switch (dd) {
                 case NORTH:

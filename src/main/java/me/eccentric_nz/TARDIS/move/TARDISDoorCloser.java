@@ -27,7 +27,6 @@ import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
 import me.eccentric_nz.TARDIS.enumeration.PRESET;
 import org.bukkit.Location;
-import org.bukkit.Material;
 import org.bukkit.block.Block;
 
 /**
@@ -73,7 +72,7 @@ public class TARDISDoorCloser {
      */
     @SuppressWarnings("deprecation")
     private void close(Block block, Location inportal, COMPASS dd) {
-        if (block.getType().equals(Material.IRON_DOOR_BLOCK) || block.getType().equals(Material.WOODEN_DOOR)) {
+        if (plugin.getGeneralKeeper().getDoors().contains(block.getType())) {
             byte door_data = block.getData();
             switch (dd) {
                 case NORTH:

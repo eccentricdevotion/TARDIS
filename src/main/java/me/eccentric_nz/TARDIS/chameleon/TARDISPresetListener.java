@@ -144,7 +144,7 @@ public class TARDISPresetListener extends TARDISMenuListener implements Listener
                                         @Override
                                         public void run() {
                                             TARDISPageThreeInventory tci = new TARDISPageThreeInventory(plugin, bool, adapt);
-                                            ItemStack[] items = tci.getTerminal();
+                                            ItemStack[] items = tci.getPageThree();
                                             Inventory chaminv = plugin.getServer().createInventory(player, 54, "§4Even More Presets");
                                             chaminv.setContents(items);
                                             player.openInventory(chaminv);
@@ -155,7 +155,6 @@ public class TARDISPresetListener extends TARDISMenuListener implements Listener
                                     // custom
                                     set.put("chameleon_preset", "CUSTOM");
                                     TARDISStaticUtils.setSign(rs.getChameleon(), 3, "CUSTOM", player);
-
                                     TARDISMessage.send(player, "CHAM_SET", ChatColor.AQUA + "Server's Custom");
                                     break;
                                 case 20:

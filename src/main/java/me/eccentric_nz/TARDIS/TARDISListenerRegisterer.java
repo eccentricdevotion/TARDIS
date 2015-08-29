@@ -33,7 +33,10 @@ import me.eccentric_nz.TARDIS.arch.TARDISSelectWatchListener;
 import me.eccentric_nz.TARDIS.artron.TARDISArtronCapacitorListener;
 import me.eccentric_nz.TARDIS.artron.TARDISArtronFurnaceListener;
 import me.eccentric_nz.TARDIS.artron.TARDISCondenserListener;
+import me.eccentric_nz.TARDIS.chameleon.TARDISChameleonConstructorListener;
+import me.eccentric_nz.TARDIS.chameleon.TARDISChameleonHelpListener;
 import me.eccentric_nz.TARDIS.chameleon.TARDISChameleonListener;
+import me.eccentric_nz.TARDIS.chameleon.TARDISChameleonTemplateListener;
 import me.eccentric_nz.TARDIS.chameleon.TARDISPageThreeListener;
 import me.eccentric_nz.TARDIS.chameleon.TARDISPresetListener;
 import me.eccentric_nz.TARDIS.commands.admin.TARDISAdminMenuListener;
@@ -181,6 +184,9 @@ public class TARDISListenerRegisterer {
         plugin.getPM().registerEvents(new TARDISBlockDamageListener(plugin), plugin);
         plugin.getPM().registerEvents(new TARDISBlockPhysicsListener(plugin), plugin);
         plugin.getPM().registerEvents(new TARDISChameleonListener(plugin), plugin);
+        plugin.getPM().registerEvents(new TARDISChameleonConstructorListener(plugin), plugin);
+        plugin.getPM().registerEvents(new TARDISChameleonHelpListener(plugin), plugin);
+        plugin.getPM().registerEvents(new TARDISChameleonTemplateListener(plugin), plugin);
         plugin.getPM().registerEvents(new TARDISChatListener(plugin), plugin);
         plugin.getPM().registerEvents(new TARDISChunkListener(plugin), plugin);
         if (plugin.getConfig().getBoolean("circuits.damage")) {

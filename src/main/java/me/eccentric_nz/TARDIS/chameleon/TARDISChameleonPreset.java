@@ -38,7 +38,7 @@ import me.eccentric_nz.TARDIS.utility.recalculators.TARDISTrapdoorRecalculator;
  */
 public class TARDISChameleonPreset {
 
-    private final List<Integer> problemBlocks = Arrays.asList(50, 53, 63, 64, 66, 67, 68, 69, 71, 77, 91, 96, 99, 106, 108, 109, 114, 128, 134, 135, 136, 143, 145, 156, 163, 164);
+    private static final List<Integer> problemBlocks = Arrays.asList(50, 53, 63, 64, 66, 67, 68, 69, 71, 77, 91, 96, 99, 106, 108, 109, 114, 128, 134, 135, 136, 143, 145, 156, 163, 164, 193, 194, 195, 196, 197);
     public final TARDISAndesitePreset andesite;
     public final TARDISAngelDownPreset angeld;
     public final TARDISAngelUpPreset angelu;
@@ -203,7 +203,7 @@ public class TARDISChameleonPreset {
         render.makePresets(false, false, false);
     }
 
-    public TARDISChameleonColumn buildTARDISChameleonColumn(COMPASS d, String id, String data, boolean asymmetric, boolean duck, boolean istorch) {
+    public static TARDISChameleonColumn buildTARDISChameleonColumn(COMPASS d, String id, String data, boolean asymmetric, boolean duck, boolean istorch) {
         TARDISChameleonColumn tcc = new TARDISChameleonColumn();
         if (d.equals(COMPASS.EAST)) {
             tcc.setId(getIntArrayFromJSON(id));
@@ -223,7 +223,7 @@ public class TARDISChameleonPreset {
      * @param js the JSON string
      * @return a 2D array of ints
      */
-    private int[][] getIntArrayFromJSON(String js) {
+    private static int[][] getIntArrayFromJSON(String js) {
         int[][] preset = new int[10][4];
         JSONArray json = new JSONArray(js);
         for (int col = 0; col < 10; col++) {
@@ -241,7 +241,7 @@ public class TARDISChameleonPreset {
      * @param js the JSON string
      * @return a 2D array of bytes
      */
-    private byte[][] getByteArrayFromJSON(String js) {
+    private static byte[][] getByteArrayFromJSON(String js) {
         byte[][] preset = new byte[10][4];
         JSONArray json = new JSONArray(js);
         for (byte col = 0; col < 10; col++) {
@@ -253,7 +253,7 @@ public class TARDISChameleonPreset {
         return preset;
     }
 
-    private int[][] rotate2DIntArray(int[][] id, COMPASS d, boolean assymetric) {
+    private static int[][] rotate2DIntArray(int[][] id, COMPASS d, boolean assymetric) {
         switch (d) {
             case NORTH:
                 int[] zero_s = id[0];
@@ -313,7 +313,7 @@ public class TARDISChameleonPreset {
         }
     }
 
-    private byte[][] rotate2DByteArray(byte[][] id, COMPASS d, boolean assymetric) {
+    private static byte[][] rotate2DByteArray(byte[][] id, COMPASS d, boolean assymetric) {
         switch (d) {
             case NORTH:
                 byte[] zero_s = id[0];
@@ -367,7 +367,7 @@ public class TARDISChameleonPreset {
         }
     }
 
-    private byte[][] convertData(int[][] id, byte[][] data, COMPASS d, boolean duck, boolean istorch) {
+    private static byte[][] convertData(int[][] id, byte[][] data, COMPASS d, boolean duck, boolean istorch) {
         for (int col = 0; col < 10; col++) {
             for (int block = 0; block < 4; block++) {
                 if (problemBlocks.contains(id[col][block])) {
@@ -375,8 +375,13 @@ public class TARDISChameleonPreset {
                         case 50: // torches
                             data[col][block] = new TARDISTorchRecalculator().recalculate(data[col][block], d);
                             break;
-                        case 64: // wood door
+                        case 64: // oak door
                         case 71: // iron door
+                        case 193: // spruce door
+                        case 194: // birch door
+                        case 195: // jungle door
+                        case 196: // acacia door
+                        case 197: // dark oak door
                             if (data[col][block] < 8) {
                                 // data is either a 0 or a 2
                                 switch (d) {
@@ -838,5 +843,4 @@ public class TARDISChameleonPreset {
     public void setR(int r) {
         this.r = r;
     }
-
 }

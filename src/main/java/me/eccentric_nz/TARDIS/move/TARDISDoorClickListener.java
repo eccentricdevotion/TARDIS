@@ -79,7 +79,7 @@ public class TARDISDoorClickListener extends TARDISDoorListener implements Liste
         if (block != null) {
             Material blockType = block.getType();
             // only proceed if they are clicking an iron door with a TARDIS key!
-            if (blockType.equals(Material.IRON_DOOR_BLOCK) || blockType.equals(Material.WOODEN_DOOR) || blockType.equals(Material.TRAP_DOOR)) {
+            if (plugin.getGeneralKeeper().getDoors().contains(blockType) || blockType.equals(Material.TRAP_DOOR)) {
                 QueryFactory qf = new QueryFactory(plugin);
                 final Player player = event.getPlayer();
                 if (player.hasPermission("tardis.enter")) {
@@ -189,11 +189,11 @@ public class TARDISDoorClickListener extends TARDISDoorListener implements Liste
                                     if (rsc.getCompanions().contains(playerUUID)) {
                                         if (!rsd.isLocked()) {
                                             // toogle the door open/closed
-                                            if (blockType.equals(Material.IRON_DOOR_BLOCK) || blockType.equals(Material.WOODEN_DOOR)) {
+                                            if (plugin.getGeneralKeeper().getDoors().contains(blockType)) {
                                                 if (doortype == 0 || doortype == 1) {
                                                     boolean open = TARDISStaticUtils.isOpen(block, dd);
                                                     // toggle the doors
-                                                    new TARDISDoorToggler(plugin, block, dd, player, minecart, open, id).toggleDoors();
+                                                    new TARDISDoorToggler(plugin, block, player, minecart, open, id).toggleDoors();
                                                 }
                                             } else if (blockType.equals(Material.TRAP_DOOR)) {
                                                 int open = 1;

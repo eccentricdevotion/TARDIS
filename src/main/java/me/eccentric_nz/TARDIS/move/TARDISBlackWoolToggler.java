@@ -60,7 +60,7 @@ public class TARDISBlackWoolToggler {
             b.getRelative(BlockFace.UP).setData(data);
             if (TARDISStaticUtils.isOpen(b.getRelative(BlockFace.SOUTH), rsd.getInnerDirection())) {
                 // toggle doors shut
-                new TARDISDoorToggler(plugin, b.getRelative(BlockFace.SOUTH), rsd.getInnerDirection(), player, false, true, id).toggleDoors();
+                new TARDISDoorToggler(plugin, b.getRelative(BlockFace.SOUTH), player, false, true, id).toggleDoors();
             }
         }
     }

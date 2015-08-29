@@ -17,6 +17,7 @@
 package me.eccentric_nz.TARDIS.builders;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Random;
@@ -24,6 +25,7 @@ import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.chameleon.TARDISChameleonColumn;
+import me.eccentric_nz.TARDIS.chameleon.TARDISConstructColumn;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetDoors;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
@@ -73,6 +75,7 @@ public class TARDISInstaPreset {
     private final byte random_colour;
     private final ChatColor sign_colour;
     private final List<ProblemBlock> do_at_end = new ArrayList<ProblemBlock>();
+    private final List<Integer> doors = Arrays.asList(64, 71, 193, 194, 195, 196, 197);
 
     public TARDISInstaPreset(TARDIS plugin, TARDISMaterialisationData tmd, PRESET preset, int lamp, int cham_id, byte cham_data, boolean rebuild, boolean minecart, boolean ctm, boolean add_sign) {
         this.plugin = plugin;
@@ -98,7 +101,11 @@ public class TARDISInstaPreset {
         if (preset.equals(PRESET.ANGEL)) {
             plugin.getPresets().setR(rand.nextInt(2));
         }
-        column = plugin.getPresets().getColumn(preset, tmd.getDirection());
+        if (preset.equals(PRESET.CONSTRUCT)) {
+            column = new TARDISConstructColumn(plugin, tmd.getTardisID(), "blueprint", tmd.getDirection()).getColumn();
+        } else {
+            column = plugin.getPresets().getColumn(preset, tmd.getDirection());
+        }
         int plusx, minusx, x, plusz, y, minusz, z, platform_id = plugin.getConfig().getInt("police_box.platform_id");
         byte platform_data = (byte) plugin.getConfig().getInt("police_box.platform_data");
         // get relative locations
@@ -299,6 +306,11 @@ public class TARDISInstaPreset {
                     case 66:
                     case 71:
                     case 96:
+                    case 193:
+                    case 194:
+                    case 195:
+                    case 196:
+                    case 197:
                         if (coldatas[yy] < 8 || colids[yy] == 96) {
                             if (colids[yy] != 66) {
                                 // remember the door location
@@ -317,7 +329,7 @@ public class TARDISInstaPreset {
                                 }
                             }
                         }
-                        if (colids[yy] == 71 && coldatas[yy] > 8) {
+                        if (doors.contains(colids[yy]) && coldatas[yy] > 8) {
                             plugin.getBlockUtils().setBlockAndRemember(world, xx, (y + yy), zz, colids[yy], tmd.getDirection().getUpperData(), tmd.getTardisID());
                         } else {
                             if (colids[yy] == 66) {

@@ -21,9 +21,6 @@ import java.util.List;
 import me.eccentric_nz.TARDIS.TARDIS;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
-import org.bukkit.enchantments.Enchantment;
-import org.bukkit.enchantments.EnchantmentWrapper;
-import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
@@ -37,7 +34,7 @@ import org.bukkit.inventory.meta.ItemMeta;
  */
 public class TARDISPageThreeInventory {
 
-    private final ItemStack[] terminal;
+    private final ItemStack[] pageThree;
     private final TARDIS plugin;
     private final boolean bool;
     private final boolean adapt;
@@ -46,7 +43,7 @@ public class TARDISPageThreeInventory {
         this.plugin = plugin;
         this.bool = bool;
         this.adapt = adapt;
-        this.terminal = getItemStack();
+        this.pageThree = getItemStack();
     }
 
     /**
@@ -72,9 +69,6 @@ public class TARDISPageThreeInventory {
         ItemStack page = new ItemStack(Material.ARROW, 1);
         ItemMeta one = page.getItemMeta();
         one.setDisplayName(plugin.getLanguage().getString("BUTTON_PAGE_1"));
-        Enchantment e = EnchantmentWrapper.ARROW_FIRE;
-        one.addEnchant(e, 1, true);
-        one.addItemFlags(ItemFlag.values());
         page.setItemMeta(one);
         // Gazebo
         ItemStack gaz = new ItemStack(Material.FENCE, 1);
@@ -150,6 +144,11 @@ public class TARDISPageThreeInventory {
         } else {
             inv = null;
         }
+        // construction GUI
+        ItemStack construct = new ItemStack(Material.PISTON_STICKY_BASE, 1, (byte) 6);
+        ItemMeta ct = construct.getItemMeta();
+        ct.setDisplayName("Chameleon Construction");
+        construct.setItemMeta(ct);
         // Biome
         ItemStack bio = new ItemStack(Material.LOG, 1, (short) 2);
         ItemMeta me = bio.getItemMeta();
@@ -170,12 +169,12 @@ public class TARDISPageThreeInventory {
             gaz, null, app, null, lig, null, lib, null, sno,
             null, jail, null, pan, null, dou, null, pris, null,
             null, null, and, null, dio, null, gra, null, null,
-            null, null, null, null, inv, null, null, null, null
+            null, null, null, inv, null, construct, null, null, null
         };
         return is;
     }
 
-    public ItemStack[] getTerminal() {
-        return terminal;
+    public ItemStack[] getPageThree() {
+        return pageThree;
     }
 }

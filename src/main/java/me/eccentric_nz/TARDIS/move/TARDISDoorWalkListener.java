@@ -79,7 +79,7 @@ public class TARDISDoorWalkListener extends TARDISDoorListener implements Listen
         if (block != null) {
             Material blockType = block.getType();
             // only proceed if they are clicking a door!
-            if (blockType.equals(Material.IRON_DOOR_BLOCK) || blockType.equals(Material.WOODEN_DOOR) || blockType.equals(Material.TRAP_DOOR)) {
+            if (plugin.getGeneralKeeper().getDoors().contains(blockType) || blockType.equals(Material.TRAP_DOOR)) {
                 final Player player = event.getPlayer();
                 if (player.hasPermission("tardis.enter")) {
                     Action action = event.getAction();
@@ -191,7 +191,7 @@ public class TARDISDoorWalkListener extends TARDISDoorListener implements Listen
                                 if (rsc.getCompanions().contains(playerUUID)) {
                                     if (!rsd.isLocked()) {
                                         // toogle the door open/closed
-                                        if (blockType.equals(Material.IRON_DOOR_BLOCK) || blockType.equals(Material.WOODEN_DOOR)) {
+                                        if (plugin.getGeneralKeeper().getDoors().contains(blockType)) {
                                             if (doortype == 0 || doortype == 1) {
                                                 boolean open = TARDISStaticUtils.isOpen(block, dd);
                                                 if (!material.equals(m) && doortype == 0 && !open) {
@@ -204,7 +204,7 @@ public class TARDISDoorWalkListener extends TARDISDoorListener implements Listen
                                                     return;
                                                 }
                                                 // toggle the door
-                                                new TARDISDoorToggler(plugin, block, dd, player, minecart, open, id).toggleDoors();
+                                                new TARDISDoorToggler(plugin, block, player, minecart, open, id).toggleDoors();
                                             }
                                         } else if (blockType.equals(Material.TRAP_DOOR)) {
                                             int open = 1;

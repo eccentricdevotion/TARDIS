@@ -81,6 +81,7 @@ public class TARDISGeneralInstanceKeeper {
     private final List<Chunk> tardisChunkList = new ArrayList<Chunk>();
     private final List<Chunk> railChunkList = new ArrayList<Chunk>();
     private final List<Location> rechargers = new ArrayList<Location>();
+    private final List<Material> doors = Arrays.asList(Material.IRON_DOOR_BLOCK, Material.WOODEN_DOOR, Material.SPRUCE_DOOR, Material.BIRCH_DOOR, Material.ACACIA_DOOR, Material.JUNGLE_DOOR, Material.DARK_OAK_DOOR);
     private final List<Material> rails = Arrays.asList(Material.POWERED_RAIL, Material.RAILS, Material.DETECTOR_RAIL, Material.ACTIVATOR_RAIL);
     private final List<Material> goodNether = Arrays.asList(Material.NETHERRACK, Material.SOUL_SAND, Material.GLOWSTONE, Material.NETHER_BRICK, Material.NETHER_FENCE, Material.NETHER_BRICK_STAIRS);
     private final List<String> gravityDownList = new ArrayList<String>();
@@ -142,6 +143,10 @@ public class TARDISGeneralInstanceKeeper {
 
     public List<Chunk> getRailChunkList() {
         return railChunkList;
+    }
+
+    public List<Material> getDoors() {
+        return doors;
     }
 
     public List<Material> getRails() {

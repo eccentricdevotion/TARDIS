@@ -17,6 +17,7 @@
 package me.eccentric_nz.TARDIS.builders;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Random;
@@ -24,6 +25,7 @@ import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.chameleon.TARDISChameleonColumn;
+import me.eccentric_nz.TARDIS.chameleon.TARDISConstructColumn;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetDoors;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
@@ -76,6 +78,7 @@ public class TARDISMaterialisationPreset implements Runnable {
     private final Random rand;
     private final byte random_colour;
     private final ChatColor sign_colour;
+    private final List<Integer> doors = Arrays.asList(64, 71, 193, 194, 195, 196, 197);
 
     /**
      * Runnable method to materialise the TARDIS Police Box. Tries to mimic the
@@ -111,9 +114,15 @@ public class TARDISMaterialisationPreset implements Runnable {
         if (preset.equals(PRESET.ANGEL)) {
             plugin.getPresets().setR(rand.nextInt(2));
         }
-        column = plugin.getPresets().getColumn(preset, tmd.getDirection());
-        stained_column = plugin.getPresets().getStained(preset, tmd.getDirection());
-        glass_column = plugin.getPresets().getGlass(preset, tmd.getDirection());
+        if (this.preset.equals(PRESET.CONSTRUCT)) {
+            column = new TARDISConstructColumn(plugin, tmd.getTardisID(), "blueprint", tmd.getDirection()).getColumn();
+            stained_column = new TARDISConstructColumn(plugin, tmd.getTardisID(), "stain", tmd.getDirection()).getColumn();
+            glass_column = new TARDISConstructColumn(plugin, tmd.getTardisID(), "glass", tmd.getDirection()).getColumn();
+        } else {
+            column = plugin.getPresets().getColumn(preset, tmd.getDirection());
+            stained_column = plugin.getPresets().getStained(preset, tmd.getDirection());
+            glass_column = plugin.getPresets().getGlass(preset, tmd.getDirection());
+        }
         colours = new byte[]{0, 1, 2, 3, 4, 5, 6, 9, 10, 11, 12, 13, 14};
         random_colour = colours[rand.nextInt(13)];
         this.sign_colour = plugin.getUtils().getSignColour();
@@ -331,6 +340,11 @@ public class TARDISMaterialisationPreset implements Runnable {
                                 case 66:
                                 case 71:
                                 case 96:
+                                case 193:
+                                case 194:
+                                case 195:
+                                case 196:
+                                case 197:
                                     if (coldatas[yy] < 8 || colids[yy] == 96) {
                                         if (colids[yy] != 66) {
                                             // remember the door location
@@ -364,7 +378,7 @@ public class TARDISMaterialisationPreset implements Runnable {
                                             plugin.getBlockUtils().setUnderDoorBlock(world, xx, (y - 1), zz, platform_id, platform_data, tmd.getTardisID(), false);
                                         }
                                     }
-                                    if (colids[yy] == 71 && coldatas[yy] > 8) {
+                                    if (doors.contains(colids[yy]) && coldatas[yy] > 8) {
                                         plugin.getBlockUtils().setBlockAndRemember(world, xx, (y + yy), zz, colids[yy], tmd.getDirection().getUpperData(), tmd.getTardisID());
                                     } else {
                                         plugin.getBlockUtils().setBlockAndRemember(world, xx, (y + yy), zz, colids[yy], coldatas[yy], tmd.getTardisID());
@@ -579,6 +593,11 @@ public class TARDISMaterialisationPreset implements Runnable {
                                     break;
                                 case 64:
                                 case 71:
+                                case 193:
+                                case 194:
+                                case 195:
+                                case 196:
+                                case 197:
                                     // don't change the door
                                     break;
                                 case 87:

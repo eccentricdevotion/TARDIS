@@ -18,7 +18,6 @@ package me.eccentric_nz.TARDIS.move;
 
 import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.enumeration.COMPASS;
 import me.eccentric_nz.TARDIS.utility.TARDISSounds;
 import org.bukkit.Location;
 import org.bukkit.Sound;
@@ -33,16 +32,14 @@ public class TARDISDoorToggler {
 
     private final TARDIS plugin;
     private final Block block;
-    private final COMPASS dd;
     private final Player player;
     private final boolean minecart;
     private final boolean open;
     private final int id;
 
-    public TARDISDoorToggler(TARDIS plugin, Block block, COMPASS dd, Player player, boolean minecart, boolean open, int id) {
+    public TARDISDoorToggler(TARDIS plugin, Block block, Player player, boolean minecart, boolean open, int id) {
         this.plugin = plugin;
         this.block = block;
-        this.dd = dd;
         this.player = player;
         this.minecart = minecart;
         this.open = open;

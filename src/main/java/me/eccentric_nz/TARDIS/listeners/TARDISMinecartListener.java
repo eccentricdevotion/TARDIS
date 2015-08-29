@@ -138,10 +138,9 @@ public class TARDISMinecartListener implements Listener {
                     int y = TARDISNumberParsers.parseInt(data[2]);
                     int z = TARDISNumberParsers.parseInt(data[3]);
                     Location in_out = new Location(w, x, y, z);
+                    // TODO check for all door block types?
                     if (mat.equals(Material.IRON_DOOR_BLOCK)) {
                         d = getDirection(in_out);
-                    }
-                    if (mat.equals(Material.IRON_DOOR_BLOCK)) {
                         plugin.getGeneralKeeper().getTardisChunkList().add(w.getChunkAt(in_out));
                     } else {
                         plugin.getGeneralKeeper().getTardisChunkList().remove(w.getChunkAt(in_out));

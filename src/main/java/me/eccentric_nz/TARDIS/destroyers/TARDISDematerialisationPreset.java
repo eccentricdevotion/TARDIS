@@ -20,6 +20,7 @@ import java.util.HashMap;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.builders.TARDISMaterialisationData;
 import me.eccentric_nz.TARDIS.chameleon.TARDISChameleonColumn;
+import me.eccentric_nz.TARDIS.chameleon.TARDISConstructColumn;
 import me.eccentric_nz.TARDIS.database.ResultSetDoors;
 import me.eccentric_nz.TARDIS.database.ResultSetPlayerPrefs;
 import me.eccentric_nz.TARDIS.enumeration.PRESET;
@@ -77,9 +78,15 @@ public class TARDISDematerialisationPreset implements Runnable {
         this.lamp = lamp;
         this.cham_id = cham_id;
         this.cham_data = cham_data;
-        column = plugin.getPresets().getColumn(preset, tmd.getDirection());
-        stained_column = plugin.getPresets().getStained(preset, tmd.getDirection());
-        glass_column = plugin.getPresets().getGlass(preset, tmd.getDirection());
+        if (this.preset.equals(PRESET.CONSTRUCT)) {
+            column = new TARDISConstructColumn(plugin, tmd.getTardisID(), "blueprint", tmd.getDirection()).getColumn();
+            stained_column = new TARDISConstructColumn(plugin, tmd.getTardisID(), "stain", tmd.getDirection()).getColumn();
+            glass_column = new TARDISConstructColumn(plugin, tmd.getTardisID(), "glass", tmd.getDirection()).getColumn();
+        } else {
+            column = plugin.getPresets().getColumn(preset, tmd.getDirection());
+            stained_column = plugin.getPresets().getStained(preset, tmd.getDirection());
+            glass_column = plugin.getPresets().getGlass(preset, tmd.getDirection());
+        }
     }
 
     @Override
@@ -241,6 +248,11 @@ public class TARDISDematerialisationPreset implements Runnable {
                             case 64:
                             case 68: // except the sign and doors
                             case 71:
+                            case 193:
+                            case 194:
+                            case 195:
+                            case 196:
+                            case 197:
                                 break;
                             case 95:
                                 if (coldatas[yy] == -1) {

@@ -76,7 +76,8 @@ public enum PRESET {
     WELL(Material.MOSSY_COBBLESTONE, "", "", false, false),
     WINDMILL(Material.WOOD, "VERY SMALL", "WINDMILL", true, false),
     YELLOW(Material.GOLD_NUGGET, "YELLOW", "SUBMARINE", true, true),
-    CUSTOM(Material.OBSIDIAN, "", "", false, false);
+    CUSTOM(Material.OBSIDIAN, "", "", false, false),
+    CONSTRUCT(Material.BARRIER, "CONSTRUCT", "", true, true);
 
     Material material;
     String firstLine;

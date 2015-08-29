@@ -64,14 +64,11 @@ public class TARDISStattenheimListener implements Listener {
 
     private final TARDIS plugin;
     List<Material> useless = new ArrayList<Material>();
-    List<Material> doors = new ArrayList<Material>();
     Material remote;
 
     public TARDISStattenheimListener(TARDIS plugin) {
         this.plugin = plugin;
         // add useless blocks
-        doors.add(Material.IRON_DOOR_BLOCK);
-        doors.add(Material.WOODEN_DOOR);
         useless.add(Material.BROWN_MUSHROOM);
         useless.add(Material.CARPET);
         useless.add(Material.DEAD_BUSH);
@@ -111,7 +108,7 @@ public class TARDISStattenheimListener implements Listener {
                 if (action.equals(Action.RIGHT_CLICK_BLOCK)) {
                     Block b = event.getClickedBlock();
                     Material m = b.getType();
-                    if (b.getState() instanceof InventoryHolder || doors.contains(m)) {
+                    if (b.getState() instanceof InventoryHolder || plugin.getGeneralKeeper().getDoors().contains(m)) {
                         return;
                     }
                     if (player.hasPermission("tardis.timetravel")) {

@@ -222,7 +222,7 @@ public class TARDISPageThreeListener extends TARDISMenuListener implements Liste
                                     TARDISStaticUtils.setSign(rs.getChameleon(), 3, "GRANITE", player);
                                     TARDISMessage.send(player, "CHAM_SET", ChatColor.AQUA + "Granite Box");
                                     break;
-                                case 49:
+                                case 48:
                                     // Invisibility
                                     // check they have an Invisibility Circuit
                                     TARDISCircuitChecker tcc = new TARDISCircuitChecker(plugin, id);
@@ -242,6 +242,20 @@ public class TARDISPageThreeListener extends TARDISMenuListener implements Liste
                                     set.put("chameleon_preset", "INVISIBLE");
                                     TARDISStaticUtils.setSign(rs.getChameleon(), 3, "INVISIBLE", player);
                                     TARDISMessage.send(player, "CHAM_SET", ChatColor.AQUA + "Invisibility");
+                                    break;
+                                case 50:
+                                    // constructor GUI
+                                    close(player);
+                                    plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
+                                        @Override
+                                        public void run() {
+                                            TARDISChameleonConstructorGUI tci = new TARDISChameleonConstructorGUI(plugin);
+                                            ItemStack[] items = tci.getConstruct();
+                                            Inventory chamcon = plugin.getServer().createInventory(player, 54, "§4Chameleon Construction");
+                                            chamcon.setContents(items);
+                                            player.openInventory(chamcon);
+                                        }
+                                    }, 2L);
                                     break;
                                 default:
                                     close(player);

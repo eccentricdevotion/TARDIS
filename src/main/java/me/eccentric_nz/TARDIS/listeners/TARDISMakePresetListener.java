@@ -66,6 +66,11 @@ public class TARDISMakePresetListener implements Listener {
         this.not_glass.add(106); // vine
         this.not_glass.add(123); // redstone lamp off
         this.not_glass.add(124); // redstone lamp on
+        this.not_glass.add(193); // spruce door
+        this.not_glass.add(194); // birch door
+        this.not_glass.add(195); // jungle door
+        this.not_glass.add(196); // acacia door
+        this.not_glass.add(197); // dark oak door
     }
 
     /**
