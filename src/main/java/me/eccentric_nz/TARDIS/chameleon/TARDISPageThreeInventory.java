@@ -145,9 +145,9 @@ public class TARDISPageThreeInventory {
             inv = null;
         }
         // construction GUI
-        ItemStack construct = new ItemStack(Material.PISTON_STICKY_BASE, 1, (byte) 6);
+        ItemStack construct = new ItemStack(Material.BOWL, 1);
         ItemMeta ct = construct.getItemMeta();
-        ct.setDisplayName("Chameleon Construction");
+        ct.setDisplayName("Chameleon construction");
         construct.setItemMeta(ct);
         // Biome
         ItemStack bio = new ItemStack(Material.LOG, 1, (short) 2);
