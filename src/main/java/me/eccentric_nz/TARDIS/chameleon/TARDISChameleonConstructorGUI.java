@@ -59,7 +59,7 @@ public class TARDISChameleonConstructorGUI {
         ItemMeta io = info.getItemMeta();
 //        hp.setDisplayName(plugin.getLanguage().getString("Help"));
         io.setDisplayName("Info");
-        io.setLore(Arrays.asList("Click the lamp slot to switch", "between all available lamps.", "Click the door slots tp switch", "between all available doors."));
+        io.setLore(Arrays.asList("Click the lamp slot to switch", "between all available lamps.", "Click the door slots to switch", "between all available doors."));
         info.setItemMeta(io);
         is[4] = info;
         // abort
