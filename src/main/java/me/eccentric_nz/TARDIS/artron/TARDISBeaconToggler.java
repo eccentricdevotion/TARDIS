@@ -101,7 +101,7 @@ public class TARDISBeaconToggler {
             while (!b.getChunk().isLoaded()) {
                 b.getChunk().load();
             }
-            b.setType((on) ? Material.GLASS : Material.BEDROCK);
+            b.setType((on) ? Material.GLASS : Material.SOUL_SAND);
         }
     }
 }
