@@ -144,7 +144,7 @@ public class TARDISConsoleCloseListener implements Listener {
                                                 TARDISMessage.send(p, "TRAVEL_NO_AREA_PERM", first);
                                                 continue;
                                             }
-                                            Location l = plugin.getTardisArea().getNextSpot(rsa.getArea_name());
+                                            Location l = plugin.getTardisArea().getNextSpot(rsa.getAreaName());
                                             if (l == null) {
                                                 TARDISMessage.send(p, "NO_MORE_SPOTS");
                                                 continue;

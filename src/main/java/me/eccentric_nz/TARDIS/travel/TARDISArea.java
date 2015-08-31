@@ -89,10 +89,10 @@ public class TARDISArea {
         if (rsa.resultSet()) {
             String w = rsa.getWorld();
             String lw = l.getWorld().getName();
-            int minx = rsa.getMinx();
-            int minz = rsa.getMinz();
-            int maxx = rsa.getMaxx();
-            int maxz = rsa.getMaxz();
+            int minx = rsa.getMinX();
+            int minz = rsa.getMinZ();
+            int maxx = rsa.getMaxX();
+            int maxz = rsa.getMaxZ();
             // is clicked block within a defined TARDIS area?
             if (w.equals(lw) && (l.getX() <= maxx && l.getZ() <= maxz && l.getX() >= minx && l.getZ() >= minz)) {
                 chk = false;
@@ -149,14 +149,14 @@ public class TARDISArea {
         where.put("area_name", a);
         ResultSetAreas rsa = new ResultSetAreas(plugin, where, false);
         if (rsa.resultSet()) {
-            int park = plugin.getConfig().getInt("preferences.parking_distance") + 3;
+            int park = rsa.getParkingDistance() + 3;
             int xx, zz = 0;
-            int minx = rsa.getMinx();
+            int minx = rsa.getMinX();
             int x = minx + 2;
-            int minz = rsa.getMinz();
+            int minz = rsa.getMinZ();
             int z = minz + 2;
-            int maxx = rsa.getMaxx();
-            int maxz = rsa.getMaxz();
+            int maxx = rsa.getMaxX();
+            int maxz = rsa.getMaxZ();
             String wStr = rsa.getWorld();
             boolean chk = false;
             // only loop for the size of the TARDIS area

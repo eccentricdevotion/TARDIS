@@ -362,11 +362,11 @@ public class TARDISTimeLordDeathListener implements Listener {
         wherea.put("world", world);
         ResultSetAreas rsa = new ResultSetAreas(plugin, wherea, false);
         if (rsa.resultSet()) {
-            String area = rsa.getArea_name();
+            String area = rsa.getAreaName();
             if (!player.hasPermission("tardis.area." + area) || !player.isPermissionSet("tardis.area." + area)) {
                 return null;
             }
-            l = plugin.getTardisArea().getNextSpot(rsa.getArea_name());
+            l = plugin.getTardisArea().getNextSpot(rsa.getAreaName());
         }
         return l;
     }

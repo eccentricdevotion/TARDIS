@@ -54,6 +54,7 @@ public class TARDISSQLiteDatabaseUpdater {
         this.prefix = this.plugin.getPrefix();
         this.statement = statement;
         areaupdates.add("y INTEGER");
+        areaupdates.add("parking_distance INTEGER DEFAULT 2");
         blockupdates.add("police_box INTEGER DEFAULT 0");
         countupdates.add("grace INTEGER DEFAULT 0");
         destupdates.add("bind TEXT DEFAULT ''");

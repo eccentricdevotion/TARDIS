@@ -65,7 +65,7 @@ public class TARDISSQLiteDatabase {
             statement.executeUpdate(queryArched);
 
             // Table structure for table 'areas'
-            String queryPresets = "CREATE TABLE IF NOT EXISTS " + prefix + "areas (area_id INTEGER PRIMARY KEY NOT NULL, area_name TEXT COLLATE NOCASE DEFAULT '', world TEXT COLLATE NOCASE DEFAULT '', minx INTEGER, minz INTEGER, maxx INTEGER, maxz INTEGER, y INTEGER)";
+            String queryPresets = "CREATE TABLE IF NOT EXISTS " + prefix + "areas (area_id INTEGER PRIMARY KEY NOT NULL, area_name TEXT COLLATE NOCASE DEFAULT '', world TEXT COLLATE NOCASE DEFAULT '', minx INTEGER, minz INTEGER, maxx INTEGER, maxz INTEGER, y INTEGER, parking_distance INTEGER DEFAULT 2)";
             statement.executeUpdate(queryPresets);
 
             // Table structure for table 'back'

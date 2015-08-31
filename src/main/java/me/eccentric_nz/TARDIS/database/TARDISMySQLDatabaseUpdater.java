@@ -155,6 +155,14 @@ public class TARDISMySQLDatabaseUpdater {
                 String bio_alter = "ALTER TABLE " + prefix + "current ADD biome varchar(64) DEFAULT ''";
                 statement.executeUpdate(bio_alter);
             }
+            // add parking_distance to areas
+            String park_query = "SHOW COLUMNS FROM " + prefix + "areas LIKE 'parking_distance'";
+            ResultSet rspark = statement.executeQuery(park_query);
+            if (!rspark.next()) {
+                i++;
+                String park_alter = "ALTER TABLE " + prefix + "areas ADD parking_distance int(2) DEFAULT '2'";
+                statement.executeUpdate(park_alter);
+            }
         } catch (SQLException e) {
             plugin.debug("MySQL database add fields error: " + e.getMessage() + e.getErrorCode());
         }

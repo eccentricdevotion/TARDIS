@@ -41,14 +41,15 @@ public class ResultSetAreas {
     private final TARDIS plugin;
     private final HashMap<String, Object> where;
     private final boolean multiple;
-    private int area_id;
-    private String area_name;
+    private int areaID;
+    private String areaName;
     private String world;
-    private int minx;
-    private int minz;
-    private int maxx;
-    private int maxz;
+    private int minX;
+    private int minZ;
+    private int maxX;
+    private int maxZ;
     private int y;
+    private int parkingDistance;
     private final ArrayList<HashMap<String, String>> data = new ArrayList<HashMap<String, String>>();
     private final String prefix;
 
@@ -115,14 +116,15 @@ public class ResultSetAreas {
                         }
                         data.add(row);
                     }
-                    this.area_id = rs.getInt("area_id");
-                    this.area_name = rs.getString("area_name");
+                    this.areaID = rs.getInt("area_id");
+                    this.areaName = rs.getString("area_name");
                     this.world = rs.getString("world");
-                    this.minx = rs.getInt("minx");
-                    this.minz = rs.getInt("minz");
-                    this.maxx = rs.getInt("maxx");
-                    this.maxz = rs.getInt("maxz");
+                    this.minX = rs.getInt("minx");
+                    this.minZ = rs.getInt("minz");
+                    this.maxX = rs.getInt("maxx");
+                    this.maxZ = rs.getInt("maxz");
                     this.y = rs.getInt("y");
+                    this.parkingDistance = rs.getInt("parking_distance");
                 }
             } else {
                 return false;
@@ -145,36 +147,40 @@ public class ResultSetAreas {
         return true;
     }
 
-    public int getArea_id() {
-        return area_id;
+    public int getAreaID() {
+        return areaID;
     }
 
-    public String getArea_name() {
-        return area_name;
+    public String getAreaName() {
+        return areaName;
     }
 
     public String getWorld() {
         return world;
     }
 
-    public int getMinx() {
-        return minx;
+    public int getMinX() {
+        return minX;
     }
 
-    public int getMinz() {
-        return minz;
+    public int getMinZ() {
+        return minZ;
     }
 
-    public int getMaxx() {
-        return maxx;
+    public int getMaxX() {
+        return maxX;
     }
 
-    public int getMaxz() {
-        return maxz;
+    public int getMaxZ() {
+        return maxZ;
     }
 
     public int getY() {
         return y;
+    }
+
+    public int getParkingDistance() {
+        return parkingDistance;
     }
 
     public ArrayList<HashMap<String, String>> getData() {

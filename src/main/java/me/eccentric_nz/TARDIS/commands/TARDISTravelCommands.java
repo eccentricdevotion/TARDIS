@@ -491,7 +491,7 @@ public class TARDISTravelCommands implements CommandExecutor {
                             TARDISMessage.send(player, "ADV_AREA");
                             return true;
                         }
-                        Location l = plugin.getTardisArea().getNextSpot(rsa.getArea_name());
+                        Location l = plugin.getTardisArea().getNextSpot(rsa.getAreaName());
                         if (l == null) {
                             TARDISMessage.send(player, "NO_MORE_SPOTS");
                             return true;

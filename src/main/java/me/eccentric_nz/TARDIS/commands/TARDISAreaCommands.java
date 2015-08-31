@@ -99,6 +99,31 @@ public class TARDISAreaCommands implements CommandExecutor {
                 TARDISMessage.send(player, "AREA_CLICK_END");
                 return true;
             }
+            if (args[0].equals("parking")) {
+                if (args.length < 2) {
+                    TARDISMessage.send(player, "AREA_NEED");
+                    return false;
+                }
+                if (args.length < 3) {
+                    TARDISMessage.send(player, "AREA_PARK");
+                    return false;
+                }
+                int park;
+                try {
+                    park = Integer.parseInt(args[2]);
+                } catch (NumberFormatException nfe) {
+                    TARDISMessage.send(player, "AREA_PARK");
+                    return false;
+                }
+                HashMap<String, Object> where = new HashMap<String, Object>();
+                where.put("area_name", args[1]);
+                HashMap<String, Object> set = new HashMap<String, Object>();
+                set.put("parking_distance", park);
+                QueryFactory qf = new QueryFactory(plugin);
+                qf.doUpdate("areas", set, where);
+                TARDISMessage.send(player, "AREA_PARK_SET", args[1]);
+                return true;
+            }
             if (args[0].equals("remove")) {
                 if (args.length < 2) {
                     TARDISMessage.send(player, "AREA_NEED");
@@ -123,10 +148,10 @@ public class TARDISAreaCommands implements CommandExecutor {
                     TARDISMessage.send(player, "AREA_NOT_FOUND", ChatColor.GREEN + "/tardis list areas" + ChatColor.RESET);
                     return false;
                 }
-                int mix = rsa.getMinx();
-                int miz = rsa.getMinz();
-                int max = rsa.getMaxx();
-                int maz = rsa.getMaxz();
+                int mix = rsa.getMinX();
+                int miz = rsa.getMinZ();
+                int max = rsa.getMaxX();
+                int maz = rsa.getMaxZ();
                 World w = plugin.getServer().getWorld(rsa.getWorld());
                 final Block b1 = w.getHighestBlockAt(mix, miz).getRelative(BlockFace.UP);
                 b1.setType(Material.SNOW_BLOCK);
@@ -168,10 +193,10 @@ public class TARDISAreaCommands implements CommandExecutor {
                     TARDISMessage.send(player, "AREA_NOT_FOUND", ChatColor.GREEN + "/tardis list areas" + ChatColor.RESET);
                     return false;
                 }
-                int mix = rsa.getMinx();
-                int miz = rsa.getMinz();
-                int max = rsa.getMaxx();
-                int maz = rsa.getMaxz();
+                int mix = rsa.getMinX();
+                int miz = rsa.getMinZ();
+                int max = rsa.getMaxX();
+                int maz = rsa.getMaxZ();
                 World w = plugin.getServer().getWorld(rsa.getWorld());
                 for (int x = mix; x <= max; x++) {
                     for (int z = miz; z <= maz; z++) {

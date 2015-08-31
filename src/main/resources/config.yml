@@ -95,7 +95,6 @@ preferences:
         enabled: false
         only_tardis_worlds: true
     render_entities: false
-    parking_distance: 2
 # circuits
 circuits:
     damage: false

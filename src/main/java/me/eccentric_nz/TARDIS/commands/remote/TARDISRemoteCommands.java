@@ -231,7 +231,7 @@ public class TARDISRemoteCommands implements CommandExecutor {
                                         }
                                     }
                                     // get a landing spot
-                                    Location l = plugin.getTardisArea().getNextSpot(rsa.getArea_name());
+                                    Location l = plugin.getTardisArea().getNextSpot(rsa.getAreaName());
                                     // returns null if full!
                                     if (l == null) {
                                         TARDISMessage.send(sender, "NO_MORE_SPOTS");

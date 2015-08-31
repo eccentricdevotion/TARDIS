@@ -27,7 +27,7 @@ import org.bukkit.command.TabCompleter;
  */
 public class TARDISAreaTabComplete extends TARDISCompleter implements TabCompleter {
 
-    private final ImmutableList<String> ROOT_SUBS = ImmutableList.of("start", "end", "remove", "show", "yard");
+    private final ImmutableList<String> ROOT_SUBS = ImmutableList.of("start", "end", "parking", "remove", "show", "yard");
 
     @Override
     public List<String> onTabComplete(CommandSender sender, Command command, String label, String[] args) {
