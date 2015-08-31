@@ -130,10 +130,14 @@ public class TARDISSonicListener implements Listener {
         interactables.add(Material.DIODE_BLOCK_ON);
         interactables.add(Material.DISPENSER);
         interactables.add(Material.DROPPER);
+        interactables.add(Material.ENDER_CHEST);
         interactables.add(Material.FENCE_GATE);
         interactables.add(Material.FURNACE);
+        interactables.add(Material.GOLD_PLATE);
         interactables.add(Material.HOPPER);
         interactables.add(Material.IRON_DOOR_BLOCK);
+        interactables.add(Material.IRON_PLATE);
+        interactables.add(Material.IRON_TRAPDOOR);
         interactables.add(Material.JUKEBOX);
         interactables.add(Material.JUNGLE_DOOR);
         interactables.add(Material.JUNGLE_FENCE_GATE);
@@ -144,10 +148,12 @@ public class TARDISSonicListener implements Listener {
         interactables.add(Material.SPRUCE_DOOR);
         interactables.add(Material.SPRUCE_FENCE_GATE);
         interactables.add(Material.STONE_BUTTON);
+        interactables.add(Material.STONE_PLATE);
         interactables.add(Material.TRAPPED_CHEST);
         interactables.add(Material.TRAP_DOOR);
         interactables.add(Material.WOODEN_DOOR);
         interactables.add(Material.WOOD_BUTTON);
+        interactables.add(Material.WOOD_PLATE);
         interactables.add(Material.WORKBENCH);
         redstone.add(Material.DETECTOR_RAIL);
         redstone.add(Material.IRON_DOOR_BLOCK);
