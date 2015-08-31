@@ -169,6 +169,7 @@ public class TARDISAdminCommands implements CommandExecutor {
         firstsInt.put("malfunction_end", "preferences");
         firstsInt.put("malfunction_nether", "preferences");
         firstsInt.put("min_time", "arch");
+        firstsInt.put("parking_distance", "preferences");
         firstsInt.put("platform_data", "police_box");
         firstsInt.put("platform_id", "police_box");
         firstsInt.put("random_attempts", "travel");

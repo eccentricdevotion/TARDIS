@@ -114,7 +114,6 @@ public class TARDISArea {
         HashMap<String, Object> where = new HashMap<String, Object>();
         where.put("world", w);
         ResultSetAreas rsa = new ResultSetAreas(plugin, where, true);
-//        int i = 1;
         if (rsa.resultSet()) {
             ArrayList<HashMap<String, String>> data = rsa.getData();
             for (HashMap<String, String> map : data) {
@@ -132,7 +131,6 @@ public class TARDISArea {
                         break;
                     }
                 }
-//                i++;
             }
         }
         return chk;
@@ -151,6 +149,7 @@ public class TARDISArea {
         where.put("area_name", a);
         ResultSetAreas rsa = new ResultSetAreas(plugin, where, false);
         if (rsa.resultSet()) {
+            int park = plugin.getConfig().getInt("preferences.parking_distance") + 3;
             int xx, zz = 0;
             int minx = rsa.getMinx();
             int x = minx + 2;
@@ -162,8 +161,8 @@ public class TARDISArea {
             boolean chk = false;
             // only loop for the size of the TARDIS area
             outerloop:
-            for (xx = x; xx <= maxx; xx += 5) {
-                for (zz = z; zz <= maxz; zz += 5) {
+            for (xx = x; xx <= maxx; xx += park) {
+                for (zz = z; zz <= maxz; zz += park) {
                     HashMap<String, Object> wherec = new HashMap<String, Object>();
                     wherec.put("world", wStr);
                     wherec.put("x", xx);
