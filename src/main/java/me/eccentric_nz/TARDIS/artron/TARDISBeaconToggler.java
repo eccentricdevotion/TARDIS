@@ -101,7 +101,10 @@ public class TARDISBeaconToggler {
             while (!b.getChunk().isLoaded()) {
                 b.getChunk().load();
             }
-            b.setType((on) ? Material.GLASS : Material.SOUL_SAND);
+            b.setType((on) ? Material.GLASS : Material.REDSTONE_BLOCK);
+            if (!plugin.getGeneralKeeper().getProtectBlockMap().containsKey(bl.toString())) {
+                plugin.getGeneralKeeper().getProtectBlockMap().put(bl.toString(), rs.getTardis_id());
+            }
         }
     }
 }
