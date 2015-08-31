@@ -65,24 +65,24 @@ public class TARDISDestroyerInner {
      */
     @SuppressWarnings("deprecation")
     public void destroyInner(SCHEMATIC schm, int id, World w, int i, String p, int slot) {
-        // get dimensions
-        String directory = (schm.isCustom()) ? "user_schematics" : "schematics";
-        String path = plugin.getDataFolder() + File.separator + directory + File.separator + schm.getPermission() + ".tschm";
-        File file = new File(path);
-        if (!file.exists()) {
-            plugin.debug(plugin.getPluginName() + "Could not find a schematic with that name!");
-            return;
-        }
-        // get JSON
-        JSONObject obj = TARDISSchematicGZip.unzip(path);
-        // get dimensions
-        JSONObject dimensions = (JSONObject) obj.get("dimensions");
-        int h = dimensions.getInt("height");
-        int width = dimensions.getInt("width");
-        int l = dimensions.getInt("length");
         // destroy TARDIS
         boolean below = (!plugin.getConfig().getBoolean("creation.create_worlds") && !plugin.getConfig().getBoolean("creation.default_world"));
         if (below) {
+            // get dimensions
+            String directory = (schm.isCustom()) ? "user_schematics" : "schematics";
+            String path = plugin.getDataFolder() + File.separator + directory + File.separator + schm.getPermission() + ".tschm";
+            File file = new File(path);
+            if (!file.exists()) {
+                plugin.debug(plugin.getPluginName() + "Could not find a schematic with that name!");
+                return;
+            }
+            // get JSON
+            JSONObject obj = TARDISSchematicGZip.unzip(path);
+            // get dimensions
+            JSONObject dimensions = (JSONObject) obj.get("dimensions");
+            int h = dimensions.getInt("height");
+            int width = dimensions.getInt("width");
+            int l = dimensions.getInt("length");
             int level, row, col, startx, startz, starty, resetx, resetz;
             // calculate startx, starty, startz
             int gsl[] = plugin.getLocationUtils().getStartLocation(id);
@@ -131,7 +131,12 @@ public class TARDISDestroyerInner {
             }
         } else {
             TARDISInteriorPostioning tips = new TARDISInteriorPostioning(plugin);
-            TARDISTIPSData coords = tips.getTIPSData(slot);
+            TARDISTIPSData coords;
+            if (schm.getPermission().equals("junk")) {
+                coords = tips.getTIPSJunkData();
+            } else {
+                coords = tips.getTIPSData(slot);
+            }
             tips.reclaimChunks(w, coords);
         }
         // remove blocks saved to blocks table (iron/gold/diamond/emerald)

@@ -66,6 +66,7 @@ public class TARDISBuilderInner {
         this.precious.add(Material.GOLD_BLOCK);
         this.precious.add(Material.IRON_BLOCK);
         this.precious.add(Material.REDSTONE_BLOCK);
+        this.precious.add(Material.BEDROCK);
     }
 
     /**
@@ -141,10 +142,16 @@ public class TARDISBuilderInner {
         TARDISTIPSData pos = null;
         if (tips) { // default world - use TIPS
             TARDISInteriorPostioning tintpos = new TARDISInteriorPostioning(plugin);
-            int slot = tintpos.getFreeSlot();
+            int slot;
+            if (schm.getPermission().equals("junk")) {
+                slot = -999;
+                pos = tintpos.getTIPSJunkData();
+            } else {
+                slot = tintpos.getFreeSlot();
+                pos = tintpos.getTIPSData(slot);
+            }
             // save the slot
             set.put("tips", slot);
-            pos = tintpos.getTIPSData(slot);
             startx = pos.getCentreX();
             resetx = pos.getCentreX();
             startz = pos.getCentreZ();
@@ -658,7 +665,8 @@ public class TARDISBuilderInner {
         if (plugin.isWorldGuardOnServer() && plugin.getConfig().getBoolean("preferences.use_worldguard")) {
             if (tips) {
                 if (pos != null) {
-                    plugin.getWorldGuardUtils().addWGProtection(p.getName(), pos, world);
+                    String name = (schm.getPermission().equals("junk")) ? "junk" : p.getName();
+                    plugin.getWorldGuardUtils().addWGProtection(name, pos, world);
                 }
             } else {
                 plugin.getWorldGuardUtils().addWGProtection(p, wg1, wg2);

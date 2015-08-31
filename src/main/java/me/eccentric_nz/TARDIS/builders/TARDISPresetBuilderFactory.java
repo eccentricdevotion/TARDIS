@@ -28,6 +28,7 @@ import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import me.eccentric_nz.TARDIS.destroyers.TARDISDeinstaPreset;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
 import me.eccentric_nz.TARDIS.enumeration.PRESET;
+import me.eccentric_nz.TARDIS.junk.TARDISJunkBuilder;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import org.bukkit.Chunk;
 import org.bukkit.Material;
@@ -157,9 +158,15 @@ public class TARDISPresetBuilderFactory {
             } else {
                 if (plugin.getConfig().getBoolean("police_box.materialise") && !preset.equals(PRESET.INVISIBLE)) {
                     plugin.getTrackerKeeper().getMaterialising().add(pbd.getTardisID());
-                    TARDISMaterialisationPreset runnable = new TARDISMaterialisationPreset(plugin, pbd, preset, lamp, cham_id, cham_data, minecart, ctm, add_sign, 18);
-                    int taskID = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, runnable, 10L, 20L);
-                    runnable.setTask(taskID);
+                    if (preset.equals(PRESET.JUNK)) {
+                        TARDISJunkBuilder runnable = new TARDISJunkBuilder(plugin, pbd);
+                        int taskID = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, runnable, 10L, 20L);
+                        runnable.setTask(taskID);
+                    } else {
+                        TARDISMaterialisationPreset runnable = new TARDISMaterialisationPreset(plugin, pbd, preset, lamp, cham_id, cham_data, minecart, ctm, add_sign, 18);
+                        int taskID = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, runnable, 10L, 20L);
+                        runnable.setTask(taskID);
+                    }
                 } else {
                     plugin.getTrackerKeeper().getMaterialising().add(pbd.getTardisID());
                     TARDISInstaPreset insta = new TARDISInstaPreset(plugin, pbd, preset, lamp, cham_id, cham_data, false, minecart, ctm, add_sign);

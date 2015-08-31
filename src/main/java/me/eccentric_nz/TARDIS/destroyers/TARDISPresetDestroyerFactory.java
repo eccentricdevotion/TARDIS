@@ -27,6 +27,7 @@ import me.eccentric_nz.TARDIS.database.ResultSetPlayerPrefs;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
 import me.eccentric_nz.TARDIS.enumeration.PRESET;
+import me.eccentric_nz.TARDIS.junk.TARDISJunkDestroyer;
 import me.eccentric_nz.TARDIS.utility.TARDISBlockSetters;
 import me.eccentric_nz.TARDIS.utility.TARDISLocationGetters;
 import org.bukkit.Location;
@@ -80,7 +81,8 @@ public class TARDISPresetDestroyerFactory {
                 }
                 int lamp = plugin.getConfig().getInt("police_box.tardis_lamp");
                 HashMap<String, Object> wherepp = new HashMap<String, Object>();
-                wherepp.put("uuid", pdd.getPlayer().getUniqueId().toString());
+                String uuid = (demat.equals(PRESET.JUNK)) ? "00000000-aaaa-bbbb-cccc-000000000000" : pdd.getPlayer().getUniqueId().toString();
+                wherepp.put("uuid", uuid);
                 ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, wherepp);
                 if (rsp.resultSet()) {
                     lamp = rsp.getLamp();
@@ -89,9 +91,15 @@ public class TARDISPresetDestroyerFactory {
                 if (pdd.isHide()) {
                     loops = 3;
                 }
-                TARDISDematerialisationPreset runnable = new TARDISDematerialisationPreset(plugin, pdd, demat, lamp, cham_id, cham_data, loops);
-                int taskID = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, runnable, 10L, 20L);
-                runnable.setTask(taskID);
+                if (demat.equals(PRESET.JUNK)) {
+                    TARDISJunkDestroyer runnable = new TARDISJunkDestroyer(plugin, pdd);
+                    int taskID = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, runnable, 10L, 20L);
+                    runnable.setTask(taskID);
+                } else {
+                    TARDISDematerialisationPreset runnable = new TARDISDematerialisationPreset(plugin, pdd, demat, lamp, cham_id, cham_data, loops);
+                    int taskID = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, runnable, 10L, 20L);
+                    runnable.setTask(taskID);
+                }
             } else {
                 new TARDISDeinstaPreset(plugin).instaDestroyPreset(pdd, pdd.isHide(), demat);
             }

@@ -556,5 +556,10 @@
             <artifactId>swing-layout</artifactId>
             <version>1.0.3</version>
         </dependency>
+        <dependency>
+            <groupId>de.slikey</groupId>
+            <artifactId>EffectLib</artifactId>
+            <version>3.4</version>
+        </dependency>
     </dependencies>
 </project>

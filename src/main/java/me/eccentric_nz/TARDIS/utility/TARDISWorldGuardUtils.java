@@ -166,7 +166,11 @@ public class TARDISWorldGuardUtils {
         dd.addPlayer(p);
         region.setOwners(dd);
         HashMap<Flag<?>, Object> flags = new HashMap<Flag<?>, Object>();
-        flags.put(DefaultFlag.ENTRY, State.DENY);
+        if (!p.equals("junk")) {
+            flags.put(DefaultFlag.ENTRY, State.DENY);
+        } else {
+            flags.put(DefaultFlag.BUILD, State.DENY);
+        }
         flags.put(DefaultFlag.TNT, State.DENY);
         flags.put(DefaultFlag.FIRE_SPREAD, State.DENY);
         flags.put(DefaultFlag.LAVA_FIRE, State.DENY);
@@ -175,9 +179,11 @@ public class TARDISWorldGuardUtils {
         flags.put(DefaultFlag.CHEST_ACCESS, State.ALLOW);
         region.setFlags(flags);
         rm.addRegion(region);
-        // deny access to anyone but the owner - companions will be added as the player defines them
-        // usage = "<id> <flag> [-w world] [-g group] [value]",
-        plugin.getServer().dispatchCommand(plugin.getConsole(), "rg flag " + region_id + " entry -w " + w.getName() + " -g nonmembers deny");
+        if (!p.equals("junk")) {
+            // deny access to anyone but the owner - companions will be added as the player defines them
+            // usage = "<id> <flag> [-w world] [-g group] [value]",
+            plugin.getServer().dispatchCommand(plugin.getConsole(), "rg flag " + region_id + " entry -w " + w.getName() + " -g nonmembers deny");
+        }
         try {
             rm.save();
         } catch (StorageException e) {
@@ -409,8 +415,7 @@ public class TARDISWorldGuardUtils {
     }
 
     /**
-     * Removes the build flags and build group from all TARDIS regions in a
-     * world.
+     * Gets a List of all TARDIS regions in a world.
      *
      * @param w the world to remove the flags from
      * @return a list of TARDIS region names for this world

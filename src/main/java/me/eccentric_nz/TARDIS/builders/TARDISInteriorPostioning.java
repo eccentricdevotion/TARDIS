@@ -100,6 +100,25 @@ public class TARDISInteriorPostioning {
     }
 
     /**
+     * Calculate the position data for the Junk TARDIS TIPS slot.
+     *
+     * @return a TIPS Data container
+     */
+    public TARDISTIPSData getTIPSJunkData() {
+        TARDISTIPSData data = new TARDISTIPSData();
+        int row = -1;
+        int col = -1;
+        data.setMinX((row * 1024));
+        data.setCentreX((row * 1024 + 496));
+        data.setMaxX((row * 1024 + 1023));
+        data.setMinZ((col * 1024));
+        data.setCentreZ((col * 1024 + 496));
+        data.setMaxZ((col * 1024 + 1023));
+        data.setSlot(-999);
+        return data;
+    }
+
+    /**
      * Make a list of the currently used TIPS slots.
      *
      * @return a list of slot numbers

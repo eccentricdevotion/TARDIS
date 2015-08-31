@@ -181,8 +181,8 @@ public class TARDISDeleteCommand {
         }
     }
 
-    private void cleanDatabase(int id) {
-        QueryFactory qf = new QueryFactory(plugin);
+    public static void cleanDatabase(int id) {
+        QueryFactory qf = new QueryFactory(TARDIS.plugin);
         List<String> tables = Arrays.asList("ars", "back", "blocks", "chunks", "controls", "current", "destinations", "doors", "gravity_well", "homes", "lamps", "next", "tardis", "travellers");
         // remove record from database tables
         for (String table : tables) {

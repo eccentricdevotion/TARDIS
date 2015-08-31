@@ -107,6 +107,8 @@ public class TARDISConfiguration {
         boolOptions.put("debug", false);
         boolOptions.put("growth.return_room_seed", true);
         boolOptions.put("growth.rooms_require_blocks", false);
+        boolOptions.put("junk.enabled", true);
+        boolOptions.put("junk.particles", true);
         boolOptions.put("police_box.materialise", true);
         boolOptions.put("police_box.name_tardis", false);
         boolOptions.put("police_box.set_biome", true);
@@ -247,6 +249,7 @@ public class TARDISConfiguration {
         intOptions.put("growth.gravity_max_velocity", 5);
         intOptions.put("growth.room_speed", 4);
         intOptions.put("growth.rooms_condenser_percent", 100);
+        intOptions.put("junk.return", -1);
         intOptions.put("police_box.confirm_timeout", 15);
         intOptions.put("police_box.platform_data", 8);
         intOptions.put("police_box.platform_id", 35);

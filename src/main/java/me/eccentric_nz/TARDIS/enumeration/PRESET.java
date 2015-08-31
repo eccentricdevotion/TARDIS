@@ -77,6 +77,7 @@ public enum PRESET {
     WINDMILL(Material.WOOD, "VERY SMALL", "WINDMILL", true, false),
     YELLOW(Material.GOLD_NUGGET, "YELLOW", "SUBMARINE", true, true),
     CUSTOM(Material.OBSIDIAN, "", "", false, false),
+    JUNK(Material.BARRIER, "", "", false, false),
     CONSTRUCT(Material.BARRIER, "CONSTRUCT", "", true, true);
 
     Material material;
