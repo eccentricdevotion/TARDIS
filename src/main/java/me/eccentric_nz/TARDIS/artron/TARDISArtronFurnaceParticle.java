@@ -1,6 +1,7 @@
-package me.eccentric_nz.TARDIS.utility;
+package me.eccentric_nz.TARDIS.artron;
 
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.tardishelper.TARDISParticleEffect;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
