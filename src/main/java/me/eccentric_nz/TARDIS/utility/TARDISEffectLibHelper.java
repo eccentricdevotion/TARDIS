@@ -35,10 +35,6 @@ public class TARDISEffectLibHelper {
         effectManager = new EffectManager(TARDIS.plugin);
     }
 
-    public EffectManager getEffectManager() {
-        return effectManager;
-    }
-
     public static void sendWaterParticle(Location l) {
         CubeEffect effect = new CubeEffect(effectManager);
         effect.particle = ParticleEffect.WATER_SPLASH;
@@ -52,7 +48,7 @@ public class TARDISEffectLibHelper {
     }
 
     public static void sendVortexParticles(Location l) {
-        Location m = l.clone().add(0.0d, 0.05d, 0.0d);
+        Location m = l.clone().add(0.0d, 0.01d, 0.0d);
         VortexEffect vortexEffect = new VortexEffect(effectManager);
         vortexEffect.particle = ParticleEffect.SPELL;
         vortexEffect.radius = 3;

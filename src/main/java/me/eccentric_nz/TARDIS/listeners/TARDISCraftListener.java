@@ -21,6 +21,7 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.UUID;
+import java.util.logging.Level;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.enumeration.CONSOLES;
 import me.eccentric_nz.TARDIS.enumeration.DISK_CIRCUIT;
@@ -80,8 +81,12 @@ public class TARDISCraftListener implements Listener {
         // custom seeds
         for (String console : plugin.getCustomConsolesConfig().getKeys(false)) {
             if (plugin.getCustomConsolesConfig().getBoolean(console + ".enabled")) {
-                Material cmat = Material.valueOf(plugin.getCustomConsolesConfig().getString(console + ".seed"));
-                t.put(cmat, console.toUpperCase());
+                if (plugin.getArtronConfig().contains("ugrades." + console)) {
+                    Material cmat = Material.valueOf(plugin.getCustomConsolesConfig().getString(console + ".seed"));
+                    t.put(cmat, console.toUpperCase());
+                } else {
+                    plugin.getLogger().log(Level.WARNING, "The custom console {0} does not have a corresponding upgrade value in artron.", console);
+                }
             }
         }
         for (Integer i : plugin.getBlocksConfig().getIntegerList("chameleon_blocks")) {

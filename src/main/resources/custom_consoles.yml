@@ -1,4 +1,4 @@
-# custom console names should preferably be a single word, and cannot contain spaces (use underscores)
+# custom console names should be a single word, you use underscores... Don't forget to add the upgrade cost to artron.yml
 CUSTOM:
     enabled: false
     schematic: custom
