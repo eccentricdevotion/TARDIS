@@ -152,7 +152,7 @@ public class TARDISMonsterRunnable implements Runnable {
                             }
                         }
                     }
-                    if (found == false) {
+                    if (found == false && plugin.getConfig().getBoolean("preferences.spawn_random_monsters")) {
                         // spawn a random mob inside TARDIS?
                         Random r = new Random();
                         // 25% chance + must not be peaceful, a Mooshroom biome or WG mob-spawning: deny

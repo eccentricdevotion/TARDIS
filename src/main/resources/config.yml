@@ -95,6 +95,7 @@ preferences:
         enabled: false
         only_tardis_worlds: true
     render_entities: false
+    spawn_random_monsters: true
 # circuits
 circuits:
     damage: false

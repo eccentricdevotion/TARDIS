@@ -134,6 +134,7 @@ public class TARDISAdminCommands implements CommandExecutor {
         firstsBool.put("sfx", "allow");
         firstsBool.put("sky_biome", "creation");
         firstsBool.put("spawn_eggs", "allow");
+        firstsBool.put("spawn_random_monsters", "preferences");
         firstsBool.put("strike_lightning", "preferences");
         firstsBool.put("the_end", "travel");
         firstsBool.put("tp_switch", "allow");

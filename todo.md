@@ -12,7 +12,6 @@
    * Should default to wall / floor if not configured
 4. TARDISSonicBlaster addon?
 5. Test area parking space variations
-6. Add config option to disable random spawning in TARDIS if door is open
 
 ##Upcoming version `3.4`
 * ?

@@ -118,6 +118,7 @@ public class TARDISConfiguration {
         boolOptions.put("preferences.respect_factions", true);
         boolOptions.put("preferences.respect_grief_prevention", true);
         boolOptions.put("preferences.respect_worldborder", true);
+        boolOptions.put("preferences.spawn_random_monsters", true);
         boolOptions.put("preferences.use_worldguard", true);
         boolOptions.put("preferences.strike_lightning", true);
         boolOptions.put("preferences.use_default_condensables", true);
