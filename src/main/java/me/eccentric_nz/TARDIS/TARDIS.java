@@ -36,6 +36,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import me.eccentric_nz.TARDIS.api.TARDII;
 import me.eccentric_nz.TARDIS.arch.TARDISArchPersister;
+import me.eccentric_nz.TARDIS.artron.TARDISArtronFurnaceParticle;
 import me.eccentric_nz.TARDIS.artron.TARDISCondensables;
 import me.eccentric_nz.TARDIS.artron.TARDISCreeperChecker;
 import me.eccentric_nz.TARDIS.artron.TARDISStandbyMode;
@@ -77,8 +78,8 @@ import me.eccentric_nz.TARDIS.siegemode.TARDISSiegePersister;
 import me.eccentric_nz.TARDIS.siegemode.TARDISSiegeRunnable;
 import me.eccentric_nz.TARDIS.travel.TARDISArea;
 import me.eccentric_nz.TARDIS.travel.TARDISPluginRespect;
-import me.eccentric_nz.TARDIS.artron.TARDISArtronFurnaceParticle;
 import me.eccentric_nz.TARDIS.utility.TARDISBlockSetters;
+import me.eccentric_nz.TARDIS.utility.TARDISEffectLibHelper;
 import me.eccentric_nz.TARDIS.utility.TARDISLocationGetters;
 import me.eccentric_nz.TARDIS.utility.TARDISMapChecker;
 import me.eccentric_nz.TARDIS.utility.TARDISMultiverseHelper;
@@ -154,6 +155,7 @@ public class TARDIS extends JavaPlugin {
     private boolean barAPIOnServer;
     private boolean disguisesOnServer;
     private boolean mvOnServer;
+    private boolean effectLibOnServer;
     private PluginManager pm;
     private final TARDISArea tardisArea = new TARDISArea(this);
     private final TARDISBuilderInner interiorBuilder = new TARDISBuilderInner(this);
@@ -176,8 +178,10 @@ public class TARDIS extends JavaPlugin {
         this.helperOnServer = false;
         this.barAPIOnServer = false;
         this.mvOnServer = false;
+        this.effectLibOnServer = false;
         this.versions.put("BarAPI", "3.3");
         this.versions.put("Citizens", "2.0.16");
+        this.versions.put("EffectLib", "3.4");
         this.versions.put("Factions", "2.7.4");
         this.versions.put("GriefPrevention", "10");
         this.versions.put("LibsDisguises", "8.5.1");
@@ -282,6 +286,7 @@ public class TARDIS extends JavaPlugin {
                 loadWorldGuard();
                 loadPluginRespect();
                 loadBarAPI();
+                this.effectLibOnServer = pm.isPluginEnabled("EffectLib");
                 startZeroHealing();
 
                 new TARDISCreeperChecker(this).startCreeperCheck();
@@ -348,7 +353,7 @@ public class TARDIS extends JavaPlugin {
                 condensables = cond.getCondensables();
                 checkBiomes();
                 checkDropChests();
-                if (plugin.getArtronConfig().getBoolean("artron_furnace.particles")) {
+                if (plugin.getArtronConfig().getBoolean("artron_furnace.particles") && pm.isPluginEnabled("EffectLib")) {
                     new TARDISArtronFurnaceParticle(this).addParticles();
                 }
             } catch (ClassNotFoundException e) {
@@ -403,6 +408,9 @@ public class TARDIS extends JavaPlugin {
             }
             if (disguisesOnServer && getConfig().getBoolean("arch.enabled")) {
                 new TARDISArchPersister(this).saveAll();
+            }
+            if (effectLibOnServer) {
+                TARDISEffectLibHelper.close();
             }
             if (getConfig().getBoolean("siege.enabled")) {
                 new TARDISSiegePersister(this).saveCubes();
@@ -1073,6 +1081,10 @@ public class TARDIS extends JavaPlugin {
 
     public boolean isDisguisesOnServer() {
         return disguisesOnServer;
+    }
+
+    public boolean isEffectLibOnServer() {
+        return effectLibOnServer;
     }
 
     public PluginManager getPM() {

@@ -16,9 +16,6 @@
  */
 package me.eccentric_nz.TARDIS.junk;
 
-import de.slikey.effectlib.EffectManager;
-import de.slikey.effectlib.effect.VortexEffect;
-import de.slikey.effectlib.util.ParticleEffect;
 import java.io.File;
 import me.eccentric_nz.TARDIS.JSON.JSONArray;
 import me.eccentric_nz.TARDIS.JSON.JSONObject;
@@ -27,6 +24,7 @@ import me.eccentric_nz.TARDIS.builders.TARDISMaterialisationData;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.schematic.TARDISSchematicGZip;
 import me.eccentric_nz.TARDIS.utility.TARDISBlockSetters;
+import me.eccentric_nz.TARDIS.utility.TARDISEffectLibHelper;
 import me.eccentric_nz.TARDIS.utility.TARDISLocationGetters;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -47,23 +45,19 @@ public class TARDISJunkBuilder implements Runnable {
     private int i = 0;
     private final int sx, sy, sz;
     private final Location loc;
-    private final Location mloc;
     World world;
     Biome biome;
-    private final EffectManager effectManager;
     private final QueryFactory qf;
 
     public TARDISJunkBuilder(TARDIS plugin, TARDISMaterialisationData tmd) {
         this.plugin = plugin;
         this.tmd = tmd;
         this.loc = this.tmd.getLocation();
-        this.mloc = this.loc.clone().add(0.0d, 0.05d, 0.0d);
         this.sx = this.loc.getBlockX() - 3;
         this.sy = this.loc.getBlockY();
         this.sz = this.loc.getBlockZ() - 2;
         this.world = this.loc.getWorld();
         this.biome = this.tmd.getBiome();
-        this.effectManager = new EffectManager(this.plugin);
         this.qf = new QueryFactory(this.plugin);
     }
 
@@ -139,17 +133,9 @@ public class TARDISJunkBuilder implements Runnable {
                         }
                     }
                 } else {
-                    if (plugin.getConfig().getBoolean("junk.particles") && plugin.getPM().isPluginEnabled("EffectLib")) {
+                    if (plugin.getConfig().getBoolean("junk.particles") && plugin.isEffectLibOnServer()) {
                         // just animate particles
-                        VortexEffect vortexEffect = new VortexEffect(effectManager);
-                        vortexEffect.particle = ParticleEffect.SPELL;
-                        vortexEffect.radius = 3;
-                        vortexEffect.circles = 10;
-                        vortexEffect.helixes = 10;
-                        vortexEffect.setLocation(loc);
-                        vortexEffect.setTarget(mloc);
-                        //vortexEffect.iterations = 5 * 20;
-                        vortexEffect.start();
+                        TARDISEffectLibHelper.sendVortexParticles(loc);
                     }
                 }
             } else {

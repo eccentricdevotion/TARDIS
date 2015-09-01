@@ -17,12 +17,11 @@
 package me.eccentric_nz.TARDIS.junk;
 
 import de.slikey.effectlib.EffectManager;
-import de.slikey.effectlib.effect.VortexEffect;
-import de.slikey.effectlib.util.ParticleEffect;
 import java.util.ArrayList;
 import java.util.List;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.builders.TARDISMaterialisationData;
+import me.eccentric_nz.TARDIS.utility.TARDISEffectLibHelper;
 import org.bukkit.Chunk;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -42,7 +41,6 @@ public class TARDISJunkDestroyer implements Runnable {
     private int i = 0;
     private final int sx, ex, sy, ey, sz, ez;
     private final Location l;
-    private final Location m;
     World world;
     Biome biome;
     private final EffectManager effectManager;
@@ -51,7 +49,6 @@ public class TARDISJunkDestroyer implements Runnable {
         this.plugin = plugin;
         this.pdd = pdd;
         this.l = this.pdd.getLocation();
-        this.m = l.clone().add(0.0d, 0.05d, 0.0d);
         this.ex = this.l.getBlockX() + 2;
         this.sx = this.l.getBlockX() - 3;
         this.sy = this.l.getBlockY();
@@ -102,17 +99,9 @@ public class TARDISJunkDestroyer implements Runnable {
                 plugin.getServer().getScheduler().cancelTask(task);
                 task = 0;
             } else {
-                if (plugin.getConfig().getBoolean("junk.particles") && plugin.getPM().isPluginEnabled("EffectLib")) {
+                if (plugin.getConfig().getBoolean("junk.particles") && plugin.isEffectLibOnServer()) {
                     // just animate particles
-                    VortexEffect vortexEffect = new VortexEffect(effectManager);
-                    vortexEffect.particle = ParticleEffect.SPELL;
-                    vortexEffect.radius = 3;
-                    vortexEffect.circles = 10;
-                    vortexEffect.helixes = 10;
-                    vortexEffect.setLocation(l);
-                    vortexEffect.setTarget(m);
-                    //vortexEffect.iterations = 5 * 20;
-                    vortexEffect.start();
+                    TARDISEffectLibHelper.sendVortexParticles(l);
                 }
             }
         }

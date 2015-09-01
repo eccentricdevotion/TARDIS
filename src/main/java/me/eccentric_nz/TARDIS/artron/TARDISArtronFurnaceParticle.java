@@ -1,7 +1,7 @@
 package me.eccentric_nz.TARDIS.artron;
 
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.tardishelper.TARDISParticleEffect;
+import me.eccentric_nz.TARDIS.utility.TARDISEffectLibHelper;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
@@ -19,14 +19,12 @@ public class TARDISArtronFurnaceParticle {
     @SuppressWarnings("deprecation")
     public void addParticles() {
 
-        final TARDISParticleEffect artronEffect = new TARDISParticleEffect(TARDISParticleEffect.ParticleType.WATER_SPLASH, 0.02d, 10, 0.10d);
-
         plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, new Runnable() {
             @Override
             public void run() {
                 for (Block block : plugin.getGeneralKeeper().getArtronFurnaces()) {
                     if (isArtronFurnace(block)) {
-                        artronEffect.sendToLocation(block.getLocation().add(0.5d, 1.1d, 0.5d));
+                        TARDISEffectLibHelper.sendWaterParticle(block.getLocation());
                     }
                 }
                 for (Player player : plugin.getServer().getOnlinePlayers()) {
