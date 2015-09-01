@@ -10,10 +10,11 @@
    * Add destation controls and destination checking
 3. Player configurable choice of (2) blocks that are changed during siege mode engagement
    * Should default to wall / floor if not configured
-4. TARDISSonicBlaster addon?
 5. Test area parking space variations
+6. Malfunctions should respect lamps / lanterns preference
 
 ##Upcoming version `3.4`
+* TARDISSonicBlaster addon?
 * ?
 
 ##Future version `4+`

@@ -460,7 +460,7 @@ public class TARDISHandbrakeListener implements Listener {
         int bz = TARDISNumberParsers.parseInt(beaconData[3]);
         Location bl = new Location(w, bx, by, bz);
         Block b = bl.getBlock();
-        b.setType((on) ? Material.GLASS : Material.BEDROCK);
+        b.setType((on) ? Material.GLASS : Material.REDSTONE_BLOCK);
     }
 
     @SuppressWarnings("deprecation")

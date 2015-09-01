@@ -57,6 +57,7 @@ public class TARDISBuilderInner {
     private final TARDIS plugin;
     List<Block> lampblocks = new ArrayList<Block>();
     List<Material> precious = new ArrayList<Material>();
+    private Block postBedrock = null;
 
     public TARDISBuilderInner(TARDIS plugin) {
         this.plugin = plugin;
@@ -220,11 +221,6 @@ public class TARDISBuilderInner {
                     }
                     type = Material.valueOf((String) c.get("type"));
                     data = c.getByte("data");
-                    if (type.equals(Material.BEDROCK)) {
-                        // remember bedrock location to block off the beacon light
-                        String bedrocloc = world.getName() + ":" + x + ":" + y + ":" + z;
-                        set.put("beacon", bedrocloc);
-                    }
                     if (type.equals(Material.NOTE_BLOCK)) {
                         // remember the location of this Disk Storage
                         String storage = TARDISLocationGetters.makeLocationStr(world, x, y, z);
@@ -502,6 +498,11 @@ public class TARDISBuilderInner {
                             swap = Material.STONE;
                         }
                         TARDISBlockSetters.setBlock(world, x, y, z, swap, data);
+                    } else if (type.equals(Material.BEDROCK)) {
+                        // remember bedrock location to block off the beacon light
+                        String bedrocloc = world.getName() + ":" + x + ":" + y + ":" + z;
+                        set.put("beacon", bedrocloc);
+                        postBedrock = world.getBlockAt(x, y, z);
                     } else {
                         TARDISBlockSetters.setBlock(world, x, y, z, type, data);
                     }
@@ -582,6 +583,9 @@ public class TARDISBuilderInner {
                 cs.update();
             }
             s++;
+        }
+        if (postBedrock != null) {
+            postBedrock.setType(Material.REDSTONE_BLOCK);
         }
         if (postSaveSignBlock != null) {
             postSaveSignBlock.setType(Material.WALL_SIGN);
