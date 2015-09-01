@@ -1,12 +1,19 @@
 #TODO
 
-##Current version `3.3-beta-1`
+##Current version `3.3.1`
 1. Fix bugs
-2. Junk TARDIS
+2. Junk TARDIS - _started_
+   * Teleport players onto vortex Junk TARDIS when dematerialising
+   * Add particles to vortex Junk TARDIS
+   * Teleport players onto destination Junk TARDIS when materialising
+   * Add Junk TARDIS sounds
+   * Add destation controls and destination checking
 3. Player configurable choice of (2) blocks that are changed during siege mode engagement
    * Should default to wall / floor if not configured
-4. TARDISSonicBlaster addon
-5. MySQL table prefix
+4. TARDISSonicBlaster addon?
+5. `/tardis update beacon` command to change position of beacon toggler block
+6. Test area parking space variations
+7. Add config option to disable random spawning in TARDIS if door is open
 
 ##Upcoming version `3.4`
 * ?
@@ -18,12 +25,12 @@
 
 ##Resource Pack / TARDISWeepingAngels
 
-1. Don't teleport player to the top of the world when touched by an Angel in the Nether
+1. Re-visit TARDIS door being biom specific
 2. Re-skin mobs for Resource pack, and add new mob sounds
 
    * Villagers -> Ood - _started_
    * Villagers -> Hath
-   * Endermen -> The Silence
+   * Endermen -> The Silence - _started_
    * Endermites -> Cybermats
    * Iron Golem -> Gunslinger
    * Witches -> Slitheen / Whispermen?
