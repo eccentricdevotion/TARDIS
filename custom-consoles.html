@@ -31,7 +31,8 @@
     </header>
     <section>
         <h1>Custom consoles</h1>
-        <p>TARDIS has the ability to add your own custom consoles using TARDIS schematic files (.tschm) and the <em>custom_consoles.yml</em> configuration file.</p>
+        <p>TARDIS has the ability to add your own custom consoles using TARDIS schematic files (.tschm) and the <em>custom_consoles.yml</em> and <em>artron.yml</em> configuration files.</p>
+        <h3>custom_consoles.yml</h3>
         <p>After running the plugin for the first time, a configuration file called <em>custom_consoles.yml</em> will be created in the <em>plugins/TARDIS</em> folder.</p>
         <p>By default it contains one entry called &lsquo;CUSTOM&rsquo; which is initially disabled.</p>
         <p>It looks like this:</p>
@@ -47,12 +48,18 @@ CUSTOM:
         <p>You can add as many custom consoles as you wish, all you need to do is duplicate the CUSTOM entry and then change it to suit as needed. The settings are explained below:</p>
         <ul>
             <li><code>enabled: [true|false]</code> &mdash; pretty self-explanatory, whether to load this console when the plugin starts up</li>
-            <li><code>schematic: [sometext]</code> &mdash; this affects the schematic filename, the permission node and the artron upgrade cost &mdash; best shown by example &mdash; if this is set to <code>rani</code>, then the schematic filename needs to <em>&lsquo;rani.tschm&rsquo;</em>, the permission to create this TARDIS will be <em>&lsquo;tardis.rani&rsquo;</em> and there needs to be a corresponding entry in <em>artron.yml</em> in the <code>upgrades</code> section e.g. <code>rani: 8000</code></li>
+            <li><code>schematic: [sometext]</code> &mdash; this affects the schematic filename, the permission node and the artron upgrade cost &mdash; best shown by example &mdash; if this is set to <code>rani</code>, then the schematic filename needs to <em>&lsquo;rani.tschm&rsquo;</em>, the permission to create this TARDIS will be <em>&lsquo;tardis.rani&rsquo;</em> and there needs to be a corresponding entry in <em>artron.yml</em> in the <code>upgrades</code> section e.g. <code>rani: 8000</code> - it should be a lowercase version of the schematic name.</li>
             <li><code>seed: [Material]</code> &mdash; this will determine the type of seed block this TARDIS uses &mdash; <code>[Material]</code> must be a valid Bukkit <a href="https://github.com/Bukkit/Bukkit/blob/master/src/main/java/org/bukkit/Material.java" target="_blank">Material</a> enum</li>
             <li><code>has_beacon: [true|false]</code> &mdash; again pretty self-explanatory, whether this TARDIS has a beacon in it</li>
             <li><code>has_lanterns: [true|false]</code> &mdash; again pretty self-explanatory, whether this TARDIS has a sea lanterns for lights</li>
             <li><code>description: [some other text]</code> &mdash; this is the display name that appears when you hover over the block in the ARS and Desktop Theme GUIs</li>
         </ul>
+        <h3>artron.yml</h3>
+        <p>The custom console schematic will NOT be enabled until an Artron Energy upgrade cost is entered into <em>artron.yml</em>. Add the schematic name (as entered into custom_consoles.yml) to the <code>upgrades</code> config section along withe Artron cost.</p>
+<pre><code>upgrades:
+    custom: 10000
+    rani: 8000</code></pre>
+        <h3>The schematic file</h3>
         <p>When you have created your TARDIS schematic, you will need to put it in the <em>plugins/TARDIS/user_schematics</em> folder, and then restart the server.</p>
         <p>You can learn about creating custom console schematics on the <a href="schematics.html">Schematics</a> page.</p>
     </section>
