@@ -93,6 +93,7 @@ public class TARDISUpdateLister {
         misc.add(ChatColor.LIGHT_PURPLE + "light" + ChatColor.RESET + " - " + ChatColor.DARK_PURPLE + "Console Light switch");
         misc.add(ChatColor.LIGHT_PURPLE + "toggle_wool" + ChatColor.RESET + " - " + ChatColor.DARK_PURPLE + "Toggle Black Wool behind door");
         misc.add(ChatColor.LIGHT_PURPLE + "zero" + ChatColor.RESET + " - " + ChatColor.DARK_PURPLE + "Zero room transmat button");
+        misc.add(ChatColor.LIGHT_PURPLE + "beacon" + ChatColor.RESET + " - " + ChatColor.DARK_PURPLE + "Beacon toggle block");
         update_options.put("Others", misc);
         return update_options;
     }

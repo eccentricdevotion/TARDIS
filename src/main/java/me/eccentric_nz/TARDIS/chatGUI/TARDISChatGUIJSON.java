@@ -60,7 +60,8 @@ public class TARDISChatGUIJSON {
             "{\"text\":\"3. Farm room\",\"clickEvent\":{\"action\":\"run_command\",\"value\":\"/tardis update farm\"},\"hoverEvent\": {\"action\": \"show_text\",\"value\": {\"text\": \"Click me!\"}}}",
             "{\"text\":\"4. Rail room\",\"clickEvent\":{\"action\":\"run_command\",\"value\":\"/tardis update rail\"},\"hoverEvent\": {\"action\": \"show_text\",\"value\": {\"text\": \"Click me!\"}}}",
             "{\"text\":\"5. Stable room\",\"clickEvent\":{\"action\":\"run_command\",\"value\":\"/tardis update stable\"},\"hoverEvent\": {\"action\": \"show_text\",\"value\": {\"text\": \"Click me!\"}}}",
-            "{\"text\":\"6. Village room\",\"clickEvent\":{\"action\":\"run_command\",\"value\":\"/tardis update village\"},\"hoverEvent\": {\"action\": \"show_text\",\"value\": {\"text\": \"Click me!\"}}}"
+            "{\"text\":\"6. Village room\",\"clickEvent\":{\"action\":\"run_command\",\"value\":\"/tardis update village\"},\"hoverEvent\": {\"action\": \"show_text\",\"value\": {\"text\": \"Click me!\"}}}",
+            "{\"text\":\"7. Beacon toggle block\",\"clickEvent\":{\"action\":\"run_command\",\"value\":\"/tardis update beacon\"},\"hoverEvent\": {\"action\": \"show_text\",\"value\": {\"text\": \"Click me!\"}}}"
     );
     private final List<String> others = Arrays.asList(
             "{\"text\":\"1. Artron Energy Condenser\",\"clickEvent\":{\"action\":\"run_command\",\"value\":\"/tardis update condenser\"},\"hoverEvent\": {\"action\": \"show_text\",\"value\": {\"text\": \"Click me!\"}}}",

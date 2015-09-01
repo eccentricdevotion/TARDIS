@@ -254,6 +254,9 @@ public class TARDISUpdateListener implements Listener {
                     set.put("location", blockLocStr);
                 }
             }
+            if (blockName.equalsIgnoreCase("beacon")) {
+                set.put("beacon", blockLocStr);
+            }
             if (blockName.equalsIgnoreCase("condenser") && blockType == Material.CHEST) {
                 set.put("condenser", blockLocStr);
             }
