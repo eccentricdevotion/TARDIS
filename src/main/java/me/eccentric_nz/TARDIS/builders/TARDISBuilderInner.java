@@ -158,9 +158,13 @@ public class TARDISBuilderInner {
             startz = pos.getCentreZ();
             resetz = pos.getCentreZ();
             // get the correct chunk for ARS
-            Chunk c = world.getChunkAt(new Location(world, startx, starty, startz));
+            Location cl = new Location(world, startx, starty, startz);
+            Chunk c = world.getChunkAt(cl);
             String chun = world.getName() + ":" + c.getX() + ":" + c.getZ();
             set.put("chunk", chun);
+            if (schm.getPermission().equals("junk")) {
+                set.put("creeper", cl.toString());
+            }
         } else {
             int gsl[] = plugin.getLocationUtils().getStartLocation(dbID);
             startx = gsl[0];
@@ -601,7 +605,8 @@ public class TARDISBuilderInner {
         }
         if (postTerminalBlock != null) {
             postTerminalBlock.setType(Material.WALL_SIGN);
-            postTerminalBlock.setData((byte) 3, true);
+            byte ptb_data = (schm.getPermission().equals("junk")) ? (byte) 5 : 3;
+            postTerminalBlock.setData(ptb_data, true);
             if (postTerminalBlock.getType().equals(Material.WALL_SIGN)) {
                 Sign ts = (Sign) postTerminalBlock.getState();
                 ts.setLine(0, "");
