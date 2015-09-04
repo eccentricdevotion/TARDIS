@@ -81,7 +81,7 @@ public class TARDISCraftListener implements Listener {
         // custom seeds
         for (String console : plugin.getCustomConsolesConfig().getKeys(false)) {
             if (plugin.getCustomConsolesConfig().getBoolean(console + ".enabled")) {
-                if (plugin.getArtronConfig().contains("ugrades." + console)) {
+                if (plugin.getArtronConfig().contains("upgrades." + console.toLowerCase())) {
                     Material cmat = Material.valueOf(plugin.getCustomConsolesConfig().getString(console + ".seed"));
                     t.put(cmat, console.toUpperCase());
                 } else {
