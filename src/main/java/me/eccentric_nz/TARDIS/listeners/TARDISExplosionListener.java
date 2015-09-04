@@ -32,6 +32,8 @@ import org.bukkit.entity.Creeper;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
+import org.bukkit.event.entity.EntityDamageByEntityEvent;
+import org.bukkit.event.entity.EntityDamageEvent.DamageCause;
 import org.bukkit.event.entity.EntityExplodeEvent;
 
 /**
@@ -56,14 +58,14 @@ public class TARDISExplosionListener implements Listener {
      *
      * @param e an entity exploding
      */
-    @EventHandler(priority = EventPriority.LOW, ignoreCancelled = true)
+    @EventHandler(priority = EventPriority.LOW)
     public void onEntityExplode(EntityExplodeEvent e) {
         Location explode = e.getLocation();
         // check if the explosion is in a TARDIS world
         if ((explode.getWorld().getName().contains("TARDIS") || explode.getWorld().getName().equals(plugin.getConfig().getString("creation.default_world_name"))) && e.getEntity() instanceof Creeper) {
             e.setCancelled(true);
             // check it is not the Artron creeper
-            String loc_chk = explode.getWorld().getName() + ":" + (explode.getBlockX() + 0.5f) + ":" + (explode.getBlockY()) + ":" + (explode.getBlockZ() + 0.5f);
+            String loc_chk = explode.getWorld().getName() + ":" + (explode.getBlockX() + 0.5f) + ":" + (explode.getBlockY() - 1) + ":" + (explode.getBlockZ() + 0.5f);
             if (new ResultSetCreeper(plugin, loc_chk).resultSet() == false) {
                 // create a new explosion that doesn't destroy blocks or set fire
                 explode.getWorld().createExplosion(explode.getX(), explode.getY(), explode.getZ(), 4.0f, false, false);
@@ -133,6 +135,17 @@ public class TARDISExplosionListener implements Listener {
                     }
                 }
             }
+        }
+    }
+
+    @EventHandler(priority = EventPriority.LOW)
+    public void onEntityDamage(EntityDamageByEntityEvent e) {
+        if (e.getCause() != DamageCause.ENTITY_EXPLOSION) {
+            return;
+        }
+        String l = e.getDamager().getLocation().getWorld().getName();
+        if (l.contains("TARDIS") || l.equals(plugin.getConfig().getString("creation.default_world_name"))) {
+            e.setCancelled(true);
         }
     }
 }
