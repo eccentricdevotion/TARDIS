@@ -112,6 +112,10 @@ public class TARDISJunkBuilder implements Runnable {
                                     // remember block
                                     postTerminalBlock = world.getBlockAt(x, y, z);
                                 }
+                                if (type.equals(Material.CAKE_BLOCK)) {
+                                    String handbrakeloc = TARDISLocationGetters.makeLocationStr(world, x, y, z);
+                                    qf.insertSyncControl(tmd.getTardisID(), 0, handbrakeloc, 0);
+                                }
                                 if (type.equals(Material.SPONGE)) {
                                     TARDISBlockSetters.setBlock(world, x, y, z, Material.AIR, data);
                                 } else {

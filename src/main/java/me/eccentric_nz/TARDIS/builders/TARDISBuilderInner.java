@@ -316,7 +316,7 @@ public class TARDISBuilderInner {
                         // check if player has storage record, and update the tardis_id field
                         plugin.getUtils().updateStorageId(playerUUID, dbID, qf);
                     }
-                    if (type.equals(Material.CAKE_BLOCK)) {
+                    if (type.equals(Material.CAKE_BLOCK) && !schm.getPermission().equals("junk")) {
                         /*
                          * This block will be converted to a lever by
                          * setBlock(), but remember it so we can use it as the handbrake!
