@@ -55,14 +55,12 @@ public class TARDISJunkDelete {
             final World cw = plugin.getServer().getWorld(name);
             // get the current location
             Location bb_loc = null;
-            COMPASS d = COMPASS.EAST;
             Biome biome = null;
             HashMap<String, Object> wherecl = new HashMap<String, Object>();
             wherecl.put("tardis_id", id);
             ResultSetCurrentLocation rsc = new ResultSetCurrentLocation(plugin, wherecl);
             if (rsc.resultSet()) {
                 bb_loc = new Location(rsc.getWorld(), rsc.getX(), rsc.getY(), rsc.getZ());
-                d = rsc.getDirection();
                 biome = rsc.getBiome();
             }
             if (bb_loc == null) {

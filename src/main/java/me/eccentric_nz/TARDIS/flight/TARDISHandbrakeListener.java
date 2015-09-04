@@ -86,10 +86,9 @@ public class TARDISHandbrakeListener implements Listener {
             if (blockType == Material.LEVER) {
                 // Checks handbrake location against the database.
                 final Location handbrake_loc = block.getLocation();
-                String hb_loc = block.getLocation().toString();
                 HashMap<String, Object> where = new HashMap<String, Object>();
                 where.put("type", 0);
-                where.put("location", hb_loc);
+                where.put("location", handbrake_loc.toString());
                 ResultSetControls rsc = new ResultSetControls(plugin, where, false);
                 if (rsc.resultSet()) {
                     event.setCancelled(true);
