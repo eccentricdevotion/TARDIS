@@ -95,7 +95,7 @@ public class TARDISJunkDestroyer implements Runnable {
                             }, 2L);
                         }
                     }
-                    TARDISJunkVortexRunnable runnable = new TARDISJunkVortexRunnable(plugin, vortexJunkLoc, junkLoc);
+                    TARDISJunkVortexRunnable runnable = new TARDISJunkVortexRunnable(plugin, vortexJunkLoc, pdd.getPlayer(), pdd.getTardisID());
                     int jvrtask = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, runnable, 1L, 20L);
                     runnable.setTask(jvrtask);
                 }
@@ -145,7 +145,7 @@ public class TARDISJunkDestroyer implements Runnable {
         double x = vortexJunkLoc.getX() + (playerLoc.getX() - junkLoc.getX());
         double y = vortexJunkLoc.getY() + (playerLoc.getY() - junkLoc.getY()) + 0.5d;
         double z = vortexJunkLoc.getZ() + (playerLoc.getZ() - junkLoc.getZ());
-        return new Location(vortexJunkLoc.getWorld(), x, y, z);
+        return new Location(vortexJunkLoc.getWorld(), x, y, z, playerLoc.getYaw(), playerLoc.getPitch());
     }
 
     public void setTask(int task) {

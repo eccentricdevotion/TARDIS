@@ -38,6 +38,7 @@ import me.eccentric_nz.TARDIS.database.ResultSetControls;
 import me.eccentric_nz.TARDIS.database.ResultSetDiskStorage;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
+import me.eccentric_nz.TARDIS.enumeration.PRESET;
 import me.eccentric_nz.TARDIS.enumeration.STORAGE;
 import me.eccentric_nz.TARDIS.move.TARDISBlackWoolToggler;
 import me.eccentric_nz.TARDIS.rooms.TARDISExteriorRenderer;
@@ -124,6 +125,9 @@ public class TARDISButtonListener implements Listener {
                     whereid.put("tardis_id", id);
                     ResultSetTardis rs = new ResultSetTardis(plugin, whereid, "", false);
                     if (rs.resultSet()) {
+                        if (rs.getPreset().equals(PRESET.JUNK)) {
+                            return;
+                        }
                         // check they initialised
                         if (!rs.isTardis_init()) {
                             TARDISMessage.send(player, "ENERGY_NO_INIT");

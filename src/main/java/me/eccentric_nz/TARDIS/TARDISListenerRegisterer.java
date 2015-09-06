@@ -53,6 +53,7 @@ import me.eccentric_nz.TARDIS.howto.TARDISRecipeMenuListener;
 import me.eccentric_nz.TARDIS.howto.TARDISSeedMenuListener;
 import me.eccentric_nz.TARDIS.howto.TARDISWallFloorMenuListener;
 import me.eccentric_nz.TARDIS.info.TARDISInformationSystemListener;
+import me.eccentric_nz.TARDIS.junk.TARDISJunkControlListener;
 import me.eccentric_nz.TARDIS.lazarus.TARDISLazarusGUIListener;
 import me.eccentric_nz.TARDIS.lazarus.TARDISLazarusListener;
 import me.eccentric_nz.TARDIS.listeners.TARDISAntiBuildListener;
@@ -218,6 +219,7 @@ public class TARDISListenerRegisterer {
         plugin.getPM().registerEvents(new TARDISInformationSystemListener(plugin), plugin);
         plugin.getPM().registerEvents(new TARDISJettisonSeeder(plugin), plugin);
         plugin.getPM().registerEvents(new TARDISJoinListener(plugin), plugin);
+        plugin.getPM().registerEvents(new TARDISJunkControlListener(plugin), plugin);
         plugin.getPM().registerEvents(new TARDISKeyboardListener(plugin), plugin);
         plugin.getPM().registerEvents(new TARDISKeyMenuListener(plugin), plugin);
         plugin.getPM().registerEvents(new TARDISLightningListener(plugin), plugin);

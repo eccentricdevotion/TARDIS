@@ -17,6 +17,7 @@
 package me.eccentric_nz.TARDIS.junk;
 
 import java.io.File;
+import java.util.HashMap;
 import me.eccentric_nz.TARDIS.JSON.JSONArray;
 import me.eccentric_nz.TARDIS.JSON.JSONObject;
 import me.eccentric_nz.TARDIS.TARDIS;
@@ -106,15 +107,36 @@ public class TARDISJunkBuilder implements Runnable {
                                     String handbrakeloc = TARDISLocationGetters.makeLocationStr(world, x, y, z);
                                     qf.insertSyncControl(tmd.getTardisID(), 0, handbrakeloc, 0);
                                 }
+                                if (type.equals(Material.STONE_BUTTON)) {
+                                    // remember location 1
+                                    String stone_button = TARDISLocationGetters.makeLocationStr(world, x, y, z);
+                                    qf.insertSyncControl(tmd.getTardisID(), 1, stone_button, 0);
+                                }
+                                if (type.equals(Material.WOOD_BUTTON)) {
+                                    // remember location 6
+                                    String wood_button = TARDISLocationGetters.makeLocationStr(world, x, y, z);
+                                    qf.insertSyncControl(tmd.getTardisID(), 6, wood_button, 0);
+                                }
+                                if (type.equals(Material.DIODE_BLOCK_OFF)) {
+                                    // remember location 3
+                                    String repeater = TARDISLocationGetters.makeLocationStr(world, x, y, z);
+                                    qf.insertSyncControl(tmd.getTardisID(), 2, repeater, 0);
+                                }
+                                if (type.equals(Material.REDSTONE_COMPARATOR_OFF)) {
+                                    // remember location 2
+                                    String comparator = TARDISLocationGetters.makeLocationStr(world, x, y, z);
+                                    qf.insertSyncControl(tmd.getTardisID(), 3, comparator, 0);
+                                }
                                 if (type.equals(Material.MONSTER_EGGS)) {
-                                    // insert / update control
+                                    // insert / update control 9
                                     qf.insertSyncControl(tmd.getTardisID(), 9, (new Location(world, x, y, z)).toString(), 0);
                                     // remember block
                                     postTerminalBlock = world.getBlockAt(x, y, z);
                                 }
-                                if (type.equals(Material.CAKE_BLOCK)) {
-                                    String handbrakeloc = TARDISLocationGetters.makeLocationStr(world, x, y, z);
-                                    qf.insertSyncControl(tmd.getTardisID(), 0, handbrakeloc, 0);
+                                if (type.equals(Material.TRIPWIRE_HOOK)) {
+                                    // remember location 4
+                                    String trip = TARDISLocationGetters.makeLocationStr(world, x, y, z);
+                                    qf.insertSyncControl(tmd.getTardisID(), 4, trip, 0);
                                 }
                                 if (type.equals(Material.SPONGE)) {
                                     TARDISBlockSetters.setBlock(world, x, y, z, Material.AIR, data);
@@ -129,10 +151,7 @@ public class TARDISJunkBuilder implements Runnable {
                         postTerminalBlock.setData((byte) 5, true);
                         if (postTerminalBlock.getType().equals(Material.WALL_SIGN)) {
                             Sign ts = (Sign) postTerminalBlock.getState();
-                            ts.setLine(0, "");
-                            ts.setLine(1, plugin.getSigns().getStringList("terminal").get(0));
-                            ts.setLine(2, plugin.getSigns().getStringList("terminal").get(1));
-                            ts.setLine(3, "");
+                            ts.setLine(0, plugin.getSigns().getStringList("junk").get(0));
                             ts.update();
                         }
                     }
@@ -147,6 +166,16 @@ public class TARDISJunkBuilder implements Runnable {
                 plugin.getTrackerKeeper().getInVortex().remove(Integer.valueOf(tmd.getTardisID()));
                 plugin.getServer().getScheduler().cancelTask(task);
                 task = 0;
+                plugin.getTrackerKeeper().setJunkTravelling(false);
+                // update current location
+                HashMap<String, Object> where = new HashMap<String, Object>();
+                where.put("tardis_id", tmd.getTardisID());
+                HashMap<String, Object> set = new HashMap<String, Object>();
+                set.put("world", loc.getWorld().getName());
+                set.put("x", loc.getBlockX());
+                set.put("y", sy);
+                set.put("z", loc.getBlockZ());
+                qf.doUpdate("current", set, where);
             }
         }
     }

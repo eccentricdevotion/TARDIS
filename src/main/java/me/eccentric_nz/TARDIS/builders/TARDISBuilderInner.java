@@ -304,7 +304,7 @@ public class TARDISBuilderInner {
                             data = (byte) 9;
                         }
                     }
-                    if (type.equals(Material.STONE_BUTTON)) { // random button
+                    if (type.equals(Material.STONE_BUTTON) && !schm.getPermission().equals("junk")) { // random button
                         // remember the location of this button
                         String button = TARDISLocationGetters.makeLocationStr(world, x, y, z);
                         qf.insertSyncControl(dbID, 1, button, 0);
@@ -324,7 +324,7 @@ public class TARDISBuilderInner {
                         String handbrakeloc = TARDISLocationGetters.makeLocationStr(world, x, y, z);
                         qf.insertSyncControl(dbID, 0, handbrakeloc, 0);
                     }
-                    if (type.equals(Material.MONSTER_EGGS)) { // silverfish stone
+                    if (type.equals(Material.MONSTER_EGGS) && !schm.getPermission().equals("junk")) { // silverfish stone
                         String blockLocStr = (new Location(world, x, y, z)).toString();
                         switch (data) {
                             case 0: // Save Sign
@@ -403,10 +403,9 @@ public class TARDISBuilderInner {
                         set.put("creeper", creeploc);
                         type = (schm.getPermission().equals("bigger") || schm.getPermission().equals("deluxe") || schm.getPermission().equals("twelfth")) ? Material.BEACON : Material.SMOOTH_BRICK;
                     }
-                    if (type.equals(Material.WOOD_BUTTON)) {
+                    if (type.equals(Material.WOOD_BUTTON) && !schm.getPermission().equals("junk")) {
                         /*
-                         * wood button will be coverted to the correct id by
-                         * setBlock(), but remember it for the Artron Energy Capacitor.
+                         * wood button - remember it for the Artron Energy Capacitor.
                          */
                         String woodbuttonloc = TARDISLocationGetters.makeLocationStr(world, x, y, z);
                         qf.insertSyncControl(dbID, 6, woodbuttonloc, 0);

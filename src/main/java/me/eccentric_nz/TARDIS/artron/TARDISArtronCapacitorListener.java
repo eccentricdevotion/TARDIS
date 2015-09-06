@@ -25,6 +25,7 @@ import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetControls;
 import me.eccentric_nz.TARDIS.database.ResultSetPlayerPrefs;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
+import me.eccentric_nz.TARDIS.enumeration.PRESET;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import me.eccentric_nz.TARDIS.utility.TARDISNumberParsers;
 import me.eccentric_nz.TARDIS.utility.TARDISSounds;
@@ -101,6 +102,9 @@ public class TARDISArtronCapacitorListener implements Listener {
                         wheret.put("tardis_id", id);
                         ResultSetTardis rs = new ResultSetTardis(plugin, wheret, "", false);
                         if (rs.resultSet()) {
+                            if (rs.getPreset().equals(PRESET.JUNK)) {
+                                return;
+                            }
                             HashMap<String, Object> whereid = new HashMap<String, Object>();
                             whereid.put("tardis_id", id);
                             int current_level = rs.getArtron_level();

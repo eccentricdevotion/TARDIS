@@ -22,3 +22,5 @@ control:
     - Centre
 keyboard:
     - Keyboard
+junk:
+    - Destination
