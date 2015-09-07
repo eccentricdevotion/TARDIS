@@ -139,7 +139,7 @@ public class TARDISUpdateCommand {
                 }
             }
             if (tardis_block.equals("ars")) {
-                if (!player.hasPermission("tardis.ars")) {
+                if (!player.hasPermission("tardis.architectural")) {
                     TARDISMessage.send(player, "NO_PERM_ARS");
                     return true;
                 }

@@ -213,7 +213,7 @@ public class TARDISButtonListener implements Listener {
                                         new TARDISThemeButton(plugin, player, rs.getSchematic(), level).clickButton();
                                     } else {
                                         // check they have permission to grow rooms
-                                        if (!player.hasPermission("tardis.ars")) {
+                                        if (!player.hasPermission("tardis.architectural")) {
                                             TARDISMessage.send(player, "NO_PERM_ROOMS");
                                             return;
                                         }

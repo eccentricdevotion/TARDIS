@@ -191,7 +191,7 @@ public class TARDISControlMenuListener extends TARDISMenuListener implements Lis
                                         return;
                                     }
                                     // check they have permission to grow rooms
-                                    if (!player.hasPermission("tardis.ars")) {
+                                    if (!player.hasPermission("tardis.architectural")) {
                                         TARDISMessage.send(player, "NO_PERM_ROOMS");
                                         return;
                                     }
