@@ -154,6 +154,7 @@ public enum TARDISInfoMenu {
     ARS("TIS|TARDIS Types|ARS", "TYPES", "A"),
     WAR("TIS|TARDIS Types|War", "TYPES", "W"),
     PYRAMID("TIS|TARDIS Types|Pyramid", "TYPES", "P"),
+    MASTER("TIS|TARDIS Types|Master", "TYPES", "M"),
     CUSTOM("TIS|TARDIS Types|Custom", "TYPES", "C"),
     ROOMS("TIS|Rooms", "TIS", "R"),
     ANTIGRAVITY("TIS|Rooms|Anti-gravity", "ROOMS", "A"),

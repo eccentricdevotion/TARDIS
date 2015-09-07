@@ -462,6 +462,9 @@ public class TARDISInformationSystemListener implements Listener {
                         if (chat.equalsIgnoreCase("P")) {
                             showInfo(p, TARDISInfoMenu.PYRAMID);
                         }
+                        if (chat.equalsIgnoreCase("M")) {
+                            showInfo(p, TARDISInfoMenu.MASTER);
+                        }
                         if (chat.equalsIgnoreCase("C")) {
                             showInfo(p, TARDISInfoMenu.CUSTOM);
                         }

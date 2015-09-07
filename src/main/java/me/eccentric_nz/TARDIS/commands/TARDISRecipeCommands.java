@@ -98,6 +98,7 @@ public class TARDISRecipeCommands implements CommandExecutor {
         firstArgs.add("tardis"); // TARDIS Seed Block
         firstArgs.add("vortex"); // Vortex Manipulator
         firstArgs.add("watch"); // TARDIS Seed Block
+        // DELUXE, ELEVENTH, TWELFTH, ARS & REDSTONE schematics supplied by Lord_Rahl and killeratnight at mcnovus.net
         t.put("ARS", Material.QUARTZ_BLOCK); // ARS
         t.put("BIGGER", Material.GOLD_BLOCK); // bigger
         t.put("BUDGET", Material.IRON_BLOCK); // budget
@@ -109,7 +110,8 @@ public class TARDISRecipeCommands implements CommandExecutor {
         t.put("TOM", Material.LAPIS_BLOCK); // tom baker
         t.put("TWELFTH", Material.PRISMARINE); // twelfth
         t.put("WAR", Material.STAINED_CLAY); // war doctor
-        t.put("PYRAMID", Material.SANDSTONE_STAIRS); // pyramid
+        t.put("PYRAMID", Material.SANDSTONE_STAIRS); // pyramid schematic supplied by airomis (player at thatsnotacreeper.com)
+        t.put("MASTER", Material.NETHER_BRICK); // master schematic supplied by macdja38 at pvpcraft.ca
         // custom seeds
         for (String console : plugin.getCustomConsolesConfig().getKeys(false)) {
             if (plugin.getCustomConsolesConfig().getBoolean(console + ".enabled")) {
