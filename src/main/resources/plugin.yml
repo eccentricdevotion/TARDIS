@@ -126,13 +126,19 @@ permissions:
     description: Allow players to build the 'War Doctor's TARDIS.
     default: op
   tardis.pyramid:
-    description: Allow players to build the 'Sandstone Pyramid TARDIS.
+    description: Allow players to build the Sandstone Pyramid TARDIS.
+    default: op
+  tardis.master:
+    description: Allow players to build the Master's TARDIS.
     default: op
   tardis.storage:
     description: Allow players to utilise the TARDIS Disk Storage.
     default: op
   tardis.advanced:
     description: Allow players to utilise the TARDIS Advanced Console.
+    default: op
+  tardis.architectural:
+    description: Allow players to utilise the TARDIS Architectural Reconfiguration System.
     default: op
   tardis.kit.join:
     description: Allow players to automatically get a TARDIS Item Kit when they join the server.
