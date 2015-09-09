@@ -29,6 +29,7 @@ import me.eccentric_nz.TARDIS.database.ResultSetTravellers;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
 import me.eccentric_nz.TARDIS.utility.TARDISLocationGetters;
 import org.bukkit.Location;
+import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
 
@@ -144,8 +145,9 @@ public class TARDISMalfunction {
                     TARDISEPSRunnable EPS_runnable = new TARDISEPSRunnable(plugin, message, p, playerUUIDs, id, eps, creeper);
                     plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, EPS_runnable, 220L);
                 }
+                Material light = (rsp.isLanternsOn()) ? Material.SEA_LANTERN : Material.REDSTONE_LAMP_ON;
                 final long start = System.currentTimeMillis() + 10000;
-                TARDISLampsRunnable runnable = new TARDISLampsRunnable(plugin, lamps, start, rsp.isWoolLightsOn());
+                TARDISLampsRunnable runnable = new TARDISLampsRunnable(plugin, lamps, start, light, rsp.isWoolLightsOn());
                 runnable.setHandbrake(handbrake_loc);
                 int taskID = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, runnable, 10L, 10L);
                 runnable.setTask(taskID);

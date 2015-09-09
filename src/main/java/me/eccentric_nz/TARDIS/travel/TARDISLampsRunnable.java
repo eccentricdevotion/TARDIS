@@ -34,17 +34,19 @@ public class TARDISLampsRunnable implements Runnable {
     private final TARDIS plugin;
     private final List<Block> lamps;
     private final long start;
+    private final Material light;
     private final boolean use_wool;
     private final boolean lights_on;
     private int task;
     private Location handbrake_loc;
 
-    public TARDISLampsRunnable(TARDIS plugin, List<Block> lamps, long start, boolean use_wool) {
+    public TARDISLampsRunnable(TARDIS plugin, List<Block> lamps, long start, Material light, boolean use_wool) {
         this.plugin = plugin;
         this.lamps = lamps;
         this.start = start;
+        this.light = light;
         this.use_wool = use_wool;
-        this.lights_on = (lamps.get(0).getType().equals(Material.REDSTONE_LAMP_ON));
+        this.lights_on = (lamps.get(0).getType().equals(this.light));
     }
 
     @SuppressWarnings("deprecation")
@@ -55,7 +57,7 @@ public class TARDISLampsRunnable implements Runnable {
             handbrake_loc.getWorld().playEffect(handbrake_loc, Effect.SMOKE, j);
         }
         for (Block b : lamps) {
-            if (b.getType().equals(Material.REDSTONE_LAMP_ON)) {
+            if (b.getType().equals(light)) {
                 if (use_wool) {
                     b.setType(Material.WOOL);
                     b.setData((byte) 15);
@@ -63,7 +65,7 @@ public class TARDISLampsRunnable implements Runnable {
                     b.setType(Material.SPONGE);
                 }
             } else if (b.getType().equals(Material.SPONGE) || (b.getType().equals(Material.WOOL) && b.getData() == (byte) 15)) {
-                b.setType(Material.REDSTONE_LAMP_ON);
+                b.setType(light);
             }
         }
         if (System.currentTimeMillis() > start) {
@@ -71,12 +73,12 @@ public class TARDISLampsRunnable implements Runnable {
             if (lights_on) {
                 for (Block b : lamps) {
                     if (b.getType().equals(Material.SPONGE) || (b.getType().equals(Material.WOOL) && b.getData() == (byte) 15)) {
-                        b.setType(Material.REDSTONE_LAMP_ON);
+                        b.setType(light);
                     }
                 }
             } else {
                 for (Block b : lamps) {
-                    if (b.getType().equals(Material.REDSTONE_LAMP_ON)) {
+                    if (b.getType().equals(light)) {
                         if (use_wool) {
                             b.setType(Material.WOOL);
                             b.setData((byte) 15);
