@@ -3,15 +3,11 @@
 ##Current version `3.3.1`
 1. Fix bugs
 2. Junk TARDIS - _started_
-   * Teleport players onto vortex Junk TARDIS when dematerialising
-   * Add particles to vortex Junk TARDIS
-   * Teleport players onto destination Junk TARDIS when materialising
-   * Add Junk TARDIS sounds
-   * Add destation controls and destination checking
+   * Limit travelling to overworlds
+   * Fry player health if they venture outside of Junk TARDIS effects
 3. Player configurable choice of (2) blocks that are changed during siege mode engagement
    * Should default to wall / floor if not configured
 5. Test area parking space variations
-6. Malfunctions should respect lamps / lanterns preference
 
 ##Upcoming version `3.4`
 * TARDISSonicBlaster addon?
