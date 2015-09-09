@@ -36,16 +36,18 @@ public class TARDISJunkVortexRunnable implements Runnable {
 
     private final TARDIS plugin;
     private final Location vortexJunkLoc;
+    private final Location effectsLoc;
     private final Location destJunkLoc;
     private final OfflinePlayer player;
     private final int id;
     private int i = 0;
-    private final int loops = 10;
+    private final int loops = 12;
     private int task;
 
     public TARDISJunkVortexRunnable(TARDIS plugin, Location vortexJunkLoc, OfflinePlayer player, int id) {
         this.plugin = plugin;
         this.vortexJunkLoc = vortexJunkLoc;
+        this.effectsLoc = this.vortexJunkLoc.clone().add(0.5d, 0, 0.5d);
         this.destJunkLoc = this.plugin.getTrackerKeeper().getJunkDestination();
         this.player = player;
         this.id = id;
@@ -55,13 +57,13 @@ public class TARDISJunkVortexRunnable implements Runnable {
     public void run() {
         if (i < loops) {
             i++;
-            TARDISEffectLibHelper.sendVortexParticles(vortexJunkLoc);
-            if (i == 0) {
+            TARDISEffectLibHelper.sendVortexParticles(effectsLoc);
+            if (i == 3) {
                 // play sound
                 for (Entity e : getJunkTravellers()) {
                     if (e instanceof Player) {
                         Player p = (Player) e;
-                        TARDISSounds.playTARDISSound(vortexJunkLoc, p, "tardis_junk_vortex");
+                        TARDISSounds.playTARDISSound(vortexJunkLoc, p, "junk_arc");
                     }
                 }
             }
@@ -85,7 +87,6 @@ public class TARDISJunkVortexRunnable implements Runnable {
                     if (e instanceof Player) {
                         final Player p = (Player) e;
                         final Location relativeLoc = getRelativeLocation(p);
-                        plugin.debug("relative location: " + relativeLoc.toString());
                         p.teleport(relativeLoc);
                         plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
                             @Override

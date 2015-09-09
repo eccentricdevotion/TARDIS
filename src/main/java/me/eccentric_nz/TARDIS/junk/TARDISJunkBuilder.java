@@ -18,6 +18,7 @@ package me.eccentric_nz.TARDIS.junk;
 
 import java.io.File;
 import java.util.HashMap;
+import java.util.List;
 import me.eccentric_nz.TARDIS.JSON.JSONArray;
 import me.eccentric_nz.TARDIS.JSON.JSONObject;
 import me.eccentric_nz.TARDIS.TARDIS;
@@ -27,12 +28,16 @@ import me.eccentric_nz.TARDIS.schematic.TARDISSchematicGZip;
 import me.eccentric_nz.TARDIS.utility.TARDISBlockSetters;
 import me.eccentric_nz.TARDIS.utility.TARDISEffectLibHelper;
 import me.eccentric_nz.TARDIS.utility.TARDISLocationGetters;
+import me.eccentric_nz.TARDIS.utility.TARDISSounds;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.block.Biome;
 import org.bukkit.block.Block;
 import org.bukkit.block.Sign;
+import org.bukkit.entity.Entity;
+import org.bukkit.entity.EntityType;
+import org.bukkit.entity.Player;
 
 /**
  *
@@ -46,6 +51,7 @@ public class TARDISJunkBuilder implements Runnable {
     private int i = 0;
     private final int sx, sy, sz;
     private final Location loc;
+    private final Location effectsLoc;
     World world;
     Biome biome;
     private final QueryFactory qf;
@@ -54,6 +60,7 @@ public class TARDISJunkBuilder implements Runnable {
         this.plugin = plugin;
         this.tmd = tmd;
         this.loc = this.tmd.getLocation();
+        this.effectsLoc = this.loc.clone().add(0.5d, 0, 0.5d);
         this.sx = this.loc.getBlockX() - 3;
         this.sy = this.loc.getBlockY();
         this.sz = this.loc.getBlockZ() - 2;
@@ -66,8 +73,16 @@ public class TARDISJunkBuilder implements Runnable {
     public void run() {
         if (!plugin.getTrackerKeeper().getDematerialising().contains(tmd.getTardisID())) {
             // get relative locations
-            if (i < 10) {
+            if (i < 24) {
                 i++;
+                if (i == 3) {
+                    for (Entity e : getJunkTravellers()) {
+                        if (e instanceof Player) {
+                            Player p = (Player) e;
+                            TARDISSounds.playTARDISSound(loc, p, "junk_land");
+                        }
+                    }
+                }
                 if (i == 1) {
                     // build TARDIS and remember blocks
                     Material type;
@@ -101,8 +116,9 @@ public class TARDISJunkBuilder implements Runnable {
                                 data = c.getByte("data");
                                 if (type.equals(Material.CAKE_BLOCK)) {
                                     /*
-                                     * This block will be converted to a lever by
-                                     * setBlock(), but remember it so we can use it as the handbrake!
+                                     * This block will be converted to a lever
+                                     * by setBlockAndRemember(), but remember it
+                                     * so we can use it as the handbrake!
                                      */
                                     String handbrakeloc = TARDISLocationGetters.makeLocationStr(world, x, y, z);
                                     qf.insertSyncControl(tmd.getTardisID(), 0, handbrakeloc, 0);
@@ -138,10 +154,12 @@ public class TARDISJunkBuilder implements Runnable {
                                     String trip = TARDISLocationGetters.makeLocationStr(world, x, y, z);
                                     qf.insertSyncControl(tmd.getTardisID(), 4, trip, 0);
                                 }
-                                if (type.equals(Material.SPONGE)) {
+                                if (type.equals(Material.SPONGE) || type.equals(Material.AIR)) {
                                     TARDISBlockSetters.setBlock(world, x, y, z, Material.AIR, data);
-                                } else {
+                                } else if (type.equals(Material.CAKE_BLOCK)) {
                                     TARDISBlockSetters.setBlock(world, x, y, z, type, data);
+                                } else {
+                                    plugin.getBlockUtils().setBlockAndRemember(world, x, y, z, type, data, tmd.getTardisID());
                                 }
                             }
                         }
@@ -155,11 +173,9 @@ public class TARDISJunkBuilder implements Runnable {
                             ts.update();
                         }
                     }
-                } else {
-                    if (plugin.getConfig().getBoolean("junk.particles") && plugin.isEffectLibOnServer()) {
-                        // just animate particles
-                        TARDISEffectLibHelper.sendVortexParticles(loc);
-                    }
+                } else if (plugin.getConfig().getBoolean("junk.particles") && plugin.isEffectLibOnServer()) {
+                    // just animate particles
+                    TARDISEffectLibHelper.sendVortexParticles(effectsLoc);
                 }
             } else {
                 plugin.getTrackerKeeper().getMaterialising().remove(Integer.valueOf(tmd.getTardisID()));
@@ -178,6 +194,14 @@ public class TARDISJunkBuilder implements Runnable {
                 qf.doUpdate("current", set, where);
             }
         }
+    }
+
+    private List<Entity> getJunkTravellers() {
+        // spawn an entity
+        Entity orb = loc.getWorld().spawnEntity(loc, EntityType.EXPERIENCE_ORB);
+        List<Entity> ents = orb.getNearbyEntities(16.0d, 16.0d, 16.0d);
+        orb.remove();
+        return ents;
     }
 
     public void setTask(int task) {

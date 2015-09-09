@@ -22,8 +22,13 @@ import java.util.HashMap;
 import java.util.List;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.builders.TARDISMaterialisationData;
+import me.eccentric_nz.TARDIS.database.QueryFactory;
+import me.eccentric_nz.TARDIS.database.ResultSetBlocks;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
+import me.eccentric_nz.TARDIS.utility.TARDISBlockSetters;
 import me.eccentric_nz.TARDIS.utility.TARDISEffectLibHelper;
+import me.eccentric_nz.TARDIS.utility.TARDISNumberParsers;
+import me.eccentric_nz.TARDIS.utility.TARDISSounds;
 import org.bukkit.Chunk;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -46,6 +51,7 @@ public class TARDISJunkDestroyer implements Runnable {
     private int i = 0;
     private final int sx, ex, sy, ey, sz, ez;
     private final Location junkLoc;
+    private final Location effectsLoc;
     private Location vortexJunkLoc;
     World world;
     Biome biome;
@@ -55,6 +61,7 @@ public class TARDISJunkDestroyer implements Runnable {
         this.plugin = plugin;
         this.pdd = pdd;
         this.junkLoc = this.pdd.getLocation();
+        this.effectsLoc = this.junkLoc.clone().add(0.5d, 0, 0.5d);
         this.ex = this.junkLoc.getBlockX() + 2;
         this.sx = this.junkLoc.getBlockX() - 3;
         this.sy = this.junkLoc.getBlockY();
@@ -69,9 +76,17 @@ public class TARDISJunkDestroyer implements Runnable {
     @Override
     public void run() {
         // get relative locations
-        if (i < 5) {
+        if (i < 25) {
             i++;
-            if (i == 5) {
+            if (i == 1) {
+                for (Entity e : getJunkTravellers(16.0d)) {
+                    if (e instanceof Player) {
+                        Player p = (Player) e;
+                        TARDISSounds.playTARDISSound(junkLoc, p, "junk_takeoff");
+                    }
+                }
+            }
+            if (i == 25) {
                 // get junk vortex location
                 HashMap<String, Object> where = new HashMap<String, Object>();
                 where.put("uuid", "00000000-aaaa-bbbb-cccc-000000000000");
@@ -79,10 +94,7 @@ public class TARDISJunkDestroyer implements Runnable {
                 if (rs.resultSet()) {
                     // teleport players to vortex
                     vortexJunkLoc = plugin.getLocationUtils().getLocationFromBukkitString(rs.getCreeper()).add(3.0d, 0.0d, 2.0d);
-                    Entity orb = junkLoc.getWorld().spawnEntity(junkLoc, EntityType.EXPERIENCE_ORB);
-                    List<Entity> ents = orb.getNearbyEntities(4.0d, 4.0d, 4.0d);
-                    orb.remove();
-                    for (Entity e : ents) {
+                    for (Entity e : getJunkTravellers(4.0d)) {
                         if (e instanceof Player) {
                             final Player p = (Player) e;
                             final Location relativeLoc = getRelativeLocation(p);
@@ -129,13 +141,40 @@ public class TARDISJunkDestroyer implements Runnable {
                 plugin.getTrackerKeeper().getDematerialising().remove(Integer.valueOf(pdd.getTardisID()));
                 plugin.getTrackerKeeper().getInVortex().remove(Integer.valueOf(pdd.getTardisID()));
                 effectManager.dispose();
+                // check protected blocks if has block id and data stored then put the block back!
+                HashMap<String, Object> tid = new HashMap<String, Object>();
+                tid.put("tardis_id", pdd.getTardisID());
+                ResultSetBlocks rsb = new ResultSetBlocks(plugin, tid, true);
+                if (rsb.resultSet()) {
+                    ArrayList<HashMap<String, String>> data = rsb.getData();
+                    for (HashMap<String, String> map : data) {
+                        Material mat = Material.AIR;
+                        byte bd = (byte) 0;
+                        if (map.get("block") != null) {
+                            mat = Material.valueOf(map.get("block"));
+                        }
+                        if (map.get("data") != null) {
+                            bd = TARDISNumberParsers.parseByte(map.get("data"));
+                        }
+                        String locStr = map.get("location");
+                        String[] loc_data = locStr.split(",");
+                        // x, y, z - 1, 2, 3
+                        String[] xStr = loc_data[1].split("=");
+                        String[] yStr = loc_data[2].split("=");
+                        String[] zStr = loc_data[3].split("=");
+                        int rx = TARDISNumberParsers.parseInt(xStr[1].substring(0, (xStr[1].length() - 2)));
+                        int ry = TARDISNumberParsers.parseInt(yStr[1].substring(0, (yStr[1].length() - 2)));
+                        int rz = TARDISNumberParsers.parseInt(zStr[1].substring(0, (zStr[1].length() - 2)));
+                        TARDISBlockSetters.setBlock(world, rx, ry, rz, mat, bd);
+                    }
+                }
+                // remove block protection
+                plugin.getPresetDestroyer().removeBlockProtection(pdd.getTardisID(), new QueryFactory(plugin));
                 plugin.getServer().getScheduler().cancelTask(task);
                 task = 0;
-            } else {
-                if (plugin.getConfig().getBoolean("junk.particles") && plugin.isEffectLibOnServer()) {
-                    // just animate particles
-                    TARDISEffectLibHelper.sendVortexParticles(junkLoc);
-                }
+            } else if (plugin.getConfig().getBoolean("junk.particles") && plugin.isEffectLibOnServer()) {
+                // just animate particles
+                TARDISEffectLibHelper.sendVortexParticles(effectsLoc);
             }
         }
     }
@@ -146,6 +185,14 @@ public class TARDISJunkDestroyer implements Runnable {
         double y = vortexJunkLoc.getY() + (playerLoc.getY() - junkLoc.getY()) + 0.5d;
         double z = vortexJunkLoc.getZ() + (playerLoc.getZ() - junkLoc.getZ());
         return new Location(vortexJunkLoc.getWorld(), x, y, z, playerLoc.getYaw(), playerLoc.getPitch());
+    }
+
+    private List<Entity> getJunkTravellers(double d) {
+        // spawn an entity
+        Entity orb = junkLoc.getWorld().spawnEntity(junkLoc, EntityType.EXPERIENCE_ORB);
+        List<Entity> ents = orb.getNearbyEntities(d, d, d);
+        orb.remove();
+        return ents;
     }
 
     public void setTask(int task) {

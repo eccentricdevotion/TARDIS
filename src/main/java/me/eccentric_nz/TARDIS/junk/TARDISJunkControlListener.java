@@ -142,7 +142,6 @@ public class TARDISJunkControlListener implements Listener {
                     wherei.put("tardis_id", id);
                     ResultSetTardis rs = new ResultSetTardis(plugin, wherei, "", false);
                     if (rs.resultSet() && rs.getPreset().equals(PRESET.JUNK)) {
-                        plugin.debug("tripwire world");
                         final Player player = event.getPlayer();
                         if (!player.hasPermission("tardis.junk")) {
                             TARDISMessage.send(player, "JUNK_NO_PERM");
@@ -153,7 +152,6 @@ public class TARDISJunkControlListener implements Listener {
                 }
             }
             if (blockType == Material.STONE_BUTTON) {
-                plugin.debug("stone x");
                 // 1
                 where.put("type", 1);
                 ResultSetControls rsh = new ResultSetControls(plugin, where, false);
@@ -174,7 +172,6 @@ public class TARDISJunkControlListener implements Listener {
                 }
             }
             if (blockType == Material.WOOD_BUTTON) {
-                plugin.debug("wood z");
                 // 6
                 where.put("type", 6);
                 ResultSetControls rsh = new ResultSetControls(plugin, where, false);
@@ -218,7 +215,6 @@ public class TARDISJunkControlListener implements Listener {
             }
             int y = w.getHighestBlockYAt(x, z) + 1;
             Location d = new Location(w, x, y, z);
-            plugin.debug("highest y: " + y);
             // TODO check destination
             if (plugin.getPluginRespect().getRespect(d, new Parameters(p, FLAG.getNoMessageFlags()))) {
                 while (!chunk.isLoaded()) {
@@ -233,7 +229,6 @@ public class TARDISJunkControlListener implements Listener {
     private void setSignWorld(int id, UUID uuid) {
         Sign s = getDestinationSign(id);
         if (s != null) {
-            plugin.debug("found sign world");
             int pos = 0;
             if (worldMap.containsKey(uuid)) {
                 int v = worldMap.get(uuid);
@@ -242,8 +237,6 @@ public class TARDISJunkControlListener implements Listener {
             } else {
                 worldMap.put(uuid, pos);
             }
-            plugin.debug("pos: " + pos);
-            plugin.debug("world: " + worlds.get(pos));
             s.setLine(1, worlds.get(pos));
             s.update();
         }
@@ -297,25 +290,24 @@ public class TARDISJunkControlListener implements Listener {
     private int getActualHighestY(Location l) {
         int startx = l.getBlockX() - 3, resetx = startx, starty = l.getBlockY(), startz = l.getBlockZ() - 2, resetz = startz, level, row, col, count = 0;
         for (level = 0; level < 5; level++) {
+            boolean found = false;
             for (row = 0; row < 6; row++) {
-                boolean found = false;
                 for (col = 0; col < 6; col++) {
                     Material mat = l.getWorld().getBlockAt(startx, starty, startz).getType();
                     if (!TARDISConstants.GOOD_MATERIALS.contains(mat)) {
                         found = true;
-                        starty = l.getWorld().getHighestBlockYAt(startx, startz);
                     }
                     startx += 1;
-                }
-                if (!found) {
-                    return starty + 1;
                 }
                 startx = resetx;
                 startz += 1;
             }
+            if (!found) {
+                return starty;
+            }
             startz = resetz;
             starty += 1;
         }
-        return starty + 1;
+        return starty;
     }
 }
