@@ -79,7 +79,6 @@ public class TARDISPresetBuilderFactory {
      * @param tmd the TARDIS build data
      */
     public void buildPreset(TARDISMaterialisationData tmd) {
-        plugin.debug("building preset...");
         HashMap<String, Object> where = new HashMap<String, Object>();
         where.put("tardis_id", tmd.getTardisID());
         ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);
@@ -122,8 +121,9 @@ public class TARDISPresetBuilderFactory {
             boolean ctm = false;
             boolean add_sign = true;
             boolean hidden = rs.isHidden();
+            String uuid = (preset.equals(PRESET.JUNK)) ? "00000000-aaaa-bbbb-cccc-000000000000" : tmd.getPlayer().getUniqueId().toString();
             HashMap<String, Object> wherepp = new HashMap<String, Object>();
-            wherepp.put("uuid", tmd.getPlayer().getUniqueId().toString());
+            wherepp.put("uuid", uuid);
             ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, wherepp);
             if (rsp.resultSet()) {
                 lamp = rsp.getLamp();
@@ -141,9 +141,9 @@ public class TARDISPresetBuilderFactory {
                 thisChunk.load();
             }
             /*
-             * We can always add the chunk, as List.remove() only removes the first
-             * occurence - and we want the chunk to remain loaded if there are other
-             * Police Boxes in it.
+             * We can always add the chunk, as List.remove() only removes the
+             * first occurence - and we want the chunk to remain loaded if there
+             * are other Police Boxes in it.
              */
             plugin.getGeneralKeeper().getTardisChunkList().add(thisChunk);
             if (tmd.isRebuild()) {
@@ -156,24 +156,21 @@ public class TARDISPresetBuilderFactory {
                 TARDISMaterialisationPreset runnable = new TARDISMaterialisationPreset(plugin, tmd, preset, lamp, cham_id, cham_data, minecart, ctm, add_sign, 3);
                 int taskID = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, runnable, 10L, 20L);
                 runnable.setTask(taskID);
-            } else {
-                if (plugin.getConfig().getBoolean("police_box.materialise") && !preset.equals(PRESET.INVISIBLE)) {
-                    plugin.getTrackerKeeper().getMaterialising().add(tmd.getTardisID());
-                    if (preset.equals(PRESET.JUNK)) {
-                        plugin.debug("building junk at: " + tmd.getLocation().toString());
-                        TARDISJunkBuilder runnable = new TARDISJunkBuilder(plugin, tmd);
-                        int taskID = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, runnable, 10L, 20L);
-                        runnable.setTask(taskID);
-                    } else {
-                        TARDISMaterialisationPreset runnable = new TARDISMaterialisationPreset(plugin, tmd, preset, lamp, cham_id, cham_data, minecart, ctm, add_sign, 18);
-                        int taskID = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, runnable, 10L, 20L);
-                        runnable.setTask(taskID);
-                    }
+            } else if (plugin.getConfig().getBoolean("police_box.materialise") && !preset.equals(PRESET.INVISIBLE)) {
+                plugin.getTrackerKeeper().getMaterialising().add(tmd.getTardisID());
+                if (preset.equals(PRESET.JUNK)) {
+                    TARDISJunkBuilder runnable = new TARDISJunkBuilder(plugin, tmd);
+                    int taskID = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, runnable, 10L, 20L);
+                    runnable.setTask(taskID);
                 } else {
-                    plugin.getTrackerKeeper().getMaterialising().add(tmd.getTardisID());
-                    TARDISInstaPreset insta = new TARDISInstaPreset(plugin, tmd, preset, lamp, cham_id, cham_data, false, minecart, ctm, add_sign);
-                    insta.buildPreset();
+                    TARDISMaterialisationPreset runnable = new TARDISMaterialisationPreset(plugin, tmd, preset, lamp, cham_id, cham_data, minecart, ctm, add_sign, 18);
+                    int taskID = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, runnable, 10L, 20L);
+                    runnable.setTask(taskID);
                 }
+            } else {
+                plugin.getTrackerKeeper().getMaterialising().add(tmd.getTardisID());
+                TARDISInstaPreset insta = new TARDISInstaPreset(plugin, tmd, preset, lamp, cham_id, cham_data, false, minecart, ctm, add_sign);
+                insta.buildPreset();
             }
             // update demat so it knows about the current preset after it has changed
             HashMap<String, Object> whered = new HashMap<String, Object>();

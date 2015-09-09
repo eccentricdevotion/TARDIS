@@ -48,7 +48,7 @@ public class TARDISJunkCommands implements CommandExecutor {
         if (cmd.getName().equalsIgnoreCase("tardisjunk")) {
             if (args.length == 0) {
                 // find Junk TARDIS
-                return true;
+                return new TARDISJunkFind(plugin).find(sender);
             }
             String first = args[0].toLowerCase();
             if (args.length == 1 && firstArgs.contains(first)) {
@@ -64,10 +64,10 @@ public class TARDISJunkCommands implements CommandExecutor {
                     return new TARDISJunkCreator(plugin, p).createJunkTARDIS();
                 }
                 if (first.equals("find")) {
-
+                    return new TARDISJunkFind(plugin).find(sender);
                 }
                 if (first.equals("return")) {
-
+                    return new TARDISJunkReturn(plugin).recall(sender);
                 }
                 if (first.equals("delete")) {
                     return new TARDISJunkDelete(plugin).delete(sender);

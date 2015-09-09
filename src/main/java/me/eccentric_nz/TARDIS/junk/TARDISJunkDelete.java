@@ -43,6 +43,10 @@ public class TARDISJunkDelete {
     }
 
     public boolean delete(final CommandSender sender) {
+        if (!sender.hasPermission("tardis.admin")) {
+            TARDISMessage.send(sender, "CMD_ADMIN");
+            return true;
+        }
         HashMap<String, Object> where = new HashMap<String, Object>();
         where.put("uuid", "00000000-aaaa-bbbb-cccc-000000000000");
         ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);

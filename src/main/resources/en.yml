@@ -402,6 +402,7 @@ JUNK_LINES: "No destination found, try setting the coords on the Junk Destinatio
 JUNK_NOT_FOUND: "Could not get the Junk TARDIS' current location!"
 JUNK_NO_DEST: "You need to set the Junk TARDIS destination!"
 JUNK_NO_PERM: "You do not have permission to fly the Junk TARDIS!"
+JUNK_RETURN: "The Junk TARDIS is returning to its 'Home' location."
 KEYBOARD_ERROR: "Keyboard not responding, press any key to continue."
 KEY_NEED: "You need to specify a key item!"
 KEY_NO_BLOCK: "The key cannot be a block!"
