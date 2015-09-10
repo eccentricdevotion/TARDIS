@@ -160,11 +160,18 @@ public interface TardisAPI {
     public Location getRandomEndLocation(String world, Player p);
 
     /**
-     * Get a string list of worlds on the server.
+     * Get a string list of TARDIS enabled worlds on the server.
      *
      * @return a list of worlds
      */
     public List<String> getWorlds();
+
+    /**
+     * Get a string list of TARDIS enabled overworlds on the server.
+     *
+     * @return a list of worlds
+     */
+    public List<String> getOverWorlds();
 
     /**
      * Get the TARDIS a player is in.

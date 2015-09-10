@@ -61,7 +61,7 @@ public class TARDISJunkControlListener implements Listener {
         this.repeaterMap.put((byte) 7, 10);
         this.repeaterMap.put((byte) 11, 100);
         this.repeaterMap.put((byte) 15, 1000);
-        this.worlds = this.plugin.getTardisAPI().getWorlds();
+        this.worlds = this.plugin.getTardisAPI().getOverWorlds();
     }
 
     @EventHandler(priority = EventPriority.MONITOR)

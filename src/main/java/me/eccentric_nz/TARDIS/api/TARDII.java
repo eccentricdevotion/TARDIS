@@ -196,6 +196,18 @@ public class TARDII implements TardisAPI {
     }
 
     @Override
+    public List<String> getOverWorlds() {
+        List<String> worlds = new ArrayList<String>();
+        for (World w : Bukkit.getWorlds()) {
+            String name = w.getName();
+            if (TARDIS.plugin.getConfig().getBoolean("worlds." + name) && !w.getEnvironment().equals(Environment.NETHER) && !w.getEnvironment().equals(Environment.THE_END)) {
+                worlds.add(name);
+            }
+        }
+        return worlds;
+    }
+
+    @Override
     public String getTARDISPlayerIsIn(Player p) {
         return getTARDISPlayerIsIn(p.getUniqueId());
     }
