@@ -94,6 +94,9 @@ public class TARDISGeneralInstanceKeeper {
     private final TARDISUUIDCache UUIDCache;
     private final YamlConfiguration pluginYAML;
     private long junkTime;
+    private boolean junkTravelling = false;
+    private Location junkDestination = null;
+    private final List<UUID> junkTravellers = new ArrayList<UUID>();
 
     public TARDISGeneralInstanceKeeper(TARDIS plugin) {
         this.plugin = plugin;
@@ -304,6 +307,26 @@ public class TARDISGeneralInstanceKeeper {
 
     public void setJunkTime(long junkTime) {
         this.junkTime = junkTime;
+    }
+
+    public boolean isJunkTravelling() {
+        return junkTravelling;
+    }
+
+    public void setJunkTravelling(boolean junkTravelling) {
+        this.junkTravelling = junkTravelling;
+    }
+
+    public Location getJunkDestination() {
+        return junkDestination;
+    }
+
+    public void setJunkDestination(Location junkDestination) {
+        this.junkDestination = junkDestination;
+    }
+
+    public List<UUID> getJunkTravellers() {
+        return junkTravellers;
     }
 
     private void setRechargers() {

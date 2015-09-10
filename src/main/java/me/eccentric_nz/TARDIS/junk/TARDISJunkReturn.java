@@ -62,8 +62,8 @@ public class TARDISJunkReturn {
                     pdd.setBiome(rsc.getBiome());
                     plugin.getPresetDestroyer().destroyPreset(pdd);
                     // fly my pretties
-                    plugin.getTrackerKeeper().setJunkTravelling(true);
-                    plugin.getTrackerKeeper().setJunkDestination(home);
+                    plugin.getGeneralKeeper().setJunkTravelling(true);
+                    plugin.getGeneralKeeper().setJunkDestination(home);
                     TARDISMessage.send(sender, "JUNK_RETURN");
                     return true;
                 }

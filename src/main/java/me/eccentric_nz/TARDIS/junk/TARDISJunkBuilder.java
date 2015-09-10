@@ -48,6 +48,7 @@ public class TARDISJunkBuilder implements Runnable {
     private final TARDIS plugin;
     private final TARDISMaterialisationData tmd;
     public int task;
+    public int fryTask;
     private int i = 0;
     private final int sx, sy, sz;
     private final Location loc;
@@ -75,13 +76,14 @@ public class TARDISJunkBuilder implements Runnable {
             // get relative locations
             if (i < 24) {
                 i++;
-                if (i == 3) {
+                if (i == 2) {
                     for (Entity e : getJunkTravellers()) {
                         if (e instanceof Player) {
                             Player p = (Player) e;
                             TARDISSounds.playTARDISSound(loc, p, "junk_land");
                         }
                     }
+                    fryTask = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, new TARDISJunkItsDangerousRunnable(plugin, loc), 0, 1L);
                 }
                 if (i == 1) {
                     // build TARDIS and remember blocks
@@ -180,12 +182,14 @@ public class TARDISJunkBuilder implements Runnable {
             } else {
                 plugin.getTrackerKeeper().getMaterialising().remove(Integer.valueOf(tmd.getTardisID()));
                 plugin.getTrackerKeeper().getInVortex().remove(Integer.valueOf(tmd.getTardisID()));
+                plugin.getServer().getScheduler().cancelTask(fryTask);
                 plugin.getServer().getScheduler().cancelTask(task);
                 task = 0;
                 if (plugin.getConfig().getLong("junk.return") > 0) {
                     plugin.getGeneralKeeper().setJunkTime(System.currentTimeMillis());
                 }
-                plugin.getTrackerKeeper().setJunkTravelling(false);
+                plugin.getGeneralKeeper().setJunkTravelling(false);
+                plugin.getGeneralKeeper().getJunkTravellers().clear();
                 // update current location
                 HashMap<String, Object> where = new HashMap<String, Object>();
                 where.put("tardis_id", tmd.getTardisID());

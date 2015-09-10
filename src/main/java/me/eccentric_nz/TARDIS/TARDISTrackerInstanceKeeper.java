@@ -46,8 +46,6 @@ import org.bukkit.entity.Player;
  */
 public class TARDISTrackerInstanceKeeper {
 
-    private boolean junkTravelling = false;
-    private Location junkDestination = null;
     private String immortalityGate = "";
     private final HashMap<Integer, Integer> damage = new HashMap<Integer, Integer>();
     private final HashMap<Integer, Integer> hasDestination = new HashMap<Integer, Integer>();
@@ -116,22 +114,6 @@ public class TARDISTrackerInstanceKeeper {
     private final List<UUID> temporallyLocated = new ArrayList<UUID>();
     private final List<UUID> renderRoomOccupants = new ArrayList<UUID>();
     private final List<UUID> zeroRoomOccupants = new ArrayList<UUID>();
-
-    public boolean isJunkTravelling() {
-        return junkTravelling;
-    }
-
-    public void setJunkTravelling(boolean junkTravelling) {
-        this.junkTravelling = junkTravelling;
-    }
-
-    public Location getJunkDestination() {
-        return junkDestination;
-    }
-
-    public void setJunkDestination(Location junkDestination) {
-        this.junkDestination = junkDestination;
-    }
 
     public HashMap<Integer, Integer> getDamage() {
         return damage;

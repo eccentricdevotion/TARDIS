@@ -66,7 +66,7 @@ public class TARDISJunkControlListener implements Listener {
 
     @EventHandler(priority = EventPriority.MONITOR)
     public void onJunkBrakeUse(PlayerInteractEvent event) {
-        if (plugin.getTrackerKeeper().isJunkTravelling()) {
+        if (plugin.getGeneralKeeper().isJunkTravelling()) {
             return;
         }
         Block block = event.getClickedBlock();
@@ -94,7 +94,7 @@ public class TARDISJunkControlListener implements Listener {
                         }
                         // get the destination
                         getDestination(id, player);
-                        if (plugin.getTrackerKeeper().getJunkDestination() != null) {
+                        if (plugin.getGeneralKeeper().getJunkDestination() != null) {
                             // get the current location
                             Location junkloc = null;
                             Biome biome = null;
@@ -123,7 +123,7 @@ public class TARDISJunkControlListener implements Listener {
                             pdd.setBiome(biome);
                             plugin.getPresetDestroyer().destroyPreset(pdd);
                             // fly my pretties
-                            plugin.getTrackerKeeper().setJunkTravelling(true);
+                            plugin.getGeneralKeeper().setJunkTravelling(true);
                         } else {
                             TARDISMessage.send(event.getPlayer(), "JUNK_NO_DEST");
                             return;
@@ -213,7 +213,7 @@ public class TARDISJunkControlListener implements Listener {
             while (!chunk.isLoaded()) {
                 w.loadChunk(chunk);
             }
-            int y = w.getHighestBlockYAt(x, z) + 1;
+            int y = w.getHighestBlockYAt(x, z);
             Location d = new Location(w, x, y, z);
             // TODO check destination
             if (plugin.getPluginRespect().getRespect(d, new Parameters(p, FLAG.getNoMessageFlags()))) {
@@ -221,7 +221,7 @@ public class TARDISJunkControlListener implements Listener {
                     chunk.load();
                 }
                 d.setY(getActualHighestY(d));
-                plugin.getTrackerKeeper().setJunkDestination(d);
+                plugin.getGeneralKeeper().setJunkDestination(d);
             }
         }
     }
@@ -288,7 +288,7 @@ public class TARDISJunkControlListener implements Listener {
     }
 
     private int getActualHighestY(Location l) {
-        int startx = l.getBlockX() - 3, resetx = startx, starty = l.getBlockY(), startz = l.getBlockZ() - 2, resetz = startz, level, row, col, count = 0;
+        int startx = l.getBlockX() - 3, resetx = startx, starty = l.getBlockY(), startz = l.getBlockZ() - 2, resetz = startz, level, row, col;
         for (level = 0; level < 5; level++) {
             boolean found = false;
             for (row = 0; row < 6; row++) {

@@ -56,6 +56,7 @@ public class TARDISJunkDestroyer implements Runnable {
     World world;
     Biome biome;
     private final EffectManager effectManager;
+    private int fryTask;
 
     public TARDISJunkDestroyer(TARDIS plugin, TARDISMaterialisationData pdd) {
         this.plugin = plugin;
@@ -83,8 +84,10 @@ public class TARDISJunkDestroyer implements Runnable {
                     if (e instanceof Player) {
                         Player p = (Player) e;
                         TARDISSounds.playTARDISSound(junkLoc, p, "junk_takeoff");
+                        plugin.getGeneralKeeper().getJunkTravellers().add(p.getUniqueId());
                     }
                 }
+                fryTask = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, new TARDISJunkItsDangerousRunnable(plugin, junkLoc), 0, 1L);
             }
             if (i == 25) {
                 // get junk vortex location
@@ -170,6 +173,7 @@ public class TARDISJunkDestroyer implements Runnable {
                 }
                 // remove block protection
                 plugin.getPresetDestroyer().removeBlockProtection(pdd.getTardisID(), new QueryFactory(plugin));
+                plugin.getServer().getScheduler().cancelTask(fryTask);
                 plugin.getServer().getScheduler().cancelTask(task);
                 task = 0;
             } else if (plugin.getConfig().getBoolean("junk.particles") && plugin.isEffectLibOnServer()) {

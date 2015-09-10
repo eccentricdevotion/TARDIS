@@ -43,12 +43,13 @@ public class TARDISJunkVortexRunnable implements Runnable {
     private int i = 0;
     private final int loops = 12;
     private int task;
+    private int fryTask;
 
     public TARDISJunkVortexRunnable(TARDIS plugin, Location vortexJunkLoc, OfflinePlayer player, int id) {
         this.plugin = plugin;
         this.vortexJunkLoc = vortexJunkLoc;
         this.effectsLoc = this.vortexJunkLoc.clone().add(0.5d, 0, 0.5d);
-        this.destJunkLoc = this.plugin.getTrackerKeeper().getJunkDestination();
+        this.destJunkLoc = this.plugin.getGeneralKeeper().getJunkDestination();
         this.player = player;
         this.id = id;
     }
@@ -57,8 +58,11 @@ public class TARDISJunkVortexRunnable implements Runnable {
     public void run() {
         if (i < loops) {
             i++;
+            if (i == 1) {
+                fryTask = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, new TARDISJunkItsDangerousRunnable(plugin, vortexJunkLoc), 0, 1L);
+            }
             TARDISEffectLibHelper.sendVortexParticles(effectsLoc);
-            if (i == 3) {
+            if (i == 2) {
                 // play sound
                 for (Entity e : getJunkTravellers()) {
                     if (e instanceof Player) {
@@ -96,6 +100,7 @@ public class TARDISJunkVortexRunnable implements Runnable {
                         }, 2L);
                     }
                 }
+                plugin.getServer().getScheduler().cancelTask(fryTask);
                 plugin.getServer().getScheduler().cancelTask(task);
                 task = 0;
             }
