@@ -182,6 +182,9 @@ public class TARDISJunkBuilder implements Runnable {
                 plugin.getTrackerKeeper().getInVortex().remove(Integer.valueOf(tmd.getTardisID()));
                 plugin.getServer().getScheduler().cancelTask(task);
                 task = 0;
+                if (plugin.getConfig().getLong("junk.return") > 0) {
+                    plugin.getGeneralKeeper().setJunkTime(System.currentTimeMillis());
+                }
                 plugin.getTrackerKeeper().setJunkTravelling(false);
                 // update current location
                 HashMap<String, Object> where = new HashMap<String, Object>();

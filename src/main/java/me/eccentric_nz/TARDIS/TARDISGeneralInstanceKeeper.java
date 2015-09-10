@@ -93,6 +93,7 @@ public class TARDISGeneralInstanceKeeper {
     private final TARDIS plugin;
     private final TARDISUUIDCache UUIDCache;
     private final YamlConfiguration pluginYAML;
+    private long junkTime;
 
     public TARDISGeneralInstanceKeeper(TARDIS plugin) {
         this.plugin = plugin;
@@ -295,6 +296,14 @@ public class TARDISGeneralInstanceKeeper {
 
     public YamlConfiguration getPluginYAML() {
         return pluginYAML;
+    }
+
+    public long getJunkTime() {
+        return junkTime;
+    }
+
+    public void setJunkTime(long junkTime) {
+        this.junkTime = junkTime;
     }
 
     private void setRechargers() {

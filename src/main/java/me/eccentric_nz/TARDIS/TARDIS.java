@@ -67,6 +67,7 @@ import me.eccentric_nz.TARDIS.files.TARDISFileCopier;
 import me.eccentric_nz.TARDIS.files.TARDISLanguageUpdater;
 import me.eccentric_nz.TARDIS.files.TARDISRecipesUpdater;
 import me.eccentric_nz.TARDIS.files.TARDISRoomMap;
+import me.eccentric_nz.TARDIS.junk.TARDISJunkReturnRunnable;
 import me.eccentric_nz.TARDIS.move.TARDISMonsterRunnable;
 import me.eccentric_nz.TARDIS.move.TARDISPortalPersister;
 import me.eccentric_nz.TARDIS.move.TARDISSpectaclesRunnable;
@@ -353,8 +354,13 @@ public class TARDIS extends JavaPlugin {
                 condensables = cond.getCondensables();
                 checkBiomes();
                 checkDropChests();
-                if (plugin.getArtronConfig().getBoolean("artron_furnace.particles") && pm.isPluginEnabled("EffectLib")) {
+                if (artronConfig.getBoolean("artron_furnace.particles") && pm.isPluginEnabled("EffectLib")) {
                     new TARDISArtronFurnaceParticle(this).addParticles();
+                }
+                if (getConfig().getBoolean("junk.enabled") && getConfig().getLong("junk.return") > 0) {
+                    generalKeeper.setJunkTime(System.currentTimeMillis());
+                    long delay = getConfig().getLong("junk.return") * 20L;
+                    getServer().getScheduler().scheduleSyncRepeatingTask(this, new TARDISJunkReturnRunnable(this), delay, delay);
                 }
             } catch (ClassNotFoundException e) {
                 console.sendMessage(pluginName + ChatColor.RED + "You need to update CraftBukkit/Spigot, disabling...");
