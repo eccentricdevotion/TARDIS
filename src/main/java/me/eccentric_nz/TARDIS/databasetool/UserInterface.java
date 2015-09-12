@@ -58,6 +58,8 @@ public class UserInterface extends javax.swing.JFrame {
         titleLabel = new javax.swing.JLabel();
         inputFile = new javax.swing.JTextField();
         outputFile = new javax.swing.JTextField();
+        jLabel1 = new javax.swing.JLabel();
+        prefix = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -98,26 +100,36 @@ public class UserInterface extends javax.swing.JFrame {
             }
         });
 
+        jLabel1.setText("Prefix");
+
+        prefix.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                prefixActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+            .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jScrollPane1)
-                    .addGroup(layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addComponent(titleLabel)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 212, Short.MAX_VALUE)
                         .addComponent(convertButton))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(outputLabel)
-                            .addComponent(inputLabel))
+                            .addComponent(inputLabel)
+                            .addComponent(jLabel1))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(outputFile)
-                            .addComponent(inputFile))
+                            .addComponent(inputFile)
+                            .addComponent(prefix))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(outputButton, javax.swing.GroupLayout.Alignment.TRAILING)
@@ -137,8 +149,12 @@ public class UserInterface extends javax.swing.JFrame {
                     .addComponent(outputButton)
                     .addComponent(outputLabel)
                     .addComponent(outputFile, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 281, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel1)
+                    .addComponent(prefix, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 253, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(convertButton)
@@ -169,6 +185,10 @@ public class UserInterface extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_convertButtonMouseReleased
 
+    private void prefixActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_prefixActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_prefixActionPerformed
+
     /**
      * Opens a file chooser.
      *
@@ -198,17 +218,22 @@ public class UserInterface extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "Please browse for TARDIS.db and TARDIS.sql files.", "Please select required files.", JOptionPane.ERROR_MESSAGE);
             return;
         }
-        Main.process(consoleStream, new File(inputFile.getText()), new File(outputFile.getText()));
+        String pre = prefix.getText();
+        Main.process(consoleStream, new File(inputFile.getText()), new File(outputFile.getText()), pre);
     }
 
     /**
      * @param args the command line arguments
      */
     public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
+        /*
+         * Set the Nimbus look and feel
+         */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html
+        /*
+         * If Nimbus (introduced in Java SE 6) is not available, stay with the
+         * default look and feel. For details see
+         * http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html
          */
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
@@ -229,7 +254,9 @@ public class UserInterface extends javax.swing.JFrame {
         //</editor-fold>
         //</editor-fold>
 
-        /* Create and display the form */
+        /*
+         * Create and display the form
+         */
         java.awt.EventQueue.invokeLater(new Runnable() {
             @Override
             public void run() {
@@ -243,11 +270,13 @@ public class UserInterface extends javax.swing.JFrame {
     private javax.swing.JButton inputButton;
     private javax.swing.JTextField inputFile;
     private javax.swing.JLabel inputLabel;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JButton outputButton;
     private javax.swing.JTextArea outputConsole;
     private javax.swing.JTextField outputFile;
     private javax.swing.JLabel outputLabel;
+    private javax.swing.JTextField prefix;
     private javax.swing.JLabel titleLabel;
     // End of variables declaration//GEN-END:variables
 }

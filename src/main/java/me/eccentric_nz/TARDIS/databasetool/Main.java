@@ -44,9 +44,10 @@ public class Main {
      * @param console the output window of the tool
      * @param sqlite the SQLite file to migrate
      * @param mysql the SQL file to write to
+     * @param prefix the desired table prefix
      * @throws IOException
      */
-    public static void process(PrintWriter console, File sqlite, File mysql) throws IOException {
+    public static void process(PrintWriter console, File sqlite, File mysql, String prefix) throws IOException {
         if (!sqlite.canRead()) {
             console.println("Specified original file " + sqlite + " does not exist or cannot be read!");
             return;
@@ -59,9 +60,12 @@ public class Main {
             console.println("Could not create specified output file " + mysql + " please ensure that it is in a valid directory which can be written to.");
             return;
         }
+        if (!prefix.isEmpty()) {
+            console.println("***** Using prefix: " + prefix);
+        }
         console.println("***** Starting conversion process, please wait.");
+        Connection connection = null;
         try {
-            Connection connection = null;
             try {
                 Class.forName("org.sqlite.JDBC");
                 connection = DriverManager.getConnection("jdbc:sqlite:" + sqlite.getCanonicalPath());
@@ -94,7 +98,7 @@ public class Main {
                 bw.write(SQL.COMMENT);
                 bw.newLine();
                 bw.newLine();
-                bw.write(SQL.CREATES.get(i));
+                bw.write(String.format(SQL.CREATES.get(i), prefix));
                 bw.newLine();
                 bw.newLine();
                 String count = "SELECT COUNT(*) AS count FROM " + table.toString();
@@ -102,6 +106,7 @@ public class Main {
                 if (rsc.isBeforeFirst()) {
                     rsc.next();
                     int c = rsc.getInt("count");
+                    console.println("Found " + c + " " + table.toString() + " records");
                     String query = "SELECT * FROM " + table.toString();
                     ResultSet rs = statement.executeQuery(query);
                     if (rs.isBeforeFirst()) {
@@ -113,7 +118,7 @@ public class Main {
                         bw.write(SQL.COMMENT);
                         bw.newLine();
                         bw.newLine();
-                        bw.write(SQL.INSERTS.get(i));
+                        bw.write(String.format(SQL.INSERTS.get(i), prefix));
                         bw.newLine();
                         while (rs.next()) {
                             String end = (b == c) ? ";" : ",";
@@ -133,7 +138,7 @@ public class Main {
                                     bw.write(str);
                                     break;
                                 case areas:
-                                    str = String.format(SQL.VALUES.get(i), rs.getInt("area_id"), rs.getString("area_name"), rs.getString("world"), rs.getInt("minx"), rs.getInt("minz"), rs.getInt("maxx"), rs.getInt("maxz"), rs.getInt("y")) + end;
+                                    str = String.format(SQL.VALUES.get(i), rs.getInt("area_id"), rs.getString("area_name"), rs.getString("world"), rs.getInt("minx"), rs.getInt("minz"), rs.getInt("maxx"), rs.getInt("maxz"), rs.getInt("y"), rs.getInt("parking_distance")) + end;
                                     bw.write(str);
                                     break;
                                 case ars:
@@ -150,6 +155,10 @@ public class Main {
                                     break;
                                 case blocks:
                                     str = String.format(SQL.VALUES.get(i), rs.getInt("b_id"), rs.getInt("tardis_id"), rs.getString("location"), rs.getInt("block"), rs.getInt("data"), rs.getInt("police_box")) + end;
+                                    bw.write(str);
+                                    break;
+                                case chameleon:
+                                    str = String.format(SQL.VALUES.get(i), rs.getInt("chameleon_id"), rs.getInt("tardis_id"), rs.getString("blueprintID"), rs.getString("blueprintData"), rs.getString("stainID"), rs.getString("stainData"), rs.getString("glassID"), rs.getString("glassData")) + end;
                                     bw.write(str);
                                     break;
                                 case chunks:
@@ -201,7 +210,7 @@ public class Main {
                                     bw.write(str);
                                     break;
                                 case player_prefs:
-                                    str = String.format(SQL.VALUES.get(i), rs.getInt("pp_id"), rs.getString("uuid"), rs.getString("player"), rs.getString("key"), rs.getInt("sfx_on"), rs.getInt("quotes_on"), rs.getInt("artron_level"), rs.getString("wall"), rs.getString("floor"), rs.getInt("auto_on"), rs.getInt("beacon_on"), rs.getInt("hads_on"), rs.getInt("build_on"), rs.getInt("eps_on"), rs.getString("eps_message").replace("'", "\\'"), rs.getInt("lamp"), rs.getString("language"), rs.getInt("texture_on"), rs.getString("texture_in"), rs.getString("texture_out"), rs.getInt("submarine_on"), rs.getInt("dnd_on"), rs.getInt("minecart_on"), rs.getInt("renderer_on"), rs.getInt("wool_lights_on"), rs.getInt("ctm_on"), rs.getInt("sign_on"), rs.getInt("travelbar_on"), rs.getInt("farm_on"), rs.getInt("auto_siege_on"), rs.getInt("flying_mode"), rs.getInt("difficulty")) + end;
+                                    str = String.format(SQL.VALUES.get(i), rs.getInt("pp_id"), rs.getString("uuid"), rs.getString("player"), rs.getString("key"), rs.getInt("sfx_on"), rs.getInt("quotes_on"), rs.getInt("artron_level"), rs.getString("wall"), rs.getString("floor"), rs.getInt("auto_on"), rs.getInt("beacon_on"), rs.getInt("hads_on"), rs.getInt("build_on"), rs.getInt("eps_on"), rs.getString("eps_message").replace("'", "\\'"), rs.getInt("lamp"), rs.getString("language"), rs.getInt("texture_on"), rs.getString("texture_in"), rs.getString("texture_out"), rs.getInt("submarine_on"), rs.getInt("dnd_on"), rs.getInt("minecart_on"), rs.getInt("renderer_on"), rs.getInt("wool_lights_on"), rs.getInt("ctm_on"), rs.getInt("sign_on"), rs.getInt("travelbar_on"), rs.getInt("farm_on"), rs.getInt("lanterns_on"), rs.getInt("auto_siege_on"), rs.getInt("flying_mode"), rs.getInt("difficulty")) + end;
                                     bw.write(str);
                                     break;
                                 case portals:
@@ -254,6 +263,14 @@ public class Main {
         } catch (SQLException ex) {
             console.println("***** SQL ERROR: " + ex.getMessage());
             return;
+        } finally {
+            if (connection != null) {
+                try {
+                    connection.close();
+                } catch (SQLException ex) {
+                    console.println("***** SQL ERROR: " + ex.getMessage());
+                }
+            }
         }
         console.println("***** Your SQLite database has been converted!");
     }

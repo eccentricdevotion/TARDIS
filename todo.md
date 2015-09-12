@@ -6,6 +6,7 @@
    * Fry player/mob health if they venture into Junk TARDIS effects
 3. Player configurable choice of (2) blocks that are changed during siege mode engagement
    * Should default to wall / floor if not configured
+4. Limited upgrades
 5. Test area parking space variations
 
 ##Upcoming version `3.4`
