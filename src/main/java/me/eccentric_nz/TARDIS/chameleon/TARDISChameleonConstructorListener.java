@@ -51,6 +51,7 @@ public class TARDISChameleonConstructorListener extends TARDISMenuListener imple
     private final TARDIS plugin;
     private final HashMap<Material, Integer> doors = new HashMap<Material, Integer>();
     private final List<Material> doormats;
+    private final List<Material> precious = new ArrayList<Material>();
     private final List<Material> lamps = new ArrayList<Material>();
     private final HashMap<UUID, Integer> currentDoor = new HashMap<UUID, Integer>();
     private final HashMap<UUID, Integer> currentLamp = new HashMap<UUID, Integer>();
@@ -68,6 +69,26 @@ public class TARDISChameleonConstructorListener extends TARDISMenuListener imple
         this.doors.put(Material.ACACIA_DOOR_ITEM, 196);
         this.doors.put(Material.DARK_OAK_DOOR_ITEM, 197);
         this.dn = this.doors.size();
+        this.precious.add(Material.BEDROCK);
+        this.precious.add(Material.COAL_ORE);
+        this.precious.add(Material.DIAMOND_BLOCK);
+        this.precious.add(Material.DIAMOND_ORE);
+        this.precious.add(Material.EMERALD_BLOCK);
+        this.precious.add(Material.EMERALD_ORE);
+        this.precious.add(Material.QUARTZ_ORE);
+        this.precious.add(Material.GOLD_BLOCK);
+        this.precious.add(Material.GOLD_ORE);
+        this.precious.add(Material.IRON_BLOCK);
+        this.precious.add(Material.IRON_ORE);
+        this.precious.add(Material.JACK_O_LANTERN);
+        this.precious.add(Material.LAPIS_BLOCK);
+        this.precious.add(Material.LAPIS_BLOCK);
+        this.precious.add(Material.MELON);
+        this.precious.add(Material.OBSIDIAN);
+        this.precious.add(Material.PUMPKIN);
+        this.precious.add(Material.REDSTONE_BLOCK);
+        this.precious.add(Material.REDSTONE_ORE);
+        this.precious.add(Material.SEA_LANTERN);
         this.doormats = new ArrayList<Material>(this.doors.keySet());
         for (String s : plugin.getBlocksConfig().getStringList("lamp_blocks")) {
             try {
@@ -167,6 +188,11 @@ public class TARDISChameleonConstructorListener extends TARDISMenuListener imple
                                         for (int c = 27; c >= 0; c -= 9) {
                                             ItemStack d = inv.getItem(s + c);
                                             if (d != null) {
+                                                Material type = d.getType();
+                                                if (!plugin.getConfig().getBoolean("allow.all_blocks") && precious.contains(type)) {
+                                                    TARDISMessage.send(player, "CHAM_NOT_CUSTOM");
+                                                    return;
+                                                }
                                                 int tid = d.getTypeId();
                                                 blueID[first][second] = tid;
                                                 if (doors.containsKey(d.getType())) {
@@ -223,12 +249,6 @@ public class TARDISChameleonConstructorListener extends TARDISMenuListener imple
                                     String jsonStainData = new JSONArray(stainData).toString();
                                     String jsonGlassID = new JSONArray(glassID).toString();
                                     String jsonGlassData = new JSONArray(glassData).toString();
-//                                    plugin.debug(jsonBlueID);
-//                                    plugin.debug(jsonBlueData);
-//                                    plugin.debug(jsonStainID);
-//                                    plugin.debug(jsonStainData);
-//                                    plugin.debug(jsonGlassID);
-//                                    plugin.debug(jsonGlassData);
                                     // save chameleon construct
                                     HashMap<String, Object> wherec = new HashMap<String, Object>();
                                     wherec.put("tardis_id", id);
@@ -316,7 +336,7 @@ public class TARDISChameleonConstructorListener extends TARDISMenuListener imple
 
     private void nextDoor(UUID uuid, Inventory inv) {
         int d = currentDoor.get(uuid);
-        if (d < ln - 1) {
+        if (d < dn - 1) {
             d++;
         } else {
             d = 0;
