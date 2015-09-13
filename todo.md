@@ -8,7 +8,6 @@
    * Should default to wall / floor if not configured
 4. Limited upgrades
 5. Test area parking space variations
-6. Use translatable strings for Chameleon Construction GUIs
 
 ##Upcoming version `3.4`
 * TARDISSonicBlaster addon?

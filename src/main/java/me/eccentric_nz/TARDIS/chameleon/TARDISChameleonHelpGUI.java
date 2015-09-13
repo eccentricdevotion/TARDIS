@@ -17,6 +17,7 @@
 package me.eccentric_nz.TARDIS.chameleon;
 
 import java.util.Arrays;
+import java.util.List;
 import me.eccentric_nz.TARDIS.TARDIS;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
@@ -41,90 +42,94 @@ public class TARDISChameleonHelpGUI {
         // back
         ItemStack back = new ItemStack(Material.ARROW, 1);
         ItemMeta bk = back.getItemMeta();
-        bk.setDisplayName("Back to construction");
+        bk.setDisplayName(plugin.getChameleonGuis().getString("BACK_CONSTRUCT"));
         back.setItemMeta(bk);
         // help
         ItemStack info = new ItemStack(Material.BOWL, 1);
         ItemMeta io = info.getItemMeta();
-        io.setDisplayName("Info");
-        io.setLore(Arrays.asList("A custom chameleon preset", "is made up of 9 columns of", "4 blocks.", "We need to roll the columns", "out flat just like a map of", "the (Earth's) globe."));
+        io.setDisplayName(plugin.getChameleonGuis().getString("INFO"));
+        List<String> infoListOne = plugin.getChameleonGuis().getStringList("INFO_HELP_1");
+        io.setLore(Arrays.asList(infoListOne.get(0), infoListOne.get(1), infoListOne.get(2), infoListOne.get(3), infoListOne.get(4), infoListOne.get(5)));
         info.setItemMeta(io);
         // help
         ItemStack info2 = new ItemStack(Material.BOWL, 1);
         ItemMeta io2 = info2.getItemMeta();
-        io2.setDisplayName("Info");
-        io2.setLore(Arrays.asList("The order of the columns before", "they are 'unrolled' is shown below left.", "Click the 'View example template'", "button to see what they look like", "unrolled, ready for construction."));
+        io2.setDisplayName(plugin.getChameleonGuis().getString("INFO"));
+        List<String> infoListTwo = plugin.getChameleonGuis().getStringList("INFO_HELP_2");
+        io2.setLore(Arrays.asList(infoListTwo.get(0), infoListTwo.get(1), infoListTwo.get(2), infoListTwo.get(3), infoListTwo.get(4)));
         info2.setItemMeta(io2);
         // one
         ItemStack one = new ItemStack(Material.BOWL, 1);
         ItemMeta oe = one.getItemMeta();
         oe.setDisplayName("1");
-        oe.setLore(Arrays.asList("Left-side front column"));
+        oe.setLore(Arrays.asList(plugin.getChameleonGuis().getString("COL_L_FRONT")));
         one.setItemMeta(oe);
         // two
         ItemStack two = new ItemStack(Material.BOWL, 1);
         ItemMeta to = two.getItemMeta();
         to.setDisplayName("2");
-        to.setLore(Arrays.asList("Left-side middle column"));
+        to.setLore(Arrays.asList(plugin.getChameleonGuis().getString("COL_L_MIDDLE")));
         two.setItemMeta(to);
         // three
         ItemStack three = new ItemStack(Material.BOWL, 1);
         ItemMeta te = three.getItemMeta();
         te.setDisplayName("3");
-        te.setLore(Arrays.asList("Left-side back column"));
+        te.setLore(Arrays.asList(plugin.getChameleonGuis().getString("COL_L_BACK")));
         three.setItemMeta(te);
         // four
         ItemStack four = new ItemStack(Material.BOWL, 1);
         ItemMeta fr = four.getItemMeta();
         fr.setDisplayName("4");
-        fr.setLore(Arrays.asList("Back middle column"));
+        fr.setLore(Arrays.asList(plugin.getChameleonGuis().getString("COL_B_MIDDLE")));
         four.setItemMeta(fr);
         // five
         ItemStack five = new ItemStack(Material.BOWL, 1);
         ItemMeta fe = five.getItemMeta();
         fe.setDisplayName("5");
-        fe.setLore(Arrays.asList("Right-side back column"));
+        fe.setLore(Arrays.asList(plugin.getChameleonGuis().getString("COL_R_BACK")));
         five.setItemMeta(fe);
         // six
         ItemStack six = new ItemStack(Material.BOWL, 1);
         ItemMeta sx = six.getItemMeta();
         sx.setDisplayName("6");
-        sx.setLore(Arrays.asList("Right-side middle column"));
+        sx.setLore(Arrays.asList(plugin.getChameleonGuis().getString("COL_R_MIDDLE")));
         six.setItemMeta(sx);
         // seven
         ItemStack seven = new ItemStack(Material.BOWL, 1);
         ItemMeta sn = seven.getItemMeta();
         sn.setDisplayName("7");
-        sn.setLore(Arrays.asList("Right-side front column"));
+        sn.setLore(Arrays.asList(plugin.getChameleonGuis().getString("COL_R_FRONT")));
         seven.setItemMeta(sn);
         // eight
         ItemStack eight = new ItemStack(Material.BOWL, 1);
         ItemMeta et = eight.getItemMeta();
         et.setDisplayName("8");
-        et.setLore(Arrays.asList("Front middle (with door) column"));
+        et.setLore(Arrays.asList(plugin.getChameleonGuis().getString("COL_F_MIDDLE")));
         eight.setItemMeta(et);
         // nine
         ItemStack nine = new ItemStack(Material.BOWL, 1);
         ItemMeta ne = nine.getItemMeta();
         ne.setDisplayName("9");
-        ne.setLore(Arrays.asList("Centre (with lamp) column"));
+        ne.setLore(Arrays.asList(plugin.getChameleonGuis().getString("COL_C_LAMP")));
         nine.setItemMeta(ne);
         // grid
         ItemStack grid = new ItemStack(Material.BOWL, 1);
         ItemMeta gd = grid.getItemMeta();
-        gd.setDisplayName("Info");
-        gd.setLore(Arrays.asList("Position of chameleon columns", "looking down from above."));
+        gd.setDisplayName(plugin.getChameleonGuis().getString("INFO"));
+        List<String> infoListThree = plugin.getChameleonGuis().getStringList("INFO_HELP_3");
+        gd.setLore(Arrays.asList(infoListThree.get(0), infoListThree.get(1)));
         grid.setItemMeta(gd);
         // grid
         ItemStack column = new ItemStack(Material.BOWL, 1);
         ItemMeta cn = column.getItemMeta();
-        cn.setDisplayName("Info");
-        cn.setLore(Arrays.asList("One chameleon column", "looking from the side."));
+        cn.setDisplayName(plugin.getChameleonGuis().getString("INFO"));
+        List<String> infoListFour = plugin.getChameleonGuis().getStringList("INFO_HELP_4");
+        cn.setLore(Arrays.asList(infoListFour.get(0), infoListFour.get(1)));
         column.setItemMeta(cn);
         // example
         ItemStack example = new ItemStack(Material.BOWL, 1);
         ItemMeta ee = example.getItemMeta();
-        ee.setDisplayName("View example template");
+        ee.setDisplayName(plugin.getChameleonGuis().getString("VIEW_TEMP"));
         example.setItemMeta(ee);
         // one
         ItemStack o = new ItemStack(Material.BOWL, 1);

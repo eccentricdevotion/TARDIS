@@ -17,6 +17,7 @@
 package me.eccentric_nz.TARDIS.chameleon;
 
 import java.util.Arrays;
+import java.util.List;
 import me.eccentric_nz.TARDIS.TARDIS;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
@@ -41,99 +42,102 @@ public class TARDISChameleonTemplateGUI {
         // back button
         ItemStack back = new ItemStack(Material.ARROW, 1);
         ItemMeta bk = back.getItemMeta();
-        bk.setDisplayName("Back to help");
+        bk.setDisplayName(plugin.getChameleonGuis().getString("BACK_HELP"));
         back.setItemMeta(bk);
         // info
         ItemStack info = new ItemStack(Material.BOWL, 1);
         ItemMeta io = info.getItemMeta();
-        io.setDisplayName("Info");
-        io.setLore(Arrays.asList("This shows the default template", "for the Police Box preset.", "Hover over the numbers to see", "where the column is positioned."));
+        io.setDisplayName(plugin.getChameleonGuis().getString("INFO"));
+        List<String> infoListTemp = plugin.getChameleonGuis().getStringList("INFO_TEMPLATE");
+        io.setLore(Arrays.asList(infoListTemp.get(0), infoListTemp.get(1), infoListTemp.get(2), infoListTemp.get(3)));
         info.setItemMeta(io);
         // next button
         ItemStack next = new ItemStack(Material.ARROW, 1);
         ItemMeta nt = next.getItemMeta();
-        nt.setDisplayName("Go to construction...");
+        nt.setDisplayName(plugin.getChameleonGuis().getString("GO_CONSTRUCT"));
         next.setItemMeta(nt);
         // one
         ItemStack one = new ItemStack(Material.BOWL, 1);
         ItemMeta oe = one.getItemMeta();
         oe.setDisplayName("1");
-        oe.setLore(Arrays.asList("Left-side front column"));
+        oe.setLore(Arrays.asList(plugin.getChameleonGuis().getString("COL_L_FRONT")));
         one.setItemMeta(oe);
         // two
         ItemStack two = new ItemStack(Material.BOWL, 1);
         ItemMeta to = two.getItemMeta();
         to.setDisplayName("2");
-        to.setLore(Arrays.asList("Left-side middle column"));
+        to.setLore(Arrays.asList(plugin.getChameleonGuis().getString("COL_L_MIDDLE")));
         two.setItemMeta(to);
         // three
         ItemStack three = new ItemStack(Material.BOWL, 1);
         ItemMeta te = three.getItemMeta();
         te.setDisplayName("3");
-        te.setLore(Arrays.asList("Left-side back column"));
+        te.setLore(Arrays.asList(plugin.getChameleonGuis().getString("COL_L_BACK")));
         three.setItemMeta(te);
         // four
         ItemStack four = new ItemStack(Material.BOWL, 1);
         ItemMeta fr = four.getItemMeta();
         fr.setDisplayName("4");
-        fr.setLore(Arrays.asList("Back middle column"));
+        fr.setLore(Arrays.asList(plugin.getChameleonGuis().getString("COL_B_MIDDLE")));
         four.setItemMeta(fr);
         // five
         ItemStack five = new ItemStack(Material.BOWL, 1);
         ItemMeta fe = five.getItemMeta();
         fe.setDisplayName("5");
-        fe.setLore(Arrays.asList("Right-side back column"));
+        fe.setLore(Arrays.asList(plugin.getChameleonGuis().getString("COL_R_BACK")));
         five.setItemMeta(fe);
         // six
         ItemStack six = new ItemStack(Material.BOWL, 1);
         ItemMeta sx = six.getItemMeta();
         sx.setDisplayName("6");
-        sx.setLore(Arrays.asList("Right-side middle column"));
+        sx.setLore(Arrays.asList(plugin.getChameleonGuis().getString("COL_R_MIDDLE")));
         six.setItemMeta(sx);
         // seven
         ItemStack seven = new ItemStack(Material.BOWL, 1);
         ItemMeta sn = seven.getItemMeta();
         sn.setDisplayName("7");
-        sn.setLore(Arrays.asList("Right-side front column"));
+        sn.setLore(Arrays.asList(plugin.getChameleonGuis().getString("COL_R_FRONT")));
         seven.setItemMeta(sn);
         // eight
         ItemStack eight = new ItemStack(Material.BOWL, 1);
         ItemMeta et = eight.getItemMeta();
         et.setDisplayName("8");
-        et.setLore(Arrays.asList("Front middle (with door) column"));
+        et.setLore(Arrays.asList(plugin.getChameleonGuis().getString("COL_F_MIDDLE")));
         eight.setItemMeta(et);
         // nine
         ItemStack nine = new ItemStack(Material.BOWL, 1);
         ItemMeta ne = nine.getItemMeta();
         ne.setDisplayName("9");
-        ne.setLore(Arrays.asList("Centre (with lamp) column"));
+        ne.setLore(Arrays.asList(plugin.getChameleonGuis().getString("COL_C_LAMP")));
         nine.setItemMeta(ne);
         // redstone lamp
         ItemStack lamp = new ItemStack(Material.REDSTONE_LAMP_OFF, 1);
         ItemMeta lp = lamp.getItemMeta();
-        lp.setDisplayName("Police Box lamp");
-        lp.setLore(Arrays.asList("Click this block to switch", "between available lamp blocks."));
+        List<String> lampList = plugin.getChameleonGuis().getStringList("PB_LAMP");
+        lp.setDisplayName(lampList.get(0));
+        lp.setLore(Arrays.asList(lampList.get(1), lampList.get(2)));
         lamp.setItemMeta(lp);
         // redstone block
         ItemStack power = new ItemStack(Material.REDSTONE_BLOCK, 1);
         ItemMeta pr = power.getItemMeta();
-        pr.setDisplayName("(Optional) power block");
+        pr.setDisplayName(plugin.getChameleonGuis().getString("POWER"));
         power.setItemMeta(pr);
         // stone slab
         ItemStack slab = new ItemStack(Material.STEP, 1);
         ItemMeta sb = slab.getItemMeta();
-        sb.setDisplayName("Police Box sign (slab)");
+        sb.setDisplayName(plugin.getChameleonGuis().getString("PB_SIGN"));
         slab.setItemMeta(sb);
         // blue wool
         ItemStack blue = new ItemStack(Material.WOOL, 1, (byte) 11);
         ItemMeta be = blue.getItemMeta();
-        be.setDisplayName("Police Box wall");
+        be.setDisplayName(plugin.getChameleonGuis().getString("PB_WALL"));
         blue.setItemMeta(be);
         // iron door
         ItemStack door = new ItemStack(Material.IRON_DOOR, 1);
         ItemMeta dr = door.getItemMeta();
-        dr.setDisplayName("Police Box door");
-        dr.setLore(Arrays.asList("Click this block to switch", "between available door blocks."));
+        List<String> doorList = plugin.getChameleonGuis().getStringList("PB_DOOR");
+        dr.setDisplayName(doorList.get(0));
+        dr.setLore(Arrays.asList(doorList.get(1), doorList.get(2)));
         door.setItemMeta(dr);
 
         ItemStack[] is = {

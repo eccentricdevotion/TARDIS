@@ -17,6 +17,7 @@
 package me.eccentric_nz.TARDIS.chameleon;
 
 import java.util.Arrays;
+import java.util.List;
 import me.eccentric_nz.TARDIS.TARDIS;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
@@ -43,37 +44,33 @@ public class TARDISChameleonConstructorGUI {
         // back
         ItemStack back = new ItemStack(Material.ARROW, 1);
         ItemMeta bk = back.getItemMeta();
-//        bk.setDisplayName(plugin.getLanguage().getString("Back"));
-        bk.setDisplayName("Back to presets");
+        bk.setDisplayName(plugin.getChameleonGuis().getString("BACK_PRESETS"));
         back.setItemMeta(bk);
         is[0] = back;
         // help
         ItemStack help = new ItemStack(Material.BOWL, 1);
         ItemMeta hp = help.getItemMeta();
-//        hp.setDisplayName(plugin.getLanguage().getString("Help"));
-        hp.setDisplayName("Help");
+        hp.setDisplayName(plugin.getChameleonGuis().getString("HELP"));
         help.setItemMeta(hp);
         is[3] = help;
         // info
         ItemStack info = new ItemStack(Material.BOWL, 1);
         ItemMeta io = info.getItemMeta();
-//        hp.setDisplayName(plugin.getLanguage().getString("Help"));
-        io.setDisplayName("Info");
-        io.setLore(Arrays.asList("Click the lamp slot to switch", "between all available lamps.", "Click the door slots to switch", "between all available doors."));
+        io.setDisplayName(plugin.getChameleonGuis().getString("INFO"));
+        List<String> infoList = plugin.getChameleonGuis().getStringList("INFO_CONSTRUCT");
+        io.setLore(Arrays.asList(infoList.get(0), infoList.get(1), infoList.get(2), infoList.get(3)));
         info.setItemMeta(io);
         is[4] = info;
         // abort
         ItemStack abort = new ItemStack(Material.BOWL, 1);
         ItemMeta at = abort.getItemMeta();
-//        at.setDisplayName(plugin.getLanguage().getString("Close"));
-        at.setDisplayName("Abort ");
+        at.setDisplayName(plugin.getChameleonGuis().getString("ABORT"));
         abort.setItemMeta(at);
         is[6] = abort;
         // save button
         ItemStack save = new ItemStack(Material.BOWL, 1);
         ItemMeta se = save.getItemMeta();
-//        se.setDisplayName(plugin.getLanguage().getString("Save construction"));
-        se.setDisplayName("Save construction");
+        se.setDisplayName(plugin.getChameleonGuis().getString("SAVE"));
         save.setItemMeta(se);
         is[8] = save;
         // lamp button

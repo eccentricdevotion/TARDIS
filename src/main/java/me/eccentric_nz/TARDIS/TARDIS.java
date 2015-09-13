@@ -130,6 +130,7 @@ public class TARDIS extends JavaPlugin {
     private FileConfiguration kitsConfig;
     private FileConfiguration language;
     private FileConfiguration signs;
+    private FileConfiguration chameleonGuis;
     private FileConfiguration recipesConfig;
     private FileConfiguration roomsConfig;
     private FileConfiguration tagConfig;
@@ -225,6 +226,7 @@ public class TARDIS extends JavaPlugin {
                 saveDefaultConfig();
                 loadCustomConfigs();
                 loadSigns();
+                loadChameleonGUIs();
                 new TARDISConfiguration(this).checkConfig();
                 new TARDISRecipesUpdater(this).addRecipes();
                 loadLanguage();
@@ -510,6 +512,22 @@ public class TARDIS extends JavaPlugin {
         }
         // load the language
         this.signs = YamlConfiguration.loadConfiguration(file);
+    }
+
+    /**
+     * Loads the chamelon_guis file.
+     */
+    private void loadChameleonGUIs() {
+        // check file exists
+        File file;
+        file = new File(getDataFolder() + File.separator + "language" + File.separator + "chameleon_guis.yml");
+        if (!file.exists()) {
+            // copy sign file
+            TARDISFileCopier.copy(getDataFolder() + File.separator + "language" + File.separator + "chameleon_guis.yml", getResource("chameleon_guis.yml"), true, pluginName);
+            file = new File(getDataFolder() + File.separator + "language" + File.separator + "chameleon_guis.yml");
+        }
+        // load the language
+        this.chameleonGuis = YamlConfiguration.loadConfiguration(file);
     }
 
     /**
@@ -959,6 +977,10 @@ public class TARDIS extends JavaPlugin {
 
     public FileConfiguration getSigns() {
         return signs;
+    }
+
+    public FileConfiguration getChameleonGuis() {
+        return chameleonGuis;
     }
 
     public TARDISUtils getUtils() {
