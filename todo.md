@@ -3,8 +3,7 @@
 ##Current version `3.4-beta-1`
 1. Fix bugs
 2. Fry player/mob health if they venture into Junk TARDIS effects?
-4. Limited upgrades
-5. Test area parking space variations
+3. Test area parking space variations
 
 ##Upcoming version `3.5`
 * TARDISSonicBlaster addon?

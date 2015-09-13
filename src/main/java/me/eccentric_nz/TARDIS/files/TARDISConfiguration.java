@@ -108,6 +108,7 @@ public class TARDISConfiguration {
         boolOptions.put("creation.use_block_stack", false);
         boolOptions.put("creation.use_clay", false);
         boolOptions.put("debug", false);
+        boolOptions.put("desktop.check_blocks_before_upgrade", false);
         boolOptions.put("growth.return_room_seed", true);
         boolOptions.put("growth.rooms_require_blocks", false);
         boolOptions.put("junk.enabled", true);
@@ -250,6 +251,7 @@ public class TARDISConfiguration {
         intOptions.put("creation.count", 0);
         intOptions.put("creation.inventory_group", 0);
         intOptions.put("creation.tips_limit", 400);
+        intOptions.put("desktop.block_change_percent", 25);
         intOptions.put("growth.ars_limit", 1);
         intOptions.put("growth.gravity_max_distance", 16);
         intOptions.put("growth.gravity_max_velocity", 5);
@@ -614,19 +616,17 @@ public class TARDISConfiguration {
             List<String> LAMP_BLOCKS = Arrays.asList("TORCH", "REDSTONE_TORCH_ON", "GLOWSTONE", "JACK_O_LANTERN", "REDSTONE_LAMP_OFF", "SEA_LANTERN");
             blocks_config.set("lamp_blocks", LAMP_BLOCKS);
             i++;
-        } else {
-            if (blocks_config.getStringList("lamp_blocks").get(0).equals("50")) {
-                List<String> lstrs = new ArrayList<String>();
-                for (int l : blocks_config.getIntegerList("lamp_blocks")) {
-                    try {
-                        lstrs.add(Material.getMaterial(l).toString());
-                    } catch (Exception e) {
-                        plugin.debug("Invalid Material ID in lamp_blocks section.");
-                    }
+        } else if (blocks_config.getStringList("lamp_blocks").get(0).equals("50")) {
+            List<String> lstrs = new ArrayList<String>();
+            for (int l : blocks_config.getIntegerList("lamp_blocks")) {
+                try {
+                    lstrs.add(Material.getMaterial(l).toString());
+                } catch (Exception e) {
+                    plugin.debug("Invalid Material ID in lamp_blocks section.");
                 }
-                blocks_config.set("lamp_blocks", lstrs);
-                i++;
             }
+            blocks_config.set("lamp_blocks", lstrs);
+            i++;
         }
         if (!blocks_config.contains("under_door_blocks")) {
             List<Integer> UNDER_BLOCKS = Arrays.asList(0, 6, 8, 9, 10, 11, 18, 20, 26, 27, 28, 29, 30, 31, 32, 33, 34, 37, 38, 39, 40, 44, 46, 50, 51, 53, 54, 55, 58, 59, 60, 61, 62, 63, 64, 65, 66, 67, 68, 69, 70, 71, 72, 75, 76, 77, 78, 79, 81, 83, 85, 89, 92, 93, 94, 96, 101, 102, 104, 105, 106, 107, 108, 109, 111, 113, 114, 115, 116, 117, 118, 119, 120, 122, 126, 128, 130, 131, 132, 134, 135, 136, 161, 171);

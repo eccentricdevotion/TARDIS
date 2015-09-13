@@ -96,6 +96,10 @@ preferences:
         only_tardis_worlds: true
     render_entities: false
     spawn_random_monsters: true
+# desktop theme
+desktop:
+    check_blocks_before_upgrade: false
+    block_change_percent: 25
 # circuits
 circuits:
     damage: false

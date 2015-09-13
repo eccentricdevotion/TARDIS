@@ -18,6 +18,7 @@ package me.eccentric_nz.TARDIS.desktop;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.enumeration.CONSOLES;
+import me.eccentric_nz.TARDIS.enumeration.SCHEMATIC;
 import me.eccentric_nz.TARDIS.listeners.TARDISMenuListener;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -70,11 +71,12 @@ public class TARDISThemeMenuListener extends TARDISMenuListener implements Liste
                         String perm = CONSOLES.SCHEMATICFor(choice.getType()).getPermission();
                         if (p.hasPermission("tardis." + perm)) {
                             // remember the upgrade choice
+                            SCHEMATIC schm = CONSOLES.SCHEMATICFor(perm);
                             TARDISUpgradeData tud = plugin.getTrackerKeeper().getUpgrades().get(p.getUniqueId());
                             int upgrade = plugin.getArtronConfig().getInt("upgrades." + perm);
-                            int needed = (tud.getPrevious().equals(tud.getSchematic())) ? upgrade / 2 : upgrade;
+                            int needed = (tud.getPrevious().getPermission().equals(schm.getPermission())) ? upgrade / 2 : upgrade;
                             if (tud.getLevel() > needed) {
-                                tud.setSchematic(CONSOLES.SCHEMATICFor(perm));
+                                tud.setSchematic(schm);
                                 plugin.getTrackerKeeper().getUpgrades().put(p.getUniqueId(), tud);
                                 // open the wall block GUI
                                 wall(p);

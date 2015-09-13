@@ -45,6 +45,14 @@ public class TARDISThemeProcessor {
     public void changeDesktop() {
         // get upgrade data
         TARDISUpgradeData tud = plugin.getTrackerKeeper().getUpgrades().get(uuid);
+        // if configured check whether there are still any blocks left
+        if (plugin.getConfig().getBoolean("desktop.check_blocks_before_upgrade")) {
+            TARDISUpgradeBlockScanner scanner = new TARDISUpgradeBlockScanner(plugin, tud, uuid);
+            if (scanner.check()) {
+                TARDISMessage.send(plugin.getServer().getPlayer(uuid), "UPGRADE_PERCENT_BLOCKS", plugin.getConfig().getInt("desktop.block_change_percent") + "");
+                return;
+            }
+        }
         // check if there are any rooms that need to be jettisoned
         if (compare(tud.getPrevious(), tud.getSchematic())) {
             // we need more space!
