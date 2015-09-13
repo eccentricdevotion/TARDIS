@@ -73,6 +73,8 @@ public class TARDISPrefsCommands implements CommandExecutor {
         firstArgs.add("quotes");
         firstArgs.add("renderer");
         firstArgs.add("sfx");
+        firstArgs.add("siege_floor");
+        firstArgs.add("siege_wall");
         firstArgs.add("sign");
         firstArgs.add("sonic");
         firstArgs.add("submarine");
@@ -144,7 +146,7 @@ public class TARDISPrefsCommands implements CommandExecutor {
                     if (pref.equals("eps_message")) {
                         return new TARDISEPSMessageCommand(plugin).setMessage(player, args, qf);
                     }
-                    if (pref.equals("wall") || pref.equals("floor")) {
+                    if (pref.equals("wall") || pref.equals("floor") || pref.equals("siege_wall") || pref.equals("siege_floor")) {
                         return new TARDISFloorCommand(plugin).setFloorOrWallBlock(player, args, qf);
                     }
                     if (pref.equals("flight")) {

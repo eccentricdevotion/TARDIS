@@ -19,7 +19,6 @@ package me.eccentric_nz.TARDIS.siegemode;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.builders.TARDISMaterialisationData;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
@@ -27,7 +26,6 @@ import me.eccentric_nz.TARDIS.database.ResultSetCurrentLocation;
 import me.eccentric_nz.TARDIS.database.ResultSetPlayerPrefs;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import me.eccentric_nz.TARDIS.desktop.TARDISUpgradeData;
-import me.eccentric_nz.TARDIS.desktop.TARDISWallFloorRunnable;
 import me.eccentric_nz.TARDIS.enumeration.SCHEMATIC;
 import me.eccentric_nz.TARDIS.rooms.TARDISWalls.Pair;
 import me.eccentric_nz.TARDIS.utility.TARDISLocationGetters;
@@ -143,26 +141,7 @@ public class TARDISSiegeMode {
 
             }
             if (plugin.getConfig().getBoolean("siege.texture")) {
-                UUID uuid = p.getUniqueId();
-                HashMap<String, Object> wherepp = new HashMap<String, Object>();
-                wherepp.put("uuid", rs.getUuid().toString());
-                ResultSetPlayerPrefs rspp = new ResultSetPlayerPrefs(plugin, wherepp);
-                if (rspp.resultSet()) {
-                    Pair wall = plugin.getTardisWalls().blocks.get(rspp.getWall());
-                    Pair floor = plugin.getTardisWalls().blocks.get(rspp.getFloor());
-                    // change to a saved theme
-                    SCHEMATIC schm = rs.getSchematic();
-                    TARDISUpgradeData tud = new TARDISUpgradeData();
-                    tud.setWall(wall.getType().toString() + ":" + wall.getData());
-                    tud.setFloor(floor.getType().toString() + ":" + floor.getData());
-                    tud.setSchematic(schm);
-                    tud.setPrevious(schm);
-                    // start the rebuild
-                    TARDISWallFloorRunnable ttr = new TARDISWallFloorRunnable(plugin, uuid, tud);
-                    long delay = Math.round(20 / plugin.getConfig().getDouble("growth.room_speed"));
-                    int task = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, ttr, 5L, delay);
-                    ttr.setTaskID(task);
-                }
+                changeTextures(rs.getUuid().toString(), rs.getSchematic(), p, false);
             }
             TARDISMessage.send(p, "SIEGE_OFF");
         } else {
@@ -224,21 +203,47 @@ public class TARDISSiegeMode {
                 }
             }
             if (plugin.getConfig().getBoolean("siege.texture")) {
-                // change to a dark theme
-                SCHEMATIC schm = rs.getSchematic();
-                TARDISUpgradeData tud = new TARDISUpgradeData();
-                tud.setFloor("WOOL:15");
-                tud.setWall("WOOL:7");
-                tud.setSchematic(schm);
-                tud.setPrevious(schm);
-                // start the rebuild
-                TARDISWallFloorRunnable ttr = new TARDISWallFloorRunnable(plugin, p.getUniqueId(), tud);
-                long delay = Math.round(20 / plugin.getConfig().getDouble("growth.room_speed"));
-                int task = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, ttr, 5L, delay);
-                ttr.setTaskID(task);
+                changeTextures(rs.getUuid().toString(), rs.getSchematic(), p, true);
             }
         }
         // update the database
         new QueryFactory(plugin).doUpdate("tardis", set, wheres);
+    }
+
+    private void changeTextures(String uuid, SCHEMATIC schm, Player p, boolean toSiege) {
+        HashMap<String, Object> wherepp = new HashMap<String, Object>();
+        wherepp.put("uuid", uuid);
+        ResultSetPlayerPrefs rspp = new ResultSetPlayerPrefs(plugin, wherepp);
+        if (rspp.resultSet()) {
+            Pair wall = plugin.getTardisWalls().blocks.get(rspp.getWall());
+            Pair floor = plugin.getTardisWalls().blocks.get(rspp.getFloor());
+            String sw = rspp.getSiegeWall();
+            String sf = rspp.getSiegeFloor();
+            if (plugin.getConfig().getBoolean("creation.use_clay")) {
+                if (sw.equals("GRAY_CLAY") || sw.equals("GREY_CLAY")) {
+                    sw = "GRAY_WOOL";
+                }
+            }
+            if (plugin.getConfig().getBoolean("creation.use_clay")) {
+                if (sf.equals("BLACK_CLAY")) {
+                    sf = "BLACK_WOOL";
+                }
+            }
+            Pair siege_wall = plugin.getTardisWalls().blocks.get(sw);
+            Pair siege_floor = plugin.getTardisWalls().blocks.get(sf);
+            // change to a saved theme
+            TARDISUpgradeData tud = new TARDISUpgradeData();
+            tud.setWall(wall.getType().toString() + ":" + wall.getData());
+            tud.setFloor(floor.getType().toString() + ":" + floor.getData());
+            tud.setSiegeWall(siege_wall.getType().toString() + ":" + siege_wall.getData());
+            tud.setSiegeFloor(siege_floor.getType().toString() + ":" + siege_floor.getData());
+            tud.setSchematic(schm);
+            tud.setPrevious(schm);
+            // start the rebuild
+            TARDISSiegeWallFloorRunnable ttr = new TARDISSiegeWallFloorRunnable(plugin, p.getUniqueId(), tud, toSiege);
+            long delay = Math.round(20 / plugin.getConfig().getDouble("growth.room_speed"));
+            int task = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, ttr, 5L, delay);
+            ttr.setTaskID(task);
+        }
     }
 }

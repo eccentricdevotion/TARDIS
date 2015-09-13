@@ -35,7 +35,7 @@ import org.bukkit.command.TabCompleter;
 public class TARDISPrefsTabComplete extends TARDISCompleter implements TabCompleter {
 
     private final TARDIS plugin;
-    private final ImmutableList<String> ROOT_SUBS = ImmutableList.of("auto", "auto_siege", "build", "beacon", "ctm", "difficulty", "dnd", "eps", "eps_message", "farm", "flight", "floor", "hads", "isomorphic", "key", "key_menu", "lamp", "language", "lanterns", "minecart", "quotes", "renderer", "sfx", "sign", "sonic", "submarine", "travelbar", "wall", "wool_lights");
+    private final ImmutableList<String> ROOT_SUBS = ImmutableList.of("auto", "auto_siege", "build", "beacon", "ctm", "difficulty", "dnd", "eps", "eps_message", "farm", "flight", "floor", "hads", "isomorphic", "key", "key_menu", "lamp", "language", "lanterns", "minecart", "quotes", "renderer", "sfx", "siege_floor", "siege_wall", "sign", "sonic", "submarine", "travelbar", "wall", "wool_lights");
     private final ImmutableList<String> DIFF_SUBS = ImmutableList.of("easy", "hard");
     private final ImmutableList<String> ONOFF_SUBS = ImmutableList.of("on", "off");
     private final ImmutableList<String> FLIGHT_SUBS = ImmutableList.of("normal", "regulator", "manual");
@@ -75,7 +75,7 @@ public class TARDISPrefsTabComplete extends TARDISCompleter implements TabComple
             if (sub.equals("add") || sub.equals("remove")) {
                 // return null to default to online player name matching
                 return null;
-            } else if (sub.equals("floor") || sub.equals("wall")) {
+            } else if (sub.equals("floor") || sub.equals("wall") || sub.equals("siege_floor") || sub.equals("siege_wall")) {
                 return partial(lastArg, MAT_SUBS);
             } else if (sub.equals("key")) {
                 return partial(lastArg, KEY_SUBS);

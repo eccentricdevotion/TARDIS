@@ -53,6 +53,8 @@ public class ResultSetPlayerPrefs {
     private String language;
     private String wall;
     private String floor;
+    private String siegeWall;
+    private String siegeFloor;
     private boolean buildOn;
     private boolean epsOn;
     private String epsMessage;
@@ -140,6 +142,8 @@ public class ResultSetPlayerPrefs {
                 }
                 this.wall = rs.getString("wall");
                 this.floor = rs.getString("floor");
+                this.siegeWall = rs.getString("siege_wall");
+                this.siegeFloor = rs.getString("siege_floor");
                 this.buildOn = rs.getBoolean("build_on");
                 this.epsOn = rs.getBoolean("eps_on");
                 // if empty use default
@@ -231,6 +235,14 @@ public class ResultSetPlayerPrefs {
 
     public String getFloor() {
         return floor;
+    }
+
+    public String getSiegeWall() {
+        return siegeWall;
+    }
+
+    public String getSiegeFloor() {
+        return siegeFloor;
     }
 
     public boolean isBuildOn() {

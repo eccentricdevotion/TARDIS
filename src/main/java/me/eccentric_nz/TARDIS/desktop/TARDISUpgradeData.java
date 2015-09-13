@@ -28,6 +28,8 @@ public class TARDISUpgradeData {
     private SCHEMATIC previous;
     private String wall;
     private String floor;
+    private String siegeWall;
+    private String siegeFloor;
     private int level;
 
     public SCHEMATIC getSchematic() {
@@ -60,6 +62,22 @@ public class TARDISUpgradeData {
 
     public void setFloor(String floor) {
         this.floor = floor;
+    }
+
+    public String getSiegeWall() {
+        return siegeWall;
+    }
+
+    public void setSiegeWall(String siegeWall) {
+        this.siegeWall = siegeWall;
+    }
+
+    public String getSiegeFloor() {
+        return siegeFloor;
+    }
+
+    public void setSiegeFloor(String siegeFloor) {
+        this.siegeFloor = siegeFloor;
     }
 
     public int getLevel() {

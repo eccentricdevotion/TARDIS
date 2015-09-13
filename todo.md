@@ -1,15 +1,12 @@
 #TODO
 
-##Current version `3.3.1`
+##Current version `3.4-beta-1`
 1. Fix bugs
-2. Junk TARDIS - _started_
-   * Fry player/mob health if they venture into Junk TARDIS effects
-3. Player configurable choice of (2) blocks that are changed during siege mode engagement
-   * Should default to wall / floor if not configured
+2. Fry player/mob health if they venture into Junk TARDIS effects?
 4. Limited upgrades
 5. Test area parking space variations
 
-##Upcoming version `3.4`
+##Upcoming version `3.5`
 * TARDISSonicBlaster addon?
 * ?
 
