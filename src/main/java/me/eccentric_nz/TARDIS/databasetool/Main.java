@@ -186,7 +186,7 @@ public class Main {
                                     bw.write(str);
                                     break;
                                 case gravity_well:
-                                    str = String.format(SQL.VALUES.get(i), rs.getInt("g_id"), rs.getInt("tardis_id"), rs.getString("location"), rs.getString("direction"), rs.getInt("disatnce"), rs.getFloat("velocity")) + end;
+                                    str = String.format(SQL.VALUES.get(i), rs.getInt("g_id"), rs.getInt("tardis_id"), rs.getString("location"), rs.getString("direction"), rs.getInt("distance"), rs.getFloat("velocity")) + end;
                                     bw.write(str);
                                     break;
                                 case homes:
