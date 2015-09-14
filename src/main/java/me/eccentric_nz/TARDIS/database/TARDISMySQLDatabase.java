@@ -52,7 +52,8 @@ public class TARDISMySQLDatabase {
             statement = connection.createStatement();
 
             for (String query : SQL.CREATES) {
-                statement.executeUpdate(query);
+                String subbed = String.format(query, plugin.getConfig().getString("storage.mysql.prefix"));
+                statement.executeUpdate(subbed);
             }
 
             // update tables
