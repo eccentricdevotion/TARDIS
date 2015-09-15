@@ -147,7 +147,7 @@
                     </replacements>
                 </configuration>
             </plugin>
-            <!-- Manifest generation for examiner GUI -->
+            <!-- Manifest generation for database conversion tool -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-jar-plugin</artifactId>

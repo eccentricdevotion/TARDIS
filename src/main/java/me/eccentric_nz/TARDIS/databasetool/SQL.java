@@ -154,8 +154,4 @@ public class SQL {
     public static final String DUMP = "-- Dumping data for table ";
     public static final String STRUCTURE = "-- Table structure for table ";
     public static final String SEPARATOR = "-- --------------------------------------------------------";
-
-    private static String getPrefix() {
-        return "";
-    }
 }
