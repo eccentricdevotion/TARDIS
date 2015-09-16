@@ -61,7 +61,7 @@ public class TARDISConsoleLoader {
         // PYRAMID schematic supplied by airomis (player at thatsnotacreeper.com)
         CONSOLES.getByNames().put("PYRAMID", new SCHEMATIC("SANDSTONE_STAIRS", "pyramid", "A Sandstone Pyramid Console", true, false, true, false, false));
         // MASTER's schematic supplied by macdja38 at pvpcraft.ca
-        CONSOLES.getByNames().put("MASTER", new SCHEMATIC("NETHER_BRICK", "master", "The Master's Console", true, true, true, false, false));
+        CONSOLES.getByNames().put("MASTER", new SCHEMATIC("NETHER_BRICK", "master", "The Master's Console", false, true, true, false, false));
         for (final String console : plugin.getCustomConsolesConfig().getKeys(false)) {
             if (plugin.getCustomConsolesConfig().getBoolean(console + ".enabled")) {
                 // check that the .tschm file exists

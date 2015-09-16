@@ -505,8 +505,8 @@ public class TARDISFullThemeRunnable extends TARDISThemeRunnable implements Runn
                 }
                 if (type.equals(Material.CAKE_BLOCK)) {
                     /*
-                     * This block will be converted to a lever by
-                     * setBlock(), but remember it so we can use it as the handbrake!
+                     * This block will be converted to a lever by setBlock(),
+                     * but remember it so we can use it as the handbrake!
                      */
                     String handbrakeloc = TARDISLocationGetters.makeLocationStr(world, x, y, z);
                     qf.insertSyncControl(id, 0, handbrakeloc, 0);
@@ -593,8 +593,8 @@ public class TARDISFullThemeRunnable extends TARDISThemeRunnable implements Runn
                 if (type.equals(Material.COMMAND) || ((tud.getSchematic().getPermission().equals("bigger") || tud.getSchematic().getPermission().equals("deluxe") || tud.getSchematic().getPermission().equals("twelfth")) && type.equals(Material.BEACON))) {
                     /*
                      * command block - remember it to spawn the creeper on.
-                     * could also be a beacon block, as the creeper sits
-                     * over the beacon in the deluxe and bigger consoles.
+                     * could also be a beacon block, as the creeper sits over
+                     * the beacon in the deluxe and bigger consoles.
                      */
                     String creeploc = world.getName() + ":" + (x + 0.5) + ":" + y + ":" + (z + 0.5);
                     set.put("creeper", creeploc);
@@ -607,7 +607,8 @@ public class TARDISFullThemeRunnable extends TARDISThemeRunnable implements Runn
                 if (type.equals(Material.WOOD_BUTTON)) {
                     /*
                      * wood button will be coverted to the correct id by
-                     * setBlock(), but remember it for the Artron Energy Capacitor.
+                     * setBlock(), but remember it for the Artron Energy
+                     * Capacitor.
                      */
                     String woodbuttonloc = TARDISLocationGetters.makeLocationStr(world, x, y, z);
                     qf.insertSyncControl(id, 6, woodbuttonloc, 0);
@@ -730,7 +731,7 @@ public class TARDISFullThemeRunnable extends TARDISThemeRunnable implements Runn
             list.add(new TARDISARSJettison(chunk, 1, 4, 5));
             list.add(new TARDISARSJettison(chunk, 1, 5, 4));
             list.add(new TARDISARSJettison(chunk, 1, 5, 5));
-        } else if (prev.getPermission().equals("deluxe") || prev.getPermission().equals("eleventh")) {
+        } else if (prev.getPermission().equals("deluxe") || prev.getPermission().equals("eleventh") || prev.getPermission().equals("master")) {
             if (next.getPermission().equals("bigger") || next.getPermission().equals("redstone") || next.getPermission().equals("twelfth")) {
                 // the 4 chunks on the level above
                 list.add(new TARDISARSJettison(chunk, 2, 4, 4));

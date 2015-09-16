@@ -109,17 +109,16 @@ public class TARDISThemeProcessor {
         if (rs.resultSet()) {
             String json = rs.getJson();
             int[][][] grid = TARDISARSMethods.getGridFromJSON(json);
-            if (prev.getPermission().equals("ars") || prev.getPermission().equals("budget") || prev.getPermission().equals("plank") || prev.getPermission().equals("steampunk") || prev.getPermission().equals("tom") || prev.getPermission().equals("war")) {
+            if (prev.getPermission().equals("ars") || prev.getPermission().equals("budget") || prev.getPermission().equals("plank") || prev.getPermission().equals("steampunk") || prev.getPermission().equals("tom") || prev.getPermission().equals("war") || prev.getPermission().equals("pyramid")) {
                 if (next.getPermission().equals("bigger") || next.getPermission().equals("redstone") || next.getPermission().equals("twelfth")) {
                     return (grid[1][4][5] != 1 || grid[1][5][4] != 1 || grid[1][5][5] != 1);
-                } else if (next.getPermission().equals("deluxe") || next.getPermission().equals("eleventh")) {
-
+                } else if (next.getPermission().equals("deluxe") || next.getPermission().equals("eleventh") || next.getPermission().equals("master")) {
                     return (grid[1][4][5] != 1 || grid[1][5][4] != 1 || grid[1][5][5] != 1 || grid[2][4][4] != 1 || grid[2][4][5] != 1 || grid[2][5][4] != 1 || grid[2][5][5] != 1);
                 } else {
                     return false;
                 }
             } else if (prev.getPermission().equals("bigger") || prev.getPermission().equals("redstone") || prev.getPermission().equals("twelfth")) {
-                if (next.getPermission().equals("deluxe") || next.getPermission().equals("eleventh")) {
+                if (next.getPermission().equals("deluxe") || next.getPermission().equals("eleventh") || next.getPermission().equals("master")) {
                     return (grid[2][4][4] != 1 || grid[2][4][5] != 1 || grid[2][5][4] != 1 || grid[2][5][5] != 1);
                 } else {
                     return false;
