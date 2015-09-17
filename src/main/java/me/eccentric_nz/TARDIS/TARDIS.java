@@ -225,11 +225,11 @@ public class TARDIS extends JavaPlugin {
                 }
                 saveDefaultConfig();
                 loadCustomConfigs();
+                loadLanguage();
                 loadSigns();
                 loadChameleonGUIs();
                 new TARDISConfiguration(this).checkConfig();
                 new TARDISRecipesUpdater(this).addRecipes();
-                loadLanguage();
                 prefix = getConfig().getString("storage.mysql.prefix");
                 loadDatabase();
                 // update database add and populate uuid fields
