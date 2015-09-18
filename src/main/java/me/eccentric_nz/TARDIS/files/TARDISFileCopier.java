@@ -86,7 +86,7 @@ public class TARDISFileCopier {
         String zeronstr = basepath + "zero.tschm";
         copy(zeronstr, plugin.getResource("zero.tschm"), false, plugin.getPluginName());
         String junknstr = basepath + "junk.tschm";
-        copy(junknstr, plugin.getResource("junk.tschm"), false, plugin.getPluginName());
+        copy(junknstr, plugin.getResource("junk.tschm"), true, plugin.getPluginName());
         String tmpnstr = userbasepath + "template.tschm";
         copy(tmpnstr, plugin.getResource("template.tschm"), false, plugin.getPluginName());
     }

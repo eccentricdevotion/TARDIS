@@ -255,7 +255,7 @@ public class TARDISJunkControlListener implements Listener {
                 txt = "0";
             }
             int multiplier = repeaterMap.get(r.getData());
-            int positiveNegative = (c.getData() == 0) ? 1 : -1;
+            int positiveNegative = (c.getData() == 3) ? 1 : -1;
             // get current coord
             int current = TARDISNumberParsers.parseInt(txt);
             // increment / decrement sign coord value
