@@ -98,12 +98,10 @@ public class TARDISBuilderInner {
         int starty;
         if (below) {
             starty = 15;
+        } else if (schm.getPermission().equals("redstone")) {
+            starty = 65;
         } else {
-            if (schm.getPermission().equals("redstone")) {
-                starty = 65;
-            } else {
-                starty = 64;
-            }
+            starty = 64;
         }
         String directory = (schm.isCustom()) ? "user_schematics" : "schematics";
         String path = plugin.getDataFolder() + File.separator + directory + File.separator + schm.getPermission() + ".tschm";
@@ -257,10 +255,8 @@ public class TARDISBuilderInner {
                                             type = floor_type;
                                             data = floor_data;
                                     }
-                                } else {
-                                    if (plugin.getConfig().getBoolean("creation.use_clay")) {
-                                        type = Material.STAINED_CLAY;
-                                    }
+                                } else if (plugin.getConfig().getBoolean("creation.use_clay")) {
+                                    type = Material.STAINED_CLAY;
                                 }
                                 break;
                             default:
@@ -320,7 +316,8 @@ public class TARDISBuilderInner {
                     if (type.equals(Material.CAKE_BLOCK) && !schm.getPermission().equals("junk")) {
                         /*
                          * This block will be converted to a lever by
-                         * setBlock(), but remember it so we can use it as the handbrake!
+                         * setBlock(), but remember it so we can use it as the
+                         * handbrake!
                          */
                         String handbrakeloc = TARDISLocationGetters.makeLocationStr(world, x, y, z);
                         qf.insertSyncControl(dbID, 0, handbrakeloc, 0);
@@ -406,7 +403,8 @@ public class TARDISBuilderInner {
                     }
                     if (type.equals(Material.WOOD_BUTTON) && !schm.getPermission().equals("junk")) {
                         /*
-                         * wood button - remember it for the Artron Energy Capacitor.
+                         * wood button - remember it for the Artron Energy
+                         * Capacitor.
                          */
                         String woodbuttonloc = TARDISLocationGetters.makeLocationStr(world, x, y, z);
                         qf.insertSyncControl(dbID, 6, woodbuttonloc, 0);
@@ -609,9 +607,9 @@ public class TARDISBuilderInner {
             postTerminalBlock.setData(ptb_data, true);
             if (postTerminalBlock.getType().equals(Material.WALL_SIGN)) {
                 Sign ts = (Sign) postTerminalBlock.getState();
-                ts.setLine(0, "");
-                ts.setLine(1, plugin.getSigns().getStringList("terminal").get(0));
-                ts.setLine(2, plugin.getSigns().getStringList("terminal").get(1));
+                ts.setLine(0, ((schm.getPermission().equals("junk")) ? plugin.getSigns().getStringList("junk").get(0) : ""));
+                ts.setLine(1, ((!schm.getPermission().equals("junk")) ? plugin.getSigns().getStringList("terminal").get(0) : ""));
+                ts.setLine(2, ((!schm.getPermission().equals("junk")) ? plugin.getSigns().getStringList("terminal").get(1) : ""));
                 ts.setLine(3, "");
                 ts.update();
             }
