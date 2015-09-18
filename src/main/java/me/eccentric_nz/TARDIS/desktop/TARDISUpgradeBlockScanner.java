@@ -120,9 +120,6 @@ public class TARDISUpgradeBlockScanner {
             tbsd.setCount(count);
             tbsd.setVolume(v);
             int changed = (int) ((count / v) * 100);
-            plugin.debug("count: " + count);
-            plugin.debug("volume: " + v);
-            plugin.debug("changed: " + changed);
             tbsd.setChanged(changed);
             // should return false if changed is higher than config
             tbsd.setAllow(changed < plugin.getConfig().getInt("desktop.block_change_percent"));
