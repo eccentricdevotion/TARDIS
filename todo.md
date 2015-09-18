@@ -3,8 +3,8 @@
 ##Current version `3.4-beta-1`
 1. Fix bugs
 2. Fry player/mob health if they venture into Junk TARDIS effects?
-3. Vortex Junk TARDIS sign (should not read 'Destination Terminal')
-3. Test area parking space variations
+3. Vortex Junk TARDIS sign (should not read 'Destination Terminal')4. 
+4. Test area parking space variations
 
 ##Upcoming version `3.5`
 * TARDISSonicBlaster addon?

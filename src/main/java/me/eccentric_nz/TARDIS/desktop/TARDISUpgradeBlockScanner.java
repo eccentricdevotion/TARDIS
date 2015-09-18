@@ -26,7 +26,8 @@ public class TARDISUpgradeBlockScanner {
     private final TARDIS plugin;
     private final TARDISUpgradeData tud;
     private final UUID uuid;
-    int startx, starty, startz, resetx, resetz, count = 0;
+    int startx, starty, startz, resetx, resetz;
+    int count = 0;
     Material type;
     byte data;
 
@@ -36,13 +37,13 @@ public class TARDISUpgradeBlockScanner {
         this.uuid = uuid;
     }
 
-    public boolean check() {
+    public TARDISBlockScannerData check() {
         String directory = (tud.getSchematic().isCustom()) ? "user_schematics" : "schematics";
         String path = plugin.getDataFolder() + File.separator + directory + File.separator + tud.getPrevious().getPermission() + ".tschm";
         File file = new File(path);
         if (!file.exists()) {
             plugin.debug(plugin.getPluginName() + "Could not find a schematic with that name!");
-            return true;
+            return null;
         }
         // get JSON
         JSONObject obj = TARDISSchematicGZip.unzip(path);
@@ -51,7 +52,7 @@ public class TARDISUpgradeBlockScanner {
         int h = dimensions.getInt("height");
         int w = dimensions.getInt("width");
         int l = dimensions.getInt("length");
-        int v = h * w * l;
+        float v = h * w * l;
         // calculate startx, starty, startz
         HashMap<String, Object> wheret = new HashMap<String, Object>();
         wheret.put("uuid", uuid.toString());
@@ -106,15 +107,28 @@ public class TARDISUpgradeBlockScanner {
                         if (type.equals(Material.WOOL) && plugin.getConfig().getBoolean("creation.use_clay")) {
                             type = Material.STAINED_CLAY;
                         }
+                        if (type.equals(Material.AIR)) {
+                            v--;
+                        }
                         if (!b.getType().equals(type)) {
                             count++;
                         }
                     }
                 }
             }
-            return count / v < (100 - plugin.getConfig().getInt("desktop.block_change_percent"));
+            TARDISBlockScannerData tbsd = new TARDISBlockScannerData();
+            tbsd.setCount(count);
+            tbsd.setVolume(v);
+            int changed = (int) ((count / v) * 100);
+            plugin.debug("count: " + count);
+            plugin.debug("volume: " + v);
+            plugin.debug("changed: " + changed);
+            tbsd.setChanged(changed);
+            // should return false if changed is higher than config
+            tbsd.setAllow(changed < plugin.getConfig().getInt("desktop.block_change_percent"));
+            return tbsd;
         } else {
-            return false;
+            return null;
         }
     }
 }

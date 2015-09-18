@@ -25,6 +25,7 @@ import me.eccentric_nz.TARDIS.database.ResultSetARS;
 import me.eccentric_nz.TARDIS.enumeration.SCHEMATIC;
 import me.eccentric_nz.TARDIS.rooms.TARDISWallsLookup;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
+import org.bukkit.entity.Player;
 
 /**
  *
@@ -48,8 +49,13 @@ public class TARDISThemeProcessor {
         // if configured check whether there are still any blocks left
         if (plugin.getConfig().getBoolean("desktop.check_blocks_before_upgrade")) {
             TARDISUpgradeBlockScanner scanner = new TARDISUpgradeBlockScanner(plugin, tud, uuid);
-            if (scanner.check()) {
-                TARDISMessage.send(plugin.getServer().getPlayer(uuid), "UPGRADE_PERCENT_BLOCKS", plugin.getConfig().getInt("desktop.block_change_percent") + "");
+            TARDISBlockScannerData check = scanner.check();
+            if (check == null) {
+                return;
+            } else if (!check.allow()) {
+                Player cp = plugin.getServer().getPlayer(uuid);
+                TARDISMessage.send(cp, "UPGRADE_PERCENT_BLOCKS", plugin.getConfig().getInt("desktop.block_change_percent") + "");
+                TARDISMessage.send(cp, "UPGRADE_PERCENT_EXPLAIN", check.getCount() + "", check.getVolume() + "", check.getChanged() + "");
                 return;
             }
         }
