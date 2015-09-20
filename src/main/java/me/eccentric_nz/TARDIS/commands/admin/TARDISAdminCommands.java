@@ -91,6 +91,7 @@ public class TARDISAdminCommands implements CommandExecutor {
         firstsStr.put("respect_worldguard", "preferences");
         firstsStr.put("siege", "siege");
         firstsStr.put("sign_colour", "police_box");
+        firstsStr.put("add_regions", "");
         firstsStrArtron.add("full_charge_item");
         firstsStrArtron.add("jettison_seed");
         // boolean
