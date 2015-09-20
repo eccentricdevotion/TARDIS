@@ -16,7 +16,6 @@
  */
 package me.eccentric_nz.TARDIS.junk;
 
-import de.slikey.effectlib.EffectManager;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -55,7 +54,6 @@ public class TARDISJunkDestroyer implements Runnable {
     private Location vortexJunkLoc;
     World world;
     Biome biome;
-    private final EffectManager effectManager;
     private int fryTask;
 
     public TARDISJunkDestroyer(TARDIS plugin, TARDISMaterialisationData pdd) {
@@ -71,7 +69,6 @@ public class TARDISJunkDestroyer implements Runnable {
         this.sz = this.junkLoc.getBlockZ() - 2;
         this.world = this.junkLoc.getWorld();
         this.biome = this.pdd.getBiome();
-        this.effectManager = new EffectManager(this.plugin);
     }
 
     @Override
@@ -148,7 +145,6 @@ public class TARDISJunkDestroyer implements Runnable {
                 }
                 plugin.getTrackerKeeper().getDematerialising().remove(Integer.valueOf(pdd.getTardisID()));
                 plugin.getTrackerKeeper().getInVortex().remove(Integer.valueOf(pdd.getTardisID()));
-                effectManager.dispose();
                 // check protected blocks if has block id and data stored then put the block back!
                 HashMap<String, Object> tid = new HashMap<String, Object>();
                 tid.put("tardis_id", pdd.getTardisID());

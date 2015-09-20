@@ -1,6 +1,6 @@
 #TODO
 
-##Current version `3.4-beta-1`
+##Current version `3.4`
 1. Fix bugs
 2. Fry player/mob health if they venture into Junk TARDIS effects?
 3. Test area parking space variations
