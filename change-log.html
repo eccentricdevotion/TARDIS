@@ -32,6 +32,110 @@
     <section>
         <h1>Change log</h1>
         <h2>What&rsquo;s been changed?</h2>
+        <h3>TARDIS v3.4-beta-1</h3>
+        <h4>Additions</h4>
+        <ul>
+            <li>Added a Junk TARDIS
+                <ul>
+                    <li>The Junk TARDIS is a public use TARDIS that any player with the correct permission can use on the server. It only travels in overworlds (no Nether or The End) and doesn&rsquo;t require the player to have an Artron Energy supply</li>
+                    <li>Video here: <a href="https://vimeo.com/139185257">https://vimeo.com/139185257</a></li>
+                    <li><strong>permissions:</strong> <code>tardis.admin</code> to create, delete and return the Junk TARDIS &mdash; <code>tardis.junk</code> to fly and find the Junk TARDIS</li>
+                    <li><strong>commands:</strong> <code>/tardisjunk create</code> &mdash; target the centre block of a flat 6 x 6 area &mdash; this becomes the Junk TARDIS &lsquo;home&rsquo; location</li>
+                    <li><code>/tardisjunk delete</code> &mdash; self explanatory</li>
+                    <li><code>/tardisjunk return</code> &mdash; returns the Junk TARDIS to its &lsquo;home&rsquo; location (bringing along any players who may be onboard)</li>
+                    <li><code>/tardisjunk find</code> &mdash; find the current location of the Junk TARDIS</li>
+                    <li><strong>config options:</strong> <code>junk.enabled: [true|false]</code> &mdash; whether the Junk TARDIS is available on the server &mdash; <strong>NOTE:</strong> The Junk TARDIS will be disabled if <code>creation.default_world</code> is <code>false</code></li>
+                    <li><code>junk.particles: [true|false]</code> &mdash; whether the Junk TARDIS displays a particle effect when travelling &mdash; requires <a href="http://dev.bukkit.org/bukkit-plugins/effectlib/">EffectLib 3.4</a> or higher</li>
+                    <li><code>junk.return: [time in seconds]</code> &mdash; if <code>[time in seconds]</code> is greater than <code>0</code> and the Junk TARDIS has not been used for longer than the specified period, it will automatically return to its &lsquo;home&rsquo; location</li>
+                    <li><strong>controls:</strong> sign &mdash; shows the travel destination, handbrake &mdash; starts the TARDIS travelling, tripwire hook &mdash; selects the world to travel to, stone button &mdash; sets the x coordinate, wood button &mdash; sets the z coordinate, repeater &mdash; determines the amount added or subtracted from the x and z coordinates when the buttons are clicked, comparator &mdash; sets whether the buttons add or subtract</li>
+                    <li>players moving off the Junk TARDIS while it is travelling are killed instantly</li>
+                    <li>update the TARDIS-Sounds resource pack for the new sfx</li>
+                </ul>
+            </li>
+            <li>You can now give a full Artron Storage Cell with:<br>
+                <code>/tardisgive [player] cell [amount] full</code></li>
+            <li>Added The Master&rsquo;s TARDIS
+                <ul>
+                    <li>courtesy of macdja38 at <a href="http://pvpcraft.ca">http://pvpcraft.ca</a></li>
+                    <li>seed block is nether brick</li>
+                    <li>permission is <code>tardis.master</code></li>
+                </ul>
+            </li>
+            <li>Added a Pyramid TARDIS console
+                <ul>
+                    <li>many thanks to Airomis for the design</li>
+                    <li>seed block is sandstone stairs</li>
+                    <li>permission is <code>tardis.pyramid</code></li>
+                </ul>
+            </li>
+            <li>Added a particle effect to Artron Furnaces &mdash; requires <a href="http://dev.bukkit.org/bukkit-plugins/effectlib/">EffectLib 3.4</a> or higher</li>
+            <li>Added an Ignite Circuit to the Sonic Screwdriver
+                <ul>
+                    <li>view the recipe with <code>/tardisrecipe ignite-circuit</code></li>
+                    <li>permission: <code>tardis.sonic.ignite</code></li>
+                    <li>don&rsquo;t forget to move the new map file into its correct location!</li>
+                    <li>flammable blocks need to be clicked on the side</li>
+                    <li>a flint &amp; steel is actually more useful / powerful in-game</li>
+                </ul>
+            </li>
+            <li>Added a Chameleon preset construction GUI
+                <ul>
+                    <li>update the TARDIS-MCP resource pack for the new textures</li>
+                    <li>accessed via the third page of the Chameleon presets GUI</li>
+                    <li>help &amp; information on use is built into the GUI</li>
+                    <li>all text can be translated using the <em>plugins/TARDIS/language/chameleon_guis.yml</em> file</li>
+                    <li>if <code>allow.all_blocks</code> is <code>false</code>, precious blocks cannot be used in the GUI</li>
+                </ul>
+            </li>
+            <li>Added a few more interactable blocks for the environment sonic to ignore</li>
+            <li>Added a <code>/tardis update beacon</code> command</li>
+            <li>Added a config option to disable random spawning in TARDIS if door is open &mdash; <code>preferences.spawn_random_monsters: [true|false]</code> &mdash; or use the admin command <code>/tardisadmin spawn_random_monsters [true|false]</code></li>
+            <li>Added more checks and warnings for missing custom console upgrade entries</li>
+            <li>Added a <code>getOverWorlds()</code> method to TARDIS API</li>
+            <li>Added a player configurable choice of (2) blocks that are changed during siege mode engagement (only applies if <code>siege.textures</code> is <code>true</code> in the config)</li>
+            <li>Added config options to limit desktop upgrades by counting the percentage of  blocks that have changed from the original schematic
+                <ul>
+                    <li>must be enabled in the config &mdash; <code>desktop.check_blocks_before_upgrade: [true|false]</code> and <code>desktop.block_change_percent: [max percent changed blocks allowed]</code></li>
+                    <li>Defaults are <code>false</code> and <code>25</code></li>
+                </ul>
+            </li>
+        </ul>
+        <h4>Changes</h4>
+        <ul>
+            <li>The plugin no longer lists items if the add-on plugin isn&rsquo;t enabled</li>
+            <li>Added a check for malformed plugin versions when checking plugin dependencies</li>
+            <li>The allowable lamps list (<code>lamp_blocks</code> in blocks.yml) now requires Bukkit Material names rather than IDs
+                <ul>
+                    <li>existing IDs will be automatically updated</li>
+                </ul>
+            </li>
+            <li>The plugin now allows all door types for minecart entry</li>
+            <li>The beacon toggler block (used when powering up &amp; down) is now a redstone block
+                <ul>
+                    <li>adds the ability to trigger redstone contraptions when the TARDIS is powered down</li>
+                </ul>
+            </li>
+            <li>The space between TARDISes parked in TARDIS areas is now configurable
+                <ul>
+                    <li>default distance can be set in the config &mdash; <code>creation.parking_distance: [distance]</code> &mdash; or use the admin command <code>/tardisadmin parking_distance [distance in blocks between TARDII]</code></li>
+                    <li>each TARDIS area can be set to different distances &mdash; <code>/tardisarea parking [area name] [distance]</code></li>
+                </ul>
+            </li>
+            <li>The <code>tardis.ars</code> permission is now solely used for the ARS console &mdash; permission to use the Architectural Reconfiguration System to grow rooms now requires <code>tardis.architectural</code> &mdash; update your permissions!</li>
+            <li>If you&rsquo;re changing the desktop theme using the same console type you now only have to have 1/2 the upgrade cost in stored Artron Energy</li>
+        </ul>
+        <h4>Bug fixes</h4>
+        <ul>
+            <li>Fixed the SQLite -&gt; MySQL database converter tool</li>
+            <li>Fixed the second Lazarus easter egg</li>
+            <li>Fixed an error in TARDIS Information System for the Painter Circuit</li>
+            <li>Fixed saving the location of a secondary console handbrake</li>
+            <li>Fixed Antigravity / Gravity Wells growing in the wrong location</li>
+            <li>The plugin now prevents double-clicking items to the cursor in all TARDIS GUIs</li>
+            <li>Fixed the beacon not turning off when powering down</li>
+            <li>Malfunctions now respect a player&rsquo;s lamps / lanterns preference</li>
+            <li>Fixed a bug where some language files were not copied when doing a fresh install because the <em>plugins/TARDIS/language/</em> directory hadn&rsquo;t been created yet</li>
+        </ul>
         <h3>TARDIS v3.3</h3>
         <p>Requires <em>CraftBukkit/Spigot 1.8.7, TARDISHelper 1.7.3</em> (included in the TARDIS ZIP file download), and if installed, <em>TARDISWeepingAngels v2.0.7</em></p>
         <p>ALWAYS run BuildTools to get the latest server JARs before installing/updating TARDIS!</p>
@@ -246,7 +350,7 @@
                 <ul>
                     <li><code>set_biome [true|false]</code> &mdash; whether to set the biome so that custom textures work on the furnace block</li>
                     <li><code>cook_time: [time ratio]</code> &mdash; sets the cook time for items smelted with Artron Storage Cells &mdash; <code>0.5</code> is half the normal time, <code>2.0</code> would be twice normal speed (longer), 1 = normal cook time (same as coal)
-                    <li><code>burn_time: [time ratio]</code> &mdash; sets the length of time an Artron Storage Cell will burn for &mdash; as above fractions (<code>0.5</code>) will give shorter life to the cells, > 1 will extend the burn time, 1 = normal burn time (same as coal)</li>
+                    <li><code>burn_time: [time ratio]</code> &mdash; sets the length of time an Artron Storage Cell will burn for &mdash; as above fractions (<code>0.5</code>) will give shorter life to the cells, &gt; 1 will extend the burn time, 1 = normal burn time (same as coal)</li>
                     <li><code>burn_limit: [amount]</code> &mdash; the maximum amount of burn time a fully charged Artron Storage Cell can have.</li>
                     <li>The actual maximum amount given is <code>burn_limit * burn_time * (cell_charge_level / full_charge)</code></li>
                     <li>default settings mean that the Artron Furnace cooks quickly but doesn&rsquo;t burn as long.</li>

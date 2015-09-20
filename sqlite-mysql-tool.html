@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="chrome=1">
-<title>TARDIS: Configuration</title>
+<title>TARDIS: SQLite -&gt; MySQL conversion tool</title>
 <link rel="stylesheet" href="stylesheets/styles.css">
 <link rel="stylesheet" href="stylesheets/pygment_trac.css">
 <script src="javascripts/scale.fix.js"></script>
@@ -30,28 +30,23 @@
 		</ul>
 	</header>
 	<section>
-		<h1>Configuration</h1>
-		<p>The configuration files (config.yml, artron.yml, rooms.yml, recipes.yml) are generated automatically, you can find them in <em>plugins/TARDIS/</em></p>
-		<p>All configuration options can be set via in game commands or in the console, see the <a href="admin-commands.html">Admin Commands</a> page.</p>
-		<p>Choose a configuration page from below:</p>
-		<ol>
-			<li><a href="configuration-storage.html">Storage</a></li>
-			<li><a href="configuration-creation.html">TARDIS creation</a></li>
-			<li><a href="configuration-worlds.html">Worlds</a></li>
-			<li><a href="configuration-preset.html">Police Box and presets</a></li>
-			<li><a href="configuration-travel.html">TARDIS travel</a></li>
-			<li><a href="configuration-prefs.html">TARDIS preferences</a></li>
-			<li><a href="configuration-allow.html">TARDIS restrictions</a></li>
-			<li><a href="configuration-growth.html">Room growth</a></li>
-			<li><a href="configuration-rooms.html">Rooms</a></li>
-			<li><a href="configuration-energy.html">Energy</a></li>
-			<li><a href="chameleon-arch.html#config">Chameleon Arch</a></li>
-			<li><a href="circuit-use.html#config">Circuits</a></li>
-			<li><a href="siege-mode.html#config">Siege mode</a></li>
-			<li><a href="junk-tardis.html#config">Junk TARDIS</a></li>
-			<li><a href="desktop-theme.html#config">Desktop Theme</a></li>
-		</ol>
-		<p><img src="https://dl.dropboxusercontent.com/u/53758864/recharger.jpg" alt="Recharger" /></p>
+		<p><a href="#video">Jump to video</a></p>
+		<h1>SQLite -&gt; MySQL conversion tool</h1>
+		<p>You can easily change the database storage format of the TARDIS plugin using the SQLite -&gt; MySQL conversion tool.</p>
+        <p><img src="images/docs/conversion_tool.png" alt="Conversion tool" /></p>
+        <p>To open the tool, double click the TARDIS.jar file. Follow the steps below to complete the conversion:</p>
+        <ol>
+        	<li>Click the first &lsquo;Browse&rsquo; button to select your SQLite <em>TARDIS.db</em> file</li>
+            <li>Click the second &lsquo;Browse&rsquo; button to set the save location for the generated SQL file. Naviagte to the appropriate directory and give the file a suitable name (such as <em>TARDIS.sql</em>)</li>
+            <li>If TARDIS data will be stoed in a shared database, enter a prefix (such as <em>TARDIS_</em>) in the &lsquo;Prefix&rsquo; field</li>
+            <li>Click the &lsquo;Convert&rsquo; button</li>
+            <li>Open your MySQL database management tool (e.g. phpMyAdmin)</li>
+            <li>Import the TARDIS data using the generated SQL file</li>
+            <li>Add your MySQL connection credentials to the TARDIS plugin config.yml</li>
+            <li>If you added a table prefix in step 3, remember to add the prefix to the TARDIS plugin config.yml as well</li>
+        </ol>
+		<h3 id="video">Video</h3>
+		<iframe src="http://player.vimeo.com/video/139174559" width="600" height="366" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
 	</section>
 </div>
 <footer>

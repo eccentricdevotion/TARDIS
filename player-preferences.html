@@ -39,6 +39,8 @@
 			<li>Who quotes</li>
 			<li>Wall material</li>
 			<li>Floor material</li>
+			<li>Siege Wall material</li>
+			<li>Siege Floor material</li>
 			<li>Isomorphic controls</li>
 			<li>Autonomous homing function</li>
 			<li>HADS</li>
@@ -70,7 +72,9 @@
 		<pre><code>/tardisprefs quotes [on|off]</code></pre>
 		<p>To change the block room walls and floors a are grown with, type:</p>
 		<pre><code>/tardisprefs [wall|floor] [material]</code></pre>
-		<p>Where <code>[material]</code> is a block from the list on the <a href="walls.html">Wall materials</a> page. Type <code>/tardisprefs wall help</code> to see the list in-game.</p>
+		<p>To change the block type that changes when a TARDIS enters siege mode, type:</p>
+		<pre><code>/tardisprefs [siege_wall|siege_floor] [material]</code></pre>
+		<p>Where <code>[material]</code> is a block from the list on the <a href="walls.html">Wall materials</a> page. This setting has no effect if <code>siege.textures: false</code> is set in the coinfig.</p>
 		<p>To change whether the TARDIS Autonomous homing function takes the Police Box to the nearest recharge point or the Tardis &lsquo;home&rsquo; (whichever is closest) when the Time Lord owner dies, type:</p>
 		<pre><code>/tardisprefs auto [on|off]</code></pre>
 		<p>If the server admin has disabled the autonomous homing function in the plugin config, this command will have no effect.</p>
