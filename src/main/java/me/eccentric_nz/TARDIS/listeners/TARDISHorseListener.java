@@ -143,7 +143,6 @@ public class TARDISHorseListener implements Listener {
                             equine.setStyle(tmhor.getHorseStyle());
                             equine.setDomestication(tmhor.getDomesticity());
                             equine.setJumpStrength(tmhor.getJumpStrength());
-                            equine.setHealth(tmhor.getHealth());
                             String name = tmhor.getName();
                             if (name != null && !name.isEmpty()) {
                                 equine.setCustomName(name);

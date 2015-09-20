@@ -390,11 +390,9 @@ public class TARDISTerminalListener implements Listener {
                         if (plugin.getConfig().getBoolean("worlds." + o)) {
                             allowedWorlds.add(o);
                         }
-                    } else {
-                        if (!o.equals(plugin.getConfig().getString("creation.default_world_name"))) {
-                            if (plugin.getConfig().getBoolean("worlds." + o)) {
-                                allowedWorlds.add(o);
-                            }
+                    } else if (!o.equals(plugin.getConfig().getString("creation.default_world_name"))) {
+                        if (plugin.getConfig().getBoolean("worlds." + o)) {
+                            allowedWorlds.add(o);
                         }
                     }
                 }
@@ -515,7 +513,6 @@ public class TARDISTerminalListener implements Listener {
                                 safe = TARDISTimeTravel.safeLocation(start[0], starty, start[2], start[1], start[3], w, d);
                             }
                             if (safe == 0) {
-
                                 String save = world + ":" + slotx + ":" + starty + ":" + slotz;
                                 if (plugin.getPluginRespect().getRespect(new Location(w, slotx, starty, slotz), new Parameters(p, FLAG.getNoMessageFlags()))) {
                                     terminalDestination.put(uuid, save);
