@@ -61,7 +61,9 @@ public class TARDISJunkVortexRunnable implements Runnable {
             if (i == 1) {
                 fryTask = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, new TARDISJunkItsDangerousRunnable(plugin, vortexJunkLoc), 0, 1L);
             }
-            TARDISEffectLibHelper.sendVortexParticles(effectsLoc);
+            if (plugin.getConfig().getBoolean("junk.particles") && plugin.isEffectLibOnServer()) {
+                TARDISEffectLibHelper.sendVortexParticles(effectsLoc);
+            }
             if (i == 2) {
                 // play sound
                 for (Entity e : getJunkTravellers()) {
