@@ -382,14 +382,12 @@ public class TARDISBuilderInner {
                         // remember lamp blocks
                         Block lamp = world.getBlockAt(x, y, z);
                         lampblocks.add(lamp);
-                        if (plugin.getConfig().getInt("preferences.malfunction") > 0) {
-                            // remember lamp block locations for malfunction
-                            HashMap<String, Object> setlb = new HashMap<String, Object>();
-                            String lloc = world.getName() + ":" + x + ":" + y + ":" + z;
-                            setlb.put("tardis_id", dbID);
-                            setlb.put("location", lloc);
-                            qf.doInsert("lamps", setlb);
-                        }
+                        // remember lamp block locations for malfunction and light switch
+                        HashMap<String, Object> setlb = new HashMap<String, Object>();
+                        String lloc = world.getName() + ":" + x + ":" + y + ":" + z;
+                        setlb.put("tardis_id", dbID);
+                        setlb.put("location", lloc);
+                        qf.doInsert("lamps", setlb);
                     }
                     if (type.equals(Material.COMMAND) || ((schm.getPermission().equals("bigger") || schm.getPermission().equals("deluxe") || schm.getPermission().equals("twelfth")) && type.equals(Material.BEACON))) {
                         /*

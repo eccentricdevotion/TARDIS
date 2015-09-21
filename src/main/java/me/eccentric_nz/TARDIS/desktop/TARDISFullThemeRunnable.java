@@ -210,6 +210,10 @@ public class TARDISFullThemeRunnable extends TARDISThemeRunnable implements Runn
                 loc = chunk.getBlock(8, 69, 4).getLocation();
             }
             player.teleport(loc);
+            // clear lamps table as we'll be adding the new lamp positions later
+            HashMap<String, Object> wherel = new HashMap<String, Object>();
+            wherel.put("tardis_id", id);
+            qf.doDelete("lamps", wherel);
         }
         if (level == (h - 1) && row == (w - 1)) {
             // we're finished
@@ -414,6 +418,20 @@ public class TARDISFullThemeRunnable extends TARDISThemeRunnable implements Runn
                     TARDISMessage.send(player, "ENERGY_RECOVERED", String.format("%d", refund));
                 }
             }
+            // add / remove chunks from the chunks table
+            HashMap<String, Object> wherec = new HashMap<String, Object>();
+            wherec.put("tardis_id", id);
+            qf.doDelete("chunks", wherec);
+            List<Chunk> chunkList = plugin.getInteriorBuilder().getChunks(world, wg1.getChunk().getX(), wg1.getChunk().getZ(), w, c);
+            // update chunks list in DB
+            for (Chunk hunk : chunkList) {
+                HashMap<String, Object> setc = new HashMap<String, Object>();
+                setc.put("tardis_id", id);
+                setc.put("world", world.getName());
+                setc.put("x", hunk.getX());
+                setc.put("z", hunk.getZ());
+                qf.doInsert("chunks", setc);
+            }
             // cancel the task
             plugin.getServer().getScheduler().cancelTask(taskID);
             taskID = 0;
@@ -581,14 +599,12 @@ public class TARDISFullThemeRunnable extends TARDISThemeRunnable implements Runn
                     // remember lamp blocks
                     Block lamp = world.getBlockAt(x, y, z);
                     lampblocks.add(lamp);
-                    if (plugin.getConfig().getInt("preferences.malfunction") > 0) {
-                        // remember lamp block locations for malfunction
-                        HashMap<String, Object> setlb = new HashMap<String, Object>();
-                        String lloc = world.getName() + ":" + x + ":" + y + ":" + z;
-                        setlb.put("tardis_id", id);
-                        setlb.put("location", lloc);
-                        qf.doInsert("lamps", setlb);
-                    }
+                    // remember lamp block locations for malfunction and light switch
+                    HashMap<String, Object> setlb = new HashMap<String, Object>();
+                    String lloc = world.getName() + ":" + x + ":" + y + ":" + z;
+                    setlb.put("tardis_id", id);
+                    setlb.put("location", lloc);
+                    qf.doInsert("lamps", setlb);
                 }
                 if (type.equals(Material.COMMAND) || ((tud.getSchematic().getPermission().equals("bigger") || tud.getSchematic().getPermission().equals("deluxe") || tud.getSchematic().getPermission().equals("twelfth")) && type.equals(Material.BEACON))) {
                     /*
