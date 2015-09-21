@@ -2,6 +2,10 @@
 
 ##Current version `3.4`
 1. Fix bugs
+    * When upgrading a TARDIS to a different size we need to add/remove chunks from the `chunks` table - this should fix the `/tardis lamps` command not finding all lamps
+    * prevent lava from flowing when upgrading from The Master's TARDIS
+    * fix redstone torches popping off in Master's TARDIS when upgrading
+    * upgrade check needs to check against the original wall/floor materials rather than what they may have been changed to via the player prefs for rooms? - _or maybe just add a message to change the prefs back before upgrading, if the check fails_
 2. Fry player/mob health if they venture into Junk TARDIS effects?
 3. Test area parking space variations
 

@@ -38,7 +38,7 @@ public class TARDISUpgradeBlockScanner {
     }
 
     public TARDISBlockScannerData check() {
-        String directory = (tud.getSchematic().isCustom()) ? "user_schematics" : "schematics";
+        String directory = (tud.getPrevious().isCustom()) ? "user_schematics" : "schematics";
         String path = plugin.getDataFolder() + File.separator + directory + File.separator + tud.getPrevious().getPermission() + ".tschm";
         File file = new File(path);
         if (!file.exists()) {
@@ -73,7 +73,7 @@ public class TARDISUpgradeBlockScanner {
                 startz = gsl[2];
                 resetz = gsl[3];
             }
-            starty = (tud.getSchematic().getPermission().equals("redstone")) ? 65 : 64;
+            starty = (tud.getPrevious().getPermission().equals("redstone")) ? 65 : 64;
             String[] split = rs.getChunk().split(":");
             World world = plugin.getServer().getWorld(split[0]);
             // wall/floor block prefs
@@ -104,6 +104,24 @@ public class TARDISUpgradeBlockScanner {
                         if (type.equals(Material.SPONGE)) {
                             type = Material.AIR;
                         }
+                        if (type.equals(Material.CAKE_BLOCK)) {
+                            type = Material.LEVER;
+                        }
+                        if (type.equals(Material.MOB_SPAWNER)) {
+                            type = Material.WOOD_BUTTON;
+                        }
+                        if (type.equals(Material.HUGE_MUSHROOM_2)) {
+                            type = Material.DIODE_BLOCK_OFF;
+                        }
+                        if (type.equals(Material.MONSTER_EGGS)) {
+                            type = Material.WALL_SIGN;
+                        }
+                        if (type.equals(Material.BEDROCK)) {
+                            type = Material.GLASS;
+                        }
+                        if (type.equals(Material.COMMAND)) {
+                            type = Material.SMOOTH_BRICK;
+                        }
                         if (type.equals(Material.WOOL) && plugin.getConfig().getBoolean("creation.use_clay")) {
                             type = Material.STAINED_CLAY;
                         }
@@ -111,6 +129,7 @@ public class TARDISUpgradeBlockScanner {
                             v--;
                         }
                         if (!b.getType().equals(type)) {
+                            plugin.debug(b.getType().toString() + " != " + type.toString());
                             count++;
                         }
                     }
