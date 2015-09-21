@@ -56,6 +56,7 @@ public class TARDISThemeProcessor {
                 Player cp = plugin.getServer().getPlayer(uuid);
                 TARDISMessage.send(cp, "UPGRADE_PERCENT_BLOCKS", plugin.getConfig().getInt("desktop.block_change_percent") + "");
                 TARDISMessage.send(cp, "UPGRADE_PERCENT_EXPLAIN", check.getCount() + "", check.getVolume() + "", check.getChanged() + "");
+                TARDISMessage.send(cp, "UPGRADE_PERCENT_REASON");
                 return;
             }
         }
@@ -89,17 +90,24 @@ public class TARDISThemeProcessor {
         wherea.put("uuid", uuid.toString());
         int amount = plugin.getArtronConfig().getInt("upgrades." + tud.getSchematic().getPermission().toLowerCase());
         TARDISThemeRunnable ttr;
+        boolean master = tud.getPrevious().getPermission().equals("master");
         if (tud.getPrevious().equals(tud.getSchematic())) {
             // reduce the cost of the theme change
             amount = Math.round((plugin.getArtronConfig().getInt("just_wall_floor") / 100F) * amount);
             ttr = new TARDISWallFloorRunnable(plugin, uuid, tud);
         } else {
+            // check for master
+            if (master) {
+                // remove lava and water
+                new TARDISDelavafier(plugin, uuid).swap();
+            }
             ttr = new TARDISFullThemeRunnable(plugin, uuid, tud);
         }
         qf.alterEnergyLevel("tardis", -amount, wherea, plugin.getServer().getPlayer(uuid));
         // start the rebuild
+        long initial_delay = (master) ? 45L : 5L;
         long delay = Math.round(20 / plugin.getConfig().getDouble("growth.room_speed"));
-        int task = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, ttr, 5L, delay);
+        int task = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, ttr, initial_delay, delay);
         ttr.setTaskID(task);
     }
 
