@@ -233,11 +233,14 @@ public class TARDISFullThemeRunnable extends TARDISThemeRunnable implements Runn
                 pdb.setType(Material.IRON_DOOR_BLOCK);
                 pdb.setData(pddata, true);
             }
+            // TODO fix redstone blocks falling off
             for (Map.Entry<Block, Byte> entry : postRedstoneTorchBlocks.entrySet()) {
                 Block prtb = entry.getKey();
                 byte ptdata = entry.getValue();
-                prtb.setType(Material.REDSTONE_TORCH_ON);
-                prtb.setData(ptdata, true);
+                plugin.debug("RS Torch data: " + ptdata);
+//                prtb.setType(Material.REDSTONE_TORCH_ON);
+//                prtb.setData(ptdata, true);
+                prtb.setTypeIdAndData(76, ptdata, true);
             }
             for (Map.Entry<Block, Byte> entry : postLeverBlocks.entrySet()) {
                 Block plb = entry.getKey();

@@ -129,7 +129,7 @@ public class TARDISUpgradeBlockScanner {
                             v--;
                         }
                         if (!b.getType().equals(type)) {
-                            plugin.debug(b.getType().toString() + " != " + type.toString());
+                            //plugin.debug(b.getType().toString() + " != " + type.toString());
                             count++;
                         }
                     }
