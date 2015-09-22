@@ -664,16 +664,19 @@ commands:
     create:
       description: Create a Junk TARDIS.
       usage: /<command> create
+      permission: tardis.admin
     find:
       description: Find the current location of the Junk TARDIS.
       usage: /<command> find
+      permission: tardis.junk
     return:
       description: Return the Junk TARDIS to its home location.
       usage: /<command> return
+      permission: tardis.admin
     delete:
       description: Delete the Junk TARDIS.
       usage: /<command> delete
-    permission: tardis.admin
+      permission: tardis.admin
     permission-message: You don't have the permission <permission> to use this command
   'tardis?':
     aliases: ['t?', tardishelp]
