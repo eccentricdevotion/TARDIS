@@ -669,6 +669,10 @@ commands:
       description: Find the current location of the Junk TARDIS.
       usage: /<command> find
       permission: tardis.junk
+    time:
+      description: Find out the time before the Junk TARDIS automatically returns home.
+      usage: /<command> time
+      permission: tardis.junk
     return:
       description: Return the Junk TARDIS to its home location.
       usage: /<command> return

@@ -28,7 +28,7 @@ import org.bukkit.command.TabCompleter;
  */
 public class TARDISJunkTabComplete extends TARDISCompleter implements TabCompleter {
 
-    private final ImmutableList<String> ROOT_SUBS = ImmutableList.of("create", "find", "return", "delete");
+    private final ImmutableList<String> ROOT_SUBS = ImmutableList.of("create", "find", "return", "delete", "time");
 
     @Override
     public List<String> onTabComplete(CommandSender sender, Command command, String label, String[] args) {

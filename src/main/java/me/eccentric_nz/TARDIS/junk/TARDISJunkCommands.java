@@ -40,6 +40,7 @@ public class TARDISJunkCommands implements CommandExecutor {
         this.firstArgs.add("delete");
         this.firstArgs.add("find");
         this.firstArgs.add("return");
+        this.firstArgs.add("time");
     }
 
     @Override
@@ -65,6 +66,9 @@ public class TARDISJunkCommands implements CommandExecutor {
                 }
                 if (first.equals("find")) {
                     return new TARDISJunkFind(plugin).find(sender);
+                }
+                if (first.equals("time")) {
+                    return new TARDISJunkTime(plugin).elapsed(sender);
                 }
                 if (first.equals("return")) {
                     return new TARDISJunkReturn(plugin).recall(sender);
