@@ -23,7 +23,7 @@ public class TARDISArtronFurnaceParticle {
             @Override
             public void run() {
                 for (Block block : plugin.getGeneralKeeper().getArtronFurnaces()) {
-                    if (isArtronFurnace(block)) {
+                    if (block != null && isArtronFurnace(block)) {
                         TARDISEffectLibHelper.sendWaterParticle(block.getLocation());
                     }
                 }
