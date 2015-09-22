@@ -37,12 +37,14 @@ import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.block.Biome;
 import org.bukkit.block.Block;
+import org.bukkit.block.BlockState;
 import org.bukkit.block.Sign;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerInteractEvent;
+import org.bukkit.material.Lever;
 
 /**
  *
@@ -109,6 +111,11 @@ public class TARDISJunkControlListener implements Listener {
                                 TARDISMessage.send(player, "JUNK_NOT_FOUND");
                                 return;
                             }
+                            BlockState state = block.getState();
+                            Lever lever = (Lever) state.getData();
+                            lever.setPowered(!lever.isPowered());
+                            state.setData(lever);
+                            state.update();
                             // destroy junk TARDIS
                             final TARDISMaterialisationData pdd = new TARDISMaterialisationData();
                             pdd.setPlayer(player);
