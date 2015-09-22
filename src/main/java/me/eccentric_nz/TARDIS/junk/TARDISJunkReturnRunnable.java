@@ -8,6 +8,7 @@ import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.ResultSetCurrentLocation;
 import me.eccentric_nz.TARDIS.database.ResultSetHomeLocation;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
+import org.bukkit.Chunk;
 import org.bukkit.Location;
 
 /**
@@ -49,7 +50,16 @@ public class TARDISJunkReturnRunnable implements Runnable {
                         Location current = new Location(rsc.getWorld(), rsc.getX(), rsc.getY(), rsc.getZ());
                         Location home = new Location(rsh.getWorld(), rsh.getX(), rsh.getY(), rsh.getZ());
                         // compare locations
-                        if (current.equals(home)) {
+                        if (!current.equals(home)) {
+                            // load chunks first
+                            Chunk cChunk = current.getChunk();
+                            while (!cChunk.isLoaded()) {
+                                cChunk.load();
+                            }
+                            Chunk hChunk = home.getChunk();
+                            while (!hChunk.isLoaded()) {
+                                hChunk.load();
+                            }
                             // bring her home
                             new TARDISJunkReturn(plugin).recall(plugin.getConsole());
                         }

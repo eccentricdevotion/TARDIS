@@ -237,9 +237,6 @@ public class TARDISFullThemeRunnable extends TARDISThemeRunnable implements Runn
             for (Map.Entry<Block, Byte> entry : postRedstoneTorchBlocks.entrySet()) {
                 Block prtb = entry.getKey();
                 byte ptdata = entry.getValue();
-                plugin.debug("RS Torch data: " + ptdata);
-//                prtb.setType(Material.REDSTONE_TORCH_ON);
-//                prtb.setData(ptdata, true);
                 prtb.setTypeIdAndData(76, ptdata, true);
             }
             for (Map.Entry<Block, Byte> entry : postLeverBlocks.entrySet()) {
