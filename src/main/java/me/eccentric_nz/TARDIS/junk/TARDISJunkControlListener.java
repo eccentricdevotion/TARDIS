@@ -209,6 +209,15 @@ public class TARDISJunkControlListener implements Listener {
             String line2 = s.getLine(2);
             String line3 = s.getLine(3);
             if (line1.isEmpty() || line2.isEmpty() || line3.isEmpty()) {
+                if (line1.isEmpty() && line2.isEmpty() && line3.isEmpty()) {
+                    // check location
+                    TARDISJunkLocation tjl = new TARDISJunkLocation(plugin);
+                    if (tjl.isNotHome()) {
+                        plugin.getGeneralKeeper().setJunkDestination(tjl.getHome());
+                        TARDISMessage.send(p, "JUNK_RETURN");
+                        return;
+                    }
+                }
                 TARDISMessage.send(p, "JUNK_LINES");
                 return;
             }

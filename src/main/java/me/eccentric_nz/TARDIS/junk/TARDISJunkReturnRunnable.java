@@ -3,11 +3,7 @@
  */
 package me.eccentric_nz.TARDIS.junk;
 
-import java.util.HashMap;
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.database.ResultSetCurrentLocation;
-import me.eccentric_nz.TARDIS.database.ResultSetHomeLocation;
-import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import org.bukkit.Chunk;
 import org.bukkit.Location;
 
@@ -33,38 +29,22 @@ public class TARDISJunkReturnRunnable implements Runnable {
         long now = System.currentTimeMillis();
         if (lastUsed + waitTime > now) {
             // check the Junk TARDIS is not home already
-            HashMap<String, Object> where = new HashMap<String, Object>();
-            where.put("uuid", "00000000-aaaa-bbbb-cccc-000000000000");
-            ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);
-            if (rs.resultSet()) {
-                // get current location
-                HashMap<String, Object> wherec = new HashMap<String, Object>();
-                wherec.put("tardis_id", rs.getTardis_id());
-                ResultSetCurrentLocation rsc = new ResultSetCurrentLocation(plugin, wherec);
-                if (rsc.resultSet()) {
-                    // get home location
-                    HashMap<String, Object> whereh = new HashMap<String, Object>();
-                    whereh.put("tardis_id", rs.getTardis_id());
-                    ResultSetHomeLocation rsh = new ResultSetHomeLocation(plugin, whereh);
-                    if (rsh.resultSet()) {
-                        Location current = new Location(rsc.getWorld(), rsc.getX(), rsc.getY(), rsc.getZ());
-                        Location home = new Location(rsh.getWorld(), rsh.getX(), rsh.getY(), rsh.getZ());
-                        // compare locations
-                        if (!current.equals(home)) {
-                            // load chunks first
-                            Chunk cChunk = current.getChunk();
-                            while (!cChunk.isLoaded()) {
-                                cChunk.load();
-                            }
-                            Chunk hChunk = home.getChunk();
-                            while (!hChunk.isLoaded()) {
-                                hChunk.load();
-                            }
-                            // bring her home
-                            new TARDISJunkReturn(plugin).recall(plugin.getConsole());
-                        }
-                    }
+            TARDISJunkLocation tjl = new TARDISJunkLocation(plugin);
+            // compare locations
+            if (tjl.isNotHome()) {
+                Location current = tjl.getCurrent();
+                Location home = tjl.getHome();
+                // load chunks first
+                Chunk cChunk = current.getChunk();
+                while (!cChunk.isLoaded()) {
+                    cChunk.load();
                 }
+                Chunk hChunk = home.getChunk();
+                while (!hChunk.isLoaded()) {
+                    hChunk.load();
+                }
+                // bring her home
+                new TARDISJunkReturn(plugin).recall(plugin.getConsole());
             }
         }
     }
