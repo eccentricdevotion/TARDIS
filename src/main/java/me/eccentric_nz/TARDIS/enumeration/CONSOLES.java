@@ -58,6 +58,7 @@ public class CONSOLES {
                 byMaterials.put(ts.getSeed(), ts);
             }
         }
+        byPerms.put("junk", new SCHEMATIC("MILK_BUCKET", "junk", "Junk Console", true, false, false, false, false));
     }
 
     public static HashMap<String, SCHEMATIC> getByNames() {

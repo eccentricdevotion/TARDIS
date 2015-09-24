@@ -67,8 +67,14 @@ public class TARDISDeleteCommand {
                 }
             }
         }
+        boolean junk = (args[1].toLowerCase().equals("junk"));
         // Look up this player's UUID
-        UUID uuid = plugin.getServer().getOfflinePlayer(args[1]).getUniqueId();
+        UUID uuid;
+        if (junk) {
+            uuid = UUID.fromString("00000000-aaaa-bbbb-cccc-000000000000");
+        } else {
+            uuid = plugin.getServer().getOfflinePlayer(args[1]).getUniqueId();
+        }
         if (uuid == null) {
             uuid = plugin.getGeneralKeeper().getUUIDCache().getIdOptimistic(args[1]);
             plugin.getGeneralKeeper().getUUIDCache().getId(args[1]);
@@ -81,10 +87,17 @@ public class TARDISDeleteCommand {
                 final int id = rs.getTardis_id();
                 final int tips = rs.getTIPS();
                 final SCHEMATIC schm = rs.getSchematic();
+                plugin.debug("schematic: " + schm.getPermission());
                 String chunkLoc = rs.getChunk();
                 boolean hidden = rs.isHidden();
                 String[] cdata = chunkLoc.split(":");
-                final String name = cdata[0];
+                String wname;
+                if (junk) {
+                    wname = plugin.getConfig().getString("creation.default_world_name");
+                } else {
+                    wname = cdata[0];
+                }
+                final String name = wname;
                 final World cw = plugin.getServer().getWorld(name);
                 if (cw == null) {
                     TARDISMessage.send(sender, "WORLD_DELETED");
