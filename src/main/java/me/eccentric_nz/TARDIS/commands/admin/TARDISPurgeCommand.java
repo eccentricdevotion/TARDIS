@@ -39,7 +39,12 @@ public class TARDISPurgeCommand {
     @SuppressWarnings("deprecation")
     public boolean clearAll(CommandSender sender, String[] args) {
         // Look up this player's UUID
-        UUID uuid = plugin.getServer().getOfflinePlayer(args[1]).getUniqueId();
+        UUID uuid;
+        if (args[1].toLowerCase().equals("junk")) {
+            uuid = UUID.fromString("00000000-aaaa-bbbb-cccc-000000000000");
+        } else {
+            uuid = plugin.getServer().getOfflinePlayer(args[1]).getUniqueId();
+        }
         if (uuid == null) {
             uuid = plugin.getGeneralKeeper().getUUIDCache().getIdOptimistic(args[1]);
             plugin.getGeneralKeeper().getUUIDCache().getId(args[1]);
