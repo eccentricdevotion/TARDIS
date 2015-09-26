@@ -199,6 +199,7 @@ public class TARDISJunkBuilder implements Runnable {
                 set.put("y", sy);
                 set.put("z", loc.getBlockZ());
                 qf.doUpdate("current", set, where);
+                plugin.getGeneralKeeper().setJunkTime(System.currentTimeMillis());
             }
         }
     }
