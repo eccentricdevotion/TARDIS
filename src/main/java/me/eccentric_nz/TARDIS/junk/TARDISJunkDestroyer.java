@@ -189,7 +189,11 @@ public class TARDISJunkDestroyer implements Runnable {
         double x = vortexJunkLoc.getX() + (playerLoc.getX() - junkLoc.getX());
         double y = vortexJunkLoc.getY() + (playerLoc.getY() - junkLoc.getY()) + 0.5d;
         double z = vortexJunkLoc.getZ() + (playerLoc.getZ() - junkLoc.getZ());
-        return new Location(vortexJunkLoc.getWorld(), x, y, z, playerLoc.getYaw(), playerLoc.getPitch());
+        Location l = new Location(vortexJunkLoc.getWorld(), x, y, z, playerLoc.getYaw(), playerLoc.getPitch());
+        while (!l.getChunk().isLoaded()) {
+            l.getChunk().load();
+        }
+        return l;
     }
 
     private List<Entity> getJunkTravellers(double d) {
