@@ -91,7 +91,7 @@ import me.eccentric_nz.TARDIS.utility.TARDISUtils;
 import me.eccentric_nz.TARDIS.utility.TARDISVaultChecker;
 import me.eccentric_nz.TARDIS.utility.TARDISWorldGuardUtils;
 import me.eccentric_nz.TARDIS.utility.Version;
-import me.eccentric_nz.tardishelper.TARDISHelper;
+import me.eccentric_nz.tardischunkgenerator.TARDISHelper;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.command.ConsoleCommandSender;
@@ -193,7 +193,7 @@ public class TARDIS extends JavaPlugin {
         this.versions.put("Multiverse-Inventories", "2.5");
         this.versions.put("My Worlds", "1.67");
         this.versions.put("ProtocolLib", "3.6.3");
-        this.versions.put("TARDISHelper", "1.7.3");
+        this.versions.put("TARDISChunkGenerator", "2.0");
         this.versions.put("Towny", "0.89");
         this.versions.put("WorldBorder", "1.8.1");
         this.versions.put("WorldGuard", "6.0.0");
@@ -678,14 +678,14 @@ public class TARDIS extends JavaPlugin {
     }
 
     /**
-     * Checks if the TARDISHelper plugin is available, and loads support if it
-     * is.
+     * Checks if the TARDISChunkGenerator plugin is available, and loads support
+     * if it is.
      */
     private void loadHelper() {
-        if (pm.getPlugin("TARDISHelper") != null) {
-            debug("Hooking into TARDISHelper!");
+        if (pm.getPlugin("TARDISChunkGenerator") != null) {
+            debug("Hooking into TARDISChunkGenerator!");
             helperOnServer = true;
-            tardisHelper = (TARDISHelper) plugin.getPM().getPlugin("TARDISHelper");
+            tardisHelper = (TARDISHelper) plugin.getPM().getPlugin("TARDISChunkGenerator");
         }
     }
 

@@ -372,10 +372,8 @@ public class TARDISExterminator {
             for (File f : files) {
                 if (f.isDirectory()) {
                     deleteFolder(f);
-                } else {
-                    if (!f.delete()) {
-                        TARDIS.plugin.debug("Could not delete file");
-                    }
+                } else if (!f.delete()) {
+                    TARDIS.plugin.debug("Could not delete file");
                 }
             }
         }
