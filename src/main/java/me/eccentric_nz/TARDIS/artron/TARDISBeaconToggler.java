@@ -76,7 +76,7 @@ public class TARDISBeaconToggler {
                 beaconData = beacon.split(":");
             }
             World w = plugin.getServer().getWorld(beaconData[0]);
-            boolean stuffed = (beaconData[1].contains(".5"));
+            boolean stuffed = (beaconData.length > 1 && beaconData[1].contains(".5"));
             int bx, bz;
             // get rid of decimal places due to incorrectly copied values from creeper field...
             if (stuffed) {
