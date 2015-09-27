@@ -32,6 +32,31 @@
     <section>
         <h1>Change log</h1>
         <h2>What&rsquo;s been changed?</h2>
+        <h3>TARDIS v3.4-beta-2</h3>
+        <h4>Additions</h4>
+        <ul>
+            <li>Added a <code>/tardisjunk time</code> command to see how much time is left before the Junk TARDIS automatically returns home</li>
+        </ul>
+        <h4>Changes</h4>
+        <ul>
+            <li>The plugin now loads chunks before returning the Junk TARDIS</li>
+            <li>The plugin now loads chunks before teleporting player to the Vortex Junk TARDIS</li>
+            <li>The handbrake lever now toggles when travelling in Junk TARDIS</li>
+            <li>The Resdtone Torch now flashes when flying the Junk TARDIS</li>
+            <li>If the Junk TARDIS destination sign is blank, then clicking the handbrake lever now returns the console to the &lsquo;home&rsquo; location (if away)</li>
+        </ul>
+        <h5>Bug fixes</h5>
+        <ul>
+            <li>Fixed a bug where EffectLib needed to be installed even if particle effects were disabled</li>
+            <li>Fixed lamp scanning using the <code>/tardis lamps</code> command after upgrading to a larger console size</li>
+            <li>Fixed lava flowing over rooms below the console after upgrading from MASTER console</li>
+            <li>Fixed the upgrade block scanner bugging out when upgrading to the REDSTONE console</li>
+            <li>Fixed redstone torches popping off when upgrading to the MASTER&rsquo;s console</li>
+            <li>Fixed permissions for the <code>/tardisjunk find</code> command</li>
+            <li>Fixed the Junk TARDIS return check logic</li>
+            <li>Fixed the <code>/tardisadmin delete junk</code> and <code>/tardisadmin purge junk</code> commands not working for the Junk TARDIS</li>
+            <li>Fixed a NulPointerException when checking if a block is an Artron Furnace</li>
+        </ul>
         <h3>TARDIS v3.4-beta-1</h3>
         <h4>Additions</h4>
         <ul>
@@ -349,7 +374,7 @@
         set_biome: true</code></pre>
                 <ul>
                     <li><code>set_biome [true|false]</code> &mdash; whether to set the biome so that custom textures work on the furnace block</li>
-                    <li><code>cook_time: [time ratio]</code> &mdash; sets the cook time for items smelted with Artron Storage Cells &mdash; <code>0.5</code> is half the normal time, <code>2.0</code> would be twice normal speed (longer), 1 = normal cook time (same as coal)
+                    <li><code>cook_time: [time ratio]</code> &mdash; sets the cook time for items smelted with Artron Storage Cells &mdash; <code>0.5</code> is half the normal time, <code>2.0</code> would be twice normal speed (longer), 1 = normal cook time (same as coal)</li>
                     <li><code>burn_time: [time ratio]</code> &mdash; sets the length of time an Artron Storage Cell will burn for &mdash; as above fractions (<code>0.5</code>) will give shorter life to the cells, &gt; 1 will extend the burn time, 1 = normal burn time (same as coal)</li>
                     <li><code>burn_limit: [amount]</code> &mdash; the maximum amount of burn time a fully charged Artron Storage Cell can have.</li>
                     <li>The actual maximum amount given is <code>burn_limit * burn_time * (cell_charge_level / full_charge)</code></li>
@@ -440,7 +465,7 @@
                     <li>add control centre sign if in schematic</li>
                 </ul>
             </li>
-            <li>Added ability to allow a <code>~</code> shortcut for current world in the <code>/tardistravel [world] [x] [y] [z]</code> command
+            <li>Added ability to allow a <code>~</code> shortcut for current world in the <code>/tardistravel [world] [x] [y] [z]</code> command</li>
             <li>Changes to autonomous homing feature:
                 <ul>
                     <li>don&rsquo;t autonomous home if the TARDIS is in siege mode</li>
