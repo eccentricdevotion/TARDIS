@@ -128,6 +128,29 @@ public class TARDII implements TardisAPI {
     }
 
     @Override
+    public TARDISData getTARDISMapData(int id) {
+        TARDISData data = null;
+        HashMap<String, Object> where = new HashMap<String, Object>();
+        where.put("tardis_id", id);
+        ResultSetTardis rs = new ResultSetTardis(TARDIS.plugin, where, "", false);
+        if (rs.resultSet()) {
+            Location current = null;
+            HashMap<String, Object> wherec = new HashMap<String, Object>();
+            wherec.put("tardis_id", id);
+            ResultSetCurrentLocation rsc = new ResultSetCurrentLocation(TARDIS.plugin, wherec);
+            if (rsc.resultSet()) {
+                current = new Location(rsc.getWorld(), rsc.getX(), rsc.getY(), rsc.getZ());
+            }
+            String console = rs.getSchematic().getPermission().toUpperCase();
+            String chameleon = rs.getPreset().toString();
+            String powered = (rs.isPowered_on()) ? "Yes" : "No";
+            String siege = (rs.isSiege_on()) ? "Yes" : "No";
+            data = new TARDISData(current, console, chameleon, powered, siege);
+        }
+        return data;
+    }
+
+    @Override
     public Location getRandomLocation(List<String> worlds, Environment environment, Parameters param) {
         if (environment == null) {
             // choose random environment

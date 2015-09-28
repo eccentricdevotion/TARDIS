@@ -76,6 +76,15 @@ public interface TardisAPI {
     public Location getTARDISNextLocation(int id);
 
     /**
+     * Retries the Current TARDIS location, chameleon preset, powered and siege
+     * status for the Dynmap-TARDIS plugin.
+     *
+     * @param id the TARDIS id to retrieve the data for
+     * @return the current TARDIS data or null if not found
+     */
+    public TARDISData getTARDISMapData(int id);
+
+    /**
      * Get a random location from a provided list of worlds in the specified
      * environment. If environment is null, then it will choose a random one.
      *

@@ -2,8 +2,8 @@
 
 ##Current version `3.4`
 1. Fix bugs
-2. Fry player/mob health if they venture into Junk TARDIS effects?
-3. Test area parking space variations
+2. Medium difficulty mode
+3. Update Dynmap-TARDIS to show TARDIS console type and other data
 
 ##Upcoming version `3.5`
 * TARDISSonicBlaster addon?
