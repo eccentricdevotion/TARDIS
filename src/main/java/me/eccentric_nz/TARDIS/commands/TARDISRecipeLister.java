@@ -64,6 +64,7 @@ public class TARDISRecipeLister {
         items.add(ChatColor.GREEN + "sonic" + ChatColor.RESET + " - " + ChatColor.DARK_GREEN + "Sonic Screwdriver");
         items.add(ChatColor.GREEN + "remote" + ChatColor.RESET + " - " + ChatColor.DARK_GREEN + "Stattenheim Remote");
         items.add(ChatColor.GREEN + "r-key" + ChatColor.RESET + " - " + ChatColor.DARK_GREEN + "TARDIS Remote Key");
+        items.add(ChatColor.GREEN + "reader" + ChatColor.RESET + " - " + ChatColor.DARK_GREEN + "TARDIS Biome Reader");
         recipe_options.put("TARDIS Items", items);
         List<String> item_circuits = new ArrayList<String>();
         item_circuits.add(ChatColor.RED + "l-circuit" + ChatColor.RESET + " - " + ChatColor.DARK_RED + "Locator Circuit");

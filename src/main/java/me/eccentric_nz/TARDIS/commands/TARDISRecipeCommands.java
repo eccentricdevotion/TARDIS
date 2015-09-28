@@ -89,6 +89,7 @@ public class TARDISRecipeCommands implements CommandExecutor {
         firstArgs.add("r-circuit"); // Redstone Circuit
         firstArgs.add("r-key"); // TARDIS Remote Key
         firstArgs.add("randomiser-circuit"); // Randomiser Circuit
+        firstArgs.add("reader"); // TARDIS Biome Reader
         firstArgs.add("remote"); // Stattenheim Remote
         firstArgs.add("s-circuit"); // Stattenheim Circuit
         firstArgs.add("save-disk"); // Save Storage Disk
@@ -290,6 +291,10 @@ public class TARDISRecipeCommands implements CommandExecutor {
             }
             if (args[0].equalsIgnoreCase("randomiser-circuit")) {
                 this.showShapedRecipe(player, "TARDIS Randomiser Circuit");
+                return true;
+            }
+            if (args[0].equalsIgnoreCase("reader")) {
+                showShapedRecipe(player, "TARDIS Biome Reader");
                 return true;
             }
             if (args[0].equalsIgnoreCase("remote")) {

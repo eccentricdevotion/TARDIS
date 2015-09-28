@@ -706,6 +706,25 @@ shaped:
         result: WATCH
         amount: 1
         lore: ""
+    TARDIS Biome Reader:
+        easy_shape: ---,-C-,SDT
+        easy_ingredients:
+            C: 'MAP:1972'
+            S: SAND
+            D: DIRT
+            T: STONE
+        hard_shape: -C-,SDT,LWN
+        hard_ingredients:
+            C: 'MAP:1972'
+            S: SAND
+            D: DIRT
+            T: STONE
+            L: CLAY
+            W: SNOW_BLOCK
+            N: NETHERRACK
+        result: CLAY_BRICK
+        amount: 1
+        lore: ""
 # -------------------
 # these are the shapeless recipes
 # -------------------

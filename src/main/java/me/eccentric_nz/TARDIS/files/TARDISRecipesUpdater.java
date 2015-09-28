@@ -151,6 +151,25 @@ public class TARDISRecipesUpdater {
             recipes_config.set("shaped.Fob Watch.lore", "");
             i++;
         }
+        if (!recipes_config.contains("shaped.TARDIS Biome Reader")) {
+            recipes_config.set("shaped.TARDIS Biome Reader.easy_shape", "---,-C-,SDT");
+            recipes_config.set("shaped.TARDIS Biome Reader.easy_ingredients.C", "MAP:1972");
+            recipes_config.set("shaped.TARDIS Biome Reader.easy_ingredients.S", "SAND");
+            recipes_config.set("shaped.TARDIS Biome Reader.easy_ingredients.D", "DIRT");
+            recipes_config.set("shaped.TARDIS Biome Reader.easy_ingredients.T", "STONE");
+            recipes_config.set("shaped.TARDIS Biome Reader.hard_shape", "-C-,SDT,LWN");
+            recipes_config.set("shaped.TARDIS Biome Reader.hard_ingredients.C", "MAP:1972");
+            recipes_config.set("shaped.TARDIS Biome Reader.hard_ingredients.S", "SAND");
+            recipes_config.set("shaped.TARDIS Biome Reader.hard_ingredients.D", "DIRT");
+            recipes_config.set("shaped.TARDIS Biome Reader.hard_ingredients.T", "STONE");
+            recipes_config.set("shaped.TARDIS Biome Reader.hard_ingredients.L", "CLAY");
+            recipes_config.set("shaped.TARDIS Biome Reader.hard_ingredients.W", "SNOW_BLOCK");
+            recipes_config.set("shaped.TARDIS Biome Reader.hard_ingredients.N", "NETHERRACK");
+            recipes_config.set("shaped.TARDIS Biome Reader.result", "CLAY_BRICK");
+            recipes_config.set("shaped.TARDIS Biome Reader.amount", 1);
+            recipes_config.set("shaped.TARDIS Biome Reader.lore", "");
+            i++;
+        }
         if (!recipes_config.contains("shaped.Jammy Dodger")) {
             recipes_config.set("shaped.Jammy Dodger.easy_shape", "---,WRW,---");
             recipes_config.set("shaped.Jammy Dodger.easy_ingredients.W", "WHEAT");
@@ -238,11 +257,9 @@ public class TARDISRecipesUpdater {
             recipes_config.set("shaped.Painter Circuit.amount", 1);
             recipes_config.set("shaped.Painter Circuit.lore", "");
             i++;
-        } else {
-            // fix the hard recipe if necessary
-            if (recipes_config.get("shaped.Painter Circuit.hard_shape").equals("-B-,-F-,-B-")) {
-                recipes_config.set("shaped.Painter Circuit.hard_shape", "-I-,DGD,-I-");
-            }
+        } else // fix the hard recipe if necessary
+        if (recipes_config.get("shaped.Painter Circuit.hard_shape").equals("-B-,-F-,-B-")) {
+            recipes_config.set("shaped.Painter Circuit.hard_shape", "-I-,DGD,-I-");
         }
         if (!recipes_config.contains("shapeless.Painter Upgrade")) {
             recipes_config.set("shapeless.Painter Upgrade.recipe", "BLAZE_ROD,MAP:1979");

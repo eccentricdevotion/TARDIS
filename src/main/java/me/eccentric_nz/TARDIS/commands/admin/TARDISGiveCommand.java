@@ -93,6 +93,7 @@ public class TARDISGiveCommand implements CommandExecutor {
         items.put("r-key", "TARDIS Remote Key");
         items.put("randomiser-circuit", "TARDIS Randomiser Circuit");
         items.put("remote", "Stattenheim Remote");
+        items.put("reader", "TARDIS Biome Reader");
         items.put("s-circuit", "TARDIS Stattenheim Circuit");
         items.put("save-disk", "Save Storage Disk");
         items.put("scanner-circuit", "TARDIS Scanner Circuit");
