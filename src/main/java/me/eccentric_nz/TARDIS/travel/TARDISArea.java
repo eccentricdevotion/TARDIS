@@ -176,11 +176,13 @@ public class TARDISArea {
             }
             if (chk == true) {
                 World w = plugin.getServer().getWorld(wStr);
-                int y = rsa.getY();
-                if (y == 0) {
-                    y = w.getHighestBlockYAt(xx, zz);
+                if (w != null) {
+                    int y = rsa.getY();
+                    if (y == 0) {
+                        y = w.getHighestBlockYAt(xx, zz);
+                    }
+                    location = w.getBlockAt(xx, y, zz).getLocation();
                 }
-                location = w.getBlockAt(xx, y, zz).getLocation();
             }
         }
         return location;

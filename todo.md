@@ -3,7 +3,6 @@
 ##Current version `3.4`
 1. Fix bugs
 2. Medium difficulty mode
-3. Update Dynmap-TARDIS to show TARDIS console type and other data
 
 ##Upcoming version `3.5`
 * TARDISSonicBlaster addon?
