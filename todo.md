@@ -15,12 +15,11 @@
 
 ##Resource Pack / TARDISWeepingAngels
 
-1. Re-visit TARDIS door being biom specific
-2. Re-skin mobs for Resource pack, and add new mob sounds
+1. Re-skin mobs for Resource pack, and add new mob sounds
 
-   * Villagers -> Ood - _started_
+   * Villagers -> Ood - _started texture_
    * Villagers -> Hath
-   * Endermen -> The Silence - _started_
+   * Endermen -> The Silence - _implemented, but texture needs to be finished_
    * Endermites -> Cybermats
    * Iron Golem -> Gunslinger
    * Witches -> Slitheen / Whispermen?
