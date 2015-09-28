@@ -92,6 +92,9 @@ public class TARDISInformationSystemListener implements Listener {
                         if (chat.equalsIgnoreCase("T")) {
                             processKey(p, TARDISInfoMenu.TYPES);
                         }
+                        if (chat.equalsIgnoreCase("F")) {
+                            processKey(p, TARDISInfoMenu.FOOD_ACCESSORIES);
+                        }
                         break;
                     // SECOND level menu
                     case CONSOLE_BLOCKS:
@@ -183,11 +186,17 @@ public class TARDISInformationSystemListener implements Listener {
                         if (chat.equalsIgnoreCase("A")) {
                             processKey(p, TARDISInfoMenu.CELL);
                         }
+                        if (chat.equalsIgnoreCase("B")) {
+                            processKey(p, TARDISInfoMenu.READER);
+                        }
                         if (chat.equalsIgnoreCase("F")) {
                             processKey(p, TARDISInfoMenu.FILTER);
                         }
                         if (chat.equalsIgnoreCase("K")) {
                             processKey(p, TARDISInfoMenu.KEY);
+                        }
+                        if (chat.equalsIgnoreCase("m")) {
+                            processKey(p, TARDISInfoMenu.R_KEY);
                         }
                         if (chat.equalsIgnoreCase("S")) {
                             processKey(p, TARDISInfoMenu.SONIC);
@@ -197,6 +206,9 @@ public class TARDISInformationSystemListener implements Listener {
                         }
                         if (chat.equalsIgnoreCase("R")) {
                             processKey(p, TARDISInfoMenu.REMOTE);
+                        }
+                        if (chat.equalsIgnoreCase("u")) {
+                            processKey(p, TARDISInfoMenu.FURNACE);
                         }
                         break;
                     case DISKS:
@@ -469,6 +481,29 @@ public class TARDISInformationSystemListener implements Listener {
                             showInfo(p, TARDISInfoMenu.CUSTOM);
                         }
                         break;
+                    case FOOD_ACCESSORIES:
+                        if (chat.equalsIgnoreCase("B")) {
+                            processKey(p, TARDISInfoMenu.BOW_TIE);
+                        }
+                        if (chat.equalsIgnoreCase("C")) {
+                            processKey(p, TARDISInfoMenu.CUSTARD);
+                        }
+                        if (chat.equalsIgnoreCase("D")) {
+                            processKey(p, TARDISInfoMenu.JAMMY_DODGER);
+                        }
+                        if (chat.equalsIgnoreCase("F")) {
+                            processKey(p, TARDISInfoMenu.FISH_FINGER);
+                        }
+                        if (chat.equalsIgnoreCase("G")) {
+                            processKey(p, TARDISInfoMenu.GLASSES);
+                        }
+                        if (chat.equalsIgnoreCase("J")) {
+                            processKey(p, TARDISInfoMenu.JELLY_BABY);
+                        }
+                        if (chat.equalsIgnoreCase("W")) {
+                            processKey(p, TARDISInfoMenu.WATCH);
+                        }
+                        break;
                     // THIRD level menus
                     case KEY:
                         if (chat.equalsIgnoreCase("I")) {
@@ -500,6 +535,86 @@ public class TARDISInformationSystemListener implements Listener {
                         }
                         if (chat.equalsIgnoreCase("R")) {
                             showRecipe(p, TARDISInfoMenu.REMOTE_RECIPE);
+                        }
+                        break;
+                    case READER:
+                        if (chat.equalsIgnoreCase("I")) {
+                            showInfo(p, TARDISInfoMenu.READER_INFO);
+                        }
+                        if (chat.equalsIgnoreCase("R")) {
+                            showRecipe(p, TARDISInfoMenu.READER_RECIPE);
+                        }
+                        break;
+                    case R_KEY:
+                        if (chat.equalsIgnoreCase("I")) {
+                            showInfo(p, TARDISInfoMenu.R_KEY_INFO);
+                        }
+                        if (chat.equalsIgnoreCase("R")) {
+                            showRecipe(p, TARDISInfoMenu.R_KEY_RECIPE);
+                        }
+                        break;
+                    case FURNACE:
+                        if (chat.equalsIgnoreCase("I")) {
+                            showInfo(p, TARDISInfoMenu.FURNACE_INFO);
+                        }
+                        if (chat.equalsIgnoreCase("R")) {
+                            showRecipe(p, TARDISInfoMenu.FURNACE_RECIPE);
+                        }
+                        break;
+                    case GLASSES:
+                        if (chat.equalsIgnoreCase("I")) {
+                            showInfo(p, TARDISInfoMenu.GLASSES_INFO);
+                        }
+                        if (chat.equalsIgnoreCase("R")) {
+                            showRecipe(p, TARDISInfoMenu.GLASSES_RECIPE);
+                        }
+                        break;
+                    case BOW_TIE:
+                        if (chat.equalsIgnoreCase("I")) {
+                            showInfo(p, TARDISInfoMenu.BOW_TIE_INFO);
+                        }
+                        if (chat.equalsIgnoreCase("R")) {
+                            showRecipe(p, TARDISInfoMenu.BOW_TIE_RECIPE);
+                        }
+                        break;
+                    case CUSTARD:
+                        if (chat.equalsIgnoreCase("I")) {
+                            showInfo(p, TARDISInfoMenu.CUSTARD_INFO);
+                        }
+                        if (chat.equalsIgnoreCase("R")) {
+                            showRecipe(p, TARDISInfoMenu.CUSTARD_RECIPE);
+                        }
+                        break;
+                    case FISH_FINGER:
+                        if (chat.equalsIgnoreCase("I")) {
+                            showInfo(p, TARDISInfoMenu.FISH_FINGER_INFO);
+                        }
+                        if (chat.equalsIgnoreCase("R")) {
+                            showRecipe(p, TARDISInfoMenu.FISH_FINGER_RECIPE);
+                        }
+                        break;
+                    case JELLY_BABY:
+                        if (chat.equalsIgnoreCase("I")) {
+                            showInfo(p, TARDISInfoMenu.JELLY_BABY_INFO);
+                        }
+                        if (chat.equalsIgnoreCase("R")) {
+                            showRecipe(p, TARDISInfoMenu.JELLY_BABY_RECIPE);
+                        }
+                        break;
+                    case JAMMY_DODGER:
+                        if (chat.equalsIgnoreCase("I")) {
+                            showInfo(p, TARDISInfoMenu.JAMMY_DODGER_INFO);
+                        }
+                        if (chat.equalsIgnoreCase("R")) {
+                            showRecipe(p, TARDISInfoMenu.JAMMY_DODGER_RECIPE);
+                        }
+                        break;
+                    case WATCH:
+                        if (chat.equalsIgnoreCase("I")) {
+                            showInfo(p, TARDISInfoMenu.WATCH_INFO);
+                        }
+                        if (chat.equalsIgnoreCase("R")) {
+                            showRecipe(p, TARDISInfoMenu.WATCH_RECIPE);
                         }
                         break;
                     case BIOME_DISK:

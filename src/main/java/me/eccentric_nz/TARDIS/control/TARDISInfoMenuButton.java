@@ -47,6 +47,7 @@ public class TARDISInfoMenuButton {
         player.sendMessage("§6> C§fo§6mmands");
         player.sendMessage("§6> §fT§6ARDIS Types");
         player.sendMessage("§6> §fR§6ooms");
+        player.sendMessage("§6> §fF§6ood & Accessories");
         player.sendMessage("§6> §fE§6xit");
     }
 }
