@@ -55,7 +55,7 @@ public class TARDISArtronFurnaceParticle {
         if (furnace != null) {
             Inventory inv = furnace.getInventory();
             if (inv != null) {
-                String title = furnace.getInventory().getTitle();
+                String title = inv.getTitle();
                 return (title != null && title.equals("TARDIS Artron Furnace"));
             }
         }
