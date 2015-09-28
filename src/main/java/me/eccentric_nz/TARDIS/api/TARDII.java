@@ -134,18 +134,13 @@ public class TARDII implements TardisAPI {
         where.put("tardis_id", id);
         ResultSetTardis rs = new ResultSetTardis(TARDIS.plugin, where, "", false);
         if (rs.resultSet()) {
-            Location current = null;
-            HashMap<String, Object> wherec = new HashMap<String, Object>();
-            wherec.put("tardis_id", id);
-            ResultSetCurrentLocation rsc = new ResultSetCurrentLocation(TARDIS.plugin, wherec);
-            if (rsc.resultSet()) {
-                current = new Location(rsc.getWorld(), rsc.getX(), rsc.getY(), rsc.getZ());
-            }
+            Location current = getTARDISCurrentLocation(id);
             String console = rs.getSchematic().getPermission().toUpperCase();
             String chameleon = rs.getPreset().toString();
             String powered = (rs.isPowered_on()) ? "Yes" : "No";
             String siege = (rs.isSiege_on()) ? "Yes" : "No";
-            data = new TARDISData(current, console, chameleon, powered, siege);
+            List<String> occupants = getPlayersInTARDIS(id);
+            data = new TARDISData(current, console, chameleon, powered, siege, occupants);
         }
         return data;
     }
