@@ -62,6 +62,7 @@ import me.eccentric_nz.TARDIS.listeners.TARDISAreaListener;
 import me.eccentric_nz.TARDIS.listeners.TARDISAreaSignListener;
 import me.eccentric_nz.TARDIS.listeners.TARDISBeaconColouringListener;
 import me.eccentric_nz.TARDIS.listeners.TARDISBindListener;
+import me.eccentric_nz.TARDIS.listeners.TARDISBiomeReaderListener;
 import me.eccentric_nz.TARDIS.listeners.TARDISBlockBreakListener;
 import me.eccentric_nz.TARDIS.listeners.TARDISBlockDamageListener;
 import me.eccentric_nz.TARDIS.listeners.TARDISBlockPhysicsListener;
@@ -182,6 +183,9 @@ public class TARDISListenerRegisterer {
         }
         plugin.getPM().registerEvents(new TARDISBeaconColouringListener(plugin), plugin);
         plugin.getPM().registerEvents(new TARDISBindListener(plugin), plugin);
+        if (!plugin.getConfig().getString("preferences.difficulty").equals("hard")) {
+            plugin.getPM().registerEvents(new TARDISBiomeReaderListener(plugin), plugin);
+        }
         plugin.getPM().registerEvents(new TARDISBlockDamageListener(plugin), plugin);
         plugin.getPM().registerEvents(new TARDISBlockPhysicsListener(plugin), plugin);
         plugin.getPM().registerEvents(new TARDISChameleonListener(plugin), plugin);

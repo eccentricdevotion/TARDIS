@@ -42,7 +42,6 @@ public class TARDISDiskCraftListener implements Listener {
 
     private final TARDIS plugin;
     private final List<InventoryAction> actions = new ArrayList<InventoryAction>();
-    private final List<String> regular = new ArrayList<String>();
 
     public TARDISDiskCraftListener(TARDIS plugin) {
         this.plugin = plugin;
@@ -50,9 +49,6 @@ public class TARDISDiskCraftListener implements Listener {
         actions.add(InventoryAction.PLACE_ONE);
         actions.add(InventoryAction.PLACE_SOME);
         actions.add(InventoryAction.SWAP_WITH_CURSOR);
-        for (BIOME_LOOKUP b : BIOME_LOOKUP.values()) {
-            regular.add(b.getRegular());
-        }
     }
 
     @EventHandler(ignoreCancelled = true)
