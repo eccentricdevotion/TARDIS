@@ -84,6 +84,7 @@ public class TARDISGeneralInstanceKeeper {
     private final List<Material> doors = Arrays.asList(Material.IRON_DOOR_BLOCK, Material.WOODEN_DOOR, Material.SPRUCE_DOOR, Material.BIRCH_DOOR, Material.ACACIA_DOOR, Material.JUNGLE_DOOR, Material.DARK_OAK_DOOR);
     private final List<Material> rails = Arrays.asList(Material.POWERED_RAIL, Material.RAILS, Material.DETECTOR_RAIL, Material.ACTIVATOR_RAIL);
     private final List<Material> goodNether = Arrays.asList(Material.NETHERRACK, Material.SOUL_SAND, Material.GLOWSTONE, Material.NETHER_BRICK, Material.NETHER_FENCE, Material.NETHER_BRICK_STAIRS);
+    private final List<Material> interactables;
     private final List<String> gravityDownList = new ArrayList<String>();
     private final List<String> roomArgs;
     private final List<String> sonicLamps = new ArrayList<String>();
@@ -104,6 +105,7 @@ public class TARDISGeneralInstanceKeeper {
         this.transparent = buildTransparent();
         this.UUIDCache = new TARDISUUIDCache(plugin);
         this.doorListener = new TARDISDoorListener(plugin);
+        this.interactables = buildInteractables();
         setRechargers();
         InputStream is = plugin.getResource("plugin.yml");
         InputStreamReader reader = new InputStreamReader(is);
@@ -329,6 +331,10 @@ public class TARDISGeneralInstanceKeeper {
         return junkTravellers;
     }
 
+    public List<Material> getInteractables() {
+        return interactables;
+    }
+
     private void setRechargers() {
         if (plugin.getConfig().isConfigurationSection("rechargers")) {
             Set<String> therechargers = plugin.getConfig().getConfigurationSection("rechargers").getKeys(false);
@@ -368,5 +374,50 @@ public class TARDISGeneralInstanceKeeper {
             }
         }
         return rooms;
+    }
+
+    private List<Material> buildInteractables() {
+        List<Material> interactables = new ArrayList<Material>();
+        interactables.add(Material.ACACIA_DOOR);
+        interactables.add(Material.ACACIA_FENCE_GATE);
+        interactables.add(Material.ANVIL);
+        interactables.add(Material.BEACON);
+        interactables.add(Material.BED_BLOCK);
+        interactables.add(Material.BIRCH_DOOR);
+        interactables.add(Material.BIRCH_FENCE_GATE);
+        interactables.add(Material.BURNING_FURNACE);
+        interactables.add(Material.CHEST);
+        interactables.add(Material.DARK_OAK_DOOR);
+        interactables.add(Material.DARK_OAK_FENCE_GATE);
+        interactables.add(Material.DIODE_BLOCK_OFF);
+        interactables.add(Material.DIODE_BLOCK_ON);
+        interactables.add(Material.DISPENSER);
+        interactables.add(Material.DROPPER);
+        interactables.add(Material.ENDER_CHEST);
+        interactables.add(Material.FENCE_GATE);
+        interactables.add(Material.FURNACE);
+        interactables.add(Material.GOLD_PLATE);
+        interactables.add(Material.HOPPER);
+        interactables.add(Material.IRON_DOOR_BLOCK);
+        interactables.add(Material.IRON_PLATE);
+        interactables.add(Material.IRON_TRAPDOOR);
+        interactables.add(Material.JUKEBOX);
+        interactables.add(Material.JUNGLE_DOOR);
+        interactables.add(Material.JUNGLE_FENCE_GATE);
+        interactables.add(Material.LEVER);
+        interactables.add(Material.NOTE_BLOCK);
+        interactables.add(Material.REDSTONE_COMPARATOR_OFF);
+        interactables.add(Material.REDSTONE_COMPARATOR_ON);
+        interactables.add(Material.SPRUCE_DOOR);
+        interactables.add(Material.SPRUCE_FENCE_GATE);
+        interactables.add(Material.STONE_BUTTON);
+        interactables.add(Material.STONE_PLATE);
+        interactables.add(Material.TRAPPED_CHEST);
+        interactables.add(Material.TRAP_DOOR);
+        interactables.add(Material.WOODEN_DOOR);
+        interactables.add(Material.WOOD_BUTTON);
+        interactables.add(Material.WOOD_PLATE);
+        interactables.add(Material.WORKBENCH);
+        return interactables;
     }
 }

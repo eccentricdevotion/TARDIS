@@ -84,7 +84,6 @@ public class TARDISSonicListener implements Listener {
     private final List<Material> diamond = new ArrayList<Material>();
     private final List<Material> distance = new ArrayList<Material>();
     private final List<Material> doors = new ArrayList<Material>();
-    private final List<Material> interactables = new ArrayList<Material>();
     private final List<Material> redstone = new ArrayList<Material>();
     private final List<UUID> frozenPlayers = new ArrayList<UUID>();
     private final List<BlockFace> faces = new ArrayList<BlockFace>();
@@ -115,46 +114,6 @@ public class TARDISSonicListener implements Listener {
         doors.add(Material.SPRUCE_DOOR);
         doors.add(Material.TRAP_DOOR);
         doors.add(Material.WOODEN_DOOR);
-        interactables.add(Material.ACACIA_DOOR);
-        interactables.add(Material.ACACIA_FENCE_GATE);
-        interactables.add(Material.ANVIL);
-        interactables.add(Material.BEACON);
-        interactables.add(Material.BED_BLOCK);
-        interactables.add(Material.BIRCH_DOOR);
-        interactables.add(Material.BIRCH_FENCE_GATE);
-        interactables.add(Material.BURNING_FURNACE);
-        interactables.add(Material.CHEST);
-        interactables.add(Material.DARK_OAK_DOOR);
-        interactables.add(Material.DARK_OAK_FENCE_GATE);
-        interactables.add(Material.DIODE_BLOCK_OFF);
-        interactables.add(Material.DIODE_BLOCK_ON);
-        interactables.add(Material.DISPENSER);
-        interactables.add(Material.DROPPER);
-        interactables.add(Material.ENDER_CHEST);
-        interactables.add(Material.FENCE_GATE);
-        interactables.add(Material.FURNACE);
-        interactables.add(Material.GOLD_PLATE);
-        interactables.add(Material.HOPPER);
-        interactables.add(Material.IRON_DOOR_BLOCK);
-        interactables.add(Material.IRON_PLATE);
-        interactables.add(Material.IRON_TRAPDOOR);
-        interactables.add(Material.JUKEBOX);
-        interactables.add(Material.JUNGLE_DOOR);
-        interactables.add(Material.JUNGLE_FENCE_GATE);
-        interactables.add(Material.LEVER);
-        interactables.add(Material.NOTE_BLOCK);
-        interactables.add(Material.REDSTONE_COMPARATOR_OFF);
-        interactables.add(Material.REDSTONE_COMPARATOR_ON);
-        interactables.add(Material.SPRUCE_DOOR);
-        interactables.add(Material.SPRUCE_FENCE_GATE);
-        interactables.add(Material.STONE_BUTTON);
-        interactables.add(Material.STONE_PLATE);
-        interactables.add(Material.TRAPPED_CHEST);
-        interactables.add(Material.TRAP_DOOR);
-        interactables.add(Material.WOODEN_DOOR);
-        interactables.add(Material.WOOD_BUTTON);
-        interactables.add(Material.WOOD_PLATE);
-        interactables.add(Material.WORKBENCH);
         redstone.add(Material.DETECTOR_RAIL);
         redstone.add(Material.IRON_DOOR_BLOCK);
         redstone.add(Material.PISTON_BASE);
@@ -225,10 +184,8 @@ public class TARDISSonicListener implements Listener {
                                                 frozenPlayers.remove(uuid);
                                             }
                                         }, 100L);
-                                    } else {
-                                        if (player.hasPermission("tardis.sonic.standard")) {
-                                            standardSonic(player);
-                                        }
+                                    } else if (player.hasPermission("tardis.sonic.standard")) {
+                                        standardSonic(player);
                                     }
                                 }
                             }, 20L);
@@ -302,7 +259,7 @@ public class TARDISSonicListener implements Listener {
                             }
                         }, 60L);
                     }
-                    if (!redstone.contains(b.getType()) && player.hasPermission("tardis.sonic.emerald") && lore != null && lore.contains("Emerald Upgrade") && !interactables.contains(b.getType())) {
+                    if (!redstone.contains(b.getType()) && player.hasPermission("tardis.sonic.emerald") && lore != null && lore.contains("Emerald Upgrade") && !plugin.getGeneralKeeper().getInteractables().contains(b.getType())) {
                         playSonicSound(player, now, 3050L, "sonic_screwdriver");
                         // scan environment
                         this.scan(b.getLocation(), player);
@@ -410,12 +367,10 @@ public class TARDISSonicListener implements Listener {
                                             break;
                                         }
                                     }
-                                } else {
-                                    if (setExtension(b)) {
-                                        plugin.getGeneralKeeper().getSonicPistons().add(b.getLocation().toString());
-                                        piston.setPowered(true);
-                                        player.playSound(b.getLocation(), Sound.PISTON_EXTEND, 1.0f, 1.0f);
-                                    }
+                                } else if (setExtension(b)) {
+                                    plugin.getGeneralKeeper().getSonicPistons().add(b.getLocation().toString());
+                                    piston.setPowered(true);
+                                    player.playSound(b.getLocation(), Sound.PISTON_EXTEND, 1.0f, 1.0f);
                                 }
                                 b.setData(piston.getData());
                                 bs.update(true);
@@ -513,63 +468,59 @@ public class TARDISSonicListener implements Listener {
                                 l.getWorld().playSound(l, Sound.SHEEP_SHEAR, 1.0F, 1.5F);
                                 // set the block to AIR
                                 b.setType(Material.AIR);
-                            } else {
-                                if (mat.equals(Material.SNOW) || mat.equals(Material.SNOW_BLOCK)) {
-                                    // how many?
-                                    int balls;
-                                    if (mat.equals(Material.SNOW_BLOCK)) {
-                                        balls = 4;
-                                    } else {
-                                        balls = 1 + b.getData();
-                                    }
-                                    b.setType(Material.AIR);
-                                    b.getLocation().getWorld().dropItemNaturally(b.getLocation(), new ItemStack(Material.SNOW_BALL, balls));
+                            } else if (mat.equals(Material.SNOW) || mat.equals(Material.SNOW_BLOCK)) {
+                                // how many?
+                                int balls;
+                                if (mat.equals(Material.SNOW_BLOCK)) {
+                                    balls = 4;
                                 } else {
-                                    b.breakNaturally();
-                                    b.getLocation().getWorld().playSound(b.getLocation(), Sound.SHEEP_SHEAR, 1.0F, 1.5F);
+                                    balls = 1 + b.getData();
                                 }
-                            }
-                        }
-                    } else {
-                        if (paintable.contains(b.getType()) && player.hasPermission("tardis.sonic.paint") && lore != null && lore.contains("Painter Upgrade")) {
-                            // must be in TARDIS world
-                            if (!plugin.getUtils().inTARDISWorld(player)) {
-                                TARDISMessage.send(player, "UPDATE_IN_WORLD");
-                                return;
-                            }
-                            // check the block is not protected by WorldGuard
-                            if (plugin.isWorldGuardOnServer()) {
-                                if (!plugin.getWorldGuardUtils().canBreakBlock(player, b)) {
-                                    TARDISMessage.send(player, "SONIC_PROTECT");
-                                    return;
-                                }
-                            }
-                            playSonicSound(player, now, 600L, "sonic_short");
-                            // check for dye in slot
-                            PlayerInventory inv = player.getInventory();
-                            ItemStack dye = inv.getItem(8);
-                            if (dye == null || !dye.getType().equals(Material.INK_SACK)) {
-                                TARDISMessage.send(player, "SONIC_DYE");
-                                return;
-                            }
-                            byte dye_data = dye.getData().getData();
-                            byte block_data = b.getData();
-                            byte new_data = (byte) (15 - dye_data);
-                            // don't do anything if it is the same colour
-                            if (new_data == block_data) {
-                                return;
-                            }
-                            // remove one dye
-                            int a = dye.getAmount();
-                            int a2 = a - 1;
-                            if (a2 > 0) {
-                                inv.getItem(8).setAmount(a2);
+                                b.setType(Material.AIR);
+                                b.getLocation().getWorld().dropItemNaturally(b.getLocation(), new ItemStack(Material.SNOW_BALL, balls));
                             } else {
-                                inv.setItem(8, null);
+                                b.breakNaturally();
+                                b.getLocation().getWorld().playSound(b.getLocation(), Sound.SHEEP_SHEAR, 1.0F, 1.5F);
                             }
-                            player.updateInventory();
-                            b.setData(new_data, true);
                         }
+                    } else if (paintable.contains(b.getType()) && player.hasPermission("tardis.sonic.paint") && lore != null && lore.contains("Painter Upgrade")) {
+                        // must be in TARDIS world
+                        if (!plugin.getUtils().inTARDISWorld(player)) {
+                            TARDISMessage.send(player, "UPDATE_IN_WORLD");
+                            return;
+                        }
+                        // check the block is not protected by WorldGuard
+                        if (plugin.isWorldGuardOnServer()) {
+                            if (!plugin.getWorldGuardUtils().canBreakBlock(player, b)) {
+                                TARDISMessage.send(player, "SONIC_PROTECT");
+                                return;
+                            }
+                        }
+                        playSonicSound(player, now, 600L, "sonic_short");
+                        // check for dye in slot
+                        PlayerInventory inv = player.getInventory();
+                        ItemStack dye = inv.getItem(8);
+                        if (dye == null || !dye.getType().equals(Material.INK_SACK)) {
+                            TARDISMessage.send(player, "SONIC_DYE");
+                            return;
+                        }
+                        byte dye_data = dye.getData().getData();
+                        byte block_data = b.getData();
+                        byte new_data = (byte) (15 - dye_data);
+                        // don't do anything if it is the same colour
+                        if (new_data == block_data) {
+                            return;
+                        }
+                        // remove one dye
+                        int a = dye.getAmount();
+                        int a2 = a - 1;
+                        if (a2 > 0) {
+                            inv.getItem(8).setAmount(a2);
+                        } else {
+                            inv.setItem(8, null);
+                        }
+                        player.updateInventory();
+                        b.setData(new_data, true);
                     }
                 }
             }

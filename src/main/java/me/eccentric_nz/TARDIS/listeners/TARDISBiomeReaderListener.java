@@ -37,6 +37,9 @@ public class TARDISBiomeReaderListener implements Listener {
 
     @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
     public void onInteract(PlayerInteractEvent event) {
+        if (plugin.getGeneralKeeper().getInteractables().contains(event.getClickedBlock().getType())) {
+            return;
+        }
         final Player player = event.getPlayer();
         ItemStack is = player.getItemInHand();
         if (is.getType().equals(Material.CLAY_BRICK) && is.hasItemMeta()) {
