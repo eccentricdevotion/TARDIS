@@ -394,7 +394,12 @@ public class TARDIS extends JavaPlugin {
             String preSplit = check.getDescription().getVersion();
             String[] split = preSplit.split("-");
             try {
-                Version ver = new Version(split[0]);
+                Version ver;
+                if (check.getName().equals("TARDISChunkGenerator") && check.getDescription().getVersion().startsWith("1")) {
+                    ver = new Version("1");
+                } else {
+                    ver = new Version(split[0]);
+                }
                 return (ver.compareTo(minver) >= 0);
             } catch (IllegalArgumentException e) {
                 getServer().getLogger().log(Level.WARNING, "TARDIS failed to get the version for {0}.", plg);
