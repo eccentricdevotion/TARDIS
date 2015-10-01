@@ -59,11 +59,9 @@ public class TARDISBiomeReaderListener implements Listener {
                     try {
                         ItemStack[] disks1;
                         disks1 = TARDISSerializeInventory.itemStacksFromString(rs.getBiomesOne());
-                        plugin.debug("disk one size: " + disks1.length);
                         if (!hasBiomeDisk(disks1, biome.toString())) {
                             ItemStack[] disks2;
                             disks2 = TARDISSerializeInventory.itemStacksFromString(rs.getBiomesTwo());
-                            plugin.debug("disk two size: " + disks2.length);
                             if (!hasBiomeDisk(disks2, biome.toString())) {
                                 ItemStack bd = new ItemStack(Material.GREEN_RECORD, 1);
                                 ItemMeta dim = bd.getItemMeta();
@@ -104,7 +102,7 @@ public class TARDISBiomeReaderListener implements Listener {
                             TARDISMessage.send(player, "BIOME_READER_FOUND", biome.toString(), "1");
                         }
                     } catch (IOException ex) {
-                        plugin.debug("Could not get biome disks items: " + ex);
+                        plugin.debug("Could not get biome disks: " + ex);
                     }
                 }
             }
