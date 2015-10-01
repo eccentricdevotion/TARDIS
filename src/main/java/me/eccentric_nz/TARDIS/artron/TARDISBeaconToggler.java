@@ -16,13 +16,15 @@
  */
 package me.eccentric_nz.TARDIS.artron;
 
-import java.util.Arrays;
 import java.util.HashMap;
-import java.util.List;
 import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
+import me.eccentric_nz.TARDIS.desktop.TARDISBlockScannerData;
+import me.eccentric_nz.TARDIS.desktop.TARDISUpgradeBlockScanner;
+import me.eccentric_nz.TARDIS.desktop.TARDISUpgradeData;
+import me.eccentric_nz.TARDIS.enumeration.CONSOLES;
 import me.eccentric_nz.TARDIS.enumeration.SCHEMATIC;
 import me.eccentric_nz.TARDIS.utility.TARDISNumberParsers;
 import org.bukkit.Location;
@@ -37,7 +39,6 @@ import org.bukkit.block.Block;
 public class TARDISBeaconToggler {
 
     private final TARDIS plugin;
-    private final List<String> no_beacon = Arrays.asList("plank", "tom");
 
     public TARDISBeaconToggler(TARDIS plugin) {
         this.plugin = plugin;
@@ -49,62 +50,52 @@ public class TARDISBeaconToggler {
         ResultSetTardis rs = new ResultSetTardis(plugin, whereb, "", false);
         if (rs.resultSet()) {
             SCHEMATIC schm = rs.getSchematic();
-            if (no_beacon.contains(schm.getPermission())) {
+            if (CONSOLES.getNoBeacon().contains(schm)) {
                 // doesn't have a beacon!
                 return;
             }
             // toggle beacon
             String beacon = rs.getBeacon();
-            String[] beaconData;
-            int plusy = 0;
-            if (beacon.isEmpty()) {
-                // get the location from the TARDIS size and the creeper location
-                if (schm.getDescription().equals("redstone")) {
-                    plusy = 14;
-                } else if (schm.getDescription().equals("eleventh")) {
-                    plusy = 22;
-                } else if (schm.getDescription().equals("deluxe")) {
-                    plusy = 23;
-                } else if (schm.getDescription().equals("bigger") || schm.getDescription().equals("ars")) {
-                    plusy = 12;
-                } else { // BUDGET, STEAMPUNK, WAR, CUSTOM?
-                    plusy = 11;
+            if (!beacon.isEmpty()) {
+                String[] beaconData = beacon.split(":");
+                if (beaconData.length > 1) {
+                    World w = plugin.getServer().getWorld(beaconData[0]);
+                    int bx = TARDISNumberParsers.parseInt(beaconData[1]);
+                    int by = TARDISNumberParsers.parseInt(beaconData[2]);
+                    int bz = TARDISNumberParsers.parseInt(beaconData[3]);
+                    Location bl = new Location(w, bx, by, bz);
+                    Block b = bl.getBlock();
+                    while (!b.getChunk().isLoaded()) {
+                        b.getChunk().load();
+                    }
+                    b.setType((on) ? Material.GLASS : Material.REDSTONE_BLOCK);
+                    if (!plugin.getGeneralKeeper().getProtectBlockMap().containsKey(bl.toString())) {
+                        plugin.getGeneralKeeper().getProtectBlockMap().put(bl.toString(), rs.getTardis_id());
+                    }
+                } else {
+                    this.updateBeacon(schm, uuid);
                 }
-                String creeper = rs.getCreeper();
-                beaconData = creeper.split(":");
             } else {
-                beaconData = beacon.split(":");
+                this.updateBeacon(schm, uuid);
             }
-            World w = plugin.getServer().getWorld(beaconData[0]);
-            boolean stuffed = (beaconData.length > 1 && beaconData[1].contains(".5"));
-            int bx, bz;
-            // get rid of decimal places due to incorrectly copied values from creeper field...
-            if (stuffed) {
-                bx = (int) TARDISNumberParsers.parseFloat(beaconData[1]) * 1;
-                bz = (int) TARDISNumberParsers.parseFloat(beaconData[3]) * 1;
-            } else {
-                bx = TARDISNumberParsers.parseInt(beaconData[1]);
-                bz = TARDISNumberParsers.parseInt(beaconData[3]);
-            }
-            int by = (int) TARDISNumberParsers.parseFloat(beaconData[2]) * 1 + plusy;
-            if (beacon.isEmpty() || stuffed) {
-                // update the tardis table so we don't have to do this again
-                String beacon_loc = beaconData[0] + ":" + bx + ":" + by + ":" + bz;
-                HashMap<String, Object> set = new HashMap<String, Object>();
-                set.put("beacon", beacon_loc);
-                HashMap<String, Object> where = new HashMap<String, Object>();
-                where.put("tardis_id", rs.getTardis_id());
-                new QueryFactory(plugin).doUpdate("tardis", set, where);
-            }
-            Location bl = new Location(w, bx, by, bz);
-            Block b = bl.getBlock();
-            while (!b.getChunk().isLoaded()) {
-                b.getChunk().load();
-            }
-            b.setType((on) ? Material.GLASS : Material.REDSTONE_BLOCK);
-            if (!plugin.getGeneralKeeper().getProtectBlockMap().containsKey(bl.toString())) {
-                plugin.getGeneralKeeper().getProtectBlockMap().put(bl.toString(), rs.getTardis_id());
-            }
+        }
+    }
+
+    private void updateBeacon(SCHEMATIC schm, UUID uuid) {
+        // determine beacon location and update the tardis table so we don't have to do this again
+        TARDISUpgradeData tud = new TARDISUpgradeData();
+        tud.setSchematic(schm);
+        tud.setPrevious(schm);
+        tud.setWall("WOOL:1");
+        tud.setFloor("WOOL:8");
+        TARDISUpgradeBlockScanner scanner = new TARDISUpgradeBlockScanner(plugin, tud, uuid);
+        TARDISBlockScannerData check = scanner.check();
+        if (!check.getBeacon().isEmpty()) {
+            HashMap<String, Object> set = new HashMap<String, Object>();
+            set.put("beacon", check.getBeacon());
+            HashMap<String, Object> where = new HashMap<String, Object>();
+            where.put("uuid", uuid.toString());
+            new QueryFactory(plugin).doUpdate("tardis", set, where);
         }
     }
 }

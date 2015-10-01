@@ -13,6 +13,7 @@ public class TARDISBlockScannerData {
     private int count;
     private float volume;
     private boolean allow;
+    private String beacon;
 
     public int getChanged() {
         return changed;
@@ -44,5 +45,13 @@ public class TARDISBlockScannerData {
 
     public void setAllow(boolean allow) {
         this.allow = allow;
+    }
+
+    public String getBeacon() {
+        return beacon;
+    }
+
+    public void setBeacon(String beacon) {
+        this.beacon = beacon;
     }
 }

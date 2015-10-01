@@ -81,6 +81,7 @@ public class TARDISUpgradeBlockScanner {
             Material wall_type = Material.valueOf(wall_arr[0]);
             String floor_arr[] = tud.getFloor().split(":");
             Material floor_type = Material.valueOf(floor_arr[0]);
+            String beacon = "";
             // get input array
             JSONArray arr = (JSONArray) obj.get("input");
             for (int level = 0; level < h; level++) {
@@ -118,6 +119,7 @@ public class TARDISUpgradeBlockScanner {
                         }
                         if (type.equals(Material.BEDROCK)) {
                             type = Material.GLASS;
+                            beacon = world.getName() + ":" + x + ":" + y + ":" + z;
                         }
                         if (type.equals(Material.COMMAND)) {
                             type = Material.SMOOTH_BRICK;
@@ -142,6 +144,7 @@ public class TARDISUpgradeBlockScanner {
             tbsd.setChanged(changed);
             // should return false if changed is higher than config
             tbsd.setAllow(changed < plugin.getConfig().getInt("desktop.block_change_percent"));
+            tbsd.setBeacon(beacon);
             return tbsd;
         } else {
             return null;
