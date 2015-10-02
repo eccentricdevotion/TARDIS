@@ -46,7 +46,7 @@ public class TARDISConsoleLoader {
     }
 
     public void addSchematics() {
-        // DELUXE, ELEVENTH, TWELFTH, ARS & REDSTONE schematics supplied by Lord_Rahl and killeratnight at mcnovus.net
+        // DELUXE, ELEVENTH, TWELFTH, ARS & REDSTONE schematics designed by Lord_Rahl and killeratnight at mcnovus.net
         CONSOLES.getByNames().put("ARS", new SCHEMATIC("QUARTZ_BLOCK", "ars", "ARS Console", true, false, true, false, false));
         CONSOLES.getByNames().put("BIGGER", new SCHEMATIC("GOLD_BLOCK", "bigger", "A Bigger Console", false, false, true, false, false));
         CONSOLES.getByNames().put("BUDGET", new SCHEMATIC("IRON_BLOCK", "budget", "Default Console", true, false, true, false, false));
@@ -58,9 +58,9 @@ public class TARDISConsoleLoader {
         CONSOLES.getByNames().put("TOM", new SCHEMATIC("LAPIS_BLOCK", "tom", "4th Doctor's Console", true, false, false, false, false));
         CONSOLES.getByNames().put("TWELFTH", new SCHEMATIC("PRISMARINE", "twelfth", "12th Doctor's Console", false, false, true, true, false));
         CONSOLES.getByNames().put("WAR", new SCHEMATIC("STAINED_CLAY", "war", "War Doctor's Console", true, false, true, false, false));
-        // PYRAMID schematic supplied by airomis (player at thatsnotacreeper.com)
+        // PYRAMID schematic designed by airomis (player at thatsnotacreeper.com)
         CONSOLES.getByNames().put("PYRAMID", new SCHEMATIC("SANDSTONE_STAIRS", "pyramid", "A Sandstone Pyramid Console", true, false, true, false, false));
-        // MASTER's schematic supplied by shadowhawk14269
+        // MASTER's schematic designed by shadowhawk14269
         CONSOLES.getByNames().put("MASTER", new SCHEMATIC("NETHER_BRICK", "master", "The Master's Console", false, true, true, false, false));
         for (final String console : plugin.getCustomConsolesConfig().getKeys(false)) {
             if (plugin.getCustomConsolesConfig().getBoolean(console + ".enabled")) {

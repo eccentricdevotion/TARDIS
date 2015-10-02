@@ -66,7 +66,7 @@ public class TARDISCraftListener implements Listener {
 
     public TARDISCraftListener(TARDIS plugin) {
         this.plugin = plugin;
-        // DELUXE, ELEVENTH, TWELFTH, ARS & REDSTONE schematics supplied by Lord_Rahl and killeratnight at mcnovus.net
+        // DELUXE, ELEVENTH, TWELFTH, ARS & REDSTONE schematics designed by Lord_Rahl and killeratnight at mcnovus.net
         t.put(Material.BOOKSHELF, "PLANK"); // plank
         t.put(Material.COAL_BLOCK, "STEAMPUNK"); // steampunk
         t.put(Material.DIAMOND_BLOCK, "DELUXE"); // deluxe
@@ -78,8 +78,8 @@ public class TARDISCraftListener implements Listener {
         t.put(Material.QUARTZ_BLOCK, "ARS"); // ARS
         t.put(Material.REDSTONE_BLOCK, "REDSTONE"); // redstone
         t.put(Material.STAINED_CLAY, "WAR"); // war doctor
-        t.put(Material.SANDSTONE_STAIRS, "PYRAMID"); // pyramid schematic supplied by airomis (player at thatsnotacreeper.com)
-        t.put(Material.NETHER_BRICK, "MASTER"); // master schematic supplied by shadowhawk14269
+        t.put(Material.SANDSTONE_STAIRS, "PYRAMID"); // pyramid schematic designed by airomis (player at thatsnotacreeper.com)
+        t.put(Material.NETHER_BRICK, "MASTER"); // master schematic designed by shadowhawk14269
         // custom seeds
         for (String console : plugin.getCustomConsolesConfig().getKeys(false)) {
             if (plugin.getCustomConsolesConfig().getBoolean(console + ".enabled")) {

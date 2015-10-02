@@ -64,9 +64,9 @@ public class TARDISFileCopier {
                 plugin.getConsole().sendMessage(plugin.getPluginName() + "Created user_schematics directory.");
             }
         }
-        // DELUXE, ELEVENTH, TWELFTH, ARS & REDSTONE schematics supplied by Lord_Rahl and killeratnight at mcnovus.net
-        // The PYRAMID schematic supplied by airomis (player at thatsnotacreeper.com)
-        // The MASTER's schematic supplied by shadowhawk14269
+        // DELUXE, ELEVENTH, TWELFTH, ARS & REDSTONE schematics designed by Lord_Rahl and killeratnight at mcnovus.net
+        // The PYRAMID schematic designed by airomis (player at thatsnotacreeper.com)
+        // The MASTER's schematic designed by shadowhawk14269
         // load schematic files - copy the default files if they don't exist
         String basepath = plugin.getDataFolder() + File.separator + "schematics" + File.separator;
         String userbasepath = plugin.getDataFolder() + File.separator + "user_schematics" + File.separator;
