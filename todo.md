@@ -6,6 +6,7 @@
 
 ##Upcoming version `3.5`
 * TARDISSonicBlaster addon?
+* Hostile Action Dispersal System
 * ?
 
 ##Future version `4+`

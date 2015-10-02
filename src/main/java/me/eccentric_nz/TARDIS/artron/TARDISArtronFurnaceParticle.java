@@ -48,16 +48,20 @@ public class TARDISArtronFurnaceParticle {
     }
 
     private boolean isArtronFurnace(Block b) {
-        if (b == null || (!b.getType().equals(Material.BURNING_FURNACE) && !b.getType().equals(Material.FURNACE))) {
-            return false;
-        }
-        Furnace furnace = (Furnace) b.getState();
-        if (furnace != null) {
-            Inventory inv = furnace.getInventory();
-            if (inv != null) {
-                String title = inv.getTitle();
-                return (title != null && title.equals("TARDIS Artron Furnace"));
+        try {
+            if (b == null || (!b.getType().equals(Material.BURNING_FURNACE) && !b.getType().equals(Material.FURNACE))) {
+                return false;
             }
+            Furnace furnace = (Furnace) b.getState();
+            if (furnace != null) {
+                Inventory inv = furnace.getInventory();
+                if (inv != null) {
+                    String title = inv.getTitle();
+                    return (title != null && title.equals("TARDIS Artron Furnace"));
+                }
+            }
+        } catch (NullPointerException e) {
+            return false;
         }
         return false;
     }
