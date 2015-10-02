@@ -60,7 +60,7 @@ public class TARDISConsoleLoader {
         CONSOLES.getByNames().put("WAR", new SCHEMATIC("STAINED_CLAY", "war", "War Doctor's Console", true, false, true, false, false));
         // PYRAMID schematic supplied by airomis (player at thatsnotacreeper.com)
         CONSOLES.getByNames().put("PYRAMID", new SCHEMATIC("SANDSTONE_STAIRS", "pyramid", "A Sandstone Pyramid Console", true, false, true, false, false));
-        // MASTER's schematic supplied by macdja38 at pvpcraft.ca
+        // MASTER's schematic supplied by shadowhawk14269
         CONSOLES.getByNames().put("MASTER", new SCHEMATIC("NETHER_BRICK", "master", "The Master's Console", false, true, true, false, false));
         for (final String console : plugin.getCustomConsolesConfig().getKeys(false)) {
             if (plugin.getCustomConsolesConfig().getBoolean(console + ".enabled")) {

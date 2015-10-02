@@ -112,7 +112,7 @@ public class TARDISRecipeCommands implements CommandExecutor {
         t.put("TWELFTH", Material.PRISMARINE); // twelfth
         t.put("WAR", Material.STAINED_CLAY); // war doctor
         t.put("PYRAMID", Material.SANDSTONE_STAIRS); // pyramid schematic supplied by airomis (player at thatsnotacreeper.com)
-        t.put("MASTER", Material.NETHER_BRICK); // master schematic supplied by macdja38 at pvpcraft.ca
+        t.put("MASTER", Material.NETHER_BRICK); // master schematic supplied by shadowhawk14269
         // custom seeds
         for (String console : plugin.getCustomConsolesConfig().getKeys(false)) {
             if (plugin.getCustomConsolesConfig().getBoolean(console + ".enabled")) {
