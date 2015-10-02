@@ -295,9 +295,8 @@ public class TARDISRemoteCommands implements CommandExecutor {
                                         return true;
                                     }
                                     // check location
-                                    TARDISTimeTravel tt = new TARDISTimeTravel(plugin);
-                                    int[] start_loc = tt.getStartLocation(location, rsc.getDirection());
-                                    int count = tt.safeLocation(start_loc[0], location.getBlockY(), start_loc[2], start_loc[1], start_loc[3], location.getWorld(), rsc.getDirection());
+                                    int[] start_loc = TARDISTimeTravel.getStartLocation(location, rsc.getDirection());
+                                    int count = TARDISTimeTravel.safeLocation(start_loc[0], location.getBlockY(), start_loc[2], start_loc[1], start_loc[3], location.getWorld(), rsc.getDirection());
                                     if (count > 0) {
                                         TARDISMessage.send(sender, "NOT_SAFE");
                                         return true;

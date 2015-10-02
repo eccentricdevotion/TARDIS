@@ -37,11 +37,13 @@ public class TARDISMessage {
      * @param message the message to send
      */
     public static void message(Player p, String message) {
-        if (message.length() > lineLength) {
-            String[] multiline = TARDISChatPaginator.wordWrap(message, lineLength);
-            p.sendMessage(multiline);
-        } else {
-            p.sendMessage(message);
+        if (p != null) {
+            if (message.length() > lineLength) {
+                String[] multiline = TARDISChatPaginator.wordWrap(message, lineLength);
+                p.sendMessage(multiline);
+            } else {
+                p.sendMessage(message);
+            }
         }
     }
 
