@@ -84,7 +84,7 @@ public class TARDISCondenserListener implements Listener {
                 boolean isCondenser;
                 HashMap<String, Object> where = new HashMap<String, Object>();
                 if (title.equals("§4Artron Condenser")) {
-                    if (plugin.getConfig().getBoolean("prepferences.no_creative_condense")) {
+                    if (plugin.getConfig().getBoolean("preferences.no_creative_condense")) {
                         if (plugin.isMVOnServer() && !plugin.getMVHelper().isWorldSurvival(loc.getWorld())) {
                             TARDISMessage.send(player, "CONDENSE_NO_CREATIVE");
                             return;
