@@ -29,6 +29,7 @@ public class TARDISVillager extends TARDISMob {
     private Profession profession;
     private ArrayList trades;
     private int career;
+    private int careerLevel;
     private boolean willing;
 
     /**
@@ -61,6 +62,14 @@ public class TARDISVillager extends TARDISMob {
 
     public void setCareer(int career) {
         this.career = career;
+    }
+
+    public int getCareerLevel() {
+        return careerLevel;
+    }
+
+    public void setCareerLevel(int careerLevel) {
+        this.careerLevel = careerLevel;
     }
 
     public boolean isWilling() {

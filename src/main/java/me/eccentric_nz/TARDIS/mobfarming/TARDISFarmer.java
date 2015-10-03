@@ -300,6 +300,7 @@ public class TARDISFarmer {
                             if (plugin.isHelperOnServer()) {
                                 tv.setTrades(plugin.getTardisHelper().getTrades(v, p));
                                 tv.setCareer(plugin.getTardisHelper().getVillagerCareer(v));
+                                tv.setCareerLevel(plugin.getTardisHelper().getVillagerCareerLevel(v));
                                 tv.setWilling(plugin.getTardisHelper().getVillagerWilling(v));
                             }
                             old_macd_had_a_villager.add(tv);
@@ -457,34 +458,32 @@ public class TARDISFarmer {
                             fungi.setRemoveWhenFarAway(false);
                         }
                     }
-                } else {
-                    if (plugin.getConfig().getBoolean("allow.spawn_eggs")) {
-                        // no farm, give the player spawn eggs
-                        Inventory inv = p.getInventory();
-                        if (old_macd_had_a_chicken.size() > 0) {
-                            ItemStack is = new ItemStack(Material.MONSTER_EGG, old_macd_had_a_chicken.size(), (short) 93);
-                            inv.addItem(is);
-                        }
-                        if (old_macd_had_a_cow.size() > 0) {
-                            ItemStack is = new ItemStack(Material.MONSTER_EGG, old_macd_had_a_cow.size(), (short) 92);
-                            inv.addItem(is);
-                        }
-                        if (old_macd_had_a_pig.size() > 0) {
-                            ItemStack is = new ItemStack(Material.MONSTER_EGG, old_macd_had_a_pig.size(), (short) 90);
-                            inv.addItem(is);
-                        }
-                        if (old_macd_had_a_sheep.size() > 0) {
-                            ItemStack is = new ItemStack(Material.MONSTER_EGG, old_macd_had_a_sheep.size(), (short) 91);
-                            inv.addItem(is);
-                        }
-                        if (old_macd_had_a_mooshroom.size() > 0) {
-                            ItemStack is = new ItemStack(Material.MONSTER_EGG, old_macd_had_a_mooshroom.size(), (short) 96);
-                            inv.addItem(is);
-                        }
-                        p.updateInventory();
-                    } else if (farmtotal > 0) {
-                        TARDISMessage.send(p, "FARM");
+                } else if (plugin.getConfig().getBoolean("allow.spawn_eggs")) {
+                    // no farm, give the player spawn eggs
+                    Inventory inv = p.getInventory();
+                    if (old_macd_had_a_chicken.size() > 0) {
+                        ItemStack is = new ItemStack(Material.MONSTER_EGG, old_macd_had_a_chicken.size(), (short) 93);
+                        inv.addItem(is);
                     }
+                    if (old_macd_had_a_cow.size() > 0) {
+                        ItemStack is = new ItemStack(Material.MONSTER_EGG, old_macd_had_a_cow.size(), (short) 92);
+                        inv.addItem(is);
+                    }
+                    if (old_macd_had_a_pig.size() > 0) {
+                        ItemStack is = new ItemStack(Material.MONSTER_EGG, old_macd_had_a_pig.size(), (short) 90);
+                        inv.addItem(is);
+                    }
+                    if (old_macd_had_a_sheep.size() > 0) {
+                        ItemStack is = new ItemStack(Material.MONSTER_EGG, old_macd_had_a_sheep.size(), (short) 91);
+                        inv.addItem(is);
+                    }
+                    if (old_macd_had_a_mooshroom.size() > 0) {
+                        ItemStack is = new ItemStack(Material.MONSTER_EGG, old_macd_had_a_mooshroom.size(), (short) 96);
+                        inv.addItem(is);
+                    }
+                    p.updateInventory();
+                } else if (farmtotal > 0) {
+                    TARDISMessage.send(p, "FARM");
                 }
                 if (!stable.isEmpty()) {
                     // get location of stable room
@@ -551,17 +550,15 @@ public class TARDISFarmer {
                             equine.setRemoveWhenFarAway(false);
                         }
                     }
-                } else {
-                    if (plugin.getConfig().getBoolean("allow.spawn_eggs")) {
-                        Inventory inv = p.getInventory();
-                        if (old_macd_had_a_horse.size() > 0) {
-                            ItemStack is = new ItemStack(Material.MONSTER_EGG, old_macd_had_a_horse.size(), (short) 100);
-                            inv.addItem(is);
-                            p.updateInventory();
-                        }
-                    } else if (horsetotal > 0) {
-                        TARDISMessage.send(p, "FARM_STABLE");
+                } else if (plugin.getConfig().getBoolean("allow.spawn_eggs")) {
+                    Inventory inv = p.getInventory();
+                    if (old_macd_had_a_horse.size() > 0) {
+                        ItemStack is = new ItemStack(Material.MONSTER_EGG, old_macd_had_a_horse.size(), (short) 100);
+                        inv.addItem(is);
+                        p.updateInventory();
                     }
+                } else if (horsetotal > 0) {
+                    TARDISMessage.send(p, "FARM_STABLE");
                 }
                 if (!hutch.isEmpty()) {
                     // get location of hutch room
@@ -591,17 +588,15 @@ public class TARDISFarmer {
                             bunny.setRemoveWhenFarAway(false);
                         }
                     }
-                } else {
-                    if (plugin.getConfig().getBoolean("allow.spawn_eggs")) {
-                        Inventory inv = p.getInventory();
-                        if (old_macd_had_a_rabbit.size() > 0) {
-                            ItemStack is = new ItemStack(Material.MONSTER_EGG, old_macd_had_a_rabbit.size(), (short) 101);
-                            inv.addItem(is);
-                            p.updateInventory();
-                        }
-                    } else if (rabbittotal > 0) {
-                        TARDISMessage.send(p, "FARM_HUTCH");
+                } else if (plugin.getConfig().getBoolean("allow.spawn_eggs")) {
+                    Inventory inv = p.getInventory();
+                    if (old_macd_had_a_rabbit.size() > 0) {
+                        ItemStack is = new ItemStack(Material.MONSTER_EGG, old_macd_had_a_rabbit.size(), (short) 101);
+                        inv.addItem(is);
+                        p.updateInventory();
                     }
+                } else if (rabbittotal > 0) {
+                    TARDISMessage.send(p, "FARM_HUTCH");
                 }
                 if (!village.isEmpty()) {
                     // get location of village room
@@ -632,22 +627,21 @@ public class TARDISFarmer {
                             if (plugin.isHelperOnServer()) {
                                 plugin.getTardisHelper().setTrades(npc, e.getTrades());
                                 plugin.getTardisHelper().setVillagerCareer(npc, e.getCareer());
+                                plugin.getTardisHelper().setVillagerCareerLevel(npc, e.getCareerLevel());
                                 plugin.getTardisHelper().setVillagerWilling(npc, e.isWilling());
                             }
                             npc.setRemoveWhenFarAway(false);
                         }
                     }
-                } else {
-                    if (plugin.getConfig().getBoolean("allow.spawn_eggs")) {
-                        Inventory inv = p.getInventory();
-                        if (old_macd_had_a_villager.size() > 0) {
-                            ItemStack is = new ItemStack(Material.MONSTER_EGG, old_macd_had_a_villager.size(), (short) 120);
-                            inv.addItem(is);
-                            p.updateInventory();
-                        }
-                    } else if (villagertotal > 0) {
-                        TARDISMessage.send(p, "FARM_VILLAGE");
+                } else if (plugin.getConfig().getBoolean("allow.spawn_eggs")) {
+                    Inventory inv = p.getInventory();
+                    if (old_macd_had_a_villager.size() > 0) {
+                        ItemStack is = new ItemStack(Material.MONSTER_EGG, old_macd_had_a_villager.size(), (short) 120);
+                        inv.addItem(is);
+                        p.updateInventory();
                     }
+                } else if (villagertotal > 0) {
+                    TARDISMessage.send(p, "FARM_VILLAGE");
                 }
             }
         }
