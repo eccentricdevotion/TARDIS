@@ -1,5 +1,7 @@
 package me.eccentric_nz.TARDIS.artron;
 
+import java.util.ArrayList;
+import java.util.List;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.utility.TARDISEffectLibHelper;
 import org.bukkit.Location;
@@ -12,6 +14,7 @@ import org.bukkit.inventory.Inventory;
 public class TARDISArtronFurnaceParticle {
 
     private final TARDIS plugin;
+    private final List<Block> nullFurnaces = new ArrayList<Block>();
 
     public TARDISArtronFurnaceParticle(TARDIS plugin) {
         this.plugin = plugin;
@@ -24,10 +27,16 @@ public class TARDISArtronFurnaceParticle {
             @Override
             public void run() {
                 for (Block block : plugin.getGeneralKeeper().getArtronFurnaces()) {
-                    if (block != null && isArtronFurnace(block)) {
-                        TARDISEffectLibHelper.sendWaterParticle(block.getLocation());
+                    try {
+                        if (block != null && isArtronFurnace(block)) {
+                            TARDISEffectLibHelper.sendWaterParticle(block.getLocation());
+                        }
+                    } catch (NullPointerException e) {
+                        nullFurnaces.add(block);
                     }
                 }
+                plugin.getGeneralKeeper().getArtronFurnaces().removeAll(nullFurnaces);
+                nullFurnaces.clear();
                 for (Player player : plugin.getServer().getOnlinePlayers()) {
                     Location loc = player.getLocation();
                     loc.subtract(10.0d, 10.0d, 10.0d);
