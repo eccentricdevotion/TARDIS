@@ -26,6 +26,8 @@ import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetCondenser;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
+import multiworld.MultiWorldPlugin;
+import multiworld.api.MultiWorldAPI;
 import org.bukkit.Effect;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -82,6 +84,19 @@ public class TARDISCondenserListener implements Listener {
                 boolean isCondenser;
                 HashMap<String, Object> where = new HashMap<String, Object>();
                 if (title.equals("§4Artron Condenser")) {
+                    if (plugin.getConfig().getBoolean("prepferences.no_creative_condense")) {
+                        if (plugin.isMVOnServer() && !plugin.getMVHelper().isWorldSurvival(loc.getWorld())) {
+                            TARDISMessage.send(player, "CONDENSE_NO_CREATIVE");
+                            return;
+                        }
+                        if (plugin.getPM().isPluginEnabled("MultiWorld")) {
+                            MultiWorldAPI multiworld = ((MultiWorldPlugin) plugin.getPM().getPlugin("MultiWorld")).getApi();
+                            if (multiworld.isCreativeWorld(loc.getWorld().getName())) {
+                                TARDISMessage.send(player, "CONDENSE_NO_CREATIVE");
+                                return;
+                            }
+                        }
+                    }
                     chest_loc = loc.getWorld().getName() + ":" + loc.getBlockX() + ":" + loc.getBlockY() + ":" + loc.getBlockZ();
                     where.put("condenser", chest_loc);
                     rs = new ResultSetTardis(plugin, where, "", false);

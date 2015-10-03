@@ -79,7 +79,7 @@ public class TARDISCraftListener implements Listener {
         t.put(Material.REDSTONE_BLOCK, "REDSTONE"); // redstone
         t.put(Material.STAINED_CLAY, "WAR"); // war doctor
         t.put(Material.SANDSTONE_STAIRS, "PYRAMID"); // pyramid schematic designed by airomis (player at thatsnotacreeper.com)
-        t.put(Material.NETHER_BRICK, "MASTER"); // master schematic designed by shadowhawk14269
+        t.put(Material.NETHER_BRICK, "MASTER"); // master schematic designed by shadowhawk14269 (while playing at pvpcraft.ca)
         // custom seeds
         for (String console : plugin.getCustomConsolesConfig().getKeys(false)) {
             if (plugin.getCustomConsolesConfig().getBoolean(console + ".enabled")) {

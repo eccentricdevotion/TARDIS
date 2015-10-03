@@ -96,6 +96,7 @@ preferences:
         only_tardis_worlds: true
     render_entities: false
     spawn_random_monsters: true
+    no_creative_condense: false
 # desktop theme
 desktop:
     check_blocks_before_upgrade: false
