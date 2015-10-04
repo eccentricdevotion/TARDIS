@@ -121,6 +121,7 @@ public class TARDISAdminCommands implements CommandExecutor {
         firstsBool.put("mob_farming", "allow");
         firstsBool.put("name_tardis", "police_box");
         firstsBool.put("nether", "travel");
+        firstsBool.put("particles", "artron_furnace");
         firstsBool.put("per_world_perms", "travel");
         firstsBool.put("power_down", "allow");
         firstsBool.put("power_down_on_quit", "allow");

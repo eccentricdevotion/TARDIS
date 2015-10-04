@@ -193,7 +193,7 @@ public class TARDISConfiguration {
         roomBoolOptions.put("rooms.ZERO.enabled", true);
         roomBoolOptions.put("rooms.ZERO.user", false);
         // boolean
-        artronBoolOptions.put("artron_furnace.particles", true);
+        artronBoolOptions.put("artron_furnace.particles", false);
         artronBoolOptions.put("artron_furnace.set_biome", true);
         // double
         artronDoubleOptions.put("artron_furnace.burn_time", 0.5);
