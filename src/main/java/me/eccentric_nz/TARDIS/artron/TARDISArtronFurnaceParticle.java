@@ -15,6 +15,8 @@ public class TARDISArtronFurnaceParticle {
 
     private final TARDIS plugin;
     private final List<Block> nullFurnaces = new ArrayList<Block>();
+    private int taskID;
+    private int errorCount = 0;
 
     public TARDISArtronFurnaceParticle(TARDIS plugin) {
         this.plugin = plugin;
@@ -23,7 +25,7 @@ public class TARDISArtronFurnaceParticle {
     @SuppressWarnings("deprecation")
     public void addParticles() {
 
-        plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, new Runnable() {
+        taskID = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, new Runnable() {
             @Override
             public void run() {
                 for (Block block : plugin.getGeneralKeeper().getArtronFurnaces()) {
@@ -32,7 +34,11 @@ public class TARDISArtronFurnaceParticle {
                             TARDISEffectLibHelper.sendWaterParticle(block.getLocation());
                         }
                     } catch (NullPointerException e) {
+                        errorCount++;
                         nullFurnaces.add(block);
+                        if (errorCount > 10) {
+                            plugin.getServer().getScheduler().cancelTask(taskID);
+                        }
                     }
                 }
                 plugin.getGeneralKeeper().getArtronFurnaces().removeAll(nullFurnaces);
@@ -73,5 +79,9 @@ public class TARDISArtronFurnaceParticle {
             return false;
         }
         return false;
+    }
+
+    public void setTaskID(int taskID) {
+        this.taskID = taskID;
     }
 }
