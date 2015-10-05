@@ -16,16 +16,22 @@
  */
 package me.eccentric_nz.TARDIS.advanced;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
+import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetCurrentLocation;
 import me.eccentric_nz.TARDIS.database.ResultSetDestinations;
+import me.eccentric_nz.TARDIS.database.ResultSetDiskStorage;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
+import me.eccentric_nz.TARDIS.enumeration.DIFFICULTY;
 import me.eccentric_nz.TARDIS.enumeration.PRESET;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
+import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -48,7 +54,16 @@ public class TARDISDiskWriterCommand {
     }
 
     public boolean writeSave(Player player, String[] args) {
-        ItemStack is = player.getItemInHand();
+        ItemStack is;
+        if (plugin.getDifficulty().equals(DIFFICULTY.MEDIUM)) {
+            is = new ItemStack(Material.RECORD_4, 1);
+            ItemMeta im = is.getItemMeta();
+            im.setDisplayName("Save Storage Disk");
+            im.setLore(Arrays.asList("Blank"));
+            is.setItemMeta(im);
+        } else {
+            is = player.getItemInHand();
+        }
         if (is.hasItemMeta()) {
             ItemMeta im = is.getItemMeta();
             if (is.getItemMeta().getDisplayName().equals("Save Storage Disk")) {
@@ -102,12 +117,74 @@ public class TARDISDiskWriterCommand {
                     lore.add(7, (rsc.isSubmarine()) ? "true" : "false");
                     im.setLore(lore);
                     is.setItemMeta(im);
+                    if (plugin.getDifficulty().equals(DIFFICULTY.MEDIUM)) {
+                        // save the disk to storage
+                        boolean isSpace = saveDiskToStorage(player, is);
+                        if (!isSpace) {
+                            TARDISMessage.send(player, "SAVE_STORAGE_FULL");
+                            return true;
+                        }
+                    }
                     TARDISMessage.send(player, "DISK_LOC_SAVED");
                     return true;
                 }
             }
         }
         return true;
+    }
+
+    private boolean saveDiskToStorage(Player player, ItemStack is) {
+        UUID uuid = player.getUniqueId();
+        // check if they have room for this save disk
+        HashMap<String, Object> where = new HashMap<String, Object>();
+        where.put("uuid", uuid.toString());
+        ResultSetDiskStorage rs = new ResultSetDiskStorage(plugin, where);
+        if (rs.resultSet()) {
+            try {
+                ItemStack[] saves1 = TARDISSerializeInventory.itemStacksFromString(rs.getSavesOne());
+                int slot = getNextFreeSlot(saves1);
+                if (slot != -1) {
+                    saves1[slot] = is;
+                    String serialized = TARDISSerializeInventory.itemStacksToString(saves1);
+                    HashMap<String, Object> set = new HashMap<String, Object>();
+                    set.put("saves_one", serialized);
+                    HashMap<String, Object> whereu = new HashMap<String, Object>();
+                    whereu.put("uuid", uuid.toString());
+                    new QueryFactory(plugin).doUpdate("storage", set, whereu);
+                    return true;
+                } else {
+                    ItemStack[] saves2 = TARDISSerializeInventory.itemStacksFromString(rs.getSavesTwo());
+                    slot = getNextFreeSlot(saves2);
+                    if (slot != -1) {
+                        saves2[slot] = is;
+                        String serialized = TARDISSerializeInventory.itemStacksToString(saves2);
+                        HashMap<String, Object> set = new HashMap<String, Object>();
+                        set.put("saves_two", serialized);
+                        HashMap<String, Object> whereu = new HashMap<String, Object>();
+                        whereu.put("uuid", uuid.toString());
+                        new QueryFactory(plugin).doUpdate("storage", set, whereu);
+                        return true;
+                    } else {
+                        return false;
+                    }
+                }
+            } catch (IOException ex) {
+                plugin.debug("Could not get save disks: " + ex);
+            }
+        }
+        return false;
+    }
+
+    private int getNextFreeSlot(ItemStack[] stack) {
+        int slot = -1;
+        for (int s = 27; s < stack.length; s++) {
+            ItemStack disk = stack[s];
+            if (disk == null) {
+                slot = s;
+                break;
+            }
+        }
+        return slot;
     }
 
     public boolean writePlayer(Player player, String[] args) {

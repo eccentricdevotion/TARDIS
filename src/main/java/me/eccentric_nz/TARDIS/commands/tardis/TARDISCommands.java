@@ -215,7 +215,7 @@ public class TARDISCommands implements CommandExecutor {
                 if (args[0].equalsIgnoreCase("save")) {
                     ItemStack is = player.getItemInHand();
                     if (!plugin.getDifficulty().equals(DIFFICULTY.EASY) && !plugin.getUtils().inGracePeriod(player, true)) {
-                        if (heldDiskIsWrong(is, "Save Storage Disk")) {
+                        if (plugin.getDifficulty().equals(DIFFICULTY.HARD) && heldDiskIsWrong(is, "Save Storage Disk")) {
                             TARDISMessage.send(player, "DISK_HAND_SAVE");
                             return true;
                         }
