@@ -134,28 +134,40 @@ public class TARDISStorageListener extends TARDISMenuListener implements Listene
             }
             switch (slot) {
                 case 0:
-                    // switch to saves
-                    loadInventory(rs.getSavesOne(), player, STORAGE.SAVE_1);
+                    if (!store.equals(STORAGE.SAVE_1)) {
+                        // switch to saves
+                        loadInventory(rs.getSavesOne(), player, STORAGE.SAVE_1);
+                    }
                     break;
                 case 1:
-                    // switch to areas
-                    loadInventory(rs.getAreas(), player, STORAGE.AREA);
+                    if (!store.equals(STORAGE.AREA)) {
+                        // switch to areas
+                        loadInventory(rs.getAreas(), player, STORAGE.AREA);
+                    }
                     break;
                 case 2:
-                    // switch to players
-                    loadInventory(rs.getPlayers(), player, STORAGE.PLAYER);
+                    if (!store.equals(STORAGE.PLAYER)) {
+                        // switch to players
+                        loadInventory(rs.getPlayers(), player, STORAGE.PLAYER);
+                    }
                     break;
                 case 3:
-                    // switch to biomes
-                    loadInventory(rs.getBiomesOne(), player, STORAGE.BIOME_1);
+                    if (!store.equals(STORAGE.BIOME_1)) {
+                        // switch to biomes
+                        loadInventory(rs.getBiomesOne(), player, STORAGE.BIOME_1);
+                    }
                     break;
                 case 4:
-                    // switch to presets
-                    loadInventory(rs.getPresetsOne(), player, STORAGE.PRESET_1);
+                    if (!store.equals(STORAGE.PRESET_1)) {
+                        // switch to presets
+                        loadInventory(rs.getPresetsOne(), player, STORAGE.PRESET_1);
+                    }
                     break;
                 case 5:
-                    // switch to circuits
-                    loadInventory(rs.getCircuits(), player, STORAGE.CIRCUIT);
+                    if (!store.equals(STORAGE.CIRCUIT)) {
+                        // switch to circuits
+                        loadInventory(rs.getCircuits(), player, STORAGE.CIRCUIT);
+                    }
                     break;
             }
             switch (store) {
@@ -269,12 +281,10 @@ public class TARDISStorageListener extends TARDISMenuListener implements Listene
                         } else {
                             stack = TARDISSerializeInventory.itemStacksFromString(serialized);
                         }
+                    } else if (s.equals(STORAGE.AREA)) {
+                        stack = new TARDISAreaDisks(plugin).makeDisks(p);
                     } else {
-                        if (s.equals(STORAGE.AREA)) {
-                            stack = new TARDISAreaDisks(plugin).makeDisks(p);
-                        } else {
-                            stack = TARDISSerializeInventory.itemStacksFromString(s.getEmpty());
-                        }
+                        stack = TARDISSerializeInventory.itemStacksFromString(s.getEmpty());
                     }
                 } catch (IOException ex) {
                     plugin.debug("Could not get inventory from database! " + ex);
