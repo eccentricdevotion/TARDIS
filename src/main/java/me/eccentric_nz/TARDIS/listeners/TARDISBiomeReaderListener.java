@@ -86,7 +86,7 @@ public class TARDISBiomeReaderListener implements Listener {
                                         disks2[slot] = bd;
                                         String serialized = TARDISSerializeInventory.itemStacksToString(disks2);
                                         HashMap<String, Object> set = new HashMap<String, Object>();
-                                        set.put("biomes_one", serialized);
+                                        set.put("biomes_two", serialized);
                                         HashMap<String, Object> whereu = new HashMap<String, Object>();
                                         whereu.put("uuid", uuid.toString());
                                         new QueryFactory(plugin).doUpdate("storage", set, whereu);
