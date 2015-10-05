@@ -313,57 +313,60 @@ public class TARDISChameleonPreset {
         }
     }
 
-    private static byte[][] rotate2DByteArray(byte[][] id, COMPASS d, boolean assymetric) {
+    private static byte[][] rotate2DByteArray(byte[][] data, COMPASS d, boolean assymetric) {
         switch (d) {
             case NORTH:
-                byte[] zero_s = id[0];
-                byte[] one_s = id[1];
-                byte[] two_s = id[2];
-                byte[] three_s = id[3];
-                byte[] four_s = id[4];
-                byte[] five_s = id[5];
-                byte[] six_s = id[6];
-                byte[] seven_s = id[7];
-                id[0] = two_s;
-                id[1] = three_s;
-                id[2] = four_s;
-                id[3] = five_s;
-                id[4] = six_s;
-                id[5] = seven_s;
-                id[6] = zero_s;
-                id[7] = one_s;
-                return id;
+                byte[] zero_s = data[0];
+                byte[] one_s = data[1];
+                byte[] two_s = data[2];
+                byte[] three_s = data[3];
+                byte[] four_s = data[4];
+                byte[] five_s = data[5];
+                byte[] six_s = data[6];
+                byte[] seven_s = data[7];
+                data[0] = two_s;
+                data[1] = three_s;
+                data[2] = four_s;
+                data[3] = five_s;
+                data[4] = six_s;
+                data[5] = seven_s;
+                data[6] = zero_s;
+                data[7] = one_s;
+                return data;
             case WEST:
                 if (assymetric) {
-                    byte[] two_w = id[2];
-                    byte[] four_w = id[4];
-                    id[2] = id[0];
-                    id[0] = two_w;
-                    id[4] = id[6];
-                    id[6] = four_w;
+                    byte[] two_w = data[2];
+                    byte[] four_w = data[4];
+                    data[2] = data[0];
+                    data[0] = two_w;
+                    data[4] = data[6];
+                    data[6] = four_w;
                 }
-                byte[] three_w = id[3];
-                id[3] = id[7];
-                id[7] = three_w;
-                return id;
+                //byte[] one_w = data[1];
+                byte[] three_w = data[3];
+                //data[1] = data[5];
+                //data[5] = one_w;
+                data[3] = data[7];
+                data[7] = three_w;
+                return data;
             default:
-                byte[] zero_n = id[0];
-                byte[] one_n = id[1];
-                byte[] two_n = id[2];
-                byte[] three_n = id[3];
-                byte[] four_n = id[4];
-                byte[] five_n = id[5];
-                byte[] six_n = id[6];
-                byte[] seven_n = id[7];
-                id[0] = six_n;
-                id[1] = seven_n;
-                id[2] = zero_n;
-                id[3] = one_n;
-                id[4] = two_n;
-                id[5] = three_n;
-                id[6] = four_n;
-                id[7] = five_n;
-                return id;
+                byte[] zero_n = data[0];
+                byte[] one_n = data[1];
+                byte[] two_n = data[2];
+                byte[] three_n = data[3];
+                byte[] four_n = data[4];
+                byte[] five_n = data[5];
+                byte[] six_n = data[6];
+                byte[] seven_n = data[7];
+                data[0] = six_n;
+                data[1] = seven_n;
+                data[2] = zero_n;
+                data[3] = one_n;
+                data[4] = two_n;
+                data[5] = three_n;
+                data[6] = four_n;
+                data[7] = five_n;
+                return data;
         }
     }
 
