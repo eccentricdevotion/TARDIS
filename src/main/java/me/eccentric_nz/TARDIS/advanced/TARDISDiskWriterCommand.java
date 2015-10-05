@@ -89,7 +89,8 @@ public class TARDISDiskWriterCommand {
                 } else {
                     int id = rs.getTardis_id();
                     PRESET preset = rs.getPreset();
-                    // check has unique name
+                    // check has unique name - this will always return false in HARD & MEDIUM difficulty
+                    // TODO check for disk lore if MEDIUM difficulty
                     HashMap<String, Object> wherename = new HashMap<String, Object>();
                     wherename.put("tardis_id", id);
                     wherename.put("dest_name", args[1]);

@@ -57,11 +57,9 @@ public class TARDISBiomeReaderListener implements Listener {
                 ResultSetDiskStorage rs = new ResultSetDiskStorage(plugin, where);
                 if (rs.resultSet()) {
                     try {
-                        ItemStack[] disks1;
-                        disks1 = TARDISSerializeInventory.itemStacksFromString(rs.getBiomesOne());
+                        ItemStack[] disks1 = TARDISSerializeInventory.itemStacksFromString(rs.getBiomesOne());
                         if (!hasBiomeDisk(disks1, biome.toString())) {
-                            ItemStack[] disks2;
-                            disks2 = TARDISSerializeInventory.itemStacksFromString(rs.getBiomesTwo());
+                            ItemStack[] disks2 = TARDISSerializeInventory.itemStacksFromString(rs.getBiomesTwo());
                             if (!hasBiomeDisk(disks2, biome.toString())) {
                                 ItemStack bd = new ItemStack(Material.GREEN_RECORD, 1);
                                 ItemMeta dim = bd.getItemMeta();
@@ -109,7 +107,7 @@ public class TARDISBiomeReaderListener implements Listener {
         }
     }
 
-    private boolean hasBiomeDisk(ItemStack[] stack, String biome) {
+    public static boolean hasBiomeDisk(ItemStack[] stack, String biome) {
         boolean found = false;
         for (int s = 27; s < stack.length; s++) {
             ItemStack disk = stack[s];

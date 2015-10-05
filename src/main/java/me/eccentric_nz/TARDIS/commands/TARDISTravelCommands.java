@@ -16,6 +16,7 @@
  */
 package me.eccentric_nz.TARDIS.commands;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -26,18 +27,21 @@ import java.util.UUID;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.advanced.TARDISSerializeInventory;
 import me.eccentric_nz.TARDIS.api.Parameters;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetAreas;
 import me.eccentric_nz.TARDIS.database.ResultSetBackLocation;
 import me.eccentric_nz.TARDIS.database.ResultSetCurrentLocation;
 import me.eccentric_nz.TARDIS.database.ResultSetDestinations;
+import me.eccentric_nz.TARDIS.database.ResultSetDiskStorage;
 import me.eccentric_nz.TARDIS.database.ResultSetHomeLocation;
 import me.eccentric_nz.TARDIS.database.ResultSetPlayerPrefs;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import me.eccentric_nz.TARDIS.database.ResultSetTravellers;
 import me.eccentric_nz.TARDIS.enumeration.DIFFICULTY;
 import me.eccentric_nz.TARDIS.enumeration.FLAG;
+import me.eccentric_nz.TARDIS.listeners.TARDISBiomeReaderListener;
 import me.eccentric_nz.TARDIS.travel.TARDISCaveFinder;
 import me.eccentric_nz.TARDIS.travel.TARDISRescue;
 import me.eccentric_nz.TARDIS.travel.TARDISTimeTravel;
@@ -55,6 +59,7 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemStack;
 
 /**
  * Command /tardistravel [arguments].
@@ -338,11 +343,38 @@ public class TARDISTravelCommands implements CommandExecutor {
                             TARDISMessage.send(player, "TRAVEL_NO_PERM_BIOME");
                             return true;
                         }
-                        if (!plugin.getDifficulty().equals(DIFFICULTY.EASY) && mustUseAdvanced.contains(args[0].toLowerCase()) && !plugin.getUtils().inGracePeriod(player, false)) {
-                            TARDISMessage.send(player, "ADV_BIOME");
-                            return true;
-                        }
                         String upper = args[1].toUpperCase(Locale.ENGLISH);
+                        if (!plugin.getDifficulty().equals(DIFFICULTY.EASY) && mustUseAdvanced.contains(args[0].toLowerCase()) && !plugin.getUtils().inGracePeriod(player, false) && !upper.equals("LIST")) {
+                            if (plugin.getDifficulty().equals(DIFFICULTY.MEDIUM)) {
+                                // check they have a biome disk in storage
+                                boolean hasBiomeDisk = false;
+                                UUID uuid = player.getUniqueId();
+                                HashMap<String, Object> whereb = new HashMap<String, Object>();
+                                whereb.put("uuid", uuid.toString());
+                                ResultSetDiskStorage rsb = new ResultSetDiskStorage(plugin, whereb);
+                                if (rsb.resultSet()) {
+                                    try {
+                                        ItemStack[] disks1 = TARDISSerializeInventory.itemStacksFromString(rsb.getBiomesOne());
+                                        if (TARDISBiomeReaderListener.hasBiomeDisk(disks1, upper)) {
+                                            hasBiomeDisk = true;
+                                        } else {
+                                            ItemStack[] disks2 = TARDISSerializeInventory.itemStacksFromString(rsb.getBiomesTwo());
+                                            if (TARDISBiomeReaderListener.hasBiomeDisk(disks2, upper)) {
+                                                hasBiomeDisk = true;
+                                            }
+                                        }
+                                    } catch (IOException ex) {
+                                    }
+                                }
+                                if (!hasBiomeDisk) {
+                                    TARDISMessage.send(player, "BIOME_DISK_NOT_FOUND");
+                                    return true;
+                                }
+                            } else {
+                                TARDISMessage.send(player, "ADV_BIOME");
+                                return true;
+                            }
+                        }
                         if (upper.equals("LIST")) {
                             StringBuilder buf = new StringBuilder();
                             for (String bi : BIOME_SUBS) {
