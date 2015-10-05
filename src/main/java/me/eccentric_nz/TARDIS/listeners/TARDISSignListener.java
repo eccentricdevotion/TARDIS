@@ -24,6 +24,7 @@ import me.eccentric_nz.TARDIS.advanced.TARDISCircuitChecker;
 import me.eccentric_nz.TARDIS.chameleon.TARDISChameleonInventory;
 import me.eccentric_nz.TARDIS.database.ResultSetTardisSign;
 import me.eccentric_nz.TARDIS.database.ResultSetTravellers;
+import me.eccentric_nz.TARDIS.enumeration.DIFFICULTY;
 import me.eccentric_nz.TARDIS.travel.TARDISSaveSignInventory;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import org.bukkit.Location;
@@ -110,7 +111,7 @@ public class TARDISSignListener implements Listener {
                         line1 = (signloc.equals(rs.getChameleon())) ? plugin.getSigns().getStringList("chameleon").get(0) : "Save Sign";
                     }
                     TARDISCircuitChecker tcc = null;
-                    if (plugin.getConfig().getString("preferences.difficulty").equals("hard") && !plugin.getUtils().inGracePeriod(player, false)) {
+                    if (!plugin.getDifficulty().equals(DIFFICULTY.EASY) && !plugin.getUtils().inGracePeriod(player, false)) {
                         tcc = new TARDISCircuitChecker(plugin, rs.getTardis_id());
                         tcc.getCircuits();
                     }
@@ -128,18 +129,16 @@ public class TARDISSignListener implements Listener {
                         Inventory cc_gui = plugin.getServer().createInventory(player, 54, "§4Chameleon Circuit");
                         cc_gui.setContents(cc);
                         player.openInventory(cc_gui);
-                    } else {
-                        if (event.getAction().equals(Action.RIGHT_CLICK_BLOCK)) {
-                            if (tcc != null && !tcc.hasMemory()) {
-                                TARDISMessage.send(player, "NO_MEM_CIRCUIT");
-                                return;
-                            }
-                            TARDISSaveSignInventory sst = new TARDISSaveSignInventory(plugin, rs.getTardis_id());
-                            ItemStack[] items = sst.getTerminal();
-                            Inventory inv = plugin.getServer().createInventory(player, 54, "§4TARDIS saves");
-                            inv.setContents(items);
-                            player.openInventory(inv);
+                    } else if (event.getAction().equals(Action.RIGHT_CLICK_BLOCK)) {
+                        if (tcc != null && !tcc.hasMemory()) {
+                            TARDISMessage.send(player, "NO_MEM_CIRCUIT");
+                            return;
                         }
+                        TARDISSaveSignInventory sst = new TARDISSaveSignInventory(plugin, rs.getTardis_id());
+                        ItemStack[] items = sst.getTerminal();
+                        Inventory inv = plugin.getServer().createInventory(player, 54, "§4TARDIS saves");
+                        inv.setContents(items);
+                        player.openInventory(inv);
                     }
                 }
             }

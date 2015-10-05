@@ -24,6 +24,7 @@ import me.eccentric_nz.TARDIS.arch.TARDISArchCommand;
 import me.eccentric_nz.TARDIS.chatGUI.TARDISUpdateChatGUI;
 import me.eccentric_nz.TARDIS.commands.TARDISCommandHelper;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
+import me.eccentric_nz.TARDIS.enumeration.DIFFICULTY;
 import me.eccentric_nz.TARDIS.enumeration.TARDIS_COMMAND;
 import me.eccentric_nz.TARDIS.noteblock.TARDISPlayThemeCommand;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
@@ -213,7 +214,7 @@ public class TARDISCommands implements CommandExecutor {
                 }
                 if (args[0].equalsIgnoreCase("save")) {
                     ItemStack is = player.getItemInHand();
-                    if (plugin.getConfig().getString("preferences.difficulty").equals("hard") && !plugin.getUtils().inGracePeriod(player, true)) {
+                    if (!plugin.getDifficulty().equals(DIFFICULTY.EASY) && !plugin.getUtils().inGracePeriod(player, true)) {
                         if (heldDiskIsWrong(is, "Save Storage Disk")) {
                             TARDISMessage.send(player, "DISK_HAND_SAVE");
                             return true;
@@ -233,18 +234,12 @@ public class TARDISCommands implements CommandExecutor {
         boolean complexBool = false;
         if (is == null) {
             complexBool = true;
-        } else {
-            if (!is.hasItemMeta()) {
-                complexBool = true;
-            } else {
-                if (!is.getItemMeta().hasDisplayName()) {
-                    complexBool = true;
-                } else {
-                    if (!is.getItemMeta().getDisplayName().equals(dn)) {
-                        complexBool = true;
-                    }
-                }
-            }
+        } else if (!is.hasItemMeta()) {
+            complexBool = true;
+        } else if (!is.getItemMeta().hasDisplayName()) {
+            complexBool = true;
+        } else if (!is.getItemMeta().getDisplayName().equals(dn)) {
+            complexBool = true;
         }
         return complexBool;
     }

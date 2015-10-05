@@ -27,6 +27,7 @@ import me.eccentric_nz.TARDIS.database.ResultSetCurrentLocation;
 import me.eccentric_nz.TARDIS.database.ResultSetPlayerPrefs;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import me.eccentric_nz.TARDIS.database.ResultSetTravellers;
+import me.eccentric_nz.TARDIS.enumeration.DIFFICULTY;
 import me.eccentric_nz.TARDIS.utility.TARDISResourcePackChanger;
 import org.bukkit.Chunk;
 import org.bukkit.Location;
@@ -103,7 +104,7 @@ public class TARDISJoinListener implements Listener {
                 }
             }
         }
-        if (plugin.getConfig().getString("preferences.difficulty").equals("hard") && ((plugin.getConfig().getBoolean("allow.player_difficulty") && player.hasPermission("tardis.difficulty")) || (plugin.getConfig().getInt("travel.grace_period") > 0 && player.hasPermission("tardis.create")))) {
+        if (!plugin.getDifficulty().equals(DIFFICULTY.EASY) && ((plugin.getConfig().getBoolean("allow.player_difficulty") && player.hasPermission("tardis.difficulty")) || (plugin.getConfig().getInt("travel.grace_period") > 0 && player.hasPermission("tardis.create")))) {
             // check if they have t_count record - create one if not
             HashMap<String, Object> wherec = new HashMap<String, Object>();
             wherec.put("uuid", uuid);

@@ -22,6 +22,7 @@ import me.eccentric_nz.TARDIS.advanced.TARDISCircuitChecker;
 import me.eccentric_nz.TARDIS.chameleon.TARDISChameleonCircuit;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
+import me.eccentric_nz.TARDIS.enumeration.DIFFICULTY;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import me.eccentric_nz.TARDIS.utility.TARDISNumberParsers;
 import org.bukkit.ChatColor;
@@ -64,7 +65,7 @@ public class TARDISChameleonCommand {
             }
             int id = rs.getTardis_id();
             TARDISCircuitChecker circ_chk = null;
-            if (plugin.getConfig().getString("preferences.difficulty").equals("hard") && !plugin.getUtils().inGracePeriod(player, false)) {
+            if (!plugin.getDifficulty().equals(DIFFICULTY.EASY) && !plugin.getUtils().inGracePeriod(player, false)) {
                 circ_chk = new TARDISCircuitChecker(plugin, id);
                 circ_chk.getCircuits();
             }

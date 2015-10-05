@@ -20,6 +20,7 @@ import java.util.HashMap;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.ResultSetCurrentLocation;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
+import me.eccentric_nz.TARDIS.enumeration.DIFFICULTY;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
@@ -45,7 +46,7 @@ public class TARDISFindCommand {
                 TARDISMessage.send(player, "NO_TARDIS");
                 return true;
             }
-            if (plugin.getConfig().getString("preferences.difficulty").equalsIgnoreCase("easy") || plugin.getUtils().inGracePeriod(player, true)) {
+            if (plugin.getDifficulty().equals(DIFFICULTY.EASY) || plugin.getUtils().inGracePeriod(player, true)) {
                 HashMap<String, Object> wherecl = new HashMap<String, Object>();
                 wherecl.put("tardis_id", rs.getTardis_id());
                 ResultSetCurrentLocation rsc = new ResultSetCurrentLocation(plugin, wherecl);

@@ -25,6 +25,7 @@ import me.eccentric_nz.TARDIS.database.ResultSetCurrentLocation;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import me.eccentric_nz.TARDIS.database.ResultSetTravellers;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
+import me.eccentric_nz.TARDIS.enumeration.DIFFICULTY;
 import me.eccentric_nz.TARDIS.enumeration.FLAG;
 import me.eccentric_nz.TARDIS.travel.TARDISTimeTravel;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
@@ -62,7 +63,7 @@ public class TARDISComehereCommand {
                 TARDISMessage.send(player, "NOT_A_TIMELORD");
                 return true;
             }
-            if (plugin.getConfig().getString("preferences.difficulty").equalsIgnoreCase("easy") || plugin.getUtils().inGracePeriod(player, true)) {
+            if (plugin.getDifficulty().equals(DIFFICULTY.EASY) || plugin.getUtils().inGracePeriod(player, true)) {
                 final int id = rs.getTardis_id();
                 if (plugin.getConfig().getBoolean("allow.power_down") && !rs.isPowered_on()) {
                     TARDISMessage.send(player, "POWER_DOWN");

@@ -23,6 +23,7 @@ import java.util.Locale;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.arch.TARDISArchCommand;
 import me.eccentric_nz.TARDIS.commands.TARDISCommandHelper;
+import me.eccentric_nz.TARDIS.enumeration.DIFFICULTY;
 import me.eccentric_nz.TARDIS.enumeration.PRESET;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import org.bukkit.command.Command;
@@ -327,11 +328,12 @@ public class TARDISAdminCommands implements CommandExecutor {
                     return new TARDISSetRespectCommand(plugin).setFlag(sender, args);
                 }
                 if (first.equals("difficulty")) {
-                    if (!args[1].equalsIgnoreCase("easy") && !args[1].equalsIgnoreCase("hard")) {
+                    if (!args[1].equalsIgnoreCase("easy") && !args[1].equalsIgnoreCase("medium") && !args[1].equalsIgnoreCase("hard")) {
                         TARDISMessage.send(sender, "ARG_DIFF");
                         return true;
                     }
                     plugin.getConfig().set("preferences.difficulty", args[1].toLowerCase(Locale.ENGLISH));
+                    plugin.setDifficulty(DIFFICULTY.valueOf(args[1].toUpperCase()));
                 }
                 if (first.equals("default_preset")) {
                     try {

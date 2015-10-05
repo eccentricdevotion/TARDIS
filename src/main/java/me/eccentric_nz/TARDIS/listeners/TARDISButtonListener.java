@@ -38,6 +38,7 @@ import me.eccentric_nz.TARDIS.database.ResultSetControls;
 import me.eccentric_nz.TARDIS.database.ResultSetDiskStorage;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
+import me.eccentric_nz.TARDIS.enumeration.DIFFICULTY;
 import me.eccentric_nz.TARDIS.enumeration.PRESET;
 import me.eccentric_nz.TARDIS.enumeration.STORAGE;
 import me.eccentric_nz.TARDIS.move.TARDISBlackWoolToggler;
@@ -150,7 +151,7 @@ public class TARDISButtonListener implements Listener {
                         boolean hb = rs.isHandbrake_on();
                         UUID ownerUUID = rs.getUuid();
                         TARDISCircuitChecker tcc = null;
-                        if (plugin.getConfig().getString("preferences.difficulty").equals("hard")) {
+                        if (!plugin.getDifficulty().equals(DIFFICULTY.EASY)) {
                             tcc = new TARDISCircuitChecker(plugin, id);
                             tcc.getCircuits();
                         }

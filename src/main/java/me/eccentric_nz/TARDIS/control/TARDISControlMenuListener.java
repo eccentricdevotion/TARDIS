@@ -23,6 +23,7 @@ import me.eccentric_nz.TARDIS.advanced.TARDISCircuitChecker;
 import me.eccentric_nz.TARDIS.artron.TARDISArtronIndicator;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import me.eccentric_nz.TARDIS.database.ResultSetTravellers;
+import me.eccentric_nz.TARDIS.enumeration.DIFFICULTY;
 import me.eccentric_nz.TARDIS.listeners.TARDISMenuListener;
 import me.eccentric_nz.TARDIS.move.TARDISBlackWoolToggler;
 import me.eccentric_nz.TARDIS.travel.TARDISAreasInventory;
@@ -88,7 +89,7 @@ public class TARDISControlMenuListener extends TARDISMenuListener implements Lis
                             boolean lights = rs.isLights_on();
                             final int level = rs.getArtron_level();
                             TARDISCircuitChecker tcc = null;
-                            if (plugin.getConfig().getString("preferences.difficulty").equals("hard")) {
+                            if (!plugin.getDifficulty().equals(DIFFICULTY.EASY)) {
                                 tcc = new TARDISCircuitChecker(plugin, id);
                                 tcc.getCircuits();
                             }

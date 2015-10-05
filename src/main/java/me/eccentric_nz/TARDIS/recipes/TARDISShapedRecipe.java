@@ -7,6 +7,7 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Set;
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.enumeration.DIFFICULTY;
 import me.eccentric_nz.TARDIS.utility.TARDISNumberParsers;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -71,17 +72,9 @@ public class TARDISShapedRecipe {
 
     private ShapedRecipe makeRecipe(String s) {
         /*
-         shape: A-A,BBB,CDC
-         ingredients:
-         A: 1
-         B: 2
-         C: '5:2'
-         D: 57
-         result: 276
-         amount: 1
-         lore: "The vorpal blade\ngoes snicker-snack!"
-         enchantment: FIRE_ASPECT
-         strength: 3
+         * shape: A-A,BBB,CDC ingredients: A: 1 B: 2 C: '5:2' D: 57 result: 276
+         * amount: 1 lore: "The vorpal blade\ngoes snicker-snack!" enchantment:
+         * FIRE_ASPECT strength: 3
          */
         String[] result_iddata = plugin.getRecipesConfig().getString("shaped." + s + ".result").split(":");
         Material mat = Material.valueOf(result_iddata[0]);
@@ -113,7 +106,7 @@ public class TARDISShapedRecipe {
         is.setItemMeta(im);
         ShapedRecipe r = new ShapedRecipe(is);
         // get shape
-        String difficulty = plugin.getConfig().getString("preferences.difficulty");
+        String difficulty = (plugin.getDifficulty().equals(DIFFICULTY.MEDIUM)) ? "easy" : plugin.getConfig().getString("preferences.difficulty").toLowerCase();
         try {
             String[] shape_tmp = plugin.getRecipesConfig().getString("shaped." + s + "." + difficulty + "_shape").split(",");
             String[] shape = new String[3];

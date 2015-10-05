@@ -60,6 +60,7 @@ import me.eccentric_nz.TARDIS.database.TARDISUUIDConverter;
 import me.eccentric_nz.TARDIS.database.TARDISWorldRemover;
 import me.eccentric_nz.TARDIS.destroyers.TARDISDestroyerInner;
 import me.eccentric_nz.TARDIS.destroyers.TARDISPresetDestroyerFactory;
+import me.eccentric_nz.TARDIS.enumeration.DIFFICULTY;
 import me.eccentric_nz.TARDIS.enumeration.LANGUAGE;
 import me.eccentric_nz.TARDIS.files.TARDISBlockLoader;
 import me.eccentric_nz.TARDIS.files.TARDISConfiguration;
@@ -174,6 +175,7 @@ public class TARDIS extends JavaPlugin {
     private final List<String> cleanUpWorlds = new ArrayList<String>();
     private final HashMap<String, String> versions = new HashMap<String, String>();
     private String prefix;
+    private DIFFICULTY difficulty;
 
     public TARDIS() {
         this.worldGuardOnServer = false;
@@ -283,6 +285,12 @@ public class TARDIS extends JavaPlugin {
                 generalKeeper = new TARDISGeneralInstanceKeeper(this);
                 generalKeeper.setQuotes(quotes());
                 loadHelper();
+                try {
+                    this.difficulty = DIFFICULTY.valueOf(getConfig().getString("preferences.difficulty").toUpperCase());
+                } catch (IllegalArgumentException e) {
+                    debug("Could not determine difficulty setting, using EASY");
+                    this.difficulty = DIFFICULTY.EASY;
+                }
                 new TARDISListenerRegisterer(this).registerListeners();
                 new TARDISCommandSetter(this).loadCommands();
                 startSound();
@@ -1138,5 +1146,13 @@ public class TARDIS extends JavaPlugin {
 
     public List<String> getCleanUpWorlds() {
         return cleanUpWorlds;
+    }
+
+    public DIFFICULTY getDifficulty() {
+        return difficulty;
+    }
+
+    public void setDifficulty(DIFFICULTY difficulty) {
+        this.difficulty = difficulty;
     }
 }

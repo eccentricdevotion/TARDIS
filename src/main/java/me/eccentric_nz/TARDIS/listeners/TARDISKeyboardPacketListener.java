@@ -20,6 +20,7 @@ import java.util.concurrent.ConcurrentMap;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.advanced.TARDISCircuitChecker;
 import me.eccentric_nz.TARDIS.database.ResultSetControls;
+import me.eccentric_nz.TARDIS.enumeration.DIFFICULTY;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -46,17 +47,17 @@ public class TARDISKeyboardPacketListener implements Listener {
     public void startSignPackets() {
         ProtocolLibrary.getProtocolManager().getAsynchronousManager().registerAsyncHandler(
                 new PacketAdapter(plugin, PacketType.Play.Client.UPDATE_SIGN) {
-                    @Override
-                    public void onPacketReceiving(PacketEvent event) {
-                        Player player = event.getPlayer();
-                        StructureModifier<BlockPosition> ints = event.getPacket().getBlockPositionModifier();
-                        Location loc = new Location(player.getWorld(), (double) ints.read(0).getX(), (double) ints.read(0).getY(), (double) ints.read(0).getZ());
-                        // Allow
-                        if (Objects.equal(editing.get(player), loc)) {
-                            setEditingPlayer((Sign) loc.getBlock().getState(), player);
-                        }
-                    }
-                }).syncStart();
+            @Override
+            public void onPacketReceiving(PacketEvent event) {
+                Player player = event.getPlayer();
+                StructureModifier<BlockPosition> ints = event.getPacket().getBlockPositionModifier();
+                Location loc = new Location(player.getWorld(), (double) ints.read(0).getX(), (double) ints.read(0).getY(), (double) ints.read(0).getZ());
+                // Allow
+                if (Objects.equal(editing.get(player), loc)) {
+                    setEditingPlayer((Sign) loc.getBlock().getState(), player);
+                }
+            }
+        }).syncStart();
     }
 
     private void setEditingPlayer(Sign sign, Player player) {
@@ -85,7 +86,7 @@ public class TARDISKeyboardPacketListener implements Listener {
             ResultSetControls rs = new ResultSetControls(plugin, where, false);
             if (rs.resultSet()) {
                 TARDISCircuitChecker tcc = null;
-                if (plugin.getConfig().getString("preferences.difficulty").equals("hard") && !plugin.getUtils().inGracePeriod(player, false)) {
+                if (!plugin.getDifficulty().equals(DIFFICULTY.EASY) && !plugin.getUtils().inGracePeriod(player, false)) {
                     tcc = new TARDISCircuitChecker(plugin, rs.getTardis_id());
                     tcc.getCircuits();
                 }

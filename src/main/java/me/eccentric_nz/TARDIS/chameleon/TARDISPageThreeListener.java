@@ -24,6 +24,7 @@ import me.eccentric_nz.TARDIS.advanced.TARDISCircuitDamager;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import me.eccentric_nz.TARDIS.database.ResultSetTravellers;
+import me.eccentric_nz.TARDIS.enumeration.DIFFICULTY;
 import me.eccentric_nz.TARDIS.enumeration.DISK_CIRCUIT;
 import me.eccentric_nz.TARDIS.listeners.TARDISMenuListener;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
@@ -109,7 +110,7 @@ public class TARDISPageThreeListener extends TARDISMenuListener implements Liste
                                 case 2:
                                     player.performCommand("tardis rebuild");
                                     close(player);
-                                    if (plugin.getConfig().getBoolean("circuits.damage") && plugin.getConfig().getString("preferences.difficulty").equals("hard") && plugin.getConfig().getInt("circuits.uses.chameleon") > 0) {
+                                    if (plugin.getConfig().getBoolean("circuits.damage") && !plugin.getDifficulty().equals(DIFFICULTY.EASY) && plugin.getConfig().getInt("circuits.uses.chameleon") > 0) {
                                         TARDISCircuitChecker tcc = new TARDISCircuitChecker(plugin, id);
                                         tcc.getCircuits();
                                         // decrement uses
@@ -227,14 +228,14 @@ public class TARDISPageThreeListener extends TARDISMenuListener implements Liste
                                     // check they have an Invisibility Circuit
                                     TARDISCircuitChecker tcc = new TARDISCircuitChecker(plugin, id);
                                     tcc.getCircuits();
-                                    if (plugin.getConfig().getString("preferences.difficulty").equals("hard")) {
+                                    if (!plugin.getDifficulty().equals(DIFFICULTY.EASY)) {
                                         if (!plugin.getUtils().inGracePeriod(player, false) && !tcc.hasInvisibility()) {
                                             close(player);
                                             TARDISMessage.send(player, "INVISIBILITY_MISSING");
                                             break;
                                         }
                                     }
-                                    if (plugin.getConfig().getBoolean("circuits.damage") && plugin.getConfig().getString("preferences.difficulty").equals("hard") && plugin.getConfig().getInt("circuits.uses.invisibility") > 0) {
+                                    if (plugin.getConfig().getBoolean("circuits.damage") && !plugin.getDifficulty().equals(DIFFICULTY.EASY) && plugin.getConfig().getInt("circuits.uses.invisibility") > 0) {
                                         // decrement uses
                                         int uses_left = tcc.getInvisibilityUses();
                                         new TARDISCircuitDamager(plugin, DISK_CIRCUIT.INVISIBILITY, uses_left, id, player).damage();

@@ -26,6 +26,7 @@ import me.eccentric_nz.TARDIS.database.ResultSetCurrentLocation;
 import me.eccentric_nz.TARDIS.database.ResultSetDestinations;
 import me.eccentric_nz.TARDIS.database.ResultSetHomeLocation;
 import me.eccentric_nz.TARDIS.database.ResultSetTravellers;
+import me.eccentric_nz.TARDIS.enumeration.DIFFICULTY;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import org.bukkit.GameMode;
 import org.bukkit.Material;
@@ -73,7 +74,7 @@ public class TARDISKeyboardListener implements Listener {
                 event.setCancelled(true);
             }
             TARDISCircuitChecker tcc = null;
-            if (plugin.getConfig().getString("preferences.difficulty").equals("hard") && !plugin.getUtils().inGracePeriod(event.getPlayer(), false)) {
+            if (!plugin.getDifficulty().equals(DIFFICULTY.EASY) && !plugin.getUtils().inGracePeriod(event.getPlayer(), false)) {
                 tcc = new TARDISCircuitChecker(plugin, rsc.getTardis_id());
                 tcc.getCircuits();
             }

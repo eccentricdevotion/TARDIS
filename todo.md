@@ -2,11 +2,15 @@
 
 ##Current version `3.4`
 1. Fix bugs
+   * Negative times given by the `/tardisjunk time` command
 2. Medium difficulty mode
+3. Don't allow door and torch only custom chameleon presets
+4. Add a save / use custom preset buttons to chameleon construction GUI?
 
 ##Upcoming version `3.5`
 * TARDISSonicBlaster addon?
 * Hostile Action Dispersal System
+* TARDIS Junk Mode
 * ?
 
 ##Future version `4+`

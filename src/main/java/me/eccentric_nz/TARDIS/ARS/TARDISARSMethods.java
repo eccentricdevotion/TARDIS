@@ -32,6 +32,7 @@ import me.eccentric_nz.TARDIS.database.ResultSetCondenser;
 import me.eccentric_nz.TARDIS.database.ResultSetPlayerPrefs;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import me.eccentric_nz.TARDIS.database.ResultSetTravellers;
+import me.eccentric_nz.TARDIS.enumeration.DIFFICULTY;
 import me.eccentric_nz.TARDIS.enumeration.DISK_CIRCUIT;
 import me.eccentric_nz.TARDIS.rooms.TARDISWalls.Pair;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
@@ -340,7 +341,7 @@ public class TARDISARSMethods {
                                 delay += period;
                             }
                             // damage the circuit if configured
-                            if (plugin.getConfig().getBoolean("circuits.damage") && plugin.getConfig().getString("preferences.difficulty").equals("hard") && plugin.getConfig().getInt("circuits.uses.ars") > 0) {
+                            if (plugin.getConfig().getBoolean("circuits.damage") && !plugin.getDifficulty().equals(DIFFICULTY.EASY) && plugin.getConfig().getInt("circuits.uses.ars") > 0) {
                                 // get the id of the TARDIS this player is in
                                 int id = plugin.getTardisAPI().getIdOfTARDISPlayerIsIn(uuid);
                                 TARDISCircuitChecker tcc = new TARDISCircuitChecker(plugin, id);

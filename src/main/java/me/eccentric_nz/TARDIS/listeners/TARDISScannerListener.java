@@ -30,6 +30,7 @@ import me.eccentric_nz.TARDIS.database.ResultSetNextLocation;
 import me.eccentric_nz.TARDIS.database.ResultSetPlayerPrefs;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
+import me.eccentric_nz.TARDIS.enumeration.DIFFICULTY;
 import me.eccentric_nz.TARDIS.enumeration.DISK_CIRCUIT;
 import me.eccentric_nz.TARDIS.rooms.TARDISExteriorRenderer;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
@@ -104,7 +105,7 @@ public class TARDISScannerListener implements Listener {
                         return;
                     }
                     TARDISCircuitChecker tcc = null;
-                    if (plugin.getConfig().getString("preferences.difficulty").equals("hard") && !plugin.getUtils().inGracePeriod(player, false)) {
+                    if (!plugin.getDifficulty().equals(DIFFICULTY.EASY) && !plugin.getUtils().inGracePeriod(player, false)) {
                         tcc = new TARDISCircuitChecker(plugin, id);
                         tcc.getCircuits();
                     }
@@ -315,7 +316,7 @@ public class TARDISScannerListener implements Listener {
                     TARDISMessage.send(player, true, "SCAN_NONE");
                 }
                 // damage the circuit if configured
-                if (plugin.getConfig().getBoolean("circuits.damage") && plugin.getConfig().getString("preferences.difficulty").equals("hard") && plugin.getConfig().getInt("circuits.uses.scanner") > 0) {
+                if (plugin.getConfig().getBoolean("circuits.damage") && !plugin.getDifficulty().equals(DIFFICULTY.EASY) && plugin.getConfig().getInt("circuits.uses.scanner") > 0) {
                     TARDISCircuitChecker tcc = new TARDISCircuitChecker(plugin, id);
                     tcc.getCircuits();
                     // decrement uses

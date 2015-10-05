@@ -45,6 +45,7 @@ import me.eccentric_nz.TARDIS.commands.preferences.TARDISPrefsMenuListener;
 import me.eccentric_nz.TARDIS.control.TARDISControlMenuListener;
 import me.eccentric_nz.TARDIS.desktop.TARDISThemeMenuListener;
 import me.eccentric_nz.TARDIS.desktop.TARDISWallMenuListener;
+import me.eccentric_nz.TARDIS.enumeration.DIFFICULTY;
 import me.eccentric_nz.TARDIS.flight.TARDISHandbrakeListener;
 import me.eccentric_nz.TARDIS.flight.TARDISManualFlightListener;
 import me.eccentric_nz.TARDIS.flight.TARDISRegulatorListener;
@@ -183,7 +184,7 @@ public class TARDISListenerRegisterer {
         }
         plugin.getPM().registerEvents(new TARDISBeaconColouringListener(plugin), plugin);
         plugin.getPM().registerEvents(new TARDISBindListener(plugin), plugin);
-        if (!plugin.getConfig().getString("preferences.difficulty").equals("hard")) {
+        if (!plugin.getDifficulty().equals(DIFFICULTY.HARD)) {
             plugin.getPM().registerEvents(new TARDISBiomeReaderListener(plugin), plugin);
         }
         plugin.getPM().registerEvents(new TARDISBlockDamageListener(plugin), plugin);

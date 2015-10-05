@@ -29,6 +29,7 @@ import me.eccentric_nz.TARDIS.database.ResultSetAreas;
 import me.eccentric_nz.TARDIS.database.ResultSetCurrentLocation;
 import me.eccentric_nz.TARDIS.database.ResultSetHomeLocation;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
+import me.eccentric_nz.TARDIS.enumeration.DIFFICULTY;
 import me.eccentric_nz.TARDIS.enumeration.FLAG;
 import me.eccentric_nz.TARDIS.enumeration.REMOTE;
 import me.eccentric_nz.TARDIS.travel.TARDISTimeTravel;
@@ -108,7 +109,7 @@ public class TARDISRemoteCommands implements CommandExecutor {
                         }
                         // must have circuits
                         TARDISCircuitChecker tcc = null;
-                        if (plugin.getConfig().getString("preferences.difficulty").equals("hard")) {
+                        if (!plugin.getDifficulty().equals(DIFFICULTY.EASY)) {
                             tcc = new TARDISCircuitChecker(plugin, id);
                             tcc.getCircuits();
                         }
@@ -219,7 +220,7 @@ public class TARDISRemoteCommands implements CommandExecutor {
                                     }
                                     if ((sender instanceof Player && !sender.hasPermission("tardis.admin")) || sender instanceof BlockCommandSender) {
                                         // must use advanced console if difficulty hard
-                                        if (plugin.getConfig().getString("preferences.difficulty").equals("hard")) {
+                                        if (plugin.getDifficulty().equals(DIFFICULTY.HARD)) {
                                             TARDISMessage.send(sender, "ADV_AREA");
                                             return true;
                                         }
