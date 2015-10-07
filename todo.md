@@ -4,13 +4,8 @@
 1. Fix bugs
    * Negative times given by the `/tardisjunk time` command
 2. Medium difficulty mode
-   * check for existing save disks with same name when saving - may need to save to desinations table as well
-3. Don't allow door and torch only custom chameleon presets
+   * check for existing save disks with same name when saving - may need to save to destinations table as well
 4. Add a save / use custom preset buttons to chameleon construction GUI?
-5. Junk TARDIS set block for orange/grey wool
-   * `/tardisjunk [wall|floor] [block_type]`
-   * Switch blocks on left wall
-   * Replace under console block with red stained clay
 
 ##Upcoming version `3.5`
 * TARDISSonicBlaster addon?

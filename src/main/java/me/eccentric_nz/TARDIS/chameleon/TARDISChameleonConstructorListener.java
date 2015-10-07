@@ -184,6 +184,7 @@ public class TARDISChameleonConstructorListener extends TARDISMenuListener imple
                                     byte[][] glassData = new byte[10][4];
                                     int first = 0;
                                     int second;
+                                    int nullcount = 0;
                                     for (int s = 18; s < 27; s++) {
                                         second = 0;
                                         for (int c = 27; c >= 0; c -= 9) {
@@ -229,10 +230,15 @@ public class TARDISChameleonConstructorListener extends TARDISMenuListener imple
                                                 stainData[first][second] = 0;
                                                 glassID[first][second] = 0;
                                                 glassData[first][second] = 0;
+                                                nullcount++;
                                             }
                                             second++;
                                         }
                                         first++;
+                                    }
+                                    if (nullcount == 33) {
+                                        TARDISMessage.send(player, "CHAM_NOT_EMPTY");
+                                        return;
                                     }
                                     // add sign
                                     int[] signID = new int[]{0, 0, 68, 0};
