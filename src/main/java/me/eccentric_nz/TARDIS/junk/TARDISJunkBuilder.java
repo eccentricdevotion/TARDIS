@@ -185,10 +185,10 @@ public class TARDISJunkBuilder implements Runnable {
                                     plugin.getBlockUtils().setBlockAndRemember(world, x, y, z, Material.LEVER, (byte) 5, tmd.getTardisID());
                                 } else if (type.equals(Material.WOOL)) {
                                     switch (data) {
-                                        case 8:
+                                        case 1:
                                             plugin.getBlockUtils().setBlockAndRemember(world, x, y, z, wall_type, wall_data, tmd.getTardisID());
                                             break;
-                                        case 1:
+                                        case 8:
                                             plugin.getBlockUtils().setBlockAndRemember(world, x, y, z, floor_type, floor_data, tmd.getTardisID());
                                             break;
                                         default:
