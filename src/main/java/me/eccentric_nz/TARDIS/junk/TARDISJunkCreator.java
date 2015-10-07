@@ -20,6 +20,7 @@ import java.util.HashMap;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.builders.TARDISMaterialisationData;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
+import me.eccentric_nz.TARDIS.database.ResultSetPlayerPrefs;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
 import me.eccentric_nz.TARDIS.enumeration.SCHEMATIC;
@@ -80,6 +81,19 @@ public class TARDISJunkCreator {
         set.put("chameleon_data", 11);
         set.put("lastuse", System.currentTimeMillis());
         final int lastInsertId = qf.doSyncInsert("tardis", set);
+        // check if player_prefs record
+        HashMap<String, Object> wherepp = new HashMap<String, Object>();
+        wherepp.put("uuid", "00000000-aaaa-bbbb-cccc-000000000000");
+        ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, wherepp);
+        if (!rsp.resultSet()) {
+            // create a player_prefs record
+            HashMap<String, Object> setpp = new HashMap<String, Object>();
+            setpp.put("uuid", "00000000-aaaa-bbbb-cccc-000000000000");
+            setpp.put("player", "junk");
+            setpp.put("wall", "ORANGE_WOOL");
+            setpp.put("floor", "GREY_WOOL");
+            qf.doInsert("player_prefs", setpp);
+        }
         World chunkworld = plugin.getServer().getWorld(cw);
         // populate home, current, next and back tables
         HashMap<String, Object> setlocs = new HashMap<String, Object>();

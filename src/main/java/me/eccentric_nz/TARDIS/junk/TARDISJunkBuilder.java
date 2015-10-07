@@ -24,6 +24,8 @@ import me.eccentric_nz.TARDIS.JSON.JSONObject;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.builders.TARDISMaterialisationData;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
+import me.eccentric_nz.TARDIS.database.ResultSetPlayerPrefs;
+import me.eccentric_nz.TARDIS.rooms.TARDISWalls;
 import me.eccentric_nz.TARDIS.schematic.TARDISSchematicGZip;
 import me.eccentric_nz.TARDIS.utility.TARDISBlockSetters;
 import me.eccentric_nz.TARDIS.utility.TARDISEffectLibHelper;
@@ -86,6 +88,27 @@ public class TARDISJunkBuilder implements Runnable {
                     fryTask = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, new TARDISJunkItsDangerousRunnable(plugin, loc), 0, 1L);
                 }
                 if (i == 1) {
+                    // get wall and floor prefs
+                    Material floor_type;
+                    byte floor_data;
+                    Material wall_type;
+                    byte wall_data;
+                    HashMap<String, Object> where = new HashMap<String, Object>();
+                    where.put("uuid", "00000000-aaaa-bbbb-cccc-000000000000");
+                    ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, where);
+                    if (rsp.resultSet()) {
+                        TARDISWalls.Pair fid_data = plugin.getTardisWalls().blocks.get(rsp.getFloor());
+                        floor_type = fid_data.getType();
+                        floor_data = fid_data.getData();
+                        TARDISWalls.Pair wid_data = plugin.getTardisWalls().blocks.get(rsp.getWall());
+                        wall_type = wid_data.getType();
+                        wall_data = wid_data.getData();
+                    } else {
+                        floor_type = Material.WOOL;
+                        floor_data = (byte) 8;
+                        wall_type = Material.WOOL;
+                        wall_data = (byte) 1;
+                    }
                     // build TARDIS and remember blocks
                     Material type;
                     byte data;
@@ -159,7 +182,19 @@ public class TARDISJunkBuilder implements Runnable {
                                 if (type.equals(Material.SPONGE) || type.equals(Material.AIR)) {
                                     TARDISBlockSetters.setBlock(world, x, y, z, Material.AIR, data);
                                 } else if (type.equals(Material.CAKE_BLOCK)) {
-                                    TARDISBlockSetters.setBlock(world, x, y, z, type, data);
+                                    plugin.getBlockUtils().setBlockAndRemember(world, x, y, z, Material.LEVER, (byte) 5, tmd.getTardisID());
+                                } else if (type.equals(Material.WOOL)) {
+                                    switch (data) {
+                                        case 8:
+                                            plugin.getBlockUtils().setBlockAndRemember(world, x, y, z, wall_type, wall_data, tmd.getTardisID());
+                                            break;
+                                        case 1:
+                                            plugin.getBlockUtils().setBlockAndRemember(world, x, y, z, floor_type, floor_data, tmd.getTardisID());
+                                            break;
+                                        default:
+                                            plugin.getBlockUtils().setBlockAndRemember(world, x, y, z, type, data, tmd.getTardisID());
+                                            break;
+                                    }
                                 } else {
                                     plugin.getBlockUtils().setBlockAndRemember(world, x, y, z, type, data, tmd.getTardisID());
                                 }
