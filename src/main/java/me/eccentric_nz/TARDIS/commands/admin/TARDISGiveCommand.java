@@ -27,7 +27,6 @@ import me.eccentric_nz.TARDIS.enumeration.CONSOLES;
 import me.eccentric_nz.TARDIS.enumeration.SCHEMATIC;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import org.bukkit.ChatColor;
-import org.bukkit.Material;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -49,7 +48,6 @@ public class TARDISGiveCommand implements CommandExecutor {
     private final TARDIS plugin;
     private final int full;
     private final HashMap<String, String> items = new HashMap<String, String>();
-    private final HashMap<String, Material> seeds = new HashMap<String, Material>();
 
     public TARDISGiveCommand(TARDIS plugin) {
         this.plugin = plugin;
