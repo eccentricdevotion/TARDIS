@@ -17,8 +17,12 @@
 package me.eccentric_nz.TARDIS.junk;
 
 import com.google.common.collect.ImmutableList;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.commands.TARDISCompleter;
+import me.eccentric_nz.TARDIS.rooms.TARDISWalls;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabCompleter;
@@ -28,12 +32,29 @@ import org.bukkit.command.TabCompleter;
  */
 public class TARDISJunkTabComplete extends TARDISCompleter implements TabCompleter {
 
-    private final ImmutableList<String> ROOT_SUBS = ImmutableList.of("create", "find", "return", "delete", "time");
+    private final TARDIS plugin;
+    private final ImmutableList<String> ROOT_SUBS = ImmutableList.of("create", "find", "floor", "return", "delete", "time", "wall");
+    private final ImmutableList<String> MAT_SUBS;
+
+    public TARDISJunkTabComplete(TARDIS plugin) {
+        this.plugin = plugin;
+        HashMap<String, TARDISWalls.Pair> map = new TARDISWalls().blocks;
+        List<String> mats = new ArrayList<String>();
+        for (String key : map.keySet()) {
+            mats.add(key);
+        }
+        this.MAT_SUBS = ImmutableList.copyOf(mats);
+    }
 
     @Override
     public List<String> onTabComplete(CommandSender sender, Command command, String label, String[] args) {
+        String lastArg = args[args.length - 1];
         if (args.length <= 1) {
             return partial(args[0], ROOT_SUBS);
+        } else if (args.length == 2) {
+            if (args[0].equals("floor") || args[0].equals("wall")) {
+                return partial(lastArg, MAT_SUBS);
+            }
         }
         return ImmutableList.of();
     }
