@@ -78,10 +78,10 @@ public class TARDISJunkCommands implements CommandExecutor {
                 if (first.equals("delete")) {
                     return new TARDISJunkDelete(plugin).delete(sender);
                 }
-                if (first.equals("floor") || first.equals("wall")) {
-                    return new TARDISJunkFloorWall(plugin).setJunkWallOrFloor(sender, args);
-                }
                 return true;
+            }
+            if (args.length == 2 && first.equals("floor") || first.equals("wall")) {
+                return new TARDISJunkFloorWall(plugin).setJunkWallOrFloor(sender, args);
             }
         }
         return false;
