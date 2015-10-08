@@ -43,7 +43,6 @@ INFO_TEMPLATE:
     - "for the Police Box preset."
     - "Hover over the numbers to see"
     - "where the column is positioned."
-
 PB_DOOR:
     - "Police Box door"
     - "Click this block to switch"
@@ -55,5 +54,6 @@ PB_LAMP:
 PB_SIGN: "Police Box sign (slab)"
 PB_WALL: "Police Box wall"
 POWER: "(Optional) power block"
-SAVE: "Save construction"
+SAVE: "Save construct"
+USE_PREV: "Use last saved construct"
 VIEW_TEMP: "View example template"

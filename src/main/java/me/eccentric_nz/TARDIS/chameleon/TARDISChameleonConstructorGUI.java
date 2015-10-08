@@ -52,7 +52,7 @@ public class TARDISChameleonConstructorGUI {
         ItemMeta hp = help.getItemMeta();
         hp.setDisplayName(plugin.getChameleonGuis().getString("HELP"));
         help.setItemMeta(hp);
-        is[3] = help;
+        is[2] = help;
         // info
         ItemStack info = new ItemStack(Material.BOWL, 1);
         ItemMeta io = info.getItemMeta();
@@ -60,13 +60,19 @@ public class TARDISChameleonConstructorGUI {
         List<String> infoList = plugin.getChameleonGuis().getStringList("INFO_CONSTRUCT");
         io.setLore(Arrays.asList(infoList.get(0), infoList.get(1), infoList.get(2), infoList.get(3)));
         info.setItemMeta(io);
-        is[4] = info;
+        is[3] = info;
         // abort
         ItemStack abort = new ItemStack(Material.BOWL, 1);
         ItemMeta at = abort.getItemMeta();
         at.setDisplayName(plugin.getChameleonGuis().getString("ABORT"));
         abort.setItemMeta(at);
-        is[6] = abort;
+        is[5] = abort;
+        // load button
+        ItemStack load = new ItemStack(Material.BOWL, 1);
+        ItemMeta ld = load.getItemMeta();
+        ld.setDisplayName(plugin.getChameleonGuis().getString("USE_PREV"));
+        load.setItemMeta(ld);
+        is[7] = load;
         // save button
         ItemStack save = new ItemStack(Material.BOWL, 1);
         ItemMeta se = save.getItemMeta();

@@ -46,6 +46,7 @@ public class TARDISConfiguration {
     private FileConfiguration blocks_config = null;
     private FileConfiguration rooms_config = null;
     private FileConfiguration signs_config = null;
+    private FileConfiguration chameleon_config = null;
     private File configFile = null;
     HashMap<String, String> strOptions = new HashMap<String, String>();
     HashMap<String, Integer> intOptions = new HashMap<String, Integer>();
@@ -58,6 +59,7 @@ public class TARDISConfiguration {
     HashMap<String, Double> artronDoubleOptions = new HashMap<String, Double>();
     HashMap<String, Integer> artronIntOptions = new HashMap<String, Integer>();
     HashMap<String, List<String>> signListOptions = new HashMap<String, List<String>>();
+    HashMap<String, String> chameleonOptions = new HashMap<String, String>();
 
     public TARDISConfiguration(TARDIS plugin) {
         this.plugin = plugin;
@@ -67,6 +69,7 @@ public class TARDISConfiguration {
         this.blocks_config = plugin.getBlocksConfig();
         this.rooms_config = plugin.getRoomsConfig();
         this.signs_config = plugin.getSigns();
+        this.chameleon_config = plugin.getChameleonGuis();
         // boolean
         boolOptions.put("allow.3d_doors", false);
         boolOptions.put("allow.achievements", true);
@@ -386,6 +389,7 @@ public class TARDISConfiguration {
         roomStrOptions.put("rooms.WORKSHOP.seed", "NETHER_BRICK");
         roomStrOptions.put("rooms.ZERO.seed", "WOOD_BUTTON");
         signListOptions.put("junk", Arrays.asList("Destination"));
+        chameleonOptions.put("USE_PREV", "Use last saved construct");
     }
 
     /**
@@ -465,6 +469,7 @@ public class TARDISConfiguration {
         checkBlocksConfig();
         checkRoomsConfig();
         checkSignsConfig();
+        checkChameleonConfig();
         plugin.saveConfig();
     }
 
@@ -726,6 +731,28 @@ public class TARDISConfiguration {
             }
         } catch (IOException io) {
             plugin.debug("Could not save signs.yml, " + io.getMessage());
+        }
+    }
+
+    public void checkChameleonConfig() {
+        if (chameleon_config.getString("SAVE").equals("Save construction")) {
+            chameleon_config.set("SAVE", "Save construct");
+        }
+        int i = 0;
+        for (Map.Entry<String, String> entry : chameleonOptions.entrySet()) {
+            if (!chameleon_config.contains(entry.getKey())) {
+                chameleon_config.set(entry.getKey(), entry.getValue());
+                i++;
+            }
+        }
+        try {
+            String chameleonPath = plugin.getDataFolder() + File.separator + "language" + File.separator + "chameleon_guis.yml";
+            chameleon_config.save(new File(chameleonPath));
+            if (i > 0) {
+                plugin.getConsole().sendMessage(plugin.getPluginName() + "Added " + ChatColor.AQUA + i + ChatColor.RESET + " new items to chameleon_guis.yml");
+            }
+        } catch (IOException io) {
+            plugin.debug("Could not save chameleon_guis.yml, " + io.getMessage());
         }
     }
 }
