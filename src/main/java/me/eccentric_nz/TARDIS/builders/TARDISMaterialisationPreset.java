@@ -195,11 +195,11 @@ public class TARDISMaterialisationPreset implements Runnable {
                             for (int r = -1; r < 2; r++) {
                                 world.setBiome(x + c, z + r, Biome.DEEP_OCEAN);
                                 if (TARDISConstants.NO_RAIN.contains(tmd.getBiome())) {
-                                    // add a glass roof
+                                    // add an invisible roof
                                     if (loops == 3) {
-                                        TARDISBlockSetters.setBlock(world, x + c, 255, z + r, 20, (byte) 0);
+                                        TARDISBlockSetters.setBlock(world, x + c, 255, z + r, Material.BARRIER, (byte) 0);
                                     } else {
-                                        plugin.getBlockUtils().setBlockAndRemember(world, x + c, 255, z + r, 20, (byte) 0, tmd.getTardisID());
+                                        plugin.getBlockUtils().setBlockAndRemember(world, x + c, 255, z + r, Material.BARRIER, (byte) 0, tmd.getTardisID());
                                     }
                                 }
                                 Chunk tmp_chunk = world.getChunkAt(new Location(world, x + c, 64, z + r));
