@@ -59,6 +59,23 @@ public class TARDISARSProcessor {
                             slot.setX(x);
                             slot.setZ(z);
                             jettison.put(slot, TARDISARS.ARSFor(start[l][x][z]));
+                            // if it is a gravity well on the top or bottom levels jettison the other half too
+                            if (start[l][x][z] == 24 && l == 2) {
+                                TARDISARSJettison uslot = new TARDISARSJettison();
+                                uslot.setChunk(c);
+                                uslot.setY(3);
+                                uslot.setX(x);
+                                uslot.setZ(z);
+                                jettison.put(uslot, TARDISARS.ARSFor(24));
+                            }
+                            if (start[l][x][z] == 48 && l == 0) {
+                                TARDISARSJettison lslot = new TARDISARSJettison();
+                                lslot.setChunk(c);
+                                lslot.setY(-1);
+                                lslot.setX(x);
+                                lslot.setZ(z);
+                                jettison.put(lslot, TARDISARS.ARSFor(48));
+                            }
                         } else {
                             switch (end[l][x][z]) {
                                 case 24:

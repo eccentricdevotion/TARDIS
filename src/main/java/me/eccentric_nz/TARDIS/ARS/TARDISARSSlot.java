@@ -127,6 +127,8 @@ public class TARDISARSSlot {
                 return 48;
             case 2:
                 return 80;
+            case 3:
+                return 96;
             default:
                 return 64;
         }

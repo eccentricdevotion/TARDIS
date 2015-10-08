@@ -60,7 +60,6 @@ public class TARDISARSJettisonRunnable implements Runnable {
             for (int xx = x; xx < (x + 16); xx++) {
                 for (int zz = z; zz < (z + 16); zz++) {
                     Block b = w.getBlockAt(xx, yy, zz);
-                    b.setType(Material.AIR);
                     // if it is a GRAVITY or ANTIGRAVITY well remove it from the database
                     if (r.equals("GRAVITY") || r.equals("ANTIGRAVITY")) {
                         byte d = b.getData();
@@ -70,8 +69,15 @@ public class TARDISARSJettisonRunnable implements Runnable {
                             where.put("location", l);
                             where.put("tardis_id", id);
                             qf.doDelete("gravity_well", where);
+                            // remove trackers
+                            if (d == (byte) 5) {
+                                plugin.getGeneralKeeper().getGravityUpList().remove(l);
+                            } else {
+                                plugin.getGeneralKeeper().getGravityDownList().remove(l);
+                            }
                         }
                     }
+                    b.setType(Material.AIR);
                 }
             }
         }
