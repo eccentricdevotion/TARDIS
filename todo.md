@@ -4,7 +4,6 @@
 1. Fix bugs
 2. Medium difficulty mode
    * check for existing save disks with same name when saving - may need to save to destinations table as well
-4. Add a save / use custom preset buttons to chameleon construction GUI?
 
 ##Upcoming version `3.5`
 * TARDISSonicBlaster addon?
