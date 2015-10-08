@@ -29,6 +29,8 @@ import me.eccentric_nz.TARDIS.enumeration.PRESET;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import me.eccentric_nz.TARDIS.utility.TARDISNumberParsers;
 import me.eccentric_nz.TARDIS.utility.TARDISSounds;
+import multiworld.MultiWorldPlugin;
+import multiworld.api.MultiWorldAPI;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
@@ -134,6 +136,19 @@ public class TARDISArtronCapacitorListener implements Listener {
                                 }
                                 int amount = 0;
                                 if (item.equals(full)) {
+                                    if (plugin.getConfig().getBoolean("preferences.no_creative_condense")) {
+                                        if (plugin.isMVOnServer() && !plugin.getMVHelper().isWorldSurvival(block.getLocation().getWorld())) {
+                                            TARDISMessage.send(player, "ARTRON_FULL_CREATIVE");
+                                            return;
+                                        }
+                                        if (plugin.getPM().isPluginEnabled("MultiWorld")) {
+                                            MultiWorldAPI multiworld = ((MultiWorldPlugin) plugin.getPM().getPlugin("MultiWorld")).getApi();
+                                            if (multiworld.isCreativeWorld(block.getLocation().getWorld().getName())) {
+                                                TARDISMessage.send(player, "ARTRON_FULL_CREATIVE");
+                                                return;
+                                            }
+                                        }
+                                    }
                                     // remove the NETHER_STAR! (if appropriate)
                                     int a = player.getInventory().getItemInHand().getAmount();
                                     int a2 = a - 1;
@@ -219,11 +234,9 @@ public class TARDISArtronCapacitorListener implements Listener {
                                     set.put("powered_on", 1);
                                     qf.doUpdate("tardis", set, whereid);
                                     TARDISMessage.send(player, "ENERGY_INIT");
-                                } else {
-                                    // toggle power
-                                    if (plugin.getConfig().getBoolean("allow.power_down")) {
-                                        new TARDISPowerButton(plugin, id, player, rs.getPreset(), rs.isPowered_on(), rs.isHidden(), lights, player.getLocation(), current_level, rs.getSchematic().hasLanterns()).clickButton();
-                                    }
+                                } else // toggle power
+                                if (plugin.getConfig().getBoolean("allow.power_down")) {
+                                    new TARDISPowerButton(plugin, id, player, rs.getPreset(), rs.isPowered_on(), rs.isHidden(), lights, player.getLocation(), current_level, rs.getSchematic().hasLanterns()).clickButton();
                                 }
                             } else if (player.isSneaking()) {
                                 if (!init) {
