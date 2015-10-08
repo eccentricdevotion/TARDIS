@@ -180,6 +180,7 @@ public class TARDISChameleonConstructorListener extends TARDISMenuListener imple
                                     wherecl.put("tardis_id", id);
                                     ResultSetChameleon rscl = new ResultSetChameleon(plugin, wherecl);
                                     if (!rscl.resultSet()) {
+                                        TARDISMessage.send(player, "CHAM_NO_SAVE");
                                         return;
                                     }
                                     buildConstruct(rs.getPreset().toString(), id, new QueryFactory(plugin), rs.getChameleon(), player);

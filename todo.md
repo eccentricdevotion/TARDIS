@@ -2,6 +2,7 @@
 
 ##Current version `3.4`
 1. Fix bugs
+   * presets with trapdoors shouldn't drop the trap door when rebuilding - eg PANDORICA - due to trying to attach to glass
 2. Medium difficulty mode
    * check for existing save disks with same name when saving - may need to save to destinations table as well
 
