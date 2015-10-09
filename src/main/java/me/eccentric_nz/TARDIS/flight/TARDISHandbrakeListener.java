@@ -165,6 +165,9 @@ public class TARDISHandbrakeListener implements Listener {
                             if (action == Action.RIGHT_CLICK_BLOCK) {
                                 if (rs.isHandbrake_on()) {
                                     if (plugin.getTrackerKeeper().getHasDestination().containsKey(id)) {
+                                        if (plugin.getConfig().getBoolean("circuits.damage") && plugin.getTrackerKeeper().getHasNotClickedHandbrake().contains(id)) {
+                                            plugin.getTrackerKeeper().getHasNotClickedHandbrake().remove(Integer.valueOf(id));
+                                        }
                                         // check if door is open
                                         if (isDoorOpen(id)) {
                                             TARDISMessage.send(player, "DOOR_CLOSE");

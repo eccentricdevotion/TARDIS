@@ -282,7 +282,8 @@ public class TARDISConsoleCloseListener implements Listener {
                                     if (plugin.getTrackerKeeper().getRescue().containsKey(id)) {
                                         plugin.getTrackerKeeper().getRescue().remove(id);
                                     }
-                                    if (plugin.getConfig().getBoolean("circuits.damage") && !plugin.getDifficulty().equals(DIFFICULTY.EASY) && plugin.getConfig().getInt("circuits.uses.memory") > 0) {
+                                    if (plugin.getConfig().getBoolean("circuits.damage") && !plugin.getDifficulty().equals(DIFFICULTY.EASY) && plugin.getConfig().getInt("circuits.uses.memory") > 0 && !plugin.getTrackerKeeper().getHasNotClickedHandbrake().contains(id)) {
+                                        plugin.getTrackerKeeper().getHasNotClickedHandbrake().add(id);
                                         TARDISCircuitChecker tcc = new TARDISCircuitChecker(plugin, id);
                                         tcc.getCircuits();
                                         // decrement uses

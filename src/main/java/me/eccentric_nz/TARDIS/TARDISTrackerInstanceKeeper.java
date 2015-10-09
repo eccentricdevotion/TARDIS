@@ -91,6 +91,7 @@ public class TARDISTrackerInstanceKeeper {
     private final HashMap<UUID, UUID> chat = new HashMap<UUID, UUID>();
     private final List<String> artronFurnaces = new ArrayList<String>();
     private final List<Integer> dematerialising = new ArrayList<Integer>();
+    private final List<Integer> hasNotClickedHandbrake = new ArrayList<Integer>();
     private final List<Integer> hasRandomised = new ArrayList<Integer>();
     private final List<Integer> inSiegeMode = new ArrayList<Integer>();
     private final List<Integer> isSiegeCube = new ArrayList<Integer>();
@@ -270,6 +271,10 @@ public class TARDISTrackerInstanceKeeper {
 
     public List<Integer> getDematerialising() {
         return dematerialising;
+    }
+
+    public List<Integer> getHasNotClickedHandbrake() {
+        return hasNotClickedHandbrake;
     }
 
     public List<Integer> getHasRandomised() {
