@@ -138,8 +138,8 @@ public class TARDISInstaPreset {
                     world.setBiome(x + c, z + r, Biome.DEEP_OCEAN);
                     // TODO check re-adding umbrella if rebuilding
                     if (TARDISConstants.NO_RAIN.contains(tmd.getBiome())) {
-                        // add a glass roof
-                        plugin.getBlockUtils().setBlockAndRemember(world, x + c, 255, z + r, 20, (byte) 0, tmd.getTardisID());
+                        // add an invisible roof
+                        plugin.getBlockUtils().setBlockAndRemember(world, x + c, 255, z + r, Material.BARRIER, (byte) 0, tmd.getTardisID());
                     }
                     Chunk tmp_chunk = world.getChunkAt(new Location(world, x + c, 64, z + r));
                     if (!chunks.contains(tmp_chunk)) {
