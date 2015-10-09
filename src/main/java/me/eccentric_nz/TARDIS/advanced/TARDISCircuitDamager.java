@@ -60,9 +60,14 @@ public class TARDISCircuitDamager {
             TARDISMessage.send(p, "CIRCUIT_VAPOUR", circuit.getName());
         } else {
             // decrement
-            int decremented = uses_left - 1;
-            setCircuitDamage(circuit.getName(), decremented, false);
-            TARDISMessage.send(p, "CIRCUIT_USES", circuit.getName(), String.format("%d", decremented));
+            final int decremented = uses_left - 1;
+            plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
+                @Override
+                public void run() {
+                    setCircuitDamage(circuit.getName(), decremented, false);
+                    TARDISMessage.send(p, "CIRCUIT_USES", circuit.getName(), String.format("%d", decremented));
+                }
+            }, 5L);
         }
     }
 

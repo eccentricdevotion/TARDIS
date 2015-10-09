@@ -339,6 +339,6 @@ public class TARDISConsoleCloseListener implements Listener {
         set.put("console", serialized);
         HashMap<String, Object> where = new HashMap<String, Object>();
         where.put("uuid", uuid);
-        new QueryFactory(plugin).doUpdate("storage", set, where);
+        new QueryFactory(plugin).doSyncUpdate("storage", set, where);
     }
 }

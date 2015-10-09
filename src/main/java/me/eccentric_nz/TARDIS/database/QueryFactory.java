@@ -135,6 +135,20 @@ public class QueryFactory {
     }
 
     /**
+     * Updates data in an SQLite database table. This method executes the SQL on
+     * the main thread.
+     *
+     * @param table the database table name to update.
+     * @param data a HashMap<String, Object> of table fields and values update.
+     * @param where a HashMap<String, Object> of table fields and values to
+     * select the records to update.
+     */
+    public void doSyncUpdate(String table, HashMap<String, Object> data, HashMap<String, Object> where) {
+        TARDISSQLUpdate update = new TARDISSQLUpdate(plugin, table, data, where);
+        plugin.getServer().getScheduler().runTask(plugin, update);
+    }
+
+    /**
      * Deletes rows from an SQLite database table. This method executes the SQL
      * in a separate thread.
      *
