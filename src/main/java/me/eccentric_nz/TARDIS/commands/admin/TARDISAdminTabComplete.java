@@ -33,7 +33,8 @@ import org.bukkit.command.TabCompleter;
 public class TARDISAdminTabComplete extends TARDISCompleter implements TabCompleter {
 
     private final TARDIS plugin;
-    private final ImmutableList<String> DIFFICULTY_SUBS = ImmutableList.of("easy", "hard");
+    private final ImmutableList<String> REGION_SUBS = ImmutableList.of("entry", "exit");
+    private final ImmutableList<String> DIFFICULTY_SUBS = ImmutableList.of("easy", "medium", "hard");
     private final ImmutableList<String> BOOL_SUBS = ImmutableList.of("true", "false");
     private final ImmutableList<String> DB_SUBS = ImmutableList.of("mysql", "sqlite");
     private final ImmutableList<String> TIPS_SUBS = ImmutableList.of("400", "800", "1200", "1600");
@@ -81,6 +82,9 @@ public class TARDISAdminTabComplete extends TARDISCompleter implements TabComple
             }
             if (sub.equals("respect_worldguard")) {
                 return partial(lastArg, FLAG_SUBS);
+            }
+            if (sub.equals("region_flag")) {
+                return partial(lastArg, REGION_SUBS);
             }
             if (sub.equals("sign_colour")) {
                 return partial(lastArg, COLOURS);

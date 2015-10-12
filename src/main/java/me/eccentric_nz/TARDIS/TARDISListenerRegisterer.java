@@ -114,6 +114,8 @@ import me.eccentric_nz.TARDIS.listeners.TARDISVaultListener;
 import me.eccentric_nz.TARDIS.listeners.TARDISWorldResetListener;
 import me.eccentric_nz.TARDIS.listeners.TARDISZeroRoomChatListener;
 import me.eccentric_nz.TARDIS.listeners.TARDISZeroRoomPacketListener;
+import me.eccentric_nz.TARDIS.move.TARDISAnyoneDoorListener;
+import me.eccentric_nz.TARDIS.move.TARDISAnyoneMoveListener;
 import me.eccentric_nz.TARDIS.move.TARDISDoorClickListener;
 import me.eccentric_nz.TARDIS.move.TARDISDoorWalkListener;
 import me.eccentric_nz.TARDIS.move.TARDISMoveListener;
@@ -155,8 +157,13 @@ public class TARDISListenerRegisterer {
         }
         plugin.getPM().registerEvents(new TARDISBlockBreakListener(plugin), plugin);
         if (plugin.getConfig().getBoolean("preferences.walk_in_tardis")) {
-            plugin.getPM().registerEvents(new TARDISDoorWalkListener(plugin), plugin);
-            plugin.getPM().registerEvents(new TARDISMoveListener(plugin), plugin);
+            if (plugin.getConfig().getBoolean("preferences.open_door_policy")) {
+                plugin.getPM().registerEvents(new TARDISAnyoneDoorListener(plugin), plugin);
+                plugin.getPM().registerEvents(new TARDISAnyoneMoveListener(plugin), plugin);
+            } else {
+                plugin.getPM().registerEvents(new TARDISDoorWalkListener(plugin), plugin);
+                plugin.getPM().registerEvents(new TARDISMoveListener(plugin), plugin);
+            }
         } else {
             plugin.getPM().registerEvents(new TARDISDoorClickListener(plugin), plugin);
         }

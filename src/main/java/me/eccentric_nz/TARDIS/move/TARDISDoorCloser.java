@@ -100,16 +100,18 @@ public class TARDISDoorCloser {
         if (inportal != null && plugin.getConfig().getBoolean("preferences.walk_in_tardis")) {
             // get all companion UUIDs
             List<UUID> uuids = new ArrayList<UUID>();
-            uuids.add(uuid);
             HashMap<String, Object> where = new HashMap<String, Object>();
             where.put("tardis_id", id);
             ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);
             if (rs.resultSet()) {
-                String[] companions = rs.getCompanions().split(":");
-                for (String c : companions) {
-                    if (!c.isEmpty()) {
-                        uuids.add(UUID.fromString(c));
+                if (!plugin.getConfig().getBoolean("preferences.open_door_policy")) {
+                    String[] companions = rs.getCompanions().split(":");
+                    for (String c : companions) {
+                        if (!c.isEmpty()) {
+                            uuids.add(UUID.fromString(c));
+                        }
                     }
+                    uuids.add(uuid);
                 }
             }
             // get locations
@@ -123,10 +125,12 @@ public class TARDISDoorCloser {
                 exportal.add(0.0d, 1.0d, 0.0d);
             }
             // unset trackers
-            // players
-            for (UUID u : uuids) {
-                if (plugin.getTrackerKeeper().getMover().contains(u)) {
-                    plugin.getTrackerKeeper().getMover().remove(u);
+            if (!plugin.getConfig().getBoolean("preferences.open_door_policy")) {
+                // players
+                for (UUID u : uuids) {
+                    if (plugin.getTrackerKeeper().getMover().contains(u)) {
+                        plugin.getTrackerKeeper().getMover().remove(u);
+                    }
                 }
             }
             // locations

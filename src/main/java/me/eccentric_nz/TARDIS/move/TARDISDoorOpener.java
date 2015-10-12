@@ -108,10 +108,12 @@ public class TARDISDoorOpener {
                 PRESET preset = null;
                 if (rs.resultSet()) {
                     preset = rs.getPreset();
-                    String[] companions = rs.getCompanions().split(":");
-                    for (String c : companions) {
-                        if (!c.isEmpty()) {
-                            uuids.add(UUID.fromString(c));
+                    if (!plugin.getConfig().getBoolean("preferences.open_door_policy")) {
+                        String[] companions = rs.getCompanions().split(":");
+                        for (String c : companions) {
+                            if (!c.isEmpty()) {
+                                uuids.add(UUID.fromString(c));
+                            }
                         }
                     }
                 }
@@ -186,11 +188,13 @@ public class TARDISDoorOpener {
                     tp_out.setLocation(exdoor);
                     tp_out.setTardisId(id);
                     tp_out.setDirection(exdirection);
-                    // players
-                    for (UUID u : uuids) {
-                        // only add them if they're not there already!
-                        if (!plugin.getTrackerKeeper().getMover().contains(u)) {
-                            plugin.getTrackerKeeper().getMover().add(u);
+                    if (!plugin.getConfig().getBoolean("preferences.open_door_policy")) {
+                        // players
+                        for (UUID u : uuids) {
+                            // only add them if they're not there already!
+                            if (!plugin.getTrackerKeeper().getMover().contains(u)) {
+                                plugin.getTrackerKeeper().getMover().add(u);
+                            }
                         }
                     }
                     // locations

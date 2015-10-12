@@ -73,6 +73,7 @@ public class TARDISAdminCommands implements CommandExecutor {
         firstsStr.put("enter", "");
         firstsStr.put("exclude", "");
         firstsStr.put("find", "");
+        firstsStr.put("region_flag", "");
         firstsStr.put("gamemode", "creation");
         firstsStr.put("include", "");
         firstsStr.put("inventory_group", "creation");
@@ -122,6 +123,7 @@ public class TARDISAdminCommands implements CommandExecutor {
         firstsBool.put("mob_farming", "allow");
         firstsBool.put("name_tardis", "police_box");
         firstsBool.put("nether", "travel");
+        firstsBool.put("open_door_policy", "preferences");
         firstsBool.put("particles", "artron_furnace");
         firstsBool.put("per_world_perms", "travel");
         firstsBool.put("power_down", "allow");
@@ -356,6 +358,9 @@ public class TARDISAdminCommands implements CommandExecutor {
                 }
                 if (first.equals("exclude") || first.equals("include")) {
                     return new TARDISSetWorldInclusionCommand(plugin).setWorldStatus(sender, args);
+                }
+                if (first.equals("region_flag")) {
+                    return new TARDISRegionFlagCommand(plugin).toggleEntryExit(sender, args);
                 }
                 // checks if its a boolean config option
                 if (firstsBool.containsKey(first)) {

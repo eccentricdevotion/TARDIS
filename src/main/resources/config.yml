@@ -71,6 +71,7 @@ preferences:
     language: en
     key: GOLD_NUGGET
     walk_in_tardis: true
+    open_door_policy: false
     use_worldguard: true
     respect_worldguard: build
     respect_towny: nation
