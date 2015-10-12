@@ -18,11 +18,13 @@ package me.eccentric_nz.TARDIS.files;
 
 import com.sk89q.worldguard.protection.regions.ProtectedRegion;
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.ResultSetBlocks;
 import me.eccentric_nz.TARDIS.database.ResultSetGravity;
@@ -34,7 +36,7 @@ import org.bukkit.util.Vector;
 /**
  * An anti-gravity spiral is a projectable beam used for removing gravity from
  * an object. The Seventh Doctor used his TARDIS to project a beam around a bus
- * in space after it crashed. He manoeuvred it down to Earth and dropped it
+ * in space after it crashed. He manoeuvered it down to Earth and dropped it
  * outside Shangri-La camp in southern Wales.
  *
  * @author eccentric_nz
@@ -42,6 +44,7 @@ import org.bukkit.util.Vector;
 public class TARDISBlockLoader {
 
     private final TARDIS plugin;
+    private final List<Integer> fixBlocks = new ArrayList<Integer>();
 
     public TARDISBlockLoader(TARDIS plugin) {
         this.plugin = plugin;
@@ -58,6 +61,24 @@ public class TARDISBlockLoader {
             ArrayList<HashMap<String, String>> data = rsb.getData();
             for (HashMap<String, String> map : data) {
                 plugin.getGeneralKeeper().getProtectBlockMap().put(map.get("location"), Integer.valueOf(map.get("tardis_id")));
+            }
+            // fix AIR in block field
+            TARDISDatabaseConnection service = TARDISDatabaseConnection.getInstance();
+            Connection connection = service.getConnection();
+            PreparedStatement ps = null;
+            try {
+                ps = connection.prepareStatement("UPDATE blocks SET block = '0' WHERE block = 'AIR'");
+                ps.executeUpdate();
+            } catch (SQLException e) {
+                plugin.debug("ResultSet error for antibuild load! " + e.getMessage());
+            } finally {
+                try {
+                    if (ps != null) {
+                        ps.close();
+                    }
+                } catch (SQLException e) {
+                    plugin.debug("Error closing antibuild load! " + e.getMessage());
+                }
             }
         }
     }

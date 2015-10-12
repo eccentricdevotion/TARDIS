@@ -147,9 +147,9 @@ public class TARDISBlockSetters {
         HashMap<String, Object> set = new HashMap<String, Object>();
         set.put("tardis_id", id);
         set.put("location", l);
-        String mat = b.getType().toString();
+        int bid = b.getTypeId();
         byte data = b.getData();
-        set.put("block", mat);
+        set.put("block", bid);
         set.put("data", data);
         set.put("police_box", 1);
         qf.doInsert("blocks", set);
