@@ -138,7 +138,7 @@ public class TARDISWorldGuardUtils {
         flags.put(DefaultFlag.LAVA_FIRE, State.DENY);
         flags.put(DefaultFlag.LAVA_FLOW, State.DENY);
         flags.put(DefaultFlag.LIGHTER, State.DENY);
-        flags.put(DefaultFlag.CHEST_ACCESS, State.ALLOW);
+//        flags.put(DefaultFlag.CHEST_ACCESS, State.ALLOW);
         region.setFlags(flags);
         rm.addRegion(region);
         try {
@@ -176,13 +176,13 @@ public class TARDISWorldGuardUtils {
         flags.put(DefaultFlag.LAVA_FIRE, State.DENY);
         flags.put(DefaultFlag.LAVA_FLOW, State.DENY);
         flags.put(DefaultFlag.LIGHTER, State.DENY);
-        flags.put(DefaultFlag.CHEST_ACCESS, State.ALLOW);
+//        flags.put(DefaultFlag.CHEST_ACCESS, State.ALLOW);
         region.setFlags(flags);
         rm.addRegion(region);
         if (!p.equals("junk")) {
-            // deny access to anyone but the owner - companions will be added as the player defines them
+            // deny exit to anyone but the owner - companions will be added as the player defines them
             // usage = "<id> <flag> [-w world] [-g group] [value]",
-            plugin.getServer().dispatchCommand(plugin.getConsole(), "rg flag " + region_id + " entry -w " + w.getName() + " -g nonmembers deny");
+            plugin.getServer().dispatchCommand(plugin.getConsole(), "rg flag " + region_id + " exit -w " + w.getName() + " deny");
         }
         try {
             rm.save();
@@ -415,9 +415,9 @@ public class TARDISWorldGuardUtils {
     }
 
     /**
-     * Gets a List of all TARDIS regions in a world.
+     * Gets a List of all TARDIS regions in a world where the build flag is set.
      *
-     * @param w the world to remove the flags from
+     * @param w the world to get the regions for
      * @return a list of TARDIS region names for this world
      */
     public List<String> getRegions(World w) {
@@ -425,6 +425,23 @@ public class TARDISWorldGuardUtils {
         RegionManager rm = wg.getRegionManager(w);
         for (Map.Entry<String, ProtectedRegion> pr : rm.getRegions().entrySet()) {
             if (pr.getKey().contains("tardis") && pr.getValue().getFlags().containsKey(DefaultFlag.BUILD)) {
+                regions.add(pr.getKey());
+            }
+        }
+        return regions;
+    }
+
+    /**
+     * Gets a List of all TARDIS regions in a world.
+     *
+     * @param w the world to get the regions for
+     * @return a list of TARDIS region names for this world
+     */
+    public List<String> getTARDISRegions(World w) {
+        List<String> regions = new ArrayList<String>();
+        RegionManager rm = wg.getRegionManager(w);
+        for (Map.Entry<String, ProtectedRegion> pr : rm.getRegions().entrySet()) {
+            if (pr.getKey().contains("tardis")) {
                 regions.add(pr.getKey());
             }
         }
