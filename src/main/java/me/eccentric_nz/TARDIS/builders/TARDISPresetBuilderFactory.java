@@ -85,6 +85,11 @@ public class TARDISPresetBuilderFactory {
         if (rs.resultSet()) {
             PRESET preset = rs.getPreset();
             Biome biome;
+            // keep the chunk this Police box is in loaded
+            Chunk thisChunk = tmd.getLocation().getChunk();
+            while (!thisChunk.isLoaded()) {
+                thisChunk.load();
+            }
             if (tmd.isRebuild()) {
                 biome = tmd.getLocation().getWorld().getBlockAt(tmd.getLocation()).getRelative(getOppositeFace(tmd.getDirection()), 2).getBiome();
             } else {
@@ -135,16 +140,14 @@ public class TARDISPresetBuilderFactory {
                 preset = PRESET.YELLOW;
                 TARDISMessage.send(tmd.getPlayer().getPlayer(), "SUB_UNSUITED");
             }
-            // keep the chunk this Police box is in loaded
-            Chunk thisChunk = tmd.getLocation().getChunk();
-            while (!thisChunk.isLoaded()) {
-                thisChunk.load();
-            }
             /*
              * We can always add the chunk, as List.remove() only removes the
              * first occurence - and we want the chunk to remain loaded if there
              * are other Police Boxes in it.
              */
+            while (!thisChunk.isLoaded()) {
+                thisChunk.load();
+            }
             plugin.getGeneralKeeper().getTardisChunkList().add(thisChunk);
             if (tmd.isRebuild()) {
                 // always destroy it first as the player may just be switching presets
