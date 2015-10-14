@@ -698,14 +698,18 @@ public class TARDISTravelCommands implements CommandExecutor {
         // get a world
         // Assume all non-nether/non-end world environments are NORMAL
         if (w != null && !w.getEnvironment().equals(Environment.NETHER) && !w.getEnvironment().equals(Environment.THE_END)) {
-            int limitx = 30000;
-            int limitz = 30000;
+            int limite = startx + 30000;
+            int limits = startz + 30000;
+            int limitw = startx - 30000;
+            int limitn = startz - 30000;
             if (plugin.getPM().isPluginEnabled("WorldBorder")) {
                 // get the border limit for this world
                 TARDISWorldBorderChecker wb = new TARDISWorldBorderChecker(plugin, plugin.getPluginRespect().isBorderOnServer());
                 int[] data = wb.getBorderDistance(w.getName());
-                limitx = data[0];
-                limitz = data[1];
+                limite = data[0];
+                limits = data[1];
+                limitw = -data[0];
+                limitn = -data[1];
             }
             int step = 10;
             // search in a random direction
@@ -715,7 +719,7 @@ public class TARDISTravelCommands implements CommandExecutor {
                 switch (directions[i]) {
                     case 0:
                         // east
-                        for (int east = startx; east < limitx; east += step) {
+                        for (int east = startx; east < limite; east += step) {
                             Biome chkb = w.getBiome(east, startz);
                             if (chkb.equals(b)) {
                                 TARDISMessage.send(p, "BIOME_E", b.toString());
@@ -725,7 +729,7 @@ public class TARDISTravelCommands implements CommandExecutor {
                         break;
                     case 1:
                         // south
-                        for (int south = startz; south < limitz; south += step) {
+                        for (int south = startz; south < limits; south += step) {
                             Biome chkb = w.getBiome(startx, south);
                             if (chkb.equals(b)) {
                                 TARDISMessage.send(p, "BIOME_S", b.toString());
@@ -735,7 +739,7 @@ public class TARDISTravelCommands implements CommandExecutor {
                         break;
                     case 2:
                         // west
-                        for (int west = startx; west > -limitx; west -= step) {
+                        for (int west = startx; west > limitw; west -= step) {
                             Biome chkb = w.getBiome(west, startz);
                             if (chkb.equals(b)) {
                                 TARDISMessage.send(p, "BIOME_W", b.toString());
@@ -745,7 +749,7 @@ public class TARDISTravelCommands implements CommandExecutor {
                         break;
                     case 3:
                         // north
-                        for (int north = startz; north > -limitz; north -= step) {
+                        for (int north = startz; north > limitn; north -= step) {
                             Biome chkb = w.getBiome(startx, north);
                             if (chkb.equals(b)) {
                                 TARDISMessage.send(p, "BIOME_N", b.toString());
