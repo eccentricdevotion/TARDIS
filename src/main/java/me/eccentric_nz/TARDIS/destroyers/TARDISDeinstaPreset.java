@@ -200,15 +200,8 @@ public class TARDISDeinstaPreset {
                     bd = TARDISNumberParsers.parseByte(map.get("data"));
                 }
                 String locStr = map.get("location");
-                String[] loc_data = locStr.split(",");
-                // x, y, z - 1, 2, 3
-                String[] xStr = loc_data[1].split("=");
-                String[] yStr = loc_data[2].split("=");
-                String[] zStr = loc_data[3].split("=");
-                int rx = TARDISNumberParsers.parseInt(xStr[1].substring(0, (xStr[1].length() - 2)));
-                int ry = TARDISNumberParsers.parseInt(yStr[1].substring(0, (yStr[1].length() - 2)));
-                int rz = TARDISNumberParsers.parseInt(zStr[1].substring(0, (zStr[1].length() - 2)));
-                TARDISBlockSetters.setBlock(w, rx, ry, rz, bID, bd);
+                Location tl = plugin.getLocationUtils().getLocationFromBukkitString(locStr);
+                TARDISBlockSetters.setBlock(tl, bID, bd);
             }
         }
         // if just hiding don't remove block protection

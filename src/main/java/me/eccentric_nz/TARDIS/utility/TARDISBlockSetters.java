@@ -20,6 +20,7 @@ import java.util.HashMap;
 import java.util.List;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
+import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.block.Block;
@@ -49,6 +50,33 @@ public class TARDISBlockSetters {
     @SuppressWarnings("deprecation")
     public static void setBlock(World w, int x, int y, int z, int m, byte d) {
         final Block b = w.getBlockAt(x, y, z);
+        if (m < 0) {
+            m += 256;
+        }
+        if (m == 92) { //cake -> handbrake
+            m = 69;
+            d = (byte) 5;
+        }
+        if (m == 52) { //mob spawner -> scanner button
+            m = 143;
+            d = (byte) 3;
+        }
+        if (b != null) {
+            b.setTypeId(m);
+            b.setData(d, true);
+        }
+    }
+
+    /**
+     * Sets a block to the specified typeId and data.
+     *
+     * @param l the location of the block.
+     * @param m the typeId to set the block to.
+     * @param d the data bit to set the block to.
+     */
+    @SuppressWarnings("deprecation")
+    public static void setBlock(Location l, int m, byte d) {
+        final Block b = l.getBlock();
         if (m < 0) {
             m += 256;
         }

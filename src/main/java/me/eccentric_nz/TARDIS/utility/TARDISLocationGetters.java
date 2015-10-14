@@ -132,9 +132,10 @@ public class TARDISLocationGetters {
         if (w == null) {
             return null;
         }
-        double x = TARDISNumberParsers.parseDouble(xStr[1]);
+        // Location{world=CraftWorld{name=world},x=1.0000021E7,y=67.0,z=1824.0,pitch=0.0,yaw=0.0}
+        double x = (xStr[1].contains("E")) ? Double.valueOf(xStr[1]) : TARDISNumberParsers.parseDouble(xStr[1]);
         double y = TARDISNumberParsers.parseDouble(yStr[1]);
-        double z = TARDISNumberParsers.parseDouble(zStr[1]);
+        double z = (zStr[1].contains("E")) ? Double.valueOf(zStr[1]) : TARDISNumberParsers.parseDouble(zStr[1]);
         return new Location(w, x, y, z);
     }
 
