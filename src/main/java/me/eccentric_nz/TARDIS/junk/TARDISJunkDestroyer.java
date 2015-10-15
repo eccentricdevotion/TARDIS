@@ -152,10 +152,10 @@ public class TARDISJunkDestroyer implements Runnable {
                 if (rsb.resultSet()) {
                     ArrayList<HashMap<String, String>> data = rsb.getData();
                     for (HashMap<String, String> map : data) {
-                        Material mat = Material.AIR;
+                        int bid = 0;
                         byte bd = (byte) 0;
                         if (map.get("block") != null) {
-                            mat = Material.valueOf(map.get("block"));
+                            bid = TARDISNumberParsers.parseInt(map.get("block"));
                         }
                         if (map.get("data") != null) {
                             bd = TARDISNumberParsers.parseByte(map.get("data"));
@@ -169,7 +169,7 @@ public class TARDISJunkDestroyer implements Runnable {
                         int rx = TARDISNumberParsers.parseInt(xStr[1].substring(0, (xStr[1].length() - 2)));
                         int ry = TARDISNumberParsers.parseInt(yStr[1].substring(0, (yStr[1].length() - 2)));
                         int rz = TARDISNumberParsers.parseInt(zStr[1].substring(0, (zStr[1].length() - 2)));
-                        TARDISBlockSetters.setBlock(world, rx, ry, rz, mat, bd);
+                        TARDISBlockSetters.setBlock(world, rx, ry, rz, bid, bd);
                     }
                 }
                 // remove block protection
