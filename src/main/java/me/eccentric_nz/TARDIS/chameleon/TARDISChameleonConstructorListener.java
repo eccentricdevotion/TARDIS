@@ -219,13 +219,23 @@ public class TARDISChameleonConstructorListener extends TARDISMenuListener imple
                                                     glassID[first][second] = did;
                                                     glassData[first][second] = dd;
                                                 } else if (tid == 50 || tid == 76) {
-                                                    // torches
-                                                    blueID[first][second] = tid;
-                                                    blueData[first][second] = (byte) 5;
-                                                    glassID[first][second] = tid;
-                                                    glassData[first][second] = (byte) 5;
-                                                    stainID[first][second] = 95;
-                                                    stainData[first][second] = (tid == 50) ? (byte) 4 : 14;
+                                                    // check block under torch
+                                                    if (inv.getItem(35) == null) {
+                                                        blueID[first][second] = 0;
+                                                        blueData[first][second] = 0;
+                                                        glassID[first][second] = 0;
+                                                        glassData[first][second] = 0;
+                                                        stainID[first][second] = 0;
+                                                        stainData[first][second] = 0;
+                                                    } else {
+                                                        // torches
+                                                        blueID[first][second] = tid;
+                                                        blueData[first][second] = (byte) 5;
+                                                        glassID[first][second] = tid;
+                                                        glassData[first][second] = (byte) 5;
+                                                        stainID[first][second] = 95;
+                                                        stainData[first][second] = (tid == 50) ? (byte) 4 : 14;
+                                                    }
                                                 } else {
                                                     blueID[first][second] = tid;
                                                     blueData[first][second] = d.getData().getData();
