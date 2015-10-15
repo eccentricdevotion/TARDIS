@@ -31,10 +31,10 @@ public class TARDISJunkItsDangerousRunnable implements Runnable {
         this.plugin = plugin;
         this.l = l;
         this.t = l.clone().add(0.0d, 2.0d, -1.0d).getBlock();
-        minX = this.l.getBlockX() - 2;
+        minX = this.l.getBlockX() - 3;
         minZ = this.l.getBlockZ() - 2;
         maxX = this.l.getBlockX() + 3;
-        maxZ = this.l.getBlockZ() + 3;
+        maxZ = this.l.getBlockZ() + 4;
     }
 
     @Override
