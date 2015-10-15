@@ -214,50 +214,50 @@ public class TARDISAnyoneDoorListener extends TARDISDoorListener implements List
                                             if (toggle) {
                                                 new TARDISDoorToggler(plugin, block, player, minecart, open, id).toggleDoors();
                                             }
-                                        } else if (blockType.equals(Material.TRAP_DOOR)) {
-                                            int open = 1;
-                                            byte door_data = block.getData();
-                                            switch (dd) {
-                                                case NORTH:
-                                                    if (door_data == 1) {
-                                                        block.setData((byte) 5, false);
-                                                    } else {
-                                                        block.setData((byte) 1, false);
-                                                        open = 2;
-                                                    }
-                                                    break;
-                                                case WEST:
-                                                    if (door_data == 3) {
-                                                        block.setData((byte) 7, false);
-                                                    } else {
-                                                        block.setData((byte) 3, false);
-                                                        open = 2;
-                                                    }
-                                                    break;
-                                                case SOUTH:
-                                                    if (door_data == 0) {
-                                                        block.setData((byte) 4, false);
-                                                    } else {
-                                                        block.setData((byte) 0, false);
-                                                        open = 2;
-                                                    }
-                                                    break;
-                                                default:
-                                                    if (door_data == 2) {
-                                                        block.setData((byte) 6, false);
-                                                    } else {
-                                                        block.setData((byte) 2, false);
-                                                        open = 2;
-                                                    }
-                                                    break;
-                                            }
-                                            playDoorSound(player, open, player.getLocation(), minecart);
                                         }
-                                    } else if (rs.getUuid() != playerUUID) {
-                                        TARDISMessage.send(player, "DOOR_DEADLOCKED");
-                                    } else {
-                                        TARDISMessage.send(player, "DOOR_UNLOCK");
+                                    } else if (blockType.equals(Material.TRAP_DOOR)) {
+                                        int open = 1;
+                                        byte door_data = block.getData();
+                                        switch (dd) {
+                                            case NORTH:
+                                                if (door_data == 1) {
+                                                    block.setData((byte) 5, false);
+                                                } else {
+                                                    block.setData((byte) 1, false);
+                                                    open = 2;
+                                                }
+                                                break;
+                                            case WEST:
+                                                if (door_data == 3) {
+                                                    block.setData((byte) 7, false);
+                                                } else {
+                                                    block.setData((byte) 3, false);
+                                                    open = 2;
+                                                }
+                                                break;
+                                            case SOUTH:
+                                                if (door_data == 0) {
+                                                    block.setData((byte) 4, false);
+                                                } else {
+                                                    block.setData((byte) 0, false);
+                                                    open = 2;
+                                                }
+                                                break;
+                                            default:
+                                                if (door_data == 2) {
+                                                    block.setData((byte) 6, false);
+                                                } else {
+                                                    block.setData((byte) 2, false);
+                                                    open = 2;
+                                                }
+                                                break;
+                                        }
+                                        playDoorSound(player, open, player.getLocation(), minecart);
                                     }
+                                } else if (rs.getUuid() != playerUUID) {
+                                    TARDISMessage.send(player, "DOOR_DEADLOCKED");
+                                } else {
+                                    TARDISMessage.send(player, "DOOR_UNLOCK");
                                 }
                             }
                         } else if (action == Action.RIGHT_CLICK_BLOCK && player.isSneaking()) {

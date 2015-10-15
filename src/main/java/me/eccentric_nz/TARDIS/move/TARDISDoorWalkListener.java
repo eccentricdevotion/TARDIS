@@ -245,12 +245,10 @@ public class TARDISDoorWalkListener extends TARDISDoorListener implements Listen
                                             }
                                             playDoorSound(player, open, player.getLocation(), minecart);
                                         }
+                                    } else if (rs.getUuid() != playerUUID) {
+                                        TARDISMessage.send(player, "DOOR_DEADLOCKED");
                                     } else {
-                                        if (rs.getUuid() != playerUUID) {
-                                            TARDISMessage.send(player, "DOOR_DEADLOCKED");
-                                        } else {
-                                            TARDISMessage.send(player, "DOOR_UNLOCK");
-                                        }
+                                        TARDISMessage.send(player, "DOOR_UNLOCK");
                                     }
                                 }
                             }
