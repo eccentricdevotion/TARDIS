@@ -19,11 +19,13 @@ package me.eccentric_nz.TARDIS.listeners;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
+import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.builders.TARDISMaterialisationData;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetBlocks;
 import me.eccentric_nz.TARDIS.database.ResultSetCurrentLocation;
+import me.eccentric_nz.TARDIS.database.ResultSetPlayerPrefs;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import me.eccentric_nz.TARDIS.utility.TARDISHostileDisplacement;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
@@ -87,7 +89,7 @@ public class TARDISBlockDamageListener implements Listener {
                     }
                 }
                 if (!isDoor && rsb.isPolice_box()) {
-                    int damage = (plugin.getTrackerKeeper().getDamage().containsKey(id)) ? plugin.getTrackerKeeper().getDamage().get(Integer.valueOf(id)) : 0;
+                    int damage = (plugin.getTrackerKeeper().getDamage().containsKey(id)) ? plugin.getTrackerKeeper().getDamage().get(id) : 0;
                     plugin.getTrackerKeeper().getDamage().put(id, damage + 1);
                     if (damage == plugin.getConfig().getInt("preferences.hads_damage")) {
                         new TARDISHostileDisplacement(plugin).moveTARDIS(id, p);
@@ -117,7 +119,15 @@ public class TARDISBlockDamageListener implements Listener {
         where.put("tardis_id", id);
         ResultSetTardis rst = new ResultSetTardis(plugin, where, "", false);
         if (rst.resultSet()) {
-            return plugin.getServer().getOfflinePlayer(rst.getUuid()).isOnline();
+            UUID ownerUUID = rst.getUuid();
+            HashMap<String, Object> wherep = new HashMap<String, Object>();
+            wherep.put("uuid", ownerUUID.toString());
+            ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, wherep);
+            boolean hads_on = true;
+            if (rsp.resultSet()) {
+                hads_on = rsp.isHadsOn();
+            }
+            return (plugin.getServer().getOfflinePlayer(ownerUUID).isOnline() && hads_on);
         } else {
             return false;
         }

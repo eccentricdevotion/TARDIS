@@ -61,7 +61,6 @@ public class TARDISHostileDisplacement {
         where.put("tardis_id", id);
         ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);
         if (rs.resultSet()) {
-            //String current = rs.getCurrent();
             UUID ownerUUID = rs.getUuid();
             boolean cham = rs.isChamele_on();
             HashMap<String, Object> wherep = new HashMap<String, Object>();
