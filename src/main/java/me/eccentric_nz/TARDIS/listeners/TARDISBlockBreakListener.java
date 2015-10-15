@@ -73,9 +73,10 @@ public class TARDISBlockBreakListener implements Listener {
         if (blockType == Material.WALL_SIGN) {
             // check the text on the sign
             Sign sign = (Sign) block.getState();
+            String line0 = ChatColor.stripColor(sign.getLine(0));
             String line1 = ChatColor.stripColor(sign.getLine(1));
             String line2 = ChatColor.stripColor(sign.getLine(2));
-            if (sign_lookup.containsKey(line1) && line2.equals(sign_lookup.get(line1))) {
+            if (isPresetSign(line0, line1, line2)) {
                 event.setCancelled(true);
                 sign.update();
                 if (player.hasPermission("tardis.exterminate")) {
@@ -94,6 +95,14 @@ public class TARDISBlockBreakListener implements Listener {
                     TARDISMessage.send(player, "NO_PERM_DELETE");
                 }
             }
+        }
+    }
+
+    private boolean isPresetSign(String l0, String l1, String l2) {
+        if (l0.equalsIgnoreCase("WEEPING") || l0.equalsIgnoreCase("$50,000")) {
+            return (sign_lookup.containsKey(l0) && l1.equals(sign_lookup.get(l0)));
+        } else {
+            return (sign_lookup.containsKey(l1) && l2.equals(sign_lookup.get(l1)));
         }
     }
 }
