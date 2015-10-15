@@ -670,19 +670,21 @@ public class TARDISMaterialisationPreset implements Runnable {
                     plugin.getTrackerKeeper().getDamage().remove(tmd.getTardisID());
                 }
                 // message travellers in tardis
-                HashMap<String, Object> where = new HashMap<String, Object>();
-                where.put("tardis_id", tmd.getTardisID());
-                ResultSetTravellers rst = new ResultSetTravellers(plugin, where, true);
-                if (rst.resultSet()) {
-                    List<UUID> travellers = rst.getData();
-                    for (UUID s : travellers) {
-                        Player p = plugin.getServer().getPlayer(s);
-                        if (p != null) {
-                            String message = (tmd.isMalfunction()) ? "MALFUNCTION" : "HANDBRAKE_LEFT_CLICK";
-                            TARDISMessage.send(p, message);
-                            // TARDIS has travelled so add players to list so they can receive Artron on exit
-                            if (!plugin.getTrackerKeeper().getHasTravelled().contains(s)) {
-                                plugin.getTrackerKeeper().getHasTravelled().add(s);
+                if (loops > 3) {
+                    HashMap<String, Object> where = new HashMap<String, Object>();
+                    where.put("tardis_id", tmd.getTardisID());
+                    ResultSetTravellers rst = new ResultSetTravellers(plugin, where, true);
+                    if (rst.resultSet()) {
+                        List<UUID> travellers = rst.getData();
+                        for (UUID s : travellers) {
+                            Player p = plugin.getServer().getPlayer(s);
+                            if (p != null) {
+                                String message = (tmd.isMalfunction()) ? "MALFUNCTION" : "HANDBRAKE_LEFT_CLICK";
+                                TARDISMessage.send(p, message);
+                                // TARDIS has travelled so add players to list so they can receive Artron on exit
+                                if (!plugin.getTrackerKeeper().getHasTravelled().contains(s)) {
+                                    plugin.getTrackerKeeper().getHasTravelled().add(s);
+                                }
                             }
                         }
                     }
