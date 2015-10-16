@@ -1,7 +1,7 @@
 #TODO
 
-##Current version `3.4`
-1. Fix bugs
+##Current version `3.4.1`
+1. Vortex TARDIS should use configured wall & floor blocks!
 
 ##Upcoming version `3.5`
 * TARDISSonicBlaster addon?
@@ -9,6 +9,7 @@
 * TARDIS Junk Mode
    * `/tprefs junk [on|off]`
    * `/tprefs junk [wall|floor] [block_type]`
+* Telepathic circuit
 * ?
 
 ##Future version `4+`
