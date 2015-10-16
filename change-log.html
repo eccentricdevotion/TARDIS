@@ -32,6 +32,80 @@
     <section>
         <h1>Change log</h1>
         <h2>What&rsquo;s been changed?</h2>
+        <h3>TARDIS v3.4</h3>
+        <h4>Additions</h4>
+        <ul>
+            <li>Added a bunch of missing TARDIS Information System entries (Remote Key, Artron Furnace, foods and accessories)</li>
+            <li>Added a new MEDIUM difficulty mode &mdash; uses easy crafting recipes, automatically writes Save Storage Disks, has a new Biome Reader tool &mdash; see <a href="http://dev.bukkit.org/bukkit-plugins/tardis/tickets/1081-tardis-medium-difficulty/">http://dev.bukkit.org/bukkit-plugins/tardis/tickets/1081-tardis-medium-difficulty/</a></li>
+            <li>Added the TARDIS Biome Reader
+                <ul>
+                    <li>use the <code>/tardisrecipe reader</code> command to see how to craft it</li>
+                    <li>clicking the Biome Reader on a block will detect the biome at the player&rsquo;s current location and automatically write a Biome Storage Disk to the Disk Storage Container if there is sufficient room and the biome disk is not there already</li>
+                    <li>cannot be used in the Nether or The End</li>
+                </ul>
+            </li>
+            <li>Added a config option to prevent condensing blocks and the use of the &lsquo;full charge&rsquo; item if the TARDIS world is set to gamemode CREATIVE
+                <ul>
+                    <li><code>preferences.no_creative_condense: [true|false]</code></li>
+                </ul>
+            </li>
+            <li>Added an admin command for setting the <code>artron_furnace.particles</code> config option &mdash; <code>/tardisadmin particles [true|false]</code></li>
+            <li>Added commands to allow the Junk TARDIS wall and floor blocks to be set
+                <ul>
+                    <li><code>/tardisjunk &lt;wall|floor&gt; [material]</code></li>
+                    <li>the <code>[material]</code> options are the same as when setting the wall or floor for TARDIS rooms &mdash; use tab completion!</li>
+                </ul>
+            </li>
+            <li>Added a new button to the Chameleon Construct GUI to load the last saved construct</li>
+            <li>Added a config option to implement a TARDIS &lsquo;open door policy&rsquo;
+                <ul>
+                    <li>config: <code>preferences.open_door_policy: [true|false]</code> &mdash; false by
+                        default &mdash; requires restart if enabled</li>
+                    <li>command: <code>/tardisadmin region-flag [entry|exit]</code> &mdash; used to update all
+                        TARDIS regions in the default TARDIS world to add the specified flag
+                        (and remove its opposite). <strong>You will need to change existing TARDIS regions</strong> to use the <code>exit</code> flag if <code>open_door_policy</code> is <code>true</code>, but you only need to do this once</li>
+                </ul>
+            </li>
+        </ul>
+        <h4>Changes</h4>
+        <ul>
+            <li>The TARDISHelper and TARDISChunkGenerator plugins have been merged into one plugin &mdash; TARDISChunkGenerator v2.0, you will need to update TARDISChunkGenerator and can safely remove TARDISHelper</li>
+            <li>Added some new API methods so that the <a href="http://dev.bukkit.org/bukkit-plugins/dynmap-tardis/">Dynmap-TARDIS</a> plugin can display more information (console type etc) on maps &mdash; update Dynmap-TARDIS to v1.2 to see the results</li>
+            <li>The plugin now gets and sets Villager career levels when farming Villagers &mdash; requires TARDISChunkGenerator v2.0</li>
+            <li>Updated the Junk TARDIS to use red stained clay under the console and cobblestone above it</li>
+            <li>You can no longer build door and lamp only Chameleon constructs</li>
+            <li>When building a Chameleon construct, if there is no block under the lamp, and the lamp is a torch or redstone torch, then there will be no lamp in the resulting construct</li>
+            <li>The DESERT Chameleon preset now uses orange stained clay instead of wool to reflect the change made to desert temples in Minecraft</li>
+            <li>The TARDIS &lsquo;umbrella&rsquo; now uses invisible BARRIER blocks instead of glass</li>
+            <li>New TARDISes now have their region set to <code>exit: deny</code> instead of <code>entry:deny</code> by default</li>
+            <li>Players can no longer place blocks inside the Police Box</li>
+            <li>HADS can no longer be engaged if the TARDIS has not been intialised</li>
+            <li>You can no longer change the desktop theme from someone else&rsquo;s TARDIS</li>
+        </ul>
+        <h4>Bug fixes</h4>
+        <ul>
+            <li>The plugin now properly updates the Junk TARDIS&rsquo; last time used</li>
+            <li>Fixed Artron Furnace particles filling the server log with errors</li>
+            <li>Fixed a bug trying to detect a missing BEACON block</li>
+            <li>Fixed a bug that allowed Storage Disks to be duplicated in the Disk Storage Container</li>
+            <li>Fixed Gravity Wells growing 1 block too high</li>
+            <li>Fixed Gravity and Antigravity Wells not beign jettisoned correctly if they were on the top or bottom level and extending beyond the ARS area</li>
+            <li>Fixed the chameleon table not being cleaned up when a TARDIS is deleted</li>
+            <li>Fixed a bug where the Advanced Console would destroy Save Storage Disks when circuit damage was enabled</li>
+            <li>Fixed circuits being damaged even though the TARDIS hadn&rsquo;t actually travelled yet</li>
+            <li>Fixed saving protected blocks for the Junk TARDIS</li>
+            <li>Fixed a bug where the correct biome was not restored when a TARDIS left a location</li>
+            <li>Fixed the <code>/tardistravel biome [biome]</code> crashing the server when the x or z coordinate was greater than +/- 30,000 blocks</li>
+            <li>Added a work around for when Bukkit stores very far locations using exponential numbers</li>
+            <li>Fixed the limits of the Junk TARDIS dangerous area, so players don&rsquo;t die as often :)</li>
+            <li>The plugin no longer messages players inside the TARDIS about releasing the handbrake when the Police box is rebuilt</li>
+            <li>The plugin no longer sends HADS messages if the player&rsquo;s HADS preference is OFF</li>
+            <li>Fixed not being able to break the ANGEL and JAIL preset signs to exterminate the TARDIS</li>
+            <li>Fixed the Control Centre sign showing the TARDIS Saved Locations GUI if the player updated the Chameleon Circuit sign to the Control Centre</li>
+            <li>Fixed Chameleon presets with trapdoors dropping trapdoors when materialising, changing direction or hiding</li>
+            <li>Fixed toggling the trapdoor on presets with a trapdoor</li>
+            <li>Fixed a bug allowing players to unsiege inside another player&rsquo;s TARDIS</li>
+        </ul>
         <h3>TARDIS v3.4-beta-2</h3>
         <h4>Additions</h4>
         <ul>
@@ -81,7 +155,7 @@
                 <code>/tardisgive [player] cell [amount] full</code></li>
             <li>Added The Master&rsquo;s TARDIS
                 <ul>
-                    <li>designed by shadowhawk14269</a></li>
+                    <li>designed by shadowhawk14269</li>
                     <li>seed block is nether brick</li>
                     <li>permission is <code>tardis.master</code></li>
                 </ul>
