@@ -19,6 +19,7 @@ package me.eccentric_nz.TARDIS.utility;
 import de.slikey.effectlib.EffectManager;
 import de.slikey.effectlib.effect.CubeEffect;
 import de.slikey.effectlib.effect.VortexEffect;
+import de.slikey.effectlib.util.DynamicLocation;
 import de.slikey.effectlib.util.ParticleEffect;
 import me.eccentric_nz.TARDIS.TARDIS;
 import org.bukkit.Location;
@@ -43,19 +44,19 @@ public class TARDISEffectLibHelper {
         effect.speed = 0.25f;
         effect.iterations = 1;
         effect.asynchronous = true;
-        effect.setLocation(l.add(0.5d, 1.1d, 0.5d));
+        effect.setDynamicOrigin(new DynamicLocation(l.add(0.5d, 1.1d, 0.5d)));
         effect.start();
     }
 
     public static void sendVortexParticles(Location l) {
-        Location m = l.clone().add(0.0d, 0.01d, 0.0d);
         VortexEffect vortexEffect = new VortexEffect(effectManager);
         vortexEffect.particle = ParticleEffect.SPELL;
         vortexEffect.radius = 3;
-        vortexEffect.circles = 10;
+        vortexEffect.circles = 20;
         vortexEffect.helixes = 10;
-        vortexEffect.setLocation(l);
-        vortexEffect.setTarget(m);
+        vortexEffect.grow = 0.075f;
+        vortexEffect.setDynamicOrigin(new DynamicLocation(l));
+        vortexEffect.setDynamicTarget(new DynamicLocation(l.add(0.0d, 0.000001d, 0.0d)));
         vortexEffect.start();
     }
 
