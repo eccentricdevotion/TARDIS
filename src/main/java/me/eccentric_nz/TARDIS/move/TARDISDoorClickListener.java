@@ -196,50 +196,59 @@ public class TARDISDoorClickListener extends TARDISDoorListener implements Liste
                                                     new TARDISDoorToggler(plugin, block, player, minecart, open, id).toggleDoors();
                                                 }
                                             } else if (blockType.equals(Material.TRAP_DOOR)) {
-                                                int open = 1;
                                                 byte door_data = block.getData();
-                                                switch (dd) {
-                                                    case NORTH:
-                                                        if (door_data == 1) {
-                                                            block.setData((byte) 5, false);
-                                                        } else {
-                                                            block.setData((byte) 1, false);
-                                                            open = 2;
-                                                        }
+                                                switch (door_data) {
+                                                    case 0:
+                                                        block.setData((byte) 4, false);
                                                         break;
-                                                    case WEST:
-                                                        if (door_data == 3) {
-                                                            block.setData((byte) 7, false);
-                                                        } else {
-                                                            block.setData((byte) 3, false);
-                                                            open = 2;
-                                                        }
+                                                    case 1:
+                                                        block.setData((byte) 5, false);
                                                         break;
-                                                    case SOUTH:
-                                                        if (door_data == 0) {
-                                                            block.setData((byte) 4, false);
-                                                        } else {
-                                                            block.setData((byte) 0, false);
-                                                            open = 2;
-                                                        }
+                                                    case 2:
+                                                        block.setData((byte) 6, false);
                                                         break;
-                                                    default:
-                                                        if (door_data == 2) {
-                                                            block.setData((byte) 6, false);
-                                                        } else {
-                                                            block.setData((byte) 2, false);
-                                                            open = 2;
-                                                        }
+                                                    case 4:
+                                                        block.setData((byte) 0, false);
+                                                        break;
+                                                    case 5:
+                                                        block.setData((byte) 1, false);
+                                                        break;
+                                                    case 6:
+                                                        block.setData((byte) 2, false);
+                                                        break;
+                                                    case 7:
+                                                        block.setData((byte) 3, false);
+                                                        break;
+                                                    case 8:
+                                                        block.setData((byte) 12, false);
+                                                        break;
+                                                    case 9:
+                                                        block.setData((byte) 13, false);
+                                                        break;
+                                                    case 10:
+                                                        block.setData((byte) 14, false);
+                                                        break;
+                                                    case 11:
+                                                        block.setData((byte) 15, false);
+                                                        break;
+                                                    case 12:
+                                                        block.setData((byte) 8, false);
+                                                        break;
+                                                    case 13:
+                                                        block.setData((byte) 9, false);
+                                                        break;
+                                                    case 14:
+                                                        block.setData((byte) 10, false);
+                                                        break;
+                                                    default: // 15
+                                                        block.setData((byte) 11, false);
                                                         break;
                                                 }
-                                                playDoorSound(player, open, player.getLocation(), minecart);
                                             }
+                                        } else if (rs.getUuid() != playerUUID) {
+                                            TARDISMessage.send(player, "DOOR_DEADLOCKED");
                                         } else {
-                                            if (rs.getUuid() != playerUUID) {
-                                                TARDISMessage.send(player, "DOOR_DEADLOCKED");
-                                            } else {
-                                                TARDISMessage.send(player, "DOOR_UNLOCK");
-                                            }
+                                            TARDISMessage.send(player, "DOOR_UNLOCK");
                                         }
                                     }
                                 }
