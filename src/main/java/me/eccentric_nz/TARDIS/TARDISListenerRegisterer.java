@@ -68,6 +68,7 @@ import me.eccentric_nz.TARDIS.listeners.TARDISBlockBreakListener;
 import me.eccentric_nz.TARDIS.listeners.TARDISBlockDamageListener;
 import me.eccentric_nz.TARDIS.listeners.TARDISBlockPhysicsListener;
 import me.eccentric_nz.TARDIS.listeners.TARDISBlockPlaceListener;
+import me.eccentric_nz.TARDIS.listeners.TARDISBlockStackListener;
 import me.eccentric_nz.TARDIS.listeners.TARDISButtonListener;
 import me.eccentric_nz.TARDIS.listeners.TARDISChatListener;
 import me.eccentric_nz.TARDIS.listeners.TARDISChunkListener;
@@ -153,9 +154,10 @@ public class TARDISListenerRegisterer {
      */
     public void registerListeners() {
         if (plugin.getConfig().getBoolean("creation.use_block_stack")) {
-            plugin.getPM().registerEvents(new TARDISBlockPlaceListener(plugin), plugin);
+            plugin.getPM().registerEvents(new TARDISBlockStackListener(plugin), plugin);
         }
         plugin.getPM().registerEvents(new TARDISBlockBreakListener(plugin), plugin);
+        plugin.getPM().registerEvents(new TARDISBlockPlaceListener(plugin), plugin);
         if (plugin.getConfig().getBoolean("preferences.walk_in_tardis")) {
             if (plugin.getConfig().getBoolean("preferences.open_door_policy")) {
                 plugin.getPM().registerEvents(new TARDISAnyoneDoorListener(plugin), plugin);

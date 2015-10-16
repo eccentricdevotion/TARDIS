@@ -94,6 +94,7 @@ public class TARDISSignListener implements Listener {
                 // get tardis from saved sign location
                 ResultSetTardisSign rs = new ResultSetTardisSign(plugin, signloc);
                 if (rs.resultSet()) {
+                    plugin.debug("RS TARDIS Sign");
                     event.setCancelled(true);
                     if (plugin.getConfig().getBoolean("allow.power_down") && !rs.isPowered_on()) {
                         TARDISMessage.send(player, "POWER_DOWN");
