@@ -44,6 +44,7 @@ public class ResultSetTardisSign {
     private boolean adapti_on;
     private boolean iso_on;
     private boolean powered_on;
+    private int which;
     private final String prefix;
 
     /**
@@ -86,6 +87,7 @@ public class ResultSetTardisSign {
                 this.adapti_on = rs.getBoolean("adapti_on");
                 this.iso_on = rs.getBoolean("iso_on");
                 this.powered_on = rs.getBoolean("powered_on");
+                this.which = (this.chameleon.equals(where)) ? 0 : 1;
             } else {
                 return false;
             }
@@ -141,5 +143,9 @@ public class ResultSetTardisSign {
 
     public boolean isPowered_on() {
         return powered_on;
+    }
+
+    public int getWhich() {
+        return which;
     }
 }

@@ -94,7 +94,6 @@ public class TARDISSignListener implements Listener {
                 // get tardis from saved sign location
                 ResultSetTardisSign rs = new ResultSetTardisSign(plugin, signloc);
                 if (rs.resultSet()) {
-                    plugin.debug("RS TARDIS Sign");
                     event.setCancelled(true);
                     if (plugin.getConfig().getBoolean("allow.power_down") && !rs.isPowered_on()) {
                         TARDISMessage.send(player, "POWER_DOWN");
@@ -109,14 +108,14 @@ public class TARDISSignListener implements Listener {
                         Sign s = (Sign) block.getState();
                         line1 = s.getLine(0);
                     } else {
-                        line1 = (signloc.equals(rs.getChameleon())) ? plugin.getSigns().getStringList("chameleon").get(0) : "Save Sign";
+                        line1 = (signloc.equals(rs.getChameleon())) ? plugin.getSigns().getStringList("chameleon").get(0) : "TARDIS";
                     }
                     TARDISCircuitChecker tcc = null;
                     if (!plugin.getDifficulty().equals(DIFFICULTY.EASY) && !plugin.getUtils().inGracePeriod(player, false)) {
                         tcc = new TARDISCircuitChecker(plugin, rs.getTardis_id());
                         tcc.getCircuits();
                     }
-                    if (line1.contains(plugin.getSigns().getStringList("chameleon").get(0))) {
+                    if (rs.getWhich() == 0 && line1.contains(plugin.getSigns().getStringList("chameleon").get(0))) {
                         if (tcc != null && !tcc.hasChameleon()) {
                             TARDISMessage.send(player, "CHAM_MISSING");
                             return;
@@ -130,7 +129,7 @@ public class TARDISSignListener implements Listener {
                         Inventory cc_gui = plugin.getServer().createInventory(player, 54, "§4Chameleon Circuit");
                         cc_gui.setContents(cc);
                         player.openInventory(cc_gui);
-                    } else if (event.getAction().equals(Action.RIGHT_CLICK_BLOCK)) {
+                    } else if (rs.getWhich() == 1 && line1.contains("TARDIS")) {
                         if (tcc != null && !tcc.hasMemory()) {
                             TARDISMessage.send(player, "NO_MEM_CIRCUIT");
                             return;

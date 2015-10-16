@@ -266,8 +266,7 @@ public class TARDIS extends JavaPlugin {
                 }
                 // update database add and populate uuid fields
                 if (!getConfig().getBoolean("conversions.lastknownname_conversion_done")) {
-                    TARDISLastKnownNameUpdater up = new TARDISLastKnownNameUpdater(this);
-                    up.update();
+                    new TARDISLastKnownNameUpdater(this).update();
                     getConfig().set("conversions.lastknownname_conversion_done", true);
                 }
                 loadMultiverse();
