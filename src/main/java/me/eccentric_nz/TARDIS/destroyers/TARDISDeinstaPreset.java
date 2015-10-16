@@ -34,6 +34,7 @@ import org.bukkit.World;
 import org.bukkit.World.Environment;
 import org.bukkit.block.Biome;
 import org.bukkit.block.Block;
+import org.bukkit.block.BlockFace;
 
 /**
  * A police box is a telephone kiosk that can be used by members of the public
@@ -142,6 +143,12 @@ public class TARDISDeinstaPreset {
             case MINESHAFT:
                 plugin.getPresetDestroyer().destroyMineshaftTorches(l, d);
                 break;
+            case LAMP:
+                Block lamp = l.getBlock().getRelative(BlockFace.UP, 3).getRelative(getOppositeFace(d));
+                for (BlockFace f : plugin.getGeneralKeeper().getFaces()) {
+                    lamp.getRelative(f).setType(Material.AIR);
+                }
+                break;
             default:
                 break;
         }
@@ -211,5 +218,19 @@ public class TARDISDeinstaPreset {
         }
         // refresh chunk
         w.refreshChunk(chunk.getX(), chunk.getZ());
+    }
+
+    private BlockFace getOppositeFace(COMPASS c) {
+        switch (c) {
+            case NORTH:
+                return BlockFace.SOUTH;
+            case WEST:
+                return BlockFace.EAST;
+            case SOUTH:
+                return BlockFace.NORTH;
+            default:
+                return BlockFace.WEST;
+
+        }
     }
 }
