@@ -119,6 +119,9 @@ public class TARDISBlockDamageListener implements Listener {
         where.put("tardis_id", id);
         ResultSetTardis rst = new ResultSetTardis(plugin, where, "", false);
         if (rst.resultSet()) {
+            if (!rst.isTardis_init()) {
+                return false;
+            }
             UUID ownerUUID = rst.getUuid();
             HashMap<String, Object> wherep = new HashMap<String, Object>();
             wherep.put("uuid", ownerUUID.toString());
