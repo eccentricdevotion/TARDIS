@@ -85,6 +85,20 @@ public class TARDISUtils {
         return name.equals("TARDIS_WORLD_" + player.getName()) || special;
     }
 
+    public boolean inTARDISWorld(Location loc) {
+        // check they are still in the TARDIS world
+        World world = loc.getWorld();
+        String name = world.getName();
+        ChunkGenerator gen = world.getGenerator();
+        // get default world name
+        String dn = "TARDIS_TimeVortex";
+        if (plugin.getConfig().getBoolean("creation.default_world")) {
+            dn = plugin.getConfig().getString("creation.default_world_name");
+        }
+        boolean special = (name.equals(dn) && (world.getWorldType().equals(WorldType.FLAT) || gen instanceof TARDISChunkGenerator));
+        return name.startsWith("TARDIS_WORLD_") || special;
+    }
+
     /**
      * Checks if player has storage record, and update the tardis_id field if
      * they do.

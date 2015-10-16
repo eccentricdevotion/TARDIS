@@ -226,11 +226,12 @@ public class TARDISSiegeListener implements Listener {
         if (!plugin.getTrackerKeeper().getSiegeCarrying().containsKey(uuid)) {
             return;
         }
-        if (plugin.getUtils().inTARDISWorld(p)) {
+        Location loc = event.getBlock().getLocation();
+        if (plugin.getUtils().inTARDISWorld(loc)) {
             event.setCancelled(true);
             TARDISMessage.send(p, "SIEGE_NO_TARDIS");
+            return;
         }
-        Location loc = event.getBlock().getLocation();
         // check there is room to expand to a police box
         COMPASS d = COMPASS.valueOf(TARDISStaticUtils.getPlayersDirection(p, false));
         int[] start = TARDISTimeTravel.getStartLocation(loc, d);

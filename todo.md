@@ -2,12 +2,6 @@
 
 ##Current version `3.4`
 1. Fix bugs
-   * presets with trapdoors shouldn't drop the trap door when rebuilding - eg PANDORICA - due to trying to attach to glass
-2. Medium difficulty mode
-   * check for existing save disks with same name when saving - may need to save to destinations table as well
-* HADS shouldn't activate when the TARDIS materialises for the first time? How likely is that in real play?
-* Move SAVE and CHAMELEON signs to the `controls` table
-* No de-siegeing inside TARDIS worlds
 
 ##Upcoming version `3.5`
 * TARDISSonicBlaster addon?
