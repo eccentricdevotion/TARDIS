@@ -1,7 +1,7 @@
 #TODO
 
 ##Current version `3.4.1`
-1. Vortex TARDIS should use configured wall & floor blocks!
+1. Fix stuff!
 
 ##Upcoming version `3.5`
 * TARDISSonicBlaster addon?
