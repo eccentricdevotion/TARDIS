@@ -309,6 +309,27 @@ public class TARDISPresetDestroyerFactory {
         TARDISBlockSetters.setBlock(w, rightx, eyey, rightz, 0, (byte) 0);
     }
 
+    public void destroyLampTrapdoors(Location l, COMPASS d) {
+        Block lamp = l.getBlock().getRelative(BlockFace.UP, 3).getRelative(getOppositeFace(d));
+        for (BlockFace f : plugin.getGeneralKeeper().getFaces()) {
+            lamp.getRelative(f).setType(Material.AIR);
+        }
+    }
+
+    private BlockFace getOppositeFace(COMPASS c) {
+        switch (c) {
+            case NORTH:
+                return BlockFace.SOUTH;
+            case WEST:
+                return BlockFace.EAST;
+            case SOUTH:
+                return BlockFace.NORTH;
+            default:
+                return BlockFace.WEST;
+
+        }
+    }
+
     public void removeBlockProtection(int id, QueryFactory qf) {
         HashMap<String, Object> whereb = new HashMap<String, Object>();
         whereb.put("tardis_id", id);
