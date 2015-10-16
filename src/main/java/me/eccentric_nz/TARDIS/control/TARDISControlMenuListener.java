@@ -207,7 +207,7 @@ public class TARDISControlMenuListener extends TARDISMenuListener implements Lis
                                     break;
                                 case 10:
                                     // desktop theme
-                                    new TARDISThemeButton(plugin, player, rs.getSchematic(), level).clickButton();
+                                    new TARDISThemeButton(plugin, player, rs.getSchematic(), level, id).clickButton();
                                     break;
                                 case 12:
                                     // temporal

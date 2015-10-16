@@ -211,7 +211,7 @@ public class TARDISButtonListener implements Listener {
                                             return;
                                         }
                                         // upgrade menu
-                                        new TARDISThemeButton(plugin, player, rs.getSchematic(), level).clickButton();
+                                        new TARDISThemeButton(plugin, player, rs.getSchematic(), level, id).clickButton();
                                     } else {
                                         // check they have permission to grow rooms
                                         if (!player.hasPermission("tardis.architectural")) {
