@@ -165,6 +165,16 @@ public class TARDISKeyboardListener implements Listener {
             }
             return;
         }
+        if (event.getLine(0).equalsIgnoreCase("cave") && p.hasPermission("tardis.timetravel.cave")) {
+            p.performCommand("tardistravel cave");
+            plugin.getConsole().sendMessage(p.getName() + " issued server command: /tardistravel cave");
+            return;
+        }
+        if (event.getLine(0).equalsIgnoreCase("village") && plugin.getConfig().getBoolean("allow.village_travel") && p.hasPermission("tardis.timetravel.village")) {
+            p.performCommand("tardistravel village");
+            plugin.getConsole().sendMessage(p.getName() + " issued server command: /tardistravel village");
+            return;
+        }
         // biome ?
         try {
             String upper = event.getLine(0).toUpperCase(Locale.ENGLISH);
