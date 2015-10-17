@@ -32,6 +32,16 @@
     <section>
         <h1>Change log</h1>
         <h2>What&rsquo;s been changed?</h2>
+        <h3>TARDIS v3.4.1</h3>
+        <h4>Additions</h4>
+        <ul>
+          <li>Added cave and village travel to the Keyboard</li>
+        </ul>
+        <h4>Bug fixes</h4>
+        <ul>
+          <li>The Vortex Junk TARDIS now properly uses the configured wall &amp; floor blocks</li>
+          <li>Fixed double selecting a Chameleon preset messing up the dematerialisation sequence (causing block drops)</li>
+        </ul>
         <h3>TARDIS v3.4</h3>
         <h4>Additions</h4>
         <ul>
@@ -89,13 +99,13 @@
             <li>Fixed a bug trying to detect a missing BEACON block</li>
             <li>Fixed a bug that allowed Storage Disks to be duplicated in the Disk Storage Container</li>
             <li>Fixed Gravity Wells growing 1 block too high</li>
-            <li>Fixed Gravity and Antigravity Wells not beign jettisoned correctly if they were on the top or bottom level and extending beyond the ARS area</li>
+            <li>Fixed Gravity and Antigravity Wells not being jettisoned correctly if they were on the top or bottom level and extending beyond the ARS area</li>
             <li>Fixed the chameleon table not being cleaned up when a TARDIS is deleted</li>
             <li>Fixed a bug where the Advanced Console would destroy Save Storage Disks when circuit damage was enabled</li>
             <li>Fixed circuits being damaged even though the TARDIS hadn&rsquo;t actually travelled yet</li>
             <li>Fixed saving protected blocks for the Junk TARDIS</li>
             <li>Fixed a bug where the correct biome was not restored when a TARDIS left a location</li>
-            <li>Fixed the <code>/tardistravel biome [biome]</code> crashing the server when the x or z coordinate was greater than +/- 30,000 blocks</li>
+            <li>Fixed the <code>/tardistravel biome [biome]</code> command crashing the server when the x or z coordinate was greater than +/- 30,000 blocks</li>
             <li>Added a work around for when Bukkit stores very far locations using exponential numbers</li>
             <li>Fixed the limits of the Junk TARDIS dangerous area, so players don&rsquo;t die as often :)</li>
             <li>The plugin no longer messages players inside the TARDIS about releasing the handbrake when the Police box is rebuilt</li>
