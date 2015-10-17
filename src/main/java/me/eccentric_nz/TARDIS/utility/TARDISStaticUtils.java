@@ -309,4 +309,24 @@ public class TARDISStaticUtils {
             }
         }
     }
+
+    /**
+     * Gets the Chameleon Sign preset text.
+     *
+     * @param loc the location string retrieved from the database
+     * @return the last line of the sign
+     */
+    public static String getLastLine(String loc) {
+        // get sign block so we can read it
+        String str = "";
+        Location l = TARDISLocationGetters.getLocationFromDB(loc, 0, 0);
+        if (l != null) {
+            Block cc = l.getBlock();
+            if (cc.getType() == Material.WALL_SIGN || cc.getType() == Material.SIGN_POST) {
+                Sign sign = (Sign) cc.getState();
+                str = sign.getLine(3);
+            }
+        }
+        return str;
+    }
 }
