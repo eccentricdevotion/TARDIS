@@ -5,7 +5,7 @@
 
 ##Upcoming version `3.5`
 * TARDISSonicBlaster addon?
-* TARDISDalekCity addon?
+* TARDISDalekCities addon?
 * Hostile Action Dispersal System
 * TARDIS Junk Mode
    * `/tprefs junk [on|off]`

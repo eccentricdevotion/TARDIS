@@ -187,6 +187,9 @@ public class TARDISMaterialisationPreset implements Runnable {
                         Chunk chunk = tmd.getLocation().getChunk();
                         chunks.add(chunk);
                         // load the chunk
+                        if (!world.loadChunk(tmd.getLocation().getBlockX(), tmd.getLocation().getBlockZ(), false)) {
+                            world.loadChunk(tmd.getLocation().getBlockX(), tmd.getLocation().getBlockZ(), true);
+                        }
                         while (!chunk.isLoaded()) {
                             world.loadChunk(chunk);
                         }

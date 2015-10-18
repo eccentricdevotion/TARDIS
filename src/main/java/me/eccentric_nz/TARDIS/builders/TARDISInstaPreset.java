@@ -129,6 +129,9 @@ public class TARDISInstaPreset {
             Chunk chunk = tmd.getLocation().getChunk();
             chunks.add(chunk);
             // load the chunk
+            if (!world.loadChunk(tmd.getLocation().getBlockX(), tmd.getLocation().getBlockZ(), false)) {
+                world.loadChunk(tmd.getLocation().getBlockX(), tmd.getLocation().getBlockZ(), true);
+            }
             while (!chunk.isLoaded()) {
                 world.loadChunk(chunk);
             }
@@ -331,12 +334,10 @@ public class TARDISInstaPreset {
                         }
                         if (doors.contains(colids[yy]) && coldatas[yy] > 8) {
                             plugin.getBlockUtils().setBlockAndRemember(world, xx, (y + yy), zz, colids[yy], tmd.getDirection().getUpperData(), tmd.getTardisID());
+                        } else if (colids[yy] == 66) {
+                            do_at_end.add(new ProblemBlock(new Location(world, xx, (y + yy), zz), colids[yy], coldatas[yy]));
                         } else {
-                            if (colids[yy] == 66) {
-                                do_at_end.add(new ProblemBlock(new Location(world, xx, (y + yy), zz), colids[yy], coldatas[yy]));
-                            } else {
-                                plugin.getBlockUtils().setBlockAndRemember(world, xx, (y + yy), zz, colids[yy], coldatas[yy], tmd.getTardisID());
-                            }
+                            plugin.getBlockUtils().setBlockAndRemember(world, xx, (y + yy), zz, colids[yy], coldatas[yy], tmd.getTardisID());
                         }
                         break;
                     case 63:
