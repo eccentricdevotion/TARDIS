@@ -201,7 +201,7 @@ public class TARDISCaveFinder {
             int ey = w.getHighestBlockYAt(spawn);
             spawn.setZ(spawn.getBlockZ() + 20);
             int sy = w.getHighestBlockYAt(spawn);
-            return (y != ny && y != ey && y != sy);
+            return (y != ny || y != ey || y != sy);
         }
     }
 
