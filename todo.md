@@ -1,10 +1,11 @@
 #TODO
 
-##Current version `3.4.1`
+##Current version `3.4.2`
 1. Fix stuff!
 
 ##Upcoming version `3.5`
 * TARDISSonicBlaster addon?
+* TARDISDalekCity addon?
 * Hostile Action Dispersal System
 * TARDIS Junk Mode
    * `/tprefs junk [on|off]`

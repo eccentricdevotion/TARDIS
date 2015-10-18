@@ -41,12 +41,11 @@ public class TARDISPlayerKickListener implements Listener {
     }
 
     @EventHandler(ignoreCancelled = true)
-    public void onInteract(PlayerKickEvent event) {
+    public void onFallOutOfTARDIS(PlayerKickEvent event) {
         final Player player = event.getPlayer();
         Location location = player.getLocation();
         if (location.getBlockY() < 1 && plugin.getUtils().inTARDISWorld(player)) {
             event.setReason(player.getName() + " fell out of their TARDIS!");
-            //event.setLeaveMessage(player.getName() + " fell out of their TARDIS!");
             event.setCancelled(true);
             if (plugin.getConfig().getString("preferences.vortex_fall").equals("kill")) {
                 player.setHealth(0);
