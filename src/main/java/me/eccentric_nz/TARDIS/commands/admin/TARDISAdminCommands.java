@@ -93,6 +93,7 @@ public class TARDISAdminCommands implements CommandExecutor {
         firstsStr.put("respect_worldguard", "preferences");
         firstsStr.put("siege", "siege");
         firstsStr.put("sign_colour", "police_box");
+        firstsStr.put("vortex_fall", "preferences");
         firstsStrArtron.add("full_charge_item");
         firstsStrArtron.add("jettison_seed");
         // boolean
@@ -361,6 +362,13 @@ public class TARDISAdminCommands implements CommandExecutor {
                 }
                 if (first.equals("region_flag")) {
                     return new TARDISRegionFlagCommand(plugin).toggleEntryExit(sender, args);
+                }
+                if (first.equals("vortex_fall")) {
+                    if (!args[1].equalsIgnoreCase("kill") && !args[1].equalsIgnoreCase("teleport")) {
+                        TARDISMessage.send(sender, "ARG_VORTEX");
+                        return true;
+                    }
+                    plugin.getConfig().set("preferences.vortex_fall", args[1].toLowerCase(Locale.ENGLISH));
                 }
                 // checks if its a boolean config option
                 if (firstsBool.containsKey(first)) {

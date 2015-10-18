@@ -94,6 +94,7 @@ import me.eccentric_nz.TARDIS.listeners.TARDISNPCListener;
 import me.eccentric_nz.TARDIS.listeners.TARDISPerceptionFilterListener;
 import me.eccentric_nz.TARDIS.listeners.TARDISPistonHarvesterListener;
 import me.eccentric_nz.TARDIS.listeners.TARDISPistonListener;
+import me.eccentric_nz.TARDIS.listeners.TARDISPlayerKickListener;
 import me.eccentric_nz.TARDIS.listeners.TARDISQuitListener;
 import me.eccentric_nz.TARDIS.listeners.TARDISRecipeListener;
 import me.eccentric_nz.TARDIS.listeners.TARDISRedstoneListener;
@@ -326,6 +327,7 @@ public class TARDISListenerRegisterer {
         if (plugin.getConfig().getBoolean("allow.wg_flag_set") && plugin.getPM().isPluginEnabled("WorldGuard")) {
             plugin.getPM().registerEvents(new TARDISAntiBuildListener(plugin), plugin);
         }
+        plugin.getPM().registerEvents(new TARDISPlayerKickListener(plugin), plugin);
     }
 
     private boolean getNPCManager() {

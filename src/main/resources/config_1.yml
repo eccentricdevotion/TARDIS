@@ -98,6 +98,7 @@ preferences:
     render_entities: false
     spawn_random_monsters: true
     no_creative_condense: false
+    vortex_fall: kill
 # desktop theme
 desktop:
     check_blocks_before_upgrade: false
