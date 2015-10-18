@@ -541,107 +541,109 @@ public class TARDISTravelCommands implements CommandExecutor {
                         }
                         return true;
                     }
-                    if (args.length == 3 && player.hasPermission("tardis.timetravel.location")) {
-                        if (args[0].startsWith("~")) {
-                            HashMap<String, Object> wherecl = new HashMap<String, Object>();
-                            wherecl.put("tardis_id", id);
-                            ResultSetCurrentLocation rsc = new ResultSetCurrentLocation(plugin, wherecl);
-                            if (!rsc.resultSet()) {
-                                TARDISMessage.send(player, "CURRENT_NOT_FOUND");
-                                return true;
-                            }
-                            if (rsc.isSubmarine()) {
-                                TARDISMessage.send(player, "SUB_NO_CMD");
-                                return true;
-                            }
-                            // check args
-                            int rx = getRelativeCoordinate(args[0]);
-                            int ry = getRelativeCoordinate(args[1]);
-                            int rz = getRelativeCoordinate(args[2]);
-                            if (rx == Integer.MAX_VALUE || ry == Integer.MAX_VALUE || rz == Integer.MAX_VALUE) {
-                                TARDISMessage.send(player, "RELATIVE_NOT_FOUND");
-                                return true;
-                            }
-                            // add relative coordinates
-                            int x = rsc.getX() + rx;
-                            int y = rsc.getY() + ry;
-                            int z = rsc.getZ() + rz;
-                            // make location
-                            Location location = new Location(rsc.getWorld(), x, y, z);
-                            // check location
-                            int count = this.checkLocation(location, player, id, tt);
-                            if (count > 0) {
-                                TARDISMessage.send(player, "NOT_SAFE");
-                                return true;
-                            } else {
-                                set.put("world", location.getWorld().getName());
-                                set.put("x", location.getBlockX());
-                                set.put("y", location.getBlockY());
-                                set.put("z", location.getBlockZ());
-                                set.put("submarine", 0);
-                                qf.doUpdate("next", set, tid);
-                                TARDISMessage.send(player, "LOC_SAVED", true);
-                                plugin.getTrackerKeeper().getHasDestination().put(id, travel);
-                                if (plugin.getTrackerKeeper().getRescue().containsKey(id)) {
-                                    plugin.getTrackerKeeper().getRescue().remove(id);
-                                }
-                                return true;
-                            }
-                        } else {
-                            // automatically get highest block Y coord
-                            Location determiney = getCoordinateLocation(args, player, id);
-                            if (determiney != null) {
-                                int count = this.checkLocation(determiney, player, id, tt);
-                                if (count > 0) {
-                                    TARDISMessage.send(player, "NOT_SAFE");
-                                    return true;
-                                } else {
-                                    set.put("world", determiney.getWorld().getName());
-                                    set.put("x", determiney.getBlockX());
-                                    set.put("y", determiney.getBlockY());
-                                    set.put("z", determiney.getBlockZ());
-                                    set.put("submarine", 0);
-                                    qf.doUpdate("next", set, tid);
-                                    TARDISMessage.send(player, "LOC_SAVED", true);
-                                    plugin.getTrackerKeeper().getHasDestination().put(id, travel);
-                                    if (plugin.getTrackerKeeper().getRescue().containsKey(id)) {
-                                        plugin.getTrackerKeeper().getRescue().remove(id);
+                    if (player.hasPermission("tardis.timetravel.location")) {
+                        switch (args.length) {
+                            case 0:
+                            case 1:
+                            case 2:
+                                TARDISMessage.send(player, "ARG_COORDS");
+                                return false;
+                            case 3:
+                                if (args[0].startsWith("~")) {
+                                    HashMap<String, Object> wherecl = new HashMap<String, Object>();
+                                    wherecl.put("tardis_id", id);
+                                    ResultSetCurrentLocation rsc = new ResultSetCurrentLocation(plugin, wherecl);
+                                    if (!rsc.resultSet()) {
+                                        TARDISMessage.send(player, "CURRENT_NOT_FOUND");
+                                        return true;
                                     }
-                                    return true;
+                                    if (rsc.isSubmarine()) {
+                                        TARDISMessage.send(player, "SUB_NO_CMD");
+                                        return true;
+                                    }
+                                    // check args
+                                    int rx = getRelativeCoordinate(args[0]);
+                                    int ry = getRelativeCoordinate(args[1]);
+                                    int rz = getRelativeCoordinate(args[2]);
+                                    if (rx == Integer.MAX_VALUE || ry == Integer.MAX_VALUE || rz == Integer.MAX_VALUE) {
+                                        TARDISMessage.send(player, "RELATIVE_NOT_FOUND");
+                                        return true;
+                                    }
+                                    // add relative coordinates
+                                    int x = rsc.getX() + rx;
+                                    int y = rsc.getY() + ry;
+                                    int z = rsc.getZ() + rz;
+                                    // make location
+                                    Location location = new Location(rsc.getWorld(), x, y, z);
+                                    // check location
+                                    int count = this.checkLocation(location, player, id, tt);
+                                    if (count > 0) {
+                                        TARDISMessage.send(player, "NOT_SAFE");
+                                        return true;
+                                    } else {
+                                        set.put("world", location.getWorld().getName());
+                                        set.put("x", location.getBlockX());
+                                        set.put("y", location.getBlockY());
+                                        set.put("z", location.getBlockZ());
+                                        set.put("submarine", 0);
+                                        qf.doUpdate("next", set, tid);
+                                        TARDISMessage.send(player, "LOC_SAVED", true);
+                                        plugin.getTrackerKeeper().getHasDestination().put(id, travel);
+                                        if (plugin.getTrackerKeeper().getRescue().containsKey(id)) {
+                                            plugin.getTrackerKeeper().getRescue().remove(id);
+                                        }
+                                        return true;
+                                    }
+                                } else {
+                                    // automatically get highest block Y coord
+                                    Location determiney = getCoordinateLocation(args, player, id);
+                                    if (determiney != null) {
+                                        int count = this.checkLocation(determiney, player, id, tt);
+                                        if (count > 0) {
+                                            TARDISMessage.send(player, "NOT_SAFE");
+                                            return true;
+                                        } else {
+                                            set.put("world", determiney.getWorld().getName());
+                                            set.put("x", determiney.getBlockX());
+                                            set.put("y", determiney.getBlockY());
+                                            set.put("z", determiney.getBlockZ());
+                                            set.put("submarine", 0);
+                                            qf.doUpdate("next", set, tid);
+                                            TARDISMessage.send(player, "LOC_SAVED", true);
+                                            plugin.getTrackerKeeper().getHasDestination().put(id, travel);
+                                            if (plugin.getTrackerKeeper().getRescue().containsKey(id)) {
+                                                plugin.getTrackerKeeper().getRescue().remove(id);
+                                            }
+                                            return true;
+                                        }
+                                    }
                                 }
-                            }
-                        }
-                    } else {
-                        TARDISMessage.send(player, "TRAVEL_NO_PERM_COORDS");
-                        return true;
-                    }
-                    if (args.length > 2 && args.length < 4) {
-                        TARDISMessage.send(player, "ARG_COORDS");
-                        return false;
-                    }
-                    if (args.length >= 4 && player.hasPermission("tardis.timetravel.location")) {
-                        // coords
-                        Location giveny = getCoordinateLocation(args, player, id);
-                        if (giveny != null) {
-                            // check location
-                            int count = this.checkLocation(giveny, player, id, tt);
-                            if (count > 0) {
-                                TARDISMessage.send(player, "NOT_SAFE");
-                                return true;
-                            } else {
-                                set.put("world", giveny.getWorld().getName());
-                                set.put("x", giveny.getBlockX());
-                                set.put("y", giveny.getBlockY());
-                                set.put("z", giveny.getBlockZ());
-                                set.put("submarine", 0);
-                                qf.doUpdate("next", set, tid);
-                                TARDISMessage.send(player, "LOC_SAVED", true);
-                                plugin.getTrackerKeeper().getHasDestination().put(id, travel);
-                                if (plugin.getTrackerKeeper().getRescue().containsKey(id)) {
-                                    plugin.getTrackerKeeper().getRescue().remove(id);
+                                break;
+                            default:
+                                // coords
+                                Location giveny = getCoordinateLocation(args, player, id);
+                                if (giveny != null) {
+                                    // check location
+                                    int count = this.checkLocation(giveny, player, id, tt);
+                                    if (count > 0) {
+                                        TARDISMessage.send(player, "NOT_SAFE");
+                                        return true;
+                                    } else {
+                                        set.put("world", giveny.getWorld().getName());
+                                        set.put("x", giveny.getBlockX());
+                                        set.put("y", giveny.getBlockY());
+                                        set.put("z", giveny.getBlockZ());
+                                        set.put("submarine", 0);
+                                        qf.doUpdate("next", set, tid);
+                                        TARDISMessage.send(player, "LOC_SAVED", true);
+                                        plugin.getTrackerKeeper().getHasDestination().put(id, travel);
+                                        if (plugin.getTrackerKeeper().getRescue().containsKey(id)) {
+                                            plugin.getTrackerKeeper().getRescue().remove(id);
+                                        }
+                                        return true;
+                                    }
                                 }
-                                return true;
-                            }
+                                break;
                         }
                     } else {
                         TARDISMessage.send(player, "TRAVEL_NO_PERM_COORDS");
