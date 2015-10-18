@@ -197,7 +197,7 @@ public class TARDISCaveFinder {
             // move 20 blocks north
             spawn.setZ(spawn.getBlockZ() - 20);
             int ny = w.getHighestBlockYAt(spawn);
-            spawn.setX(spawn.getBlockZ() + 20);
+            spawn.setX(spawn.getBlockX() + 20);
             int ey = w.getHighestBlockYAt(spawn);
             spawn.setZ(spawn.getBlockZ() + 20);
             int sy = w.getHighestBlockYAt(spawn);
