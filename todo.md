@@ -1,7 +1,7 @@
 #TODO
 
 ##Current version `3.4.2`
-1. Fix stuff!
+1. Fix biome not being set properly when Police Box materialises
 
 ##Upcoming version `3.5`
 * TARDISSonicBlaster addon?
