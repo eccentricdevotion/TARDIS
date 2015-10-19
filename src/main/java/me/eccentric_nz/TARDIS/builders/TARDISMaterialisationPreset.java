@@ -182,40 +182,7 @@ public class TARDISMaterialisationPreset implements Runnable {
                 // first run - remember blocks
                 if (i == 1) {
                     // if configured and it's a Whovian preset set biome
-                    if (plugin.getConfig().getBoolean("police_box.set_biome") && (preset.equals(PRESET.NEW) || preset.equals(PRESET.OLD) || preset.equals(PRESET.PANDORICA))) {
-                        List<Chunk> chunks = new ArrayList<Chunk>();
-                        Chunk chunk = tmd.getLocation().getChunk();
-                        chunks.add(chunk);
-                        // load the chunk
-                        if (!world.loadChunk(tmd.getLocation().getBlockX(), tmd.getLocation().getBlockZ(), false)) {
-                            world.loadChunk(tmd.getLocation().getBlockX(), tmd.getLocation().getBlockZ(), true);
-                        }
-                        while (!chunk.isLoaded()) {
-                            world.loadChunk(chunk);
-                        }
-                        // set the biome
-                        for (int c = -1; c < 2; c++) {
-                            for (int r = -1; r < 2; r++) {
-                                world.setBiome(x + c, z + r, Biome.DEEP_OCEAN);
-                                if (TARDISConstants.NO_RAIN.contains(tmd.getBiome())) {
-                                    // add an invisible roof
-                                    if (loops == 3) {
-                                        TARDISBlockSetters.setBlock(world, x + c, 255, z + r, Material.BARRIER, (byte) 0);
-                                    } else {
-                                        plugin.getBlockUtils().setBlockAndRemember(world, x + c, 255, z + r, Material.BARRIER, (byte) 0, tmd.getTardisID());
-                                    }
-                                }
-                                Chunk tmp_chunk = world.getChunkAt(new Location(world, x + c, 64, z + r));
-                                if (!chunks.contains(tmp_chunk)) {
-                                    chunks.add(tmp_chunk);
-                                }
-                            }
-                        }
-                        // refresh the chunks
-                        for (Chunk c : chunks) {
-                            world.refreshChunk(c.getX(), c.getZ());
-                        }
-                    }
+                    setBiome(world, x, z);
                     HashMap<String, Object> where = new HashMap<String, Object>();
                     where.put("tardis_id", tmd.getTardisID());
                     if (tmd.isOutside()) {
@@ -663,7 +630,9 @@ public class TARDISMaterialisationPreset implements Runnable {
                     }
                 }
             } else {
-                // set sheild if submarine
+                // just in case
+                setBiome(world, x, z);
+                // remove trackers
                 plugin.getTrackerKeeper().getMaterialising().remove(Integer.valueOf(tmd.getTardisID()));
                 plugin.getTrackerKeeper().getInVortex().remove(Integer.valueOf(tmd.getTardisID()));
                 plugin.getServer().getScheduler().cancelTask(task);
@@ -693,6 +662,43 @@ public class TARDISMaterialisationPreset implements Runnable {
                     }
                 }
             }
+        }
+    }
+
+    public void setBiome(World world, int x, int z) {
+        if (plugin.getConfig().getBoolean("police_box.set_biome") && (preset.equals(PRESET.NEW) || preset.equals(PRESET.OLD) || preset.equals(PRESET.PANDORICA))) {
+            List<Chunk> chunks = new ArrayList<Chunk>();
+            Chunk chunk = tmd.getLocation().getChunk();
+            chunks.add(chunk);
+            // load the chunk
+            if (!world.loadChunk(tmd.getLocation().getBlockX(), tmd.getLocation().getBlockZ(), false)) {
+                world.loadChunk(tmd.getLocation().getBlockX(), tmd.getLocation().getBlockZ(), true);
+            }
+            while (!chunk.isLoaded()) {
+                world.loadChunk(chunk);
+            }
+            // set the biome
+            for (int c = -1; c < 2; c++) {
+                for (int r = -1; r < 2; r++) {
+                    world.setBiome(x + c, z + r, Biome.DEEP_OCEAN);
+                    if (TARDISConstants.NO_RAIN.contains(tmd.getBiome())) {
+                        // add an invisible roof
+                        if (loops == 3) {
+                            TARDISBlockSetters.setBlock(world, x + c, 255, z + r, Material.BARRIER, (byte) 0);
+                        } else {
+                            plugin.getBlockUtils().setBlockAndRemember(world, x + c, 255, z + r, Material.BARRIER, (byte) 0, tmd.getTardisID());
+                        }
+                    }
+//                    Chunk tmp_chunk = world.getChunkAt(new Location(world, x + c, 64, z + r));
+//                    if (!chunks.contains(tmp_chunk)) {
+//                        chunks.add(tmp_chunk);
+//                    }
+                }
+            }
+//            // refresh the chunks
+//            for (Chunk c : chunks) {
+//                world.refreshChunk(c.getX(), c.getZ());
+//            }
         }
     }
 

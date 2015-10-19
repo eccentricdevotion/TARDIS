@@ -144,16 +144,16 @@ public class TARDISInstaPreset {
                         // add an invisible roof
                         plugin.getBlockUtils().setBlockAndRemember(world, x + c, 255, z + r, Material.BARRIER, (byte) 0, tmd.getTardisID());
                     }
-                    Chunk tmp_chunk = world.getChunkAt(new Location(world, x + c, 64, z + r));
-                    if (!chunks.contains(tmp_chunk)) {
-                        chunks.add(tmp_chunk);
-                    }
+//                    Chunk tmp_chunk = world.getChunkAt(new Location(world, x + c, 64, z + r));
+//                    if (!chunks.contains(tmp_chunk)) {
+//                        chunks.add(tmp_chunk);
+//                    }
                 }
             }
-            // refresh the chunks
-            for (Chunk c : chunks) {
-                world.refreshChunk(c.getX(), c.getZ());
-            }
+//            // refresh the chunks
+//            for (Chunk c : chunks) {
+//                world.refreshChunk(c.getX(), c.getZ());
+//            }
         }
         // rescue player?
         if (plugin.getTrackerKeeper().getRescue().containsKey(tmd.getTardisID())) {
