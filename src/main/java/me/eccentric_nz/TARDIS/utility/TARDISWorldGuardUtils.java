@@ -138,7 +138,7 @@ public class TARDISWorldGuardUtils {
         flags.put(DefaultFlag.LAVA_FIRE, State.DENY);
         flags.put(DefaultFlag.LAVA_FLOW, State.DENY);
         flags.put(DefaultFlag.LIGHTER, State.DENY);
-//        flags.put(DefaultFlag.CHEST_ACCESS, State.ALLOW);
+        flags.put(DefaultFlag.USE, State.ALLOW);
         region.setFlags(flags);
         rm.addRegion(region);
         try {
@@ -176,7 +176,7 @@ public class TARDISWorldGuardUtils {
         flags.put(DefaultFlag.LAVA_FIRE, State.DENY);
         flags.put(DefaultFlag.LAVA_FLOW, State.DENY);
         flags.put(DefaultFlag.LIGHTER, State.DENY);
-//        flags.put(DefaultFlag.CHEST_ACCESS, State.ALLOW);
+        flags.put(DefaultFlag.USE, State.ALLOW);
         region.setFlags(flags);
         rm.addRegion(region);
         if (!p.equals("junk")) {
