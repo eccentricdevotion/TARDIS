@@ -71,7 +71,7 @@ public class TARDISFastReturnButton {
                     if (plugin.getTrackerKeeper().getRescue().containsKey(id)) {
                         plugin.getTrackerKeeper().getRescue().remove(id);
                     }
-                    TARDISMessage.send(player, "PREV_SET", true);
+                    TARDISMessage.send(player, "PREV_SET", rsb.getWorld().getName() + ":" + rsb.getX() + ":" + rsb.getY() + ":" + rsb.getZ(), true);
                 } else {
                     TARDISMessage.send(player, "TRAVEL_NO_BACK");
                 }

@@ -206,7 +206,7 @@ public class TARDISTravelCommands implements CommandExecutor {
                                 set.put("z", rsb.getZ());
                                 set.put("direction", rsb.getDirection().toString());
                                 set.put("submarine", (rsb.isSubmarine()) ? 1 : 0);
-                                which = "Fast Return";
+                                which = "Fast Return to " + ChatColor.GREEN + "(" + rsb.getWorld().getName() + ":" + rsb.getX() + ":" + rsb.getY() + ":" + rsb.getZ() + ")" + ChatColor.RESET;
                             } else if (args[0].equalsIgnoreCase("cave")) {
                                 if (!player.hasPermission("tardis.timetravel.cave")) {
                                     TARDISMessage.send(player, "TRAVEL_NO_PERM_CAVE");
