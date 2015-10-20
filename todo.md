@@ -1,7 +1,8 @@
 #TODO
 
 ##Current version `3.4.2`
-1. Fix biome not being set properly when Police Box materialises
+1. Fix stuff!
+2. Artron cost displayed when destination set
 
 ##Upcoming version `3.5`
 * TARDISSonicBlaster addon?

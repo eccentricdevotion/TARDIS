@@ -87,6 +87,9 @@ public class TARDISArtronIndicator {
                 if (used > 0) {
                     Score amount_used = objective.getScore(ChatColor.RED + plugin.getLanguage().getString("ARTRON_USED") + ":");
                     amount_used.setScore(used);
+                } else if (plugin.getTrackerKeeper().getHasDestination().containsKey(id)) {
+                    Score amount_used = objective.getScore(ChatColor.RED + plugin.getLanguage().getString("ARTRON_COST") + ":");
+                    amount_used.setScore(plugin.getTrackerKeeper().getHasDestination().get(id));
                 }
                 current.setScore(current_level);
                 percentage.setScore(percent);
@@ -97,12 +100,10 @@ public class TARDISArtronIndicator {
                         p.setScoreboard(currentScoreboard);
                     }
                 }, 150L);
+            } else if (used > 0) {
+                TARDISMessage.send(p, "ENERGY_USED", String.format("%d", used));
             } else {
-                if (used > 0) {
-                    TARDISMessage.send(p, "ENERGY_USED", String.format("%d", used));
-                } else {
-                    TARDISMessage.send(p, "ENERGY_LEVEL", String.format("%d", percent));
-                }
+                TARDISMessage.send(p, "ENERGY_LEVEL", String.format("%d", percent));
             }
         }
     }
