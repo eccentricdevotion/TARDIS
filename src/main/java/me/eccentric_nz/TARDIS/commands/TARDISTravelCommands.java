@@ -75,6 +75,7 @@ public class TARDISTravelCommands implements CommandExecutor {
     private final TARDIS plugin;
     private final List<String> BIOME_SUBS = new ArrayList<String>();
     private final List<String> mustUseAdvanced = Arrays.asList("area", "biome", "dest");
+    private final List<String> costs = Arrays.asList("random", "random_circuit", "travel", "comehere", "hide", "rebuild", "autonomous", "backdoor");
 
     public TARDISTravelCommands(TARDIS plugin) {
         this.plugin = plugin;
@@ -178,6 +179,14 @@ public class TARDISTravelCommands implements CommandExecutor {
                                 TARDISMessage.send(player, "TRAVEL_CANCEL");
                             } else {
                                 TARDISMessage.send(player, "TRAVEL_NEED_DEST");
+                            }
+                            return true;
+                        }
+                        if (args[0].equalsIgnoreCase("costs")) {
+                            TARDISMessage.send(player, "TRAVEL_COSTS");
+                            for (String s : costs) {
+                                String c = (s.equals("rebuild")) ? plugin.getArtronConfig().getString("random") : plugin.getArtronConfig().getString(s);
+                                TARDISMessage.message(player, "    " + s + ": " + ChatColor.AQUA + c);
                             }
                             return true;
                         }
