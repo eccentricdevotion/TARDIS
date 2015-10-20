@@ -138,6 +138,11 @@ public class TARDISSaveSignInventory {
         ItemMeta rearrange = tool.getItemMeta();
         rearrange.setDisplayName("Rearrange saves");
         tool.setItemMeta(rearrange);
+        // add button to allow deleting saves
+        ItemStack bucket = new ItemStack(Material.BUCKET, 1);
+        ItemMeta delete = bucket.getItemMeta();
+        delete.setDisplayName("Delete save");
+        bucket.setItemMeta(delete);
         for (int m = 45; m < 54; m++) {
             switch (m) {
                 case 45:
@@ -145,6 +150,9 @@ public class TARDISSaveSignInventory {
                     break;
                 case 49:
                     stack[m] = map;
+                    break;
+                case 53:
+                    stack[m] = bucket;
                     break;
                 default:
                     stack[m] = null;

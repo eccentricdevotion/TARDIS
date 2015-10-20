@@ -77,12 +77,28 @@ public class TARDISSaveSignListener extends TARDISMenuListener implements Listen
                 int id = rst.getTardis_id();
                 int slot = event.getRawSlot();
                 if (plugin.getTrackerKeeper().getArrangers().contains(uuid)) {
-                    if (slot >= 1 && slot < 45) {
+                    if ((slot >= 1 && slot < 45) || slot == 53) {
                         if (event.getClick().equals(ClickType.SHIFT_LEFT) || event.getClick().equals(ClickType.SHIFT_RIGHT)) {
                             event.setCancelled(true);
                             return;
                         }
                         // allow
+                        if (slot == 53) {
+                            // get item on cursor
+                            ItemStack cursor = player.getItemOnCursor();
+                            if (cursor == null) {
+                                event.setCancelled(true);
+                            } else {
+                                ItemMeta cim = cursor.getItemMeta();
+                                String save = cim.getDisplayName();
+                                HashMap<String, Object> where = new HashMap<String, Object>();
+                                where.put("tardis_id", id);
+                                where.put("dest_name", save);
+                                new QueryFactory(plugin).doDelete("destinations", where);
+                                player.setItemOnCursor(null);
+                            }
+                            event.setCancelled(true);
+                        }
                     } else {
                         event.setCancelled(true);
                     }
