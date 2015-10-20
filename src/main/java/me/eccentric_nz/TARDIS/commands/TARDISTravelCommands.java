@@ -172,6 +172,15 @@ public class TARDISTravelCommands implements CommandExecutor {
                     return true;
                 } else {
                     if (args.length == 1) {
+                        if (args[0].equalsIgnoreCase("cancel")) {
+                            if (plugin.getTrackerKeeper().getHasDestination().containsKey(id)) {
+                                plugin.getTrackerKeeper().getHasDestination().remove(id);
+                                TARDISMessage.send(player, "TRAVEL_CANCEL");
+                            } else {
+                                TARDISMessage.send(player, "TRAVEL_NEED_DEST");
+                            }
+                            return true;
+                        }
                         // we're thinking this is a player's name or home / back / cave
                         if (args[0].equalsIgnoreCase("home") || args[0].equalsIgnoreCase("back") || args[0].equalsIgnoreCase("cave") || args[0].equalsIgnoreCase("village")) {
                             String which;

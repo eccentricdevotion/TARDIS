@@ -2,7 +2,7 @@
 
 ##Current version `3.4.2`
 1. Fix stuff!
-2. Artron cost displayed when destination set
+2. Throw malfunction if no destination found or player is denied travel (configurable)
 
 ##Upcoming version `3.5`
 * TARDISSonicBlaster addon?
