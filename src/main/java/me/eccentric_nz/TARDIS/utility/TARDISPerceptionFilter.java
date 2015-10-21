@@ -17,6 +17,8 @@
 package me.eccentric_nz.TARDIS.utility;
 
 import me.eccentric_nz.TARDIS.TARDIS;
+import org.bukkit.Bukkit;
+import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
@@ -49,6 +51,17 @@ public class TARDISPerceptionFilter {
             for (Player olp : plugin.getServer().getOnlinePlayers()) {
                 perceptionFilter.addPlayer(olp);
             }
+        }
+    }
+
+    public static void removePerceptionFilter() {
+        Scoreboard board = Bukkit.getServer().getScoreboardManager().getMainScoreboard();
+        Team perceptionFilter = board.getTeam("PerceptionFilter");
+        if (perceptionFilter != null) {
+            for (OfflinePlayer olp : Bukkit.getServer().getOfflinePlayers()) {
+                perceptionFilter.removePlayer(olp);
+            }
+            perceptionFilter.unregister();
         }
     }
 

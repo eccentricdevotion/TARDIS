@@ -423,6 +423,7 @@ public class TARDIS extends JavaPlugin {
     @Override
     public void onDisable() {
         if (hasVersion) {
+            TARDISPerceptionFilter.removePerceptionFilter();
             if (getConfig().getBoolean("preferences.walk_in_tardis")) {
                 new TARDISPortalPersister(this).save();
             }
