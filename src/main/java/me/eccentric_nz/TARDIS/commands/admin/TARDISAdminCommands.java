@@ -127,6 +127,7 @@ public class TARDISAdminCommands implements CommandExecutor {
         firstsBool.put("open_door_policy", "preferences");
         firstsBool.put("particles", "artron_furnace");
         firstsBool.put("per_world_perms", "travel");
+        firstsBool.put("perception_filter", "allow");
         firstsBool.put("power_down", "allow");
         firstsBool.put("power_down_on_quit", "allow");
         firstsBool.put("redefine", "travel.terminal");
