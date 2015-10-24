@@ -3,6 +3,8 @@
 ##Current version `3.4.2`
 1. Fix stuff!
 2. Throw malfunction if no destination found or player is denied travel (configurable)
+3. `/tprefs policebox_textures [on|off]`
+
 
 ##Upcoming version `3.5`
 * TARDISSonicBlaster addon?

@@ -54,7 +54,8 @@ public class TARDISCaveFinder {
             int startz = rsc.getZ();
             COMPASS d = rsc.getDirection();
             // Assume all non-nether/non-end world environments are NORMAL
-            if (!w.getEnvironment().equals(World.Environment.NETHER) && !w.getEnvironment().equals(World.Environment.THE_END)) {
+            plugin.debug("generator: " + w.getGenerator().getClass().getName());
+            if (!w.getEnvironment().equals(World.Environment.NETHER) && !w.getEnvironment().equals(World.Environment.THE_END) && !w.getGenerator().getClass().getName().contains("hothgenerator")) {
                 if (!w.getWorldType().equals(WorldType.FLAT) && worldCheck(w)) {
                     int limitx = 2000;
                     int limitz = 2000;
@@ -112,7 +113,8 @@ public class TARDISCaveFinder {
                     }
                 }
             } else {
-                TARDISMessage.send(p, "CAVE_NO_TRAVEL", w.getEnvironment().toString());
+                String env = (w.getGenerator().getClass().getName().contains("hothgenerator")) ? "Hoth World System" : w.getEnvironment().toString();
+                TARDISMessage.send(p, "CAVE_NO_TRAVEL", env);
             }
         } else {
             TARDISMessage.send(p, "CURRENT_NOT_FOUND");
@@ -127,7 +129,7 @@ public class TARDISCaveFinder {
             if (w.getBlockAt(x, y, z).getType().equals(Material.AIR)) {
                 int yy = getLowestAirBlock(w, x, y, z);
                 // check there is enough height for the police box
-                if (yy <= y - 3 && w.getBlockAt(x - 1, yy - 1, z - 1).getType().equals(Material.STONE)) {
+                if (yy <= y - 3 && !w.getBlockAt(x - 1, yy - 1, z - 1).getType().equals(Material.STONE)) {
                     // check there is room for the police box
                     if (w.getBlockAt(x - 1, yy, z - 1).getType().equals(Material.AIR)
                             && w.getBlockAt(x - 1, yy, z).getType().equals(Material.AIR)
@@ -195,11 +197,11 @@ public class TARDISCaveFinder {
             return false;
         } else {
             // move 20 blocks north
-            spawn.setZ(spawn.getBlockZ() - 20);
+            spawn.setZ(spawn.getBlockZ() - 100);
             int ny = w.getHighestBlockYAt(spawn);
-            spawn.setX(spawn.getBlockX() + 20);
+            spawn.setX(spawn.getBlockX() + 100);
             int ey = w.getHighestBlockYAt(spawn);
-            spawn.setZ(spawn.getBlockZ() + 20);
+            spawn.setZ(spawn.getBlockZ() + 100);
             int sy = w.getHighestBlockYAt(spawn);
             return (y != ny || y != ey || y != sy);
         }
