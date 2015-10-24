@@ -54,8 +54,8 @@ public class TARDISCaveFinder {
             int startz = rsc.getZ();
             COMPASS d = rsc.getDirection();
             // Assume all non-nether/non-end world environments are NORMAL
-            plugin.debug("generator: " + w.getGenerator().getClass().getName());
-            if (!w.getEnvironment().equals(World.Environment.NETHER) && !w.getEnvironment().equals(World.Environment.THE_END) && !w.getGenerator().getClass().getName().contains("hothgenerator")) {
+            boolean hoth = (w.getGenerator() != null && w.getGenerator().getClass().getName().contains("hothgenerator"));
+            if (!w.getEnvironment().equals(World.Environment.NETHER) && !w.getEnvironment().equals(World.Environment.THE_END) && !hoth) {
                 if (!w.getWorldType().equals(WorldType.FLAT) && worldCheck(w)) {
                     int limitx = 2000;
                     int limitz = 2000;
