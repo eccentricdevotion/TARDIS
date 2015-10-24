@@ -32,7 +32,7 @@
 	</header>
 	<section>
 		<h1>Police Box &amp; preset configuration options</h1>
-		<p>These are the travel configuration options.</p>
+		<p>These are the Police Box &amp; preset configuration options.</p>
 		<style type="text/css">
 			table, table code { font-size:85%; }
 			td { vertical-align:top; }
@@ -105,11 +105,11 @@
 			<tr class="coption">
 				<td class="noborder">&nbsp;&nbsp;&nbsp;&nbsp;<code>confirm_timeout</code></td>
 				<td class="noborder">integer</td>
-				<td class="noborder"><code>8</code></td>
+				<td class="noborder"><code>15</code></td>
 			</tr>
 			<tr>
 				<td>&nbsp;</td>
-				<td colspan="2">Sets the colour of the text on TARDIS exterior signs. Use any Bukkit colour name &mdash; a list can be found here: <a href="http://jd.bukkit.org/rb/apidocs/org/bukkit/ChatColor.html">ChatColor</a></td>
+				<td colspan="2">Sets the amount of time (in seconds) a player has to type <code>/tardis exterminate</code> after breaking the Police box sign.</td>
 			</tr>
 			<tr class="coption">
 				<td class="noborder">&nbsp;&nbsp;&nbsp;&nbsp;<code>sign_colour</code></td>
@@ -128,6 +128,15 @@
 			<tr>
 				<td>&nbsp;</td>
 				<td colspan="2">Sets the colour of the text on a TARDIS sign. Must be a valid ChatColor value, see <a href="http://jd.bukkit.org/rb/apidocs/org/bukkit/ChatColor.html" target="_blank">http://jd.bukkit.org/rb/apidocs/org/bukkit/ChatColor.html</a></td>
+			</tr>
+			<tr class="coption">
+				<td class="noborder">&nbsp;&nbsp;&nbsp;&nbsp;<code>default_preset</code></td>
+				<td class="noborder">string</td>
+				<td class="noborder"><code>NEW</code></td>
+			</tr>
+			<tr>
+				<td>&nbsp;</td>
+				<td colspan="2">Sets the default preset that appears when the TARDIS is first created</td>
 			</tr>
 		</table>
 		<p><a href="configuration.html">Back to main configuration page</a></p>
