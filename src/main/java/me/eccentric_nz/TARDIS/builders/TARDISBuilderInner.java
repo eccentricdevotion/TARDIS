@@ -267,7 +267,7 @@ public class TARDISBuilderInner {
                         }
                     }
                     if (type.equals(Material.MOB_SPAWNER)) { // scanner button
-                         /*
+                        /*
                          * mob spawner will be converted to the correct id by
                          * setBlock(), but remember it for the scanner.
                          */
@@ -575,7 +575,7 @@ public class TARDISBuilderInner {
                     cs.setLine(0, plugin.getSigns().getStringList("chameleon").get(0));
                     cs.setLine(1, plugin.getSigns().getStringList("chameleon").get(1));
                     cs.setLine(2, ChatColor.RED + plugin.getLanguage().getString("SET_OFF"));
-                    cs.setLine(3, "NEW");
+                    cs.setLine(3, plugin.getConfig().getString("police_box.default_preset").toUpperCase());
                     String chameleonloc = world.getName() + ":" + psb.getLocation().getBlockX() + ":" + psb.getLocation().getBlockY() + ":" + psb.getLocation().getBlockZ();
                     set.put("chameleon", chameleonloc);
                     set.put("chamele_on", 0);

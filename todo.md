@@ -14,7 +14,7 @@
    * `/tprefs junk [on|off]`
    * `/tprefs junk [wall|floor] [block_type]`
 * Telepathic circuit
-* ?
+* Companion GUI
 
 ##Future version `4+`
 * SpongeAPI
