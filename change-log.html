@@ -32,15 +32,44 @@
     <section>
         <h1>Change log</h1>
         <h2>What&rsquo;s been changed?</h2>
-        <h3>TARDIS v3.4.1</h3>
+        <h3>TARDIS v3.4.2</h3>
         <h4>Additions</h4>
         <ul>
-          <li>Added cave and village travel to the Keyboard</li>
+            <li>Added a config option <code>preferences.vortex_fall: [teleport|kill]</code> so that players that fall into the time vortex are not kicked for flying. This setting really only applies if the TARDIS WorldGuard region flag is set to <code>exit: deny</code>
+                <ul>
+                    <li><code>teleport</code> will send the players back into the TARDIS they were in</li>
+                    <li><code>kill</code> will set the players&rsquo; health to <code>0</code>, resulting in death</li>
+                </ul>
+            </li>
+            <li>Added a <code>/tardistravel cancel</code> command - cancels the last set destination</li>
+            <li>Added <code>/ttravel costs</code> command - shows the Artron Energy costs for TARDIS travel</li>
+        </ul>
+        <h4>Changes</h4>
+        <ul>
+            <li>If the <code>/tardistravel</code> command receives a world name and two coordinates, it now automatically determines the highest Y block</li>
+            <li>When switching to the <code>exit: deny</code> flag on TARDIS WorldGuard regions, the <code>use: allow</code> flag is also now added so that players can interact with doors, buttons and pressure plates etc.</li>
+            <li>The time travel cost is now shown in the Artron Energy HUD when a destination has been set</li>
+            <li>In the TARDIS Saved Locations GUI you can now remove saves by dragging them to the trash (a bucket)</li>
+            <li>When selecting the fast return location (<code>/tardistravel back</code>) the actual location is now shown in chat</li>
         </ul>
         <h4>Bug fixes</h4>
         <ul>
-          <li>The Vortex Junk TARDIS now properly uses the configured wall &amp; floor blocks</li>
-          <li>Fixed double selecting a Chameleon preset messing up the dematerialisation sequence (causing block drops)</li>
+            <li>Fixed a bug where players who were made companions inside the TARDIS could not move when the WorldGuard flag was set to <code>exit: deny</code></li>
+            <li>Fixed cave travel failing in some cases</li>
+            <li>Fixed cave travel locking up the server when trying to find a cave on a HothGenerator world</li>
+            <li>Fixed a bug where the <code>allow.perception_filter: [true|false]</code> config option was not added if missing</li>
+            <li>Fixed a bug where players could not turn completely invisible, even though <code>allow.perception_filter</code> was set to <code>false</code></li>
+            <li>Fixed crops popping off when growing a GREEHOUSE room and <code>growth.room_speed</code> is set to default (<code>4</code>)</li>
+        </ul>
+        <h3>TARDIS v3.4.1</h3>
+        <h4>Additions</h4>
+        <ul>
+            <li>Added cave and village travel to the Keyboard</li>
+        </ul>
+        <h4>Bug fixes</h4>
+        <ul>
+            <li>The Vortex Junk TARDIS now properly uses the configured wall &amp; floor blocks</li>
+            <li>Fixed double selecting a Chameleon preset messing up the dematerialisation sequence (causing block drops)</li>
         </ul>
         <h3>TARDIS v3.4</h3>
         <h4>Additions</h4>
