@@ -1,20 +1,20 @@
 #TODO
 
-##Current version `3.4.2`
+##Current version `3.5-beta-1`
 1. Fix stuff!
 2. Throw malfunction if no destination found or player is denied travel (configurable)
 3. `/tprefs policebox_textures [on|off]`
-
-
-##Upcoming version `3.5`
-* TARDISSonicBlaster addon?
-* TARDISDalekCities addon?
-* Hostile Action Dispersal System
-* TARDIS Junk Mode
+4. * Hostile Action Dispersal System
+5. TARDIS Junk Mode
    * `/tprefs junk [on|off]`
    * `/tprefs junk [wall|floor] [block_type]`
-* Telepathic circuit
-* Companion GUI
+6. Telepathic circuit
+7. Companion GUI
+8. TARDISDalekCities addon?
+
+##Upcoming version `3.6`
+* TARDISSonicBlaster addon?
+
 
 ##Future version `4+`
 * SpongeAPI
