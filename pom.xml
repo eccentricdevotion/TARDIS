@@ -35,7 +35,6 @@
             <id>macgeek</id>
             <url>http://tardisjenkins.duckdns.org:8888</url>
         </repository>
-        <!--
         <repository>
             <id>libsdisguises-repo</id>
             <url>http://server.psmc.ca/repo/</url>
@@ -44,10 +43,7 @@
             <id>onarandombox</id>
             <url>http://repo.onarandombox.com/content/groups/public</url>
         </repository>
-        <repository>
-            <id>bar-api-repo</id>
-            <url>http://ci.frostcast.net/plugin/repository/everything</url>
-        </repository>
+        <!--
         <repository>
             <id>mcstats.releases</id>
             <name>mcstats.org releases</name>
@@ -494,7 +490,7 @@
         <dependency>
             <groupId>me.ryanhamshire</groupId>
             <artifactId>GriefPrevention</artifactId>
-            <version>12.8</version>
+            <version>12.9.1</version>
         </dependency>
         <dependency>
             <groupId>com.comphenix.protocol</groupId>

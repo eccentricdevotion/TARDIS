@@ -60,7 +60,7 @@ public class TARDISInstaPreset {
 
     private final TARDIS plugin;
     private final TARDISMaterialisationData tmd;
-    private final int lamp;
+    private final Material lamp;
     private final int cham_id;
     private final byte cham_data;
     private final boolean rebuild;
@@ -77,7 +77,7 @@ public class TARDISInstaPreset {
     private final List<ProblemBlock> do_at_end = new ArrayList<ProblemBlock>();
     private final List<Integer> doors = Arrays.asList(64, 71, 193, 194, 195, 196, 197);
 
-    public TARDISInstaPreset(TARDIS plugin, TARDISMaterialisationData tmd, PRESET preset, int lamp, int cham_id, byte cham_data, boolean rebuild, boolean minecart, boolean ctm, boolean add_sign) {
+    public TARDISInstaPreset(TARDIS plugin, TARDISMaterialisationData tmd, PRESET preset, Material lamp, int cham_id, byte cham_data, boolean rebuild, boolean minecart, boolean ctm, boolean add_sign) {
         this.plugin = plugin;
         this.tmd = tmd;
         this.preset = preset;
@@ -290,13 +290,13 @@ public class TARDISInstaPreset {
                     case 50: // lamps, glowstone and torches
                     case 89:
                     case 124:
-                        int light;
+                        Material light;
                         byte ld;
                         if (tmd.isSubmarine() && colids[yy] == 50) {
-                            light = 89;
+                            light = Material.GLOWSTONE;
                             ld = 0;
                         } else {
-                            light = (preset.equals(PRESET.NEW) || preset.equals(PRESET.OLD)) ? lamp : colids[yy];
+                            light = (preset.equals(PRESET.NEW) || preset.equals(PRESET.OLD)) ? lamp : Material.getMaterial(colids[yy]);
                             ld = coldatas[yy];
                         }
                         if (colids[yy] == 50) {
@@ -335,7 +335,7 @@ public class TARDISInstaPreset {
                         if (doors.contains(colids[yy]) && coldatas[yy] > 8) {
                             plugin.getBlockUtils().setBlockAndRemember(world, xx, (y + yy), zz, colids[yy], tmd.getDirection().getUpperData(), tmd.getTardisID());
                         } else if (colids[yy] == 66) {
-                            do_at_end.add(new ProblemBlock(new Location(world, xx, (y + yy), zz), colids[yy], coldatas[yy]));
+                            do_at_end.add(new ProblemBlock(new Location(world, xx, (y + yy), zz), Material.getMaterial(colids[yy]), coldatas[yy]));
                         } else {
                             plugin.getBlockUtils().setBlockAndRemember(world, xx, (y + yy), zz, colids[yy], coldatas[yy], tmd.getTardisID());
                         }
@@ -441,7 +441,7 @@ public class TARDISInstaPreset {
                         }
                         break;
                     case 152:
-                        if (lamp != 123 && (preset.equals(PRESET.NEW) || preset.equals(PRESET.OLD))) {
+                        if (!lamp.equals(Material.REDSTONE_LAMP_OFF) && (preset.equals(PRESET.NEW) || preset.equals(PRESET.OLD))) {
                             plugin.getBlockUtils().setBlockAndRemember(world, xx, (y + yy), zz, cham_id, cham_data, tmd.getTardisID());
                         } else {
                             plugin.getBlockUtils().setBlockAndRemember(world, xx, (y + yy), zz, colids[yy], coldatas[yy], tmd.getTardisID());
@@ -450,7 +450,7 @@ public class TARDISInstaPreset {
                     default: // everything else
                         if (change) {
                             if (colids[yy] == 69 || colids[yy] == 77 || colids[yy] == 143) {
-                                do_at_end.add(new ProblemBlock(new Location(world, xx, (y + yy), zz), colids[yy], coldatas[yy]));
+                                do_at_end.add(new ProblemBlock(new Location(world, xx, (y + yy), zz), Material.getMaterial(colids[yy]), coldatas[yy]));
                             } else {
                                 plugin.getBlockUtils().setBlockAndRemember(world, xx, (y + yy), zz, colids[yy], coldatas[yy], tmd.getTardisID());
                             }
@@ -514,10 +514,10 @@ public class TARDISInstaPreset {
     private class ProblemBlock {
 
         Location l;
-        int id;
+        Material id;
         byte data;
 
-        public ProblemBlock(Location l, int id, byte data) {
+        public ProblemBlock(Location l, Material id, byte data) {
             this.l = l;
             this.id = id;
             this.data = data;
@@ -527,7 +527,7 @@ public class TARDISInstaPreset {
             return l;
         }
 
-        public int getId() {
+        public Material getId() {
             return id;
         }
 

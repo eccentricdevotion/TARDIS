@@ -79,7 +79,7 @@ public class TARDISPresetDestroyerFactory {
                     cham_id = b_data[0];
                     cham_data = (byte) b_data[1];
                 }
-                int lamp = plugin.getConfig().getInt("police_box.tardis_lamp");
+                Material lamp = Material.getMaterial(plugin.getConfig().getInt("police_box.tardis_lamp"));
                 HashMap<String, Object> wherepp = new HashMap<String, Object>();
                 String uuid = (demat.equals(PRESET.JUNK)) ? "00000000-aaaa-bbbb-cccc-000000000000" : pdd.getPlayer().getUniqueId().toString();
                 wherepp.put("uuid", uuid);

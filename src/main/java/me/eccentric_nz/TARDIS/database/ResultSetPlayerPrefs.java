@@ -25,6 +25,7 @@ import java.util.Map;
 import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.utility.TARDISNumberParsers;
+import org.bukkit.Material;
 
 /**
  * Many facts, figures, and formulas are contained within the Matrix,
@@ -49,7 +50,7 @@ public class ResultSetPlayerPrefs {
     private boolean hadsOn;
     private boolean submarineOn;
     private int artronLevel;
-    private int lamp;
+    private Material lamp;
     private String language;
     private String wall;
     private String floor;
@@ -135,11 +136,15 @@ public class ResultSetPlayerPrefs {
                 this.hadsOn = rs.getBoolean("hads_on");
                 this.submarineOn = rs.getBoolean("submarine_on");
                 this.artronLevel = rs.getInt("artron_level");
-                this.lamp = rs.getInt("lamp");
-                this.language = rs.getString("language");
-                if (rs.wasNull()) {
-                    this.lamp = plugin.getConfig().getInt("police_box.tardis_lamp");
+                try {
+                    this.lamp = Material.valueOf(rs.getString("lamp"));
+                } catch (IllegalArgumentException e) {
+                    this.lamp = Material.getMaterial(plugin.getConfig().getInt("police_box.tardis_lamp"));
                 }
+                if (rs.wasNull()) {
+                    this.lamp = Material.getMaterial(plugin.getConfig().getInt("police_box.tardis_lamp"));
+                }
+                this.language = rs.getString("language");
                 this.wall = rs.getString("wall");
                 this.floor = rs.getString("floor");
                 this.siegeWall = rs.getString("siege_wall");
@@ -269,7 +274,7 @@ public class ResultSetPlayerPrefs {
         return textureOut;
     }
 
-    public int getLamp() {
+    public Material getLamp() {
         return lamp;
     }
 

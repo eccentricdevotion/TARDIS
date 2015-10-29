@@ -64,7 +64,7 @@ public class TARDISMaterialisationPreset implements Runnable {
     private final PRESET preset;
     public int task;
     private int i;
-    private final int lamp;
+    private final Material lamp;
     private final boolean minecart;
     private final boolean ctm;
     private final boolean add_sign;
@@ -98,7 +98,7 @@ public class TARDISMaterialisationPreset implements Runnable {
      * @param add_sign whether to add the TARDIS name sign
      * @param loops the number of loops to run
      */
-    public TARDISMaterialisationPreset(TARDIS plugin, TARDISMaterialisationData tmd, PRESET preset, int lamp, int cham_id, byte cham_data, boolean minecart, boolean ctm, boolean add_sign, int loops) {
+    public TARDISMaterialisationPreset(TARDIS plugin, TARDISMaterialisationData tmd, PRESET preset, Material lamp, int cham_id, byte cham_data, boolean minecart, boolean ctm, boolean add_sign, int loops) {
         this.plugin = plugin;
         this.tmd = tmd;
         this.loops = loops;
@@ -295,13 +295,13 @@ public class TARDISMaterialisationPreset implements Runnable {
                                 case 50: // lamps, glowstone and torches
                                 case 89:
                                 case 124:
-                                    int light;
+                                    Material light;
                                     byte ld;
                                     if (tmd.isSubmarine() && colids[yy] == 50) {
-                                        light = 89;
+                                        light = Material.GLOWSTONE;
                                         ld = 0;
                                     } else {
-                                        light = (preset.equals(PRESET.NEW) || preset.equals(PRESET.OLD)) ? lamp : colids[yy];
+                                        light = (preset.equals(PRESET.NEW) || preset.equals(PRESET.OLD)) ? lamp : Material.getMaterial(colids[yy]);
                                         ld = coldatas[yy];
                                     }
                                     plugin.getBlockUtils().setBlockAndRemember(world, xx, (y + yy), zz, light, ld, tmd.getTardisID());
@@ -447,7 +447,7 @@ public class TARDISMaterialisationPreset implements Runnable {
                                     }
                                     break;
                                 case 152:
-                                    if (lamp != 123 && (preset.equals(PRESET.NEW) || preset.equals(PRESET.OLD))) {
+                                    if (!lamp.equals(Material.REDSTONE_LAMP_OFF) && (preset.equals(PRESET.NEW) || preset.equals(PRESET.OLD))) {
                                         plugin.getBlockUtils().setBlockAndRemember(world, xx, (y + yy), zz, cham_id, cham_data, tmd.getTardisID());
                                     } else {
                                         plugin.getBlockUtils().setBlockAndRemember(world, xx, (y + yy), zz, colids[yy], coldatas[yy], tmd.getTardisID());
@@ -550,13 +550,13 @@ public class TARDISMaterialisationPreset implements Runnable {
                                 case 50: // lamps, glowstone and torches
                                 case 89:
                                 case 124:
-                                    int light;
+                                    Material light;
                                     byte ld;
                                     if (tmd.isSubmarine() && colids[yy] == 50) {
-                                        light = 89;
+                                        light = Material.GLOWSTONE;
                                         ld = 0;
                                     } else {
-                                        light = (preset.equals(PRESET.NEW) || preset.equals(PRESET.OLD)) ? lamp : colids[yy];
+                                        light = (preset.equals(PRESET.NEW) || preset.equals(PRESET.OLD)) ? lamp : Material.getMaterial(colids[yy]);
                                         ld = coldatas[yy];
                                     }
                                     TARDISBlockSetters.setBlock(world, xx, (y + yy), zz, light, ld);
@@ -614,7 +614,7 @@ public class TARDISMaterialisationPreset implements Runnable {
                                     }
                                     break;
                                 case 152:
-                                    if (lamp != 123 && (preset.equals(PRESET.NEW) || preset.equals(PRESET.OLD))) {
+                                    if (!lamp.equals(Material.REDSTONE_LAMP_OFF) && (preset.equals(PRESET.NEW) || preset.equals(PRESET.OLD))) {
                                         TARDISBlockSetters.setBlock(world, xx, (y + yy), zz, cham_id, cham_data);
                                     } else {
                                         TARDISBlockSetters.setBlock(world, xx, (y + yy), zz, colids[yy], coldatas[yy]);

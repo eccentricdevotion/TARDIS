@@ -121,7 +121,7 @@ public class TARDISPresetBuilderFactory {
                 cham_data = (byte) b_data[1];
             }
             // get lamp and submarine preferences
-            int lamp = plugin.getConfig().getInt("police_box.tardis_lamp");
+            Material lamp = Material.getMaterial(plugin.getConfig().getInt("police_box.tardis_lamp"));
             boolean minecart = false;
             boolean ctm = false;
             boolean add_sign = true;

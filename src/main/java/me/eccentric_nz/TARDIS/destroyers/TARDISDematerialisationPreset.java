@@ -48,7 +48,7 @@ public class TARDISDematerialisationPreset implements Runnable {
     private final PRESET preset;
     public int task;
     private int i;
-    private final int lamp;
+    private final Material lamp;
     private final int cham_id;
     private final byte cham_data;
     private final TARDISChameleonColumn column;
@@ -69,7 +69,7 @@ public class TARDISDematerialisationPreset implements Runnable {
      * @param cham_data the chameleon block data for the police box
      * @param loops the number of loops to run
      */
-    public TARDISDematerialisationPreset(TARDIS plugin, TARDISMaterialisationData tmd, PRESET preset, int lamp, int cham_id, byte cham_data, int loops) {
+    public TARDISDematerialisationPreset(TARDIS plugin, TARDISMaterialisationData tmd, PRESET preset, Material lamp, int cham_id, byte cham_data, int loops) {
         this.plugin = plugin;
         this.tmd = tmd;
         this.loops = loops;
@@ -242,7 +242,7 @@ public class TARDISDematerialisationPreset implements Runnable {
                             case 50: // lamps, glowstone and torches
                             case 89:
                             case 124:
-                                int light = (preset.equals(PRESET.NEW) || preset.equals(PRESET.OLD)) ? lamp : colids[yy];
+                                Material light = (preset.equals(PRESET.NEW) || preset.equals(PRESET.OLD)) ? lamp : Material.getMaterial(colids[yy]);
                                 TARDISBlockSetters.setBlock(world, xx, (y + yy), zz, light, coldatas[yy]);
                                 break;
                             case 64:
