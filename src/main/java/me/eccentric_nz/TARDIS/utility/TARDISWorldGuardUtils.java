@@ -180,7 +180,7 @@ public class TARDISWorldGuardUtils {
         region.setFlags(flags);
         rm.addRegion(region);
         if (!p.equals("junk")) {
-            // deny exit to anyone but the owner - companions will be added as the player defines them
+            // deny exit to all
             // usage = "<id> <flag> [-w world] [-g group] [value]",
             plugin.getServer().dispatchCommand(plugin.getConsole(), "rg flag " + region_id + " exit -w " + w.getName() + " deny");
         }

@@ -20,10 +20,6 @@
             <url>https://hub.spigotmc.org/nexus/content/groups/public/</url>
         </repository>
         <repository>
-            <id>sk89q-repo</id>
-            <url>http://maven.sk89q.com/repo/</url>
-        </repository>
-        <repository>
             <id>md-5</id>
             <url>http://repo.md-5.net/content/groups/public</url>
         </repository>
@@ -44,6 +40,10 @@
             <url>http://repo.onarandombox.com/content/groups/public</url>
         </repository>
         <!--
+        <repository>
+            <id>sk89q-repo</id>
+            <url>http://maven.sk89q.com/repo/</url>
+        </repository>
         <repository>
             <id>mcstats.releases</id>
             <name>mcstats.org releases</name>
