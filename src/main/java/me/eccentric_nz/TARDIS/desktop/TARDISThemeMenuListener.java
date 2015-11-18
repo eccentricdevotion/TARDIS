@@ -75,7 +75,7 @@ public class TARDISThemeMenuListener extends TARDISMenuListener implements Liste
                             TARDISUpgradeData tud = plugin.getTrackerKeeper().getUpgrades().get(p.getUniqueId());
                             int upgrade = plugin.getArtronConfig().getInt("upgrades." + perm);
                             int needed = (tud.getPrevious().getPermission().equals(schm.getPermission())) ? upgrade / 2 : upgrade;
-                            if (tud.getLevel() > needed) {
+                            if (tud.getLevel() >= needed) {
                                 tud.setSchematic(schm);
                                 plugin.getTrackerKeeper().getUpgrades().put(p.getUniqueId(), tud);
                                 // open the wall block GUI
