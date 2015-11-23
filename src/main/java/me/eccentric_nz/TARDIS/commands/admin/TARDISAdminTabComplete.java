@@ -23,6 +23,7 @@ import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.commands.TARDISCompleter;
 import me.eccentric_nz.TARDIS.enumeration.PRESET;
 import me.eccentric_nz.TARDIS.utility.TARDISWorldGuardFlag;
+import org.bukkit.World;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabCompleter;
@@ -49,6 +50,7 @@ public class TARDISAdminTabComplete extends TARDISCompleter implements TabComple
     private final ImmutableList<String> TIPS_SUBS = ImmutableList.of("400", "800", "1200", "1600");
     private final ImmutableList<String> TOWNY_SUBS = ImmutableList.of("none", "wilderness", "town", "nation");
     private final ImmutableList<String> VORTEX_SUBS = ImmutableList.of("kill", "teleport");
+    private final ImmutableList<String> WORLD_SUBS;
 
     public TARDISAdminTabComplete(TARDIS plugin) {
         this.plugin = plugin;
@@ -63,6 +65,11 @@ public class TARDISAdminTabComplete extends TARDISCompleter implements TabComple
         }
         this.PRESETS = ImmutableList.copyOf(tmpPresets);
         this.ROOT_SUBS = ImmutableList.copyOf(combineLists());
+        List<String> worlds = new ArrayList<String>();
+        for (World w : plugin.getServer().getWorlds()) {
+            worlds.add(w.getName());
+        }
+        WORLD_SUBS = ImmutableList.copyOf(worlds);
     }
 
     @Override
@@ -72,6 +79,9 @@ public class TARDISAdminTabComplete extends TARDISCompleter implements TabComple
             return partial(args[0], ROOT_SUBS);
         } else if (args.length == 2) {
             String sub = args[0];
+            if (sub.equals("include") || sub.equals("exclude")) {
+                return partial(lastArg, WORLD_SUBS);
+            }
             if (sub.equals("config")) {
                 return partial(lastArg, CONFIG_SUBS);
             }
