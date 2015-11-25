@@ -50,41 +50,41 @@ public final class TARDISZeroRoomPacketListener implements Listener {
         ProtocolManager manager = ProtocolLibrary.getProtocolManager();
         manager.addPacketListener(
                 new PacketAdapter(instance, ListenerPriority.NORMAL, Arrays.asList(PacketType.Play.Server.CHAT), ListenerOptions.ASYNC) {
-                    @Override
-                    @SuppressWarnings("unchecked")
-                    public void onPacketSending(PacketEvent event) {
-                        boolean send = false;
-                        WrappedChatComponent chat = event.getPacket().getChatComponents().read(0);
-                        String json = chat.getJson();
-                        if (!json.isEmpty() && !json.equals("\"\"")) {
-                            try {
-                                JSONObject data = new JSONObject(json);
-                                if (data.has("extra")) {
-                                    JSONArray extra = data.getJSONArray("extra");
-                                    for (int i = 0; i < extra.length(); i++) {
-                                        if (extra.get(i) instanceof String) {
-                                            return;
-                                        }
-                                        JSONObject tmp = (JSONObject) extra.get(i);
-                                        if (tmp.has("text")) {
-                                            String text = (String) tmp.get("text");
-                                            if (text.toLowerCase().contains("broadcast")) {
-                                                send = true;
-                                                break;
-                                            }
-                                        }
-                                    }
-                                    if (send == false && instance.getTrackerKeeper().getZeroRoomOccupants().contains(event.getPlayer().getUniqueId())) {
-                                        event.setCancelled(true);
+            @Override
+            @SuppressWarnings("unchecked")
+            public void onPacketSending(PacketEvent event) {
+                boolean send = false;
+                WrappedChatComponent chat = event.getPacket().getChatComponents().read(0);
+                String json = chat.getJson();
+                if (json != null && !json.isEmpty() && !json.equals("\"\"")) {
+                    try {
+                        JSONObject data = new JSONObject(json);
+                        if (data.has("extra")) {
+                            JSONArray extra = data.getJSONArray("extra");
+                            for (int i = 0; i < extra.length(); i++) {
+                                if (extra.get(i) instanceof String) {
+                                    return;
+                                }
+                                JSONObject tmp = (JSONObject) extra.get(i);
+                                if (tmp.has("text")) {
+                                    String text = (String) tmp.get("text");
+                                    if (text.toLowerCase().contains("broadcast")) {
+                                        send = true;
+                                        break;
                                     }
                                 }
-                            } catch (JSONException e) {
-                                instance.debug("Invalid JSON in packet!");
-                                instance.debug(json);
+                            }
+                            if (send == false && instance.getTrackerKeeper().getZeroRoomOccupants().contains(event.getPlayer().getUniqueId())) {
+                                event.setCancelled(true);
                             }
                         }
+                    } catch (JSONException e) {
+                        instance.debug("Invalid JSON in packet!");
+                        instance.debug(json);
                     }
                 }
+            }
+        }
         );
     }
 }
