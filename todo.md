@@ -11,6 +11,7 @@
 6. Telepathic circuit
 7. Companion GUI
 8. TARDISDalekCities addon?
+9. Make sql statements asynchronous.
 
 ##Upcoming version `3.6`
 * TARDISSonicBlaster addon?
