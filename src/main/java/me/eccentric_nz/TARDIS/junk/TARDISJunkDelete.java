@@ -53,10 +53,6 @@ public class TARDISJunkDelete {
         if (rs.resultSet()) {
             final int id = rs.getTardis_id();
             final SCHEMATIC junk = new SCHEMATIC("AIR", "junk", "Junk TARDIS", true, false, false, false, false);
-            String chunkLoc = rs.getChunk();
-            String[] cdata = chunkLoc.split(":");
-            final String name = cdata[0];
-            final World cw = plugin.getServer().getWorld(name);
             // get the current location
             Location bb_loc = null;
             Biome biome = null;
@@ -84,6 +80,7 @@ public class TARDISJunkDelete {
             pdd.setBiome(biome);
             plugin.getPresetDestroyer().destroyPreset(pdd);
             // destroy the vortex TARDIS
+            final World cw = bb_loc.getWorld();
             // give the TARDIS time to remove itself as it's not hidden
             plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
                 @Override
