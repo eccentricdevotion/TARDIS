@@ -32,14 +32,14 @@
             <url>http://tardisjenkins.duckdns.org:8888</url>
         </repository>
         <repository>
-            <id>libsdisguises-repo</id>
-            <url>http://server.psmc.ca/repo/</url>
-        </repository>
-        <repository>
             <id>onarandombox</id>
             <url>http://repo.onarandombox.com/content/groups/public</url>
         </repository>
         <!--
+        <repository>
+            <id>libsdisguises-repo</id>
+            <url>http://server.psmc.ca/repo/</url>
+        </repository>
         <repository>
             <id>sk89q-repo</id>
             <url>http://maven.sk89q.com/repo/</url>
