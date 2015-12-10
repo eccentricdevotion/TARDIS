@@ -51,6 +51,7 @@ public class TARDISEffectLibHelper {
     public static void sendVortexParticles(Location l) {
         VortexEffect vortexEffect = new VortexEffect(effectManager);
         vortexEffect.particle = ParticleEffect.SPELL;
+        vortexEffect.autoOrient = true;
         vortexEffect.radius = 3;
         vortexEffect.circles = 20;
         vortexEffect.helixes = 10;

@@ -551,7 +551,7 @@
         <dependency>
             <groupId>de.slikey</groupId>
             <artifactId>EffectLib</artifactId>
-            <version>3.5</version>
+            <version>3.8</version>
         </dependency>
     </dependencies>
 </project>
