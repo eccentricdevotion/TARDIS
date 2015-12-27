@@ -80,7 +80,7 @@ public class TARDISSQLiteDatabaseUpdater {
         prefsupdates.add("flying_mode INTEGER DEFAULT 1");
         prefsupdates.add("hads_on INTEGER DEFAULT 1");
         prefsupdates.add("key TEXT DEFAULT ''");
-        prefsupdates.add("lamp INTEGER");
+        prefsupdates.add("lamp TEXT DEFAULT ''");
         prefsupdates.add("language TEXT DEFAULT 'AUTO_DETECT'");
         prefsupdates.add("lanterns_on INTEGER DEFAULT 0");
         prefsupdates.add("minecart_on INTEGER DEFAULT 0");
