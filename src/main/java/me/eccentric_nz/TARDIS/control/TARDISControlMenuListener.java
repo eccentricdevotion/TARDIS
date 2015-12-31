@@ -207,6 +207,10 @@ public class TARDISControlMenuListener extends TARDISMenuListener implements Lis
                                     break;
                                 case 10:
                                     // desktop theme
+                                    if (!player.hasPermission("tardis.upgrade")) {
+                                        TARDISMessage.send(player, "NO_PERM_UPGRADE");
+                                        return;
+                                    }
                                     new TARDISThemeButton(plugin, player, rs.getSchematic(), level, id).clickButton();
                                     break;
                                 case 12:
