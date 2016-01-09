@@ -597,7 +597,7 @@ commands:
   tardisbook:
     aliases: tbook
     description: Get and read TARDIS books and start TARDIS achievements.
-    usage: /<command> [list|get|start] [book name]
+    usage: /<command> [list|book name] [get|start]
     permission: tardis.book
     permission-message: You don't have the permission <permission> to use this command
   tardistexture:
