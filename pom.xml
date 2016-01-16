@@ -35,11 +35,11 @@
             <id>onarandombox</id>
             <url>http://repo.onarandombox.com/content/groups/public</url>
         </repository>
-        <!--
         <repository>
             <id>libsdisguises-repo</id>
             <url>http://server.psmc.ca/repo/</url>
         </repository>
+        <!--
         <repository>
             <id>sk89q-repo</id>
             <url>http://maven.sk89q.com/repo/</url>
@@ -514,7 +514,7 @@
         <dependency>
             <groupId>LibsDisguises</groupId>
             <artifactId>LibsDisguises</artifactId>
-            <version>8.6.5-SNAPSHOT</version>
+            <version>8.6.7-SNAPSHOT</version>
             <exclusions>
                 <exclusion>
                     <artifactId>craftbukkit</artifactId>
