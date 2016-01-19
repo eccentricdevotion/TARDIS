@@ -80,16 +80,18 @@ public class TARDISJunkDelete {
             pdd.setBiome(biome);
             plugin.getPresetDestroyer().destroyPreset(pdd);
             // destroy the vortex TARDIS
-            final World cw = bb_loc.getWorld();
+            final World cw = plugin.getServer().getWorld(plugin.getConfig().getString("creation.default_world_name"));
             // give the TARDIS time to remove itself as it's not hidden
-            plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
-                @Override
-                public void run() {
-                    plugin.getInteriorDestroyer().destroyInner(junk, id, cw, 0, "junk", -999);
-                    TARDISDeleteCommand.cleanDatabase(id);
-                    TARDISMessage.send(sender, "JUNK_DELETED");
-                }
-            }, 20L);
+            if (cw != null) {
+                plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
+                    @Override
+                    public void run() {
+                        plugin.getInteriorDestroyer().destroyInner(junk, id, cw, 0, "junk", -999);
+                        TARDISDeleteCommand.cleanDatabase(id);
+                        TARDISMessage.send(sender, "JUNK_DELETED");
+                    }
+                }, 20L);
+            }
         }
         return true;
     }
