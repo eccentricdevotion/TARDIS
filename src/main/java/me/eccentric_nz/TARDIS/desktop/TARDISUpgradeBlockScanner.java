@@ -11,7 +11,9 @@ import me.eccentric_nz.TARDIS.JSON.JSONObject;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.builders.TARDISInteriorPostioning;
 import me.eccentric_nz.TARDIS.builders.TARDISTIPSData;
+import me.eccentric_nz.TARDIS.database.ResultSetPlayerPrefs;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
+import me.eccentric_nz.TARDIS.rooms.TARDISWalls;
 import me.eccentric_nz.TARDIS.schematic.TARDISSchematicGZip;
 import org.bukkit.Material;
 import org.bukkit.World;
@@ -76,11 +78,21 @@ public class TARDISUpgradeBlockScanner {
             starty = (tud.getPrevious().getPermission().equals("redstone")) ? 65 : 64;
             String[] split = rs.getChunk().split(":");
             World world = plugin.getServer().getWorld(split[0]);
-            // wall/floor block prefs
-            String wall_arr[] = tud.getWall().split(":");
-            Material wall_type = Material.valueOf(wall_arr[0]);
-            String floor_arr[] = tud.getFloor().split(":");
-            Material floor_type = Material.valueOf(floor_arr[0]);
+            Material wall_type;
+            Material floor_type;
+            // get wall/floor block prefs from database...
+            HashMap<String, Object> where = new HashMap<String, Object>();
+            where.put("uuid", uuid.toString());
+            ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, where);
+            if (rsp.resultSet()) {
+                TARDISWalls.Pair wid_data = plugin.getTardisWalls().blocks.get(rsp.getWall());
+                wall_type = wid_data.getType();
+                TARDISWalls.Pair fid_data = plugin.getTardisWalls().blocks.get(rsp.getFloor());
+                floor_type = fid_data.getType();
+            } else {
+                wall_type = Material.WOOL;
+                floor_type = Material.WOOL;
+            }
             String beacon = "";
             // get input array
             JSONArray arr = (JSONArray) obj.get("input");
