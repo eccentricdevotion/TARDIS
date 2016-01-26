@@ -53,36 +53,6 @@ public class TARDISThemeMenuListener extends TARDISMenuListener implements Liste
             int slot = event.getRawSlot();
             if (slot >= 0 && slot < 27) {
                 switch (slot) {
-                    case 0:
-                    case 1:
-                    case 2:
-                    case 3:
-                    case 4:
-                    case 5:
-                    case 6:
-                    case 7:
-                    case 8:
-                    case 9:
-                    case 10:
-                    case 11:
-                        event.setCancelled(true);
-                        // get Display name of selected console
-                        ItemStack choice = inv.getItem(slot);
-                        String perm = CONSOLES.SCHEMATICFor(choice.getType()).getPermission();
-                        if (p.hasPermission("tardis." + perm)) {
-                            // remember the upgrade choice
-                            SCHEMATIC schm = CONSOLES.SCHEMATICFor(perm);
-                            TARDISUpgradeData tud = plugin.getTrackerKeeper().getUpgrades().get(p.getUniqueId());
-                            int upgrade = plugin.getArtronConfig().getInt("upgrades." + perm);
-                            int needed = (tud.getPrevious().getPermission().equals(schm.getPermission())) ? upgrade / 2 : upgrade;
-                            if (tud.getLevel() >= needed) {
-                                tud.setSchematic(schm);
-                                plugin.getTrackerKeeper().getUpgrades().put(p.getUniqueId(), tud);
-                                // open the wall block GUI
-                                wall(p);
-                            }
-                        }
-                        break;
                     case 26:
                         // close
                         event.setCancelled(true);
@@ -90,6 +60,24 @@ public class TARDISThemeMenuListener extends TARDISMenuListener implements Liste
                         break;
                     default:
                         event.setCancelled(true);
+                        // get Display name of selected console
+                        ItemStack choice = inv.getItem(slot);
+                        if (choice != null) {
+                            String perm = CONSOLES.SCHEMATICFor(choice.getType()).getPermission();
+                            if (p.hasPermission("tardis." + perm)) {
+                                // remember the upgrade choice
+                                SCHEMATIC schm = CONSOLES.SCHEMATICFor(perm);
+                                TARDISUpgradeData tud = plugin.getTrackerKeeper().getUpgrades().get(p.getUniqueId());
+                                int upgrade = plugin.getArtronConfig().getInt("upgrades." + perm);
+                                int needed = (tud.getPrevious().getPermission().equals(schm.getPermission())) ? upgrade / 2 : upgrade;
+                                if (tud.getLevel() >= needed) {
+                                    tud.setSchematic(schm);
+                                    plugin.getTrackerKeeper().getUpgrades().put(p.getUniqueId(), tud);
+                                    // open the wall block GUI
+                                    wall(p);
+                                }
+                            }
+                        }
                         break;
                 }
             } else {
