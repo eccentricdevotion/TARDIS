@@ -4,7 +4,7 @@
 1. Fix stuff!
 2. Throw malfunction if no destination found or player is denied travel (configurable)
 3. `/tprefs policebox_textures [on|off]`
-4. * Hostile Action Dispersal System
+4. Hostile Action Dispersal System
 5. TARDIS Junk Mode
    * `/tprefs junk [on|off]`
    * `/tprefs junk [wall|floor] [block_type]`
