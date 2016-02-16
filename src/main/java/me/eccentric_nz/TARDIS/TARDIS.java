@@ -224,6 +224,14 @@ public class TARDIS extends JavaPlugin {
                         pm.disablePlugin(this);
                         return;
                     }
+                    if (plg.getKey().equals("Multiverse-Inventories")) {
+                        if (!checkMVI()) {
+                            console.sendMessage(pluginName + ChatColor.RED + "This plugin requires Multiverse-Inventories to be v2.5-b344 or higher, disabling...");
+                            hasVersion = false;
+                            pm.disablePlugin(this);
+                            return;
+                        }
+                    }
                 }
                 saveDefaultConfig();
                 loadCustomConfigs();
@@ -413,6 +421,28 @@ public class TARDIS extends JavaPlugin {
                 getServer().getLogger().log(Level.WARNING, "This could cause issues with enabling the plugin.");
                 getServer().getLogger().log(Level.WARNING, "Please check you have at least v{0}", min);
                 getServer().getLogger().log(Level.WARNING, "The invalid version format was {0}", preSplit);
+                return true;
+            }
+        } else {
+            return true;
+        }
+    }
+
+    private boolean checkMVI() {
+        if (pm.isPluginEnabled("Multiverse-Inventories")) {
+            Plugin check = pm.getPlugin("Multiverse-Inventories");
+            Version minver = new Version("344");
+            String preSplit = check.getDescription().getVersion();
+            String[] split = preSplit.split("-");
+            String build = split[1].substring(1);
+            try {
+                Version ver = new Version(build);
+                return (ver.compareTo(minver) >= 0);
+            } catch (IllegalArgumentException e) {
+                getServer().getLogger().log(Level.WARNING, "TARDIS failed to get the build number for Multiverse-Inventories");
+                getServer().getLogger().log(Level.WARNING, "This could cause issues with enabling the plugin.");
+                getServer().getLogger().log(Level.WARNING, "Please check you have at least build 344");
+                getServer().getLogger().log(Level.WARNING, "The invalid build format was {0}", preSplit);
                 return true;
             }
         } else {
