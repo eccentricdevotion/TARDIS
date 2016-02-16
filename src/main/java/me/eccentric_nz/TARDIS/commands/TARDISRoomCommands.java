@@ -245,7 +245,7 @@ public class TARDISRoomCommands implements CommandExecutor {
                 String filepath = plugin.getDataFolder() + File.separator + "user_schematics" + File.separator + lower + ".tschm";
                 File file = new File(filepath);
                 if (!file.exists()) {
-                    TARDISMessage.send(sender, "ROOM_SCHEMATIC_INFO" + lower);
+                    TARDISMessage.send(sender, "ROOM_SCHEMATIC_INFO", lower);
                     return true;
                 }
                 String basepath = plugin.getDataFolder() + File.separator + "user_schematics" + File.separator;
