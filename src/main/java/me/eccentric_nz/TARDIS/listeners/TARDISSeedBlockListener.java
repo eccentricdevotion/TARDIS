@@ -219,30 +219,36 @@ public class TARDISSeedBlockListener implements Listener {
             }
             Material m = Material.getMaterial(mat);
             data.setId(m.getId());
-            if (m.equals(Material.STONE)) {
-                if (split2[1].endsWith("ANDESITE")) {
-                    data.setData((byte) 6);
-                }
-                if (split2[1].endsWith("DIORITE")) {
-                    data.setData((byte) 4);
-                }
-                if (split2[1].endsWith("GRANITE")) {
-                    data.setData((byte) 2);
-                }
-            } else if (m.equals(Material.WOOL) || m.equals(Material.STAINED_CLAY) || m.equals(Material.STAINED_GLASS)) {
-                data.setData(DyeColor.valueOf(split2[0]).getWoolData());
-            } else {
-                data.setData(getWoodDataType(m, split2[0]));
+            switch (m) {
+                case STONE:
+                    if (split2[1].endsWith("ANDESITE")) {
+                        data.setData((byte) 6);
+                    }
+                    if (split2[1].endsWith("DIORITE")) {
+                        data.setData((byte) 4);
+                    }
+                    if (split2[1].endsWith("GRANITE")) {
+                        data.setData((byte) 2);
+                    }
+                    break;
+                case WOOL:
+                case STAINED_CLAY:
+                case STAINED_GLASS:
+                    data.setData(DyeColor.valueOf(split2[0]).getWoolData());
+                    break;
+                default:
+                    data.setData(getWoodDataType(m, split2[0]));
+                    break;
             }
         } else if (split1[1].equals("ANDESITE") || split1[1].equals("DIORITE") || split1[1].equals("GRANITE")) {
             data.setId(1);
-            if (split2[1].endsWith("ANDESITE")) {
+            if (split1[1].equals("ANDESITE")) {
                 data.setData((byte) 5);
             }
-            if (split2[1].endsWith("DIORITE")) {
+            if (split1[1].equals("DIORITE")) {
                 data.setData((byte) 3);
             }
-            if (split2[1].endsWith("GRANITE")) {
+            if (split1[1].equals("GRANITE")) {
                 data.setData((byte) 1);
             }
         } else {
