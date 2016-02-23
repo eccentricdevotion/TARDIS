@@ -12,7 +12,7 @@
 7. Companion GUI
 8. TARDISDalekCities addon?
 9. Explore using [Compassance](https://www.spigotmc.org/resources/compassance.18327/) for TARDIS location
-10. Allow dual weilding TARDIS items
+10. Allow dual wielding TARDIS items
 
 ##Upcoming version `3.6`
 * TARDISSonicBlaster addon?
