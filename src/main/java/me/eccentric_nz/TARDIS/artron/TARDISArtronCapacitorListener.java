@@ -113,7 +113,7 @@ public class TARDISArtronCapacitorListener implements Listener {
                             boolean init = rs.isTardis_init();
                             boolean lights = rs.isLights_on();
                             int fc = plugin.getArtronConfig().getInt("full_charge");
-                            Material item = player.getItemInHand().getType();
+                            Material item = player.getInventory().getItemInMainHand().getType();
                             Material full = Material.valueOf(plugin.getArtronConfig().getString("full_charge_item"));
                             Material cell = Material.valueOf(plugin.getRecipesConfig().getString("shaped.Artron Storage Cell.result"));
                             QueryFactory qf = new QueryFactory(plugin);
@@ -150,13 +150,13 @@ public class TARDISArtronCapacitorListener implements Listener {
                                         }
                                     }
                                     // remove the NETHER_STAR! (if appropriate)
-                                    int a = player.getInventory().getItemInHand().getAmount();
+                                    int a = player.getInventory().getItemInMainHand().getAmount();
                                     int a2 = a - 1;
                                     if (current_level < fc) {
                                         // There's room in the tank!
                                         amount = fc;
                                         if (a2 > 0) {
-                                            player.getInventory().getItemInHand().setAmount(a2);
+                                            player.getInventory().getItemInMainHand().setAmount(a2);
                                         } else {
                                             player.getInventory().removeItem(new ItemStack(full, 1));
                                         }
@@ -167,7 +167,7 @@ public class TARDISArtronCapacitorListener implements Listener {
                                         TARDISMessage.send(player, "ENERGY_MAX");
                                     }
                                 } else {
-                                    ItemStack is = player.getItemInHand();
+                                    ItemStack is = player.getInventory().getItemInMainHand();
                                     if (is.hasItemMeta()) {
                                         ItemMeta im = is.getItemMeta();
                                         String name = im.getDisplayName();
@@ -235,9 +235,9 @@ public class TARDISArtronCapacitorListener implements Listener {
                                     qf.doUpdate("tardis", set, whereid);
                                     TARDISMessage.send(player, "ENERGY_INIT");
                                 } else // toggle power
-                                if (plugin.getConfig().getBoolean("allow.power_down")) {
-                                    new TARDISPowerButton(plugin, id, player, rs.getPreset(), rs.isPowered_on(), rs.isHidden(), lights, player.getLocation(), current_level, rs.getSchematic().hasLanterns()).clickButton();
-                                }
+                                 if (plugin.getConfig().getBoolean("allow.power_down")) {
+                                        new TARDISPowerButton(plugin, id, player, rs.getPreset(), rs.isPowered_on(), rs.isHidden(), lights, player.getLocation(), current_level, rs.getSchematic().hasLanterns()).clickButton();
+                                    }
                             } else if (player.isSneaking()) {
                                 if (!init) {
                                     TARDISMessage.send(player, "ENERGY_NO_INIT");

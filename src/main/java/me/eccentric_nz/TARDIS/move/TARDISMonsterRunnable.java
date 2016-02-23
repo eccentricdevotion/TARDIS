@@ -172,7 +172,7 @@ public class TARDISMonsterRunnable implements Runnable {
     private boolean canSpawn(Location l, int r) {
         // get biome
         Biome biome = l.getBlock().getRelative(plugin.getGeneralKeeper().getFaces().get(r), 2).getBiome();
-        if (biome.equals(Biome.MUSHROOM_ISLAND) || biome.equals(Biome.MUSHROOM_SHORE)) {
+        if (biome.equals(Biome.MUSHROOM_ISLAND) || biome.equals(Biome.MUSHROOM_ISLAND_SHORE)) {
             return false;
         }
         // worldguard
@@ -289,7 +289,7 @@ public class TARDISMonsterRunnable implements Runnable {
                     EntityEquipment ep = pigzombie.getEquipment();
                     if (m.getEquipment() != null) {
                         ep.setArmorContents(m.getEquipment().getArmorContents());
-                        ep.setItemInHand(m.getEquipment().getItemInHand());
+                        ep.setItemInMainHand(m.getEquipment().getItemInMainHand());
                     }
                     break;
                 case SKELETON:
@@ -297,7 +297,7 @@ public class TARDISMonsterRunnable implements Runnable {
                     EntityEquipment es = skeleton.getEquipment();
                     if (m.getEquipment() != null) {
                         es.setArmorContents(m.getEquipment().getArmorContents());
-                        es.setItemInHand(m.getEquipment().getItemInHand());
+                        es.setItemInMainHand(m.getEquipment().getItemInMainHand());
                         if (m.getEquipment().getHelmet().getType().equals(Material.VINE) && plugin.getPM().isPluginEnabled("LibsDisguises")) {
                             TARDISDalekDisguiser.dalekanium(skeleton);
                         }
@@ -316,7 +316,7 @@ public class TARDISMonsterRunnable implements Runnable {
                     EntityEquipment ez = zombie.getEquipment();
                     if (m.getEquipment() != null) {
                         ez.setArmorContents(m.getEquipment().getArmorContents());
-                        ez.setItemInHand(m.getEquipment().getItemInHand());
+                        ez.setItemInMainHand(m.getEquipment().getItemInMainHand());
                     }
                     break;
             }

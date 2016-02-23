@@ -74,14 +74,12 @@ public class TARDISDoorToggler {
             if (!m) {
                 TARDISSounds.playTARDISSound(l, p, "tardis_door_close");
             } else {
-                p.playSound(p.getLocation(), Sound.DOOR_CLOSE, 1.0F, 1.0F);
+                p.playSound(p.getLocation(), Sound.BLOCK_IRON_DOOR_CLOSE, 1.0F, 1.0F);
             }
+        } else if (!m) {
+            TARDISSounds.playTARDISSound(l, p, "tardis_door_open");
         } else {
-            if (!m) {
-                TARDISSounds.playTARDISSound(l, p, "tardis_door_open");
-            } else {
-                p.playSound(p.getLocation(), Sound.DOOR_OPEN, 1.0F, 1.0F);
-            }
+            p.playSound(p.getLocation(), Sound.BLOCK_IRON_DOOR_OPEN, 1.0F, 1.0F);
         }
     }
 }

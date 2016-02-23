@@ -70,7 +70,7 @@ public class TARDISArtronStorageCommand implements CommandExecutor {
                 TARDISMessage.send(sender, "CMD_PLAYER");
                 return true;
             }
-            ItemStack is = player.getItemInHand();
+            ItemStack is = player.getInventory().getItemInMainHand();
             if (is == null || !is.hasItemMeta()) {
                 TARDISMessage.send(player, "CELL_IN_HAND");
                 return true;
@@ -128,11 +128,9 @@ public class TARDISArtronStorageCommand implements CommandExecutor {
                     TARDISMessage.send(player, "CELL_NO_TRANSFER");
                     return true;
                 }
-            } else {
-                if (current_level - amount < 0) {
-                    TARDISMessage.send(player, "CELL_NOT_ENOUGH");
-                    return true;
-                }
+            } else if (current_level - amount < 0) {
+                TARDISMessage.send(player, "CELL_NOT_ENOUGH");
+                return true;
             }
             List<String> lore = im.getLore();
             int level = TARDISNumberParsers.parseInt(lore.get(1));

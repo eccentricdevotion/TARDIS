@@ -44,7 +44,7 @@ public class TARDISTemporalListener implements Listener {
     @EventHandler
     public void onPlayerInteract(PlayerInteractEvent event) {
         Player p = event.getPlayer();
-        ItemStack inhand = p.getItemInHand();
+        ItemStack inhand = p.getInventory().getItemInMainHand();
         if (event.getAction().equals(Action.RIGHT_CLICK_AIR) && inhand.getType().equals(Material.WATCH) && p.hasPermission("tardis.temporal")) {
             if (inhand.hasItemMeta() && inhand.getItemMeta().hasDisplayName() && notthese.contains(inhand.getItemMeta().getDisplayName())) {
                 return;

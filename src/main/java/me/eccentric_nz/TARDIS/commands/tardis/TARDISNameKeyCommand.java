@@ -53,7 +53,7 @@ public class TARDISNameKeyCommand {
             TARDISMessage.send(player, "KEY_NO_RENAME");
             return true;
         }
-        ItemStack is = player.getItemInHand();
+        ItemStack is = player.getInventory().getItemInMainHand();
         if (!is.getType().equals(m)) {
             TARDISMessage.send(player, "KEY_ONLY");
             return true;

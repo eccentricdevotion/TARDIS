@@ -53,9 +53,9 @@ public class TARDISSonicEntityListener implements Listener {
     public void onInteract(PlayerInteractEntityEvent event) {
         final Player player = event.getPlayer();
         long now = System.currentTimeMillis();
-        final ItemStack is = player.getItemInHand();
+        final ItemStack is = player.getInventory().getItemInMainHand();
         if (is.getType().equals(sonic) && is.hasItemMeta()) {
-            ItemMeta im = player.getItemInHand().getItemMeta();
+            ItemMeta im = player.getInventory().getItemInMainHand().getItemMeta();
             if (ChatColor.stripColor(im.getDisplayName()).equals("Sonic Screwdriver")) {
                 List<String> lore = im.getLore();
                 Entity ent = event.getRightClicked();

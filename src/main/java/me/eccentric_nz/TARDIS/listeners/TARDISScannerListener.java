@@ -270,9 +270,9 @@ public class TARDISScannerListener implements Listener {
         }, 60L);
         // get weather
         final String weather;
-        if (biome.equals(Biome.DESERT) || biome.equals(Biome.DESERT_HILLS) || biome.equals(Biome.SAVANNA) || biome.equals(Biome.SAVANNA_MOUNTAINS) || biome.equals(Biome.SAVANNA_PLATEAU) || biome.equals(Biome.SAVANNA_PLATEAU_MOUNTAINS) || biome.equals(Biome.MESA) || biome.equals(Biome.MESA_BRYCE) || biome.equals(Biome.MESA_PLATEAU) || biome.equals(Biome.MESA_PLATEAU_MOUNTAINS)) {
+        if (biome.equals(Biome.DESERT) || biome.equals(Biome.DESERT_HILLS) || biome.equals(Biome.MUTATED_DESERT) || biome.equals(Biome.SAVANNA) || biome.equals(Biome.SAVANNA_ROCK) || biome.equals(Biome.MUTATED_SAVANNA) || biome.equals(Biome.MUTATED_SAVANNA_ROCK) || biome.equals(Biome.MESA) || biome.equals(Biome.MUTATED_MESA) || biome.equals(Biome.MUTATED_MESA_CLEAR_ROCK) || biome.equals(Biome.MUTATED_MESA_ROCK) || biome.equals(Biome.MESA_ROCK) || biome.equals(Biome.MESA_CLEAR_ROCK)) {
             weather = plugin.getLanguage().getString("WEATHER_DRY");
-        } else if (biome.equals(Biome.ICE_PLAINS) || biome.equals(Biome.ICE_PLAINS_SPIKES) || biome.equals(Biome.FROZEN_OCEAN) || biome.equals(Biome.FROZEN_RIVER) || biome.equals(Biome.COLD_BEACH) || biome.equals(Biome.COLD_TAIGA) || biome.equals(Biome.COLD_TAIGA_HILLS) || biome.equals(Biome.COLD_TAIGA_MOUNTAINS)) {
+        } else if (biome.equals(Biome.ICE_FLATS) || biome.equals(Biome.MUTATED_ICE_FLATS) || biome.equals(Biome.FROZEN_OCEAN) || biome.equals(Biome.FROZEN_RIVER) || biome.equals(Biome.COLD_BEACH) || biome.equals(Biome.TAIGA_COLD) || biome.equals(Biome.TAIGA_COLD_HILLS) || biome.equals(Biome.MUTATED_TAIGA_COLD)) {
             weather = (scan_loc.getWorld().hasStorm()) ? plugin.getLanguage().getString("WEATHER_SNOW") : plugin.getLanguage().getString("WEATHER_COLD");
         } else {
             weather = (scan_loc.getWorld().hasStorm()) ? plugin.getLanguage().getString("WEATHER_RAIN") : plugin.getLanguage().getString("WEATHER_CLEAR");

@@ -108,9 +108,9 @@ public class TARDISKeyboardListener implements Listener {
             event.setCancelled(true);
             event.getBlock().setType(Material.AIR);
             if (p.getGameMode() != GameMode.CREATIVE) {
-                ItemStack itemInHand = p.getItemInHand();
+                ItemStack itemInHand = p.getInventory().getItemInMainHand();
                 if ((itemInHand == null) || (itemInHand.getType() == Material.AIR)) {
-                    p.setItemInHand(new ItemStack(Material.SIGN, 1));
+                    p.getInventory().setItemInMainHand(new ItemStack(Material.SIGN, 1));
                 } else {
                     itemInHand.setAmount(itemInHand.getAmount() + 1);
                 }

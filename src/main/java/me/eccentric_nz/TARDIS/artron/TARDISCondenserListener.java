@@ -110,7 +110,7 @@ public class TARDISCondenserListener implements Listener {
                 if (isCondenser) {
                     try {
                         Class.forName("org.bukkit.Sound");
-                        player.playSound(player.getLocation(), Sound.CHEST_CLOSE, 1, 1);
+                        player.playSound(player.getLocation(), Sound.BLOCK_CHEST_CLOSE, 1, 1);
                     } catch (ClassNotFoundException e) {
                         loc.getWorld().playEffect(loc, Effect.CLICK2, 0);
                     }
@@ -225,7 +225,7 @@ public class TARDISCondenserListener implements Listener {
         aec.setContents(is);
         try {
             Class.forName("org.bukkit.Sound");
-            p.playSound(p.getLocation(), Sound.CHEST_OPEN, 1, 1);
+            p.playSound(p.getLocation(), Sound.BLOCK_CHEST_OPEN, 1, 1);
         } catch (ClassNotFoundException e) {
             b.getLocation().getWorld().playEffect(b.getLocation(), Effect.CLICK1, 0);
         }

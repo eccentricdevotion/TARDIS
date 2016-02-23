@@ -41,7 +41,7 @@ public class TARDISEPSMessageCommand {
     public boolean setMessage(Player player, String[] args, QueryFactory qf) {
         String message;
         int count = args.length;
-        ItemStack bq = player.getItemInHand();
+        ItemStack bq = player.getInventory().getItemInMainHand();
         if (bq != null && (bq.getType().equals(Material.BOOK_AND_QUILL) || bq.getType().equals(Material.WRITTEN_BOOK))) {
             BookMeta bm = (BookMeta) bq.getItemMeta();
             List<String> pages = bm.getPages();

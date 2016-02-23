@@ -201,7 +201,7 @@ public class TARDISPresetBuilderFactory {
             case PLAINS:
                 return PRESET.VILLAGE;
             case MUSHROOM_ISLAND:
-            case MUSHROOM_SHORE:
+            case MUSHROOM_ISLAND_SHORE:
                 return PRESET.SHROOM;
             case SWAMPLAND:
                 return PRESET.SWAMP;

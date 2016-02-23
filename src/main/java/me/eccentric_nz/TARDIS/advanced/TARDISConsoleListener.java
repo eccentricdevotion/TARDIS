@@ -84,7 +84,8 @@ public class TARDISConsoleListener implements Listener {
                         key = plugin.getConfig().getString("preferences.key");
                     }
                     onlythese.add(Material.valueOf(key));
-                    ItemStack disk = event.getPlayer().getItemInHand();
+                    ItemStack disk_tmp = event.getPlayer().getInventory().getItemInMainHand();
+                    ItemStack disk = (disk_tmp != null) ? disk_tmp : event.getPlayer().getInventory().getItemInOffHand();
                     if ((disk != null && onlythese.contains(disk.getType()) && disk.hasItemMeta()) || key.equals("AIR")) {
                         // only the time lord of this tardis
                         HashMap<String, Object> wheret = new HashMap<String, Object>();

@@ -71,7 +71,7 @@ public class TARDISSeedBlockListener implements Listener {
     @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
     public void onSeedBlockPlace(BlockPlaceEvent event) {
         final Player player = event.getPlayer();
-        ItemStack is = player.getItemInHand();
+        ItemStack is = player.getInventory().getItemInMainHand();
         if (!is.hasItemMeta()) {
             return;
         }
@@ -174,7 +174,7 @@ public class TARDISSeedBlockListener implements Listener {
                 } else {
                     key = plugin.getConfig().getString("preferences.key");
                 }
-                if (player.getItemInHand().getType().equals(Material.getMaterial(key))) {
+                if (player.getInventory().getItemInMainHand().getType().equals(Material.getMaterial(key))) {
                     if (!plugin.getConfig().getBoolean("worlds." + l.getWorld().getName())) {
                         TARDISMessage.send(player, "WORLD_NO_TARDIS");
                         return;

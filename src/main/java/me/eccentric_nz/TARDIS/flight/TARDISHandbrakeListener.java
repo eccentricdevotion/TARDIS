@@ -258,7 +258,7 @@ public class TARDISHandbrakeListener implements Listener {
                                                     TARDISSounds.playTARDISSoundNearby(l, "tardis_takeoff");
                                                 }
                                             } else {
-                                                handbrake_loc.getWorld().playSound(handbrake_loc, Sound.MINECART_INSIDE, 1.0F, 0.0F);
+                                                handbrake_loc.getWorld().playSound(handbrake_loc, Sound.ENTITY_MINECART_INSIDE, 1.0F, 0.0F);
                                             }
                                         }
                                         if (exit != null) {
@@ -326,7 +326,7 @@ public class TARDISHandbrakeListener implements Listener {
                                                         TARDISSounds.playTARDISSound(handbrake_loc, player, "tardis_land");
                                                         TARDISSounds.playTARDISSoundNearby(final_location, "tardis_land");
                                                     } else {
-                                                        handbrake_loc.getWorld().playSound(handbrake_loc, Sound.MINECART_INSIDE, 1.0F, 0.0F);
+                                                        handbrake_loc.getWorld().playSound(handbrake_loc, Sound.ENTITY_MINECART_INSIDE, 1.0F, 0.0F);
                                                     }
                                                     // current
                                                     setcurrent.put("world", final_location.getWorld().getName());

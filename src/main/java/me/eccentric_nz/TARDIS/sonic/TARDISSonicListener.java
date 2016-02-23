@@ -140,9 +140,9 @@ public class TARDISSonicListener implements Listener {
     public void onInteract(PlayerInteractEvent event) {
         final Player player = event.getPlayer();
         long now = System.currentTimeMillis();
-        final ItemStack is = player.getItemInHand();
+        final ItemStack is = player.getInventory().getItemInMainHand();
         if (is.getType().equals(sonic) && is.hasItemMeta()) {
-            ItemMeta im = player.getItemInHand().getItemMeta();
+            ItemMeta im = player.getInventory().getItemInMainHand().getItemMeta();
             if (ChatColor.stripColor(im.getDisplayName()).equals("Sonic Screwdriver")) {
                 List<String> lore = im.getLore();
                 Action action = event.getAction();
@@ -370,7 +370,7 @@ public class TARDISSonicListener implements Listener {
                                 } else if (setExtension(b)) {
                                     plugin.getGeneralKeeper().getSonicPistons().add(b.getLocation().toString());
                                     piston.setPowered(true);
-                                    player.playSound(b.getLocation(), Sound.PISTON_EXTEND, 1.0f, 1.0f);
+                                    player.playSound(b.getLocation(), Sound.BLOCK_PISTON_EXTEND, 1.0f, 1.0f);
                                 }
                                 b.setData(piston.getData());
                                 bs.update(true);
@@ -465,7 +465,7 @@ public class TARDISSonicListener implements Listener {
                                     default:
                                         break;
                                 }
-                                l.getWorld().playSound(l, Sound.SHEEP_SHEAR, 1.0F, 1.5F);
+                                l.getWorld().playSound(l, Sound.ENTITY_SHEEP_SHEAR, 1.0F, 1.5F);
                                 // set the block to AIR
                                 b.setType(Material.AIR);
                             } else if (mat.equals(Material.SNOW) || mat.equals(Material.SNOW_BLOCK)) {
@@ -480,7 +480,7 @@ public class TARDISSonicListener implements Listener {
                                 b.getLocation().getWorld().dropItemNaturally(b.getLocation(), new ItemStack(Material.SNOW_BALL, balls));
                             } else {
                                 b.breakNaturally();
-                                b.getLocation().getWorld().playSound(b.getLocation(), Sound.SHEEP_SHEAR, 1.0F, 1.5F);
+                                b.getLocation().getWorld().playSound(b.getLocation(), Sound.ENTITY_SHEEP_SHEAR, 1.0F, 1.5F);
                             }
                         }
                     } else if (paintable.contains(b.getType()) && player.hasPermission("tardis.sonic.paint") && lore != null && lore.contains("Painter Upgrade")) {
@@ -529,23 +529,23 @@ public class TARDISSonicListener implements Listener {
 
     public void playSonicSound(final Player player, long now, long cooldown, String sound) {
         if ((!timeout.containsKey(player.getUniqueId()) || timeout.get(player.getUniqueId()) < now)) {
-            ItemMeta im = player.getItemInHand().getItemMeta();
+            ItemMeta im = player.getInventory().getItemInMainHand().getItemMeta();
             im.addEnchant(Enchantment.DURABILITY, 1, true);
             if (!plugin.getPM().isPluginEnabled("Multiverse-Inventories")) {
                 im.addItemFlags(ItemFlag.values());
             }
-            player.getItemInHand().setItemMeta(im);
+            player.getInventory().getItemInMainHand().setItemMeta(im);
             timeout.put(player.getUniqueId(), now + cooldown);
             TARDISSounds.playTARDISSound(player.getLocation(), player, sound);
             plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
                 @Override
                 public void run() {
-                    ItemStack is = player.getItemInHand();
+                    ItemStack is = player.getInventory().getItemInMainHand();
                     if (is.hasItemMeta()) {
                         ItemMeta im = is.getItemMeta();
                         if (im.hasDisplayName() && ChatColor.stripColor(im.getDisplayName()).equals("Sonic Screwdriver")) {
-                            for (Enchantment e : player.getItemInHand().getEnchantments().keySet()) {
-                                player.getItemInHand().removeEnchantment(e);
+                            for (Enchantment e : player.getInventory().getItemInMainHand().getEnchantments().keySet()) {
+                                player.getInventory().getItemInMainHand().removeEnchantment(e);
                             }
                         } else {
                             // find the screwdriver in the player's inventory
@@ -661,9 +661,9 @@ public class TARDISSonicListener implements Listener {
         }, 60L);
         // get weather
         final String weather;
-        if (biome.equals(Biome.DESERT) || biome.equals(Biome.DESERT_HILLS) || biome.equals(Biome.SAVANNA) || biome.equals(Biome.SAVANNA_MOUNTAINS) || biome.equals(Biome.SAVANNA_PLATEAU) || biome.equals(Biome.SAVANNA_PLATEAU_MOUNTAINS) || biome.equals(Biome.MESA) || biome.equals(Biome.MESA_BRYCE) || biome.equals(Biome.MESA_PLATEAU) || biome.equals(Biome.MESA_PLATEAU_MOUNTAINS)) {
+        if (biome.equals(Biome.DESERT) || biome.equals(Biome.DESERT_HILLS) || biome.equals(Biome.MUTATED_DESERT) || biome.equals(Biome.SAVANNA) || biome.equals(Biome.SAVANNA_ROCK) || biome.equals(Biome.MUTATED_SAVANNA) || biome.equals(Biome.MUTATED_SAVANNA_ROCK) || biome.equals(Biome.MESA) || biome.equals(Biome.MUTATED_MESA) || biome.equals(Biome.MUTATED_MESA_CLEAR_ROCK) || biome.equals(Biome.MUTATED_MESA_ROCK) || biome.equals(Biome.MESA_ROCK) || biome.equals(Biome.MESA_CLEAR_ROCK)) {
             weather = plugin.getLanguage().getString("WEATHER_DRY");
-        } else if (biome.equals(Biome.ICE_PLAINS) || biome.equals(Biome.ICE_PLAINS_SPIKES) || biome.equals(Biome.FROZEN_OCEAN) || biome.equals(Biome.FROZEN_RIVER) || biome.equals(Biome.COLD_BEACH) || biome.equals(Biome.COLD_TAIGA) || biome.equals(Biome.COLD_TAIGA_HILLS) || biome.equals(Biome.COLD_TAIGA_MOUNTAINS)) {
+        } else if (biome.equals(Biome.ICE_FLATS) || biome.equals(Biome.MUTATED_ICE_FLATS) || biome.equals(Biome.FROZEN_OCEAN) || biome.equals(Biome.FROZEN_RIVER) || biome.equals(Biome.COLD_BEACH) || biome.equals(Biome.TAIGA_COLD) || biome.equals(Biome.TAIGA_COLD_HILLS) || biome.equals(Biome.MUTATED_TAIGA_COLD)) {
             weather = (scan_loc.getWorld().hasStorm()) ? plugin.getLanguage().getString("WEATHER_SNOW") : plugin.getLanguage().getString("WEATHER_COLD");
         } else {
             weather = (scan_loc.getWorld().hasStorm()) ? plugin.getLanguage().getString("WEATHER_RAIN") : plugin.getLanguage().getString("WEATHER_CLEAR");

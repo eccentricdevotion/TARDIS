@@ -68,7 +68,7 @@ public class TARDISRemoteKeyListener implements Listener {
         }
         final Player player = event.getPlayer();
         // check item in hand
-        ItemStack is = player.getItemInHand();
+        ItemStack is = player.getInventory().getItemInMainHand();
         if (is == null || !is.getType().equals(rkey)) {
             return;
         }
@@ -123,34 +123,30 @@ public class TARDISRemoteKeyListener implements Listener {
                         }
                     }, 6L);
                 }
-            } else {
-                if (preset.equals(PRESET.INVISIBLE)) {
-                    HashMap<String, Object> whered = new HashMap<String, Object>();
-                    whered.put("tardis_id", id);
-                    whered.put("door_type", 1);
-                    ResultSetDoors rsd = new ResultSetDoors(plugin, whered, false);
-                    if (rsd.resultSet()) {
-                        // get inner door block
-                        Block block = TARDISLocationGetters.getLocationFromDB(rsd.getDoor_location(), 0.0f, 0.0f).getBlock();
-                        COMPASS dd = rsd.getDoor_direction();
-                        boolean open = TARDISStaticUtils.isOpen(block, dd);
-                        // toggle door / portals
-                        new TARDISDoorToggler(plugin, block, player, false, open, id).toggleDoors();
-                        String message = (open) ? "DOOR_CLOSED" : "DOOR_OPENED";
-                        TARDISMessage.send(player, message);
-                    }
-                } else {
-                    // toggle hidden
-                    if (hidden) {
-                        // rebuild
-                        TARDISSounds.playTARDISSound(player.getLocation(), player, "tardis_rebuild");
-                        new TARDISRebuildCommand(plugin).rebuildPreset(player);
-                    } else {
-                        // hide
-                        TARDISSounds.playTARDISSound(player.getLocation(), player, "tardis_hide");
-                        new TARDISHideCommand(plugin).hide(player);
-                    }
+            } else if (preset.equals(PRESET.INVISIBLE)) {
+                HashMap<String, Object> whered = new HashMap<String, Object>();
+                whered.put("tardis_id", id);
+                whered.put("door_type", 1);
+                ResultSetDoors rsd = new ResultSetDoors(plugin, whered, false);
+                if (rsd.resultSet()) {
+                    // get inner door block
+                    Block block = TARDISLocationGetters.getLocationFromDB(rsd.getDoor_location(), 0.0f, 0.0f).getBlock();
+                    COMPASS dd = rsd.getDoor_direction();
+                    boolean open = TARDISStaticUtils.isOpen(block, dd);
+                    // toggle door / portals
+                    new TARDISDoorToggler(plugin, block, player, false, open, id).toggleDoors();
+                    String message = (open) ? "DOOR_CLOSED" : "DOOR_OPENED";
+                    TARDISMessage.send(player, message);
                 }
+            } else // toggle hidden
+            if (hidden) {
+                // rebuild
+                TARDISSounds.playTARDISSound(player.getLocation(), player, "tardis_rebuild");
+                new TARDISRebuildCommand(plugin).rebuildPreset(player);
+            } else {
+                // hide
+                TARDISSounds.playTARDISSound(player.getLocation(), player, "tardis_hide");
+                new TARDISHideCommand(plugin).hide(player);
             }
         }
     }

@@ -288,7 +288,7 @@ public class TARDISExteriorRenderer {
             @Override
             public void run() {
                 transmat(p, d, location);
-                p.playSound(location, Sound.ENDERMAN_TELEPORT, 1.0f, 1.0f);
+                p.playSound(location, Sound.ENTITY_ENDERMEN_TELEPORT, 1.0f, 1.0f);
                 TARDISMessage.send(p, "RENDER_EXIT");
             }
         }, 10L);

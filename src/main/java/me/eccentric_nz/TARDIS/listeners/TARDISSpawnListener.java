@@ -52,7 +52,7 @@ public class TARDISSpawnListener implements Listener {
         biomes.add(Biome.DEEP_OCEAN);
         biomes.add(Biome.HELL);
         biomes.add(Biome.MUSHROOM_ISLAND);
-        biomes.add(Biome.MUSHROOM_SHORE);
+        biomes.add(Biome.MUSHROOM_ISLAND_SHORE);
         biomes.add(Biome.SKY);
     }
 
@@ -109,7 +109,7 @@ public class TARDISSpawnListener implements Listener {
                         return;
                     }
                     break;
-                case MUSHROOM_SHORE:
+                case MUSHROOM_ISLAND_SHORE:
                     if (!event.getEntity().getType().equals(EntityType.SQUID)) {
                         event.setCancelled(true);
                         return;

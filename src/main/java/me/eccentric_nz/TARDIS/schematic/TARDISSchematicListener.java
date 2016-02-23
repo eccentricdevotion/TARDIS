@@ -27,7 +27,7 @@ public class TARDISSchematicListener implements Listener {
     public void onInteract(PlayerInteractEvent event) {
         final Player player = event.getPlayer();
         UUID uuid = player.getUniqueId();
-        if (!player.getItemInHand().getType().equals(wand) || !player.hasPermission("tardis.admin")) {
+        if (!player.getInventory().getItemInMainHand().getType().equals(wand) || !player.hasPermission("tardis.admin")) {
             return;
         }
         Block b = event.getClickedBlock();

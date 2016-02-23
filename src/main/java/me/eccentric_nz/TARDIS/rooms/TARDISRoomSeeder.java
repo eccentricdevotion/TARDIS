@@ -72,7 +72,7 @@ public class TARDISRoomSeeder implements Listener {
         Block block = event.getClickedBlock();
         if (block != null) {
             Material blockType = block.getType();
-            Material inhand = player.getItemInHand().getType();
+            Material inhand = player.getInventory().getItemInMainHand().getType();
             String key;
             HashMap<String, Object> where = new HashMap<String, Object>();
             where.put("uuid", player.getUniqueId().toString());

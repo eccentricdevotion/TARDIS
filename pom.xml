@@ -27,10 +27,12 @@
             <id>dmulloy2-repo</id>
             <url>http://repo.dmulloy2.net/content/groups/public/</url>
         </repository>
+        <!--
         <repository>
             <id>macgeek</id>
             <url>http://tardisjenkins.duckdns.org:8888</url>
         </repository>
+        -->
         <repository>
             <id>onarandombox</id>
             <url>http://repo.onarandombox.com/content/groups/public</url>
@@ -184,7 +186,7 @@
         <dependency>
             <groupId>org.bukkit</groupId>
             <artifactId>bukkit</artifactId>
-            <version>1.8.8-R0.1-SNAPSHOT</version>
+            <version>1.9-pre1-SNAPSHOT</version>
             <type>jar</type>
             <scope>compile</scope>
             <exclusions>
@@ -495,7 +497,7 @@
         <dependency>
             <groupId>com.comphenix.protocol</groupId>
             <artifactId>ProtocolLib</artifactId>
-            <version>3.6.5-SNAPSHOT</version>
+            <version>3.6.6-SNAPSHOT</version>
             <exclusions>
                 <exclusion>
                     <artifactId>BukkitExecutors</artifactId>

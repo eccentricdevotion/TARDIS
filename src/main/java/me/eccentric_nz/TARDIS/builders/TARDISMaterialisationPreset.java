@@ -189,7 +189,7 @@ public class TARDISMaterialisationPreset implements Runnable {
                         if (!minecart) {
                             TARDISSounds.playTARDISSound(tmd.getLocation(), tmd.getPlayer().getPlayer(), "tardis_land");
                         } else {
-                            world.playSound(tmd.getLocation(), Sound.MINECART_INSIDE, 1.0F, 0.0F);
+                            world.playSound(tmd.getLocation(), Sound.ENTITY_MINECART_INSIDE, 1.0F, 0.0F);
                         }
                     }
                     // get direction player is facing from yaw place block under door if block is in list of blocks an iron door cannot go on

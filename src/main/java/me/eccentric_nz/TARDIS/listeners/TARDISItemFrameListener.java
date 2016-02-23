@@ -151,38 +151,36 @@ public class TARDISItemFrameListener implements Listener {
                         frame.setRotation(r);
                         TARDISMessage.send(player, "DIRECTON_SET", direction);
                     }
-                } else {
-                    // are they placing a tripwire hook?
-                    if (frame.getItem().getType().equals(Material.AIR) && player.getItemInHand().getType().equals(Material.TRIPWIRE_HOOK)) {
-                        // get current tardis direction
-                        HashMap<String, Object> wherec = new HashMap<String, Object>();
-                        wherec.put("tardis_id", id);
-                        final ResultSetCurrentLocation rscl = new ResultSetCurrentLocation(plugin, wherec);
-                        if (rscl.resultSet()) {
-                            plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
-                                @Override
-                                public void run() {
-                                    // update the TRIPWIRE_HOOK rotation
-                                    Rotation r;
-                                    switch (rscl.getDirection()) {
-                                        case EAST:
-                                            r = Rotation.COUNTER_CLOCKWISE;
-                                            break;
-                                        case SOUTH:
-                                            r = Rotation.NONE;
-                                            break;
-                                        case WEST:
-                                            r = Rotation.CLOCKWISE;
-                                            break;
-                                        default:
-                                            r = Rotation.FLIPPED;
-                                            break;
-                                    }
-                                    frame.setRotation(r);
-                                    TARDISMessage.send(player, "DIRECTION_CURRENT", rscl.getDirection().toString());
+                } else // are they placing a tripwire hook?
+                if (frame.getItem().getType().equals(Material.AIR) && player.getInventory().getItemInMainHand().getType().equals(Material.TRIPWIRE_HOOK)) {
+                    // get current tardis direction
+                    HashMap<String, Object> wherec = new HashMap<String, Object>();
+                    wherec.put("tardis_id", id);
+                    final ResultSetCurrentLocation rscl = new ResultSetCurrentLocation(plugin, wherec);
+                    if (rscl.resultSet()) {
+                        plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
+                            @Override
+                            public void run() {
+                                // update the TRIPWIRE_HOOK rotation
+                                Rotation r;
+                                switch (rscl.getDirection()) {
+                                    case EAST:
+                                        r = Rotation.COUNTER_CLOCKWISE;
+                                        break;
+                                    case SOUTH:
+                                        r = Rotation.NONE;
+                                        break;
+                                    case WEST:
+                                        r = Rotation.CLOCKWISE;
+                                        break;
+                                    default:
+                                        r = Rotation.FLIPPED;
+                                        break;
                                 }
-                            }, 4L);
-                        }
+                                frame.setRotation(r);
+                                TARDISMessage.send(player, "DIRECTION_CURRENT", rscl.getDirection().toString());
+                            }
+                        }, 4L);
                     }
                 }
             }

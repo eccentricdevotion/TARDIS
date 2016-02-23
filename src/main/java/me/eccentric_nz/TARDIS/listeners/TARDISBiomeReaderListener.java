@@ -41,7 +41,7 @@ public class TARDISBiomeReaderListener implements Listener {
             return;
         }
         final Player player = event.getPlayer();
-        ItemStack is = player.getItemInHand();
+        ItemStack is = player.getInventory().getItemInMainHand();
         if (is.getType().equals(Material.CLAY_BRICK) && is.hasItemMeta()) {
             ItemMeta im = is.getItemMeta();
             if (im.hasDisplayName() && im.getDisplayName().equals("TARDIS Biome Reader")) {

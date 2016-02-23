@@ -60,7 +60,7 @@ public class TARDISSonicSorterListener implements Listener {
     public void onPlayerInteract(PlayerInteractEvent event) {
         Player player = event.getPlayer();
         if (event.getAction() == Action.LEFT_CLICK_BLOCK && player.hasPermission("tardis.sonic.sort")) {
-            ItemStack is = player.getItemInHand();
+            ItemStack is = player.getInventory().getItemInMainHand();
             if (is.hasItemMeta()) {
                 ItemMeta im = is.getItemMeta();
                 if (im.hasDisplayName() && ChatColor.stripColor(im.getDisplayName()).equals("Sonic Screwdriver")) {

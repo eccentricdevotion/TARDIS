@@ -166,7 +166,7 @@ public class TARDISDematerialisationPreset implements Runnable {
                     if (!minecart) {
                         TARDISSounds.playTARDISSoundNearby(tmd.getLocation(), "tardis_takeoff");
                     } else {
-                        world.playSound(tmd.getLocation(), Sound.MINECART_INSIDE, 1.0F, 0.0F);
+                        world.playSound(tmd.getLocation(), Sound.ENTITY_MINECART_INSIDE, 1.0F, 0.0F);
                     }
                 }
                 the_colour = getWoolColour(tmd.getTardisID(), preset);

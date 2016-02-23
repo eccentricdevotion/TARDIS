@@ -62,7 +62,7 @@ public class TARDISDiskWriterCommand {
             im.setLore(Arrays.asList("Blank"));
             is.setItemMeta(im);
         } else {
-            is = player.getItemInHand();
+            is = player.getInventory().getItemInMainHand();
         }
         if (is.hasItemMeta()) {
             ItemMeta im = is.getItemMeta();
@@ -189,7 +189,7 @@ public class TARDISDiskWriterCommand {
     }
 
     public boolean writePlayer(Player player, String[] args) {
-        ItemStack is = player.getItemInHand();
+        ItemStack is = player.getInventory().getItemInMainHand();
         if (is.hasItemMeta()) {
             ItemMeta im = is.getItemMeta();
             if (is.getItemMeta().getDisplayName().equals("Player Storage Disk")) {
@@ -229,7 +229,7 @@ public class TARDISDiskWriterCommand {
     }
 
     public boolean eraseDisk(Player player) {
-        ItemStack is = player.getItemInHand();
+        ItemStack is = player.getInventory().getItemInMainHand();
         if (is.hasItemMeta() && disks.contains(is.getItemMeta().getDisplayName())) {
             ItemMeta im = is.getItemMeta();
             List<String> lore = Arrays.asList("Blank");
