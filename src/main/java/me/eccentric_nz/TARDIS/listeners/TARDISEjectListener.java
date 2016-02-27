@@ -248,6 +248,8 @@ public class TARDISEjectListener implements Listener {
                 villager.setProfession(v.getProfession());
                 villager.setAge(v.getTicksLived());
                 villager.setHealth(v.getHealth());
+                villager.setRecipes(v.getRecipes());
+                villager.setRiches(v.getRiches());
                 if ((!((Villager) ent).isAdult())) {
                     villager.setBaby();
                 }
@@ -256,7 +258,6 @@ public class TARDISEjectListener implements Listener {
                     villager.setCustomName(vilname);
                 }
                 if (plugin.isHelperOnServer()) {
-                    plugin.getTardisHelper().setTrades(villager, plugin.getTardisHelper().getTrades(v, player));
                     plugin.getTardisHelper().setVillagerCareer(villager, plugin.getTardisHelper().getVillagerCareer(v));
                     plugin.getTardisHelper().setVillagerCareerLevel(villager, plugin.getTardisHelper().getVillagerCareerLevel(v));
                     plugin.getTardisHelper().setVillagerWilling(villager, plugin.getTardisHelper().getVillagerWilling(v));
