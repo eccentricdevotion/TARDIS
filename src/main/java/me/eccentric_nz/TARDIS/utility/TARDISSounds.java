@@ -39,7 +39,7 @@ import org.bukkit.entity.Player;
  */
 public class TARDISSounds {
 
-    private static final float volume = TARDIS.plugin.getConfig().getInt("preferences.sfx_volume") / 10.0F;
+    private static final float VOLUME = TARDIS.plugin.getConfig().getInt("preferences.sfx_volume") / 10.0F;
 
     /**
      * Plays a random TARDIS sound to players who are inside the TARDIS and
@@ -83,11 +83,13 @@ public class TARDISSounds {
     @SuppressWarnings("deprecation")
     public static void playTARDISSound(Location l, Player p, String s) {
         if (p != null) {
-            p.playSound(l, s, volume, 1.0F);
+//            p.playSound(l, s, volume, 1.0F);
+            TARDIS.plugin.getTardisHelper().playSound(p, s, VOLUME, l);
             for (Entity e : p.getNearbyEntities(10.0d, 10.0d, 10.0d)) {
                 if (e instanceof Player && !((Player) e).equals(p)) {
                     Player pp = (Player) e;
-                    pp.playSound(pp.getLocation(), s, volume, 1.0f);
+//                    pp.playSound(pp.getLocation(), s, volume, 1.0f);
+                    TARDIS.plugin.getTardisHelper().playSound(pp, s, VOLUME, pp.getLocation());
                 }
             }
         }
@@ -108,7 +110,8 @@ public class TARDISSounds {
         for (Entity e : egg.getNearbyEntities(16.0d, 16.0d, 16.0d)) {
             if (e instanceof Player) {
                 Player pp = (Player) e;
-                pp.playSound(pp.getLocation(), s, volume, 1.0f);
+//                pp.playSound(pp.getLocation(), s, volume, 1.0f);
+                TARDIS.plugin.getTardisHelper().playSound(pp, s, VOLUME, pp.getLocation());
             }
         }
         // remove entity
