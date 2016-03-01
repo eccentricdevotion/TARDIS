@@ -152,7 +152,7 @@ public class TARDISRoomRunnable implements Runnable {
             resetz = startz;
             world = l.getWorld();
             running = true;
-            grammar = (TARDISConstants.vowels.contains(room.substring(0, 1))) ? "an " + room : "a " + room;
+            grammar = (TARDISConstants.VOWELS.contains(room.substring(0, 1))) ? "an " + room : "a " + room;
             if (room.equals("GRAVITY") || room.equals("ANTIGRAVITY")) {
                 grammar += " WELL";
             }
