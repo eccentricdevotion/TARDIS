@@ -3,7 +3,6 @@
 ##Current version `3.5-beta-1`
 1. Update for Minecraft 1.9!
    * Allow dual wielding TARDIS items
-   * Add new blocks
    * Purpur / End preset
    * Use the new Particle API instead of EffectLib for TARDIS particles
    * VOID biome - use for MCP texture changes instead of The End / SKY?
