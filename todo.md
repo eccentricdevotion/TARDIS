@@ -5,7 +5,6 @@
    * Allow dual wielding TARDIS items
    * Add new blocks
    * Purpur / End preset
-   * Use the new BossBar API instead of BarAPI for the TARDIS travel bar
    * Use the new Particle API instead of EffectLib for TARDIS particles
    * VOID biome - use for MCP texture changes instead of The End / SKY?
 2. Throw malfunction if no destination found or player is denied travel (configurable)

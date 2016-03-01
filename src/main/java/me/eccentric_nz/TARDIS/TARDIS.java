@@ -155,7 +155,6 @@ public class TARDIS extends JavaPlugin {
     private boolean tardisSpawn = false;
     private boolean worldGuardOnServer;
     private boolean helperOnServer;
-    private boolean barAPIOnServer;
     private boolean disguisesOnServer;
     private boolean mvOnServer;
     private boolean effectLibOnServer;
@@ -180,21 +179,19 @@ public class TARDIS extends JavaPlugin {
     public TARDIS() {
         this.worldGuardOnServer = false;
         this.helperOnServer = false;
-        this.barAPIOnServer = false;
         this.mvOnServer = false;
         this.effectLibOnServer = false;
-        this.versions.put("BarAPI", "3.3");
-        this.versions.put("Citizens", "2.0.16");
+        this.versions.put("Citizens", "2.0.17");
         this.versions.put("EffectLib", "3.5");
         this.versions.put("Factions", "2.7.4");
         this.versions.put("GriefPrevention", "10");
-        this.versions.put("LibsDisguises", "8.5.1");
+        this.versions.put("LibsDisguises", "9.0.0");
         this.versions.put("MultiWorld", "5.2");
         this.versions.put("Multiverse-Adventure", "2.5");
         this.versions.put("Multiverse-Core", "2.5");
         this.versions.put("Multiverse-Inventories", "2.5");
         this.versions.put("My Worlds", "1.67");
-        this.versions.put("ProtocolLib", "3.6.3");
+        this.versions.put("ProtocolLib", "3.7");
         this.versions.put("TARDISChunkGenerator", "2.1");
         this.versions.put("Towny", "0.89");
         this.versions.put("WorldBorder", "1.8.1");
@@ -301,7 +298,6 @@ public class TARDIS extends JavaPlugin {
             startSound();
             loadWorldGuard();
             loadPluginRespect();
-            loadBarAPI();
             this.effectLibOnServer = pm.isPluginEnabled("EffectLib");
             startZeroHealing();
 
@@ -730,16 +726,6 @@ public class TARDIS extends JavaPlugin {
         return tardisHelper;
     }
 
-    /**
-     * Checks if the BarAPI plugin is available, and loads support if it is.
-     */
-    private void loadBarAPI() {
-        if (pm.getPlugin("BarAPI") != null) {
-            debug("Hooking into BarAPI!");
-            barAPIOnServer = true;
-        }
-    }
-
     private void loadPluginRespect() {
         pluginRespect = new TARDISPluginRespect(this);
         pluginRespect.loadFactions();
@@ -1138,10 +1124,6 @@ public class TARDIS extends JavaPlugin {
 
     public boolean isHelperOnServer() {
         return helperOnServer;
-    }
-
-    public boolean isBarAPIOnServer() {
-        return barAPIOnServer;
     }
 
     public boolean isDisguisesOnServer() {

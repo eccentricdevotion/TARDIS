@@ -267,8 +267,8 @@ public class TARDISHandbrakeListener implements Listener {
                                                 exit.getWorld().loadChunk(exit.getChunk());
                                             }
                                             boolean mat = plugin.getConfig().getBoolean("police_box.materialise");
-                                            if (mat && bar && plugin.isBarAPIOnServer()) {
-                                                long bar_time = (flight_mode == 2 || flight_mode == 3) ? 1500L : 880L;
+                                            if (mat && bar) {
+                                                long bar_time = (flight_mode == 2 || flight_mode == 3) ? 1500L : 890L;
                                                 new TARDISTravelBar(plugin).showTravelRemaining(player, bar_time);
                                             }
                                             plugin.getTrackerKeeper().getInVortex().add(id);

@@ -16,8 +16,12 @@
  */
 package me.eccentric_nz.TARDIS.flight;
 
-import me.confuser.barapi.BarAPI;
 import me.eccentric_nz.TARDIS.TARDIS;
+import org.bukkit.Bukkit;
+import org.bukkit.boss.BarColor;
+import org.bukkit.boss.BarFlag;
+import org.bukkit.boss.BarStyle;
+import org.bukkit.boss.BossBar;
 import org.bukkit.entity.Player;
 
 /**
@@ -27,18 +31,37 @@ import org.bukkit.entity.Player;
 public class TARDISTravelBar {
 
     private final TARDIS plugin;
+    private int taskID;
+    private static final BarFlag[] EMPTY_ARRAY = new BarFlag[0];
 
     public TARDISTravelBar(TARDIS plugin) {
         this.plugin = plugin;
     }
 
-    public void showTravelRemaining(Player player, long duration) {
-        int seconds = (int) duration / 20;
-        if (seconds < 1) {
-            seconds = 1;
-        }
-        if (!BarAPI.hasBar(player)) {
-            BarAPI.setMessage(player, "TARDIS travel time remaining", seconds);
-        }
+    public void showTravelRemaining(Player player, final long duration) {
+
+        final BossBar bb = Bukkit.createBossBar("TARDIS travel time remaining", BarColor.WHITE, BarStyle.SOLID, EMPTY_ARRAY);
+        bb.setProgress(0);
+        bb.addPlayer(player);
+        bb.show();
+        final double millis = duration * 50.0d;
+        final long start = System.currentTimeMillis();
+        final double end = start + millis;
+        taskID = Bukkit.getScheduler().scheduleSyncRepeatingTask(plugin, new Runnable() {
+            @Override
+            public void run() {
+                long now = System.currentTimeMillis();
+                if (now < end) {
+                    double progress = 1 - (end - now) / millis;
+                    bb.setProgress(progress);
+                } else {
+                    bb.setProgress(1);
+                    bb.hide();
+                    bb.removeAll();
+                    Bukkit.getScheduler().cancelTask(taskID);
+                    taskID = 0;
+                }
+            }
+        }, 1L, 1L);
     }
 }

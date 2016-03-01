@@ -53,10 +53,6 @@ public class TARDISToggleOnOffCommand {
             TARDISMessage.send(player, "HADS_DISBALED");
             return true;
         }
-        if (pref.equals("travelbar") && !plugin.isBarAPIOnServer()) {
-            TARDISMessage.send(player, "BAR_DISBALED");
-            return true;
-        }
         HashMap<String, Object> setp = new HashMap<String, Object>();
         HashMap<String, Object> wherep = new HashMap<String, Object>();
         wherep.put("uuid", player.getUniqueId().toString());

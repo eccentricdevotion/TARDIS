@@ -204,15 +204,13 @@ public class TARDISPrefsMenuInventory {
         pre.setItemMeta(sign);
         options.add(pre);
         // travel bar
-        if (plugin.isBarAPIOnServer()) {
-            ItemStack bar = new ItemStack(Material.DIODE, 1);
-            ItemMeta api = bar.getItemMeta();
-            api.setDisplayName("Travel Bar");
-            String bar_value = (rsp.isTravelbarOn()) ? plugin.getLanguage().getString("SET_ON") : plugin.getLanguage().getString("SET_OFF");
-            api.setLore(Arrays.asList(bar_value));
-            bar.setItemMeta(api);
-            options.add(bar);
-        }
+        ItemStack bar = new ItemStack(Material.DIODE, 1);
+        ItemMeta api = bar.getItemMeta();
+        api.setDisplayName("Travel Bar");
+        String bar_value = (rsp.isTravelbarOn()) ? plugin.getLanguage().getString("SET_ON") : plugin.getLanguage().getString("SET_OFF");
+        api.setLore(Arrays.asList(bar_value));
+        bar.setItemMeta(api);
+        options.add(bar);
         // mob farming
         if (plugin.getConfig().getBoolean("allow.mob_farming")) {
             ItemStack far = new ItemStack(Material.DIODE, 1);
