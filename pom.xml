@@ -15,6 +15,7 @@
     </properties>
     <url>http://eccentricdevotion.github.com/TARDIS/</url>
     <repositories>
+        <!--
         <repository>
             <id>Spigot</id>
             <url>https://hub.spigotmc.org/nexus/content/groups/public/</url>
@@ -24,12 +25,13 @@
             <url>http://repo.md-5.net/content/groups/public</url>
         </repository>
         <repository>
-            <id>dmulloy2-repo</id>
-            <url>http://repo.dmulloy2.net/content/groups/public/</url>
-        </repository>
-        <repository>
             <id>macgeek</id>
             <url>http://tardisjenkins.duckdns.org:8888</url>
+        </repository>
+        -->
+        <repository>
+            <id>dmulloy2-repo</id>
+            <url>http://repo.dmulloy2.net/content/groups/public/</url>
         </repository>
         <repository>
             <id>onarandombox</id>
@@ -39,11 +41,11 @@
             <id>libsdisguises-repo</id>
             <url>http://server.psmc.ca/repo/</url>
         </repository>
-        <!--
         <repository>
             <id>sk89q-repo</id>
             <url>http://maven.sk89q.com/repo/</url>
         </repository>
+        <!--
         <repository>
             <id>mcstats.releases</id>
             <name>mcstats.org releases</name>
@@ -201,6 +203,11 @@
                     <artifactId>junit</artifactId>
                 </exclusion>
             </exclusions>
+        </dependency>
+        <dependency>
+            <groupId>com.google.guava</groupId>
+            <artifactId>guava</artifactId>
+            <version>17.0</version>
         </dependency>
         <dependency>
             <groupId>com.sk89q</groupId>
