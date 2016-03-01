@@ -127,6 +127,9 @@ public class TARDISWalls {
         blocks.put("POLISHED_DIORITE", new Pair(Material.STONE, (byte) 4));
         blocks.put("ANDESITE", new Pair(Material.STONE, (byte) 5));
         blocks.put("POLISHED_ANDESITE", new Pair(Material.STONE, (byte) 6));
+        blocks.put("END_STONE_BRICK", new Pair(Material.END_BRICKS, (byte) 0));
+        blocks.put("PURPUR", new Pair(Material.PURPUR_BLOCK, (byte) 10));
+        blocks.put("PURPUR_PILLAR", new Pair(Material.PURPUR_PILLAR, (byte) 10));
         if (TARDIS.plugin.getConfig().getBoolean("allow.all_blocks")) {
             blocks.put("BEDROCK", new Pair(Material.BEDROCK, (byte) 0));
             blocks.put("COAL_ORE", new Pair(Material.COAL_ORE, (byte) 0));
