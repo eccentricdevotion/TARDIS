@@ -4,7 +4,6 @@
 1. Update for Minecraft 1.9!
    * Allow dual wielding TARDIS items
    * Purpur / End preset
-   * Use the new Particle API instead of EffectLib for TARDIS particles
    * VOID biome - use for MCP texture changes instead of The End / SKY?
 2. Throw malfunction if no destination found or player is denied travel (configurable)
 3. Companion GUI

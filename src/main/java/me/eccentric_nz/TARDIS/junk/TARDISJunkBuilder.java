@@ -18,7 +18,6 @@ package me.eccentric_nz.TARDIS.junk;
 
 import java.io.File;
 import java.util.HashMap;
-import java.util.List;
 import me.eccentric_nz.TARDIS.JSON.JSONArray;
 import me.eccentric_nz.TARDIS.JSON.JSONObject;
 import me.eccentric_nz.TARDIS.TARDIS;
@@ -28,7 +27,7 @@ import me.eccentric_nz.TARDIS.database.ResultSetPlayerPrefs;
 import me.eccentric_nz.TARDIS.rooms.TARDISWalls;
 import me.eccentric_nz.TARDIS.schematic.TARDISSchematicGZip;
 import me.eccentric_nz.TARDIS.utility.TARDISBlockSetters;
-import me.eccentric_nz.TARDIS.utility.TARDISEffectLibHelper;
+import me.eccentric_nz.TARDIS.utility.TARDISJunkParticles;
 import me.eccentric_nz.TARDIS.utility.TARDISLocationGetters;
 import me.eccentric_nz.TARDIS.utility.TARDISSounds;
 import org.bukkit.Location;
@@ -38,7 +37,6 @@ import org.bukkit.block.Biome;
 import org.bukkit.block.Block;
 import org.bukkit.block.Sign;
 import org.bukkit.entity.Entity;
-import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 
 /**
@@ -79,7 +77,7 @@ public class TARDISJunkBuilder implements Runnable {
             if (i < 24) {
                 i++;
                 if (i == 2) {
-                    for (Entity e : getJunkTravellers()) {
+                    for (Entity e : plugin.getUtils().getJunkTravellers(loc)) {
                         if (e instanceof Player) {
                             Player p = (Player) e;
                             TARDISSounds.playTARDISSound(loc, p, "junk_land");
@@ -210,9 +208,14 @@ public class TARDISJunkBuilder implements Runnable {
                             ts.update();
                         }
                     }
-                } else if (plugin.getConfig().getBoolean("junk.particles") && plugin.isEffectLibOnServer()) {
+                } else if (plugin.getConfig().getBoolean("junk.particles")) {
                     // just animate particles
-                    TARDISEffectLibHelper.sendVortexParticles(effectsLoc);
+                    for (Entity e : plugin.getUtils().getJunkTravellers(loc)) {
+                        if (e instanceof Player) {
+                            Player p = (Player) e;
+                            TARDISJunkParticles.sendVortexParticles(effectsLoc, p);
+                        }
+                    }
                 }
             } else {
                 plugin.getTrackerKeeper().getMaterialising().remove(Integer.valueOf(tmd.getTardisID()));
@@ -237,14 +240,6 @@ public class TARDISJunkBuilder implements Runnable {
                 plugin.getGeneralKeeper().setJunkTime(System.currentTimeMillis());
             }
         }
-    }
-
-    private List<Entity> getJunkTravellers() {
-        // spawn an entity
-        Entity orb = loc.getWorld().spawnEntity(loc, EntityType.EXPERIENCE_ORB);
-        List<Entity> ents = orb.getNearbyEntities(16.0d, 16.0d, 16.0d);
-        orb.remove();
-        return ents;
     }
 
     public void setTask(int task) {

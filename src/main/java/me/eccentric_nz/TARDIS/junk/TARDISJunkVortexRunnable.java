@@ -20,7 +20,7 @@ import java.util.List;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.builders.TARDISMaterialisationData;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
-import me.eccentric_nz.TARDIS.utility.TARDISEffectLibHelper;
+import me.eccentric_nz.TARDIS.utility.TARDISJunkParticles;
 import me.eccentric_nz.TARDIS.utility.TARDISSounds;
 import org.bukkit.Location;
 import org.bukkit.OfflinePlayer;
@@ -61,8 +61,13 @@ public class TARDISJunkVortexRunnable implements Runnable {
             if (i == 1) {
                 fryTask = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, new TARDISJunkItsDangerousRunnable(plugin, vortexJunkLoc), 0, 1L);
             }
-            if (plugin.getConfig().getBoolean("junk.particles") && plugin.isEffectLibOnServer()) {
-                TARDISEffectLibHelper.sendVortexParticles(effectsLoc);
+            if (plugin.getConfig().getBoolean("junk.particles")) {
+                for (Entity e : plugin.getUtils().getJunkTravellers(vortexJunkLoc)) {
+                    if (e instanceof Player) {
+                        Player p = (Player) e;
+                        TARDISJunkParticles.sendVortexParticles(effectsLoc, p);
+                    }
+                }
             }
             if (i == 2) {
                 // play sound

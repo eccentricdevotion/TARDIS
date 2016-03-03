@@ -17,6 +17,7 @@
 package me.eccentric_nz.TARDIS.utility;
 
 import java.util.HashMap;
+import java.util.List;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetCount;
@@ -30,6 +31,8 @@ import org.bukkit.World;
 import org.bukkit.WorldType;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
+import org.bukkit.entity.Entity;
+import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.generator.ChunkGenerator;
 
@@ -196,5 +199,13 @@ public class TARDISUtils {
             }
         }
         return inGracePeriod;
+    }
+
+    public List<Entity> getJunkTravellers(Location loc) {
+        // spawn an entity
+        Entity orb = loc.getWorld().spawnEntity(loc, EntityType.EXPERIENCE_ORB);
+        List<Entity> ents = orb.getNearbyEntities(16.0d, 16.0d, 16.0d);
+        orb.remove();
+        return ents;
     }
 }

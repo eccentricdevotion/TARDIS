@@ -25,7 +25,7 @@ import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetBlocks;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import me.eccentric_nz.TARDIS.utility.TARDISBlockSetters;
-import me.eccentric_nz.TARDIS.utility.TARDISEffectLibHelper;
+import me.eccentric_nz.TARDIS.utility.TARDISJunkParticles;
 import me.eccentric_nz.TARDIS.utility.TARDISNumberParsers;
 import me.eccentric_nz.TARDIS.utility.TARDISSounds;
 import org.bukkit.Chunk;
@@ -177,9 +177,14 @@ public class TARDISJunkDestroyer implements Runnable {
                 plugin.getServer().getScheduler().cancelTask(fryTask);
                 plugin.getServer().getScheduler().cancelTask(task);
                 task = 0;
-            } else if (plugin.getConfig().getBoolean("junk.particles") && plugin.isEffectLibOnServer()) {
+            } else if (plugin.getConfig().getBoolean("junk.particles")) {
                 // just animate particles
-                TARDISEffectLibHelper.sendVortexParticles(effectsLoc);
+                for (Entity e : plugin.getUtils().getJunkTravellers(junkLoc)) {
+                    if (e instanceof Player) {
+                        Player p = (Player) e;
+                        TARDISJunkParticles.sendVortexParticles(effectsLoc, p);
+                    }
+                }
             }
         }
     }
