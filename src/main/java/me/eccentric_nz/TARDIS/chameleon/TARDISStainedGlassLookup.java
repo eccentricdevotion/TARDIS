@@ -171,6 +171,14 @@ public class TARDISStainedGlassLookup {
         stain.put(174, (byte) 3);
         stain.put(175, (byte) 5);
         stain.put(179, (byte) 1);
+        stain.put(198, (byte) 3);
+        stain.put(200, (byte) 10);
+        stain.put(201, (byte) 10);
+        stain.put(202, (byte) 10);
+        stain.put(203, (byte) 10);
+        stain.put(204, (byte) 10);
+        stain.put(205, (byte) 10);
+        stain.put(206, (byte) 10);
     }
 
     public HashMap<Integer, Byte> getStain() {

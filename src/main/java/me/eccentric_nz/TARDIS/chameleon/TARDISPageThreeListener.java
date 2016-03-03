@@ -225,6 +225,14 @@ public class TARDISPageThreeListener extends TARDISMenuListener implements Liste
                                     }
                                     TARDISMessage.send(player, "CHAM_SET", ChatColor.AQUA + "Guardian Temple");
                                     break;
+                                case 36:
+                                    // Chorus
+                                    if (!last_line.equals("CHORUS")) {
+                                        set.put("chameleon_preset", "CHORUS");
+                                        TARDISStaticUtils.setSign(rs.getChameleon(), 3, "CHORUS", player);
+                                    }
+                                    TARDISMessage.send(player, "CHAM_SET", ChatColor.AQUA + "Chorus Flower");
+                                    break;
                                 case 38:
                                     // Andesite
                                     if (!last_line.equals("ANDESITE")) {

@@ -32,6 +32,7 @@ public enum PRESET {
     CAKE(Material.CAKE, "CAKE AND", "EAT IT TOO", true, true),
     CANDY(Material.SUGAR, "", "", false, false),
     CHALICE(Material.QUARTZ, "", "", false, false),
+    CHORUS(Material.CHORUS_FLOWER, "", "", true, true),
     CREEPY(Material.STRING, "HAUNTED", "HOUSE", true, true),
     DESERT(Material.SAND, "", "", true, true),
     DIORITE(Material.EMERALD, "DIORITE", "BOX", true, true),

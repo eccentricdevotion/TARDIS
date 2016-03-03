@@ -38,7 +38,7 @@ import me.eccentric_nz.TARDIS.utility.recalculators.TARDISTrapdoorRecalculator;
  */
 public class TARDISChameleonPreset {
 
-    private static final List<Integer> problemBlocks = Arrays.asList(50, 53, 63, 64, 66, 67, 68, 69, 71, 77, 91, 96, 99, 106, 108, 109, 114, 128, 134, 135, 136, 143, 145, 156, 163, 164, 193, 194, 195, 196, 197);
+    private static final List<Integer> PROBLEM_BLOCKS = Arrays.asList(50, 53, 63, 64, 66, 67, 68, 69, 71, 77, 91, 96, 99, 106, 108, 109, 114, 128, 134, 135, 136, 143, 145, 156, 163, 164, 193, 194, 195, 196, 197, 203);
     public final TARDISAndesitePreset andesite;
     public final TARDISAngelDownPreset angeld;
     public final TARDISAngelUpPreset angelu;
@@ -46,6 +46,7 @@ public class TARDISChameleonPreset {
     public final TARDISCakePreset cake;
     public final TARDISCandyCanePreset candy;
     public final TARDISChalicePreset chalice;
+    public final TARDISChorusPreset chorus;
     public final TARDISColumnPreset column;
     public final TARDISCreepyPreset creepy;
     public final TARDISDesertPreset desert;
@@ -101,6 +102,7 @@ public class TARDISChameleonPreset {
         this.cake = new TARDISCakePreset();
         this.candy = new TARDISCandyCanePreset();
         this.chalice = new TARDISChalicePreset();
+        this.chorus = new TARDISChorusPreset();
         this.column = new TARDISColumnPreset();
         this.creepy = new TARDISCreepyPreset();
         this.desert = new TARDISDesertPreset();
@@ -156,6 +158,7 @@ public class TARDISChameleonPreset {
         cake.makePresets(false, false, false);
         candy.makePresets(true, false, true);
         chalice.makePresets(false, false, false);
+        chorus.makePresets(false, false, false);
         column.makePresets(false, false, false);
         creepy.makePresets(false, false, false);
         desert.makePresets(false, false, false);
@@ -373,7 +376,7 @@ public class TARDISChameleonPreset {
     private static byte[][] convertData(int[][] id, byte[][] data, COMPASS d, boolean duck, boolean istorch) {
         for (int col = 0; col < 10; col++) {
             for (int block = 0; block < 4; block++) {
-                if (problemBlocks.contains(id[col][block])) {
+                if (PROBLEM_BLOCKS.contains(id[col][block])) {
                     switch (id[col][block]) {
                         case 50: // torches
                             data[col][block] = new TARDISTorchRecalculator().recalculate(data[col][block], d);
@@ -451,6 +454,7 @@ public class TARDISChameleonPreset {
                         case 156: // quartz stair
                         case 163: // acacia stair
                         case 164: // dark oak stair
+                        case 203: // purpur stair
                             data[col][block] = new TARDISStairRecalculator().recalculate(data[col][block], d, col, duck);
                             break;
                         case 77: // stone button
@@ -528,6 +532,8 @@ public class TARDISChameleonPreset {
                 return candy.getBlueprint().get(d);
             case CHALICE:
                 return chalice.getBlueprint().get(d);
+            case CHORUS:
+                return chorus.getBlueprint().get(d);
             case CREEPY:
                 return creepy.getBlueprint().get(d);
             case DESERT:
@@ -639,6 +645,8 @@ public class TARDISChameleonPreset {
                 return candy.getGlass().get(d);
             case CHALICE:
                 return chalice.getGlass().get(d);
+            case CHORUS:
+                return chorus.getGlass().get(d);
             case CREEPY:
                 return creepy.getGlass().get(d);
             case DESERT:
@@ -750,6 +758,8 @@ public class TARDISChameleonPreset {
                 return candy.getStained().get(d);
             case CHALICE:
                 return chalice.getStained().get(d);
+            case CHORUS:
+                return chorus.getStained().get(d);
             case CREEPY:
                 return creepy.getStained().get(d);
             case DESERT:

@@ -115,6 +115,11 @@ public class TARDISPageThreeInventory {
         ItemMeta mar = pris.getItemMeta();
         mar.setDisplayName("Guardian Temple");
         pris.setItemMeta(mar);
+        // Chorus
+        ItemStack cho = new ItemStack(Material.CHORUS_FLOWER, 1);
+        ItemMeta rus = cho.getItemMeta();
+        rus.setDisplayName("Chorus Flower");
+        cho.setItemMeta(rus);
         // Andesite
         ItemStack and = new ItemStack(Material.STONE, 1, (byte) 6);
         ItemMeta esi = and.getItemMeta();
@@ -168,7 +173,7 @@ public class TARDISPageThreeInventory {
             null, null, null, null, null, null, null, null, null,
             gaz, null, app, null, lig, null, lib, null, sno,
             null, jail, null, pan, null, dou, null, pris, null,
-            null, null, and, null, dio, null, gra, null, null,
+            cho, null, and, null, dio, null, gra, null, null,
             null, null, null, inv, null, construct, null, null, null
         };
         return is;

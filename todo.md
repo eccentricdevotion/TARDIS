@@ -3,8 +3,7 @@
 ##Current version `3.5-beta-1`
 1. Update for Minecraft 1.9!
    * Allow dual wielding TARDIS items
-   * Purpur / End preset
-   * VOID biome - use for MCP texture changes instead of The End / SKY?
+   * VOID biome - use for MCPatcher texture changes instead of The End / SKY? _(Need to wait for MCPatcher to update)_
 2. Throw malfunction if no destination found or player is denied travel (configurable)
 3. Companion GUI
 4. `/tprefs policebox_textures [on|off]` [#1184](http://dev.bukkit.org/bukkit-plugins/tardis/tickets/1184-player-preference-for-setting-biome/)
