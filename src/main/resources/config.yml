@@ -66,6 +66,7 @@ travel:
     random_circuit:
         x: 5000
         z: 5000
+    no_destination_malfunctions: true
 # general preferences
 preferences:
     language: en

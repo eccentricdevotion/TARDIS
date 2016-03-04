@@ -144,6 +144,7 @@ public class TARDISConfiguration {
         boolOptions.put("travel.include_default_world", false);
         boolOptions.put("travel.land_on_water", true);
         boolOptions.put("travel.nether", false);
+        boolOptions.put("travel.no_destination_malfunctions", true);
         boolOptions.put("travel.per_world_perms", false);
         boolOptions.put("travel.terminal.redefine", false);
         boolOptions.put("travel.the_end", false);
@@ -290,6 +291,7 @@ public class TARDISConfiguration {
         intOptions.put("travel.tp_radius", 256);
         intOptions.put("travel.random_circuit.x", 5000);
         intOptions.put("travel.random_circuit.z", 5000);
+        intOptions.put("travel.spawn_limit", 10);
         roomIntOptions.put("rooms.ANTIGRAVITY.cost", 625);
         roomIntOptions.put("rooms.ANTIGRAVITY.offset", -4);
         roomIntOptions.put("rooms.ARBORETUM.cost", 325);
