@@ -63,6 +63,7 @@ public class TARDISMySQLDatabaseUpdater {
         tardisupdates.add("siege_on int(1) DEFAULT '0'");
         tardisupdates.add("zero varchar(512) DEFAULT ''");
         tardisupdates.add("last_known_name varchar(32) DEFAULT ''");
+        tardisupdates.add("monsters int(2) DEFAULT '0'");
         prefsupdates.add("language varchar(32) DEFAULT 'AUTO_DETECT'");
         prefsupdates.add("build_on int(1) DEFAULT '1'");
         prefsupdates.add("ctm_on int(1) DEFAULT '0'");

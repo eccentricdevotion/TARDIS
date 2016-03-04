@@ -85,6 +85,7 @@ public class ResultSetTardis {
     private boolean powered_on;
     private boolean lights_on;
     private boolean siege_on;
+    private int monsters;
     private final ArrayList<HashMap<String, String>> data = new ArrayList<HashMap<String, String>>();
     private final String prefix;
 
@@ -205,6 +206,7 @@ public class ResultSetTardis {
                     this.powered_on = rs.getBoolean("powered_on");
                     this.lights_on = rs.getBoolean("lights_on");
                     this.siege_on = rs.getBoolean("siege_on");
+                    this.monsters = rs.getInt("monsters");
                 }
             } else {
                 return false;
@@ -382,6 +384,10 @@ public class ResultSetTardis {
 
     public boolean isSiege_on() {
         return siege_on;
+    }
+
+    public int getMonsters() {
+        return monsters;
     }
 
     public ArrayList<HashMap<String, String>> getData() {

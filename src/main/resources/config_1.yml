@@ -97,6 +97,7 @@ preferences:
         only_tardis_worlds: true
     render_entities: false
     spawn_random_monsters: true
+    spawn_limit: 10
     no_creative_condense: false
     vortex_fall: kill
 # desktop theme

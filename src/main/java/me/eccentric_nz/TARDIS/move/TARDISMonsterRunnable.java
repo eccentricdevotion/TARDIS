@@ -157,11 +157,16 @@ public class TARDISMonsterRunnable implements Runnable {
                         Random r = new Random();
                         // 25% chance + must not be peaceful, a Mooshroom biome or WG mob-spawning: deny
                         if (r.nextInt(4) == 0 && canSpawn(map.getKey(), r.nextInt(4))) {
-                            TARDISMonster rtm = new TARDISMonster();
-                            // choose a random monster
-                            EntityType type = random_monsters.get(r.nextInt(random_monsters.size()));
-                            rtm.setType(type);
-                            moveMonster(map.getValue(), rtm, null, type.equals(EntityType.GUARDIAN));
+                            HashMap<String, Object> wheret = new HashMap<String, Object>();
+                            wheret.put("tardis_id", map.getValue().getTardisId());
+                            ResultSetTardis rs = new ResultSetTardis(plugin, wheret, "", false);
+                            if (rs.resultSet() && rs.getMonsters() < plugin.getConfig().getInt("preferences.spawn_limit")) {
+                                TARDISMonster rtm = new TARDISMonster();
+                                // choose a random monster
+                                EntityType type = random_monsters.get(r.nextInt(random_monsters.size()));
+                                rtm.setType(type);
+                                moveMonster(map.getValue(), rtm, null, type.equals(EntityType.GUARDIAN));
+                            }
                         }
                     }
                 }

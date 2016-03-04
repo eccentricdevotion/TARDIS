@@ -14,13 +14,11 @@
 7. Telepathic circuit [#1174](http://dev.bukkit.org/bukkit-plugins/tardis/tickets/1174-tardis-commands-applies-to-the-one-which-you-are-in/#comments)
 8. Explore using [Compassance](https://www.spigotmc.org/resources/compassance.18327/) for TARDIS location finding instead of a compass
 9. Red time rotor
-10. Limit number of mobs that can enter the TARDIS
-11. TARDISDalekCities addon?
-12. Fix bugs!
+10. Fix bugs!
 
 ##Upcoming version `3.6`
 * TARDISSonicBlaster addon?
-
+* TARDISDalekCities addon?
 
 ##Future version `4+`
 * SpongeAPI
