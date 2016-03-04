@@ -83,13 +83,11 @@ public class TARDISSounds {
     @SuppressWarnings("deprecation")
     public static void playTARDISSound(Location l, Player p, String s) {
         if (p != null) {
-//            p.playSound(l, s, volume, 1.0F);
-            TARDIS.plugin.getTardisHelper().playSound(p, s, VOLUME, l);
+            p.playSound(l, s, VOLUME, 1.0F);
             for (Entity e : p.getNearbyEntities(10.0d, 10.0d, 10.0d)) {
                 if (e instanceof Player && !((Player) e).equals(p)) {
                     Player pp = (Player) e;
-//                    pp.playSound(pp.getLocation(), s, volume, 1.0f);
-                    TARDIS.plugin.getTardisHelper().playSound(pp, s, VOLUME, pp.getLocation());
+                    pp.playSound(pp.getLocation(), s, VOLUME, 1.0f);
                 }
             }
         }
@@ -110,8 +108,7 @@ public class TARDISSounds {
         for (Entity e : egg.getNearbyEntities(16.0d, 16.0d, 16.0d)) {
             if (e instanceof Player) {
                 Player pp = (Player) e;
-//                pp.playSound(pp.getLocation(), s, volume, 1.0f);
-                TARDIS.plugin.getTardisHelper().playSound(pp, s, VOLUME, pp.getLocation());
+                pp.playSound(pp.getLocation(), s, VOLUME, 1.0f);
             }
         }
         // remove entity
