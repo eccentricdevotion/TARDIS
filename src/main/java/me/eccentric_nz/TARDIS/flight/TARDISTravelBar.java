@@ -43,7 +43,7 @@ public class TARDISTravelBar {
         final BossBar bb = Bukkit.createBossBar("TARDIS travel time remaining", BarColor.WHITE, BarStyle.SOLID, EMPTY_ARRAY);
         bb.setProgress(0);
         bb.addPlayer(player);
-        bb.show();
+        bb.setVisible(true);
         final double millis = duration * 50.0d;
         final long start = System.currentTimeMillis();
         final double end = start + millis;
@@ -56,7 +56,7 @@ public class TARDISTravelBar {
                     bb.setProgress(progress);
                 } else {
                     bb.setProgress(1);
-                    bb.hide();
+                    bb.setVisible(false);
                     bb.removeAll();
                     Bukkit.getScheduler().cancelTask(taskID);
                     taskID = 0;

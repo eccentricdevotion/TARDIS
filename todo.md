@@ -2,17 +2,16 @@
 
 ##Current version `3.5-beta-1`
 1. Update for Minecraft 1.9!
-   * Allow dual wielding TARDIS items
+   * Allow dual wielding TARDIS items?
    * VOID biome - use for MCPatcher texture changes instead of The End / SKY? _(Need to wait for MCPatcher to update)_
-2. Throw malfunction if no destination found or player is denied travel (configurable)
-3. Companion GUI
-4. `/tprefs policebox_textures [on|off]` [#1184](http://dev.bukkit.org/bukkit-plugins/tardis/tickets/1184-player-preference-for-setting-biome/)
-5. Hostile Action Dispersal System [#1150](http://dev.bukkit.org/bukkit-plugins/tardis/tickets/1150-hads2-hostile-action-dispersal-system/)
-6. TARDIS Junk Mode [#1157](http://dev.bukkit.org/bukkit-plugins/tardis/tickets/1157-normal-tardis-junk-mode/)
+2. Companion GUI
+3. `/tprefs policebox_textures [on|off]` [#1184](http://dev.bukkit.org/bukkit-plugins/tardis/tickets/1184-player-preference-for-setting-biome/)
+4. Hostile Action Dispersal System [#1150](http://dev.bukkit.org/bukkit-plugins/tardis/tickets/1150-hads2-hostile-action-dispersal-system/)
+5. TARDIS Junk Mode [#1157](http://dev.bukkit.org/bukkit-plugins/tardis/tickets/1157-normal-tardis-junk-mode/)
    * `/tprefs junk [on|off]`
    * `/tprefs junk [wall|floor] [block_type]`
-7. Telepathic circuit [#1174](http://dev.bukkit.org/bukkit-plugins/tardis/tickets/1174-tardis-commands-applies-to-the-one-which-you-are-in/#comments)
-8. Fix bugs!
+6. Telepathic circuit [#1174](http://dev.bukkit.org/bukkit-plugins/tardis/tickets/1174-tardis-commands-applies-to-the-one-which-you-are-in/#comments)
+7. Fix bugs!
 
 ##Upcoming version `3.6`
 * TARDISSonicBlaster addon?
