@@ -166,7 +166,7 @@ public class TARDISScannerListener implements Listener {
 
     public TARDISScannerData scan(final Player player, final int id, BukkitScheduler bsched) {
         TARDISScannerData data = new TARDISScannerData();
-        TARDISSounds.playTARDISSound(player.getLocation(), player, "tardis_scanner");
+        TARDISSounds.playTARDISSound(player.getLocation(), "tardis_scanner");
         final Location scan_loc;
         String whereisit;
         final COMPASS tardisDirection;

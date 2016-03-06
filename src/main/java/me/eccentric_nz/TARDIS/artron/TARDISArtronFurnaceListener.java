@@ -69,7 +69,7 @@ public class TARDISArtronFurnaceListener implements Listener {
                     if (!lore.get(1).equals("0")) {
                         // track furnace
                         plugin.getTrackerKeeper().getArtronFurnaces().add(l);
-                        TARDISSounds.playTARDISSoundNearby(furnace.getLocation(), "artron_furnace");
+                        TARDISSounds.playTARDISSound(furnace.getLocation(), "artron_furnace");
                         // get charge level
                         int charge_level = TARDISNumberParsers.parseInt(lore.get(1));
                         double percentage = charge_level / plugin.getArtronConfig().getDouble("full_charge");
@@ -94,10 +94,8 @@ public class TARDISArtronFurnaceListener implements Listener {
                         }, 2L);
                     }
                 }
-            } else {
-                if (plugin.getTrackerKeeper().getArtronFurnaces().contains(l)) {
-                    plugin.getTrackerKeeper().getArtronFurnaces().remove(l);
-                }
+            } else if (plugin.getTrackerKeeper().getArtronFurnaces().contains(l)) {
+                plugin.getTrackerKeeper().getArtronFurnaces().remove(l);
             }
         }
     }

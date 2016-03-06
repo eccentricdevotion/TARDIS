@@ -24,8 +24,6 @@ import me.eccentric_nz.TARDIS.database.ResultSetPlayerPrefs;
 import me.eccentric_nz.TARDIS.database.ResultSetTravellers;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
-import org.bukkit.entity.Entity;
-import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 
 /**
@@ -63,7 +61,7 @@ public class TARDISSounds {
                     final Player player = Bukkit.getServer().getPlayer(u);
                     if (player != null) {
                         if (userSFX) {
-                            playTARDISSound(player.getLocation(), player, "tardis_hum");
+                            playTARDISSound(player.getLocation(), "tardis_hum");
                         }
                     }
                 }
@@ -75,43 +73,45 @@ public class TARDISSounds {
      * Plays a TARDIS sound for the player and surrounding players at the
      * current location.
      *
-     * @param l The location
-     * @param p The player who initiated the sound playing, i.e. released the
-     * handbrake
+     * @param l The location // * @param p The player who initiated the sound
+     * playing, i.e. released the // * handbrake
      * @param s The sound to play
      */
-    @SuppressWarnings("deprecation")
-    public static void playTARDISSound(Location l, Player p, String s) {
-        if (p != null) {
-            p.playSound(l, s, VOLUME, 1.0F);
-            for (Entity e : p.getNearbyEntities(10.0d, 10.0d, 10.0d)) {
-                if (e instanceof Player && !((Player) e).equals(p)) {
-                    Player pp = (Player) e;
-                    pp.playSound(pp.getLocation(), s, VOLUME, 1.0f);
-                }
-            }
-        }
+//    @SuppressWarnings("deprecation")
+//    public static void playTARDISSound(Location l, Player p, String s) {
+    public static void playTARDISSound(Location l, String s) {
+//        if (p != null) {
+//            p.playSound(l, s, VOLUME, 1.0F);
+//            for (Entity e : p.getNearbyEntities(10.0d, 10.0d, 10.0d)) {
+//                if (e instanceof Player && !((Player) e).equals(p)) {
+//                    Player pp = (Player) e;
+//                    pp.playSound(pp.getLocation(), s, VOLUME, 1.0f);
+//                }
+//            }
+//        }
+        l.getWorld().playSound(l, s, VOLUME, 1.0f);
     }
 
-    /**
-     * Attempts to play a TARDIS sound at an external location. Generally the
-     * location is outside the TARDIS, so this will attempt to find rescued
-     * players and players nearby to the TARDIS as it re-materialises.
-     *
-     * @param l The location to play the sound
-     * @param s The sound to play
-     */
-    @SuppressWarnings("deprecation")
-    public static void playTARDISSoundNearby(Location l, String s) {
-        // spawn an entity at the location - an egg will do
-        Entity egg = l.getWorld().spawnEntity(l, EntityType.EGG);
-        for (Entity e : egg.getNearbyEntities(16.0d, 16.0d, 16.0d)) {
-            if (e instanceof Player) {
-                Player pp = (Player) e;
-                pp.playSound(pp.getLocation(), s, VOLUME, 1.0f);
-            }
-        }
-        // remove entity
-        egg.remove();
-    }
+//    /**
+//     * Attempts to play a TARDIS sound at an external location. Generally the
+//     * location is outside the TARDIS, so this will attempt to find rescued
+//     * players and players nearby to the TARDIS as it re-materialises.
+//     *
+//     * @param l The location to play the sound
+//     * @param s The sound to play
+//     */
+//    @SuppressWarnings("deprecation")
+//    public static void playTARDISSoundNearby(Location l, String s) {
+//        // spawn an entity at the location - an egg will do
+//        Entity egg = l.getWorld().spawnEntity(l, EntityType.EGG);
+//        for (Entity e : egg.getNearbyEntities(16.0d, 16.0d, 16.0d)) {
+//            if (e instanceof Player) {
+//                Player pp = (Player) e;
+//                pp.playSound(pp.getLocation(), s, VOLUME, 1.0f);
+//            }
+//        }
+//        // remove entity
+//        egg.remove();
+//        l.getWorld().playSound(l, s, VOLUME, 1.0f);
+//    }
 }

@@ -68,7 +68,7 @@ public class TARDISPowerButton {
                 TARDISMessage.send(player, "POWER_NO");
                 return;
             }
-            TARDISSounds.playTARDISSound(loc, player, "power_down");
+            TARDISSounds.playTARDISSound(loc, "power_down");
             // power down
             setp.put("powered_on", 0);
             TARDISMessage.send(player, "POWER_OFF");
@@ -100,7 +100,7 @@ public class TARDISPowerButton {
                 TARDISMessage.send(player, "POWER_LOW");
                 return;
             }
-            TARDISSounds.playTARDISSound(loc, player, "power_up");
+            TARDISSounds.playTARDISSound(loc, "power_up");
             // power up
             setp.put("powered_on", 1);
             TARDISMessage.send(player, "POWER_ON");

@@ -173,7 +173,7 @@ public class TARDISHandbrakeListener implements Listener {
                                             TARDISMessage.send(player, "DOOR_CLOSE");
                                             return;
                                         }
-                                        TARDISSounds.playTARDISSound(handbrake_loc, player, "tardis_handbrake_release");
+                                        TARDISSounds.playTARDISSound(handbrake_loc, "tardis_handbrake_release");
                                         if (!beac_on && !beacon.isEmpty()) {
                                             toggleBeacon(beacon, true);
                                         }
@@ -219,13 +219,13 @@ public class TARDISHandbrakeListener implements Listener {
                                                         plugin.getTrackerKeeper().getHasDestination().remove(id);
                                                     }
                                                     // play tardis crash sound
-                                                    TARDISSounds.playTARDISSound(handbrake_loc, player, "tardis_malfunction");
+                                                    TARDISSounds.playTARDISSound(handbrake_loc, "tardis_malfunction");
                                                     // add a potion effect to the player
                                                     player.addPotionEffect(new PotionEffect(PotionEffectType.CONFUSION, 150, 5));
                                                     plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
                                                         @Override
                                                         public void run() {
-                                                            TARDISSounds.playTARDISSound(handbrake_loc, player, "tardis_cloister_bell");
+                                                            TARDISSounds.playTARDISSound(handbrake_loc, "tardis_cloister_bell");
                                                         }
                                                     }, 300L);
                                                 } else {
@@ -252,11 +252,7 @@ public class TARDISHandbrakeListener implements Listener {
                                             set.put("handbrake_on", 0);
                                             TARDISMessage.send(player, "HANDBRAKE_OFF");
                                             if (!minecart) {
-                                                TARDISSounds.playTARDISSound(handbrake_loc, player, "tardis_takeoff");
-                                                // play sound at current TARDIS location
-                                                if (l != null) {
-                                                    TARDISSounds.playTARDISSoundNearby(l, "tardis_takeoff");
-                                                }
+                                                TARDISSounds.playTARDISSound(handbrake_loc, "tardis_takeoff");
                                             } else {
                                                 handbrake_loc.getWorld().playSound(handbrake_loc, Sound.ENTITY_MINECART_INSIDE, 1.0F, 0.0F);
                                             }
@@ -323,8 +319,7 @@ public class TARDISHandbrakeListener implements Listener {
                                                     Location final_location = m_data.getLocation();
                                                     plugin.getPresetBuilder().buildPreset(m_data);
                                                     if (!mine_sound) {
-                                                        TARDISSounds.playTARDISSound(handbrake_loc, player, "tardis_land");
-                                                        TARDISSounds.playTARDISSoundNearby(final_location, "tardis_land");
+                                                        TARDISSounds.playTARDISSound(handbrake_loc, "tardis_land");
                                                     } else {
                                                         handbrake_loc.getWorld().playSound(handbrake_loc, Sound.ENTITY_MINECART_INSIDE, 1.0F, 0.0F);
                                                     }
@@ -406,7 +401,7 @@ public class TARDISHandbrakeListener implements Listener {
                             }
                             if (action == Action.LEFT_CLICK_BLOCK) {
                                 if (!rs.isHandbrake_on()) {
-                                    TARDISSounds.playTARDISSound(handbrake_loc, player, "tardis_handbrake_engage");
+                                    TARDISSounds.playTARDISSound(handbrake_loc, "tardis_handbrake_engage");
                                     // Changes the lever to on
                                     lever.setPowered(true);
                                     state.setData(lever);

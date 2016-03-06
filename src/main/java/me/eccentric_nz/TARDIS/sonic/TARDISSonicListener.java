@@ -536,7 +536,7 @@ public class TARDISSonicListener implements Listener {
             }
             player.getInventory().getItemInMainHand().setItemMeta(im);
             timeout.put(player.getUniqueId(), now + cooldown);
-            TARDISSounds.playTARDISSound(player.getLocation(), player, sound);
+            TARDISSounds.playTARDISSound(player.getLocation(), sound);
             plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
                 @Override
                 public void run() {

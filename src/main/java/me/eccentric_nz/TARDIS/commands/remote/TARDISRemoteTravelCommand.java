@@ -116,7 +116,7 @@ public class TARDISRemoteTravelCommand {
                 @Override
                 public void run() {
                     plugin.getPresetBuilder().buildPreset(pbd);
-                    TARDISSounds.playTARDISSoundNearby(pbd.getLocation(), "tardis_land");
+                    TARDISSounds.playTARDISSound(pbd.getLocation(), "tardis_land");
                 }
             }, delay);
             if (plugin.getTrackerKeeper().getDamage().containsKey(id)) {

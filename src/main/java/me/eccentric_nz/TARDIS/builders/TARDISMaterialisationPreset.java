@@ -187,7 +187,7 @@ public class TARDISMaterialisationPreset implements Runnable {
                     where.put("tardis_id", tmd.getTardisID());
                     if (tmd.isOutside()) {
                         if (!minecart) {
-                            TARDISSounds.playTARDISSound(tmd.getLocation(), tmd.getPlayer().getPlayer(), "tardis_land");
+                            TARDISSounds.playTARDISSound(tmd.getLocation(), "tardis_land");
                         } else {
                             world.playSound(tmd.getLocation(), Sound.ENTITY_MINECART_INSIDE, 1.0F, 0.0F);
                         }

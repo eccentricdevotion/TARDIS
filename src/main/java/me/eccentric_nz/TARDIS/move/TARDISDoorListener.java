@@ -146,7 +146,7 @@ public class TARDISDoorListener {
                     if (p.isPlayerTimeRelative()) {
                         setTemporalLocation(p, -1);
                     }
-                    TARDISSounds.playTARDISSound(p.getLocation(), p, "tardis_hum");
+                    TARDISSounds.playTARDISSound(p.getLocation(), "tardis_hum");
                 }
                 // give a key
                 giveKey(p);
@@ -365,21 +365,21 @@ public class TARDISDoorListener {
         switch (sound) {
             case 1:
                 if (!m) {
-                    TARDISSounds.playTARDISSound(l, p, "tardis_door_open");
+                    TARDISSounds.playTARDISSound(l, "tardis_door_open");
                 } else {
                     p.playSound(p.getLocation(), Sound.BLOCK_IRON_DOOR_OPEN, 1.0F, 1.0F);
                 }
                 break;
             case 2:
                 if (!m) {
-                    TARDISSounds.playTARDISSound(l, p, "tardis_door_close");
+                    TARDISSounds.playTARDISSound(l, "tardis_door_close");
                 } else {
                     p.playSound(p.getLocation(), Sound.BLOCK_IRON_DOOR_OPEN, 1.0F, 1.0F);
                 }
                 break;
             case 3:
                 if (!m) {
-                    TARDISSounds.playTARDISSound(l, p, "tardis_enter");
+                    TARDISSounds.playTARDISSound(l, "tardis_enter");
                 } else {
                     p.playSound(p.getLocation(), Sound.ENTITY_ENDERMEN_TELEPORT, 1.0F, 1.0F);
                 }

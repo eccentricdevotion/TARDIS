@@ -114,7 +114,7 @@ public class TARDISRemoteKeyListener implements Listener {
                     String message = (rsd.isLocked()) ? plugin.getLanguage().getString("DOOR_UNLOCK") : plugin.getLanguage().getString("DOOR_DEADLOCK");
                     TARDISMessage.send(player, "DOOR_LOCK", message);
                     final TARDISPoliceBoxLampToggler tpblt = new TARDISPoliceBoxLampToggler(plugin);
-                    TARDISSounds.playTARDISSoundNearby(l, "tardis_lock");
+                    TARDISSounds.playTARDISSound(l, "tardis_lock");
                     tpblt.toggleLamp(id, !powered);
                     plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
                         @Override
@@ -139,15 +139,15 @@ public class TARDISRemoteKeyListener implements Listener {
                     TARDISMessage.send(player, message);
                 }
             } else // toggle hidden
-            if (hidden) {
-                // rebuild
-                TARDISSounds.playTARDISSound(player.getLocation(), player, "tardis_rebuild");
-                new TARDISRebuildCommand(plugin).rebuildPreset(player);
-            } else {
-                // hide
-                TARDISSounds.playTARDISSound(player.getLocation(), player, "tardis_hide");
-                new TARDISHideCommand(plugin).hide(player);
-            }
+             if (hidden) {
+                    // rebuild
+                    TARDISSounds.playTARDISSound(player.getLocation(), "tardis_rebuild");
+                    new TARDISRebuildCommand(plugin).rebuildPreset(player);
+                } else {
+                    // hide
+                    TARDISSounds.playTARDISSound(player.getLocation(), "tardis_hide");
+                    new TARDISHideCommand(plugin).hide(player);
+                }
         }
     }
 }

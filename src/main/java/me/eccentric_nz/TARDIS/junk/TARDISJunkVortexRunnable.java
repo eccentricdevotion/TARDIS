@@ -71,12 +71,12 @@ public class TARDISJunkVortexRunnable implements Runnable {
             }
             if (i == 2) {
                 // play sound
-                for (Entity e : getJunkTravellers()) {
-                    if (e instanceof Player) {
-                        Player p = (Player) e;
-                        TARDISSounds.playTARDISSound(vortexJunkLoc, p, "junk_arc");
-                    }
-                }
+//                for (Entity e : getJunkTravellers()) {
+//                    if (e instanceof Player) {
+//                        Player p = (Player) e;
+                TARDISSounds.playTARDISSound(vortexJunkLoc, "junk_arc");
+//                    }
+//                }
             }
             if (i == loops - 1) {
                 // build the TARDIS at the location

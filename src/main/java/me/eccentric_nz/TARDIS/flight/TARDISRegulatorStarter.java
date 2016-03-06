@@ -47,6 +47,6 @@ public class TARDISRegulatorStarter implements Runnable {
         inv.setContents(items);
         player.openInventory(inv);
         // play inflight sound
-        TARDISSounds.playTARDISSound(player.getLocation(), player, "interior_flight");
+        TARDISSounds.playTARDISSound(player.getLocation(), "interior_flight");
     }
 }

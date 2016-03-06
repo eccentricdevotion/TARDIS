@@ -224,13 +224,13 @@ public class TARDISRandomButton {
                                     plugin.getTrackerKeeper().getHasDestination().remove(id);
                                 }
                                 // play tardis crash sound
-                                TARDISSounds.playTARDISSound(handbrake_loc, player, "tardis_malfunction");
+                                TARDISSounds.playTARDISSound(handbrake_loc, "tardis_malfunction");
                                 // add a potion effect to the player
                                 player.addPotionEffect(new PotionEffect(PotionEffectType.CONFUSION, 150, 5));
                                 plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
                                     @Override
                                     public void run() {
-                                        TARDISSounds.playTARDISSound(handbrake_loc, player, "tardis_cloister_bell");
+                                        TARDISSounds.playTARDISSound(handbrake_loc, "tardis_cloister_bell");
                                     }
                                 }, 300L);
                             } else {

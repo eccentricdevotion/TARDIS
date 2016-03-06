@@ -246,7 +246,7 @@ public class TARDISMonsterRunnable implements Runnable {
             where.put("tardis_id", tpl.getTardisId());
             ResultSetTravellers rs = new ResultSetTravellers(plugin, where, false);
             if (rs.resultSet()) {
-                TARDISSounds.playTARDISSoundNearby(loc, "tardis_cloister_bell");
+                TARDISSounds.playTARDISSound(loc, "tardis_cloister_bell");
             } else {
                 // else message the Time Lord
                 HashMap<String, Object> wheret = new HashMap<String, Object>();
