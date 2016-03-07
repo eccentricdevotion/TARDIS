@@ -95,7 +95,11 @@ public class TARDISCommands implements CommandExecutor {
                     return true;
                 }
                 if (args[0].equalsIgnoreCase("add")) {
-                    return new TARDISAddCompanionCommand(plugin).doAdd(player, args);
+                    if (args.length == 1) {
+                        return new TARDISAddCompanionCommand(plugin).doAddGUI(player);
+                    } else {
+                        return new TARDISAddCompanionCommand(plugin).doAdd(player, args);
+                    }
                 }
                 if (args[0].equalsIgnoreCase("arch_time")) {
                     return new TARDISArchCommand(plugin).getTime(player);

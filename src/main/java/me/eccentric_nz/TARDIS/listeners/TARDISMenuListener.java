@@ -70,12 +70,14 @@ public class TARDISMenuListener {
 
     public final HashMap<String, Integer> getTitleMap() {
         HashMap<String, Integer> map = new HashMap<String, Integer>();
+        map.put("§4Add Companion", 54);
         map.put("§4Admin Menu", 54);
         map.put("§4Architectural Reconfiguration", 54);
         map.put("§4Chameleon Circuit", 54);
         map.put("§4Chameleon Construction", 18);
         map.put("§4Chameleon Help", 54);
         map.put("§4Chameleon Template", 54);
+        map.put("§4Companions", 54);
         map.put("§4Destination Terminal", 54);
         map.put("§4Even More Presets", 54);
         map.put("§4Genetic Manipulator", 54);

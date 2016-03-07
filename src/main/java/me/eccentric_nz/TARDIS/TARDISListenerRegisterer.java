@@ -42,6 +42,8 @@ import me.eccentric_nz.TARDIS.chameleon.TARDISPresetListener;
 import me.eccentric_nz.TARDIS.commands.admin.TARDISAdminMenuListener;
 import me.eccentric_nz.TARDIS.commands.preferences.TARDISKeyMenuListener;
 import me.eccentric_nz.TARDIS.commands.preferences.TARDISPrefsMenuListener;
+import me.eccentric_nz.TARDIS.companionGUI.TARDISCompanionAddGUIListener;
+import me.eccentric_nz.TARDIS.companionGUI.TARDISCompanionGUIListener;
 import me.eccentric_nz.TARDIS.control.TARDISControlMenuListener;
 import me.eccentric_nz.TARDIS.desktop.TARDISThemeMenuListener;
 import me.eccentric_nz.TARDIS.desktop.TARDISWallMenuListener;
@@ -208,6 +210,8 @@ public class TARDISListenerRegisterer {
         if (plugin.getConfig().getBoolean("circuits.damage")) {
             plugin.getPM().registerEvents(new TARDISCircuitRepairListener(plugin), plugin);
         }
+        plugin.getPM().registerEvents(new TARDISCompanionGUIListener(plugin), plugin);
+        plugin.getPM().registerEvents(new TARDISCompanionAddGUIListener(plugin), plugin);
         plugin.getPM().registerEvents(new TARDISCondenserListener(plugin), plugin);
         plugin.getPM().registerEvents(new TARDISConsoleCloseListener(plugin), plugin);
         plugin.getPM().registerEvents(new TARDISConsoleListener(plugin), plugin);

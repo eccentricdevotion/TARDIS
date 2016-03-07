@@ -19,14 +19,16 @@ package me.eccentric_nz.TARDIS.utility;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Set;
-import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.companionGUI.TARDISCompanionInventory;
 import me.eccentric_nz.TARDIS.database.ResultSetAreas;
 import me.eccentric_nz.TARDIS.database.ResultSetDestinations;
 import me.eccentric_nz.TARDIS.database.ResultSetHomeLocation;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.Inventory;
+import org.bukkit.inventory.ItemStack;
 
 /**
  * The Zygons are a race of metamorphic humanoids. They originated from the
@@ -125,11 +127,11 @@ public class TARDISLister {
                     String comps = rst.getCompanions();
                     if (comps != null && !comps.isEmpty()) {
                         String[] companionData = comps.split(":");
-                        p.sendMessage(ChatColor.AQUA + plugin.getLanguage().getString("COMPANIONS"));
-                        for (String c : companionData) {
-                            String com = plugin.getServer().getOfflinePlayer(UUID.fromString(c)).getName();
-                            p.sendMessage(ChatColor.AQUA + com);
-                        }
+                        ItemStack[] heads = new TARDISCompanionInventory(plugin, companionData).getSkulls();
+                        // open the GUI
+                        Inventory inv = plugin.getServer().createInventory(p, 54, "§4Companions");
+                        inv.setContents(heads);
+                        p.openInventory(inv);
                     } else {
                         TARDISMessage.send(p, "COMPANIONS_NONE");
                     }

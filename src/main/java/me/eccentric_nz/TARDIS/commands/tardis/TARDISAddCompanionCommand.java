@@ -21,12 +21,15 @@ import java.util.Locale;
 import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.achievement.TARDISAchievementFactory;
+import me.eccentric_nz.TARDIS.companionGUI.TARDISCompanionAddInventory;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import org.bukkit.ChatColor;
 import org.bukkit.World;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.Inventory;
+import org.bukkit.inventory.ItemStack;
 
 /**
  *
@@ -38,6 +41,18 @@ public class TARDISAddCompanionCommand {
 
     public TARDISAddCompanionCommand(TARDIS plugin) {
         this.plugin = plugin;
+    }
+
+    public boolean doAddGUI(Player player) {
+        if (player.hasPermission("tardis.add")) {
+            ItemStack[] items = new TARDISCompanionAddInventory(plugin, player.getUniqueId()).getPlayers();
+            Inventory presetinv = plugin.getServer().createInventory(player, 54, "§4Add Companion");
+            presetinv.setContents(items);
+            player.openInventory(presetinv);
+        } else {
+            TARDISMessage.send(player, "NO_PERMS");
+        }
+        return true;
     }
 
     public boolean doAdd(Player player, String[] args) {
