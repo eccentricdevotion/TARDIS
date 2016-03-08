@@ -505,7 +505,7 @@
         <dependency>
             <groupId>com.comphenix.protocol</groupId>
             <artifactId>ProtocolLib</artifactId>
-            <version>3.7-SNAPSHOT</version>
+            <version>3.7.0-BETA</version>
             <exclusions>
                 <exclusion>
                     <artifactId>BukkitExecutors</artifactId>
