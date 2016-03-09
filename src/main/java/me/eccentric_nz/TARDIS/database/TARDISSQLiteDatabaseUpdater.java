@@ -80,7 +80,7 @@ public class TARDISSQLiteDatabaseUpdater {
         prefsupdates.add("flying_mode INTEGER DEFAULT 1");
         prefsupdates.add("hads_on INTEGER DEFAULT 1");
         prefsupdates.add("key TEXT DEFAULT ''");
-        prefsupdates.add("lamp INTEGER");
+        prefsupdates.add("lamp TEXT DEFAULT ''");
         prefsupdates.add("language TEXT DEFAULT 'AUTO_DETECT'");
         prefsupdates.add("lanterns_on INTEGER DEFAULT 0");
         prefsupdates.add("minecart_on INTEGER DEFAULT 0");
@@ -211,9 +211,10 @@ public class TARDISSQLiteDatabaseUpdater {
                 String p_query = "SELECT sql FROM sqlite_master WHERE tbl_name = '" + prefix + "player_prefs' AND sql LIKE '%" + pcheck + "%'";
                 ResultSet rsp = statement.executeQuery(p_query);
                 if (!rsp.next()) {
-                    String couldBeDuplicate = (p.equals("lamp INTEGER")) ? "lamp TEXT DEFAULT ''" : p;
-                    i++;
-                    String p_alter = "ALTER TABLE " + prefix + "player_prefs ADD " + couldBeDuplicate;
+                    if (!p.equals("lamp TEXT DEFAULT ''")) {
+                        i++;
+                    }
+                    String p_alter = "ALTER TABLE " + prefix + "player_prefs ADD " + p;
                     statement.executeUpdate(p_alter);
                 }
             }

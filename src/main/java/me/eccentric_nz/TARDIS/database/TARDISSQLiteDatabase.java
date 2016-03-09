@@ -189,9 +189,9 @@ public class TARDISSQLiteDatabase {
             dbu.updateTables();
 
             // change RAISED preset to SWAMP
-            String queryRaisedPreset = "UPDATE tardis SET " + prefix + "chameleon_preset = 'SWAMP' WHERE chameleon_preset = 'RAISED'";
+            String queryRaisedPreset = "UPDATE " + prefix + "tardis SET chameleon_preset = 'SWAMP' WHERE chameleon_preset = 'RAISED'";
             statement.executeUpdate(queryRaisedPreset);
-            String queryRaisedDemat = "UPDATE tardis SET " + prefix + "chameleon_demat = 'SWAMP' WHERE chameleon_demat = 'RAISED'";
+            String queryRaisedDemat = "UPDATE " + prefix + "tardis SET chameleon_demat = 'SWAMP' WHERE chameleon_demat = 'RAISED'";
             statement.executeUpdate(queryRaisedDemat);
 
         } catch (SQLException e) {
