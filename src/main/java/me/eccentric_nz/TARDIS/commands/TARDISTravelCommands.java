@@ -752,6 +752,10 @@ public class TARDISTravelCommands implements CommandExecutor {
     }
 
     public Location searchBiome(Player p, int id, Biome b, World w, int startx, int startz) {
+        if (b == null) {
+            TARDISMessage.send(p, "BIOME_NOT_VALID");
+            return null;
+        }
         HashMap<String, Object> wherecl = new HashMap<String, Object>();
         wherecl.put("tardis_id", id);
         ResultSetCurrentLocation rsc = new ResultSetCurrentLocation(plugin, wherecl);

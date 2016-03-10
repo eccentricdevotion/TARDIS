@@ -24,6 +24,7 @@ import java.util.HashMap;
 import java.util.Map;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
+import me.eccentric_nz.TARDIS.enumeration.TARDISOldBiomeLookup;
 import me.eccentric_nz.TARDIS.utility.TARDISNumberParsers;
 import org.bukkit.World;
 import org.bukkit.block.Biome;
@@ -113,7 +114,12 @@ public class ResultSetCurrentLocation {
                     try {
                         this.biome = Biome.valueOf(rs.getString("biome"));
                     } catch (IllegalArgumentException e) {
-                        this.biome = null;
+                        // may have a pre-1.9 biome stored so do old biome lookup...
+                        if (TARDISOldBiomeLookup.OLD_BIOME_LOOKUP.containsKey(rs.getString("biome"))) {
+                            biome = TARDISOldBiomeLookup.OLD_BIOME_LOOKUP.get(rs.getString("biome"));
+                        } else {
+                            this.biome = null;
+                        }
                     }
                 }
             } else {

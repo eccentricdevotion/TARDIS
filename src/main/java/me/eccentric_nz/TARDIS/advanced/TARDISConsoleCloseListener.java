@@ -31,6 +31,7 @@ import me.eccentric_nz.TARDIS.database.ResultSetTravellers;
 import me.eccentric_nz.TARDIS.enumeration.DIFFICULTY;
 import me.eccentric_nz.TARDIS.enumeration.DISK_CIRCUIT;
 import me.eccentric_nz.TARDIS.enumeration.FLAG;
+import me.eccentric_nz.TARDIS.enumeration.TARDISOldBiomeLookup;
 import me.eccentric_nz.TARDIS.travel.TARDISRandomiserCircuit;
 import me.eccentric_nz.TARDIS.travel.TARDISRescue;
 import me.eccentric_nz.TARDIS.travel.TARDISTimeTravel;
@@ -167,42 +168,48 @@ public class TARDISConsoleCloseListener implements Listener {
                                             if (current.getBlock().getBiome().toString().equals(first)) {
                                                 continue;
                                             }
+                                            Biome biome;
                                             try {
-                                                Biome biome = Biome.valueOf(first);
-                                                TARDISMessage.send(p, "BIOME_SEARCH");
-                                                Location nsob = plugin.getGeneralKeeper().getTardisTravelCommand().searchBiome(p, id, biome, rsc.getWorld(), rsc.getX(), rsc.getZ());
-                                                if (nsob == null) {
-                                                    TARDISMessage.send(p, "BIOME_NOT_FOUND");
-                                                    continue;
-                                                } else {
-                                                    if (!plugin.getPluginRespect().getRespect(nsob, new Parameters(p, FLAG.getDefaultFlags()))) {
-                                                        continue;
-                                                    }
-                                                    World bw = nsob.getWorld();
-                                                    // check location
-                                                    while (!bw.getChunkAt(nsob).isLoaded()) {
-                                                        bw.getChunkAt(nsob).load();
-                                                    }
-                                                    int[] start_loc = TARDISTimeTravel.getStartLocation(nsob, rsc.getDirection());
-                                                    int tmp_y = nsob.getBlockY();
-                                                    for (int up = 0; up < 10; up++) {
-                                                        int count = TARDISTimeTravel.safeLocation(start_loc[0], tmp_y + up, start_loc[2], start_loc[1], start_loc[3], nsob.getWorld(), rsc.getDirection());
-                                                        if (count == 0) {
-                                                            nsob.setY(tmp_y + up);
-                                                            break;
-                                                        }
-                                                    }
-                                                    set_next.put("world", nsob.getWorld().getName());
-                                                    set_next.put("x", nsob.getBlockX());
-                                                    set_next.put("y", nsob.getBlockY());
-                                                    set_next.put("z", nsob.getBlockZ());
-                                                    set_next.put("direction", rsc.getDirection().toString());
-                                                    set_next.put("submarine", 0);
-                                                    TARDISMessage.send(p, "BIOME_SET", true);
-                                                }
+                                                biome = Biome.valueOf(first);
                                             } catch (IllegalArgumentException iae) {
-                                                TARDISMessage.send(p, "BIOME_NOT_VALID");
+                                                // may have a pre-1.9 biome disk do old biome lookup...
+                                                if (TARDISOldBiomeLookup.OLD_BIOME_LOOKUP.containsKey(first)) {
+                                                    biome = TARDISOldBiomeLookup.OLD_BIOME_LOOKUP.get(first);
+                                                } else {
+                                                    TARDISMessage.send(p, "BIOME_NOT_VALID");
+                                                    continue;
+                                                }
+                                            }
+                                            TARDISMessage.send(p, "BIOME_SEARCH");
+                                            Location nsob = plugin.getGeneralKeeper().getTardisTravelCommand().searchBiome(p, id, biome, rsc.getWorld(), rsc.getX(), rsc.getZ());
+                                            if (nsob == null) {
+                                                TARDISMessage.send(p, "BIOME_NOT_FOUND");
                                                 continue;
+                                            } else {
+                                                if (!plugin.getPluginRespect().getRespect(nsob, new Parameters(p, FLAG.getDefaultFlags()))) {
+                                                    continue;
+                                                }
+                                                World bw = nsob.getWorld();
+                                                // check location
+                                                while (!bw.getChunkAt(nsob).isLoaded()) {
+                                                    bw.getChunkAt(nsob).load();
+                                                }
+                                                int[] start_loc = TARDISTimeTravel.getStartLocation(nsob, rsc.getDirection());
+                                                int tmp_y = nsob.getBlockY();
+                                                for (int up = 0; up < 10; up++) {
+                                                    int count = TARDISTimeTravel.safeLocation(start_loc[0], tmp_y + up, start_loc[2], start_loc[1], start_loc[3], nsob.getWorld(), rsc.getDirection());
+                                                    if (count == 0) {
+                                                        nsob.setY(tmp_y + up);
+                                                        break;
+                                                    }
+                                                }
+                                                set_next.put("world", nsob.getWorld().getName());
+                                                set_next.put("x", nsob.getBlockX());
+                                                set_next.put("y", nsob.getBlockY());
+                                                set_next.put("z", nsob.getBlockZ());
+                                                set_next.put("direction", rsc.getDirection().toString());
+                                                set_next.put("submarine", 0);
+                                                TARDISMessage.send(p, "BIOME_SET", true);
                                             }
                                             break;
                                         case RECORD_12: // player
