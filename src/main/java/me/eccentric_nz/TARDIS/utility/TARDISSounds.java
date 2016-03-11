@@ -81,7 +81,7 @@ public class TARDISSounds {
     public static void playTARDISSound(Location l, String s) {
         try {
             l.getWorld().playSound(l, s, VOLUME, 1.0f);
-        } catch (Exception ex) {
+        } catch (NoSuchMethodError ex) {
             // spawn an entity at the location - an exp orb will do
             Entity orb = l.getWorld().spawnEntity(l, EntityType.EXPERIENCE_ORB);
             for (Entity e : orb.getNearbyEntities(16.0d, 16.0d, 16.0d)) {
@@ -92,6 +92,7 @@ public class TARDISSounds {
             }
             // remove entity
             orb.remove();
+            TARDISMessage.message(TARDIS.plugin.getConsole(), "Sound method not found, please update Spigot / CraftBukkit using BuildTools!");
         }
     }
 }

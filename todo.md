@@ -10,7 +10,8 @@
    * `/tprefs junk [on|off]`
    * `/tprefs junk [wall|floor] [block_type]`
 5. Telepathic circuit [#1174](http://dev.bukkit.org/bukkit-plugins/tardis/tickets/1174-tardis-commands-applies-to-the-one-which-you-are-in/#comments)
-6. Fix bugs!
+6. TIPS visulisation tool (using WorldGuard region data)
+7. Fix bugs!
 
 ##Upcoming version `3.6`
 * TARDISSonicBlaster addon?

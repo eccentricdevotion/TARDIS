@@ -16,7 +16,6 @@
  */
 package me.eccentric_nz.TARDIS.builders;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
@@ -667,9 +666,9 @@ public class TARDISMaterialisationPreset implements Runnable {
 
     public void setBiome(World world, int x, int z) {
         if (plugin.getConfig().getBoolean("police_box.set_biome") && (preset.equals(PRESET.NEW) || preset.equals(PRESET.OLD) || preset.equals(PRESET.PANDORICA))) {
-            List<Chunk> chunks = new ArrayList<Chunk>();
+            //List<Chunk> chunks = new ArrayList<Chunk>();
             Chunk chunk = tmd.getLocation().getChunk();
-            chunks.add(chunk);
+            //chunks.add(chunk);
             // load the chunk
             if (!world.loadChunk(tmd.getLocation().getBlockX(), tmd.getLocation().getBlockZ(), false)) {
                 world.loadChunk(tmd.getLocation().getBlockX(), tmd.getLocation().getBlockZ(), true);
