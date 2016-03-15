@@ -24,7 +24,6 @@ import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import me.eccentric_nz.TARDIS.utility.TARDISTownyChecker;
 import me.eccentric_nz.TARDIS.utility.TARDISVanillaBorderChecker;
 import me.eccentric_nz.TARDIS.utility.TARDISWorldBorderChecker;
-import me.eccentric_nz.TARDIS.utility.Version;
 import org.bukkit.Location;
 import org.bukkit.World.Environment;
 import org.bukkit.WorldBorder;
@@ -179,14 +178,8 @@ public class TARDISPluginRespect {
      */
     public void loadFactions() {
         if (plugin.getPM().getPlugin("Factions") != null) {
-            Version version = new Version(plugin.getPM().getPlugin("Factions").getDescription().getVersion());
-            Version min_version = new Version("2.0");
-            if (version.compareTo(min_version) >= 0) {
-                factionsOnServer = true;
-                factionschk = new TARDISFactionsChecker(plugin);
-            } else {
-                plugin.getConsole().sendMessage(plugin.getPluginName() + "This version of TARDIS is not compatible with Factions " + version.toString() + ", please update to Factions 2.0 or higher.");
-            }
+            factionsOnServer = true;
+            factionschk = new TARDISFactionsChecker(plugin);
         }
     }
 

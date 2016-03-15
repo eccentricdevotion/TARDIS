@@ -179,7 +179,7 @@ public class TARDIS extends JavaPlugin {
         this.helperOnServer = false;
         this.mvOnServer = false;
         this.versions.put("Citizens", "2.0.17");
-        this.versions.put("Factions", "2.7.4");
+        this.versions.put("Factions", "2.8.7");
         this.versions.put("GriefPrevention", "10");
         this.versions.put("LibsDisguises", "9.0.0");
         this.versions.put("MultiWorld", "5.2");
@@ -397,6 +397,8 @@ public class TARDIS extends JavaPlugin {
                 Version ver;
                 if (check.getName().equals("TARDISChunkGenerator") && check.getDescription().getVersion().startsWith("1")) {
                     ver = new Version("1");
+                } else if (check.getName().equals("Factions") && check.getDescription().getVersion().endsWith("Beta")) {
+                    ver = new Version(split[0].substring(0, split[0].length() - 4));
                 } else {
                     ver = new Version(split[0]);
                 }
