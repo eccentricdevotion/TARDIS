@@ -4,7 +4,7 @@
 1. Update for Minecraft 1.9!
    * Allow dual wielding TARDIS items?
    * VOID biome - use for MCPatcher texture changes instead of The End / SKY? _(Need to wait for MCPatcher to update)_
-2. `/tprefs policebox_textures [on|off]` [#1184](http://dev.bukkit.org/bukkit-plugins/tardis/tickets/1184-player-preference-for-setting-biome/)
+2. `/tprefs policebox_textures [on|off]` [#1184](http://dev.bukkit.org/bukkit-plugins/tardis/tickets/1184-player-preference-for-setting-biome/) - _started_
 3. Hostile Action Dispersal System [#1150](http://dev.bukkit.org/bukkit-plugins/tardis/tickets/1150-hads2-hostile-action-dispersal-system/)
 4. TARDIS Junk Mode [#1157](http://dev.bukkit.org/bukkit-plugins/tardis/tickets/1157-normal-tardis-junk-mode/)
    * `/tprefs junk [on|off]`

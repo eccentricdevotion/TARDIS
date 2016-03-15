@@ -319,7 +319,7 @@ public class TARDISLazarusGUIListener extends TARDISMenuListener implements List
                                             break;
                                         case BAT:
                                             BatWatcher bw = (BatWatcher) livingWatcher;
-                                            bw.setFlying(getBoolean(inv));
+                                            bw.setHanging(!getBoolean(inv));
                                             break;
                                         case BLAZE:
                                             BlazeWatcher bbw = (BlazeWatcher) livingWatcher;
