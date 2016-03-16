@@ -80,10 +80,10 @@ public class TARDISSQLiteDatabaseUpdater {
         prefsupdates.add("flying_mode INTEGER DEFAULT 1");
         prefsupdates.add("hads_on INTEGER DEFAULT 1");
         prefsupdates.add("key TEXT DEFAULT ''");
-        prefsupdates.add("lamp TEXT DEFAULT ''");
         prefsupdates.add("language TEXT DEFAULT 'AUTO_DETECT'");
         prefsupdates.add("lanterns_on INTEGER DEFAULT 0");
         prefsupdates.add("minecart_on INTEGER DEFAULT 0");
+        prefsupdates.add("policebox_textures_on INTEGER DEFAULT 1");
         prefsupdates.add("renderer_on INTEGER DEFAULT 1");
         prefsupdates.add("siege_floor TEXT DEFAULT 'BLACK_CLAY'");
         prefsupdates.add("siege_wall TEXT DEFAULT 'GREY_CLAY'");
@@ -211,12 +211,27 @@ public class TARDISSQLiteDatabaseUpdater {
                 String p_query = "SELECT sql FROM sqlite_master WHERE tbl_name = '" + prefix + "player_prefs' AND sql LIKE '%" + pcheck + "%'";
                 ResultSet rsp = statement.executeQuery(p_query);
                 if (!rsp.next()) {
-                    if (!p.equals("lamp TEXT DEFAULT ''")) {
-                        i++;
-                    }
+                    i++;
                     String p_alter = "ALTER TABLE " + prefix + "player_prefs ADD " + p;
                     statement.executeUpdate(p_alter);
                 }
+            }
+            String lamp_query1 = "SELECT sql FROM sqlite_master WHERE tbl_name = '" + prefix + "player_prefs' AND sql LIKE '%lamp TEXT%'";
+            boolean addlamp = false;
+            ResultSet lamp1 = statement.executeQuery(lamp_query1);
+            if (!lamp1.next()) {
+                addlamp = true;
+                // check again
+                String lamp_query2 = "SELECT sql FROM sqlite_master WHERE tbl_name = '" + prefix + "player_prefs' AND sql LIKE '%lamp INTEGER%'";
+                ResultSet lamp2 = statement.executeQuery(lamp_query2);
+                if (lamp2.next()) {
+                    addlamp = false;
+                }
+            }
+            if (addlamp) {
+                i++;
+                String lamp_alter = "ALTER TABLE " + prefix + "player_prefs ADD lamp TEXT DEFAULT ''";
+                statement.executeUpdate(lamp_alter);
             }
             for (String t : tardisupdates) {
                 String[] tsplit = t.split(" ");

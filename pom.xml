@@ -15,7 +15,6 @@
     </properties>
     <url>http://eccentricdevotion.github.com/TARDIS/</url>
     <repositories>
-        <!--
         <repository>
             <id>Spigot</id>
             <url>https://hub.spigotmc.org/nexus/content/groups/public/</url>
@@ -28,7 +27,10 @@
             <id>macgeek</id>
             <url>http://tardisjenkins.duckdns.org:8888</url>
         </repository>
-        -->
+        <repository>
+            <id>libsdisguises-repo</id>
+            <url>http://server.psmc.ca/repo/</url>
+        </repository>
         <repository>
             <id>dmulloy2-repo</id>
             <url>http://repo.dmulloy2.net/content/groups/public/</url>
@@ -38,10 +40,6 @@
             <url>http://repo.onarandombox.com/content/groups/public</url>
         </repository>
         <repository>
-            <id>libsdisguises-repo</id>
-            <url>http://server.psmc.ca/repo/</url>
-        </repository>
-        <repository>
             <id>sk89q-repo</id>
             <url>http://maven.sk89q.com/repo/</url>
         </repository>
@@ -49,18 +47,6 @@
             <id>citizens</id>
             <url>http://ci.citizensnpcs.co/plugin/repository/everything/</url>
         </repository>
-        <!--
-        <repository>
-            <id>mcstats.releases</id>
-            <name>mcstats.org releases</name>
-            <url>http://repo.mcstats.org/content/repositories/releases/</url>
-        </repository>
-        <repository>
-            <id>mcstats.snapshots</id>
-            <name>mcstats.org snapshots</name>
-            <url>http://repo.mcstats.org/content/repositories/snapshots/</url>
-        </repository>
-        -->
     </repositories>
     <scm>
         <connection>scm:git:ssh://github.com/eccentricdevotion/TARDIS</connection>
