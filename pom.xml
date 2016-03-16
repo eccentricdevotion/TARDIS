@@ -16,17 +16,23 @@
     <url>http://eccentricdevotion.github.com/TARDIS/</url>
     <repositories>
         <repository>
+            <id>macgeek</id>
+            <url>http://tardisjenkins.duckdns.org:8888</url>
+        </repository>
+        <repository>
+            <id>Bromley Massive</id>
+            <url>http://tardisjenkins.duckdns.org:8080/plugin/repository/everything/</url>
+        </repository>
+        <repository>
             <id>Spigot</id>
             <url>https://hub.spigotmc.org/nexus/content/groups/public/</url>
         </repository>
+        <!--
         <repository>
             <id>md-5</id>
             <url>http://repo.md-5.net/content/groups/public</url>
         </repository>
-        <repository>
-            <id>macgeek</id>
-            <url>http://tardisjenkins.duckdns.org:8888</url>
-        </repository>
+        -->
         <repository>
             <id>libsdisguises-repo</id>
             <url>http://server.psmc.ca/repo/</url>
@@ -541,11 +547,6 @@
             <groupId>org.swinglabs</groupId>
             <artifactId>swing-layout</artifactId>
             <version>1.0.3</version>
-        </dependency>
-        <dependency>
-            <groupId>de.slikey</groupId>
-            <artifactId>EffectLib</artifactId>
-            <version>3.8</version>
         </dependency>
     </dependencies>
 </project>
