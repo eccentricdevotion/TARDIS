@@ -122,7 +122,7 @@ public class TARDISDeleteCommand {
                 }
                 // destroy outer TARDIS
                 if (!hidden) {
-                    final TARDISMaterialisationData pdd = new TARDISMaterialisationData();
+                    final TARDISMaterialisationData pdd = new TARDISMaterialisationData(plugin, uuid.toString());
                     pdd.setChameleon(false);
                     pdd.setDirection(d);
                     pdd.setLocation(bb_loc);

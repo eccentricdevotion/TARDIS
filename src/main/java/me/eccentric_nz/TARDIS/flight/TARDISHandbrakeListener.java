@@ -154,12 +154,14 @@ public class TARDISHandbrakeListener implements Listener {
                             boolean beac_on = true;
                             boolean minecart = false;
                             boolean bar = false;
+                            boolean set_biome = true;
                             int flight_mode = 1;
                             if (rsp.resultSet()) {
                                 beac_on = rsp.isBeaconOn();
                                 minecart = rsp.isMinecartOn();
                                 flight_mode = rsp.getFlightMode();
                                 bar = rsp.isTravelbarOn();
+                                set_biome = rsp.isPoliceboxTexturesOn();
                             }
                             final QueryFactory qf = new QueryFactory(plugin);
                             if (action == Action.RIGHT_CLICK_BLOCK) {
@@ -268,7 +270,7 @@ public class TARDISHandbrakeListener implements Listener {
                                                 new TARDISTravelBar(plugin).showTravelRemaining(player, bar_time);
                                             }
                                             plugin.getTrackerKeeper().getInVortex().add(id);
-                                            final TARDISMaterialisationData pdd = new TARDISMaterialisationData();
+                                            final TARDISMaterialisationData pdd = new TARDISMaterialisationData(plugin, uuid.toString());
                                             pdd.setChameleon(cham);
                                             pdd.setDirection(cd);
                                             pdd.setLocation(l);
@@ -279,6 +281,7 @@ public class TARDISHandbrakeListener implements Listener {
                                             pdd.setSubmarine(sub);
                                             pdd.setTardisID(id);
                                             pdd.setBiome(biome);
+                                            pdd.setTexture(true);
                                             if (!hidden && !plugin.getTrackerKeeper().getReset().contains(resetw)) {
                                                 plugin.getTrackerKeeper().getDematerialising().add(id);
                                                 plugin.getPresetDestroyer().destroyPreset(pdd);
@@ -288,7 +291,7 @@ public class TARDISHandbrakeListener implements Listener {
                                                 plugin.getPresetDestroyer().removeBlockProtection(id, new QueryFactory(plugin));
                                             }
                                             // get destination flight data
-                                            final TARDISMaterialisationData pbd = new TARDISMaterialisationData();
+                                            final TARDISMaterialisationData pbd = new TARDISMaterialisationData(plugin, uuid.toString());
                                             pbd.setChameleon(cham);
                                             pbd.setDirection(sd);
                                             pbd.setLocation(exit);
@@ -301,6 +304,7 @@ public class TARDISHandbrakeListener implements Listener {
                                             pbd.setDistance(dist);
                                             pbd.setResetWorld(resetw);
                                             pbd.setFromLocation(l);
+                                            pbd.setTexture(set_biome);
                                             // remember flight data
                                             plugin.getTrackerKeeper().getFlightData().put(uuid, pbd);
                                             long delay = (mat) ? 500L : 10L;

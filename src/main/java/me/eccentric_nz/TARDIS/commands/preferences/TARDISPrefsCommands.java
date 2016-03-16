@@ -70,6 +70,7 @@ public class TARDISPrefsCommands implements CommandExecutor {
         firstArgs.add("language");
         firstArgs.add("lanterns");
         firstArgs.add("minecart");
+        firstArgs.add("policebox_textures");
         firstArgs.add("quotes");
         firstArgs.add("renderer");
         firstArgs.add("sfx");

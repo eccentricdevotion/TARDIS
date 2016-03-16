@@ -31,7 +31,7 @@ public class TARDISJunkReturn {
         if (tjl.isNotHome()) {
             Location home = tjl.getHome();
             // fly home
-            TARDISMaterialisationData pdd = new TARDISMaterialisationData();
+            TARDISMaterialisationData pdd = new TARDISMaterialisationData(plugin, "00000000-aaaa-bbbb-cccc-000000000000");
             pdd.setLocation(tjl.getCurrent());
             pdd.setChameleon(false);
             pdd.setDirection(COMPASS.SOUTH);

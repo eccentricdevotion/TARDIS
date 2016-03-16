@@ -128,7 +128,7 @@ public class TARDISDirectionCommand {
                 }
                 plugin.getPresetDestroyer().destroyDoor(id);
                 plugin.getPresetDestroyer().destroySign(l, old_d, demat);
-                final TARDISMaterialisationData pbd = new TARDISMaterialisationData();
+                final TARDISMaterialisationData pbd = new TARDISMaterialisationData(plugin, player.getUniqueId().toString());
                 pbd.setChameleon(cham);
                 pbd.setDirection(d);
                 pbd.setLocation(l);

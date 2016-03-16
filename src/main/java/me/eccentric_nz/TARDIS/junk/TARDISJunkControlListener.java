@@ -117,7 +117,7 @@ public class TARDISJunkControlListener implements Listener {
                             state.setData(lever);
                             state.update();
                             // destroy junk TARDIS
-                            final TARDISMaterialisationData pdd = new TARDISMaterialisationData();
+                            final TARDISMaterialisationData pdd = new TARDISMaterialisationData(plugin, "00000000-aaaa-bbbb-cccc-000000000000");
                             pdd.setPlayer(player);
                             pdd.setChameleon(false);
                             pdd.setDirection(COMPASS.SOUTH);

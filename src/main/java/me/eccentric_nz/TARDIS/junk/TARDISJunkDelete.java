@@ -68,7 +68,7 @@ public class TARDISJunkDelete {
                 return true;
             }
             // destroy junk TARDIS
-            final TARDISMaterialisationData pdd = new TARDISMaterialisationData();
+            final TARDISMaterialisationData pdd = new TARDISMaterialisationData(plugin, "00000000-aaaa-bbbb-cccc-000000000000");
             pdd.setChameleon(false);
             pdd.setDirection(COMPASS.SOUTH);
             pdd.setLocation(bb_loc);

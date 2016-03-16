@@ -56,7 +56,7 @@ public class TARDISRemoteRebuildCommand {
             TARDISMessage.send(player.getPlayer(), "INVISIBILITY_ENGAGED");
             return true;
         }
-        final TARDISMaterialisationData pbd = new TARDISMaterialisationData();
+        final TARDISMaterialisationData pbd = new TARDISMaterialisationData(plugin, player.getUniqueId().toString());
         pbd.setChameleon(cham);
         pbd.setDirection(rsc.getDirection());
         pbd.setLocation(l);

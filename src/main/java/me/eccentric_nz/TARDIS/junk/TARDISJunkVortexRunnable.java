@@ -80,7 +80,7 @@ public class TARDISJunkVortexRunnable implements Runnable {
             }
             if (i == loops - 1) {
                 // build the TARDIS at the location
-                final TARDISMaterialisationData tmd = new TARDISMaterialisationData();
+                final TARDISMaterialisationData tmd = new TARDISMaterialisationData(plugin, "00000000-aaaa-bbbb-cccc-000000000000");
                 tmd.setChameleon(false);
                 tmd.setDirection(COMPASS.SOUTH);
                 tmd.setLocation(destJunkLoc);

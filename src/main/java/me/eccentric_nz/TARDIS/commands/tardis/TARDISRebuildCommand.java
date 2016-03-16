@@ -111,7 +111,8 @@ public class TARDISRebuildCommand {
                 TARDISMessage.send(player.getPlayer(), "ENERGY_NO_REBUILD");
                 return false;
             }
-            final TARDISMaterialisationData pbd = new TARDISMaterialisationData();
+            // TODO get player prefs
+            final TARDISMaterialisationData pbd = new TARDISMaterialisationData(plugin, uuid.toString());
             pbd.setChameleon(cham);
             pbd.setDirection(rsc.getDirection());
             pbd.setLocation(l);

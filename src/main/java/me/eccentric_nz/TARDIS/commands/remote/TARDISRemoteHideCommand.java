@@ -69,7 +69,7 @@ public class TARDISRemoteHideCommand {
             TARDISMessage.send(olp.getPlayer(), "INVISIBILITY_ENGAGED");
             return true;
         }
-        final TARDISMaterialisationData pdd = new TARDISMaterialisationData();
+        final TARDISMaterialisationData pdd = new TARDISMaterialisationData(plugin, olp.getUniqueId().toString());
         pdd.setChameleon(false);
         pdd.setDirection(rsc.getDirection());
         pdd.setLocation(l);

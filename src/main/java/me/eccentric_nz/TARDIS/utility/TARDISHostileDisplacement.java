@@ -61,10 +61,10 @@ public class TARDISHostileDisplacement {
         where.put("tardis_id", id);
         ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);
         if (rs.resultSet()) {
-            UUID ownerUUID = rs.getUuid();
+            UUID uuid = rs.getUuid();
             boolean cham = rs.isChamele_on();
             HashMap<String, Object> wherep = new HashMap<String, Object>();
-            wherep.put("uuid", ownerUUID.toString());
+            wherep.put("uuid", uuid.toString());
             ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, wherep);
             if (rsp.resultSet()) {
                 if (rsp.isHadsOn()) {
@@ -97,7 +97,7 @@ public class TARDISHostileDisplacement {
                         if (l.getBlock().getRelative(BlockFace.DOWN).isLiquid() && !plugin.getConfig().getBoolean("travel.land_on_water") && !rsc.isSubmarine()) {
                             bool = false;
                         }
-                        Player player = plugin.getServer().getPlayer(ownerUUID);
+                        Player player = plugin.getServer().getPlayer(uuid);
                         if (bool) {
                             Location sub = null;
                             boolean safe;
@@ -127,7 +127,7 @@ public class TARDISHostileDisplacement {
                                     long delay = (mat) ? 1L : 180L;
                                     // move TARDIS
                                     plugin.getTrackerKeeper().getInVortex().add(id);
-                                    final TARDISMaterialisationData pdd = new TARDISMaterialisationData();
+                                    final TARDISMaterialisationData pdd = new TARDISMaterialisationData(plugin, uuid.toString());
                                     pdd.setChameleon(cham);
                                     pdd.setDirection(d);
                                     pdd.setLocation(loc);
@@ -145,7 +145,7 @@ public class TARDISHostileDisplacement {
                                             plugin.getPresetDestroyer().destroyPreset(pdd);
                                         }
                                     }, delay);
-                                    final TARDISMaterialisationData pbd = new TARDISMaterialisationData();
+                                    final TARDISMaterialisationData pbd = new TARDISMaterialisationData(plugin, uuid.toString());
                                     pbd.setChameleon(cham);
                                     pbd.setDirection(d);
                                     pbd.setLocation(fl);

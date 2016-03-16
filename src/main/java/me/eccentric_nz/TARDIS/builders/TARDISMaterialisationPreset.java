@@ -63,10 +63,10 @@ public class TARDISMaterialisationPreset implements Runnable {
     private final PRESET preset;
     public int task;
     private int i;
-    private final Material lamp;
-    private final boolean minecart;
-    private final boolean ctm;
-    private final boolean add_sign;
+//    private final Material lamp;
+//    private final boolean minecart;
+//    private final boolean ctm;
+//    private final boolean add_sign;
     private final int cham_id;
     private final byte cham_data;
     private Block sponge;
@@ -87,28 +87,18 @@ public class TARDISMaterialisationPreset implements Runnable {
      * @param plugin instance of the TARDIS plugin
      * @param tmd the Materialisation data
      * @param preset the preset to construct
-     * @param lamp a boolean determining whether there should be a lamp
      * @param cham_id the chameleon block id for the police box
      * @param cham_data the chameleon block data for the police box
-     * @param minecart whether to play the minecart sound instead of the
-     * resource pack sounds
-     * @param ctm whether to swap the police box door sign block for a quartz
-     * pillar
-     * @param add_sign whether to add the TARDIS name sign
      * @param loops the number of loops to run
      */
-    public TARDISMaterialisationPreset(TARDIS plugin, TARDISMaterialisationData tmd, PRESET preset, Material lamp, int cham_id, byte cham_data, boolean minecart, boolean ctm, boolean add_sign, int loops) {
+    public TARDISMaterialisationPreset(TARDIS plugin, TARDISMaterialisationData tmd, PRESET preset, int cham_id, byte cham_data, int loops) {
         this.plugin = plugin;
         this.tmd = tmd;
         this.loops = loops;
         this.i = 0;
         this.preset = preset;
-        this.lamp = lamp;
         this.cham_id = cham_id;
         this.cham_data = cham_data;
-        this.minecart = minecart;
-        this.ctm = ctm;
-        this.add_sign = add_sign;
         rand = new Random();
         if (preset.equals(PRESET.ANGEL)) {
             plugin.getPresets().setR(rand.nextInt(2));
@@ -169,7 +159,7 @@ public class TARDISMaterialisationPreset implements Runnable {
                     if (saved != null) {
                         TARDISDoorLocation idl = plugin.getGeneralKeeper().getDoorListener().getDoor(1, tmd.getTardisID());
                         Location l = idl.getL();
-                        plugin.getGeneralKeeper().getDoorListener().movePlayer(saved, l, false, world, false, 0, minecart);
+                        plugin.getGeneralKeeper().getDoorListener().movePlayer(saved, l, false, world, false, 0, tmd.useMinecartSounds());
                         // put player into travellers table
                         HashMap<String, Object> set = new HashMap<String, Object>();
                         set.put("tardis_id", tmd.getTardisID());
@@ -181,11 +171,11 @@ public class TARDISMaterialisationPreset implements Runnable {
                 // first run - remember blocks
                 if (i == 1) {
                     // if configured and it's a Whovian preset set biome
-                    setBiome(world, x, z);
+                    setBiome(world, x, z, tmd.useTexture());
                     HashMap<String, Object> where = new HashMap<String, Object>();
                     where.put("tardis_id", tmd.getTardisID());
                     if (tmd.isOutside()) {
-                        if (!minecart) {
+                        if (!tmd.useMinecartSounds()) {
                             TARDISSounds.playTARDISSound(tmd.getLocation(), "tardis_land");
                         } else {
                             world.playSound(tmd.getLocation(), Sound.ENTITY_MINECART_INSIDE, 1.0F, 0.0F);
@@ -300,7 +290,7 @@ public class TARDISMaterialisationPreset implements Runnable {
                                         light = Material.GLOWSTONE;
                                         ld = 0;
                                     } else {
-                                        light = (preset.equals(PRESET.NEW) || preset.equals(PRESET.OLD)) ? lamp : Material.getMaterial(colids[yy]);
+                                        light = (preset.equals(PRESET.NEW) || preset.equals(PRESET.OLD)) ? tmd.getLamp() : Material.getMaterial(colids[yy]);
                                         ld = coldatas[yy];
                                     }
                                     plugin.getBlockUtils().setBlockAndRemember(world, xx, (y + yy), zz, light, ld, tmd.getTardisID());
@@ -359,7 +349,7 @@ public class TARDISMaterialisationPreset implements Runnable {
                                     }
                                     break;
                                 case 68: // sign - if there is one
-                                    if (add_sign) {
+                                    if (tmd.shouldAddSign()) {
                                         TARDISBlockSetters.setBlock(world, xx, (y + yy), zz, colids[yy], coldatas[yy]);
                                         Block sign = world.getBlockAt(xx, (y + yy), zz);
                                         if (sign.getType().equals(Material.WALL_SIGN) || sign.getType().equals(Material.SIGN_POST)) {
@@ -446,7 +436,7 @@ public class TARDISMaterialisationPreset implements Runnable {
                                     }
                                     break;
                                 case 152:
-                                    if (!lamp.equals(Material.REDSTONE_LAMP_OFF) && (preset.equals(PRESET.NEW) || preset.equals(PRESET.OLD))) {
+                                    if (!tmd.getLamp().equals(Material.REDSTONE_LAMP_OFF) && (preset.equals(PRESET.NEW) || preset.equals(PRESET.OLD))) {
                                         plugin.getBlockUtils().setBlockAndRemember(world, xx, (y + yy), zz, cham_id, cham_data, tmd.getTardisID());
                                     } else {
                                         plugin.getBlockUtils().setBlockAndRemember(world, xx, (y + yy), zz, colids[yy], coldatas[yy], tmd.getTardisID());
@@ -533,7 +523,7 @@ public class TARDISMaterialisationPreset implements Runnable {
                                     if (preset.equals(PRESET.PARTY) || (preset.equals(PRESET.FLOWER) && coldatas[yy] == 0)) {
                                         chad = random_colour;
                                     }
-                                    if (ctm && n == TARDISStaticUtils.getCol(tmd.getDirection()) && yy == 1 && cham_id == 35 && (cham_data == (byte) 11 || cham_data == (byte) 3) && (preset.equals(PRESET.NEW) || preset.equals(PRESET.OLD)) && plugin.getConfig().getBoolean("police_box.set_biome")) {
+                                    if (tmd.shouldUseCTM() && n == TARDISStaticUtils.getCol(tmd.getDirection()) && yy == 1 && cham_id == 35 && (cham_data == (byte) 11 || cham_data == (byte) 3) && (preset.equals(PRESET.NEW) || preset.equals(PRESET.OLD)) && plugin.getConfig().getBoolean("police_box.set_biome")) {
                                         // set a quartz pillar block instead
                                         byte pillar = (tmd.getDirection().equals(COMPASS.EAST) || tmd.getDirection().equals(COMPASS.WEST)) ? (byte) 3 : (byte) 4;
                                         TARDISBlockSetters.setBlock(world, xx, (y + yy), zz, 155, pillar);
@@ -555,7 +545,7 @@ public class TARDISMaterialisationPreset implements Runnable {
                                         light = Material.GLOWSTONE;
                                         ld = 0;
                                     } else {
-                                        light = (preset.equals(PRESET.NEW) || preset.equals(PRESET.OLD)) ? lamp : Material.getMaterial(colids[yy]);
+                                        light = (preset.equals(PRESET.NEW) || preset.equals(PRESET.OLD)) ? tmd.getLamp() : Material.getMaterial(colids[yy]);
                                         ld = coldatas[yy];
                                     }
                                     TARDISBlockSetters.setBlock(world, xx, (y + yy), zz, light, ld);
@@ -613,7 +603,7 @@ public class TARDISMaterialisationPreset implements Runnable {
                                     }
                                     break;
                                 case 152:
-                                    if (!lamp.equals(Material.REDSTONE_LAMP_OFF) && (preset.equals(PRESET.NEW) || preset.equals(PRESET.OLD))) {
+                                    if (!tmd.getLamp().equals(Material.REDSTONE_LAMP_OFF) && (preset.equals(PRESET.NEW) || preset.equals(PRESET.OLD))) {
                                         TARDISBlockSetters.setBlock(world, xx, (y + yy), zz, cham_id, cham_data);
                                     } else {
                                         TARDISBlockSetters.setBlock(world, xx, (y + yy), zz, colids[yy], coldatas[yy]);
@@ -630,7 +620,7 @@ public class TARDISMaterialisationPreset implements Runnable {
                 }
             } else {
                 // just in case
-                setBiome(world, x, z);
+                setBiome(world, x, z, tmd.useTexture());
                 // remove trackers
                 plugin.getTrackerKeeper().getMaterialising().remove(Integer.valueOf(tmd.getTardisID()));
                 plugin.getTrackerKeeper().getInVortex().remove(Integer.valueOf(tmd.getTardisID()));
@@ -664,8 +654,8 @@ public class TARDISMaterialisationPreset implements Runnable {
         }
     }
 
-    public void setBiome(World world, int x, int z) {
-        if (plugin.getConfig().getBoolean("police_box.set_biome") && (preset.equals(PRESET.NEW) || preset.equals(PRESET.OLD) || preset.equals(PRESET.PANDORICA))) {
+    public void setBiome(World world, int x, int z, boolean pp) {
+        if (plugin.getConfig().getBoolean("police_box.set_biome") && (preset.equals(PRESET.NEW) || preset.equals(PRESET.OLD) || preset.equals(PRESET.PANDORICA)) && pp) {
             //List<Chunk> chunks = new ArrayList<Chunk>();
             Chunk chunk = tmd.getLocation().getChunk();
             //chunks.add(chunk);

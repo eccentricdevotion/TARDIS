@@ -205,7 +205,7 @@ public class TARDISComehereCommand {
                 long delay = (mat) ? 1L : 180L;
                 plugin.getTrackerKeeper().getInVortex().add(id);
                 final boolean hid = hidden;
-                final TARDISMaterialisationData pdd = new TARDISMaterialisationData();
+                final TARDISMaterialisationData pdd = new TARDISMaterialisationData(plugin, player.getUniqueId().toString());
                 pdd.setChameleon(cham);
                 pdd.setDirection(d);
                 pdd.setLocation(oldSave);
@@ -227,7 +227,7 @@ public class TARDISComehereCommand {
                         }
                     }
                 }, delay);
-                final TARDISMaterialisationData pbd = new TARDISMaterialisationData();
+                final TARDISMaterialisationData pbd = new TARDISMaterialisationData(plugin, player.getUniqueId().toString());
                 pbd.setChameleon(cham);
                 pbd.setDirection(player_d);
                 pbd.setLocation(eyeLocation);

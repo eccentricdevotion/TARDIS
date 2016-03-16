@@ -16,8 +16,12 @@
  */
 package me.eccentric_nz.TARDIS.builders;
 
+import java.util.HashMap;
+import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.database.ResultSetPlayerPrefs;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
 import org.bukkit.Location;
+import org.bukkit.Material;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.block.Biome;
 
@@ -28,6 +32,8 @@ import org.bukkit.block.Biome;
  */
 public class TARDISMaterialisationData {
 
+    private final TARDIS plugin;
+    private final String uuid;
     private COMPASS direction;
     private Location location;
     private OfflinePlayer player;
@@ -38,12 +44,23 @@ public class TARDISMaterialisationData {
     private boolean outside;
     private boolean rebuild;
     private boolean submarine;
+    private Material lamp = Material.TORCH;
+    private boolean texture = true;
+    private boolean minecartSounds = false;
+    private boolean CTM = true;
+    private boolean addSign = true;
     private int tardisID;
     private Biome biome;
-    // TODO may remove these later?
     private int distance;
     private String resetWorld;
     private Location fromLocation;
+
+    public TARDISMaterialisationData(TARDIS plugin, String uuid) {
+        this.plugin = plugin;
+        this.uuid = uuid;
+        // get player preferences
+        setPlayerDefaults(this.uuid);
+    }
 
     public COMPASS getDirection() {
         return direction;
@@ -75,6 +92,14 @@ public class TARDISMaterialisationData {
 
     public void setChameleon(boolean chameleon) {
         this.chameleon = chameleon;
+    }
+
+    public Material getLamp() {
+        return lamp;
+    }
+
+    public void setLamp(Material lamp) {
+        this.lamp = lamp;
     }
 
     public boolean isDematerialise() {
@@ -141,7 +166,38 @@ public class TARDISMaterialisationData {
         this.biome = biome;
     }
 
-    // may remove
+    public boolean useTexture() {
+        return texture;
+    }
+
+    public void setTexture(boolean texture) {
+        this.texture = texture;
+    }
+
+    public boolean useMinecartSounds() {
+        return minecartSounds;
+    }
+
+    public void setMinecartSounds(boolean minecartSounds) {
+        this.minecartSounds = minecartSounds;
+    }
+
+    public boolean shouldUseCTM() {
+        return CTM;
+    }
+
+    public void setCTM(boolean CTM) {
+        this.CTM = CTM;
+    }
+
+    public boolean shouldAddSign() {
+        return addSign;
+    }
+
+    public void setAddSign(boolean addSign) {
+        this.addSign = addSign;
+    }
+
     public int getDistance() {
         return distance;
     }
@@ -164,5 +220,18 @@ public class TARDISMaterialisationData {
 
     public void setFromLocation(Location fromLocation) {
         this.fromLocation = fromLocation;
+    }
+
+    private void setPlayerDefaults(String uuid) {
+        HashMap<String, Object> wherep = new HashMap<String, Object>();
+        wherep.put("uuid", uuid);
+        final ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, wherep);
+        if (rsp.resultSet()) {
+            lamp = rsp.getLamp();
+            texture = rsp.isPoliceboxTexturesOn();
+            addSign = rsp.isSignOn();
+            CTM = rsp.isCtmOn();
+            minecartSounds = rsp.isMinecartOn();
+        }
     }
 }

@@ -116,7 +116,7 @@ public class TARDISMakeHerBlueCommand {
         HashMap<String, Object> set = new HashMap<String, Object>();
         set.put("chameleon_preset", "NEW");
         qf.doUpdate("tardis", set, wherep);
-        final TARDISMaterialisationData pbd = new TARDISMaterialisationData();
+        final TARDISMaterialisationData pbd = new TARDISMaterialisationData(plugin, player.getUniqueId().toString());
         pbd.setChameleon(false);
         pbd.setDirection(rsc.getDirection());
         pbd.setLocation(l);

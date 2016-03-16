@@ -340,7 +340,7 @@ public class TARDISSiegeListener implements Listener {
             }
             // rebuild the TARDIS
             Location current = b.getLocation();
-            final TARDISMaterialisationData pbd = new TARDISMaterialisationData();
+            final TARDISMaterialisationData pbd = new TARDISMaterialisationData(plugin, p.getUniqueId().toString());
             pbd.setChameleon(rst.isChamele_on());
             pbd.setDirection(rsc.getDirection());
             pbd.setLocation(current);

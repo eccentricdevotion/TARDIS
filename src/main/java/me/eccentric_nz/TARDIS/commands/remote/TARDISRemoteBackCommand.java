@@ -81,7 +81,7 @@ public class TARDISRemoteBackCommand {
         qf.doUpdate("current", set, tid);
         plugin.getTrackerKeeper().getInVortex().add(id);
         // destroy the police box
-        final TARDISMaterialisationData pdd = new TARDISMaterialisationData();
+        final TARDISMaterialisationData pdd = new TARDISMaterialisationData(plugin, player.getUniqueId().toString());
         pdd.setChameleon(false);
         pdd.setDirection(rsc.getDirection());
         pdd.setLocation(new Location(rsc.getWorld(), rsc.getX(), rsc.getY(), rsc.getZ()));
@@ -95,7 +95,7 @@ public class TARDISRemoteBackCommand {
         plugin.getTrackerKeeper().getDematerialising().add(id);
         plugin.getPresetDestroyer().destroyPreset(pdd);
         // rebuild the police box
-        final TARDISMaterialisationData pbd = new TARDISMaterialisationData();
+        final TARDISMaterialisationData pbd = new TARDISMaterialisationData(plugin, player.getUniqueId().toString());
         pbd.setChameleon(false);
         pbd.setDirection(rsb.getDirection());
         pbd.setLocation(new Location(rsb.getWorld(), rsb.getX(), rsb.getY(), rsb.getZ()));

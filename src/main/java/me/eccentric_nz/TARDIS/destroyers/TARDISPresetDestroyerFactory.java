@@ -96,7 +96,7 @@ public class TARDISPresetDestroyerFactory {
                     int taskID = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, runnable, 10L, 20L);
                     runnable.setTask(taskID);
                 } else {
-                    TARDISDematerialisationPreset runnable = new TARDISDematerialisationPreset(plugin, pdd, demat, lamp, cham_id, cham_data, loops);
+                    TARDISDematerialisationPreset runnable = new TARDISDematerialisationPreset(plugin, pdd, demat, cham_id, cham_data, loops);
                     int taskID = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, runnable, 10L, 20L);
                     runnable.setTask(taskID);
                 }

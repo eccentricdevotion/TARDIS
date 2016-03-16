@@ -62,6 +62,7 @@ public class TARDISPrefsMenuListener implements Listener {
         lookup.put("Connected Textures", "ctm_on");
         lookup.put("Preset Sign", "sign_on");
         lookup.put("Travel Bar", "travelbar_on");
+        lookup.put("Police Box Textures", "policebox_textures_on");
         lookup.put("Mob Farming", "farm_on");
     }
 

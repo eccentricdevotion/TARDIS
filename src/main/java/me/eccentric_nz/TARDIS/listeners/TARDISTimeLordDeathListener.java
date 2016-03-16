@@ -78,11 +78,11 @@ public class TARDISTimeLordDeathListener implements Listener {
     @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
     public void onTimeLordDeath(PlayerDeathEvent event) {
         Player player = event.getEntity();
-        UUID playerUUID = player.getUniqueId();
+        UUID uuid = player.getUniqueId();
         if (plugin.getConfig().getBoolean("allow.autonomous")) {
             if (player.hasPermission("tardis.autonomous")) {
                 HashMap<String, Object> where = new HashMap<String, Object>();
-                where.put("uuid", playerUUID.toString());
+                where.put("uuid", uuid.toString());
                 ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);
                 // are they a time lord?
                 if (rs.resultSet()) {
@@ -91,7 +91,7 @@ public class TARDISTimeLordDeathListener implements Listener {
                         String eps = rs.getEps();
                         String creeper = rs.getCreeper();
                         HashMap<String, Object> whereu = new HashMap<String, Object>();
-                        whereu.put("uuid", playerUUID.toString());
+                        whereu.put("uuid", uuid.toString());
                         ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, whereu);
                         if (rsp.resultSet()) {
                             // do they have the autonomous circuit on?
@@ -106,7 +106,7 @@ public class TARDISTimeLordDeathListener implements Listener {
                                         ResultSetTravellers rst = new ResultSetTravellers(plugin, wherev, true);
                                         if (rst.resultSet()) {
                                             List<UUID> data = rst.getData();
-                                            if (data.size() > 0 && !data.contains(playerUUID)) {
+                                            if (data.size() > 0 && !data.contains(uuid)) {
                                                 // schedule the NPC to appear
                                                 TARDISEPSRunnable EPS_runnable = new TARDISEPSRunnable(plugin, rsp.getEpsMessage(), player, data, id, eps, creeper);
                                                 plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, EPS_runnable, 20L);
@@ -174,7 +174,7 @@ public class TARDISTimeLordDeathListener implements Listener {
                                         boolean cham = rs.isChamele_on();
                                         COMPASS fd = (going_home) ? hd : cd;
                                         // destroy police box
-                                        final TARDISMaterialisationData pdd = new TARDISMaterialisationData();
+                                        final TARDISMaterialisationData pdd = new TARDISMaterialisationData(plugin, uuid.toString());
                                         pdd.setChameleon(cham);
                                         pdd.setDirection(cd);
                                         pdd.setLocation(sl);
@@ -195,7 +195,7 @@ public class TARDISTimeLordDeathListener implements Listener {
                                             tid.put("tardis_id", id);
                                             qf.doUpdate("tardis", set, tid);
                                         }
-                                        final TARDISMaterialisationData pbd = new TARDISMaterialisationData();
+                                        final TARDISMaterialisationData pbd = new TARDISMaterialisationData(plugin, uuid.toString());
                                         pbd.setChameleon(cham);
                                         pbd.setDirection(fd);
                                         pbd.setLocation(goto_loc);
@@ -262,7 +262,7 @@ public class TARDISTimeLordDeathListener implements Listener {
                                         }
                                     }
                                 } else if (plugin.getConfig().getBoolean("siege.enabled") && rsp.isAutoSiegeOn()) {
-                                // enter siege mode
+                                    // enter siege mode
                                     // where is the TARDIS Police Box?
                                     HashMap<String, Object> wherecl = new HashMap<String, Object>();
                                     wherecl.put("tardis_id", id);
@@ -277,7 +277,7 @@ public class TARDISTimeLordDeathListener implements Listener {
                                     wheres.put("tardis_id", id);
                                     HashMap<String, Object> set = new HashMap<String, Object>();
                                     // destroy tardis
-                                    final TARDISMaterialisationData pdd = new TARDISMaterialisationData();
+                                    final TARDISMaterialisationData pdd = new TARDISMaterialisationData(plugin, uuid.toString());
                                     pdd.setChameleon(false);
                                     pdd.setDirection(rsc.getDirection());
                                     pdd.setLocation(sl);
@@ -331,27 +331,23 @@ public class TARDISTimeLordDeathListener implements Listener {
                                     }
                                     // update the database
                                     new QueryFactory(plugin).doUpdate("tardis", set, wheres);
-                                } else {
-                                    if (player.isOnline()) {
-                                        TARDISMessage.send(player, "ENERGY_NOT_AUTO");
-                                    }
+                                } else if (player.isOnline()) {
+                                    TARDISMessage.send(player, "ENERGY_NOT_AUTO");
                                 }
                             }
                         }
-                    } else {
-                        if (player.isOnline()) {
-                            TARDISMessage.send(player, "AUTO_POWER");
-                        }
+                    } else if (player.isOnline()) {
+                        TARDISMessage.send(player, "AUTO_POWER");
                     }
                 }
             }
         }
         // save arched status
-        if (plugin.isDisguisesOnServer() && plugin.getConfig().getBoolean("arch.enabled") && plugin.getTrackerKeeper().getJohnSmith().containsKey(playerUUID)) {
-            new TARDISArchPersister(plugin).save(playerUUID);
+        if (plugin.isDisguisesOnServer() && plugin.getConfig().getBoolean("arch.enabled") && plugin.getTrackerKeeper().getJohnSmith().containsKey(uuid)) {
+            new TARDISArchPersister(plugin).save(uuid);
             if (plugin.getConfig().getBoolean("arch.clear_inv_on_death")) {
                 // clear inventories
-                new TARDISArchInventory().clear(playerUUID);
+                new TARDISArchInventory().clear(uuid);
             }
         }
     }

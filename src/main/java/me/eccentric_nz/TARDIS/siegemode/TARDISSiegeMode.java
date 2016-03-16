@@ -87,7 +87,7 @@ public class TARDISSiegeMode {
             // remove siege block
             siege.setType(Material.AIR);
             // rebuild preset
-            final TARDISMaterialisationData pbd = new TARDISMaterialisationData();
+            final TARDISMaterialisationData pbd = new TARDISMaterialisationData(plugin, p.getUniqueId().toString());
             pbd.setChameleon(cham);
             pbd.setDirection(rsc.getDirection());
             pbd.setLocation(current);
@@ -146,7 +146,7 @@ public class TARDISSiegeMode {
             TARDISMessage.send(p, "SIEGE_OFF");
         } else {
             // destroy tardis
-            final TARDISMaterialisationData pdd = new TARDISMaterialisationData();
+            final TARDISMaterialisationData pdd = new TARDISMaterialisationData(plugin, p.getUniqueId().toString());
             pdd.setChameleon(false);
             pdd.setDirection(rsc.getDirection());
             pdd.setLocation(current);

@@ -252,7 +252,7 @@ public class TARDISBlockStackListener implements Listener {
                         blockBelow.setType(Material.AIR);
                         blockBottom.setType(Material.AIR);
                         // turn the block stack into a TARDIS
-                        final TARDISMaterialisationData pbd = new TARDISMaterialisationData();
+                        final TARDISMaterialisationData pbd = new TARDISMaterialisationData(plugin, player.getUniqueId().toString());
                         pbd.setChameleon(false);
                         pbd.setDirection(COMPASS.valueOf(d));
                         pbd.setLocation(block_loc);

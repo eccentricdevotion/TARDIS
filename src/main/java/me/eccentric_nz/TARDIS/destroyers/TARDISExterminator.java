@@ -79,7 +79,7 @@ public class TARDISExterminator {
                     return false;
                 }
                 Location bb_loc = new Location(rsc.getWorld(), rsc.getX(), rsc.getY(), rsc.getZ());
-                final TARDISMaterialisationData pdd = new TARDISMaterialisationData();
+                final TARDISMaterialisationData pdd = new TARDISMaterialisationData(plugin, uuid.toString());
                 pdd.setChameleon(false);
                 pdd.setDirection(rsc.getDirection());
                 pdd.setLocation(bb_loc);
@@ -213,7 +213,7 @@ public class TARDISExterminator {
             }
             int signy = -2;
             // if the sign was on the TARDIS destroy the TARDIS!
-            final TARDISMaterialisationData pdd = new TARDISMaterialisationData();
+            final TARDISMaterialisationData pdd = new TARDISMaterialisationData(plugin, player.getUniqueId().toString());
             pdd.setChameleon(false);
             pdd.setDirection(d);
             pdd.setLocation(bb_loc);

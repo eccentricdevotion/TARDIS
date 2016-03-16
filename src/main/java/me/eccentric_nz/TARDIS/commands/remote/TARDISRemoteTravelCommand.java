@@ -81,7 +81,7 @@ public class TARDISRemoteTravelCommand {
             }
             boolean mat = plugin.getConfig().getBoolean("police_box.materialise");
             plugin.getTrackerKeeper().getInVortex().add(id);
-            final TARDISMaterialisationData pdd = new TARDISMaterialisationData();
+            final TARDISMaterialisationData pdd = new TARDISMaterialisationData(plugin, player.getUniqueId().toString());
             pdd.setChameleon(cham);
             pdd.setDirection(cd);
             pdd.setLocation(l);
@@ -102,7 +102,7 @@ public class TARDISRemoteTravelCommand {
                 plugin.getPresetDestroyer().removeBlockProtection(id, new QueryFactory(plugin));
             }
             long delay = (mat) ? 500L : 1L;
-            final TARDISMaterialisationData pbd = new TARDISMaterialisationData();
+            final TARDISMaterialisationData pbd = new TARDISMaterialisationData(plugin, player.getUniqueId().toString());
             pbd.setChameleon(cham);
             pbd.setDirection(sd);
             pbd.setLocation(exit);

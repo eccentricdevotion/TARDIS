@@ -60,13 +60,13 @@ public class TARDISInstaPreset {
 
     private final TARDIS plugin;
     private final TARDISMaterialisationData tmd;
-    private final Material lamp;
+//    private final Material lamp;
     private final int cham_id;
     private final byte cham_data;
     private final boolean rebuild;
-    private final boolean minecart;
-    private final boolean ctm;
-    private final boolean add_sign;
+//    private final boolean minecart;
+//    private final boolean ctm;
+//    private final boolean add_sign;
     private Block sponge;
     private final PRESET preset;
     private TARDISChameleonColumn column;
@@ -77,17 +77,17 @@ public class TARDISInstaPreset {
     private final List<ProblemBlock> do_at_end = new ArrayList<ProblemBlock>();
     private final List<Integer> doors = Arrays.asList(64, 71, 193, 194, 195, 196, 197);
 
-    public TARDISInstaPreset(TARDIS plugin, TARDISMaterialisationData tmd, PRESET preset, Material lamp, int cham_id, byte cham_data, boolean rebuild, boolean minecart, boolean ctm, boolean add_sign) {
+    public TARDISInstaPreset(TARDIS plugin, TARDISMaterialisationData tmd, PRESET preset, int cham_id, byte cham_data, boolean rebuild) {
         this.plugin = plugin;
         this.tmd = tmd;
         this.preset = preset;
-        this.lamp = lamp;
+//        this.lamp = lamp;
         this.cham_id = cham_id;
         this.cham_data = cham_data;
         this.rebuild = rebuild;
-        this.minecart = minecart;
-        this.ctm = ctm;
-        this.add_sign = add_sign;
+//        this.minecart = minecart;
+//        this.ctm = ctm;
+//        this.add_sign = add_sign;
         colours = new byte[]{0, 1, 2, 3, 4, 5, 6, 9, 10, 11, 12, 13, 14};
         rand = new Random();
         random_colour = colours[rand.nextInt(13)];
@@ -124,10 +124,10 @@ public class TARDISInstaPreset {
         int signx = 0, signz = 0;
         QueryFactory qf = new QueryFactory(plugin);
         // if configured and it's a Whovian preset set biome
-        if (plugin.getConfig().getBoolean("police_box.set_biome") && (preset.equals(PRESET.NEW) || preset.equals(PRESET.OLD) || preset.equals(PRESET.PANDORICA))) {
-            List<Chunk> chunks = new ArrayList<Chunk>();
+        if (plugin.getConfig().getBoolean("police_box.set_biome") && (preset.equals(PRESET.NEW) || preset.equals(PRESET.OLD) || preset.equals(PRESET.PANDORICA)) && tmd.useTexture()) {
+            //List<Chunk> chunks = new ArrayList<Chunk>();
             Chunk chunk = tmd.getLocation().getChunk();
-            chunks.add(chunk);
+            //chunks.add(chunk);
             // load the chunk
             if (!world.loadChunk(tmd.getLocation().getBlockX(), tmd.getLocation().getBlockZ(), false)) {
                 world.loadChunk(tmd.getLocation().getBlockX(), tmd.getLocation().getBlockZ(), true);
@@ -162,7 +162,7 @@ public class TARDISInstaPreset {
             if (saved != null) {
                 TARDISDoorLocation idl = plugin.getGeneralKeeper().getDoorListener().getDoor(1, tmd.getTardisID());
                 Location l = idl.getL();
-                plugin.getGeneralKeeper().getDoorListener().movePlayer(saved, l, false, world, false, 0, minecart);
+                plugin.getGeneralKeeper().getDoorListener().movePlayer(saved, l, false, world, false, 0, tmd.useMinecartSounds());
                 // put player into travellers table
                 HashMap<String, Object> set = new HashMap<String, Object>();
                 set.put("tardis_id", tmd.getTardisID());
@@ -279,7 +279,7 @@ public class TARDISInstaPreset {
                         if (preset.equals(PRESET.PARTY) || (preset.equals(PRESET.FLOWER) && coldatas[yy] == 0)) {
                             chad = random_colour;
                         }
-                        if (ctm && i == TARDISStaticUtils.getCol(tmd.getDirection()) && yy == 1 && cham_id == 35 && (cham_data == (byte) 11 || cham_data == (byte) 3) && (preset.equals(PRESET.NEW) || preset.equals(PRESET.OLD)) && plugin.getConfig().getBoolean("police_box.set_biome")) {
+                        if (tmd.shouldUseCTM() && i == TARDISStaticUtils.getCol(tmd.getDirection()) && yy == 1 && cham_id == 35 && (cham_data == (byte) 11 || cham_data == (byte) 3) && (preset.equals(PRESET.NEW) || preset.equals(PRESET.OLD)) && plugin.getConfig().getBoolean("police_box.set_biome")) {
                             // set a quartz pillar block instead
                             byte pillar = (tmd.getDirection().equals(COMPASS.EAST) || tmd.getDirection().equals(COMPASS.WEST)) ? (byte) 3 : (byte) 4;
                             plugin.getBlockUtils().setBlockAndRemember(world, xx, (y + yy), zz, 155, pillar, tmd.getTardisID());
@@ -296,7 +296,7 @@ public class TARDISInstaPreset {
                             light = Material.GLOWSTONE;
                             ld = 0;
                         } else {
-                            light = (preset.equals(PRESET.NEW) || preset.equals(PRESET.OLD)) ? lamp : Material.getMaterial(colids[yy]);
+                            light = (preset.equals(PRESET.NEW) || preset.equals(PRESET.OLD)) ? tmd.getLamp() : Material.getMaterial(colids[yy]);
                             ld = coldatas[yy];
                         }
                         if (colids[yy] == 50) {
@@ -346,7 +346,7 @@ public class TARDISInstaPreset {
                         }
                         break;
                     case 68: // sign - if there is one
-                        if (add_sign) {
+                        if (tmd.shouldAddSign()) {
                             TARDISBlockSetters.setBlock(world, xx, (y + yy), zz, colids[yy], coldatas[yy]);
                             Block sign = world.getBlockAt(xx, (y + yy), zz);
                             if (sign.getType().equals(Material.WALL_SIGN) || sign.getType().equals(Material.SIGN_POST)) {
@@ -441,7 +441,7 @@ public class TARDISInstaPreset {
                         }
                         break;
                     case 152:
-                        if (!lamp.equals(Material.REDSTONE_LAMP_OFF) && (preset.equals(PRESET.NEW) || preset.equals(PRESET.OLD))) {
+                        if (!tmd.getLamp().equals(Material.REDSTONE_LAMP_OFF) && (preset.equals(PRESET.NEW) || preset.equals(PRESET.OLD))) {
                             plugin.getBlockUtils().setBlockAndRemember(world, xx, (y + yy), zz, cham_id, cham_data, tmd.getTardisID());
                         } else {
                             plugin.getBlockUtils().setBlockAndRemember(world, xx, (y + yy), zz, colids[yy], coldatas[yy], tmd.getTardisID());

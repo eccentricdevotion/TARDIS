@@ -48,7 +48,6 @@ public class TARDISDematerialisationPreset implements Runnable {
     private final PRESET preset;
     public int task;
     private int i;
-    private final Material lamp;
     private final int cham_id;
     private final byte cham_data;
     private final TARDISChameleonColumn column;
@@ -64,18 +63,16 @@ public class TARDISDematerialisationPreset implements Runnable {
      * @param plugin instance of the TARDIS plugin
      * @param tmd the TARDISMaterialisationData
      * @param preset the Chameleon preset currently in use by the TARDIS
-     * @param lamp the id of the lamp block
      * @param cham_id the chameleon block id for the police box
      * @param cham_data the chameleon block data for the police box
      * @param loops the number of loops to run
      */
-    public TARDISDematerialisationPreset(TARDIS plugin, TARDISMaterialisationData tmd, PRESET preset, Material lamp, int cham_id, byte cham_data, int loops) {
+    public TARDISDematerialisationPreset(TARDIS plugin, TARDISMaterialisationData tmd, PRESET preset, int cham_id, byte cham_data, int loops) {
         this.plugin = plugin;
         this.tmd = tmd;
         this.loops = loops;
         this.preset = preset;
         this.i = 0;
-        this.lamp = lamp;
         this.cham_id = cham_id;
         this.cham_data = cham_data;
         if (this.preset.equals(PRESET.CONSTRUCT)) {
@@ -242,7 +239,7 @@ public class TARDISDematerialisationPreset implements Runnable {
                             case 50: // lamps, glowstone and torches
                             case 89:
                             case 124:
-                                Material light = (preset.equals(PRESET.NEW) || preset.equals(PRESET.OLD)) ? lamp : Material.getMaterial(colids[yy]);
+                                Material light = (preset.equals(PRESET.NEW) || preset.equals(PRESET.OLD)) ? tmd.getLamp() : Material.getMaterial(colids[yy]);
                                 TARDISBlockSetters.setBlock(world, xx, (y + yy), zz, light, coldatas[yy]);
                                 break;
                             case 64:

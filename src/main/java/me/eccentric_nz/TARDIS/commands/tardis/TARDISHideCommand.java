@@ -108,7 +108,7 @@ public class TARDISHideCommand {
                 TARDISMessage.send(player.getPlayer(), "ENERGY_NO_HIDE");
                 return false;
             }
-            final TARDISMaterialisationData pdd = new TARDISMaterialisationData();
+            final TARDISMaterialisationData pdd = new TARDISMaterialisationData(plugin, player.getUniqueId().toString());
             pdd.setChameleon(false);
             pdd.setDirection(rsc.getDirection());
             pdd.setLocation(l);

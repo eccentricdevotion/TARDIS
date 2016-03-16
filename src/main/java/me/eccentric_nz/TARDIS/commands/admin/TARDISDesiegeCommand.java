@@ -84,7 +84,7 @@ public class TARDISDesiegeCommand {
                 setc.put("submarine", (rsh.isSubmarine()) ? 1 : 0);
                 qf.doUpdate("current", setc, wherec);
                 // rebuild the TARDIS
-                final TARDISMaterialisationData pbd = new TARDISMaterialisationData();
+                final TARDISMaterialisationData pbd = new TARDISMaterialisationData(plugin, uuid.toString());
                 pbd.setChameleon(false);
                 pbd.setDirection(rsh.getDirection());
                 pbd.setLocation(new Location(rsh.getWorld(), rsh.getX(), rsh.getY(), rsh.getZ()));

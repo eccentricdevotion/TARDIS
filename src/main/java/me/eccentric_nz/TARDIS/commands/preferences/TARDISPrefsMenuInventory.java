@@ -211,6 +211,14 @@ public class TARDISPrefsMenuInventory {
         api.setLore(Arrays.asList(bar_value));
         bar.setItemMeta(api);
         options.add(bar);
+        // police box textures (set biome)
+        ItemStack pb = new ItemStack(Material.DIODE, 1);
+        ItemMeta ure = pb.getItemMeta();
+        ure.setDisplayName("Police Box Textures");
+        String pbt_value = (rsp.isPoliceboxTexturesOn()) ? plugin.getLanguage().getString("SET_ON") : plugin.getLanguage().getString("SET_OFF");
+        ure.setLore(Arrays.asList(pbt_value));
+        pb.setItemMeta(ure);
+        options.add(pb);
         // mob farming
         if (plugin.getConfig().getBoolean("allow.mob_farming")) {
             ItemStack far = new ItemStack(Material.DIODE, 1);
@@ -222,7 +230,7 @@ public class TARDISPrefsMenuInventory {
             options.add(far);
         }
         ItemStack[] stack = new ItemStack[27];
-        for (int s = 0; s < 19; s++) {
+        for (int s = 0; s < 20; s++) {
             if (s < options.size()) {
                 stack[s] = options.get(s);
             } else {

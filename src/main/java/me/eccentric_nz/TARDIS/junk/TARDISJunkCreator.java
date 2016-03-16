@@ -119,7 +119,7 @@ public class TARDISJunkCreator {
         setlocs.put("direction", "SOUTH");
         qf.insertLocations(setlocs, l.getBlock().getBiome().toString(), lastInsertId);
         // build the TARDIS at the location
-        final TARDISMaterialisationData pbd = new TARDISMaterialisationData();
+        final TARDISMaterialisationData pbd = new TARDISMaterialisationData(plugin, "00000000-aaaa-bbbb-cccc-000000000000");
         pbd.setChameleon(false);
         pbd.setDirection(COMPASS.SOUTH);
         pbd.setLocation(l);

@@ -71,6 +71,7 @@ public class ResultSetPlayerPrefs {
     private boolean travelbarOn;
     private boolean farmOn;
     private boolean lanternsOn;
+    private boolean policeboxTexturesOn;
     private int flightMode;
     private boolean easyDifficulty;
     private final String prefix;
@@ -173,6 +174,7 @@ public class ResultSetPlayerPrefs {
                 this.travelbarOn = rs.getBoolean("travelbar_on");
                 this.farmOn = rs.getBoolean("farm_on");
                 this.lanternsOn = rs.getBoolean("lanterns_on");
+                this.policeboxTexturesOn = rs.getBoolean("policebox_textures_on");
                 this.flightMode = rs.getInt("flying_mode");
                 this.easyDifficulty = rs.getBoolean("difficulty");
             } else {
@@ -322,6 +324,10 @@ public class ResultSetPlayerPrefs {
 
     public boolean isLanternsOn() {
         return lanternsOn;
+    }
+
+    public boolean isPoliceboxTexturesOn() {
+        return policeboxTexturesOn;
     }
 
     public int getFlightMode() {
