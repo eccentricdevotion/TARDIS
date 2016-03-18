@@ -244,6 +244,19 @@ public class TARDISRecipesUpdater {
             recipes_config.set("shaped.TARDIS Invisibility Circuit.lore", "Uses left~5");
             i++;
         }
+        if (!recipes_config.contains("shaped.TARDIS Telepathic Circuit")) {
+            recipes_config.set("shaped.TARDIS Telepathic Circuit.easy_shape", "-S-,SES,-S-");
+            recipes_config.set("shaped.TARDIS Telepathic Circuit.easy_ingredients.S", "SLIME_BALL");
+            recipes_config.set("shaped.TARDIS Telepathic Circuit.easy_ingredients.E", "EMERALD");
+            recipes_config.set("shaped.TARDIS Telepathic Circuit.hard_shape", "-S-,SPS,ESE");
+            recipes_config.set("shaped.TARDIS Telepathic Circuit.hard_ingredients.S", "SLIME_BALL");
+            recipes_config.set("shaped.TARDIS Telepathic Circuit.hard_ingredients.P", "POTION:373");
+            recipes_config.set("shaped.TARDIS Telepathic Circuit.hard_ingredients.E", "EMERALD");
+            recipes_config.set("shaped.TARDIS Telepathic Circuit.result", "DAYLIGHT_DETECTOR");
+            recipes_config.set("shaped.TARDIS Telepathic Circuit.amount", 1);
+            recipes_config.set("shaped.TARDIS Telepathic Circuit.lore", "Allow companions to~use TARDIS commands");
+            i++;
+        }
         if (!recipes_config.contains("shaped.Painter Circuit")) {
             recipes_config.set("shaped.Painter Circuit.easy_shape", "-I-,DGD,-I-");
             recipes_config.set("shaped.Painter Circuit.easy_ingredients.I", "INK_SACK:0");
@@ -257,8 +270,8 @@ public class TARDISRecipesUpdater {
             recipes_config.set("shaped.Painter Circuit.amount", 1);
             recipes_config.set("shaped.Painter Circuit.lore", "");
             i++;
-        } else // fix the hard recipe if necessary
-        if (recipes_config.get("shaped.Painter Circuit.hard_shape").equals("-B-,-F-,-B-")) {
+        } else if (recipes_config.get("shaped.Painter Circuit.hard_shape").equals("-B-,-F-,-B-")) {
+            // fix the hard recipe if necessary
             recipes_config.set("shaped.Painter Circuit.hard_shape", "-I-,DGD,-I-");
         }
         if (!recipes_config.contains("shapeless.Painter Upgrade")) {

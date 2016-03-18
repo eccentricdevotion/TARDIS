@@ -220,6 +220,19 @@ shaped:
         result: 'MAP:1981'
         amount: 1
         lore: "Uses left~5"
+    TARDIS Telepathic Circuit:
+        easy_shape: -S-,SES,-S-
+        easy_ingredients:
+            S: SLIME_BALL
+            E: EMERALD
+        hard_shape: -S-,SPS,ESE
+        hard_ingredients:
+            S: SLIME_BALL
+            P: 'POTION:373'
+            E: EMERALD
+        result: 'DAYLIGHT_DETECTOR'
+        amount: 1
+        lore: "Allow companions to~use TARDIS commands"
     Perception Filter:
         easy_shape: S-S,-S-,RGC
         easy_ingredients:

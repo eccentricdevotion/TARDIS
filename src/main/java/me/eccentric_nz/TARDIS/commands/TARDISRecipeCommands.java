@@ -97,6 +97,7 @@ public class TARDISRecipeCommands implements CommandExecutor {
         firstArgs.add("sonic"); // Sonic Screwdriver
         firstArgs.add("t-circuit"); // Temporal Circuit
         firstArgs.add("tardis"); // TARDIS Seed Block
+        firstArgs.add("telepathic"); // TARDIS Telepathic Circuit
         firstArgs.add("vortex"); // Vortex Manipulator
         firstArgs.add("watch"); // TARDIS Seed Block
         // DELUXE, ELEVENTH, TWELFTH, ARS & REDSTONE schematics designed by Lord_Rahl and killeratnight at mcnovus.net
@@ -319,6 +320,10 @@ public class TARDISRecipeCommands implements CommandExecutor {
             }
             if (args[0].equalsIgnoreCase("t-circuit")) {
                 this.showShapedRecipe(player, "TARDIS Temporal Circuit");
+                return true;
+            }
+            if (args[0].equalsIgnoreCase("telepathic")) {
+                this.showShapedRecipe(player, "TARDIS Telepathic Circuit");
                 return true;
             }
             if (args[0].equalsIgnoreCase("watch")) {
