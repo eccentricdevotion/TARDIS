@@ -68,6 +68,7 @@ import me.eccentric_nz.TARDIS.files.TARDISFileCopier;
 import me.eccentric_nz.TARDIS.files.TARDISLanguageUpdater;
 import me.eccentric_nz.TARDIS.files.TARDISRecipesUpdater;
 import me.eccentric_nz.TARDIS.files.TARDISRoomMap;
+import me.eccentric_nz.TARDIS.hads.TARDISHadsPersister;
 import me.eccentric_nz.TARDIS.junk.TARDISJunkReturnRunnable;
 import me.eccentric_nz.TARDIS.move.TARDISMonsterRunnable;
 import me.eccentric_nz.TARDIS.move.TARDISPortalPersister;
@@ -349,6 +350,10 @@ public class TARDIS extends JavaPlugin {
                 tsp.loadSiege();
                 tsp.loadCubes();
             }
+            if (getConfig().getBoolean("allow.hads")) {
+                TARDISHadsPersister thp = new TARDISHadsPersister(this);
+                thp.load();
+            }
             setDates();
             startStandBy();
             if (getConfig().getBoolean("allow.perception_filter")) {
@@ -449,6 +454,9 @@ public class TARDIS extends JavaPlugin {
             }
             if (getConfig().getBoolean("siege.enabled")) {
                 new TARDISSiegePersister(this).saveCubes();
+            }
+            if (getConfig().getBoolean("allow.hads")) {
+                new TARDISHadsPersister(this).save();
             }
             updateTagStats();
             closeDatabase();

@@ -93,6 +93,10 @@ public class TARDISRebuildCommand {
                 TARDISMessage.send(player.getPlayer(), "NOT_WHILE_MAT");
                 return true;
             }
+            if (plugin.getTrackerKeeper().getDispersed().containsKey(uuid)) {
+                TARDISMessage.send(player.getPlayer(), "NOT_WHILE_DISPERSED");
+                return true;
+            }
             if (plugin.getConfig().getBoolean("travel.chameleon")) {
                 cham = rs.isChamele_on();
             }
@@ -111,7 +115,6 @@ public class TARDISRebuildCommand {
                 TARDISMessage.send(player.getPlayer(), "ENERGY_NO_REBUILD");
                 return false;
             }
-            // TODO get player prefs
             final TARDISMaterialisationData pbd = new TARDISMaterialisationData(plugin, uuid.toString());
             pbd.setChameleon(cham);
             pbd.setDirection(rsc.getDirection());

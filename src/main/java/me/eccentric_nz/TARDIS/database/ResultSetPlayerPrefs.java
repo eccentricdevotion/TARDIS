@@ -24,6 +24,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.enumeration.HADS;
 import me.eccentric_nz.TARDIS.utility.TARDISNumberParsers;
 import org.bukkit.Material;
 
@@ -48,6 +49,7 @@ public class ResultSetPlayerPrefs {
     private boolean autoSiegeOn;
     private boolean beaconOn;
     private boolean hadsOn;
+    private HADS hadsType;
     private boolean submarineOn;
     private int artronLevel;
     private Material lamp;
@@ -135,6 +137,7 @@ public class ResultSetPlayerPrefs {
                 this.autoSiegeOn = rs.getBoolean("auto_siege_on");
                 this.beaconOn = rs.getBoolean("beacon_on");
                 this.hadsOn = rs.getBoolean("hads_on");
+                this.hadsType = HADS.valueOf(rs.getString("hads_type"));
                 this.submarineOn = rs.getBoolean("submarine_on");
                 this.artronLevel = rs.getInt("artron_level");
                 String trylamp = rs.getString("lamp");
@@ -232,6 +235,10 @@ public class ResultSetPlayerPrefs {
 
     public boolean isHadsOn() {
         return hadsOn;
+    }
+
+    public HADS getHadsType() {
+        return hadsType;
     }
 
     public int getArtronLevel() {

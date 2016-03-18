@@ -24,6 +24,7 @@ import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetPlayerPrefs;
+import me.eccentric_nz.TARDIS.enumeration.HADS;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -123,6 +124,14 @@ public class TARDISPrefsMenuInventory {
         h_im.setLore(Arrays.asList(h_value));
         hads.setItemMeta(h_im);
         options.add(hads);
+        // hads
+        ItemStack hads_type = new ItemStack(Material.DIODE, 1);
+        ItemMeta ht_im = hads_type.getItemMeta();
+        ht_im.setDisplayName("HADS Type");
+        String ht_value = (rsp.getHadsType().equals(HADS.DISPLACEMENT)) ? "DISPLACEMENT" : "DISPERSAL";
+        ht_im.setLore(Arrays.asList(ht_value));
+        hads_type.setItemMeta(ht_im);
+        options.add(hads_type);
         // minecart
         ItemStack mine = new ItemStack(Material.DIODE, 1);
         ItemMeta m_im = mine.getItemMeta();
@@ -230,14 +239,14 @@ public class TARDISPrefsMenuInventory {
             options.add(far);
         }
         ItemStack[] stack = new ItemStack[27];
-        for (int s = 0; s < 20; s++) {
+        for (int s = 0; s < 21; s++) {
             if (s < options.size()) {
                 stack[s] = options.get(s);
             } else {
                 stack[s] = null;
             }
         }
-        stack[22] = tt;
+        stack[23] = tt;
         if (plugin.getServer().getPlayer(uuid).hasPermission("tardis.admin")) {
             // admin
             ItemStack ad = new ItemStack(Material.NETHER_STAR, 1);

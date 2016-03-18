@@ -70,6 +70,7 @@ public class TARDISMySQLDatabaseUpdater {
         prefsupdates.add("difficulty int(1) DEFAULT '0'");
         prefsupdates.add("flying_mode int(1) DEFAULT '1'");
         prefsupdates.add("farm_on int(1) DEFAULT '0'");
+        prefsupdates.add("hads_type varchar(12) DEFAULT 'DISPLACEMENT'");
         prefsupdates.add("lanterns_on int(1) DEFAULT '0'");
         prefsupdates.add("minecart_on int(1) DEFAULT '0'");
         prefsupdates.add("policebox_textures_on int(1) DEFAULT '1'");

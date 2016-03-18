@@ -100,6 +100,10 @@ public class TARDISSQLiteDatabase {
             String queryDestinations = "CREATE TABLE IF NOT EXISTS " + prefix + "destinations (dest_id INTEGER PRIMARY KEY NOT NULL, tardis_id INTEGER, dest_name TEXT COLLATE NOCASE DEFAULT '', world TEXT COLLATE NOCASE DEFAULT '', x INTEGER, y INTEGER, z INTEGER, direction TEXT DEFAULT '', bind TEXT DEFAULT '', type INTEGER DEFAULT 0, submarine INTEGER DEFAULT 0, slot INTEGER DEFAULT '-1')";
             statement.executeUpdate(queryDestinations);
 
+            // Table structure for table 'dispersed'
+            String queryDispersed = "CREATE TABLE IF NOT EXISTS " + prefix + "dispersed (d_id INTEGER PRIMARY KEY NOT NULL, uuid TEXT DEFAULT '', world TEXT COLLATE NOCASE DEFAULT '', x INTEGER, y INTEGER, z INTEGER)";
+            statement.executeUpdate(queryDispersed);
+
             // Table structure for table 'doors'
             String queryDoors = "CREATE TABLE IF NOT EXISTS " + prefix + "doors (door_id INTEGER PRIMARY KEY NOT NULL, tardis_id INTEGER, door_type INTEGER, door_location TEXT, door_direction TEXT DEFAULT 'SOUTH', locked INTEGER DEFAULT 0)";
             statement.executeUpdate(queryDoors);
@@ -129,7 +133,7 @@ public class TARDISSQLiteDatabase {
             statement.executeUpdate(queryNext);
 
             // Table structure for table 'player_prefs'
-            String queryPlayers = "CREATE TABLE IF NOT EXISTS " + prefix + "player_prefs (pp_id INTEGER PRIMARY KEY NOT NULL, uuid TEXT DEFAULT '', player TEXT COLLATE NOCASE DEFAULT '', key TEXT DEFAULT '', sfx_on INTEGER DEFAULT 0, quotes_on INTEGER DEFAULT 0, artron_level INTEGER DEFAULT 0, wall TEXT DEFAULT 'ORANGE_WOOL', floor TEXT DEFAULT 'LIGHT_GREY_WOOL', siege_wall TEXT DEFAULT 'GREY_WOOL', siege_floor TEXT DEFAULT 'BLACK_WOOL', auto_on INTEGER DEFAULT 0, beacon_on INTEGER DEFAULT 1, hads_on INTEGER DEFAULT 1, build_on INTEGER DEFAULT 1, eps_on INTEGER DEFAULT 0, eps_message TEXT DEFAULT '', lamp TEXT DEFAULT '', language TEXT DEFAULT 'AUTO_DETECT', texture_on INTEGER DEFAULT 0, texture_in TEXT DEFAULT '', texture_out TEXT DEFAULT 'default', submarine_on INTEGER DEFAULT 0, dnd_on INTEGER DEFAULT 0, minecart_on INTEGER DEFAULT 0, renderer_on INTEGER DEFAULT 1, wool_lights_on INTEGER DEFAULT 0, ctm_on INTEGER DEFAULT 0, sign_on INTEGER DEFAULT 1, travelbar_on INTEGER DEFAULT 0, farm_on INTEGER DEFAULT 0, lanterns_on INTEGER DEFAULT 0, policebox_textures_on INTEGER DEFAULT 1, auto_siege_on INTEGER DEFAULT 0, flying_mode INTEGER DEFAULT 1, difficulty INTEGER DEFAULT 0)";
+            String queryPlayers = "CREATE TABLE IF NOT EXISTS " + prefix + "player_prefs (pp_id INTEGER PRIMARY KEY NOT NULL, uuid TEXT DEFAULT '', player TEXT COLLATE NOCASE DEFAULT '', key TEXT DEFAULT '', sfx_on INTEGER DEFAULT 0, quotes_on INTEGER DEFAULT 0, artron_level INTEGER DEFAULT 0, wall TEXT DEFAULT 'ORANGE_WOOL', floor TEXT DEFAULT 'LIGHT_GREY_WOOL', siege_wall TEXT DEFAULT 'GREY_WOOL', siege_floor TEXT DEFAULT 'BLACK_WOOL', auto_on INTEGER DEFAULT 0, beacon_on INTEGER DEFAULT 1, hads_on INTEGER DEFAULT 1, hads_type TEXT DEFAULT 'DISPLACEMENT', build_on INTEGER DEFAULT 1, eps_on INTEGER DEFAULT 0, eps_message TEXT DEFAULT '', lamp TEXT DEFAULT '', language TEXT DEFAULT 'AUTO_DETECT', texture_on INTEGER DEFAULT 0, texture_in TEXT DEFAULT '', texture_out TEXT DEFAULT 'default', submarine_on INTEGER DEFAULT 0, dnd_on INTEGER DEFAULT 0, minecart_on INTEGER DEFAULT 0, renderer_on INTEGER DEFAULT 1, wool_lights_on INTEGER DEFAULT 0, ctm_on INTEGER DEFAULT 0, sign_on INTEGER DEFAULT 1, travelbar_on INTEGER DEFAULT 0, farm_on INTEGER DEFAULT 0, lanterns_on INTEGER DEFAULT 0, policebox_textures_on INTEGER DEFAULT 1, auto_siege_on INTEGER DEFAULT 0, flying_mode INTEGER DEFAULT 1, difficulty INTEGER DEFAULT 0)";
             statement.executeUpdate(queryPlayers);
 
             // Table structure for table 'portals'

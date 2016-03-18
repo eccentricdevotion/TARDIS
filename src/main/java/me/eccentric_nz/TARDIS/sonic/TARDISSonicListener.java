@@ -148,6 +148,18 @@ public class TARDISSonicListener implements Listener {
                 Action action = event.getAction();
                 if (action.equals(Action.RIGHT_CLICK_AIR) && !player.isSneaking()) {
                     playSonicSound(player, now, 3050L, "sonic_screwdriver");
+                    // rebuild Police Box if dispersed by HADS
+                    if (plugin.getTrackerKeeper().getDispersed().containsKey(player.getUniqueId())) {
+                        // check player's location
+                        Location tmp = player.getLocation();
+                        Location pl = new Location(tmp.getWorld(), tmp.getBlockX(), tmp.getBlockY(), tmp.getBlockZ());
+                        Location pb = plugin.getTrackerKeeper().getDispersed().get(player.getUniqueId());
+                        if (pl.equals(pb)) {
+                            // rebuild
+                            plugin.getTrackerKeeper().getDispersed().remove(player.getUniqueId());
+                            player.performCommand("tardis rebuild");
+                        }
+                    }
                     if (player.hasPermission("tardis.sonic.freeze") && lore != null && lore.contains("Bio-scanner Upgrade")) {
                         long cool = System.currentTimeMillis();
                         if ((!cooldown.containsKey(player.getUniqueId()) || cooldown.get(player.getUniqueId()) < cool)) {

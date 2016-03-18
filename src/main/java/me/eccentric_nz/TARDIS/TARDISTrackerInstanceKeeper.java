@@ -67,6 +67,7 @@ public class TARDISTrackerInstanceKeeper {
     private final HashMap<UUID, JSONObject> pastes = new HashMap<UUID, JSONObject>();
     private final HashMap<UUID, List<Integer>> renderedNPCs = new HashMap<UUID, List<Integer>>();
     private final HashMap<UUID, List<Location>> repeaters = new HashMap<UUID, List<Location>>();
+    private final HashMap<UUID, Location> dispersed = new HashMap<UUID, Location>();
     private final HashMap<UUID, Location> startLocation = new HashMap<UUID, Location>();
     private final HashMap<UUID, Location> endLocation = new HashMap<UUID, Location>();
     private final HashMap<UUID, Long> setTime = new HashMap<UUID, Long>();
@@ -271,6 +272,10 @@ public class TARDISTrackerInstanceKeeper {
 
     public List<Integer> getDematerialising() {
         return dematerialising;
+    }
+
+    public HashMap<UUID, Location> getDispersed() {
+        return dispersed;
     }
 
     public List<Integer> getHasNotClickedHandbrake() {

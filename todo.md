@@ -4,13 +4,12 @@
 1. Update for Minecraft 1.9!
    * Allow dual wielding TARDIS items?
    * VOID biome - use for MCPatcher texture changes instead of The End / SKY? _(Need to wait for MCPatcher to update)_
-2. Hostile Action Dispersal System [#1150](http://dev.bukkit.org/bukkit-plugins/tardis/tickets/1150-hads2-hostile-action-dispersal-system/)
-3. TARDIS Junk Mode [#1157](http://dev.bukkit.org/bukkit-plugins/tardis/tickets/1157-normal-tardis-junk-mode/)
+2. TARDIS Junk Mode [#1157](http://dev.bukkit.org/bukkit-plugins/tardis/tickets/1157-normal-tardis-junk-mode/)
    * `/tprefs junk [on|off]`
    * `/tprefs junk [wall|floor] [block_type]`
-4. Telepathic circuit [#1174](http://dev.bukkit.org/bukkit-plugins/tardis/tickets/1174-tardis-commands-applies-to-the-one-which-you-are-in/#comments)
-5. TIPS visulisation tool (using WorldGuard region data)
-6. Fix bugs!
+3. Telepathic circuit [#1174](http://dev.bukkit.org/bukkit-plugins/tardis/tickets/1174-tardis-commands-applies-to-the-one-which-you-are-in/#comments)
+4. TIPS visulisation tool (using WorldGuard region data)
+5. Fix bugs!
 
 ##Upcoming version `3.6`
 * TARDISSonicBlaster addon?

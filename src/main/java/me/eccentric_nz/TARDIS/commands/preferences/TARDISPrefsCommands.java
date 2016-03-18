@@ -63,6 +63,7 @@ public class TARDISPrefsCommands implements CommandExecutor {
         firstArgs.add("flight");
         firstArgs.add("floor");
         firstArgs.add("hads");
+        firstArgs.add("hads_type");
         firstArgs.add("isomorphic");
         firstArgs.add("key");
         firstArgs.add("key_menu");
@@ -131,6 +132,9 @@ public class TARDISPrefsCommands implements CommandExecutor {
                         set.put("uuid", player.getUniqueId().toString());
                         set.put("lamp", plugin.getConfig().getInt("police_box.tardis_lamp"));
                         qf.doInsert("player_prefs", set);
+                    }
+                    if (pref.equals("hads_type")) {
+                        return new TARDISHadsTypeCommand(plugin).setHadsPref(player, args, qf);
                     }
                     if (pref.equals("key")) {
                         return new TARDISSetKeyCommand(plugin).setKeyPref(player, args, qf);

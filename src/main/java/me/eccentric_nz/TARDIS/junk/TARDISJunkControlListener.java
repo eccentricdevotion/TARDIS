@@ -231,7 +231,7 @@ public class TARDISJunkControlListener implements Listener {
             }
             int y = w.getHighestBlockYAt(x, z);
             Location d = new Location(w, x, y, z);
-            // TODO check destination
+            // check destination
             if (plugin.getPluginRespect().getRespect(d, new Parameters(p, FLAG.getNoMessageFlags()))) {
                 while (!chunk.isLoaded()) {
                     chunk.load();

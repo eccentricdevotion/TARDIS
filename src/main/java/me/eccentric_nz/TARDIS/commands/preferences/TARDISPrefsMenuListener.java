@@ -79,7 +79,7 @@ public class TARDISPrefsMenuListener implements Listener {
                     final Player p = (Player) event.getWhoClicked();
                     UUID uuid = p.getUniqueId();
                     ItemMeta im = is.getItemMeta();
-                    if (slot == 22 && im.getDisplayName().equals("TARDIS Map")) {
+                    if (slot == 23 && im.getDisplayName().equals("TARDIS Map")) {
                         // must be in the TARDIS
                         HashMap<String, Object> where = new HashMap<String, Object>();
                         where.put("uuid", uuid.toString());
@@ -125,9 +125,14 @@ public class TARDISPrefsMenuListener implements Listener {
                         new TARDISBuildCommand(plugin).toggleCompanionBuilding(((Player) event.getWhoClicked()), args);
                     } else {
                         HashMap<String, Object> set = new HashMap<String, Object>();
-                        set.put(lookup.get(im.getDisplayName()), b);
                         HashMap<String, Object> where = new HashMap<String, Object>();
                         where.put("uuid", uuid.toString());
+                        if (im.getDisplayName().equals("HADS Type")) {
+                            value = (lore.get(0).equals("DISPLACEMENT")) ? "DISPERSAL" : "DISPLACEMENT";
+                            set.put("hads_type", value);
+                        } else {
+                            set.put(lookup.get(im.getDisplayName()), b);
+                        }
                         new QueryFactory(plugin).doUpdate("player_prefs", set, where);
                     }
                     lore.set(0, value);
