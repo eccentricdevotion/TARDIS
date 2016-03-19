@@ -233,16 +233,23 @@ public class TARDISRecipesUpdater {
             recipes_config.set("shaped.TARDIS Invisibility Circuit.easy_ingredients.D", "DIAMOND");
             recipes_config.set("shaped.TARDIS Invisibility Circuit.easy_ingredients.P", "MAP:1978");
             recipes_config.set("shaped.TARDIS Invisibility Circuit.easy_ingredients.E", "EMERALD");
-            recipes_config.set("shaped.TARDIS Invisibility Circuit.easy_ingredients.W", "POTION:8206");
+            recipes_config.set("shaped.TARDIS Invisibility Circuit.easy_ingredients.W", "POTION");
             recipes_config.set("shaped.TARDIS Invisibility Circuit.hard_shape", "-D-,P-E,-W-");
             recipes_config.set("shaped.TARDIS Invisibility Circuit.hard_ingredients.D", "DIAMOND");
             recipes_config.set("shaped.TARDIS Invisibility Circuit.hard_ingredients.P", "MAP:1978");
             recipes_config.set("shaped.TARDIS Invisibility Circuit.hard_ingredients.E", "EMERALD");
-            recipes_config.set("shaped.TARDIS Invisibility Circuit.hard_ingredients.W", "POTION:8270");
+            recipes_config.set("shaped.TARDIS Invisibility Circuit.hard_ingredients.W", "POTION");
             recipes_config.set("shaped.TARDIS Invisibility Circuit.result", "MAP:1981");
             recipes_config.set("shaped.TARDIS Invisibility Circuit.amount", 1);
             recipes_config.set("shaped.TARDIS Invisibility Circuit.lore", "Uses left~5");
             i++;
+        } else {
+            if (recipes_config.getString("shaped.TARDIS Invisibility Circuit.easy_ingredients.W").equals("POTION:8206")) {
+                recipes_config.set("shaped.TARDIS Invisibility Circuit.easy_ingredients.W", "POTION");
+            }
+            if (recipes_config.getString("shaped.TARDIS Invisibility Circuit.hard_ingredients.W").equals("POTION:8270")) {
+                recipes_config.set("shaped.TARDIS Invisibility Circuit.hard_ingredients.W", "POTION");
+            }
         }
         if (!recipes_config.contains("shaped.TARDIS Telepathic Circuit")) {
             recipes_config.set("shaped.TARDIS Telepathic Circuit.easy_shape", "-S-,SES,-S-");
@@ -250,12 +257,14 @@ public class TARDISRecipesUpdater {
             recipes_config.set("shaped.TARDIS Telepathic Circuit.easy_ingredients.E", "EMERALD");
             recipes_config.set("shaped.TARDIS Telepathic Circuit.hard_shape", "-S-,SPS,ESE");
             recipes_config.set("shaped.TARDIS Telepathic Circuit.hard_ingredients.S", "SLIME_BALL");
-            recipes_config.set("shaped.TARDIS Telepathic Circuit.hard_ingredients.P", "POTION:373");
+            recipes_config.set("shaped.TARDIS Telepathic Circuit.hard_ingredients.P", "POTION");
             recipes_config.set("shaped.TARDIS Telepathic Circuit.hard_ingredients.E", "EMERALD");
             recipes_config.set("shaped.TARDIS Telepathic Circuit.result", "DAYLIGHT_DETECTOR");
             recipes_config.set("shaped.TARDIS Telepathic Circuit.amount", 1);
             recipes_config.set("shaped.TARDIS Telepathic Circuit.lore", "Allow companions to~use TARDIS commands");
             i++;
+        } else if (recipes_config.getString("shaped.TARDIS Telepathic Circuit.hard_ingredients.P").equals("POTION:373")) {
+            recipes_config.set("shaped.TARDIS Telepathic Circuit.hard_ingredients.P", "POTION");
         }
         if (!recipes_config.contains("shaped.Painter Circuit")) {
             recipes_config.set("shaped.Painter Circuit.easy_shape", "-I-,DGD,-I-");

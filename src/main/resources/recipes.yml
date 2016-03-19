@@ -210,13 +210,13 @@ shaped:
             D: DIAMOND
             P: 'MAP:1978'
             E: EMERALD
-            W: 'POTION:8206'
+            W: 'POTION'
         hard_shape: -D-,P-E,-W-
         hard_ingredients:
             D: DIAMOND
             P: 'MAP:1978'
             E: EMERALD
-            W: 'POTION:8270'
+            W: 'POTION'
         result: 'MAP:1981'
         amount: 1
         lore: "Uses left~5"
@@ -228,7 +228,7 @@ shaped:
         hard_shape: -S-,SPS,ESE
         hard_ingredients:
             S: SLIME_BALL
-            P: 'POTION:373'
+            P: 'POTION'
             E: EMERALD
         result: 'DAYLIGHT_DETECTOR'
         amount: 1

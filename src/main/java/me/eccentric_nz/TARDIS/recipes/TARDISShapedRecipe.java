@@ -70,6 +70,7 @@ public class TARDISShapedRecipe {
         }
     }
 
+    @SuppressWarnings("deprecation")
     private ShapedRecipe makeRecipe(String s) {
         /*
          * shape: A-A,BBB,CDC ingredients: A: 1 B: 2 C: '5:2' D: 57 result: 276

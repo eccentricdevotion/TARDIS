@@ -7,7 +7,6 @@
 2. TARDIS Junk Mode [#1157](http://dev.bukkit.org/bukkit-plugins/tardis/tickets/1157-normal-tardis-junk-mode/)
    * `/tprefs junk [on|off]`
    * `/tprefs junk [wall|floor] [block_type]`
-3. Telepathic circuit [#1174](http://dev.bukkit.org/bukkit-plugins/tardis/tickets/1174-tardis-commands-applies-to-the-one-which-you-are-in/#comments)
 4. TIPS visulisation tool (using WorldGuard region data)
 5. Fix bugs!
 
