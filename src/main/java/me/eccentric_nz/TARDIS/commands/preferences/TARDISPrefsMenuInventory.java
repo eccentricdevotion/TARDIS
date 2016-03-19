@@ -238,15 +238,23 @@ public class TARDISPrefsMenuInventory {
             far.setItemMeta(ming);
             options.add(far);
         }
+        // telepathic circuit
+        ItemStack tele = new ItemStack(Material.DIODE, 1);
+        ItemMeta path = tele.getItemMeta();
+        path.setDisplayName("Telepathic Circuit");
+        String tele_value = (rsp.isPoliceboxTexturesOn()) ? plugin.getLanguage().getString("SET_ON") : plugin.getLanguage().getString("SET_OFF");
+        path.setLore(Arrays.asList(tele_value));
+        tele.setItemMeta(path);
+        options.add(tele);
         ItemStack[] stack = new ItemStack[27];
-        for (int s = 0; s < 21; s++) {
+        for (int s = 0; s < 22; s++) {
             if (s < options.size()) {
                 stack[s] = options.get(s);
             } else {
                 stack[s] = null;
             }
         }
-        stack[23] = tt;
+        stack[24] = tt;
         if (plugin.getServer().getPlayer(uuid).hasPermission("tardis.admin")) {
             // admin
             ItemStack ad = new ItemStack(Material.NETHER_STAR, 1);

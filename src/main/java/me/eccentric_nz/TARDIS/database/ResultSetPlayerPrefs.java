@@ -70,6 +70,7 @@ public class ResultSetPlayerPrefs {
     private boolean woolLightsOn;
     private boolean ctmOn;
     private boolean signOn;
+    private boolean telepathyOn;
     private boolean travelbarOn;
     private boolean farmOn;
     private boolean lanternsOn;
@@ -174,6 +175,7 @@ public class ResultSetPlayerPrefs {
                 this.woolLightsOn = rs.getBoolean("wool_lights_on");
                 this.ctmOn = rs.getBoolean("ctm_on");
                 this.signOn = rs.getBoolean("sign_on");
+                this.telepathyOn = rs.getBoolean("telepathy_on");
                 this.travelbarOn = rs.getBoolean("travelbar_on");
                 this.farmOn = rs.getBoolean("farm_on");
                 this.lanternsOn = rs.getBoolean("lanterns_on");
@@ -319,6 +321,10 @@ public class ResultSetPlayerPrefs {
 
     public boolean isSignOn() {
         return signOn;
+    }
+
+    public boolean isTelepathyOn() {
+        return telepathyOn;
     }
 
     public boolean isTravelbarOn() {

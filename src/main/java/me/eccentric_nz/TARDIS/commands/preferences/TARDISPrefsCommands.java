@@ -80,6 +80,7 @@ public class TARDISPrefsCommands implements CommandExecutor {
         firstArgs.add("sign");
         firstArgs.add("sonic");
         firstArgs.add("submarine");
+        firstArgs.add("telepathy");
         firstArgs.add("travelbar");
         firstArgs.add("wall");
         firstArgs.add("wool_lights");

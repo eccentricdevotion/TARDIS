@@ -90,6 +90,7 @@ public class TARDISSQLiteDatabaseUpdater {
         prefsupdates.add("siege_wall TEXT DEFAULT 'GREY_CLAY'");
         prefsupdates.add("sign_on INTEGER DEFAULT 1");
         prefsupdates.add("submarine_on INTEGER DEFAULT 0");
+        prefsupdates.add("telepathy_on INTEGER DEFAULT 0");
         prefsupdates.add("texture_in TEXT DEFAULT ''");
         prefsupdates.add("texture_on INTEGER DEFAULT 0");
         prefsupdates.add("texture_out TEXT DEFAULT 'default'");
@@ -100,20 +101,22 @@ public class TARDISSQLiteDatabaseUpdater {
         tardisupdates.add("artron_level INTEGER DEFAULT 0");
         tardisupdates.add("beacon TEXT DEFAULT ''");
         tardisupdates.add("chameleon_data INTEGER DEFAULT 11");
+        tardisupdates.add("chameleon_demat TEXT DEFAULT 'NEW'");
         tardisupdates.add("chameleon_id INTEGER DEFAULT 35");
         tardisupdates.add("chameleon_preset TEXT DEFAULT 'NEW'");
-        tardisupdates.add("chameleon_demat TEXT DEFAULT 'NEW'");
         tardisupdates.add("condenser TEXT DEFAULT ''");
         tardisupdates.add("creeper TEXT DEFAULT ''");
         tardisupdates.add("eps TEXT DEFAULT ''");
         tardisupdates.add("farm TEXT DEFAULT ''");
         tardisupdates.add("handbrake_on INTEGER DEFAULT 1");
-        tardisupdates.add("hutch TEXT DEFAULT ''");
         tardisupdates.add("hidden INTEGER DEFAULT 0");
+        tardisupdates.add("hutch TEXT DEFAULT ''");
         tardisupdates.add("iso_on INTEGER DEFAULT 0");
+        tardisupdates.add("last_known_name TEXT COLLATE NOCASE DEFAULT ''");
         tardisupdates.add("lastuse INTEGER DEFAULT " + now);
-        tardisupdates.add("powered_on INTEGER DEFAULT 0");
         tardisupdates.add("lights_on INTEGER DEFAULT 1");
+        tardisupdates.add("monsters INTEGER DEFAULT 0");
+        tardisupdates.add("powered_on INTEGER DEFAULT 0");
         tardisupdates.add("rail TEXT DEFAULT ''");
         tardisupdates.add("recharging INTEGER DEFAULT 0");
         tardisupdates.add("renderer TEXT DEFAULT ''");
@@ -124,8 +127,6 @@ public class TARDISSQLiteDatabaseUpdater {
         tardisupdates.add("tips INTEGER DEFAULT '-1'");
         tardisupdates.add("village TEXT DEFAULT ''");
         tardisupdates.add("zero TEXT DEFAULT ''");
-        tardisupdates.add("last_known_name TEXT COLLATE NOCASE DEFAULT ''");
-        tardisupdates.add("monsters INTEGER DEFAULT 0");
         inventoryupdates.add("attributes TEXT DEFAULT ''");
         inventoryupdates.add("armour_attributes TEXT DEFAULT ''");
     }

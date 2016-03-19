@@ -64,6 +64,7 @@ public class TARDISPrefsMenuListener implements Listener {
         lookup.put("Travel Bar", "travelbar_on");
         lookup.put("Police Box Textures", "policebox_textures_on");
         lookup.put("Mob Farming", "farm_on");
+        lookup.put("Telepathic Circuit", "telepathy_on");
     }
 
     @EventHandler(ignoreCancelled = true)
@@ -79,7 +80,7 @@ public class TARDISPrefsMenuListener implements Listener {
                     final Player p = (Player) event.getWhoClicked();
                     UUID uuid = p.getUniqueId();
                     ItemMeta im = is.getItemMeta();
-                    if (slot == 23 && im.getDisplayName().equals("TARDIS Map")) {
+                    if (slot == 24 && im.getDisplayName().equals("TARDIS Map")) {
                         // must be in the TARDIS
                         HashMap<String, Object> where = new HashMap<String, Object>();
                         where.put("uuid", uuid.toString());
