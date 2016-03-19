@@ -135,6 +135,7 @@ import me.eccentric_nz.TARDIS.sonic.TARDISSonicListener;
 import me.eccentric_nz.TARDIS.sonic.TARDISSonicMenuListener;
 import me.eccentric_nz.TARDIS.sonic.TARDISSonicSorterListener;
 import me.eccentric_nz.TARDIS.sonic.TARDISSonicUpgradeListener;
+import me.eccentric_nz.TARDIS.listeners.TARDISTelepathicListener;
 import me.eccentric_nz.TARDIS.travel.TARDISTerminalListener;
 
 /**
@@ -279,6 +280,7 @@ public class TARDISListenerRegisterer {
         plugin.getPM().registerEvents(new TARDISStattenheimListener(plugin), plugin);
         plugin.getPM().registerEvents(new TARDISStorageListener(plugin), plugin);
         plugin.getPM().registerEvents(new TARDISTagListener(plugin), plugin);
+        plugin.getPM().registerEvents(new TARDISTelepathicListener(plugin), plugin);
         plugin.getPM().registerEvents(new TARDISTeleportListener(plugin), plugin);
         plugin.getPM().registerEvents(new TARDISTemporalListener(plugin), plugin);
         plugin.getPM().registerEvents(new TARDISTemporalLocatorListener(plugin), plugin);

@@ -17,6 +17,7 @@
 package me.eccentric_nz.TARDIS.listeners;
 
 import java.util.List;
+import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import org.bukkit.entity.Player;
@@ -53,22 +54,33 @@ public class TARDISZeroRoomChatListener implements Listener {
         if (plugin.getTrackerKeeper().getZeroRoomOccupants().contains(zero.getUniqueId())) {
             event.setCancelled(true);
             TARDISMessage.send(zero, "NOT_IN_ZERO");
-        } else {
-            if (plugin.getServer().getWorld("TARDIS_Zero_Room") != null) {
-                List<Player> inZeroRoom = plugin.getServer().getWorld("TARDIS_Zero_Room").getPlayers();
-                for (Player p : inZeroRoom) {
-                    event.getRecipients().remove(p);
-                }
+        } else if (plugin.getServer().getWorld("TARDIS_Zero_Room") != null) {
+            List<Player> inZeroRoom = plugin.getServer().getWorld("TARDIS_Zero_Room").getPlayers();
+            for (Player p : inZeroRoom) {
+                event.getRecipients().remove(p);
             }
         }
     }
 
     @EventHandler(ignoreCancelled = true)
     public void onPlayerCommandPreprocessEvent(PlayerCommandPreprocessEvent event) {
-        Player zero = event.getPlayer();
-        if (plugin.getTrackerKeeper().getZeroRoomOccupants().contains(zero.getUniqueId())) {
+        Player player = event.getPlayer();
+        if (plugin.getTrackerKeeper().getZeroRoomOccupants().contains(player.getUniqueId())) {
             event.setCancelled(true);
-            TARDISMessage.send(zero, "NOT_IN_ZERO");
+            TARDISMessage.send(player, "NOT_IN_ZERO");
+            return;
+        }
+        UUID uuid = player.getUniqueId();
+        String command = event.getMessage().toLowerCase();
+        if (plugin.getTrackerKeeper().getTelepaths().containsKey(uuid)) {
+            if (command.contains("tardis ")) {
+                UUID owner = plugin.getTrackerKeeper().getTelepaths().get(uuid);
+                Player timelord = plugin.getServer().getPlayer(owner);
+                // if it is a tardis command run it as the time lord
+                event.setPlayer(timelord);
+            }
+            // always stop tracking the player
+            plugin.getTrackerKeeper().getTelepaths().remove(uuid);
         }
     }
 }
