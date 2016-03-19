@@ -89,6 +89,7 @@ public class TARDISUpdateListener implements Listener {
         controls.put("toggle_wool", 20);
         controls.put("siege", 21);
         controls.put("control", 22);
+        controls.put("telepathic", 23);
         validBlocks.add(Material.LEVER);
         validBlocks.add(Material.REDSTONE_COMPARATOR_OFF);
         validBlocks.add(Material.REDSTONE_COMPARATOR_ON);
@@ -238,6 +239,17 @@ public class TARDISUpdateListener implements Listener {
             }
             if (blockName.equalsIgnoreCase("scanner") && validBlocks.contains(blockType)) {
                 set.put("scanner", blockLocStr);
+            }
+            if (blockName.equalsIgnoreCase("telepathic") && blockType.equals(Material.DAYLIGHT_DETECTOR)) {
+                HashMap<String, Object> wheret = new HashMap<String, Object>();
+                wheret.put("tardis_id", id);
+                wheret.put("type", 23);
+                ResultSetControls rsc = new ResultSetControls(plugin, wheret, false);
+                if (secondary || !rsc.resultSet()) {
+                    qf.insertControl(id, 23, blockLocStr, 1);
+                } else {
+                    set.put("location", blockLocStr);
+                }
             }
             if (blockName.equalsIgnoreCase("handbrake") && blockType == Material.LEVER) {
                 // check for existing handbrake - there may not be one, as custom schematic may not have CAKE block

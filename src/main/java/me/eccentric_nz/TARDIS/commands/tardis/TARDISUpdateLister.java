@@ -72,6 +72,7 @@ public class TARDISUpdateLister {
         guis.add(ChatColor.RED + "direction" + ChatColor.RESET + " - " + ChatColor.DARK_RED + "Direction Item Frame");
         guis.add(ChatColor.RED + "info" + ChatColor.RESET + " - " + ChatColor.DARK_RED + "TARDIS Information System");
         guis.add(ChatColor.RED + "save-sign" + ChatColor.RESET + " - " + ChatColor.DARK_RED + "Saved locations and TARDIS areas");
+        guis.add(ChatColor.RED + "telepathic" + ChatColor.RESET + " - " + ChatColor.DARK_RED + "Telepathic Circuit");
         guis.add(ChatColor.RED + "temporal" + ChatColor.RESET + " - " + ChatColor.DARK_RED + "Temporal Relocator");
         guis.add(ChatColor.RED + "terminal" + ChatColor.RESET + " - " + ChatColor.DARK_RED + "Destination Terminal");
         guis.add(ChatColor.RED + "storage" + ChatColor.RESET + " - " + ChatColor.DARK_RED + "Disk Storage Container");
