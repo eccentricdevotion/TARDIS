@@ -109,6 +109,7 @@ import me.eccentric_nz.TARDIS.listeners.TARDISSignListener;
 import me.eccentric_nz.TARDIS.listeners.TARDISSpawnListener;
 import me.eccentric_nz.TARDIS.listeners.TARDISStattenheimListener;
 import me.eccentric_nz.TARDIS.listeners.TARDISTagListener;
+import me.eccentric_nz.TARDIS.listeners.TARDISTelepathicListener;
 import me.eccentric_nz.TARDIS.listeners.TARDISTeleportListener;
 import me.eccentric_nz.TARDIS.listeners.TARDISTemporalListener;
 import me.eccentric_nz.TARDIS.listeners.TARDISTemporalLocatorListener;
@@ -135,7 +136,6 @@ import me.eccentric_nz.TARDIS.sonic.TARDISSonicListener;
 import me.eccentric_nz.TARDIS.sonic.TARDISSonicMenuListener;
 import me.eccentric_nz.TARDIS.sonic.TARDISSonicSorterListener;
 import me.eccentric_nz.TARDIS.sonic.TARDISSonicUpgradeListener;
-import me.eccentric_nz.TARDIS.listeners.TARDISTelepathicListener;
 import me.eccentric_nz.TARDIS.travel.TARDISTerminalListener;
 
 /**
@@ -301,11 +301,9 @@ public class TARDISListenerRegisterer {
         if (plugin.getPM().isPluginEnabled("Multiverse-Adventure")) {
             plugin.getPM().registerEvents(new TARDISWorldResetListener(plugin), plugin);
         }
-        if (plugin.getConfig().getBoolean("allow.zero_room")) {
-            plugin.getPM().registerEvents(new TARDISZeroRoomChatListener(plugin), plugin);
-            if (plugin.getPM().isPluginEnabled("ProtocolLib")) {
-                new TARDISZeroRoomPacketListener(plugin);
-            }
+        plugin.getPM().registerEvents(new TARDISZeroRoomChatListener(plugin), plugin);
+        if (plugin.getConfig().getBoolean("allow.zero_room") && plugin.getPM().isPluginEnabled("ProtocolLib")) {
+            new TARDISZeroRoomPacketListener(plugin);
         }
         if (plugin.getPM().isPluginEnabled("ProtocolLib")) {
             TARDISKeyboardPacketListener kpl = new TARDISKeyboardPacketListener(plugin);

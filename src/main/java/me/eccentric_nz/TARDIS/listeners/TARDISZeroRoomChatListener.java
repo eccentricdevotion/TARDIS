@@ -76,8 +76,11 @@ public class TARDISZeroRoomChatListener implements Listener {
             if (command.contains("tardis ")) {
                 UUID owner = plugin.getTrackerKeeper().getTelepaths().get(uuid);
                 Player timelord = plugin.getServer().getPlayer(owner);
+                // message console so it is logged
+                TARDISMessage.message(plugin.getConsole(), "[TARDIS] Companion [" + player.getName() + "] ran a telepathic command as Time Lord [" + timelord.getName() + "]");
                 // if it is a tardis command run it as the time lord
                 event.setPlayer(timelord);
+                TARDISMessage.send(player, "TELEPATHIC_RUN", command);
             }
             // always stop tracking the player
             plugin.getTrackerKeeper().getTelepaths().remove(uuid);
