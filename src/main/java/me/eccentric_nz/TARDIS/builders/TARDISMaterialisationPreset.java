@@ -63,10 +63,6 @@ public class TARDISMaterialisationPreset implements Runnable {
     private final PRESET preset;
     public int task;
     private int i;
-//    private final Material lamp;
-//    private final boolean minecart;
-//    private final boolean ctm;
-//    private final boolean add_sign;
     private final int cham_id;
     private final byte cham_data;
     private Block sponge;
@@ -349,7 +345,27 @@ public class TARDISMaterialisationPreset implements Runnable {
                                     }
                                     break;
                                 case 68: // sign - if there is one
-                                    if (tmd.shouldAddSign()) {
+                                    if (preset.equals(PRESET.JUNK)) {
+                                        // add a sign
+                                        TARDISBlockSetters.setBlock(world, xx, (y + yy), zz, colids[yy], coldatas[yy]);
+                                        // remember its location
+                                        String location = new Location(world, xx, (y + yy), zz).toString();
+                                        HashMap<String, Object> wherej = new HashMap<String, Object>();
+                                        wherej.put("tardis_id", tmd.getTardisID());
+                                        HashMap<String, Object> setj = new HashMap<String, Object>();
+                                        setj.put("location", location);
+                                        qf.doUpdate("junk", setj, wherej);
+                                        // make it a save_sign
+                                        Block sign = world.getBlockAt(xx, (y + yy), zz);
+                                        if (sign.getType().equals(Material.WALL_SIGN)) {
+                                            Sign s = (Sign) sign.getState();
+                                            s.setLine(0, "TARDIS");
+                                            s.setLine(1, plugin.getSigns().getStringList("saves").get(0));
+                                            s.setLine(2, plugin.getSigns().getStringList("saves").get(1));
+                                            s.setLine(3, "");
+                                            s.update();
+                                        }
+                                    } else if (tmd.shouldAddSign()) {
                                         TARDISBlockSetters.setBlock(world, xx, (y + yy), zz, colids[yy], coldatas[yy]);
                                         Block sign = world.getBlockAt(xx, (y + yy), zz);
                                         if (sign.getType().equals(Material.WALL_SIGN) || sign.getType().equals(Material.SIGN_POST)) {
