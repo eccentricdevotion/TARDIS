@@ -197,6 +197,10 @@ public class Main {
                                     str = String.format(SQL.VALUES.get(i), rs.getInt("id"), rs.getString("uuid"), rs.getString("player"), rs.getInt("arch"), rs.getString("inventory"), rs.getString("armour"), rs.getString("attributes"), rs.getString("armour_attributes")) + end;
                                     bw.write(str);
                                     break;
+                                case junk:
+                                    str = String.format(SQL.VALUES.get(i), rs.getInt("id"), rs.getString("uuid"), rs.getInt("tardis_id"), rs.getString("world"), rs.getInt("x"), rs.getInt("y"), rs.getInt("z"), rs.getString("preset")) + end;
+                                    bw.write(str);
+                                    break;
                                 case lamps:
                                     str = String.format(SQL.VALUES.get(i), rs.getInt("l_id"), rs.getInt("tardis_id"), rs.getString("location")) + end;
                                     bw.write(str);
@@ -210,7 +214,7 @@ public class Main {
                                     bw.write(str);
                                     break;
                                 case player_prefs:
-                                    str = String.format(SQL.VALUES.get(i), rs.getInt("pp_id"), rs.getString("uuid"), rs.getString("player"), rs.getString("key"), rs.getInt("sfx_on"), rs.getInt("quotes_on"), rs.getInt("artron_level"), rs.getString("wall"), rs.getString("floor"), rs.getString("siege_wall"), rs.getString("siege_floor"), rs.getInt("auto_on"), rs.getInt("beacon_on"), rs.getInt("hads_on"), rs.getInt("build_on"), rs.getInt("eps_on"), rs.getString("eps_message").replace("'", "\\'"), rs.getInt("lamp"), rs.getString("language"), rs.getInt("texture_on"), rs.getString("texture_in"), rs.getString("texture_out"), rs.getInt("submarine_on"), rs.getInt("dnd_on"), rs.getInt("minecart_on"), rs.getInt("renderer_on"), rs.getInt("wool_lights_on"), rs.getInt("ctm_on"), rs.getInt("sign_on"), rs.getInt("travelbar_on"), rs.getInt("farm_on"), rs.getInt("lanterns_on"), rs.getInt("auto_siege_on"), rs.getInt("flying_mode"), rs.getInt("difficulty")) + end;
+                                    str = String.format(SQL.VALUES.get(i), rs.getInt("pp_id"), rs.getString("uuid"), rs.getString("player"), rs.getString("key"), rs.getInt("sfx_on"), rs.getInt("quotes_on"), rs.getInt("artron_level"), rs.getString("wall"), rs.getString("floor"), rs.getString("siege_wall"), rs.getString("siege_floor"), rs.getInt("auto_on"), rs.getInt("beacon_on"), rs.getInt("hads_on"), rs.getString("hads_type"), rs.getInt("build_on"), rs.getInt("eps_on"), rs.getString("eps_message").replace("'", "\\'"), rs.getString("lamp"), rs.getString("language"), rs.getInt("texture_on"), rs.getString("texture_in"), rs.getString("texture_out"), rs.getInt("submarine_on"), rs.getInt("dnd_on"), rs.getInt("minecart_on"), rs.getInt("renderer_on"), rs.getInt("wool_lights_on"), rs.getInt("ctm_on"), rs.getInt("sign_on"), rs.getInt("telepathy_on"), rs.getInt("travelbar_on"), rs.getInt("farm_on"), rs.getInt("lanterns_on"), rs.getInt("auto_siege_on"), rs.getInt("flying_mode"), rs.getInt("difficulty")) + end;
                                     bw.write(str);
                                     break;
                                 case portals:
@@ -242,7 +246,7 @@ public class Main {
                                     if (rs.wasNull()) {
                                         companions = "";
                                     }
-                                    str = String.format(SQL.VALUES.get(i), rs.getInt("tardis_id"), rs.getString("uuid"), rs.getString("owner"), rs.getString("last_known_name"), rs.getString("chunk"), rs.getInt("tips"), rs.getString("size"), rs.getInt("artron_level"), replaced, companions, rs.getString("chameleon"), rs.getInt("handbrake_on"), rs.getInt("iso_on"), rs.getInt("hidden"), rs.getInt("recharging"), rs.getInt("tardis_init"), rs.getInt("adapti_on"), rs.getInt("chamele_on"), rs.getString("chameleon_preset"), rs.getString("chameleon_demat"), rs.getInt("chameleon_id"), rs.getInt("chameleon_data"), rs.getString("save_sign"), rs.getString("creeper"), rs.getString("condenser"), rs.getString("scanner"), rs.getString("farm"), rs.getString("stable"), rs.getString("beacon"), rs.getString("eps"), rs.getString("rail"), rs.getString("village"), rs.getString("renderer"), rs.getString("zero"), rs.getString("hutch"), rs.getInt("powered_on"), rs.getInt("lights_on"), rs.getLong("lastuse")) + end;
+                                    str = String.format(SQL.VALUES.get(i), rs.getInt("tardis_id"), rs.getString("uuid"), rs.getString("owner"), rs.getString("last_known_name"), rs.getString("chunk"), rs.getInt("tips"), rs.getString("size"), rs.getInt("artron_level"), replaced, companions, rs.getString("chameleon"), rs.getInt("handbrake_on"), rs.getInt("iso_on"), rs.getInt("hidden"), rs.getInt("recharging"), rs.getInt("tardis_init"), rs.getInt("adapti_on"), rs.getInt("chamele_on"), rs.getString("chameleon_preset"), rs.getString("chameleon_demat"), rs.getInt("chameleon_id"), rs.getInt("chameleon_data"), rs.getString("save_sign"), rs.getString("creeper"), rs.getString("condenser"), rs.getString("scanner"), rs.getString("farm"), rs.getString("stable"), rs.getString("beacon"), rs.getString("eps"), rs.getString("rail"), rs.getString("village"), rs.getString("renderer"), rs.getString("zero"), rs.getString("hutch"), rs.getInt("powered_on"), rs.getInt("lights_on"), rs.getLong("lastuse"), rs.getInt("monsters")) + end;
                                     bw.write(str);
                                     break;
                                 case travellers:
@@ -264,6 +268,9 @@ public class Main {
             }
             bw.write(SQL.SEPARATOR);
             bw.close();
+        } catch (IOException ex) {
+            console.println("***** Input/Output ERROR: " + ex.getMessage());
+            return;
         } catch (SQLException ex) {
             console.println("***** SQL ERROR: " + ex.getMessage());
             return;
