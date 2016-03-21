@@ -121,7 +121,7 @@ public class TARDISSQLiteDatabase {
             statement.executeUpdate(queryInventories);
 
             // Table structure for junk
-            String queryJunk = "CREATE TABLE IF NOT EXISTS " + prefix + "junk (id INTEGER PRIMARY KEY NOT NULL, uuid TEXT DEFAULT '', tardis_id INTEGER, location TEXT COLLATE NOCASE DEFAULT '', wall TEXT DEFAULT 'ORANGE_WOOL', floor TEXT DEFAULT 'LIGHT_GREY_WOOL')";
+            String queryJunk = "CREATE TABLE IF NOT EXISTS " + prefix + "junk (id INTEGER PRIMARY KEY NOT NULL, uuid TEXT DEFAULT '', tardis_id INTEGER, location TEXT COLLATE NOCASE DEFAULT '', wall TEXT DEFAULT 'ORANGE_WOOL', floor TEXT DEFAULT 'LIGHT_GREY_WOOL', preset TEXT DEFAULT '')";
             statement.executeUpdate(queryJunk);
 
             // Table structure for table 'lamps'
