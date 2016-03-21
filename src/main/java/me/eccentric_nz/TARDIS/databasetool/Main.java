@@ -198,7 +198,7 @@ public class Main {
                                     bw.write(str);
                                     break;
                                 case junk:
-                                    str = String.format(SQL.VALUES.get(i), rs.getInt("id"), rs.getString("uuid"), rs.getInt("tardis_id"), rs.getString("world"), rs.getInt("x"), rs.getInt("y"), rs.getInt("z"), rs.getString("preset")) + end;
+                                    str = String.format(SQL.VALUES.get(i), rs.getInt("id"), rs.getString("uuid"), rs.getInt("tardis_id"), rs.getString("save_sign"), rs.getString("handbrake"), rs.getString("wall"), rs.getString("floor"), rs.getString("preset")) + end;
                                     bw.write(str);
                                     break;
                                 case lamps:

@@ -45,7 +45,8 @@ public class ResultSetJunk {
     private int id;
     private UUID uuid;
     private int tardis_id;
-    private String location;
+    private String save_sign;
+    private String handbrake;
     private String wall;
     private String floor;
     private PRESET preset;
@@ -105,7 +106,8 @@ public class ResultSetJunk {
                     this.id = rs.getInt("id");
                     this.uuid = UUID.fromString(rs.getString("uuid"));
                     this.tardis_id = rs.getInt("tardis_id");
-                    this.location = rs.getString("location");
+                    this.save_sign = rs.getString("save_sign");
+                    this.handbrake = rs.getString("handbrake");
                     this.wall = rs.getString("wall");
                     this.floor = rs.getString("floor");
                     this.preset = PRESET.valueOf(rs.getString("preset"));
@@ -143,8 +145,12 @@ public class ResultSetJunk {
         return tardis_id;
     }
 
-    public String getLocation() {
-        return location;
+    public String getSave_sign() {
+        return save_sign;
+    }
+
+    public String getHandbrake() {
+        return handbrake;
     }
 
     public String getWall() {
