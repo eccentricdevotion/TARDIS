@@ -80,7 +80,6 @@ public class TARDISJunkCreator {
         set.put("chameleon_demat", "JUNK");
         set.put("chameleon_id", 35);
         set.put("chameleon_data", 11);
-        set.put("lamp", 123);
         set.put("lastuse", System.currentTimeMillis());
         final int lastInsertId = qf.doSyncInsert("tardis", set);
         // get wall floor prefs
@@ -106,6 +105,7 @@ public class TARDISJunkCreator {
             setpp.put("player", "junk");
             setpp.put("wall", "ORANGE_WOOL");
             setpp.put("floor", "GREY_WOOL");
+            setpp.put("lamp", "REDSTONE_LAMP_OFF");
             qf.doInsert("player_prefs", setpp);
         }
         World chunkworld = plugin.getServer().getWorld(cw);
