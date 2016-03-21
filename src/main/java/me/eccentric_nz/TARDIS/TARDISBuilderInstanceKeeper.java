@@ -16,7 +16,9 @@
  */
 package me.eccentric_nz.TARDIS;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import me.eccentric_nz.TARDIS.chameleon.TARDISStainedGlassLookup;
 import org.bukkit.Material;
 
@@ -32,6 +34,17 @@ public class TARDISBuilderInstanceKeeper {
     private final HashMap<String, HashMap<String, Integer>> roomBlockCounts = new HashMap<String, HashMap<String, Integer>>();
     private final TARDISStainedGlassLookup stainedGlassLookup = new TARDISStainedGlassLookup();
     private HashMap<Material, String> seeds;
+    private static final List<Material> precious = new ArrayList<Material>();
+
+    static {
+        precious.add(Material.BEACON);
+        precious.add(Material.DIAMOND_BLOCK);
+        precious.add(Material.EMERALD_BLOCK);
+        precious.add(Material.GOLD_BLOCK);
+        precious.add(Material.IRON_BLOCK);
+        precious.add(Material.REDSTONE_BLOCK);
+        precious.add(Material.BEDROCK);
+    }
 
     public HashMap<String, HashMap<String, Integer>> getRoomBlockCounts() {
         return roomBlockCounts;
@@ -45,7 +58,11 @@ public class TARDISBuilderInstanceKeeper {
         return seeds;
     }
 
-    public void setSeeds(HashMap<Material, String> seeds) {
-        this.seeds = seeds;
+    public void setSeeds(HashMap<Material, String> t_seeds) {
+        seeds = t_seeds;
+    }
+
+    public static List<Material> getPrecious() {
+        return precious;
     }
 }

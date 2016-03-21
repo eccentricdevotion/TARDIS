@@ -24,6 +24,7 @@ import java.util.Map;
 import me.eccentric_nz.TARDIS.JSON.JSONArray;
 import me.eccentric_nz.TARDIS.JSON.JSONObject;
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.TARDISBuilderInstanceKeeper;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetAchievements;
 import me.eccentric_nz.TARDIS.enumeration.SCHEMATIC;
@@ -56,18 +57,10 @@ public class TARDISBuilderInner {
 
     private final TARDIS plugin;
     List<Block> lampblocks = new ArrayList<Block>();
-    List<Material> precious = new ArrayList<Material>();
     private Block postBedrock = null;
 
     public TARDISBuilderInner(TARDIS plugin) {
         this.plugin = plugin;
-        this.precious.add(Material.BEACON);
-        this.precious.add(Material.DIAMOND_BLOCK);
-        this.precious.add(Material.EMERALD_BLOCK);
-        this.precious.add(Material.GOLD_BLOCK);
-        this.precious.add(Material.IRON_BLOCK);
-        this.precious.add(Material.REDSTONE_BLOCK);
-        this.precious.add(Material.BEDROCK);
     }
 
     /**
@@ -408,7 +401,7 @@ public class TARDISBuilderInner {
                         qf.insertSyncControl(dbID, 6, woodbuttonloc, 0);
                     }
                     // if it's an iron/gold/diamond/emerald/beacon/redstone block put it in the blocks table
-                    if (precious.contains(type)) {
+                    if (TARDISBuilderInstanceKeeper.getPrecious().contains(type)) {
                         HashMap<String, Object> setpb = new HashMap<String, Object>();
                         String loc = TARDISLocationGetters.makeLocationStr(world, x, y, z);
                         setpb.put("tardis_id", dbID);

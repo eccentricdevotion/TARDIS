@@ -19,9 +19,13 @@ package me.eccentric_nz.TARDIS.listeners;
 import java.util.HashMap;
 import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.TARDISBuilderInstanceKeeper;
+import me.eccentric_nz.TARDIS.database.QueryFactory;
+import me.eccentric_nz.TARDIS.database.ResultSetTravellers;
 import me.eccentric_nz.TARDIS.enumeration.PRESET;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import org.bukkit.ChatColor;
+import org.bukkit.GameMode;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.block.Sign;
@@ -70,6 +74,21 @@ public class TARDISBlockBreakListener implements Listener {
         }
         Block block = event.getBlock();
         Material blockType = block.getType();
+        if (player.getGameMode().equals(GameMode.CREATIVE) && TARDISBuilderInstanceKeeper.getPrecious().contains(blockType)) {
+            HashMap<String, Object> where = new HashMap<String, Object>();
+            where.put("uuid", player.getUniqueId().toString());
+            ResultSetTravellers rs = new ResultSetTravellers(plugin, where, false);
+            if (rs.resultSet()) {
+                // remove protection
+                HashMap<String, Object> wherep = new HashMap<String, Object>();
+                String loc = block.getLocation().toString();
+                wherep.put("location", loc);
+                wherep.put("police_box", 0);
+                new QueryFactory(plugin).doDelete("blocks", wherep);
+                plugin.getGeneralKeeper().getProtectBlockMap().remove(loc);
+            }
+            return;
+        }
         if (blockType == Material.WALL_SIGN) {
             // check the text on the sign
             Sign sign = (Sign) block.getState();
