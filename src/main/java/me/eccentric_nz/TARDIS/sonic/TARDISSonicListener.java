@@ -101,8 +101,13 @@ public class TARDISSonicListener implements Listener {
         diamond.add(Material.STAINED_GLASS_PANE);
         diamond.add(Material.THIN_GLASS);
         diamond.add(Material.WEB);
+        distance.add(Material.ACACIA_DOOR);
+        distance.add(Material.BIRCH_DOOR);
+        distance.add(Material.DARK_OAK_DOOR);
         distance.add(Material.IRON_DOOR_BLOCK);
+        distance.add(Material.JUNGLE_DOOR);
         distance.add(Material.LEVER);
+        distance.add(Material.SPRUCE_DOOR);
         distance.add(Material.STONE_BUTTON);
         distance.add(Material.WOODEN_DOOR);
         distance.add(Material.WOOD_BUTTON);
@@ -729,7 +734,12 @@ public class TARDISSonicListener implements Listener {
         if (distance.contains(blockType)) {
             final BlockState bs = targetBlock.getState();
             switch (blockType) {
+                case ACACIA_DOOR:
+                case BIRCH_DOOR:
+                case DARK_OAK_DOOR:
                 case IRON_DOOR_BLOCK:
+                case JUNGLE_DOOR:
+                case SPRUCE_DOOR:
                 case WOODEN_DOOR:
                     final Block lowerdoor;
                     if (targetBlock.getData() >= 8) {
