@@ -110,7 +110,7 @@ public class TARDISKeyboardPacketListener implements Listener {
         if (!player.getWorld().equals(sign.getWorld())) {
             throw new IllegalArgumentException("Player and sign must be in the same world.");
         }
-        PacketContainer editSignPacket = new PacketContainer(PacketType.Play.Server.OPEN_SIGN_ENTITY);
+        PacketContainer editSignPacket = new PacketContainer(PacketType.Play.Server.OPEN_SIGN_EDITOR);
 
         // Permit this
         editing.put(player, sign.getLocation());
