@@ -34,11 +34,13 @@ import org.bukkit.command.TabCompleter;
 public class TARDISTravelTabComplete extends TARDISCompleter implements TabCompleter {
 
     TARDIS plugin;
-    private List<String> ROOT_SUBS = new ArrayList<String>();
+    private final List<String> ROOT_SUBS = new ArrayList<String>();
     private final List<String> firsts = Arrays.asList("home", "biome", "dest", "area", "back", "cave", "village", "cancel", "costs");
     private final List<String> BIOME_SUBS = new ArrayList<String>();
+    private final List<String> AREA_SUBS = new ArrayList<String>();
 
     public TARDISTravelTabComplete(TARDIS plugin) {
+        this.plugin = plugin;
         for (Biome bi : org.bukkit.block.Biome.values()) {
             if (!bi.equals(Biome.HELL) && !bi.equals(Biome.SKY)) {
                 BIOME_SUBS.add(bi.toString());
@@ -46,6 +48,13 @@ public class TARDISTravelTabComplete extends TARDISCompleter implements TabCompl
         }
         ROOT_SUBS.addAll(firsts);
         ROOT_SUBS.addAll(plugin.getTardisAPI().getWorlds());
+        ResultSetAreas rsa = new ResultSetAreas(plugin, null, true);
+        if (rsa.resultSet()) {
+            ArrayList<HashMap<String, String>> data = rsa.getData();
+            for (HashMap<String, String> map : data) {
+                AREA_SUBS.add(map.get("area_name"));
+            }
+        }
     }
 
     @Override
@@ -58,7 +67,7 @@ public class TARDISTravelTabComplete extends TARDISCompleter implements TabCompl
         } else if (args.length == 2) {
             String sub = args[0];
             if (sub.equals("area")) {
-                return partial(lastArg, getAreas());
+                return partial(lastArg, AREA_SUBS);
             }
             if (sub.equals("biome")) {
                 return partial(lastArg, BIOME_SUBS);
@@ -67,17 +76,5 @@ public class TARDISTravelTabComplete extends TARDISCompleter implements TabCompl
 
         }
         return ImmutableList.of();
-    }
-
-    private List<String> getAreas() {
-        List<String> areas = new ArrayList<String>();
-        ResultSetAreas rsa = new ResultSetAreas(plugin, null, true);
-        if (rsa.resultSet()) {
-            ArrayList<HashMap<String, String>> data = rsa.getData();
-            for (HashMap<String, String> map : data) {
-                areas.add(map.get("area_name"));
-            }
-        }
-        return areas;
     }
 }
