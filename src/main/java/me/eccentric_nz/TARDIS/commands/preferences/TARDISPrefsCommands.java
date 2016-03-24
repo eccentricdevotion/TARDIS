@@ -67,6 +67,7 @@ public class TARDISPrefsCommands implements CommandExecutor {
         firstArgs.add("isomorphic");
         firstArgs.add("key");
         firstArgs.add("key_menu");
+        firstArgs.add("junk");
         firstArgs.add("lamp");
         firstArgs.add("language");
         firstArgs.add("lanterns");
@@ -139,6 +140,9 @@ public class TARDISPrefsCommands implements CommandExecutor {
                     }
                     if (pref.equals("key")) {
                         return new TARDISSetKeyCommand(plugin).setKeyPref(player, args, qf);
+                    }
+                    if (pref.equals("junk")) {
+                        return new TARDISJunkPreference(plugin).toggle(player, args[1], qf);
                     }
                     if (pref.equals("lamp")) {
                         return new TARDISSetLampCommand(plugin).setLampPref(player, args, qf);

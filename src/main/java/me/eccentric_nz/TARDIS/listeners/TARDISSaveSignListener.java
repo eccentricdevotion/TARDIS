@@ -70,11 +70,21 @@ public class TARDISSaveSignListener extends TARDISMenuListener implements Listen
             final Player player = (Player) event.getWhoClicked();
             UUID uuid = player.getUniqueId();
             // get the TARDIS the player is in
-            HashMap<String, Object> wheres = new HashMap<String, Object>();
-            wheres.put("uuid", player.getUniqueId().toString());
-            ResultSetTravellers rst = new ResultSetTravellers(plugin, wheres, false);
-            if (rst.resultSet()) {
-                int id = rst.getTardis_id();
+            boolean allow = false;
+            int id = -1;
+            if (plugin.getTrackerKeeper().getJunkPlayers().containsKey(uuid)) {
+                allow = true;
+                id = plugin.getTrackerKeeper().getJunkPlayers().get(uuid);
+            } else {
+                HashMap<String, Object> wheres = new HashMap<String, Object>();
+                wheres.put("uuid", player.getUniqueId().toString());
+                ResultSetTravellers rst = new ResultSetTravellers(plugin, wheres, false);
+                if (rst.resultSet()) {
+                    allow = true;
+                    id = rst.getTardis_id();
+                }
+            }
+            if (allow) {
                 int slot = event.getRawSlot();
                 if (plugin.getTrackerKeeper().getArrangers().contains(uuid)) {
                     if ((slot >= 1 && slot < 45) || slot == 53) {

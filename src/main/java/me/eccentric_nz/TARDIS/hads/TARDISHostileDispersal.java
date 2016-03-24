@@ -161,6 +161,9 @@ public class TARDISHostileDispersal {
         plugin.getPresetDestroyer().destroyLamp(l, preset);
         // remove sign
         plugin.getPresetDestroyer().destroySign(l, d, preset);
+        if (preset.equals(PRESET.JUNK_MODE)) {
+            plugin.getPresetDestroyer().destroyHandbrake(l, d);
+        }
         // remove blue wool
         final List<FallingBlock> falls = new ArrayList<FallingBlock>();
         byte tmp = 0;

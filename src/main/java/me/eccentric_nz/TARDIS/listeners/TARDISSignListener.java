@@ -19,9 +19,12 @@ package me.eccentric_nz.TARDIS.listeners;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.advanced.TARDISCircuitChecker;
 import me.eccentric_nz.TARDIS.chameleon.TARDISChameleonInventory;
+import me.eccentric_nz.TARDIS.database.ResultSetJunk;
+import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import me.eccentric_nz.TARDIS.database.ResultSetTardisSign;
 import me.eccentric_nz.TARDIS.database.ResultSetTravellers;
 import me.eccentric_nz.TARDIS.enumeration.DIFFICULTY;
@@ -76,30 +79,54 @@ public class TARDISSignListener implements Listener {
             Action action = event.getAction();
             // only proceed if they are right-clicking a valid sign block!
             if (action == Action.RIGHT_CLICK_BLOCK && validSigns.contains(blockType)) {
+                UUID uuid = player.getUniqueId();
                 // check they are in the TARDIS
-                // get the TARDIS the player is in
                 HashMap<String, Object> wheres = new HashMap<String, Object>();
-                wheres.put("uuid", player.getUniqueId().toString());
+                wheres.put("uuid", uuid.toString());
                 ResultSetTravellers rst = new ResultSetTravellers(plugin, wheres, false);
-                if (!rst.resultSet()) {
-                    return;
-                }
+                boolean inside = rst.resultSet();
+                boolean found = false;
+                int which = 1;
+                int id = -1;
                 // get clicked block location
                 Location b = block.getLocation();
-                String bw = b.getWorld().getName();
-                int bx = b.getBlockX();
-                int by = b.getBlockY();
-                int bz = b.getBlockZ();
-                String signloc = bw + ":" + bx + ":" + by + ":" + bz;
-                // get tardis from saved sign location
-                ResultSetTardisSign rs = new ResultSetTardisSign(plugin, signloc);
-                if (rs.resultSet()) {
+                String signloc = b.toString();
+                if (inside) {
+                    String bw = b.getWorld().getName();
+                    int bx = b.getBlockX();
+                    int by = b.getBlockY();
+                    int bz = b.getBlockZ();
+                    signloc = bw + ":" + bx + ":" + by + ":" + bz;
+                    // get tardis from saved sign location
+                    ResultSetTardisSign rsts = new ResultSetTardisSign(plugin, signloc);
+                    if (rsts.resultSet()) {
+                        found = true;
+                        id = rsts.getTardis_id();
+                        which = rsts.getWhich();
+                    }
+                } else {
+                    HashMap<String, Object> where = new HashMap<String, Object>();
+                    where.put("uuid", uuid.toString());
+                    where.put("save_sign", signloc);
+                    ResultSetJunk rsj = new ResultSetJunk(plugin, where);
+                    if (rsj.resultSet()) {
+                        found = true;
+                        id = rsj.getTardis_id();
+                        // track player for save sign GUI
+                        plugin.getTrackerKeeper().getJunkPlayers().put(uuid, id);
+                    }
+                }
+                if (found) {
                     event.setCancelled(true);
+                    HashMap<String, Object> wheret = new HashMap<String, Object>();
+                    wheret.put("tardis_id", id);
+                    ResultSetTardis rs = new ResultSetTardis(plugin, wheret, "", false);
+                    rs.resultSet();
                     if (plugin.getConfig().getBoolean("allow.power_down") && !rs.isPowered_on()) {
                         TARDISMessage.send(player, "POWER_DOWN");
                         return;
                     }
-                    if ((rs.isIso_on() && !player.getUniqueId().equals(rs.getUuid()) && event.isCancelled() && !player.hasPermission("tardis.skeletonkey")) || plugin.getTrackerKeeper().getJohnSmith().containsKey(player.getUniqueId())) {
+                    if ((rs.isIso_on() && !uuid.equals(rs.getUuid()) && event.isCancelled() && !player.hasPermission("tardis.skeletonkey")) || plugin.getTrackerKeeper().getJohnSmith().containsKey(uuid)) {
                         TARDISMessage.send(player, "ISO_HANDS_OFF");
                         return;
                     }
@@ -115,7 +142,7 @@ public class TARDISSignListener implements Listener {
                         tcc = new TARDISCircuitChecker(plugin, rs.getTardis_id());
                         tcc.getCircuits();
                     }
-                    if (rs.getWhich() == 0 && line1.contains(plugin.getSigns().getStringList("chameleon").get(0))) {
+                    if (which == 0 && line1.contains(plugin.getSigns().getStringList("chameleon").get(0))) {
                         if (tcc != null && !tcc.hasChameleon()) {
                             TARDISMessage.send(player, "CHAM_MISSING");
                             return;
@@ -129,7 +156,7 @@ public class TARDISSignListener implements Listener {
                         Inventory cc_gui = plugin.getServer().createInventory(player, 54, "§4Chameleon Circuit");
                         cc_gui.setContents(cc);
                         player.openInventory(cc_gui);
-                    } else if (rs.getWhich() == 1 && line1.contains("TARDIS")) {
+                    } else if (which == 1 && line1.contains("TARDIS")) {
                         if (tcc != null && !tcc.hasMemory()) {
                             TARDISMessage.send(player, "NO_MEM_CIRCUIT");
                             return;

@@ -61,6 +61,7 @@ public class TARDISChameleonPreset {
     public final TARDISInvisiblePreset invisible;
     public final TARDISJailPreset jail;
     public final TARDISJunglePreset jungle;
+    public final TARDISJunkPreset junk;
     public final TARDISLampPostPreset lamp;
     public final TARDISLibraryPreset library;
     public final TARDISLighthousePreset lighthouse;
@@ -118,6 +119,7 @@ public class TARDISChameleonPreset {
         this.invisible = new TARDISInvisiblePreset();
         this.jail = new TARDISJailPreset();
         this.jungle = new TARDISJunglePreset();
+        this.junk = new TARDISJunkPreset();
         this.lamp = new TARDISLampPostPreset();
         this.library = new TARDISLibraryPreset();
         this.lighthouse = new TARDISLighthousePreset();
@@ -174,6 +176,7 @@ public class TARDISChameleonPreset {
         invisible.makePresets(true, true, true);
         jail.makePresets(false, false, false);
         jungle.makePresets(false, false, false);
+        junk.makePresets(true, false, false);
         lamp.makePresets(true, false, true);
         library.makePresets(false, false, false);
         lighthouse.makePresets(false, false, false);
@@ -562,6 +565,8 @@ public class TARDISChameleonPreset {
                 return jail.getBlueprint().get(d);
             case JUNGLE:
                 return jungle.getBlueprint().get(d);
+            case JUNK_MODE:
+                return junk.getBlueprint().get(d);
             case LAMP:
                 return lamp.getBlueprint().get(d);
             case LIBRARY:
@@ -675,6 +680,8 @@ public class TARDISChameleonPreset {
                 return jail.getGlass().get(d);
             case JUNGLE:
                 return jungle.getGlass().get(d);
+            case JUNK_MODE:
+                return junk.getGlass().get(d);
             case LAMP:
                 return lamp.getGlass().get(d);
             case LIBRARY:
@@ -788,6 +795,8 @@ public class TARDISChameleonPreset {
                 return jail.getStained().get(d);
             case JUNGLE:
                 return jungle.getStained().get(d);
+            case JUNK_MODE:
+                return junk.getStained().get(d);
             case LAMP:
                 return lamp.getStained().get(d);
             case LIBRARY:

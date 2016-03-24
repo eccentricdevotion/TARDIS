@@ -17,6 +17,7 @@
 package me.eccentric_nz.TARDIS.destroyers;
 
 import java.util.HashMap;
+import java.util.List;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.builders.TARDISMaterialisationData;
 import me.eccentric_nz.TARDIS.chameleon.TARDISChameleonColumn;
@@ -25,13 +26,18 @@ import me.eccentric_nz.TARDIS.database.ResultSetDoors;
 import me.eccentric_nz.TARDIS.database.ResultSetPlayerPrefs;
 import me.eccentric_nz.TARDIS.enumeration.PRESET;
 import me.eccentric_nz.TARDIS.utility.TARDISBlockSetters;
+import me.eccentric_nz.TARDIS.utility.TARDISJunkParticles;
 import me.eccentric_nz.TARDIS.utility.TARDISLocationGetters;
 import me.eccentric_nz.TARDIS.utility.TARDISSounds;
+import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.Sound;
 import org.bukkit.World;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
+import org.bukkit.entity.Entity;
+import org.bukkit.entity.EntityType;
+import org.bukkit.entity.Player;
 
 /**
  * A dematerialisation circuit was an essential part of a Type 40 TARDIS which
@@ -148,6 +154,10 @@ public class TARDISDematerialisationPreset implements Runnable {
                     case CAKE:
                         plugin.getPresetDestroyer().destroyLamp(tmd.getLocation(), preset);
                         break;
+                    case JUNK_MODE:
+                        plugin.getPresetDestroyer().destroySign(tmd.getLocation(), tmd.getDirection(), preset);
+                        plugin.getPresetDestroyer().destroyHandbrake(tmd.getLocation(), tmd.getDirection());
+                        break;
                     default:
                         break;
                 }
@@ -161,12 +171,22 @@ public class TARDISDematerialisationPreset implements Runnable {
                         minecart = rsp.isMinecartOn();
                     }
                     if (!minecart) {
-                        TARDISSounds.playTARDISSound(tmd.getLocation(), "tardis_takeoff");
+                        String sound = (preset.equals(PRESET.JUNK_MODE)) ? "junk_takeoff" : "tardis_takeoff";
+                        TARDISSounds.playTARDISSound(tmd.getLocation(), sound);
                     } else {
                         world.playSound(tmd.getLocation(), Sound.ENTITY_MINECART_INSIDE, 1.0F, 0.0F);
                     }
                 }
                 the_colour = getWoolColour(tmd.getTardisID(), preset);
+            } else if (preset.equals(PRESET.JUNK_MODE) && plugin.getConfig().getBoolean("junk.particles")) {
+                // animate particles
+                for (Entity e : plugin.getUtils().getJunkTravellers(tmd.getLocation())) {
+                    if (e instanceof Player) {
+                        Player p = (Player) e;
+                        Location effectsLoc = tmd.getLocation().clone().add(0.5d, 0, 0.5d);
+                        TARDISJunkParticles.sendVortexParticles(effectsLoc, p);
+                    }
+                }
             } else {
                 // just change the walls
                 int xx, zz;
@@ -284,10 +304,47 @@ public class TARDISDematerialisationPreset implements Runnable {
                 }
             }
         } else {
+            ((Player) tmd.getPlayer()).sendMessage("end demat");
             plugin.getServer().getScheduler().cancelTask(task);
             task = 0;
             new TARDISDeinstaPreset(plugin).instaDestroyPreset(tmd, false, preset);
+            if (preset.equals(PRESET.JUNK_MODE)) {
+                // teleport player(s) to exit (tmd.getFromToLocation())
+                for (Entity e : getJunkTravellers(1.0d)) {
+                    if (e instanceof Player) {
+                        final Player p = (Player) e;
+                        final Location relativeLoc = getRelativeLocation(p);
+                        p.teleport(relativeLoc);
+                        plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
+                            @Override
+                            public void run() {
+                                p.teleport(relativeLoc);
+                            }
+                        }, 2L);
+                    }
+                }
+            }
         }
+    }
+
+    private Location getRelativeLocation(Player p) {
+        Location playerLoc = p.getLocation();
+        double x = tmd.getFromToLocation().getX() + (playerLoc.getX() - tmd.getLocation().getX());
+        double y = tmd.getFromToLocation().getY() + (playerLoc.getY() - tmd.getLocation().getY()) + 1.1d;
+        double z = tmd.getFromToLocation().getZ() + (playerLoc.getZ() - tmd.getLocation().getZ());
+        Location l = new Location(tmd.getFromToLocation().getWorld(), x, y, z, playerLoc.getYaw(), playerLoc.getPitch());
+        while (!l.getChunk().isLoaded()) {
+            l.getChunk().load();
+        }
+        return l;
+    }
+
+    private List<Entity> getJunkTravellers(double d) {
+        // spawn an entity
+        Entity orb = tmd.getLocation().getWorld().spawnEntity(tmd.getLocation(), EntityType.EXPERIENCE_ORB);
+        List<Entity> ents = orb.getNearbyEntities(d, d, d);
+        orb.remove();
+        return ents;
     }
 
     @SuppressWarnings("deprecation")

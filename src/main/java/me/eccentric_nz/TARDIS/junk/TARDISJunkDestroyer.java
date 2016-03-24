@@ -83,12 +83,7 @@ public class TARDISJunkDestroyer implements Runnable {
                         plugin.getGeneralKeeper().getJunkTravellers().add(p.getUniqueId());
                     }
                 }
-//                for (Entity e : getJunkTravellers(16.0d)) {
-//                    if (e instanceof Player) {
-//                        Player p = (Player) e;
                 TARDISSounds.playTARDISSound(junkLoc, "junk_takeoff");
-//                    }
-//                }
                 fryTask = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, new TARDISJunkItsDangerousRunnable(plugin, junkLoc), 0, 1L);
             }
             if (i == 25) {

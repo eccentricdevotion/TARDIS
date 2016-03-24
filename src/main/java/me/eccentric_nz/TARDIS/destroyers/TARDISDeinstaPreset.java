@@ -145,6 +145,9 @@ public class TARDISDeinstaPreset {
             case LAMP:
                 plugin.getPresetDestroyer().destroyLampTrapdoors(l, d);
                 break;
+            case JUNK_MODE:
+                plugin.getPresetDestroyer().destroyHandbrake(l, d);
+                break;
             default:
                 break;
         }

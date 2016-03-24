@@ -58,6 +58,7 @@ public class TARDISPresetDestroyerFactory {
         ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);
         if (rs.resultSet()) {
             PRESET demat = rs.getDemat();
+            PRESET preset = rs.getPreset();
             // load the chunk if unloaded
             if (!pdd.getLocation().getWorld().isChunkLoaded(pdd.getLocation().getChunk())) {
                 pdd.getLocation().getWorld().loadChunk(pdd.getLocation().getChunk());
@@ -90,6 +91,8 @@ public class TARDISPresetDestroyerFactory {
                 int loops = 18;
                 if (pdd.isHide()) {
                     loops = 3;
+                } else if (preset.equals(PRESET.JUNK_MODE)) {
+                    loops = 25;
                 }
                 if (demat.equals(PRESET.JUNK)) {
                     TARDISJunkDestroyer runnable = new TARDISJunkDestroyer(plugin, pdd);
@@ -124,6 +127,22 @@ public class TARDISPresetDestroyerFactory {
         World w = l.getWorld();
         int signx, signz, signy;
         switch (p) {
+            case JUNK_MODE:
+                switch (d) {
+                    case EAST:
+                        signx = 0;
+                        signz = 1;
+                        break;
+                    case WEST:
+                        signx = 0;
+                        signz = -1;
+                        break;
+                    default:
+                        signx = 1;
+                        signz = 0;
+                        break;
+                }
+                break;
             case GRAVESTONE:
                 signx = 0;
                 signz = 0;
@@ -234,6 +253,34 @@ public class TARDISPresetDestroyerFactory {
         if (p.equals(PRESET.SWAMP)) {
             TARDISBlockSetters.setBlock(w, l.getBlockX() + signx, l.getBlockY(), l.getBlockZ() + signz, 0, (byte) 0);
         }
+    }
+
+    public void destroyHandbrake(Location l, COMPASS d) {
+        int lx;
+        int lz;
+        switch (d) {
+            case EAST:
+                lx = -1;
+                lz = 1;
+                break;
+            case SOUTH:
+                lx = -1;
+                lz = -1;
+                break;
+            case WEST:
+                lx = 1;
+                lz = -1;
+                break;
+            default:
+                lx = 1;
+                lz = 1;
+                break;
+        }
+        World w = l.getWorld();
+        int tx = l.getBlockX() + lx;
+        int ty = l.getBlockY() + 2;
+        int tz = l.getBlockZ() + lz;
+        TARDISBlockSetters.setBlock(w, tx, ty, tz, 0, (byte) 0);
     }
 
     public void destroyLamp(Location l, PRESET p) {

@@ -5,8 +5,8 @@
    * Allow dual wielding TARDIS items?
    * VOID biome - use for MCPatcher texture changes instead of The End / SKY? _(Need to wait for MCPatcher to update)_
 2. TARDIS Junk Mode [#1157](http://dev.bukkit.org/bukkit-plugins/tardis/tickets/1157-normal-tardis-junk-mode/)
-   * `/tprefs junk [on|off]`
    * `/tprefs junk [wall|floor] [block_type]`
+   * Fix Save Sign Listener when outside TARDIS
 4. TIPS visulisation tool (using WorldGuard region data)
 5. Fix bugs!
 
@@ -21,7 +21,8 @@
 
 ##Resource Pack / TARDISWeepingAngels
 
-1. Re-skin mobs for Resource pack, and add new mob sounds
+1. Angels can now dual wield, so give them another wing!
+2. Re-skin mobs for Resource pack, and add new mob sounds
 
    * Villagers -> Ood - _started texture_
    * Villagers -> Hath

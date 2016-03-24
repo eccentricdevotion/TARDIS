@@ -126,6 +126,9 @@ public class TARDISDirectionCommand {
                 if (demat.equals(PRESET.LAMP)) {
                     plugin.getPresetDestroyer().destroyLampTrapdoors(l, old_d);
                 }
+                if (demat.equals(PRESET.JUNK_MODE)) {
+                    plugin.getPresetDestroyer().destroyHandbrake(l, old_d);
+                }
                 plugin.getPresetDestroyer().destroyDoor(id);
                 plugin.getPresetDestroyer().destroySign(l, old_d, demat);
                 final TARDISMaterialisationData pbd = new TARDISMaterialisationData(plugin, player.getUniqueId().toString());

@@ -24,6 +24,8 @@ import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.artron.TARDISBeaconToggler;
 import me.eccentric_nz.TARDIS.commands.admin.TARDISAdminMenuInventory;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
+import me.eccentric_nz.TARDIS.database.ResultSetJunk;
+import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import me.eccentric_nz.TARDIS.database.ResultSetTravellers;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import org.bukkit.entity.Player;
@@ -80,7 +82,7 @@ public class TARDISPrefsMenuListener implements Listener {
                     final Player p = (Player) event.getWhoClicked();
                     UUID uuid = p.getUniqueId();
                     ItemMeta im = is.getItemMeta();
-                    if (slot == 24 && im.getDisplayName().equals("TARDIS Map")) {
+                    if (slot == 25 && im.getDisplayName().equals("TARDIS Map")) {
                         // must be in the TARDIS
                         HashMap<String, Object> where = new HashMap<String, Object>();
                         where.put("uuid", uuid.toString());
@@ -119,7 +121,62 @@ public class TARDISPrefsMenuListener implements Listener {
                     boolean bool = (lore.get(0).equals(plugin.getLanguage().getString("SET_ON")));
                     String value = (bool) ? plugin.getLanguage().getString("SET_OFF") : plugin.getLanguage().getString("SET_ON");
                     int b = (bool) ? 0 : 1;
-                    if (im.getDisplayName().equals("Companion Build")) {
+                    if (im.getDisplayName().equals("Junk TARDIS")) {
+                        // must be outside of the TARDIS
+                        HashMap<String, Object> wheret = new HashMap<String, Object>();
+                        wheret.put("uuid", uuid);
+                        ResultSetTravellers rst = new ResultSetTravellers(plugin, wheret, false);
+                        if (rst.resultSet()) {
+                            TARDISMessage.send(p, "JUNK_PRESET_OUTSIDE");
+                            return;
+                        }
+                        HashMap<String, Object> where = new HashMap<String, Object>();
+                        where.put("uuid", uuid.toString());
+                        ResultSetJunk rsj = new ResultSetJunk(plugin, where);
+                        boolean has = rsj.resultSet();
+                        // get preset
+                        HashMap<String, Object> wherep = new HashMap<String, Object>();
+                        wherep.put("uuid", uuid.toString());
+                        ResultSetTardis rsp = new ResultSetTardis(plugin, wherep, "", false);
+                        if (rsp.resultSet()) {
+                            QueryFactory qf = new QueryFactory(plugin);
+                            String current = rsp.getPreset().toString();
+                            int id = rsp.getTardis_id();
+                            HashMap<String, Object> setj = new HashMap<String, Object>();
+                            if (has) {
+                                // update rcord with current preset
+                                HashMap<String, Object> wherej = new HashMap<String, Object>();
+                                wherej.put("uuid", uuid.toString());
+                                setj.put("preset", current);
+                                qf.doSyncUpdate("junk", setj, wherej);
+                            } else {
+                                // create a junk record
+                                setj.put("uuid", uuid.toString());
+                                setj.put("tardis_id", id);
+                                setj.put("preset", current);
+                                qf.doSyncInsert("junk", setj);
+                            }
+                            HashMap<String, Object> whereu = new HashMap<String, Object>();
+                            whereu.put("uuid", uuid.toString());
+                            HashMap<String, Object> sett = new HashMap<String, Object>();
+                            String message = "JUNK_PRESET_ON";
+                            if (bool) {
+                                // restore saved preset
+                                String preset = (has) ? rsj.getPreset().toString() : current;
+                                sett.put("chameleon_preset", preset);
+                                sett.put("chameleon_demat", "JUNK_MODE");
+                                message = "JUNK_PRESET_OFF";
+                            } else {
+                                // save JUNK_MODE preset
+                                sett.put("chameleon_preset", "JUNK_MODE");
+                                sett.put("chameleon_demat", current);
+                            }
+                            qf.doSyncUpdate("tardis", sett, whereu);
+                            // rebuild
+                            TARDISMessage.send(p, message);
+                            p.performCommand("tardis rebuild");
+                        }
+                    } else if (im.getDisplayName().equals("Companion Build")) {
                         String[] args = new String[2];
                         args[0] = "";
                         args[1] = value;

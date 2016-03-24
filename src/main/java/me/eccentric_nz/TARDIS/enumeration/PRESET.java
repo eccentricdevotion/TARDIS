@@ -79,6 +79,7 @@ public enum PRESET {
     YELLOW(Material.GOLD_NUGGET, "YELLOW", "SUBMARINE", true, true),
     CUSTOM(Material.OBSIDIAN, "", "", false, false),
     JUNK(Material.BARRIER, "", "", false, false),
+    JUNK_MODE(Material.BARRIER, "", "", false, false),
     CONSTRUCT(Material.BARRIER, "CONSTRUCT", "", true, true);
 
     Material material;

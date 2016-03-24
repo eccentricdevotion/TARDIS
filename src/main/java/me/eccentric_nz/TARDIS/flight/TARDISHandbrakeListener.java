@@ -29,9 +29,11 @@ import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetControls;
 import me.eccentric_nz.TARDIS.database.ResultSetCurrentLocation;
 import me.eccentric_nz.TARDIS.database.ResultSetDoors;
+import me.eccentric_nz.TARDIS.database.ResultSetJunk;
 import me.eccentric_nz.TARDIS.database.ResultSetNextLocation;
 import me.eccentric_nz.TARDIS.database.ResultSetPlayerPrefs;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
+import me.eccentric_nz.TARDIS.database.ResultSetTravellers;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
 import me.eccentric_nz.TARDIS.enumeration.DIFFICULTY;
 import me.eccentric_nz.TARDIS.enumeration.DISK_CIRCUIT;
@@ -86,15 +88,36 @@ public class TARDISHandbrakeListener implements Listener {
         if (block != null) {
             Material blockType = block.getType();
             if (blockType == Material.LEVER) {
-                // Checks handbrake location against the database.
+                final UUID uuid = player.getUniqueId();
+                HashMap<String, Object> whereu = new HashMap<String, Object>();
+                whereu.put("uuid", uuid.toString());
+                ResultSetTravellers rsv = new ResultSetTravellers(plugin, whereu, false);
+                boolean inside = rsv.resultSet();
+                // check handbrake location against the database.
                 final Location handbrake_loc = block.getLocation();
                 HashMap<String, Object> where = new HashMap<String, Object>();
-                where.put("type", 0);
-                where.put("location", handbrake_loc.toString());
-                ResultSetControls rsc = new ResultSetControls(plugin, where, false);
-                if (rsc.resultSet()) {
+                boolean found = false;
+                int tmp_id = -1;
+                if (inside) {
+                    where.put("type", 0);
+                    where.put("location", handbrake_loc.toString());
+                    ResultSetControls rsc = new ResultSetControls(plugin, where, false);
+                    if (rsc.resultSet()) {
+                        found = true;
+                        tmp_id = rsc.getTardis_id();
+                    }
+                } else {
+                    where.put("uuid", uuid.toString());
+                    where.put("handbrake", handbrake_loc.toString());
+                    ResultSetJunk rsj = new ResultSetJunk(plugin, where);
+                    if (rsj.resultSet()) {
+                        found = true;
+                        tmp_id = rsj.getTardis_id();
+                    }
+                }
+                if (found) {
                     event.setCancelled(true);
-                    final int id = rsc.getTardis_id();
+                    final int id = tmp_id;
                     TARDISCircuitChecker tcc = null;
                     if (!plugin.getDifficulty().equals(DIFFICULTY.EASY) && !plugin.getUtils().inGracePeriod(player, event.getAction().equals(Action.LEFT_CLICK_BLOCK))) {
                         tcc = new TARDISCircuitChecker(plugin, id);
@@ -119,11 +142,11 @@ public class TARDISHandbrakeListener implements Listener {
                     final HashMap<String, Object> setdoor = new HashMap<String, Object>();
                     final HashMap<String, Object> wheredoor = new HashMap<String, Object>();
                     if (rs.resultSet()) {
-                        if (rs.getPreset().equals(PRESET.JUNK)) {
+                        final PRESET preset = rs.getPreset();
+                        if (preset.equals(PRESET.JUNK)) {
                             return;
                         }
                         UUID ownerUUID = rs.getUuid();
-                        final UUID uuid = player.getUniqueId();
                         if ((rs.isIso_on() && !uuid.equals(ownerUUID) && event.isCancelled() && !player.hasPermission("tardis.skeletonkey")) || plugin.getTrackerKeeper().getJohnSmith().containsKey(uuid)) {
                             // check if cancelled so we don't get double messages from the bind listener
                             TARDISMessage.send(player, "ISO_HANDS_OFF");
@@ -254,7 +277,8 @@ public class TARDISHandbrakeListener implements Listener {
                                             set.put("handbrake_on", 0);
                                             TARDISMessage.send(player, "HANDBRAKE_OFF");
                                             if (!minecart) {
-                                                TARDISSounds.playTARDISSound(handbrake_loc, "tardis_takeoff");
+                                                String sound = (preset.equals(PRESET.JUNK_MODE)) ? "junk_takeoff" : "tardis_takeoff";
+                                                TARDISSounds.playTARDISSound(handbrake_loc, sound);
                                             } else {
                                                 handbrake_loc.getWorld().playSound(handbrake_loc, Sound.ENTITY_MINECART_INSIDE, 1.0F, 0.0F);
                                             }
@@ -281,6 +305,7 @@ public class TARDISHandbrakeListener implements Listener {
                                             pdd.setSubmarine(sub);
                                             pdd.setTardisID(id);
                                             pdd.setBiome(biome);
+                                            pdd.setFromToLocation(exit);
                                             pdd.setTexture(true);
                                             if (!hidden && !plugin.getTrackerKeeper().getReset().contains(resetw)) {
                                                 plugin.getTrackerKeeper().getDematerialising().add(id);
@@ -303,7 +328,7 @@ public class TARDISHandbrakeListener implements Listener {
                                             pbd.setTardisID(id);
                                             pbd.setDistance(dist);
                                             pbd.setResetWorld(resetw);
-                                            pbd.setFromLocation(l);
+                                            pbd.setFromToLocation(l);
                                             pbd.setTexture(set_biome);
                                             // remember flight data
                                             plugin.getTrackerKeeper().getFlightData().put(uuid, pbd);
@@ -316,14 +341,17 @@ public class TARDISHandbrakeListener implements Listener {
                                                 plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, runner, 500L);
                                             }
                                             final boolean mine_sound = minecart;
+                                            final Location sound_loc = (preset.equals(PRESET.JUNK_MODE)) ? exit : handbrake_loc;
                                             plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
                                                 @Override
                                                 public void run() {
+                                                    player.sendMessage("Mat start");
                                                     TARDISMaterialisationData m_data = plugin.getTrackerKeeper().getFlightData().get(uuid);
                                                     Location final_location = m_data.getLocation();
                                                     plugin.getPresetBuilder().buildPreset(m_data);
                                                     if (!mine_sound) {
-                                                        TARDISSounds.playTARDISSound(handbrake_loc, "tardis_land");
+                                                        String sound = (preset.equals(PRESET.JUNK_MODE)) ? "junk_land" : "tardis_land";
+                                                        TARDISSounds.playTARDISSound(sound_loc, sound);
                                                     } else {
                                                         handbrake_loc.getWorld().playSound(handbrake_loc, Sound.ENTITY_MINECART_INSIDE, 1.0F, 0.0F);
                                                     }
@@ -367,8 +395,8 @@ public class TARDISHandbrakeListener implements Listener {
                                                         qf.doUpdate("doors", setdoor, wheredoor);
                                                     }
                                                     if (plugin.getAchievementConfig().getBoolean("travel.enabled") && !plugin.getTrackerKeeper().getReset().contains(m_data.getResetWorld())) {
-                                                        if (m_data.getFromLocation() != null && m_data.getFromLocation().getWorld().equals(final_location.getWorld())) {
-                                                            m_data.setDistance((int) m_data.getFromLocation().distance(final_location));
+                                                        if (m_data.getFromToLocation() != null && m_data.getFromToLocation().getWorld().equals(final_location.getWorld())) {
+                                                            m_data.setDistance((int) m_data.getFromToLocation().distance(final_location));
                                                             if (m_data.getDistance() > 0 && plugin.getAchievementConfig().getBoolean("travel.enabled")) {
                                                                 TARDISAchievementFactory taf = new TARDISAchievementFactory(plugin, player, "travel", 1);
                                                                 taf.doAchievement(m_data.getDistance());

@@ -24,7 +24,9 @@ import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetPlayerPrefs;
+import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import me.eccentric_nz.TARDIS.enumeration.HADS;
+import me.eccentric_nz.TARDIS.enumeration.PRESET;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -246,6 +248,21 @@ public class TARDISPrefsMenuInventory {
         path.setLore(Arrays.asList(tele_value));
         tele.setItemMeta(path);
         options.add(tele);
+        // junk preset
+        ItemStack ju = new ItemStack(Material.DIODE, 1);
+        ItemMeta nk = ju.getItemMeta();
+        nk.setDisplayName("Junk TARDIS");
+        // get TARDIS preset
+        HashMap<String, Object> wherej = new HashMap<String, Object>();
+        wherej.put("uuid", uuid.toString());
+        ResultSetTardis rs = new ResultSetTardis(plugin, wherej, "", false);
+        String junk_value = plugin.getLanguage().getString("SET_OFF");
+        if (rs.resultSet()) {
+            junk_value = (rs.getPreset().equals(PRESET.JUNK_MODE)) ? plugin.getLanguage().getString("SET_ON") : plugin.getLanguage().getString("SET_OFF");
+        }
+        nk.setLore(Arrays.asList(junk_value));
+        ju.setItemMeta(nk);
+        options.add(ju);
         ItemStack[] stack = new ItemStack[27];
         for (int s = 0; s < 22; s++) {
             if (s < options.size()) {
@@ -254,7 +271,7 @@ public class TARDISPrefsMenuInventory {
                 stack[s] = null;
             }
         }
-        stack[24] = tt;
+        stack[25] = tt;
         if (plugin.getServer().getPlayer(uuid).hasPermission("tardis.admin")) {
             // admin
             ItemStack ad = new ItemStack(Material.NETHER_STAR, 1);

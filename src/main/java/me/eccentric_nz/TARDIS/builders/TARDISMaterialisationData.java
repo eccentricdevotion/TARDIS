@@ -53,7 +53,7 @@ public class TARDISMaterialisationData {
     private Biome biome;
     private int distance;
     private String resetWorld;
-    private Location fromLocation;
+    private Location fromToLocation;
 
     public TARDISMaterialisationData(TARDIS plugin, String uuid) {
         this.plugin = plugin;
@@ -214,12 +214,12 @@ public class TARDISMaterialisationData {
         this.resetWorld = resetWorld;
     }
 
-    public Location getFromLocation() {
-        return fromLocation;
+    public Location getFromToLocation() {
+        return fromToLocation;
     }
 
-    public void setFromLocation(Location fromLocation) {
-        this.fromLocation = fromLocation;
+    public void setFromToLocation(Location fromToLocation) {
+        this.fromToLocation = fromToLocation;
     }
 
     private void setPlayerDefaults(String uuid) {
