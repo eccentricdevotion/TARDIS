@@ -1,6 +1,9 @@
 #TODO
 
 ##Current version `3.5`
+0. Telepathic Circuit
+   * Check that the placed block was a crafted one
+   * Allow the block to be broken and drop a Telepathic Circuit item
 1. Update for Minecraft 1.9!
    * Allow dual wielding TARDIS items?
    * VOID biome - use for MCPatcher texture changes instead of The End / SKY? _(need to wait for MCPatcher to update)_

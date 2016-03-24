@@ -199,7 +199,7 @@ public class TARDISRandomButton {
                         HashMap<String, Object> whereh = new HashMap<String, Object>();
                         whereh.put("type", 0);
                         whereh.put("tardis_id", id);
-                        ResultSetControls rsc = new ResultSetControls(plugin, where, false);
+                        ResultSetControls rsc = new ResultSetControls(plugin, whereh, false);
                         if (rsc.resultSet()) {
                             final Location handbrake_loc = plugin.getLocationUtils().getLocationFromBukkitString(rsc.getLocation());
                             TARDISMalfunction m = new TARDISMalfunction(plugin, id, player, dir, handbrake_loc, eps, creeper);
