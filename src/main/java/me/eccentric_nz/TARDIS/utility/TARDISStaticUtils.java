@@ -339,7 +339,7 @@ public class TARDISStaticUtils {
      * @param type the type of ItemStack to check for
      * @return true if the item in either hand matches
      */
-    public static boolean checkIteminHands(PlayerInventory inv, Material type) {
+    public static boolean checkItemInHands(PlayerInventory inv, Material type) {
         ItemStack main = inv.getItemInMainHand();
         if (main != null) {
             return main.getType().equals(type);
