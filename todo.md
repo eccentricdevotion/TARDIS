@@ -1,12 +1,11 @@
 #TODO
 
-##Current version `3.5-beta-1`
+##Current version `3.5`
 1. Update for Minecraft 1.9!
    * Allow dual wielding TARDIS items?
-   * VOID biome - use for MCPatcher texture changes instead of The End / SKY? _(Need to wait for MCPatcher to update)_
-2. TARDIS Junk Mode [#1157](http://dev.bukkit.org/bukkit-plugins/tardis/tickets/1157-normal-tardis-junk-mode/)
-   * `/tprefs junk [wall|floor] [block_type]`
-   * Fix Save Sign Listener when outside TARDIS
+   * VOID biome - use for MCPatcher texture changes instead of The End / SKY? _(need to wait for MCPatcher to update)_
+2. TARDIS Junk Mode - `/tprefs junk [wall|floor] [block_type]`?
+3. New 12th doctor's sonic screwdriver _(need to wait for MCPatcher to update)_
 4. TIPS visulisation tool (using WorldGuard region data)
 5. Fix bugs!
 
