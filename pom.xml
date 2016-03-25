@@ -2,7 +2,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>me.eccentric_nz.TARDIS</groupId>
     <artifactId>TARDIS</artifactId>
-    <version>3.5-beta-1</version>
+    <version>3.5</version>
     <name>TARDIS</name>
     <description>A Doctor Who Plugin</description>
     <properties>
@@ -408,7 +408,7 @@
         <dependency>
             <groupId>multiworld</groupId>
             <artifactId>MultiWorld</artifactId>
-            <version>5.2.6</version>
+            <version>5.2.8</version>
             <type>jar</type>
             <scope>compile</scope>
         </dependency>
@@ -516,7 +516,7 @@
         <dependency>
             <groupId>me.ryanhamshire</groupId>
             <artifactId>GriefPrevention</artifactId>
-            <version>13.9</version>
+            <version>14.2</version>
             <type>jar</type>
             <scope>compile</scope>
         </dependency>
