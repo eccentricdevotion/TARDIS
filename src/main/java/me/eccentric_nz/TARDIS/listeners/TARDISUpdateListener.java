@@ -252,8 +252,7 @@ public class TARDISUpdateListener implements Listener {
                 ResultSetControls rsc = new ResultSetControls(plugin, wheret, false);
                 if (!rsc.resultSet()) {
                     qf.insertControl(id, 0, blockLocStr, 0);
-                }
-                if (secondary) {
+                } else if (secondary) {
                     qf.insertControl(id, 0, blockLocStr, 1);
                 } else {
                     set.put("location", blockLocStr);
@@ -267,8 +266,7 @@ public class TARDISUpdateListener implements Listener {
                 ResultSetControls rsc = new ResultSetControls(plugin, whereh, false);
                 if (!rsc.resultSet()) {
                     qf.insertControl(id, 0, blockLocStr, 0);
-                }
-                if (secondary) {
+                } else if (secondary) {
                     qf.insertControl(id, 0, blockLocStr, 1);
                 } else {
                     set.put("location", blockLocStr);
