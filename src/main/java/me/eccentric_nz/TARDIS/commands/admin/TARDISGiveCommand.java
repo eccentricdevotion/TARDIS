@@ -98,6 +98,7 @@ public class TARDISGiveCommand implements CommandExecutor {
         items.put("seed", "");
         items.put("sonic", "Sonic Screwdriver");
         items.put("t-circuit", "TARDIS Temporal Circuit");
+        items.put("telepathic", "TARDIS Telepathic Circuit");
         items.put("tachyon", "");
         items.put("vortex", "Vortex Manipulator");
         items.put("watch", "Fob Watch");

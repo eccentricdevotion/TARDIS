@@ -95,6 +95,7 @@ public class TARDISGiveLister {
         console_circuits.add(ChatColor.LIGHT_PURPLE + "randomiser-circuit" + ChatColor.RESET + " - " + ChatColor.DARK_PURPLE + "Randomiser Circuit");
         console_circuits.add(ChatColor.LIGHT_PURPLE + "scanner-circuit" + ChatColor.RESET + " - " + ChatColor.DARK_PURPLE + "Scanner Circuit");
         console_circuits.add(ChatColor.LIGHT_PURPLE + "t-circuit" + ChatColor.RESET + " - " + ChatColor.DARK_PURPLE + "Temporal Circuit");
+        console_circuits.add(ChatColor.LIGHT_PURPLE + "telepathic" + ChatColor.RESET + " - " + ChatColor.DARK_PURPLE + "Telepathic Circuit");
         give_options.put("Advanced Console Circuits", console_circuits);
         List<String> disks = new ArrayList<String>();
         disks.add(ChatColor.AQUA + "blank" + ChatColor.RESET + " - " + ChatColor.DARK_AQUA + "Blank Storage Disk");
