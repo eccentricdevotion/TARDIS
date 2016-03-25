@@ -50,7 +50,7 @@ public class TARDISTelepathicListener implements Listener {
 
     @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
     public void onTelepathicCircuit(PlayerInteractEvent event) {
-        Block block = event.getClickedBlock();
+        final Block block = event.getClickedBlock();
         if (!block.getType().equals(Material.DAYLIGHT_DETECTOR)) {
             return;
         }
@@ -85,7 +85,12 @@ public class TARDISTelepathicListener implements Listener {
                     }
                 }
             }
-            block.setType(Material.DAYLIGHT_DETECTOR);
+            plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
+                @Override
+                public void run() {
+                    block.setType(Material.DAYLIGHT_DETECTOR);
+                }
+            }, 3L);
         }
     }
 
