@@ -16,6 +16,7 @@
  */
 package me.eccentric_nz.TARDIS.listeners;
 
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
@@ -29,7 +30,10 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
+import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
+import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
 
 /**
  *
@@ -81,5 +85,31 @@ public class TARDISTelepathicListener implements Listener {
                 }
             }
         }
+    }
+
+    @EventHandler(ignoreCancelled = true)
+    public void onTelepathicCircuitBreak(BlockBreakEvent event) {
+        Block b = event.getBlock();
+        if (!b.getType().equals(Material.DAYLIGHT_DETECTOR)) {
+            return;
+        }
+        // check location
+        HashMap<String, Object> where = new HashMap<String, Object>();
+        where.put("type", 23);
+        where.put("location", b.getLocation().toString());
+        ResultSetControls rsc = new ResultSetControls(plugin, where, false);
+        if (!rsc.resultSet()) {
+            return;
+        }
+        event.setCancelled(true);
+        // set block to AIR
+        b.setType(Material.AIR);
+        // drop a custom DAYLIGHT_DETECTOR
+        ItemStack is = new ItemStack(Material.DAYLIGHT_DETECTOR, 1);
+        ItemMeta im = is.getItemMeta();
+        im.setDisplayName("TARDIS Telepathic Circuit");
+        im.setLore(Arrays.asList("Allow companions to", "use TARDIS commands"));
+        is.setItemMeta(im);
+        b.getWorld().dropItemNaturally(b.getLocation(), is);
     }
 }
