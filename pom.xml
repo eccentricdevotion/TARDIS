@@ -548,7 +548,7 @@
         <dependency>
             <groupId>LibsDisguises</groupId>
             <artifactId>LibsDisguises</artifactId>
-            <version>9.0.2-SNAPSHOT</version>
+            <version>9.0.3-SNAPSHOT</version>
             <type>jar</type>
             <!--<scope>compile</scope>-->
             <scope>system</scope>

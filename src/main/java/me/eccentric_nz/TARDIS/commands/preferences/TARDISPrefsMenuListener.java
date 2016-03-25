@@ -28,6 +28,7 @@ import me.eccentric_nz.TARDIS.database.ResultSetJunk;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import me.eccentric_nz.TARDIS.database.ResultSetTravellers;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
+import me.eccentric_nz.TARDIS.utility.TARDISStaticUtils;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -142,6 +143,8 @@ public class TARDISPrefsMenuListener implements Listener {
                             QueryFactory qf = new QueryFactory(plugin);
                             String current = rsp.getPreset().toString();
                             int id = rsp.getTardis_id();
+                            String chameleon = rsp.getChameleon();
+                            String cham_set = "";
                             HashMap<String, Object> setj = new HashMap<String, Object>();
                             if (has) {
                                 // update rcord with current preset
@@ -166,12 +169,16 @@ public class TARDISPrefsMenuListener implements Listener {
                                 sett.put("chameleon_preset", preset);
                                 sett.put("chameleon_demat", "JUNK_MODE");
                                 message = "JUNK_PRESET_OFF";
+                                cham_set = preset;
                             } else {
                                 // save JUNK_MODE preset
                                 sett.put("chameleon_preset", "JUNK_MODE");
                                 sett.put("chameleon_demat", current);
+                                cham_set = "JUNK_MODE";
                             }
                             qf.doSyncUpdate("tardis", sett, whereu);
+                            // set the Chameleon Circuit sign
+                            TARDISStaticUtils.setSign(chameleon, 3, cham_set, p);
                             // rebuild
                             TARDISMessage.send(p, message);
                             p.performCommand("tardis rebuild");

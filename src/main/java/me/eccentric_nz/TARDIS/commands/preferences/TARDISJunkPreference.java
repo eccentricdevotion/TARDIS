@@ -23,6 +23,7 @@ import me.eccentric_nz.TARDIS.database.ResultSetJunk;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import me.eccentric_nz.TARDIS.database.ResultSetTravellers;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
+import me.eccentric_nz.TARDIS.utility.TARDISStaticUtils;
 import org.bukkit.entity.Player;
 
 /**
@@ -47,6 +48,7 @@ public class TARDISJunkPreference {
             int id = rs.getTardis_id();
             // get current preset
             String current = rs.getPreset().toString();
+            String chameleon = rs.getChameleon();
             // must be outside of the TARDIS
             HashMap<String, Object> wheret = new HashMap<String, Object>();
             wheret.put("uuid", uuid);
@@ -61,6 +63,7 @@ public class TARDISJunkPreference {
             ResultSetJunk rsj = new ResultSetJunk(plugin, wherej);
             boolean has = rsj.resultSet();
             HashMap<String, Object> sett = new HashMap<String, Object>();
+            String cham_set = "";
             if (arg.equalsIgnoreCase("on")) {
                 HashMap<String, Object> set = new HashMap<String, Object>();
                 if (has) {
@@ -80,6 +83,7 @@ public class TARDISJunkPreference {
                 sett.put("chameleon_preset", "JUNK_MODE");
                 sett.put("chameleon_demat", current);
                 TARDISMessage.send(player, "JUNK_PRESET_ON");
+                cham_set = "JUNK_MODE";
             }
             if (arg.equalsIgnoreCase("off")) {
                 // restore saved preset
@@ -87,11 +91,14 @@ public class TARDISJunkPreference {
                 sett.put("chameleon_preset", preset);
                 sett.put("chameleon_demat", "JUNK_MODE");
                 TARDISMessage.send(player, "JUNK_PRESET_OFF");
+                cham_set = preset;
             }
             // update tardis table
             HashMap<String, Object> whereu = new HashMap<String, Object>();
             whereu.put("uuid", uuid);
             qf.doSyncUpdate("tardis", sett, whereu);
+            // set the Chameleon Circuit sign
+            TARDISStaticUtils.setSign(chameleon, 3, cham_set, player);
             // rebuild
             player.performCommand("tardis rebuild");
             return true;
