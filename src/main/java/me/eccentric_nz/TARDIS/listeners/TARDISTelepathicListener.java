@@ -31,6 +31,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
+import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -111,5 +112,19 @@ public class TARDISTelepathicListener implements Listener {
         im.setLore(Arrays.asList("Allow companions to", "use TARDIS commands"));
         is.setItemMeta(im);
         b.getWorld().dropItemNaturally(b.getLocation(), is);
+    }
+
+    @EventHandler(ignoreCancelled = true)
+    public void onTelepathicCircuitPlace(BlockPlaceEvent event) {
+        ItemStack is = event.getItemInHand();
+        if (!is.getType().equals(Material.DAYLIGHT_DETECTOR) || !is.hasItemMeta()) {
+            return;
+        }
+        ItemMeta im = is.getItemMeta();
+        if (im.hasDisplayName() && im.getDisplayName().equals("TARDIS Telepathic Circuit")) {
+            UUID uuid = event.getPlayer().getUniqueId();
+            String l = event.getBlock().getLocation().toString();
+            plugin.getTrackerKeeper().getTelepathicPlacements().put(uuid, l);
+        }
     }
 }

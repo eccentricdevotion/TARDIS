@@ -84,6 +84,7 @@ public class TARDISTrackerInstanceKeeper {
     private final HashMap<UUID, String> players = new HashMap<UUID, String>();
     private final HashMap<UUID, String> preset = new HashMap<UUID, String>();
     private final HashMap<UUID, String> secondary = new HashMap<UUID, String>();
+    private final HashMap<UUID, String> telepathicPlacements = new HashMap<UUID, String>();
     private final HashMap<UUID, TARDISInfoMenu> infoMenu = new HashMap<UUID, TARDISInfoMenu>();
     private final HashMap<UUID, TARDISMaterialisationData> flightData = new HashMap<UUID, TARDISMaterialisationData>();
     private final HashMap<UUID, TARDISMoveSession> moveSessions = new HashMap<UUID, TARDISMoveSession>();
@@ -249,6 +250,10 @@ public class TARDISTrackerInstanceKeeper {
 
     public HashMap<UUID, String> getSecondary() {
         return secondary;
+    }
+
+    public HashMap<UUID, String> getTelepathicPlacements() {
+        return telepathicPlacements;
     }
 
     public HashMap<UUID, TARDISInfoMenu> getInfoMenu() {
