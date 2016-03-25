@@ -240,7 +240,7 @@ public class TARDISUpdateListener implements Listener {
             if (blockName.equalsIgnoreCase("scanner") && validBlocks.contains(blockType)) {
                 set.put("scanner", blockLocStr);
             }
-            if (blockName.equalsIgnoreCase("telepathic") && blockType.equals(Material.DAYLIGHT_DETECTOR)) {
+            if (blockName.equalsIgnoreCase("telepathic") && (blockType.equals(Material.DAYLIGHT_DETECTOR) || blockType.equals(Material.DAYLIGHT_DETECTOR_INVERTED))) {
                 if (!plugin.getTrackerKeeper().getTelepathicPlacements().containsKey(uuid)) {
                     TARDISMessage.send(player, "TELEPATHIC_PLACE");
                     return;

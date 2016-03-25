@@ -85,6 +85,7 @@ public class TARDISTelepathicListener implements Listener {
                     }
                 }
             }
+            block.setType(Material.DAYLIGHT_DETECTOR);
         }
     }
 
