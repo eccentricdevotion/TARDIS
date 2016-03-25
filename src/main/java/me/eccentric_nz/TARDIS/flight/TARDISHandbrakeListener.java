@@ -345,7 +345,6 @@ public class TARDISHandbrakeListener implements Listener {
                                             plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
                                                 @Override
                                                 public void run() {
-                                                    player.sendMessage("Mat start");
                                                     TARDISMaterialisationData m_data = plugin.getTrackerKeeper().getFlightData().get(uuid);
                                                     Location final_location = m_data.getLocation();
                                                     plugin.getPresetBuilder().buildPreset(m_data);

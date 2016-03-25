@@ -304,7 +304,6 @@ public class TARDISDematerialisationPreset implements Runnable {
                 }
             }
         } else {
-            ((Player) tmd.getPlayer()).sendMessage("end demat");
             plugin.getServer().getScheduler().cancelTask(task);
             task = 0;
             new TARDISDeinstaPreset(plugin).instaDestroyPreset(tmd, false, preset);
