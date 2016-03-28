@@ -72,7 +72,7 @@ public class TARDISDoorCloser {
      */
     @SuppressWarnings("deprecation")
     private void close(Block block, Location inportal, COMPASS dd) {
-        if (plugin.getGeneralKeeper().getDoors().contains(block.getType())) {
+        if (block != null && plugin.getGeneralKeeper().getDoors().contains(block.getType())) {
             byte door_data = block.getData();
             switch (dd) {
                 case NORTH:
