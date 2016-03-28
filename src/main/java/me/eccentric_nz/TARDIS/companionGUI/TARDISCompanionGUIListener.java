@@ -48,7 +48,7 @@ public class TARDISCompanionGUIListener extends TARDISMenuListener implements Li
     }
 
     @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
-    public void onPageThreeTerminalClick(InventoryClickEvent event) {
+    public void onCompanionGUIClick(InventoryClickEvent event) {
         Inventory inv = event.getInventory();
         String name = inv.getTitle();
         if (name.equals("§4Companions")) {
@@ -77,7 +77,7 @@ public class TARDISCompanionGUIListener extends TARDISMenuListener implements Li
                         case 51: // delete
                             if (selected_head.containsKey(uuid)) {
                                 HashMap<String, Object> where = new HashMap<String, Object>();
-                                where.put("uuid", player);
+                                where.put("uuid", uuid.toString());
                                 ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);
                                 if (rs.resultSet()) {
                                     int id = rs.getTardis_id();
