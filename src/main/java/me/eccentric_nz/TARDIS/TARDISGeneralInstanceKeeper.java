@@ -353,15 +353,16 @@ public class TARDISGeneralInstanceKeeper {
         HashSet<Material> trans = new HashSet<Material>();
         // add transparent blocks
         trans.add(Material.AIR);
-        trans.add(Material.WATER);
-        trans.add(Material.STATIONARY_WATER);
-        trans.add(Material.LONG_GRASS);
         trans.add(Material.DEAD_BUSH);
         trans.add(Material.DOUBLE_PLANT);
+        trans.add(Material.END_ROD);
+        trans.add(Material.IRON_FENCE);
+        trans.add(Material.LONG_GRASS);
         trans.add(Material.REDSTONE_WIRE);
         trans.add(Material.SNOW);
-        trans.add(Material.IRON_FENCE);
+        trans.add(Material.STATIONARY_WATER);
         trans.add(Material.VINE);
+        trans.add(Material.WATER);
         return trans;
     }
 
