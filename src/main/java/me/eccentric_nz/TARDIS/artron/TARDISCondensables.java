@@ -54,6 +54,9 @@ public class TARDISCondensables {
             condensables.put("BED", 68);
             condensables.put("BEDROCK", 100);
             condensables.put("BEEF", 3);
+            condensables.put("BEETROOT", 9);
+            condensables.put("BEETROOT_SEEDS", 2);
+            condensables.put("BEETROOT_SOUP", 5);
             condensables.put("BIRCH_DOOR_ITEM", 3);
             condensables.put("BIRCH_FENCE", 1);
             condensables.put("BIRCH_FENCE_GATE", 5);
@@ -80,6 +83,10 @@ public class TARDISCondensables {
             condensables.put("CAULDRON", 154);
             condensables.put("CAULDRON_ITEM", 154);
             condensables.put("CHEST", 4);
+            condensables.put("CHORUS_FLOWER", 12);
+            condensables.put("CHORUS_FRUIT", 4);
+            condensables.put("CHORUS_FRUIT_POPPED", 8);
+            condensables.put("CHORUS_PLANT", 4);
             condensables.put("CLAY", 12);
             condensables.put("CLAY_BALL", 3);
             condensables.put("CLAY_BRICK", 5);
@@ -129,6 +136,8 @@ public class TARDISCondensables {
             condensables.put("EMERALD_BLOCK", 2000);
             condensables.put("ENCHANTMENT_TABLE", 1365);
             condensables.put("ENDER_STONE", 2);
+            condensables.put("END_BRICKS", 21);
+            condensables.put("END_ROD", 200);
             condensables.put("EYE_OF_ENDER", 200);
             condensables.put("FEATHER", 3);
             condensables.put("FENCE", 1);
@@ -233,6 +242,11 @@ public class TARDISCondensables {
             condensables.put("PUMPKIN", 50);
             condensables.put("PUMPKIN_PIE", 60);
             condensables.put("PUMPKIN_SEEDS", 2);
+            condensables.put("PURPUR_BLOCK", 22);
+            condensables.put("PURPUR_DOUBLE_SLAB", 22);
+            condensables.put("PURPUR_PILLAR", 22);
+            condensables.put("PURPUR_SLAB", 6);
+            condensables.put("PURPUR_STAIRS", 22);
             condensables.put("QUARTZ", 15);
             condensables.put("QUARTZ_BLOCK", 60);
             condensables.put("QUARTZ_ORE", 15);
@@ -267,6 +281,7 @@ public class TARDISCondensables {
             condensables.put("SEA_LANTERN", 160);
             condensables.put("SEEDS", 2);
             condensables.put("SHEARS", 44);
+            condensables.put("SHIELD", 28);
             condensables.put("SIGN", 2);
             condensables.put("SLIME_BALL", 50);
             condensables.put("SLIME_BLOCK", 450);
@@ -277,6 +292,7 @@ public class TARDISCondensables {
             condensables.put("SNOW_BLOCK", 4);
             condensables.put("SOIL", 1);
             condensables.put("SOUL_SAND", 2);
+            condensables.put("SPECTRAL_ARROW", 44);
             condensables.put("SPIDER_EYE", 10);
             condensables.put("SPONGE", 80);
             condensables.put("SPRUCE_DOOR_ITEM", 3);
@@ -304,6 +320,7 @@ public class TARDISCondensables {
             condensables.put("SUGAR_CANE", 10);
             condensables.put("SULPHUR", 20);
             condensables.put("THIN_GLASS", 5);
+            condensables.put("TIPPED_ARROW", 10);
             condensables.put("TNT", 100);
             condensables.put("TORCH", 4);
             condensables.put("TRAPPED_CHEST", 30);
