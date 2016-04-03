@@ -24,6 +24,7 @@ import me.eccentric_nz.TARDIS.achievement.TARDISAchievementFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
+import me.eccentric_nz.TARDIS.utility.TARDISMultiInvChecker;
 import me.eccentric_nz.TARDIS.utility.TARDISNumberParsers;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -342,8 +343,13 @@ public class TARDISFarmer {
                             break;
                     }
                 }
-                if (plugin.getPM().isPluginEnabled("Multiverse-Inventories") && (farmtotal > 0 || horsetotal > 0 || villagertotal > 0 || pettotal > 0)) {
-                    boolean canfarm = plugin.getTMIChecker().checkMVI(from, to);
+                if (farmtotal > 0 || horsetotal > 0 || villagertotal > 0 || pettotal > 0) {
+                    boolean canfarm = true;
+                    if (plugin.isMVIOnServer()) {
+                        canfarm = plugin.getTMIChecker().checkWorldsCanShare(from, to);
+                    } else if (plugin.isMIOnServer()) {
+                        canfarm = TARDISMultiInvChecker.checkWorldsCanShare(from, to);
+                    }
                     if (!canfarm) {
                         TARDISMessage.send(p, "WORLD_NO_FARM");
                         plugin.getTrackerKeeper().getFarming().remove(p.getUniqueId());

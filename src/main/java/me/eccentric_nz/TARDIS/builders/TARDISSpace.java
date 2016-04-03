@@ -94,7 +94,7 @@ public class TARDISSpace {
                 }
                 plugin.getServer().dispatchCommand(plugin.getConsole(), "world config save");
             }
-            if (plugin.getPM().isPluginEnabled("Multiverse-Inventories")) {
+            if (plugin.isMVIOnServer()) {
                 if (!inventory_group.equals("0")) {
                     MultiverseInventories mi = (MultiverseInventories) plugin.getPM().getPlugin("Multiverse-Inventories");
                     WorldGroupProfile wgp = mi.getGroupManager().getGroup(inventory_group);

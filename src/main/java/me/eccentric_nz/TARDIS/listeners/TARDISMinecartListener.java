@@ -23,6 +23,7 @@ import me.eccentric_nz.TARDIS.database.ResultSetDoors;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
+import me.eccentric_nz.TARDIS.utility.TARDISMultiInvChecker;
 import me.eccentric_nz.TARDIS.utility.TARDISNumberParsers;
 import org.bukkit.Chunk;
 import org.bukkit.Location;
@@ -124,8 +125,17 @@ public class TARDISMinecartListener implements Listener {
                         break;
                 }
                 if (data != null && data.length > 3) {
-                    if (plugin.getPM().isPluginEnabled("Multiverse-Inventories")) {
-                        if (!plugin.getTMIChecker().checkMVI(bw, data[0])) {
+                    if (plugin.isMVIOnServer()) {
+                        if (!plugin.getTMIChecker().checkWorldsCanShare(bw, data[0])) {
+                            if (playerUUID != null && plugin.getServer().getPlayer(playerUUID).isOnline()) {
+                                TARDISMessage.send(plugin.getServer().getPlayer(playerUUID), "WORLD_NO_CART", bw, data[0]);
+                            }
+                            plugin.getTrackerKeeper().getMinecart().remove(Integer.valueOf(id));
+                            return;
+                        }
+                    }
+                    if (plugin.isMIOnServer()) {
+                        if (!TARDISMultiInvChecker.checkWorldsCanShare(bw, data[0])) {
                             if (playerUUID != null && plugin.getServer().getPlayer(playerUUID).isOnline()) {
                                 TARDISMessage.send(plugin.getServer().getPlayer(playerUUID), "WORLD_NO_CART", bw, data[0]);
                             }

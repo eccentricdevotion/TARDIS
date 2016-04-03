@@ -143,7 +143,7 @@ public class TARDISArtronStorageCommand implements CommandExecutor {
             lore.set(1, "" + new_amount);
             im.setLore(lore);
             im.addEnchant(Enchantment.DURABILITY, 1, true);
-            if (!plugin.getPM().isPluginEnabled("Multiverse-Inventories")) {
+            if (!plugin.isMVIOnServer()) {
                 im.addItemFlags(ItemFlag.values());
             }
             is.setItemMeta(im);

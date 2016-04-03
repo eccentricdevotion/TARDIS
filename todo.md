@@ -2,7 +2,7 @@
 
 ##Current version `3.5`
 1. Update for Minecraft 1.9!
-   * Allow dual wielding TARDIS items?
+   * Allow dual wielding TARDIS items? _(PlayerInteractEvent really needs an overhaul now that both hands can be used, will wait for Spigot team to add new API)_
    * VOID biome - use for MCPatcher texture changes instead of The End / SKY? _(need to wait for MCPatcher to update)_
 2. TARDIS Junk Mode - `/tprefs junk [wall|floor] [block_type]`?
 3. New 12th doctor's sonic screwdriver _(need to wait for MCPatcher to update)_

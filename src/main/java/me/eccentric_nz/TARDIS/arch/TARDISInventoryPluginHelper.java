@@ -18,6 +18,7 @@ package me.eccentric_nz.TARDIS.arch;
 
 import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.utility.TARDISMultiInvChecker;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -28,11 +29,11 @@ import org.bukkit.event.player.PlayerChangedWorldEvent;
  *
  * @author eccentric_nz
  */
-public class TARDISMVIHelper implements Listener {
+public class TARDISInventoryPluginHelper implements Listener {
 
     private final TARDIS plugin;
 
-    public TARDISMVIHelper(TARDIS plugin) {
+    public TARDISInventoryPluginHelper(TARDIS plugin) {
         this.plugin = plugin;
     }
 
@@ -42,9 +43,15 @@ public class TARDISMVIHelper implements Listener {
      */
     @EventHandler(priority = EventPriority.LOWEST, ignoreCancelled = true)
     public void onPlayerWorldChangeLOWEST(PlayerChangedWorldEvent event) {
+        if (!plugin.isMVIOnServer() && !plugin.isMIOnServer()) {
+            return;
+        }
         final Player player = event.getPlayer();
-        if (!plugin.getTMIChecker().checkMVI(event.getFrom().getName(), player.getWorld().getName())) {
-            // switch to non-fobbed inventory before MVI
+        boolean shouldSwitch = (plugin.isMVIOnServer())
+                ? !plugin.getTMIChecker().checkWorldsCanShare(event.getFrom().getName(), player.getWorld().getName())
+                : !TARDISMultiInvChecker.checkWorldsCanShare(event.getFrom().getName(), player.getWorld().getName());
+        if (shouldSwitch) {
+            // switch to non-fobbed inventory before MVI and MI
             UUID uuid = player.getUniqueId();
             if (plugin.getTrackerKeeper().getJohnSmith().containsKey(uuid)) {
                 new TARDISArchInventory().switchInventories(player, 1);
@@ -53,14 +60,20 @@ public class TARDISMVIHelper implements Listener {
     }
 
     /*
-     * Multiverse-Inventories listens on LOW priority, so if we listen on NORMAL
-     * we should go after.
+     * Multiverse-Inventories listens on LOW priority, MultiInv on HIGHEST so if we listen on HIGHEST
+     * we should (hopefully for MultiInv) go after.
      */
-    @EventHandler(priority = EventPriority.NORMAL, ignoreCancelled = true)
+    @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
     public void onPlayerWorldChangeNORMAL(PlayerChangedWorldEvent event) {
+        if (!plugin.isMVIOnServer() && !plugin.isMIOnServer()) {
+            return;
+        }
         final Player player = event.getPlayer();
-        if (!plugin.getTMIChecker().checkMVI(event.getFrom().getName(), player.getWorld().getName())) {
-            // switch to back to fobbed inventory after MVI
+        boolean shouldSwitch = (plugin.isMVIOnServer())
+                ? !plugin.getTMIChecker().checkWorldsCanShare(event.getFrom().getName(), player.getWorld().getName())
+                : !TARDISMultiInvChecker.checkWorldsCanShare(event.getFrom().getName(), player.getWorld().getName());
+        if (shouldSwitch) {
+            // switch to back to fobbed inventory after MVI and MI
             UUID uuid = player.getUniqueId();
             if (plugin.getTrackerKeeper().getJohnSmith().containsKey(uuid)) {
                 new TARDISArchInventory().switchInventories(player, 0);

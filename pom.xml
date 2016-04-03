@@ -406,6 +406,13 @@
             </exclusions>
         </dependency>
         <dependency>
+            <groupId>uk.co.tggl.pluckerpluck</groupId>
+            <artifactId>MultiInv</artifactId>
+            <version>3.3.6</version>
+            <type>jar</type>
+            <scope>compile</scope>
+        </dependency>
+        <dependency>
             <groupId>multiworld</groupId>
             <artifactId>MultiWorld</artifactId>
             <version>5.2.8</version>

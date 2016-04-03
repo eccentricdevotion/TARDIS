@@ -357,7 +357,7 @@ public class TARDISGiveCommand implements CommandExecutor {
         lore.set(1, "" + max);
         im.setLore(lore);
         im.addEnchant(Enchantment.DURABILITY, 1, true);
-        if (!plugin.getPM().isPluginEnabled("Multiverse-Inventories")) {
+        if (!plugin.isMVIOnServer()) {
             im.addItemFlags(ItemFlag.values());
         }
         result.setItemMeta(im);

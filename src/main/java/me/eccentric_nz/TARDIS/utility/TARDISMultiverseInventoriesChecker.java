@@ -36,7 +36,7 @@ public class TARDISMultiverseInventoriesChecker {
         this.plugin = plugin;
     }
 
-    public boolean checkMVI(String from, String to) {
+    public boolean checkWorldsCanShare(String from, String to) {
         MultiverseInventories mvi = (MultiverseInventories) plugin.getPM().getPlugin("Multiverse-Inventories");
         GroupManager gm = mvi.getGroupManager();
         if (gm.hasGroup(from)) {

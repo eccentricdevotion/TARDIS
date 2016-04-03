@@ -157,6 +157,8 @@ public class TARDIS extends JavaPlugin {
     private boolean helperOnServer;
     private boolean disguisesOnServer;
     private boolean mvOnServer;
+    private boolean mviOnServer;
+    private boolean miOnServer;
     private PluginManager pm;
     private final TARDISArea tardisArea = new TARDISArea(this);
     private final TARDISBuilderInner interiorBuilder = new TARDISBuilderInner(this);
@@ -179,6 +181,8 @@ public class TARDIS extends JavaPlugin {
         this.worldGuardOnServer = false;
         this.helperOnServer = false;
         this.mvOnServer = false;
+        this.mviOnServer = false;
+        this.miOnServer = false;
         this.versions.put("Citizens", "2.0.17");
         this.versions.put("Factions", "2.8.7");
         this.versions.put("GriefPrevention", "10");
@@ -187,6 +191,7 @@ public class TARDIS extends JavaPlugin {
         this.versions.put("Multiverse-Adventure", "2.5");
         this.versions.put("Multiverse-Core", "2.5");
         this.versions.put("Multiverse-Inventories", "2.5");
+        this.versions.put("MultiInv", "3.3.6");
         this.versions.put("My Worlds", "1.67");
         this.versions.put("ProtocolLib", "4.0.0");
         this.versions.put("TARDISChunkGenerator", "2.2");
@@ -270,6 +275,8 @@ public class TARDIS extends JavaPlugin {
                 getConfig().set("conversions.lastknownname_conversion_done", true);
             }
             loadMultiverse();
+            loadMultiverseInventories();
+            loadMultiInv();
             checkTCG();
             checkDefaultWorld();
             cleanUpWorlds();
@@ -689,6 +696,35 @@ public class TARDIS extends JavaPlugin {
             worldGuardOnServer = true;
             worldGuardUtils = new TARDISWorldGuardUtils(this);
         }
+    }
+
+    /**
+     * Checks if the MultiInv plugin is available, and loads support if it is.
+     */
+    private void loadMultiInv() {
+        if (pm.isPluginEnabled("MultiInv")) {
+            debug("Hooking into MultiInv!");
+            this.miOnServer = true;
+        }
+    }
+
+    public boolean isMIOnServer() {
+        return miOnServer;
+    }
+
+    /**
+     * Checks if the Multiverse-Inventories plugin is available, and loads
+     * support if it is.
+     */
+    private void loadMultiverseInventories() {
+        if (pm.isPluginEnabled("Multiverse-Inventories")) {
+            debug("Hooking into Multiverse-Inventories!");
+            this.mviOnServer = true;
+        }
+    }
+
+    public boolean isMVIOnServer() {
+        return mviOnServer;
     }
 
     /**
