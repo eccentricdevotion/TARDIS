@@ -22,7 +22,7 @@ import com.onarandombox.multiverseinventories.api.profile.WorldGroupProfile;
 import com.onarandombox.multiverseinventories.api.share.Sharables;
 import com.onarandombox.multiverseinventories.api.share.Shares;
 import java.util.List;
-import me.eccentric_nz.TARDIS.TARDIS;
+import org.bukkit.Bukkit;
 
 /**
  *
@@ -30,14 +30,8 @@ import me.eccentric_nz.TARDIS.TARDIS;
  */
 public class TARDISMultiverseInventoriesChecker {
 
-    private final TARDIS plugin;
-
-    public TARDISMultiverseInventoriesChecker(TARDIS plugin) {
-        this.plugin = plugin;
-    }
-
-    public boolean checkWorldsCanShare(String from, String to) {
-        MultiverseInventories mvi = (MultiverseInventories) plugin.getPM().getPlugin("Multiverse-Inventories");
+    public static boolean checkWorldsCanShare(String from, String to) {
+        MultiverseInventories mvi = (MultiverseInventories) Bukkit.getServer().getPluginManager().getPlugin("Multiverse-Inventories");
         GroupManager gm = mvi.getGroupManager();
         if (gm.hasGroup(from)) {
             List<WorldGroupProfile> profiles = gm.getGroupsForWorld(from);

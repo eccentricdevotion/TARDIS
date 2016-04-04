@@ -24,6 +24,7 @@ import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import me.eccentric_nz.TARDIS.enumeration.CONSOLES;
+import me.eccentric_nz.TARDIS.enumeration.INVENTORY_MANAGER;
 import me.eccentric_nz.TARDIS.enumeration.SCHEMATIC;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import org.bukkit.ChatColor;
@@ -357,7 +358,7 @@ public class TARDISGiveCommand implements CommandExecutor {
         lore.set(1, "" + max);
         im.setLore(lore);
         im.addEnchant(Enchantment.DURABILITY, 1, true);
-        if (!plugin.isMVIOnServer()) {
+        if (!plugin.getInvManager().equals(INVENTORY_MANAGER.MULTIVERSE)) {
             im.addItemFlags(ItemFlag.values());
         }
         result.setItemMeta(im);

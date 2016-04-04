@@ -94,11 +94,28 @@ public class TARDISSpace {
                 }
                 plugin.getServer().dispatchCommand(plugin.getConsole(), "world config save");
             }
-            if (plugin.isMVIOnServer()) {
-                if (!inventory_group.equals("0")) {
-                    MultiverseInventories mi = (MultiverseInventories) plugin.getPM().getPlugin("Multiverse-Inventories");
-                    WorldGroupProfile wgp = mi.getGroupManager().getGroup(inventory_group);
-                    wgp.addWorld(name);
+            if (!inventory_group.equals("0")) {
+                switch (plugin.getInvManager()) {
+//                    case MULTI:
+//                        // No API to add world to group
+//                        HashMap<String, String> migroups = MIYamlFiles.getGroups();
+//                        migroups.put(name, inventory_group);
+//                        // save YAML file and reload
+//                        break;
+                    case MULTIVERSE:
+                        MultiverseInventories mi = (MultiverseInventories) plugin.getPM().getPlugin("Multiverse-Inventories");
+                        WorldGroupProfile wgp = mi.getGroupManager().getGroup(inventory_group);
+                        wgp.addWorld(name);
+                        break;
+//                    case PER_WORLD:
+//                        // No API to add world to group
+//                        PerWorldInventory pwi = (PerWorldInventory) plugin.getPM().getPlugin("PerWorldInventory");
+//                        GroupManager pwigm = pwi.getGroupManager();
+//                        Group gf = pwigm.getGroup(inventory_group);
+//                        gf.getWorlds().add(name);
+//                        break;
+                    default:
+                        break;
                 }
             }
             if (plugin.getPM().isPluginEnabled("WorldBorder")) {

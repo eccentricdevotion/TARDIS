@@ -19,6 +19,8 @@ package me.eccentric_nz.TARDIS.arch;
 import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.utility.TARDISMultiInvChecker;
+import me.eccentric_nz.TARDIS.utility.TARDISMultiverseInventoriesChecker;
+import me.eccentric_nz.TARDIS.utility.TARDISPerWorldInventoryChecker;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -43,15 +45,26 @@ public class TARDISInventoryPluginHelper implements Listener {
      */
     @EventHandler(priority = EventPriority.LOWEST, ignoreCancelled = true)
     public void onPlayerWorldChangeLOWEST(PlayerChangedWorldEvent event) {
-        if (!plugin.isMVIOnServer() && !plugin.isMIOnServer()) {
-            return;
-        }
+
         final Player player = event.getPlayer();
-        boolean shouldSwitch = (plugin.isMVIOnServer())
-                ? !plugin.getTMIChecker().checkWorldsCanShare(event.getFrom().getName(), player.getWorld().getName())
-                : !TARDISMultiInvChecker.checkWorldsCanShare(event.getFrom().getName(), player.getWorld().getName());
+        boolean shouldSwitch;
+        switch (plugin.getInvManager()) {
+            case MULTI:
+                shouldSwitch = !TARDISMultiInvChecker.checkWorldsCanShare(event.getFrom().getName(), player.getWorld().getName());
+                break;
+            case MULTIVERSE:
+                shouldSwitch = !TARDISMultiverseInventoriesChecker.checkWorldsCanShare(event.getFrom().getName(), player.getWorld().getName());
+                break;
+            case PER_WORLD:
+                shouldSwitch = !TARDISPerWorldInventoryChecker.checkWorldsCanShare(event.getFrom().getName(), player.getWorld().getName());
+                break;
+            default:
+                // GAMEMODE
+                shouldSwitch = (plugin.getGeneralKeeper().getDoorListener().checkSurvival(event.getFrom()) != plugin.getGeneralKeeper().getDoorListener().checkSurvival(player.getWorld()));
+                break;
+        }
         if (shouldSwitch) {
-            // switch to non-fobbed inventory before MVI and MI
+            // switch to non-fobbed inventory before inventory manager
             UUID uuid = player.getUniqueId();
             if (plugin.getTrackerKeeper().getJohnSmith().containsKey(uuid)) {
                 new TARDISArchInventory().switchInventories(player, 1);
@@ -60,18 +73,29 @@ public class TARDISInventoryPluginHelper implements Listener {
     }
 
     /*
-     * Multiverse-Inventories listens on LOW priority, MultiInv on HIGHEST so if we listen on HIGHEST
-     * we should (hopefully for MultiInv) go after.
+     * Multiverse-Inventories and GameModeInventories listen on LOW priority, MultiInv on HIGHEST, PerWorldInventory on MONITOR so if we listen on MONITOR
+     * we should go after.
      */
-    @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
+    @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
     public void onPlayerWorldChangeNORMAL(PlayerChangedWorldEvent event) {
-        if (!plugin.isMVIOnServer() && !plugin.isMIOnServer()) {
-            return;
-        }
+
         final Player player = event.getPlayer();
-        boolean shouldSwitch = (plugin.isMVIOnServer())
-                ? !plugin.getTMIChecker().checkWorldsCanShare(event.getFrom().getName(), player.getWorld().getName())
-                : !TARDISMultiInvChecker.checkWorldsCanShare(event.getFrom().getName(), player.getWorld().getName());
+        boolean shouldSwitch;
+        switch (plugin.getInvManager()) {
+            case MULTI:
+                shouldSwitch = !TARDISMultiInvChecker.checkWorldsCanShare(event.getFrom().getName(), player.getWorld().getName());
+                break;
+            case MULTIVERSE:
+                shouldSwitch = !TARDISMultiverseInventoriesChecker.checkWorldsCanShare(event.getFrom().getName(), player.getWorld().getName());
+                break;
+            case PER_WORLD:
+                shouldSwitch = !TARDISPerWorldInventoryChecker.checkWorldsCanShare(event.getFrom().getName(), player.getWorld().getName());
+                break;
+            default:
+                // GAMEMODE
+                shouldSwitch = (plugin.getGeneralKeeper().getDoorListener().checkSurvival(event.getFrom()) != plugin.getGeneralKeeper().getDoorListener().checkSurvival(player.getWorld()));
+                break;
+        }
         if (shouldSwitch) {
             // switch to back to fobbed inventory after MVI and MI
             UUID uuid = player.getUniqueId();

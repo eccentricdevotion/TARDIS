@@ -61,6 +61,7 @@ import me.eccentric_nz.TARDIS.database.TARDISWorldRemover;
 import me.eccentric_nz.TARDIS.destroyers.TARDISDestroyerInner;
 import me.eccentric_nz.TARDIS.destroyers.TARDISPresetDestroyerFactory;
 import me.eccentric_nz.TARDIS.enumeration.DIFFICULTY;
+import me.eccentric_nz.TARDIS.enumeration.INVENTORY_MANAGER;
 import me.eccentric_nz.TARDIS.enumeration.LANGUAGE;
 import me.eccentric_nz.TARDIS.files.TARDISBlockLoader;
 import me.eccentric_nz.TARDIS.files.TARDISConfiguration;
@@ -85,7 +86,6 @@ import me.eccentric_nz.TARDIS.utility.TARDISBlockSetters;
 import me.eccentric_nz.TARDIS.utility.TARDISLocationGetters;
 import me.eccentric_nz.TARDIS.utility.TARDISMapChecker;
 import me.eccentric_nz.TARDIS.utility.TARDISMultiverseHelper;
-import me.eccentric_nz.TARDIS.utility.TARDISMultiverseInventoriesChecker;
 import me.eccentric_nz.TARDIS.utility.TARDISPerceptionFilter;
 import me.eccentric_nz.TARDIS.utility.TARDISSounds;
 import me.eccentric_nz.TARDIS.utility.TARDISUtils;
@@ -141,7 +141,7 @@ public class TARDIS extends JavaPlugin {
     private String pluginName;
     private String resourcePack;
     private TARDISChameleonPreset presets;
-    private TARDISMultiverseInventoriesChecker TMIChecker;
+//    private TARDISMultiverseInventoriesChecker TMIChecker;
     private TARDISPerceptionFilter filter;
     private TARDISPluginRespect pluginRespect;
     private TARDISShapedRecipe figura;
@@ -157,8 +157,9 @@ public class TARDIS extends JavaPlugin {
     private boolean helperOnServer;
     private boolean disguisesOnServer;
     private boolean mvOnServer;
-    private boolean mviOnServer;
-    private boolean miOnServer;
+    private INVENTORY_MANAGER invManager;
+//    private boolean mviOnServer;
+//    private boolean miOnServer;
     private PluginManager pm;
     private final TARDISArea tardisArea = new TARDISArea(this);
     private final TARDISBuilderInner interiorBuilder = new TARDISBuilderInner(this);
@@ -181,8 +182,9 @@ public class TARDIS extends JavaPlugin {
         this.worldGuardOnServer = false;
         this.helperOnServer = false;
         this.mvOnServer = false;
-        this.mviOnServer = false;
-        this.miOnServer = false;
+        this.invManager = INVENTORY_MANAGER.NONE;
+//        this.mviOnServer = false;
+//        this.miOnServer = false;
         this.versions.put("Citizens", "2.0.17");
         this.versions.put("Factions", "2.8.7");
         this.versions.put("GriefPrevention", "10");
@@ -275,8 +277,9 @@ public class TARDIS extends JavaPlugin {
                 getConfig().set("conversions.lastknownname_conversion_done", true);
             }
             loadMultiverse();
-            loadMultiverseInventories();
-            loadMultiInv();
+//            loadMultiverseInventories();
+//            loadMultiInv();
+            loadInventoryManager();
             checkTCG();
             checkDefaultWorld();
             cleanUpWorlds();
@@ -339,9 +342,9 @@ public class TARDIS extends JavaPlugin {
 
             presets = new TARDISChameleonPreset();
             presets.makePresets();
-            if (pm.isPluginEnabled("Multiverse-Inventories")) {
-                TMIChecker = new TARDISMultiverseInventoriesChecker(this);
-            }
+//            if (pm.isPluginEnabled("Multiverse-Inventories")) {
+//                TMIChecker = new TARDISMultiverseInventoriesChecker(this);
+//            }
             if (getConfig().getBoolean("preferences.walk_in_tardis")) {
                 new TARDISPortalPersister(this).load();
                 this.getServer().getScheduler().scheduleSyncRepeatingTask(this, new TARDISMonsterRunnable(this), 2400L, 2400L);
@@ -698,35 +701,53 @@ public class TARDIS extends JavaPlugin {
         }
     }
 
-    /**
-     * Checks if the MultiInv plugin is available, and loads support if it is.
-     */
-    private void loadMultiInv() {
+    private void loadInventoryManager() {
         if (pm.isPluginEnabled("MultiInv")) {
-            debug("Hooking into MultiInv!");
-            this.miOnServer = true;
+            this.invManager = INVENTORY_MANAGER.MULTI;
         }
-    }
-
-    public boolean isMIOnServer() {
-        return miOnServer;
-    }
-
-    /**
-     * Checks if the Multiverse-Inventories plugin is available, and loads
-     * support if it is.
-     */
-    private void loadMultiverseInventories() {
         if (pm.isPluginEnabled("Multiverse-Inventories")) {
-            debug("Hooking into Multiverse-Inventories!");
-            this.mviOnServer = true;
+            this.invManager = INVENTORY_MANAGER.MULTIVERSE;
+        }
+        if (pm.isPluginEnabled("PerWorldInventory")) {
+            this.invManager = INVENTORY_MANAGER.PER_WORLD;
+        }
+        if (pm.isPluginEnabled("GameModeInventories")) {
+            this.invManager = INVENTORY_MANAGER.GAMEMODE;
         }
     }
 
-    public boolean isMVIOnServer() {
-        return mviOnServer;
+    public INVENTORY_MANAGER getInvManager() {
+        return invManager;
     }
 
+//    /**
+//     * Checks if the MultiInv plugin is available, and loads support if it is.
+//     */
+//    private void loadMultiInv() {
+//        if (pm.isPluginEnabled("MultiInv")) {
+//            debug("Hooking into MultiInv!");
+//            this.miOnServer = true;
+//        }
+//    }
+//
+//    public boolean isMIOnServer() {
+//        return miOnServer;
+//    }
+//
+//    /**
+//     * Checks if the Multiverse-Inventories plugin is available, and loads
+//     * support if it is.
+//     */
+//    private void loadMultiverseInventories() {
+//        if (pm.isPluginEnabled("Multiverse-Inventories")) {
+//            debug("Hooking into Multiverse-Inventories!");
+//            this.mviOnServer = true;
+//        }
+//    }
+//
+//    public boolean isMVIOnServer() {
+//        return mviOnServer;
+//    }
     /**
      * Checks if the Multiverse-Core plugin is available, and loads support if
      * it is.
@@ -1088,10 +1109,9 @@ public class TARDIS extends JavaPlugin {
         return presets;
     }
 
-    public TARDISMultiverseInventoriesChecker getTMIChecker() {
-        return TMIChecker;
-    }
-
+//    public TARDISMultiverseInventoriesChecker getTMIChecker() {
+//        return TMIChecker;
+//    }
     public TARDISWalls getTardisWalls() {
         return tardisWalls;
     }

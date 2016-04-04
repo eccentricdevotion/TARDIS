@@ -30,6 +30,7 @@ import me.eccentric_nz.TARDIS.database.ResultSetBackLocation;
 import me.eccentric_nz.TARDIS.database.ResultSetDoors;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import me.eccentric_nz.TARDIS.database.ResultSetTravellers;
+import me.eccentric_nz.TARDIS.enumeration.INVENTORY_MANAGER;
 import static me.eccentric_nz.TARDIS.listeners.TARDISScannerListener.getNearbyEntities;
 import me.eccentric_nz.TARDIS.utility.TARDISGriefPreventionChecker;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
@@ -548,7 +549,7 @@ public class TARDISSonicListener implements Listener {
         if ((!timeout.containsKey(player.getUniqueId()) || timeout.get(player.getUniqueId()) < now)) {
             ItemMeta im = player.getInventory().getItemInMainHand().getItemMeta();
             im.addEnchant(Enchantment.DURABILITY, 1, true);
-            if (!plugin.isMVIOnServer()) {
+            if (!plugin.getInvManager().equals(INVENTORY_MANAGER.MULTIVERSE)) {
                 im.addItemFlags(ItemFlag.values());
             }
             player.getInventory().getItemInMainHand().setItemMeta(im);

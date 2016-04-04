@@ -26,7 +26,6 @@ import me.eccentric_nz.TARDIS.advanced.TARDISDiskCraftListener;
 import me.eccentric_nz.TARDIS.advanced.TARDISStorageListener;
 import me.eccentric_nz.TARDIS.arch.TARDISFakeChatListener;
 import me.eccentric_nz.TARDIS.arch.TARDISFobWatchListener;
-import me.eccentric_nz.TARDIS.arch.TARDISGMIHelper;
 import me.eccentric_nz.TARDIS.arch.TARDISInventoryPluginHelper;
 import me.eccentric_nz.TARDIS.arch.TARDISRespawnListener;
 import me.eccentric_nz.TARDIS.arch.TARDISSelectWatchListener;
@@ -48,6 +47,7 @@ import me.eccentric_nz.TARDIS.control.TARDISControlMenuListener;
 import me.eccentric_nz.TARDIS.desktop.TARDISThemeMenuListener;
 import me.eccentric_nz.TARDIS.desktop.TARDISWallMenuListener;
 import me.eccentric_nz.TARDIS.enumeration.DIFFICULTY;
+import me.eccentric_nz.TARDIS.enumeration.INVENTORY_MANAGER;
 import me.eccentric_nz.TARDIS.flight.TARDISHandbrakeListener;
 import me.eccentric_nz.TARDIS.flight.TARDISManualFlightListener;
 import me.eccentric_nz.TARDIS.flight.TARDISRegulatorListener;
@@ -315,12 +315,12 @@ public class TARDISListenerRegisterer {
                     plugin.getPM().registerEvents(new TARDISSelectWatchListener(plugin), plugin);
                     plugin.getPM().registerEvents(new TARDISRespawnListener(plugin), plugin);
                     if (plugin.getConfig().getBoolean("arch.switch_inventory")) {
-                        if (plugin.isMVIOnServer() || plugin.isMIOnServer()) {
+                        if (!plugin.getInvManager().equals(INVENTORY_MANAGER.NONE)) {
                             plugin.getPM().registerEvents(new TARDISInventoryPluginHelper(plugin), plugin);
                         }
-                        if (plugin.getPM().isPluginEnabled("GameModeInventories")) {
-                            plugin.getPM().registerEvents(new TARDISGMIHelper(plugin), plugin);
-                        }
+//                        if (plugin.getPM().isPluginEnabled("GameModeInventories")) {
+//                            plugin.getPM().registerEvents(new TARDISGMIHelper(plugin), plugin);
+//                        }
                     }
                 }
                 plugin.getPM().registerEvents(new TARDISLazarusListener(plugin), plugin);

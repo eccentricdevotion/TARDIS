@@ -160,7 +160,7 @@ public class TARDISDoorListener {
      * @param w the world to check
      * @return true if the world is a SURVIVAL world, otherwise false
      */
-    private boolean checkSurvival(World w) {
+    public boolean checkSurvival(World w) {
         boolean bool = false;
         if (plugin.isMVOnServer()) {
             bool = plugin.getMVHelper().isWorldSurvival(w);

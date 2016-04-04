@@ -25,7 +25,9 @@ import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import me.eccentric_nz.TARDIS.utility.TARDISMultiInvChecker;
+import me.eccentric_nz.TARDIS.utility.TARDISMultiverseInventoriesChecker;
 import me.eccentric_nz.TARDIS.utility.TARDISNumberParsers;
+import me.eccentric_nz.TARDIS.utility.TARDISPerWorldInventoryChecker;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.OfflinePlayer;
@@ -344,11 +346,19 @@ public class TARDISFarmer {
                     }
                 }
                 if (farmtotal > 0 || horsetotal > 0 || villagertotal > 0 || pettotal > 0) {
-                    boolean canfarm = true;
-                    if (plugin.isMVIOnServer()) {
-                        canfarm = plugin.getTMIChecker().checkWorldsCanShare(from, to);
-                    } else if (plugin.isMIOnServer()) {
-                        canfarm = TARDISMultiInvChecker.checkWorldsCanShare(from, to);
+                    boolean canfarm;
+                    switch (plugin.getInvManager()) {
+                        case MULTIVERSE:
+                            canfarm = TARDISMultiverseInventoriesChecker.checkWorldsCanShare(from, to);
+                            break;
+                        case MULTI:
+                            canfarm = TARDISMultiInvChecker.checkWorldsCanShare(from, to);
+                            break;
+                        case PER_WORLD:
+                            canfarm = TARDISPerWorldInventoryChecker.checkWorldsCanShare(from, to);
+                            break;
+                        default:
+                            canfarm = true;
                     }
                     if (!canfarm) {
                         TARDISMessage.send(p, "WORLD_NO_FARM");

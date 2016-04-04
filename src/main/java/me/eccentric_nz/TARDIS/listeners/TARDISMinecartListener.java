@@ -24,7 +24,9 @@ import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import me.eccentric_nz.TARDIS.utility.TARDISMultiInvChecker;
+import me.eccentric_nz.TARDIS.utility.TARDISMultiverseInventoriesChecker;
 import me.eccentric_nz.TARDIS.utility.TARDISNumberParsers;
+import me.eccentric_nz.TARDIS.utility.TARDISPerWorldInventoryChecker;
 import org.bukkit.Chunk;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -125,36 +127,38 @@ public class TARDISMinecartListener implements Listener {
                         break;
                 }
                 if (data != null && data.length > 3) {
-                    if (plugin.isMVIOnServer()) {
-                        if (!plugin.getTMIChecker().checkWorldsCanShare(bw, data[0])) {
-                            if (playerUUID != null && plugin.getServer().getPlayer(playerUUID).isOnline()) {
-                                TARDISMessage.send(plugin.getServer().getPlayer(playerUUID), "WORLD_NO_CART", bw, data[0]);
+                    boolean shouldPrevent;
+                    switch (plugin.getInvManager()) {
+                        case MULTIVERSE:
+                            shouldPrevent = (!TARDISMultiverseInventoriesChecker.checkWorldsCanShare(bw, data[0]));
+                            break;
+                        case MULTI:
+                            shouldPrevent = (!TARDISMultiInvChecker.checkWorldsCanShare(bw, data[0]));
+                            break;
+                        case PER_WORLD:
+                            shouldPrevent = (!TARDISPerWorldInventoryChecker.checkWorldsCanShare(bw, data[0]));
+                            break;
+                        default:
+                            World w = plugin.getServer().getWorld(data[0]);
+                            int x = TARDISNumberParsers.parseInt(data[1]);
+                            int y = TARDISNumberParsers.parseInt(data[2]);
+                            int z = TARDISNumberParsers.parseInt(data[3]);
+                            Location in_out = new Location(w, x, y, z);
+                            if (plugin.getGeneralKeeper().getDoors().contains(mat)) {
+                                d = getDirection(in_out);
+                                plugin.getGeneralKeeper().getTardisChunkList().add(w.getChunkAt(in_out));
+                            } else {
+                                plugin.getGeneralKeeper().getTardisChunkList().remove(w.getChunkAt(in_out));
                             }
-                            plugin.getTrackerKeeper().getMinecart().remove(Integer.valueOf(id));
-                            return;
+                            teleportMinecart(minecart, in_out, d, inv, minecart.getType());
+                            shouldPrevent = false;
+                    }
+                    if (shouldPrevent) {
+                        if (playerUUID != null && plugin.getServer().getPlayer(playerUUID).isOnline()) {
+                            TARDISMessage.send(plugin.getServer().getPlayer(playerUUID), "WORLD_NO_CART", bw, data[0]);
                         }
+                        plugin.getTrackerKeeper().getMinecart().remove(Integer.valueOf(id));
                     }
-                    if (plugin.isMIOnServer()) {
-                        if (!TARDISMultiInvChecker.checkWorldsCanShare(bw, data[0])) {
-                            if (playerUUID != null && plugin.getServer().getPlayer(playerUUID).isOnline()) {
-                                TARDISMessage.send(plugin.getServer().getPlayer(playerUUID), "WORLD_NO_CART", bw, data[0]);
-                            }
-                            plugin.getTrackerKeeper().getMinecart().remove(Integer.valueOf(id));
-                            return;
-                        }
-                    }
-                    World w = plugin.getServer().getWorld(data[0]);
-                    int x = TARDISNumberParsers.parseInt(data[1]);
-                    int y = TARDISNumberParsers.parseInt(data[2]);
-                    int z = TARDISNumberParsers.parseInt(data[3]);
-                    Location in_out = new Location(w, x, y, z);
-                    if (plugin.getGeneralKeeper().getDoors().contains(mat)) {
-                        d = getDirection(in_out);
-                        plugin.getGeneralKeeper().getTardisChunkList().add(w.getChunkAt(in_out));
-                    } else {
-                        plugin.getGeneralKeeper().getTardisChunkList().remove(w.getChunkAt(in_out));
-                    }
-                    teleportMinecart(minecart, in_out, d, inv, minecart.getType());
                 }
             }
         }

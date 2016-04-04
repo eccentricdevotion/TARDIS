@@ -413,6 +413,13 @@
             <scope>compile</scope>
         </dependency>
         <dependency>
+            <groupId>me.gnat008.perworldinventory</groupId>
+            <artifactId>PerWorldInventory</artifactId>
+            <version>1.5.10</version>
+            <type>jar</type>
+            <scope>compile</scope>
+        </dependency>
+        <dependency>
             <groupId>multiworld</groupId>
             <artifactId>MultiWorld</artifactId>
             <version>5.2.8</version>
