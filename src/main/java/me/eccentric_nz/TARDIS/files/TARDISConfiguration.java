@@ -25,6 +25,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import me.eccentric_nz.TARDIS.TARDIS;
+import org.apache.commons.lang.math.NumberUtils;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.World;
@@ -269,7 +270,6 @@ public class TARDISConfiguration {
         intOptions.put("police_box.platform_data", 8);
         intOptions.put("police_box.platform_id", 35);
         intOptions.put("police_box.rebuild_cooldown", 10000);
-        intOptions.put("police_box.tardis_lamp", 50);
         intOptions.put("police_box.wall_data", 11);
         intOptions.put("police_box.wall_id", 35);
         intOptions.put("preferences.freeze_cooldown", 60);
@@ -349,6 +349,7 @@ public class TARDISConfiguration {
         strOptions.put("creation.default_world_name", "TARDIS_TimeVortex");
         strOptions.put("creation.gamemode", "survival");
         strOptions.put("police_box.default_preset", "NEW");
+        strOptions.put("police_box.tardis_lamp", "REDSTONE_LAMP_OFF");
         strOptions.put("police_box.sign_colour", "WHITE");
         strOptions.put("preferences.default_key", "eleventh");
         strOptions.put("preferences.default_sonic", "eleventh");
@@ -463,6 +464,14 @@ public class TARDISConfiguration {
             }
             if (config.contains("difficulty") && config.getString("difficulty").equals("normal")) {
                 plugin.getConfig().set("difficulty", "hard");
+            }
+            if (config.contains("police_box.tardis_lamp") && NumberUtils.isNumber(config.getString("police_box.tardis_lamp"))) {
+                String setlamp = "REDSTONE_LAMP_OFF";
+                int lampint = config.getInt("police_box.tardis_lamp");
+                if (lampint != 50) {
+                    setlamp = Material.getMaterial(lampint).toString();
+                }
+                plugin.getConfig().set("police_box.tardis_lamp", setlamp);
             }
             if (i > 0) {
                 plugin.getConsole().sendMessage(plugin.getPluginName() + "Added " + ChatColor.AQUA + i + ChatColor.RESET + " new items to config");

@@ -23,7 +23,6 @@ import me.eccentric_nz.TARDIS.builders.TARDISMaterialisationData;
 import me.eccentric_nz.TARDIS.chameleon.TARDISChameleonCircuit;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetDoors;
-import me.eccentric_nz.TARDIS.database.ResultSetPlayerPrefs;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
 import me.eccentric_nz.TARDIS.enumeration.PRESET;
@@ -79,14 +78,6 @@ public class TARDISPresetDestroyerFactory {
                     int[] b_data = tcc.getChameleonBlock(chameleonBlock, pdd.getPlayer(), false);
                     cham_id = b_data[0];
                     cham_data = (byte) b_data[1];
-                }
-                Material lamp = Material.getMaterial(plugin.getConfig().getInt("police_box.tardis_lamp"));
-                HashMap<String, Object> wherepp = new HashMap<String, Object>();
-                String uuid = (demat.equals(PRESET.JUNK)) ? "00000000-aaaa-bbbb-cccc-000000000000" : pdd.getPlayer().getUniqueId().toString();
-                wherepp.put("uuid", uuid);
-                ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, wherepp);
-                if (rsp.resultSet()) {
-                    lamp = rsp.getLamp();
                 }
                 int loops = 18;
                 if (pdd.isHide()) {

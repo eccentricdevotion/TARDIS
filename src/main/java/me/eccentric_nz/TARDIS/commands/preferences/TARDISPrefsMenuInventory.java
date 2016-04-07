@@ -70,7 +70,7 @@ public class TARDISPrefsMenuInventory {
             // make a new record
             HashMap<String, Object> set = new HashMap<String, Object>();
             set.put("uuid", uuid.toString());
-            set.put("lamp", plugin.getConfig().getInt("police_box.tardis_lamp"));
+            set.put("lamp", plugin.getConfig().getString("police_box.tardis_lamp"));
             new QueryFactory(plugin).doInsert("player_prefs", set);
             // get the new record
             HashMap<String, Object> whereu = new HashMap<String, Object>();

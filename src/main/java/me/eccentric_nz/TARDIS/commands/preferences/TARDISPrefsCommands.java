@@ -132,7 +132,7 @@ public class TARDISPrefsCommands implements CommandExecutor {
                     // if no prefs record found, make one
                     if (!rsp.resultSet()) {
                         set.put("uuid", player.getUniqueId().toString());
-                        set.put("lamp", plugin.getConfig().getInt("police_box.tardis_lamp"));
+                        set.put("lamp", plugin.getConfig().getString("police_box.tardis_lamp"));
                         qf.doInsert("player_prefs", set);
                     }
                     if (pref.equals("hads_type")) {

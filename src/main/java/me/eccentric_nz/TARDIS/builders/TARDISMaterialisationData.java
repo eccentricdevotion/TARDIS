@@ -44,7 +44,7 @@ public class TARDISMaterialisationData {
     private boolean outside;
     private boolean rebuild;
     private boolean submarine;
-    private Material lamp = Material.TORCH;
+    private Material lamp = Material.REDSTONE_LAMP_OFF;
     private boolean texture = true;
     private boolean minecartSounds = false;
     private boolean CTM = true;

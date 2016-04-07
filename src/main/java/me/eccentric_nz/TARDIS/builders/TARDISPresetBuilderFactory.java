@@ -23,7 +23,6 @@ import java.util.Random;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.chameleon.TARDISChameleonCircuit;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
-import me.eccentric_nz.TARDIS.database.ResultSetPlayerPrefs;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import me.eccentric_nz.TARDIS.destroyers.TARDISDeinstaPreset;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
@@ -120,22 +119,8 @@ public class TARDISPresetBuilderFactory {
                 cham_id = b_data[0];
                 cham_data = (byte) b_data[1];
             }
-            // get lamp and submarine preferences
-            Material lamp = Material.getMaterial(plugin.getConfig().getInt("police_box.tardis_lamp"));
-            boolean minecart = false;
-            boolean ctm = false;
-            boolean add_sign = true;
             boolean hidden = rs.isHidden();
-            String uuid = (preset.equals(PRESET.JUNK)) ? "00000000-aaaa-bbbb-cccc-000000000000" : tmd.getPlayer().getUniqueId().toString();
-            HashMap<String, Object> wherepp = new HashMap<String, Object>();
-            wherepp.put("uuid", uuid);
-            ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, wherepp);
-            if (rsp.resultSet()) {
-                lamp = rsp.getLamp();
-                minecart = rsp.isMinecartOn();
-                ctm = rsp.isCtmOn();
-                add_sign = rsp.isSignOn();
-            }
+            // get submarine preferences
             if (tmd.isSubmarine() && notSubmarinePresets.contains(preset)) {
                 preset = PRESET.YELLOW;
                 TARDISMessage.send(tmd.getPlayer().getPlayer(), "SUB_UNSUITED");

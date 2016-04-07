@@ -142,13 +142,19 @@ public class ResultSetPlayerPrefs {
                 this.submarineOn = rs.getBoolean("submarine_on");
                 this.artronLevel = rs.getInt("artron_level");
                 String trylamp = rs.getString("lamp");
+                Material default_lamp;
+                try {
+                    default_lamp = Material.valueOf(plugin.getConfig().getString("police_box.tardis_lamp"));
+                } catch (IllegalArgumentException e) {
+                    default_lamp = Material.REDSTONE_LAMP_OFF;
+                }
                 if (rs.wasNull()) {
-                    this.lamp = Material.getMaterial(plugin.getConfig().getInt("police_box.tardis_lamp"));
+                    this.lamp = default_lamp;
                 } else {
                     try {
                         this.lamp = Material.valueOf(trylamp);
                     } catch (IllegalArgumentException e) {
-                        this.lamp = Material.getMaterial(plugin.getConfig().getInt("police_box.tardis_lamp"));
+                        this.lamp = default_lamp;
                     }
                 }
                 this.language = rs.getString("language");
