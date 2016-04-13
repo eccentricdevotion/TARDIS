@@ -127,7 +127,7 @@ public class TARDISUpdateListener implements Listener {
         } else {
             return;
         }
-        Block block = event.getClickedBlock();
+        final Block block = event.getClickedBlock();
         if (block != null) {
             Material blockType = block.getType();
             Location block_loc = block.getLocation();
@@ -251,12 +251,19 @@ public class TARDISUpdateListener implements Listener {
                 wheret.put("type", 23);
                 ResultSetControls rsc = new ResultSetControls(plugin, wheret, false);
                 if (!rsc.resultSet()) {
-                    qf.insertControl(id, 0, blockLocStr, 0);
+                    qf.insertControl(id, 23, blockLocStr, 0);
+                    secondary = true;
                 } else if (secondary) {
-                    qf.insertControl(id, 0, blockLocStr, 1);
+                    qf.insertControl(id, 23, blockLocStr, 1);
                 } else {
                     set.put("location", blockLocStr);
                 }
+                plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
+                    @Override
+                    public void run() {
+                        block.setType(Material.DAYLIGHT_DETECTOR);
+                    }
+                }, 3L);
             }
             if (blockName.equalsIgnoreCase("handbrake") && blockType == Material.LEVER) {
                 // check for existing handbrake - there may not be one, as custom schematic may not have CAKE block
@@ -266,6 +273,7 @@ public class TARDISUpdateListener implements Listener {
                 ResultSetControls rsc = new ResultSetControls(plugin, whereh, false);
                 if (!rsc.resultSet()) {
                     qf.insertControl(id, 0, blockLocStr, 0);
+                    secondary = true;
                 } else if (secondary) {
                     qf.insertControl(id, 0, blockLocStr, 1);
                 } else {

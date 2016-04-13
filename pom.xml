@@ -28,15 +28,15 @@
             <url>https://hub.spigotmc.org/nexus/content/groups/public/</url>
         </repository>
         <!--
-        <repository>
-            <id>md-5</id>
-            <url>http://repo.md-5.net/content/groups/public</url>
-        </repository>
+     <repository>
+         <id>md-5</id>
+         <url>http://repo.md-5.net/content/groups/public</url>
+     </repository>
+     <repository>
+         <id>libsdisguises-repo</id>
+         <url>http://server.psmc.ca/repo/</url>
+     </repository>
         -->
-        <repository>
-            <id>libsdisguises-repo</id>
-            <url>http://server.psmc.ca/repo/</url>
-        </repository>
         <repository>
             <id>dmulloy2-repo</id>
             <url>http://repo.dmulloy2.net/content/groups/public/</url>
