@@ -73,7 +73,7 @@ public class TARDISZeroRoomChatListener implements Listener {
         UUID uuid = player.getUniqueId();
         String command = event.getMessage().toLowerCase();
         if (plugin.getTrackerKeeper().getTelepaths().containsKey(uuid)) {
-            if (command.contains("tardis ")) {
+            if (command.contains("tardis ") || command.contains("tardistravel ") || command.contains("ttravel ")) {
                 UUID owner = plugin.getTrackerKeeper().getTelepaths().get(uuid);
                 Player timelord = plugin.getServer().getPlayer(owner);
                 // message console so it is logged
