@@ -18,7 +18,6 @@ package me.eccentric_nz.TARDIS.move;
 
 import me.eccentric_nz.TARDIS.mobfarming.TARDISMob;
 import org.bukkit.inventory.EntityEquipment;
-import org.bukkit.inventory.ItemStack;
 import org.bukkit.material.MaterialData;
 
 /**
@@ -31,7 +30,6 @@ public class TARDISMonster extends TARDISMob {
     private int anger;
     private boolean charged;
     private boolean villager;
-    private ItemStack itemInHand;
     private EntityEquipment equipment;
     private MaterialData carried;
     private int size;
@@ -66,14 +64,6 @@ public class TARDISMonster extends TARDISMob {
 
     public void setVillager(boolean villager) {
         this.villager = villager;
-    }
-
-    public ItemStack getItemInHand() {
-        return itemInHand;
-    }
-
-    public void setItemInHand(ItemStack itemInHand) {
-        this.itemInHand = itemInHand;
     }
 
     public EntityEquipment getEquipment() {
