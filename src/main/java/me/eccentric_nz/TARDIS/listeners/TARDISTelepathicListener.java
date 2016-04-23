@@ -33,6 +33,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
+import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
@@ -50,6 +51,9 @@ public class TARDISTelepathicListener implements Listener {
 
     @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
     public void onTelepathicCircuit(PlayerInteractEvent event) {
+        if (event.getHand().equals(EquipmentSlot.OFF_HAND)) {
+            return;
+        }
         final Block block = event.getClickedBlock();
         if (!block.getType().equals(Material.DAYLIGHT_DETECTOR)) {
             return;

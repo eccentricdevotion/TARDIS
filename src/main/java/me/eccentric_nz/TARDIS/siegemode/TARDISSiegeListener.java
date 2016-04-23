@@ -45,6 +45,7 @@ import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.entity.ItemDespawnEvent;
 import org.bukkit.event.player.PlayerDropItemEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
+import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
@@ -259,6 +260,9 @@ public class TARDISSiegeListener implements Listener {
 
     @EventHandler(ignoreCancelled = true)
     public void onSiegeCubeInteract(final PlayerInteractEvent event) {
+        if (event.getHand().equals(EquipmentSlot.OFF_HAND)) {
+            return;
+        }
         Action action = event.getAction();
         if (!action.equals(Action.RIGHT_CLICK_BLOCK)) {
             return;

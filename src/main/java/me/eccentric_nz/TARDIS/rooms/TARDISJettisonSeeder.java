@@ -34,6 +34,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerInteractEvent;
+import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
@@ -63,6 +64,9 @@ public class TARDISJettisonSeeder implements Listener {
     @SuppressWarnings("deprecation")
     @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
     public void onSeedBlockInteract(PlayerInteractEvent event) {
+        if (event.getHand().equals(EquipmentSlot.OFF_HAND)) {
+            return;
+        }
         final Player player = event.getPlayer();
         String playerNameStr = player.getName();
         UUID uuid = player.getUniqueId();
@@ -73,7 +77,7 @@ public class TARDISJettisonSeeder implements Listener {
         Block block = event.getClickedBlock();
         if (block != null) {
             Material blockType = block.getType();
-            Material inhand = player.getItemInHand().getType();
+            Material inhand = player.getInventory().getItemInMainHand().getType();
             String key;
             HashMap<String, Object> where = new HashMap<String, Object>();
             where.put("uuid", player.getUniqueId().toString());

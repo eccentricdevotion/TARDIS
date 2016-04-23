@@ -59,7 +59,6 @@ public class TARDISBlockDamageListener implements Listener {
      *
      * @param event a block being damaged
      */
-    @SuppressWarnings("deprecation")
     @EventHandler(ignoreCancelled = true)
     public void onPoliceBoxDamage(BlockDamageEvent event) {
         Player p = event.getPlayer();
@@ -73,7 +72,7 @@ public class TARDISBlockDamageListener implements Listener {
             if (p.hasPermission("tardis.sonic.admin")) {
                 String[] split = plugin.getRecipesConfig().getString("shaped.Sonic Screwdriver.result").split(":");
                 Material sonic = Material.valueOf(split[0]);
-                ItemStack is = p.getItemInHand();
+                ItemStack is = event.getItemInHand();
                 if (is != null && is.getType().equals(sonic)) {
                     // unhide TARDIS
                     unhide(id, p);

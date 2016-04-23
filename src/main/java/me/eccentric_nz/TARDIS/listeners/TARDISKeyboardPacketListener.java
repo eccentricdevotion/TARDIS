@@ -30,6 +30,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerInteractEvent;
+import org.bukkit.inventory.EquipmentSlot;
 
 public class TARDISKeyboardPacketListener implements Listener {
 
@@ -76,6 +77,9 @@ public class TARDISKeyboardPacketListener implements Listener {
 
     @EventHandler(ignoreCancelled = true)
     public void onKeyboardInteract(PlayerInteractEvent event) {
+        if (event.getHand().equals(EquipmentSlot.OFF_HAND)) {
+            return;
+        }
         Block b = event.getClickedBlock();
         if (b != null && (b.getType().equals(Material.SIGN_POST) || b.getType().equals(Material.WALL_SIGN))) {
             Player player = event.getPlayer();

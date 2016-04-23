@@ -36,6 +36,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerMoveEvent;
+import org.bukkit.inventory.EquipmentSlot;
 
 /**
  * Air corridors projected by TARDISes had the option to use anti-gravity,
@@ -181,6 +182,9 @@ public class TARDISGravityWellListener implements Listener {
      */
     @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
     public void onWoolInteract(PlayerInteractEvent event) {
+        if (event.getHand().equals(EquipmentSlot.OFF_HAND)) {
+            return;
+        }
         final Player player = event.getPlayer();
         UUID uuid = player.getUniqueId();
         if (plugin.getTrackerKeeper().getGravity().containsKey(uuid)) {

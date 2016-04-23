@@ -31,6 +31,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerInteractEvent;
+import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.ItemStack;
 
 /**
@@ -57,12 +58,15 @@ public class TARDISBeaconColouringListener implements Listener {
     @SuppressWarnings("deprecation")
     @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
     public void onInteract(PlayerInteractEvent event) {
+        if (event.getHand().equals(EquipmentSlot.OFF_HAND)) {
+            return;
+        }
         final Player player = event.getPlayer();
         UUID uuid = player.getUniqueId();
         if (!plugin.getTrackerKeeper().getBeaconColouring().contains(uuid)) {
             return;
         }
-        if (!player.getItemInHand().getType().equals(Material.INK_SACK)) {
+        if (!player.getInventory().getItemInMainHand().getType().equals(Material.INK_SACK)) {
             TARDISMessage.send(player, "COLOUR_DYE");
             return;
         }
@@ -87,7 +91,7 @@ public class TARDISBeaconColouringListener implements Listener {
             plugin.getTrackerKeeper().getBeaconColouring().remove(uuid);
             return;
         }
-        ItemStack dye = player.getItemInHand();
+        ItemStack dye = player.getInventory().getItemInMainHand();
         int amount = dye.getAmount();
         byte dye_data = dye.getData().getData();
         byte new_data = (byte) (15 - dye_data);
@@ -122,7 +126,7 @@ public class TARDISBeaconColouringListener implements Listener {
             return;
         }
         if (amount > needed) {
-            player.getInventory().getItemInHand().setAmount(amount - needed);
+            player.getInventory().getItemInMainHand().setAmount(amount - needed);
         } else {
             player.getInventory().removeItem(new ItemStack(dye.getType(), needed, dye.getDurability()));
         }

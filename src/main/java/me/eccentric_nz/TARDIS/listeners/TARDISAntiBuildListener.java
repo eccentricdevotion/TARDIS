@@ -36,6 +36,7 @@ import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.hanging.HangingBreakByEntityEvent;
 import org.bukkit.event.player.PlayerInteractEntityEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
+import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.util.Vector;
 
 /**
@@ -125,12 +126,14 @@ public class TARDISAntiBuildListener implements Listener {
         if (!rs.resultSet() || !plugin.getTrackerKeeper().getAntiBuild().containsKey(rs.getTardis_id())) {
             return;
         }
-        if (no_place.contains(event.getPlayer().getItemInHand().getType()) && !allow_interact.contains(event.getClickedBlock().getType())) {
+        EquipmentSlot hand = event.getHand();
+        Material m = (hand.equals(EquipmentSlot.HAND)) ? event.getPlayer().getInventory().getItemInMainHand().getType() : event.getPlayer().getInventory().getItemInOffHand().getType();
+        if ((hand.equals(EquipmentSlot.HAND) && no_place.contains(m)) || (hand.equals(EquipmentSlot.OFF_HAND) && no_place.contains(m)) && !allow_interact.contains(event.getClickedBlock().getType())) {
             event.setUseItemInHand(Result.DENY);
             event.setCancelled(true);
             TARDISMessage.send(event.getPlayer(), "ANTIBUILD");
         }
-        if (event.getClickedBlock().getType().equals(Material.FLOWER_POT) && no_flower_pot.contains(event.getPlayer().getItemInHand().getType())) {
+        if (event.getClickedBlock().getType().equals(Material.FLOWER_POT) && (hand.equals(EquipmentSlot.HAND) && no_flower_pot.contains(m)) || (hand.equals(EquipmentSlot.OFF_HAND) && no_flower_pot.contains(m))) {
             event.setUseItemInHand(Result.DENY);
             event.setCancelled(true);
             Block b = event.getClickedBlock();

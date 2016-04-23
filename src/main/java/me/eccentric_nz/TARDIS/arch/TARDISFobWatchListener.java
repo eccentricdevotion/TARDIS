@@ -28,6 +28,7 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
+import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
@@ -45,6 +46,9 @@ public class TARDISFobWatchListener implements Listener {
 
     @EventHandler(priority = EventPriority.MONITOR)
     public void onFobWatchClick(PlayerInteractEvent event) {
+        if (event.getHand().equals(EquipmentSlot.OFF_HAND)) {
+            return;
+        }
         if (event.getAction().equals(Action.RIGHT_CLICK_AIR)) {
             ItemStack is = event.getItem();
             if (is == null || !is.getType().equals(Material.WATCH) || !is.hasItemMeta()) {

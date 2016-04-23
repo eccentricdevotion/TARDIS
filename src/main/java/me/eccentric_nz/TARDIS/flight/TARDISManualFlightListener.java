@@ -26,6 +26,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerInteractEvent;
+import org.bukkit.inventory.EquipmentSlot;
 
 /**
  * The Absolute Tesseractulator is responsible for keeping track of a TARDIS's
@@ -46,6 +47,9 @@ public class TARDISManualFlightListener implements Listener {
 
     @EventHandler(priority = EventPriority.NORMAL)
     public void onInteract(PlayerInteractEvent event) {
+        if (event.getHand().equals(EquipmentSlot.OFF_HAND)) {
+            return;
+        }
         final Player player = event.getPlayer();
         UUID uuid = player.getUniqueId();
         Block b = event.getClickedBlock();
@@ -62,11 +66,9 @@ public class TARDISManualFlightListener implements Listener {
                     event.setCancelled(true);
                 }
                 plugin.getTrackerKeeper().getFlight().remove(uuid);
-            } else {
-                // if it is a TARDIS repeater cancel the event
-                if (plugin.getTrackerKeeper().getRepeaters().containsKey(uuid) && plugin.getTrackerKeeper().getRepeaters().get(uuid).contains(loc)) {
-                    event.setCancelled(true);
-                }
+            } else // if it is a TARDIS repeater cancel the event
+            if (plugin.getTrackerKeeper().getRepeaters().containsKey(uuid) && plugin.getTrackerKeeper().getRepeaters().get(uuid).contains(loc)) {
+                event.setCancelled(true);
             }
         }
     }

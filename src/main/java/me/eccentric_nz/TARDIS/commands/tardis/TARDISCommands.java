@@ -187,7 +187,7 @@ public class TARDISCommands implements CommandExecutor {
                     return new TARDISRoomCommand(plugin).startRoom(player, args);
                 }
                 if (args[0].equalsIgnoreCase("save_player")) {
-                    ItemStack is = player.getItemInHand();
+                    ItemStack is = player.getInventory().getItemInMainHand();
                     if (heldDiskIsWrong(is, "Player Storage Disk")) {
                         TARDISMessage.send(player, "DISK_HAND_PLAYER");
                         return true;
@@ -217,7 +217,7 @@ public class TARDISCommands implements CommandExecutor {
                     return new TARDISExterminateCommand(plugin).doExterminate(player);
                 }
                 if (args[0].equalsIgnoreCase("save")) {
-                    ItemStack is = player.getItemInHand();
+                    ItemStack is = player.getInventory().getItemInMainHand();
                     if (!plugin.getDifficulty().equals(DIFFICULTY.EASY) && !plugin.getUtils().inGracePeriod(player, true)) {
                         if (plugin.getDifficulty().equals(DIFFICULTY.HARD) && heldDiskIsWrong(is, "Save Storage Disk")) {
                             TARDISMessage.send(player, "DISK_HAND_SAVE");

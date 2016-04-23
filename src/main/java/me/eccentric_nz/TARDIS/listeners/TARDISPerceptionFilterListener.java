@@ -27,6 +27,7 @@ import org.bukkit.event.inventory.InventoryAction;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.event.player.PlayerInteractEvent;
+import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
@@ -48,12 +49,14 @@ public class TARDISPerceptionFilterListener implements Listener {
         this.filter = Material.valueOf(plugin.getRecipesConfig().getString("shaped.Perception Filter.result"));
     }
 
-    @SuppressWarnings("deprecation")
     @EventHandler
     public void onPerceptionFilterClick(PlayerInteractEvent event) {
+        if (event.getHand().equals(EquipmentSlot.OFF_HAND)) {
+            return;
+        }
         final Player player = event.getPlayer();
-        if (player.getItemInHand().getType().equals(filter) && event.getAction().equals(Action.RIGHT_CLICK_AIR)) {
-            ItemStack is = player.getItemInHand();
+        if (player.getInventory().getItemInMainHand().getType().equals(filter) && event.getAction().equals(Action.RIGHT_CLICK_AIR)) {
+            ItemStack is = player.getInventory().getItemInMainHand();
             if (is.hasItemMeta()) {
                 ItemMeta im = is.getItemMeta();
                 if (im.hasDisplayName() && im.getDisplayName().equals("Perception Filter")) {
@@ -63,7 +66,7 @@ public class TARDISPerceptionFilterListener implements Listener {
                             // equip the chest slot with the perception filter
                             player.getInventory().setChestplate(is);
                             player.updateInventory();
-                            player.setItemInHand(new ItemStack(Material.AIR));
+                            player.getInventory().setItemInMainHand(new ItemStack(Material.AIR));
                             // make the player invisible
                             plugin.getFilter().addPerceptionFilter(player);
                         } else {

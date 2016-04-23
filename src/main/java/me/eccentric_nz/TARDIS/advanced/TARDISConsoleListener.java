@@ -35,6 +35,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
+import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
@@ -58,6 +59,9 @@ public class TARDISConsoleListener implements Listener {
 
     @EventHandler(ignoreCancelled = true)
     public void onConsoleInteract(PlayerInteractEvent event) {
+        if (event.getHand().equals(EquipmentSlot.OFF_HAND)) {
+            return;
+        }
         final Player p = event.getPlayer();
         if (!p.hasPermission("tardis.advanced")) {
             return;

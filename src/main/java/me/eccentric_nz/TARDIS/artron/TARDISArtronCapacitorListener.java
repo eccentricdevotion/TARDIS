@@ -45,6 +45,7 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
+import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
@@ -83,6 +84,9 @@ public class TARDISArtronCapacitorListener implements Listener {
      */
     @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
     public void onCapacitorInteract(PlayerInteractEvent event) {
+        if (event.getHand().equals(EquipmentSlot.OFF_HAND)) {
+            return;
+        }
         final Player player = event.getPlayer();
         Block block = event.getClickedBlock();
         if (block != null) {
@@ -235,11 +239,9 @@ public class TARDISArtronCapacitorListener implements Listener {
                                     qf.doUpdate("tardis", set, whereid);
                                     TARDISMessage.send(player, "ENERGY_INIT");
                                 } else // toggle power
-                                {
-                                    if (plugin.getConfig().getBoolean("allow.power_down")) {
+                                 if (plugin.getConfig().getBoolean("allow.power_down")) {
                                         new TARDISPowerButton(plugin, id, player, rs.getPreset(), rs.isPowered_on(), rs.isHidden(), lights, player.getLocation(), current_level, rs.getSchematic().hasLanterns()).clickButton();
                                     }
-                                }
                             } else if (player.isSneaking()) {
                                 if (!init) {
                                     TARDISMessage.send(player, "ENERGY_NO_INIT");

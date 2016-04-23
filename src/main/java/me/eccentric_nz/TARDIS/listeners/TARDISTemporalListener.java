@@ -26,6 +26,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
+import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.ItemStack;
 
 /**
@@ -43,6 +44,9 @@ public class TARDISTemporalListener implements Listener {
 
     @EventHandler
     public void onPlayerInteract(PlayerInteractEvent event) {
+        if (event.getHand().equals(EquipmentSlot.OFF_HAND)) {
+            return;
+        }
         Player p = event.getPlayer();
         ItemStack inhand = p.getInventory().getItemInMainHand();
         if (event.getAction().equals(Action.RIGHT_CLICK_AIR) && inhand.getType().equals(Material.WATCH) && p.hasPermission("tardis.temporal")) {

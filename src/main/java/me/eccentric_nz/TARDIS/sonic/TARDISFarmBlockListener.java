@@ -40,9 +40,9 @@ public class TARDISFarmBlockListener implements Listener {
         if (!player.hasPermission("tardis.sonic.plant")) {
             return;
         }
-        ItemStack stack = player.getItemInHand();
+        ItemStack stack = player.getInventory().getItemInMainHand();
         if (stack.getType().equals(sonic) && stack.hasItemMeta()) {
-            ItemMeta im = player.getItemInHand().getItemMeta();
+            ItemMeta im = stack.getItemMeta();
             if (im.hasDisplayName() && ChatColor.stripColor(im.getDisplayName()).equals("Sonic Screwdriver") && im.hasLore() && im.getLore().contains("Emerald Upgrade")) {
                 Block block = event.getBlock();
                 Material type = block.getType();

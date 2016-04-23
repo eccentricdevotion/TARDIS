@@ -44,6 +44,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerInteractEvent;
+import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.material.Lever;
 
 /**
@@ -68,6 +69,9 @@ public class TARDISJunkControlListener implements Listener {
 
     @EventHandler(priority = EventPriority.MONITOR)
     public void onJunkBrakeUse(PlayerInteractEvent event) {
+        if (event.getHand().equals(EquipmentSlot.OFF_HAND)) {
+            return;
+        }
         if (plugin.getGeneralKeeper().isJunkTravelling()) {
             return;
         }

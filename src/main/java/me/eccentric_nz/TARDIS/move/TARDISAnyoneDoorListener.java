@@ -48,6 +48,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
+import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.material.Door;
 
@@ -75,6 +76,9 @@ public class TARDISAnyoneDoorListener extends TARDISDoorListener implements List
     @SuppressWarnings("deprecation")
     @EventHandler(ignoreCancelled = true)
     public void onDoorInteract(PlayerInteractEvent event) {
+        if (event.getHand().equals(EquipmentSlot.OFF_HAND)) {
+            return;
+        }
         Block block = event.getClickedBlock();
         if (block != null) {
             Material blockType = block.getType();
@@ -126,7 +130,7 @@ public class TARDISAnyoneDoorListener extends TARDISDoorListener implements List
                                 end_doortype = 0;
                                 break;
                         }
-                        ItemStack stack = player.getItemInHand();
+                        ItemStack stack = player.getInventory().getItemInMainHand();
                         Material material = stack.getType();
                         // get key material
                         HashMap<String, Object> wherepp = new HashMap<String, Object>();

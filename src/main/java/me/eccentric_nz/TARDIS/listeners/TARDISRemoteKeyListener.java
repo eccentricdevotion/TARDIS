@@ -41,6 +41,7 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
+import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.ItemStack;
 
 /**
@@ -68,7 +69,7 @@ public class TARDISRemoteKeyListener implements Listener {
         }
         final Player player = event.getPlayer();
         // check item in hand
-        ItemStack is = player.getInventory().getItemInMainHand();
+        ItemStack is = (event.getHand().equals(EquipmentSlot.HAND)) ? player.getInventory().getItemInMainHand() : player.getInventory().getItemInOffHand();
         if (is == null || !is.getType().equals(rkey)) {
             return;
         }
