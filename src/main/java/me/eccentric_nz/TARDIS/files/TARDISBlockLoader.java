@@ -70,14 +70,14 @@ public class TARDISBlockLoader {
                 ps = connection.prepareStatement("UPDATE blocks SET block = '0' WHERE block = 'AIR'");
                 ps.executeUpdate();
             } catch (SQLException e) {
-                plugin.debug("ResultSet error for antibuild load! " + e.getMessage());
+                plugin.debug("ResultSet error for block protection load! " + e.getMessage());
             } finally {
                 try {
                     if (ps != null) {
                         ps.close();
                     }
                 } catch (SQLException e) {
-                    plugin.debug("Error closing antibuild load! " + e.getMessage());
+                    plugin.debug("Error closing block protection load! " + e.getMessage());
                 }
             }
         }
