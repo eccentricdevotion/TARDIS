@@ -77,7 +77,7 @@ public class TARDISKeyboardPacketListener implements Listener {
 
     @EventHandler(ignoreCancelled = true)
     public void onKeyboardInteract(PlayerInteractEvent event) {
-        if (event.getHand().equals(EquipmentSlot.OFF_HAND)) {
+        if (event.getHand() == null || event.getHand().equals(EquipmentSlot.OFF_HAND)) {
             return;
         }
         Block b = event.getClickedBlock();

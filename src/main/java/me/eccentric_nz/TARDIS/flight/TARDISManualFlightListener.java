@@ -47,7 +47,7 @@ public class TARDISManualFlightListener implements Listener {
 
     @EventHandler(priority = EventPriority.NORMAL)
     public void onInteract(PlayerInteractEvent event) {
-        if (event.getHand().equals(EquipmentSlot.OFF_HAND)) {
+        if (event.getHand() == null || event.getHand().equals(EquipmentSlot.OFF_HAND)) {
             return;
         }
         final Player player = event.getPlayer();
@@ -67,8 +67,10 @@ public class TARDISManualFlightListener implements Listener {
                 }
                 plugin.getTrackerKeeper().getFlight().remove(uuid);
             } else // if it is a TARDIS repeater cancel the event
-            if (plugin.getTrackerKeeper().getRepeaters().containsKey(uuid) && plugin.getTrackerKeeper().getRepeaters().get(uuid).contains(loc)) {
-                event.setCancelled(true);
+            {
+                if (plugin.getTrackerKeeper().getRepeaters().containsKey(uuid) && plugin.getTrackerKeeper().getRepeaters().get(uuid).contains(loc)) {
+                    event.setCancelled(true);
+                }
             }
         }
     }

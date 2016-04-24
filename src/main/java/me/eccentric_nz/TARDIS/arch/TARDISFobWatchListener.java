@@ -46,7 +46,7 @@ public class TARDISFobWatchListener implements Listener {
 
     @EventHandler(priority = EventPriority.MONITOR)
     public void onFobWatchClick(PlayerInteractEvent event) {
-        if (event.getHand().equals(EquipmentSlot.OFF_HAND)) {
+        if (event.getHand() == null || event.getHand().equals(EquipmentSlot.OFF_HAND)) {
             return;
         }
         if (event.getAction().equals(Action.RIGHT_CLICK_AIR)) {

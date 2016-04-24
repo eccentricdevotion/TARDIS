@@ -76,7 +76,7 @@ public class TARDISAnyoneDoorListener extends TARDISDoorListener implements List
     @SuppressWarnings("deprecation")
     @EventHandler(ignoreCancelled = true)
     public void onDoorInteract(PlayerInteractEvent event) {
-        if (event.getHand().equals(EquipmentSlot.OFF_HAND)) {
+        if (event.getHand() == null || event.getHand().equals(EquipmentSlot.OFF_HAND)) {
             return;
         }
         Block block = event.getClickedBlock();
