@@ -103,9 +103,8 @@ public class TARDISUUIDCache {
         asyncFetch(nameList(name));
     }
 
-    @SuppressWarnings("deprecation")
     private void asyncFetch(final ArrayList<String> names) {
-        plugin.getServer().getScheduler().scheduleAsyncDelayedTask(plugin, new Runnable() {
+        plugin.getServer().getScheduler().runTaskAsynchronously(plugin, new Runnable() {
             @Override
             public void run() {
                 syncFetch(names);
