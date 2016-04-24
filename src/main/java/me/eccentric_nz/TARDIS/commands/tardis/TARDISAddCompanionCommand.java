@@ -82,10 +82,10 @@ public class TARDISAddCompanionCommand {
                 return true;
             } else {
                 UUID oluuid = plugin.getServer().getOfflinePlayer(args[1]).getUniqueId();
-                if (oluuid == null) {
-                    oluuid = plugin.getGeneralKeeper().getUUIDCache().getIdOptimistic(args[1]);
-                    plugin.getGeneralKeeper().getUUIDCache().getId(args[1]);
-                }
+//                if (oluuid == null) {
+//                    oluuid = plugin.getGeneralKeeper().getUUIDCache().getIdOptimistic(args[1]);
+//                    plugin.getGeneralKeeper().getUUIDCache().getId(args[1]);
+//                }
                 if (oluuid != null) {
                     QueryFactory qf = new QueryFactory(plugin);
                     HashMap<String, Object> tid = new HashMap<String, Object>();

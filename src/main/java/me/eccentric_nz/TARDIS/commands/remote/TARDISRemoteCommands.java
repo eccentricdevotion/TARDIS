@@ -68,10 +68,10 @@ public class TARDISRemoteCommands implements CommandExecutor {
                 return true;
             }
             UUID oluuid = plugin.getServer().getOfflinePlayer(args[0]).getUniqueId();
-            if (oluuid == null) {
-                oluuid = plugin.getGeneralKeeper().getUUIDCache().getIdOptimistic(args[0]);
-                plugin.getGeneralKeeper().getUUIDCache().getId(args[0]);
-            }
+//            if (oluuid == null) {
+//                oluuid = plugin.getGeneralKeeper().getUUIDCache().getIdOptimistic(args[0]);
+//                plugin.getGeneralKeeper().getUUIDCache().getId(args[0]);
+//            }
             if (oluuid != null) {
                 final UUID uuid = oluuid;
                 // check the player has a TARDIS

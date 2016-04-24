@@ -72,10 +72,10 @@ public class TARDISRemoveCompanionCommand {
                 String message = "COMPANIONS_REMOVE_ALL";
                 if (!args[1].equals("all")) {
                     UUID oluuid = plugin.getServer().getOfflinePlayer(args[1]).getUniqueId();
-                    if (oluuid == null) {
-                        oluuid = plugin.getGeneralKeeper().getUUIDCache().getIdOptimistic(args[1]);
-                        plugin.getGeneralKeeper().getUUIDCache().getId(args[1]);
-                    }
+//                    if (oluuid == null) {
+//                        oluuid = plugin.getGeneralKeeper().getUUIDCache().getIdOptimistic(args[1]);
+//                        plugin.getGeneralKeeper().getUUIDCache().getId(args[1]);
+//                    }
                     if (oluuid != null) {
                         String[] split = comps.split(":");
                         StringBuilder buf = new StringBuilder();

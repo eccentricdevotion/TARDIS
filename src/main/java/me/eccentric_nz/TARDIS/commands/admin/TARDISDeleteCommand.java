@@ -75,10 +75,10 @@ public class TARDISDeleteCommand {
         } else {
             uuid = plugin.getServer().getOfflinePlayer(args[1]).getUniqueId();
         }
-        if (uuid == null) {
-            uuid = plugin.getGeneralKeeper().getUUIDCache().getIdOptimistic(args[1]);
-            plugin.getGeneralKeeper().getUUIDCache().getId(args[1]);
-        }
+//        if (uuid == null) {
+//            uuid = plugin.getGeneralKeeper().getUUIDCache().getIdOptimistic(args[1]);
+//            plugin.getGeneralKeeper().getUUIDCache().getId(args[1]);
+//        }
         if (uuid != null) {
             HashMap<String, Object> where = new HashMap<String, Object>();
             where.put("uuid", uuid.toString());

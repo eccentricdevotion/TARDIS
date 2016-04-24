@@ -247,10 +247,10 @@ public class TARDISGiveCommand implements CommandExecutor {
     private boolean giveArtron(CommandSender sender, String player, int amount) {
         // Look up this player's UUID
         UUID uuid = plugin.getServer().getOfflinePlayer(player).getUniqueId();
-        if (uuid == null) {
-            uuid = plugin.getGeneralKeeper().getUUIDCache().getIdOptimistic(player);
-            plugin.getGeneralKeeper().getUUIDCache().getId(player);
-        }
+//        if (uuid == null) {
+//            uuid = plugin.getGeneralKeeper().getUUIDCache().getIdOptimistic(player);
+//            plugin.getGeneralKeeper().getUUIDCache().getId(player);
+//        }
         if (uuid != null) {
             HashMap<String, Object> where = new HashMap<String, Object>();
             where.put("uuid", uuid.toString());
@@ -329,10 +329,10 @@ public class TARDISGiveCommand implements CommandExecutor {
         }
         // Look up this player's UUID
         UUID uuid = plugin.getServer().getOfflinePlayer(player).getUniqueId();
-        if (uuid == null) {
-            uuid = plugin.getGeneralKeeper().getUUIDCache().getIdOptimistic(player);
-            plugin.getGeneralKeeper().getUUIDCache().getId(player);
-        }
+//        if (uuid == null) {
+//            uuid = plugin.getGeneralKeeper().getUUIDCache().getIdOptimistic(player);
+//            plugin.getGeneralKeeper().getUUIDCache().getId(player);
+//        }
         if (uuid != null) {
             plugin.getServer().dispatchCommand(sender, "vmg " + uuid.toString() + " " + amount);
             return true;

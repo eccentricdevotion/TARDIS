@@ -45,10 +45,10 @@ public class TARDISPurgeCommand {
         } else {
             uuid = plugin.getServer().getOfflinePlayer(args[1]).getUniqueId();
         }
-        if (uuid == null) {
-            uuid = plugin.getGeneralKeeper().getUUIDCache().getIdOptimistic(args[1]);
-            plugin.getGeneralKeeper().getUUIDCache().getId(args[1]);
-        }
+//        if (uuid == null) {
+//            uuid = plugin.getGeneralKeeper().getUUIDCache().getIdOptimistic(args[1]);
+//            plugin.getGeneralKeeper().getUUIDCache().getId(args[1]);
+//        }
         if (uuid != null) {
             // get the player's TARDIS id
             HashMap<String, Object> where = new HashMap<String, Object>();
