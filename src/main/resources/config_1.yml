@@ -34,9 +34,7 @@ police_box:
     name_tardis: false
     wall_id: 35
     wall_data: 11
-    tardis_lamp: 50
-    platform_id: 35
-    platform_data: 8
+    tardis_lamp: REDSTONE_LAMP_OFF
     materialise: true
     confirm_timeout: 15
     sign_colour: WHITE

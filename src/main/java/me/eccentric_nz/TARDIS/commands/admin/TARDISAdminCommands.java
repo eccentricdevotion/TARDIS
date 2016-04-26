@@ -73,7 +73,6 @@ public class TARDISAdminCommands implements CommandExecutor {
         firstsStr.put("enter", "");
         firstsStr.put("exclude", "");
         firstsStr.put("find", "");
-        firstsStr.put("region_flag", "");
         firstsStr.put("gamemode", "creation");
         firstsStr.put("include", "");
         firstsStr.put("inventory_group", "creation");
@@ -87,12 +86,14 @@ public class TARDISAdminCommands implements CommandExecutor {
         firstsStr.put("purge", "");
         firstsStr.put("purge_portals", "");
         firstsStr.put("recharger", "");
+        firstsStr.put("region_flag", "");
         firstsStr.put("reload", "");
         firstsStr.put("remove_flag", "");
         firstsStr.put("respect_towny", "preferences");
         firstsStr.put("respect_worldguard", "preferences");
         firstsStr.put("siege", "siege");
         firstsStr.put("sign_colour", "police_box");
+        firstsStr.put("tardis_lamp", "police_box");
         firstsStr.put("vortex_fall", "preferences");
         firstsStrArtron.add("full_charge_item");
         firstsStrArtron.add("jettison_seed");
@@ -185,7 +186,6 @@ public class TARDISAdminCommands implements CommandExecutor {
         firstsInt.put("room_speed", "growth");
         firstsInt.put("rooms_condenser_percent", "growth");
         firstsInt.put("sfx_volume", "preferences");
-        firstsInt.put("tardis_lamp", "police_box");
         firstsInt.put("terminal_step", "travel");
         firstsInt.put("timeout", "travel");
         firstsInt.put("timeout_height", "travel");
@@ -313,7 +313,7 @@ public class TARDISAdminCommands implements CommandExecutor {
                 if (first.equals("delete")) {
                     return new TARDISDeleteCommand(plugin).deleteTARDIS(sender, args);
                 }
-                if (first.equals("key") || first.equals("custom_schematic_seed")) {
+                if (first.equals("key") || first.equals("custom_schematic_seed") || first.equals("tardis_lamp")) {
                     return new TARDISSetMaterialCommand(plugin).setConfigMaterial(sender, args, firstsStr.get(first));
                 }
                 if (first.equals("full_charge_item") || first.equals("jettison_seed")) {
