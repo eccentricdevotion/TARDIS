@@ -33,6 +33,7 @@ import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.block.Biome;
 import org.bukkit.block.Block;
+import org.bukkit.block.BlockFace;
 import org.bukkit.entity.FallingBlock;
 import org.bukkit.entity.Player;
 import org.bukkit.util.Vector;
@@ -50,10 +51,12 @@ public class TARDISHostileDispersal {
 
     private final TARDIS plugin;
     private final List<Material> has_colour;
+    private final List<Material> replace_with_barrier;
 
     public TARDISHostileDispersal(TARDIS plugin) {
-        this.has_colour = Arrays.asList(Material.WOOL, Material.STAINED_GLASS, Material.STAINED_GLASS_PANE, Material.STAINED_CLAY);
         this.plugin = plugin;
+        this.has_colour = Arrays.asList(Material.WOOL, Material.STAINED_GLASS, Material.STAINED_GLASS_PANE, Material.STAINED_CLAY);
+        this.replace_with_barrier = buildList();
     }
 
     @SuppressWarnings("deprecation")
@@ -171,6 +174,12 @@ public class TARDISHostileDispersal {
             for (int xx = 0; xx < 3; xx++) {
                 for (int zz = 0; zz < 3; zz++) {
                     Block b = w.getBlockAt((sbx + xx), (sby + yy), (sbz + zz));
+                    if (yy == 0) {
+                        Block under = b.getRelative(BlockFace.DOWN);
+                        if (replace_with_barrier.contains(under.getType())) {
+                            plugin.getBlockUtils().setUnderDoorBlock(w, (sbx + xx), (sby + yy) - 1, (sbz + zz), id, false);
+                        }
+                    }
                     if (!b.getType().equals(Material.AIR)) {
                         float v = (float) -0.5 + (float) (Math.random() * ((0.5 - -0.5) + 1));
                         byte colour = (has_colour.contains(b.getType())) ? b.getData() : plugin.getBuildKeeper().getStainedGlassLookup().getStain().get(b.getTypeId());
@@ -211,5 +220,14 @@ public class TARDISHostileDispersal {
             }
         }, 15L);
         plugin.getTrackerKeeper().getDispersed().put(uuid, l);
+        plugin.getTrackerKeeper().getDispersedTARDII().add(id);
+    }
+
+    private List<Material> buildList() {
+        List<Material> list = new ArrayList<Material>();
+        for (Integer i : plugin.getBlocksConfig().getIntegerList("under_door_blocks")) {
+            list.add(Material.getMaterial(i));
+        }
+        return list;
     }
 }
