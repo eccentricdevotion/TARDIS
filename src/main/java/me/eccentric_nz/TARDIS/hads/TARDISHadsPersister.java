@@ -20,9 +20,11 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import me.eccentric_nz.TARDIS.database.TARDISDatabaseConnection;
 import org.bukkit.Location;
 import org.bukkit.World;
@@ -49,14 +51,21 @@ public class TARDISHadsPersister {
     public void save() {
         try {
             // save the dispersed police boxes
-            ps = connection.prepareStatement("INSERT INTO " + prefix + "dispersed (uuid, world, x, y, z) VALUES (?, ?, ?, ?, ?)");
+            ps = connection.prepareStatement("INSERT INTO " + prefix + "dispersed (uuid, world, x, y, z, tardis_id) VALUES (?, ?, ?, ?, ?, ?)");
             for (Map.Entry<UUID, Location> map : plugin.getTrackerKeeper().getDispersed().entrySet()) {
                 Location l = map.getValue();
-                ps.setString(1, map.getKey().toString());
+                String uuid = map.getKey().toString();
+                ps.setString(1, uuid);
                 ps.setString(2, l.getWorld().getName());
                 ps.setInt(3, l.getBlockX());
                 ps.setInt(4, l.getBlockY());
                 ps.setInt(5, l.getBlockZ());
+                // get tardis_id
+                HashMap<String, Object> where = new HashMap<String, Object>();
+                where.put("uuid", uuid);
+                ResultSetTardis rst = new ResultSetTardis(plugin, where, "", false);
+                rst.resultSet();
+                ps.setInt(6, rst.getTardis_id());
                 count += ps.executeUpdate();
             }
             plugin.getConsole().sendMessage(plugin.getPluginName() + "Saved " + count + " 'dispersed' TARDISes.");
@@ -86,6 +95,7 @@ public class TARDISHadsPersister {
                     UUID uuid = UUID.fromString(rs.getString("uuid"));
                     Location l = new Location(world, rs.getInt("x"), rs.getInt("y"), rs.getInt("z"));
                     plugin.getTrackerKeeper().getDispersed().put(uuid, l);
+                    plugin.getTrackerKeeper().getDispersedTARDII().add(rs.getInt("tardis_id"));
                     count++;
                 }
             }

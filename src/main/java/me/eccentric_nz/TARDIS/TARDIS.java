@@ -141,7 +141,6 @@ public class TARDIS extends JavaPlugin {
     private String pluginName;
     private String resourcePack;
     private TARDISChameleonPreset presets;
-//    private TARDISMultiverseInventoriesChecker TMIChecker;
     private TARDISPerceptionFilter filter;
     private TARDISPluginRespect pluginRespect;
     private TARDISShapedRecipe figura;
@@ -158,8 +157,6 @@ public class TARDIS extends JavaPlugin {
     private boolean disguisesOnServer;
     private boolean mvOnServer;
     private INVENTORY_MANAGER invManager;
-//    private boolean mviOnServer;
-//    private boolean miOnServer;
     private PluginManager pm;
     private final TARDISArea tardisArea = new TARDISArea(this);
     private final TARDISBuilderInner interiorBuilder = new TARDISBuilderInner(this);
@@ -183,8 +180,6 @@ public class TARDIS extends JavaPlugin {
         this.helperOnServer = false;
         this.mvOnServer = false;
         this.invManager = INVENTORY_MANAGER.NONE;
-//        this.mviOnServer = false;
-//        this.miOnServer = false;
         this.versions.put("Citizens", "2.0.17");
         this.versions.put("Factions", "2.8.7");
         this.versions.put("GriefPrevention", "10");
@@ -277,8 +272,6 @@ public class TARDIS extends JavaPlugin {
                 getConfig().set("conversions.lastknownname_conversion_done", true);
             }
             loadMultiverse();
-//            loadMultiverseInventories();
-//            loadMultiInv();
             loadInventoryManager();
             checkTCG();
             checkDefaultWorld();
@@ -342,9 +335,6 @@ public class TARDIS extends JavaPlugin {
 
             presets = new TARDISChameleonPreset();
             presets.makePresets();
-//            if (pm.isPluginEnabled("Multiverse-Inventories")) {
-//                TMIChecker = new TARDISMultiverseInventoriesChecker(this);
-//            }
             if (getConfig().getBoolean("preferences.walk_in_tardis")) {
                 new TARDISPortalPersister(this).load();
                 this.getServer().getScheduler().scheduleSyncRepeatingTask(this, new TARDISMonsterRunnable(this), 2400L, 2400L);

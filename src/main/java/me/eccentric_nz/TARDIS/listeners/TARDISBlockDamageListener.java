@@ -81,7 +81,7 @@ public class TARDISBlockDamageListener implements Listener {
             }
             boolean m = false;
             boolean isDoor = false;
-            if (plugin.getConfig().getBoolean("allow.hads") && !plugin.getTrackerKeeper().getInVortex().contains(id) && isOwnerOnline(id)) {
+            if (plugin.getConfig().getBoolean("allow.hads") && !plugin.getTrackerKeeper().getInVortex().contains(id) && isOwnerOnline(id) && !plugin.getTrackerKeeper().getDispersedTARDII().contains(id)) {
                 if (doors.contains(b.getType())) {
                     if (isOwner(id, p.getUniqueId().toString())) {
                         isDoor = true;

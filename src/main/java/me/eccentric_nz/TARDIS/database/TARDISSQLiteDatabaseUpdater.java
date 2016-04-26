@@ -263,6 +263,16 @@ public class TARDISSQLiteDatabaseUpdater {
                 String bio_alter = "ALTER TABLE " + prefix + "current ADD biome TEXT DEFAULT ''";
                 statement.executeUpdate(bio_alter);
             }
+            // add tardis_id to dispersed
+            String dispersed_query = "SELECT sql FROM sqlite_master WHERE tbl_name = '" + prefix + "dispersed' AND sql LIKE '%tardis_id%'";
+            ResultSet rsdispersed = statement.executeQuery(dispersed_query);
+            if (!rsdispersed.next()) {
+                i++;
+                String dispersed_alter = "ALTER TABLE " + prefix + "dispersed ADD tardis_id INTEGER";
+                statement.executeUpdate(dispersed_alter);
+                // update tardis_id column for existing records
+                new TARDISDispersalUpdater(plugin).updateTardis_ids();
+            }
         } catch (SQLException e) {
             plugin.debug("SQLite database add fields error: " + e.getMessage() + e.getErrorCode());
         }

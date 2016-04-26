@@ -176,6 +176,16 @@ public class TARDISMySQLDatabaseUpdater {
                 String park_alter = "ALTER TABLE " + prefix + "areas ADD parking_distance int(2) DEFAULT '2'";
                 statement.executeUpdate(park_alter);
             }
+            // add tardis_id to dispersed
+            String dispersed_query = "SHOW COLUMNS FROM " + prefix + "dispersed LIKE 'tardis_id'";
+            ResultSet rsdispersed = statement.executeQuery(dispersed_query);
+            if (!rsdispersed.next()) {
+                i++;
+                String dispersed_alter = "ALTER TABLE " + prefix + "dispersed ADD tardis_id int(11)";
+                statement.executeUpdate(dispersed_alter);
+                // update tardis_id column for existing records
+                new TARDISDispersalUpdater(plugin).updateTardis_ids();
+            }
         } catch (SQLException e) {
             plugin.debug("MySQL database add fields error: " + e.getMessage() + e.getErrorCode());
         }

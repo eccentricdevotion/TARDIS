@@ -165,9 +165,17 @@ public class TARDISSonicListener implements Listener {
                         Location pl = new Location(tmp.getWorld(), tmp.getBlockX(), tmp.getBlockY(), tmp.getBlockZ());
                         Location pb = plugin.getTrackerKeeper().getDispersed().get(player.getUniqueId());
                         if (pl.equals(pb)) {
-                            // rebuild
-                            plugin.getTrackerKeeper().getDispersed().remove(player.getUniqueId());
-                            player.performCommand("tardis rebuild");
+                            UUID uuid = player.getUniqueId();
+                            // get TARDIS id
+                            HashMap<String, Object> where = new HashMap<String, Object>();
+                            where.put("uuid", uuid.toString());
+                            ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);
+                            if (rs.resultSet()) {
+                                // rebuild
+                                plugin.getTrackerKeeper().getDispersed().remove(uuid);
+                                plugin.getTrackerKeeper().getDispersedTARDII().remove(Integer.valueOf(rs.getTardis_id()));
+                                player.performCommand("tardis rebuild");
+                            }
                         }
                     }
                     if (player.hasPermission("tardis.sonic.freeze") && lore != null && lore.contains("Bio-scanner Upgrade")) {

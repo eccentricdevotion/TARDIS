@@ -101,7 +101,7 @@ public class TARDISSQLiteDatabase {
             statement.executeUpdate(queryDestinations);
 
             // Table structure for table 'dispersed'
-            String queryDispersed = "CREATE TABLE IF NOT EXISTS " + prefix + "dispersed (d_id INTEGER PRIMARY KEY NOT NULL, uuid TEXT DEFAULT '', world TEXT COLLATE NOCASE DEFAULT '', x INTEGER, y INTEGER, z INTEGER)";
+            String queryDispersed = "CREATE TABLE IF NOT EXISTS " + prefix + "dispersed (d_id INTEGER PRIMARY KEY NOT NULL, uuid TEXT DEFAULT '', world TEXT COLLATE NOCASE DEFAULT '', x INTEGER, y INTEGER, z INTEGER, tardis_id INTEGER)";
             statement.executeUpdate(queryDispersed);
 
             // Table structure for table 'doors'

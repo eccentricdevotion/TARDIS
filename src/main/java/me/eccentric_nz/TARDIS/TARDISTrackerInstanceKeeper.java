@@ -95,11 +95,12 @@ public class TARDISTrackerInstanceKeeper {
     private final HashMap<UUID, UUID> telepaths = new HashMap<UUID, UUID>();
     private final List<String> artronFurnaces = new ArrayList<String>();
     private final List<Integer> dematerialising = new ArrayList<Integer>();
+    private final List<Integer> dispersedTARDII = new ArrayList<Integer>();
     private final List<Integer> hasNotClickedHandbrake = new ArrayList<Integer>();
     private final List<Integer> hasRandomised = new ArrayList<Integer>();
     private final List<Integer> inSiegeMode = new ArrayList<Integer>();
-    private final List<Integer> isSiegeCube = new ArrayList<Integer>();
     private final List<Integer> inVortex = new ArrayList<Integer>();
+    private final List<Integer> isSiegeCube = new ArrayList<Integer>();
     private final List<Integer> materialising = new ArrayList<Integer>();
     private final List<Integer> minecart = new ArrayList<Integer>();
     private final List<Integer> submarine = new ArrayList<Integer>();
@@ -319,6 +320,10 @@ public class TARDISTrackerInstanceKeeper {
 
     public List<Integer> getSubmarine() {
         return submarine;
+    }
+
+    public List<Integer> getDispersedTARDII() {
+        return dispersedTARDII;
     }
 
     public List<UUID> getArrangers() {
