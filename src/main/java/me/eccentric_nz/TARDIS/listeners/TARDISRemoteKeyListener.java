@@ -88,6 +88,10 @@ public class TARDISRemoteKeyListener implements Listener {
                 TARDISMessage.send(player, "SIEGE_NO_CONTROL");
                 return;
             }
+            if (plugin.getTrackerKeeper().getDispersedTARDII().contains(id)) {
+                TARDISMessage.send(player, "NOT_WHILE_DISPERSED");
+                return;
+            }
             boolean hidden = rs.isHidden();
             if (action.equals(Action.LEFT_CLICK_AIR)) {
                 final boolean powered = rs.isPowered_on();
@@ -140,7 +144,8 @@ public class TARDISRemoteKeyListener implements Listener {
                     TARDISMessage.send(player, message);
                 }
             } else // toggle hidden
-             if (hidden) {
+            {
+                if (hidden) {
                     // rebuild
                     TARDISSounds.playTARDISSound(player.getLocation(), "tardis_rebuild");
                     new TARDISRebuildCommand(plugin).rebuildPreset(player);
@@ -149,6 +154,7 @@ public class TARDISRemoteKeyListener implements Listener {
                     TARDISSounds.playTARDISSound(player.getLocation(), "tardis_hide");
                     new TARDISHideCommand(plugin).hide(player);
                 }
+            }
         }
     }
 }

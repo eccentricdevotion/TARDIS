@@ -135,6 +135,10 @@ public class TARDISHandbrakeListener implements Listener {
                         TARDISMessage.send(player, "SIEGE_NO_CONTROL");
                         return;
                     }
+                    if (plugin.getTrackerKeeper().getDispersedTARDII().contains(id)) {
+                        TARDISMessage.send(player, "NOT_WHILE_DISPERSED");
+                        return;
+                    }
                     HashMap<String, Object> wherei = new HashMap<String, Object>();
                     wherei.put("tardis_id", id);
                     ResultSetTardis rs = new ResultSetTardis(plugin, wherei, "", false);

@@ -126,6 +126,7 @@ public class TARDISSignListener implements Listener {
                     wheret.put("tardis_id", id);
                     ResultSetTardis rs = new ResultSetTardis(plugin, wheret, "", false);
                     rs.resultSet();
+                    int tid = rs.getTardis_id();
                     if (plugin.getConfig().getBoolean("allow.power_down") && !rs.isPowered_on()) {
                         TARDISMessage.send(player, "POWER_DOWN");
                         return;
@@ -143,7 +144,7 @@ public class TARDISSignListener implements Listener {
                     }
                     TARDISCircuitChecker tcc = null;
                     if (!plugin.getDifficulty().equals(DIFFICULTY.EASY) && !plugin.getUtils().inGracePeriod(player, false)) {
-                        tcc = new TARDISCircuitChecker(plugin, rs.getTardis_id());
+                        tcc = new TARDISCircuitChecker(plugin, tid);
                         tcc.getCircuits();
                     }
                     if (which == 0 && line1.contains(plugin.getSigns().getStringList("chameleon").get(0))) {
@@ -151,8 +152,12 @@ public class TARDISSignListener implements Listener {
                             TARDISMessage.send(player, "CHAM_MISSING");
                             return;
                         }
-                        if (plugin.getTrackerKeeper().getInSiegeMode().contains(rs.getTardis_id())) {
+                        if (plugin.getTrackerKeeper().getInSiegeMode().contains(tid)) {
                             TARDISMessage.send(player, "SIEGE_NO_CONTROL");
+                            return;
+                        }
+                        if (plugin.getTrackerKeeper().getDispersedTARDII().contains(tid)) {
+                            TARDISMessage.send(player, "NOT_WHILE_DISPERSED");
                             return;
                         }
                         // open Chameleon Circuit GUI
@@ -165,7 +170,7 @@ public class TARDISSignListener implements Listener {
                             TARDISMessage.send(player, "NO_MEM_CIRCUIT");
                             return;
                         }
-                        TARDISSaveSignInventory sst = new TARDISSaveSignInventory(plugin, rs.getTardis_id());
+                        TARDISSaveSignInventory sst = new TARDISSaveSignInventory(plugin, tid);
                         ItemStack[] items = sst.getTerminal();
                         Inventory inv = plugin.getServer().createInventory(player, 54, "§4TARDIS saves");
                         inv.setContents(items);
