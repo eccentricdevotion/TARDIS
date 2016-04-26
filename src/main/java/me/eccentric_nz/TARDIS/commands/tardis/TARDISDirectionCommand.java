@@ -18,6 +18,7 @@ package me.eccentric_nz.TARDIS.commands.tardis;
 
 import java.util.HashMap;
 import java.util.Locale;
+import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.advanced.TARDISCircuitChecker;
 import me.eccentric_nz.TARDIS.builders.TARDISMaterialisationData;
@@ -54,8 +55,9 @@ public class TARDISDirectionCommand {
                 TARDISMessage.send(player, "DIRECTION_NEED");
                 return false;
             }
+            UUID uuid = player.getUniqueId();
             HashMap<String, Object> where = new HashMap<String, Object>();
-            where.put("uuid", player.getUniqueId().toString());
+            where.put("uuid", uuid.toString());
             ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);
             if (!rs.resultSet()) {
                 TARDISMessage.send(player, "NO_TARDIS");
@@ -83,6 +85,10 @@ public class TARDISDirectionCommand {
             }
             if (plugin.getTrackerKeeper().getInVortex().contains(id)) {
                 TARDISMessage.send(player, "NOT_WHILE_MAT");
+                return true;
+            }
+            if (plugin.getTrackerKeeper().getDispersedTARDII().contains(id)) {
+                TARDISMessage.send(player.getPlayer(), "NOT_WHILE_DISPERSED");
                 return true;
             }
             boolean tmp_cham = false;
@@ -131,7 +137,7 @@ public class TARDISDirectionCommand {
                 }
                 plugin.getPresetDestroyer().destroyDoor(id);
                 plugin.getPresetDestroyer().destroySign(l, old_d, demat);
-                final TARDISMaterialisationData pbd = new TARDISMaterialisationData(plugin, player.getUniqueId().toString());
+                final TARDISMaterialisationData pbd = new TARDISMaterialisationData(plugin, uuid.toString());
                 pbd.setChameleon(cham);
                 pbd.setDirection(d);
                 pbd.setLocation(l);

@@ -19,6 +19,7 @@ package me.eccentric_nz.TARDIS.listeners;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.advanced.TARDISCircuitChecker;
 import me.eccentric_nz.TARDIS.api.Parameters;
@@ -96,8 +97,9 @@ public class TARDISStattenheimListener implements Listener {
             if (im.getDisplayName().equals("Stattenheim Remote")) {
                 Action action = event.getAction();
                 // check they are a Time Lord
+                UUID uuid = player.getUniqueId();
                 HashMap<String, Object> where = new HashMap<String, Object>();
-                where.put("uuid", player.getUniqueId().toString());
+                where.put("uuid", uuid.toString());
                 ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);
                 if (!rs.resultSet()) {
                     TARDISMessage.send(player, "NO_TARDIS");
@@ -106,6 +108,10 @@ public class TARDISStattenheimListener implements Listener {
                 final int id = rs.getTardis_id();
                 if (plugin.getTrackerKeeper().getInSiegeMode().contains(id)) {
                     TARDISMessage.send(player, "SIEGE_NO_CONTROL");
+                    return;
+                }
+                if (plugin.getTrackerKeeper().getDispersedTARDII().contains(id)) {
+                    TARDISMessage.send(player.getPlayer(), "NOT_WHILE_DISPERSED");
                     return;
                 }
                 boolean power = rs.isPowered_on();
@@ -164,7 +170,7 @@ public class TARDISStattenheimListener implements Listener {
                         boolean cham = (plugin.getConfig().getBoolean("travel.chameleon") && rs.isChamele_on());
                         // check they are not in the tardis
                         HashMap<String, Object> wherettrav = new HashMap<String, Object>();
-                        wherettrav.put("uuid", player.getUniqueId().toString());
+                        wherettrav.put("uuid", uuid.toString());
                         wherettrav.put("tardis_id", id);
                         ResultSetTravellers rst = new ResultSetTravellers(plugin, wherettrav, false);
                         if (rst.resultSet()) {
@@ -258,7 +264,7 @@ public class TARDISStattenheimListener implements Listener {
                         long delay = (mat) ? 10L : 180L;
                         plugin.getTrackerKeeper().getInVortex().add(id);
                         final boolean hid = hidden;
-                        final TARDISMaterialisationData pdd = new TARDISMaterialisationData(plugin, player.getUniqueId().toString());
+                        final TARDISMaterialisationData pdd = new TARDISMaterialisationData(plugin, uuid.toString());
                         pdd.setChameleon(cham);
                         pdd.setDirection(d);
                         pdd.setLocation(oldSave);
@@ -280,7 +286,7 @@ public class TARDISStattenheimListener implements Listener {
                                 }
                             }
                         }, delay);
-                        final TARDISMaterialisationData pbd = new TARDISMaterialisationData(plugin, player.getUniqueId().toString());
+                        final TARDISMaterialisationData pbd = new TARDISMaterialisationData(plugin, uuid.toString());
                         pbd.setChameleon(cham);
                         pbd.setDirection(player_d);
                         pbd.setLocation(remoteLocation);
@@ -311,7 +317,7 @@ public class TARDISStattenheimListener implements Listener {
                     // is the power off?
                     if (!power) {
                         HashMap<String, Object> wherek = new HashMap<String, Object>();
-                        wherek.put("uuid", player.getUniqueId().toString());
+                        wherek.put("uuid", uuid.toString());
                         ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, wherek);
                         boolean beacon_on = true;
                         if (rsp.resultSet()) {
@@ -326,11 +332,11 @@ public class TARDISStattenheimListener implements Listener {
                         TARDISMessage.send(player, "POWER_ON");
                         // if lights are off, turn them on
                         if (rs.isLights_on()) {
-                            new TARDISLampToggler(plugin).flickSwitch(id, player.getUniqueId(), false, rs.getSchematic().hasLanterns());
+                            new TARDISLampToggler(plugin).flickSwitch(id, uuid, false, rs.getSchematic().hasLanterns());
                         }
                         // if beacon is off turn it on
                         if (beacon_on) {
-                            new TARDISBeaconToggler(plugin).flickSwitch(player.getUniqueId(), true);
+                            new TARDISBeaconToggler(plugin).flickSwitch(uuid, true);
                         }
                         // police box lamp
                         if (preset.equals(PRESET.NEW) || preset.equals(PRESET.OLD)) {

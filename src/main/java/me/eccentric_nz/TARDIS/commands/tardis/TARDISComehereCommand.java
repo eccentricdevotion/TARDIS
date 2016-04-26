@@ -17,6 +17,7 @@
 package me.eccentric_nz.TARDIS.commands.tardis;
 
 import java.util.HashMap;
+import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.api.Parameters;
 import me.eccentric_nz.TARDIS.builders.TARDISMaterialisationData;
@@ -56,8 +57,9 @@ public class TARDISComehereCommand {
     public boolean doComeHere(Player player) {
         if (player.hasPermission("tardis.timetravel")) {
             // check they are a timelord
+            UUID uuid = player.getUniqueId();
             HashMap<String, Object> where = new HashMap<String, Object>();
-            where.put("uuid", player.getUniqueId().toString());
+            where.put("uuid", uuid.toString());
             ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);
             if (!rs.resultSet()) {
                 TARDISMessage.send(player, "NOT_A_TIMELORD");
@@ -91,6 +93,10 @@ public class TARDISComehereCommand {
                         return true;
                     }
                 }
+                if (plugin.getTrackerKeeper().getDispersedTARDII().contains(id)) {
+                    TARDISMessage.send(player.getPlayer(), "NOT_WHILE_DISPERSED");
+                    return true;
+                }
                 if (!plugin.getTardisArea().areaCheckInExisting(eyeLocation)) {
                     TARDISMessage.send(player, "AREA_NO_COMEHERE", ChatColor.AQUA + "/tardistravel area [area name]");
                     return true;
@@ -108,7 +114,7 @@ public class TARDISComehereCommand {
                 }
                 // check they are not in the tardis
                 HashMap<String, Object> wherettrav = new HashMap<String, Object>();
-                wherettrav.put("uuid", player.getUniqueId().toString());
+                wherettrav.put("uuid", uuid.toString());
                 wherettrav.put("tardis_id", id);
                 ResultSetTravellers rst = new ResultSetTravellers(plugin, wherettrav, false);
                 if (rst.resultSet()) {
@@ -205,7 +211,7 @@ public class TARDISComehereCommand {
                 long delay = (mat) ? 1L : 180L;
                 plugin.getTrackerKeeper().getInVortex().add(id);
                 final boolean hid = hidden;
-                final TARDISMaterialisationData pdd = new TARDISMaterialisationData(plugin, player.getUniqueId().toString());
+                final TARDISMaterialisationData pdd = new TARDISMaterialisationData(plugin, uuid.toString());
                 pdd.setChameleon(cham);
                 pdd.setDirection(d);
                 pdd.setLocation(oldSave);
@@ -227,7 +233,7 @@ public class TARDISComehereCommand {
                         }
                     }
                 }, delay);
-                final TARDISMaterialisationData pbd = new TARDISMaterialisationData(plugin, player.getUniqueId().toString());
+                final TARDISMaterialisationData pbd = new TARDISMaterialisationData(plugin, uuid.toString());
                 pbd.setChameleon(cham);
                 pbd.setDirection(player_d);
                 pbd.setLocation(eyeLocation);
