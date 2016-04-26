@@ -61,6 +61,7 @@ public class TARDISConfiguration {
     HashMap<String, Integer> artronIntOptions = new HashMap<String, Integer>();
     HashMap<String, List<String>> signListOptions = new HashMap<String, List<String>>();
     HashMap<String, String> chameleonOptions = new HashMap<String, String>();
+    List<String> removeOptions = new ArrayList<String>();
 
     public TARDISConfiguration(TARDIS plugin) {
         this.plugin = plugin;
@@ -267,8 +268,6 @@ public class TARDISConfiguration {
         intOptions.put("growth.rooms_condenser_percent", 100);
         intOptions.put("junk.return", -1);
         intOptions.put("police_box.confirm_timeout", 15);
-        intOptions.put("police_box.platform_data", 8);
-        intOptions.put("police_box.platform_id", 35);
         intOptions.put("police_box.rebuild_cooldown", 10000);
         intOptions.put("police_box.wall_data", 11);
         intOptions.put("police_box.wall_id", 35);
@@ -396,6 +395,10 @@ public class TARDISConfiguration {
         roomStrOptions.put("rooms.ZERO.seed", "WOOD_BUTTON");
         signListOptions.put("junk", Arrays.asList("Destination"));
         chameleonOptions.put("USE_PREV", "Use last saved construct");
+        removeOptions.add("creation.materialise");
+        removeOptions.add("police_box.platform_data");
+        removeOptions.add("police_box.platform_id");
+        removeOptions.add("rooms.FIRST");
     }
 
     /**
@@ -456,11 +459,8 @@ public class TARDISConfiguration {
             if (!config.isConfigurationSection("rechargers")) {
                 plugin.getConfig().createSection("rechargers");
             }
-            if (config.contains("rooms.FIRST")) {
-                plugin.getConfig().set("rooms.FIRST", null);
-            }
-            if (config.contains("creation.materialise")) {
-                plugin.getConfig().set("creation.materialise", null);
+            for (String remove : removeOptions) {
+                plugin.getConfig().set(remove, null);
             }
             if (config.contains("difficulty") && config.getString("difficulty").equals("normal")) {
                 plugin.getConfig().set("difficulty", "hard");

@@ -92,8 +92,6 @@ public class TARDISConfigConverter {
         sectionsInt.put("malfunction", "preferences.malfunction");
         sectionsInt.put("malfunction_end", "preferences.malfunction_end");
         sectionsInt.put("malfunction_nether", "preferences.malfunction_nether");
-        sectionsInt.put("platform_data", "police_box.platform_data");
-        sectionsInt.put("platform_id", "police_box.platform_id");
         sectionsInt.put("random_attempts", "travel.random_attempts");
         sectionsInt.put("room_speed", "growth.room_speed");
         sectionsInt.put("rooms_condenser_percent", "growth.rooms_condenser_percent");
