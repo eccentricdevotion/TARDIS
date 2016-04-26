@@ -60,13 +60,9 @@ public class TARDISInstaPreset {
 
     private final TARDIS plugin;
     private final TARDISMaterialisationData tmd;
-//    private final Material lamp;
     private final int cham_id;
     private final byte cham_data;
     private final boolean rebuild;
-//    private final boolean minecart;
-//    private final boolean ctm;
-//    private final boolean add_sign;
     private Block sponge;
     private final PRESET preset;
     private TARDISChameleonColumn column;
@@ -81,13 +77,9 @@ public class TARDISInstaPreset {
         this.plugin = plugin;
         this.tmd = tmd;
         this.preset = preset;
-//        this.lamp = lamp;
         this.cham_id = cham_id;
         this.cham_data = cham_data;
         this.rebuild = rebuild;
-//        this.minecart = minecart;
-//        this.ctm = ctm;
-//        this.add_sign = add_sign;
         colours = new byte[]{0, 1, 2, 3, 4, 5, 6, 9, 10, 11, 12, 13, 14};
         rand = new Random();
         random_colour = colours[rand.nextInt(13)];
@@ -106,8 +98,7 @@ public class TARDISInstaPreset {
         } else {
             column = plugin.getPresets().getColumn(preset, tmd.getDirection());
         }
-        int plusx, minusx, x, plusz, y, minusz, z, platform_id = plugin.getConfig().getInt("police_box.platform_id");
-        byte platform_data = (byte) plugin.getConfig().getInt("police_box.platform_data");
+        int plusx, minusx, x, plusz, y, minusz, z;
         // get relative locations
         x = tmd.getLocation().getBlockX();
         plusx = (tmd.getLocation().getBlockX() + 1);
@@ -251,7 +242,7 @@ public class TARDISInstaPreset {
                     }
                 }
                 if (yy == 0 && i == 8 && !plugin.getPresetBuilder().no_block_under_door.contains(preset)) {
-                    plugin.getBlockUtils().setUnderDoorBlock(world, xx, (y - 1), zz, platform_id, platform_data, tmd.getTardisID(), true);
+                    plugin.getBlockUtils().setUnderDoorBlock(world, xx, (y - 1), zz, tmd.getTardisID(), true);
                 }
                 // update door location if invisible
                 if (yy == 0 && (i == 1 || i == 3 || i == 5 || i == 7) && preset.equals(PRESET.INVISIBLE) && colids[yy] == 0) {
@@ -328,7 +319,7 @@ public class TARDISInstaPreset {
                                     sponge = world.getBlockAt(xx, sy, zz);
                                     plugin.getWorldGuardUtils().sponge(sponge, true);
                                 } else if (!plugin.getPresetBuilder().no_block_under_door.contains(preset)) {
-                                    plugin.getBlockUtils().setUnderDoorBlock(world, xx, (y - 1), zz, platform_id, platform_data, tmd.getTardisID(), false);
+                                    plugin.getBlockUtils().setUnderDoorBlock(world, xx, (y - 1), zz, tmd.getTardisID(), false);
                                 }
                             }
                         }
@@ -342,7 +333,7 @@ public class TARDISInstaPreset {
                         break;
                     case 63:
                         if (preset.equals(PRESET.APPERTURE)) {
-                            plugin.getBlockUtils().setUnderDoorBlock(world, xx, (y - 1), zz, platform_id, platform_data, tmd.getTardisID(), false);
+                            plugin.getBlockUtils().setUnderDoorBlock(world, xx, (y - 1), zz, tmd.getTardisID(), false);
                         }
                         break;
                     case 68: // sign - if there is one

@@ -195,13 +195,11 @@ public class TARDISBlockSetters {
      * @param x the x coordinate of the block.
      * @param y the y coordinate of the block.
      * @param z the z coordinate of the block.
-     * @param m the typeId to set the block to.
-     * @param d the data bit to set the block to.
      * @param id the TARDIS this block belongs to.
      * @param portal whether a chest can be in the portal block location
      */
     @SuppressWarnings("deprecation")
-    public void setUnderDoorBlock(World w, int x, int y, int z, int m, byte d, int id, boolean portal) {
+    public void setUnderDoorBlock(World w, int x, int y, int z, int id, boolean portal) {
         // List of blocks that a door cannot be placed on
         List<Integer> ids = plugin.getBlocksConfig().getIntegerList("under_door_blocks");
         if (portal) {
@@ -222,8 +220,7 @@ public class TARDISBlockSetters {
             qf.doInsert("blocks", set);
             plugin.getGeneralKeeper().getProtectBlockMap().put(l, id);
             // set the block
-            b.setTypeId(m);
-            b.setData(d, true);
+            b.setType(Material.BARRIER);
         }
     }
 }

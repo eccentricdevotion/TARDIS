@@ -130,8 +130,6 @@ public class TARDISMaterialisationPreset implements Runnable {
                 y = tmd.getLocation().getBlockY();
             }
             int z = tmd.getLocation().getBlockZ(), plusz = tmd.getLocation().getBlockZ() + 1, minusz = tmd.getLocation().getBlockZ() - 1;
-            int platform_id = plugin.getConfig().getInt("police_box.platform_id");
-            byte platform_data = (byte) plugin.getConfig().getInt("police_box.platform_data");
             World world = tmd.getLocation().getWorld();
             int signx = 0, signz = 0;
             if (i < loops) {
@@ -270,7 +268,7 @@ public class TARDISMaterialisationPreset implements Runnable {
                                 }
                             }
                             if (yy == 0 && n == 8 && !plugin.getPresetBuilder().no_block_under_door.contains(preset)) {
-                                plugin.getBlockUtils().setUnderDoorBlock(world, xx, (y - 1), zz, platform_id, platform_data, tmd.getTardisID(), true);
+                                plugin.getBlockUtils().setUnderDoorBlock(world, xx, (y - 1), zz, tmd.getTardisID(), true);
                             }
                             switch (colids[yy]) {
                                 case 2:
@@ -340,7 +338,7 @@ public class TARDISMaterialisationPreset implements Runnable {
                                             sponge = world.getBlockAt(xx, sy, zz);
                                             plugin.getWorldGuardUtils().sponge(sponge, true);
                                         } else if (!plugin.getPresetBuilder().no_block_under_door.contains(preset)) {
-                                            plugin.getBlockUtils().setUnderDoorBlock(world, xx, (y - 1), zz, platform_id, platform_data, tmd.getTardisID(), false);
+                                            plugin.getBlockUtils().setUnderDoorBlock(world, xx, (y - 1), zz, tmd.getTardisID(), false);
                                         }
                                     }
                                     if (doors.contains(colids[yy]) && coldatas[yy] > 8) {
@@ -351,7 +349,7 @@ public class TARDISMaterialisationPreset implements Runnable {
                                     break;
                                 case 63:
                                     if (preset.equals(PRESET.APPERTURE)) {
-                                        plugin.getBlockUtils().setUnderDoorBlock(world, xx, (y - 1), zz, platform_id, platform_data, tmd.getTardisID(), false);
+                                        plugin.getBlockUtils().setUnderDoorBlock(world, xx, (y - 1), zz, tmd.getTardisID(), false);
                                     }
                                     break;
                                 case 68: // sign - if there is one
