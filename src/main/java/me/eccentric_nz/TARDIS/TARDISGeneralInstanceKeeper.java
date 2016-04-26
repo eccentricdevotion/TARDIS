@@ -409,12 +409,14 @@ public class TARDISGeneralInstanceKeeper {
         interactables.add(Material.NOTE_BLOCK);
         interactables.add(Material.REDSTONE_COMPARATOR_OFF);
         interactables.add(Material.REDSTONE_COMPARATOR_ON);
+        interactables.add(Material.SIGN);
         interactables.add(Material.SPRUCE_DOOR);
         interactables.add(Material.SPRUCE_FENCE_GATE);
         interactables.add(Material.STONE_BUTTON);
         interactables.add(Material.STONE_PLATE);
         interactables.add(Material.TRAPPED_CHEST);
         interactables.add(Material.TRAP_DOOR);
+        interactables.add(Material.WALL_SIGN);
         interactables.add(Material.WOODEN_DOOR);
         interactables.add(Material.WOOD_BUTTON);
         interactables.add(Material.WOOD_PLATE);
