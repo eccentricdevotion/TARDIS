@@ -76,7 +76,6 @@ public class TARDISBlockDamageListener implements Listener {
                 if (is != null && is.getType().equals(sonic)) {
                     // unhide TARDIS
                     unhide(id, p);
-                    return;
                 }
             }
             boolean m = false;
