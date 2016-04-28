@@ -166,12 +166,12 @@ public class TARDISSiegeMode {
             set.put("siege_on", 1);
             TARDISMessage.send(p, "SIEGE_ON");
             // butcher hostile mobs?
-            if (plugin.getConfig().getBoolean("seige.butcher")) {
+            if (plugin.getConfig().getBoolean("siege.butcher")) {
                 TARDISMessage.send(p, "SIEGE_BUTCHER");
                 for (Entity ent : p.getNearbyEntities(72d, 32d, 72d)) {
                     if (ent instanceof Monster) {
                         if (ent instanceof Creeper) {
-                            // check it is  not the Artron Capacitor Creeper
+                            // check it is not the Artron Capacitor Creeper
                             Location cl = ent.getLocation();
                             Location dbl = TARDISLocationGetters.getLocationFromDB(rs.getCreeper(), 0.0f, 0.0f);
                             if (cl.getBlockX() == dbl.getBlockX() && cl.getBlockY() == dbl.getBlockY() && cl.getBlockZ() == dbl.getBlockZ()) {
