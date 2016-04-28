@@ -625,6 +625,16 @@ public class TARDISConfiguration {
                 blocks_config.set("chameleon_blocks", cblocs);
                 i++;
             }
+            if (!cblocs.contains(95)) {
+                cblocs.add(95);
+                cblocs.add(165);
+                cblocs.add(168);
+                cblocs.add(201);
+                cblocs.add(202);
+                cblocs.add(206);
+                blocks_config.set("chameleon_blocks", cblocs);
+                i++;
+            }
             if (cblocs.contains(43)) {
                 cblocs.remove(Integer.valueOf(43));
                 cblocs.remove(Integer.valueOf(74));
