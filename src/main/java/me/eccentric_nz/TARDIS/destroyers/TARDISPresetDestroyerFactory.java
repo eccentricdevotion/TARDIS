@@ -90,11 +90,13 @@ public class TARDISPresetDestroyerFactory {
                     int taskID = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, runnable, 10L, 20L);
                     runnable.setTask(taskID);
                 } else {
+                    plugin.getTrackerKeeper().getMaterialising().add(pdd.getTardisID());
                     TARDISDematerialisationPreset runnable = new TARDISDematerialisationPreset(plugin, pdd, demat, cham_id, cham_data, loops);
                     int taskID = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, runnable, 10L, 20L);
                     runnable.setTask(taskID);
                 }
             } else {
+                plugin.getTrackerKeeper().getMaterialising().add(pdd.getTardisID());
                 new TARDISDeinstaPreset(plugin).instaDestroyPreset(pdd, pdd.isHide(), demat);
             }
         }

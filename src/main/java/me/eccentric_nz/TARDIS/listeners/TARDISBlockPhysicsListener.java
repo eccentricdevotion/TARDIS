@@ -69,7 +69,7 @@ public class TARDISBlockPhysicsListener implements Listener {
                 if (plugin.getGeneralKeeper().getDoors().contains(block.getType())) {
                     Block blockBelow = getBlockBelow(block);
                     if (blockBelow != null) {
-                        if (blockBelow.getType().equals(Material.GLASS) || blockBelow.getType().equals(Material.ICE) || plugin.getGeneralKeeper().getDoors().contains(blockBelow.getType()) || blockBelow.getType().equals(Material.STAINED_GLASS) || blockBelow.getType().equals(Material.AIR)) {
+                        if (blockBelow.getType().equals(Material.GLASS) || blockBelow.getType().equals(Material.ICE) || plugin.getGeneralKeeper().getDoors().contains(blockBelow.getType()) || blockBelow.getType().equals(Material.STAINED_GLASS) || blockBelow.getType().equals(Material.AIR) || blockBelow.getType().equals(Material.SEA_LANTERN)) {
                             event.setCancelled(true);
                         }
                     }
