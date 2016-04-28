@@ -119,7 +119,7 @@ public class TARDISChameleonCommand {
                     set.put("chameleon_id", c_id);
                     set.put("chameleon_data", c_data);
                     qf.doUpdate("tardis", set, tid);
-                    boolean bluewool = (c_id == dwid && c_data == (byte) dwd);
+                    boolean bluewool = (c_id == dwid && c_data == dwd);
                     if (!bluewool) {
                         TARDISMessage.send(player, "CHAM_SET", target_block.getType().toString());
                     }
