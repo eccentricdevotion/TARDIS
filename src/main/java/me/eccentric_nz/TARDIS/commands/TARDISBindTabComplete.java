@@ -28,7 +28,7 @@ import org.bukkit.command.TabCompleter;
 public class TARDISBindTabComplete extends TARDISCompleter implements TabCompleter {
 
     private final List<String> ROOT_SUBS = ImmutableList.of("save", "cmd", "player", "area", "biome", "remove", "update");
-    private final ImmutableList<String> T1_SUBS = ImmutableList.of("hide", "rebuild", "home", "cave");
+    private final ImmutableList<String> T1_SUBS = ImmutableList.of("hide", "rebuild", "home", "cave", "make_her_blue");
 
     public TARDISBindTabComplete() {
     }
