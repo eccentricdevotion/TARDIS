@@ -37,7 +37,7 @@ public class TARDISVanillaBorderChecker {
      * border
      */
     public static boolean isInBorder(WorldBorder border, Location l) {
-        double size = (border.getSize() / 2) - 16d;
+        double size = (border.getSize() / 2) - 17d;
         Location centre = border.getCenter();
         // default world border is 60,000,000 blocks wide (in other words not set at all)
         double minX = centre.getBlockX() - size;

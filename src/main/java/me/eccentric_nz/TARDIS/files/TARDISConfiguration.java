@@ -290,7 +290,8 @@ public class TARDISConfiguration {
         intOptions.put("travel.terminal_step", 1);
         intOptions.put("travel.timeout", 5);
         intOptions.put("travel.timeout_height", 135);
-        intOptions.put("travel.tp_radius", 256);
+        intOptions.put("travel.tp_radius", 500);
+        intOptions.put("travel.max_distance", 29999983);
         roomIntOptions.put("rooms.ANTIGRAVITY.cost", 625);
         roomIntOptions.put("rooms.ANTIGRAVITY.offset", -4);
         roomIntOptions.put("rooms.ARBORETUM.cost", 325);

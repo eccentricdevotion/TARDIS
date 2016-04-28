@@ -744,7 +744,8 @@ public class TARDISTravelCommands implements CommandExecutor {
             }
             y = w.getHighestBlockYAt(x, z);
         }
-        if (x > 15000000 || x < -15000000 || z > 15000000 || z < -15000000) {
+        int max = Math.min(plugin.getConfig().getInt("travel.max_distance"), (int) (w.getWorldBorder().getSize() / 2) - 17);
+        if (x > max || x < -max || z > max || z < -max) {
             TARDISMessage.send(player, "XZ_NOT_VALID");
             return null;
         }
