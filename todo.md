@@ -9,8 +9,10 @@
 5. Fix bugs!
 
 ##Upcoming version `3.6`
-* TARDISSonicBlaster addon?
-* TARDISDalekCities addon?
+1. [Auto powerup](http://dev.bukkit.org/bukkit-plugins/tardis/tickets/1209-auto-powerup/)
+2. [Red time rotor](http://dev.bukkit.org/bukkit-plugins/tardis/tickets/1216-red-time-rotor/)
+3. TARDISDalekCities addon?
+4. TARDISSonicBlaster addon?
 
 ##Future version `4+`
 * SpongeAPI

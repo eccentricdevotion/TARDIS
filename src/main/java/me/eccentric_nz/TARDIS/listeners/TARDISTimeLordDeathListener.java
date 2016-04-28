@@ -95,7 +95,7 @@ public class TARDISTimeLordDeathListener implements Listener {
                         ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, whereu);
                         if (rsp.resultSet()) {
                             // do they have the autonomous circuit on?
-                            if (rsp.isAutoOn() && !rs.isSiege_on()) {
+                            if (rsp.isAutoOn() && !rs.isSiege_on() && !plugin.getTrackerKeeper().getDispersedTARDII().contains(id)) {
                                 Location death_loc = player.getLocation();
                                 int amount = plugin.getArtronConfig().getInt("autonomous");
                                 if (rs.getArtron_level() > amount) {
