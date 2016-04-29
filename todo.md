@@ -2,7 +2,6 @@
 
 ##Current version `3.5`
 1. Update for Minecraft 1.9!
-   * VOID biome - use for MCPatcher texture changes instead of The End / SKY? _(need to wait for MCPatcher to update? Maybe not - OptiFine seems to working...)_
 2. TARDIS Junk Mode - `/tprefs junk [wall|floor] [block_type]`?
 3. New 12th doctor's sonic screwdriver
 4. TIPS visulisation tool (using WorldGuard region data)
