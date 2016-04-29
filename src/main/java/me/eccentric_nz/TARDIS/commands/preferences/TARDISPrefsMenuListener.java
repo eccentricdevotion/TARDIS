@@ -16,17 +16,22 @@
  */
 package me.eccentric_nz.TARDIS.commands.preferences;
 
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.UUID;
 import me.eccentric_nz.TARDIS.ARS.TARDISARSMap;
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.advanced.TARDISCircuitChecker;
+import me.eccentric_nz.TARDIS.advanced.TARDISCircuitDamager;
 import me.eccentric_nz.TARDIS.artron.TARDISBeaconToggler;
 import me.eccentric_nz.TARDIS.commands.admin.TARDISAdminMenuInventory;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetJunk;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import me.eccentric_nz.TARDIS.database.ResultSetTravellers;
+import me.eccentric_nz.TARDIS.enumeration.DIFFICULTY;
+import me.eccentric_nz.TARDIS.enumeration.DISK_CIRCUIT;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import me.eccentric_nz.TARDIS.utility.TARDISStaticUtils;
 import org.bukkit.entity.Player;
@@ -83,6 +88,60 @@ public class TARDISPrefsMenuListener implements Listener {
                     final Player p = (Player) event.getWhoClicked();
                     UUID uuid = p.getUniqueId();
                     ItemMeta im = is.getItemMeta();
+                    if (slot == 24 && im.getDisplayName().equals("Handbrake")) {
+                        // you can only set it to ON!
+                        List<String> lore = im.getLore();
+                        if (lore.get(0).equals(plugin.getLanguage().getString("SET_OFF"))) {
+                            // get this player's TARDIS
+                            HashMap<String, Object> where = new HashMap<String, Object>();
+                            where.put("uuid", uuid.toString());
+                            ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);
+                            if (rs.resultSet()) {
+                                int id = rs.getTardis_id();
+                                // must not be in the vortex or materialising
+                                if (!plugin.getTrackerKeeper().getMaterialising().contains(id) && !plugin.getTrackerKeeper().getInVortex().contains(id)) {
+                                    // set the handbrake to ON
+                                    HashMap<String, Object> wheret = new HashMap<String, Object>();
+                                    wheret.put("tardis_id", id);
+                                    HashMap<String, Object> set = new HashMap<String, Object>();
+                                    set.put("handbrake_on", 1);
+                                    QueryFactory qf = new QueryFactory(plugin);
+                                    qf.doUpdate("tardis", set, wheret);
+                                    im.setLore(Arrays.asList(plugin.getLanguage().getString("SET_ON")));
+                                    is.setItemMeta(im);
+                                    TARDISMessage.send(p, "HANDBRAKE_ON");
+                                    if (plugin.getTrackerKeeper().getHasDestination().containsKey(id)) {
+                                        int amount = plugin.getTrackerKeeper().getHasDestination().get(id) * -1;
+                                        HashMap<String, Object> wheref = new HashMap<String, Object>();
+                                        wheref.put("tardis_id", id);
+                                        qf.alterEnergyLevel("tardis", amount, wheref, p);
+                                    }
+                                    plugin.getTrackerKeeper().getHasDestination().remove(id);
+                                    if (plugin.getTrackerKeeper().getHasRandomised().contains(id)) {
+                                        plugin.getTrackerKeeper().getHasRandomised().remove(Integer.valueOf(id));
+                                    }
+                                    TARDISCircuitChecker tcc = null;
+                                    if (!plugin.getDifficulty().equals(DIFFICULTY.EASY) && !plugin.getUtils().inGracePeriod(p, true)) {
+                                        tcc = new TARDISCircuitChecker(plugin, id);
+                                        tcc.getCircuits();
+                                    }
+                                    // damage the circuit if configured
+                                    if (tcc != null && plugin.getConfig().getBoolean("circuits.damage") && plugin.getConfig().getInt("circuits.uses.materialisation") > 0) {
+                                        // decrement uses
+                                        int uses_left = tcc.getMaterialisationUses();
+                                        new TARDISCircuitDamager(plugin, DISK_CIRCUIT.MATERIALISATION, uses_left, id, p).damage();
+                                    }
+                                } else {
+                                    TARDISMessage.send(p, "HANDBRAKE_IN_VORTEX");
+                                }
+                            } else {
+                                TARDISMessage.send(p, "NO_TARDIS");
+                            }
+                        } else {
+                            TARDISMessage.send(p, "SONIC_HANDBRAKE_ON");
+                        }
+                        return;
+                    }
                     if (slot == 25 && im.getDisplayName().equals("TARDIS Map")) {
                         // must be in the TARDIS
                         HashMap<String, Object> where = new HashMap<String, Object>();

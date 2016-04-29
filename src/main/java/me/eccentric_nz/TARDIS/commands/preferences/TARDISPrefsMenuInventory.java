@@ -257,8 +257,10 @@ public class TARDISPrefsMenuInventory {
         wherej.put("uuid", uuid.toString());
         ResultSetTardis rs = new ResultSetTardis(plugin, wherej, "", false);
         String junk_value = plugin.getLanguage().getString("SET_OFF");
+        String hb_value = plugin.getLanguage().getString("SET_ON");
         if (rs.resultSet()) {
             junk_value = (rs.getPreset().equals(PRESET.JUNK_MODE)) ? plugin.getLanguage().getString("SET_ON") : plugin.getLanguage().getString("SET_OFF");
+            hb_value = (rs.isHandbrake_on()) ? plugin.getLanguage().getString("SET_ON") : plugin.getLanguage().getString("SET_OFF");
         }
         nk.setLore(Arrays.asList(junk_value));
         ju.setItemMeta(nk);
@@ -271,6 +273,13 @@ public class TARDISPrefsMenuInventory {
                 stack[s] = null;
             }
         }
+        // handbrake
+        ItemStack hand = new ItemStack(Material.LEVER, 1);
+        ItemMeta brake = hand.getItemMeta();
+        brake.setDisplayName("Handbrake");
+        brake.setLore(Arrays.asList(hb_value));
+        hand.setItemMeta(brake);
+        stack[24] = hand;
         stack[25] = tt;
         if (plugin.getServer().getPlayer(uuid).hasPermission("tardis.admin")) {
             // admin
