@@ -120,8 +120,10 @@ public class TARDISInstaPreset {
             Chunk chunk = tmd.getLocation().getChunk();
             //chunks.add(chunk);
             // load the chunk
-            if (!world.loadChunk(tmd.getLocation().getBlockX(), tmd.getLocation().getBlockZ(), false)) {
-                world.loadChunk(tmd.getLocation().getBlockX(), tmd.getLocation().getBlockZ(), true);
+            final int cx = tmd.getLocation().getBlockX() >> 4;
+            final int cz = tmd.getLocation().getBlockZ() >> 4;
+            if (!world.loadChunk(cx, cz, false)) {
+                world.loadChunk(cx, cz, true);
             }
             while (!chunk.isLoaded()) {
                 world.loadChunk(chunk);

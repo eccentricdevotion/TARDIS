@@ -711,12 +711,12 @@ public class TARDISMaterialisationPreset implements Runnable {
 
     public void setBiome(World world, int x, int z, boolean pp) {
         if (plugin.getConfig().getBoolean("police_box.set_biome") && (preset.equals(PRESET.NEW) || preset.equals(PRESET.OLD) || preset.equals(PRESET.PANDORICA)) && pp) {
-            //List<Chunk> chunks = new ArrayList<Chunk>();
             Chunk chunk = tmd.getLocation().getChunk();
-            //chunks.add(chunk);
             // load the chunk
-            if (!world.loadChunk(tmd.getLocation().getBlockX(), tmd.getLocation().getBlockZ(), false)) {
-                world.loadChunk(tmd.getLocation().getBlockX(), tmd.getLocation().getBlockZ(), true);
+            final int cx = tmd.getLocation().getBlockX() >> 4;
+            final int cz = tmd.getLocation().getBlockZ() >> 4;
+            if (!world.loadChunk(cx, cz, false)) {
+                world.loadChunk(cx, cz, true);
             }
             while (!chunk.isLoaded()) {
                 world.loadChunk(chunk);
