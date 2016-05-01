@@ -70,6 +70,7 @@ public class TARDISSonicMenuListener extends TARDISMenuListener implements Liste
                     case 14:
                     case 15:
                     case 16:
+                    case 17:
                         event.setCancelled(true);
                         // set display name of sonic in slot 18
                         ItemStack sonic = inv.getItem(18);
