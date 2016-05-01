@@ -1,17 +1,18 @@
 #TODO
 
-##Current version `3.5`
-1. Update for Minecraft 1.9!
-2. TARDIS Junk Mode - `/tprefs junk [wall|floor] [block_type]`?
-3. New 12th doctor's sonic screwdriver
-4. TIPS visulisation tool (using WorldGuard region data)
-5. Fix bugs!
+##Current bugfix version `3.5.1`
+1. Fix bugs!
 
-##Upcoming version `3.6`
-1. [Auto powerup](http://dev.bukkit.org/bukkit-plugins/tardis/tickets/1209-auto-powerup/)
-2. [Red time rotor](http://dev.bukkit.org/bukkit-plugins/tardis/tickets/1216-red-time-rotor/)
-3. TARDISDalekCities addon?
-4. TARDISSonicBlaster addon?
+##Next minor version `3.6-beta-1`
+1. TARDIS Junk Mode - `/tprefs junk [wall|floor] [block_type]`?
+2. TIPS visulisation tool (using WorldGuard region data)
+3. [Auto powerup](http://dev.bukkit.org/bukkit-plugins/tardis/tickets/1209-auto-powerup/)
+4. [Red time rotor](http://dev.bukkit.org/bukkit-plugins/tardis/tickets/1216-red-time-rotor/)
+5. TARDISDalekCities addon?
+6. TARDISSonicBlaster addon?
+
+##Upcoming minor version `3.7`
+?
 
 ##Future version `4+`
 * SpongeAPI
