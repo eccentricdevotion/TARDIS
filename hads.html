@@ -31,11 +31,16 @@
     </header>
     <section>
         <p><a href="#video">Jump to video</a></p>
-        <h1>Hostile Action Displacement System</h1>
-        <p>You can set the TARDIS to move away from hostile actions automatically with HADS.</p>
+        <h1>Hostile Action Displacement/Dispersal System</h1>
+        <p>You can set the TARDIS to move away from hostile actions automatically (DISPLACEMENT) or disperse its particles into the air (DISPERSAL) with HADS.</p>
         <p>To enable HADS, use the <code>/tardisprefs</code> command:</p>
         <pre><code>/tardisprefs hads on</code></pre>
-        <p>Once HADS has been activated, the TARDIS finds a random spot to travel to within a configuarble radius (default 10 blocks). You can also configure how many hits it takes to trigger HADS. See the <a href="configuration-prefs.html">TARDIS Preferences Configuration</a> page.</p>
+        <p>To set the HADS type, use the <code>/tardisprefs</code> command:</p>
+        <pre><code>/tardisprefs hads_type [DISPLACEMENT|DISPERSAL]</code></pre>
+        <p>You can configure how many hits it takes to trigger HADS. See the <a href="configuration-prefs.html">TARDIS Preferences Configuration</a> page.</p>
+        <p>When HADS (DISPLACEMENT) has been activated, the TARDIS finds a random spot to travel to within a configuarble radius (default 10 blocks).</p>
+        <p>When HADS (DISPERSAL) has been activated, the TARDIS scatters its particles and then creates a carpet floor of coloured wool.</p>
+        <p>Once dispersed, the Time Lord of the TARDIS must stand in the centre of the carpet and RIGHT-CLICK-AIR with their Sonic Screwdriver to rebuild the Police Box.</p>
         <h3 id="video">Video</h3>
         <iframe src="http://player.vimeo.com/video/66992762" width="600" height="366" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
     </section>

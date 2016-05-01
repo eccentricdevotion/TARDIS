@@ -32,6 +32,142 @@
     <section>
         <h1>Change log</h1>
         <h2>What&rsquo;s been changed?</h2>
+        <h3>TARDIS v3.5</h3>
+        <h4>Additions</h4>
+        <ul>
+            <li>Added new 1.9 additions to condensable items</li>
+            <li>Added support for MultiInv and PerWorldInventory plugins</li>
+            <li>You can now use telepathic <code>/tardistravel</code> commands</li>
+            <li>Made the maximum travel distance configurable
+                <ul>
+                    <li>plugin will use the maximum travel distance or the world border distance whichever is smaller</li>
+                    <li><code>travel.max_distance: [distance in blocks]</code></li>
+                    <li>default is <code>29999983</code></li>
+                    <li>the usual world border checks will still be run when checking the TARDIS&rsquo; destination</li>
+                </ul>
+            </li>
+            <li>Added new / missing Chameleon blocks to <code>blocks.yml</code></li>
+            <li>Added the <code>make_her_blue</code> command to the <code>/tardisbind cmd [command]</code> command</li>
+            <li>Add a handbrake switch to the Sonic Prefs menu
+                <ul>
+                    <li>Useful for engaging the handbrake after a Time lord has died and may have respawned outside the TARDIS </li>
+                    <li>You can only <em>engage</em> the handbrake, not disengage it</li>
+                    <li>You cannot engage the handbrake if the TARDIS is travelling</li>
+                </ul>
+            </li>
+            <li>Added the Twelfth Doctor&rsquo;s Sonic Screwdriver
+                <ul>
+                    <li><a href="https://github.com/eccentricdevotion/TARDIS-MCP" target="_blank">TARDIS-MCP Resource Pack</a> update required</li>
+                </ul>
+            </li>
+        </ul>
+        <h4>Changes</h4>
+        <ul>
+            <li>Made the default Police Box lamp <code>REDSTONE_LAMP_OFF</code></li>
+            <li>The Time Lord of the TARDIS must be online to use telepathic commands</li>
+            <li>The plugin now uses <code>BARRIER</code> blocks for under door and platform blocks</li>
+            <li>Signs are now part of the Sonic Screwdriver (un)interactables list</li>
+            <li>The TARDIS can no longer be moved while it is dispersed</li>
+            <li>The TARDIS will no longer autonomously return home while it is dispersed</li>
+        </ul>
+        <h4>Bug fixes</h4>
+        <ul>
+            <li>Prevented double message for some TARDIS item interactions</li>
+            <li>Fixed adding the Telepathic Circuit for the first time</li>
+            <li>Fixed an error when removing players from the Companions GUI</li>
+            <li>Fixed sticky pistons being able to retract TARDIS under-beacon blocks</li>
+            <li>Fixed not being able to set a recharger surrounded by End rods</li>
+            <li>Fixed the vanilla Minecraft world border check</li>
+            <li>Fixed HADS numbers going negative when the TARDIS is dispersed</li>
+            <li>Fixed carpet dropping when the TARDIS is dispersed</li>
+            <li>Fixed being able to break TARDIS blocks if player has <code>tardis.sonic.admin</code> permission</li>
+            <li>Fixed the config option <code>siege.butcher</code> not working</li>
+            <li>Fixed a bug causing the door to drop when leaving the TARDIS &lsquo;home&rsquo; location</li>
+        </ul>
+        <h4>Related stuff</h4>
+        <ul>
+            <li>The <a href="https://github.com/eccentricdevotion/TARDIS-MCP" target="_blank">TARDIS-MCP Resource Pack</a> has been updated to work with OptiFine 1.9.2<em>U</em>B2</li>
+            <li>The <a href="https://github.com/eccentricdevotion/TARDISWeepingAngels-Resource-Pack" target="_blank">TARDISWeepingAngels Resource Pack</a> has been updated to work with OptiFine 1.9.2<em>U</em>B2</li>
+        </ul>
+        <h3>TARDIS v3.5-beta-1</h3>
+        <h4>Additions</h4>
+        <ul>
+            <li>
+                <p>Updated for CraftBukkit / Spigot 1.9</p>
+                <ul>
+                    <li>Added new blocks</li>
+                    <li>Added new Purpur chameleon preset</li>
+                    <li>Used new Villager API additions</li>
+                    <li>Used new Particle API</li>
+                    <li>Used new BossBar API</li>
+                    <li>Updated biomes and sounds</li>
+                </ul>
+            </li>
+            <li>
+                <p>Added world name tab completion to <code>/tardisadmin</code> and <code>/tardistravel</code> commands</p>
+            </li>
+            <li>Added a Companion GUI for the <code>/tardis list companions</code> and <code>/tardis add</code> commands</li>
+            <li>Added a <code>/tardisprefs policebox_textures [on|off]</code> command - setting this to <code>off</code> stops the plugin changing the biome (for MCPatcher texture support) when the Police Box materialises</li>
+            <li>
+                <p>Implemented the Hostile Action Dispersal System</p>
+                <ul>
+                    <li>toggle it with the <code>/tardisprefs hads_type [DISPLACEMENT|DISPERSAL]</code> command (or use the sonic preferences menu)</li>
+                    <li>to rebuild you must stand in the centre of the dispersed TARDIS (carpet) and right-click-air with the sonic screwdriver</li>
+                </ul>
+            </li>
+            <li>
+                <p>Added the TARDIS Telepathic Circuit</p>
+                <ul>
+                    <li><code>/tardisrecipe telepathic</code></li>
+                    <li><code>/tardisprefs telepathy [on|off]</code> (or use the sonic preferences menu)</li>
+                    <li><code>/tardis update telepathic</code></li>
+                    <li>Allows a companion to run any <code>/tardis</code> command for the TARDIS that they are in</li>
+                </ul>
+            </li>
+            <li>Added all door types to standard sonic function</li>
+            <li>Added Junk mode to regular TARDISes
+                <ul>
+                    <li><code>/tardisprefs junk [on|off]</code> (or use the sonic preferences menu)</li>
+                    <li>You can only travel to saved locations while in Junk mode</li>
+                </ul>
+            </li>
+        </ul>
+        <h4>Changes</h4>
+        <ul>
+            <li>Carpet is no longer allowed in custom Chameleon presets</li>
+            <li>Updated some dependent plugin versions - make sure you have the latest 1.9 versions</li>
+            <li>The plugin now uses the new BossBar API instead of the BarAPI plugin for the TARDIS travel bar</li>
+            <li>The plugin now uses the new Particle API for Artron Furnace and Junk TARDIS particle effects instead of the EffectLib plugin</li>
+            <li>The plugin now checks that Multiverse-Inventories is the correct build (as well as version)</li>
+            <li>You can now set a limit for the number of mobs that can randomly enter the TARDIS
+                <ul>
+                    <li><code>preferences.spawn_limit: [max number of monsters]</code></li>
+                </ul>
+            </li>
+            <li>The TARDIS will now throw a malfunction if no destination is found or the player is denied travel</li>
+            <li>The plugin now checks a player is in their own TARDIS when using the <code>/tardis upgrade</code> command</li>
+            <li>Protection is now removed from inner TARDIS blocks broken in CREATIVE gamemode</li>
+            <li>Allow the desktop theme change if TARDIS Artron level is greater than or equal to (not just greater than) the Artron upgrade cost</li>
+        </ul>
+        <h4>Bug fixes</h4>
+        <ul>
+            <li>Fixed players&rsquo; Police Box lamp preference not taking effect</li>
+            <li>Fixed a possible NPE in the Zero room chat listener</li>
+            <li>Fixed Junk TARDIS creation</li>
+            <li>Fixed an issue with the Junk TARDIS not deleting</li>
+            <li>Fixed getting the wrong world for deleting the vortex Junk TARDIS</li>
+            <li>Fixed Junk TARDIS particle direction</li>
+            <li>Fixed player permission checks when upgrading the TARDIS console</li>
+            <li>Fixed not all console types being available when upgrading</li>
+            <li>Fixed using the correct wall/floor type when doing the upgrade check</li>
+            <li>Fixed <code>/tardisbook</code> usage (in help)</li>
+            <li>Fixed ANDESITE, DIORITE and GRANITE in seed blocks</li>
+            <li>Fixed the error message when adding a room and the file name is wrong</li>
+            <li>Fixed a prefix mixup when updating the SQLite database</li>
+            <li>Fixed getting the Factions plugin version when it contains &lsquo;Beta&rsquo;</li>
+            <li>Fixed recipes with Potions in them</li>
+            <li>Fixed <code>/ttravel area</code> tab completion</li>
+        </ul>
         <h3>TARDIS v3.4.2</h3>
         <h4>Additions</h4>
         <ul>
@@ -60,7 +196,7 @@
             <li>Fixed a bug where the <code>allow.perception_filter: [true|false]</code> config option was not added if missing</li>
             <li>Fixed a bug where players could not turn completely invisible, even though <code>allow.perception_filter</code> was set to <code>false</code></li>
             <li>Fixed crops popping off when growing a GREEHOUSE room and <code>growth.room_speed</code> is set to default (<code>4</code>)</li>
-            <li>Fixed the Chameleon Circuit sign not displaying the correct preset when the <code>default_preset</code> had been changed . This bug prevented the <code>NEW</code> preset from being applied unless it was changed to something else first</li>
+            <li>Fixed the Chameleon Circuit sign not displaying the correct preset when the <code>default_preset</code> had been changed. This bug prevented the <code>NEW</code> preset from being applied unless it was changed to something else first</li>
         </ul>
         <h3>TARDIS v3.4.1</h3>
         <h4>Additions</h4>

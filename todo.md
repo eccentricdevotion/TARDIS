@@ -1,13 +1,20 @@
 #TODO
 
-##Current version `3.4`
-1. Fix bugs
-2. Fry player/mob health if they venture into Junk TARDIS effects?
-3. Test area parking space variations
+##Current version `3.5`
+1. Fix stuff!
+2. Throw malfunction if no destination found or player is denied travel (configurable)
+3. `/tprefs policebox_textures [on|off]`
+4. * Hostile Action Dispersal System
+5. TARDIS Junk Mode
+   * `/tprefs junk [on|off]`
+   * `/tprefs junk [wall|floor] [block_type]`
+6. Telepathic circuit
+7. Companion GUI
+8. TARDISDalekCities addon?
 
-##Upcoming version `3.5`
+##Upcoming version `3.6`
 * TARDISSonicBlaster addon?
-* ?
+
 
 ##Future version `4+`
 * SpongeAPI
@@ -16,12 +23,11 @@
 
 ##Resource Pack / TARDISWeepingAngels
 
-1. Re-visit TARDIS door being biom specific
-2. Re-skin mobs for Resource pack, and add new mob sounds
+1. Re-skin mobs for Resource pack, and add new mob sounds
 
-   * Villagers -> Ood - _started_
+   * Villagers -> Ood - _started texture_
    * Villagers -> Hath
-   * Endermen -> The Silence - _started_
+   * Endermen -> The Silence - _implemented, but texture needs to be finished_
    * Endermites -> Cybermats
    * Iron Golem -> Gunslinger
    * Witches -> Slitheen / Whispermen?
