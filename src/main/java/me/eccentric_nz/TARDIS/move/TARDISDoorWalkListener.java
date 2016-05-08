@@ -76,6 +76,9 @@ public class TARDISDoorWalkListener extends TARDISDoorListener implements Listen
     @SuppressWarnings("deprecation")
     @EventHandler(ignoreCancelled = true)
     public void onDoorInteract(PlayerInteractEvent event) {
+        if (event.getHand() == null || event.getHand().equals(EquipmentSlot.OFF_HAND)) {
+            return;
+        }
         Block block = event.getClickedBlock();
         if (block != null) {
             Material blockType = block.getType();
@@ -127,7 +130,7 @@ public class TARDISDoorWalkListener extends TARDISDoorListener implements Listen
                                 end_doortype = 0;
                                 break;
                         }
-                        ItemStack stack = (event.getHand().equals(EquipmentSlot.HAND)) ? player.getInventory().getItemInMainHand() : player.getInventory().getItemInOffHand();
+                        ItemStack stack = player.getInventory().getItemInMainHand();
                         Material material = stack.getType();
                         // get key material
                         HashMap<String, Object> wherepp = new HashMap<String, Object>();

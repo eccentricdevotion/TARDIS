@@ -24,8 +24,6 @@ import org.bukkit.block.Biome;
 import org.bukkit.block.Block;
 import org.bukkit.block.Sign;
 import org.bukkit.entity.Player;
-import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.PlayerInventory;
 
 /**
  *
@@ -335,22 +333,5 @@ public class TARDISStaticUtils {
             }
         }
         return str;
-    }
-
-    /**
-     * Checks if the item in either hand is a specific TARDIS item.
-     *
-     * @param inv a player's inventory
-     * @param type the type of ItemStack to check for
-     * @return true if the item in either hand matches
-     */
-    public static boolean checkItemInHands(PlayerInventory inv, Material type) {
-        ItemStack main = inv.getItemInMainHand();
-        if (main != null) {
-            return main.getType().equals(type);
-        } else {
-            ItemStack off = inv.getItemInOffHand();
-            return (off != null && off.getType().equals(type));
-        }
     }
 }

@@ -63,13 +63,16 @@ public class TARDISRemoteKeyListener implements Listener {
 
     @EventHandler(priority = EventPriority.MONITOR)
     public void onInteract(PlayerInteractEvent event) {
+        if (event.getHand() == null || event.getHand().equals(EquipmentSlot.OFF_HAND)) {
+            return;
+        }
         Action action = event.getAction();
         if (!action.equals(Action.LEFT_CLICK_AIR) && !action.equals(Action.RIGHT_CLICK_AIR)) {
             return;
         }
         final Player player = event.getPlayer();
         // check item in hand
-        ItemStack is = (event.getHand().equals(EquipmentSlot.HAND)) ? player.getInventory().getItemInMainHand() : player.getInventory().getItemInOffHand();
+        ItemStack is = player.getInventory().getItemInMainHand();
         if (is == null || !is.getType().equals(rkey)) {
             return;
         }

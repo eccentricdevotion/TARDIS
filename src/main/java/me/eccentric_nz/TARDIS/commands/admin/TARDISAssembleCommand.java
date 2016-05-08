@@ -46,9 +46,6 @@ public class TARDISAssembleCommand {
             for (Integer d : plugin.getTrackerKeeper().getDispersedTARDII()) {
                 plugin.debug("TARDIS id: " + d);
             }
-            for (Integer d : plugin.getTrackerKeeper().getDispersedTARDII()) {
-                plugin.debug("TARDIS id: " + d);
-            }
             return true;
         } else {
             // turn off dispersal for this player
