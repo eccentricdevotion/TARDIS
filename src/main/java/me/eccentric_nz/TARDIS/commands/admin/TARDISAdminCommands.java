@@ -57,6 +57,7 @@ public class TARDISAdminCommands implements CommandExecutor {
         firstsStr.put("add_regions", "");
         firstsStr.put("arch", "");
         firstsStr.put("area", "creation");
+        firstsStr.put("assemble", "");
         firstsStr.put("chunks", "");
         firstsStr.put("condenser", "");
         firstsStr.put("config", "");
@@ -257,6 +258,9 @@ public class TARDISAdminCommands implements CommandExecutor {
                 }
                 if (first.equals("area")) {
                     plugin.getConfig().set("creation.area", args[1]);
+                }
+                if (first.equals("assemble")) {
+                    return new TARDISAssembleCommand(plugin).assemble(sender, args[1]);
                 }
                 if (first.equals("config")) {
                     return new TARDISConfigCommand(plugin).showConfigOptions(sender, args);

@@ -36,14 +36,14 @@
          <id>libsdisguises-repo</id>
          <url>http://server.psmc.ca/repo/</url>
      </repository>
+        <repository>
+            <id>onarandombox</id>
+            <url>http://repo.onarandombox.com/content/groups/public</url>
+        </repository>
         -->
         <repository>
             <id>dmulloy2-repo</id>
             <url>http://repo.dmulloy2.net/content/groups/public/</url>
-        </repository>
-        <repository>
-            <id>onarandombox</id>
-            <url>http://repo.onarandombox.com/content/groups/public</url>
         </repository>
         <repository>
             <id>sk89q-repo</id>
