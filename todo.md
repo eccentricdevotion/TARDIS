@@ -1,6 +1,6 @@
 #TODO
 
-##Current bugfix version `3.5.1`
+##Current bugfix version `3.5.2`
 1. Fix bugs!
 
 ##Next minor version `3.6-beta-1`
