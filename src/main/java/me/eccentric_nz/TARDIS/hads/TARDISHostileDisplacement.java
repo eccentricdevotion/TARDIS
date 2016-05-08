@@ -50,6 +50,7 @@ public class TARDISHostileDisplacement {
 
     private final TARDIS plugin;
     private final List<Integer> angles;
+    private int count = 0;
 
     public TARDISHostileDisplacement(TARDIS plugin) {
         this.angles = Arrays.asList(0, 45, 90, 135, 180, 225, 270, 315);
@@ -73,6 +74,7 @@ public class TARDISHostileDisplacement {
         // randomise the direction
         Collections.shuffle(angles);
         for (Integer a : angles) {
+            count++;
             int wx = (int) (l.getX() + r * Math.cos(a)); // x = cx + r * cos(a)
             int wz = (int) (l.getZ() + r * Math.sin(a)); // z = cz + r * sin(a)
             l.setX(wx);
@@ -160,16 +162,18 @@ public class TARDISHostileDisplacement {
                         if (player != hostile) {
                             hostile.sendMessage(message);
                         }
-                        break;
+                        return;
                     } else {
                         TARDISMessage.send(player, "HADS_PROTECTED");
                         if (player != hostile) {
                             TARDISMessage.send(hostile, "HADS_PROTECTED");
                         }
+                        return;
                     }
                 } else if (underwater) {
                     TARDISMessage.send(player, "HADS_NOT_SAFE");
-                } else {
+                } else if (count > 7) {
+                    // only if count is 8 or more
                     // use dispersal instead...
                     new TARDISHostileDispersal(plugin).disperseTARDIS(id, cham, uuid, hostile, preset);
                 }
