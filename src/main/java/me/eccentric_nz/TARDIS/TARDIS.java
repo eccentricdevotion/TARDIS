@@ -206,7 +206,7 @@ public class TARDIS extends JavaPlugin {
         plugin = this;
         console = getServer().getConsoleSender();
         Version bukkitversion = getServerVersion(getServer().getVersion());
-        Version minversion = new Version("1.9");
+        Version minversion = new Version("1.9.4");
         // check CraftBukkit version
         if (bukkitversion.compareTo(minversion) >= 0) {
             // check for WorldBorder class
