@@ -289,7 +289,7 @@
         <dependency>
             <groupId>com.palmergames.bukkit</groupId>
             <artifactId>Towny</artifactId>
-            <version>0.89.0.0</version>
+            <version>0.91.1.0</version>
             <type>jar</type>
             <scope>compile</scope>
         </dependency>
