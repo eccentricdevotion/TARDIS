@@ -58,6 +58,24 @@
 				<td colspan="2">Sets the TARDIS key item. You can use any valid Bukkit Material ENUM. A list can be found here: <a href="http://jd.bukkit.org/apidocs/org/bukkit/Material.html">http://jd.bukkit.org/apidocs/org/bukkit/Material.html</a></td>
 			</tr>
 			<tr class="coption">
+				<td class="noborder">&nbsp;&nbsp;&nbsp;&nbsp;<code>walk_in_tardis</code></td>
+				<td class="noborder">boolean</td>
+				<td class="noborder"><code>true</code></td>
+			</tr>
+			<tr>
+				<td>&nbsp;</td>
+				<td colspan="2">Sets whether players can walk into the Police Box to enter the TARDIS. If set to <code>false</code>, clicking the door with the TARDIS key teleports you to the interior.</td>
+			</tr>
+			<tr class="coption">
+				<td class="noborder">&nbsp;&nbsp;&nbsp;&nbsp;<code>open_door_policy</code></td>
+				<td class="noborder">boolean</td>
+				<td class="noborder"><code>false</code></td>
+			</tr>
+			<tr>
+				<td>&nbsp;</td>
+				<td colspan="2">Sets whether anyone can enter the TARDIS. If set to <code>false</code> (the default) only the Time Lord and their compnions can enter the TRADIS.</td>
+			</tr>
+			<tr class="coption">
 				<td class="noborder">&nbsp;&nbsp;&nbsp;&nbsp;<code>use_worldguard</code></td>
 				<td class="noborder">boolean</td>
 				<td class="noborder"><code>true</code></td>
@@ -194,6 +212,15 @@
 				<td colspan="2">Sets whether to use the plugin settings for condenser values. If you want to set your own values, set this to <code>false</code> and edit <em>condensables.yml</em></td>
 			</tr>
 			<tr class="coption">
+				<td class="noborder">&nbsp;&nbsp;&nbsp;&nbsp;<code>no_creative_condense</code></td>
+				<td class="noborder">boolean</td>
+				<td class="noborder"><code>false</code></td>
+			</tr>
+			<tr>
+				<td>&nbsp;</td>
+				<td colspan="2">Sets whether players can condense items in CREATIVE game mode.</td>
+			</tr>
+			<tr class="coption">
 				<td class="noborder">&nbsp;&nbsp;&nbsp;&nbsp;<code>heal_speed</code></td>
 				<td class="noborder">integer</td>
 				<td class="noborder"><code>200</code></td>
@@ -264,6 +291,24 @@
 			<tr>
 				<td>&nbsp;</td>
 				<td colspan="2">Sets whether monsters will randomly spawn in the TARDIS if door is left open.</td>
+			</tr>
+			<tr class="coption">
+				<td class="noborder">&nbsp;&nbsp;&nbsp;&nbsp;<code>spawn_limit</code></td>
+				<td class="noborder">integer</td>
+				<td class="noborder"><code>10</code></td>
+			</tr>
+			<tr>
+				<td>&nbsp;</td>
+				<td colspan="2">Sets the maximum number of monsters that can randomly spawn inside a TARDIS</td>
+			</tr>
+			<tr class="coption">
+				<td class="noborder">&nbsp;&nbsp;&nbsp;&nbsp;<code>vortex_fall</code></td>
+				<td class="noborder">string</td>
+				<td class="noborder"><code>kill</code></td>
+			</tr>
+			<tr>
+				<td>&nbsp;</td>
+				<td colspan="2">Sets whether players who fall into the void in the TARDIS_TimeVortex world are killed or teleported back into the TARDIS. Options: <code>[kill|teleport]</code></td>
 			</tr>
 		</table>
 		<p><a href="configuration.html">Back to main configuration page</a></p>
