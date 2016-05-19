@@ -1,6 +1,6 @@
 #TODO
 
-##Current bugfix version `3.5.2`
+##Current bugfix version `3.5.3`
 1. Fix bugs!
 
 ##Next minor version `3.6-beta-1`
@@ -12,6 +12,12 @@
 6. TARDISSonicBlaster addon?
 
 ##Upcoming minor version `3.7`
+1. Update for Minecraft 1.10
+   * Add new blocks
+   * Add new mobs
+   * Use new spawn eggs (farming & Lazarus GUI)
+   * Structure blocks?
+
 ?
 
 ##Future version `4+`
