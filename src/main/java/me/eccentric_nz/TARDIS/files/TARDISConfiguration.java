@@ -675,6 +675,11 @@ public class TARDISConfiguration {
                 blocks_config.set("under_door_blocks", udblocs);
                 i++;
             }
+            if (!udblocs.contains(208)) {
+                udblocs.add(208);
+                blocks_config.set("under_door_blocks", udblocs);
+                i++;
+            }
         }
         if (!blocks_config.contains("no_artron_value")) {
             blocks_config.set("no_artron_value", new ArrayList<String>());
