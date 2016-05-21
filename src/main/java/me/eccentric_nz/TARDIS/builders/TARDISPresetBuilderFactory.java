@@ -146,6 +146,9 @@ public class TARDISPresetBuilderFactory {
                 int taskID = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, runnable, 10L, 20L);
                 runnable.setTask(taskID);
                 TARDISSounds.playTARDISSound(tmd.getLocation(), "tardis_land_fast");
+                if (plugin.getUtils().inTARDISWorld(tmd.getPlayer().getPlayer())) {
+                    TARDISSounds.playTARDISSound(tmd.getPlayer().getPlayer().getLocation(), "tardis_land_fast");
+                }
             } else if (plugin.getConfig().getBoolean("police_box.materialise") && !preset.equals(PRESET.INVISIBLE)) {
                 plugin.getTrackerKeeper().getMaterialising().add(tmd.getTardisID());
                 if (preset.equals(PRESET.JUNK)) {
