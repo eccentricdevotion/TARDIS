@@ -266,6 +266,7 @@ public class TARDISHandbrakeListener implements Listener {
                                                 }
                                             }
                                         }
+                                        final boolean mat = plugin.getConfig().getBoolean("police_box.materialise");
                                         if (!malfunction) {
                                             HashMap<String, Object> wherenl = new HashMap<String, Object>();
                                             wherenl.put("tardis_id", id);
@@ -284,11 +285,13 @@ public class TARDISHandbrakeListener implements Listener {
                                             // Sets database and sends the player/world message/sounds
                                             set.put("handbrake_on", 0);
                                             TARDISMessage.send(player, "HANDBRAKE_OFF");
-                                            if (!minecart) {
-                                                String sound = (preset.equals(PRESET.JUNK_MODE)) ? "junk_takeoff" : "tardis_takeoff";
-                                                TARDISSounds.playTARDISSound(handbrake_loc, sound);
-                                            } else {
-                                                handbrake_loc.getWorld().playSound(handbrake_loc, Sound.ENTITY_MINECART_INSIDE, 1.0F, 0.0F);
+                                            if (mat) {
+                                                if (!minecart) {
+                                                    String sound = (preset.equals(PRESET.JUNK_MODE)) ? "junk_takeoff" : "tardis_takeoff";
+                                                    TARDISSounds.playTARDISSound(handbrake_loc, sound);
+                                                } else {
+                                                    handbrake_loc.getWorld().playSound(handbrake_loc, Sound.ENTITY_MINECART_INSIDE, 1.0F, 0.0F);
+                                                }
                                             }
                                         }
                                         if (exit != null) {
@@ -296,7 +299,6 @@ public class TARDISHandbrakeListener implements Listener {
                                             if (!exit.getWorld().isChunkLoaded(exit.getChunk())) {
                                                 exit.getWorld().loadChunk(exit.getChunk());
                                             }
-                                            boolean mat = plugin.getConfig().getBoolean("police_box.materialise");
                                             if (mat && bar) {
                                                 long bar_time = (flight_mode == 2 || flight_mode == 3) ? 1500L : 890L;
                                                 new TARDISTravelBar(plugin).showTravelRemaining(player, bar_time);
@@ -356,11 +358,13 @@ public class TARDISHandbrakeListener implements Listener {
                                                     TARDISMaterialisationData m_data = plugin.getTrackerKeeper().getFlightData().get(uuid);
                                                     Location final_location = m_data.getLocation();
                                                     plugin.getPresetBuilder().buildPreset(m_data);
-                                                    if (!mine_sound) {
-                                                        String sound = (preset.equals(PRESET.JUNK_MODE)) ? "junk_land" : "tardis_land";
-                                                        TARDISSounds.playTARDISSound(sound_loc, sound);
-                                                    } else {
-                                                        handbrake_loc.getWorld().playSound(handbrake_loc, Sound.ENTITY_MINECART_INSIDE, 1.0F, 0.0F);
+                                                    if (mat) {
+                                                        if (!mine_sound) {
+                                                            String sound = (preset.equals(PRESET.JUNK_MODE)) ? "junk_land" : "tardis_land";
+                                                            TARDISSounds.playTARDISSound(sound_loc, sound);
+                                                        } else {
+                                                            handbrake_loc.getWorld().playSound(handbrake_loc, Sound.ENTITY_MINECART_INSIDE, 1.0F, 0.0F);
+                                                        }
                                                     }
                                                     // current
                                                     setcurrent.put("world", final_location.getWorld().getName());
