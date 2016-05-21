@@ -374,7 +374,7 @@ public class TARDIS extends JavaPlugin {
                 getServer().getScheduler().scheduleSyncRepeatingTask(this, new TARDISJunkReturnRunnable(this), delay, delay);
             }
         } else {
-            console.sendMessage(pluginName + ChatColor.RED + "This plugin requires CraftBukkit/Spigot 1.9 or higher, disabling...");
+            console.sendMessage(pluginName + ChatColor.RED + "This plugin requires CraftBukkit/Spigot " + minversion + " or higher, disabling...");
             pm.disablePlugin(this);
         }
     }
