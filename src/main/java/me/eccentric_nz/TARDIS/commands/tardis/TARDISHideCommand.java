@@ -112,9 +112,9 @@ public class TARDISHideCommand {
             pdd.setChameleon(false);
             pdd.setDirection(rsc.getDirection());
             pdd.setLocation(l);
-            pdd.setDematerialise(false);
+            pdd.setDematerialise(plugin.getConfig().getBoolean("police_box.materialise"));
             pdd.setPlayer(player.getPlayer());
-            pdd.setHide(false);
+            pdd.setHide(true);
             pdd.setOutside(false);
             pdd.setSubmarine(rsc.isSubmarine());
             pdd.setTardisID(id);

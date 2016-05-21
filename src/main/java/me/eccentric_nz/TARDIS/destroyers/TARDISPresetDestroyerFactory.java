@@ -29,6 +29,7 @@ import me.eccentric_nz.TARDIS.enumeration.PRESET;
 import me.eccentric_nz.TARDIS.junk.TARDISJunkDestroyer;
 import me.eccentric_nz.TARDIS.utility.TARDISBlockSetters;
 import me.eccentric_nz.TARDIS.utility.TARDISLocationGetters;
+import me.eccentric_nz.TARDIS.utility.TARDISSounds;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
@@ -82,6 +83,10 @@ public class TARDISPresetDestroyerFactory {
                 int loops = 18;
                 if (pdd.isHide()) {
                     loops = 3;
+                    TARDISSounds.playTARDISSound(pdd.getLocation(), "tardis_takeoff_fast");
+                    if (plugin.getUtils().inTARDISWorld(pdd.getPlayer().getPlayer())) {
+                        TARDISSounds.playTARDISSound(pdd.getPlayer().getPlayer().getLocation(), "tardis_takeoff_fast");
+                    }
                 } else if (preset.equals(PRESET.JUNK_MODE)) {
                     loops = 25;
                 }

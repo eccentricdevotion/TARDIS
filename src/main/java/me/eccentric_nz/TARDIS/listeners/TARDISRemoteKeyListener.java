@@ -163,11 +163,9 @@ public class TARDISRemoteKeyListener implements Listener {
                 }
                 if (hidden) {
                     // rebuild
-                    TARDISSounds.playTARDISSound(player.getLocation(), "tardis_rebuild");
                     new TARDISRebuildCommand(plugin).rebuildPreset(player);
                 } else {
                     // hide
-                    TARDISSounds.playTARDISSound(player.getLocation(), "tardis_hide");
                     new TARDISHideCommand(plugin).hide(player);
                 }
             }
