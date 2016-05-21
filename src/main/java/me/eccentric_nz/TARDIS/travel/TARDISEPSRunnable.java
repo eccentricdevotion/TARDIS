@@ -23,6 +23,7 @@ import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.ResultSetDoors;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import me.eccentric_nz.TARDIS.utility.TARDISNumberParsers;
+import me.eccentric_nz.TARDIS.utility.TARDISSounds;
 import net.citizensnpcs.api.CitizensAPI;
 import net.citizensnpcs.api.npc.NPC;
 import net.citizensnpcs.api.npc.NPCRegistry;
@@ -64,6 +65,7 @@ public class TARDISEPSRunnable implements Runnable {
         Location l = getSpawnLocation(id);
         if (l != null) {
             try {
+                TARDISSounds.playTARDISSound(l, "tardis_land");
                 plugin.setTardisSpawn(true);
                 l.setX(l.getX() + 0.5F);
                 l.setZ(l.getZ() + 1.5F);
@@ -112,40 +114,38 @@ public class TARDISEPSRunnable implements Runnable {
             int y = TARDISNumberParsers.parseInt(npc[2]);
             int z = TARDISNumberParsers.parseInt(npc[3]);
             return new Location(w, x, y, z);
+        } else if (plugin.getConfig().getBoolean("creation.create_worlds")) {
+            // get world spawn location
+            return plugin.getServer().getWorld("TARDIS_WORLD_" + tl.getName()).getSpawnLocation();
         } else {
-            if (plugin.getConfig().getBoolean("creation.create_worlds")) {
-                // get world spawn location
-                return plugin.getServer().getWorld("TARDIS_WORLD_" + tl.getName()).getSpawnLocation();
-            } else {
-                HashMap<String, Object> where = new HashMap<String, Object>();
-                where.put("tardis_id", id);
-                where.put("door_type", 1);
-                ResultSetDoors rsd = new ResultSetDoors(plugin, where, false);
-                if (rsd.resultSet()) {
-                    String[] door = rsd.getDoor_location().split(":");
-                    World w = plugin.getServer().getWorld(door[0]);
-                    int x = TARDISNumberParsers.parseInt(door[1]);
-                    int y = TARDISNumberParsers.parseInt(door[2]);
-                    int z = TARDISNumberParsers.parseInt(door[3]);
-                    switch (rsd.getDoor_direction()) {
-                        case NORTH:
-                            z -= 2;
-                            break;
-                        case EAST:
-                            x += 1;
-                            z -= 1;
-                            break;
-                        case WEST:
-                            x -= 1;
-                            z -= 1;
-                            break;
-                        default:
-                            break;
-                    }
-                    return new Location(w, x, y, z);
-                } else {
-                    return null;
+            HashMap<String, Object> where = new HashMap<String, Object>();
+            where.put("tardis_id", id);
+            where.put("door_type", 1);
+            ResultSetDoors rsd = new ResultSetDoors(plugin, where, false);
+            if (rsd.resultSet()) {
+                String[] door = rsd.getDoor_location().split(":");
+                World w = plugin.getServer().getWorld(door[0]);
+                int x = TARDISNumberParsers.parseInt(door[1]);
+                int y = TARDISNumberParsers.parseInt(door[2]);
+                int z = TARDISNumberParsers.parseInt(door[3]);
+                switch (rsd.getDoor_direction()) {
+                    case NORTH:
+                        z -= 2;
+                        break;
+                    case EAST:
+                        x += 1;
+                        z -= 1;
+                        break;
+                    case WEST:
+                        x -= 1;
+                        z -= 1;
+                        break;
+                    default:
+                        break;
                 }
+                return new Location(w, x, y, z);
+            } else {
+                return null;
             }
         }
     }

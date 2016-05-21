@@ -42,6 +42,7 @@ import me.eccentric_nz.TARDIS.enumeration.SCHEMATIC;
 import me.eccentric_nz.TARDIS.siegemode.TARDISSiegeArea;
 import me.eccentric_nz.TARDIS.travel.TARDISEPSRunnable;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
+import me.eccentric_nz.TARDIS.utility.TARDISSounds;
 import org.bukkit.Chunk;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -187,6 +188,8 @@ public class TARDISTimeLordDeathListener implements Listener {
                                         pdd.setBiome(rsc.getBiome());
                                         if (!rs.isHidden()) {
                                             plugin.getPresetDestroyer().destroyPreset(pdd);
+                                            // play tardis_takeoff sfx
+                                            TARDISSounds.playTARDISSound(sl, "tardis_takeoff");
                                         } else {
                                             plugin.getPresetDestroyer().removeBlockProtection(id, qf);
                                             HashMap<String, Object> set = new HashMap<String, Object>();
@@ -210,6 +213,8 @@ public class TARDISTimeLordDeathListener implements Listener {
                                             public void run() {
                                                 // rebuild police box - needs to be a delay
                                                 plugin.getPresetBuilder().buildPreset(pbd);
+                                                // play tardis_land sfx
+                                                TARDISSounds.playTARDISSound(pbd.getLocation(), "tardis_land");
                                             }
                                         }, 500L);
                                         // set current
