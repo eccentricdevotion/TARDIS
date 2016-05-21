@@ -86,6 +86,7 @@ public class TARDISRemoteKeyListener implements Listener {
                 return;
             }
             final int id = rs.getTardis_id();
+            final boolean powered = rs.isPowered_on();
             final PRESET preset = rs.getPreset();
             if (plugin.getTrackerKeeper().getInSiegeMode().contains(id)) {
                 TARDISMessage.send(player, "SIEGE_NO_CONTROL");
@@ -97,7 +98,7 @@ public class TARDISRemoteKeyListener implements Listener {
             }
             boolean hidden = rs.isHidden();
             if (action.equals(Action.LEFT_CLICK_AIR)) {
-                final boolean powered = rs.isPowered_on();
+
                 // get the TARDIS current location
                 HashMap<String, Object> wherec = new HashMap<String, Object>();
                 wherec.put("tardis_id", id);
@@ -155,6 +156,10 @@ public class TARDISRemoteKeyListener implements Listener {
                         TARDISMessage.send(player.getPlayer(), "COOLDOWN", String.format("%d", cooldown / 1000));
                         return;
                     }
+                }
+                if (!powered) {
+                    TARDISMessage.send(player, "POWER_DOWN");
+                    return;
                 }
                 if (hidden) {
                     // rebuild
