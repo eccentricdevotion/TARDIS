@@ -22,6 +22,7 @@ import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.ResultSetPlayerPrefs;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import me.eccentric_nz.TARDIS.enumeration.PRESET;
+import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import org.bukkit.entity.Player;
 
 /**
@@ -43,12 +44,13 @@ public class TARDISHostileAction {
         if (rs.resultSet()) {
             UUID uuid = rs.getUuid();
             boolean cham = rs.isChamele_on();
+            boolean poweredOn = rs.isPowered_on();
             PRESET preset = rs.getPreset();
             HashMap<String, Object> wherep = new HashMap<String, Object>();
             wherep.put("uuid", uuid.toString());
             ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, wherep);
             if (rsp.resultSet()) {
-                if (rsp.isHadsOn()) {
+                if (rsp.isHadsOn() && poweredOn) {
                     switch (rsp.getHadsType()) {
                         case DISPLACEMENT:
                             new TARDISHostileDisplacement(plugin).moveTARDIS(id, cham, uuid, hostile, preset);
@@ -59,7 +61,13 @@ public class TARDISHostileAction {
                         default:
                             break;
                     }
+                } else {
+                    plugin.getTrackerKeeper().getDamage().remove(id);
+                    TARDISMessage.send(hostile, "TARDIS_BREAK");
                 }
+            } else {
+                plugin.getTrackerKeeper().getDamage().remove(id);
+                TARDISMessage.send(hostile, "TARDIS_BREAK");
             }
         }
     }
