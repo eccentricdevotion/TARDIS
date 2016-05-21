@@ -29,6 +29,7 @@ import me.eccentric_nz.TARDIS.enumeration.COMPASS;
 import me.eccentric_nz.TARDIS.enumeration.PRESET;
 import me.eccentric_nz.TARDIS.junk.TARDISJunkBuilder;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
+import me.eccentric_nz.TARDIS.utility.TARDISSounds;
 import org.bukkit.Chunk;
 import org.bukkit.Material;
 import org.bukkit.block.Biome;
@@ -144,6 +145,7 @@ public class TARDISPresetBuilderFactory {
                 TARDISMaterialisationPreset runnable = new TARDISMaterialisationPreset(plugin, tmd, preset, cham_id, cham_data, 3);
                 int taskID = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, runnable, 10L, 20L);
                 runnable.setTask(taskID);
+                TARDISSounds.playTARDISSound(tmd.getLocation(), "tardis_land_fast");
             } else if (plugin.getConfig().getBoolean("police_box.materialise") && !preset.equals(PRESET.INVISIBLE)) {
                 plugin.getTrackerKeeper().getMaterialising().add(tmd.getTardisID());
                 if (preset.equals(PRESET.JUNK)) {
