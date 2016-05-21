@@ -146,8 +146,16 @@ public class TARDISRemoteKeyListener implements Listener {
                     String message = (open) ? "DOOR_CLOSED" : "DOOR_OPENED";
                     TARDISMessage.send(player, message);
                 }
-            } else // toggle hidden
-            {
+            } else {
+                if (plugin.getTrackerKeeper().getRebuildCooldown().containsKey(player.getUniqueId())) {
+                    long now = System.currentTimeMillis();
+                    long cooldown = plugin.getConfig().getLong("police_box.rebuild_cooldown");
+                    long then = plugin.getTrackerKeeper().getRebuildCooldown().get(player.getUniqueId()) + cooldown;
+                    if (now < then) {
+                        TARDISMessage.send(player.getPlayer(), "COOLDOWN", String.format("%d", cooldown / 1000));
+                        return;
+                    }
+                }
                 if (hidden) {
                     // rebuild
                     TARDISSounds.playTARDISSound(player.getLocation(), "tardis_rebuild");
