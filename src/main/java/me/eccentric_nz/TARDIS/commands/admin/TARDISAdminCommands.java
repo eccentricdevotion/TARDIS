@@ -22,6 +22,7 @@ import java.util.List;
 import java.util.Locale;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.arch.TARDISArchCommand;
+import me.eccentric_nz.TARDIS.builders.TARDISSkaro;
 import me.eccentric_nz.TARDIS.commands.TARDISCommandHelper;
 import me.eccentric_nz.TARDIS.enumeration.DIFFICULTY;
 import me.eccentric_nz.TARDIS.enumeration.PRESET;
@@ -94,6 +95,7 @@ public class TARDISAdminCommands implements CommandExecutor {
         firstsStr.put("respect_worldguard", "preferences");
         firstsStr.put("siege", "siege");
         firstsStr.put("sign_colour", "police_box");
+        firstsStr.put("skaro", "");
         firstsStr.put("tardis_lamp", "police_box");
         firstsStr.put("vortex_fall", "preferences");
         firstsStrArtron.add("full_charge_item");
@@ -223,6 +225,10 @@ public class TARDISAdminCommands implements CommandExecutor {
                     return false;
                 }
                 if (args.length == 1) {
+                    if (first.equals("skaro")) {
+                        new TARDISSkaro(plugin).createDalekWorld();
+                        return true;
+                    }
                     if (first.equals("chunks")) {
                         return new TARDISChunksCommand(plugin).listChunks(sender);
                     }
