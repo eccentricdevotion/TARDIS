@@ -79,6 +79,10 @@ public class TARDISZeroRoomChatListener implements Listener {
                 if (timelord != null && timelord.isOnline()) {
                     // message console so it is logged
                     TARDISMessage.message(plugin.getConsole(), "[TARDIS] Companion [" + player.getName() + "] ran a telepathic command as Time Lord [" + timelord.getName() + "]");
+                    if (command.contains("rescue") && command.contains(timelord.getName().toLowerCase())) {
+                        // track the timelord
+                        plugin.getTrackerKeeper().getTelepathicRescue().put(owner, uuid);
+                    }
                     // if it is a tardis command run it as the time lord
                     event.setPlayer(timelord);
                     TARDISMessage.send(player, "TELEPATHIC_RUN", command);

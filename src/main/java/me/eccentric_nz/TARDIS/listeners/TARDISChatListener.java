@@ -64,24 +64,30 @@ public class TARDISChatListener implements Listener {
         String chat = event.getMessage();
         if (chat != null) {
             if (chat.equalsIgnoreCase("tardis rescue accept") || chat.equalsIgnoreCase("tardis request accept")) {
+                final boolean request = (chat.equalsIgnoreCase("tardis request accept"));
                 if (plugin.getTrackerKeeper().getChat().containsKey(saved)) {
                     final Player rescuer = plugin.getServer().getPlayer(plugin.getTrackerKeeper().getChat().get(saved));
                     final TARDISRescue res = new TARDISRescue(plugin);
                     plugin.getTrackerKeeper().getChat().remove(saved);
                     // delay it so the chat appears before the message
                     final String player = event.getPlayer().getName();
-                    final boolean request = (chat.equalsIgnoreCase("tardis request accept"));
-                    final String message = (chat.equalsIgnoreCase("tardis request accept")) ? "REQUEST_RELEASE" : "RESCUE_RELEASE";
+                    final String message = (request) ? "REQUEST_RELEASE" : "RESCUE_RELEASE";
                     plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
                         @Override
                         public void run() {
                             if (res.tryRescue(rescuer, saved, request)) {
-                                TARDISMessage.send(rescuer, message, player);
+                                if (plugin.getTrackerKeeper().getTelepathicRescue().containsKey(saved)) {
+                                    Player who = plugin.getServer().getPlayer(plugin.getTrackerKeeper().getTelepathicRescue().get(saved));
+                                    TARDISMessage.send(who, message, player);
+                                    plugin.getTrackerKeeper().getTelepathicRescue().remove(saved);
+                                } else {
+                                    TARDISMessage.send(rescuer, message, player);
+                                }
                             }
                         }
                     }, 2L);
                 } else {
-                    final String message = (chat.equalsIgnoreCase("tardis request accept")) ? "REQUEST_TIMEOUT" : "RESCUE_TIMEOUT";
+                    final String message = (request) ? "REQUEST_TIMEOUT" : "RESCUE_TIMEOUT";
                     TARDISMessage.send(event.getPlayer(), message);
                 }
             } else {

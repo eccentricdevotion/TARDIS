@@ -134,12 +134,12 @@ public class TARDISRescue {
             HashMap<String, Object> wheret = new HashMap<String, Object>();
             wheret.put("uuid", player.getUniqueId().toString());
             ResultSetTravellers rst = new ResultSetTravellers(plugin, wheret, false);
-            if (!rst.resultSet()) {
+            if (!rst.resultSet() && !plugin.getTrackerKeeper().getTelepathicRescue().containsKey(saved)) {
                 TARDISMessage.send(player, "NOT_IN_TARDIS");
                 return false;
             }
             int tardis_id = rst.getTardis_id();
-            if (tardis_id != id) {
+            if (tardis_id != id && !plugin.getTrackerKeeper().getTelepathicRescue().containsKey(saved)) {
                 TARDISMessage.send(player, "CMD_ONLY_TL");
                 return false;
             }

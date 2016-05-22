@@ -93,6 +93,7 @@ public class TARDISTrackerInstanceKeeper {
     private final HashMap<UUID, TARDISUpgradeData> upgrades = new HashMap<UUID, TARDISUpgradeData>();
     private final HashMap<UUID, UUID> chat = new HashMap<UUID, UUID>();
     private final HashMap<UUID, UUID> telepaths = new HashMap<UUID, UUID>();
+    private final HashMap<UUID, UUID> telepathicRescue = new HashMap<UUID, UUID>();
     private final List<String> artronFurnaces = new ArrayList<String>();
     private final List<Integer> dematerialising = new ArrayList<Integer>();
     private final List<Integer> dispersedTARDII = new ArrayList<Integer>();
@@ -384,6 +385,10 @@ public class TARDISTrackerInstanceKeeper {
 
     public HashMap<UUID, UUID> getTelepaths() {
         return telepaths;
+    }
+
+    public HashMap<UUID, UUID> getTelepathicRescue() {
+        return telepathicRescue;
     }
 
     public List<String> getReset() {
