@@ -16,8 +16,11 @@
  */
 package me.eccentric_nz.TARDIS.arch;
 
+import java.util.HashMap;
 import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.database.QueryFactory;
+import me.eccentric_nz.TARDIS.database.ResultSetTravellers;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -47,5 +50,14 @@ public class TARDISRespawnListener implements Listener {
                 new TARDISArchPersister(plugin).reArch(uuid);
             }
         }, 5L);
+        // remove the player from the travellers table if they respawned in a non-TARDIS world
+        HashMap<String, Object> where = new HashMap<String, Object>();
+        where.put("uuid", uuid.toString());
+        ResultSetTravellers rs = new ResultSetTravellers(plugin, where, false);
+        if (rs.resultSet() && !plugin.getUtils().inTARDISWorld(player)) {
+            HashMap<String, Object> wheret = new HashMap<String, Object>();
+            wheret.put("uuid", uuid.toString());
+            new QueryFactory(plugin).doDelete("travellers", wheret);
+        }
     }
 }
