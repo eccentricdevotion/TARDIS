@@ -287,8 +287,12 @@ public class TARDISHandbrakeListener implements Listener {
                                             TARDISMessage.send(player, "HANDBRAKE_OFF");
                                             if (mat) {
                                                 if (!minecart) {
-                                                    String sound = (preset.equals(PRESET.JUNK_MODE)) ? "junk_takeoff" : "tardis_takeoff";
-                                                    TARDISSounds.playTARDISSound(handbrake_loc, sound);
+                                                    if (!preset.equals(PRESET.JUNK_MODE)) {
+                                                        TARDISSounds.playTARDISSound(handbrake_loc, "tardis_takeoff");
+                                                        TARDISSounds.playTARDISSound(l, "tardis_takeoff");
+                                                    } else {
+                                                        TARDISSounds.playTARDISSound(handbrake_loc, "junk_takeoff");
+                                                    }
                                                 } else {
                                                     handbrake_loc.getWorld().playSound(handbrake_loc, Sound.ENTITY_MINECART_INSIDE, 1.0F, 0.0F);
                                                 }
@@ -352,6 +356,7 @@ public class TARDISHandbrakeListener implements Listener {
                                             }
                                             final boolean mine_sound = minecart;
                                             final Location sound_loc = (preset.equals(PRESET.JUNK_MODE)) ? exit : handbrake_loc;
+                                            final Location external_sound_loc = exit;
                                             plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
                                                 @Override
                                                 public void run() {
@@ -360,8 +365,12 @@ public class TARDISHandbrakeListener implements Listener {
                                                     plugin.getPresetBuilder().buildPreset(m_data);
                                                     if (mat) {
                                                         if (!mine_sound) {
-                                                            String sound = (preset.equals(PRESET.JUNK_MODE)) ? "junk_land" : "tardis_land";
-                                                            TARDISSounds.playTARDISSound(sound_loc, sound);
+                                                            if (!preset.equals(PRESET.JUNK_MODE)) {
+                                                                TARDISSounds.playTARDISSound(sound_loc, "tardis_land");
+                                                                TARDISSounds.playTARDISSound(external_sound_loc, "tardis_land");
+                                                            } else {
+                                                                TARDISSounds.playTARDISSound(sound_loc, "junk_land");
+                                                            }
                                                         } else {
                                                             handbrake_loc.getWorld().playSound(handbrake_loc, Sound.ENTITY_MINECART_INSIDE, 1.0F, 0.0F);
                                                         }
