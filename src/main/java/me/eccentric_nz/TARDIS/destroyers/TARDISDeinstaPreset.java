@@ -218,5 +218,6 @@ public class TARDISDeinstaPreset {
         // refresh chunk
         w.refreshChunk(chunk.getX(), chunk.getZ());
         plugin.getTrackerKeeper().getMaterialising().remove(Integer.valueOf(id));
+        plugin.getTrackerKeeper().getInVortex().remove(Integer.valueOf(id));
     }
 }
