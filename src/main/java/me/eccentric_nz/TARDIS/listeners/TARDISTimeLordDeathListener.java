@@ -39,6 +39,7 @@ import me.eccentric_nz.TARDIS.desktop.TARDISWallFloorRunnable;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
 import me.eccentric_nz.TARDIS.enumeration.PRESET;
 import me.eccentric_nz.TARDIS.enumeration.SCHEMATIC;
+import me.eccentric_nz.TARDIS.move.TARDISDoorCloser;
 import me.eccentric_nz.TARDIS.siegemode.TARDISSiegeArea;
 import me.eccentric_nz.TARDIS.travel.TARDISEPSRunnable;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
@@ -97,6 +98,8 @@ public class TARDISTimeLordDeathListener implements Listener {
                         if (rsp.resultSet()) {
                             // do they have the autonomous circuit on?
                             if (rsp.isAutoOn() && !rs.isSiege_on() && !plugin.getTrackerKeeper().getDispersedTARDII().contains(id)) {
+                                // close doors
+                                new TARDISDoorCloser(plugin, uuid, id).closeDoors();
                                 Location death_loc = player.getLocation();
                                 int amount = plugin.getArtronConfig().getInt("autonomous");
                                 if (rs.getArtron_level() > amount) {
