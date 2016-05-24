@@ -97,7 +97,9 @@ public class TARDISArtronIndicator {
                 plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
                     @Override
                     public void run() {
-                        p.setScoreboard(currentScoreboard);
+                        if (p.isOnline()) {
+                            p.setScoreboard(currentScoreboard);
+                        }
                     }
                 }, 150L);
             } else if (used > 0) {

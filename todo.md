@@ -8,8 +8,10 @@
 2. TIPS visulisation tool (using WorldGuard region data)
 3. [Auto powerup](http://dev.bukkit.org/bukkit-plugins/tardis/tickets/1209-auto-powerup/)
 4. [Red time rotor](http://dev.bukkit.org/bukkit-plugins/tardis/tickets/1216-red-time-rotor/)
-5. TARDISDalekCities addon?
+5. [TARDISDalekCities](http://dev.bukkit.org/bukkit-plugins/tardis/tickets/1168-a-dalek-conquest/) addon?
 6. TARDISSonicBlaster addon?
+7. [Abandoned TARDISes](http://dev.bukkit.org/bukkit-plugins/tardis/tickets/1277-possibility-to-abandon-a-tardis/)
+8. [Destination 'vortex'](http://dev.bukkit.org/bukkit-plugins/tardis/tickets/1023-set-the-tardis-inflight-without-setting-a-destination/) - dematerialise without setting a destination.
 
 ##Upcoming minor version `3.7`
 1. Update for Minecraft 1.10
