@@ -120,6 +120,7 @@ public class TARDISHideCommand {
             pdd.setTardisID(id);
             pdd.setBiome(rsc.getBiome());
             plugin.getPresetDestroyer().destroyPreset(pdd);
+            plugin.getTrackerKeeper().getInVortex().add(id);
             TARDISMessage.send(player.getPlayer(), "TARDIS_HIDDEN", ChatColor.GREEN + " /tardis rebuild " + ChatColor.RESET);
             QueryFactory qf = new QueryFactory(plugin);
             HashMap<String, Object> wheret = new HashMap<String, Object>();

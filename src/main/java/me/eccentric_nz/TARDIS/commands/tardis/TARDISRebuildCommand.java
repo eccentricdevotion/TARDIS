@@ -72,7 +72,7 @@ public class TARDISRebuildCommand {
                 TARDISMessage.send(player.getPlayer(), "INVISIBILITY_ENGAGED");
                 return true;
             }
-            int id = rs.getTardis_id();
+            final int id = rs.getTardis_id();
             TARDISCircuitChecker tcc = null;
             if (!plugin.getDifficulty().equals(DIFFICULTY.EASY) && !plugin.getUtils().inGracePeriod(player.getPlayer(), true)) {
                 tcc = new TARDISCircuitChecker(plugin, id);
@@ -130,6 +130,7 @@ public class TARDISRebuildCommand {
                 @Override
                 public void run() {
                     plugin.getPresetBuilder().buildPreset(pbd);
+                    plugin.getTrackerKeeper().getInVortex().add(id);
                 }
             }, 10L);
             TARDISMessage.send(player.getPlayer(), "TARDIS_REBUILT");
