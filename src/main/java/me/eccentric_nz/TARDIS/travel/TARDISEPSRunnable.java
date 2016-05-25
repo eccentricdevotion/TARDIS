@@ -62,10 +62,16 @@ public class TARDISEPSRunnable implements Runnable {
 
     @Override
     public void run() {
-        Location l = getSpawnLocation(id);
+        final Location l = getSpawnLocation(id);
         if (l != null) {
             try {
-                TARDISSounds.playTARDISSound(l, "tardis_land");
+                TARDISSounds.playTARDISSound(l, "tardis_takeoff");
+                plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
+                    @Override
+                    public void run() {
+                        TARDISSounds.playTARDISSound(l, "tardis_land");
+                    }
+                }, 490L);
                 plugin.setTardisSpawn(true);
                 l.setX(l.getX() + 0.5F);
                 l.setZ(l.getZ() + 1.5F);
