@@ -204,6 +204,8 @@ public class TARDISComehereCommand {
                     HashMap<String, Object> ttid = new HashMap<String, Object>();
                     ttid.put("tardis_id", id);
                     qf.doUpdate("tardis", sett, ttid);
+                    // restore biome
+                    plugin.getUtils().restoreBiome(oldSave, biome);
                 }
                 qf.doUpdate("current", set, tid);
                 TARDISMessage.send(player, "TARDIS_COMING");

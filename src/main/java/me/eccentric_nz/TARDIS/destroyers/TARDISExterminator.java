@@ -228,6 +228,9 @@ public class TARDISExterminator {
                 if (!rs.isHidden()) {
                     // remove Police Box
                     plugin.getPresetDestroyer().destroyPreset(pdd);
+                } else {
+                    // restore biome
+                    plugin.getUtils().restoreBiome(bb_loc, rsc.getBiome());
                 }
                 String[] chunkworld = chunkLoc.split(":");
                 World cw = plugin.getServer().getWorld(chunkworld[0]);

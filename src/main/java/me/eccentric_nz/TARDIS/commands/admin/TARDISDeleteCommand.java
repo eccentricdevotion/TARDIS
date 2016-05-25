@@ -134,6 +134,9 @@ public class TARDISDeleteCommand {
                     pdd.setTardisID(id);
                     pdd.setBiome(biome);
                     plugin.getPresetDestroyer().destroyPreset(pdd);
+                } else {
+                    // restore biome
+                    plugin.getUtils().restoreBiome(bb_loc, biome);
                 }
                 // destroy the inner TARDIS
                 // give the TARDIS time to remove itself as it's not hidden
