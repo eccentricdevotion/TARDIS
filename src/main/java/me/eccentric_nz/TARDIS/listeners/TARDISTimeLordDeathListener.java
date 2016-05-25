@@ -191,6 +191,7 @@ public class TARDISTimeLordDeathListener implements Listener {
                                         pdd.setBiome(rsc.getBiome());
                                         if (!rs.isHidden()) {
                                             plugin.getPresetDestroyer().destroyPreset(pdd);
+                                            plugin.getTrackerKeeper().getInVortex().add(id);
                                             // play tardis_takeoff sfx
                                             TARDISSounds.playTARDISSound(sl, "tardis_takeoff");
                                         } else {
@@ -216,6 +217,7 @@ public class TARDISTimeLordDeathListener implements Listener {
                                             public void run() {
                                                 // rebuild police box - needs to be a delay
                                                 plugin.getPresetBuilder().buildPreset(pbd);
+                                                plugin.getTrackerKeeper().getInVortex().add(id);
                                                 // play tardis_land sfx
                                                 TARDISSounds.playTARDISSound(pbd.getLocation(), "tardis_land");
                                             }
