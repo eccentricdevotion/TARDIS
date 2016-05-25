@@ -100,6 +100,8 @@ public class TARDISRemoteTravelCommand {
                 // set hidden false!
                 set.put("hidden", 0);
                 plugin.getPresetDestroyer().removeBlockProtection(id, new QueryFactory(plugin));
+                // restore biome
+                plugin.getUtils().restoreBiome(l, biome);
             }
             long delay = (mat) ? 500L : 1L;
             final TARDISMaterialisationData pbd = new TARDISMaterialisationData(plugin, player.getUniqueId().toString());

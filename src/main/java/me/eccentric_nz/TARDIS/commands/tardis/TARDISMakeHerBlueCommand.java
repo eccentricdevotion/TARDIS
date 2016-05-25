@@ -116,7 +116,7 @@ public class TARDISMakeHerBlueCommand {
         HashMap<String, Object> set = new HashMap<String, Object>();
         set.put("chameleon_preset", "NEW");
         qf.doUpdate("tardis", set, wherep);
-        final TARDISMaterialisationData pbd = new TARDISMaterialisationData(plugin, player.getUniqueId().toString());
+        final TARDISMaterialisationData pbd = new TARDISMaterialisationData(plugin, uuid.toString());
         pbd.setChameleon(false);
         pbd.setDirection(rsc.getDirection());
         pbd.setLocation(l);
@@ -132,7 +132,7 @@ public class TARDISMakeHerBlueCommand {
             public void run() {
                 plugin.getPresetBuilder().buildPreset(pbd);
             }
-        }, 10L);
+        }, 20L);
         TARDISMessage.send(player.getPlayer(), "INVISIBILITY_REMOVED");
         HashMap<String, Object> wheret = new HashMap<String, Object>();
         wheret.put("tardis_id", id);

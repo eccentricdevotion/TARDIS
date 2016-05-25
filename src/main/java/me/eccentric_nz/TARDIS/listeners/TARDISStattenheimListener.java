@@ -258,6 +258,8 @@ public class TARDISStattenheimListener implements Listener {
                             set.put("hidden", 0);
                             tid.put("tardis_id", id);
                             qf.doUpdate("tardis", set, tid);
+                            // restore biome
+                            plugin.getUtils().restoreBiome(oldSave, rsc.getBiome());
                         }
                         TARDISMessage.send(player, "TARDIS_COMING");
                         boolean mat = plugin.getConfig().getBoolean("police_box.materialise");

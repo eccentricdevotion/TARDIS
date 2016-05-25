@@ -31,7 +31,6 @@ import org.bukkit.Chunk;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
-import org.bukkit.World.Environment;
 import org.bukkit.block.Biome;
 import org.bukkit.block.Block;
 
@@ -90,24 +89,9 @@ public class TARDISDeinstaPreset {
         }
         final int sbz = l.getBlockZ() - 1;
         // reset biome and it's not The End
-        if (l.getBlock().getBiome().equals(Biome.DEEP_OCEAN) || (l.getBlock().getBiome().equals(Biome.SKY) && !l.getWorld().getEnvironment().equals(Environment.THE_END)) && biome != null) {
-            // reset the biome
-            boolean run = true;
-            for (int c = 0; c < 3 && run; c++) {
-                for (int r = 0; r < 3 && run; r++) {
-                    try {
-                        w.setBiome(sbx + c, sbz + r, biome);
-                    } catch (NullPointerException e) {
-                        //plugin.debug(plugin.getPluginName() + "Couldn't set biome!\nWorld = " + w.toString() + "\nsbx = " + sbx + "\nsbz = " + sbz + "\nbiome = " + biome.toString());
-                        e.printStackTrace();
-                        run = false;
-                        // remove TARDIS from tracker
-                        plugin.getTrackerKeeper().getDematerialising().remove(Integer.valueOf(id));
-                    }
-                }
-            }
-            // refresh the chunk
-            w.refreshChunk(chunk.getX(), chunk.getZ());
+        if (!plugin.getUtils().restoreBiome(l, biome)) {
+            // remove TARDIS from tracker
+            plugin.getTrackerKeeper().getDematerialising().remove(Integer.valueOf(id));
         }
         // remove problem blocks first
         switch (preset) {

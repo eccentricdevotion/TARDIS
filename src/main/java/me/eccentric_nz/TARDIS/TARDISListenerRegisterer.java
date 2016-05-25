@@ -318,9 +318,6 @@ public class TARDISListenerRegisterer {
                         if (!plugin.getInvManager().equals(INVENTORY_MANAGER.NONE)) {
                             plugin.getPM().registerEvents(new TARDISInventoryPluginHelper(plugin), plugin);
                         }
-//                        if (plugin.getPM().isPluginEnabled("GameModeInventories")) {
-//                            plugin.getPM().registerEvents(new TARDISGMIHelper(plugin), plugin);
-//                        }
                     }
                 }
                 plugin.getPM().registerEvents(new TARDISLazarusListener(plugin), plugin);

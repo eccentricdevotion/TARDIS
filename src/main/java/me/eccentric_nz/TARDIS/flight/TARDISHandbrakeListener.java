@@ -328,6 +328,8 @@ public class TARDISHandbrakeListener implements Listener {
                                                 // set hidden false!
                                                 set.put("hidden", 0);
                                                 plugin.getPresetDestroyer().removeBlockProtection(id, new QueryFactory(plugin));
+                                                // restore biome
+                                                plugin.getUtils().restoreBiome(l, biome);
                                             }
                                             // get destination flight data
                                             final TARDISMaterialisationData pbd = new TARDISMaterialisationData(plugin, uuid.toString());

@@ -29,6 +29,7 @@ import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.WorldType;
+import org.bukkit.block.Biome;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 import org.bukkit.entity.Entity;
@@ -207,5 +208,30 @@ public class TARDISUtils {
         List<Entity> ents = orb.getNearbyEntities(16.0d, 16.0d, 16.0d);
         orb.remove();
         return ents;
+    }
+
+    public boolean restoreBiome(Location l, Biome biome) {
+        int sbx = l.getBlockX() - 1;
+        final int sbz = l.getBlockZ() - 1;
+        World w = l.getWorld();
+        boolean run = true;
+        // reset biome and it's not The End
+        if (l.getBlock().getBiome().equals(Biome.DEEP_OCEAN) || (l.getBlock().getBiome().equals(Biome.SKY) && !l.getWorld().getEnvironment().equals(World.Environment.THE_END)) && biome != null) {
+            // reset the biome
+            for (int c = 0; c < 3 && run; c++) {
+                for (int r = 0; r < 3 && run; r++) {
+                    try {
+                        w.setBiome(sbx + c, sbz + r, biome);
+                    } catch (NullPointerException e) {
+                        e.printStackTrace();
+                        return false;
+                    }
+                }
+            }
+            // refresh the chunk
+            //Chunk chunk = w.getChunkAt(l);
+            //w.refreshChunk(chunk.getX(), chunk.getZ());
+        }
+        return run;
     }
 }

@@ -201,6 +201,8 @@ public class TARDISTimeLordDeathListener implements Listener {
                                             HashMap<String, Object> tid = new HashMap<String, Object>();
                                             tid.put("tardis_id", id);
                                             qf.doUpdate("tardis", set, tid);
+                                            // restore biome
+                                            plugin.getUtils().restoreBiome(sl, rsc.getBiome());
                                         }
                                         final TARDISMaterialisationData pbd = new TARDISMaterialisationData(plugin, uuid.toString());
                                         pbd.setChameleon(cham);
