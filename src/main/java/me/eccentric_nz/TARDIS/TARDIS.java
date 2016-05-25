@@ -55,6 +55,7 @@ import me.eccentric_nz.TARDIS.database.TARDISLastKnownNameUpdater;
 import me.eccentric_nz.TARDIS.database.TARDISLocationsConverter;
 import me.eccentric_nz.TARDIS.database.TARDISMaterialIDConverter;
 import me.eccentric_nz.TARDIS.database.TARDISMySQLDatabase;
+import me.eccentric_nz.TARDIS.database.TARDISRecordingTask;
 import me.eccentric_nz.TARDIS.database.TARDISSQLiteDatabase;
 import me.eccentric_nz.TARDIS.database.TARDISUUIDConverter;
 import me.eccentric_nz.TARDIS.database.TARDISWorldRemover;
@@ -103,6 +104,7 @@ import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.PluginDescriptionFile;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
+import org.bukkit.scheduler.BukkitTask;
 
 /**
  * The main class where everything is enabled and disabled.
@@ -174,6 +176,7 @@ public class TARDIS extends JavaPlugin {
     private final HashMap<String, String> versions = new HashMap<String, String>();
     private String prefix;
     private DIFFICULTY difficulty;
+    private BukkitTask recordingTask;
 
     public TARDIS() {
         this.worldGuardOnServer = false;
@@ -373,6 +376,7 @@ public class TARDIS extends JavaPlugin {
                 long delay = getConfig().getLong("junk.return") * 20L;
                 getServer().getScheduler().scheduleSyncRepeatingTask(this, new TARDISJunkReturnRunnable(this), delay, delay);
             }
+            startRecorderTask();
         } else {
             console.sendMessage(pluginName + ChatColor.RED + "This plugin requires CraftBukkit/Spigot " + minversion + " or higher, disabling...");
             pm.disablePlugin(this);
@@ -1204,5 +1208,15 @@ public class TARDIS extends JavaPlugin {
 
     public void setDifficulty(DIFFICULTY difficulty) {
         this.difficulty = difficulty;
+    }
+
+    public void startRecorderTask() {
+        int recorder_tick_delay = 5;
+        // we schedule it once, it will reschedule itself
+        recordingTask = getServer().getScheduler().runTaskLaterAsynchronously(this, new TARDISRecordingTask(this), recorder_tick_delay);
+    }
+
+    public void setRecordingTask(BukkitTask recordingTask) {
+        this.recordingTask = recordingTask;
     }
 }
