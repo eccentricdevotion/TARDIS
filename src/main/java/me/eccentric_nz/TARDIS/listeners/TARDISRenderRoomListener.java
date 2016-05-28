@@ -53,6 +53,7 @@ public class TARDISRenderRoomListener implements Listener {
             if (event.getAction().equals(Action.RIGHT_CLICK_BLOCK) || event.getAction().equals(Action.RIGHT_CLICK_AIR)) {
                 // tp the player back to the TARDIS console
                 transmat(player);
+                player.updateInventory();
             }
         }
     }
