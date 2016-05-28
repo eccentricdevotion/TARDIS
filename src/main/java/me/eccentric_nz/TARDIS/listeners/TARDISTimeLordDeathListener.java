@@ -196,6 +196,7 @@ public class TARDISTimeLordDeathListener implements Listener {
                                         tid.put("tardis_id", id);
                                         if (!rs.isHidden()) {
                                             plugin.getPresetDestroyer().destroyPreset(pdd);
+                                            plugin.getTrackerKeeper().getDematerialising().add(pdd.getTardisID());
                                             plugin.getTrackerKeeper().getInVortex().add(id);
                                             // play tardis_takeoff sfx
                                             TARDISSounds.playTARDISSound(sl, "tardis_takeoff");

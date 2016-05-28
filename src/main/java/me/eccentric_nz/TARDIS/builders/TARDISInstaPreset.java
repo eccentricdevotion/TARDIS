@@ -18,6 +18,7 @@ package me.eccentric_nz.TARDIS.builders;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Random;
@@ -482,8 +483,9 @@ public class TARDISInstaPreset {
                 }, 30L);
             }
         }
-        plugin.getTrackerKeeper().getMaterialising().remove(Integer.valueOf(tmd.getTardisID()));
-        plugin.getTrackerKeeper().getInVortex().remove(Integer.valueOf(tmd.getTardisID()));
+        plugin.getTrackerKeeper().getMaterialising().removeAll(Collections.singleton(tmd.getTardisID()));
+        plugin.getTrackerKeeper().getDematerialising().removeAll(Collections.singleton(tmd.getTardisID()));
+        plugin.getTrackerKeeper().getInVortex().removeAll(Collections.singleton(tmd.getTardisID()));
     }
 
     private void processDoor(String doorloc, QueryFactory qf) {
