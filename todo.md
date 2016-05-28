@@ -9,10 +9,10 @@
 3. [Auto powerup](http://dev.bukkit.org/bukkit-plugins/tardis/tickets/1209-auto-powerup/)
 4. [Red time rotor](http://dev.bukkit.org/bukkit-plugins/tardis/tickets/1216-red-time-rotor/)
 5. [TARDISDalekCities](http://dev.bukkit.org/bukkit-plugins/tardis/tickets/1168-a-dalek-conquest/) addon?
-6. TARDISSonicBlaster addon?
-7. [Abandoned TARDISes](http://dev.bukkit.org/bukkit-plugins/tardis/tickets/1277-possibility-to-abandon-a-tardis/)
-8. [Destination 'vortex'](http://dev.bukkit.org/bukkit-plugins/tardis/tickets/1023-set-the-tardis-inflight-without-setting-a-destination/) - dematerialise without setting a destination.
-9. VOID biome for TARDIS interior
+6. [Abandoned TARDISes](http://dev.bukkit.org/bukkit-plugins/tardis/tickets/1277-possibility-to-abandon-a-tardis/)
+7. [Destination 'vortex'](http://dev.bukkit.org/bukkit-plugins/tardis/tickets/1023-set-the-tardis-inflight-without-setting-a-destination/) - dematerialise without setting a destination.
+8. VOID biome for TARDIS interior
+9. [Sonic screwdriver [flower] pot](http://dev.bukkit.org/bukkit-plugins/tardis/tickets/1239-new-screwdriver/)
 
 ##Upcoming minor version `3.7`
 1. Update for Minecraft 1.10
@@ -20,6 +20,7 @@
    * Add new mobs
    * Use new spawn eggs (farming & Lazarus GUI)
    * Structure blocks?
+2. TARDISSonicBlaster addon?
 
 ?
 
@@ -30,8 +31,7 @@
 
 ##Resource Pack / TARDISWeepingAngels
 
-1. Angels can now dual wield, so give them another wing!
-2. Re-skin mobs for Resource pack, and add new mob sounds
+1. Re-skin mobs for Resource pack, and add new mob sounds
 
    * Villagers -> Ood - _started texture_
    * Villagers -> Hath
@@ -41,6 +41,7 @@
    * Witches -> Slitheen / Whispermen?
    * Wolves -> K-9? (All the textures I seen so far just don't work - you shouldn't see the legs...)
    * Slimes -> Adipose
+   * Something with a Shulker passenger?
 
 ##Waiting on Bukkit / SpigotAPI
 0. IDs/data are soon to be history... so convert all ID/data use to block states 
