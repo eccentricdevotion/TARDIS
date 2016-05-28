@@ -18,6 +18,7 @@ package me.eccentric_nz.TARDIS.builders;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Random;
@@ -250,6 +251,8 @@ public class TARDISInstaPreset {
                 if (yy == 0 && (i == 1 || i == 3 || i == 5 || i == 7) && preset.equals(PRESET.INVISIBLE) && colids[yy] == 0) {
                     String invisible_door = world.getName() + ":" + xx + ":" + y + ":" + zz;
                     processDoor(invisible_door, qf);
+                    // if tardis is in the air add under door
+                    plugin.getBlockUtils().setUnderDoorBlock(world, xx, (y - 1), zz, tmd.getTardisID(), true);
                 }
                 switch (colids[yy]) {
                     case 2:
@@ -468,7 +471,7 @@ public class TARDISInstaPreset {
                         for (UUID s : travellers) {
                             Player trav = plugin.getServer().getPlayer(s);
                             if (trav != null) {
-                                String message = (tmd.isMalfunction()) ? "MALFUNCTIO." : "HANDBRAKE_LEFT_CLICK";
+                                String message = (tmd.isMalfunction()) ? "MALFUNCTION" : "HANDBRAKE_LEFT_CLICK";
                                 TARDISMessage.send(trav, message);
                                 // TARDIS has travelled so add players to list so they can receive Artron on exit
                                 if (!plugin.getTrackerKeeper().getHasTravelled().contains(s)) {
@@ -480,8 +483,9 @@ public class TARDISInstaPreset {
                 }, 30L);
             }
         }
-        plugin.getTrackerKeeper().getMaterialising().remove(Integer.valueOf(tmd.getTardisID()));
-        plugin.getTrackerKeeper().getInVortex().remove(Integer.valueOf(tmd.getTardisID()));
+        plugin.getTrackerKeeper().getMaterialising().removeAll(Collections.singleton(tmd.getTardisID()));
+        plugin.getTrackerKeeper().getDematerialising().removeAll(Collections.singleton(tmd.getTardisID()));
+        plugin.getTrackerKeeper().getInVortex().removeAll(Collections.singleton(tmd.getTardisID()));
     }
 
     private void processDoor(String doorloc, QueryFactory qf) {

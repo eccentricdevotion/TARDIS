@@ -174,7 +174,7 @@ public class TARDISTimeLordDeathListener implements Listener {
                                             plugin.getTrackerKeeper().getPerm().remove(player.getUniqueId());
                                             return;
                                         }
-                                        QueryFactory qf = new QueryFactory(plugin);
+                                        final QueryFactory qf = new QueryFactory(plugin);
                                         boolean cham = rs.isChamele_on();
                                         COMPASS fd = (going_home) ? hd : cd;
                                         // destroy police box
@@ -189,21 +189,24 @@ public class TARDISTimeLordDeathListener implements Listener {
                                         pdd.setSubmarine(rsc.isSubmarine());
                                         pdd.setTardisID(id);
                                         pdd.setBiome(rsc.getBiome());
+                                        // set handbrake off
+                                        HashMap<String, Object> set = new HashMap<String, Object>();
+                                        set.put("handbrake_on", 0);
+                                        HashMap<String, Object> tid = new HashMap<String, Object>();
+                                        tid.put("tardis_id", id);
                                         if (!rs.isHidden()) {
                                             plugin.getPresetDestroyer().destroyPreset(pdd);
+                                            plugin.getTrackerKeeper().getDematerialising().add(pdd.getTardisID());
                                             plugin.getTrackerKeeper().getInVortex().add(id);
                                             // play tardis_takeoff sfx
                                             TARDISSounds.playTARDISSound(sl, "tardis_takeoff");
                                         } else {
                                             plugin.getPresetDestroyer().removeBlockProtection(id, qf);
-                                            HashMap<String, Object> set = new HashMap<String, Object>();
                                             set.put("hidden", 0);
-                                            HashMap<String, Object> tid = new HashMap<String, Object>();
-                                            tid.put("tardis_id", id);
-                                            qf.doUpdate("tardis", set, tid);
                                             // restore biome
                                             plugin.getUtils().restoreBiome(sl, rsc.getBiome());
                                         }
+                                        qf.doUpdate("tardis", set, tid);
                                         final TARDISMaterialisationData pbd = new TARDISMaterialisationData(plugin, uuid.toString());
                                         pbd.setChameleon(cham);
                                         pbd.setDirection(fd);
@@ -222,6 +225,12 @@ public class TARDISTimeLordDeathListener implements Listener {
                                                 plugin.getTrackerKeeper().getInVortex().add(id);
                                                 // play tardis_land sfx
                                                 TARDISSounds.playTARDISSound(pbd.getLocation(), "tardis_land");
+                                                // set handbrake on
+                                                HashMap<String, Object> seth = new HashMap<String, Object>();
+                                                seth.put("handbrake_on", 1);
+                                                HashMap<String, Object> wheret = new HashMap<String, Object>();
+                                                wheret.put("tardis_id", id);
+                                                qf.doUpdate("tardis", seth, wheret);
                                             }
                                         }, 500L);
                                         // set current

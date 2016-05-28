@@ -101,7 +101,6 @@ public class TARDISPresetDestroyerFactory {
                     runnable.setTask(taskID);
                 }
             } else {
-                plugin.getTrackerKeeper().getMaterialising().add(pdd.getTardisID());
                 new TARDISDeinstaPreset(plugin).instaDestroyPreset(pdd, pdd.isHide(), demat);
             }
         }

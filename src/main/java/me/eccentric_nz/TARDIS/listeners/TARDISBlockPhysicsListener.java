@@ -50,7 +50,6 @@ public class TARDISBlockPhysicsListener implements Listener {
             plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
                 @Override
                 public void run() {
-                    plugin.debug("adding to queue: " + loc);
                     TARDISRecordingQueue.addToQueue(loc);
                 }
             }, 7L);

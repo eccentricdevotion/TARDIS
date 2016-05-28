@@ -78,7 +78,7 @@ public class TARDISPresetBuilderFactory {
      *
      * @param tmd the TARDIS build data
      */
-    public void buildPreset(TARDISMaterialisationData tmd) {
+    public void buildPreset(final TARDISMaterialisationData tmd) {
         HashMap<String, Object> where = new HashMap<String, Object>();
         where.put("tardis_id", tmd.getTardisID());
         ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);
@@ -161,9 +161,17 @@ public class TARDISPresetBuilderFactory {
                     runnable.setTask(taskID);
                 }
             } else {
-                plugin.getTrackerKeeper().getMaterialising().add(tmd.getTardisID());
-                TARDISInstaPreset insta = new TARDISInstaPreset(plugin, tmd, preset, cham_id, cham_data, false);
-                insta.buildPreset();
+                final int id = cham_id;
+                final byte data = cham_data;
+                // delay by the usual time so handbrake message shows after materialisation sound
+                plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
+                    @Override
+                    public void run() {
+                        plugin.getTrackerKeeper().getMaterialising().add(tmd.getTardisID());
+                        TARDISInstaPreset insta = new TARDISInstaPreset(plugin, tmd, PRESET.INVISIBLE, id, data, false);
+                        insta.buildPreset();
+                    }
+                }, 430L);
             }
             // update demat so it knows about the current preset after it has changed
             HashMap<String, Object> whered = new HashMap<String, Object>();

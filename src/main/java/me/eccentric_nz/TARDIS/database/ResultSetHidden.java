@@ -57,14 +57,14 @@ public class ResultSetHidden {
     public boolean isVisible() {
         PreparedStatement statement = null;
         ResultSet rs = null;
-        String query = "SELECT hidden FROM " + prefix + "tardis WHERE tardis_id =" + id;
+        String query = "SELECT hidden, chameleon_preset FROM " + prefix + "tardis WHERE tardis_id =" + id;
         try {
             service.testConnection(connection);
             statement = connection.prepareStatement(query);
             rs = statement.executeQuery();
             if (rs.isBeforeFirst()) {
                 rs.next();
-                return rs.getBoolean("hidden");
+                return rs.getBoolean("hidden") || rs.getString("chameleon_preset").equals("INVISIBLE");
             }
         } catch (SQLException e) {
             plugin.debug("ResultSet error for hidden! " + e.getMessage());

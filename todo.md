@@ -12,6 +12,7 @@
 6. TARDISSonicBlaster addon?
 7. [Abandoned TARDISes](http://dev.bukkit.org/bukkit-plugins/tardis/tickets/1277-possibility-to-abandon-a-tardis/)
 8. [Destination 'vortex'](http://dev.bukkit.org/bukkit-plugins/tardis/tickets/1023-set-the-tardis-inflight-without-setting-a-destination/) - dematerialise without setting a destination.
+9. VOID biome for TARDIS interior
 
 ##Upcoming minor version `3.7`
 1. Update for Minecraft 1.10

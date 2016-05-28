@@ -17,6 +17,7 @@
 package me.eccentric_nz.TARDIS.destroyers;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.builders.TARDISMaterialisationData;
@@ -201,7 +202,7 @@ public class TARDISDeinstaPreset {
         }
         // refresh chunk
         w.refreshChunk(chunk.getX(), chunk.getZ());
-        plugin.getTrackerKeeper().getMaterialising().remove(Integer.valueOf(id));
-        plugin.getTrackerKeeper().getInVortex().remove(Integer.valueOf(id));
+        plugin.getTrackerKeeper().getDematerialising().removeAll(Collections.singleton(id));
+        plugin.getTrackerKeeper().getInVortex().removeAll(Collections.singleton(id));
     }
 }
