@@ -250,6 +250,8 @@ public class TARDISInstaPreset {
                 if (yy == 0 && (i == 1 || i == 3 || i == 5 || i == 7) && preset.equals(PRESET.INVISIBLE) && colids[yy] == 0) {
                     String invisible_door = world.getName() + ":" + xx + ":" + y + ":" + zz;
                     processDoor(invisible_door, qf);
+                    // if tardis is in the air add under door
+                    plugin.getBlockUtils().setUnderDoorBlock(world, xx, (y - 1), zz, tmd.getTardisID(), true);
                 }
                 switch (colids[yy]) {
                     case 2:
