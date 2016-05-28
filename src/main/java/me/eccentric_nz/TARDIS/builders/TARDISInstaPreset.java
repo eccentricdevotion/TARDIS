@@ -470,7 +470,7 @@ public class TARDISInstaPreset {
                         for (UUID s : travellers) {
                             Player trav = plugin.getServer().getPlayer(s);
                             if (trav != null) {
-                                String message = (tmd.isMalfunction()) ? "MALFUNCTIO." : "HANDBRAKE_LEFT_CLICK";
+                                String message = (tmd.isMalfunction()) ? "MALFUNCTION" : "HANDBRAKE_LEFT_CLICK";
                                 TARDISMessage.send(trav, message);
                                 // TARDIS has travelled so add players to list so they can receive Artron on exit
                                 if (!plugin.getTrackerKeeper().getHasTravelled().contains(s)) {
