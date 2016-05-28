@@ -171,7 +171,7 @@ public class TARDISPresetBuilderFactory {
                         TARDISInstaPreset insta = new TARDISInstaPreset(plugin, tmd, PRESET.INVISIBLE, id, data, false);
                         insta.buildPreset();
                     }
-                }, 500L);
+                }, 430L);
             }
             // update demat so it knows about the current preset after it has changed
             HashMap<String, Object> whered = new HashMap<String, Object>();
