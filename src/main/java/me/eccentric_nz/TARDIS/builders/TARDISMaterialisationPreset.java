@@ -164,6 +164,7 @@ public class TARDISMaterialisationPreset implements Runnable {
                         TARDISDoorLocation idl = plugin.getGeneralKeeper().getDoorListener().getDoor(1, tmd.getTardisID());
                         Location l = idl.getL();
                         plugin.getGeneralKeeper().getDoorListener().movePlayer(saved, l, false, world, false, 0, tmd.useMinecartSounds());
+                        TARDISSounds.playTARDISSound(saved, "tardis_land_fast");
                         // put player into travellers table
                         HashMap<String, Object> set = new HashMap<String, Object>();
                         set.put("tardis_id", tmd.getTardisID());

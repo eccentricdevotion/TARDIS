@@ -95,4 +95,14 @@ public class TARDISSounds {
             TARDISMessage.message(TARDIS.plugin.getConsole(), "Sound method not found, please update Spigot / CraftBukkit using BuildTools!");
         }
     }
+
+    /**
+     * Plays a TARIS sound for the specified player.
+     *
+     * @param p The player
+     * @param s The sound to play
+     */
+    public static void playTARDISSound(Player p, String s) {
+        p.playSound(p.getLocation(), s, VOLUME, 1.0f);
+    }
 }
