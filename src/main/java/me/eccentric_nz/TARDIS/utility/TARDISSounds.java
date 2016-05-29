@@ -102,7 +102,12 @@ public class TARDISSounds {
      * @param p The player
      * @param s The sound to play
      */
-    public static void playTARDISSound(Player p, String s) {
-        p.playSound(p.getLocation(), s, VOLUME, 1.0f);
+    public static void playTARDISSound(final Player p, final String s) {
+        TARDIS.plugin.getServer().getScheduler().scheduleSyncDelayedTask(TARDIS.plugin, new Runnable() {
+            @Override
+            public void run() {
+                p.playSound(p.getLocation(), s, VOLUME, 1.0f);
+            }
+        }, 5L);
     }
 }
