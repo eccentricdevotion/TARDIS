@@ -282,6 +282,9 @@ permissions:
   tardis.furnace:
     description: Allows a player to have a TARDIS Artron Furnace.
     default: op
+  tardis.acid.bypass:
+    description: Allows a player to not dissolve in the Skaro planet's acid water.
+    default: false
 commands:
   tardis:
     aliases: [tt, ttardis, /tardis, timelord]

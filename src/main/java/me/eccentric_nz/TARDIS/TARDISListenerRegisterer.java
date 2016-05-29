@@ -130,6 +130,7 @@ import me.eccentric_nz.TARDIS.schematic.TARDISSchematicListener;
 import me.eccentric_nz.TARDIS.siegemode.TARDISBreedingListener;
 import me.eccentric_nz.TARDIS.siegemode.TARDISGrowthListener;
 import me.eccentric_nz.TARDIS.siegemode.TARDISSiegeListener;
+import me.eccentric_nz.TARDIS.skaro.TARDISAcidWater;
 import me.eccentric_nz.TARDIS.sonic.TARDISFarmBlockListener;
 import me.eccentric_nz.TARDIS.sonic.TARDISSonicEntityListener;
 import me.eccentric_nz.TARDIS.sonic.TARDISSonicListener;
@@ -329,6 +330,9 @@ public class TARDISListenerRegisterer {
             plugin.getPM().registerEvents(new TARDISAntiBuildListener(plugin), plugin);
         }
         plugin.getPM().registerEvents(new TARDISPlayerKickListener(plugin), plugin);
+        if (plugin.getPlanetsConfig().getBoolean("planets.Skaro.enabled") && plugin.getPlanetsConfig().getBoolean("planets.Skaro.acid")) {
+            plugin.getPM().registerEvents(new TARDISAcidWater(plugin), plugin);
+        }
     }
 
     private boolean getNPCManager() {

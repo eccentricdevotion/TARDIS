@@ -41,7 +41,6 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitRunnable;
-import org.bukkit.util.Vector;
 
 /**
  *
@@ -57,16 +56,17 @@ public class TARDISAcidWater implements Listener {
     }
 
     @EventHandler(priority = EventPriority.LOW)
-    public void onPlayerDeath(PlayerDeathEvent e) {
-        burningPlayers.remove(e.getEntity());
+    public void onPlayerDeath(PlayerDeathEvent event) {
+        if (burningPlayers.contains(event.getEntity())) {
+            String name = event.getEntity().getName();
+            event.setDeathMessage(name + " was dissolved in acid");
+        }
+        burningPlayers.remove(event.getEntity());
     }
 
     @EventHandler(priority = EventPriority.LOWEST, ignoreCancelled = true)
     public void onPlayerMove(PlayerMoveEvent e) {
-        // Fast return if acid isn't being used
-        if (!plugin.getConfig().getBoolean("planets.Skaro.enabled") || !plugin.getConfig().getBoolean("planets.Skaro.acid")) {
-            return;
-        }
+
         final Player player = e.getPlayer();
         final Location loc = player.getLocation(); // Grab Location
 
@@ -106,20 +106,12 @@ public class TARDISAcidWater implements Listener {
         if (!block.isLiquid() && !head.isLiquid()) {
             return;
         }
-        // only in configured biomes
-
-        // Find out if they are at the bottom of the sea and if so bounce them back up
-        if (loc.getBlockY() < 1) {
-            final Vector v = new Vector(player.getVelocity().getX(), 1D, player.getVelocity().getZ());
-            player.setVelocity(v);
-        }
         // If they are already burning in acid then return
         if (burningPlayers.contains(player)) {
             return;
         }
         // Check if they are in water
         if (block.getType().equals(Material.STATIONARY_WATER) || block.getType().equals(Material.WATER) || head.getType().equals(Material.STATIONARY_WATER) || head.getType().equals(Material.WATER)) {
-            //plugin.getLogger().info("DEBUG: head = " + head.getType() + " body = " + block.getType());
             // Check if player is in a boat
             Entity playersVehicle = player.getVehicle();
             if (playersVehicle != null) {
@@ -132,19 +124,15 @@ public class TARDISAcidWater implements Listener {
             // Check if player has an active water potion or not
             Collection<PotionEffect> activePotions = player.getActivePotionEffects();
             for (PotionEffect s : activePotions) {
-                // plugin.getLogger().info("Potion is : " + s.getType().toString());
                 if (s.getType().equals(PotionEffectType.WATER_BREATHING)) {
                     // Safe!
-                    //plugin.getLogger().info("DEBUG: Water breathing potion protection!");
                     return;
                 }
             }
             // ACID!
-            //plugin.getLogger().info("DEBUG: Acid!");
             // Put the player into the acid list
             burningPlayers.add(player);
-            // This runnable continuously hurts the player even if they are not
-            // moving but are in acid.
+            // This runnable continuously hurts the player even if they are not moving but are in acid.
             new BukkitRunnable() {
                 @Override
                 public void run() {
@@ -152,27 +140,20 @@ public class TARDISAcidWater implements Listener {
                         burningPlayers.remove(player);
                         this.cancel();
                     } else if ((player.getLocation().getBlock().isLiquid() || player.getLocation().getBlock().getRelative(BlockFace.UP).isLiquid()) && player.getLocation().getWorld().getName().equalsIgnoreCase("Skaro")) {
-                        // plugin.getLogger().info("Damage setting = " + Settings.acidDamage);
-                        // plugin.getLogger().info("Damage to player = " + (Settings.general_acidDamage - Settings.general_acidDamage * getDamageReduced(player)));
-                        // plugin.getLogger().info("Player health is " + player.getHealth());
                         // Apply additional potion effects
-                        // plugin.getLogger().info("Potion damage " + Settings.acidDamageType.toString());
-                        if (!plugin.getConfig().getStringList("planets.Skaro.acid_potions").isEmpty()) {
-                            for (String t : plugin.getConfig().getStringList("planets.Skaro.acid_potions")) {
+                        if (!plugin.getPlanetsConfig().getStringList("planets.Skaro.acid_potions").isEmpty()) {
+                            for (String t : plugin.getPlanetsConfig().getStringList("planets.Skaro.acid_potions")) {
                                 PotionEffectType pet = PotionEffectType.getByName(t);
-                                // plugin.getLogger().info("Applying " + pet.toString());
-                                // player.addPotionEffect(new PotionEffect(t, 20, amplifier));
                                 if (pet != null && (pet.equals(PotionEffectType.BLINDNESS) || pet.equals(PotionEffectType.CONFUSION) || pet.equals(PotionEffectType.HUNGER) || pet.equals(PotionEffectType.SLOW) || pet.equals(PotionEffectType.SLOW_DIGGING) || pet.equals(PotionEffectType.WEAKNESS))) {
-                                    player.addPotionEffect(new PotionEffect(pet, 600, 1));
+                                    player.addPotionEffect(new PotionEffect(pet, 200, 1));
                                 } else {
                                     // Poison
-                                    player.addPotionEffect(new PotionEffect(pet, 200, 1));
+                                    player.addPotionEffect(new PotionEffect(pet, 50, 1));
                                 }
                             }
                         }
-                        // double health = player.getHealth();
                         // Apply damage if there is any
-                        double ad = plugin.getConfig().getDouble("planets.Skaro.acid_damage");
+                        double ad = plugin.getPlanetsConfig().getDouble("planets.Skaro.acid_damage");
                         if (ad > 0d) {
                             double health = player.getHealth() - (ad - ad * getDamageReduced(player));
                             if (health < 0D) {
@@ -185,7 +166,6 @@ public class TARDISAcidWater implements Listener {
                         }
                     } else {
                         burningPlayers.remove(player);
-                        // plugin.getLogger().info("Cancelled!");
                         this.cancel();
                     }
                 }
