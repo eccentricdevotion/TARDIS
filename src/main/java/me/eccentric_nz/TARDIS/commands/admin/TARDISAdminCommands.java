@@ -22,10 +22,10 @@ import java.util.List;
 import java.util.Locale;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.arch.TARDISArchCommand;
-import me.eccentric_nz.TARDIS.builders.TARDISSkaro;
 import me.eccentric_nz.TARDIS.commands.TARDISCommandHelper;
 import me.eccentric_nz.TARDIS.enumeration.DIFFICULTY;
 import me.eccentric_nz.TARDIS.enumeration.PRESET;
+import me.eccentric_nz.TARDIS.skaro.TARDISSkaro;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -226,7 +226,11 @@ public class TARDISAdminCommands implements CommandExecutor {
                 }
                 if (args.length == 1) {
                     if (first.equals("skaro")) {
-                        new TARDISSkaro(plugin).createDalekWorld();
+                        if (plugin.getServer().getWorld("Skaro") == null) {
+                            new TARDISSkaro(plugin).createDalekWorld();
+                        } else {
+                            TARDISMessage.send(sender, "WORLD_EXISTS", "Skaro");
+                        }
                         return true;
                     }
                     if (first.equals("chunks")) {

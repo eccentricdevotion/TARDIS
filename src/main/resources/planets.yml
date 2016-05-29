@@ -1,0 +1,9 @@
+planets:
+    Skaro:
+        enabled: false
+        acid: true
+        acid_damage: 5
+        acid_potions:
+            - WEAKNESS
+            - POISON
+        rust: true

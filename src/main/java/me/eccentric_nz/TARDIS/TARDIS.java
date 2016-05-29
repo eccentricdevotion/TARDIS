@@ -81,6 +81,7 @@ import me.eccentric_nz.TARDIS.rooms.TARDISWalls;
 import me.eccentric_nz.TARDIS.rooms.TARDISZeroRoomRunnable;
 import me.eccentric_nz.TARDIS.siegemode.TARDISSiegePersister;
 import me.eccentric_nz.TARDIS.siegemode.TARDISSiegeRunnable;
+import me.eccentric_nz.TARDIS.skaro.TARDISSkaro;
 import me.eccentric_nz.TARDIS.travel.TARDISArea;
 import me.eccentric_nz.TARDIS.travel.TARDISPluginRespect;
 import me.eccentric_nz.TARDIS.utility.TARDISBlockSetters;
@@ -137,6 +138,7 @@ public class TARDIS extends JavaPlugin {
     private FileConfiguration recipesConfig;
     private FileConfiguration roomsConfig;
     private FileConfiguration tagConfig;
+    private FileConfiguration planetsConfig;
     private HashMap<String, Integer> condensables;
     private int standbyTask;
     private PluginDescriptionFile pdfFile;
@@ -280,6 +282,7 @@ public class TARDIS extends JavaPlugin {
             checkTCG();
             checkDefaultWorld();
             cleanUpWorlds();
+            setupPlanets();
             utils = new TARDISUtils(this);
             locationUtils = new TARDISLocationGetters(this);
             blockUtils = new TARDISBlockSetters(this);
@@ -578,6 +581,7 @@ public class TARDIS extends JavaPlugin {
         tardisCopier.copy("artron.yml");
         tardisCopier.copy("blocks.yml");
         tardisCopier.copy("rooms.yml");
+        tardisCopier.copy("planets.yml");
         tardisCopier.copy("tag.yml");
         tardisCopier.copy("recipes.yml");
         tardisCopier.copy("kits.yml");
@@ -595,6 +599,7 @@ public class TARDIS extends JavaPlugin {
         this.artronConfig = YamlConfiguration.loadConfiguration(new File(getDataFolder(), "artron.yml"));
         this.blocksConfig = YamlConfiguration.loadConfiguration(new File(getDataFolder(), "blocks.yml"));
         this.roomsConfig = YamlConfiguration.loadConfiguration(new File(getDataFolder(), "rooms.yml"));
+        this.planetsConfig = YamlConfiguration.loadConfiguration(new File(getDataFolder(), "planets.yml"));
         this.tagConfig = YamlConfiguration.loadConfiguration(new File(getDataFolder(), "tag.yml"));
         this.recipesConfig = YamlConfiguration.loadConfiguration(new File(getDataFolder(), "recipes.yml"));
         this.kitsConfig = YamlConfiguration.loadConfiguration(new File(getDataFolder(), "kits.yml"));
@@ -965,6 +970,13 @@ public class TARDIS extends JavaPlugin {
         }
     }
 
+    private void setupPlanets() {
+        // Skaro
+        if (plugin.getPlanetsConfig().getBoolean("planets.Skaro.enabled") && getServer().getWorld("Skaro") == null) {
+            new TARDISSkaro(plugin).createDalekWorld();
+        }
+    }
+
     /**
      * Makes sure that the biome field in the current table is not empty.
      */
@@ -1022,6 +1034,10 @@ public class TARDIS extends JavaPlugin {
 
     public FileConfiguration getRoomsConfig() {
         return roomsConfig;
+    }
+
+    public FileConfiguration getPlanetsConfig() {
+        return planetsConfig;
     }
 
     public FileConfiguration getTagConfig() {
