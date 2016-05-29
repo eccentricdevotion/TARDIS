@@ -32,6 +32,64 @@
     <section>
         <h1>Change log</h1>
         <h2>What&rsquo;s been changed?</h2>
+        <h3>TARDIS v3.5.3</h3>
+        <ul>
+            <li><strong>TARDIS requires TARDISChunkGenerator v2.3 and CraftBukkit 1.9.4</strong></li>
+        </ul>
+        <h4>Additions</h4>
+        <ul>
+            <li>Grass path blocks are restored when the TARDIS leaves the affected location</li>
+            <li>Added new sound effects
+                <ul>
+                    <li>a faster materialisation sound effect when the TARDIS rebuilds</li>
+                    <li>a faster dematerialisation sound effect when the TARDIS hides</li>
+                    <li>requires an update to the <a href="https://github.com/eccentricdevotion/TARDIS-SoundResourcePack">TARDIS-SoundResourcePack</a></li>
+                </ul>
+            </li>
+            <li>Added cooldown logic to the TARDIS remote key rebuild &amp; hide feature</li>
+            <li>Added an under door block to the INVISIBLE preset if the block under is AIR</li>
+        </ul>
+        <h4>Changes</h4>
+        <ul>
+            <li>HADS no longer engages if the TARDIS is powered down</li>
+            <li>The Remote Key no longer functions if the TARDIS is powered down</li>
+            <li>The required server version is now explicitly specified in the plugin disable message</li>
+            <li>Materialisation sound effects are now played for autonomous homing (inside and outside the TARDIS)</li>
+            <li>Materialisation sound effects are now played when EP1 appears</li>
+            <li>Players are now removed from the <code>travellers</code> table if they respawn in a non-TARDIS world after dying</li>
+            <li>Doors are now closed (and portals removed) before autonomously returning home &mdash; may fix monsters spawning when the door is (supposedly) closed</li>
+            <li>Monsters should no longer randomly spawn inside a TARDIS when set to the INVISIBLE preset</li>
+            <li>The plugin now allows the <code>/tardis occupy</code> command for companions outside the TARDIS</li>
+        </ul>
+        <h4>Bug fixes</h4>
+        <ul>
+            <li>Fixed the Police Box door falling off when landing on grass paths</li>
+            <li>Materialisation sound effects are no longer played when <code>police_box.materialise</code> is <code>false</code></li>
+            <li>Companions can now rescue the Time Lord of a TARDIS using the telepathic circuit</li>
+            <li>Fixed an error when showing the Artron Indicator and the player had already disconnected from the server</li>
+            <li>Prevented rebuilding the TARDIS while it &rsquo;s still hiding</li>
+            <li>Prevented companions opening the door when TARDIS autonomous homes and is still materialising</li>
+            <li>The plugin now restores the biome at the Police Box &rsquo;s last location when leaving &mdash; even if the TARDIS was hidden</li>
+            <li>Fixed a <code>null</code> message when there is malfunction with the INVISIBLE preset</li>
+            <li>Fixed the TARDIS becoming unusable when autonomously returning with invisibility engaged</li>
+            <li>The player &rsquo;s inventory is updated after cancelling the block place event in the renderer room (so the item appears back in the inventory without having to click on it)</li>
+        </ul>
+        <h3>TARDIS v3.5.2</h3>
+        <ul>
+            <li>TARDISChunkGenerator updated for CraftBukkit 1.9.4</li>
+            <li><strong>TARDIS requires TARDISChunkGenerator v2.3 and CraftBukkit 1.9.4</strong></li>
+        </ul>
+        <h3>TARDIS v3.5.1</h3>
+        <h4>Bug fixes</h4>
+        <ul>
+            <li>Fixed the wrong chunk loading when the TARDIS materialises</li>
+            <li>Fixed a bug with using TARDIS items when the off hand contains a usable item (like a shield)</li>
+            <li>Fixed a nasty bug with HADS &mdash; DISPERSAL was running when the HADS type was  set to DISPLACEMENT and a safe location wasn &rsquo;t found on the first try &mdash; this left the plugin thinking that the TARDIS was permanently in dispersed mode. See how to fix this below...</li>
+        </ul>
+        <h4>Additions</h4>
+        <ul>
+            <li>Added a <code>/tardisadmin assemble [all|player]</code> command to unset the dispersed trackers for <code>all</code> dispersed TARDISes, or a specific <code>player</code> TARDIS</li>
+        </ul>
         <h3>TARDIS v3.5</h3>
         <h4>Additions</h4>
         <ul>
@@ -107,7 +165,7 @@
                 <p>Added world name tab completion to <code>/tardisadmin</code> and <code>/tardistravel</code> commands</p>
             </li>
             <li>Added a Companion GUI for the <code>/tardis list companions</code> and <code>/tardis add</code> commands</li>
-            <li>Added a <code>/tardisprefs policebox_textures [on|off]</code> command - setting this to <code>off</code> stops the plugin changing the biome (for MCPatcher texture support) when the Police Box materialises</li>
+            <li>Added a <code>/tardisprefs policebox_textures [on|off]</code> command &mdash; setting this to <code>off</code> stops the plugin changing the biome (for MCPatcher texture support) when the Police Box materialises</li>
             <li>
                 <p>Implemented the Hostile Action Dispersal System</p>
                 <ul>
@@ -135,7 +193,7 @@
         <h4>Changes</h4>
         <ul>
             <li>Carpet is no longer allowed in custom Chameleon presets</li>
-            <li>Updated some dependent plugin versions - make sure you have the latest 1.9 versions</li>
+            <li>Updated some dependent plugin versions &mdash; make sure you have the latest 1.9 versions</li>
             <li>The plugin now uses the new BossBar API instead of the BarAPI plugin for the TARDIS travel bar</li>
             <li>The plugin now uses the new Particle API for Artron Furnace and Junk TARDIS particle effects instead of the EffectLib plugin</li>
             <li>The plugin now checks that Multiverse-Inventories is the correct build (as well as version)</li>
@@ -177,8 +235,8 @@
                     <li><code>kill</code> will set the players&rsquo; health to <code>0</code>, resulting in death</li>
                 </ul>
             </li>
-            <li>Added a <code>/tardistravel cancel</code> command - cancels the last set destination</li>
-            <li>Added <code>/ttravel costs</code> command - shows the Artron Energy costs for TARDIS travel</li>
+            <li>Added a <code>/tardistravel cancel</code> command &mdash; cancels the last set destination</li>
+            <li>Added <code>/ttravel costs</code> command &mdash; shows the Artron Energy costs for TARDIS travel</li>
         </ul>
         <h4>Changes</h4>
         <ul>
