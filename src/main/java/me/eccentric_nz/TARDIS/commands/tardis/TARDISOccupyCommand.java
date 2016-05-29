@@ -39,16 +39,7 @@ public class TARDISOccupyCommand {
 
     public boolean toggleOccupancy(Player player) {
         if (player.hasPermission("tardis.timetravel")) {
-            HashMap<String, Object> where = new HashMap<String, Object>();
-            where.put("uuid", player.getUniqueId().toString());
-            ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);
-            if (!rs.resultSet()) {
-                TARDISMessage.send(player, "NOT_A_TIMELORD");
-                return false;
-            }
-            int id = rs.getTardis_id();
             HashMap<String, Object> wheret = new HashMap<String, Object>();
-            //wheret.put("tardis_id", id);
             wheret.put("uuid", player.getUniqueId().toString());
             ResultSetTravellers rst = new ResultSetTravellers(plugin, wheret, false);
             String occupied;
@@ -64,17 +55,23 @@ public class TARDISOccupyCommand {
                     TARDISMessage.send(player, "OCCUPY_MUST_BE_OUT");
                     return true;
                 }
-            } else {
-                if (plugin.getUtils().inTARDISWorld(player)) {
-                    HashMap<String, Object> wherei = new HashMap<String, Object>();
-                    wherei.put("tardis_id", id);
-                    wherei.put("uuid", player.getUniqueId().toString());
-                    qf.doInsert("travellers", wherei);
-                    occupied = ChatColor.GREEN + plugin.getLanguage().getString("OCCUPY_IN");
-                } else {
-                    TARDISMessage.send(player, "OCCUPY_MUST_BE_IN");
-                    return true;
+            } else if (plugin.getUtils().inTARDISWorld(player)) {
+                HashMap<String, Object> where = new HashMap<String, Object>();
+                where.put("uuid", player.getUniqueId().toString());
+                ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);
+                if (!rs.resultSet()) {
+                    TARDISMessage.send(player, "NOT_A_TIMELORD");
+                    return false;
                 }
+                int id = rs.getTardis_id();
+                HashMap<String, Object> wherei = new HashMap<String, Object>();
+                wherei.put("tardis_id", id);
+                wherei.put("uuid", player.getUniqueId().toString());
+                qf.doInsert("travellers", wherei);
+                occupied = ChatColor.GREEN + plugin.getLanguage().getString("OCCUPY_IN");
+            } else {
+                TARDISMessage.send(player, "OCCUPY_MUST_BE_IN");
+                return true;
             }
             TARDISMessage.send(player, "OCCUPY_SET", occupied);
             return true;
