@@ -32,7 +32,7 @@ import org.bukkit.command.CommandSender;
 public class TARDISSetBooleanCommand {
 
     private final TARDIS plugin;
-    private final List<String> require_restart = Arrays.asList("use_block_stack", "use_worldguard", "wg_flag_set", "walk_in_tardis", "zero_room", "open_door_policy", "particles");
+    private final List<String> require_restart = Arrays.asList("use_block_stack", "use_worldguard", "wg_flag_set", "walk_in_tardis", "zero_room", "open_door_policy", "particles", "switch_resource_packs");
 
     public TARDISSetBooleanCommand(TARDIS plugin) {
         this.plugin = plugin;
@@ -46,6 +46,14 @@ public class TARDISSetBooleanCommand {
         if (!tf.equals("true") && !tf.equals("false")) {
             TARDISMessage.send(sender, "TRUE_FALSE");
             return false;
+        }
+        if (first.equals("switch_resource_packs")) {
+            plugin.getPlanetsConfig().set("switch_resource_packs", tf);
+            try {
+                plugin.getPlanetsConfig().save(new File(plugin.getDataFolder(), "planets.yml"));
+            } catch (IOException ex) {
+                plugin.debug("Could not save planets.yml, " + ex.getMessage());
+            }
         }
         if (first.equals("artron_furnace.particles")) {
             plugin.getArtronConfig().set(first, Boolean.valueOf(tf));

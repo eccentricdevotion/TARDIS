@@ -81,7 +81,7 @@ import me.eccentric_nz.TARDIS.rooms.TARDISWalls;
 import me.eccentric_nz.TARDIS.rooms.TARDISZeroRoomRunnable;
 import me.eccentric_nz.TARDIS.siegemode.TARDISSiegePersister;
 import me.eccentric_nz.TARDIS.siegemode.TARDISSiegeRunnable;
-import me.eccentric_nz.TARDIS.skaro.TARDISSkaro;
+import me.eccentric_nz.TARDIS.planets.TARDISSkaro;
 import me.eccentric_nz.TARDIS.travel.TARDISArea;
 import me.eccentric_nz.TARDIS.travel.TARDISPluginRespect;
 import me.eccentric_nz.TARDIS.utility.TARDISBlockSetters;
@@ -720,34 +720,6 @@ public class TARDIS extends JavaPlugin {
         return invManager;
     }
 
-//    /**
-//     * Checks if the MultiInv plugin is available, and loads support if it is.
-//     */
-//    private void loadMultiInv() {
-//        if (pm.isPluginEnabled("MultiInv")) {
-//            debug("Hooking into MultiInv!");
-//            this.miOnServer = true;
-//        }
-//    }
-//
-//    public boolean isMIOnServer() {
-//        return miOnServer;
-//    }
-//
-//    /**
-//     * Checks if the Multiverse-Inventories plugin is available, and loads
-//     * support if it is.
-//     */
-//    private void loadMultiverseInventories() {
-//        if (pm.isPluginEnabled("Multiverse-Inventories")) {
-//            debug("Hooking into Multiverse-Inventories!");
-//            this.mviOnServer = true;
-//        }
-//    }
-//
-//    public boolean isMVIOnServer() {
-//        return mviOnServer;
-//    }
     /**
      * Checks if the Multiverse-Core plugin is available, and loads support if
      * it is.

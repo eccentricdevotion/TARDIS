@@ -25,7 +25,7 @@ import me.eccentric_nz.TARDIS.arch.TARDISArchCommand;
 import me.eccentric_nz.TARDIS.commands.TARDISCommandHelper;
 import me.eccentric_nz.TARDIS.enumeration.DIFFICULTY;
 import me.eccentric_nz.TARDIS.enumeration.PRESET;
-import me.eccentric_nz.TARDIS.skaro.TARDISSkaro;
+import me.eccentric_nz.TARDIS.planets.TARDISSkaro;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -147,6 +147,7 @@ public class TARDISAdminCommands implements CommandExecutor {
         firstsBool.put("spawn_eggs", "allow");
         firstsBool.put("spawn_random_monsters", "preferences");
         firstsBool.put("strike_lightning", "preferences");
+        firstsBool.put("switch_resource_packs", "");
         firstsBool.put("the_end", "travel");
         firstsBool.put("tp_switch", "allow");
         firstsBool.put("use_block_stack", "creation");
