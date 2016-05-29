@@ -1,6 +1,6 @@
 #TODO
 
-##Current bugfix version `3.5.3`
+##Current bugfix version `3.6-beta-1`
 1. Fix bugs!
 
 ##Next minor version `3.6-beta-1`
@@ -10,7 +10,7 @@
 4. [Red time rotor](http://dev.bukkit.org/bukkit-plugins/tardis/tickets/1216-red-time-rotor/)
 5. [TARDISDalekCities](http://dev.bukkit.org/bukkit-plugins/tardis/tickets/1168-a-dalek-conquest/) addon?
     * Custom TerrainControl world (_done_)
-    * Custom resource pack (_done_) and resource pack switching
+    * Custom resource pack and resource pack switching (_done_)
     * Acid water (_done_)
     * Custom acid damage amount (_done_)
     * Optional custom acid potion effects (_done_)
@@ -19,6 +19,7 @@
 7. [Destination 'vortex'](http://dev.bukkit.org/bukkit-plugins/tardis/tickets/1023-set-the-tardis-inflight-without-setting-a-destination/) - dematerialise without setting a destination.
 8. VOID biome for TARDIS interior
 9. [Sonic screwdriver [flower] pot](http://dev.bukkit.org/bukkit-plugins/tardis/tickets/1239-new-screwdriver/)
+10. Ice/igloo room - if TARDISWeepingAngels plugin is enabled, make a 3% chance a Dalek will form when building a snowman in the room. Should have a pen ready for polar bears
 
 ##Upcoming minor version `3.7`
 1. Update for Minecraft 1.10
@@ -26,6 +27,7 @@
    * Add new mobs
    * Use new spawn eggs (farming & Lazarus GUI)
    * Structure blocks?
+   * Polar bear farming
 2. TARDISSonicBlaster addon?
 
 ?
