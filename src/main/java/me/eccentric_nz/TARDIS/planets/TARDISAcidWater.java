@@ -16,7 +16,7 @@
  * Adapted by eccentric_nz for the TARDIS plugin
  *
  */
-package me.eccentric_nz.TARDIS.skaro;
+package me.eccentric_nz.TARDIS.planets;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -70,16 +70,9 @@ public class TARDISAcidWater implements Listener {
     public void onPlayerMove(PlayerMoveEvent e) {
 
         final Player player = e.getPlayer();
-        final Location loc = player.getLocation(); // Grab Location
+        final Location loc = player.getLocation();
 
-        /**
-         * Copyright (c) 2011, The Multiverse Team All rights reserved. Check
-         * the Player has actually moved a block to prevent unneeded
-         * calculations... This is to prevent huge performance drops on high
-         * player count servers.
-         */
         TARDISMoveSession tms = plugin.getTrackerKeeper().getTARDISMoveSession(player);
-        tms.setStaleLocation(loc);
 
         // If the location is stale, ie: the player isn't actually moving xyz coords, they're looking around
         if (tms.isStaleLocation()) {
