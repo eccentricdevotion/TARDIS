@@ -36,8 +36,10 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.PlayerDeathEvent;
+import org.bukkit.event.player.PlayerBucketFillEvent;
 import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitRunnable;
@@ -272,5 +274,24 @@ public class TARDISAcidWater implements Listener {
             }
         }
         return red;
+    }
+
+    @EventHandler
+    public void onFillAcidBucket(PlayerBucketFillEvent event) {
+        Player p = event.getPlayer();
+        if (!p.getWorld().getName().equals("Skaro")) {
+            return;
+        }
+        Material type = event.getBlockClicked().getType();
+        ItemStack bucket = event.getItemStack();
+        ItemMeta im = bucket.getItemMeta();
+        if (type.equals(Material.WATER) || type.equals(Material.STATIONARY_WATER)) {
+            im.setDisplayName("Acid Bucket");
+        }
+        if (type.equals(Material.LAVA) || type.equals(Material.STATIONARY_LAVA)) {
+            im.setDisplayName("Rust Bucket");
+        }
+        bucket.setItemMeta(im);
+        p.updateInventory();
     }
 }
