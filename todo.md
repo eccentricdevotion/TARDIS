@@ -9,6 +9,12 @@
 3. [Auto powerup](http://dev.bukkit.org/bukkit-plugins/tardis/tickets/1209-auto-powerup/)
 4. [Red time rotor](http://dev.bukkit.org/bukkit-plugins/tardis/tickets/1216-red-time-rotor/)
 5. [TARDISDalekCities](http://dev.bukkit.org/bukkit-plugins/tardis/tickets/1168-a-dalek-conquest/) addon?
+    * Custom TerrainControl world
+    * Custom resource pack and resource pack switching
+    * Acid water in configurable biomes
+    * Custom acid damage amount
+    * Optional custom acid potion effects
+    * Autiomatically generating Dalek cities
 6. [Abandoned TARDISes](http://dev.bukkit.org/bukkit-plugins/tardis/tickets/1277-possibility-to-abandon-a-tardis/)
 7. [Destination 'vortex'](http://dev.bukkit.org/bukkit-plugins/tardis/tickets/1023-set-the-tardis-inflight-without-setting-a-destination/) - dematerialise without setting a destination.
 8. VOID biome for TARDIS interior
