@@ -36,6 +36,13 @@ public class TARDISSonicReplant implements Runnable {
     @Override
     public void run() {
         switch (type) {
+            case BEETROOT_SEEDS:
+                if (under.getType().equals(soil) && block.getType().equals(air)) {
+                    block.setType(Material.BEETROOT_BLOCK);
+                } else {
+                    block.getWorld().dropItemNaturally(block.getLocation(), new ItemStack(Material.BEETROOT));
+                }
+                break;
             case CARROT_ITEM:
                 if (under.getType().equals(soil) && block.getType().equals(air)) {
                     block.setType(Material.CARROT);
