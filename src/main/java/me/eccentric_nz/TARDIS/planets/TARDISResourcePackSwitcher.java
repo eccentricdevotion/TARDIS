@@ -40,7 +40,18 @@ public class TARDISResourcePackSwitcher implements Listener {
     public void onPlayerWorldChange(PlayerChangedWorldEvent event) {
         Player player = event.getPlayer();
         String world = player.getWorld().getName();
-        setResourcePack(player, world);
+        String from = plugin.getPlanetsConfig().getString("planets." + event.getFrom().getName() + ".resource_pack");
+        if (from == null) {
+            from = "default";
+        }
+        String path = plugin.getPlanetsConfig().getString("planets." + world + ".resource_pack");
+        if (path == null) {
+            path = "default";
+        }
+        // check to see whether the resource pack URL is actually different
+        if (!from.equals(path)) {
+            setResourcePack(player, path);
+        }
     }
 
     @EventHandler(priority = EventPriority.MONITOR)
@@ -48,13 +59,13 @@ public class TARDISResourcePackSwitcher implements Listener {
         if (plugin.getPlanetsConfig().getBoolean("set_pack_on_join")) {
             final Player player = event.getPlayer();
             String world = player.getWorld().getName();
-            setResourcePack(player, world);
+            String path = plugin.getPlanetsConfig().getString("planets." + world + ".resource_pack");
+            setResourcePack(player, path);
         }
     }
 
-    private void setResourcePack(Player player, String world) {
-        String path = plugin.getPlanetsConfig().getString("planets." + world + ".resource_pack");
-        if (path == null || path.equalsIgnoreCase("default")) {
+    private void setResourcePack(Player player, String path) {
+        if (path.equalsIgnoreCase("default")) {
             path = plugin.getPlanetsConfig().getString("default_resource_pack");
         }
         if (player.isOnline()) {
