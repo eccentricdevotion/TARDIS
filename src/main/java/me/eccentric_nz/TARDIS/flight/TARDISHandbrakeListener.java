@@ -359,6 +359,7 @@ public class TARDISHandbrakeListener implements Listener {
                                             final boolean mine_sound = minecart;
                                             final Location sound_loc = (preset.equals(PRESET.JUNK_MODE)) ? exit : handbrake_loc;
                                             final Location external_sound_loc = exit;
+                                            final boolean malchk = malfunction;
                                             plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
                                                 @Override
                                                 public void run() {
@@ -368,8 +369,10 @@ public class TARDISHandbrakeListener implements Listener {
                                                     if (mat) {
                                                         if (!mine_sound) {
                                                             if (!preset.equals(PRESET.JUNK_MODE)) {
-                                                                TARDISSounds.playTARDISSound(sound_loc, "tardis_land");
-                                                                TARDISSounds.playTARDISSound(external_sound_loc, "tardis_land");
+                                                                if (!malchk) {
+                                                                    TARDISSounds.playTARDISSound(sound_loc, "tardis_land");
+                                                                    TARDISSounds.playTARDISSound(external_sound_loc, "tardis_land");
+                                                                }
                                                             } else {
                                                                 TARDISSounds.playTARDISSound(sound_loc, "junk_land");
                                                             }
