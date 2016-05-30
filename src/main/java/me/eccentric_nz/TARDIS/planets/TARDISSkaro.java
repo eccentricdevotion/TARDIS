@@ -52,12 +52,26 @@ public class TARDISSkaro {
         try {
             File worlds_dir = new File(tc.getDataFolder(), "worlds" + File.separator + "Skaro");
             worlds_dir.mkdir();
+            // copy WorldConfig.ini file to Skaro folder
             TARDISFileCopier.copy(worlds_dir.getAbsolutePath() + File.separator + "WorldConfig.ini", plugin.getResource("WorldConfig.ini"), true, plugin.getPluginName());
+            // copy biome files to Skaro WorldBiomes folder
+            File biomes_dir = new File(worlds_dir, File.separator + "WorldBiomes");
+            biomes_dir.mkdir();
+            String biomes_base_path = biomes_dir.getAbsolutePath() + File.separator;
+            TARDISFileCopier.copy(biomes_base_path + "Desert.bc", plugin.getResource("Desert.bc"), true, plugin.getPluginName());
+            TARDISFileCopier.copy(biomes_base_path + "DesertHills.bc", plugin.getResource("DesertHills.bc"), true, plugin.getPluginName());
+            TARDISFileCopier.copy(biomes_base_path + "Mesa (Bryce).bc", plugin.getResource("Mesa (Bryce).bc"), true, plugin.getPluginName());
+            TARDISFileCopier.copy(biomes_base_path + "Mesa Plateau F M.bc", plugin.getResource("Mesa Plateau F M.bc"), true, plugin.getPluginName());
+            TARDISFileCopier.copy(biomes_base_path + "Mesa Plateau F.bc", plugin.getResource("Mesa Plateau F.bc"), true, plugin.getPluginName());
+            TARDISFileCopier.copy(biomes_base_path + "Mesa Plateau M.bc", plugin.getResource("Mesa Plateau M.bc"), true, plugin.getPluginName());
+            TARDISFileCopier.copy(biomes_base_path + "Mesa Plateau.bc", plugin.getResource("Mesa Plateau.bc"), true, plugin.getPluginName());
+            TARDISFileCopier.copy(biomes_base_path + "Mesa.bc", plugin.getResource("Mesa.bc"), true, plugin.getPluginName());
             // copy bo3 files to Skaro WorldObjects folder
             File objects_dir = new File(worlds_dir, File.separator + "WorldObjects");
             objects_dir.mkdir();
-            String base_path = objects_dir.getAbsolutePath();
-            TARDISFileCopier.copy(base_path + File.separator + "police_box.bo3", plugin.getResource("police_box.bo3"), true, plugin.getPluginName());
+            String objects_base_path = objects_dir.getAbsolutePath() + File.separator;
+            TARDISFileCopier.copy(objects_base_path + "dalek1.bo3", plugin.getResource("dalek1.bo3"), true, plugin.getPluginName());
+            TARDISFileCopier.copy(objects_base_path + "dalek2.bo3", plugin.getResource("dalek2.bo3"), true, plugin.getPluginName());
             if (plugin.getPM().isPluginEnabled("MultiWorld")) {
                 plugin.getServer().dispatchCommand(plugin.getConsole(), "mw create Skaro plugin:TerrainControl");
                 plugin.getServer().dispatchCommand(plugin.getConsole(), "mw load Skaro");
