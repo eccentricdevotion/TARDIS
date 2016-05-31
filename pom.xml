@@ -162,6 +162,13 @@
             </exclusions>
         </dependency>
         <dependency>
+            <groupId>me.eccentric_nz.tardisweepingangels</groupId>
+            <artifactId>TARDISWeepingAngels</artifactId>
+            <version>2.3</version>
+            <type>jar</type>
+            <scope>compile</scope>
+        </dependency>
+        <dependency>
             <groupId>org.spigotmc</groupId>
             <artifactId>spigot-api</artifactId>
             <version>1.9.4-R0.1-SNAPSHOT</version>

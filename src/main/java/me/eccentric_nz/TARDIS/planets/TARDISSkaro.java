@@ -51,12 +51,12 @@ public class TARDISSkaro {
         Plugin tc = plugin.getPM().getPlugin("TerrainControl");
         try {
             File worlds_dir = new File(tc.getDataFolder(), "worlds" + File.separator + "Skaro");
-            worlds_dir.mkdir();
+            worlds_dir.mkdirs();
             // copy WorldConfig.ini file to Skaro folder
             TARDISFileCopier.copy(worlds_dir.getAbsolutePath() + File.separator + "WorldConfig.ini", plugin.getResource("WorldConfig.ini"), true, plugin.getPluginName());
             // copy biome files to Skaro WorldBiomes folder
             File biomes_dir = new File(worlds_dir, File.separator + "WorldBiomes");
-            biomes_dir.mkdir();
+            biomes_dir.mkdirs();
             String biomes_base_path = biomes_dir.getAbsolutePath() + File.separator;
             TARDISFileCopier.copy(biomes_base_path + "Desert.bc", plugin.getResource("Desert.bc"), true, plugin.getPluginName());
             TARDISFileCopier.copy(biomes_base_path + "DesertHills.bc", plugin.getResource("DesertHills.bc"), true, plugin.getPluginName());
@@ -68,10 +68,13 @@ public class TARDISSkaro {
             TARDISFileCopier.copy(biomes_base_path + "Mesa.bc", plugin.getResource("Mesa.bc"), true, plugin.getPluginName());
             // copy bo3 files to Skaro WorldObjects folder
             File objects_dir = new File(worlds_dir, File.separator + "WorldObjects");
-            objects_dir.mkdir();
+            objects_dir.mkdirs();
             String objects_base_path = objects_dir.getAbsolutePath() + File.separator;
             TARDISFileCopier.copy(objects_base_path + "dalek1.bo3", plugin.getResource("dalek1.bo3"), true, plugin.getPluginName());
             TARDISFileCopier.copy(objects_base_path + "dalek2.bo3", plugin.getResource("dalek2.bo3"), true, plugin.getPluginName());
+            File nbt_dir = new File(objects_dir, File.separator + "dalek1");
+            nbt_dir.mkdirs();
+            TARDISFileCopier.copy(nbt_dir.getAbsolutePath() + File.separator + "MobSpawner.nbt", plugin.getResource("MobSpawner.nbt"), true, plugin.getPluginName());
             if (plugin.getPM().isPluginEnabled("MultiWorld")) {
                 plugin.getServer().dispatchCommand(plugin.getConsole(), "mw create Skaro plugin:TerrainControl");
                 plugin.getServer().dispatchCommand(plugin.getConsole(), "mw load Skaro");

@@ -126,6 +126,7 @@ import me.eccentric_nz.TARDIS.move.TARDISDoorWalkListener;
 import me.eccentric_nz.TARDIS.move.TARDISMoveListener;
 import me.eccentric_nz.TARDIS.planets.TARDISAcidWater;
 import me.eccentric_nz.TARDIS.planets.TARDISResourcePackSwitcher;
+import me.eccentric_nz.TARDIS.planets.TARDISSkaroSpawnListener;
 import me.eccentric_nz.TARDIS.rooms.TARDISJettisonSeeder;
 import me.eccentric_nz.TARDIS.rooms.TARDISRoomSeeder;
 import me.eccentric_nz.TARDIS.schematic.TARDISSchematicListener;
@@ -333,6 +334,9 @@ public class TARDISListenerRegisterer {
         plugin.getPM().registerEvents(new TARDISPlayerKickListener(plugin), plugin);
         if (plugin.getPlanetsConfig().getBoolean("planets.Skaro.enabled") && plugin.getPlanetsConfig().getBoolean("planets.Skaro.acid")) {
             plugin.getPM().registerEvents(new TARDISAcidWater(plugin), plugin);
+            if (plugin.getPM().getPlugin("TARDISWeepingAngels") != null && plugin.getPM().getPlugin("TARDISWeepingAngels").isEnabled()) {
+                plugin.getPM().registerEvents(new TARDISSkaroSpawnListener(plugin), plugin);
+            }
         }
         if (plugin.getPlanetsConfig().getBoolean("switch_resource_packs")) {
             plugin.getPM().registerEvents(new TARDISResourcePackSwitcher(plugin), plugin);
