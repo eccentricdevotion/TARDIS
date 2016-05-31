@@ -16,8 +16,15 @@
  */
 package me.eccentric_nz.TARDIS.files;
 
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
+import java.io.PrintWriter;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 import me.eccentric_nz.TARDIS.TARDIS;
 import org.bukkit.ChatColor;
 import org.bukkit.configuration.file.FileConfiguration;
@@ -53,6 +60,18 @@ public class TARDISLanguageUpdater {
             if (!plugin.getLanguage().contains(key)) {
                 plugin.getLanguage().set(key, en.getString(key));
                 i++;
+            } else if (key.equals("ARG_COLOUR")
+                    || key.equals("BIND_NOT_VALID")
+                    || key.equals("CONDENSE_REQUIRE")
+                    || key.equals("MATERIAL_NOT_VALID")
+                    || key.equals("REQUEST_TRAVEL")
+                    || key.equals("RESCUE_REQUEST")
+                    || key.equals("SAVE_NAME_NOT_VALID")
+                    || key.equals("TARDIS_LOCS_INFO")
+                    || key.equals("UPDATE_INTERFACE")
+                    || key.equals("UPDATE_LOCATION")
+                    || key.equals("UPGRADE_PERCENT_EXPLAIN")) {
+                plugin.getLanguage().set(key, en.getString(key));
             }
         }
         try {
@@ -60,10 +79,53 @@ public class TARDISLanguageUpdater {
             String lang_path = plugin.getDataFolder() + File.separator + "language" + File.separator + lang + ".yml";
             plugin.getLanguage().save(new File(lang_path));
         } catch (IOException ex) {
-            plugin.debug("Could not save language config file! " + ex.getMessage());
+            plugin.debug("Could not save language config file after adding entries! " + ex.getMessage());
+        }
+        // loop through the keys and remove values that are no longer in en.yml
+        int j = 0;
+        for (String key : plugin.getLanguage().getKeys(false)) {
+            if (!en.contains(key)) {
+                plugin.getLanguage().set(key, null);
+                j++;
+            }
+        }
+        // resave file
+        String lang_path = plugin.getDataFolder() + File.separator + "language" + File.separator + lang + ".yml";
+        try {
+            // save the config
+            plugin.getLanguage().save(new File(lang_path));
+        } catch (IOException ex) {
+            plugin.debug("Could not save language config file after removing entries! " + ex.getMessage());
         }
         if (i > 0) {
             plugin.getConsole().sendMessage(plugin.getPluginName() + "Added " + ChatColor.AQUA + i + ChatColor.RESET + " new messages to " + lang + ".yml");
+        }
+        if (j > 0) {
+            plugin.getConsole().sendMessage(plugin.getPluginName() + "Removed " + ChatColor.AQUA + j + ChatColor.RESET + " redundant messages from " + lang + ".yml");
+        }
+        // sort language file alphabetically
+        try {
+            FileReader fileReader = new FileReader(lang_path);
+            BufferedReader bufferedReader = new BufferedReader(fileReader);
+            String inputLine;
+            List<String> lineList = new ArrayList<String>();
+            while ((inputLine = bufferedReader.readLine()) != null) {
+                lineList.add(inputLine);
+            }
+            fileReader.close();
+
+            Collections.sort(lineList);
+
+            FileWriter fileWriter = new FileWriter(lang_path);
+            PrintWriter out = new PrintWriter(fileWriter, false);
+            for (String outputLine : lineList) {
+                out.println(outputLine);
+            }
+            out.flush();
+            out.close();
+            fileWriter.close();
+        } catch (IOException ex) {
+            plugin.debug("Could not alphabetize language config file! " + ex.getMessage());
         }
     }
 }

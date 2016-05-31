@@ -2,6 +2,9 @@
 
 ##Current bugfix version `3.6-beta-1`
 1. Fix bugs!
+   * Siege mode wall/floor changes are not reverted when disengaging siege mode from outside the TARDIS
+   * Disengaging siege mode in the BUDGET console TARDIS changes the floor to orange wool
+   * You can get stuck in the Renderer room if you exit the TARDIS while the scanner is still displaying its data
 
 ##Next minor version `3.6-beta-1`
 1. TARDIS Junk Mode - `/tprefs junk [wall|floor] [block_type]`?
