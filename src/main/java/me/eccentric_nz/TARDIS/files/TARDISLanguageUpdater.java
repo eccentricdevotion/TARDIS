@@ -99,33 +99,33 @@ public class TARDISLanguageUpdater {
         }
         if (i > 0) {
             plugin.getConsole().sendMessage(plugin.getPluginName() + "Added " + ChatColor.AQUA + i + ChatColor.RESET + " new messages to " + lang + ".yml");
+            // sort language file alphabetically if additions were made
+            try {
+                FileReader fileReader = new FileReader(lang_path);
+                BufferedReader bufferedReader = new BufferedReader(fileReader);
+                String inputLine;
+                List<String> lineList = new ArrayList<String>();
+                while ((inputLine = bufferedReader.readLine()) != null) {
+                    lineList.add(inputLine);
+                }
+                fileReader.close();
+
+                Collections.sort(lineList);
+
+                FileWriter fileWriter = new FileWriter(lang_path);
+                PrintWriter out = new PrintWriter(fileWriter, false);
+                for (String outputLine : lineList) {
+                    out.println(outputLine);
+                }
+                out.flush();
+                out.close();
+                fileWriter.close();
+            } catch (IOException ex) {
+                plugin.debug("Could not alphabetize language config file! " + ex.getMessage());
+            }
         }
         if (j > 0) {
             plugin.getConsole().sendMessage(plugin.getPluginName() + "Removed " + ChatColor.AQUA + j + ChatColor.RESET + " redundant messages from " + lang + ".yml");
-        }
-        // sort language file alphabetically
-        try {
-            FileReader fileReader = new FileReader(lang_path);
-            BufferedReader bufferedReader = new BufferedReader(fileReader);
-            String inputLine;
-            List<String> lineList = new ArrayList<String>();
-            while ((inputLine = bufferedReader.readLine()) != null) {
-                lineList.add(inputLine);
-            }
-            fileReader.close();
-
-            Collections.sort(lineList);
-
-            FileWriter fileWriter = new FileWriter(lang_path);
-            PrintWriter out = new PrintWriter(fileWriter, false);
-            for (String outputLine : lineList) {
-                out.println(outputLine);
-            }
-            out.flush();
-            out.close();
-            fileWriter.close();
-        } catch (IOException ex) {
-            plugin.debug("Could not alphabetize language config file! " + ex.getMessage());
         }
     }
 }
