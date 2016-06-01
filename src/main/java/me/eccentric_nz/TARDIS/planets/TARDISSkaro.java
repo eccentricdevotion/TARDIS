@@ -91,6 +91,12 @@ public class TARDISSkaro {
             // add world to config
             plugin.getConfig().set("worlds.Skaro", true);
             plugin.saveConfig();
+            // make sure TARDISWeepingAngels can re-disguise Daleks in the Skaro world
+            Plugin twa = plugin.getPM().getPlugin("TARDISWeepingAngels");
+            if (twa != null) {
+                twa.getConfig().set("daleks.worlds.Skaro", 500);
+                twa.saveConfig();
+            }
         } catch (Exception e) {
             plugin.getServer().getLogger().log(Level.SEVERE, "Could not copy files to TerrainControl plugin data folder: {0}", e.getMessage());
         }
