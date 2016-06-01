@@ -17,7 +17,10 @@
     * Acid water (_done_)
     * Custom acid damage amount (_done_)
     * Optional custom acid potion effects (_done_)
-    * Automatically generating Dalek cities
+    * Automatically generating Dalek cities (_done_)
+    * Spawn Daleks!  (_done_)
+    * Add loot chests to main Dalek Buildings (_started_)
+    * Determine a use for Acid and Rust Buckets
 6. [Abandoned TARDISes](http://dev.bukkit.org/bukkit-plugins/tardis/tickets/1277-possibility-to-abandon-a-tardis/)
 7. [Destination 'vortex'](http://dev.bukkit.org/bukkit-plugins/tardis/tickets/1023-set-the-tardis-inflight-without-setting-a-destination/) - dematerialise without setting a destination.
 8. VOID biome for TARDIS interior

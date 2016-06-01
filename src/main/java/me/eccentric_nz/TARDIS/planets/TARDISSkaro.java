@@ -72,9 +72,17 @@ public class TARDISSkaro {
             String objects_base_path = objects_dir.getAbsolutePath() + File.separator;
             TARDISFileCopier.copy(objects_base_path + "dalek1.bo3", plugin.getResource("dalek1.bo3"), true, plugin.getPluginName());
             TARDISFileCopier.copy(objects_base_path + "dalek2.bo3", plugin.getResource("dalek2.bo3"), true, plugin.getPluginName());
-            File nbt_dir = new File(objects_dir, File.separator + "dalek1");
+            // copy nbt files to WorldObjects/NBT folder
+            File nbt_dir = new File(objects_dir, File.separator + "NBT");
             nbt_dir.mkdirs();
-            TARDISFileCopier.copy(nbt_dir.getAbsolutePath() + File.separator + "MobSpawner.nbt", plugin.getResource("MobSpawner.nbt"), true, plugin.getPluginName());
+            String nbt_base_path = nbt_dir.getAbsolutePath() + File.separator;
+            TARDISFileCopier.copy(nbt_base_path + "MobSpawner.nbt", plugin.getResource("MobSpawner.nbt"), true, plugin.getPluginName());
+            for (int l = 1; l < 16; l++) {
+                TARDISFileCopier.copy(nbt_base_path + "Basic-" + l + ".nbt", plugin.getResource("Basic-" + l + ".nbt"), true, plugin.getPluginName());
+                TARDISFileCopier.copy(nbt_base_path + "BasicE-" + l + ".nbt", plugin.getResource("BasicE-" + l + ".nbt"), true, plugin.getPluginName());
+                TARDISFileCopier.copy(nbt_base_path + "Rare-" + l + ".nbt", plugin.getResource("Rare-" + l + ".nbt"), true, plugin.getPluginName());
+                TARDISFileCopier.copy(nbt_base_path + "RareE-" + l + ".nbt", plugin.getResource("RareE-" + l + ".nbt"), true, plugin.getPluginName());
+            }
             if (plugin.getPM().isPluginEnabled("MultiWorld")) {
                 plugin.getServer().dispatchCommand(plugin.getConsole(), "mw create Skaro plugin:TerrainControl");
                 plugin.getServer().dispatchCommand(plugin.getConsole(), "mw load Skaro");
