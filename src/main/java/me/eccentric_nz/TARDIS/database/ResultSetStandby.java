@@ -58,7 +58,7 @@ public class ResultSetStandby {
                     if (rs.getString("size").equals("JUNK")) {
                         sd = new StandbyData(Integer.MAX_VALUE, UUID.fromString(rs.getString("uuid")), false, false, PRESET.JUNK, false);
                     } else {
-                        sd = new StandbyData(rs.getInt("artron_level"), UUID.fromString(rs.getString("uuid")), rs.getBoolean("hidden"), rs.getBoolean("lights_on"), PRESET.valueOf(rs.getString("chameleon_preset")), CONSOLES.getByNames().get(rs.getString("size")).hasLanterns());
+                        sd = new StandbyData(rs.getInt("artron_level"), UUID.fromString(rs.getString("uuid")), rs.getBoolean("hidden"), rs.getBoolean("lights_on"), PRESET.valueOf(rs.getString("chameleon_preset")), CONSOLES.getBY_NAMES().get(rs.getString("size")).hasLanterns());
                     }
                     ids.put(rs.getInt("tardis_id"), sd);
                 }

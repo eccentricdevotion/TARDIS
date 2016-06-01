@@ -53,7 +53,7 @@ public class TARDISSeedsInventory {
         ItemStack[] stack = new ItemStack[18];
         int i = 0;
         // get consoles
-        for (SCHEMATIC a : CONSOLES.getByNames().values()) {
+        for (SCHEMATIC a : CONSOLES.getBY_NAMES().values()) {
             if (player.hasPermission("tardis." + a.getPermission())) {
                 Material m = Material.getMaterial(a.getSeed());
                 ItemStack is = new ItemStack(m, 1);

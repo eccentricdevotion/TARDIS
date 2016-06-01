@@ -300,8 +300,8 @@ public class TARDISGiveCommand implements CommandExecutor {
         }
         Player player = plugin.getServer().getPlayer(p);
         ItemStack is;
-        if (CONSOLES.getByNames().containsKey(type)) {
-            SCHEMATIC schm = CONSOLES.getByNames().get(type);
+        if (CONSOLES.getBY_NAMES().containsKey(type)) {
+            SCHEMATIC schm = CONSOLES.getBY_NAMES().get(type);
             is = new ItemStack(schm.getSeedMaterial(), 1);
             // set display name
             ItemMeta im = is.getItemMeta();

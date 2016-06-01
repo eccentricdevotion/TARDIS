@@ -62,7 +62,7 @@ public class TARDISThemeInventory {
         ItemStack[] stack = new ItemStack[27];
         int i = 0;
         // get consoles
-        for (SCHEMATIC a : CONSOLES.getByNames().values()) {
+        for (SCHEMATIC a : CONSOLES.getBY_NAMES().values()) {
             Material m = Material.getMaterial(a.getSeed());
             ItemStack is = new ItemStack(m, 1);
             ItemMeta im = is.getItemMeta();

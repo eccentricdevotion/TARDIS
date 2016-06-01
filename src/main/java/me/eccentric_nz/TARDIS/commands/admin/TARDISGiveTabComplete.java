@@ -41,7 +41,7 @@ public class TARDISGiveTabComplete extends TARDISCompleter implements TabComplet
         this.plugin = plugin;
         this.kits = plugin.getKitsConfig().getConfigurationSection("kits").getKeys(false);
         this.KIT_SUBS = ImmutableList.copyOf(kits);
-        this.SEED_SUBS = ImmutableList.copyOf(CONSOLES.getByNames().keySet());
+        this.SEED_SUBS = ImmutableList.copyOf(CONSOLES.getBY_NAMES().keySet());
     }
 
     @Override

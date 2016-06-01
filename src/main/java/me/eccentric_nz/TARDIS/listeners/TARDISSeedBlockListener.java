@@ -82,7 +82,7 @@ public class TARDISSeedBlockListener implements Listener {
         }
         if (im.getDisplayName().equals("§6TARDIS Seed Block")) {
             List<String> lore = im.getLore();
-            SCHEMATIC schm = CONSOLES.getByNames().get(lore.get(0));
+            SCHEMATIC schm = CONSOLES.getBY_NAMES().get(lore.get(0));
             Pair wall_data = getValuesFromWallString(lore.get(1));
             Pair floor_data = getValuesFromWallString(lore.get(2));
             TwoValues cham_data = getValuesFromString(lore.get(3));

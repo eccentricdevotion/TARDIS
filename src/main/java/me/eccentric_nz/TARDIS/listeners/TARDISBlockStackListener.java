@@ -135,7 +135,7 @@ public class TARDISBlockStackListener implements Listener {
                 }
                 schm = CONSOLES.SCHEMATICFor(blockBottom.getType());
                 if (schm == null) {
-                    schm = CONSOLES.getByNames().get("BUDGET");
+                    schm = CONSOLES.getBY_NAMES().get("BUDGET");
                 }
                 // check perms
                 if (!schm.getPermission().equals("budget") && !player.hasPermission("tardis." + schm.getPermission())) {

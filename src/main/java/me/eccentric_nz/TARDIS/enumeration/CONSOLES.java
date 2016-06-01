@@ -27,10 +27,10 @@ import org.bukkit.Material;
  */
 public class CONSOLES {
 
-    private final static HashMap<String, SCHEMATIC> byNames = new HashMap<String, SCHEMATIC>();
-    private final static HashMap<String, SCHEMATIC> byPerms = new HashMap<String, SCHEMATIC>();
-    private final static HashMap<String, SCHEMATIC> byMaterials = new HashMap<String, SCHEMATIC>();
-    private final static List<SCHEMATIC> noBeacon = new ArrayList<SCHEMATIC>();
+    private final static HashMap<String, SCHEMATIC> BY_NAMES = new HashMap<String, SCHEMATIC>();
+    private final static HashMap<String, SCHEMATIC> BY_PERMS = new HashMap<String, SCHEMATIC>();
+    private final static HashMap<String, SCHEMATIC> BY_MATERIALS = new HashMap<String, SCHEMATIC>();
+    private final static List<SCHEMATIC> NO_BEACON = new ArrayList<SCHEMATIC>();
 
     /**
      * Attempts to get the SCHEMATIC with the given name.
@@ -39,7 +39,7 @@ public class CONSOLES {
      * @return SCHEMATIC if found, or null
      */
     public static SCHEMATIC SCHEMATICFor(String perm) {
-        return byPerms.get(perm);
+        return BY_PERMS.get(perm);
     }
 
     /**
@@ -49,37 +49,37 @@ public class CONSOLES {
      * @return SCHEMATIC if found, or null
      */
     public static SCHEMATIC SCHEMATICFor(Material mat) {
-        return byMaterials.get(mat.toString());
+        return BY_MATERIALS.get(mat.toString());
     }
 
     public static void loadLookups() {
-        for (SCHEMATIC ts : byNames.values()) {
-            if (!byPerms.containsKey(ts.getPermission())) {
-                byPerms.put(ts.getPermission(), ts);
+        for (SCHEMATIC ts : BY_NAMES.values()) {
+            if (!BY_PERMS.containsKey(ts.getPermission())) {
+                BY_PERMS.put(ts.getPermission(), ts);
             }
-            if (!byMaterials.containsKey(ts.getSeed())) {
-                byMaterials.put(ts.getSeed(), ts);
+            if (!BY_MATERIALS.containsKey(ts.getSeed())) {
+                BY_MATERIALS.put(ts.getSeed(), ts);
             }
-            if (!noBeacon.contains(ts) && !ts.hasBeacon()) {
-                noBeacon.add(ts);
+            if (!NO_BEACON.contains(ts) && !ts.hasBeacon()) {
+                NO_BEACON.add(ts);
             }
         }
-        byPerms.put("junk", new SCHEMATIC("MILK_BUCKET", "junk", "Junk Console", true, false, false, false, false));
+        BY_PERMS.put("junk", new SCHEMATIC("MILK_BUCKET", "junk", "Junk Console", true, false, false, false, false));
     }
 
-    public static HashMap<String, SCHEMATIC> getByNames() {
-        return byNames;
+    public static HashMap<String, SCHEMATIC> getBY_NAMES() {
+        return BY_NAMES;
     }
 
-    public static HashMap<String, SCHEMATIC> getByPerms() {
-        return byPerms;
+    public static HashMap<String, SCHEMATIC> getBY_PERMS() {
+        return BY_PERMS;
     }
 
-    public static HashMap<String, SCHEMATIC> getByMaterials() {
-        return byMaterials;
+    public static HashMap<String, SCHEMATIC> getBY_MATERIALS() {
+        return BY_MATERIALS;
     }
 
-    public static List<SCHEMATIC> getNoBeacon() {
-        return noBeacon;
+    public static List<SCHEMATIC> getNO_BEACON() {
+        return NO_BEACON;
     }
 }
