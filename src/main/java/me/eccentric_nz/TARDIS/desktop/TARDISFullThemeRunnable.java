@@ -47,6 +47,7 @@ import org.bukkit.block.Biome;
 import org.bukkit.block.Block;
 import org.bukkit.block.Sign;
 import org.bukkit.entity.Creeper;
+import org.bukkit.entity.EnderCrystal;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Item;
@@ -397,7 +398,8 @@ public class TARDISFullThemeRunnable extends TARDISThemeRunnable implements Runn
                 }
             }
             if (ender != null) {
-                world.spawnEntity(ender, EntityType.ENDER_CRYSTAL);
+                Entity ender_crystal = world.spawnEntity(ender, EntityType.ENDER_CRYSTAL);
+                ((EnderCrystal) ender_crystal).setShowingBottom(false);
             }
             // finished processing - update tardis table!
             where.put("tardis_id", id);
