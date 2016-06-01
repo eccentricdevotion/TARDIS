@@ -98,6 +98,7 @@ public class TARDISFullThemeRunnable extends TARDISThemeRunnable implements Runn
     boolean downgrade = false;
     Chunk chunk;
     Player player;
+    Location ender = null;
 
     public TARDISFullThemeRunnable(TARDIS plugin, UUID uuid, TARDISUpgradeData tud) {
         this.plugin = plugin;
@@ -147,6 +148,14 @@ public class TARDISFullThemeRunnable extends TARDISThemeRunnable implements Runn
             slot = rs.getTIPS();
             id = rs.getTardis_id();
             chunk = getChunk(rs.getChunk());
+            if (tud.getPrevious().getPermission().equals("ender")) {
+                // remove ender crystal
+                for (Entity end : chunk.getEntities()) {
+                    if (end.getType().equals(EntityType.ENDER_CRYSTAL)) {
+                        end.remove();
+                    }
+                }
+            }
             chunks = getChunks(chunk, tud.getSchematic());
             // remove the charged creeper
             Location creeper = getCreeperLocation(rs.getCreeper());
@@ -375,7 +384,7 @@ public class TARDISFullThemeRunnable extends TARDISThemeRunnable implements Runn
                 }
             }
             for (Block lamp : lampblocks) {
-                Material l = (tud.getSchematic().getPermission().equals("eleventh") || tud.getSchematic().getPermission().equals("twelfth")) ? Material.SEA_LANTERN : Material.REDSTONE_LAMP_ON;
+                Material l = (tud.getSchematic().hasLanterns()) ? Material.SEA_LANTERN : Material.REDSTONE_LAMP_ON;
                 lamp.setType(l);
             }
             lampblocks.clear();
@@ -386,6 +395,9 @@ public class TARDISFullThemeRunnable extends TARDISThemeRunnable implements Runn
                 if (slot == -1) {
                     plugin.getWorldGuardUtils().addWGProtection(player, wg1, wg2);
                 }
+            }
+            if (ender != null) {
+                world.spawnEntity(ender, EntityType.ENDER_CRYSTAL);
             }
             // finished processing - update tardis table!
             where.put("tardis_id", id);
@@ -477,7 +489,7 @@ public class TARDISFullThemeRunnable extends TARDISThemeRunnable implements Runn
                     }
                 }
                 if (type.equals(Material.MOB_SPAWNER)) { // scanner button
-                     /*
+                    /*
                      * mob spawner will be converted to the correct id by
                      * setBlock(), but remember it for the scanner.
                      */
@@ -618,6 +630,9 @@ public class TARDISFullThemeRunnable extends TARDISThemeRunnable implements Runn
                         type = Material.BEACON;
                     } else {
                         type = Material.SMOOTH_BRICK;
+                        if (tud.getSchematic().getPermission().equals("ender")) {
+                            data = (byte) 3;
+                        }
                     }
                 }
                 if (type.equals(Material.WOOD_BUTTON)) {
@@ -628,6 +643,19 @@ public class TARDISFullThemeRunnable extends TARDISThemeRunnable implements Runn
                      */
                     String woodbuttonloc = TARDISLocationGetters.makeLocationStr(world, x, y, z);
                     qf.insertSyncControl(id, 6, woodbuttonloc, 0);
+                }
+                if (type.equals(Material.DAYLIGHT_DETECTOR)) {
+                    /*
+                     * remember the telepathic circuit.
+                     */
+                    String telepathicloc = TARDISLocationGetters.makeLocationStr(world, x, y, z);
+                    qf.insertSyncControl(id, 23, telepathicloc, 0);
+                }
+                if (type.equals(Material.BEACON) && tud.getSchematic().getPermission().equals("ender")) {
+                    /*
+                        * get the ender crytal location
+                     */
+                    ender = world.getBlockAt(x, y, z).getLocation().add(0.5d, 4d, 0.5d);
                 }
                 // if it's an iron/gold/diamond/emerald/beacon/redstone block put it in the blocks table
                 if (precious.contains(type)) {

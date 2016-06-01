@@ -43,6 +43,7 @@ import org.bukkit.WorldType;
 import org.bukkit.block.Biome;
 import org.bukkit.block.Block;
 import org.bukkit.block.Sign;
+import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 
 /**
@@ -129,6 +130,7 @@ public class TARDISBuilderInner {
         Block postTISBlock = null;
         Block postTemporalBlock = null;
         Block postKeyboardBlock = null;
+        Location ender = null;
         QueryFactory qf = new QueryFactory(plugin);
         HashMap<String, Object> set = new HashMap<String, Object>();
         // calculate startx, starty, startz
@@ -390,7 +392,14 @@ public class TARDISBuilderInner {
                          */
                         String creeploc = world.getName() + ":" + (x + 0.5) + ":" + y + ":" + (z + 0.5);
                         set.put("creeper", creeploc);
-                        type = (schm.getPermission().equals("bigger") || schm.getPermission().equals("deluxe") || schm.getPermission().equals("twelfth")) ? Material.BEACON : Material.SMOOTH_BRICK;
+                        if (schm.getPermission().equals("bigger") || schm.getPermission().equals("deluxe") || schm.getPermission().equals("twelfth")) {
+                            type = Material.BEACON;
+                        } else {
+                            type = Material.SMOOTH_BRICK;
+                            if (schm.getPermission().equals("ender")) {
+                                data = (byte) 3;
+                            }
+                        }
                     }
                     if (type.equals(Material.WOOD_BUTTON) && !schm.getPermission().equals("junk")) {
                         /*
@@ -399,6 +408,19 @@ public class TARDISBuilderInner {
                          */
                         String woodbuttonloc = TARDISLocationGetters.makeLocationStr(world, x, y, z);
                         qf.insertSyncControl(dbID, 6, woodbuttonloc, 0);
+                    }
+                    if (type.equals(Material.DAYLIGHT_DETECTOR)) {
+                        /*
+                         * remember the telepathic circuit.
+                         */
+                        String telepathicloc = TARDISLocationGetters.makeLocationStr(world, x, y, z);
+                        qf.insertSyncControl(dbID, 23, telepathicloc, 0);
+                    }
+                    if (type.equals(Material.BEACON) && schm.getPermission().equals("ender")) {
+                        /*
+                        * get the ender crytal location
+                         */
+                        ender = world.getBlockAt(x, y, z).getLocation().add(0.5d, 4d, 0.5d);
                     }
                     // if it's an iron/gold/diamond/emerald/beacon/redstone block put it in the blocks table
                     if (TARDISBuilderInstanceKeeper.getPrecious().contains(type)) {
@@ -654,7 +676,7 @@ public class TARDISBuilderInner {
             }
         }
         for (Block lamp : lampblocks) {
-            Material lantern = (schm.getPermission().equals("eleventh") || schm.getPermission().equals("twelfth")) ? Material.SEA_LANTERN : Material.REDSTONE_LAMP_ON;
+            Material lantern = (schm.hasLanterns()) ? Material.SEA_LANTERN : Material.REDSTONE_LAMP_ON;
             lamp.setType(lantern);
         }
         lampblocks.clear();
@@ -669,6 +691,9 @@ public class TARDISBuilderInner {
             } else {
                 plugin.getWorldGuardUtils().addWGProtection(p, wg1, wg2);
             }
+        }
+        if (ender != null) {
+            world.spawnEntity(ender, EntityType.ENDER_CRYSTAL);
         }
         // finished processing - update tardis table!
         qf.doUpdate("tardis", set, where);

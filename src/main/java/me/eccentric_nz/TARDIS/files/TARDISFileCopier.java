@@ -66,11 +66,12 @@ public class TARDISFileCopier {
         }
         // DELUXE, ELEVENTH, TWELFTH, ARS & REDSTONE schematics designed by Lord_Rahl and killeratnight at mcnovus.net
         // The PYRAMID schematic designed by airomis (player at thatsnotacreeper.com)
+        // The ENDER schematic designed by ToppanaFIN (player at thatsnotacreeper.com)
         // The MASTER's schematic designed by shadowhawk14269 (while playing at pvpcraft.ca)
         // load schematic files - copy the default files if they don't exist
         String basepath = plugin.getDataFolder() + File.separator + "schematics" + File.separator;
         String userbasepath = plugin.getDataFolder() + File.separator + "user_schematics" + File.separator;
-        for (SCHEMATIC ts : CONSOLES.getByNames().values()) {
+        for (SCHEMATIC ts : CONSOLES.getBY_NAMES().values()) {
             if (!ts.isCustom()) {
                 String str = basepath + ts.getPermission() + ".tschm";
                 copy(str, plugin.getResource(ts.getPermission() + ".tschm"), true, plugin.getPluginName());

@@ -75,7 +75,7 @@ public class TARDISThemeProcessor {
         HashMap<String, Object> setp = new HashMap<String, Object>();
         setp.put("wall", wall_pref);
         setp.put("floor", floor_pref);
-        setp.put("lanterns_on", (tud.getSchematic().getPermission().equals("eleventh") || tud.getSchematic().getPermission().equals("twelfth")) ? 1 : 0);
+        setp.put("lanterns_on", (tud.getSchematic().hasLanterns()) ? 1 : 0);
         HashMap<String, Object> wherep = new HashMap<String, Object>();
         wherep.put("uuid", uuid.toString());
         qf.doUpdate("player_prefs", setp, wherep);

@@ -71,6 +71,7 @@ public class TARDISCraftListener implements Listener {
         t.put(Material.COAL_BLOCK, "STEAMPUNK"); // steampunk
         t.put(Material.DIAMOND_BLOCK, "DELUXE"); // deluxe
         t.put(Material.EMERALD_BLOCK, "ELEVENTH"); // eleventh
+        t.put(Material.PURPUR_BLOCK, "ENDER"); // ender schematic designed by ToppanaFIN (player at thatsnotacreeper.com)
         t.put(Material.GOLD_BLOCK, "BIGGER"); // bigger
         t.put(Material.IRON_BLOCK, "BUDGET"); // budget
         t.put(Material.LAPIS_BLOCK, "TOM"); // tom baker
@@ -274,7 +275,7 @@ public class TARDISCraftListener implements Listener {
     }
 
     private boolean checkPerms(Player p, Material m) {
-        SCHEMATIC schm = CONSOLES.getByMaterials().get(m.toString());
+        SCHEMATIC schm = CONSOLES.getBY_MATERIALS().get(m.toString());
         if (schm != null) {
             String perm = schm.getPermission();
             return (perm.equals("budget")) ? true : p.hasPermission("tardis." + perm);
