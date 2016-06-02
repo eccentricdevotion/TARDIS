@@ -42,7 +42,7 @@ public class TARDISTravelTabComplete extends TARDISCompleter implements TabCompl
     public TARDISTravelTabComplete(TARDIS plugin) {
         this.plugin = plugin;
         for (Biome bi : org.bukkit.block.Biome.values()) {
-            if (!bi.equals(Biome.HELL) && !bi.equals(Biome.SKY)) {
+            if (!bi.equals(Biome.HELL) && !bi.equals(Biome.SKY) && !bi.equals(Biome.VOID)) {
                 BIOME_SUBS.add(bi.toString());
             }
         }

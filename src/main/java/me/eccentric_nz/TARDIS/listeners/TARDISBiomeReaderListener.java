@@ -50,7 +50,7 @@ public class TARDISBiomeReaderListener implements Listener {
             ItemMeta im = is.getItemMeta();
             if (im.hasDisplayName() && im.getDisplayName().equals("TARDIS Biome Reader")) {
                 Biome biome = event.getClickedBlock().getBiome();
-                if (biome.equals(Biome.SKY) || biome.equals(Biome.HELL)) {
+                if (biome.equals(Biome.SKY) || biome.equals(Biome.HELL) || biome.equals(Biome.VOID)) {
                     TARDISMessage.send(player, "BIOME_READER_NOT_VALID");
                     return;
                 }
