@@ -2,25 +2,18 @@
 
 ##Current bugfix version `3.6-beta-1`
 1. Fix bugs!
-   * Disengaging siege mode in the BUDGET console TARDIS changes the floor to orange wool
 
 ##Next minor version `3.6-beta-1`
 1. TARDIS Junk Mode - `/tprefs junk [wall|floor] [block_type]`?
 2. TIPS visulisation tool (using WorldGuard region data)
 3. [Auto powerup](http://dev.bukkit.org/bukkit-plugins/tardis/tickets/1209-auto-powerup/)
 4. [Red time rotor](http://dev.bukkit.org/bukkit-plugins/tardis/tickets/1216-red-time-rotor/)
-5. [TARDISDalekCities](http://dev.bukkit.org/bukkit-plugins/tardis/tickets/1168-a-dalek-conquest/) addon?
-    * Custom TerrainControl world (_done_)
-    * Custom resource pack and resource pack switching (_done_)
-    * Acid water (_done_)
-    * Custom acid damage amount (_done_)
-    * Optional custom acid potion effects (_done_)
-    * Automatically generating Dalek cities (_done_)
-    * Spawn Daleks!  (_done_)
-    * Add loot chests to main Dalek Buildings (_done_)
+5. [TARDIS planets](http://dev.bukkit.org/bukkit-plugins/tardis/tickets/1168-a-dalek-conquest/)
     * Determine a use for Acid and Rust Buckets
+    * Add other worlds (Silurian cave world, Gallifrey)?
 6. [Abandoned TARDISes](http://dev.bukkit.org/bukkit-plugins/tardis/tickets/1277-possibility-to-abandon-a-tardis/)
 7. [Destination 'vortex'](http://dev.bukkit.org/bukkit-plugins/tardis/tickets/1023-set-the-tardis-inflight-without-setting-a-destination/) - dematerialise without setting a destination.
+8. Update console schematics to add Control Centre sign (and any other missing controls)
 9. [Sonic screwdriver [flower] pot](http://dev.bukkit.org/bukkit-plugins/tardis/tickets/1239-new-screwdriver/)
 10. Ice/igloo room - if TARDISWeepingAngels plugin is enabled, make a 3% chance a Dalek will form when building a snowman in the room. Should have a pen ready for polar bears
 
