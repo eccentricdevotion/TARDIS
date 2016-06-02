@@ -76,6 +76,7 @@ public class TARDISUpdateLister {
         guis.add(ChatColor.RED + "temporal" + ChatColor.RESET + " - " + ChatColor.DARK_RED + "Temporal Relocator");
         guis.add(ChatColor.RED + "terminal" + ChatColor.RESET + " - " + ChatColor.DARK_RED + "Destination Terminal");
         guis.add(ChatColor.RED + "storage" + ChatColor.RESET + " - " + ChatColor.DARK_RED + "Disk Storage Container");
+        guis.add(ChatColor.RED + "generator" + ChatColor.RESET + " - " + ChatColor.DARK_RED + "Sonic Generator");
         update_options.put("TARDIS User Interfaces", guis);
         List<String> spawns = new ArrayList<String>();
         spawns.add(ChatColor.BLUE + "creeper" + ChatColor.RESET + " - " + ChatColor.DARK_BLUE + "Artron Charged Creeper");

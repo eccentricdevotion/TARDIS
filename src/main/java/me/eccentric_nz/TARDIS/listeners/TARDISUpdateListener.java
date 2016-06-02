@@ -91,6 +91,7 @@ public class TARDISUpdateListener implements Listener {
         controls.put("siege", 21);
         controls.put("control", 22);
         controls.put("telepathic", 23);
+        controls.put("generator", 24);
         validBlocks.add(Material.LEVER);
         validBlocks.add(Material.REDSTONE_COMPARATOR_OFF);
         validBlocks.add(Material.REDSTONE_COMPARATOR_ON);
@@ -243,6 +244,18 @@ public class TARDISUpdateListener implements Listener {
             }
             if (blockName.equalsIgnoreCase("scanner") && validBlocks.contains(blockType)) {
                 set.put("scanner", blockLocStr);
+            }
+            if (blockName.equalsIgnoreCase("generator") && blockType.equals(Material.FLOWER_POT)) {
+                HashMap<String, Object> wherec = new HashMap<String, Object>();
+                wherec.put("tardis_id", id);
+                wherec.put("type", 24);
+                ResultSetControls rsc = new ResultSetControls(plugin, wherec, false);
+                if (!rsc.resultSet()) {
+                    qf.insertControl(id, 24, blockLocStr, 1);
+                    secondary = true;
+                } else {
+                    set.put("location", blockLocStr);
+                }
             }
             if (blockName.equalsIgnoreCase("telepathic") && (blockType.equals(Material.DAYLIGHT_DETECTOR) || blockType.equals(Material.DAYLIGHT_DETECTOR_INVERTED))) {
                 if (!plugin.getTrackerKeeper().getTelepathicPlacements().containsKey(uuid)) {
