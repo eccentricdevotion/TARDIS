@@ -317,6 +317,22 @@ shaped:
         result: BLAZE_ROD
         amount: 1
         lore: ""
+    Sonic Generator:
+        easy_shape: GRG,-F-,-S-
+        easy_ingredients:
+            G: GOLD_NUGGET
+            R: REDSTONE
+            F: FLOWER_POT_ITEM
+            S: BLAZE_ROD
+        hard_shape: GRG,-F-,-S-
+        hard_ingredients:
+            G: GOLD_INGOT
+            R: REDSTONE_BLOCK
+            F: FLOWER_POT_ITEM
+            S: BLAZE_ROD
+        result: FLOWER_POT_ITEM
+        amount: 1
+        lore: ""
     Server Admin Circuit:
         easy_shape: BBB,BOB,BBB
         easy_ingredients:

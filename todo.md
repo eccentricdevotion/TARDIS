@@ -13,8 +13,15 @@
     * Add other worlds (Silurian cave world, Gallifrey)?
 6. [Abandoned TARDISes](http://dev.bukkit.org/bukkit-plugins/tardis/tickets/1277-possibility-to-abandon-a-tardis/)
 7. [Destination 'vortex'](http://dev.bukkit.org/bukkit-plugins/tardis/tickets/1023-set-the-tardis-inflight-without-setting-a-destination/) - dematerialise without setting a destination.
-8. Update console schematics to add Control Centre sign (and any other missing controls)
-9. [Sonic screwdriver [flower] pot](http://dev.bukkit.org/bukkit-plugins/tardis/tickets/1239-new-screwdriver/)
+8. [Sonic Screwdriver [flower pot] Generator](http://dev.bukkit.org/bukkit-plugins/tardis/tickets/1239-new-screwdriver/)
+    * add to console schematics
+    * crafting recipe, `/tgive` and `/trecipe` commands
+    * if not crafted, must be initialised by inserting the crafting materials
+    * add GUI when clicked to select screwdriver type/upgrades that the unit produces (only show upgrades the player has permission for) - if uninitialised provide way to activate it
+    * add configurable artron cost (per screwdriver type/upgrade)
+    * `/tardis update generator`
+    * resource pack texture
+9. Update console schematics to add Control Centre sign (and any other missing controls)
 10. Ice/igloo room - if TARDISWeepingAngels plugin is enabled, make a 3% chance a Dalek will form when building a snowman in the room. Should have a pen ready for polar bears
 
 ##Upcoming minor version `3.7`

@@ -87,6 +87,21 @@ public class TARDISRecipesUpdater {
         recipes_config.set("shaped.Stattenheim Remote.lore", "Right-click block~to call TARDIS");
         recipes_config.set("shaped.Artron Storage Cell.lore", "Charge Level~0");
         //
+        if (!recipes_config.contains("shaped.Sonic Generator")) {
+            recipes_config.set("shaped.Sonic Generator.easy_shape", "GRG,-F-,-S-");
+            recipes_config.set("shaped.Sonic Generator.easy_ingredients.G", "GOLD_NUGGET");
+            recipes_config.set("shaped.Sonic Generator.easy_ingredients.R", "REDSTONE");
+            recipes_config.set("shaped.Sonic Generator.easy_ingredients.F", "FLOWER_POT_ITEM");
+            recipes_config.set("shaped.Sonic Generator.easy_ingredients.S", "BLAZE_ROD");
+            recipes_config.set("shaped.Sonic Generator.hard_shape", "GRG,-F-,-S-");
+            recipes_config.set("shaped.Sonic Generator.hard_ingredients.G", "GOLD_INGOT");
+            recipes_config.set("shaped.Sonic Generator.hard_ingredients.R", "REDSTONE_BLOCK");
+            recipes_config.set("shaped.Sonic Generator.hard_ingredients.F", "FLOWER_POT_ITEM");
+            recipes_config.set("shaped.Sonic Generator.hard_ingredients.S", "BLAZE_ROD");
+            recipes_config.set("shaped.Sonic Generator.result", "FLOWER_POT_ITEM");
+            recipes_config.set("shaped.Sonic Generator.amount", 1);
+            recipes_config.set("shaped.Sonic Generator.lore", "");
+        }
         if (!recipes_config.contains("shaped.TARDIS Remote Key")) {
             recipes_config.set("shaped.TARDIS Remote Key.easy_shape", "RCR,-K-,-T-");
             recipes_config.set("shaped.TARDIS Remote Key.easy_ingredients.R", "REDSTONE");
