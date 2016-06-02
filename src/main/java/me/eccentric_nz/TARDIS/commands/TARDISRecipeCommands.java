@@ -69,6 +69,7 @@ public class TARDISRecipeCommands implements CommandExecutor {
         firstArgs.add("filter"); // Perception Filter
         firstArgs.add("fish-finger"); // Fish Finger
         firstArgs.add("furnace"); // TARDIS Artron Furnace
+        firstArgs.add("generator"); // Sonic Generator
         firstArgs.add("glasses"); // 3-D Glasses
         firstArgs.add("i-circuit"); // Input Circuit
         firstArgs.add("ignite-circuit"); // Ignite Circuit
@@ -217,6 +218,10 @@ public class TARDISRecipeCommands implements CommandExecutor {
             }
             if (args[0].equalsIgnoreCase("furnace")) {
                 this.showShapedRecipe(player, "TARDIS Artron Furnace");
+                return true;
+            }
+            if (args[0].equalsIgnoreCase("generator")) {
+                this.showShapedRecipe(player, "Sonic Generator");
                 return true;
             }
             if (args[0].equalsIgnoreCase("glasses")) {
