@@ -229,6 +229,7 @@ public class TARDISAdminCommands implements CommandExecutor {
                     if (first.equals("skaro")) {
                         if (plugin.getServer().getWorld("Skaro") == null) {
                             new TARDISSkaro(plugin).createDalekWorld();
+                            plugin.getPlanetsConfig().set("planets.Skaro.enabled", true);
                         } else {
                             TARDISMessage.send(sender, "WORLD_EXISTS", "Skaro");
                         }
