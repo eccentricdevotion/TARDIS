@@ -36,7 +36,7 @@ public class ResultSetVoid {
     private final TARDISDatabaseConnection service = TARDISDatabaseConnection.getInstance();
     private final Connection connection = service.getConnection();
     private final TARDIS plugin;
-    private int tardis_id;
+    private final int tardis_id;
     private final String prefix;
 
     /**
@@ -63,7 +63,7 @@ public class ResultSetVoid {
     public boolean hasUpdatedToVOID() {
         PreparedStatement statement = null;
         ResultSet rs = null;
-        String query = "SELECT tardis_id FROM " + prefix + "void WHERE tardis_id = ?" + tardis_id;
+        String query = "SELECT tardis_id FROM " + prefix + "void WHERE tardis_id = ?";
         try {
             service.testConnection(connection);
             statement = connection.prepareStatement(query);
