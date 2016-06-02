@@ -22,7 +22,6 @@
     * Determine a use for Acid and Rust Buckets
 6. [Abandoned TARDISes](http://dev.bukkit.org/bukkit-plugins/tardis/tickets/1277-possibility-to-abandon-a-tardis/)
 7. [Destination 'vortex'](http://dev.bukkit.org/bukkit-plugins/tardis/tickets/1023-set-the-tardis-inflight-without-setting-a-destination/) - dematerialise without setting a destination.
-8. VOID biome for TARDIS interior
 9. [Sonic screwdriver [flower] pot](http://dev.bukkit.org/bukkit-plugins/tardis/tickets/1239-new-screwdriver/)
 10. Ice/igloo room - if TARDISWeepingAngels plugin is enabled, make a 3% chance a Dalek will form when building a snowman in the room. Should have a pen ready for polar bears
 

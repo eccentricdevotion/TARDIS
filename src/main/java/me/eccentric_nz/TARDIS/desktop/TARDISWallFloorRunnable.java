@@ -145,7 +145,7 @@ public class TARDISWallFloorRunnable extends TARDISThemeRunnable implements Runn
                 int z = startz + col;
                 // if we're setting the biome to sky, do it now
                 if (plugin.getConfig().getBoolean("creation.sky_biome") && level == 0) {
-                    world.setBiome(x, z, Biome.SKY);
+                    world.setBiome(x, z, Biome.VOID);
                 }
                 Material type = Material.valueOf((String) bb.get("type"));
                 byte data = bb.getByte("data");

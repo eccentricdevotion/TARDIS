@@ -133,7 +133,7 @@ public class TARDISJunkBuilder implements Runnable {
                                 int z = sz + col;
                                 // if we're setting the biome to sky, do it now
                                 if (plugin.getConfig().getBoolean("creation.sky_biome") && level == 0) {
-                                    world.setBiome(x, z, Biome.SKY);
+                                    world.setBiome(x, z, Biome.VOID);
                                 }
                                 type = Material.valueOf((String) c.get("type"));
                                 data = c.getByte("data");
