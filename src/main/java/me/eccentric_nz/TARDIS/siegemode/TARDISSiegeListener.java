@@ -370,6 +370,9 @@ public class TARDISSiegeListener implements Listener {
             if (plugin.getTrackerKeeper().getInSiegeMode().contains(id)) {
                 plugin.getTrackerKeeper().getInSiegeMode().remove(Integer.valueOf(id));
             }
+            if (plugin.getConfig().getBoolean("siege.texture")) {
+                new TARDISSiegeMode(plugin).changeTextures(rst.getUuid().toString(), rst.getSchematic(), p, false);
+            }
             TARDISMessage.send(p, "SIEGE_OFF");
         }
     }

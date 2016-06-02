@@ -138,7 +138,6 @@ public class TARDISSiegeMode {
                         plugin.getTrackerKeeper().getSiegeGrowthAreas().remove(w);
                     }
                 }
-
             }
             if (plugin.getConfig().getBoolean("siege.texture")) {
                 changeTextures(rs.getUuid().toString(), rs.getSchematic(), p, false);
@@ -210,7 +209,7 @@ public class TARDISSiegeMode {
         new QueryFactory(plugin).doUpdate("tardis", set, wheres);
     }
 
-    private void changeTextures(String uuid, SCHEMATIC schm, Player p, boolean toSiege) {
+    public void changeTextures(String uuid, SCHEMATIC schm, Player p, boolean toSiege) {
         HashMap<String, Object> wherepp = new HashMap<String, Object>();
         wherepp.put("uuid", uuid);
         ResultSetPlayerPrefs rspp = new ResultSetPlayerPrefs(plugin, wherepp);

@@ -2,7 +2,6 @@
 
 ##Current bugfix version `3.6-beta-1`
 1. Fix bugs!
-   * Siege mode wall/floor changes are not reverted when disengaging siege mode from outside the TARDIS
    * Disengaging siege mode in the BUDGET console TARDIS changes the floor to orange wool
 
 ##Next minor version `3.6-beta-1`
