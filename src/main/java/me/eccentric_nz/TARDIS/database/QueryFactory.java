@@ -355,4 +355,30 @@ public class QueryFactory {
             }
         }
     }
+
+    /**
+     * Add a TARDIS id to the void table.
+     *
+     * @param id the tardis_id to add
+     */
+    public void addToVoid(int id) {
+        PreparedStatement ps = null;
+        String query = "INSERT INTO " + prefix + "void (tardis_id) VALUES (?)";
+        try {
+            service.testConnection(connection);
+            ps = connection.prepareStatement(query);
+            ps.setInt(1, id);
+            ps.executeUpdate();
+        } catch (SQLException e) {
+            plugin.debug("Update error for saving tardis_id to void! " + e.getMessage());
+        } finally {
+            try {
+                if (ps != null) {
+                    ps.close();
+                }
+            } catch (SQLException e) {
+                plugin.debug("Error closing statement! " + e.getMessage());
+            }
+        }
+    }
 }

@@ -89,7 +89,8 @@ public class SQL {
             "CREATE TABLE IF NOT EXISTS %stag (tag_id int(11) NOT NULL AUTO_INCREMENT, player varchar(32) DEFAULT '', `time` int(11) DEFAULT '0', PRIMARY KEY (tag_id)) DEFAULT CHARSET=utf8 COLLATE utf8_general_ci;",
             "CREATE TABLE IF NOT EXISTS %stardis (tardis_id int(11) NOT NULL AUTO_INCREMENT, uuid varchar(48) DEFAULT '', owner varchar(32) DEFAULT '', last_known_name varchar(32) DEFAULT '', chunk varchar(64) DEFAULT '', tips int(4) DEFAULT '0', size varchar(32) DEFAULT '', artron_level int(11) DEFAULT '0', replaced text NULL, companions text NULL, chameleon varchar(512) DEFAULT '', handbrake_on int(1) DEFAULT '1', iso_on int(1) DEFAULT '0', hidden int(1) DEFAULT '0', recharging int(1) DEFAULT '0', tardis_init int(1) DEFAULT '0', adapti_on int(1) DEFAULT '0', chamele_on int(1) DEFAULT '0', chameleon_preset varchar(32) DEFAULT 'NEW', chameleon_demat varchar(32) DEFAULT 'NEW', chameleon_id int(6) DEFAULT '35', chameleon_data int(6) DEFAULT '11', save_sign varchar(512) DEFAULT '', creeper varchar(512) DEFAULT '', condenser varchar(512) DEFAULT '', scanner varchar(512) DEFAULT '', farm varchar(512) DEFAULT '', stable varchar(512) DEFAULT '', beacon varchar(512) DEFAULT '', eps varchar(512) DEFAULT '', rail varchar(512) DEFAULT '', village varchar(512) DEFAULT '', renderer varchar(512) DEFAULT '', zero varchar(512) DEFAULT '', hutch varchar(512) DEFAULT '', powered_on int(1) DEFAULT '0', lights_on int(1) DEFAULT '1', siege_on int(1) DEFAULT '0', lastuse bigint(20), monsters int(2) DEFAULT '0', PRIMARY KEY (tardis_id)) DEFAULT CHARSET=utf8 COLLATE utf8_general_ci;",
             "CREATE TABLE IF NOT EXISTS %stravellers (traveller_id int(11) NOT NULL AUTO_INCREMENT, tardis_id int(11) DEFAULT '0', uuid varchar(48) DEFAULT '', player varchar(32) DEFAULT '', PRIMARY KEY (traveller_id)) DEFAULT CHARSET=utf8 COLLATE utf8_general_ci;",
-            "CREATE TABLE IF NOT EXISTS %svaults (v_id int(11) NOT NULL AUTO_INCREMENT, tardis_id int(11) DEFAULT '0', location varchar(512) DEFAULT '', x int(11) DEFAULT '0', y int(3) DEFAULT '0', z int(11) DEFAULT '0', PRIMARY KEY (v_id)) DEFAULT CHARSET=utf8 COLLATE utf8_general_ci;"
+            "CREATE TABLE IF NOT EXISTS %svaults (v_id int(11) NOT NULL AUTO_INCREMENT, tardis_id int(11) DEFAULT '0', location varchar(512) DEFAULT '', x int(11) DEFAULT '0', y int(3) DEFAULT '0', z int(11) DEFAULT '0', PRIMARY KEY (v_id)) DEFAULT CHARSET=utf8 COLLATE utf8_general_ci;",
+            "CREATE TABLE IF NOT EXISTS %svoid (tardis_id int(11) NOT NULL, PRIMARY KEY (tardis_id)) DEFAULT CHARSET=utf8 COLLATE utf8_general_ci;"
     );
 
     public static final List<String> INSERTS = Arrays.asList(
@@ -122,7 +123,8 @@ public class SQL {
             "INSERT INTO `%stag` (`tag_id`, `player`, `time`) VALUES",
             "INSERT INTO `%stardis` (`tardis_id`, `uuid`, `owner`, `last_known_name`, `chunk`, `tips`, `size`, `artron_level`, `replaced`, `companions`, `chameleon`, `handbrake_on`, `iso_on`, `hidden`, `recharging`, `tardis_init`, `adapti_on`, `chamele_on`, `chameleon_preset`, `chameleon_demat`, `chameleon_id`, `chameleon_data`, `save_sign`, `creeper`, `condenser`, `scanner`, `farm`, `stable`, `beacon`, `eps`, `rail`, `village`, `renderer`, `zero`, `hutch`, `powered_on`, `lights_on`, `lastuse`, `monsters`) VALUES",
             "INSERT INTO `%stravellers` (`traveller_id`, `tardis_id`, `uuid`, `player`) VALUES",
-            "INSERT INTO `%svaults` (`v_id`, `tardis_id`, `location`, `x`, `y`, `z`) VALUES"
+            "INSERT INTO `%svaults` (`v_id`, `tardis_id`, `location`, `x`, `y`, `z`) VALUES",
+            "INSERT INTO `%svoid` (`tardis_id`) VALUES"
     );
 
     public static final List<String> VALUES = Arrays.asList(
@@ -155,7 +157,8 @@ public class SQL {
             "(%s, '%s', %s)",
             "(%s, '%s', '%s', '%s', '%s', %s, '%s', %s, '%s', '%s', '%s', %s, %s, %s, %s, %s, %s, %s, '%s', '%s', %s, %s, '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', %s, %s, %s, %s)",
             "(%s, %s, '%s', '%s')",
-            "(%s, %s, '%s', %s, %s, %s)"
+            "(%s, %s, '%s', %s, %s, %s)",
+            "(%s)"
     );
 
     public static final String COMMENT = "--";

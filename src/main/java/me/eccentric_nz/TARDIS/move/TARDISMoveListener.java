@@ -23,11 +23,13 @@ import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetCompanions;
 import me.eccentric_nz.TARDIS.database.ResultSetPlayerPrefs;
+import me.eccentric_nz.TARDIS.database.ResultSetVoid;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
 import me.eccentric_nz.TARDIS.mobfarming.TARDISFarmer;
 import me.eccentric_nz.TARDIS.mobfarming.TARDISMob;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import me.eccentric_nz.TARDIS.utility.TARDISStaticUtils;
+import me.eccentric_nz.TARDIS.utility.TARDISVoidUpdate;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -120,6 +122,12 @@ public class TARDISMoveListener implements Listener {
                     set.put("tardis_id", id);
                     set.put("uuid", uuid.toString());
                     qf.doSyncInsert("travellers", set);
+                    // check to see whether the TARDIS has been updated to VOID biome
+                    if (!new ResultSetVoid(plugin, id).hasUpdatedToVOID()) {
+                        new TARDISVoidUpdate(plugin, id).updateBiome();
+                        // add tardis id to void table
+                        qf.addToVoid(id);
+                    }
                 }
                 // tp player
                 plugin.getGeneralKeeper().getDoorListener().movePlayer(p, to, exit, l.getWorld(), userQuotes, 0, minecart);
