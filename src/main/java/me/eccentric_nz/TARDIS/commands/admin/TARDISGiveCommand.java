@@ -70,6 +70,7 @@ public class TARDISGiveCommand implements CommandExecutor {
         items.put("filter", "Perception Filter");
         items.put("fish-finger", "Fish Finger");
         items.put("furnace", "TARDIS Artron Furnace");
+        items.put("generator", "Sonic Generator");
         items.put("glasses", "3-D Glasses");
         items.put("i-circuit", "TARDIS Input Circuit");
         items.put("ignite-circuit", "Ignite Circuit");
