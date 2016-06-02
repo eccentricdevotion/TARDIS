@@ -117,9 +117,9 @@ public class TARDISInstaPreset {
         QueryFactory qf = new QueryFactory(plugin);
         // if configured and it's a Whovian preset set biome
         if (plugin.getConfig().getBoolean("police_box.set_biome") && (preset.equals(PRESET.NEW) || preset.equals(PRESET.OLD) || preset.equals(PRESET.PANDORICA)) && tmd.useTexture()) {
-            //List<Chunk> chunks = new ArrayList<Chunk>();
+            List<Chunk> chunks = new ArrayList<Chunk>();
             Chunk chunk = tmd.getLocation().getChunk();
-            //chunks.add(chunk);
+            chunks.add(chunk);
             // load the chunk
             final int cx = tmd.getLocation().getBlockX() >> 4;
             final int cz = tmd.getLocation().getBlockZ() >> 4;
@@ -138,16 +138,17 @@ public class TARDISInstaPreset {
                         // add an invisible roof
                         plugin.getBlockUtils().setBlockAndRemember(world, x + c, 255, z + r, Material.BARRIER, (byte) 0, tmd.getTardisID());
                     }
-//                    Chunk tmp_chunk = world.getChunkAt(new Location(world, x + c, 64, z + r));
-//                    if (!chunks.contains(tmp_chunk)) {
-//                        chunks.add(tmp_chunk);
-//                    }
+                    Chunk tmp_chunk = world.getChunkAt(new Location(world, x + c, 64, z + r));
+                    if (!chunks.contains(tmp_chunk)) {
+                        chunks.add(tmp_chunk);
+                    }
                 }
             }
-//            // refresh the chunks
-//            for (Chunk c : chunks) {
-//                world.refreshChunk(c.getX(), c.getZ());
-//            }
+            // refresh the chunks
+            for (Chunk c : chunks) {
+                //world.refreshChunk(c.getX(), c.getZ());
+                plugin.getTardisHelper().refreshChunk(c);
+            }
         }
         // rescue player?
         if (plugin.getTrackerKeeper().getRescue().containsKey(tmd.getTardisID())) {

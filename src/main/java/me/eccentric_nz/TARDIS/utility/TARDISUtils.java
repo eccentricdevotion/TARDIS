@@ -25,6 +25,7 @@ import me.eccentric_nz.TARDIS.database.ResultSetDiskStorage;
 import me.eccentric_nz.TARDIS.database.ResultSetPlayerPrefs;
 import me.eccentric_nz.tardischunkgenerator.TARDISChunkGenerator;
 import org.bukkit.ChatColor;
+import org.bukkit.Chunk;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
@@ -216,7 +217,7 @@ public class TARDISUtils {
         World w = l.getWorld();
         boolean run = true;
         // reset biome and it's not The End
-        if (l.getBlock().getBiome().equals(Biome.DEEP_OCEAN) || (l.getBlock().getBiome().equals(Biome.SKY) && !l.getWorld().getEnvironment().equals(World.Environment.THE_END)) && biome != null) {
+        if (l.getBlock().getBiome().equals(Biome.DEEP_OCEAN) || l.getBlock().getBiome().equals(Biome.VOID) || (l.getBlock().getBiome().equals(Biome.SKY) && !l.getWorld().getEnvironment().equals(World.Environment.THE_END)) && biome != null) {
             // reset the biome
             for (int c = 0; c < 3 && run; c++) {
                 for (int r = 0; r < 3 && run; r++) {
@@ -229,8 +230,9 @@ public class TARDISUtils {
                 }
             }
             // refresh the chunk
-            //Chunk chunk = w.getChunkAt(l);
+            Chunk chunk = w.getChunkAt(l);
             //w.refreshChunk(chunk.getX(), chunk.getZ());
+            plugin.getTardisHelper().refreshChunk(chunk);
         }
         return run;
     }

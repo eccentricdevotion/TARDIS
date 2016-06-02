@@ -201,7 +201,8 @@ public class TARDISDeinstaPreset {
             plugin.getPresetDestroyer().removeBlockProtection(id, new QueryFactory(plugin));
         }
         // refresh chunk
-        w.refreshChunk(chunk.getX(), chunk.getZ());
+//        w.refreshChunk(chunk.getX(), chunk.getZ());
+        plugin.getTardisHelper().refreshChunk(chunk);
         plugin.getTrackerKeeper().getDematerialising().removeAll(Collections.singleton(id));
         plugin.getTrackerKeeper().getInVortex().removeAll(Collections.singleton(id));
     }

@@ -256,7 +256,8 @@ public class TARDISRoomRunnable implements Runnable {
                 for (Chunk ch : chunkList) {
                     if (plugin.getConfig().getBoolean("creation.sky_biome")) {
                         // refesh the cunk so ctm textures show
-                        world.refreshChunk(ch.getX(), ch.getZ());
+                        //world.refreshChunk(ch.getX(), ch.getZ());
+                        plugin.getTardisHelper().refreshChunk(ch);
                     }
                     plugin.getGeneralKeeper().getRoomChunkList().remove(ch);
                 }
@@ -551,7 +552,7 @@ public class TARDISRoomRunnable implements Runnable {
             }
             // if we're setting the biome to sky, do it now
             if (plugin.getConfig().getBoolean("creation.sky_biome") && level == 0) {
-                world.setBiome(startx, startz, Biome.SKY);
+                world.setBiome(startx, startz, Biome.VOID);
             }
             if (!notThese.contains(type) && !(type.equals(Material.HUGE_MUSHROOM_2) && data == (byte) 15)) {
                 if (type.equals(Material.STATIONARY_WATER)) {

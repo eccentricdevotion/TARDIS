@@ -32,6 +32,7 @@ import org.bukkit.Chunk;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
+import org.bukkit.World.Environment;
 import org.bukkit.block.Biome;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Entity;
@@ -118,7 +119,7 @@ public class TARDISJunkDestroyer implements Runnable {
                         for (int col = sz; col <= ez; col++) {
                             Block b = world.getBlockAt(row, level, col);
                             b.setType(Material.AIR);
-                            if (level == sy && (b.getBiome().equals(Biome.SKY) && !junkLoc.getWorld().getEnvironment().equals(World.Environment.THE_END)) && biome != null) {
+                            if (level == sy && ((b.getBiome().equals(Biome.SKY) && !junkLoc.getWorld().getEnvironment().equals(Environment.THE_END)) || b.getBiome().equals(Biome.VOID)) && biome != null) {
                                 if (!chunks.contains(b.getChunk())) {
                                     chunks.add(b.getChunk());
                                 }
@@ -133,7 +134,8 @@ public class TARDISJunkDestroyer implements Runnable {
                         }
                         // refresh the chunks
                         for (Chunk chink : chunks) {
-                            world.refreshChunk(chink.getX(), chink.getZ());
+                            //world.refreshChunk(chink.getX(), chink.getZ());
+                            plugin.getTardisHelper().refreshChunk(chink);
                         }
                         chunks.clear();
                     }
