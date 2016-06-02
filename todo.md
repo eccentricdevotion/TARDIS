@@ -4,7 +4,6 @@
 1. Fix bugs!
    * Siege mode wall/floor changes are not reverted when disengaging siege mode from outside the TARDIS
    * Disengaging siege mode in the BUDGET console TARDIS changes the floor to orange wool
-   * You can get stuck in the Renderer room if you exit the TARDIS while the scanner is still displaying its data
 
 ##Next minor version `3.6-beta-1`
 1. TARDIS Junk Mode - `/tprefs junk [wall|floor] [block_type]`?
@@ -19,7 +18,7 @@
     * Optional custom acid potion effects (_done_)
     * Automatically generating Dalek cities (_done_)
     * Spawn Daleks!  (_done_)
-    * Add loot chests to main Dalek Buildings (_started_)
+    * Add loot chests to main Dalek Buildings (_done_)
     * Determine a use for Acid and Rust Buckets
 6. [Abandoned TARDISes](http://dev.bukkit.org/bukkit-plugins/tardis/tickets/1277-possibility-to-abandon-a-tardis/)
 7. [Destination 'vortex'](http://dev.bukkit.org/bukkit-plugins/tardis/tickets/1023-set-the-tardis-inflight-without-setting-a-destination/) - dematerialise without setting a destination.

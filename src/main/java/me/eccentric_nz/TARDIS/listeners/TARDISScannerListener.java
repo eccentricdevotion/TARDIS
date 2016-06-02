@@ -138,8 +138,10 @@ public class TARDISScannerListener implements Listener {
                                 bsched.scheduleSyncDelayedTask(plugin, new Runnable() {
                                     @Override
                                     public void run() {
-                                        TARDISExteriorRenderer ter = new TARDISExteriorRenderer(plugin);
-                                        ter.render(renderer, data.getScanLocation(), id, player, data.getTardisDirection(), data.getTime(), data.getBiome());
+                                        if (player.isOnline() && plugin.getUtils().inTARDISWorld(player)) {
+                                            TARDISExteriorRenderer ter = new TARDISExteriorRenderer(plugin);
+                                            ter.render(renderer, data.getScanLocation(), id, player, data.getTardisDirection(), data.getTime(), data.getBiome());
+                                        }
                                     }
                                 }, 160L);
                             } else {
