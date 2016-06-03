@@ -24,6 +24,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.database.data.Sonic;
 import me.eccentric_nz.TARDIS.utility.TARDISNumberParsers;
 import org.bukkit.ChatColor;
 
@@ -42,16 +43,7 @@ public class ResultSetSonic {
     private final Connection connection = service.getConnection();
     private final TARDIS plugin;
     private final HashMap<String, Object> where;
-    private int sonic_id;
-    private UUID uuid;
-    private boolean activated;
-    private ChatColor sonicType;
-    private boolean bio;
-    private boolean diamond;
-    private boolean emerald;
-    private boolean redstone;
-    private boolean painter;
-    private boolean ignite;
+    private Sonic sonic;
     private final String prefix;
 
     /**
@@ -104,18 +96,19 @@ public class ResultSetSonic {
             }
             rs = statement.executeQuery();
             if (rs.isBeforeFirst()) {
-                while (rs.next()) {
-                    this.sonic_id = rs.getInt("sonic_id");
-                    this.uuid = UUID.fromString(rs.getString("uuid"));
-                    this.activated = rs.getBoolean("activated");
-                    this.sonicType = ChatColor.valueOf(rs.getString("sonic_type"));
-                    this.bio = rs.getBoolean("bio");
-                    this.diamond = rs.getBoolean("diamond");
-                    this.emerald = rs.getBoolean("emerald");
-                    this.redstone = rs.getBoolean("redstone");
-                    this.painter = rs.getBoolean("painter");
-                    this.ignite = rs.getBoolean("ignite");
-                }
+                rs.next();
+                sonic = new Sonic(
+                        rs.getInt("sonic_id"),
+                        UUID.fromString(rs.getString("uuid")),
+                        rs.getBoolean("activated"),
+                        ChatColor.valueOf(rs.getString("sonic_type")),
+                        rs.getBoolean("bio"),
+                        rs.getBoolean("diamond"),
+                        rs.getBoolean("emerald"),
+                        rs.getBoolean("redstone"),
+                        rs.getBoolean("painter"),
+                        rs.getBoolean("ignite")
+                );
             } else {
                 return false;
             }
@@ -137,43 +130,7 @@ public class ResultSetSonic {
         return true;
     }
 
-    public int getSonic_id() {
-        return sonic_id;
-    }
-
-    public UUID getUuid() {
-        return uuid;
-    }
-
-    public boolean isActivated() {
-        return activated;
-    }
-
-    public ChatColor getSonicType() {
-        return sonicType;
-    }
-
-    public boolean hasBio() {
-        return bio;
-    }
-
-    public boolean hasDiamond() {
-        return diamond;
-    }
-
-    public boolean hasEmerald() {
-        return emerald;
-    }
-
-    public boolean hasRedstone() {
-        return redstone;
-    }
-
-    public boolean hasPainter() {
-        return painter;
-    }
-
-    public boolean hasIgnite() {
-        return ignite;
+    public Sonic getSonic() {
+        return sonic;
     }
 }

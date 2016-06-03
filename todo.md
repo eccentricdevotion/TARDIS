@@ -3,7 +3,9 @@
 ##Current bugfix version `3.6-beta-1`
 1. Fix bugs!
 
-##Next minor version `3.6-beta-1`
+##Next minor version `3.6-beta-1
+
+0.  Convert all database ResultSets to use data classes - `multiple` should return a `List<T>` instead of a `Map<String, String>`
 1. TARDIS Junk Mode - `/tprefs junk [wall|floor] [block_type]`?
 2. TIPS visulisation tool (using WorldGuard region data)
 3. [Auto powerup](http://dev.bukkit.org/bukkit-plugins/tardis/tickets/1209-auto-powerup/)
