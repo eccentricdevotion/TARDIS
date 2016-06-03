@@ -148,6 +148,10 @@ public class TARDISSQLiteDatabase {
             String querySiege = "CREATE TABLE IF NOT EXISTS " + prefix + "siege (siege_id INTEGER PRIMARY KEY NOT NULL, uuid TEXT DEFAULT '', tardis_id INTEGER DEFAULT 0)";
             statement.executeUpdate(querySiege);
 
+            // Table structure for table 'sonic'
+            String querySonic = "CREATE TABLE IF NOT EXISTS " + prefix + "sonic (sonic_id INTEGER PRIMARY KEY NOT NULL, uuid TEXT DEFAULT '', activated INTEGER DEFAULT 0, sonic_type TEXT DEFAULT '', bio INTEGER DEFAULT 0, diamond INTEGER DEFAULT 0, emerald INTEGER DEFAULT 0, redstone INTEGER DEFAULT 0, painter INTEGER DEFAULT 0, ignite INTEGER DEFAULT 0)";
+            statement.executeUpdate(querySonic);
+
             // reset storage table
             String s_query = "SELECT sql FROM sqlite_master WHERE tbl_name = '" + prefix + "storage'";
             ResultSet rss = statement.executeQuery(s_query);
@@ -184,8 +188,8 @@ public class TARDISSQLiteDatabase {
             String queryVaults = "CREATE TABLE IF NOT EXISTS " + prefix + "vaults (v_id INTEGER PRIMARY KEY NOT NULL, tardis_id INTEGER, location TEXT COLLATE NOCASE DEFAULT '', x INTEGER DEFAULT 0, y INTEGER DEFAULT 0, z INTEGER DEFAULT 0)";
             statement.executeUpdate(queryVaults);
 
-            // Table structure for table 'void'
-            String queryVoid = "CREATE TABLE IF NOT EXISTS " + prefix + "void (tardis_id INTEGER PRIMARY KEY NOT NULL)";
+            // Table structure for table 'thevoid'
+            String queryVoid = "CREATE TABLE IF NOT EXISTS " + prefix + "thevoid (tardis_id INTEGER PRIMARY KEY NOT NULL)";
             statement.executeUpdate(queryVoid);
 
             // delete old submerged, gravity and levers tables
