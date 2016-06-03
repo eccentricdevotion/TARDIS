@@ -227,6 +227,13 @@ public class TARDISConfiguration {
         artronIntOptions.put("siege_deplete", 100);
         artronIntOptions.put("siege_ticks", 1500);
         artronIntOptions.put("siege_transfer", 10);
+        artronIntOptions.put("sonic_generator.standard", 10);
+        artronIntOptions.put("sonic_generator.bio", 10);
+        artronIntOptions.put("sonic_generator.diamond", 10);
+        artronIntOptions.put("sonic_generator.emerald", 10);
+        artronIntOptions.put("sonic_generator.redstone", 10);
+        artronIntOptions.put("sonic_generator.painter", 10);
+        artronIntOptions.put("sonic_generator.ignite", 10);
         artronIntOptions.put("standby", 5);
         artronIntOptions.put("standby_time", 6000);
         artronIntOptions.put("the_end_min", 5500);
