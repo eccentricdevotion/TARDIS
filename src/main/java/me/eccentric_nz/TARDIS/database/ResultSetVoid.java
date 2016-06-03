@@ -53,9 +53,9 @@ public class ResultSetVoid {
     }
 
     /**
-     * Attempts to see whether the supplied TARDIS id is in the void table. This
-     * method builds an SQL query string from the parameters supplied and then
-     * executes the query.
+     * Attempts to see whether the supplied TARDIS id is in the thevoid table.
+     * This method builds an SQL query string from the parameters supplied and
+     * then executes the query.
      *
      * @return true or false depending on whether the TARDIS id exists in the
      * table
@@ -63,7 +63,7 @@ public class ResultSetVoid {
     public boolean hasUpdatedToVOID() {
         PreparedStatement statement = null;
         ResultSet rs = null;
-        String query = "SELECT tardis_id FROM " + prefix + "void WHERE tardis_id = ?";
+        String query = "SELECT tardis_id FROM " + prefix + "thevoid WHERE tardis_id = ?";
         try {
             service.testConnection(connection);
             statement = connection.prepareStatement(query);
@@ -71,7 +71,7 @@ public class ResultSetVoid {
             rs = statement.executeQuery();
             return rs.isBeforeFirst();
         } catch (SQLException e) {
-            plugin.debug("ResultSet error for void table! " + e.getMessage());
+            plugin.debug("ResultSet error for thevoid table! " + e.getMessage());
             return false;
         } finally {
             try {
@@ -82,7 +82,7 @@ public class ResultSetVoid {
                     statement.close();
                 }
             } catch (SQLException e) {
-                plugin.debug("Error closing void table! " + e.getMessage());
+                plugin.debug("Error closing thevoid table! " + e.getMessage());
             }
         }
     }
