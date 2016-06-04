@@ -97,11 +97,13 @@ public class ResultSetSonic {
             rs = statement.executeQuery();
             if (rs.isBeforeFirst()) {
                 rs.next();
+                String colour = rs.getString("sonic_type");
+                ChatColor cc = (colour.isEmpty()) ? ChatColor.RESET : ChatColor.valueOf(colour);
                 sonic = new Sonic(
                         rs.getInt("sonic_id"),
                         UUID.fromString(rs.getString("uuid")),
                         rs.getBoolean("activated"),
-                        ChatColor.valueOf(rs.getString("sonic_type")),
+                        cc,
                         rs.getBoolean("bio"),
                         rs.getBoolean("diamond"),
                         rs.getBoolean("emerald"),
