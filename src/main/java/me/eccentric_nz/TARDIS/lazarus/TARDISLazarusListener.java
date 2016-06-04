@@ -19,7 +19,7 @@ package me.eccentric_nz.TARDIS.lazarus;
 import java.util.HashMap;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.ResultSetControls;
-import me.eccentric_nz.TARDIS.database.ResultSetTardis;
+import me.eccentric_nz.TARDIS.database.ResultSetTardisPowered;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
@@ -63,10 +63,8 @@ public class TARDISLazarusListener implements Listener {
                 if (rsc.resultSet()) {
                     // check for power
                     if (plugin.getConfig().getBoolean("allow.power_down")) {
-                        HashMap<String, Object> wheret = new HashMap<String, Object>();
-                        wheret.put("tardis_id", rsc.getTardis_id());
-                        ResultSetTardis rs = new ResultSetTardis(plugin, wheret, "", false);
-                        if (rs.resultSet() && !rs.isPowered_on()) {
+                        ResultSetTardisPowered rs = new ResultSetTardisPowered(plugin);
+                        if (rs.fromID(rsc.getTardis_id()) && !rs.isPowered()) {
                             TARDISMessage.send(player, "POWER_DOWN");
                             return;
                         }

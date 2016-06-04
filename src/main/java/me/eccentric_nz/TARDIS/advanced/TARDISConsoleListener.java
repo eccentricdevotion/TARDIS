@@ -25,7 +25,7 @@ import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetControls;
 import me.eccentric_nz.TARDIS.database.ResultSetDiskStorage;
 import me.eccentric_nz.TARDIS.database.ResultSetPlayerPrefs;
-import me.eccentric_nz.TARDIS.database.ResultSetTardis;
+import me.eccentric_nz.TARDIS.database.ResultSetTardisPowered;
 import me.eccentric_nz.TARDIS.enumeration.DISK_CIRCUIT;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import org.bukkit.Material;
@@ -94,12 +94,12 @@ public class TARDISConsoleListener implements Listener {
                         HashMap<String, Object> wheret = new HashMap<String, Object>();
                         wheret.put("tardis_id", id);
                         wheret.put("uuid", p.getUniqueId().toString());
-                        ResultSetTardis rs = new ResultSetTardis(plugin, wheret, "", false);
-                        if (!rs.resultSet()) {
+                        ResultSetTardisPowered rs = new ResultSetTardisPowered(plugin);
+                        if (!rs.fromBoth(id, p.getUniqueId().toString())) {
                             TARDISMessage.send(p, "NOT_OWNER");
                             return;
                         }
-                        if (plugin.getConfig().getBoolean("allow.power_down") && !rs.isPowered_on()) {
+                        if (plugin.getConfig().getBoolean("allow.power_down") && !rs.isPowered()) {
                             TARDISMessage.send(p, "POWER_DOWN");
                             return;
                         }
