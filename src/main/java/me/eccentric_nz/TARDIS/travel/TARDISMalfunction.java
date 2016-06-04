@@ -27,10 +27,8 @@ import me.eccentric_nz.TARDIS.database.ResultSetLamps;
 import me.eccentric_nz.TARDIS.database.ResultSetPlayerPrefs;
 import me.eccentric_nz.TARDIS.database.ResultSetTravellers;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
-import me.eccentric_nz.TARDIS.utility.TARDISLocationGetters;
 import org.bukkit.Location;
 import org.bukkit.Material;
-import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
 
 /**
@@ -116,14 +114,7 @@ public class TARDISMalfunction {
         HashMap<String, Object> where = new HashMap<String, Object>();
         where.put("tardis_id", id);
         ResultSetLamps rsl = new ResultSetLamps(plugin, where, true);
-        List<Block> lamps = new ArrayList<Block>();
         if (rsl.resultSet()) {
-            // flicker lights
-            ArrayList<HashMap<String, String>> data = rsl.getData();
-            for (HashMap<String, String> map : data) {
-                Location loc = TARDISLocationGetters.getLocationFromDB(map.get("location"), 0.0F, 0.0F);
-                lamps.add(loc.getBlock());
-            }
             // get player prefs
             HashMap<String, Object> wherep = new HashMap<String, Object>();
             wherep.put("uuid", p.getUniqueId().toString());
@@ -146,8 +137,9 @@ public class TARDISMalfunction {
                     plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, EPS_runnable, 220L);
                 }
                 Material light = (rsp.isLanternsOn()) ? Material.SEA_LANTERN : Material.REDSTONE_LAMP_ON;
+                // flicker lights
                 final long start = System.currentTimeMillis() + 10000;
-                TARDISLampsRunnable runnable = new TARDISLampsRunnable(plugin, lamps, start, light, rsp.isWoolLightsOn());
+                TARDISLampsRunnable runnable = new TARDISLampsRunnable(plugin, rsl.getData(), start, light, rsp.isWoolLightsOn());
                 runnable.setHandbrake(handbrake_loc);
                 int taskID = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, runnable, 10L, 10L);
                 runnable.setTask(taskID);

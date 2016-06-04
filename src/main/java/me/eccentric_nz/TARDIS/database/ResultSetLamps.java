@@ -19,14 +19,16 @@ package me.eccentric_nz.TARDIS.database;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Locale;
+import java.util.List;
 import java.util.Map;
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.utility.TARDISLocationGetters;
 import me.eccentric_nz.TARDIS.utility.TARDISNumberParsers;
+import org.bukkit.Location;
+import org.bukkit.block.Block;
 
 /**
  * A fission lamp was a type of lamp used around the 50th century. They were
@@ -44,10 +46,7 @@ public class ResultSetLamps {
     private final TARDIS plugin;
     private final HashMap<String, Object> where;
     private final boolean multiple;
-    private int id;
-    private int tardis_id;
-    private String location;
-    private final ArrayList<HashMap<String, String>> data = new ArrayList<HashMap<String, String>>();
+    private final List<Block> data = new ArrayList<Block>();
     private final String prefix;
 
     /**
@@ -103,19 +102,13 @@ public class ResultSetLamps {
             }
             rs = statement.executeQuery();
             if (rs.isBeforeFirst()) {
-                while (rs.next()) {
-                    if (multiple) {
-                        HashMap<String, String> row = new HashMap<String, String>();
-                        ResultSetMetaData rsmd = rs.getMetaData();
-                        int columns = rsmd.getColumnCount();
-                        for (int i = 1; i < columns + 1; i++) {
-                            row.put(rsmd.getColumnName(i).toLowerCase(Locale.ENGLISH), rs.getString(i));
+                if (multiple) {
+                    while (rs.next()) {
+                        Location loc = TARDISLocationGetters.getLocationFromDB(rs.getString("location"), 0.0F, 0.0F);
+                        if (loc != null) {
+                            data.add(loc.getBlock());
                         }
-                        data.add(row);
                     }
-                    this.id = rs.getInt("l_id");
-                    this.tardis_id = rs.getInt("tardis_id");
-                    this.location = rs.getString("location");
                 }
             } else {
                 return false;
@@ -138,19 +131,7 @@ public class ResultSetLamps {
         return true;
     }
 
-    public int getId() {
-        return id;
-    }
-
-    public int getTardis_id() {
-        return tardis_id;
-    }
-
-    public String getLocation() {
-        return location;
-    }
-
-    public ArrayList<HashMap<String, String>> getData() {
+    public List<Block> getData() {
         return data;
     }
 }
