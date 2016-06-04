@@ -5,7 +5,7 @@
 
 ##Next minor version `3.6-beta-1
 
-0.  Convert all database ResultSets to use data classes - `multiple` should return a `List<T>` instead of a `Map<String, String>`
+0.  Convert all database ResultSets to use data classes - `multiple` should return a `List<T>` instead of a `Map<String, String>` (_started_)
 1. TARDIS Junk Mode - `/tprefs junk [wall|floor] [block_type]`?
 2. TIPS visulisation tool (using WorldGuard region data)
 3. [Auto powerup](http://dev.bukkit.org/bukkit-plugins/tardis/tickets/1209-auto-powerup/)
@@ -17,12 +17,6 @@
 7. [Destination 'vortex'](http://dev.bukkit.org/bukkit-plugins/tardis/tickets/1023-set-the-tardis-inflight-without-setting-a-destination/) - dematerialise without setting a destination.
 8. [Sonic Screwdriver [flower pot] Generator](http://dev.bukkit.org/bukkit-plugins/tardis/tickets/1239-new-screwdriver/)
     * add to console schematics
-    * crafting recipe, `/tgive` and `/trecipe` commands (_done_)
-    * if not crafted, must be initialised by inserting the crafting materials
-    * add GUI when clicked to select screwdriver type/upgrades that the unit produces (only show upgrades the player has permission for) - if uninitialised provide way to activate it
-    * add configurable artron cost (per screwdriver type/upgrade) (_done_)
-    * `/tardis update generator` (_done_)
-    * resource pack texture
 9. Update console schematics to add Control Centre sign (and any other missing controls)
 10. Ice/igloo room - if TARDISWeepingAngels plugin is enabled, make a 3% chance a Dalek will form when building a snowman in the room. Should have a pen ready for polar bears
 

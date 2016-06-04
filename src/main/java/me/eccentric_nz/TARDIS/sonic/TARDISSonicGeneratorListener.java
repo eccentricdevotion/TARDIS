@@ -230,10 +230,13 @@ public class TARDISSonicGeneratorListener implements Listener {
                 ResultSetSonic rss = new ResultSetSonic(plugin, wheres);
                 HashMap<String, Object> set = new HashMap<String, Object>();
                 set.put("activated", 1);
-                if (rss.resultSet() && !rss.getSonic().isActivated()) {
-                    HashMap<String, Object> wherea = new HashMap<String, Object>();
-                    wherea.put("uuid", uuid);
-                    qf.doUpdate("sonic", set, wherea);
+                if (rss.resultSet()) {
+                    if (!rss.getSonic().isActivated()) {
+                        // update it to activated
+                        HashMap<String, Object> wherea = new HashMap<String, Object>();
+                        wherea.put("uuid", uuid);
+                        qf.doUpdate("sonic", set, wherea);
+                    }
                 } else {
                     set.put("uuid", uuid);
                     qf.doInsert("sonic", set);
