@@ -22,6 +22,8 @@ import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
+import me.eccentric_nz.TARDIS.database.ResultSetTardisCompanions;
+import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.listeners.TARDISMenuListener;
 import org.bukkit.World;
 import org.bukkit.entity.Player;
@@ -72,16 +74,17 @@ public class TARDISCompanionAddGUIListener extends TARDISMenuListener implements
                             where.put("uuid", player.getUniqueId().toString());
                             ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);
                             if (rs.resultSet()) {
-                                int id = rs.getTardis_id();
-                                final String comps = rs.getCompanions();
+                                Tardis tardis = rs.getTardis();
+                                int id = tardis.getTardis_id();
+                                final String comps = tardis.getCompanions();
                                 ItemStack h = inv.getItem(slot);
                                 ItemMeta m = h.getItemMeta();
                                 List<String> l = m.getLore();
                                 String u = l.get(0);
                                 addCompanion(id, comps, u);
                                 if (plugin.isWorldGuardOnServer() && plugin.getConfig().getBoolean("preferences.use_worldguard")) {
-                                    String[] data = rs.getChunk().split(":");
-                                    addToRegion(data[0], rs.getOwner(), m.getDisplayName());
+                                    String[] data = tardis.getChunk().split(":");
+                                    addToRegion(data[0], tardis.getOwner(), m.getDisplayName());
                                 }
                                 list(player);
                             }
@@ -93,10 +96,8 @@ public class TARDISCompanionAddGUIListener extends TARDISMenuListener implements
     }
 
     private void list(final Player player) {
-        HashMap<String, Object> where = new HashMap<String, Object>();
-        where.put("uuid", player.getUniqueId().toString());
-        ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);
-        if (rs.resultSet()) {
+        ResultSetTardisCompanions rs = new ResultSetTardisCompanions(plugin);
+        if (rs.fromUUID(player.getUniqueId().toString())) {
             final String comps = rs.getCompanions();
             close(player);
             plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {

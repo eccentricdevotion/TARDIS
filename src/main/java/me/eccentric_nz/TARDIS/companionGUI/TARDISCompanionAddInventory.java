@@ -18,11 +18,10 @@ package me.eccentric_nz.TARDIS.companionGUI;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.List;
 import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.database.ResultSetTardis;
+import me.eccentric_nz.TARDIS.database.ResultSetTardisCompanions;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
@@ -48,10 +47,8 @@ public class TARDISCompanionAddInventory {
     private ItemStack[] getItemStack() {
         ItemStack[] heads = new ItemStack[54];
         // get current companions
-        HashMap<String, Object> where = new HashMap<String, Object>();
-        where.put("uuid", uuid.toString());
-        ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);
-        if (rs.resultSet()) {
+        ResultSetTardisCompanions rs = new ResultSetTardisCompanions(plugin);
+        if (rs.fromUUID(uuid.toString())) {
             List<String> comps = Arrays.asList(rs.getCompanions().split(":"));
             int i = 0;
             for (Player p : plugin.getServer().getOnlinePlayers()) {
