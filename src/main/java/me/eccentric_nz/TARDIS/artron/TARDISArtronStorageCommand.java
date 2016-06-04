@@ -23,7 +23,7 @@ import java.util.Locale;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetPlayerPrefs;
-import me.eccentric_nz.TARDIS.database.ResultSetTardis;
+import me.eccentric_nz.TARDIS.database.ResultSetTardisArtron;
 import me.eccentric_nz.TARDIS.enumeration.INVENTORY_MANAGER;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import me.eccentric_nz.TARDIS.utility.TARDISNumberParsers;
@@ -94,16 +94,15 @@ public class TARDISArtronStorageCommand implements CommandExecutor {
             // must be a timelord
             String playerUUID = player.getUniqueId().toString();
             int current_level;
-            HashMap<String, Object> wheret = new HashMap<String, Object>();
             if (which.equals("tardis")) {
-                wheret.put("uuid", playerUUID);
-                ResultSetTardis rs = new ResultSetTardis(plugin, wheret, "", false);
-                if (!rs.resultSet()) {
+                ResultSetTardisArtron rs = new ResultSetTardisArtron(plugin);
+                if (!rs.fromUUID(playerUUID)) {
                     TARDISMessage.send(player, "NO_TARDIS");
                     return true;
                 }
                 current_level = rs.getArtron_level();
             } else {
+                HashMap<String, Object> wheret = new HashMap<String, Object>();
                 wheret.put("uuid", playerUUID);
                 ResultSetPlayerPrefs rs = new ResultSetPlayerPrefs(plugin, wheret);
                 if (!rs.resultSet()) {

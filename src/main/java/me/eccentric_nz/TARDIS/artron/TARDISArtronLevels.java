@@ -19,7 +19,7 @@ package me.eccentric_nz.TARDIS.artron;
 import java.util.HashMap;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
-import me.eccentric_nz.TARDIS.database.ResultSetTardis;
+import me.eccentric_nz.TARDIS.database.ResultSetTardisArtron;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import org.bukkit.entity.Player;
 
@@ -68,10 +68,8 @@ public class TARDISArtronLevels {
      * @return a boolean - true if the TARDIS has sufficient energy
      */
     public boolean checkLevel(int id, int required, Player p) {
-        HashMap<String, Object> where = new HashMap<String, Object>();
-        where.put("tardis_id", id);
-        ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);
-        if (!rs.resultSet()) {
+        ResultSetTardisArtron rs = new ResultSetTardisArtron(plugin);
+        if (!rs.fromID(id)) {
             return false;
         }
         int level = rs.getArtron_level();

@@ -20,7 +20,7 @@ import java.util.HashMap;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetCurrentLocation;
-import me.eccentric_nz.TARDIS.database.ResultSetTardis;
+import me.eccentric_nz.TARDIS.database.ResultSetTardisArtron;
 import org.bukkit.Location;
 
 /**
@@ -98,10 +98,8 @@ public class TARDISArtronRunnable implements Runnable {
      * Gets the current Artron Energy Level for the specified TARDIS.
      */
     private int isFull(int id) {
-        HashMap<String, Object> where = new HashMap<String, Object>();
-        where.put("tardis_id", id);
-        ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);
-        return (rs.resultSet()) ? rs.getArtron_level() : plugin.getArtronConfig().getInt("full_charge");
+        ResultSetTardisArtron rs = new ResultSetTardisArtron(plugin);
+        return (rs.fromID(id)) ? rs.getArtron_level() : plugin.getArtronConfig().getInt("full_charge");
     }
 
     public void setTask(int task) {

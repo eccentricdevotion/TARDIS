@@ -19,7 +19,7 @@ package me.eccentric_nz.TARDIS.artron;
 import java.util.HashMap;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.ResultSetPlayerPrefs;
-import me.eccentric_nz.TARDIS.database.ResultSetTardis;
+import me.eccentric_nz.TARDIS.database.ResultSetTardisArtron;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -60,10 +60,8 @@ public class TARDISArtronIndicator {
         }
         final Scoreboard currentScoreboard = (p.getScoreboard().getObjective("TARDIS") != null) ? manager.getMainScoreboard() : p.getScoreboard();
         // get Artron level
-        HashMap<String, Object> where = new HashMap<String, Object>();
-        where.put("tardis_id", id);
-        ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);
-        if (rs.resultSet()) {
+        ResultSetTardisArtron rs = new ResultSetTardisArtron(plugin);
+        if (rs.fromID(id)) {
             int current_level = rs.getArtron_level();
             int percent = Math.round((current_level * 100F) / fc);
             if (!isFiltered) {

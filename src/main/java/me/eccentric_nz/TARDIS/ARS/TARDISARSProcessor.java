@@ -19,7 +19,7 @@ package me.eccentric_nz.TARDIS.ARS;
 import java.util.HashMap;
 import java.util.Map;
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.database.ResultSetTardis;
+import me.eccentric_nz.TARDIS.database.ResultSetTardisArtron;
 import org.bukkit.Chunk;
 
 /**
@@ -140,10 +140,8 @@ public class TARDISARSProcessor {
             for (Map.Entry<TARDISARSSlot, ARS> c : changed.entrySet()) {
                 totalcost += plugin.getRoomsConfig().getInt("rooms." + c.getValue().getActualName() + ".cost");
             }
-            HashMap<String, Object> where = new HashMap<String, Object>();
-            where.put("tardis_id", id);
-            ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);
-            if (rs.resultSet()) {
+            ResultSetTardisArtron rs = new ResultSetTardisArtron(plugin);
+            if (rs.fromID(id)) {
                 int energy = rs.getArtron_level();
                 // check available energy vs cost
                 if (totalcost - recoveredcost > energy) {

@@ -24,6 +24,7 @@ import me.eccentric_nz.TARDIS.api.Parameters;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetCurrentLocation;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
+import me.eccentric_nz.TARDIS.database.ResultSetTardisArtron;
 import me.eccentric_nz.TARDIS.database.ResultSetTravellers;
 import me.eccentric_nz.TARDIS.enumeration.FLAG;
 import me.eccentric_nz.TARDIS.travel.TARDISAreasInventory;
@@ -139,10 +140,8 @@ public class TARDISSaveSignListener extends TARDISMenuListener implements Listen
                                     return;
                                 }
                                 // get tardis artron level
-                                HashMap<String, Object> wherel = new HashMap<String, Object>();
-                                wherel.put("tardis_id", id);
-                                ResultSetTardis rs = new ResultSetTardis(plugin, wherel, "", false);
-                                if (!rs.resultSet()) {
+                                ResultSetTardisArtron rs = new ResultSetTardisArtron(plugin);
+                                if (!rs.fromID(id)) {
                                     close(player);
                                     return;
                                 }
