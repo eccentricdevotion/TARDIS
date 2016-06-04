@@ -21,7 +21,7 @@ import java.util.HashMap;
 import me.eccentric_nz.TARDIS.JSON.JSONObject;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.ResultSetChunks;
-import me.eccentric_nz.TARDIS.database.ResultSetTardis;
+import me.eccentric_nz.TARDIS.database.ResultSetTardisChunk;
 import me.eccentric_nz.TARDIS.enumeration.SCHEMATIC;
 import me.eccentric_nz.TARDIS.schematic.TARDISSchematicGZip;
 import org.bukkit.Bukkit;
@@ -50,8 +50,8 @@ public class TARDISLocationGetters {
     public Chunk getTARDISChunk(int id) {
         HashMap<String, Object> where = new HashMap<String, Object>();
         where.put("tardis_id", id);
-        ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);
-        if (rs.resultSet()) {
+        ResultSetTardisChunk rs = new ResultSetTardisChunk(plugin);
+        if (rs.fromID(id)) {
             String c = rs.getChunk();
             String[] data = c.split(":");
             World w = plugin.getServer().getWorld(data[0]);
@@ -71,10 +71,8 @@ public class TARDISLocationGetters {
     public int[] getStartLocation(int id) {
         int[] startLoc = new int[4];
         int cx, cz;
-        HashMap<String, Object> where = new HashMap<String, Object>();
-        where.put("tardis_id", id);
-        ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);
-        if (rs.resultSet()) {
+        ResultSetTardisChunk rs = new ResultSetTardisChunk(plugin);
+        if (rs.fromID(id)) {
             String chunkstr = rs.getChunk();
             String[] split = chunkstr.split(":");
             World w = plugin.getServer().getWorld(split[0]);
