@@ -40,7 +40,7 @@ public class TARDISSonicActivatorInventory {
     }
 
     /**
-     * Constructs an inventory for the Sonic Generator Menu GUI.
+     * Constructs an inventory for the Sonic Activator Menu GUI.
      *
      * @return an Array of itemStacks (an inventory)
      */

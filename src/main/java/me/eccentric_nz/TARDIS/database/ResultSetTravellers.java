@@ -49,7 +49,6 @@ public class ResultSetTravellers {
     private int traveller_id;
     private int tardis_id;
     private UUID uuid;
-    private String player;
     private final List<UUID> data = new ArrayList<UUID>();
     private final String prefix;
 
@@ -113,7 +112,6 @@ public class ResultSetTravellers {
                     this.traveller_id = rs.getInt("traveller_id");
                     this.tardis_id = rs.getInt("tardis_id");
                     this.uuid = UUID.fromString(rs.getString("uuid"));
-                    this.player = rs.getString("player");
                 }
             } else {
                 return false;
@@ -148,9 +146,6 @@ public class ResultSetTravellers {
         return uuid;
     }
 
-//    public String getPlayer() {
-//        return player;
-//    }
     public List<UUID> getData() {
         return Collections.unmodifiableList(data);
     }
