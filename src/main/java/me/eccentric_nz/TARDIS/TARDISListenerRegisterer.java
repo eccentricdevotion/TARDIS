@@ -134,7 +134,10 @@ import me.eccentric_nz.TARDIS.siegemode.TARDISBreedingListener;
 import me.eccentric_nz.TARDIS.siegemode.TARDISGrowthListener;
 import me.eccentric_nz.TARDIS.siegemode.TARDISSiegeListener;
 import me.eccentric_nz.TARDIS.sonic.TARDISFarmBlockListener;
+import me.eccentric_nz.TARDIS.sonic.TARDISSonicActivatorListener;
 import me.eccentric_nz.TARDIS.sonic.TARDISSonicEntityListener;
+import me.eccentric_nz.TARDIS.sonic.TARDISSonicGeneratorListener;
+import me.eccentric_nz.TARDIS.sonic.TARDISSonicGeneratorMenuListener;
 import me.eccentric_nz.TARDIS.sonic.TARDISSonicListener;
 import me.eccentric_nz.TARDIS.sonic.TARDISSonicMenuListener;
 import me.eccentric_nz.TARDIS.sonic.TARDISSonicSorterListener;
@@ -276,6 +279,9 @@ public class TARDISListenerRegisterer {
         }
         plugin.getPM().registerEvents(new TARDISSignListener(plugin), plugin);
         plugin.getPM().registerEvents(new TARDISSonicEntityListener(plugin), plugin);
+        plugin.getPM().registerEvents(new TARDISSonicGeneratorMenuListener(plugin), plugin);
+        plugin.getPM().registerEvents(new TARDISSonicGeneratorListener(plugin), plugin);
+        plugin.getPM().registerEvents(new TARDISSonicActivatorListener(plugin), plugin);
         plugin.getPM().registerEvents(new TARDISSonicMenuListener(plugin), plugin);
         plugin.getPM().registerEvents(new TARDISSonicSorterListener(plugin), plugin);
         plugin.getPM().registerEvents(new TARDISSonicUpgradeListener(plugin), plugin);

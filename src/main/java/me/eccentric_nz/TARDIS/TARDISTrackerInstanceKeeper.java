@@ -69,6 +69,7 @@ public class TARDISTrackerInstanceKeeper {
     private final HashMap<UUID, List<Integer>> renderedNPCs = new HashMap<UUID, List<Integer>>();
     private final HashMap<UUID, List<Location>> repeaters = new HashMap<UUID, List<Location>>();
     private final HashMap<UUID, Location> dispersed = new HashMap<UUID, Location>();
+    private final HashMap<UUID, Location> sonicGenerators = new HashMap<UUID, Location>();
     private final HashMap<UUID, Location> startLocation = new HashMap<UUID, Location>();
     private final HashMap<UUID, Location> endLocation = new HashMap<UUID, Location>();
     private final HashMap<UUID, Long> setTime = new HashMap<UUID, Long>();
@@ -421,6 +422,10 @@ public class TARDISTrackerInstanceKeeper {
 
     public HashMap<UUID, Location> getStartLocation() {
         return startLocation;
+    }
+
+    public HashMap<UUID, Location> getSonicGenerators() {
+        return sonicGenerators;
     }
 
     public HashMap<UUID, Location> getEndLocation() {

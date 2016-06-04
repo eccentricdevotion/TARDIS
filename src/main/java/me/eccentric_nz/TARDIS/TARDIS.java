@@ -299,6 +299,12 @@ public class TARDIS extends JavaPlugin {
                 debug("Could not determine difficulty setting, using EASY");
                 this.difficulty = DIFFICULTY.EASY;
             }
+            // register recipes
+            figura = new TARDISShapedRecipe(this);
+            figura.addShapedRecipes();
+            incomposita = new TARDISShapelessRecipe(this);
+            incomposita.addShapelessRecipes();
+
             new TARDISListenerRegisterer(this).registerListeners();
             new TARDISCommandSetter(this).loadCommands();
             startSound();
@@ -330,11 +336,6 @@ public class TARDIS extends JavaPlugin {
             resourcePack = getServerTP();
             // copy maps
             new TARDISMapChecker(this).checkMaps();
-            // register recipes
-            figura = new TARDISShapedRecipe(this);
-            figura.addShapedRecipes();
-            incomposita = new TARDISShapelessRecipe(this);
-            incomposita.addShapelessRecipes();
 
             presets = new TARDISChameleonPreset();
             presets.makePresets();
