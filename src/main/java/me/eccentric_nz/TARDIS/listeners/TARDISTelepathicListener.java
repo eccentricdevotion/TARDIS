@@ -71,7 +71,7 @@ public class TARDISTelepathicListener implements Listener {
             wheret.put("tardis_id", id);
             ResultSetTardis rs = new ResultSetTardis(plugin, wheret, "", false);
             if (rs.resultSet()) {
-                UUID o_uuid = rs.getUuid();
+                UUID o_uuid = rs.getTardis().getUuid();
                 String owner = o_uuid.toString();
                 // get Time Lord player prefs
                 HashMap<String, Object> wherep = new HashMap<String, Object>();

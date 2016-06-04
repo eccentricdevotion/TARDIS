@@ -24,6 +24,7 @@ import me.eccentric_nz.TARDIS.chameleon.TARDISChameleonCircuit;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetDoors;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
+import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
 import me.eccentric_nz.TARDIS.enumeration.PRESET;
 import me.eccentric_nz.TARDIS.junk.TARDISJunkDestroyer;
@@ -57,15 +58,16 @@ public class TARDISPresetDestroyerFactory {
         where.put("tardis_id", pdd.getTardisID());
         ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);
         if (rs.resultSet()) {
-            PRESET demat = rs.getDemat();
-            PRESET preset = rs.getPreset();
+            Tardis tardis = rs.getTardis();
+            PRESET demat = tardis.getDemat();
+            PRESET preset = tardis.getPreset();
             // load the chunk if unloaded
             if (!pdd.getLocation().getWorld().isChunkLoaded(pdd.getLocation().getChunk())) {
                 pdd.getLocation().getWorld().loadChunk(pdd.getLocation().getChunk());
             }
             if (pdd.isDematerialise() && !demat.equals(PRESET.INVISIBLE)) {
-                int cham_id = rs.getChameleon_id();
-                byte cham_data = rs.getChameleon_data();
+                int cham_id = tardis.getChameleon_id();
+                byte cham_data = tardis.getChameleon_data();
                 if (pdd.isChameleon() && (demat.equals(PRESET.NEW) || demat.equals(PRESET.OLD) || demat.equals(PRESET.SUBMERGED))) {
                     Block chameleonBlock;
                     // chameleon circuit is on - get block under TARDIS

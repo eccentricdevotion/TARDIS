@@ -20,6 +20,7 @@ import java.util.HashMap;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
+import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
 import me.eccentric_nz.TARDIS.travel.TARDISTimeTravel;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
@@ -57,7 +58,8 @@ public class TARDISEmergencyRelocation {
                 tmd.setMalfunction(false);
                 tmd.setSubmarine(false);
                 // TODO get player preferences
-                new TARDISInstaPreset(plugin, tmd, rs.getPreset(), rs.getChameleon_id(), rs.getChameleon_data(), false).buildPreset();
+                Tardis tardis = rs.getTardis();
+                new TARDISInstaPreset(plugin, tmd, tardis.getPreset(), tardis.getChameleon_id(), tardis.getChameleon_data(), false).buildPreset();
                 QueryFactory qf = new QueryFactory(plugin);
                 HashMap<String, Object> wherec = new HashMap<String, Object>();
                 wherec.put("tardis_id", id);

@@ -27,6 +27,7 @@ import me.eccentric_nz.TARDIS.database.ResultSetBlocks;
 import me.eccentric_nz.TARDIS.database.ResultSetCurrentLocation;
 import me.eccentric_nz.TARDIS.database.ResultSetPlayerPrefs;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
+import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.hads.TARDISHostileAction;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import org.bukkit.Location;
@@ -117,10 +118,11 @@ public class TARDISBlockDamageListener implements Listener {
         where.put("tardis_id", id);
         ResultSetTardis rst = new ResultSetTardis(plugin, where, "", false);
         if (rst.resultSet()) {
-            if (!rst.isTardis_init()) {
+            Tardis tardis = rst.getTardis();
+            if (!tardis.isTardis_init()) {
                 return false;
             }
-            UUID ownerUUID = rst.getUuid();
+            UUID ownerUUID = tardis.getUuid();
             HashMap<String, Object> wherep = new HashMap<String, Object>();
             wherep.put("uuid", ownerUUID.toString());
             ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, wherep);
@@ -138,12 +140,12 @@ public class TARDISBlockDamageListener implements Listener {
         HashMap<String, Object> where = new HashMap<String, Object>();
         where.put("tardis_id", id);
         ResultSetTardis rst = new ResultSetTardis(plugin, where, "", false);
-        if (rst.resultSet() && rst.isHidden()) {
+        if (rst.resultSet() && rst.getTardis().isHidden()) {
 //            Player p = (Player) plugin.getServer().getOfflinePlayer(rst.getUuid());
             // unhide this tardis
             boolean cham = false;
             if (plugin.getConfig().getBoolean("travel.chameleon")) {
-                cham = rst.isChamele_on();
+                cham = rst.getTardis().isChamele_on();
             }
             HashMap<String, Object> wherecl = new HashMap<String, Object>();
             wherecl.put("tardis_id", id);

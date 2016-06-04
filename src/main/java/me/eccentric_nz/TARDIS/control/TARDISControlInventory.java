@@ -21,6 +21,7 @@ import java.util.HashMap;
 import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
+import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.move.TARDISBlackWoolToggler;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -61,11 +62,12 @@ public class TARDISControlInventory {
         String off = plugin.getLanguage().getString("SET_OFF");
         String on = plugin.getLanguage().getString("SET_ON");
         if (rs.resultSet()) {
-            siege_onoff = (rs.isSiege_on()) ? on : off;
-            lights_onoff = (rs.isLights_on()) ? on : off;
-            boolean open = new TARDISBlackWoolToggler(plugin).isOpen(rs.getTardis_id());
+            Tardis tardis = rs.getTardis();
+            siege_onoff = (tardis.isSiege_on()) ? on : off;
+            lights_onoff = (tardis.isLights_on()) ? on : off;
+            boolean open = new TARDISBlackWoolToggler(plugin).isOpen(tardis.getTardis_id());
             toggle_openclosed = (open) ? plugin.getLanguage().getString("SET_OPEN") : plugin.getLanguage().getString("SET_CLOSED");
-            power_onoff = (rs.isPowered_on()) ? on : off;
+            power_onoff = (tardis.isPowered_on()) ? on : off;
         }
         // Cancel / close
         ItemStack close = new ItemStack(Material.BOWL, 1);

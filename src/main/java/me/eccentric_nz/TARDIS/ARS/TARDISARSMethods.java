@@ -543,7 +543,7 @@ public class TARDISARSMethods {
         where.put("tardis_id", ids.get(uuid));
         ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);
         if (rs.resultSet()) {
-            return !rs.getRenderer().isEmpty();
+            return !rs.getTardis().getRenderer().isEmpty();
         }
         return false;
     }

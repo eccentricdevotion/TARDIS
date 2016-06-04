@@ -25,6 +25,7 @@ import me.eccentric_nz.TARDIS.database.ResultSetCurrentLocation;
 import me.eccentric_nz.TARDIS.database.ResultSetDoorBlocks;
 import me.eccentric_nz.TARDIS.database.ResultSetPortals;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
+import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
 import me.eccentric_nz.TARDIS.enumeration.PRESET;
 import me.eccentric_nz.TARDIS.utility.TARDISLocationGetters;
@@ -105,11 +106,13 @@ public class TARDISDoorOpener {
                 HashMap<String, Object> where = new HashMap<String, Object>();
                 where.put("tardis_id", id);
                 ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);
+                Tardis tardis = null;
                 PRESET preset = null;
                 if (rs.resultSet()) {
-                    preset = rs.getPreset();
+                    tardis = rs.getTardis();
+                    preset = tardis.getPreset();
                     if (!plugin.getConfig().getBoolean("preferences.open_door_policy")) {
-                        String[] companions = rs.getCompanions().split(":");
+                        String[] companions = tardis.getCompanions().split(":");
                         for (String c : companions) {
                             if (!c.isEmpty()) {
                                 uuids.add(UUID.fromString(c));
@@ -198,11 +201,11 @@ public class TARDISDoorOpener {
                         }
                     }
                     // locations
-                    if (preset != null && preset.hasPortal()) {
+                    if (tardis != null && preset != null && preset.hasPortal()) {
                         plugin.getTrackerKeeper().getPortals().put(exportal, tp_in);
                         if (preset.equals(PRESET.INVISIBLE) && plugin.getConfig().getBoolean("allow.3d_doors")) {
                             // remember door location
-                            plugin.getTrackerKeeper().getInvisibleDoors().put(rs.getUuid(), other);
+                            plugin.getTrackerKeeper().getInvisibleDoors().put(tardis.getUuid(), other);
                         }
                     }
                     plugin.getTrackerKeeper().getPortals().put(inportal, tp_out);

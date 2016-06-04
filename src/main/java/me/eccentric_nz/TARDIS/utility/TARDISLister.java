@@ -25,6 +25,7 @@ import me.eccentric_nz.TARDIS.database.ResultSetAreas;
 import me.eccentric_nz.TARDIS.database.ResultSetDestinations;
 import me.eccentric_nz.TARDIS.database.ResultSetHomeLocation;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
+import me.eccentric_nz.TARDIS.database.data.Tardis;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
@@ -92,7 +93,8 @@ public class TARDISLister {
             where.put("uuid", p.getUniqueId().toString());
             ResultSetTardis rst = new ResultSetTardis(TARDIS.plugin, where, "", false);
             if (rst.resultSet()) {
-                int id = rst.getTardis_id();
+                Tardis tardis = rst.getTardis();
+                int id = tardis.getTardis_id();
                 // list TARDIS saves
                 if (l.equalsIgnoreCase("saves")) {
                     // get home
@@ -124,7 +126,7 @@ public class TARDISLister {
                 }
                 if (l.equalsIgnoreCase("companions")) {
                     // list companions
-                    String comps = rst.getCompanions();
+                    String comps = tardis.getCompanions();
                     if (comps != null && !comps.isEmpty()) {
                         String[] companionData = comps.split(":");
                         ItemStack[] heads = new TARDISCompanionInventory(plugin, companionData).getSkulls();

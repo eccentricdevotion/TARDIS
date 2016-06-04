@@ -31,6 +31,7 @@ import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetDoors;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import me.eccentric_nz.TARDIS.database.ResultSetTravellers;
+import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
 import me.eccentric_nz.TARDIS.enumeration.PRESET;
 import me.eccentric_nz.TARDIS.travel.TARDISDoorLocation;
@@ -353,10 +354,11 @@ public class TARDISInstaPreset {
                                     wheret.put("tardis_id", tmd.getTardisID());
                                     ResultSetTardis rst = new ResultSetTardis(plugin, wheret, "", false);
                                     if (rst.resultSet()) {
-                                        String player_name = plugin.getGeneralKeeper().getUUIDCache().getNameCache().get(rst.getUuid());
+                                        Tardis tardis = rst.getTardis();
+                                        String player_name = plugin.getGeneralKeeper().getUUIDCache().getNameCache().get(tardis.getUuid());
                                         if (player_name == null) {
                                             // cache lookup failed, player may have disconnected
-                                            player_name = rst.getOwner();
+                                            player_name = tardis.getOwner();
                                         }
                                         String owner;
                                         if (preset.equals(PRESET.GRAVESTONE) || preset.equals(PRESET.PUNKED) || preset.equals(PRESET.ROBOT)) {

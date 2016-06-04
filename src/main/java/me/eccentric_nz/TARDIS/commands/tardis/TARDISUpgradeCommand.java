@@ -21,6 +21,7 @@ import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.builders.TARDISInteriorPostioning;
 import me.eccentric_nz.TARDIS.builders.TARDISTIPSData;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
+import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.desktop.TARDISThemeInventory;
 import me.eccentric_nz.TARDIS.desktop.TARDISUpgradeData;
 import me.eccentric_nz.TARDIS.enumeration.SCHEMATIC;
@@ -55,8 +56,9 @@ public class TARDISUpgradeCommand {
             TARDISMessage.send(player, "NO_TARDIS");
             return false;
         }
+        Tardis tardis = rs.getTardis();
         // console must in a TARDIS world
-        if (!plugin.getUtils().canGrowRooms(rs.getChunk())) {
+        if (!plugin.getUtils().canGrowRooms(tardis.getChunk())) {
             TARDISMessage.send(player, "UPGRADE_ABORT_WORLD");
             return true;
         }
@@ -64,7 +66,7 @@ public class TARDISUpgradeCommand {
         boolean own;
         Location pl = player.getLocation();
         String current_world = pl.getWorld().getName();
-        String[] split = rs.getChunk().split(":");
+        String[] split = tardis.getChunk().split(":");
         String db_world = split[0];
         if (plugin.getConfig().getBoolean("creation.default_world")) {
             if (plugin.getConfig().getBoolean("creation.create_worlds_with_perms") && player.hasPermission("tardis.create_world")) {
@@ -72,7 +74,7 @@ public class TARDISUpgradeCommand {
             } else {
                 // get if player is in TIPS area for their TARDIS
                 TARDISInteriorPostioning tintpos = new TARDISInteriorPostioning(plugin);
-                TARDISTIPSData pos = tintpos.getTIPSData(rs.getTIPS());
+                TARDISTIPSData pos = tintpos.getTIPSData(tardis.getTIPS());
                 own = (pl.getBlockX() > pos.getMinX() && pl.getBlockZ() > pos.getMinZ() && pl.getBlockX() < pos.getMaxX() && pl.getBlockZ() < pos.getMaxZ());
             }
         } else {
@@ -83,8 +85,8 @@ public class TARDISUpgradeCommand {
             return true;
         }
         // get player's current console
-        SCHEMATIC current_console = rs.getSchematic();
-        int level = rs.getArtron_level();
+        SCHEMATIC current_console = tardis.getSchematic();
+        int level = tardis.getArtron_level();
         TARDISUpgradeData tud = new TARDISUpgradeData();
         tud.setPrevious(current_console);
         tud.setLevel(level);

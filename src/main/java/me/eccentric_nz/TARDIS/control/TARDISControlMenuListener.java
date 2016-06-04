@@ -23,6 +23,7 @@ import me.eccentric_nz.TARDIS.advanced.TARDISCircuitChecker;
 import me.eccentric_nz.TARDIS.artron.TARDISArtronIndicator;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import me.eccentric_nz.TARDIS.database.ResultSetTravellers;
+import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.enumeration.DIFFICULTY;
 import me.eccentric_nz.TARDIS.listeners.TARDISMenuListener;
 import me.eccentric_nz.TARDIS.move.TARDISBlackWoolToggler;
@@ -70,24 +71,25 @@ public class TARDISControlMenuListener extends TARDISMenuListener implements Lis
                         final int id = rst.getTardis_id();
                         HashMap<String, Object> where = new HashMap<String, Object>();
                         where.put("tardis_id", id);
-                        final ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);
+                        ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);
                         if (rs.resultSet()) {
+                            final Tardis tardis = rs.getTardis();
                             // check they initialised
-                            if (!rs.isTardis_init()) {
+                            if (!tardis.isTardis_init()) {
                                 TARDISMessage.send(player, "ENERGY_NO_INIT");
                                 return;
                             }
-                            if (plugin.getConfig().getBoolean("allow.power_down") && !rs.isPowered_on() && slot != 6 && slot != 7) {
+                            if (plugin.getConfig().getBoolean("allow.power_down") && !tardis.isPowered_on() && slot != 6 && slot != 7) {
                                 TARDISMessage.send(player, "POWER_DOWN");
                                 return;
                             }
-                            if (!rs.isHandbrake_on()) {
+                            if (!tardis.isHandbrake_on()) {
                                 String message = (slot == 9) ? "ARS_NO_TRAVEL" : "NOT_WHILE_TRAVELLING";
                                 TARDISMessage.send(player, message);
                                 return;
                             }
-                            boolean lights = rs.isLights_on();
-                            final int level = rs.getArtron_level();
+                            boolean lights = tardis.isLights_on();
+                            final int level = tardis.getArtron_level();
                             TARDISCircuitChecker tcc = null;
                             if (!plugin.getDifficulty().equals(DIFFICULTY.EASY)) {
                                 tcc = new TARDISCircuitChecker(plugin, id);
@@ -105,7 +107,7 @@ public class TARDISControlMenuListener extends TARDISMenuListener implements Lis
                                     plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
                                         @Override
                                         public void run() {
-                                            new TARDISRandomButton(plugin, player, id, level, 0, rs.getCompanions(), rs.getUuid()).clickButton();
+                                            new TARDISRandomButton(plugin, player, id, level, 0, tardis.getCompanions(), tardis.getUuid()).clickButton();
                                         }
                                     }, 2L);
                                     break;
@@ -139,7 +141,7 @@ public class TARDISControlMenuListener extends TARDISMenuListener implements Lis
                                         TARDISMessage.send(player, "NO_MEM_CIRCUIT");
                                         return;
                                     }
-                                    TARDISSaveSignInventory tssi = new TARDISSaveSignInventory(plugin, rs.getTardis_id());
+                                    TARDISSaveSignInventory tssi = new TARDISSaveSignInventory(plugin, tardis.getTardis_id());
                                     ItemStack[] saves = tssi.getTerminal();
                                     Inventory saved = plugin.getServer().createInventory(player, 54, "§4TARDIS saves");
                                     saved.setContents(saves);
@@ -166,7 +168,7 @@ public class TARDISControlMenuListener extends TARDISMenuListener implements Lis
                                     // power up/down
                                     if (plugin.getConfig().getBoolean("allow.power_down")) {
                                         close(player);
-                                        new TARDISPowerButton(plugin, id, player, rs.getPreset(), rs.isPowered_on(), rs.isHidden(), lights, player.getLocation(), level, rs.getSchematic().hasLanterns()).clickButton();
+                                        new TARDISPowerButton(plugin, id, player, tardis.getPreset(), tardis.isPowered_on(), tardis.isHidden(), lights, player.getLocation(), level, tardis.getSchematic().hasLanterns()).clickButton();
                                     } else {
                                         TARDISMessage.send(player, "POWER_DOWN_DISABLED");
                                     }
@@ -178,7 +180,7 @@ public class TARDISControlMenuListener extends TARDISMenuListener implements Lis
                                         TARDISMessage.send(player, "NO_MAT_CIRCUIT");
                                         return;
                                     }
-                                    new TARDISSiegeButton(plugin, player, rs.isPowered_on(), id).clickButton();
+                                    new TARDISSiegeButton(plugin, player, tardis.isPowered_on(), id).clickButton();
                                     break;
                                 case 9:
                                     // ars
@@ -187,7 +189,7 @@ public class TARDISControlMenuListener extends TARDISMenuListener implements Lis
                                         return;
                                     }
                                     // check they're in a compatible world
-                                    if (!plugin.getUtils().canGrowRooms(rs.getChunk())) {
+                                    if (!plugin.getUtils().canGrowRooms(tardis.getChunk())) {
                                         TARDISMessage.send(player, "ROOM_OWN_WORLD");
                                         return;
                                     }
@@ -211,7 +213,7 @@ public class TARDISControlMenuListener extends TARDISMenuListener implements Lis
                                         TARDISMessage.send(player, "NO_PERM_UPGRADE");
                                         return;
                                     }
-                                    new TARDISThemeButton(plugin, player, rs.getSchematic(), level, id).clickButton();
+                                    new TARDISThemeButton(plugin, player, tardis.getSchematic(), level, id).clickButton();
                                     break;
                                 case 12:
                                     // temporal
@@ -236,11 +238,11 @@ public class TARDISControlMenuListener extends TARDISMenuListener implements Lis
                                 case 14:
                                     // light switch
                                     close(player);
-                                    if (!lights && plugin.getConfig().getBoolean("allow.power_down") && !rs.isPowered_on()) {
+                                    if (!lights && plugin.getConfig().getBoolean("allow.power_down") && !tardis.isPowered_on()) {
                                         TARDISMessage.send(player, "POWER_DOWN");
                                         return;
                                     }
-                                    new TARDISLightSwitch(plugin, id, lights, player, rs.getSchematic().hasLanterns()).flickSwitch();
+                                    new TARDISLightSwitch(plugin, id, lights, player, tardis.getSchematic().hasLanterns()).flickSwitch();
                                     break;
                                 case 15:
                                     // toggle wool

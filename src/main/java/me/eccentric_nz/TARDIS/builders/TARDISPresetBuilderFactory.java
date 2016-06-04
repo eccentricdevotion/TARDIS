@@ -24,6 +24,7 @@ import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.chameleon.TARDISChameleonCircuit;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
+import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.destroyers.TARDISDeinstaPreset;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
 import me.eccentric_nz.TARDIS.enumeration.PRESET;
@@ -83,7 +84,8 @@ public class TARDISPresetBuilderFactory {
         where.put("tardis_id", tmd.getTardisID());
         ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);
         if (rs.resultSet()) {
-            PRESET preset = rs.getPreset();
+            Tardis tardis = rs.getTardis();
+            PRESET preset = tardis.getPreset();
             Biome biome;
             // keep the chunk this Police box is in loaded
             Chunk thisChunk = tmd.getLocation().getChunk();
@@ -98,14 +100,14 @@ public class TARDISPresetBuilderFactory {
             tmd.setBiome(biome);
             if (plugin.getConfig().getBoolean("police_box.set_biome") && !tmd.isRebuild()) {
                 // remember the current biome (unless rebuilding)
-                new QueryFactory(plugin).saveBiome(rs.getTardis_id(), biome.toString());
+                new QueryFactory(plugin).saveBiome(tardis.getTardis_id(), biome.toString());
             }
-            if (rs.isAdapti_on()) {
+            if (tardis.isAdapti_on()) {
                 preset = adapt(biome, preset);
             }
-            PRESET demat = rs.getDemat();
-            int cham_id = rs.getChameleon_id();
-            byte cham_data = rs.getChameleon_data();
+            PRESET demat = tardis.getDemat();
+            int cham_id = tardis.getChameleon_id();
+            byte cham_data = tardis.getChameleon_data();
             if (tmd.isChameleon() && (preset.equals(PRESET.NEW) || preset.equals(PRESET.OLD) || preset.equals(PRESET.SUBMERGED))) {
                 Block chameleonBlock;
                 // chameleon circuit is on - get block under TARDIS
@@ -120,7 +122,7 @@ public class TARDISPresetBuilderFactory {
                 cham_id = b_data[0];
                 cham_data = (byte) b_data[1];
             }
-            boolean hidden = rs.isHidden();
+            boolean hidden = tardis.isHidden();
             // get submarine preferences
             if (tmd.isSubmarine() && notSubmarinePresets.contains(preset)) {
                 preset = PRESET.YELLOW;

@@ -28,6 +28,7 @@ import me.eccentric_nz.TARDIS.database.ResultSetCurrentLocation;
 import me.eccentric_nz.TARDIS.database.ResultSetDestinations;
 import me.eccentric_nz.TARDIS.database.ResultSetDiskStorage;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
+import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.enumeration.DIFFICULTY;
 import me.eccentric_nz.TARDIS.enumeration.PRESET;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
@@ -87,8 +88,9 @@ public class TARDISDiskWriterCommand {
                     TARDISMessage.send(player, "NO_TARDIS");
                     return false;
                 } else {
-                    int id = rs.getTardis_id();
-                    PRESET preset = rs.getPreset();
+                    Tardis tardis = rs.getTardis();
+                    int id = tardis.getTardis_id();
+                    PRESET preset = tardis.getPreset();
                     // check has unique name - this will always return false in HARD & MEDIUM difficulty
                     // TODO check for disk lore if MEDIUM difficulty
                     HashMap<String, Object> wherename = new HashMap<String, Object>();
@@ -102,7 +104,7 @@ public class TARDISDiskWriterCommand {
                     }
                     // get current destination
                     HashMap<String, Object> wherecl = new HashMap<String, Object>();
-                    wherecl.put("tardis_id", rs.getTardis_id());
+                    wherecl.put("tardis_id", id);
                     ResultSetCurrentLocation rsc = new ResultSetCurrentLocation(plugin, wherecl);
                     if (!rsc.resultSet()) {
                         TARDISMessage.send(player, "CURRENT_NOT_FOUND");

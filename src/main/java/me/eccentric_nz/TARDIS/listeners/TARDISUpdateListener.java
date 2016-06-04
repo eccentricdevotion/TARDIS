@@ -31,6 +31,7 @@ import me.eccentric_nz.TARDIS.database.ResultSetDoorBlocks;
 import me.eccentric_nz.TARDIS.database.ResultSetDoors;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import me.eccentric_nz.TARDIS.database.ResultSetTravellers;
+import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.enumeration.SCHEMATIC;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import me.eccentric_nz.TARDIS.utility.TARDISStaticUtils;
@@ -152,9 +153,10 @@ public class TARDISUpdateListener implements Listener {
                 TARDISMessage.send(player, "NO_TARDIS");
                 return;
             }
-            int id = rs.getTardis_id();
-            String preset = rs.getPreset().toString();
-            SCHEMATIC schm = rs.getSchematic();
+            Tardis tardis = rs.getTardis();
+            int id = tardis.getTardis_id();
+            String preset = tardis.getPreset().toString();
+            SCHEMATIC schm = tardis.getSchematic();
             QueryFactory qf = new QueryFactory(plugin);
             String table = "tardis";
             HashMap<String, Object> tid = new HashMap<String, Object>();

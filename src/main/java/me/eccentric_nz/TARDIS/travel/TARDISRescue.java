@@ -24,6 +24,7 @@ import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetCurrentLocation;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import me.eccentric_nz.TARDIS.database.ResultSetTravellers;
+import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
 import me.eccentric_nz.TARDIS.enumeration.FLAG;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
@@ -126,8 +127,9 @@ public class TARDISRescue {
                 TARDISMessage.send(player, "NO_TARDIS");
                 return false;
             }
-            int id = rs.getTardis_id();
-            if (!rs.isHandbrake_on()) {
+            Tardis tardis = rs.getTardis();
+            int id = tardis.getTardis_id();
+            if (!tardis.isHandbrake_on()) {
                 TARDISMessage.send(player, "NOT_WHILE_TRAVELLING");
                 return false;
             }
@@ -143,7 +145,7 @@ public class TARDISRescue {
                 TARDISMessage.send(player, "CMD_ONLY_TL");
                 return false;
             }
-            int level = rs.getArtron_level();
+            int level = tardis.getArtron_level();
             int travel = plugin.getArtronConfig().getInt("travel");
             if (level < travel) {
                 TARDISMessage.send(player, "NOT_ENOUGH_ENERGY");

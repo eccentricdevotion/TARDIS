@@ -34,6 +34,7 @@ import me.eccentric_nz.TARDIS.database.ResultSetNextLocation;
 import me.eccentric_nz.TARDIS.database.ResultSetPlayerPrefs;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import me.eccentric_nz.TARDIS.database.ResultSetTravellers;
+import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
 import me.eccentric_nz.TARDIS.enumeration.DIFFICULTY;
 import me.eccentric_nz.TARDIS.enumeration.DISK_CIRCUIT;
@@ -150,25 +151,26 @@ public class TARDISHandbrakeListener implements Listener {
                     final HashMap<String, Object> setdoor = new HashMap<String, Object>();
                     final HashMap<String, Object> wheredoor = new HashMap<String, Object>();
                     if (rs.resultSet()) {
-                        final PRESET preset = rs.getPreset();
+                        Tardis tardis = rs.getTardis();
+                        final PRESET preset = tardis.getPreset();
                         if (preset.equals(PRESET.JUNK)) {
                             return;
                         }
-                        UUID ownerUUID = rs.getUuid();
-                        if ((rs.isIso_on() && !uuid.equals(ownerUUID) && event.isCancelled() && !player.hasPermission("tardis.skeletonkey")) || plugin.getTrackerKeeper().getJohnSmith().containsKey(uuid)) {
+                        UUID ownerUUID = tardis.getUuid();
+                        if ((tardis.isIso_on() && !uuid.equals(ownerUUID) && event.isCancelled() && !player.hasPermission("tardis.skeletonkey")) || plugin.getTrackerKeeper().getJohnSmith().containsKey(uuid)) {
                             // check if cancelled so we don't get double messages from the bind listener
                             TARDISMessage.send(player, "ISO_HANDS_OFF");
                             return;
                         }
-                        if (plugin.getConfig().getBoolean("allow.power_down") && !rs.isPowered_on()) {
+                        if (plugin.getConfig().getBoolean("allow.power_down") && !tardis.isPowered_on()) {
                             TARDISMessage.send(player, "POWER_DOWN");
                             return;
                         }
-                        boolean cham = rs.isChamele_on();
-                        boolean hidden = rs.isHidden();
-                        String beacon = rs.getBeacon();
-                        String eps = rs.getEps();
-                        String creeper = rs.getCreeper();
+                        boolean cham = tardis.isChamele_on();
+                        boolean hidden = tardis.isHidden();
+                        String beacon = tardis.getBeacon();
+                        String eps = tardis.getEps();
+                        String creeper = tardis.getCreeper();
                         Location exit = null;
                         boolean error = false;
                         if (plugin.getTrackerKeeper().getInVortex().contains(id)) {
@@ -196,7 +198,7 @@ public class TARDISHandbrakeListener implements Listener {
                             }
                             final QueryFactory qf = new QueryFactory(plugin);
                             if (action == Action.RIGHT_CLICK_BLOCK) {
-                                if (rs.isHandbrake_on()) {
+                                if (tardis.isHandbrake_on()) {
                                     if (plugin.getTrackerKeeper().getHasDestination().containsKey(id)) {
                                         if (plugin.getConfig().getBoolean("circuits.damage") && plugin.getTrackerKeeper().getHasNotClickedHandbrake().contains(id)) {
                                             plugin.getTrackerKeeper().getHasNotClickedHandbrake().remove(Integer.valueOf(id));
@@ -457,7 +459,7 @@ public class TARDISHandbrakeListener implements Listener {
                                 }
                             }
                             if (action == Action.LEFT_CLICK_BLOCK) {
-                                if (!rs.isHandbrake_on()) {
+                                if (!tardis.isHandbrake_on()) {
                                     TARDISSounds.playTARDISSound(handbrake_loc, "tardis_handbrake_engage");
                                     // Changes the lever to on
                                     lever.setPowered(true);

@@ -24,6 +24,7 @@ import me.eccentric_nz.TARDIS.builders.TARDISMaterialisationData;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetCurrentLocation;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
+import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.enumeration.DIFFICULTY;
 import me.eccentric_nz.TARDIS.enumeration.PRESET;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
@@ -66,15 +67,16 @@ public class TARDISMakeHerBlueCommand {
             TARDISMessage.send(player.getPlayer(), "NO_TARDIS");
             return true;
         }
-        if (plugin.getConfig().getBoolean("allow.power_down") && !rs.isPowered_on()) {
+        Tardis tardis = rs.getTardis();
+        if (plugin.getConfig().getBoolean("allow.power_down") && !tardis.isPowered_on()) {
             TARDISMessage.send(player.getPlayer(), "POWER_DOWN");
             return true;
         }
-        if (!rs.getPreset().equals(PRESET.INVISIBLE)) {
+        if (!tardis.getPreset().equals(PRESET.INVISIBLE)) {
             TARDISMessage.send(player.getPlayer(), "INVISIBILITY_NOT");
             return true;
         }
-        int id = rs.getTardis_id();
+        int id = tardis.getTardis_id();
         TARDISCircuitChecker tcc = null;
         if (!plugin.getDifficulty().equals(DIFFICULTY.EASY)) {
             tcc = new TARDISCircuitChecker(plugin, id);
@@ -95,7 +97,7 @@ public class TARDISMakeHerBlueCommand {
             return true;
         }
         HashMap<String, Object> wherecl = new HashMap<String, Object>();
-        wherecl.put("tardis_id", rs.getTardis_id());
+        wherecl.put("tardis_id", tardis.getTardis_id());
         ResultSetCurrentLocation rsc = new ResultSetCurrentLocation(plugin, wherecl);
         if (!rsc.resultSet()) {
             TARDISMessage.send(player.getPlayer(), "CURRENT_NOT_FOUND");
@@ -104,7 +106,7 @@ public class TARDISMakeHerBlueCommand {
         }
         Location l = new Location(rsc.getWorld(), rsc.getX(), rsc.getY(), rsc.getZ());
         QueryFactory qf = new QueryFactory(plugin);
-        int level = rs.getArtron_level();
+        int level = tardis.getArtron_level();
         int rebuild = plugin.getArtronConfig().getInt("random");
         if (level < rebuild) {
             TARDISMessage.send(player.getPlayer(), "ENERGY_NO_REBUILD");

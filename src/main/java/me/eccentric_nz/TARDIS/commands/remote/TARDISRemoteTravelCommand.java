@@ -23,6 +23,7 @@ import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetCurrentLocation;
 import me.eccentric_nz.TARDIS.database.ResultSetNextLocation;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
+import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import me.eccentric_nz.TARDIS.utility.TARDISSounds;
@@ -49,8 +50,9 @@ public class TARDISRemoteTravelCommand {
         wherei.put("tardis_id", id);
         ResultSetTardis rs = new ResultSetTardis(plugin, wherei, "", false);
         if (rs.resultSet()) {
-            boolean cham = rs.isChamele_on();
-            boolean hidden = rs.isHidden();
+            Tardis tardis = rs.getTardis();
+            boolean cham = tardis.isChamele_on();
+            boolean hidden = tardis.isHidden();
             HashMap<String, Object> wherecl = new HashMap<String, Object>();
             wherecl.put("tardis_id", id);
             ResultSetCurrentLocation rscl = new ResultSetCurrentLocation(plugin, wherecl);

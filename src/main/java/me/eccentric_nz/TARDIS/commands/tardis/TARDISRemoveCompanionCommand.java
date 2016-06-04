@@ -22,6 +22,7 @@ import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
+import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import org.bukkit.World;
 import org.bukkit.entity.Player;
@@ -51,14 +52,15 @@ public class TARDISRemoveCompanionCommand {
                 TARDISMessage.send(player, "NO_TARDIS");
                 return false;
             } else {
-                comps = rs.getCompanions();
+                Tardis tardis = rs.getTardis();
+                comps = tardis.getCompanions();
                 if (comps == null || comps.isEmpty()) {
                     TARDISMessage.send(player, "COMPANIONS_NONE");
                     return true;
                 }
-                id = rs.getTardis_id();
-                data = rs.getChunk().split(":");
-                owner = rs.getOwner();
+                id = tardis.getTardis_id();
+                data = tardis.getChunk().split(":");
+                owner = tardis.getOwner();
             }
             if (args.length < 2) {
                 TARDISMessage.send(player, "TOO_FEW_ARGS");

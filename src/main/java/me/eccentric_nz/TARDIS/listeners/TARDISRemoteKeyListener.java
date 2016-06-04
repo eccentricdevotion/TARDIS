@@ -25,6 +25,7 @@ import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetCurrentLocation;
 import me.eccentric_nz.TARDIS.database.ResultSetDoors;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
+import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
 import me.eccentric_nz.TARDIS.enumeration.PRESET;
 import me.eccentric_nz.TARDIS.move.TARDISDoorToggler;
@@ -85,9 +86,10 @@ public class TARDISRemoteKeyListener implements Listener {
             if (!rs.resultSet()) {
                 return;
             }
-            final int id = rs.getTardis_id();
-            final boolean powered = rs.isPowered_on();
-            final PRESET preset = rs.getPreset();
+            Tardis tardis = rs.getTardis();
+            final int id = tardis.getTardis_id();
+            final boolean powered = tardis.isPowered_on();
+            final PRESET preset = tardis.getPreset();
             if (plugin.getTrackerKeeper().getInSiegeMode().contains(id)) {
                 TARDISMessage.send(player, "SIEGE_NO_CONTROL");
                 return;
@@ -96,7 +98,7 @@ public class TARDISRemoteKeyListener implements Listener {
                 TARDISMessage.send(player, "NOT_WHILE_DISPERSED");
                 return;
             }
-            boolean hidden = rs.isHidden();
+            boolean hidden = tardis.isHidden();
             if (action.equals(Action.LEFT_CLICK_AIR)) {
 
                 // get the TARDIS current location

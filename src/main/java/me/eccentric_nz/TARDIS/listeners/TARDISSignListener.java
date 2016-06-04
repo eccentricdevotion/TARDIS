@@ -27,6 +27,7 @@ import me.eccentric_nz.TARDIS.database.ResultSetJunk;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import me.eccentric_nz.TARDIS.database.ResultSetTardisSign;
 import me.eccentric_nz.TARDIS.database.ResultSetTravellers;
+import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.enumeration.DIFFICULTY;
 import me.eccentric_nz.TARDIS.travel.TARDISSaveSignInventory;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
@@ -126,12 +127,13 @@ public class TARDISSignListener implements Listener {
                     wheret.put("tardis_id", id);
                     ResultSetTardis rs = new ResultSetTardis(plugin, wheret, "", false);
                     rs.resultSet();
-                    int tid = rs.getTardis_id();
-                    if (plugin.getConfig().getBoolean("allow.power_down") && !rs.isPowered_on()) {
+                    Tardis tardis = rs.getTardis();
+                    int tid = tardis.getTardis_id();
+                    if (plugin.getConfig().getBoolean("allow.power_down") && !tardis.isPowered_on()) {
                         TARDISMessage.send(player, "POWER_DOWN");
                         return;
                     }
-                    if ((rs.isIso_on() && !uuid.equals(rs.getUuid()) && event.isCancelled() && !player.hasPermission("tardis.skeletonkey")) || plugin.getTrackerKeeper().getJohnSmith().containsKey(uuid)) {
+                    if ((tardis.isIso_on() && !uuid.equals(tardis.getUuid()) && event.isCancelled() && !player.hasPermission("tardis.skeletonkey")) || plugin.getTrackerKeeper().getJohnSmith().containsKey(uuid)) {
                         TARDISMessage.send(player, "ISO_HANDS_OFF");
                         return;
                     }
@@ -140,7 +142,7 @@ public class TARDISSignListener implements Listener {
                         Sign s = (Sign) block.getState();
                         line1 = s.getLine(0);
                     } else {
-                        line1 = (signloc.equals(rs.getChameleon())) ? plugin.getSigns().getStringList("chameleon").get(0) : "TARDIS";
+                        line1 = (signloc.equals(tardis.getChameleon())) ? plugin.getSigns().getStringList("chameleon").get(0) : "TARDIS";
                     }
                     TARDISCircuitChecker tcc = null;
                     if (!plugin.getDifficulty().equals(DIFFICULTY.EASY) && !plugin.getUtils().inGracePeriod(player, false)) {
@@ -161,7 +163,7 @@ public class TARDISSignListener implements Listener {
                             return;
                         }
                         // open Chameleon Circuit GUI
-                        ItemStack[] cc = new TARDISChameleonInventory(plugin, rs.isChamele_on(), rs.isAdapti_on()).getTerminal();
+                        ItemStack[] cc = new TARDISChameleonInventory(plugin, tardis.isChamele_on(), tardis.isAdapti_on()).getTerminal();
                         Inventory cc_gui = plugin.getServer().createInventory(player, 54, "§4Chameleon Circuit");
                         cc_gui.setContents(cc);
                         player.openInventory(cc_gui);

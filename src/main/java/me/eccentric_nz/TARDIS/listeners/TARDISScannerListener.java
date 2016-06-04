@@ -29,6 +29,7 @@ import me.eccentric_nz.TARDIS.database.ResultSetCurrentLocation;
 import me.eccentric_nz.TARDIS.database.ResultSetNextLocation;
 import me.eccentric_nz.TARDIS.database.ResultSetPlayerPrefs;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
+import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
 import me.eccentric_nz.TARDIS.enumeration.DIFFICULTY;
 import me.eccentric_nz.TARDIS.enumeration.DISK_CIRCUIT;
@@ -102,9 +103,10 @@ public class TARDISScannerListener implements Listener {
                 where.put("scanner", scanner_loc);
                 ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);
                 if (rs.resultSet()) {
-                    final int id = rs.getTardis_id();
-                    int level = rs.getArtron_level();
-                    if (plugin.getConfig().getBoolean("allow.power_down") && !rs.isPowered_on()) {
+                    Tardis tardis = rs.getTardis();
+                    final int id = tardis.getTardis_id();
+                    int level = tardis.getArtron_level();
+                    if (plugin.getConfig().getBoolean("allow.power_down") && !tardis.isPowered_on()) {
                         TARDISMessage.send(player, "POWER_DOWN");
                         return;
                     }
@@ -121,7 +123,7 @@ public class TARDISScannerListener implements Listener {
                         TARDISMessage.send(player, "SCAN_NO_RANDOM");
                         return;
                     }
-                    final String renderer = rs.getRenderer();
+                    final String renderer = tardis.getRenderer();
                     BukkitScheduler bsched = plugin.getServer().getScheduler();
                     final TARDISScannerData data = scan(player, id, bsched);
                     if (data != null) {

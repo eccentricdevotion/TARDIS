@@ -21,6 +21,7 @@ import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.ResultSetPlayerPrefs;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
+import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.enumeration.PRESET;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import org.bukkit.entity.Player;
@@ -42,10 +43,11 @@ public class TARDISHostileAction {
         where.put("tardis_id", id);
         ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);
         if (rs.resultSet()) {
-            UUID uuid = rs.getUuid();
-            boolean cham = rs.isChamele_on();
-            boolean poweredOn = rs.isPowered_on();
-            PRESET preset = rs.getPreset();
+            Tardis tardis = rs.getTardis();
+            UUID uuid = tardis.getUuid();
+            boolean cham = tardis.isChamele_on();
+            boolean poweredOn = tardis.isPowered_on();
+            PRESET preset = tardis.getPreset();
             HashMap<String, Object> wherep = new HashMap<String, Object>();
             wherep.put("uuid", uuid.toString());
             ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, wherep);

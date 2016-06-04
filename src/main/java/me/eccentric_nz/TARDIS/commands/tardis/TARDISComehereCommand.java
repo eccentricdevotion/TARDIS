@@ -25,6 +25,7 @@ import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetCurrentLocation;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import me.eccentric_nz.TARDIS.database.ResultSetTravellers;
+import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
 import me.eccentric_nz.TARDIS.enumeration.DIFFICULTY;
 import me.eccentric_nz.TARDIS.enumeration.FLAG;
@@ -66,17 +67,18 @@ public class TARDISComehereCommand {
                 return true;
             }
             if (plugin.getDifficulty().equals(DIFFICULTY.EASY) || plugin.getUtils().inGracePeriod(player, true)) {
-                final int id = rs.getTardis_id();
-                if (plugin.getConfig().getBoolean("allow.power_down") && !rs.isPowered_on()) {
+                Tardis tardis = rs.getTardis();
+                final int id = tardis.getTardis_id();
+                if (plugin.getConfig().getBoolean("allow.power_down") && !tardis.isPowered_on()) {
                     TARDISMessage.send(player, "POWER_DOWN");
                     return true;
                 }
-                int level = rs.getArtron_level();
+                int level = tardis.getArtron_level();
                 boolean chamtmp = false;
                 if (plugin.getConfig().getBoolean("travel.chameleon")) {
-                    chamtmp = rs.isChamele_on();
+                    chamtmp = tardis.isChamele_on();
                 }
-                boolean hidden = rs.isHidden();
+                boolean hidden = tardis.isHidden();
                 // get location
                 Location eyeLocation = player.getTargetBlock(plugin.getGeneralKeeper().getTransparent(), 50).getLocation();
                 if (!plugin.getConfig().getBoolean("travel.include_default_world") && plugin.getConfig().getBoolean("creation.default_world") && eyeLocation.getWorld().getName().equals(plugin.getConfig().getString("creation.default_world_name"))) {

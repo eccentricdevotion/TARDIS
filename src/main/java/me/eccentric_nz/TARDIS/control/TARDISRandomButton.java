@@ -26,6 +26,7 @@ import me.eccentric_nz.TARDIS.database.ResultSetCurrentLocation;
 import me.eccentric_nz.TARDIS.database.ResultSetRepeaters;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import me.eccentric_nz.TARDIS.database.ResultSetTravellers;
+import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
 import me.eccentric_nz.TARDIS.travel.TARDISMalfunction;
 import me.eccentric_nz.TARDIS.travel.TARDISTimeTravel;
@@ -194,8 +195,9 @@ public class TARDISRandomButton {
                     where.put("tardis_id", id);
                     ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);
                     if (rs.resultSet()) {
-                        String eps = rs.getEps();
-                        String creeper = rs.getCreeper();
+                        Tardis tardis = rs.getTardis();
+                        String eps = tardis.getEps();
+                        String creeper = tardis.getCreeper();
                         HashMap<String, Object> whereh = new HashMap<String, Object>();
                         whereh.put("type", 0);
                         whereh.put("tardis_id", id);

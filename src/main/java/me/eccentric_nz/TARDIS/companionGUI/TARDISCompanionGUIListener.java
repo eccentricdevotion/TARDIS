@@ -22,6 +22,7 @@ import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
+import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.listeners.TARDISMenuListener;
 import org.bukkit.World;
 import org.bukkit.entity.Player;
@@ -80,16 +81,17 @@ public class TARDISCompanionGUIListener extends TARDISMenuListener implements Li
                                 where.put("uuid", uuid.toString());
                                 ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);
                                 if (rs.resultSet()) {
-                                    int id = rs.getTardis_id();
-                                    String comps = rs.getCompanions();
+                                    Tardis tardis = rs.getTardis();
+                                    int id = tardis.getTardis_id();
+                                    String comps = tardis.getCompanions();
                                     ItemStack h = inv.getItem(selected_head.get(uuid));
                                     ItemMeta m = h.getItemMeta();
                                     List<String> l = m.getLore();
                                     String u = l.get(0);
                                     removeCompanion(id, comps, u);
                                     if (plugin.isWorldGuardOnServer() && plugin.getConfig().getBoolean("preferences.use_worldguard")) {
-                                        String[] data = rs.getChunk().split(":");
-                                        removeFromRegion(data[0], rs.getOwner(), m.getDisplayName());
+                                        String[] data = tardis.getChunk().split(":");
+                                        removeFromRegion(data[0], tardis.getOwner(), m.getDisplayName());
                                     }
                                     close(player);
                                 }

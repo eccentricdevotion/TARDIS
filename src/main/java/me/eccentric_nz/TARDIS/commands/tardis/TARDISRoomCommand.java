@@ -27,6 +27,7 @@ import me.eccentric_nz.TARDIS.database.ResultSetControls;
 import me.eccentric_nz.TARDIS.database.ResultSetPlayerPrefs;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import me.eccentric_nz.TARDIS.database.ResultSetTravellers;
+import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.enumeration.DIFFICULTY;
 import me.eccentric_nz.TARDIS.enumeration.SCHEMATIC;
 import me.eccentric_nz.TARDIS.rooms.TARDISCondenserData;
@@ -70,19 +71,20 @@ public class TARDISRoomCommand {
             TARDISMessage.send(player, "NOT_A_TIMELORD");
             return true;
         }
-        if (plugin.getConfig().getBoolean("allow.power_down") && !rs.isPowered_on()) {
+        Tardis tardis = rs.getTardis();
+        if (plugin.getConfig().getBoolean("allow.power_down") && !tardis.isPowered_on()) {
             TARDISMessage.send(player, "POWER_DOWN");
             return true;
         }
-        if (!plugin.getUtils().canGrowRooms(rs.getChunk())) {
+        if (!plugin.getUtils().canGrowRooms(tardis.getChunk())) {
             TARDISMessage.send(player, "ROOM_OWN_WORLD");
             return true;
         }
-        if (!rs.getRenderer().isEmpty() && room.equals("RENDERER")) {
+        if (!tardis.getRenderer().isEmpty() && room.equals("RENDERER")) {
             TARDISMessage.send(player, "RENDER_EXISTS");
             return true;
         }
-        int id = rs.getTardis_id();
+        int id = tardis.getTardis_id();
         TARDISCircuitChecker tcc = null;
         if (!plugin.getDifficulty().equals(DIFFICULTY.EASY) && !plugin.getUtils().inGracePeriod(player, true)) {
             tcc = new TARDISCircuitChecker(plugin, id);
@@ -92,10 +94,10 @@ public class TARDISRoomCommand {
             TARDISMessage.send(player, "ARS_MISSING");
             return true;
         }
-        int level = rs.getArtron_level();
-        String chunk = rs.getChunk();
-        SCHEMATIC schm = rs.getSchematic();
-        int tips = rs.getTIPS();
+        int level = tardis.getArtron_level();
+        String chunk = tardis.getChunk();
+        SCHEMATIC schm = tardis.getSchematic();
+        int tips = tardis.getTIPS();
         // check they are in the tardis
         HashMap<String, Object> wheret = new HashMap<String, Object>();
         wheret.put("uuid", player.getUniqueId().toString());

@@ -26,6 +26,7 @@ import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetControls;
 import me.eccentric_nz.TARDIS.database.ResultSetCurrentLocation;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
+import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
 import me.eccentric_nz.TARDIS.enumeration.DIFFICULTY;
 import me.eccentric_nz.TARDIS.enumeration.PRESET;
@@ -63,11 +64,12 @@ public class TARDISDirectionCommand {
                 TARDISMessage.send(player, "NO_TARDIS");
                 return false;
             }
-            if (plugin.getConfig().getBoolean("allow.power_down") && !rs.isPowered_on()) {
+            Tardis tardis = rs.getTardis();
+            if (plugin.getConfig().getBoolean("allow.power_down") && !tardis.isPowered_on()) {
                 TARDISMessage.send(player, "POWER_DOWN");
                 return true;
             }
-            int id = rs.getTardis_id();
+            int id = tardis.getTardis_id();
             TARDISCircuitChecker tcc = null;
             if (!plugin.getDifficulty().equals(DIFFICULTY.EASY) && !plugin.getUtils().inGracePeriod(player, true)) {
                 tcc = new TARDISCircuitChecker(plugin, id);
@@ -77,7 +79,7 @@ public class TARDISDirectionCommand {
                 TARDISMessage.send(player, "NO_MAT_CIRCUIT");
                 return true;
             }
-            int level = rs.getArtron_level();
+            int level = tardis.getArtron_level();
             int amount = plugin.getArtronConfig().getInt("random");
             if (level < amount) {
                 TARDISMessage.send(player, "ENERGY_NO_DIRECTION");
@@ -93,11 +95,11 @@ public class TARDISDirectionCommand {
             }
             boolean tmp_cham = false;
             if (plugin.getConfig().getBoolean("travel.chameleon")) {
-                tmp_cham = rs.isChamele_on();
+                tmp_cham = tardis.isChamele_on();
             }
             boolean cham = tmp_cham;
-            boolean hid = rs.isHidden();
-            PRESET demat = rs.getDemat();
+            boolean hid = tardis.isHidden();
+            PRESET demat = tardis.getDemat();
             String dir = args[1].toUpperCase(Locale.ENGLISH);
             HashMap<String, Object> wherecl = new HashMap<String, Object>();
             wherecl.put("tardis_id", id);

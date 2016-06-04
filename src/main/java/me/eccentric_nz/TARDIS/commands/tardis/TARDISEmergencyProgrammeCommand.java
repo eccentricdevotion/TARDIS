@@ -24,6 +24,7 @@ import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.ResultSetPlayerPrefs;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import me.eccentric_nz.TARDIS.database.ResultSetTravellers;
+import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.travel.TARDISEPSRunnable;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import org.bukkit.entity.Player;
@@ -53,9 +54,10 @@ public class TARDISEmergencyProgrammeCommand {
                 TARDISMessage.send(p, "NOT_A_TIMELORD");
                 return true;
             }
-            int id = rs.getTardis_id();
-            String eps = rs.getEps();
-            String creeper = rs.getCreeper();
+            Tardis tardis = rs.getTardis();
+            int id = tardis.getTardis_id();
+            String eps = tardis.getEps();
+            String creeper = tardis.getCreeper();
             HashMap<String, Object> wherem = new HashMap<String, Object>();
             wherem.put("uuid", p.getUniqueId().toString());
             ResultSetTravellers rsm = new ResultSetTravellers(plugin, wherem, true);

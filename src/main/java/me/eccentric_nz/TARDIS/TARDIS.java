@@ -49,7 +49,6 @@ import me.eccentric_nz.TARDIS.chatGUI.TARDISChatGUIJSON;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.TARDISBiomeUpdater;
 import me.eccentric_nz.TARDIS.database.TARDISCompanionClearer;
-import me.eccentric_nz.TARDIS.database.TARDISControlsConverter;
 import me.eccentric_nz.TARDIS.database.TARDISDatabaseConnection;
 import me.eccentric_nz.TARDIS.database.TARDISLastKnownNameUpdater;
 import me.eccentric_nz.TARDIS.database.TARDISLocationsConverter;
@@ -322,9 +321,6 @@ public class TARDIS extends JavaPlugin {
             }
             loadPerms();
             loadBooks();
-            if (!getConfig().getBoolean("conversions.conversion_done")) {
-                new TARDISControlsConverter(this).convertControls();
-            }
             if (!getConfig().getBoolean("conversions.location_conversion_done")) {
                 new TARDISLocationsConverter(this).convert();
             }

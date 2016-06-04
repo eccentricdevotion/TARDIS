@@ -26,6 +26,7 @@ import me.eccentric_nz.TARDIS.builders.TARDISInteriorPostioning;
 import me.eccentric_nz.TARDIS.builders.TARDISTIPSData;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
+import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.schematic.TARDISSchematicGZip;
 import me.eccentric_nz.TARDIS.utility.TARDISBlockSetters;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
@@ -94,8 +95,9 @@ public class TARDISWallFloorRunnable extends TARDISThemeRunnable implements Runn
                 int amount = plugin.getArtronConfig().getInt("upgrades." + tud.getSchematic().getPermission());
                 qf.alterEnergyLevel("tardis", amount, wherea, player);
             }
-            slot = rs.getTIPS();
-            id = rs.getTardis_id();
+            Tardis tardis = rs.getTardis();
+            slot = tardis.getTIPS();
+            id = tardis.getTardis_id();
             if (slot != -1) { // default world - use TIPS
                 TARDISInteriorPostioning tintpos = new TARDISInteriorPostioning(plugin);
                 TARDISTIPSData pos = tintpos.getTIPSData(slot);
@@ -104,14 +106,14 @@ public class TARDISWallFloorRunnable extends TARDISThemeRunnable implements Runn
                 startz = pos.getCentreZ();
                 resetz = pos.getCentreZ();
             } else {
-                int gsl[] = plugin.getLocationUtils().getStartLocation(rs.getTardis_id());
+                int gsl[] = plugin.getLocationUtils().getStartLocation(tardis.getTardis_id());
                 startx = gsl[0];
                 resetx = gsl[1];
                 startz = gsl[2];
                 resetz = gsl[3];
             }
             starty = (tud.getSchematic().getPermission().equals("redstone")) ? 65 : 64;
-            String[] split = rs.getChunk().split(":");
+            String[] split = tardis.getChunk().split(":");
             world = plugin.getServer().getWorld(split[0]);
             own_world = plugin.getConfig().getBoolean("creation.create_worlds");
             // wall/floor block prefs

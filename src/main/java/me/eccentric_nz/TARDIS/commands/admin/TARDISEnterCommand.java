@@ -22,6 +22,7 @@ import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetDoors;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
+import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import me.eccentric_nz.TARDIS.utility.TARDISNumberParsers;
@@ -67,8 +68,9 @@ public class TARDISEnterCommand {
             where.put("uuid", uuid.toString());
             ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);
             if (rs.resultSet()) {
-                int id = rs.getTardis_id();
-                String owner = rs.getOwner();
+                Tardis tardis = rs.getTardis();
+                int id = tardis.getTardis_id();
+                String owner = tardis.getOwner();
                 HashMap<String, Object> wherei = new HashMap<String, Object>();
                 wherei.put("door_type", 1);
                 wherei.put("tardis_id", id);

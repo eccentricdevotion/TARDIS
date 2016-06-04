@@ -25,6 +25,7 @@ import me.eccentric_nz.TARDIS.achievement.TARDISAchievementFactory;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetCondenser;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
+import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import multiworld.MultiWorldPlugin;
 import multiworld.api.MultiWorldAPI;
@@ -142,20 +143,21 @@ public class TARDISCondenserListener implements Listener {
                             }
                         }
                     }
+                    Tardis tardis = rs.getTardis();
                     // process item_counts
                     if (plugin.getConfig().getBoolean("growth.rooms_require_blocks")) {
                         for (Map.Entry<String, Integer> map : item_counts.entrySet()) {
                             // check if the tardis has condensed this material before
                             HashMap<String, Object> wherec = new HashMap<String, Object>();
-                            wherec.put("tardis_id", rs.getTardis_id());
+                            wherec.put("tardis_id", tardis.getTardis_id());
                             wherec.put("block_data", map.getKey());
                             ResultSetCondenser rsc = new ResultSetCondenser(plugin, wherec, false);
                             HashMap<String, Object> setc = new HashMap<String, Object>();
                             if (rsc.resultSet()) {
                                 int new_stack_size = (int) map.getValue() + rsc.getBlock_count();
-                                qf.updateCondensedBlockCount(new_stack_size, rs.getTardis_id(), map.getKey());
+                                qf.updateCondensedBlockCount(new_stack_size, tardis.getTardis_id(), map.getKey());
                             } else {
-                                setc.put("tardis_id", rs.getTardis_id());
+                                setc.put("tardis_id", tardis.getTardis_id());
                                 setc.put("block_data", map.getKey());
                                 setc.put("block_count", (int) map.getValue());
                                 qf.doInsert("condenser", setc);
@@ -165,13 +167,13 @@ public class TARDISCondenserListener implements Listener {
                     // halve it cause 1:1 is too much...
                     amount = Math.round(amount / 2.0F);
                     HashMap<String, Object> wheret = new HashMap<String, Object>();
-                    wheret.put("tardis_id", rs.getTardis_id());
+                    wheret.put("tardis_id", tardis.getTardis_id());
                     qf.alterEnergyLevel("tardis", amount, wheret, player);
                     if (amount > 0) {
                         // are we doing an achievement?
                         if (plugin.getAchievementConfig().getBoolean("energy.enabled")) {
                             // determine the current percentage
-                            int current_level = rs.getArtron_level() + amount;
+                            int current_level = tardis.getArtron_level() + amount;
                             int fc = plugin.getArtronConfig().getInt("full_charge");
                             int percent = Math.round((current_level * 100F) / fc);
                             TARDISAchievementFactory taf = new TARDISAchievementFactory(plugin, player, "energy", 1);

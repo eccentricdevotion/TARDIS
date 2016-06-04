@@ -29,6 +29,7 @@ import me.eccentric_nz.TARDIS.database.ResultSetAreas;
 import me.eccentric_nz.TARDIS.database.ResultSetCurrentLocation;
 import me.eccentric_nz.TARDIS.database.ResultSetHomeLocation;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
+import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.enumeration.DIFFICULTY;
 import me.eccentric_nz.TARDIS.enumeration.FLAG;
 import me.eccentric_nz.TARDIS.enumeration.REMOTE;
@@ -79,17 +80,18 @@ public class TARDISRemoteCommands implements CommandExecutor {
                 where.put("uuid", uuid.toString());
                 ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);
                 if (rs.resultSet()) {
+                    Tardis tardis = rs.getTardis();
                     // not in siege mode
-                    if (plugin.getTrackerKeeper().getInSiegeMode().contains(rs.getTardis_id())) {
+                    if (plugin.getTrackerKeeper().getInSiegeMode().contains(tardis.getTardis_id())) {
                         TARDISMessage.send(sender, "SIEGE_NO_CMD");
                         return true;
                     }
                     // we're good to go
-                    final int id = rs.getTardis_id();
-                    boolean chameleon = rs.isChamele_on();
-                    boolean hidden = rs.isHidden();
-                    boolean handbrake = rs.isHandbrake_on();
-                    int level = rs.getArtron_level();
+                    final int id = tardis.getTardis_id();
+                    boolean chameleon = tardis.isChamele_on();
+                    boolean hidden = tardis.isHidden();
+                    boolean handbrake = tardis.isHandbrake_on();
+                    int level = tardis.getArtron_level();
                     if (sender instanceof Player && !sender.hasPermission("tardis.admin")) {
                         HashMap<String, Object> wheret = new HashMap<String, Object>();
                         wheret.put("uuid", ((Player) sender).getUniqueId().toString());
@@ -98,12 +100,13 @@ public class TARDISRemoteCommands implements CommandExecutor {
                             TARDISMessage.send(sender, "NOT_A_TIMELORD");
                             return true;
                         }
-                        int tardis_id = rst.getTardis_id();
+                        Tardis t = rst.getTardis();
+                        int tardis_id = t.getTardis_id();
                         if (tardis_id != id) {
                             TARDISMessage.send(sender, "CMD_ONLY_TL_REMOTE");
                             return true;
                         }
-                        if (plugin.getConfig().getBoolean("allow.power_down") && !rst.isPowered_on()) {
+                        if (plugin.getConfig().getBoolean("allow.power_down") && !t.isPowered_on()) {
                             TARDISMessage.send(sender, "POWER_DOWN");
                             return true;
                         }

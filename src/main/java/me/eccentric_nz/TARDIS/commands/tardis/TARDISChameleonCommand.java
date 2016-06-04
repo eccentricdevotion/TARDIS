@@ -22,6 +22,7 @@ import me.eccentric_nz.TARDIS.advanced.TARDISCircuitChecker;
 import me.eccentric_nz.TARDIS.chameleon.TARDISChameleonCircuit;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
+import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.enumeration.DIFFICULTY;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import me.eccentric_nz.TARDIS.utility.TARDISNumberParsers;
@@ -63,7 +64,8 @@ public class TARDISChameleonCommand {
                 TARDISMessage.send(player, "NO_TARDIS");
                 return false;
             }
-            int id = rs.getTardis_id();
+            Tardis tardis = rs.getTardis();
+            int id = tardis.getTardis_id();
             TARDISCircuitChecker circ_chk = null;
             if (!plugin.getDifficulty().equals(DIFFICULTY.EASY) && !plugin.getUtils().inGracePeriod(player, false)) {
                 circ_chk = new TARDISCircuitChecker(plugin, id);
@@ -73,7 +75,7 @@ public class TARDISChameleonCommand {
                 TARDISMessage.send(player, "CHAM_MISSING");
                 return true;
             }
-            String chamStr = rs.getChameleon();
+            String chamStr = tardis.getChameleon();
             if (chamStr.isEmpty()) {
                 TARDISMessage.send(player, "CHAM_NOT_FOUND");
                 return false;

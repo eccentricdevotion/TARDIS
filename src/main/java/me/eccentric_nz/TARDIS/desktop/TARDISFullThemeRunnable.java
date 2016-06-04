@@ -32,6 +32,7 @@ import me.eccentric_nz.TARDIS.builders.TARDISTIPSData;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetARS;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
+import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.enumeration.SCHEMATIC;
 import me.eccentric_nz.TARDIS.schematic.TARDISSchematicGZip;
 import me.eccentric_nz.TARDIS.utility.TARDISBlockSetters;
@@ -146,9 +147,10 @@ public class TARDISFullThemeRunnable extends TARDISThemeRunnable implements Runn
                 int amount = plugin.getArtronConfig().getInt("upgrades." + tud.getSchematic().getPermission());
                 qf.alterEnergyLevel("tardis", amount, wherea, player);
             }
-            slot = rs.getTIPS();
-            id = rs.getTardis_id();
-            chunk = getChunk(rs.getChunk());
+            Tardis tardis = rs.getTardis();
+            slot = tardis.getTIPS();
+            id = tardis.getTardis_id();
+            chunk = getChunk(tardis.getChunk());
             if (tud.getPrevious().getPermission().equals("ender")) {
                 // remove ender crystal
                 for (Entity end : chunk.getEntities()) {
@@ -159,7 +161,7 @@ public class TARDISFullThemeRunnable extends TARDISThemeRunnable implements Runn
             }
             chunks = getChunks(chunk, tud.getSchematic());
             // remove the charged creeper
-            Location creeper = getCreeperLocation(rs.getCreeper());
+            Location creeper = getCreeperLocation(tardis.getCreeper());
             Entity ent = creeper.getWorld().spawnEntity(creeper, EntityType.EGG);
             for (Entity e : ent.getNearbyEntities(1.5d, 1.5d, 1.5d)) {
                 if (e instanceof Creeper) {
@@ -175,7 +177,7 @@ public class TARDISFullThemeRunnable extends TARDISThemeRunnable implements Runn
                 startz = pos.getCentreZ();
                 resetz = pos.getCentreZ();
             } else {
-                int gsl[] = plugin.getLocationUtils().getStartLocation(rs.getTardis_id());
+                int gsl[] = plugin.getLocationUtils().getStartLocation(tardis.getTardis_id());
                 startx = gsl[0];
                 resetx = gsl[1];
                 startz = gsl[2];
@@ -183,7 +185,7 @@ public class TARDISFullThemeRunnable extends TARDISThemeRunnable implements Runn
             }
             starty = (tud.getSchematic().getPermission().equals("redstone")) ? 65 : 64;
             downgrade = compare(tud.getPrevious(), tud.getSchematic());
-            String[] split = rs.getChunk().split(":");
+            String[] split = tardis.getChunk().split(":");
             world = plugin.getServer().getWorld(split[0]);
             own_world = plugin.getConfig().getBoolean("creation.create_worlds");
             wg1 = new Location(world, startx, starty, startz);

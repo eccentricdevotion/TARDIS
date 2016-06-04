@@ -34,6 +34,7 @@ import me.eccentric_nz.TARDIS.database.ResultSetHomeLocation;
 import me.eccentric_nz.TARDIS.database.ResultSetPlayerPrefs;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import me.eccentric_nz.TARDIS.database.ResultSetTravellers;
+import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.desktop.TARDISUpgradeData;
 import me.eccentric_nz.TARDIS.desktop.TARDISWallFloorRunnable;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
@@ -88,21 +89,22 @@ public class TARDISTimeLordDeathListener implements Listener {
                 ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);
                 // are they a time lord?
                 if (rs.resultSet()) {
-                    if (rs.isPowered_on()) {
-                        final int id = rs.getTardis_id();
-                        String eps = rs.getEps();
-                        String creeper = rs.getCreeper();
+                    Tardis tardis = rs.getTardis();
+                    if (tardis.isPowered_on()) {
+                        final int id = tardis.getTardis_id();
+                        String eps = tardis.getEps();
+                        String creeper = tardis.getCreeper();
                         HashMap<String, Object> whereu = new HashMap<String, Object>();
                         whereu.put("uuid", uuid.toString());
                         ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, whereu);
                         if (rsp.resultSet()) {
                             // do they have the autonomous circuit on?
-                            if (rsp.isAutoOn() && !rs.isSiege_on() && !plugin.getTrackerKeeper().getDispersedTARDII().contains(id)) {
+                            if (rsp.isAutoOn() && !tardis.isSiege_on() && !plugin.getTrackerKeeper().getDispersedTARDII().contains(id)) {
                                 // close doors
                                 new TARDISDoorCloser(plugin, uuid, id).closeDoors();
                                 Location death_loc = player.getLocation();
                                 int amount = plugin.getArtronConfig().getInt("autonomous");
-                                if (rs.getArtron_level() > amount) {
+                                if (tardis.getArtron_level() > amount) {
                                     if (plugin.getPM().isPluginEnabled("Citizens") && plugin.getConfig().getBoolean("allow.emergency_npc") && rsp.isEpsOn()) {
                                         // check if there are players in the TARDIS
                                         HashMap<String, Object> wherev = new HashMap<String, Object>();
@@ -175,7 +177,7 @@ public class TARDISTimeLordDeathListener implements Listener {
                                             return;
                                         }
                                         final QueryFactory qf = new QueryFactory(plugin);
-                                        boolean cham = rs.isChamele_on();
+                                        boolean cham = tardis.isChamele_on();
                                         COMPASS fd = (going_home) ? hd : cd;
                                         // destroy police box
                                         final TARDISMaterialisationData pdd = new TARDISMaterialisationData(plugin, uuid.toString());
@@ -194,7 +196,7 @@ public class TARDISTimeLordDeathListener implements Listener {
                                         set.put("handbrake_on", 0);
                                         HashMap<String, Object> tid = new HashMap<String, Object>();
                                         tid.put("tardis_id", id);
-                                        if (!rs.isHidden()) {
+                                        if (!tardis.isHidden()) {
                                             plugin.getPresetDestroyer().destroyPreset(pdd);
                                             plugin.getTrackerKeeper().getDematerialising().add(pdd.getTardisID());
                                             plugin.getTrackerKeeper().getInVortex().add(id);
@@ -267,7 +269,7 @@ public class TARDISTimeLordDeathListener implements Listener {
                                             // power down
                                             setp.put("powered_on", 0);
                                             // police box lamp, delay it incase the TARDIS needs rebuilding
-                                            if (rs.getPreset().equals(PRESET.NEW) || rs.getPreset().equals(PRESET.OLD)) {
+                                            if (tardis.getPreset().equals(PRESET.NEW) || tardis.getPreset().equals(PRESET.OLD)) {
                                                 plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
                                                     @Override
                                                     public void run() {
@@ -276,7 +278,7 @@ public class TARDISTimeLordDeathListener implements Listener {
                                                 }, 1L);
                                             }
                                             // if lights are on, turn them off
-                                            new TARDISLampToggler(plugin).flickSwitch(id, player.getUniqueId(), true, rs.getSchematic().hasLanterns());
+                                            new TARDISLampToggler(plugin).flickSwitch(id, player.getUniqueId(), true, tardis.getSchematic().hasLanterns());
                                             // if beacon is on turn it off
                                             new TARDISBeaconToggler(plugin).flickSwitch(player.getUniqueId(), false);
                                             qf.doUpdate("tardis", setp, wherep);
@@ -338,7 +340,7 @@ public class TARDISTimeLordDeathListener implements Listener {
                                     }
                                     if (plugin.getConfig().getBoolean("siege.texture")) {
                                         // change to a dark theme
-                                        SCHEMATIC schm = rs.getSchematic();
+                                        SCHEMATIC schm = tardis.getSchematic();
                                         TARDISUpgradeData tud = new TARDISUpgradeData();
                                         tud.setFloor("WOOL:15");
                                         tud.setWall("WOOL:7");

@@ -24,6 +24,7 @@ import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.chameleon.TARDISChameleonInventory;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import me.eccentric_nz.TARDIS.database.ResultSetTravellers;
+import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.travel.TARDISSaveSignInventory;
 import me.eccentric_nz.TARDIS.travel.TARDISTemporalLocatorInventory;
 import me.eccentric_nz.TARDIS.travel.TARDISTerminalInventory;
@@ -77,8 +78,9 @@ public class TARDISConsoleSwitchListener implements Listener {
                         if (gui_circuits.contains(map)) {
                             HashMap<String, Object> where = new HashMap<String, Object>();
                             where.put("uuid", p.getUniqueId().toString());
-                            final ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);
+                            ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);
                             if (rs.resultSet()) {
+                                final Tardis tardis = rs.getTardis();
                                 plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
                                     @Override
                                     public void run() {
@@ -87,7 +89,7 @@ public class TARDISConsoleSwitchListener implements Listener {
                                         switch (map) {
                                             case (byte) 1966: // Chameleon circuit
                                                 new_inv = plugin.getServer().createInventory(p, 54, "§4Chameleon Circuit");
-                                                stack = new TARDISChameleonInventory(plugin, rs.isChamele_on(), rs.isAdapti_on()).getTerminal();
+                                                stack = new TARDISChameleonInventory(plugin, tardis.isChamele_on(), tardis.isAdapti_on()).getTerminal();
                                                 break;
                                             case (byte) 1973: // ARS circuit
                                                 new_inv = plugin.getServer().createInventory(p, 54, "§4Architectural Reconfiguration");
@@ -99,14 +101,14 @@ public class TARDISConsoleSwitchListener implements Listener {
                                                 break;
                                             case (byte) 1975: // Memory circuit (saves/areas)
                                                 new_inv = plugin.getServer().createInventory(p, 54, "§4TARDIS saves");
-                                                stack = new TARDISSaveSignInventory(plugin, rs.getTardis_id()).getTerminal();
+                                                stack = new TARDISSaveSignInventory(plugin, tardis.getTardis_id()).getTerminal();
                                                 break;
                                             case (byte) 1976: // Input circuit (terminal)
                                                 new_inv = plugin.getServer().createInventory(p, 54, "§4Destination Terminal");
                                                 stack = new TARDISTerminalInventory(plugin).getTerminal();
                                                 break;
                                             default: // scanner circuit
-                                                plugin.getGeneralKeeper().getScannerListener().scan(p, rs.getTardis_id(), plugin.getServer().getScheduler());
+                                                plugin.getGeneralKeeper().getScannerListener().scan(p, tardis.getTardis_id(), plugin.getServer().getScheduler());
                                                 break;
                                         }
                                         // close inventory

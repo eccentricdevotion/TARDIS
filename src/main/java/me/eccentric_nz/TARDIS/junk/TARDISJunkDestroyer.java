@@ -94,7 +94,7 @@ public class TARDISJunkDestroyer implements Runnable {
                 ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);
                 if (rs.resultSet()) {
                     // teleport players to vortex
-                    vortexJunkLoc = plugin.getLocationUtils().getLocationFromBukkitString(rs.getCreeper()).add(3.0d, 0.0d, 2.0d);
+                    vortexJunkLoc = plugin.getLocationUtils().getLocationFromBukkitString(rs.getTardis().getCreeper()).add(3.0d, 0.0d, 2.0d);
                     for (Entity e : getJunkTravellers(4.0d)) {
                         if (e instanceof Player) {
                             final Player p = (Player) e;

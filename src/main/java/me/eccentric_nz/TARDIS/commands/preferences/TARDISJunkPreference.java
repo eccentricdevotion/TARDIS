@@ -22,6 +22,7 @@ import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetJunk;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import me.eccentric_nz.TARDIS.database.ResultSetTravellers;
+import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import me.eccentric_nz.TARDIS.utility.TARDISStaticUtils;
 import org.bukkit.entity.Player;
@@ -45,10 +46,11 @@ public class TARDISJunkPreference {
         where.put("uuid", uuid);
         ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);
         if (rs.resultSet()) {
-            int id = rs.getTardis_id();
+            Tardis tardis = rs.getTardis();
+            int id = tardis.getTardis_id();
             // get current preset
-            String current = rs.getPreset().toString();
-            String chameleon = rs.getChameleon();
+            String current = tardis.getPreset().toString();
+            String chameleon = tardis.getChameleon();
             // must be outside of the TARDIS
             HashMap<String, Object> wheret = new HashMap<String, Object>();
             wheret.put("uuid", uuid);

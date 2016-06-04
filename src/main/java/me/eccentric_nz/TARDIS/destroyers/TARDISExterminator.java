@@ -32,6 +32,7 @@ import me.eccentric_nz.TARDIS.database.ResultSetCurrentLocation;
 import me.eccentric_nz.TARDIS.database.ResultSetGravity;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import me.eccentric_nz.TARDIS.database.ResultSetTravellers;
+import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
 import me.eccentric_nz.TARDIS.enumeration.SCHEMATIC;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
@@ -65,13 +66,14 @@ public class TARDISExterminator {
         ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);
         try {
             if (rs.resultSet()) {
-                boolean hid = rs.isHidden();
-                String chunkLoc = rs.getChunk();
-                String owner = rs.getOwner();
-                UUID uuid = rs.getUuid();
-                int tips = rs.getTIPS();
-                boolean hasZero = (!rs.getZero().isEmpty());
-                SCHEMATIC schm = rs.getSchematic();
+                Tardis tardis = rs.getTardis();
+                boolean hid = tardis.isHidden();
+                String chunkLoc = tardis.getChunk();
+                String owner = tardis.getOwner();
+                UUID uuid = tardis.getUuid();
+                int tips = tardis.getTIPS();
+                boolean hasZero = (!tardis.getZero().isEmpty());
+                SCHEMATIC schm = tardis.getSchematic();
                 HashMap<String, Object> wherecl = new HashMap<String, Object>();
                 wherecl.put("tardis_id", id);
                 ResultSetCurrentLocation rsc = new ResultSetCurrentLocation(plugin, wherecl);
@@ -166,12 +168,13 @@ public class TARDISExterminator {
         }
         ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);
         if (rs.resultSet()) {
-            final int id = rs.getTardis_id();
-            String owner = rs.getOwner();
-            String chunkLoc = rs.getChunk();
-            int tips = rs.getTIPS();
-            boolean hasZero = (!rs.getZero().isEmpty());
-            SCHEMATIC schm = rs.getSchematic();
+            Tardis tardis = rs.getTardis();
+            final int id = tardis.getTardis_id();
+            String owner = tardis.getOwner();
+            String chunkLoc = tardis.getChunk();
+            int tips = tardis.getTIPS();
+            boolean hasZero = (!tardis.getZero().isEmpty());
+            SCHEMATIC schm = tardis.getSchematic();
             // need to check that a player is not currently in the TARDIS
             if (player.hasPermission("tardis.delete")) {
                 HashMap<String, Object> travid = new HashMap<String, Object>();
@@ -225,7 +228,7 @@ public class TARDISExterminator {
             pdd.setTardisID(id);
             pdd.setBiome(rsc.getBiome());
             if (sign_loc.getBlockX() == bb_loc.getBlockX() + signx && sign_loc.getBlockY() + signy == bb_loc.getBlockY() && sign_loc.getBlockZ() == bb_loc.getBlockZ() + signz) {
-                if (!rs.isHidden()) {
+                if (!tardis.isHidden()) {
                     // remove Police Box
                     plugin.getPresetDestroyer().destroyPreset(pdd);
                 } else {

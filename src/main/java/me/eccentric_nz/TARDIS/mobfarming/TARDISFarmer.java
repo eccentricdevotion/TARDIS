@@ -22,6 +22,7 @@ import java.util.List;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.achievement.TARDISAchievementFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
+import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import me.eccentric_nz.TARDIS.utility.TARDISMultiInvChecker;
@@ -141,10 +142,11 @@ public class TARDISFarmer {
             where.put("tardis_id", id);
             ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);
             if (rs.resultSet()) {
-                String farm = rs.getFarm();
-                String stable = rs.getStable();
-                String hutch = rs.getHutch();
-                String village = rs.getVillage();
+                Tardis tardis = rs.getTardis();
+                String farm = tardis.getFarm();
+                String stable = tardis.getStable();
+                String hutch = tardis.getHutch();
+                String village = tardis.getVillage();
                 // collate the mobs
                 for (Entity e : mobs) {
                     switch (e.getType()) {

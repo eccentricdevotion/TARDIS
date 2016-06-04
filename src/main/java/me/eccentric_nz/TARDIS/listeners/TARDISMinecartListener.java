@@ -21,6 +21,7 @@ import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.ResultSetDoors;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
+import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import me.eccentric_nz.TARDIS.utility.TARDISMultiInvChecker;
@@ -91,8 +92,9 @@ public class TARDISMinecartListener implements Listener {
                             whereid.put("tardis_id", id);
                             ResultSetTardis rs = new ResultSetTardis(plugin, whereid, "", false);
                             if (rs.resultSet() && !plugin.getTrackerKeeper().getMinecart().contains(id)) {
-                                data = rs.getRail().split(":");
-                                playerUUID = rs.getUuid();
+                                Tardis tardis = rs.getTardis();
+                                data = tardis.getRail().split(":");
+                                playerUUID = tardis.getUuid();
                                 plugin.getTrackerKeeper().getMinecart().add(id);
                             }
                         }
@@ -103,8 +105,9 @@ public class TARDISMinecartListener implements Listener {
                         wherep.put("rail", db_loc);
                         ResultSetTardis rsp = new ResultSetTardis(plugin, wherep, "", false);
                         if (rsp.resultSet()) {
-                            playerUUID = rsp.getUuid();
-                            id = rsp.getTardis_id();
+                            Tardis tardis = rsp.getTardis();
+                            playerUUID = tardis.getUuid();
+                            id = tardis.getTardis_id();
                             HashMap<String, Object> whereinner = new HashMap<String, Object>();
                             whereinner.put("tardis_id", id);
                             whereinner.put("door_type", 1);

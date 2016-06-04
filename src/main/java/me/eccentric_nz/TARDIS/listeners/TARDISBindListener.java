@@ -25,6 +25,7 @@ import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetDestinations;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import me.eccentric_nz.TARDIS.database.ResultSetTravellers;
+import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
@@ -100,21 +101,22 @@ public class TARDISBindListener implements Listener {
                         wheret.put("tardis_id", id);
                         ResultSetTardis rs = new ResultSetTardis(plugin, wheret, "", false);
                         if (rs.resultSet()) {
-                            UUID ownerUUID = rs.getUuid();
+                            Tardis tardis = rs.getTardis();
+                            UUID ownerUUID = tardis.getUuid();
                             HashMap<String, Object> whereb = new HashMap<String, Object>();
                             whereb.put("tardis_id", id);
                             whereb.put("bind", l);
                             ResultSetDestinations rsd = new ResultSetDestinations(plugin, whereb, false);
                             if (rsd.resultSet()) {
-                                if (plugin.getConfig().getBoolean("allow.power_down") && !rs.isPowered_on()) {
+                                if (plugin.getConfig().getBoolean("allow.power_down") && !tardis.isPowered_on()) {
                                     TARDISMessage.send(player, "POWER_DOWN");
                                     return;
                                 }
-                                if ((rs.isIso_on() && !player.getUniqueId().equals(ownerUUID) && !event.isCancelled()) || plugin.getTrackerKeeper().getJohnSmith().containsKey(player.getUniqueId())) {
+                                if ((tardis.isIso_on() && !player.getUniqueId().equals(ownerUUID) && !event.isCancelled()) || plugin.getTrackerKeeper().getJohnSmith().containsKey(player.getUniqueId())) {
                                     TARDISMessage.send(player, "ISO_HANDS_OFF");
                                     return;
                                 }
-                                if (!rs.isHandbrake_on()) {
+                                if (!tardis.isHandbrake_on()) {
                                     TARDISMessage.send(player, "NOT_WHILE_TRAVELLING");
                                     return;
                                 }

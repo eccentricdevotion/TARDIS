@@ -25,6 +25,7 @@ import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetControls;
 import me.eccentric_nz.TARDIS.database.ResultSetPlayerPrefs;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
+import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.enumeration.PRESET;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import me.eccentric_nz.TARDIS.utility.TARDISNumberParsers;
@@ -108,14 +109,15 @@ public class TARDISArtronCapacitorListener implements Listener {
                         wheret.put("tardis_id", id);
                         ResultSetTardis rs = new ResultSetTardis(plugin, wheret, "", false);
                         if (rs.resultSet()) {
-                            if (rs.getPreset().equals(PRESET.JUNK)) {
+                            Tardis tardis = rs.getTardis();
+                            if (tardis.getPreset().equals(PRESET.JUNK)) {
                                 return;
                             }
                             HashMap<String, Object> whereid = new HashMap<String, Object>();
                             whereid.put("tardis_id", id);
-                            int current_level = rs.getArtron_level();
-                            boolean init = rs.isTardis_init();
-                            boolean lights = rs.isLights_on();
+                            int current_level = tardis.getArtron_level();
+                            boolean init = tardis.isTardis_init();
+                            boolean lights = tardis.isLights_on();
                             int fc = plugin.getArtronConfig().getInt("full_charge");
                             Material item = player.getInventory().getItemInMainHand().getType();
                             Material full = Material.valueOf(plugin.getArtronConfig().getString("full_charge_item"));
@@ -205,8 +207,8 @@ public class TARDISArtronCapacitorListener implements Listener {
                                     // kickstart the TARDIS Artron Energy Capacitor
                                     TARDISSounds.playTARDISSound(block.getLocation(), "power_up");
                                     // get locations from database
-                                    String creeper = rs.getCreeper();
-                                    String beacon = rs.getBeacon();
+                                    String creeper = tardis.getCreeper();
+                                    String beacon = tardis.getBeacon();
                                     if (!creeper.isEmpty() && !creeper.equals(":")) {
                                         String[] creeperData = creeper.split(":");
                                         String[] beaconData = beacon.split(":");
@@ -239,11 +241,9 @@ public class TARDISArtronCapacitorListener implements Listener {
                                     qf.doUpdate("tardis", set, whereid);
                                     TARDISMessage.send(player, "ENERGY_INIT");
                                 } else // toggle power
-                                {
-                                    if (plugin.getConfig().getBoolean("allow.power_down")) {
-                                        new TARDISPowerButton(plugin, id, player, rs.getPreset(), rs.isPowered_on(), rs.isHidden(), lights, player.getLocation(), current_level, rs.getSchematic().hasLanterns()).clickButton();
+                                 if (plugin.getConfig().getBoolean("allow.power_down")) {
+                                        new TARDISPowerButton(plugin, id, player, tardis.getPreset(), tardis.isPowered_on(), tardis.isHidden(), lights, player.getLocation(), current_level, tardis.getSchematic().hasLanterns()).clickButton();
                                     }
-                                }
                             } else if (player.isSneaking()) {
                                 if (!init) {
                                     TARDISMessage.send(player, "ENERGY_NO_INIT");

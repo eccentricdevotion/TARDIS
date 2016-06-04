@@ -27,6 +27,7 @@ import me.eccentric_nz.TARDIS.database.ResultSetCurrentLocation;
 import me.eccentric_nz.TARDIS.database.ResultSetPlayerPrefs;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import me.eccentric_nz.TARDIS.database.ResultSetTravellers;
+import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.enumeration.DIFFICULTY;
 import me.eccentric_nz.TARDIS.utility.TARDISResourcePackChanger;
 import org.bukkit.Chunk;
@@ -143,9 +144,10 @@ public class TARDISJoinListener implements Listener {
         wherep.put("uuid", player.getUniqueId().toString());
         ResultSetTardis rs = new ResultSetTardis(plugin, wherep, "", false);
         if (rs.resultSet()) {
-            int id = rs.getTardis_id();
-            String owner = rs.getOwner();
-            String last_known_name = rs.getLastKnownName();
+            Tardis tardis = rs.getTardis();
+            int id = tardis.getTardis_id();
+            String owner = tardis.getOwner();
+            String last_known_name = tardis.getLastKnownName();
             HashMap<String, Object> wherecl = new HashMap<String, Object>();
             wherecl.put("tardis_id", id);
             ResultSetCurrentLocation rsc = new ResultSetCurrentLocation(plugin, wherecl);
@@ -171,7 +173,7 @@ public class TARDISJoinListener implements Listener {
             if (!last_known_name.equals(player.getName())) {
                 // update the player's name WG region as it may have changed
                 if (plugin.isWorldGuardOnServer() && plugin.getConfig().getBoolean("preferences.use_worldguard")) {
-                    String[] chunkworld = rs.getChunk().split(":");
+                    String[] chunkworld = tardis.getChunk().split(":");
                     World cw = plugin.getServer().getWorld(chunkworld[0]);
                     // tardis region
                     plugin.getWorldGuardUtils().updateRegionForNameChange(cw, owner, player.getUniqueId(), "tardis");

@@ -28,6 +28,7 @@ import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetChameleon;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import me.eccentric_nz.TARDIS.database.ResultSetTravellers;
+import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.enumeration.DIFFICULTY;
 import me.eccentric_nz.TARDIS.enumeration.DISK_CIRCUIT;
 import me.eccentric_nz.TARDIS.listeners.TARDISMenuListener;
@@ -129,9 +130,10 @@ public class TARDISChameleonConstructorListener extends TARDISMenuListener imple
                         where.put("tardis_id", id);
                         ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);
                         if (rs.resultSet()) {
+                            Tardis tardis = rs.getTardis();
                             UUID uuid = player.getUniqueId();
-                            final boolean bool = rs.isChamele_on();
-                            final boolean adapt = rs.isAdapti_on();
+                            final boolean bool = tardis.isChamele_on();
+                            final boolean adapt = tardis.isAdapti_on();
                             switch (slot) {
                                 case 0:
                                     // back
@@ -183,7 +185,7 @@ public class TARDISChameleonConstructorListener extends TARDISMenuListener imple
                                         TARDISMessage.send(player, "CHAM_NO_SAVE");
                                         return;
                                     }
-                                    buildConstruct(rs.getPreset().toString(), id, new QueryFactory(plugin), rs.getChameleon(), player);
+                                    buildConstruct(tardis.getPreset().toString(), id, new QueryFactory(plugin), tardis.getChameleon(), player);
                                     break;
                                 case 8:
                                     // process
@@ -299,28 +301,7 @@ public class TARDISChameleonConstructorListener extends TARDISMenuListener imple
                                         set.put("tardis_id", id);
                                         qf.doInsert("chameleon", set);
                                     }
-                                    buildConstruct(rs.getPreset().toString(), id, qf, rs.getChameleon(), player);
-//                                    // update tardis table
-//                                    HashMap<String, Object> sett = new HashMap<String, Object>();
-//                                    sett.put("chameleon_preset", "CONSTRUCT");
-//                                    sett.put("chameleon_demat", rs.getPreset().toString());
-//                                    HashMap<String, Object> wheret = new HashMap<String, Object>();
-//                                    wheret.put("tardis_id", id);
-//                                    qf.doUpdate("tardis", sett, wheret);
-//                                    // update chameleon sign
-//                                    TARDISStaticUtils.setSign(rs.getChameleon(), 3, "CONSTRUCT", player);
-//                                    TARDISMessage.send(player, "CHAM_SET", ChatColor.AQUA + "Construct");
-//                                    // rebuild
-//                                    player.performCommand("tardis rebuild");
-//                                    close(player);
-//                                    // damage the circuit if configured
-//                                    if (plugin.getConfig().getBoolean("circuits.damage") && !plugin.getDifficulty().equals(DIFFICULTY.EASY) && plugin.getConfig().getInt("circuits.uses.chameleon") > 0) {
-//                                        TARDISCircuitChecker tcc = new TARDISCircuitChecker(plugin, id);
-//                                        tcc.getCircuits();
-//                                        // decrement uses
-//                                        int uses_left = tcc.getChameleonUses();
-//                                        new TARDISCircuitDamager(plugin, DISK_CIRCUIT.CHAMELEON, uses_left, id, player).damage();
-//                                    }
+                                    buildConstruct(tardis.getPreset().toString(), id, qf, tardis.getChameleon(), player);
                                     break;
                                 case 26:
                                     // set lamp

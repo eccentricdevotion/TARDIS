@@ -24,6 +24,7 @@ import me.eccentric_nz.TARDIS.advanced.TARDISCircuitDamager;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import me.eccentric_nz.TARDIS.database.ResultSetTravellers;
+import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.enumeration.DIFFICULTY;
 import me.eccentric_nz.TARDIS.enumeration.DISK_CIRCUIT;
 import me.eccentric_nz.TARDIS.listeners.TARDISMenuListener;
@@ -78,10 +79,11 @@ public class TARDISPageThreeListener extends TARDISMenuListener implements Liste
                         where.put("tardis_id", id);
                         ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);
                         if (rs.resultSet()) {
-                            String last_line = TARDISStaticUtils.getLastLine(rs.getChameleon());
-                            final boolean bool = rs.isChamele_on();
-                            final boolean adapt = rs.isAdapti_on();
-                            String preset = rs.getPreset().toString();
+                            Tardis tardis = rs.getTardis();
+                            String last_line = TARDISStaticUtils.getLastLine(tardis.getChameleon());
+                            final boolean bool = tardis.isChamele_on();
+                            final boolean adapt = tardis.isAdapti_on();
+                            String preset = tardis.getPreset().toString();
                             HashMap<String, Object> set = new HashMap<String, Object>();
                             HashMap<String, Object> set_oo = new HashMap<String, Object>();
                             QueryFactory qf = new QueryFactory(plugin);
@@ -93,7 +95,7 @@ public class TARDISPageThreeListener extends TARDISMenuListener implements Liste
                                     String onoff;
                                     String engage;
                                     int oo;
-                                    if (rs.isChamele_on()) {
+                                    if (tardis.isChamele_on()) {
                                         onoff = ChatColor.RED + plugin.getLanguage().getString("SET_OFF");
                                         engage = plugin.getLanguage().getString("SET_ON");
                                         oo = 0;
@@ -106,7 +108,7 @@ public class TARDISPageThreeListener extends TARDISMenuListener implements Liste
                                     im.setLore(Arrays.asList(onoff, String.format(plugin.getLanguage().getString("CHAM_CLICK"), engage)));
                                     is.setItemMeta(im);
                                     // set sign text
-                                    TARDISStaticUtils.setSign(rs.getChameleon(), 2, onoff, player);
+                                    TARDISStaticUtils.setSign(tardis.getChameleon(), 2, onoff, player);
                                     set_oo.put("chamele_on", oo);
                                     break;
                                 case 2:
@@ -125,7 +127,7 @@ public class TARDISPageThreeListener extends TARDISMenuListener implements Liste
                                     String biome;
                                     String to_turn;
                                     int ba;
-                                    if (rs.isAdapti_on()) {
+                                    if (tardis.isAdapti_on()) {
                                         biome = ChatColor.RED + plugin.getLanguage().getString("SET_OFF");
                                         to_turn = plugin.getLanguage().getString("SET_ON");
                                         ba = 0;
@@ -157,7 +159,7 @@ public class TARDISPageThreeListener extends TARDISMenuListener implements Liste
                                     // Gazebo
                                     if (!last_line.equals("GAZEBO")) {
                                         set.put("chameleon_preset", "GAZEBO");
-                                        TARDISStaticUtils.setSign(rs.getChameleon(), 3, "GAZEBO", player);
+                                        TARDISStaticUtils.setSign(tardis.getChameleon(), 3, "GAZEBO", player);
                                     }
                                     TARDISMessage.send(player, "CHAM_SET", ChatColor.AQUA + "Gazebo");
                                     break;
@@ -165,7 +167,7 @@ public class TARDISPageThreeListener extends TARDISMenuListener implements Liste
                                     // Apperture Science
                                     if (!last_line.equals("APPERTURE")) {
                                         set.put("chameleon_preset", "APPERTURE");
-                                        TARDISStaticUtils.setSign(rs.getChameleon(), 3, "APPERTURE", player);
+                                        TARDISStaticUtils.setSign(tardis.getChameleon(), 3, "APPERTURE", player);
                                     }
                                     TARDISMessage.send(player, "CHAM_SET", ChatColor.AQUA + "Apperture Science");
                                     break;
@@ -173,7 +175,7 @@ public class TARDISPageThreeListener extends TARDISMenuListener implements Liste
                                     // Lighthouse
                                     if (!last_line.equals("LIGHTHOUSE")) {
                                         set.put("chameleon_preset", "LIGHTHOUSE");
-                                        TARDISStaticUtils.setSign(rs.getChameleon(), 3, "LIGHTHOUSE", player);
+                                        TARDISStaticUtils.setSign(tardis.getChameleon(), 3, "LIGHTHOUSE", player);
                                     }
                                     TARDISMessage.send(player, "CHAM_SET", ChatColor.AQUA + "Tiny Lighthouse");
                                     break;
@@ -181,7 +183,7 @@ public class TARDISPageThreeListener extends TARDISMenuListener implements Liste
                                     // Library
                                     if (!last_line.equals("LIBRARY")) {
                                         set.put("chameleon_preset", "LIBRARY");
-                                        TARDISStaticUtils.setSign(rs.getChameleon(), 3, "LIBRARY", player);
+                                        TARDISStaticUtils.setSign(tardis.getChameleon(), 3, "LIBRARY", player);
                                     }
                                     TARDISMessage.send(player, "CHAM_SET", ChatColor.AQUA + "Library");
                                     break;
@@ -189,7 +191,7 @@ public class TARDISPageThreeListener extends TARDISMenuListener implements Liste
                                     // Snowman
                                     if (!last_line.equals("SNOWMAN")) {
                                         set.put("chameleon_preset", "SNOWMAN");
-                                        TARDISStaticUtils.setSign(rs.getChameleon(), 3, "SNOWMAN", player);
+                                        TARDISStaticUtils.setSign(tardis.getChameleon(), 3, "SNOWMAN", player);
                                     }
                                     TARDISMessage.send(player, "CHAM_SET", ChatColor.AQUA + "Snowman");
                                     break;
@@ -197,7 +199,7 @@ public class TARDISPageThreeListener extends TARDISMenuListener implements Liste
                                     // Jail Cell
                                     if (!last_line.equals("JAIL")) {
                                         set.put("chameleon_preset", "JAIL");
-                                        TARDISStaticUtils.setSign(rs.getChameleon(), 3, "JAIL", player);
+                                        TARDISStaticUtils.setSign(tardis.getChameleon(), 3, "JAIL", player);
                                     }
                                     TARDISMessage.send(player, "CHAM_SET", ChatColor.AQUA + "Jail Cell");
                                     break;
@@ -205,7 +207,7 @@ public class TARDISPageThreeListener extends TARDISMenuListener implements Liste
                                     // Pandorica
                                     if (!last_line.equals("PANDORICA")) {
                                         set.put("chameleon_preset", "PANDORICA");
-                                        TARDISStaticUtils.setSign(rs.getChameleon(), 3, "PANDORICA", player);
+                                        TARDISStaticUtils.setSign(tardis.getChameleon(), 3, "PANDORICA", player);
                                     }
                                     TARDISMessage.send(player, "CHAM_SET", ChatColor.AQUA + "Pandorica");
                                     break;
@@ -213,7 +215,7 @@ public class TARDISPageThreeListener extends TARDISMenuListener implements Liste
                                     // double helix
                                     if (!last_line.equals("HELIX")) {
                                         set.put("chameleon_preset", "HELIX");
-                                        TARDISStaticUtils.setSign(rs.getChameleon(), 3, "HELIX", player);
+                                        TARDISStaticUtils.setSign(tardis.getChameleon(), 3, "HELIX", player);
                                     }
                                     TARDISMessage.send(player, "CHAM_SET", ChatColor.AQUA + "Double Helix");
                                     break;
@@ -221,7 +223,7 @@ public class TARDISPageThreeListener extends TARDISMenuListener implements Liste
                                     // Prismarine
                                     if (!last_line.equals("PRISMARINE")) {
                                         set.put("chameleon_preset", "PRISMARINE");
-                                        TARDISStaticUtils.setSign(rs.getChameleon(), 3, "PRISMARINE", player);
+                                        TARDISStaticUtils.setSign(tardis.getChameleon(), 3, "PRISMARINE", player);
                                     }
                                     TARDISMessage.send(player, "CHAM_SET", ChatColor.AQUA + "Guardian Temple");
                                     break;
@@ -229,7 +231,7 @@ public class TARDISPageThreeListener extends TARDISMenuListener implements Liste
                                     // Chorus
                                     if (!last_line.equals("CHORUS")) {
                                         set.put("chameleon_preset", "CHORUS");
-                                        TARDISStaticUtils.setSign(rs.getChameleon(), 3, "CHORUS", player);
+                                        TARDISStaticUtils.setSign(tardis.getChameleon(), 3, "CHORUS", player);
                                     }
                                     TARDISMessage.send(player, "CHAM_SET", ChatColor.AQUA + "Chorus Flower");
                                     break;
@@ -237,7 +239,7 @@ public class TARDISPageThreeListener extends TARDISMenuListener implements Liste
                                     // Andesite
                                     if (!last_line.equals("ANDESITE")) {
                                         set.put("chameleon_preset", "ANDESITE");
-                                        TARDISStaticUtils.setSign(rs.getChameleon(), 3, "ANDESITE", player);
+                                        TARDISStaticUtils.setSign(tardis.getChameleon(), 3, "ANDESITE", player);
                                     }
                                     TARDISMessage.send(player, "CHAM_SET", ChatColor.AQUA + "Andesite Box");
                                     break;
@@ -245,7 +247,7 @@ public class TARDISPageThreeListener extends TARDISMenuListener implements Liste
                                     // Diorite
                                     if (!last_line.equals("DIORITE")) {
                                         set.put("chameleon_preset", "DIORITE");
-                                        TARDISStaticUtils.setSign(rs.getChameleon(), 3, "DIORITE", player);
+                                        TARDISStaticUtils.setSign(tardis.getChameleon(), 3, "DIORITE", player);
                                     }
                                     TARDISMessage.send(player, "CHAM_SET", ChatColor.AQUA + "Diorite Box");
                                     break;
@@ -253,7 +255,7 @@ public class TARDISPageThreeListener extends TARDISMenuListener implements Liste
                                     // Granite
                                     if (!last_line.equals("GRANITE")) {
                                         set.put("chameleon_preset", "GRANITE");
-                                        TARDISStaticUtils.setSign(rs.getChameleon(), 3, "GRANITE", player);
+                                        TARDISStaticUtils.setSign(tardis.getChameleon(), 3, "GRANITE", player);
                                     }
                                     TARDISMessage.send(player, "CHAM_SET", ChatColor.AQUA + "Granite Box");
                                     break;
@@ -276,7 +278,7 @@ public class TARDISPageThreeListener extends TARDISMenuListener implements Liste
                                             new TARDISCircuitDamager(plugin, DISK_CIRCUIT.INVISIBILITY, uses_left, id, player).damage();
                                         }
                                         set.put("chameleon_preset", "INVISIBLE");
-                                        TARDISStaticUtils.setSign(rs.getChameleon(), 3, "INVISIBLE", player);
+                                        TARDISStaticUtils.setSign(tardis.getChameleon(), 3, "INVISIBLE", player);
                                     }
                                     TARDISMessage.send(player, "CHAM_SET", ChatColor.AQUA + "Invisibility");
                                     break;

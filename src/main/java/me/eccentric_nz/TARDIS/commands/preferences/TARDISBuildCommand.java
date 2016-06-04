@@ -21,6 +21,7 @@ import java.util.HashMap;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
+import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.utility.TARDISAntiBuild;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import org.bukkit.entity.Player;
@@ -52,7 +53,8 @@ public class TARDISBuildCommand {
             TARDISMessage.send(player, "NO_TARDIS");
             return true;
         }
-        Integer id = rs.getTardis_id();
+        Tardis tardis = rs.getTardis();
+        Integer id = tardis.getTardis_id();
         HashMap<String, Object> setp = new HashMap<String, Object>();
         HashMap<String, Object> wherep = new HashMap<String, Object>();
         wherep.put("uuid", player.getUniqueId().toString());
@@ -65,7 +67,7 @@ public class TARDISBuildCommand {
             setp.put("build_on", 0);
             TARDISAntiBuild tab = new TARDISAntiBuild();
             // get region vectors
-            ProtectedRegion pr = plugin.getWorldGuardUtils().getRegion(rs.getChunk().split(":")[0], playerNameStr);
+            ProtectedRegion pr = plugin.getWorldGuardUtils().getRegion(tardis.getChunk().split(":")[0], playerNameStr);
             if (pr == null) {
                 TARDISMessage.send(player, "WG_NOT_FOUND");
                 return true;

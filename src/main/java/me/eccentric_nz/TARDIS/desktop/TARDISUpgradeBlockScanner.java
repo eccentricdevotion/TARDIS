@@ -13,6 +13,7 @@ import me.eccentric_nz.TARDIS.builders.TARDISInteriorPostioning;
 import me.eccentric_nz.TARDIS.builders.TARDISTIPSData;
 import me.eccentric_nz.TARDIS.database.ResultSetPlayerPrefs;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
+import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.rooms.TARDISWalls;
 import me.eccentric_nz.TARDIS.schematic.TARDISSchematicGZip;
 import org.bukkit.Material;
@@ -60,7 +61,8 @@ public class TARDISUpgradeBlockScanner {
         wheret.put("uuid", uuid.toString());
         ResultSetTardis rs = new ResultSetTardis(plugin, wheret, "", false);
         if (rs.resultSet()) {
-            int slot = rs.getTIPS();
+            Tardis tardis = rs.getTardis();
+            int slot = tardis.getTIPS();
             if (slot != -1) { // default world - use TIPS
                 TARDISInteriorPostioning tintpos = new TARDISInteriorPostioning(plugin);
                 TARDISTIPSData pos = tintpos.getTIPSData(slot);
@@ -69,14 +71,14 @@ public class TARDISUpgradeBlockScanner {
                 startz = pos.getCentreZ();
                 resetz = pos.getCentreZ();
             } else {
-                int gsl[] = plugin.getLocationUtils().getStartLocation(rs.getTardis_id());
+                int gsl[] = plugin.getLocationUtils().getStartLocation(tardis.getTardis_id());
                 startx = gsl[0];
                 resetx = gsl[1];
                 startz = gsl[2];
                 resetz = gsl[3];
             }
             starty = (tud.getPrevious().getPermission().equals("redstone")) ? 65 : 64;
-            String[] split = rs.getChunk().split(":");
+            String[] split = tardis.getChunk().split(":");
             World world = plugin.getServer().getWorld(split[0]);
             Material wall_type;
             Material floor_type;

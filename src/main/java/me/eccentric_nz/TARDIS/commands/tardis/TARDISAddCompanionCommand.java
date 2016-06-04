@@ -24,6 +24,7 @@ import me.eccentric_nz.TARDIS.achievement.TARDISAchievementFactory;
 import me.eccentric_nz.TARDIS.companionGUI.TARDISCompanionAddInventory;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
+import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import org.bukkit.ChatColor;
 import org.bukkit.World;
@@ -68,10 +69,11 @@ public class TARDISAddCompanionCommand {
                 TARDISMessage.send(player, "NO_TARDIS");
                 return true;
             } else {
-                id = rs.getTardis_id();
-                comps = rs.getCompanions();
-                data = rs.getChunk().split(":");
-                owner = rs.getOwner();
+                Tardis tardis = rs.getTardis();
+                id = tardis.getTardis_id();
+                comps = tardis.getCompanions();
+                data = tardis.getChunk().split(":");
+                owner = tardis.getOwner();
             }
             if (args.length < 2) {
                 TARDISMessage.send(player, "TOO_FEW_ARGS");

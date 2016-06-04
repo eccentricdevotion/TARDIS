@@ -25,6 +25,7 @@ import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetCurrentLocation;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import me.eccentric_nz.TARDIS.database.ResultSetTravellers;
+import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
 import me.eccentric_nz.TARDIS.enumeration.FLAG;
 import me.eccentric_nz.TARDIS.travel.TARDISTimeTravel;
@@ -84,7 +85,8 @@ public class TARDISRemoteComehereCommand {
             TARDISMessage.send(player, "PLAYER_NO_TARDIS");
             return true;
         }
-        final int id = rs.getTardis_id();
+        Tardis tardis = rs.getTardis();
+        final int id = tardis.getTardis_id();
         // check they are not in the tardis
         HashMap<String, Object> wherettrav = new HashMap<String, Object>();
         wherettrav.put("uuid", player.getUniqueId().toString());
@@ -100,9 +102,9 @@ public class TARDISRemoteComehereCommand {
         }
         boolean chamtmp = false;
         if (plugin.getConfig().getBoolean("travel.chameleon")) {
-            chamtmp = rs.isChamele_on();
+            chamtmp = tardis.isChamele_on();
         }
-        boolean hidden = rs.isHidden();
+        boolean hidden = tardis.isHidden();
         // get current police box location
         HashMap<String, Object> wherecl = new HashMap<String, Object>();
         wherecl.put("tardis_id", id);

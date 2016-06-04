@@ -32,6 +32,7 @@ import me.eccentric_nz.TARDIS.database.ResultSetCurrentLocation;
 import me.eccentric_nz.TARDIS.database.ResultSetPlayerPrefs;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import me.eccentric_nz.TARDIS.database.ResultSetTravellers;
+import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
 import me.eccentric_nz.TARDIS.enumeration.DIFFICULTY;
 import me.eccentric_nz.TARDIS.enumeration.FLAG;
@@ -105,7 +106,8 @@ public class TARDISStattenheimListener implements Listener {
                     TARDISMessage.send(player, "NO_TARDIS");
                     return;
                 }
-                final int id = rs.getTardis_id();
+                Tardis tardis = rs.getTardis();
+                final int id = tardis.getTardis_id();
                 if (plugin.getTrackerKeeper().getInSiegeMode().contains(id)) {
                     TARDISMessage.send(player, "SIEGE_NO_CONTROL");
                     return;
@@ -114,7 +116,7 @@ public class TARDISStattenheimListener implements Listener {
                     TARDISMessage.send(player.getPlayer(), "NOT_WHILE_DISPERSED");
                     return;
                 }
-                boolean power = rs.isPowered_on();
+                boolean power = tardis.isPowered_on();
                 final QueryFactory qf = new QueryFactory(plugin);
                 if (action.equals(Action.RIGHT_CLICK_BLOCK)) {
                     Block b = event.getClickedBlock();
@@ -165,9 +167,9 @@ public class TARDISStattenheimListener implements Listener {
                             TARDISMessage.send(player, "NO_MAT_CIRCUIT");
                             return;
                         }
-                        boolean hidden = rs.isHidden();
-                        int level = rs.getArtron_level();
-                        boolean cham = (plugin.getConfig().getBoolean("travel.chameleon") && rs.isChamele_on());
+                        boolean hidden = tardis.isHidden();
+                        int level = tardis.getArtron_level();
+                        boolean cham = (plugin.getConfig().getBoolean("travel.chameleon") && tardis.isChamele_on());
                         // check they are not in the tardis
                         HashMap<String, Object> wherettrav = new HashMap<String, Object>();
                         wherettrav.put("uuid", uuid.toString());
@@ -183,7 +185,7 @@ public class TARDISStattenheimListener implements Listener {
                         }
                         // get TARDIS's current location
                         HashMap<String, Object> wherecl = new HashMap<String, Object>();
-                        wherecl.put("tardis_id", rs.getTardis_id());
+                        wherecl.put("tardis_id", tardis.getTardis_id());
                         ResultSetCurrentLocation rsc = new ResultSetCurrentLocation(plugin, wherecl);
                         if (!rsc.resultSet()) {
                             hidden = true;
@@ -326,15 +328,15 @@ public class TARDISStattenheimListener implements Listener {
                             beacon_on = rsp.isBeaconOn();
                         }
                         // power up
-                        PRESET preset = rs.getPreset();
+                        PRESET preset = tardis.getPreset();
                         HashMap<String, Object> wherep = new HashMap<String, Object>();
                         wherep.put("tardis_id", id);
                         HashMap<String, Object> setp = new HashMap<String, Object>();
                         setp.put("powered_on", 1);
                         TARDISMessage.send(player, "POWER_ON");
                         // if lights are off, turn them on
-                        if (rs.isLights_on()) {
-                            new TARDISLampToggler(plugin).flickSwitch(id, uuid, false, rs.getSchematic().hasLanterns());
+                        if (tardis.isLights_on()) {
+                            new TARDISLampToggler(plugin).flickSwitch(id, uuid, false, tardis.getSchematic().hasLanterns());
                         }
                         // if beacon is off turn it on
                         if (beacon_on) {

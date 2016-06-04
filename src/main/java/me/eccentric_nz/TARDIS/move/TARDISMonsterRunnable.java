@@ -160,7 +160,7 @@ public class TARDISMonsterRunnable implements Runnable {
                             HashMap<String, Object> wheret = new HashMap<String, Object>();
                             wheret.put("tardis_id", map.getValue().getTardisId());
                             ResultSetTardis rs = new ResultSetTardis(plugin, wheret, "", false);
-                            if (rs.resultSet() && rs.getMonsters() < plugin.getConfig().getInt("preferences.spawn_limit")) {
+                            if (rs.resultSet() && rs.getTardis().getMonsters() < plugin.getConfig().getInt("preferences.spawn_limit")) {
                                 TARDISMonster rtm = new TARDISMonster();
                                 // choose a random monster
                                 EntityType type = random_monsters.get(r.nextInt(random_monsters.size()));
@@ -208,7 +208,7 @@ public class TARDISMonsterRunnable implements Runnable {
                                 wheret.put("tardis_id", tpl.getTardisId());
                                 ResultSetTardis rs = new ResultSetTardis(plugin, wheret, "", false);
                                 if (rs.resultSet()) {
-                                    int pos = rs.getTIPS();
+                                    int pos = rs.getTardis().getTIPS();
                                     int tx = 0, tz = 0;
                                     if (pos != -1) {
                                         // tips slot
@@ -253,13 +253,13 @@ public class TARDISMonsterRunnable implements Runnable {
                 wheret.put("tardis_id", tpl.getTardisId());
                 ResultSetTardis rst = new ResultSetTardis(plugin, wheret, "", false);
                 if (rst.resultSet()) {
-                    Player p = plugin.getServer().getPlayer(rst.getUuid());
+                    Player p = plugin.getServer().getPlayer(rst.getTardis().getUuid());
                     if (p != null) {
                         TARDISMessage.send(p, "MONSTER", m.getType().toString());
                     }
                 }
                 HashMap<String, Object> wherer = new HashMap<String, Object>();
-                wherer.put("tardis_id", rst.getTardis_id());
+                wherer.put("tardis_id", rst.getTardis().getTardis_id());
                 wherer.put("type", 5);
                 wherer.put("secondary", 0);
                 ResultSetControls rsc = new ResultSetControls(plugin, wherer, false);

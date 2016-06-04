@@ -16,10 +16,10 @@
  */
 package me.eccentric_nz.TARDIS.artron;
 
-import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.List;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
+import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.utility.TARDISNumberParsers;
 import org.bukkit.Location;
 import org.bukkit.World;
@@ -60,13 +60,13 @@ public class TARDISCreeperChecker {
     private void checkCreepers() {
         ResultSetTardis rs = new ResultSetTardis(plugin, null, "", true);
         if (rs.resultSet()) {
-            ArrayList<HashMap<String, String>> data = rs.getData();
-            for (HashMap<String, String> map : data) {
+            List<Tardis> data = rs.getData();
+            for (Tardis t : data) {
                 // only if there is a saved creeper location
-                if (!map.get("creeper").isEmpty()) {
+                if (!t.getCreeper().isEmpty()) {
                     // only if the TARDIS has been initialised
-                    if (map.get("tardis_init").equals("1")) {
-                        String[] creeperData = map.get("creeper").split(":");
+                    if (t.isTardis_init()) {
+                        String[] creeperData = t.getCreeper().split(":");
                         World w = plugin.getServer().getWorld(creeperData[0]);
                         if (w != null) {
                             float cx = TARDISNumberParsers.parseFloat(creeperData[1]);

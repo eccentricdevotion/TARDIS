@@ -21,6 +21,7 @@ import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
+import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.desktop.TARDISBlockScannerData;
 import me.eccentric_nz.TARDIS.desktop.TARDISUpgradeBlockScanner;
 import me.eccentric_nz.TARDIS.desktop.TARDISUpgradeData;
@@ -49,13 +50,14 @@ public class TARDISBeaconToggler {
         whereb.put("uuid", uuid.toString());
         ResultSetTardis rs = new ResultSetTardis(plugin, whereb, "", false);
         if (rs.resultSet()) {
-            SCHEMATIC schm = rs.getSchematic();
+            Tardis tardis = rs.getTardis();
+            SCHEMATIC schm = tardis.getSchematic();
             if (CONSOLES.getNO_BEACON().contains(schm)) {
                 // doesn't have a beacon!
                 return;
             }
             // toggle beacon
-            String beacon = rs.getBeacon();
+            String beacon = tardis.getBeacon();
             if (!beacon.isEmpty()) {
                 String[] beaconData = beacon.split(":");
                 if (beaconData.length > 1) {
@@ -70,7 +72,7 @@ public class TARDISBeaconToggler {
                     }
                     b.setType((on) ? Material.GLASS : Material.REDSTONE_BLOCK);
                     if (!plugin.getGeneralKeeper().getProtectBlockMap().containsKey(bl.toString())) {
-                        plugin.getGeneralKeeper().getProtectBlockMap().put(bl.toString(), rs.getTardis_id());
+                        plugin.getGeneralKeeper().getProtectBlockMap().put(bl.toString(), tardis.getTardis_id());
                     }
                 } else {
                     this.updateBeacon(schm, uuid);

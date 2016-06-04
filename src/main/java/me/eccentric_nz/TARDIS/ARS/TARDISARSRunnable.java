@@ -24,6 +24,7 @@ import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetPlayerPrefs;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
+import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
 import me.eccentric_nz.TARDIS.rooms.TARDISRoomData;
 import me.eccentric_nz.TARDIS.rooms.TARDISRoomRunnable;
@@ -64,13 +65,14 @@ public class TARDISARSRunnable implements Runnable {
         where.put("uuid", p.getUniqueId().toString());
         ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);
         if (rs.resultSet()) {
-            String[] chunk_data = rs.getChunk().split(":");
+            Tardis tardis = rs.getTardis();
+            String[] chunk_data = tardis.getChunk().split(":");
             World w = plugin.getServer().getWorld(chunk_data[0]);
             HashMap<String, Object> wherepp = new HashMap<String, Object>();
             wherepp.put("uuid", p.getUniqueId().toString());
             ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, wherepp);
             TARDISRoomData roomData = new TARDISRoomData();
-            roomData.setTardis_id(rs.getTardis_id());
+            roomData.setTardis_id(tardis.getTardis_id());
             // get middle data, default to orange wool if not set
             Material wall_type, floor_type;
             byte wall_data, floor_data;

@@ -25,6 +25,7 @@ import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetPlayerPrefs;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
+import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.enumeration.HADS;
 import me.eccentric_nz.TARDIS.enumeration.PRESET;
 import org.bukkit.Material;
@@ -259,8 +260,9 @@ public class TARDISPrefsMenuInventory {
         String junk_value = plugin.getLanguage().getString("SET_OFF");
         String hb_value = plugin.getLanguage().getString("SET_ON");
         if (rs.resultSet()) {
-            junk_value = (rs.getPreset().equals(PRESET.JUNK_MODE)) ? plugin.getLanguage().getString("SET_ON") : plugin.getLanguage().getString("SET_OFF");
-            hb_value = (rs.isHandbrake_on()) ? plugin.getLanguage().getString("SET_ON") : plugin.getLanguage().getString("SET_OFF");
+            Tardis tardis = rs.getTardis();
+            junk_value = (tardis.getPreset().equals(PRESET.JUNK_MODE)) ? plugin.getLanguage().getString("SET_ON") : plugin.getLanguage().getString("SET_OFF");
+            hb_value = (tardis.isHandbrake_on()) ? plugin.getLanguage().getString("SET_ON") : plugin.getLanguage().getString("SET_OFF");
         }
         nk.setLore(Arrays.asList(junk_value));
         ju.setItemMeta(nk);

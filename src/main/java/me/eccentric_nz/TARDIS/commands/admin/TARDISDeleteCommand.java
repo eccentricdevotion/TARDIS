@@ -27,6 +27,7 @@ import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetCurrentLocation;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import me.eccentric_nz.TARDIS.database.ResultSetTravellers;
+import me.eccentric_nz.TARDIS.database.data.Tardis;
 import static me.eccentric_nz.TARDIS.destroyers.TARDISExterminator.deleteFolder;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
 import me.eccentric_nz.TARDIS.enumeration.SCHEMATIC;
@@ -84,12 +85,13 @@ public class TARDISDeleteCommand {
             where.put("uuid", uuid.toString());
             ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);
             if (rs.resultSet()) {
-                final int id = rs.getTardis_id();
-                final int tips = rs.getTIPS();
-                final SCHEMATIC schm = rs.getSchematic();
+                Tardis tardis = rs.getTardis();
+                final int id = tardis.getTardis_id();
+                final int tips = tardis.getTIPS();
+                final SCHEMATIC schm = tardis.getSchematic();
                 plugin.debug("schematic: " + schm.getPermission());
-                String chunkLoc = rs.getChunk();
-                boolean hidden = rs.isHidden();
+                String chunkLoc = tardis.getChunk();
+                boolean hidden = tardis.isHidden();
                 String[] cdata = chunkLoc.split(":");
                 String wname;
                 if (junk) {

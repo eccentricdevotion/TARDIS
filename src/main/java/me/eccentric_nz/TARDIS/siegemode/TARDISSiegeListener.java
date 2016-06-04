@@ -27,6 +27,7 @@ import me.eccentric_nz.TARDIS.database.ResultSetCurrentLocation;
 import me.eccentric_nz.TARDIS.database.ResultSetPlayerPrefs;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import me.eccentric_nz.TARDIS.database.ResultSetTravellers;
+import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
 import me.eccentric_nz.TARDIS.travel.TARDISTimeTravel;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
@@ -97,14 +98,15 @@ public class TARDISSiegeListener implements Listener {
         if (!rs.resultSet()) {
             return;
         }
+        Tardis tardis = rs.getTardis();
         // only break if player is owner or companion
         UUID puuid = event.getPlayer().getUniqueId();
-        UUID tluuid = rs.getUuid();
+        UUID tluuid = tardis.getUuid();
         if (!puuid.equals(tluuid)) {
             boolean isCompanion = false;
-            if (!rs.getCompanions().isEmpty()) {
+            if (!tardis.getCompanions().isEmpty()) {
                 // check if they are a companion
-                for (String cuuid : rs.getCompanions().split(":")) {
+                for (String cuuid : tardis.getCompanions().split(":")) {
                     if (cuuid.equals(puuid.toString())) {
                         isCompanion = true;
                         break;
@@ -116,7 +118,7 @@ public class TARDISSiegeListener implements Listener {
                 return;
             }
         }
-        String tl = rs.getOwner();
+        String tl = tardis.getOwner();
         ItemStack is = new ItemStack(Material.HUGE_MUSHROOM_1, 1, (byte) 14);
         ItemMeta im = is.getItemMeta();
         im.setDisplayName("TARDIS Siege Cube");
@@ -145,7 +147,7 @@ public class TARDISSiegeListener implements Listener {
             plugin.getTardisHelper().protect(item);
         }
         // track it
-        plugin.getTrackerKeeper().getIsSiegeCube().add(Integer.valueOf(id));
+        plugin.getTrackerKeeper().getIsSiegeCube().add(id);
         // track the player as well
         plugin.getTrackerKeeper().getSiegeCarrying().put(puuid, id);
     }
@@ -294,11 +296,12 @@ public class TARDISSiegeListener implements Listener {
         if (!rst.resultSet()) {
             return;
         }
-        int id = rst.getTardis_id();
-        if (!uuid.equals(rst.getUuid())) {
+        Tardis tardis = rst.getTardis();
+        int id = tardis.getTardis_id();
+        if (!uuid.equals(tardis.getUuid())) {
             boolean isCompanion = false;
-            if (!rst.getCompanions().isEmpty()) {
-                for (String cuuid : rst.getCompanions().split(":")) {
+            if (!tardis.getCompanions().isEmpty()) {
+                for (String cuuid : tardis.getCompanions().split(":")) {
                     if (cuuid.equals(uuid.toString())) {
                         isCompanion = true;
                         break;
@@ -338,14 +341,14 @@ public class TARDISSiegeListener implements Listener {
         } else {
             // attempt to unsiege the TARDIS
             // check TARDIS has minimum energy level
-            if (min > rst.getArtron_level()) {
+            if (min > tardis.getArtron_level()) {
                 TARDISMessage.send(p, "SIEGE_POWER");
                 return;
             }
             // rebuild the TARDIS
             Location current = b.getLocation();
             final TARDISMaterialisationData pbd = new TARDISMaterialisationData(plugin, p.getUniqueId().toString());
-            pbd.setChameleon(rst.isChamele_on());
+            pbd.setChameleon(tardis.isChamele_on());
             pbd.setDirection(rsc.getDirection());
             pbd.setLocation(current);
             pbd.setMalfunction(false);
@@ -371,7 +374,7 @@ public class TARDISSiegeListener implements Listener {
                 plugin.getTrackerKeeper().getInSiegeMode().remove(Integer.valueOf(id));
             }
             if (plugin.getConfig().getBoolean("siege.texture")) {
-                new TARDISSiegeMode(plugin).changeTextures(rst.getUuid().toString(), rst.getSchematic(), p, false);
+                new TARDISSiegeMode(plugin).changeTextures(tardis.getUuid().toString(), tardis.getSchematic(), p, false);
             }
             TARDISMessage.send(p, "SIEGE_OFF");
         }

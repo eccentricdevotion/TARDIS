@@ -26,6 +26,7 @@ import me.eccentric_nz.TARDIS.database.ResultSetChunks;
 import me.eccentric_nz.TARDIS.database.ResultSetLamps;
 import me.eccentric_nz.TARDIS.database.ResultSetPlayerPrefs;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
+import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.enumeration.SCHEMATIC;
 import me.eccentric_nz.TARDIS.schematic.TARDISSchematicGZip;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
@@ -68,7 +69,8 @@ public class TARDISLampsCommand {
         where.put("uuid", owner.getUniqueId().toString());
         ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);
         if (rs.resultSet()) {
-            int id = rs.getTardis_id();
+            Tardis tardis = rs.getTardis();
+            int id = tardis.getTardis_id();
             // check if they have already got lamp records
             HashMap<String, Object> wherel = new HashMap<String, Object>();
             wherel.put("tardis_id", id);
@@ -86,7 +88,7 @@ public class TARDISLampsCommand {
             ResultSetChunks rsc = new ResultSetChunks(plugin, wherec, true);
             if (rsc.resultSet()) {
                 int starty, endy;
-                SCHEMATIC schm = rs.getSchematic();
+                SCHEMATIC schm = tardis.getSchematic();
                 Material lampon = (schm.hasLanterns()) ? Material.SEA_LANTERN : Material.REDSTONE_LAMP_ON;
                 // player preference
                 HashMap<String, Object> wherepp = new HashMap<String, Object>();

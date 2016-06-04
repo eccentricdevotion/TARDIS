@@ -23,6 +23,7 @@ import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
+import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.enumeration.CONSOLES;
 import me.eccentric_nz.TARDIS.enumeration.INVENTORY_MANAGER;
 import me.eccentric_nz.TARDIS.enumeration.SCHEMATIC;
@@ -261,8 +262,9 @@ public class TARDISGiveCommand implements CommandExecutor {
             where.put("uuid", uuid.toString());
             ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);
             if (rs.resultSet()) {
-                int id = rs.getTardis_id();
-                int level = rs.getArtron_level();
+                Tardis tardis = rs.getTardis();
+                int id = tardis.getTardis_id();
+                int level = tardis.getArtron_level();
                 int set_level;
                 if (amount == 0) {
                     set_level = 0;

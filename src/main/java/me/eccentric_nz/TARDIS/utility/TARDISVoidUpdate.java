@@ -19,6 +19,7 @@ package me.eccentric_nz.TARDIS.utility;
 import java.util.HashMap;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
+import me.eccentric_nz.TARDIS.database.data.Tardis;
 import static me.eccentric_nz.TARDIS.utility.TARDISSpiral.SPIRAL;
 import org.bukkit.Chunk;
 import org.bukkit.World;
@@ -46,9 +47,10 @@ public class TARDISVoidUpdate {
         where.put("tardis_id", id);
         ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);
         if (rs.resultSet()) {
-            slot = rs.getTIPS();
+            Tardis tardis = rs.getTardis();
+            slot = tardis.getTIPS();
             // get start chunk for this TARDIS
-            String[] cstr = rs.getChunk().split(":");
+            String[] cstr = tardis.getChunk().split(":");
             World w = plugin.getServer().getWorld(cstr[0]);
             int cx = TARDISNumberParsers.parseInt(cstr[1]);
             int cz = TARDISNumberParsers.parseInt(cstr[2]);

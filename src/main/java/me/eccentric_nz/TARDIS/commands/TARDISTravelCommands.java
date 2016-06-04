@@ -39,6 +39,7 @@ import me.eccentric_nz.TARDIS.database.ResultSetHomeLocation;
 import me.eccentric_nz.TARDIS.database.ResultSetPlayerPrefs;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import me.eccentric_nz.TARDIS.database.ResultSetTravellers;
+import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.enumeration.DIFFICULTY;
 import me.eccentric_nz.TARDIS.enumeration.FLAG;
 import me.eccentric_nz.TARDIS.listeners.TARDISBiomeReaderListener;
@@ -115,14 +116,15 @@ public class TARDISTravelCommands implements CommandExecutor {
                     TARDISMessage.send(player, "NO_TARDIS");
                     return true;
                 }
-                int id = rs.getTardis_id();
+                Tardis tardis = rs.getTardis();
+                int id = tardis.getTardis_id();
                 if (plugin.getTrackerKeeper().getInSiegeMode().contains(id)) {
                     TARDISMessage.send(player, "SIEGE_NO_CMD");
                     return true;
                 }
-                int level = rs.getArtron_level();
-                boolean powered = rs.isPowered_on();
-                if (!rs.isHandbrake_on()) {
+                int level = tardis.getArtron_level();
+                boolean powered = tardis.isPowered_on();
+                if (!tardis.isHandbrake_on()) {
                     TARDISMessage.send(player, "NOT_WHILE_TRAVELLING");
                     return true;
                 }
@@ -408,7 +410,7 @@ public class TARDISTravelCommands implements CommandExecutor {
                                 TARDISMessage.send(player, "BIOME_SEARCH");
 
                                 HashMap<String, Object> wherecl = new HashMap<String, Object>();
-                                wherecl.put("tardis_id", rs.getTardis_id());
+                                wherecl.put("tardis_id", tardis.getTardis_id());
                                 ResultSetCurrentLocation rsc = new ResultSetCurrentLocation(plugin, wherecl);
                                 if (!rsc.resultSet()) {
                                     TARDISMessage.send(player, "CURRENT_NOT_FOUND");
@@ -499,7 +501,7 @@ public class TARDISTravelCommands implements CommandExecutor {
                                 } else {
                                     // get current direction
                                     HashMap<String, Object> wherecl = new HashMap<String, Object>();
-                                    wherecl.put("tardis_id", rs.getTardis_id());
+                                    wherecl.put("tardis_id", tardis.getTardis_id());
                                     ResultSetCurrentLocation rsc = new ResultSetCurrentLocation(plugin, wherecl);
                                     if (!rsc.resultSet()) {
                                         TARDISMessage.send(player, "CURRENT_NOT_FOUND");

@@ -37,6 +37,7 @@ import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetControls;
 import me.eccentric_nz.TARDIS.database.ResultSetDiskStorage;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
+import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
 import me.eccentric_nz.TARDIS.enumeration.DIFFICULTY;
 import me.eccentric_nz.TARDIS.enumeration.PRESET;
@@ -130,15 +131,16 @@ public class TARDISButtonListener implements Listener {
                     whereid.put("tardis_id", id);
                     ResultSetTardis rs = new ResultSetTardis(plugin, whereid, "", false);
                     if (rs.resultSet()) {
-                        if (rs.getPreset().equals(PRESET.JUNK)) {
+                        Tardis tardis = rs.getTardis();
+                        if (tardis.getPreset().equals(PRESET.JUNK)) {
                             return;
                         }
                         // check they initialised
-                        if (!rs.isTardis_init()) {
+                        if (!tardis.isTardis_init()) {
                             TARDISMessage.send(player, "ENERGY_NO_INIT");
                             return;
                         }
-                        if (plugin.getConfig().getBoolean("allow.power_down") && !rs.isPowered_on() && !allow_unpowered.contains(type)) {
+                        if (plugin.getConfig().getBoolean("allow.power_down") && !tardis.isPowered_on() && !allow_unpowered.contains(type)) {
                             TARDISMessage.send(player, "POWER_DOWN");
                             return;
                         }
@@ -146,14 +148,14 @@ public class TARDISButtonListener implements Listener {
                             TARDISMessage.send(player, "SIEGE_NO_CONTROL");
                             return;
                         }
-                        boolean lights = rs.isLights_on();
-                        if (!lights && type == 12 && plugin.getConfig().getBoolean("allow.power_down") && !rs.isPowered_on()) {
+                        boolean lights = tardis.isLights_on();
+                        if (!lights && type == 12 && plugin.getConfig().getBoolean("allow.power_down") && !tardis.isPowered_on()) {
                             TARDISMessage.send(player, "POWER_DOWN");
                             return;
                         }
-                        int level = rs.getArtron_level();
-                        boolean hb = rs.isHandbrake_on();
-                        UUID ownerUUID = rs.getUuid();
+                        int level = tardis.getArtron_level();
+                        boolean hb = tardis.isHandbrake_on();
+                        UUID ownerUUID = tardis.getUuid();
                         TARDISCircuitChecker tcc = null;
                         if (!plugin.getDifficulty().equals(DIFFICULTY.EASY)) {
                             tcc = new TARDISCircuitChecker(plugin, id);
@@ -167,7 +169,7 @@ public class TARDISButtonListener implements Listener {
                                         TARDISMessage.send(player, "NOT_WHILE_TRAVELLING");
                                         return;
                                     }
-                                    new TARDISRandomButton(plugin, player, id, level, 0, rs.getCompanions(), rs.getUuid()).clickButton();
+                                    new TARDISRandomButton(plugin, player, id, level, 0, tardis.getCompanions(), tardis.getUuid()).clickButton();
                                     break;
                                 case 8: // fast return button
                                     if (!hb) {
@@ -200,7 +202,7 @@ public class TARDISButtonListener implements Listener {
                                         return;
                                     }
                                     // check they're in a compatible world
-                                    if (!plugin.getUtils().canGrowRooms(rs.getChunk())) {
+                                    if (!plugin.getUtils().canGrowRooms(tardis.getChunk())) {
                                         TARDISMessage.send(player, "ROOM_OWN_WORLD");
                                         return;
                                     }
@@ -215,7 +217,7 @@ public class TARDISButtonListener implements Listener {
                                             return;
                                         }
                                         // upgrade menu
-                                        new TARDISThemeButton(plugin, player, rs.getSchematic(), level, id).clickButton();
+                                        new TARDISThemeButton(plugin, player, tardis.getSchematic(), level, id).clickButton();
                                     } else {
                                         // check they have permission to grow rooms
                                         if (!player.hasPermission("tardis.architectural")) {
@@ -247,7 +249,7 @@ public class TARDISButtonListener implements Listener {
                                     player.openInventory(tmpl);
                                     break;
                                 case 12: // Control room light switch
-                                    new TARDISLightSwitch(plugin, id, lights, player, rs.getSchematic().hasLanterns()).flickSwitch();
+                                    new TARDISLightSwitch(plugin, id, lights, player, tardis.getSchematic().hasLanterns()).flickSwitch();
                                     break;
                                 case 13: // TIS
                                     new TARDISInfoMenuButton(plugin, player).clickButton();
@@ -291,7 +293,7 @@ public class TARDISButtonListener implements Listener {
                                     player.openInventory(inv);
                                     break;
                                 case 16: // enter zero room
-                                    doZero(level, player, rs.getZero(), id, qf);
+                                    doZero(level, player, tardis.getZero(), id, qf);
                                     break;
                                 case 17:
                                     // exit zero room
@@ -308,7 +310,7 @@ public class TARDISButtonListener implements Listener {
                                         TARDISMessage.send(player, "NO_MAT_CIRCUIT");
                                         return;
                                     }
-                                    new TARDISSiegeButton(plugin, player, rs.isPowered_on(), id).clickButton();
+                                    new TARDISSiegeButton(plugin, player, tardis.isPowered_on(), id).clickButton();
                                     break;
                                 case 22:
                                     // controls GUI
@@ -321,7 +323,7 @@ public class TARDISButtonListener implements Listener {
                                     break;
                             }
                         } else if (action.equals(Action.PHYSICAL) && type == 16) {
-                            doZero(level, player, rs.getZero(), id, qf);
+                            doZero(level, player, tardis.getZero(), id, qf);
                         }
                     }
                 }

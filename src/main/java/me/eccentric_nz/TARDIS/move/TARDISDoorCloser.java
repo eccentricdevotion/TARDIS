@@ -105,7 +105,7 @@ public class TARDISDoorCloser {
             ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);
             if (rs.resultSet()) {
                 if (!plugin.getConfig().getBoolean("preferences.open_door_policy")) {
-                    String[] companions = rs.getCompanions().split(":");
+                    String[] companions = rs.getTardis().getCompanions().split(":");
                     for (String c : companions) {
                         if (!c.isEmpty()) {
                             uuids.add(UUID.fromString(c));
@@ -121,7 +121,7 @@ public class TARDISDoorCloser {
             ResultSetCurrentLocation rsc = new ResultSetCurrentLocation(plugin, where_exportal);
             rsc.resultSet();
             Location exportal = new Location(rsc.getWorld(), rsc.getX(), rsc.getY(), rsc.getZ());
-            if (rs.getPreset().equals(PRESET.SWAMP)) {
+            if (rs.getTardis().getPreset().equals(PRESET.SWAMP)) {
                 exportal.add(0.0d, 1.0d, 0.0d);
             }
             // unset trackers
