@@ -515,7 +515,7 @@ public class TARDISARSMethods {
             HashMap<String, Object> wherec = new HashMap<String, Object>();
             wherec.put("tardis_id", id);
             wherec.put("block_data", map.getKey());
-            ResultSetCondenser rsc = new ResultSetCondenser(plugin, wherec, false);
+            ResultSetCondenser rsc = new ResultSetCondenser(plugin, wherec);
             if (rsc.resultSet()) {
                 if (rsc.getBlock_count() < map.getValue()) {
                     hasRequired = false;

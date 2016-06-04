@@ -151,7 +151,7 @@ public class TARDISCondenserListener implements Listener {
                             HashMap<String, Object> wherec = new HashMap<String, Object>();
                             wherec.put("tardis_id", tardis.getTardis_id());
                             wherec.put("block_data", map.getKey());
-                            ResultSetCondenser rsc = new ResultSetCondenser(plugin, wherec, false);
+                            ResultSetCondenser rsc = new ResultSetCondenser(plugin, wherec);
                             HashMap<String, Object> setc = new HashMap<String, Object>();
                             if (rsc.resultSet()) {
                                 int new_stack_size = (int) map.getValue() + rsc.getBlock_count();

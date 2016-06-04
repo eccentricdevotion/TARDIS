@@ -202,7 +202,7 @@ public class TARDISRoomCommands implements CommandExecutor {
                         HashMap<String, Object> wherec = new HashMap<String, Object>();
                         wherec.put("tardis_id", rs.getTardis_id());
                         wherec.put("block_data", map.getKey());
-                        ResultSetCondenser rsc = new ResultSetCondenser(plugin, wherec, false);
+                        ResultSetCondenser rsc = new ResultSetCondenser(plugin, wherec);
                         int has = (rsc.resultSet()) ? rsc.getBlock_count() : 0;
                         int required = map.getValue() - has;
                         if (required > 0) {

@@ -19,11 +19,8 @@ package me.eccentric_nz.TARDIS.database;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Locale;
 import java.util.Map;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.utility.TARDISNumberParsers;
@@ -40,12 +37,10 @@ public class ResultSetCondenser {
     private final Connection connection = service.getConnection();
     private final TARDIS plugin;
     private final HashMap<String, Object> where;
-    private final boolean multiple;
     private int c_id;
     private int tardis_id;
     private String block_data;
     private int block_count;
-    private final ArrayList<HashMap<String, String>> data = new ArrayList<HashMap<String, String>>();
     private final String prefix;
 
     /**
@@ -55,13 +50,10 @@ public class ResultSetCondenser {
      * @param plugin an instance of the main class.
      * @param where a HashMap<String, Object> of table fields and values to
      * refine the search.
-     * @param multiple a boolean indicating whether multiple rows should be
-     * fetched
      */
-    public ResultSetCondenser(TARDIS plugin, HashMap<String, Object> where, boolean multiple) {
+    public ResultSetCondenser(TARDIS plugin, HashMap<String, Object> where) {
         this.plugin = plugin;
         this.where = where;
-        this.multiple = multiple;
         this.prefix = this.plugin.getPrefix();
     }
 
@@ -102,15 +94,6 @@ public class ResultSetCondenser {
             rs = statement.executeQuery();
             if (rs.isBeforeFirst()) {
                 while (rs.next()) {
-                    if (multiple) {
-                        HashMap<String, String> row = new HashMap<String, String>();
-                        ResultSetMetaData rsmd = rs.getMetaData();
-                        int columns = rsmd.getColumnCount();
-                        for (int i = 1; i < columns + 1; i++) {
-                            row.put(rsmd.getColumnName(i).toLowerCase(Locale.ENGLISH), rs.getString(i));
-                        }
-                        data.add(row);
-                    }
                     this.c_id = rs.getInt("c_id");
                     this.tardis_id = rs.getInt("tardis_id");
                     this.block_data = rs.getString("block_data");
@@ -151,9 +134,5 @@ public class ResultSetCondenser {
 
     public int getBlock_count() {
         return block_count;
-    }
-
-    public ArrayList<HashMap<String, String>> getData() {
-        return data;
     }
 }
