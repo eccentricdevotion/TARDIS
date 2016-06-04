@@ -186,6 +186,19 @@ public class TARDISMySQLDatabaseUpdater {
                 // update tardis_id column for existing records
                 new TARDISDispersalUpdater(plugin).updateTardis_ids();
             }
+            // transfer `void` data to `thevoid`, then remove `void` table
+            String voidQuery = "SHOW TABLES LIKE '" + prefix + "void'";
+            ResultSet rsvoid = statement.executeQuery(voidQuery);
+            if (rsvoid.next()) {
+                String getVoid = "SELECT * FROM '" + prefix + "void'";
+                ResultSet rsv = statement.executeQuery(getVoid);
+                while (rsv.next()) {
+                    String transfer = "INSERT IGNORE INTO " + prefix + "thevoid (tardis_id) VALUES (" + rsv.getInt("tardis_id") + ")";
+                    statement.executeUpdate(transfer);
+                }
+                String delVoid = "DROP TABLE '" + prefix + "void'";
+                statement.executeUpdate(delVoid);
+            }
         } catch (SQLException e) {
             plugin.debug("MySQL database add fields error: " + e.getMessage() + e.getErrorCode());
         }
