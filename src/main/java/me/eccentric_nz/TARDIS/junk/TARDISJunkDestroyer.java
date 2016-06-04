@@ -24,9 +24,9 @@ import me.eccentric_nz.TARDIS.builders.TARDISMaterialisationData;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetBlocks;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
+import me.eccentric_nz.TARDIS.database.data.ReplacedBlock;
 import me.eccentric_nz.TARDIS.utility.TARDISBlockSetters;
 import me.eccentric_nz.TARDIS.utility.TARDISJunkParticles;
-import me.eccentric_nz.TARDIS.utility.TARDISNumberParsers;
 import me.eccentric_nz.TARDIS.utility.TARDISSounds;
 import org.bukkit.Chunk;
 import org.bukkit.Location;
@@ -147,26 +147,11 @@ public class TARDISJunkDestroyer implements Runnable {
                 tid.put("tardis_id", pdd.getTardisID());
                 ResultSetBlocks rsb = new ResultSetBlocks(plugin, tid, true);
                 if (rsb.resultSet()) {
-                    ArrayList<HashMap<String, String>> data = rsb.getData();
-                    for (HashMap<String, String> map : data) {
-                        int bid = 0;
-                        byte bd = (byte) 0;
-                        if (map.get("block") != null) {
-                            bid = TARDISNumberParsers.parseInt(map.get("block"));
-                        }
-                        if (map.get("data") != null) {
-                            bd = TARDISNumberParsers.parseByte(map.get("data"));
-                        }
-                        String locStr = map.get("location");
-                        String[] loc_data = locStr.split(",");
-                        // x, y, z - 1, 2, 3
-                        String[] xStr = loc_data[1].split("=");
-                        String[] yStr = loc_data[2].split("=");
-                        String[] zStr = loc_data[3].split("=");
-                        int rx = TARDISNumberParsers.parseInt(xStr[1].substring(0, (xStr[1].length() - 2)));
-                        int ry = TARDISNumberParsers.parseInt(yStr[1].substring(0, (yStr[1].length() - 2)));
-                        int rz = TARDISNumberParsers.parseInt(zStr[1].substring(0, (zStr[1].length() - 2)));
-                        TARDISBlockSetters.setBlock(world, rx, ry, rz, bid, bd);
+                    for (ReplacedBlock rp : rsb.getData()) {
+                        int rx = rp.getLocation().getBlockX();
+                        int ry = rp.getLocation().getBlockY();
+                        int rz = rp.getLocation().getBlockZ();
+                        TARDISBlockSetters.setBlock(world, rx, ry, rz, rp.getBlock(), rp.getData());
                     }
                 }
                 // remove block protection

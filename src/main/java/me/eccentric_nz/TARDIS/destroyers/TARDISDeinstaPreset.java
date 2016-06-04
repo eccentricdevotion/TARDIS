@@ -16,18 +16,17 @@
  */
 package me.eccentric_nz.TARDIS.destroyers;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.builders.TARDISMaterialisationData;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetBlocks;
+import me.eccentric_nz.TARDIS.database.data.ReplacedBlock;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
 import me.eccentric_nz.TARDIS.enumeration.PRESET;
 import me.eccentric_nz.TARDIS.move.TARDISDoorCloser;
 import me.eccentric_nz.TARDIS.utility.TARDISBlockSetters;
-import me.eccentric_nz.TARDIS.utility.TARDISNumberParsers;
 import org.bukkit.Chunk;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -164,13 +163,9 @@ public class TARDISDeinstaPreset {
             ResultSetBlocks rs = new ResultSetBlocks(plugin, where, false);
             Block b;
             if (rs.resultSet()) {
-                String replacedData = rs.getLocation();
-                if (!replacedData.isEmpty()) {
-                    Location sponge = plugin.getLocationUtils().getLocationFromBukkitString(replacedData);
-                    if (sponge != null) {
-                        b = sponge.getBlock();
-                        plugin.getWorldGuardUtils().sponge(b, false);
-                    }
+                if (rs.getReplacedBlock().getLocation() != null) {
+                    b = rs.getReplacedBlock().getLocation().getBlock();
+                    plugin.getWorldGuardUtils().sponge(b, false);
                 }
             }
         }
@@ -181,19 +176,8 @@ public class TARDISDeinstaPreset {
         tid.put("police_box", 1);
         ResultSetBlocks rsb = new ResultSetBlocks(plugin, tid, true);
         if (rsb.resultSet()) {
-            ArrayList<HashMap<String, String>> data = rsb.getData();
-            for (HashMap<String, String> map : data) {
-                int bID = 0;
-                byte bd = (byte) 0;
-                if (map.get("block") != null) {
-                    bID = TARDISNumberParsers.parseInt(map.get("block"));
-                }
-                if (map.get("data") != null) {
-                    bd = TARDISNumberParsers.parseByte(map.get("data"));
-                }
-                String locStr = map.get("location");
-                Location tl = plugin.getLocationUtils().getLocationFromBukkitString(locStr);
-                TARDISBlockSetters.setBlock(tl, bID, bd);
+            for (ReplacedBlock rb : rsb.getData()) {
+                TARDISBlockSetters.setBlock(rb.getLocation(), rb.getBlock(), rb.getData());
             }
         }
         // if just hiding don't remove block protection
@@ -201,7 +185,6 @@ public class TARDISDeinstaPreset {
             plugin.getPresetDestroyer().removeBlockProtection(id, new QueryFactory(plugin));
         }
         // refresh chunk
-//        w.refreshChunk(chunk.getX(), chunk.getZ());
         plugin.getTardisHelper().refreshChunk(chunk);
         plugin.getTrackerKeeper().getDematerialising().removeAll(Collections.singleton(id));
         plugin.getTrackerKeeper().getInVortex().removeAll(Collections.singleton(id));

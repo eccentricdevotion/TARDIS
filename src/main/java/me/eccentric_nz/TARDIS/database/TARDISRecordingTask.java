@@ -63,7 +63,7 @@ public class TARDISRecordingTask implements Runnable {
                     ResultSetBlocks rs = new ResultSetBlocks(plugin, where, false);
                     if (rs.resultSet()) {
                         String loco = plugin.getLocationUtils().getLocationFromBukkitString(a).add(0.0d, -1.0d, 0.0d).toString();
-                        s.setInt(1, rs.getTardis_id());
+                        s.setInt(1, rs.getReplacedBlock().getTardis_id());
                         s.setString(2, loco);
                         s.setInt(3, 208);
                         s.setInt(4, 0);

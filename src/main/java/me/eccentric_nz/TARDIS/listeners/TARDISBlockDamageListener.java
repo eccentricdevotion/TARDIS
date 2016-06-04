@@ -27,6 +27,7 @@ import me.eccentric_nz.TARDIS.database.ResultSetBlocks;
 import me.eccentric_nz.TARDIS.database.ResultSetCurrentLocation;
 import me.eccentric_nz.TARDIS.database.ResultSetPlayerPrefs;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
+import me.eccentric_nz.TARDIS.database.data.ReplacedBlock;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.hads.TARDISHostileAction;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
@@ -69,7 +70,8 @@ public class TARDISBlockDamageListener implements Listener {
         where.put("location", l);
         ResultSetBlocks rsb = new ResultSetBlocks(plugin, where, false);
         if (rsb.resultSet()) {
-            int id = rsb.getTardis_id();
+            ReplacedBlock rb = rsb.getReplacedBlock();
+            int id = rb.getTardis_id();
             if (p.hasPermission("tardis.sonic.admin")) {
                 String[] split = plugin.getRecipesConfig().getString("shaped.Sonic Screwdriver.result").split(":");
                 Material sonic = Material.valueOf(split[0]);
@@ -87,7 +89,7 @@ public class TARDISBlockDamageListener implements Listener {
                         isDoor = true;
                     }
                 }
-                if (!isDoor && rsb.isPolice_box()) {
+                if (!isDoor && rb.isPolice_box()) {
                     int damage = (plugin.getTrackerKeeper().getDamage().containsKey(id)) ? plugin.getTrackerKeeper().getDamage().get(id) : 0;
                     plugin.getTrackerKeeper().getDamage().put(id, damage + 1);
                     if (damage == plugin.getConfig().getInt("preferences.hads_damage")) {

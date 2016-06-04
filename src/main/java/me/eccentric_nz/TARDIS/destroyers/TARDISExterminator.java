@@ -32,6 +32,7 @@ import me.eccentric_nz.TARDIS.database.ResultSetCurrentLocation;
 import me.eccentric_nz.TARDIS.database.ResultSetGravity;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import me.eccentric_nz.TARDIS.database.ResultSetTravellers;
+import me.eccentric_nz.TARDIS.database.data.ReplacedBlock;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
 import me.eccentric_nz.TARDIS.enumeration.SCHEMATIC;
@@ -287,9 +288,8 @@ public class TARDISExterminator {
         whereb.put("tardis_id", id);
         ResultSetBlocks rsb = new ResultSetBlocks(plugin, whereb, true);
         if (rsb.resultSet()) {
-            ArrayList<HashMap<String, String>> bdata = rsb.getData();
-            for (HashMap<String, String> bmap : bdata) {
-                plugin.getGeneralKeeper().getProtectBlockMap().remove(bmap.get("location"));
+            for (ReplacedBlock rp : rsb.getData()) {
+                plugin.getGeneralKeeper().getProtectBlockMap().remove(rp.getStrLocation());
             }
         }
         // remove gravity well blocks from the HashMap

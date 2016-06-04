@@ -19,13 +19,13 @@ package me.eccentric_nz.TARDIS.database;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Locale;
+import java.util.List;
 import java.util.Map;
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.database.data.ReplacedBlock;
 import me.eccentric_nz.TARDIS.utility.TARDISNumberParsers;
 
 /**
@@ -41,13 +41,8 @@ public class ResultSetBlocks {
     private final TARDIS plugin;
     private final HashMap<String, Object> where;
     private final boolean multiple;
-    private int id;
-    private int tardis_id;
-    private String location;
-    private int blockId;
-    private byte blockData;
-    private boolean police_box;
-    private final ArrayList<HashMap<String, String>> data = new ArrayList<HashMap<String, String>>();
+    private ReplacedBlock replacedBlock;
+    private final List<ReplacedBlock> data = new ArrayList<ReplacedBlock>();
     private final String prefix;
 
     /**
@@ -104,21 +99,19 @@ public class ResultSetBlocks {
             rs = statement.executeQuery();
             if (rs.isBeforeFirst()) {
                 while (rs.next()) {
+                    String str = rs.getString("location");
+                    replacedBlock = new ReplacedBlock(
+                            rs.getInt("b_id"),
+                            rs.getInt("tardis_id"),
+                            plugin.getLocationUtils().getLocationFromBukkitString(str),
+                            str,
+                            rs.getInt("block"),
+                            rs.getByte("data"),
+                            rs.getBoolean("police_box")
+                    );
                     if (multiple) {
-                        HashMap<String, String> row = new HashMap<String, String>();
-                        ResultSetMetaData rsmd = rs.getMetaData();
-                        int columns = rsmd.getColumnCount();
-                        for (int i = 1; i < columns + 1; i++) {
-                            row.put(rsmd.getColumnName(i).toLowerCase(Locale.ENGLISH), rs.getString(i));
-                        }
-                        data.add(row);
+                        data.add(replacedBlock);
                     }
-                    this.id = rs.getInt("b_id");
-                    this.tardis_id = rs.getInt("tardis_id");
-                    this.location = rs.getString("location");
-                    this.blockId = rs.getInt("block");
-                    this.blockData = rs.getByte("data");
-                    this.police_box = rs.getBoolean("police_box");
                 }
             } else {
                 return false;
@@ -141,31 +134,11 @@ public class ResultSetBlocks {
         return true;
     }
 
-    public int getId() {
-        return id;
+    public ReplacedBlock getReplacedBlock() {
+        return replacedBlock;
     }
 
-    public int getTardis_id() {
-        return tardis_id;
-    }
-
-    public String getLocation() {
-        return location;
-    }
-
-    public int getBlockId() {
-        return blockId;
-    }
-
-    public byte getBlockData() {
-        return blockData;
-    }
-
-    public boolean isPolice_box() {
-        return police_box;
-    }
-
-    public ArrayList<HashMap<String, String>> getData() {
+    public List<ReplacedBlock> getData() {
         return data;
     }
 }

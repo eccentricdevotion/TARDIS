@@ -29,6 +29,7 @@ import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.ResultSetBlocks;
 import me.eccentric_nz.TARDIS.database.ResultSetGravity;
 import me.eccentric_nz.TARDIS.database.TARDISDatabaseConnection;
+import me.eccentric_nz.TARDIS.database.data.ReplacedBlock;
 import me.eccentric_nz.TARDIS.utility.TARDISAntiBuild;
 import me.eccentric_nz.TARDIS.utility.TARDISNumberParsers;
 import org.bukkit.util.Vector;
@@ -58,9 +59,8 @@ public class TARDISBlockLoader {
     public void loadProtectBlocks() {
         ResultSetBlocks rsb = new ResultSetBlocks(plugin, null, true);
         if (rsb.resultSet()) {
-            ArrayList<HashMap<String, String>> data = rsb.getData();
-            for (HashMap<String, String> map : data) {
-                plugin.getGeneralKeeper().getProtectBlockMap().put(map.get("location"), Integer.valueOf(map.get("tardis_id")));
+            for (ReplacedBlock rp : rsb.getData()) {
+                plugin.getGeneralKeeper().getProtectBlockMap().put(rp.getStrLocation(), rp.getTardis_id());
             }
             // fix AIR in block field
             TARDISDatabaseConnection service = TARDISDatabaseConnection.getInstance();

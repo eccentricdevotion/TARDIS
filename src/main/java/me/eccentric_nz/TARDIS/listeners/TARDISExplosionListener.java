@@ -16,12 +16,12 @@
  */
 package me.eccentric_nz.TARDIS.listeners;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.ResultSetBlocks;
 import me.eccentric_nz.TARDIS.database.ResultSetCreeper;
 import me.eccentric_nz.TARDIS.database.ResultSetDoors;
+import me.eccentric_nz.TARDIS.database.data.ReplacedBlock;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
 import me.eccentric_nz.TARDIS.utility.TARDISNumberParsers;
 import org.bukkit.Location;
@@ -77,10 +77,9 @@ public class TARDISExplosionListener implements Listener {
             whereb.put("police_box", 1);
             ResultSetBlocks rs = new ResultSetBlocks(plugin, whereb, true);
             if (rs.resultSet()) {
-                ArrayList<HashMap<String, String>> data = rs.getData();
-                for (HashMap<String, String> map : data) {
-                    int id = TARDISNumberParsers.parseInt(map.get("tardis_id"));
-                    Location loc = plugin.getLocationUtils().getLocationFromBukkitString(map.get("location"));
+                for (ReplacedBlock rb : rs.getData()) {
+                    int id = rb.getTardis_id();
+                    Location loc = rb.getLocation();
                     if (loc != null) {
                         Block block = loc.getBlock();
                         // if the block is a TARDIS block then remove it
