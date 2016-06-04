@@ -93,25 +93,17 @@ public class TARDISSonicActivatorListener extends TARDISMenuListener implements 
     }
 
     private void save(Player p, Inventory inv) {
-        plugin.debug("stack count: " + stacks.size());
-        for (ItemStack s : stacks) {
-            if (s != null) {
-                plugin.debug("stack: " + s.toString());
-            }
-        }
         Material m = Material.AIR;
         int count = 0;
         for (int i = 0; i < 7; i++) {
             ItemStack is = inv.getItem(i);
             if (is != null) {
-                plugin.debug("is: " + is.toString());
                 if (!is.getType().equals(m) && stacks.contains(is)) {
                     m = is.getType();
                     count++;
                 }
             }
         }
-        plugin.debug("count: " + count);
         close(p);
         if (count == stacks.size()) {
             // actvate Sonic Generator
