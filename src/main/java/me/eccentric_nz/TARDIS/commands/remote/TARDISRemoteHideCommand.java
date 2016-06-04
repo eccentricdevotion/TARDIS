@@ -22,6 +22,7 @@ import me.eccentric_nz.TARDIS.builders.TARDISMaterialisationData;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetCurrentLocation;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
+import me.eccentric_nz.TARDIS.database.ResultSetTardisPreset;
 import me.eccentric_nz.TARDIS.enumeration.PRESET;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import org.bukkit.Location;
@@ -58,14 +59,12 @@ public class TARDISRemoteHideCommand {
             where.put("tardis_id", id);
             ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);
             if (rs.resultSet()) {
-                olp = plugin.getServer().getOfflinePlayer(rs.getUuid());
+                olp = plugin.getServer().getOfflinePlayer(rs.getTardis().getUuid());
             }
         }
         Location l = new Location(rsc.getWorld(), rsc.getX(), rsc.getY(), rsc.getZ());
-        HashMap<String, Object> wheret = new HashMap<String, Object>();
-        wheret.put("tardis_id", id);
-        ResultSetTardis rs = new ResultSetTardis(plugin, wheret, "", false);
-        if (rs.resultSet() && rs.getPreset().equals(PRESET.INVISIBLE) && olp != null) {
+        ResultSetTardisPreset rs = new ResultSetTardisPreset(plugin);
+        if (rs.fromID(id) && rs.getPreset().equals(PRESET.INVISIBLE) && olp != null) {
             TARDISMessage.send(olp.getPlayer(), "INVISIBILITY_ENGAGED");
             return true;
         }

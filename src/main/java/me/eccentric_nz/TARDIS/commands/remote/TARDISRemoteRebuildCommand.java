@@ -21,7 +21,7 @@ import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.builders.TARDISMaterialisationData;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetCurrentLocation;
-import me.eccentric_nz.TARDIS.database.ResultSetTardis;
+import me.eccentric_nz.TARDIS.database.ResultSetTardisPreset;
 import me.eccentric_nz.TARDIS.enumeration.PRESET;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import org.bukkit.Location;
@@ -49,10 +49,8 @@ public class TARDISRemoteRebuildCommand {
             return true;
         }
         Location l = new Location(rsc.getWorld(), rsc.getX(), rsc.getY(), rsc.getZ());
-        HashMap<String, Object> wheret = new HashMap<String, Object>();
-        wheret.put("tardis_id", id);
-        ResultSetTardis rs = new ResultSetTardis(plugin, wheret, "", false);
-        if (rs.resultSet() && rs.getPreset().equals(PRESET.INVISIBLE)) {
+        ResultSetTardisPreset rs = new ResultSetTardisPreset(plugin);
+        if (rs.fromID(id) && rs.getPreset().equals(PRESET.INVISIBLE)) {
             TARDISMessage.send(player.getPlayer(), "INVISIBILITY_ENGAGED");
             return true;
         }

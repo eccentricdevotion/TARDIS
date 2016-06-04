@@ -25,7 +25,7 @@ import me.eccentric_nz.TARDIS.api.Parameters;
 import me.eccentric_nz.TARDIS.builders.TARDISMaterialisationData;
 import me.eccentric_nz.TARDIS.database.ResultSetControls;
 import me.eccentric_nz.TARDIS.database.ResultSetCurrentLocation;
-import me.eccentric_nz.TARDIS.database.ResultSetTardis;
+import me.eccentric_nz.TARDIS.database.ResultSetTardisPreset;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
 import me.eccentric_nz.TARDIS.enumeration.FLAG;
 import me.eccentric_nz.TARDIS.enumeration.PRESET;
@@ -89,10 +89,8 @@ public class TARDISJunkControlListener implements Listener {
                 if (rsh.resultSet()) {
                     int id = rsh.getTardis_id();
                     // is it the Junk TARDIS?
-                    HashMap<String, Object> wherei = new HashMap<String, Object>();
-                    wherei.put("tardis_id", id);
-                    ResultSetTardis rs = new ResultSetTardis(plugin, wherei, "", false);
-                    if (rs.resultSet() && rs.getPreset().equals(PRESET.JUNK)) {
+                    ResultSetTardisPreset rs = new ResultSetTardisPreset(plugin);
+                    if (rs.fromID(id) && rs.getPreset().equals(PRESET.JUNK)) {
                         final Player player = event.getPlayer();
                         if (!player.hasPermission("tardis.junk")) {
                             TARDISMessage.send(player, "JUNK_NO_PERM");
@@ -149,10 +147,8 @@ public class TARDISJunkControlListener implements Listener {
                 if (rst.resultSet()) {
                     int id = rst.getTardis_id();
                     // is it the Junk TARDIS?
-                    HashMap<String, Object> wherei = new HashMap<String, Object>();
-                    wherei.put("tardis_id", id);
-                    ResultSetTardis rs = new ResultSetTardis(plugin, wherei, "", false);
-                    if (rs.resultSet() && rs.getPreset().equals(PRESET.JUNK)) {
+                    ResultSetTardisPreset rs = new ResultSetTardisPreset(plugin);
+                    if (rs.fromID(id) && rs.getPreset().equals(PRESET.JUNK)) {
                         final Player player = event.getPlayer();
                         if (!player.hasPermission("tardis.junk")) {
                             TARDISMessage.send(player, "JUNK_NO_PERM");
@@ -169,10 +165,8 @@ public class TARDISJunkControlListener implements Listener {
                 if (rsh.resultSet()) {
                     int id = rsh.getTardis_id();
                     // is it the Junk TARDIS?
-                    HashMap<String, Object> wherei = new HashMap<String, Object>();
-                    wherei.put("tardis_id", id);
-                    ResultSetTardis rs = new ResultSetTardis(plugin, wherei, "", false);
-                    if (rs.resultSet() && rs.getPreset().equals(PRESET.JUNK)) {
+                    ResultSetTardisPreset rs = new ResultSetTardisPreset(plugin);
+                    if (rs.fromID(id) && rs.getPreset().equals(PRESET.JUNK)) {
                         final Player player = event.getPlayer();
                         if (!player.hasPermission("tardis.junk")) {
                             TARDISMessage.send(player, "JUNK_NO_PERM");
@@ -189,10 +183,8 @@ public class TARDISJunkControlListener implements Listener {
                 if (rsh.resultSet()) {
                     int id = rsh.getTardis_id();
                     // is it the Junk TARDIS?
-                    HashMap<String, Object> wherei = new HashMap<String, Object>();
-                    wherei.put("tardis_id", id);
-                    ResultSetTardis rs = new ResultSetTardis(plugin, wherei, "", false);
-                    if (rs.resultSet() && rs.getPreset().equals(PRESET.JUNK)) {
+                    ResultSetTardisPreset rs = new ResultSetTardisPreset(plugin);
+                    if (rs.fromID(id) && rs.getPreset().equals(PRESET.JUNK)) {
                         final Player player = event.getPlayer();
                         if (!player.hasPermission("tardis.junk")) {
                             TARDISMessage.send(player, "JUNK_NO_PERM");
