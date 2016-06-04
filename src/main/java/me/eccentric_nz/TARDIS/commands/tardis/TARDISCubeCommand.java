@@ -16,11 +16,10 @@
  */
 package me.eccentric_nz.TARDIS.commands.tardis;
 
-import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.database.ResultSetTardis;
+import me.eccentric_nz.TARDIS.database.ResultSetTardisID;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import org.bukkit.entity.Player;
 
@@ -39,20 +38,19 @@ public class TARDISCubeCommand {
     public boolean whoHasCube(Player player) {
         // check they have TARDIS
         if (player.hasPermission("tardis.find")) {
-            HashMap<String, Object> where = new HashMap<String, Object>();
-            where.put("uuid", player.getUniqueId().toString());
-            ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);
-            if (!rs.resultSet()) {
+            ResultSetTardisID rs = new ResultSetTardisID(plugin);
+            if (!rs.fromUUID(player.getUniqueId().toString())) {
                 TARDISMessage.send(player, "NO_TARDIS");
                 return true;
             }
-            if (!plugin.getTrackerKeeper().getIsSiegeCube().contains(rs.getTardis_id())) {
+            int id = rs.getTardis_id();
+            if (!plugin.getTrackerKeeper().getIsSiegeCube().contains(id)) {
                 TARDISMessage.send(player, "SIEGE_NOT_SIEGED");
                 return true;
             }
             // get the player who is carrying the Siege cube
             for (Map.Entry<UUID, Integer> map : plugin.getTrackerKeeper().getSiegeCarrying().entrySet()) {
-                if (map.getValue() == rs.getTardis_id()) {
+                if (map.getValue() == id) {
                     String p = plugin.getServer().getPlayer(map.getKey()).getName();
                     TARDISMessage.send(player, "SIEGE_CARRIER", p);
                     return true;

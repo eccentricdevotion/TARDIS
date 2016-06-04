@@ -19,7 +19,7 @@ package me.eccentric_nz.TARDIS.listeners;
 import java.util.HashMap;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.ResultSetCurrentLocation;
-import me.eccentric_nz.TARDIS.database.ResultSetTardis;
+import me.eccentric_nz.TARDIS.database.ResultSetTardisID;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -51,10 +51,8 @@ public class TARDISHotbarListener implements Listener {
         if (is != null && is.getType().equals(Material.COMPASS)) {
             if (is.hasItemMeta() && is.getItemMeta().hasDisplayName() && is.getItemMeta().getDisplayName().equals("TARDIS Locator")) {
                 // get TARDIS location
-                HashMap<String, Object> where = new HashMap<String, Object>();
-                where.put("uuid", player.getUniqueId().toString());
-                ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);
-                if (rs.resultSet()) {
+                ResultSetTardisID rs = new ResultSetTardisID(plugin);
+                if (!rs.fromUUID(player.getUniqueId().toString())) {
                     HashMap<String, Object> wherecl = new HashMap<String, Object>();
                     wherecl.put("tardis_id", rs.getTardis_id());
                     ResultSetCurrentLocation rsc = new ResultSetCurrentLocation(plugin, wherecl);

@@ -21,7 +21,7 @@ import java.util.HashMap;
 import me.eccentric_nz.TARDIS.JSON.JSONObject;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.ResultSetPlayerPrefs;
-import me.eccentric_nz.TARDIS.database.ResultSetTardis;
+import me.eccentric_nz.TARDIS.database.ResultSetTardisID;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
 import me.eccentric_nz.TARDIS.rooms.TARDISWalls.Pair;
 import me.eccentric_nz.TARDIS.schematic.TARDISSchematicGZip;
@@ -65,10 +65,8 @@ public class TARDISRoomBuilder {
      * @return true or false
      */
     public boolean build() {
-        HashMap<String, Object> where = new HashMap<String, Object>();
-        where.put("uuid", p.getUniqueId().toString());
-        ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);
-        if (rs.resultSet()) {
+        ResultSetTardisID rs = new ResultSetTardisID(plugin);
+        if (!rs.fromUUID(p.getUniqueId().toString())) {
             HashMap<String, Object> wherepp = new HashMap<String, Object>();
             wherepp.put("uuid", p.getUniqueId().toString());
             ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, wherepp);

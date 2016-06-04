@@ -21,7 +21,7 @@ import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetPlayerPrefs;
-import me.eccentric_nz.TARDIS.database.ResultSetTardis;
+import me.eccentric_nz.TARDIS.database.ResultSetTardisID;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import org.bukkit.Effect;
@@ -102,10 +102,8 @@ public class TARDISJettisonSeeder implements Listener {
                 // get clicked block location
                 Location l = block.getRelative(facing, 3).getLocation();
                 // get the TARDIS id
-                HashMap<String, Object> whereid = new HashMap<String, Object>();
-                whereid.put("uuid", player.getUniqueId().toString());
-                ResultSetTardis rs = new ResultSetTardis(plugin, whereid, "", false);
-                if (rs.resultSet()) {
+                ResultSetTardisID rs = new ResultSetTardisID(plugin);
+                if (!rs.fromUUID(player.getUniqueId().toString())) {
                     int id = rs.getTardis_id();
                     TARDISRoomRemover remover = new TARDISRoomRemover(plugin, r, l, d, id);
                     if (remover.remove()) {

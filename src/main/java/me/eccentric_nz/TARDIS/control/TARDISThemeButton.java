@@ -16,9 +16,8 @@
  */
 package me.eccentric_nz.TARDIS.control;
 
-import java.util.HashMap;
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.database.ResultSetTardis;
+import me.eccentric_nz.TARDIS.database.ResultSetTardisID;
 import me.eccentric_nz.TARDIS.desktop.TARDISThemeInventory;
 import me.eccentric_nz.TARDIS.desktop.TARDISUpgradeData;
 import me.eccentric_nz.TARDIS.enumeration.SCHEMATIC;
@@ -68,10 +67,8 @@ public class TARDISThemeButton {
 
     public int getTardisId(String uuid) {
         int tid = 0;
-        HashMap<String, Object> where = new HashMap<String, Object>();
-        where.put("uuid", uuid);
-        ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);
-        if (rs.resultSet()) {
+        ResultSetTardisID rs = new ResultSetTardisID(plugin);
+        if (!rs.fromUUID(player.getUniqueId().toString())) {
             tid = rs.getTardis_id();
         }
         return tid;

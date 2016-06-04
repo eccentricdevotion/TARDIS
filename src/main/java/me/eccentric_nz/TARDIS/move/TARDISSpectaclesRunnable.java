@@ -21,7 +21,7 @@ import java.util.Map;
 import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.ResultSetCurrentLocation;
-import me.eccentric_nz.TARDIS.database.ResultSetTardis;
+import me.eccentric_nz.TARDIS.database.ResultSetTardisID;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
@@ -53,10 +53,8 @@ public class TARDISSpectaclesRunnable implements Runnable {
             if (p != null && p.isOnline() && plugin.getTrackerKeeper().getSpectacleWearers().contains(map.getKey())) {
                 String b = p.getTargetBlock(plugin.getGeneralKeeper().getTransparent(), 50).getRelative(BlockFace.UP).toString();
                 if (b.equals(map.getValue().toString())) {
-                    HashMap<String, Object> where = new HashMap<String, Object>();
-                    where.put("uuid", map.getKey().toString());
-                    ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);
-                    if (rs.resultSet()) {
+                    ResultSetTardisID rs = new ResultSetTardisID(plugin);
+                    if (!rs.fromUUID(map.getKey().toString())) {
                         HashMap<String, Object> wherec = new HashMap<String, Object>();
                         wherec.put("tardis_id", rs.getTardis_id());
                         ResultSetCurrentLocation rsc = new ResultSetCurrentLocation(plugin, wherec);

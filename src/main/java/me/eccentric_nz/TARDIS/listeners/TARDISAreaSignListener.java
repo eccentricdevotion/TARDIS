@@ -18,7 +18,7 @@ package me.eccentric_nz.TARDIS.listeners;
 
 import java.util.HashMap;
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.database.ResultSetTardis;
+import me.eccentric_nz.TARDIS.database.ResultSetTardisID;
 import me.eccentric_nz.TARDIS.database.ResultSetTravellers;
 import me.eccentric_nz.TARDIS.travel.TARDISSaveSignInventory;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
@@ -92,10 +92,8 @@ public class TARDISAreaSignListener extends TARDISMenuListener implements Listen
                 plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
                     @Override
                     public void run() {
-                        HashMap<String, Object> where = new HashMap<String, Object>();
-                        where.put("uuid", player.getUniqueId().toString());
-                        ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);
-                        if (rs.resultSet()) {
+                        ResultSetTardisID rs = new ResultSetTardisID(plugin);
+                        if (!rs.fromUUID(player.getUniqueId().toString())) {
                             TARDISSaveSignInventory sst = new TARDISSaveSignInventory(plugin, rs.getTardis_id());
                             ItemStack[] items = sst.getTerminal();
                             Inventory saveinv = plugin.getServer().createInventory(player, 54, "§4TARDIS saves");

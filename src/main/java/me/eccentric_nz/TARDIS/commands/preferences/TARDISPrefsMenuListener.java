@@ -29,7 +29,9 @@ import me.eccentric_nz.TARDIS.commands.admin.TARDISAdminMenuInventory;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetJunk;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
+import me.eccentric_nz.TARDIS.database.ResultSetTardisID;
 import me.eccentric_nz.TARDIS.database.ResultSetTravellers;
+import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.enumeration.DIFFICULTY;
 import me.eccentric_nz.TARDIS.enumeration.DISK_CIRCUIT;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
@@ -93,10 +95,8 @@ public class TARDISPrefsMenuListener implements Listener {
                         List<String> lore = im.getLore();
                         if (lore.get(0).equals(plugin.getLanguage().getString("SET_OFF"))) {
                             // get this player's TARDIS
-                            HashMap<String, Object> where = new HashMap<String, Object>();
-                            where.put("uuid", uuid.toString());
-                            ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);
-                            if (rs.resultSet()) {
+                            ResultSetTardisID rs = new ResultSetTardisID(plugin);
+                            if (rs.fromUUID(uuid.toString())) {
                                 int id = rs.getTardis_id();
                                 // must not be in the vortex or materialising
                                 if (!plugin.getTrackerKeeper().getMaterialising().contains(id) && !plugin.getTrackerKeeper().getInVortex().contains(id)) {
@@ -200,9 +200,10 @@ public class TARDISPrefsMenuListener implements Listener {
                         ResultSetTardis rsp = new ResultSetTardis(plugin, wherep, "", false);
                         if (rsp.resultSet()) {
                             QueryFactory qf = new QueryFactory(plugin);
-                            String current = rsp.getPreset().toString();
-                            int id = rsp.getTardis_id();
-                            String chameleon = rsp.getChameleon();
+                            Tardis tardis = rsp.getTardis();
+                            String current = tardis.getPreset().toString();
+                            int id = tardis.getTardis_id();
+                            String chameleon = tardis.getChameleon();
                             String cham_set = "";
                             HashMap<String, Object> setj = new HashMap<String, Object>();
                             if (has) {

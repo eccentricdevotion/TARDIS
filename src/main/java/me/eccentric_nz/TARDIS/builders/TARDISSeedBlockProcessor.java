@@ -23,7 +23,7 @@ import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetCount;
 import me.eccentric_nz.TARDIS.database.ResultSetCurrentLocation;
 import me.eccentric_nz.TARDIS.database.ResultSetPlayerPrefs;
-import me.eccentric_nz.TARDIS.database.ResultSetTardis;
+import me.eccentric_nz.TARDIS.database.ResultSetTardisID;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
 import me.eccentric_nz.TARDIS.enumeration.SCHEMATIC;
 import me.eccentric_nz.TARDIS.rooms.TARDISWalls;
@@ -84,10 +84,8 @@ public class TARDISSeedBlockProcessor {
             }
             String playerNameStr = player.getName();
             // check to see if they already have a TARDIS
-            HashMap<String, Object> where = new HashMap<String, Object>();
-            where.put("uuid", player.getUniqueId().toString());
-            ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);
-            if (!rs.resultSet()) {
+            ResultSetTardisID rs = new ResultSetTardisID(plugin);
+            if (!rs.fromUUID(player.getUniqueId().toString())) {
                 SCHEMATIC schm = seed.getSchematic();
                 // check perms
                 if (!schm.getPermission().equals("budget") && !player.hasPermission("tardis." + schm.getPermission())) {

@@ -30,7 +30,7 @@ import java.util.regex.Pattern;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.ResultSetCondenser;
 import me.eccentric_nz.TARDIS.database.ResultSetPlayerPrefs;
-import me.eccentric_nz.TARDIS.database.ResultSetTardis;
+import me.eccentric_nz.TARDIS.database.ResultSetTardisID;
 import me.eccentric_nz.TARDIS.files.TARDISRoomMap;
 import me.eccentric_nz.TARDIS.rooms.TARDISWalls.Pair;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
@@ -172,10 +172,8 @@ public class TARDISRoomCommands implements CommandExecutor {
                     floor = rsp.getFloor();
                 }
                 // get the TARDIS id
-                HashMap<String, Object> wheret = new HashMap<String, Object>();
-                wheret.put("uuid", player.getUniqueId().toString());
-                ResultSetTardis rs = new ResultSetTardis(plugin, wheret, "", false);
-                if (rs.resultSet()) {
+                ResultSetTardisID rs = new ResultSetTardisID(plugin);
+                if (rs.fromUUID(player.getUniqueId().toString())) {
                     TARDISMessage.send(player, "CONDENSE_REQUIRE", name);
                     HashMap<String, Integer> item_counts = new HashMap<String, Integer>();
                     for (Map.Entry<String, Integer> entry : blockTypes.entrySet()) {

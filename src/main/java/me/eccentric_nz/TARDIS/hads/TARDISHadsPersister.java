@@ -20,11 +20,10 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.database.ResultSetTardis;
+import me.eccentric_nz.TARDIS.database.ResultSetTardisID;
 import me.eccentric_nz.TARDIS.database.TARDISDatabaseConnection;
 import org.bukkit.Location;
 import org.bukkit.World;
@@ -61,12 +60,11 @@ public class TARDISHadsPersister {
                 ps.setInt(4, l.getBlockY());
                 ps.setInt(5, l.getBlockZ());
                 // get tardis_id
-                HashMap<String, Object> where = new HashMap<String, Object>();
-                where.put("uuid", uuid);
-                ResultSetTardis rst = new ResultSetTardis(plugin, where, "", false);
-                rst.resultSet();
-                ps.setInt(6, rst.getTardis_id());
-                count += ps.executeUpdate();
+                ResultSetTardisID rst = new ResultSetTardisID(plugin);
+                if (!rst.fromUUID(uuid)) {
+                    ps.setInt(6, rst.getTardis_id());
+                    count += ps.executeUpdate();
+                }
             }
             plugin.getConsole().sendMessage(plugin.getPluginName() + "Saved " + count + " 'dispersed' TARDISes.");
         } catch (SQLException ex) {

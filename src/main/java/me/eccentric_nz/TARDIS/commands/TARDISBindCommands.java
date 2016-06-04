@@ -25,7 +25,7 @@ import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetAreas;
 import me.eccentric_nz.TARDIS.database.ResultSetDestinations;
-import me.eccentric_nz.TARDIS.database.ResultSetTardis;
+import me.eccentric_nz.TARDIS.database.ResultSetTardisID;
 import me.eccentric_nz.TARDIS.database.ResultSetTravellers;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import org.bukkit.ChatColor;
@@ -86,10 +86,8 @@ public class TARDISBindCommands implements CommandExecutor {
                 TARDISMessage.send(player, "BIND_NOT_VALID");
                 return false;
             }
-            HashMap<String, Object> where = new HashMap<String, Object>();
-            where.put("uuid", player.getUniqueId().toString());
-            ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);
-            if (!rs.resultSet()) {
+            ResultSetTardisID rs = new ResultSetTardisID(plugin);
+            if (!rs.fromUUID(player.getUniqueId().toString())) {
                 TARDISMessage.send(player, "NOT_A_TIMELORD");
                 return false;
             }

@@ -6,7 +6,7 @@ package me.eccentric_nz.TARDIS.junk;
 import java.util.HashMap;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.ResultSetCurrentLocation;
-import me.eccentric_nz.TARDIS.database.ResultSetTardis;
+import me.eccentric_nz.TARDIS.database.ResultSetTardisID;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import org.bukkit.command.CommandSender;
 
@@ -29,14 +29,11 @@ public class TARDISJunkFind {
             return true;
         }
         // get junk TARDIS id
-        HashMap<String, Object> wheret = new HashMap<String, Object>();
-        wheret.put("uuid", "00000000-aaaa-bbbb-cccc-000000000000");
-        ResultSetTardis rst = new ResultSetTardis(plugin, wheret, "", false);
-        if (rst.resultSet()) {
-            int id = rst.getTardis_id();
+        ResultSetTardisID rs = new ResultSetTardisID(plugin);
+        if (!rs.fromUUID("00000000-aaaa-bbbb-cccc-000000000000")) {
             // get current location
             HashMap<String, Object> wherec = new HashMap<String, Object>();
-            wherec.put("tardis_id", id);
+            wherec.put("tardis_id", rs.getTardis_id());
             ResultSetCurrentLocation rsc = new ResultSetCurrentLocation(plugin, wherec);
             if (rsc.resultSet()) {
                 String world = rsc.getWorld().getName();

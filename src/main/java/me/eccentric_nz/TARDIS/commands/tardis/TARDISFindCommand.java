@@ -19,7 +19,7 @@ package me.eccentric_nz.TARDIS.commands.tardis;
 import java.util.HashMap;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.ResultSetCurrentLocation;
-import me.eccentric_nz.TARDIS.database.ResultSetTardis;
+import me.eccentric_nz.TARDIS.database.ResultSetTardisID;
 import me.eccentric_nz.TARDIS.enumeration.DIFFICULTY;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import org.bukkit.ChatColor;
@@ -39,10 +39,8 @@ public class TARDISFindCommand {
 
     public boolean findTARDIS(Player player, String[] args) {
         if (player.hasPermission("tardis.find")) {
-            HashMap<String, Object> where = new HashMap<String, Object>();
-            where.put("uuid", player.getUniqueId().toString());
-            ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);
-            if (!rs.resultSet()) {
+            ResultSetTardisID rs = new ResultSetTardisID(plugin);
+            if (!rs.fromUUID(player.getUniqueId().toString())) {
                 TARDISMessage.send(player, "NO_TARDIS");
                 return true;
             }

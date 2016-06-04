@@ -22,7 +22,7 @@ import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.builders.TARDISMaterialisationData;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetHomeLocation;
-import me.eccentric_nz.TARDIS.database.ResultSetTardis;
+import me.eccentric_nz.TARDIS.database.ResultSetTardisID;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import org.bukkit.Location;
 import org.bukkit.block.Biome;
@@ -48,10 +48,8 @@ public class TARDISDesiegeCommand {
             // get the player's UUID
             UUID uuid = p.getUniqueId();
             // get the player's TARDIS id
-            HashMap<String, Object> where = new HashMap<String, Object>();
-            where.put("uuid", uuid.toString());
-            ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);
-            if (!rs.resultSet()) {
+            ResultSetTardisID rs = new ResultSetTardisID(plugin);
+            if (!rs.fromUUID(uuid.toString())) {
                 TARDISMessage.send(sender, "PLAYER_NOT_FOUND_DB", args[1]);
                 return true;
             }

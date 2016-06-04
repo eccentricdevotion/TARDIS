@@ -16,14 +16,13 @@
  */
 package me.eccentric_nz.TARDIS.commands.tardis;
 
-import java.util.HashMap;
 import java.util.Locale;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.advanced.TARDISDiskWriterCommand;
 import me.eccentric_nz.TARDIS.arch.TARDISArchCommand;
 import me.eccentric_nz.TARDIS.chatGUI.TARDISUpdateChatGUI;
 import me.eccentric_nz.TARDIS.commands.TARDISCommandHelper;
-import me.eccentric_nz.TARDIS.database.ResultSetTardis;
+import me.eccentric_nz.TARDIS.database.ResultSetTardisID;
 import me.eccentric_nz.TARDIS.enumeration.DIFFICULTY;
 import me.eccentric_nz.TARDIS.enumeration.TARDIS_COMMAND;
 import me.eccentric_nz.TARDIS.noteblock.TARDISPlayThemeCommand;
@@ -83,10 +82,8 @@ public class TARDISCommands implements CommandExecutor {
                 TARDISMessage.send(sender, "CMD_PLAYER");
                 return false;
             } else {
-                HashMap<String, Object> where = new HashMap<String, Object>();
-                where.put("uuid", player.getUniqueId().toString());
-                ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);
-                if (!rs.resultSet()) {
+                ResultSetTardisID rs = new ResultSetTardisID(plugin);
+                if (!rs.fromUUID(player.getUniqueId().toString())) {
                     TARDISMessage.send(player, "NOT_A_TIMELORD");
                     return true;
                 }

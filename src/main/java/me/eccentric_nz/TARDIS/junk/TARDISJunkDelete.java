@@ -21,7 +21,7 @@ import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.builders.TARDISMaterialisationData;
 import me.eccentric_nz.TARDIS.commands.admin.TARDISDeleteCommand;
 import me.eccentric_nz.TARDIS.database.ResultSetCurrentLocation;
-import me.eccentric_nz.TARDIS.database.ResultSetTardis;
+import me.eccentric_nz.TARDIS.database.ResultSetTardisID;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
 import me.eccentric_nz.TARDIS.enumeration.SCHEMATIC;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
@@ -47,10 +47,8 @@ public class TARDISJunkDelete {
             TARDISMessage.send(sender, "CMD_ADMIN");
             return true;
         }
-        HashMap<String, Object> where = new HashMap<String, Object>();
-        where.put("uuid", "00000000-aaaa-bbbb-cccc-000000000000");
-        ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);
-        if (rs.resultSet()) {
+        ResultSetTardisID rs = new ResultSetTardisID(plugin);
+        if (!rs.fromUUID("00000000-aaaa-bbbb-cccc-000000000000")) {
             final int id = rs.getTardis_id();
             final SCHEMATIC junk = new SCHEMATIC("AIR", "junk", "Junk TARDIS", true, false, false, false, false);
             // get the current location

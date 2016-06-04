@@ -29,7 +29,9 @@ import me.eccentric_nz.TARDIS.commands.preferences.TARDISPrefsMenuInventory;
 import me.eccentric_nz.TARDIS.database.ResultSetBackLocation;
 import me.eccentric_nz.TARDIS.database.ResultSetDoors;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
+import me.eccentric_nz.TARDIS.database.ResultSetTardisID;
 import me.eccentric_nz.TARDIS.database.ResultSetTravellers;
+import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.enumeration.INVENTORY_MANAGER;
 import static me.eccentric_nz.TARDIS.listeners.TARDISScannerListener.getNearbyEntities;
 import me.eccentric_nz.TARDIS.utility.TARDISGriefPreventionChecker;
@@ -167,10 +169,8 @@ public class TARDISSonicListener implements Listener {
                         if (pl.equals(pb)) {
                             UUID uuid = player.getUniqueId();
                             // get TARDIS id
-                            HashMap<String, Object> where = new HashMap<String, Object>();
-                            where.put("uuid", uuid.toString());
-                            ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);
-                            if (rs.resultSet()) {
+                            ResultSetTardisID rs = new ResultSetTardisID(plugin);
+                            if (!rs.fromUUID(uuid.toString())) {
                                 // rebuild
                                 plugin.getTrackerKeeper().getDispersed().remove(uuid);
                                 plugin.getTrackerKeeper().getDispersedTARDII().remove(Integer.valueOf(rs.getTardis_id()));
@@ -262,9 +262,10 @@ public class TARDISSonicListener implements Listener {
                                     wheren.put("tardis_id", id);
                                     ResultSetTardis rsn = new ResultSetTardis(plugin, wheren, "", false);
                                     if (rsn.resultSet()) {
-                                        String name = plugin.getServer().getOfflinePlayer(rsn.getUuid()).getName();
+                                        Tardis tardis = rsn.getTardis();
+                                        String name = plugin.getServer().getOfflinePlayer(tardis.getUuid()).getName();
                                         TARDISMessage.send(player, "TARDIS_WHOSE", name);
-                                        int percent = Math.round((rsn.getArtron_level() * 100F) / plugin.getArtronConfig().getInt("full_charge"));
+                                        int percent = Math.round((tardis.getArtron_level() * 100F) / plugin.getArtronConfig().getInt("full_charge"));
                                         TARDISMessage.send(player, "ENERGY_LEVEL", String.format("%d", percent));
                                         HashMap<String, Object> whereb = new HashMap<String, Object>();
                                         whereb.put("tardis_id", id);

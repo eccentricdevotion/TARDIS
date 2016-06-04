@@ -27,6 +27,8 @@ import me.eccentric_nz.TARDIS.database.ResultSetCurrentLocation;
 import me.eccentric_nz.TARDIS.database.ResultSetDoors;
 import me.eccentric_nz.TARDIS.database.ResultSetPlayerPrefs;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
+import me.eccentric_nz.TARDIS.database.ResultSetTardisID;
+import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
 import me.eccentric_nz.TARDIS.enumeration.PRESET;
 import me.eccentric_nz.TARDIS.mobfarming.TARDISFarmer;
@@ -151,10 +153,8 @@ public class TARDISDoorClickListener extends TARDISDoorListener implements Liste
                             }
                             if (action == Action.LEFT_CLICK_BLOCK) {
                                 // must be the owner
-                                HashMap<String, Object> oid = new HashMap<String, Object>();
-                                oid.put("uuid", player.getUniqueId().toString());
-                                ResultSetTardis rs = new ResultSetTardis(plugin, oid, "", false);
-                                if (rs.resultSet()) {
+                                ResultSetTardisID rs = new ResultSetTardisID(plugin);
+                                if (!rs.fromUUID(player.getUniqueId().toString())) {
                                     if (rs.getTardis_id() != id) {
                                         TARDISMessage.send(player, "DOOR_LOCK_UNLOCK");
                                         return;
@@ -184,7 +184,7 @@ public class TARDISDoorClickListener extends TARDISDoorListener implements Liste
                                 tid.put("tardis_id", id);
                                 ResultSetTardis rs = new ResultSetTardis(plugin, tid, "", false);
                                 if (rs.resultSet()) {
-                                    if (!rs.isHandbrake_on()) {
+                                    if (!rs.getTardis().isHandbrake_on()) {
                                         TARDISMessage.send(player, "HANDBRAKE_ENGAGE");
                                         return;
                                     }
@@ -249,7 +249,7 @@ public class TARDISDoorClickListener extends TARDISDoorListener implements Liste
                                                         break;
                                                 }
                                             }
-                                        } else if (rs.getUuid() != playerUUID) {
+                                        } else if (rs.getTardis().getUuid() != playerUUID) {
                                             TARDISMessage.send(player, "DOOR_DEADLOCKED");
                                         } else {
                                             TARDISMessage.send(player, "DOOR_UNLOCK");
@@ -269,16 +269,17 @@ public class TARDISDoorClickListener extends TARDISDoorListener implements Liste
                                 tid.put("tardis_id", id);
                                 ResultSetTardis rs = new ResultSetTardis(plugin, tid, "", false);
                                 if (rs.resultSet()) {
-                                    int artron = rs.getArtron_level();
+                                    Tardis tardis = rs.getTardis();
+                                    int artron = tardis.getArtron_level();
                                     int required = plugin.getArtronConfig().getInt("backdoor");
-                                    UUID tlUUID = rs.getUuid();
-                                    PRESET preset = rs.getPreset();
+                                    UUID tlUUID = tardis.getUuid();
+                                    PRESET preset = tardis.getPreset();
                                     float yaw = player.getLocation().getYaw();
                                     float pitch = player.getLocation().getPitch();
-                                    String companions = rs.getCompanions();
-                                    boolean hb = rs.isHandbrake_on();
+                                    String companions = tardis.getCompanions();
+                                    boolean hb = tardis.isHandbrake_on();
                                     HashMap<String, Object> wherecl = new HashMap<String, Object>();
-                                    wherecl.put("tardis_id", rs.getTardis_id());
+                                    wherecl.put("tardis_id", tardis.getTardis_id());
                                     ResultSetCurrentLocation rsc = new ResultSetCurrentLocation(plugin, wherecl);
                                     if (!rsc.resultSet()) {
                                         // emergency TARDIS relocation
@@ -419,7 +420,7 @@ public class TARDISDoorClickListener extends TARDISDoorListener implements Liste
                                                 }
                                                 // if WorldGuard is on the server check for TARDIS region protection and add admin as member
                                                 if (plugin.isWorldGuardOnServer() && plugin.getConfig().getBoolean("preferences.use_worldguard") && player.hasPermission("tardis.skeletonkey")) {
-                                                    plugin.getWorldGuardUtils().addMemberToRegion(cw, rs.getOwner(), player.getName());
+                                                    plugin.getWorldGuardUtils().addMemberToRegion(cw, tardis.getOwner(), player.getName());
                                                 }
                                                 // enter TARDIS!
                                                 cw.getChunkAt(tmp_loc).load();
