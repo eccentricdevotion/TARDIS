@@ -16,13 +16,12 @@
  */
 package me.eccentric_nz.TARDIS.travel;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Set;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.ResultSetAreas;
 import me.eccentric_nz.TARDIS.database.ResultSetCurrentLocation;
-import me.eccentric_nz.TARDIS.utility.TARDISNumberParsers;
+import me.eccentric_nz.TARDIS.database.data.Area;
 import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.entity.Player;
@@ -55,16 +54,11 @@ public class TARDISArea {
         String w = l.getWorld().getName();
         HashMap<String, Object> where = new HashMap<String, Object>();
         where.put("world", w);
-        ResultSetAreas rsa = new ResultSetAreas(plugin, where, true);
+        ResultSetAreas rsa = new ResultSetAreas(plugin, where, true, false);
         if (rsa.resultSet()) {
-            ArrayList<HashMap<String, String>> data = rsa.getData();
-            for (HashMap<String, String> map : data) {
-                int minx = TARDISNumberParsers.parseInt(map.get("minx"));
-                int minz = TARDISNumberParsers.parseInt(map.get("minz"));
-                int maxx = TARDISNumberParsers.parseInt(map.get("maxx"));
-                int maxz = TARDISNumberParsers.parseInt(map.get("maxz"));
+            for (Area a : rsa.getData()) {
                 // is clicked block within a defined TARDIS area?
-                if (l.getX() <= maxx && l.getZ() <= maxz && l.getX() >= minx && l.getZ() >= minz) {
+                if (l.getX() <= a.getMaxX() && l.getZ() <= a.getMaxZ() && l.getX() >= a.getMinX() && l.getZ() >= a.getMinZ()) {
                     chk = false;
                     break;
                 }
@@ -76,25 +70,21 @@ public class TARDISArea {
     /**
      * Checks if a location is contained within a specific TARDIS area.
      *
-     * @param a the TARDIS area to check in.
+     * @param area the TARDIS area to check in.
      * @param l a location object to check.
      * @return true or false depending on whether the location is in the
      * specified TARDIS area
      */
-    public boolean areaCheckInExile(String a, Location l) {
+    public boolean areaCheckInExile(String area, Location l) {
         boolean chk = true;
         HashMap<String, Object> where = new HashMap<String, Object>();
-        where.put("area_name", a);
-        ResultSetAreas rsa = new ResultSetAreas(plugin, where, false);
+        where.put("area_name", area);
+        ResultSetAreas rsa = new ResultSetAreas(plugin, where, false, false);
         if (rsa.resultSet()) {
-            String w = rsa.getWorld();
+            Area a = rsa.getArea();
             String lw = l.getWorld().getName();
-            int minx = rsa.getMinX();
-            int minz = rsa.getMinZ();
-            int maxx = rsa.getMaxX();
-            int maxz = rsa.getMaxZ();
             // is clicked block within a defined TARDIS area?
-            if (w.equals(lw) && (l.getX() <= maxx && l.getZ() <= maxz && l.getX() >= minx && l.getZ() >= minz)) {
+            if (a.getWorld().equals(lw) && (l.getX() <= a.getMaxX() && l.getZ() <= a.getMaxZ() && l.getX() >= a.getMinX() && l.getZ() >= a.getMinZ())) {
                 chk = false;
             }
         }
@@ -113,17 +103,12 @@ public class TARDISArea {
         String w = l.getWorld().getName();
         HashMap<String, Object> where = new HashMap<String, Object>();
         where.put("world", w);
-        ResultSetAreas rsa = new ResultSetAreas(plugin, where, true);
+        ResultSetAreas rsa = new ResultSetAreas(plugin, where, true, false);
         if (rsa.resultSet()) {
-            ArrayList<HashMap<String, String>> data = rsa.getData();
-            for (HashMap<String, String> map : data) {
-                String n = map.get("area_name");
-                int minx = TARDISNumberParsers.parseInt(map.get("minx"));
-                int minz = TARDISNumberParsers.parseInt(map.get("minz"));
-                int maxx = TARDISNumberParsers.parseInt(map.get("maxx"));
-                int maxz = TARDISNumberParsers.parseInt(map.get("maxz"));
+            for (Area a : rsa.getData()) {
+                String n = a.getAreaName();
                 // is time travel destination within a defined TARDIS area?
-                if (l.getX() <= maxx && l.getZ() <= maxz && l.getX() >= minx && l.getZ() >= minz) {
+                if (l.getX() <= a.getMaxX() && l.getZ() <= a.getMaxZ() && l.getX() >= a.getMinX() && l.getZ() >= a.getMinZ()) {
                     // does the player have permmission to travel here
                     if (!p.hasPermission("tardis.area." + n) || !p.isPermissionSet("tardis.area." + n)) {
                         plugin.getTrackerKeeper().getPerm().put(p.getUniqueId(), "tardis.area." + n);
@@ -139,25 +124,26 @@ public class TARDISArea {
     /**
      * Gets the next available parking spot in a specified TARDIS area.
      *
-     * @param a the TARDIS area to look in.
+     * @param area the TARDIS area to look in.
      * @return the next free Location in an area
      */
-    public Location getNextSpot(String a) {
+    public Location getNextSpot(String area) {
         Location location = null;
         // find the next available slot in this area
         HashMap<String, Object> where = new HashMap<String, Object>();
-        where.put("area_name", a);
-        ResultSetAreas rsa = new ResultSetAreas(plugin, where, false);
+        where.put("area_name", area);
+        ResultSetAreas rsa = new ResultSetAreas(plugin, where, false, false);
         if (rsa.resultSet()) {
-            int park = rsa.getParkingDistance() + 3;
+            Area a = rsa.getArea();
+            int park = a.getParkingDistance() + 3;
             int xx, zz = 0;
-            int minx = rsa.getMinX();
+            int minx = a.getMinX();
             int x = minx + 2;
-            int minz = rsa.getMinZ();
+            int minz = a.getMinZ();
             int z = minz + 2;
-            int maxx = rsa.getMaxX();
-            int maxz = rsa.getMaxZ();
-            String wStr = rsa.getWorld();
+            int maxx = a.getMaxX();
+            int maxz = a.getMaxZ();
+            String wStr = a.getWorld();
             boolean chk = false;
             // only loop for the size of the TARDIS area
             outerloop:
@@ -177,7 +163,7 @@ public class TARDISArea {
             if (chk == true) {
                 World w = plugin.getServer().getWorld(wStr);
                 if (w != null) {
-                    int y = rsa.getY();
+                    int y = a.getY();
                     if (y == 0) {
                         y = w.getHighestBlockYAt(xx, zz);
                     }

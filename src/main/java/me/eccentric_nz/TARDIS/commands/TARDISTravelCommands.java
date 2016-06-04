@@ -530,7 +530,7 @@ public class TARDISTravelCommands implements CommandExecutor {
                         // we're thinking this is admin defined area name
                         HashMap<String, Object> wherea = new HashMap<String, Object>();
                         wherea.put("area_name", args[1]);
-                        ResultSetAreas rsa = new ResultSetAreas(plugin, wherea, false);
+                        ResultSetAreas rsa = new ResultSetAreas(plugin, wherea, false, false);
                         if (!rsa.resultSet()) {
                             TARDISMessage.send(player, "AREA_NOT_FOUND", ChatColor.GREEN + "/tardis list areas" + ChatColor.RESET);
                             return true;
@@ -543,7 +543,7 @@ public class TARDISTravelCommands implements CommandExecutor {
                             TARDISMessage.send(player, "ADV_AREA");
                             return true;
                         }
-                        Location l = plugin.getTardisArea().getNextSpot(rsa.getAreaName());
+                        Location l = plugin.getTardisArea().getNextSpot(rsa.getArea().getAreaName());
                         if (l == null) {
                             TARDISMessage.send(player, "NO_MORE_SPOTS");
                             return true;

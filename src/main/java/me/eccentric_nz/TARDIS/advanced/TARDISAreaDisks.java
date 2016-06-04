@@ -23,6 +23,7 @@ import java.util.List;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.ResultSetAreas;
 import me.eccentric_nz.TARDIS.database.ResultSetDiskStorage;
+import me.eccentric_nz.TARDIS.database.data.Area;
 import me.eccentric_nz.TARDIS.enumeration.STORAGE;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -55,19 +56,18 @@ public class TARDISAreaDisks {
 
         List<ItemStack> areas = new ArrayList<ItemStack>();
         // get the areas this player has access to
-        ResultSetAreas rsa = new ResultSetAreas(plugin, null, true);
+        ResultSetAreas rsa = new ResultSetAreas(plugin, null, false, true);
         if (rsa.resultSet()) {
-            ArrayList<HashMap<String, String>> data = rsa.getData();
             // cycle through areas
-            for (HashMap<String, String> map : data) {
-                String name = map.get("area_name");
+            for (Area a : rsa.getData()) {
+                String name = a.getAreaName();
                 if (p.hasPermission("tardis.area." + name) || p.hasPermission("tardis.area.*")) {
                     ItemStack is = new ItemStack(Material.RECORD_3, 1);
                     ItemMeta im = is.getItemMeta();
                     im.setDisplayName("Area Storage Disk");
                     List<String> lore = new ArrayList<String>();
                     lore.add(name);
-                    lore.add(map.get("world"));
+                    lore.add(a.getWorld());
                     im.setLore(lore);
                     is.setItemMeta(im);
                     areas.add(is);
@@ -139,13 +139,12 @@ public class TARDISAreaDisks {
                 }
                 Inventory inv = plugin.getServer().createInventory(p, 54);
                 inv.setContents(areas);
-                ResultSetAreas rsa = new ResultSetAreas(plugin, null, true);
+                ResultSetAreas rsa = new ResultSetAreas(plugin, null, true, false);
                 if (rsa.resultSet()) {
-                    ArrayList<HashMap<String, String>> data = rsa.getData();
                     int count = 0;
                     // cycle through areas
-                    for (HashMap<String, String> map : data) {
-                        String name = map.get("area_name");
+                    for (Area map : rsa.getData()) {
+                        String name = map.getAreaName();
                         if ((!player_has.contains(name) && p.hasPermission("tardis.area." + name)) || (!player_has.contains(name) && p.hasPermission("tardis.area.*"))) {
                             // add new area if there is room
                             int empty = getNextEmptySlot(inv);
@@ -155,7 +154,7 @@ public class TARDISAreaDisks {
                                 im.setDisplayName("Area Storage Disk");
                                 List<String> lore = new ArrayList<String>();
                                 lore.add(name);
-                                lore.add(map.get("world"));
+                                lore.add(map.getWorld());
                                 im.setLore(lore);
                                 is.setItemMeta(im);
                                 inv.setItem(empty, is);

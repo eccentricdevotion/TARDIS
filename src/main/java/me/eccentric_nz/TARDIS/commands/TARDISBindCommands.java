@@ -188,7 +188,7 @@ public class TARDISBindCommands implements CommandExecutor {
                 if (args[0].equalsIgnoreCase("area")) { // type 3
                     HashMap<String, Object> wherea = new HashMap<String, Object>();
                     wherea.put("area_name", args[1]);
-                    ResultSetAreas rsa = new ResultSetAreas(plugin, wherea, false);
+                    ResultSetAreas rsa = new ResultSetAreas(plugin, wherea, false, false);
                     if (!rsa.resultSet()) {
                         TARDISMessage.send(player, "AREA_NOT_FOUND", ChatColor.GREEN + "/tardis list areas" + ChatColor.RESET);
                         return true;

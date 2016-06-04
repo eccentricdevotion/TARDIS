@@ -19,7 +19,6 @@ package me.eccentric_nz.TARDIS.commands;
 import com.google.common.collect.ImmutableList;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.List;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.ResultSetAreas;
@@ -48,12 +47,9 @@ public class TARDISTravelTabComplete extends TARDISCompleter implements TabCompl
         }
         ROOT_SUBS.addAll(firsts);
         ROOT_SUBS.addAll(plugin.getTardisAPI().getWorlds());
-        ResultSetAreas rsa = new ResultSetAreas(plugin, null, true);
+        ResultSetAreas rsa = new ResultSetAreas(plugin, null, false, true);
         if (rsa.resultSet()) {
-            ArrayList<HashMap<String, String>> data = rsa.getData();
-            for (HashMap<String, String> map : data) {
-                AREA_SUBS.add(map.get("area_name"));
-            }
+            AREA_SUBS.addAll(rsa.getNames());
         }
     }
 

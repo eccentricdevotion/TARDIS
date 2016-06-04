@@ -19,13 +19,13 @@ package me.eccentric_nz.TARDIS.database;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Locale;
+import java.util.List;
 import java.util.Map;
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.database.data.Area;
 import me.eccentric_nz.TARDIS.utility.TARDISNumberParsers;
 
 /**
@@ -41,16 +41,10 @@ public class ResultSetAreas {
     private final TARDIS plugin;
     private final HashMap<String, Object> where;
     private final boolean multiple;
-    private int areaID;
-    private String areaName;
-    private String world;
-    private int minX;
-    private int minZ;
-    private int maxX;
-    private int maxZ;
-    private int y;
-    private int parkingDistance;
-    private final ArrayList<HashMap<String, String>> data = new ArrayList<HashMap<String, String>>();
+    private final boolean onlynames;
+    private Area area;
+    private final List<Area> data = new ArrayList<Area>();
+    private final List<String> names = new ArrayList<String>();
     private final String prefix;
 
     /**
@@ -62,11 +56,14 @@ public class ResultSetAreas {
      * refine the search.
      * @param multiple a boolean indicating whether multiple rows should be
      * fetched
+     * @param onlynames a boolean indicating whether to fetch a list of area
+     * names
      */
-    public ResultSetAreas(TARDIS plugin, HashMap<String, Object> where, boolean multiple) {
+    public ResultSetAreas(TARDIS plugin, HashMap<String, Object> where, boolean multiple, boolean onlynames) {
         this.plugin = plugin;
         this.where = where;
         this.multiple = multiple;
+        this.onlynames = onlynames;
         this.prefix = this.plugin.getPrefix();
     }
 
@@ -107,24 +104,24 @@ public class ResultSetAreas {
             rs = statement.executeQuery();
             if (rs.isBeforeFirst()) {
                 while (rs.next()) {
-                    if (multiple) {
-                        HashMap<String, String> row = new HashMap<String, String>();
-                        ResultSetMetaData rsmd = rs.getMetaData();
-                        int columns = rsmd.getColumnCount();
-                        for (int i = 1; i < columns + 1; i++) {
-                            row.put(rsmd.getColumnName(i).toLowerCase(Locale.ENGLISH), rs.getString(i));
+                    if (!onlynames) {
+                        area = new Area(
+                                rs.getInt("area_id"),
+                                rs.getString("area_name"),
+                                rs.getString("world"),
+                                rs.getInt("minx"),
+                                rs.getInt("minz"),
+                                rs.getInt("maxx"),
+                                rs.getInt("maxz"),
+                                rs.getInt("y"),
+                                rs.getInt("parking_distance")
+                        );
+                        if (multiple) {
+                            data.add(area);
                         }
-                        data.add(row);
+                    } else {
+                        names.add(rs.getString("area_name"));
                     }
-                    this.areaID = rs.getInt("area_id");
-                    this.areaName = rs.getString("area_name");
-                    this.world = rs.getString("world");
-                    this.minX = rs.getInt("minx");
-                    this.minZ = rs.getInt("minz");
-                    this.maxX = rs.getInt("maxx");
-                    this.maxZ = rs.getInt("maxz");
-                    this.y = rs.getInt("y");
-                    this.parkingDistance = rs.getInt("parking_distance");
                 }
             } else {
                 return false;
@@ -147,43 +144,15 @@ public class ResultSetAreas {
         return true;
     }
 
-    public int getAreaID() {
-        return areaID;
+    public Area getArea() {
+        return area;
     }
 
-    public String getAreaName() {
-        return areaName;
-    }
-
-    public String getWorld() {
-        return world;
-    }
-
-    public int getMinX() {
-        return minX;
-    }
-
-    public int getMinZ() {
-        return minZ;
-    }
-
-    public int getMaxX() {
-        return maxX;
-    }
-
-    public int getMaxZ() {
-        return maxZ;
-    }
-
-    public int getY() {
-        return y;
-    }
-
-    public int getParkingDistance() {
-        return parkingDistance;
-    }
-
-    public ArrayList<HashMap<String, String>> getData() {
+    public List<Area> getData() {
         return data;
+    }
+
+    public List<String> getNames() {
+        return names;
     }
 }

@@ -199,7 +199,7 @@ public class TARDISKeyboardListener implements Listener {
         // area?
         HashMap<String, Object> wherea = new HashMap<String, Object>();
         wherea.put("area_name", event.getLine(0));
-        ResultSetAreas rsa = new ResultSetAreas(plugin, wherea, false);
+        ResultSetAreas rsa = new ResultSetAreas(plugin, wherea, false, false);
         if (rsa.resultSet()) {
             p.performCommand("tardistravel area " + event.getLine(0));
             plugin.getConsole().sendMessage(p.getName() + " issued server command: /tardistravel area " + event.getLine(0));

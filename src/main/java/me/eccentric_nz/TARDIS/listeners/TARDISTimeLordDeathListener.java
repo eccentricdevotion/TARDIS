@@ -379,13 +379,13 @@ public class TARDISTimeLordDeathListener implements Listener {
         Location l = null;
         HashMap<String, Object> wherea = new HashMap<String, Object>();
         wherea.put("world", world);
-        ResultSetAreas rsa = new ResultSetAreas(plugin, wherea, false);
+        ResultSetAreas rsa = new ResultSetAreas(plugin, wherea, false, false);
         if (rsa.resultSet()) {
-            String area = rsa.getAreaName();
+            String area = rsa.getArea().getAreaName();
             if (!player.hasPermission("tardis.area." + area) || !player.isPermissionSet("tardis.area." + area)) {
                 return null;
             }
-            l = plugin.getTardisArea().getNextSpot(rsa.getAreaName());
+            l = plugin.getTardisArea().getNextSpot(area);
         }
         return l;
     }

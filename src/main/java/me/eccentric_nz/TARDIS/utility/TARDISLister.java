@@ -25,6 +25,7 @@ import me.eccentric_nz.TARDIS.database.ResultSetAreas;
 import me.eccentric_nz.TARDIS.database.ResultSetDestinations;
 import me.eccentric_nz.TARDIS.database.ResultSetHomeLocation;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
+import me.eccentric_nz.TARDIS.database.data.Area;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
@@ -73,20 +74,17 @@ public class TARDISLister {
             }
         }
         if (l.equals("areas")) {
-            ResultSetAreas rsa = new ResultSetAreas(TARDIS.plugin, null, true);
-            int a = 1;
+            ResultSetAreas rsa = new ResultSetAreas(TARDIS.plugin, null, true, false);
+            int n = 1;
             if (!rsa.resultSet()) {
                 TARDISMessage.send(p, "AREA_NONE");
             }
-            ArrayList<HashMap<String, String>> data = rsa.getData();
-            for (HashMap<String, String> map : data) {
-                String name = map.get("area_name");
-                String world = map.get("world");
-                if (a == 1) {
+            for (Area a : rsa.getData()) {
+                if (n == 1) {
                     TARDISMessage.send(p, "AREAS");
                 }
-                p.sendMessage(a + ". [" + name + "] in world: " + world);
-                a++;
+                p.sendMessage(n + ". [" + a.getAreaName() + "] in world: " + a.getWorld());
+                n++;
             }
         } else {
             HashMap<String, Object> where = new HashMap<String, Object>();

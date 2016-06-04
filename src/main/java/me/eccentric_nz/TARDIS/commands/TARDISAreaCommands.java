@@ -16,11 +16,11 @@
  */
 package me.eccentric_nz.TARDIS.commands;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetAreas;
+import me.eccentric_nz.TARDIS.database.data.Area;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -76,11 +76,10 @@ public class TARDISAreaCommands implements CommandExecutor {
                     TARDISMessage.send(player, "AREA_NAME_NOT_VALID");
                     return false;
                 }
-                ResultSetAreas rsa = new ResultSetAreas(plugin, null, true);
+                ResultSetAreas rsa = new ResultSetAreas(plugin, null, false, true);
                 if (rsa.resultSet()) {
-                    ArrayList<HashMap<String, String>> data = rsa.getData();
-                    for (HashMap<String, String> map : data) {
-                        if (map.get("area_name").equals(args[1])) {
+                    for (String s : rsa.getNames()) {
+                        if (s.equals(args[1])) {
                             TARDISMessage.send(player, "AREA_IN_USE");
                             return false;
                         }
@@ -143,16 +142,17 @@ public class TARDISAreaCommands implements CommandExecutor {
                 }
                 HashMap<String, Object> where = new HashMap<String, Object>();
                 where.put("area_name", args[1]);
-                ResultSetAreas rsa = new ResultSetAreas(plugin, where, false);
+                ResultSetAreas rsa = new ResultSetAreas(plugin, where, false, false);
                 if (!rsa.resultSet()) {
                     TARDISMessage.send(player, "AREA_NOT_FOUND", ChatColor.GREEN + "/tardis list areas" + ChatColor.RESET);
                     return false;
                 }
-                int mix = rsa.getMinX();
-                int miz = rsa.getMinZ();
-                int max = rsa.getMaxX();
-                int maz = rsa.getMaxZ();
-                World w = plugin.getServer().getWorld(rsa.getWorld());
+                Area a = rsa.getArea();
+                int mix = a.getMinX();
+                int miz = a.getMinZ();
+                int max = a.getMaxX();
+                int maz = a.getMaxZ();
+                World w = plugin.getServer().getWorld(a.getWorld());
                 final Block b1 = w.getHighestBlockAt(mix, miz).getRelative(BlockFace.UP);
                 b1.setType(Material.SNOW_BLOCK);
                 final Block b2 = w.getHighestBlockAt(mix, maz).getRelative(BlockFace.UP);
@@ -188,16 +188,17 @@ public class TARDISAreaCommands implements CommandExecutor {
                 }
                 HashMap<String, Object> where = new HashMap<String, Object>();
                 where.put("area_name", args[1]);
-                ResultSetAreas rsa = new ResultSetAreas(plugin, where, false);
+                ResultSetAreas rsa = new ResultSetAreas(plugin, where, false, false);
                 if (!rsa.resultSet()) {
                     TARDISMessage.send(player, "AREA_NOT_FOUND", ChatColor.GREEN + "/tardis list areas" + ChatColor.RESET);
                     return false;
                 }
-                int mix = rsa.getMinX();
-                int miz = rsa.getMinZ();
-                int max = rsa.getMaxX();
-                int maz = rsa.getMaxZ();
-                World w = plugin.getServer().getWorld(rsa.getWorld());
+                Area a = rsa.getArea();
+                int mix = a.getMinX();
+                int miz = a.getMinZ();
+                int max = a.getMaxX();
+                int maz = a.getMaxZ();
+                World w = plugin.getServer().getWorld(a.getWorld());
                 for (int x = mix; x <= max; x++) {
                     for (int z = miz; z <= maz; z++) {
                         int y = w.getHighestBlockYAt(x, z) - 1;

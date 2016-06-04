@@ -216,7 +216,7 @@ public class TARDISRemoteCommands implements CommandExecutor {
                                     // check area name
                                     HashMap<String, Object> wherea = new HashMap<String, Object>();
                                     wherea.put("area_name", args[3]);
-                                    ResultSetAreas rsa = new ResultSetAreas(plugin, wherea, false);
+                                    ResultSetAreas rsa = new ResultSetAreas(plugin, wherea, false, false);
                                     if (!rsa.resultSet()) {
                                         TARDISMessage.send(sender, "AREA_NOT_FOUND", ChatColor.GREEN + "/tardis list areas" + ChatColor.RESET);
                                         return true;
@@ -235,7 +235,7 @@ public class TARDISRemoteCommands implements CommandExecutor {
                                         }
                                     }
                                     // get a landing spot
-                                    Location l = plugin.getTardisArea().getNextSpot(rsa.getAreaName());
+                                    Location l = plugin.getTardisArea().getNextSpot(rsa.getArea().getAreaName());
                                     // returns null if full!
                                     if (l == null) {
                                         TARDISMessage.send(sender, "NO_MORE_SPOTS");

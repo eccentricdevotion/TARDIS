@@ -137,7 +137,7 @@ public class TARDISConsoleCloseListener implements Listener {
                                             // get a parking spot in this area
                                             HashMap<String, Object> wherea = new HashMap<String, Object>();
                                             wherea.put("area_name", first);
-                                            ResultSetAreas rsa = new ResultSetAreas(plugin, wherea, false);
+                                            ResultSetAreas rsa = new ResultSetAreas(plugin, wherea, false, false);
                                             if (!rsa.resultSet()) {
                                                 TARDISMessage.send(p, "AREA_NOT_FOUND", ChatColor.GREEN + "/tardis list areas" + ChatColor.RESET);
                                                 continue;
@@ -146,7 +146,7 @@ public class TARDISConsoleCloseListener implements Listener {
                                                 TARDISMessage.send(p, "TRAVEL_NO_AREA_PERM", first);
                                                 continue;
                                             }
-                                            Location l = plugin.getTardisArea().getNextSpot(rsa.getAreaName());
+                                            Location l = plugin.getTardisArea().getNextSpot(rsa.getArea().getAreaName());
                                             if (l == null) {
                                                 TARDISMessage.send(p, "NO_MORE_SPOTS");
                                                 continue;

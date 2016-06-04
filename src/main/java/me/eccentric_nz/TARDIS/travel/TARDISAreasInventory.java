@@ -17,11 +17,11 @@
 package me.eccentric_nz.TARDIS.travel;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.database.ResultSetAreas;
+import me.eccentric_nz.TARDIS.database.data.Area;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -54,19 +54,18 @@ public class TARDISAreasInventory {
     private ItemStack[] getItemStack() {
         List<ItemStack> areas = new ArrayList<ItemStack>();
         // saved destinations
-        ResultSetAreas rsa = new ResultSetAreas(plugin, null, true);
+        ResultSetAreas rsa = new ResultSetAreas(plugin, null, true, false);
         int i = 0;
         if (rsa.resultSet()) {
-            ArrayList<HashMap<String, String>> data = rsa.getData();
             // cycle through areas
-            for (HashMap<String, String> map : data) {
-                String name = map.get("area_name");
+            for (Area a : rsa.getData()) {
+                String name = a.getAreaName();
                 if (p.hasPermission("tardis.area." + name) || p.hasPermission("tardis.area.*")) {
                     ItemStack is = new ItemStack(TARDISConstants.GUI_IDS.get(i), 1);
                     ItemMeta im = is.getItemMeta();
                     im.setDisplayName(name);
                     List<String> lore = new ArrayList<String>();
-                    lore.add(map.get("world"));
+                    lore.add(a.getWorld());
                     im.setLore(lore);
                     is.setItemMeta(im);
                     areas.add(is);
