@@ -16,28 +16,42 @@
  */
 package me.eccentric_nz.TARDIS.control;
 
+import java.util.Arrays;
 import java.util.HashMap;
 import me.eccentric_nz.TARDIS.ARS.TARDISARSInventory;
+import me.eccentric_nz.TARDIS.ARS.TARDISARSMap;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.advanced.TARDISCircuitChecker;
 import me.eccentric_nz.TARDIS.artron.TARDISArtronIndicator;
+import me.eccentric_nz.TARDIS.chameleon.TARDISChameleonInventory;
+import me.eccentric_nz.TARDIS.commands.preferences.TARDISPrefsMenuInventory;
+import me.eccentric_nz.TARDIS.commands.tardis.TARDISDirectionCommand;
+import me.eccentric_nz.TARDIS.commands.tardis.TARDISHideCommand;
+import me.eccentric_nz.TARDIS.commands.tardis.TARDISRebuildCommand;
+import me.eccentric_nz.TARDIS.database.QueryFactory;
+import me.eccentric_nz.TARDIS.database.ResultSetCurrentLocation;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import me.eccentric_nz.TARDIS.database.ResultSetTravellers;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
+import me.eccentric_nz.TARDIS.enumeration.COMPASS;
 import me.eccentric_nz.TARDIS.enumeration.DIFFICULTY;
 import me.eccentric_nz.TARDIS.listeners.TARDISMenuListener;
 import me.eccentric_nz.TARDIS.move.TARDISBlackWoolToggler;
+import me.eccentric_nz.TARDIS.rooms.TARDISExteriorRenderer;
 import me.eccentric_nz.TARDIS.travel.TARDISAreasInventory;
 import me.eccentric_nz.TARDIS.travel.TARDISSaveSignInventory;
 import me.eccentric_nz.TARDIS.travel.TARDISTemporalLocatorInventory;
 import me.eccentric_nz.TARDIS.travel.TARDISTerminalInventory;
+import me.eccentric_nz.TARDIS.utility.TARDISLocationGetters;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
+import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
 
 /**
  *
@@ -60,7 +74,7 @@ public class TARDISControlMenuListener extends TARDISMenuListener implements Lis
             event.setCancelled(true);
             int slot = event.getRawSlot();
             final Player player = (Player) event.getWhoClicked();
-            if (slot >= 0 && slot < 18) {
+            if (slot >= 0 && slot < 54) {
                 ItemStack is = inv.getItem(slot);
                 if (is != null) {
                     // get the TARDIS the player is in
@@ -111,78 +125,7 @@ public class TARDISControlMenuListener extends TARDISMenuListener implements Lis
                                         }
                                     }, 2L);
                                     break;
-                                case 1:
-                                    // fast return
-                                    close(player);
-                                    if (tcc != null && !tcc.hasInput() && !plugin.getUtils().inGracePeriod(player, false)) {
-                                        TARDISMessage.send(player, "INPUT_MISSING");
-                                        return;
-                                    }
-                                    new TARDISFastReturnButton(plugin, player, id, level).clickButton();
-                                    break;
                                 case 2:
-                                    // destination terminal
-                                    if (level < plugin.getArtronConfig().getInt("travel")) {
-                                        TARDISMessage.send(player, "NOT_ENOUGH_ENERGY");
-                                        return;
-                                    }
-                                    if (tcc != null && !tcc.hasInput() && !plugin.getUtils().inGracePeriod(player, false)) {
-                                        TARDISMessage.send(player, "INPUT_MISSING");
-                                        return;
-                                    }
-                                    ItemStack[] items = new TARDISTerminalInventory(plugin).getTerminal();
-                                    Inventory aec = plugin.getServer().createInventory(player, 54, "§4Destination Terminal");
-                                    aec.setContents(items);
-                                    player.openInventory(aec);
-                                    break;
-                                case 3:
-                                    // saves
-                                    if (tcc != null && !tcc.hasMemory()) {
-                                        TARDISMessage.send(player, "NO_MEM_CIRCUIT");
-                                        return;
-                                    }
-                                    TARDISSaveSignInventory tssi = new TARDISSaveSignInventory(plugin, tardis.getTardis_id());
-                                    ItemStack[] saves = tssi.getTerminal();
-                                    Inventory saved = plugin.getServer().createInventory(player, 54, "§4TARDIS saves");
-                                    saved.setContents(saves);
-                                    player.openInventory(saved);
-                                    break;
-                                case 4:
-                                    // areas
-                                    if (tcc != null && !tcc.hasMemory()) {
-                                        TARDISMessage.send(player, "NO_MEM_CIRCUIT");
-                                        return;
-                                    }
-                                    TARDISAreasInventory tai = new TARDISAreasInventory(plugin, player);
-                                    ItemStack[] areas = tai.getTerminal();
-                                    Inventory areainv = plugin.getServer().createInventory(player, 54, "§4TARDIS areas");
-                                    areainv.setContents(areas);
-                                    player.openInventory(areainv);
-                                    break;
-                                case 6:
-                                    // artron level
-                                    close(player);
-                                    new TARDISArtronIndicator(plugin).showArtronLevel(player, id, 0);
-                                    break;
-                                case 7:
-                                    // power up/down
-                                    if (plugin.getConfig().getBoolean("allow.power_down")) {
-                                        close(player);
-                                        new TARDISPowerButton(plugin, id, player, tardis.getPreset(), tardis.isPowered_on(), tardis.isHidden(), lights, player.getLocation(), level, tardis.getSchematic().hasLanterns()).clickButton();
-                                    } else {
-                                        TARDISMessage.send(player, "POWER_DOWN_DISABLED");
-                                    }
-                                    break;
-                                case 8:
-                                    // siege
-                                    close(player);
-                                    if (tcc != null && !tcc.hasMaterialisation()) {
-                                        TARDISMessage.send(player, "NO_MAT_CIRCUIT");
-                                        return;
-                                    }
-                                    new TARDISSiegeButton(plugin, player, tardis.isPowered_on(), id).clickButton();
-                                    break;
-                                case 9:
                                     // ars
                                     if (plugin.getTrackerKeeper().getInSiegeMode().contains(id)) {
                                         TARDISMessage.send(player, "SIEGE_NO_CONTROL");
@@ -207,15 +150,209 @@ public class TARDISControlMenuListener extends TARDISMenuListener implements Lis
                                     ars.setContents(tars);
                                     player.openInventory(ars);
                                     break;
-                                case 10:
+                                case 4:
+                                    // chameleon circuit
+                                    if (tcc != null && !tcc.hasChameleon()) {
+                                        TARDISMessage.send(player, "CHAM_MISSING");
+                                        return;
+                                    }
+                                    if (plugin.getTrackerKeeper().getInSiegeMode().contains(id)) {
+                                        TARDISMessage.send(player, "SIEGE_NO_CONTROL");
+                                        return;
+                                    }
+                                    if (plugin.getTrackerKeeper().getDispersedTARDII().contains(id)) {
+                                        TARDISMessage.send(player, "NOT_WHILE_DISPERSED");
+                                        return;
+                                    }
+                                    // open Chameleon Circuit GUI
+                                    ItemStack[] cc = new TARDISChameleonInventory(plugin, tardis.isChamele_on(), tardis.isAdapti_on()).getTerminal();
+                                    Inventory cc_gui = plugin.getServer().createInventory(player, 54, "§4Chameleon Circuit");
+                                    cc_gui.setContents(cc);
+                                    player.openInventory(cc_gui);
+                                    break;
+                                case 6:
+                                    // artron level
+                                    close(player);
+                                    new TARDISArtronIndicator(plugin).showArtronLevel(player, id, 0);
+                                    break;
+                                case 8:
+                                    // zero room
+                                    int zero_amount = plugin.getArtronConfig().getInt("zero");
+                                    if (level < zero_amount) {
+                                        TARDISMessage.send(player, "NOT_ENOUGH_ZERO_ENERGY");
+                                        return;
+                                    }
+                                    final Location zero = TARDISLocationGetters.getLocationFromDB(tardis.getZero(), 0.0F, 0.0F);
+                                    if (zero != null) {
+                                        close(player);
+                                        TARDISMessage.send(player, "ZERO_READY");
+                                        plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
+                                            @Override
+                                            public void run() {
+                                                new TARDISExteriorRenderer(plugin).transmat(player, COMPASS.SOUTH, zero);
+                                            }
+                                        }, 20L);
+                                        plugin.getTrackerKeeper().getZeroRoomOccupants().add(player.getUniqueId());
+                                        HashMap<String, Object> wherez = new HashMap<String, Object>();
+                                        wherez.put("tardis_id", id);
+                                        new QueryFactory(plugin).alterEnergyLevel("tardis", -zero_amount, wherez, player);
+                                    } else {
+                                        TARDISMessage.send(player, "NO_ZERO");
+                                    }
+                                    break;
+                                case 9:
+                                    // saves
+                                    if (tcc != null && !tcc.hasMemory()) {
+                                        TARDISMessage.send(player, "NO_MEM_CIRCUIT");
+                                        return;
+                                    }
+                                    TARDISSaveSignInventory tssi = new TARDISSaveSignInventory(plugin, tardis.getTardis_id());
+                                    ItemStack[] saves = tssi.getTerminal();
+                                    Inventory saved = plugin.getServer().createInventory(player, 54, "§4TARDIS saves");
+                                    saved.setContents(saves);
+                                    player.openInventory(saved);
+                                    break;
+                                case 11:
                                     // desktop theme
                                     if (!player.hasPermission("tardis.upgrade")) {
                                         TARDISMessage.send(player, "NO_PERM_UPGRADE");
                                         return;
                                     }
+                                    close(player);
                                     new TARDISThemeButton(plugin, player, tardis.getSchematic(), level, id).clickButton();
                                     break;
-                                case 12:
+                                case 13:
+                                    // siege
+                                    if (tcc != null && !tcc.hasMaterialisation()) {
+                                        TARDISMessage.send(player, "NO_MAT_CIRCUIT");
+                                        return;
+                                    }
+                                    close(player);
+                                    new TARDISSiegeButton(plugin, player, tardis.isPowered_on(), id).clickButton();
+                                    break;
+                                case 15:
+                                    // scanner
+                                    close(player);
+                                    plugin.getGeneralKeeper().getScannerListener().scan(player, id, plugin.getServer().getScheduler());
+                                    break;
+                                case 17:
+                                    //player prefs
+                                    Inventory ppm = plugin.getServer().createInventory(player, 27, "§4Player Prefs Menu");
+                                    ppm.setContents(new TARDISPrefsMenuInventory(plugin, player.getUniqueId()).getMenu());
+                                    player.openInventory(ppm);
+                                    break;
+                                case 18:
+                                    // fast return
+                                    if (tcc != null && !tcc.hasInput() && !plugin.getUtils().inGracePeriod(player, false)) {
+                                        TARDISMessage.send(player, "INPUT_MISSING");
+                                        return;
+                                    }
+                                    close(player);
+                                    new TARDISFastReturnButton(plugin, player, id, level).clickButton();
+                                    break;
+                                case 20:
+                                    // power up/down
+                                    if (plugin.getConfig().getBoolean("allow.power_down")) {
+                                        close(player);
+                                        new TARDISPowerButton(plugin, id, player, tardis.getPreset(), tardis.isPowered_on(), tardis.isHidden(), lights, player.getLocation(), level, tardis.getSchematic().hasLanterns()).clickButton();
+                                    } else {
+                                        TARDISMessage.send(player, "POWER_DOWN_DISABLED");
+                                    }
+                                    break;
+                                case 22:
+                                    // hide
+                                    close(player);
+                                    new TARDISHideCommand(plugin).hide(player);
+                                    break;
+                                case 24:
+                                    // TIS
+                                    close(player);
+                                    new TARDISInfoMenuButton(plugin, player).clickButton();
+                                    break;
+                                case 27:
+                                    // areas
+                                    if (tcc != null && !tcc.hasMemory()) {
+                                        TARDISMessage.send(player, "NO_MEM_CIRCUIT");
+                                        return;
+                                    }
+                                    TARDISAreasInventory tai = new TARDISAreasInventory(plugin, player);
+                                    ItemStack[] areas = tai.getTerminal();
+                                    Inventory areainv = plugin.getServer().createInventory(player, 54, "§4TARDIS areas");
+                                    areainv.setContents(areas);
+                                    player.openInventory(areainv);
+                                    break;
+                                case 29:
+                                    // light switch
+                                    if (!lights && plugin.getConfig().getBoolean("allow.power_down") && !tardis.isPowered_on()) {
+                                        TARDISMessage.send(player, "POWER_DOWN");
+                                        return;
+                                    }
+                                    close(player);
+                                    new TARDISLightSwitch(plugin, id, lights, player, tardis.getSchematic().hasLanterns()).flickSwitch();
+                                    break;
+                                case 31:
+                                    // rebuild
+                                    close(player);
+                                    new TARDISRebuildCommand(plugin).rebuildPreset(player);
+                                    break;
+                                case 36:
+                                    // destination terminal
+                                    if (level < plugin.getArtronConfig().getInt("travel")) {
+                                        TARDISMessage.send(player, "NOT_ENOUGH_ENERGY");
+                                        return;
+                                    }
+                                    if (tcc != null && !tcc.hasInput() && !plugin.getUtils().inGracePeriod(player, false)) {
+                                        TARDISMessage.send(player, "INPUT_MISSING");
+                                        return;
+                                    }
+                                    ItemStack[] items = new TARDISTerminalInventory(plugin).getTerminal();
+                                    Inventory aec = plugin.getServer().createInventory(player, 54, "§4Destination Terminal");
+                                    aec.setContents(items);
+                                    player.openInventory(aec);
+                                    break;
+                                case 38:
+                                    // toggle wool
+                                    if (plugin.getTrackerKeeper().getInSiegeMode().contains(id)) {
+                                        TARDISMessage.send(player, "SIEGE_NO_CONTROL");
+                                        return;
+                                    }
+                                    close(player);
+                                    new TARDISBlackWoolToggler(plugin).toggleBlocks(id, player);
+                                    break;
+                                case 40:
+                                    // direction
+                                    HashMap<String, Object> whered = new HashMap<String, Object>();
+                                    whered.put("tardis_id", id);
+                                    ResultSetCurrentLocation rsc = new ResultSetCurrentLocation(plugin, whered);
+                                    String direction = "EAST";
+                                    if (rsc.resultSet()) {
+                                        direction = rsc.getDirection().toString();
+                                        int ordinal = COMPASS.valueOf(direction).ordinal() + 1;
+                                        if (ordinal == 4) {
+                                            ordinal = 0;
+                                        }
+                                        direction = COMPASS.values()[ordinal].toString();
+                                    }
+                                    String[] args = new String[]{"direction", direction};
+                                    new TARDISDirectionCommand(plugin).changeDirection(player, args);
+                                    // update the lore
+                                    ItemStack d = inv.getItem(40);
+                                    ItemMeta im = d.getItemMeta();
+                                    im.setLore(Arrays.asList(direction));
+                                    d.setItemMeta(im);
+                                    break;
+                                case 45:
+                                    // keyboard
+                                    close(player);
+                                    break;
+                                case 47:
+                                    // tardis map
+                                    Inventory new_inv = plugin.getServer().createInventory(player, 54, "§4TARDIS Map");
+                                    // open new inventory
+                                    new_inv.setContents(new TARDISARSMap(plugin).getMap());
+                                    player.openInventory(new_inv);
+                                    break;
+                                case 49:
                                     // temporal
                                     if (!player.hasPermission("tardis.temporal")) {
                                         TARDISMessage.send(player, "NO_PERM_TEMPORAL");
@@ -230,30 +367,7 @@ public class TARDISControlMenuListener extends TARDISMenuListener implements Lis
                                     tmpl.setContents(clocks);
                                     player.openInventory(tmpl);
                                     break;
-                                case 13:
-                                    // TIS
-                                    new TARDISInfoMenuButton(plugin, player).clickButton();
-                                    close(player);
-                                    break;
-                                case 14:
-                                    // light switch
-                                    close(player);
-                                    if (!lights && plugin.getConfig().getBoolean("allow.power_down") && !tardis.isPowered_on()) {
-                                        TARDISMessage.send(player, "POWER_DOWN");
-                                        return;
-                                    }
-                                    new TARDISLightSwitch(plugin, id, lights, player, tardis.getSchematic().hasLanterns()).flickSwitch();
-                                    break;
-                                case 15:
-                                    // toggle wool
-                                    close(player);
-                                    if (plugin.getTrackerKeeper().getInSiegeMode().contains(id)) {
-                                        TARDISMessage.send(player, "SIEGE_NO_CONTROL");
-                                        return;
-                                    }
-                                    new TARDISBlackWoolToggler(plugin).toggleBlocks(id, player);
-                                    break;
-                                case 17:
+                                case 53:
                                     // close
                                     close(player);
                                     break;

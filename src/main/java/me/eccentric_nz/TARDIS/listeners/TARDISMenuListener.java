@@ -88,7 +88,7 @@ public class TARDISMenuListener {
         map.put("§4Sonic Generator", 54);
         map.put("§4Sonic Prefs Menu", 27);
         map.put("§4TARDIS Console", 9);
-        map.put("§4TARDIS Control Menu", 27);
+        map.put("§4TARDIS Control Menu", 54);
         map.put("§4TARDIS Floor Menu", 54);
         map.put("§4TARDIS Key Prefs Menu", 27);
         map.put("§4TARDIS Map", 54);

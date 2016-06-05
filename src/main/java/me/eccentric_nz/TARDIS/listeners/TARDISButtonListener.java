@@ -315,7 +315,7 @@ public class TARDISButtonListener implements Listener {
                                 case 22:
                                     // controls GUI
                                     ItemStack[] controls = new TARDISControlInventory(plugin, player.getUniqueId()).getControls();
-                                    Inventory cgui = plugin.getServer().createInventory(player, 18, "§4TARDIS Control Menu");
+                                    Inventory cgui = plugin.getServer().createInventory(player, 54, "§4TARDIS Control Menu");
                                     cgui.setContents(controls);
                                     player.openInventory(cgui);
                                     break;

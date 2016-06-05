@@ -5,7 +5,6 @@
 
 ##Next minor version `3.6-beta-1
 
-0.  Convert all database ResultSets to use data classes - `multiple` should return a `List<T>` instead of a `Map<String, String>` (_started_)
 1. TARDIS Junk Mode - `/tprefs junk [wall|floor] [block_type]`?
 2. TIPS visulisation tool (using WorldGuard region data)
 3. [Auto powerup](http://dev.bukkit.org/bukkit-plugins/tardis/tickets/1209-auto-powerup/)
@@ -15,7 +14,14 @@
     * Add other worlds (Silurian cave world, Gallifrey)?
 6. [Abandoned TARDISes](http://dev.bukkit.org/bukkit-plugins/tardis/tickets/1277-possibility-to-abandon-a-tardis/)
 7. [Destination 'vortex'](http://dev.bukkit.org/bukkit-plugins/tardis/tickets/1023-set-the-tardis-inflight-without-setting-a-destination/) - dematerialise without setting a destination.
-8. Update console schematics to add Control Centre sign, Sonic Generator, and any other missing controls
+8. [Improve Control Centre](http://dev.bukkit.org/bukkit-plugins/tardis/tickets/1324-improving-control-centre/)
+   * Add other control signs (if not present) to control centre (_done_)
+   * Update display of Control Centre with TARDIS stats
+      * Current location
+      * Chameleon preset
+      * Artron level
+   * Update console schematics to add Control Centre sign, Sonic Generator
+   * Remove other control signs from console schematics
 10. Ice/igloo room - if TARDISWeepingAngels plugin is enabled, make a 3% chance a Dalek will form when building a snowman in the room. Should have a pen ready for polar bears
 
 ##Upcoming minor version `3.7`
@@ -46,14 +52,14 @@
    * Witches -> Slitheen / Whispermen?
    * Wolves -> K-9? (All the textures I seen so far just don't work - you shouldn't see the legs...)
    * Slimes -> Adipose
-   * Something with a Shulker passenger?
+   * Something with an invisible Shulker passenger?
 
 ##Waiting on Bukkit / SpigotAPI
 0. IDs/data are soon to be history... so convert all ID/data use to block states 
 1. Get/set horse speed (Attribute API)
-2. Achievements API is now available, but doesn't allow custom achievements :( [https://bukkit.atlassian.net/browse/BUKKIT-5672](https://bukkit.atlassian.net/browse/BUKKIT-5672)
+2. Achievements API is now available, but doesn't allow custom achievements :(
 
-##Minecraft API when available
+##Minecraft API if ever available
 1. Recreate everything with the new API :)
 2. Create custom blocks for the TARDIS and console.
 3. Custom TARDIS items and crafting recipes for the same.
