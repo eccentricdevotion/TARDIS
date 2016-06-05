@@ -19,6 +19,7 @@ package me.eccentric_nz.TARDIS.sonic;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.data.Sonic;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -32,11 +33,13 @@ import org.bukkit.inventory.meta.ItemMeta;
  */
 public class TARDISSonicGeneratorInventory {
 
+    private final TARDIS plugin;
     private final Sonic data;
     private final Player player;
     private final ItemStack[] generator;
 
-    public TARDISSonicGeneratorInventory(Sonic data, Player player) {
+    public TARDISSonicGeneratorInventory(TARDIS plugin, Sonic data, Player player) {
+        this.plugin = plugin;
         this.data = data;
         this.player = player;
         this.generator = getItemStack();
@@ -220,12 +223,6 @@ public class TARDISSonicGeneratorInventory {
             ite.setDisplayName("Ignite Upgrade");
             ign.setItemMeta(ite);
         }
-        // cost
-        ItemStack cost = new ItemStack(Material.BOWL, 1);
-        ItemMeta cost_im = cost.getItemMeta();
-        cost_im.setDisplayName("Artron cost");
-        cost_im.setLore(Arrays.asList("0"));
-        cost.setItemMeta(cost_im);
         // close
         ItemStack close = new ItemStack(Material.BOWL, 1);
         ItemMeta close_im = close.getItemMeta();
@@ -250,24 +247,39 @@ public class TARDISSonicGeneratorInventory {
         String dn = (data.getSonicType().equals(ChatColor.RESET)) ? "Sonic Screwdriver" : data.getSonicType() + "Sonic Screwdriver";
         screw.setDisplayName(dn);
         List<String> upgrades = new ArrayList<String>();
+        double full = plugin.getArtronConfig().getDouble("full_charge") / 100.0d;
+        int artron = (int) (plugin.getArtronConfig().getDouble("sonic_generator.standard") * full);
         if (data.hasBio()) {
             upgrades.add("Bio-scanner Upgrade");
+            artron += (int) (plugin.getArtronConfig().getDouble("sonic_generator.bio") * full);
         }
         if (data.hasDiamond()) {
             upgrades.add("Diamond Upgrade");
+            artron += (int) (plugin.getArtronConfig().getDouble("sonic_generator.diamond") * full);
         }
         if (data.hasEmerald()) {
             upgrades.add("Emerald Upgrade");
+            artron += (int) (plugin.getArtronConfig().getDouble("sonic_generator.emerald") * full);
         }
         if (data.hasRedstone()) {
             upgrades.add("Redstone Upgrade");
+            artron += (int) (plugin.getArtronConfig().getDouble("sonic_generator.redstone") * full);
         }
         if (data.hasPainter()) {
             upgrades.add("Painter Upgrade");
+            artron += (int) (plugin.getArtronConfig().getDouble("sonic_generator.painter") * full);
         }
         if (data.hasIgnite()) {
             upgrades.add("Ignite Upgrade");
+            artron += (int) (plugin.getArtronConfig().getDouble("sonic_generator.ignite") * full);
         }
+        // cost
+        ItemStack cost = new ItemStack(Material.BOWL, 1);
+        ItemMeta cost_im = cost.getItemMeta();
+        cost_im.setDisplayName("Artron cost");
+        cost_im.setLore(Arrays.asList("" + artron));
+        cost.setItemMeta(cost_im);
+
         if (upgrades.size() > 0) {
             List<String> finalUps = new ArrayList<String>();
             finalUps.add("Upgrades:");

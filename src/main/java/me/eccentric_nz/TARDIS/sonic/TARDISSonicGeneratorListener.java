@@ -90,7 +90,7 @@ public class TARDISSonicGeneratorListener implements Listener {
                             generate(player, block.getLocation(), s);
                         } else {
                             // open GUI
-                            ItemStack[] items = new TARDISSonicGeneratorInventory(s, player).getGenerator();
+                            ItemStack[] items = new TARDISSonicGeneratorInventory(plugin, s, player).getGenerator();
                             Inventory sgc = plugin.getServer().createInventory(player, 54, "§4Sonic Generator");
                             sgc.setContents(items);
                             plugin.getTrackerKeeper().getSonicGenerators().put(uuid, block.getLocation());
