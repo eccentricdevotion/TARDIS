@@ -13,11 +13,15 @@ import java.util.concurrent.ConcurrentMap;
 public class TARDISAttributeType {
 
     private static final ConcurrentMap<String, TARDISAttributeType> LOOKUP = Maps.newConcurrentMap();
-    public static final TARDISAttributeType GENERIC_MAX_HEALTH = new TARDISAttributeType("generic.maxHealth").register();
-    public static final TARDISAttributeType GENERIC_FOLLOW_RANGE = new TARDISAttributeType("generic.followRange").register();
+    public static final TARDISAttributeType GENERIC_ARMOR = new TARDISAttributeType("generic.armor").register();
+    public static final TARDISAttributeType GENERIC_ARMOR_TOUGHNESS = new TARDISAttributeType("generic.armorToughness").register();
     public static final TARDISAttributeType GENERIC_ATTACK_DAMAGE = new TARDISAttributeType("generic.attackDamage").register();
-    public static final TARDISAttributeType GENERIC_MOVEMENT_SPEED = new TARDISAttributeType("generic.movementSpeed").register();
+    public static final TARDISAttributeType GENERIC_ATTACK_SPEED = new TARDISAttributeType("generic.attackSpeed").register();
+    public static final TARDISAttributeType GENERIC_FOLLOW_RANGE = new TARDISAttributeType("generic.followRange").register();
     public static final TARDISAttributeType GENERIC_KNOCKBACK_RESISTANCE = new TARDISAttributeType("generic.knockbackResistance").register();
+    public static final TARDISAttributeType GENERIC_LUCK = new TARDISAttributeType("generic.luck").register();
+    public static final TARDISAttributeType GENERIC_MAX_HEALTH = new TARDISAttributeType("generic.maxHealth").register();
+    public static final TARDISAttributeType GENERIC_MOVEMENT_SPEED = new TARDISAttributeType("generic.movementSpeed").register();
 
     private final String minecraftId;
 
