@@ -16,10 +16,6 @@
 7. [Destination 'vortex'](http://dev.bukkit.org/bukkit-plugins/tardis/tickets/1023-set-the-tardis-inflight-without-setting-a-destination/) - dematerialise without setting a destination.
 8. [Improve Control Centre](http://dev.bukkit.org/bukkit-plugins/tardis/tickets/1324-improving-control-centre/)
    * Add other control signs (if not present) to control centre (_done_)
-   * Update display of Control Centre with TARDIS stats
-      * Current location
-      * Chameleon preset
-      * Artron level
    * Update console schematics to add Control Centre sign, Sonic Generator
    * Remove other control signs from console schematics
 10. Ice/igloo room - if TARDISWeepingAngels plugin is enabled, make a 3% chance a Dalek will form when building a snowman in the room. Should have a pen ready for polar bears
