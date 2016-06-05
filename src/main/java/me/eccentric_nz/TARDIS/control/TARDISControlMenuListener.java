@@ -112,11 +112,11 @@ public class TARDISControlMenuListener extends TARDISMenuListener implements Lis
                             switch (slot) {
                                 case 0:
                                     // random location
-                                    close(player);
                                     if (tcc != null && !tcc.hasInput() && !plugin.getUtils().inGracePeriod(player, false)) {
                                         TARDISMessage.send(player, "INPUT_MISSING");
                                         return;
                                     }
+                                    close(player);
                                     // give the GUI time to close first
                                     plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
                                         @Override
@@ -218,7 +218,6 @@ public class TARDISControlMenuListener extends TARDISMenuListener implements Lis
                                         TARDISMessage.send(player, "NO_PERM_UPGRADE");
                                         return;
                                     }
-                                    close(player);
                                     new TARDISThemeButton(plugin, player, tardis.getSchematic(), level, id).clickButton();
                                     break;
                                 case 13:
