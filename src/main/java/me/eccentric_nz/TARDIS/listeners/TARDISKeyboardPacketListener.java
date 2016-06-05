@@ -35,7 +35,7 @@ import org.bukkit.inventory.EquipmentSlot;
 public class TARDISKeyboardPacketListener implements Listener {
 
     private final TARDIS plugin;
-    private final ConcurrentMap<Player, Location> editing = new MapMaker().weakKeys().makeMap();
+    private static final ConcurrentMap<Player, Location> EDITING = new MapMaker().weakKeys().makeMap();
     // For accessing the underlying tile entity
     private FieldAccessor tileEntityAccessor;
     private FieldAccessor booleanAccessor;
@@ -54,7 +54,7 @@ public class TARDISKeyboardPacketListener implements Listener {
                 StructureModifier<BlockPosition> ints = event.getPacket().getBlockPositionModifier();
                 Location loc = new Location(player.getWorld(), (double) ints.read(0).getX(), (double) ints.read(0).getY(), (double) ints.read(0).getZ());
                 // Allow
-                if (Objects.equal(editing.get(player), loc)) {
+                if (Objects.equal(EDITING.get(player), loc)) {
                     setEditingPlayer((Sign) loc.getBlock().getState(), player);
                 }
             }
@@ -111,19 +111,19 @@ public class TARDISKeyboardPacketListener implements Listener {
      * @param player - the player to send the packet to
      * @param sign - the sign to edit.
      */
-    private void displaySignEditor(Player player, Block sign) {
+    public static void displaySignEditor(Player player, Block sign) {
         if (!player.getWorld().equals(sign.getWorld())) {
             throw new IllegalArgumentException("Player and sign must be in the same world.");
         }
         PacketContainer editSignPacket = new PacketContainer(PacketType.Play.Server.OPEN_SIGN_EDITOR);
 
         // Permit this
-        editing.put(player, sign.getLocation());
+        EDITING.put(player, sign.getLocation());
         try {
             BlockPosition bp = new BlockPosition(sign.getX(), sign.getY(), sign.getZ());
             editSignPacket.getBlockPositionModifier().write(0, bp);
         } catch (FieldAccessException e) {
-            plugin.debug("Keyboard error: " + e.getMessage());
+            TARDIS.plugin.debug("Keyboard error: " + e.getMessage());
             return;
         }
 

@@ -42,37 +42,42 @@ public class TARDISControlRunnable implements Runnable {
         ResultSetOccupied rso = new ResultSetOccupied(plugin);
         rso.resultSet();
         for (int id : rso.getData()) {
-            ResultSetConsole rsc = new ResultSetConsole(plugin, id);
-            if (modulo % 2 == 0) {
-                // get the location data
-                if (rsc.locationData()) {
-                    if (rsc.getSign().getType().equals(Material.WALL_SIGN) || rsc.getSign().getType().equals(Material.SIGN_POST)) {
-                        // get the sign
-                        Sign sign = (Sign) rsc.getSign().getState();
-                        // update the data
-                        sign.setLine(0, rsc.getWorld());
-                        sign.setLine(1, rsc.getLocation());
-                        sign.setLine(2, rsc.getBiome());
-                        sign.setLine(3, rsc.getPreset());
-                        sign.update();
-                    }
-                }
-            } else // get the artron data
-            {
-                if (rsc.artronData()) {
-                    int fc = plugin.getArtronConfig().getInt("full_charge");
-                    int current_level = rsc.getArtronLevel();
-                    int percent = Math.round((current_level * 100F) / fc);
-                    if (rsc.getSign().getType().equals(Material.WALL_SIGN) || rsc.getSign().getType().equals(Material.SIGN_POST)) {
-                        // get the sign
-                        Sign sign = (Sign) rsc.getSign().getState();
-                        // update the data
-                        sign.setLine(0, plugin.getLanguage().getString("ARTRON_DISPLAY"));
-                        sign.setLine(1, ChatColor.AQUA + plugin.getLanguage().getString("ARTRON_MAX") + ":" + plugin.getArtronConfig().getInt("full_charge"));
-                        sign.setLine(2, ChatColor.GREEN + plugin.getLanguage().getString("ARTRON_REMAINING") + ":" + current_level);
-                        sign.setLine(3, ChatColor.LIGHT_PURPLE + plugin.getLanguage().getString("ARTRON_PERCENT") + ":" + percent + "%");
-                        sign.update();
-                    }
+            if (!plugin.getTrackerKeeper().getKeyboard().contains(id)) {
+                ResultSetConsole rsc = new ResultSetConsole(plugin, id);
+                switch (modulo % 2) {
+                    case 0:
+                        // get the location data
+                        if (rsc.locationData()) {
+                            if (rsc.getSign().getType().equals(Material.WALL_SIGN) || rsc.getSign().getType().equals(Material.SIGN_POST)) {
+                                // get the sign
+                                Sign sign = (Sign) rsc.getSign().getState();
+                                // update the data
+                                sign.setLine(0, rsc.getWorld());
+                                sign.setLine(1, rsc.getLocation());
+                                sign.setLine(2, rsc.getBiome());
+                                sign.setLine(3, rsc.getPreset());
+                                sign.update();
+                            }
+                        }
+                        break;
+                    default:
+                        // get the artron data
+                        if (rsc.artronData()) {
+                            int fc = plugin.getArtronConfig().getInt("full_charge");
+                            int current_level = rsc.getArtronLevel();
+                            int percent = Math.round((current_level * 100F) / fc);
+                            if (rsc.getSign().getType().equals(Material.WALL_SIGN) || rsc.getSign().getType().equals(Material.SIGN_POST)) {
+                                // get the sign
+                                Sign sign = (Sign) rsc.getSign().getState();
+                                // update the data
+                                sign.setLine(0, plugin.getLanguage().getString("ARTRON_DISPLAY"));
+                                sign.setLine(1, ChatColor.AQUA + plugin.getLanguage().getString("ARTRON_MAX") + ":" + plugin.getArtronConfig().getInt("full_charge"));
+                                sign.setLine(2, ChatColor.GREEN + plugin.getLanguage().getString("ARTRON_REMAINING") + ":" + current_level);
+                                sign.setLine(3, ChatColor.LIGHT_PURPLE + plugin.getLanguage().getString("ARTRON_PERCENT") + ":" + percent + "%");
+                                sign.update();
+                            }
+                        }
+                        break;
                 }
             }
         }

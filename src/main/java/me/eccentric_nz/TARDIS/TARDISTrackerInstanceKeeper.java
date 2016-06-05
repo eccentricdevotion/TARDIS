@@ -106,6 +106,7 @@ public class TARDISTrackerInstanceKeeper {
     private final List<Integer> materialising = new ArrayList<Integer>();
     private final List<Integer> minecart = new ArrayList<Integer>();
     private final List<Integer> submarine = new ArrayList<Integer>();
+    private final List<Integer> keyboard = new ArrayList<Integer>();
     private final List<String> reset = new ArrayList<String>();
     private final List<UUID> arrangers = new ArrayList<UUID>();
     private final List<UUID> beaconColouring = new ArrayList<UUID>();
@@ -326,6 +327,10 @@ public class TARDISTrackerInstanceKeeper {
 
     public List<Integer> getDispersedTARDII() {
         return dispersedTARDII;
+    }
+
+    public List<Integer> getKeyboard() {
+        return keyboard;
     }
 
     public List<UUID> getArrangers() {

@@ -51,6 +51,7 @@ import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
+import org.bukkit.block.Sign;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -313,11 +314,34 @@ public class TARDISButtonListener implements Listener {
                                     new TARDISSiegeButton(plugin, player, tardis.isPowered_on(), id).clickButton();
                                     break;
                                 case 22:
-                                    // controls GUI
-                                    ItemStack[] controls = new TARDISControlInventory(plugin, player.getUniqueId()).getControls();
-                                    Inventory cgui = plugin.getServer().createInventory(player, 54, "§4TARDIS Control Menu");
-                                    cgui.setContents(controls);
-                                    player.openInventory(cgui);
+                                    if (player.isSneaking()) {
+                                        // keyboard
+                                        if (block.getType().equals(Material.SIGN_POST) || block.getType().equals(Material.WALL_SIGN)) {
+                                            if (!plugin.getDifficulty().equals(DIFFICULTY.EASY) && !plugin.getUtils().inGracePeriod(player, false)) {
+                                                tcc = new TARDISCircuitChecker(plugin, id);
+                                                tcc.getCircuits();
+                                            }
+                                            if (tcc != null && !tcc.hasInput()) {
+                                                TARDISMessage.send(player, "INPUT_MISSING");
+                                                return;
+                                            }
+                                            Sign sign = (Sign) block.getState();
+                                            sign.setLine(0, "");
+                                            sign.setLine(1, "");
+                                            sign.setLine(2, "");
+                                            sign.setLine(3, "");
+                                            sign.update();
+                                            plugin.getTrackerKeeper().getSign().put(buttonloc, sign);
+                                            plugin.getTrackerKeeper().getKeyboard().add(id);
+                                            TARDISKeyboardPacketListener.displaySignEditor(player, block);
+                                        }
+                                    } else {
+                                        // controls GUI
+                                        ItemStack[] controls = new TARDISControlInventory(plugin, player.getUniqueId()).getControls();
+                                        Inventory cgui = plugin.getServer().createInventory(player, 54, "§4TARDIS Control Menu");
+                                        cgui.setContents(controls);
+                                        player.openInventory(cgui);
+                                    }
                                     break;
                                 default:
                                     break;
