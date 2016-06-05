@@ -135,7 +135,7 @@ public class TARDISDeinstaPreset {
             default:
                 break;
         }
-        plugin.getTrackerKeeper().getDematerialising().remove(Integer.valueOf(id));
+        plugin.getTrackerKeeper().getDematerialising().removeAll(Collections.singleton(id));
         plugin.getGeneralKeeper().getTardisChunkList().remove(l.getChunk());
         // remove door
         plugin.getPresetDestroyer().destroyDoor(id);
