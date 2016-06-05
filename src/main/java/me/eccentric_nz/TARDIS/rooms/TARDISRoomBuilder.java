@@ -66,7 +66,7 @@ public class TARDISRoomBuilder {
      */
     public boolean build() {
         ResultSetTardisID rs = new ResultSetTardisID(plugin);
-        if (!rs.fromUUID(p.getUniqueId().toString())) {
+        if (rs.fromUUID(p.getUniqueId().toString())) {
             HashMap<String, Object> wherepp = new HashMap<String, Object>();
             wherepp.put("uuid", p.getUniqueId().toString());
             ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, wherepp);

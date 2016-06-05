@@ -30,7 +30,7 @@ public class TARDISJunkFind {
         }
         // get junk TARDIS id
         ResultSetTardisID rs = new ResultSetTardisID(plugin);
-        if (!rs.fromUUID("00000000-aaaa-bbbb-cccc-000000000000")) {
+        if (rs.fromUUID("00000000-aaaa-bbbb-cccc-000000000000")) {
             // get current location
             HashMap<String, Object> wherec = new HashMap<String, Object>();
             wherec.put("tardis_id", rs.getTardis_id());

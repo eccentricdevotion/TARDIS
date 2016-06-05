@@ -52,7 +52,7 @@ public class TARDISHotbarListener implements Listener {
             if (is.hasItemMeta() && is.getItemMeta().hasDisplayName() && is.getItemMeta().getDisplayName().equals("TARDIS Locator")) {
                 // get TARDIS location
                 ResultSetTardisID rs = new ResultSetTardisID(plugin);
-                if (!rs.fromUUID(player.getUniqueId().toString())) {
+                if (rs.fromUUID(player.getUniqueId().toString())) {
                     HashMap<String, Object> wherecl = new HashMap<String, Object>();
                     wherecl.put("tardis_id", rs.getTardis_id());
                     ResultSetCurrentLocation rsc = new ResultSetCurrentLocation(plugin, wherecl);

@@ -61,10 +61,9 @@ public class TARDISHadsPersister {
                 ps.setInt(5, l.getBlockZ());
                 // get tardis_id
                 ResultSetTardisID rst = new ResultSetTardisID(plugin);
-                if (!rst.fromUUID(uuid)) {
-                    ps.setInt(6, rst.getTardis_id());
-                    count += ps.executeUpdate();
-                }
+                rst.fromUUID(uuid);
+                ps.setInt(6, rst.getTardis_id());
+                count += ps.executeUpdate();
             }
             plugin.getConsole().sendMessage(plugin.getPluginName() + "Saved " + count + " 'dispersed' TARDISes.");
         } catch (SQLException ex) {

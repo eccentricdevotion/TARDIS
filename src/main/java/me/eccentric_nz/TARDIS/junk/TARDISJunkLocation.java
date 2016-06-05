@@ -30,7 +30,7 @@ public class TARDISJunkLocation {
     public boolean isNotHome() {
         // check the Junk TARDIS is not home already
         ResultSetTardisID rs = new ResultSetTardisID(plugin);
-        if (!rs.fromUUID("00000000-aaaa-bbbb-cccc-000000000000")) {
+        if (rs.fromUUID("00000000-aaaa-bbbb-cccc-000000000000")) {
             id = rs.getTardis_id();
             // get current location
             HashMap<String, Object> wherec = new HashMap<String, Object>();

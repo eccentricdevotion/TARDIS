@@ -62,7 +62,7 @@ import me.eccentric_nz.TARDIS.lazarus.TARDISLazarusListener;
 import me.eccentric_nz.TARDIS.listeners.TARDISAntiBuildListener;
 import me.eccentric_nz.TARDIS.listeners.TARDISAnvilListener;
 import me.eccentric_nz.TARDIS.listeners.TARDISAreaListener;
-import me.eccentric_nz.TARDIS.listeners.TARDISAreaSignListener;
+import me.eccentric_nz.TARDIS.travel.TARDISAreaSignListener;
 import me.eccentric_nz.TARDIS.listeners.TARDISBeaconColouringListener;
 import me.eccentric_nz.TARDIS.listeners.TARDISBindListener;
 import me.eccentric_nz.TARDIS.listeners.TARDISBiomeReaderListener;

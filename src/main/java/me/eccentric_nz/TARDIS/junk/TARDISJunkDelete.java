@@ -48,7 +48,7 @@ public class TARDISJunkDelete {
             return true;
         }
         ResultSetTardisID rs = new ResultSetTardisID(plugin);
-        if (!rs.fromUUID("00000000-aaaa-bbbb-cccc-000000000000")) {
+        if (rs.fromUUID("00000000-aaaa-bbbb-cccc-000000000000")) {
             final int id = rs.getTardis_id();
             final SCHEMATIC junk = new SCHEMATIC("AIR", "junk", "Junk TARDIS", true, false, false, false, false);
             // get the current location

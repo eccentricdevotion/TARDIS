@@ -170,7 +170,7 @@ public class TARDISSonicListener implements Listener {
                             UUID uuid = player.getUniqueId();
                             // get TARDIS id
                             ResultSetTardisID rs = new ResultSetTardisID(plugin);
-                            if (!rs.fromUUID(uuid.toString())) {
+                            if (rs.fromUUID(uuid.toString())) {
                                 // rebuild
                                 plugin.getTrackerKeeper().getDispersed().remove(uuid);
                                 plugin.getTrackerKeeper().getDispersedTARDII().remove(Integer.valueOf(rs.getTardis_id()));

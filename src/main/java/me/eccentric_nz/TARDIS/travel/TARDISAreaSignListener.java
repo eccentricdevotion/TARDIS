@@ -14,13 +14,13 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package me.eccentric_nz.TARDIS.listeners;
+package me.eccentric_nz.TARDIS.travel;
 
 import java.util.HashMap;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.ResultSetTardisID;
 import me.eccentric_nz.TARDIS.database.ResultSetTravellers;
-import me.eccentric_nz.TARDIS.travel.TARDISSaveSignInventory;
+import me.eccentric_nz.TARDIS.listeners.TARDISMenuListener;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
@@ -93,7 +93,7 @@ public class TARDISAreaSignListener extends TARDISMenuListener implements Listen
                     @Override
                     public void run() {
                         ResultSetTardisID rs = new ResultSetTardisID(plugin);
-                        if (!rs.fromUUID(player.getUniqueId().toString())) {
+                        if (rs.fromUUID(player.getUniqueId().toString())) {
                             TARDISSaveSignInventory sst = new TARDISSaveSignInventory(plugin, rs.getTardis_id());
                             ItemStack[] items = sst.getTerminal();
                             Inventory saveinv = plugin.getServer().createInventory(player, 54, "§4TARDIS saves");
