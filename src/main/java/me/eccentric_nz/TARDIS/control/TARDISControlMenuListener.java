@@ -341,10 +341,6 @@ public class TARDISControlMenuListener extends TARDISMenuListener implements Lis
                                     im.setLore(Arrays.asList(direction));
                                     d.setItemMeta(im);
                                     break;
-                                case 45:
-                                    // keyboard
-                                    close(player);
-                                    break;
                                 case 47:
                                     // tardis map
                                     Inventory new_inv = plugin.getServer().createInventory(player, 54, "§4TARDIS Map");

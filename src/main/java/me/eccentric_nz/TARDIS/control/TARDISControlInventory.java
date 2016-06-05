@@ -105,11 +105,6 @@ public class TARDISControlInventory {
         ItemMeta min = ter.getItemMeta();
         min.setDisplayName(plugin.getLanguage().getString("BUTTON_TERM"));
         ter.setItemMeta(min);
-        // keyboard
-        ItemStack key = new ItemStack(Material.BOWL, 1);
-        ItemMeta board = key.getItemMeta();
-        board.setDisplayName(plugin.getLanguage().getString("BUTTON_KEYBOARD"));
-        key.setItemMeta(board);
         /**
          * ***** INTERIOR *****
          */
@@ -224,7 +219,7 @@ public class TARDISControlInventory {
             fast, null, pow, null, hide, null, info, null, null,
             area, null, lig, null, reb, null, null, null, null,
             ter, null, tog, null, dir, null, null, null, null,
-            key, null, map, null, temp, null, null, null, close
+            null, null, map, null, temp, null, null, null, close
         };
         return is;
     }
