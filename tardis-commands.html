@@ -163,6 +163,12 @@
 /tardis secondary y-repeater
 /tardis secondary z-repeater</code></pre>
 		<p>After executing the command, click on the block to update the TARDIS settings.</p>
+        <h3>/tardis lamps</h3>
+        <p>Another &ldquo;update&rdquo; type command, this one deletes all of a TARDIS&rsquo; lamp records from the database, and rescans the TARDIS console for lamps to add back in.</p>
+        <p>This is useful if you have changed the location of the lights of the console room and now I can&rsquo;t turn them on or off.</p>
+        <p><strong>Note:</strong> Make sure that you have set your lamp preference correctly before running the command (<code>/tardisprefs lanterns [on|off]</code>), so the plugin searches for the correct block type (Redstone Lamp or Sea Lantern).</p>
+		<pre><code>/tardisprefs lanterns [on|off]
+/tardis lamps</code></pre>
 		<h3>/tardis rebuild</h3>
 		<p>If your blue Police Box gets damaged (damn those creepers!), lost due to a server crash or you&rsquo;ve hidden it, simply type:</p>
 		<pre><code>/tardis rebuild</code></pre>
