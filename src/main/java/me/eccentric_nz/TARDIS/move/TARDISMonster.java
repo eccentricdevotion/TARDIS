@@ -35,6 +35,7 @@ public class TARDISMonster extends TARDISMob {
     private EntityEquipment equipment;
     private MaterialData carried;
     private EntityType passenger;
+    private String displayName;
     private int size;
 
     public boolean isAggressive() {
@@ -91,6 +92,14 @@ public class TARDISMonster extends TARDISMob {
 
     public void setPassenger(EntityType passenger) {
         this.passenger = passenger;
+    }
+
+    public String getDisplayName() {
+        return displayName;
+    }
+
+    public void setDisplayName(String displayName) {
+        this.displayName = displayName;
     }
 
     public int getSize() {

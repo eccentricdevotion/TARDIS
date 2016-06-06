@@ -36,6 +36,7 @@ import me.eccentric_nz.TARDIS.utility.TARDISDalekDisguiser;
 import me.eccentric_nz.TARDIS.utility.TARDISLocationGetters;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import me.eccentric_nz.TARDIS.utility.TARDISSounds;
+import org.apache.commons.lang.WordUtils;
 import org.bukkit.Difficulty;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -107,29 +108,49 @@ public class TARDISMonsterRunnable implements Runnable {
                         }
                         // nobody there so continue
                         if (take_action) {
+                            boolean twa = plugin.getPM().isPluginEnabled("TARDISWeepingAngels");
                             for (Entity e : entities) {
                                 EntityType type = e.getType();
                                 TARDISMonster tm = new TARDISMonster();
+                                String dn = WordUtils.capitalize(type.toString().toLowerCase());
                                 if (monsters.contains(type)) {
                                     found = true;
                                     switch (type) {
                                         case CREEPER:
                                             Creeper creeper = (Creeper) e;
                                             tm.setCharged(creeper.isPowered());
+                                            dn = (creeper.isPowered()) ? "Charged Creeper" : "Creeper";
                                             break;
                                         case ENDERMAN:
                                             Enderman enderman = (Enderman) e;
                                             tm.setCarried(enderman.getCarriedMaterial());
+                                            if (twa && e.getPassenger() != null && e.getPassenger().getType().equals(EntityType.GUARDIAN)) {
+                                                dn = "Silent";
+                                            }
                                             break;
                                         case PIG_ZOMBIE:
                                             PigZombie pigzombie = (PigZombie) e;
                                             tm.setAggressive(pigzombie.isAngry());
                                             tm.setAnger(pigzombie.getAnger());
                                             tm.setEquipment(pigzombie.getEquipment());
+                                            if (twa && pigzombie.getEquipment().getHelmet() != null && pigzombie.getEquipment().getHelmet().hasItemMeta() && pigzombie.getEquipment().getHelmet().getItemMeta().hasDisplayName()) {
+                                                String name = pigzombie.getEquipment().getHelmet().getItemMeta().getDisplayName();
+                                                if (name.equals("Ice Warrior Head") || name.equals("Strax Head")) {
+                                                    dn = name.substring(0, name.length() - 5);
+                                                }
+                                            } else {
+                                                dn = "Pig Zombie";
+                                            }
                                             break;
                                         case SKELETON:
                                             Skeleton skeleton = (Skeleton) e;
                                             tm.setEquipment(skeleton.getEquipment());
+                                            if (twa && skeleton.getEquipment().getHelmet() != null && skeleton.getEquipment().getHelmet().hasItemMeta() && skeleton.getEquipment().getHelmet().getItemMeta().hasDisplayName()) {
+                                                String name = skeleton.getEquipment().getHelmet().getItemMeta().getDisplayName();
+                                                if (name.equals("Dalek Head") || name.equals("Silurian Head") || name.equals("Weeping Angel Head")) {
+                                                    dn = name.substring(0, name.length() - 5);
+                                                }
+                                            }
                                             break;
                                         case SLIME:
                                             Slime slime = (Slime) e;
@@ -138,12 +159,22 @@ public class TARDISMonsterRunnable implements Runnable {
                                         case ZOMBIE:
                                             Zombie zombie = (Zombie) e;
                                             tm.setProfession(zombie.getVillagerProfession());
+                                            if (zombie.getVillagerProfession() != null) {
+                                                dn = "Zombie Villager";
+                                            }
                                             tm.setBaby(zombie.isBaby());
                                             tm.setEquipment(zombie.getEquipment());
+                                            if (twa && zombie.getEquipment().getHelmet() != null && zombie.getEquipment().getHelmet().hasItemMeta() && zombie.getEquipment().getHelmet().getItemMeta().hasDisplayName()) {
+                                                String name = zombie.getEquipment().getHelmet().getItemMeta().getDisplayName();
+                                                if (name.equals("Cyberman Head") || name.equals("Empty Child Head") || name.equals("Sontaran Head") || name.equals("Vashta Nerada Head") || name.equals("Zygon Head")) {
+                                                    dn = name.substring(0, name.length() - 5);
+                                                }
+                                            }
                                             break;
                                         default:
                                             break;
                                     }
+                                    tm.setDisplayName(dn);
                                     tm.setType(type);
                                     tm.setAge(e.getTicksLived());
                                     tm.setHealth(((LivingEntity) e).getHealth());
@@ -259,7 +290,7 @@ public class TARDISMonsterRunnable implements Runnable {
                 if (rst.resultSet()) {
                     Player p = plugin.getServer().getPlayer(rst.getTardis().getUuid());
                     if (p != null) {
-                        TARDISMessage.send(p, "MONSTER", m.getType().toString());
+                        TARDISMessage.send(p, "MONSTER", m.getDisplayName());
                     }
                 }
                 HashMap<String, Object> wherer = new HashMap<String, Object>();
