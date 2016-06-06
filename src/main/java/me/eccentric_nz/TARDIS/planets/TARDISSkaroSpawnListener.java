@@ -17,7 +17,6 @@
 package me.eccentric_nz.TARDIS.planets;
 
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.tardisweepingangels.TARDISWeepingAngels;
 import me.eccentric_nz.tardisweepingangels.TARDISWeepingAngelsAPI;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.LivingEntity;
@@ -26,7 +25,6 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.CreatureSpawnEvent;
 import org.bukkit.event.entity.CreatureSpawnEvent.SpawnReason;
-import org.bukkit.plugin.Plugin;
 
 /**
  *
@@ -35,12 +33,11 @@ import org.bukkit.plugin.Plugin;
 public class TARDISSkaroSpawnListener implements Listener {
 
     private final TARDIS plugin;
-    private TARDISWeepingAngels twa;
     private final TARDISWeepingAngelsAPI twaAPI;
 
     public TARDISSkaroSpawnListener(TARDIS plugin) {
         this.plugin = plugin;
-        this.twaAPI = getAPI();
+        this.twaAPI = TARDISAngelsAPI.getAPI(this.plugin);
     }
 
     @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
@@ -55,22 +52,7 @@ public class TARDISSkaroSpawnListener implements Listener {
             return;
         }
         LivingEntity le = event.getEntity();
-//        if (!le.getEquipment().getHelmet().getType().equals(Material.VINE)) {
-//            return;
-//        }
         // it's a Dalek - disguise it!
         twaAPI.setDalekEquipment(le);
-    }
-
-    private TARDISWeepingAngelsAPI getAPI() {
-        /*
-         * Get TARDISWeepingAngels
-         */
-        Plugin p = plugin.getPM().getPlugin("TARDISWeepingAngels");
-        if (p == null || !plugin.getPM().isPluginEnabled("TARDISWeepingAngels")) {
-            plugin.debug("Cannot find TARDISWeepingAngels!");
-        }
-        twa = (TARDISWeepingAngels) p;
-        return twa.getWeepingAngelsAPI();
     }
 }

@@ -18,12 +18,15 @@ package me.eccentric_nz.TARDIS.listeners;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
+import me.eccentric_nz.TARDIS.planets.TARDISAngelsAPI;
 import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.block.Biome;
 import org.bukkit.entity.EntityType;
+import org.bukkit.entity.LivingEntity;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
@@ -39,6 +42,7 @@ public class TARDISSpawnListener implements Listener {
     private final TARDIS plugin;
     List<SpawnReason> good_spawns = new ArrayList<SpawnReason>();
     List<Biome> biomes = new ArrayList<Biome>();
+    private final Random rand;
 
     public TARDISSpawnListener(TARDIS plugin) {
         this.plugin = plugin;
@@ -54,6 +58,7 @@ public class TARDISSpawnListener implements Listener {
         biomes.add(Biome.MUSHROOM_ISLAND);
         biomes.add(Biome.MUSHROOM_ISLAND_SHORE);
         biomes.add(Biome.SKY);
+        this.rand = new Random();
     }
 
     /**
@@ -66,7 +71,7 @@ public class TARDISSpawnListener implements Listener {
      * @param event
      */
     @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
-    public void onEntitySpawn(CreatureSpawnEvent event) {
+    public void onEntitySpawn(final CreatureSpawnEvent event) {
         Location l = event.getLocation();
         if (l.getWorld().getName().contains("TARDIS")) {
             if (event.getEntityType().equals(EntityType.ARMOR_STAND)) {
@@ -79,6 +84,19 @@ public class TARDISSpawnListener implements Listener {
             // if not an allowable TARDIS spawn reason, cancel
             if (!good_spawns.contains(event.getSpawnReason())) {
                 event.setCancelled(true);
+            }
+            if (event.getSpawnReason().equals(SpawnReason.BUILD_SNOWMAN) && plugin.getPM().isPluginEnabled("TARDISWeepingAngels")) {
+                if (rand.nextInt(100) < 3) {
+                    // spawn a Dalek instead
+                    LivingEntity le = (LivingEntity) l.getWorld().spawnEntity(l, EntityType.SKELETON);
+                    TARDISAngelsAPI.getAPI(plugin).setDalekEquipment(le);
+                    plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
+                        @Override
+                        public void run() {
+                            event.getEntity().remove();
+                        }
+                    }, 2L);
+                }
             }
         } else {
             // only if configured

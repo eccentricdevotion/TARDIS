@@ -17,10 +17,7 @@
 7. [Improve Control Centre](http://dev.bukkit.org/bukkit-plugins/tardis/tickets/1324-improving-control-centre/)
     * Update console schematics to add Control Centre sign, Sonic Generator
     * Remove other control signs from console schematics
-8. Ice/igloo room
-    * If TARDISWeepingAngels plugin is enabled, make a 3% chance a Dalek will form when building a snowman in the room
-    * Should have a spawn location ready for polar bears
-9. TARDIS Junk Mode - `/tprefs junk [wall|floor] [block_type]`?
+8. TARDIS Junk Mode - `/tprefs junk [wall|floor] [block_type]`?
 
 ##Upcoming minor version `3.7`
 1. Update for Minecraft 1.10
