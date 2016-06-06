@@ -44,11 +44,13 @@ import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
+import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerInteractEvent;
+import org.bukkit.inventory.EntityEquipment;
 import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.scheduler.BukkitScheduler;
 
@@ -64,6 +66,7 @@ public class TARDISScannerListener implements Listener {
 
     private final TARDIS plugin;
     List<Material> validBlocks = new ArrayList<Material>();
+    HashMap<String, EntityType> twa = new HashMap<String, EntityType>();
 
     public TARDISScannerListener(TARDIS plugin) {
         this.plugin = plugin;
@@ -72,6 +75,14 @@ public class TARDISScannerListener implements Listener {
         validBlocks.add(Material.REDSTONE_COMPARATOR_ON);
         validBlocks.add(Material.STONE_BUTTON);
         validBlocks.add(Material.WOOD_BUTTON);
+        twa.put("Cyberman Head", EntityType.AREA_EFFECT_CLOUD);
+        twa.put("Empty Child Head", EntityType.ARMOR_STAND);
+        twa.put("Ice Warrior Head", EntityType.ARROW);
+        twa.put("Silurian Head", EntityType.BOAT);
+        twa.put("Sontaran Head", EntityType.FIREWORK);
+        twa.put("Strax Head", EntityType.EGG);
+        twa.put("Vashta Nerada Head", EntityType.ENDER_CRYSTAL);
+        twa.put("Zygon Head", EntityType.FISHING_HOOK);
     }
 
     /**
@@ -207,7 +218,6 @@ public class TARDISScannerListener implements Listener {
         for (Entity k : getNearbyEntities(scan_loc, 16)) {
             EntityType et = k.getType();
             if (TARDISConstants.ENTITY_TYPES.contains(et)) {
-                Integer entity_count = (scannedentities.containsKey(et)) ? scannedentities.get(et) : 0;
                 boolean visible = true;
                 if (et.equals(EntityType.PLAYER)) {
                     Player entPlayer = (Player) k;
@@ -217,6 +227,38 @@ public class TARDISScannerListener implements Listener {
                         visible = false;
                     }
                 }
+                if (plugin.getPM().isPluginEnabled("TARDISWeepingAngels") && (et.equals(EntityType.SKELETON) || et.equals(EntityType.ZOMBIE) || et.equals(EntityType.PIG_ZOMBIE))) {
+                    EntityEquipment ee = ((LivingEntity) k).getEquipment();
+                    if (ee.getHelmet() != null) {
+                        switch (ee.getHelmet().getType()) {
+                            case VINE:
+                                // dalek
+                                et = EntityType.COMPLEX_PART;
+                                break;
+                            case IRON_HELMET:
+                            case GOLD_HELMET:
+                            case CHAINMAIL_HELMET:
+                                if (ee.getHelmet().hasItemMeta() && ee.getHelmet().getItemMeta().hasDisplayName()) {
+                                    String dn = ee.getHelmet().getItemMeta().getDisplayName();
+                                    if (twa.containsKey(dn)) {
+                                        et = twa.get(dn);
+                                    }
+                                }
+                                break;
+                            case STONE_BUTTON:
+                                // weeping angel
+                                et = EntityType.DRAGON_FIREBALL;
+                                break;
+                            default:
+                                break;
+                        }
+                    }
+                }
+                if (et.equals(EntityType.ENDERMAN) && k.getPassenger() != null && k.getPassenger().getType().equals(EntityType.GUARDIAN)) {
+                    // silent
+                    et = EntityType.SPLASH_POTION;
+                }
+                Integer entity_count = (scannedentities.containsKey(et)) ? scannedentities.get(et) : 0;
                 if (visible) {
                     scannedentities.put(et, entity_count + 1);
                 }
@@ -317,7 +359,44 @@ public class TARDISScannerListener implements Listener {
                             }
                             message = " (" + buf.toString().substring(2) + ")";
                         }
-                        player.sendMessage("    " + entry.getKey() + ": " + entry.getValue() + message);
+                        switch (entry.getKey()) {
+                            case AREA_EFFECT_CLOUD:
+                                player.sendMessage("    Cyberman: " + entry.getValue());
+                                break;
+                            case COMPLEX_PART:
+                                player.sendMessage("    Dalek: " + entry.getValue());
+                                break;
+                            case ARMOR_STAND:
+                                player.sendMessage("    Empty Child: " + entry.getValue());
+                                break;
+                            case ARROW:
+                                player.sendMessage("    Ice Warrior: " + entry.getValue());
+                                break;
+                            case SPLASH_POTION:
+                                player.sendMessage("    Silent: " + entry.getValue());
+                                break;
+                            case BOAT:
+                                player.sendMessage("    Silurian: " + entry.getValue());
+                                break;
+                            case FIREWORK:
+                                player.sendMessage("    Sontaran: " + entry.getValue());
+                                break;
+                            case EGG:
+                                player.sendMessage("    Strax: " + entry.getValue());
+                                break;
+                            case ENDER_CRYSTAL:
+                                player.sendMessage("    Vashta Nerada: " + entry.getValue());
+                                break;
+                            case DRAGON_FIREBALL:
+                                player.sendMessage("    Weeping Angel: " + entry.getValue());
+                                break;
+                            case FISHING_HOOK:
+                                player.sendMessage("    Zygon: " + entry.getValue());
+                                break;
+                            default:
+                                player.sendMessage("    " + entry.getKey() + ": " + entry.getValue() + message);
+                                break;
+                        }
                     }
                     scannedentities.clear();
                 } else {

@@ -10,7 +10,6 @@
 3. [Red time rotor](http://dev.bukkit.org/bukkit-plugins/tardis/tickets/1216-red-time-rotor/)
 4. [TARDIS planets](http://dev.bukkit.org/bukkit-plugins/tardis/tickets/1168-a-dalek-conquest/)
     * Determine a use for Acid and Rust Buckets
-    * When scanning the TARDIS exterior check for Daleks (as well as skeletons)
     * Add other worlds (Silurian cave world, Gallifrey)?
 5. [Abandoned TARDISes](http://dev.bukkit.org/bukkit-plugins/tardis/tickets/1277-possibility-to-abandon-a-tardis/)
 6. [Destination 'vortex'](http://dev.bukkit.org/bukkit-plugins/tardis/tickets/1023-set-the-tardis-inflight-without-setting-a-destination/) - dematerialise without setting a destination.
