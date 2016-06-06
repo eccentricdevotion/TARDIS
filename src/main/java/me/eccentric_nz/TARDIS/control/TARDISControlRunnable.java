@@ -52,10 +52,14 @@ public class TARDISControlRunnable implements Runnable {
                                 // get the sign
                                 Sign sign = (Sign) rsc.getSign().getState();
                                 // update the data
-                                sign.setLine(0, rsc.getWorld());
+                                String worldname = rsc.getWorld();
+                                if (plugin.isMVOnServer()) {
+                                    worldname = plugin.getMVHelper().getAlias(rsc.getWorld());
+                                }
+                                sign.setLine(0, ChatColor.DARK_PURPLE + worldname);
                                 sign.setLine(1, rsc.getLocation());
                                 sign.setLine(2, rsc.getBiome());
-                                sign.setLine(3, rsc.getPreset());
+                                sign.setLine(3, ChatColor.BLUE + rsc.getPreset());
                                 sign.update();
                             }
                         }

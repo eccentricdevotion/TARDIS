@@ -32,6 +32,7 @@ public enum ROOM {
     GREENHOUSE,
     HARMONY,
     HUTCH,
+    IGLOO,
     KITCHEN,
     LIBRARY,
     MUSHROOM,

@@ -170,6 +170,8 @@ public class TARDISConfiguration {
         roomBoolOptions.put("rooms.HARMONY.user", false);
         roomBoolOptions.put("rooms.HUTCH.enabled", true);
         roomBoolOptions.put("rooms.HUTCH.user", false);
+        roomBoolOptions.put("rooms.IGLOO.enabled", true);
+        roomBoolOptions.put("rooms.IGLOO.user", false);
         roomBoolOptions.put("rooms.KITCHEN.enabled", true);
         roomBoolOptions.put("rooms.KITCHEN.user", false);
         roomBoolOptions.put("rooms.LAZARUS.enabled", true);
@@ -320,6 +322,8 @@ public class TARDISConfiguration {
         roomIntOptions.put("rooms.HARMONY.offset", -4);
         roomIntOptions.put("rooms.HUTCH.cost", 450);
         roomIntOptions.put("rooms.HUTCH.offset", -4);
+        roomIntOptions.put("rooms.IGLOO.cost", 650);
+        roomIntOptions.put("rooms.IGLOO.offset", -4);
         roomIntOptions.put("rooms.KITCHEN.cost", 450);
         roomIntOptions.put("rooms.KITCHEN.offset", -4);
         roomIntOptions.put("rooms.LAZARUS.cost", 750);
@@ -387,6 +391,7 @@ public class TARDISConfiguration {
         roomStrOptions.put("rooms.GREENHOUSE.seed", "MELON_BLOCK");
         roomStrOptions.put("rooms.HARMONY.seed", "BRICK_STAIRS");
         roomStrOptions.put("rooms.HUTCH.seed", "LOG_2");
+        roomStrOptions.put("rooms.IGLOO.seed", "PACKED_ICE");
         roomStrOptions.put("rooms.KITCHEN.seed", "PUMPKIN");
         roomStrOptions.put("rooms.LAZARUS.seed", "FURNACE");
         roomStrOptions.put("rooms.LIBRARY.seed", "ENCHANTMENT_TABLE");

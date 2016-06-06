@@ -35,6 +35,7 @@ public enum TARDISARS implements ARS {
     GREENHOUSE(103, "GREENHOUSE", "Greenhouse", 1),
     HARMONY(109, "HARMONY", "Eye of Harmony", 1),
     HUTCH(162, "HUTCH", "Rabbit Hutch", 1),
+    IGLOO(174, "IGLOO", "Igloo", 1),
     KITCHEN(86, "KITCHEN", "Kitchen", 1),
     LAZARUS(61, "LAZARUS", "Genetic Manipulator", 1),
     LIBRARY(116, "LIBRARY", "Library", 1),

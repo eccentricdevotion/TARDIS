@@ -62,12 +62,13 @@ public class Tardis {
     private final String renderer;
     private final String zero;
     private final String hutch;
+    private final String igloo;
     private final boolean powered_on;
     private final boolean lights_on;
     private final boolean siege_on;
     private final int monsters;
 
-    public Tardis(int tardis_id, UUID uuid, String owner, String lastKnownName, String chunk, int tips, SCHEMATIC schematic, String replaced, String companions, String save_sign, String chameleon, boolean chamele_on, int chameleon_id, byte chameleon_data, PRESET preset, PRESET demat, boolean adapti_on, int artron_level, String creeper, String condenser, String beacon, boolean handbrake_on, boolean tardis_init, boolean recharging, String scanner, String farm, String stable, boolean hidden, long lastuse, boolean iso_on, String eps, String rail, String village, String renderer, String zero, String hutch, boolean powered_on, boolean lights_on, boolean siege_on, int monsters) {
+    public Tardis(int tardis_id, UUID uuid, String owner, String lastKnownName, String chunk, int tips, SCHEMATIC schematic, String replaced, String companions, String save_sign, String chameleon, boolean chamele_on, int chameleon_id, byte chameleon_data, PRESET preset, PRESET demat, boolean adapti_on, int artron_level, String creeper, String condenser, String beacon, boolean handbrake_on, boolean tardis_init, boolean recharging, String scanner, String farm, String stable, boolean hidden, long lastuse, boolean iso_on, String eps, String rail, String village, String renderer, String zero, String hutch, String igloo, boolean powered_on, boolean lights_on, boolean siege_on, int monsters) {
         this.tardis_id = tardis_id;
         this.uuid = uuid;
         this.owner = owner;
@@ -104,6 +105,7 @@ public class Tardis {
         this.renderer = renderer;
         this.zero = zero;
         this.hutch = hutch;
+        this.igloo = igloo;
         this.powered_on = powered_on;
         this.lights_on = lights_on;
         this.siege_on = siege_on;
@@ -252,6 +254,10 @@ public class Tardis {
 
     public String getHutch() {
         return hutch;
+    }
+
+    public String getIgloo() {
+        return igloo;
     }
 
     public boolean isPowered_on() {

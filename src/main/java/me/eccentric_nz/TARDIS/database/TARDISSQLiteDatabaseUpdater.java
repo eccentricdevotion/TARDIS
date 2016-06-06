@@ -111,6 +111,7 @@ public class TARDISSQLiteDatabaseUpdater {
         tardisupdates.add("handbrake_on INTEGER DEFAULT 1");
         tardisupdates.add("hidden INTEGER DEFAULT 0");
         tardisupdates.add("hutch TEXT DEFAULT ''");
+        tardisupdates.add("igloo TEXT DEFAULT ''");
         tardisupdates.add("iso_on INTEGER DEFAULT 0");
         tardisupdates.add("last_known_name TEXT COLLATE NOCASE DEFAULT ''");
         tardisupdates.add("lastuse INTEGER DEFAULT " + now);

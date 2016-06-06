@@ -108,6 +108,12 @@ rooms:
     offset: -4
     seed: LOG_2
     user: false
+  IGLOO:
+    enabled: true
+    cost: 650
+    offset: -4
+    seed: PACKED_ICE
+    user: false
   MUSHROOM:
     enabled: true
     cost: 350

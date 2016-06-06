@@ -40,6 +40,11 @@ public class TARDISMultiverseHelper {
         return mvw.getAlias();
     }
 
+    public String getAlias(String world) {
+        MultiverseWorld mvw = mvc.getMVWorldManager().getMVWorld(world);
+        return mvw.getAlias();
+    }
+
     public void setSpawnLocation(World world, int x, int y, int z) {
         MultiverseWorld mvw = mvc.getMVWorldManager().getMVWorld(world.getName());
         Location spawn = new Location(world, (x + 0.5), y, (z + 1.5), 0, 0);
