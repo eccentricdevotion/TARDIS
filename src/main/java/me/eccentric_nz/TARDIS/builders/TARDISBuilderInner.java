@@ -583,6 +583,8 @@ public class TARDISBuilderInner {
             psb.setData(psdata, true);
             if (psb.getType().equals(Material.WALL_SIGN)) {
                 Sign cs = (Sign) psb.getState();
+                // TODO change schematics to only have 1 sign
+//                if (s == 0) { // always make the control centre the first sign
                 if (s > 0) {
                     cs.setLine(1, plugin.getSigns().getStringList("control").get(0));
                     cs.setLine(2, plugin.getSigns().getStringList("control").get(1));

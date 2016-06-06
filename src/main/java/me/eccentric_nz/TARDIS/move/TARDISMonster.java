@@ -17,6 +17,8 @@
 package me.eccentric_nz.TARDIS.move;
 
 import me.eccentric_nz.TARDIS.mobfarming.TARDISMob;
+import org.bukkit.entity.EntityType;
+import org.bukkit.entity.Villager.Profession;
 import org.bukkit.inventory.EntityEquipment;
 import org.bukkit.material.MaterialData;
 
@@ -29,9 +31,10 @@ public class TARDISMonster extends TARDISMob {
     private boolean aggressive;
     private int anger;
     private boolean charged;
-    private boolean villager;
+    private Profession profession;
     private EntityEquipment equipment;
     private MaterialData carried;
+    private EntityType passenger;
     private int size;
 
     public boolean isAggressive() {
@@ -58,12 +61,12 @@ public class TARDISMonster extends TARDISMob {
         this.charged = charged;
     }
 
-    public boolean isVillager() {
-        return villager;
+    public Profession getProfession() {
+        return profession;
     }
 
-    public void setVillager(boolean villager) {
-        this.villager = villager;
+    public void setProfession(Profession profession) {
+        this.profession = profession;
     }
 
     public EntityEquipment getEquipment() {
@@ -80,6 +83,14 @@ public class TARDISMonster extends TARDISMob {
 
     public void setCarried(MaterialData carried) {
         this.carried = carried;
+    }
+
+    public EntityType getPassenger() {
+        return passenger;
+    }
+
+    public void setPassenger(EntityType passenger) {
+        this.passenger = passenger;
     }
 
     public int getSize() {

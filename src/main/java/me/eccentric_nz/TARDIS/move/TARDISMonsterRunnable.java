@@ -31,6 +31,7 @@ import me.eccentric_nz.TARDIS.database.ResultSetControls;
 import me.eccentric_nz.TARDIS.database.ResultSetHidden;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import me.eccentric_nz.TARDIS.database.ResultSetTravellers;
+import me.eccentric_nz.TARDIS.planets.TARDISAngelsAPI;
 import me.eccentric_nz.TARDIS.utility.TARDISDalekDisguiser;
 import me.eccentric_nz.TARDIS.utility.TARDISLocationGetters;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
@@ -136,7 +137,7 @@ public class TARDISMonsterRunnable implements Runnable {
                                             break;
                                         case ZOMBIE:
                                             Zombie zombie = (Zombie) e;
-                                            tm.setVillager(zombie.isVillager());
+                                            tm.setProfession(zombie.getVillagerProfession());
                                             tm.setBaby(zombie.isBaby());
                                             tm.setEquipment(zombie.getEquipment());
                                             break;
@@ -147,6 +148,9 @@ public class TARDISMonsterRunnable implements Runnable {
                                     tm.setAge(e.getTicksLived());
                                     tm.setHealth(((LivingEntity) e).getHealth());
                                     tm.setName(((LivingEntity) e).getCustomName());
+                                    if (e.getPassenger() != null) {
+                                        tm.setPassenger(e.getPassenger().getType());
+                                    }
                                     moveMonster(map.getValue(), tm, e, type.equals(EntityType.GUARDIAN));
                                 }
                             }
@@ -266,7 +270,7 @@ public class TARDISMonsterRunnable implements Runnable {
                 if (rsc.resultSet()) {
                     // move the location to the y-repeater
                     loc = TARDISLocationGetters.getLocationFromDB(rsc.getLocation(), 0.0f, 0.0f);
-                    loc.setY(loc.getY() + 0.125d);
+                    loc.add(0.5d, 0.125d, 0.5d);
                 }
             }
             // load the chunk
@@ -316,7 +320,9 @@ public class TARDISMonsterRunnable implements Runnable {
                     break;
                 case ZOMBIE:
                     Zombie zombie = (Zombie) ent;
-                    zombie.setVillager(m.isVillager());
+                    if (m.getProfession() != null) {
+                        zombie.setVillagerProfession(m.getProfession());
+                    }
                     zombie.setBaby(m.isBaby());
                     EntityEquipment ez = zombie.getEquipment();
                     if (m.getEquipment() != null) {
@@ -333,6 +339,14 @@ public class TARDISMonsterRunnable implements Runnable {
             }
             if (m.getName() != null && !m.getName().isEmpty()) {
                 ((LivingEntity) ent).setCustomName(m.getName());
+            }
+            if (m.getPassenger() != null) {
+                if (plugin.getPM().isPluginEnabled("TARDISWeepingAngels") && m.getPassenger().equals(EntityType.GUARDIAN)) {
+                    TARDISAngelsAPI.getAPI(plugin).setSilentEquipment((LivingEntity) ent);
+                } else {
+                    Entity passenger = loc.getWorld().spawnEntity(loc, m.getPassenger());
+                    ent.setPassenger(passenger);
+                }
             }
         }
     }
