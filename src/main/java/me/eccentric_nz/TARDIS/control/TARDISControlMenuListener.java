@@ -93,12 +93,12 @@ public class TARDISControlMenuListener extends TARDISMenuListener implements Lis
                                 TARDISMessage.send(player, "ENERGY_NO_INIT");
                                 return;
                             }
-                            if (plugin.getConfig().getBoolean("allow.power_down") && !tardis.isPowered_on() && slot != 6 && slot != 7) {
+                            if (plugin.getConfig().getBoolean("allow.power_down") && !tardis.isPowered_on() && slot != 6 && slot != 13 && slot != 20) {
                                 TARDISMessage.send(player, "POWER_DOWN");
                                 return;
                             }
                             if (!tardis.isHandbrake_on()) {
-                                String message = (slot == 9) ? "ARS_NO_TRAVEL" : "NOT_WHILE_TRAVELLING";
+                                String message = (slot == 2) ? "ARS_NO_TRAVEL" : "NOT_WHILE_TRAVELLING";
                                 TARDISMessage.send(player, message);
                                 return;
                             }
