@@ -112,6 +112,10 @@ public class TARDISControlMenuListener extends TARDISMenuListener implements Lis
                             switch (slot) {
                                 case 0:
                                     // random location
+                                    if (plugin.getTrackerKeeper().getInSiegeMode().contains(id)) {
+                                        TARDISMessage.send(player, "SIEGE_NO_CONTROL");
+                                        return;
+                                    }
                                     if (tcc != null && !tcc.hasInput() && !plugin.getUtils().inGracePeriod(player, false)) {
                                         TARDISMessage.send(player, "INPUT_MISSING");
                                         return;
@@ -202,6 +206,10 @@ public class TARDISControlMenuListener extends TARDISMenuListener implements Lis
                                     break;
                                 case 9:
                                     // saves
+                                    if (plugin.getTrackerKeeper().getInSiegeMode().contains(id)) {
+                                        TARDISMessage.send(player, "SIEGE_NO_CONTROL");
+                                        return;
+                                    }
                                     if (tcc != null && !tcc.hasMemory()) {
                                         TARDISMessage.send(player, "NO_MEM_CIRCUIT");
                                         return;
@@ -242,6 +250,10 @@ public class TARDISControlMenuListener extends TARDISMenuListener implements Lis
                                     break;
                                 case 18:
                                     // fast return
+                                    if (plugin.getTrackerKeeper().getInSiegeMode().contains(id)) {
+                                        TARDISMessage.send(player, "SIEGE_NO_CONTROL");
+                                        return;
+                                    }
                                     if (tcc != null && !tcc.hasInput() && !plugin.getUtils().inGracePeriod(player, false)) {
                                         TARDISMessage.send(player, "INPUT_MISSING");
                                         return;
@@ -261,6 +273,10 @@ public class TARDISControlMenuListener extends TARDISMenuListener implements Lis
                                 case 22:
                                     // hide
                                     close(player);
+                                    if (plugin.getTrackerKeeper().getInSiegeMode().contains(id)) {
+                                        TARDISMessage.send(player, "SIEGE_NO_CONTROL");
+                                        return;
+                                    }
                                     new TARDISHideCommand(plugin).hide(player);
                                     break;
                                 case 24:
@@ -270,6 +286,10 @@ public class TARDISControlMenuListener extends TARDISMenuListener implements Lis
                                     break;
                                 case 27:
                                     // areas
+                                    if (plugin.getTrackerKeeper().getInSiegeMode().contains(id)) {
+                                        TARDISMessage.send(player, "SIEGE_NO_CONTROL");
+                                        return;
+                                    }
                                     if (tcc != null && !tcc.hasMemory()) {
                                         TARDISMessage.send(player, "NO_MEM_CIRCUIT");
                                         return;
@@ -292,10 +312,18 @@ public class TARDISControlMenuListener extends TARDISMenuListener implements Lis
                                 case 31:
                                     // rebuild
                                     close(player);
+                                    if (plugin.getTrackerKeeper().getInSiegeMode().contains(id)) {
+                                        TARDISMessage.send(player, "SIEGE_NO_CONTROL");
+                                        return;
+                                    }
                                     new TARDISRebuildCommand(plugin).rebuildPreset(player);
                                     break;
                                 case 36:
                                     // destination terminal
+                                    if (plugin.getTrackerKeeper().getInSiegeMode().contains(id)) {
+                                        TARDISMessage.send(player, "SIEGE_NO_CONTROL");
+                                        return;
+                                    }
                                     if (level < plugin.getArtronConfig().getInt("travel")) {
                                         TARDISMessage.send(player, "NOT_ENOUGH_ENERGY");
                                         return;
@@ -320,6 +348,10 @@ public class TARDISControlMenuListener extends TARDISMenuListener implements Lis
                                     break;
                                 case 40:
                                     // direction
+                                    if (plugin.getTrackerKeeper().getInSiegeMode().contains(id)) {
+                                        TARDISMessage.send(player, "SIEGE_NO_CONTROL");
+                                        return;
+                                    }
                                     HashMap<String, Object> whered = new HashMap<String, Object>();
                                     whered.put("tardis_id", id);
                                     ResultSetCurrentLocation rsc = new ResultSetCurrentLocation(plugin, whered);
