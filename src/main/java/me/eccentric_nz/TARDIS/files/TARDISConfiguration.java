@@ -611,9 +611,16 @@ public class TARDISConfiguration {
                 blocks_config.set("tardis_blocks", tblocs);
                 i++;
             }
+            if (!tblocs.contains("NETHER_WART_BLOCK")) {
+                tblocs.add("NETHER_WART_BLOCK");
+                tblocs.add("RED_NETHER_BRICK");
+                tblocs.add("BONE_BLOCK");
+                blocks_config.set("tardis_blocks", tblocs);
+                i++;
+            }
         }
         if (!blocks_config.contains("chameleon_blocks")) {
-            List<Integer> CHAM_BLOCKS = Arrays.asList(1, 3, 4, 5, 7, 14, 15, 16, 17, 18, 19, 20, 21, 22, 24, 25, 35, 41, 42, 45, 46, 47, 48, 49, 56, 57, 58, 73, 79, 80, 82, 84, 86, 87, 88, 89, 91, 98, 99, 100, 103, 110, 112, 121, 123, 129, 133, 155, 159, 161, 162, 170, 172, 173, 174);
+            List<Integer> CHAM_BLOCKS = Arrays.asList(1, 3, 4, 5, 7, 14, 15, 16, 17, 18, 19, 20, 21, 22, 24, 25, 35, 41, 42, 45, 46, 47, 48, 49, 56, 57, 58, 73, 79, 80, 82, 84, 86, 87, 88, 89, 91, 95, 98, 99, 100, 103, 110, 112, 121, 123, 129, 133, 155, 159, 161, 162, 165, 168, 170, 172, 173, 174, 201, 202, 206, 214, 215, 216);
             blocks_config.set("chameleon_blocks", CHAM_BLOCKS);
             i++;
         } else {
@@ -645,6 +652,13 @@ public class TARDISConfiguration {
                 cblocs.add(201);
                 cblocs.add(202);
                 cblocs.add(206);
+                blocks_config.set("chameleon_blocks", cblocs);
+                i++;
+            }
+            if (!cblocs.contains(214)) {
+                cblocs.add(214);
+                cblocs.add(215);
+                cblocs.add(216);
                 blocks_config.set("chameleon_blocks", cblocs);
                 i++;
             }
