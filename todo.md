@@ -18,11 +18,7 @@
     * Remove other control signs from console schematics
 8. TARDIS Junk Mode - `/tprefs junk [wall|floor] [block_type]`?
 9. Update for Minecraft 1.10
-   * Add new blocks
-   * Add new mobs
-   * Use new spawn eggs (farming & Lazarus GUI)
    * Structure blocks?
-   * Polar bear farming
    
    ```
     MAGMA(213),

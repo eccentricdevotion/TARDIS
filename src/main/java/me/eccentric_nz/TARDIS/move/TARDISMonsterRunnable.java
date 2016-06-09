@@ -49,7 +49,9 @@ import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.PigZombie;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Skeleton;
+import org.bukkit.entity.Skeleton.SkeletonType;
 import org.bukkit.entity.Slime;
+import org.bukkit.entity.Villager.Profession;
 import org.bukkit.entity.Zombie;
 import org.bukkit.inventory.EntityEquipment;
 
@@ -145,11 +147,15 @@ public class TARDISMonsterRunnable implements Runnable {
                                         case SKELETON:
                                             Skeleton skeleton = (Skeleton) e;
                                             tm.setEquipment(skeleton.getEquipment());
+                                            tm.setSkeletonType(skeleton.getSkeletonType());
                                             if (twa && skeleton.getEquipment().getHelmet() != null && skeleton.getEquipment().getHelmet().hasItemMeta() && skeleton.getEquipment().getHelmet().getItemMeta().hasDisplayName()) {
                                                 String name = skeleton.getEquipment().getHelmet().getItemMeta().getDisplayName();
                                                 if (name.equals("Dalek Head") || name.equals("Silurian Head") || name.equals("Weeping Angel Head")) {
                                                     dn = name.substring(0, name.length() - 5);
                                                 }
+                                            }
+                                            if (!skeleton.getSkeletonType().equals(SkeletonType.NORMAL)) {
+                                                dn = WordUtils.capitalize(skeleton.getSkeletonType().toString().toLowerCase());
                                             }
                                             break;
                                         case SLIME:
@@ -160,7 +166,7 @@ public class TARDISMonsterRunnable implements Runnable {
                                             Zombie zombie = (Zombie) e;
                                             tm.setProfession(zombie.getVillagerProfession());
                                             if (zombie.getVillagerProfession() != null) {
-                                                dn = "Zombie Villager";
+                                                dn = (zombie.getVillagerProfession().equals(Profession.HUSK)) ? "Husk" : "Zombie Villager";
                                             }
                                             tm.setBaby(zombie.isBaby());
                                             tm.setEquipment(zombie.getEquipment());
@@ -342,6 +348,7 @@ public class TARDISMonsterRunnable implements Runnable {
                             TARDISDalekDisguiser.dalekanium(skeleton);
                         }
                     }
+                    skeleton.setSkeletonType(m.getSkeletonType());
                     break;
                 case SLIME:
                     Slime slime = (Slime) ent;
