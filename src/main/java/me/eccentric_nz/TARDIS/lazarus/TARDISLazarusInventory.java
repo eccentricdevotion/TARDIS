@@ -21,6 +21,7 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 import me.eccentric_nz.TARDIS.TARDIS;
 import org.bukkit.Material;
+import org.bukkit.entity.EntityType;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
@@ -37,42 +38,41 @@ public class TARDISLazarusInventory {
 
     private final ItemStack[] terminal;
     private final TARDIS plugin;
-    LinkedHashMap<String, Short> disguises = new LinkedHashMap<String, Short>();
+    LinkedHashMap<String, EntityType> disguises = new LinkedHashMap<String, EntityType>();
 
     public TARDISLazarusInventory(TARDIS plugin) {
         this.plugin = plugin;
-        disguises.put("BAT", (short) 65);
-        disguises.put("BLAZE", (short) 61);
-        disguises.put("CAVE_SPIDER", (short) 59);
-        disguises.put("CHICKEN", (short) 93);
-        disguises.put("COW", (short) 92);
-        disguises.put("CREEPER", (short) 50);
-        disguises.put("ENDERMAN", (short) 58);
-        disguises.put("ENDERMITE", (short) 67);
-        disguises.put("GUARDIAN", (short) 68);
-        disguises.put("HORSE", (short) 100);
-        disguises.put("DONKEY", (short) 100);
-        disguises.put("MULE", (short) 100);
-        disguises.put("SKELETON_HORSE", (short) 100);
-        disguises.put("UNDEAD_HORSE", (short) 100);
-        disguises.put("MAGMA_CUBE", (short) 62);
-        disguises.put("MUSHROOM_COW", (short) 96);
-        disguises.put("OCELOT", (short) 98);
-        disguises.put("PIG", (short) 90);
-        disguises.put("PIG_ZOMBIE", (short) 57);
-        disguises.put("RABBIT", (short) 101);
-        disguises.put("SHEEP", (short) 91);
-        disguises.put("SILVERFISH", (short) 60);
-        disguises.put("SKELETON", (short) 51);
-        disguises.put("WITHER_SKELETON", (short) 51);
-        disguises.put("SLIME", (short) 55);
-        disguises.put("SPIDER", (short) 52);
-        disguises.put("SQUID", (short) 94);
-        disguises.put("VILLAGER", (short) 120);
-        disguises.put("WITCH", (short) 66);
-        disguises.put("WOLF", (short) 95);
-        disguises.put("ZOMBIE", (short) 54);
-        disguises.put("ZOMBIE_VILLAGER", (short) 54);
+        disguises.put("BAT", EntityType.BAT);
+        disguises.put("BLAZE", EntityType.BLAZE);
+        disguises.put("CAVE_SPIDER", EntityType.CAVE_SPIDER);
+        disguises.put("CHICKEN", EntityType.CHICKEN);
+        disguises.put("COW", EntityType.COW);
+        disguises.put("CREEPER", EntityType.CREEPER);
+        disguises.put("ENDERMAN", EntityType.ENDERMAN);
+        disguises.put("ENDERMITE", EntityType.ENDERMITE);
+        disguises.put("GUARDIAN", EntityType.GUARDIAN);
+        disguises.put("HORSE", EntityType.HORSE);
+        disguises.put("DONKEY", EntityType.HORSE);
+        disguises.put("MULE", EntityType.HORSE);
+        disguises.put("SKELETON_HORSE", EntityType.HORSE);
+        disguises.put("UNDEAD_HORSE", EntityType.HORSE);
+        disguises.put("MAGMA_CUBE", EntityType.MAGMA_CUBE);
+        disguises.put("MUSHROOM_COW", EntityType.MUSHROOM_COW);
+        disguises.put("OCELOT", EntityType.OCELOT);
+        disguises.put("PIG", EntityType.PIG);
+        disguises.put("PIG_ZOMBIE", EntityType.PIG_ZOMBIE);
+        disguises.put("POLAR_BEAR", EntityType.POLAR_BEAR);
+        disguises.put("RABBIT", EntityType.RABBIT);
+        disguises.put("SHEEP", EntityType.SHEEP);
+        disguises.put("SILVERFISH", EntityType.SILVERFISH);
+        disguises.put("SKELETON", EntityType.SKELETON);
+        disguises.put("SLIME", EntityType.SLIME);
+        disguises.put("SPIDER", EntityType.SPIDER);
+        disguises.put("SQUID", EntityType.SQUID);
+        disguises.put("VILLAGER", EntityType.VILLAGER);
+        disguises.put("WITCH", EntityType.WITCH);
+        disguises.put("WOLF", EntityType.WOLF);
+        disguises.put("ZOMBIE", EntityType.ZOMBIE);
         this.terminal = getItemStack();
     }
 
@@ -84,8 +84,8 @@ public class TARDISLazarusInventory {
     private ItemStack[] getItemStack() {
         ItemStack[] eggs = new ItemStack[54];
         int i = 0;
-        for (Map.Entry<String, Short> map : disguises.entrySet()) {
-            ItemStack egg = new ItemStack(Material.MONSTER_EGG, 1, map.getValue());
+        for (Map.Entry<String, EntityType> map : disguises.entrySet()) {
+            ItemStack egg = plugin.getTardisHelper().setSpawnEggType(new ItemStack(Material.MONSTER_EGG, 1), map.getValue());
             ItemMeta ime = egg.getItemMeta();
             ime.setDisplayName(map.getKey());
             egg.setItemMeta(ime);

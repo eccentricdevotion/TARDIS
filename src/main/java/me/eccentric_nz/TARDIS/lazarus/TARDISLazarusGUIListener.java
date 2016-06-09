@@ -42,6 +42,7 @@ import me.libraryaddict.disguise.disguisetypes.watchers.OcelotWatcher;
 import me.libraryaddict.disguise.disguisetypes.watchers.PigWatcher;
 import me.libraryaddict.disguise.disguisetypes.watchers.RabbitWatcher;
 import me.libraryaddict.disguise.disguisetypes.watchers.SheepWatcher;
+import me.libraryaddict.disguise.disguisetypes.watchers.SkeletonWatcher;
 import me.libraryaddict.disguise.disguisetypes.watchers.SlimeWatcher;
 import me.libraryaddict.disguise.disguisetypes.watchers.VillagerWatcher;
 import me.libraryaddict.disguise.disguisetypes.watchers.WolfWatcher;
@@ -53,6 +54,7 @@ import org.bukkit.block.BlockFace;
 import org.bukkit.entity.Horse.Color;
 import org.bukkit.entity.Ocelot.Type;
 import org.bukkit.entity.Player;
+import org.bukkit.entity.Skeleton.SkeletonType;
 import org.bukkit.entity.Villager.Profession;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -76,6 +78,8 @@ public class TARDISLazarusGUIListener extends TARDISMenuListener implements List
     private final HashMap<UUID, Integer> rabbits = new HashMap<UUID, Integer>();
     private final HashMap<UUID, Integer> professions = new HashMap<UUID, Integer>();
     private final HashMap<UUID, Integer> slimes = new HashMap<UUID, Integer>();
+    private final HashMap<UUID, Integer> skeletons = new HashMap<UUID, Integer>();
+    private final HashMap<UUID, Integer> zombies = new HashMap<UUID, Integer>();
     private final List<Integer> slimeSizes = Arrays.asList(1, 2, 4);
     private final List<String> twaMonsters = Arrays.asList("WEEPING ANGEL", "CYBERMAN", "ICE WARRIOR", "EMPTY CHILD", "SILURIAN", "SONTARAN", "STRAX", "VASHTA NERADA", "ZYGON");
     private final List<String> twaChests = Arrays.asList("Weeping Angel Chest", "Cyberman Chest", "Ice Warrior Chest", "Empty Child Chest", "Silurian Chest", "Sontaran Chest", "Strax Chest", "Vashta Nerada Chest", "Zygon Chest");
@@ -99,7 +103,7 @@ public class TARDISLazarusGUIListener extends TARDISMenuListener implements List
         if (name.equals("§4Genetic Manipulator")) {
             event.setCancelled(true);
             if (plugin.checkTWA()) {
-                max_slot = 45;
+                max_slot = 43;
             }
             int slot = event.getRawSlot();
             final Player player = (Player) event.getWhoClicked();
@@ -301,7 +305,7 @@ public class TARDISLazarusGUIListener extends TARDISMenuListener implements List
                                             break;
                                         case VILLAGER:
                                             VillagerWatcher vw = (VillagerWatcher) livingWatcher;
-                                            vw.setProfession(getProfession(inv));
+// TODO                                           vw.setProfession(getProfession(inv));
                                             vw.setBaby(getBaby(inv));
                                             break;
                                         case WOLF:
@@ -342,9 +346,13 @@ public class TARDISLazarusGUIListener extends TARDISMenuListener implements List
                                             aw.setBaby(getBaby(inv));
                                             break;
                                         case ZOMBIE:
-                                        case ZOMBIE_VILLAGER:
                                             ZombieWatcher zw = (ZombieWatcher) livingWatcher;
                                             zw.setBaby(getBaby(inv));
+// TODO                                            zw.setProfession(getZombieProfession(inv));
+                                            break;
+                                        case SKELETON:
+                                            SkeletonWatcher skw = (SkeletonWatcher) livingWatcher;
+// TODO                                           skw.setType(getSkeletonType(inv));
                                             break;
                                         default:
                                             break;
@@ -423,6 +431,15 @@ public class TARDISLazarusGUIListener extends TARDISMenuListener implements List
     private void setSlotFourtyEight(Inventory i, String d, UUID uuid) {
         String t = null;
         int o;
+        if (d.equals("SKELETON")) {
+            if (skeletons.containsKey(uuid)) {
+                o = (skeletons.get(uuid) + 1 < 3) ? skeletons.get(uuid) + 1 : 0;
+            } else {
+                o = 0;
+            }
+            t = SkeletonType.values()[o].toString();
+            skeletons.put(uuid, o);
+        }
         if (d.equals("SHEEP") || d.equals("WOLF")) {
             if (sheep.containsKey(uuid)) {
                 o = (sheep.get(uuid) + 1 < 16) ? sheep.get(uuid) + 1 : 0;
@@ -461,12 +478,21 @@ public class TARDISLazarusGUIListener extends TARDISMenuListener implements List
         }
         if (d.equals("VILLAGER")) {
             if (professions.containsKey(uuid)) {
-                o = (professions.get(uuid) + 1 < 5) ? professions.get(uuid) + 1 : 0;
+                o = (professions.get(uuid) + 1 < 6) ? professions.get(uuid) + 1 : 1;
+            } else {
+                o = 1;
+            }
+            t = Profession.values()[o].toString();
+            professions.put(uuid, o);
+        }
+        if (d.equals("ZOMBIE")) {
+            if (zombies.containsKey(uuid)) {
+                o = (zombies.get(uuid) + 1 < 7) ? zombies.get(uuid) + 1 : 0;
             } else {
                 o = 0;
             }
             t = Profession.values()[o].toString();
-            professions.put(uuid, o);
+            zombies.put(uuid, o);
         }
         if (d.equals("SLIME") || d.equals("MAGMA_CUBE")) {
             if (slimes.containsKey(uuid)) {
@@ -538,6 +564,26 @@ public class TARDISLazarusGUIListener extends TARDISMenuListener implements List
             return Profession.valueOf(im.getLore().get(0));
         } catch (IllegalArgumentException e) {
             return Profession.FARMER;
+        }
+    }
+
+    private Profession getZombieProfession(Inventory i) {
+        ItemStack is = i.getItem(48);
+        ItemMeta im = is.getItemMeta();
+        try {
+            return Profession.valueOf(im.getLore().get(0));
+        } catch (IllegalArgumentException e) {
+            return Profession.NORMAL;
+        }
+    }
+
+    private SkeletonType getSkeletonType(Inventory i) {
+        ItemStack is = i.getItem(48);
+        ItemMeta im = is.getItemMeta();
+        try {
+            return SkeletonType.valueOf(im.getLore().get(0));
+        } catch (IllegalArgumentException e) {
+            return SkeletonType.NORMAL;
         }
     }
 
