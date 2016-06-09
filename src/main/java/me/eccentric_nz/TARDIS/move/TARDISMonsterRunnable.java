@@ -154,8 +154,15 @@ public class TARDISMonsterRunnable implements Runnable {
                                                     dn = name.substring(0, name.length() - 5);
                                                 }
                                             }
-                                            if (!skeleton.getSkeletonType().equals(SkeletonType.NORMAL)) {
-                                                dn = WordUtils.capitalize(skeleton.getSkeletonType().toString().toLowerCase());
+                                            switch (skeleton.getSkeletonType()) {
+                                                case WITHER:
+                                                    dn = "Wither Skeleton";
+                                                    break;
+                                                case STRAY:
+                                                    dn = "Stray";
+                                                    break;
+                                                default:
+                                                    break;
                                             }
                                             break;
                                         case SLIME:
@@ -164,9 +171,18 @@ public class TARDISMonsterRunnable implements Runnable {
                                             break;
                                         case ZOMBIE:
                                             Zombie zombie = (Zombie) e;
-                                            tm.setProfession(zombie.getVillagerProfession());
-                                            if (zombie.getVillagerProfession() != null) {
-                                                dn = (zombie.getVillagerProfession().equals(Profession.HUSK)) ? "Husk" : "Zombie Villager";
+                                            Profession prof = zombie.getVillagerProfession();
+                                            tm.setProfession(prof);
+                                            if (prof != null) {
+                                                switch (prof) {
+                                                    case NORMAL:
+                                                        break;
+                                                    case HUSK:
+                                                        dn = "Husk";
+                                                        break;
+                                                    default:
+                                                        dn = "Zombie " + WordUtils.capitalize(prof.toString().toLowerCase());
+                                                }
                                             }
                                             tm.setBaby(zombie.isBaby());
                                             tm.setEquipment(zombie.getEquipment());
@@ -206,6 +222,40 @@ public class TARDISMonsterRunnable implements Runnable {
                                 // choose a random monster
                                 EntityType type = random_monsters.get(r.nextInt(random_monsters.size()));
                                 rtm.setType(type);
+                                String dn = WordUtils.capitalize(type.toString().toLowerCase());
+                                // set random sub types eg. Husk, Zombie Villagers, Stray & Wither Skeletons
+                                switch (type) {
+                                    case SKELETON:
+                                        SkeletonType st = SkeletonType.values()[r.nextInt(3)];
+                                        rtm.setSkeletonType(st);
+                                        switch (st) {
+                                            case WITHER:
+                                                dn = "Wither Skeleton";
+                                                break;
+                                            case STRAY:
+                                                dn = "Stray";
+                                                break;
+                                            default:
+                                                break;
+                                        }
+                                        break;
+                                    case ZOMBIE:
+                                        Profession prof = Profession.values()[r.nextInt(7)];
+                                        rtm.setProfession(prof);
+                                        switch (prof) {
+                                            case NORMAL:
+                                                break;
+                                            case HUSK:
+                                                dn = "Husk";
+                                                break;
+                                            default:
+                                                dn = "Zombie " + WordUtils.capitalize(prof.toString().toLowerCase());
+                                        }
+                                        break;
+                                    default:
+                                        break;
+                                }
+                                rtm.setDisplayName(dn);
                                 moveMonster(map.getValue(), rtm, null, type.equals(EntityType.GUARDIAN));
                             }
                         }

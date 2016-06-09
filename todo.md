@@ -19,7 +19,6 @@
 8. TARDIS Junk Mode - `/tprefs junk [wall|floor] [block_type]`?
 9. Update for Minecraft 1.10
    * Make Daleks fly?
-   * When randomly spawning zombies/skeletons also randomly choose type to set them as (Husk/Stray)
 
 ##Upcoming minor version `3.7`  
  
