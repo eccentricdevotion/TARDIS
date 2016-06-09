@@ -17,14 +17,32 @@
     * Update console schematics to add Control Centre sign, Sonic Generator
     * Remove other control signs from console schematics
 8. TARDIS Junk Mode - `/tprefs junk [wall|floor] [block_type]`?
-
-##Upcoming minor version `3.7`
-1. Update for Minecraft 1.10
+9. Update for Minecraft 1.10
    * Add new blocks
    * Add new mobs
    * Use new spawn eggs (farming & Lazarus GUI)
    * Structure blocks?
    * Polar bear farming
+   
+   ```
+    MAGMA(213),
+    NETHER_WART_BLOCK(214),
+    RED_NETHER_BRICK(215),
+    BONE_BLOCK(216),
+    
+    Entity.setGravity(boolean gravity);
+    
+    PolarBear.class
+    
+    Skeleton.setType(SkeletonType.STRAY);
+    
+    Villager.setProfession(Profession.HUSK)
+    
+    Particle.FALLING_DUST
+    ```
+
+##Upcoming minor version `3.7`  
+ 
 2. TARDISSonicBlaster addon?
 
 ?
