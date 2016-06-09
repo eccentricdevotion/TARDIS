@@ -48,6 +48,7 @@ public class TARDISConfiguration {
     private FileConfiguration rooms_config = null;
     private FileConfiguration signs_config = null;
     private FileConfiguration chameleon_config = null;
+    private FileConfiguration planets_config = null;
     private File configFile = null;
     HashMap<String, String> strOptions = new HashMap<String, String>();
     HashMap<String, Integer> intOptions = new HashMap<String, Integer>();
@@ -72,6 +73,7 @@ public class TARDISConfiguration {
         this.rooms_config = plugin.getRoomsConfig();
         this.signs_config = plugin.getSigns();
         this.chameleon_config = plugin.getChameleonGuis();
+        this.planets_config = plugin.getPlanetsConfig();
         // boolean
         boolOptions.put("allow.3d_doors", false);
         boolOptions.put("allow.achievements", true);
@@ -409,6 +411,7 @@ public class TARDISConfiguration {
         roomStrOptions.put("rooms.ZERO.seed", "WOOD_BUTTON");
         signListOptions.put("junk", Arrays.asList("Destination"));
         chameleonOptions.put("USE_PREV", "Use last saved construct");
+
         removeOptions.add("creation.materialise");
         removeOptions.add("police_box.platform_data");
         removeOptions.add("police_box.platform_id");
@@ -810,6 +813,19 @@ public class TARDISConfiguration {
             }
         } catch (IOException io) {
             plugin.debug("Could not save chameleon_guis.yml, " + io.getMessage());
+        }
+    }
+
+    public void checkPlanetsConfig() {
+        if (!planets_config.contains("planets.Skaro.flying_daleks")) {
+            planets_config.set("planets.Skaro.flying_daleks", true);
+            try {
+                String planetsPath = plugin.getDataFolder() + File.separator + "planets.yml";
+                planets_config.save(new File(planetsPath));
+                plugin.getConsole().sendMessage(plugin.getPluginName() + "Added " + ChatColor.AQUA + "1" + ChatColor.RESET + " new item to planets.yml");
+            } catch (IOException io) {
+                plugin.debug("Could not save chameleon_guis.yml, " + io.getMessage());
+            }
         }
     }
 }

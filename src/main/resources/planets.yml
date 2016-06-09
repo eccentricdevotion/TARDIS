@@ -11,5 +11,6 @@ planets:
             - WEAKNESS
             - POISON
         rust: true
+        flying_daleks: true
     TARDIS_TimeVortex:
         resource_pack: default
