@@ -18,24 +18,8 @@
     * Remove other control signs from console schematics
 8. TARDIS Junk Mode - `/tprefs junk [wall|floor] [block_type]`?
 9. Update for Minecraft 1.10
-   * Structure blocks?
-   
-   ```
-    MAGMA(213),
-    NETHER_WART_BLOCK(214),
-    RED_NETHER_BRICK(215),
-    BONE_BLOCK(216),
-    
-    Entity.setGravity(boolean gravity);
-    
-    PolarBear.class
-    
-    Skeleton.setType(SkeletonType.STRAY);
-    
-    Villager.setProfession(Profession.HUSK)
-    
-    Particle.FALLING_DUST
-    ```
+   * Make Daleks fly?
+   * When randomly spawning zombies/skeletons also randomly choose type to set them as (Husk/Stray)
 
 ##Upcoming minor version `3.7`  
  
