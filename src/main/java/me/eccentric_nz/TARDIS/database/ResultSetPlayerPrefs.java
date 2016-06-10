@@ -77,6 +77,7 @@ public class ResultSetPlayerPrefs {
     private boolean policeboxTexturesOn;
     private int flightMode;
     private boolean easyDifficulty;
+    private boolean autoPowerUp;
     private final String prefix;
 
     /**
@@ -188,6 +189,7 @@ public class ResultSetPlayerPrefs {
                 this.policeboxTexturesOn = rs.getBoolean("policebox_textures_on");
                 this.flightMode = rs.getInt("flying_mode");
                 this.easyDifficulty = rs.getBoolean("difficulty");
+                this.autoPowerUp = rs.getBoolean("auto_powerup_on");
             } else {
                 return false;
             }
@@ -355,5 +357,9 @@ public class ResultSetPlayerPrefs {
 
     public boolean isEasyDifficulty() {
         return easyDifficulty;
+    }
+
+    public boolean isAutoPowerUp() {
+        return autoPowerUp;
     }
 }

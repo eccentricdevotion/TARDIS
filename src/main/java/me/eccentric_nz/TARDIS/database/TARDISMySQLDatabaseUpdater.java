@@ -64,10 +64,12 @@ public class TARDISMySQLDatabaseUpdater {
         tardisupdates.add("renderer varchar(512) DEFAULT ''");
         tardisupdates.add("siege_on int(1) DEFAULT '0'");
         tardisupdates.add("zero varchar(512) DEFAULT ''");
+        tardisupdates.add("igloo varchar(512) DEFAULT ''");
         prefsupdates.add("auto_siege_on int(1) DEFAULT '0'");
         prefsupdates.add("build_on int(1) DEFAULT '1'");
         prefsupdates.add("ctm_on int(1) DEFAULT '0'");
         prefsupdates.add("difficulty int(1) DEFAULT '0'");
+        prefsupdates.add("dnd_on int(1) DEFAULT '0'");
         prefsupdates.add("farm_on int(1) DEFAULT '0'");
         prefsupdates.add("flying_mode int(1) DEFAULT '1'");
         prefsupdates.add("hads_type varchar(12) DEFAULT 'DISPLACEMENT'");
@@ -82,6 +84,7 @@ public class TARDISMySQLDatabaseUpdater {
         prefsupdates.add("telepathy_on int(1) DEFAULT '0'");
         prefsupdates.add("travelbar_on int(1) DEFAULT '0'");
         prefsupdates.add("wool_lights_on int(1) DEFAULT '0'");
+        prefsupdates.add("auto_powerup_on int(1) DEFAULT '0'");
         destsupdates.add("slot int(1) DEFAULT '-1'");
         countupdates.add("grace int(3) DEFAULT '0'");
         inventoryupdates.add("attributes text");

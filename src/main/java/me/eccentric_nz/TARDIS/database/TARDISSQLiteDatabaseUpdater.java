@@ -97,6 +97,7 @@ public class TARDISSQLiteDatabaseUpdater {
         prefsupdates.add("travelbar_on INTEGER DEFAULT 0");
         prefsupdates.add("wall TEXT DEFAULT 'ORANGE_WOOL'");
         prefsupdates.add("wool_lights_on INTEGER DEFAULT 0");
+        prefsupdates.add("auto_powerup_on INTEGER DEFAULT 0");
         tardisupdates.add("adapti_on INTEGER DEFAULT 0");
         tardisupdates.add("artron_level INTEGER DEFAULT 0");
         tardisupdates.add("beacon TEXT DEFAULT ''");
