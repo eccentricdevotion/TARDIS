@@ -106,7 +106,7 @@ public class TARDISMoveListener implements Listener {
                 boolean minecart = (hasPrefs) ? rsp.isMinecartOn() : false;
                 boolean userQuotes = (hasPrefs) ? rsp.isQuotesOn() : false;
                 boolean willFarm = (hasPrefs) ? rsp.isFarmOn() : false;
-                boolean canPowerUp = (hasPrefs) ? rsp.isFarmOn() : false;
+                boolean canPowerUp = (hasPrefs) ? rsp.isAutoPowerUp() : false;
                 // check for entities near the police box
                 List<TARDISMob> pets = null;
                 if (plugin.getConfig().getBoolean("allow.mob_farming") && p.hasPermission("tardis.farm") && !plugin.getTrackerKeeper().getFarming().contains(uuid) && willFarm) {
@@ -148,7 +148,9 @@ public class TARDISMoveListener implements Listener {
                             ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);
                             if (rs.resultSet()) {
                                 Tardis tardis = rs.getTardis();
-                                new TARDISPowerButton(plugin, id, p, tardis.getPreset(), false, tardis.isHidden(), tardis.isLights_on(), p.getLocation(), tardis.getArtron_level(), tardis.getSchematic().hasLanterns()).clickButton();
+                                if (!tardis.isPowered_on()) {
+                                    new TARDISPowerButton(plugin, id, p, tardis.getPreset(), false, tardis.isHidden(), tardis.isLights_on(), p.getLocation(), tardis.getArtron_level(), tardis.getSchematic().hasLanterns()).clickButton();
+                                }
                             }
                         }
                     }, 20L);
