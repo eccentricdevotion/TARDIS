@@ -18,7 +18,7 @@
     * Remove other control signs from console schematics
 8. TARDIS Junk Mode - `/tprefs junk [wall|floor] [block_type]`?
 9. Update for Minecraft 1.10
-   * Make Daleks fly?
+   * Waiting on LibsDisguises to update (so we can finish Lazarus Device)
 
 ##Upcoming minor version `3.7`  
  

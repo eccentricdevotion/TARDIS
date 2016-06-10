@@ -143,9 +143,7 @@ public class TARDISSiegeListener implements Listener {
         // set block to AIR
         b.setType(Material.AIR);
         Item item = b.getWorld().dropItemNaturally(b.getLocation(), is);
-        if (plugin.isHelperOnServer()) {
-            plugin.getTardisHelper().protect(item);
-        }
+        item.setInvulnerable(true);
         // track it
         plugin.getTrackerKeeper().getIsSiegeCube().add(id);
         // track the player as well
@@ -173,9 +171,7 @@ public class TARDISSiegeListener implements Listener {
             TARDISMessage.send(p, "SIEGE_NO_TARDIS");
             return;
         }
-        if (plugin.isHelperOnServer()) {
-            plugin.getTardisHelper().protect(item);
-        }
+        item.setInvulnerable(true);
         plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
             @Override
             @SuppressWarnings("deprecation")
