@@ -55,6 +55,7 @@ public class TARDISPrefsMenuListener implements Listener {
 
     public TARDISPrefsMenuListener(TARDIS plugin) {
         this.plugin = plugin;
+        lookup.put("Auto Power Up", "auto_powerup_on");
         lookup.put("Autonomous", "auto_on");
         lookup.put("Autonomous Siege", "auto_siege_on");
         lookup.put("Beacon", "beacon_on");
@@ -204,7 +205,7 @@ public class TARDISPrefsMenuListener implements Listener {
                             String current = tardis.getPreset().toString();
                             int id = tardis.getTardis_id();
                             String chameleon = tardis.getChameleon();
-                            String cham_set = "";
+                            String cham_set;
                             HashMap<String, Object> setj = new HashMap<String, Object>();
                             if (has) {
                                 // update rcord with current preset

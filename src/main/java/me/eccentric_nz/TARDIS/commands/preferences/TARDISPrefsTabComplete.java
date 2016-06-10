@@ -35,7 +35,7 @@ import org.bukkit.command.TabCompleter;
 public class TARDISPrefsTabComplete extends TARDISCompleter implements TabCompleter {
 
     private final TARDIS plugin;
-    private final ImmutableList<String> ROOT_SUBS = ImmutableList.of("auto", "auto_siege", "build", "beacon", "ctm", "difficulty", "dnd", "eps", "eps_message", "farm", "flight", "floor", "hads", "hads_type", "isomorphic", "junk", "key", "key_menu", "lamp", "language", "lanterns", "minecart", "policebox_textures", "quotes", "renderer", "sfx", "siege_floor", "siege_wall", "sign", "sonic", "submarine", "telepathy", "travelbar", "wall", "wool_lights");
+    private final ImmutableList<String> ROOT_SUBS = ImmutableList.of("auto", "auto_powerup", "auto_siege", "build", "beacon", "ctm", "difficulty", "dnd", "eps", "eps_message", "farm", "flight", "floor", "hads", "hads_type", "isomorphic", "junk", "key", "key_menu", "lamp", "language", "lanterns", "minecart", "policebox_textures", "quotes", "renderer", "sfx", "siege_floor", "siege_wall", "sign", "sonic", "submarine", "telepathy", "travelbar", "wall", "wool_lights");
     private final ImmutableList<String> DIFF_SUBS = ImmutableList.of("easy", "hard");
     private final ImmutableList<String> ONOFF_SUBS = ImmutableList.of("on", "off");
     private final ImmutableList<String> HADS_SUBS = ImmutableList.of("DISPLACEMENT", "DISPERSAL");

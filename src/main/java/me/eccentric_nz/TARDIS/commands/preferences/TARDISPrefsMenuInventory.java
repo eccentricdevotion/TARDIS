@@ -267,8 +267,17 @@ public class TARDISPrefsMenuInventory {
         nk.setLore(Arrays.asList(junk_value));
         ju.setItemMeta(nk);
         options.add(ju);
+        // auto powerup
+        ItemStack power = new ItemStack(Material.DIODE, 1);
+        ItemMeta up = power.getItemMeta();
+        up.setDisplayName("Auto Power Up");
+        String pu_value = (rsp.isAutoPowerUp()) ? plugin.getLanguage().getString("SET_ON") : plugin.getLanguage().getString("SET_OFF");
+        up.setLore(Arrays.asList(pu_value));
+        power.setItemMeta(up);
+        options.add(power);
+        // add to stack
         ItemStack[] stack = new ItemStack[27];
-        for (int s = 0; s < 22; s++) {
+        for (int s = 0; s < 23; s++) {
             if (s < options.size()) {
                 stack[s] = options.get(s);
             } else {

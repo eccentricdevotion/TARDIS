@@ -20,10 +20,13 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.control.TARDISPowerButton;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetCompanions;
 import me.eccentric_nz.TARDIS.database.ResultSetPlayerPrefs;
+import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import me.eccentric_nz.TARDIS.database.ResultSetVoid;
+import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
 import me.eccentric_nz.TARDIS.mobfarming.TARDISFarmer;
 import me.eccentric_nz.TARDIS.mobfarming.TARDISMob;
@@ -51,7 +54,7 @@ public class TARDISMoveListener implements Listener {
 
     @EventHandler(priority = EventPriority.MONITOR)
     public void onPlayerMoveToFromTARDIS(PlayerMoveEvent event) {
-        Player p = event.getPlayer();
+        final Player p = event.getPlayer();
         if (!plugin.getTrackerKeeper().getMover().contains(p.getUniqueId())) {
             return;
         }
@@ -75,7 +78,7 @@ public class TARDISMoveListener implements Listener {
         if (plugin.getTrackerKeeper().getPortals().containsKey(l)) {
             TARDISTeleportLocation tpl = plugin.getTrackerKeeper().getPortals().get(l);
             UUID uuid = p.getUniqueId();
-            int id = tpl.getTardisId();
+            final int id = tpl.getTardisId();
             // are they a companion of this TARDIS?
             List<UUID> companions = new ResultSetCompanions(plugin, id).getCompanions();
             if (companions.contains(uuid)) {
@@ -103,6 +106,7 @@ public class TARDISMoveListener implements Listener {
                 boolean minecart = (hasPrefs) ? rsp.isMinecartOn() : false;
                 boolean userQuotes = (hasPrefs) ? rsp.isQuotesOn() : false;
                 boolean willFarm = (hasPrefs) ? rsp.isFarmOn() : false;
+                boolean canPowerUp = (hasPrefs) ? rsp.isFarmOn() : false;
                 // check for entities near the police box
                 List<TARDISMob> pets = null;
                 if (plugin.getConfig().getBoolean("allow.mob_farming") && p.hasPermission("tardis.farm") && !plugin.getTrackerKeeper().getFarming().contains(uuid) && willFarm) {
@@ -133,6 +137,21 @@ public class TARDISMoveListener implements Listener {
                 plugin.getGeneralKeeper().getDoorListener().movePlayer(p, to, exit, l.getWorld(), userQuotes, 0, minecart);
                 if (pets != null && pets.size() > 0) {
                     plugin.getGeneralKeeper().getDoorListener().movePets(pets, tpl.getLocation(), p, d, true);
+                }
+                if (canPowerUp && exit == false) {
+                    // power up the TARDIS
+                    plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
+                        @Override
+                        public void run() {
+                            HashMap<String, Object> where = new HashMap<String, Object>();
+                            where.put("tardis_id", id);
+                            ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);
+                            if (rs.resultSet()) {
+                                Tardis tardis = rs.getTardis();
+                                new TARDISPowerButton(plugin, id, p, tardis.getPreset(), false, tardis.isHidden(), tardis.isLights_on(), p.getLocation(), tardis.getArtron_level(), tardis.getSchematic().hasLanterns()).clickButton();
+                            }
+                        }
+                    }, 20L);
                 }
                 if (userQuotes) {
                     TARDISMessage.send(p, "DOOR_REMIND");

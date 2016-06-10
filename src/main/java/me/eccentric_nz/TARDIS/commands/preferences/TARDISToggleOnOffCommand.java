@@ -36,13 +36,17 @@ public class TARDISToggleOnOffCommand {
 
     public TARDISToggleOnOffCommand(TARDIS plugin) {
         this.plugin = plugin;
-        this.was = Arrays.asList("auto", "auto_siege", "beacon", "build", "ctm", "difficulty", "dnd", "eps", "farm", "hads", "minecart", "renderer", "submarine", "travelbar");
+        this.was = Arrays.asList("auto", "auto_powerup", "auto_siege", "beacon", "build", "ctm", "difficulty", "dnd", "eps", "farm", "hads", "minecart", "renderer", "submarine", "travelbar");
     }
 
     public boolean toggle(Player player, String[] args, QueryFactory qf) {
         String pref = args[0];
         if (pref.equals("auto") && !plugin.getConfig().getBoolean("allow.autonomous")) {
             TARDISMessage.send(player, "AUTO_DISABLED");
+            return true;
+        }
+        if (pref.equals("auto_powerup") && !plugin.getConfig().getBoolean("allow.power_down")) {
+            TARDISMessage.send(player, "POWER_DOWN_DISABLED");
             return true;
         }
         if (pref.equals("eps") && !plugin.getConfig().getBoolean("allow.emergency_npc")) {
