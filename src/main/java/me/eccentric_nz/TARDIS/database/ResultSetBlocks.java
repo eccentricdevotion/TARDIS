@@ -107,7 +107,7 @@ public class ResultSetBlocks {
                             str,
                             rs.getInt("block"),
                             rs.getByte("data"),
-                            rs.getBoolean("police_box")
+                            rs.getInt("police_box")
                     );
                     if (multiple) {
                         data.add(replacedBlock);

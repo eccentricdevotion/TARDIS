@@ -40,6 +40,7 @@ import me.eccentric_nz.TARDIS.enumeration.DIFFICULTY;
 import me.eccentric_nz.TARDIS.enumeration.DISK_CIRCUIT;
 import me.eccentric_nz.TARDIS.enumeration.PRESET;
 import me.eccentric_nz.TARDIS.travel.TARDISMalfunction;
+import me.eccentric_nz.TARDIS.utility.TARDISBlockSetters;
 import me.eccentric_nz.TARDIS.utility.TARDISLocationGetters;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import me.eccentric_nz.TARDIS.utility.TARDISNumberParsers;
@@ -50,6 +51,7 @@ import org.bukkit.Sound;
 import org.bukkit.World;
 import org.bukkit.block.Biome;
 import org.bukkit.block.Block;
+import org.bukkit.block.BlockFace;
 import org.bukkit.block.BlockState;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -252,6 +254,10 @@ public class TARDISHandbrakeListener implements Listener {
                                                         qf.alterEnergyLevel("tardis", amount, wheret, player);
                                                         TARDISMessage.send(player, "Q_FLY");
                                                         plugin.getTrackerKeeper().getHasDestination().remove(id);
+                                                    }
+                                                    // set beacon colour to red
+                                                    if (!beacon.isEmpty()) {
+                                                        setBeaconUpBlock(beacon, id);
                                                     }
                                                     // play tardis crash sound
                                                     TARDISSounds.playTARDISSound(handbrake_loc, "tardis_malfunction");
@@ -522,6 +528,21 @@ public class TARDISHandbrakeListener implements Listener {
         Location bl = new Location(w, bx, by, bz);
         Block b = bl.getBlock();
         b.setType((on) ? Material.GLASS : Material.REDSTONE_BLOCK);
+    }
+
+    private void setBeaconUpBlock(String str, int id) {
+        plugin.debug("attempt to set red glass block");
+        String[] beaconData = str.split(":");
+        World w = plugin.getServer().getWorld(beaconData[0]);
+        int bx = TARDISNumberParsers.parseInt(beaconData[1]);
+        int by = TARDISNumberParsers.parseInt(beaconData[2]) + 1;
+        int bz = TARDISNumberParsers.parseInt(beaconData[3]);
+        Location bl = new Location(w, bx, by, bz);
+        Block b = bl.getBlock();
+        while (!b.getType().equals(Material.BEACON)) {
+            b = b.getRelative(BlockFace.DOWN);
+        }
+        TARDISBlockSetters.setBlockAndRemember(b.getRelative(BlockFace.UP), Material.STAINED_GLASS, (byte) 14, id, 2);
     }
 
     @SuppressWarnings("deprecation")

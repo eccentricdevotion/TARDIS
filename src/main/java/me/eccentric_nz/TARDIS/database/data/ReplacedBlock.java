@@ -30,9 +30,9 @@ public class ReplacedBlock {
     private final String strLocation;
     private final int blockId;
     private final byte blockData;
-    private final boolean police_box;
+    private final int police_box;
 
-    public ReplacedBlock(int id, int tardis_id, Location location, String strLocation, int blockId, byte blockData, boolean police_box) {
+    public ReplacedBlock(int id, int tardis_id, Location location, String strLocation, int blockId, byte blockData, int police_box) {
         this.id = id;
         this.tardis_id = tardis_id;
         this.location = location;
@@ -66,7 +66,7 @@ public class ReplacedBlock {
         return blockData;
     }
 
-    public boolean isPolice_box() {
+    public int getPolice_box() {
         return police_box;
     }
 }

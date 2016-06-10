@@ -28,9 +28,11 @@ import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.chameleon.TARDISChameleonColumn;
 import me.eccentric_nz.TARDIS.chameleon.TARDISConstructColumn;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
+import me.eccentric_nz.TARDIS.database.ResultSetBlocks;
 import me.eccentric_nz.TARDIS.database.ResultSetDoors;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import me.eccentric_nz.TARDIS.database.ResultSetTravellers;
+import me.eccentric_nz.TARDIS.database.data.ReplacedBlock;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
 import me.eccentric_nz.TARDIS.enumeration.PRESET;
@@ -708,6 +710,19 @@ public class TARDISMaterialisationPreset implements Runnable {
                         }
                     } else if (plugin.getTrackerKeeper().getJunkPlayers().containsKey(tmd.getPlayer().getUniqueId())) {
                         TARDISMessage.send(tmd.getPlayer().getPlayer(), "JUNK_HANDBRAKE_LEFT_CLICK");
+                    }
+                    // restore beacon up block if present
+                    HashMap<String, Object> whereb = new HashMap<String, Object>();
+                    whereb.put("tardis_id", tmd.getTardisID());
+                    whereb.put("police_box", 2);
+                    ResultSetBlocks rs = new ResultSetBlocks(plugin, whereb, false);
+                    if (rs.resultSet()) {
+                        ReplacedBlock rb = rs.getReplacedBlock();
+                        TARDISBlockSetters.setBlock(rb.getLocation(), rb.getBlock(), rb.getData());
+                        HashMap<String, Object> whered = new HashMap<String, Object>();
+                        whered.put("tardis_id", tmd.getTardisID());
+                        whered.put("police_box", 2);
+                        new QueryFactory(plugin).doDelete("blocks", whered);
                     }
                 }
             }

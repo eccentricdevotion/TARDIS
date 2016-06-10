@@ -6,17 +6,16 @@
 ##Next minor version `3.6-beta-1
 
 1. TIPS visulisation tool (using WorldGuard region data)
-2. [Red time rotor](http://dev.bukkit.org/bukkit-plugins/tardis/tickets/1216-red-time-rotor/)
-3. [TARDIS planets](http://dev.bukkit.org/bukkit-plugins/tardis/tickets/1168-a-dalek-conquest/)
+2. [TARDIS planets](http://dev.bukkit.org/bukkit-plugins/tardis/tickets/1168-a-dalek-conquest/)
     * Determine a use for Acid and Rust Buckets
     * Add other worlds (Silurian cave world, Gallifrey)?
-4. [Abandoned TARDISes](http://dev.bukkit.org/bukkit-plugins/tardis/tickets/1277-possibility-to-abandon-a-tardis/)
-5. [Destination 'vortex'](http://dev.bukkit.org/bukkit-plugins/tardis/tickets/1023-set-the-tardis-inflight-without-setting-a-destination/) - dematerialise without setting a destination.
-6. [Improve Control Centre](http://dev.bukkit.org/bukkit-plugins/tardis/tickets/1324-improving-control-centre/)
+3. [Abandoned TARDISes](http://dev.bukkit.org/bukkit-plugins/tardis/tickets/1277-possibility-to-abandon-a-tardis/)
+4. [Destination 'vortex'](http://dev.bukkit.org/bukkit-plugins/tardis/tickets/1023-set-the-tardis-inflight-without-setting-a-destination/) - dematerialise without setting a destination.
+5. [Improve Control Centre](http://dev.bukkit.org/bukkit-plugins/tardis/tickets/1324-improving-control-centre/)
     * Update console schematics to add Control Centre sign, Sonic Generator
     * Remove other control signs from console schematics
-7. TARDIS Junk Mode - `/tprefs junk [wall|floor] [block_type]`?
-8. Update for Minecraft 1.10
+6. TARDIS Junk Mode - `/tprefs junk [wall|floor] [block_type]`?
+7. Update for Minecraft 1.10
    * Waiting on LibsDisguises to update (so we can finish Lazarus Device)
 
 ##Upcoming minor version `3.7`  

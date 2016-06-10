@@ -188,6 +188,35 @@ public class TARDISBlockSetters {
     }
 
     /**
+     * Sets a block to the specified type and data and remembers its location,
+     * typeId and data.
+     *
+     * @param b the block to set and remember
+     * @param m the typeId to set the block to.
+     * @param d the data bit to set the block to.
+     * @param id the TARDIS this block belongs to.
+     * @param type the police_box type (0 = interior, 1 = police box, 2 = beacon
+     * up block)
+     */
+    @SuppressWarnings("deprecation")
+    public static void setBlockAndRemember(Block b, Material m, byte d, int id, int type) {
+        // save the block location so that we can restore it (if it wasn't air)!
+        String l = b.getLocation().toString();
+        HashMap<String, Object> set = new HashMap<String, Object>();
+        set.put("tardis_id", id);
+        set.put("location", l);
+        int bid = b.getTypeId();
+        byte data = b.getData();
+        set.put("block", bid);
+        set.put("data", data);
+        set.put("police_box", type);
+        new QueryFactory(TARDIS.plugin).doInsert("blocks", set);
+        // set the block
+        b.setType(m);
+        b.setData(d, true);
+    }
+
+    /**
      * Sets the block under the TARDIS Police Box door to the specified typeId
      * and data and remembers the block for replacement later on.
      *
