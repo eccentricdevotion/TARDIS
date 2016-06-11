@@ -18,11 +18,11 @@ package me.eccentric_nz.TARDIS.commands.remote;
 
 import java.util.HashMap;
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.builders.TARDISMaterialisationData;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetCurrentLocation;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import me.eccentric_nz.TARDIS.database.ResultSetTardisPreset;
+import me.eccentric_nz.TARDIS.destroyers.DestroyData;
 import me.eccentric_nz.TARDIS.enumeration.PRESET;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import org.bukkit.Location;
@@ -43,6 +43,10 @@ public class TARDISRemoteHideCommand {
     }
 
     public boolean doRemoteHide(CommandSender sender, int id) {
+        if (plugin.getTrackerKeeper().getDestinationVortex().containsKey(id)) {
+            TARDISMessage.send(sender, "NOT_IN_VORTEX");
+            return true;
+        }
         HashMap<String, Object> wherecl = new HashMap<String, Object>();
         wherecl.put("tardis_id", id);
         ResultSetCurrentLocation rsc = new ResultSetCurrentLocation(plugin, wherecl);
@@ -68,18 +72,17 @@ public class TARDISRemoteHideCommand {
             TARDISMessage.send(olp.getPlayer(), "INVISIBILITY_ENGAGED");
             return true;
         }
-        final TARDISMaterialisationData pdd = new TARDISMaterialisationData(plugin, olp.getUniqueId().toString());
-        pdd.setChameleon(false);
-        pdd.setDirection(rsc.getDirection());
-        pdd.setLocation(l);
-        pdd.setDematerialise(false);
-        pdd.setPlayer(olp);
-        pdd.setHide(false);
-        pdd.setOutside(false);
-        pdd.setSubmarine(rsc.isSubmarine());
-        pdd.setTardisID(id);
-        pdd.setBiome(rsc.getBiome());
-        plugin.getPresetDestroyer().destroyPreset(pdd);
+        final DestroyData dd = new DestroyData(plugin, olp.getUniqueId().toString());
+        dd.setChameleon(false);
+        dd.setDirection(rsc.getDirection());
+        dd.setLocation(l);
+        dd.setPlayer(olp);
+        dd.setHide(false);
+        dd.setOutside(false);
+        dd.setSubmarine(rsc.isSubmarine());
+        dd.setTardisID(id);
+        dd.setBiome(rsc.getBiome());
+        plugin.getPresetDestroyer().destroyPreset(dd);
         TARDISMessage.send(sender, "TARDIS_HIDDEN", "/tardisremote [player] rebuild");
         // set hidden to true
         HashMap<String, Object> whereh = new HashMap<String, Object>();

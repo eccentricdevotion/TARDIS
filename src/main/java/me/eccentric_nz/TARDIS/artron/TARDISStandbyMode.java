@@ -99,7 +99,7 @@ public class TARDISStandbyMode implements Runnable {
     }
 
     private boolean isTravelling(int id) {
-        return (plugin.getTrackerKeeper().getDematerialising().contains(id) || plugin.getTrackerKeeper().getMaterialising().contains(id) || plugin.getTrackerKeeper().getInVortex().contains(id));
+        return (plugin.getTrackerKeeper().getDematerialising().contains(id) || plugin.getTrackerKeeper().getMaterialising().contains(id) || plugin.getTrackerKeeper().getInVortex().contains(id) || plugin.getTrackerKeeper().getDestinationVortex().containsKey(id));
     }
 
     /**
@@ -109,7 +109,7 @@ public class TARDISStandbyMode implements Runnable {
         HashMap<String, Object> where = new HashMap<String, Object>();
         where.put("tardis_id", id);
         ResultSetCurrentLocation rs = new ResultSetCurrentLocation(plugin, where);
-        if (!rs.resultSet()) {
+        if (plugin.getTrackerKeeper().getDestinationVortex().containsKey(id) || !rs.resultSet()) {
             return false;
         }
         if (rs.getWorld() == null) {

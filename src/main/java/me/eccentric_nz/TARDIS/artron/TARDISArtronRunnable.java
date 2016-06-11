@@ -72,7 +72,7 @@ public class TARDISArtronRunnable implements Runnable {
         HashMap<String, Object> where = new HashMap<String, Object>();
         where.put("tardis_id", id);
         ResultSetCurrentLocation rs = new ResultSetCurrentLocation(plugin, where);
-        if (!rs.resultSet()) {
+        if (plugin.getTrackerKeeper().getDestinationVortex().containsKey(id) || !rs.resultSet()) {
             return false;
         }
         if (rs.getWorld() == null) {

@@ -27,6 +27,7 @@ import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import me.eccentric_nz.TARDIS.database.ResultSetTardisArtron;
 import me.eccentric_nz.TARDIS.database.ResultSetTravellers;
 import me.eccentric_nz.TARDIS.enumeration.FLAG;
+import me.eccentric_nz.TARDIS.flight.TARDISLand;
 import me.eccentric_nz.TARDIS.travel.TARDISAreasInventory;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import me.eccentric_nz.TARDIS.utility.TARDISNumberParsers;
@@ -166,7 +167,7 @@ public class TARDISSaveSignListener extends TARDISMenuListener implements Listen
                                         return;
                                     }
                                 }
-                                if (!save_dest.equals(current)) {
+                                if (!save_dest.equals(current) || plugin.getTrackerKeeper().getDestinationVortex().containsKey(id)) {
                                     HashMap<String, Object> set = new HashMap<String, Object>();
                                     set.put("world", lore.get(0));
                                     set.put("x", TARDISNumberParsers.parseInt(lore.get(1)));
@@ -191,7 +192,10 @@ public class TARDISSaveSignListener extends TARDISMenuListener implements Listen
                                         plugin.getTrackerKeeper().getRescue().remove(id);
                                     }
                                     close(player);
-                                    TARDISMessage.send(player, "DEST_SET_TERMINAL", im.getDisplayName(), true);
+                                    TARDISMessage.send(player, "DEST_SET_TERMINAL", im.getDisplayName(), !plugin.getTrackerKeeper().getDestinationVortex().containsKey(id));
+                                    if (plugin.getTrackerKeeper().getDestinationVortex().containsKey(id)) {
+                                        new TARDISLand(plugin, id, player).exitVortex();
+                                    }
                                 } else if (!lore.contains("§6Current location")) {
                                     lore.add("§6Current location");
                                     im.setLore(lore);

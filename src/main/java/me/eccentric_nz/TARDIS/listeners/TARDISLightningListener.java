@@ -68,6 +68,9 @@ public class TARDISLightningListener implements Listener {
                         charging = false;
                     }
                     int id = t.getTardis_id();
+                    if (plugin.getTrackerKeeper().getDestinationVortex().containsKey(id)) {
+                        return;
+                    }
                     HashMap<String, Object> wherecl = new HashMap<String, Object>();
                     wherecl.put("tardis_id", id);
                     ResultSetCurrentLocation rsc = new ResultSetCurrentLocation(plugin, wherecl);

@@ -69,6 +69,10 @@ public class TARDISSiegeButton {
             TARDISMessage.send(player, "TARDIS_NO_REBUILD");
             return;
         }
+        if (plugin.getTrackerKeeper().getDestinationVortex().containsKey(id)) {
+            TARDISMessage.send(player.getPlayer(), "NOT_IN_VORTEX");
+            return;
+        }
         if (plugin.getTrackerKeeper().getInVortex().contains(id)) {
             TARDISMessage.send(player, "NOT_WHILE_MAT");
             return;

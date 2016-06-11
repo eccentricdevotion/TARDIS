@@ -19,39 +19,29 @@ package me.eccentric_nz.TARDIS.flight;
 import java.util.HashMap;
 import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.achievement.TARDISAchievementFactory;
 import me.eccentric_nz.TARDIS.advanced.TARDISCircuitChecker;
 import me.eccentric_nz.TARDIS.advanced.TARDISCircuitDamager;
 import me.eccentric_nz.TARDIS.artron.TARDISArtronIndicator;
 import me.eccentric_nz.TARDIS.artron.TARDISArtronLevels;
-import me.eccentric_nz.TARDIS.builders.TARDISMaterialisationData;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetControls;
-import me.eccentric_nz.TARDIS.database.ResultSetCurrentLocation;
 import me.eccentric_nz.TARDIS.database.ResultSetDoors;
 import me.eccentric_nz.TARDIS.database.ResultSetJunk;
-import me.eccentric_nz.TARDIS.database.ResultSetNextLocation;
 import me.eccentric_nz.TARDIS.database.ResultSetPlayerPrefs;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import me.eccentric_nz.TARDIS.database.ResultSetTravellers;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
-import me.eccentric_nz.TARDIS.enumeration.COMPASS;
 import me.eccentric_nz.TARDIS.enumeration.DIFFICULTY;
 import me.eccentric_nz.TARDIS.enumeration.DISK_CIRCUIT;
 import me.eccentric_nz.TARDIS.enumeration.PRESET;
-import me.eccentric_nz.TARDIS.travel.TARDISMalfunction;
-import me.eccentric_nz.TARDIS.utility.TARDISBlockSetters;
 import me.eccentric_nz.TARDIS.utility.TARDISLocationGetters;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import me.eccentric_nz.TARDIS.utility.TARDISNumberParsers;
 import me.eccentric_nz.TARDIS.utility.TARDISSounds;
 import org.bukkit.Location;
 import org.bukkit.Material;
-import org.bukkit.Sound;
 import org.bukkit.World;
-import org.bukkit.block.Biome;
 import org.bukkit.block.Block;
-import org.bukkit.block.BlockFace;
 import org.bukkit.block.BlockState;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -60,8 +50,6 @@ import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.material.Lever;
-import org.bukkit.potion.PotionEffect;
-import org.bukkit.potion.PotionEffectType;
 
 /**
  * The handbrake was a utensil on the TARDIS used for quick stops. River song
@@ -146,12 +134,6 @@ public class TARDISHandbrakeListener implements Listener {
                     wherei.put("tardis_id", id);
                     ResultSetTardis rs = new ResultSetTardis(plugin, wherei, "", false);
                     HashMap<String, Object> set = new HashMap<String, Object>();
-                    final HashMap<String, Object> setcurrent = new HashMap<String, Object>();
-                    final HashMap<String, Object> wherecurrent = new HashMap<String, Object>();
-                    final HashMap<String, Object> setback = new HashMap<String, Object>();
-                    final HashMap<String, Object> whereback = new HashMap<String, Object>();
-                    final HashMap<String, Object> setdoor = new HashMap<String, Object>();
-                    final HashMap<String, Object> wheredoor = new HashMap<String, Object>();
                     if (rs.resultSet()) {
                         Tardis tardis = rs.getTardis();
                         final PRESET preset = tardis.getPreset();
@@ -168,14 +150,9 @@ public class TARDISHandbrakeListener implements Listener {
                             TARDISMessage.send(player, "POWER_DOWN");
                             return;
                         }
-                        boolean cham = tardis.isChamele_on();
-                        boolean hidden = tardis.isHidden();
                         String beacon = tardis.getBeacon();
-                        String eps = tardis.getEps();
-                        String creeper = tardis.getCreeper();
-                        Location exit = null;
                         boolean error = false;
-                        if (plugin.getTrackerKeeper().getInVortex().contains(id)) {
+                        if (plugin.getTrackerKeeper().getInVortex().contains(id) || plugin.getTrackerKeeper().getDestinationVortex().containsKey(id)) {
                             TARDISMessage.send(player, "HANDBRAKE_IN_VORTEX");
                         } else {
                             Action action = event.getAction();
@@ -187,277 +164,47 @@ public class TARDISHandbrakeListener implements Listener {
                             wherek.put("uuid", uuid.toString());
                             ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, wherek);
                             boolean beac_on = true;
-                            boolean minecart = false;
                             boolean bar = false;
-                            boolean set_biome = true;
                             int flight_mode = 1;
                             if (rsp.resultSet()) {
                                 beac_on = rsp.isBeaconOn();
-                                minecart = rsp.isMinecartOn();
                                 flight_mode = rsp.getFlightMode();
                                 bar = rsp.isTravelbarOn();
-                                set_biome = rsp.isPoliceboxTexturesOn();
                             }
                             final QueryFactory qf = new QueryFactory(plugin);
                             if (action == Action.RIGHT_CLICK_BLOCK) {
                                 if (tardis.isHandbrake_on()) {
+                                    // Changes the lever to off
+                                    lever.setPowered(false);
+                                    state.setData(lever);
+                                    state.update();
+                                    if (plugin.getConfig().getBoolean("circuits.damage") && plugin.getTrackerKeeper().getHasNotClickedHandbrake().contains(id)) {
+                                        plugin.getTrackerKeeper().getHasNotClickedHandbrake().remove(Integer.valueOf(id));
+                                    }
+                                    // check if door is open
+                                    if (isDoorOpen(id)) {
+                                        TARDISMessage.send(player, "DOOR_CLOSE");
+                                        return;
+                                    }
+                                    TARDISSounds.playTARDISSound(handbrake_loc, "tardis_handbrake_release");
+                                    if (!beac_on && !beacon.isEmpty()) {
+                                        toggleBeacon(beacon, true);
+                                    }
+                                    set.put("handbrake_on", 0);
+                                    TARDISMessage.send(player, "HANDBRAKE_OFF");
+                                    plugin.getTrackerKeeper().getInVortex().add(id);
+                                    // dematerialise
+                                    new TARDISDematerialiseToVortex(plugin, id, player, handbrake_loc).run();
                                     if (plugin.getTrackerKeeper().getHasDestination().containsKey(id)) {
-                                        if (plugin.getConfig().getBoolean("circuits.damage") && plugin.getTrackerKeeper().getHasNotClickedHandbrake().contains(id)) {
-                                            plugin.getTrackerKeeper().getHasNotClickedHandbrake().remove(Integer.valueOf(id));
+                                        if (bar) {
+                                            long bar_time = (flight_mode == 2 || flight_mode == 3) ? 1500L : 890L;
+                                            new TARDISTravelBar(plugin).showTravelRemaining(player, bar_time);
                                         }
-                                        // check if door is open
-                                        if (isDoorOpen(id)) {
-                                            TARDISMessage.send(player, "DOOR_CLOSE");
-                                            return;
-                                        }
-                                        TARDISSounds.playTARDISSound(handbrake_loc, "tardis_handbrake_release");
-                                        if (!beac_on && !beacon.isEmpty()) {
-                                            toggleBeacon(beacon, true);
-                                        }
-                                        HashMap<String, Object> wherecl = new HashMap<String, Object>();
-                                        wherecl.put("tardis_id", id);
-                                        ResultSetCurrentLocation rscl = new ResultSetCurrentLocation(plugin, wherecl);
-                                        String resetw = "";
-                                        Location l = null;
-                                        if (!rscl.resultSet()) {
-                                            hidden = true;
-                                        } else {
-                                            resetw = rscl.getWorld().getName();
-                                            l = new Location(rscl.getWorld(), rscl.getX(), rscl.getY(), rscl.getZ());
-                                        }
-                                        COMPASS cd = rscl.getDirection();
-                                        boolean sub = rscl.isSubmarine();
-                                        Biome biome = rscl.getBiome();
-                                        COMPASS sd = cd;
-                                        boolean malfunction = false;
-                                        boolean is_next_sub = false;
-                                        if (plugin.getConfig().getInt("preferences.malfunction") > 0) {
-                                            // check for a malfunction
-                                            TARDISMalfunction m = new TARDISMalfunction(plugin, id, player, cd, handbrake_loc, eps, creeper);
-                                            malfunction = m.isMalfunction();
-                                            if (malfunction) {
-                                                exit = m.getMalfunction();
-                                                if (exit != null) {
-                                                    HashMap<String, Object> wheress = new HashMap<String, Object>();
-                                                    wheress.put("tardis_id", id);
-                                                    HashMap<String, Object> setsave = new HashMap<String, Object>();
-                                                    setsave.put("world", exit.getWorld().getName());
-                                                    setsave.put("x", exit.getBlockX());
-                                                    setsave.put("y", exit.getBlockY());
-                                                    setsave.put("z", exit.getBlockZ());
-                                                    setsave.put("submarine", 0);
-                                                    qf.doUpdate("next", setsave, wheress);
-                                                    if (plugin.getTrackerKeeper().getHasDestination().containsKey(id)) {
-                                                        int amount = plugin.getTrackerKeeper().getHasDestination().get(id) * -1;
-                                                        HashMap<String, Object> wheret = new HashMap<String, Object>();
-                                                        wheret.put("tardis_id", id);
-                                                        qf.alterEnergyLevel("tardis", amount, wheret, player);
-                                                        TARDISMessage.send(player, "Q_FLY");
-                                                        plugin.getTrackerKeeper().getHasDestination().remove(id);
-                                                    }
-                                                    // set beacon colour to red
-                                                    if (!beacon.isEmpty()) {
-                                                        setBeaconUpBlock(beacon, id);
-                                                    }
-                                                    // play tardis crash sound
-                                                    TARDISSounds.playTARDISSound(handbrake_loc, "tardis_malfunction");
-                                                    // add a potion effect to the player
-                                                    player.addPotionEffect(new PotionEffect(PotionEffectType.CONFUSION, 150, 5));
-                                                    plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
-                                                        @Override
-                                                        public void run() {
-                                                            TARDISSounds.playTARDISSound(handbrake_loc, "tardis_cloister_bell");
-                                                        }
-                                                    }, 300L);
-                                                } else {
-                                                    malfunction = false;
-                                                }
-                                            }
-                                        }
-                                        final boolean mat = plugin.getConfig().getBoolean("police_box.materialise");
-                                        if (!malfunction) {
-                                            HashMap<String, Object> wherenl = new HashMap<String, Object>();
-                                            wherenl.put("tardis_id", id);
-                                            ResultSetNextLocation rsn = new ResultSetNextLocation(plugin, wherenl);
-                                            if (!rsn.resultSet()) {
-                                                TARDISMessage.send(player, "DEST_NO_LOAD");
-                                                return;
-                                            }
-                                            is_next_sub = rsn.isSubmarine();
-                                            exit = new Location(rsn.getWorld(), rsn.getX(), rsn.getY(), rsn.getZ());
-                                            sd = rsn.getDirection();
-                                            // Changes the lever to off
-                                            lever.setPowered(false);
-                                            state.setData(lever);
-                                            state.update();
-                                            // Sets database and sends the player/world message/sounds
-                                            set.put("handbrake_on", 0);
-                                            TARDISMessage.send(player, "HANDBRAKE_OFF");
-                                            if (mat) {
-                                                if (!minecart) {
-                                                    if (!preset.equals(PRESET.JUNK_MODE)) {
-                                                        TARDISSounds.playTARDISSound(handbrake_loc, "tardis_takeoff");
-                                                        TARDISSounds.playTARDISSound(l, "tardis_takeoff");
-                                                    } else {
-                                                        TARDISSounds.playTARDISSound(handbrake_loc, "junk_takeoff");
-                                                    }
-                                                } else {
-                                                    handbrake_loc.getWorld().playSound(handbrake_loc, Sound.ENTITY_MINECART_INSIDE, 1.0F, 0.0F);
-                                                }
-                                            }
-                                        }
-                                        if (exit != null) {
-                                            // Removes Blue Box and loads chunk if it unloaded somehow
-                                            if (!exit.getWorld().isChunkLoaded(exit.getChunk())) {
-                                                exit.getWorld().loadChunk(exit.getChunk());
-                                            }
-                                            if (mat && bar) {
-                                                long bar_time = (flight_mode == 2 || flight_mode == 3) ? 1500L : 890L;
-                                                new TARDISTravelBar(plugin).showTravelRemaining(player, bar_time);
-                                            }
-                                            plugin.getTrackerKeeper().getInVortex().add(id);
-                                            final TARDISMaterialisationData pdd = new TARDISMaterialisationData(plugin, uuid.toString());
-                                            pdd.setChameleon(cham);
-                                            pdd.setDirection(cd);
-                                            pdd.setLocation(l);
-                                            pdd.setDematerialise(mat);
-                                            pdd.setPlayer(player);
-                                            pdd.setHide(false);
-                                            pdd.setOutside(false);
-                                            pdd.setSubmarine(sub);
-                                            pdd.setTardisID(id);
-                                            pdd.setBiome(biome);
-                                            pdd.setFromToLocation(exit);
-                                            pdd.setTexture(true);
-                                            if (!hidden && !plugin.getTrackerKeeper().getReset().contains(resetw)) {
-                                                plugin.getTrackerKeeper().getDematerialising().add(id);
-                                                plugin.getPresetDestroyer().destroyPreset(pdd);
-                                            } else {
-                                                // set hidden false!
-                                                set.put("hidden", 0);
-                                                plugin.getPresetDestroyer().removeBlockProtection(id, new QueryFactory(plugin));
-                                                // restore biome
-                                                plugin.getUtils().restoreBiome(l, biome);
-                                            }
-                                            // get destination flight data
-                                            final TARDISMaterialisationData pbd = new TARDISMaterialisationData(plugin, uuid.toString());
-                                            pbd.setChameleon(cham);
-                                            pbd.setDirection(sd);
-                                            pbd.setLocation(exit);
-                                            pbd.setMalfunction(malfunction);
-                                            pbd.setOutside(false);
-                                            pbd.setPlayer(player);
-                                            pbd.setRebuild(false);
-                                            pbd.setSubmarine(is_next_sub);
-                                            pbd.setTardisID(id);
-                                            pbd.setDistance(dist);
-                                            pbd.setResetWorld(resetw);
-                                            pbd.setFromToLocation(l);
-                                            pbd.setTexture(set_biome);
-                                            // remember flight data
-                                            plugin.getTrackerKeeper().getFlightData().put(uuid, pbd);
-                                            long delay = (mat) ? 500L : 10L;
-                                            // flight mode
-                                            if (mat && (flight_mode == 2 || flight_mode == 3)) {
-                                                delay += 650L;
-                                                Runnable runner = (flight_mode == 2) ? new TARDISRegulatorStarter(plugin, player) : new TARDISManualFlightStarter(plugin, player, id);
-                                                // start the flying mode when demat has finished
-                                                plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, runner, 500L);
-                                            }
-                                            final boolean mine_sound = minecart;
-                                            final Location sound_loc = (preset.equals(PRESET.JUNK_MODE)) ? exit : handbrake_loc;
-                                            final Location external_sound_loc = exit;
-                                            final boolean malchk = malfunction;
-                                            plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
-                                                @Override
-                                                public void run() {
-                                                    TARDISMaterialisationData m_data = plugin.getTrackerKeeper().getFlightData().get(uuid);
-                                                    Location final_location = m_data.getLocation();
-                                                    plugin.getPresetBuilder().buildPreset(m_data);
-                                                    if (mat) {
-                                                        if (!mine_sound) {
-                                                            if (!preset.equals(PRESET.JUNK_MODE)) {
-                                                                if (!malchk) {
-                                                                    TARDISSounds.playTARDISSound(sound_loc, "tardis_land");
-                                                                    TARDISSounds.playTARDISSound(external_sound_loc, "tardis_land");
-                                                                }
-                                                            } else {
-                                                                TARDISSounds.playTARDISSound(sound_loc, "junk_land");
-                                                            }
-                                                        } else {
-                                                            handbrake_loc.getWorld().playSound(handbrake_loc, Sound.ENTITY_MINECART_INSIDE, 1.0F, 0.0F);
-                                                        }
-                                                    }
-                                                    // current
-                                                    setcurrent.put("world", final_location.getWorld().getName());
-                                                    setcurrent.put("x", final_location.getBlockX());
-                                                    setcurrent.put("y", final_location.getBlockY());
-                                                    setcurrent.put("z", final_location.getBlockZ());
-                                                    setcurrent.put("direction", m_data.getDirection().toString());
-                                                    setcurrent.put("submarine", (m_data.isSubmarine()) ? 1 : 0);
-                                                    wherecurrent.put("tardis_id", id);
-                                                    // get current location for back
-                                                    HashMap<String, Object> wherecu = new HashMap<String, Object>();
-                                                    wherecu.put("tardis_id", id);
-                                                    ResultSetCurrentLocation rscu = new ResultSetCurrentLocation(plugin, wherecu);
-                                                    if (!rscu.resultSet()) {
-                                                        // back
-                                                        setback.put("world", final_location.getWorld().getName());
-                                                        setback.put("x", final_location.getX());
-                                                        setback.put("y", final_location.getY());
-                                                        setback.put("z", final_location.getZ());
-                                                        setback.put("direction", final_location.getDirection().toString());
-                                                        setback.put("submarine", (m_data.isSubmarine()) ? 1 : 0);
-                                                    } else {
-                                                        // back
-                                                        setback.put("world", rscu.getWorld().getName());
-                                                        setback.put("x", rscu.getX());
-                                                        setback.put("y", rscu.getY());
-                                                        setback.put("z", rscu.getZ());
-                                                        setback.put("direction", rscu.getDirection().toString());
-                                                        setback.put("submarine", (rscu.isSubmarine()) ? 1 : 0);
-                                                    }
-                                                    whereback.put("tardis_id", id);
-                                                    // update Police Box door direction
-                                                    setdoor.put("door_direction", m_data.getDirection().toString());
-                                                    wheredoor.put("tardis_id", id);
-                                                    wheredoor.put("door_type", 0);
-                                                    if (setcurrent.size() > 0) {
-                                                        qf.doUpdate("current", setcurrent, wherecurrent);
-                                                        qf.doUpdate("back", setback, whereback);
-                                                        qf.doUpdate("doors", setdoor, wheredoor);
-                                                    }
-                                                    if (plugin.getAchievementConfig().getBoolean("travel.enabled") && !plugin.getTrackerKeeper().getReset().contains(m_data.getResetWorld())) {
-                                                        if (m_data.getFromToLocation() != null && m_data.getFromToLocation().getWorld().equals(final_location.getWorld())) {
-                                                            m_data.setDistance((int) m_data.getFromToLocation().distance(final_location));
-                                                            if (m_data.getDistance() > 0 && plugin.getAchievementConfig().getBoolean("travel.enabled")) {
-                                                                TARDISAchievementFactory taf = new TARDISAchievementFactory(plugin, player, "travel", 1);
-                                                                taf.doAchievement(m_data.getDistance());
-                                                            }
-                                                        }
-                                                    }
-                                                    // forget flight data
-                                                    plugin.getTrackerKeeper().getFlightData().remove(uuid);
-                                                }
-                                            }, delay);
-                                            if (plugin.getTrackerKeeper().getDamage().containsKey(id)) {
-                                                plugin.getTrackerKeeper().getDamage().remove(id);
-                                            }
-                                            // set last use
-                                            long now;
-                                            if (player.hasPermission("tardis.prune.bypass")) {
-                                                now = Long.MAX_VALUE;
-                                            } else {
-                                                now = System.currentTimeMillis();
-                                            }
-                                            set.put("lastuse", now);
-                                        } else {
-                                            TARDISMessage.send(player, "TRAVEL_NO_EXIT");
-                                            error = true;
-                                        }
+                                        // materialise
+                                        new TARDISMaterialseFromVortex(plugin, id, player, handbrake_loc).run();
                                     } else {
-                                        TARDISMessage.send(player, "TRAVEL_NEED_DEST");
-                                        error = true;
+                                        new TARDISTravelBar(plugin).showTravelRemaining(player, 445L);
+                                        plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new TARDISLoopingFlightSound(plugin, handbrake_loc, id), 500L);
                                     }
                                 } else {
                                     TARDISMessage.send(player, "HANDBRAKE_OFF_ERR");
@@ -528,21 +275,6 @@ public class TARDISHandbrakeListener implements Listener {
         Location bl = new Location(w, bx, by, bz);
         Block b = bl.getBlock();
         b.setType((on) ? Material.GLASS : Material.REDSTONE_BLOCK);
-    }
-
-    private void setBeaconUpBlock(String str, int id) {
-        plugin.debug("attempt to set red glass block");
-        String[] beaconData = str.split(":");
-        World w = plugin.getServer().getWorld(beaconData[0]);
-        int bx = TARDISNumberParsers.parseInt(beaconData[1]);
-        int by = TARDISNumberParsers.parseInt(beaconData[2]) + 1;
-        int bz = TARDISNumberParsers.parseInt(beaconData[3]);
-        Location bl = new Location(w, bx, by, bz);
-        Block b = bl.getBlock();
-        while (!b.getType().equals(Material.BEACON)) {
-            b = b.getRelative(BlockFace.DOWN);
-        }
-        TARDISBlockSetters.setBlockAndRemember(b.getRelative(BlockFace.UP), Material.STAINED_GLASS, (byte) 14, id, 2);
     }
 
     @SuppressWarnings("deprecation")

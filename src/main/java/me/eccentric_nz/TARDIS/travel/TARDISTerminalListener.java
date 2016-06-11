@@ -36,6 +36,7 @@ import me.eccentric_nz.TARDIS.enumeration.COMPASS;
 import me.eccentric_nz.TARDIS.enumeration.DIFFICULTY;
 import me.eccentric_nz.TARDIS.enumeration.DISK_CIRCUIT;
 import me.eccentric_nz.TARDIS.enumeration.FLAG;
+import me.eccentric_nz.TARDIS.flight.TARDISLand;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import me.eccentric_nz.TARDIS.utility.TARDISStaticUtils;
 import org.bukkit.Location;
@@ -163,7 +164,10 @@ public class TARDISTerminalListener implements Listener {
                                     plugin.getTrackerKeeper().getRescue().remove(terminalIDs.get(uuid));
                                 }
                                 close(player);
-                                TARDISMessage.send(player, "DEST_SET", true);
+                                TARDISMessage.send(player, "DEST_SET", !plugin.getTrackerKeeper().getDestinationVortex().containsKey(terminalIDs.get(uuid)));
+                                if (plugin.getTrackerKeeper().getDestinationVortex().containsKey(terminalIDs.get(uuid))) {
+                                    new TARDISLand(plugin, terminalIDs.get(uuid), player).exitVortex();
+                                }
                                 // damage the circuit if configured
                                 if (plugin.getConfig().getBoolean("circuits.damage") && !plugin.getDifficulty().equals(DIFFICULTY.EASY) && plugin.getConfig().getInt("circuits.uses.input") > 0) {
                                     TARDISCircuitChecker tcc = new TARDISCircuitChecker(plugin, terminalIDs.get(uuid));

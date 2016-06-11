@@ -42,6 +42,7 @@ import me.eccentric_nz.TARDIS.database.ResultSetTravellers;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.enumeration.DIFFICULTY;
 import me.eccentric_nz.TARDIS.enumeration.FLAG;
+import me.eccentric_nz.TARDIS.flight.TARDISLand;
 import me.eccentric_nz.TARDIS.listeners.TARDISBiomeReaderListener;
 import me.eccentric_nz.TARDIS.travel.TARDISCaveFinder;
 import me.eccentric_nz.TARDIS.travel.TARDISRescue;
@@ -124,7 +125,7 @@ public class TARDISTravelCommands implements CommandExecutor {
                 }
                 int level = tardis.getArtron_level();
                 boolean powered = tardis.isPowered_on();
-                if (!tardis.isHandbrake_on()) {
+                if (!tardis.isHandbrake_on() && !plugin.getTrackerKeeper().getDestinationVortex().containsKey(id)) {
                     TARDISMessage.send(player, "NOT_WHILE_TRAVELLING");
                     return true;
                 }
@@ -171,6 +172,9 @@ public class TARDISTravelCommands implements CommandExecutor {
                     plugin.getTrackerKeeper().getHasDestination().put(id, travel);
                     if (plugin.getTrackerKeeper().getRescue().containsKey(id)) {
                         plugin.getTrackerKeeper().getRescue().remove(id);
+                    }
+                    if (plugin.getTrackerKeeper().getDestinationVortex().containsKey(id)) {
+                        new TARDISLand(plugin, id, player).exitVortex();
                     }
                     return true;
                 } else {
@@ -279,6 +283,9 @@ public class TARDISTravelCommands implements CommandExecutor {
                             plugin.getTrackerKeeper().getHasDestination().put(id, travel);
                             if (plugin.getTrackerKeeper().getRescue().containsKey(id)) {
                                 plugin.getTrackerKeeper().getRescue().remove(id);
+                            }
+                            if (plugin.getTrackerKeeper().getDestinationVortex().containsKey(id)) {
+                                new TARDISLand(plugin, id, player).exitVortex();
                             }
                             return true;
                         } else if (player.hasPermission("tardis.timetravel.player")) {
@@ -450,6 +457,9 @@ public class TARDISTravelCommands implements CommandExecutor {
                                     if (plugin.getTrackerKeeper().getRescue().containsKey(id)) {
                                         plugin.getTrackerKeeper().getRescue().remove(id);
                                     }
+                                    if (plugin.getTrackerKeeper().getDestinationVortex().containsKey(id)) {
+                                        new TARDISLand(plugin, id, player).exitVortex();
+                                    }
                                 }
                             } catch (IllegalArgumentException iae) {
                                 TARDISMessage.send(player, "BIOME_NOT_VALID");
@@ -516,6 +526,9 @@ public class TARDISTravelCommands implements CommandExecutor {
                                 if (plugin.getTrackerKeeper().getRescue().containsKey(id)) {
                                     plugin.getTrackerKeeper().getRescue().remove(id);
                                 }
+                                if (plugin.getTrackerKeeper().getDestinationVortex().containsKey(id)) {
+                                    new TARDISLand(plugin, id, player).exitVortex();
+                                }
                                 return true;
                             } else {
                                 TARDISMessage.send(player, "SAVE_NO_WORLD");
@@ -558,6 +571,9 @@ public class TARDISTravelCommands implements CommandExecutor {
                         plugin.getTrackerKeeper().getHasDestination().put(id, travel);
                         if (plugin.getTrackerKeeper().getRescue().containsKey(id)) {
                             plugin.getTrackerKeeper().getRescue().remove(id);
+                        }
+                        if (plugin.getTrackerKeeper().getDestinationVortex().containsKey(id)) {
+                            new TARDISLand(plugin, id, player).exitVortex();
                         }
                         return true;
                     }
@@ -612,6 +628,9 @@ public class TARDISTravelCommands implements CommandExecutor {
                                         if (plugin.getTrackerKeeper().getRescue().containsKey(id)) {
                                             plugin.getTrackerKeeper().getRescue().remove(id);
                                         }
+                                        if (plugin.getTrackerKeeper().getDestinationVortex().containsKey(id)) {
+                                            new TARDISLand(plugin, id, player).exitVortex();
+                                        }
                                         return true;
                                     }
                                 } else {
@@ -633,6 +652,9 @@ public class TARDISTravelCommands implements CommandExecutor {
                                             plugin.getTrackerKeeper().getHasDestination().put(id, travel);
                                             if (plugin.getTrackerKeeper().getRescue().containsKey(id)) {
                                                 plugin.getTrackerKeeper().getRescue().remove(id);
+                                            }
+                                            if (plugin.getTrackerKeeper().getDestinationVortex().containsKey(id)) {
+                                                new TARDISLand(plugin, id, player).exitVortex();
                                             }
                                             return true;
                                         }
@@ -659,6 +681,9 @@ public class TARDISTravelCommands implements CommandExecutor {
                                         plugin.getTrackerKeeper().getHasDestination().put(id, travel);
                                         if (plugin.getTrackerKeeper().getRescue().containsKey(id)) {
                                             plugin.getTrackerKeeper().getRescue().remove(id);
+                                        }
+                                        if (plugin.getTrackerKeeper().getDestinationVortex().containsKey(id)) {
+                                            new TARDISLand(plugin, id, player).exitVortex();
                                         }
                                         return true;
                                     }

@@ -12,6 +12,7 @@
 3. [Abandoned TARDISes](http://dev.bukkit.org/bukkit-plugins/tardis/tickets/1277-possibility-to-abandon-a-tardis/)
 4. [Destination 'vortex'](http://dev.bukkit.org/bukkit-plugins/tardis/tickets/1023-set-the-tardis-inflight-without-setting-a-destination/) - dematerialise without setting a destination.
    * remove `police_box.materialise` config option (who wants a TARDIS that doesn't materialise?)
+   * persist TARDISes in Time Vortex to database
 5. [Improve Control Centre](http://dev.bukkit.org/bukkit-plugins/tardis/tickets/1324-improving-control-centre/)
     * Update console schematics to add Control Centre sign, Sonic Generator
     * Remove other control signs from console schematics
@@ -43,6 +44,7 @@
    * Wolves -> K-9? (All the textures I seen so far just don't work - you shouldn't see the legs...)
    * Slimes -> Adipose
    * Something with an invisible Shulker passenger?
+2. Spawn flying daleks `/twas DALEK flying`
 
 ##Waiting on Bukkit / SpigotAPI
 0. IDs/data are soon to be history... so convert all ID/data use to block states 

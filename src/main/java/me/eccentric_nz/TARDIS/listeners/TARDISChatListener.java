@@ -19,8 +19,10 @@ package me.eccentric_nz.TARDIS.listeners;
 import java.util.UUID;
 import java.util.regex.Pattern;
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.flight.TARDISLand;
 import me.eccentric_nz.TARDIS.howto.TARDISSeedsInventory;
 import me.eccentric_nz.TARDIS.travel.TARDISRescue;
+import me.eccentric_nz.TARDIS.travel.TARDISRescue.RescueData;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -75,13 +77,19 @@ public class TARDISChatListener implements Listener {
                     plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
                         @Override
                         public void run() {
-                            if (res.tryRescue(rescuer, saved, request)) {
+                            RescueData rd = res.tryRescue(rescuer, saved, request);
+                            if (rd.success()) {
                                 if (plugin.getTrackerKeeper().getTelepathicRescue().containsKey(saved)) {
                                     Player who = plugin.getServer().getPlayer(plugin.getTrackerKeeper().getTelepathicRescue().get(saved));
-                                    TARDISMessage.send(who, message, player);
+                                    if (!plugin.getTrackerKeeper().getDestinationVortex().containsKey(rd.getTardis_id())) {
+                                        TARDISMessage.send(who, message, player);
+                                    }
                                     plugin.getTrackerKeeper().getTelepathicRescue().remove(saved);
-                                } else {
+                                } else if (!plugin.getTrackerKeeper().getDestinationVortex().containsKey(rd.getTardis_id())) {
                                     TARDISMessage.send(rescuer, message, player);
+                                }
+                                if (plugin.getTrackerKeeper().getDestinationVortex().containsKey(rd.getTardis_id())) {
+                                    new TARDISLand(plugin, rd.getTardis_id(), rescuer).exitVortex();
                                 }
                             }
                         }

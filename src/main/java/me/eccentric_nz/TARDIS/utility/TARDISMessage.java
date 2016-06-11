@@ -27,7 +27,7 @@ import org.bukkit.entity.Player;
  */
 public class TARDISMessage {
 
-    private static final int lineLength = TARDISChatPaginator.GUARANTEED_NO_WRAP_CHAT_PAGE_WIDTH;
+    private static final int LINE_LENGTH = TARDISChatPaginator.GUARANTEED_NO_WRAP_CHAT_PAGE_WIDTH;
 
     /**
      * Splits a message into multiple lines if it is longer than the guaranteed
@@ -38,8 +38,8 @@ public class TARDISMessage {
      */
     public static void message(Player p, String message) {
         if (p != null) {
-            if (message.length() > lineLength) {
-                String[] multiline = TARDISChatPaginator.wordWrap(message, lineLength);
+            if (message.length() > LINE_LENGTH) {
+                String[] multiline = TARDISChatPaginator.wordWrap(message, LINE_LENGTH);
                 p.sendMessage(multiline);
             } else {
                 p.sendMessage(message);
@@ -48,8 +48,8 @@ public class TARDISMessage {
     }
 
     public static void message(CommandSender cs, String message) {
-        if (message.length() > lineLength) {
-            String[] multiline = TARDISChatPaginator.wordWrap(message, lineLength);
+        if (message.length() > LINE_LENGTH) {
+            String[] multiline = TARDISChatPaginator.wordWrap(message, LINE_LENGTH);
             cs.sendMessage(multiline);
         } else {
             cs.sendMessage(message);
@@ -78,12 +78,20 @@ public class TARDISMessage {
 
     public static void send(Player p, String key, boolean handbrake) {
         String local = TARDIS.plugin.getLanguage().getString(key);
-        message(p, TARDIS.plugin.getPluginName() + local + " " + TARDIS.plugin.getLanguage().getString("HANDBRAKE_RELEASE"));
+        if (handbrake) {
+            message(p, TARDIS.plugin.getPluginName() + local + " " + TARDIS.plugin.getLanguage().getString("HANDBRAKE_RELEASE"));
+        } else {
+            message(p, TARDIS.plugin.getPluginName() + local + " " + TARDIS.plugin.getLanguage().getString("LEAVING_VORTEX"));
+        }
     }
 
     public static void send(Player p, String key, String sub, boolean handbrake) {
         String local = TARDIS.plugin.getLanguage().getString(key);
-        message(p, TARDIS.plugin.getPluginName() + String.format(local, sub) + " " + TARDIS.plugin.getLanguage().getString("HANDBRAKE_RELEASE"));
+        if (handbrake) {
+            message(p, TARDIS.plugin.getPluginName() + String.format(local, sub) + " " + TARDIS.plugin.getLanguage().getString("HANDBRAKE_RELEASE"));
+        } else {
+            message(p, TARDIS.plugin.getPluginName() + String.format(local, sub) + " " + TARDIS.plugin.getLanguage().getString("LEAVING_VORTEX"));
+        }
     }
 
     public static void send(Player p, String key, String one, String two) {

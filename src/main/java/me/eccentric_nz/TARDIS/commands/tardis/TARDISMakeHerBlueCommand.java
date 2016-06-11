@@ -20,7 +20,7 @@ import java.util.HashMap;
 import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.advanced.TARDISCircuitChecker;
-import me.eccentric_nz.TARDIS.builders.TARDISMaterialisationData;
+import me.eccentric_nz.TARDIS.builders.BuildData;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetCurrentLocation;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
@@ -92,6 +92,10 @@ public class TARDISMakeHerBlueCommand {
                 return true;
             }
         }
+        if (plugin.getTrackerKeeper().getDestinationVortex().containsKey(id)) {
+            TARDISMessage.send(player.getPlayer(), "NOT_IN_VORTEX");
+            return true;
+        }
         if (plugin.getTrackerKeeper().getInVortex().contains(id)) {
             TARDISMessage.send(player.getPlayer(), "NOT_WHILE_MAT");
             return true;
@@ -118,21 +122,21 @@ public class TARDISMakeHerBlueCommand {
         HashMap<String, Object> set = new HashMap<String, Object>();
         set.put("chameleon_preset", "NEW");
         qf.doUpdate("tardis", set, wherep);
-        final TARDISMaterialisationData pbd = new TARDISMaterialisationData(plugin, uuid.toString());
-        pbd.setChameleon(false);
-        pbd.setDirection(rsc.getDirection());
-        pbd.setLocation(l);
-        pbd.setMalfunction(false);
-        pbd.setOutside(false);
-        pbd.setPlayer(player);
-        pbd.setRebuild(true);
-        pbd.setSubmarine(rsc.isSubmarine());
-        pbd.setTardisID(id);
-        pbd.setBiome(rsc.getBiome());
+        final BuildData bd = new BuildData(plugin, uuid.toString());
+        bd.setChameleon(false);
+        bd.setDirection(rsc.getDirection());
+        bd.setLocation(l);
+        bd.setMalfunction(false);
+        bd.setOutside(false);
+        bd.setPlayer(player);
+        bd.setRebuild(true);
+        bd.setSubmarine(rsc.isSubmarine());
+        bd.setTardisID(id);
+        bd.setBiome(rsc.getBiome());
         plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
             @Override
             public void run() {
-                plugin.getPresetBuilder().buildPreset(pbd);
+                plugin.getPresetBuilder().buildPreset(bd);
             }
         }, 20L);
         TARDISMessage.send(player.getPlayer(), "INVISIBILITY_REMOVED");

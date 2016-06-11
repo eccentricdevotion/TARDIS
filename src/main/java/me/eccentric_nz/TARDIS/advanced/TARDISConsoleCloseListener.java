@@ -32,6 +32,7 @@ import me.eccentric_nz.TARDIS.enumeration.DIFFICULTY;
 import me.eccentric_nz.TARDIS.enumeration.DISK_CIRCUIT;
 import me.eccentric_nz.TARDIS.enumeration.FLAG;
 import me.eccentric_nz.TARDIS.enumeration.TARDISOldBiomeLookup;
+import me.eccentric_nz.TARDIS.flight.TARDISLand;
 import me.eccentric_nz.TARDIS.travel.TARDISRandomiserCircuit;
 import me.eccentric_nz.TARDIS.travel.TARDISRescue;
 import me.eccentric_nz.TARDIS.travel.TARDISTimeTravel;
@@ -289,6 +290,9 @@ public class TARDISConsoleCloseListener implements Listener {
                                     if (plugin.getTrackerKeeper().getRescue().containsKey(id)) {
                                         plugin.getTrackerKeeper().getRescue().remove(id);
                                     }
+                                    if (plugin.getTrackerKeeper().getDestinationVortex().containsKey(id)) {
+                                        new TARDISLand(plugin, id, p).exitVortex();
+                                    }
                                     if (plugin.getConfig().getBoolean("circuits.damage") && !plugin.getDifficulty().equals(DIFFICULTY.EASY) && plugin.getConfig().getInt("circuits.uses.memory") > 0 && !plugin.getTrackerKeeper().getHasNotClickedHandbrake().contains(id)) {
                                         plugin.getTrackerKeeper().getHasNotClickedHandbrake().add(id);
                                         TARDISCircuitChecker tcc = new TARDISCircuitChecker(plugin, id);
@@ -322,6 +326,9 @@ public class TARDISConsoleCloseListener implements Listener {
                                 plugin.getTrackerKeeper().getHasDestination().put(id, plugin.getArtronConfig().getInt("random_circuit"));
                                 plugin.getTrackerKeeper().getHasRandomised().add(id);
                                 TARDISMessage.send(p, "RANDOMISER");
+                                if (plugin.getTrackerKeeper().getDestinationVortex().containsKey(id)) {
+                                    new TARDISLand(plugin, id, p).exitVortex();
+                                }
                                 if (plugin.getConfig().getBoolean("circuits.damage") && !plugin.getDifficulty().equals(DIFFICULTY.EASY) && plugin.getConfig().getInt("circuits.uses.randomiser") > 0) {
                                     TARDISCircuitChecker tcc = new TARDISCircuitChecker(plugin, id);
                                     tcc.getCircuits();

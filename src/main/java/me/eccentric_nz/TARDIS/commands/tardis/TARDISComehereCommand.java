@@ -20,12 +20,13 @@ import java.util.HashMap;
 import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.api.Parameters;
-import me.eccentric_nz.TARDIS.builders.TARDISMaterialisationData;
+import me.eccentric_nz.TARDIS.builders.BuildData;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetCurrentLocation;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import me.eccentric_nz.TARDIS.database.ResultSetTravellers;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
+import me.eccentric_nz.TARDIS.destroyers.DestroyData;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
 import me.eccentric_nz.TARDIS.enumeration.DIFFICULTY;
 import me.eccentric_nz.TARDIS.enumeration.FLAG;
@@ -211,46 +212,48 @@ public class TARDISComehereCommand {
                 }
                 qf.doUpdate("current", set, tid);
                 TARDISMessage.send(player, "TARDIS_COMING");
-                boolean mat = plugin.getConfig().getBoolean("police_box.materialise");
-                long delay = (mat) ? 1L : 180L;
+//                boolean mat = plugin.getConfig().getBoolean("police_box.materialise");
+//                long delay = (mat) ? 1L : 180L;
+                long delay = 1L;
                 plugin.getTrackerKeeper().getInVortex().add(id);
                 final boolean hid = hidden;
-                final TARDISMaterialisationData pdd = new TARDISMaterialisationData(plugin, uuid.toString());
-                pdd.setChameleon(cham);
-                pdd.setDirection(d);
-                pdd.setLocation(oldSave);
-                pdd.setDematerialise(mat);
-                pdd.setPlayer(player);
-                pdd.setHide(false);
-                pdd.setOutside(true);
-                pdd.setSubmarine(rsc.isSubmarine());
-                pdd.setTardisID(id);
-                pdd.setBiome(biome);
-                plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
-                    @Override
-                    public void run() {
-                        if (!hid) {
-                            plugin.getTrackerKeeper().getDematerialising().add(id);
-                            plugin.getPresetDestroyer().destroyPreset(pdd);
-                        } else {
-                            plugin.getPresetDestroyer().removeBlockProtection(id, qf);
+                if (!plugin.getTrackerKeeper().getDestinationVortex().containsKey(id)) {
+                    final DestroyData dd = new DestroyData(plugin, uuid.toString());
+                    dd.setChameleon(cham);
+                    dd.setDirection(d);
+                    dd.setLocation(oldSave);
+                    dd.setPlayer(player);
+                    dd.setHide(false);
+                    dd.setOutside(true);
+                    dd.setSubmarine(rsc.isSubmarine());
+                    dd.setTardisID(id);
+                    dd.setBiome(biome);
+                    plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
+                        @Override
+                        public void run() {
+                            if (!hid) {
+                                plugin.getTrackerKeeper().getDematerialising().add(id);
+                                plugin.getPresetDestroyer().destroyPreset(dd);
+                            } else {
+                                plugin.getPresetDestroyer().removeBlockProtection(id, qf);
+                            }
                         }
-                    }
-                }, delay);
-                final TARDISMaterialisationData pbd = new TARDISMaterialisationData(plugin, uuid.toString());
-                pbd.setChameleon(cham);
-                pbd.setDirection(player_d);
-                pbd.setLocation(eyeLocation);
-                pbd.setMalfunction(false);
-                pbd.setOutside(true);
-                pbd.setPlayer(player);
-                pbd.setRebuild(false);
-                pbd.setSubmarine(sub);
-                pbd.setTardisID(id);
+                    }, delay);
+                }
+                final BuildData bd = new BuildData(plugin, uuid.toString());
+                bd.setChameleon(cham);
+                bd.setDirection(player_d);
+                bd.setLocation(eyeLocation);
+                bd.setMalfunction(false);
+                bd.setOutside(true);
+                bd.setPlayer(player);
+                bd.setRebuild(false);
+                bd.setSubmarine(sub);
+                bd.setTardisID(id);
                 plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
                     @Override
                     public void run() {
-                        plugin.getPresetBuilder().buildPreset(pbd);
+                        plugin.getPresetBuilder().buildPreset(bd);
                     }
                 }, delay * 2);
                 // remove energy from TARDIS

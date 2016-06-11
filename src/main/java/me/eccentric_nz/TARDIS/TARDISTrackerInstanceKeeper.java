@@ -22,7 +22,7 @@ import java.util.List;
 import java.util.UUID;
 import me.eccentric_nz.TARDIS.JSON.JSONObject;
 import me.eccentric_nz.TARDIS.arch.TARDISWatchData;
-import me.eccentric_nz.TARDIS.builders.TARDISMaterialisationData;
+import me.eccentric_nz.TARDIS.builders.BuildData;
 import me.eccentric_nz.TARDIS.desktop.TARDISUpgradeData;
 import me.eccentric_nz.TARDIS.flight.TARDISRegulatorRunnable;
 import me.eccentric_nz.TARDIS.info.TARDISInfoMenu;
@@ -49,6 +49,7 @@ public class TARDISTrackerInstanceKeeper {
     private String immortalityGate = "";
     private final HashMap<Integer, Integer> damage = new HashMap<Integer, Integer>();
     private final HashMap<Integer, Integer> hasDestination = new HashMap<Integer, Integer>();
+    private final HashMap<Integer, Integer> destinationVortex = new HashMap<Integer, Integer>();
     private final HashMap<Integer, String> renderer = new HashMap<Integer, String>();
     private final HashMap<Integer, TARDISAntiBuild> antiBuild = new HashMap<Integer, TARDISAntiBuild>();
     private final HashMap<Integer, UUID> rescue = new HashMap<Integer, UUID>();
@@ -87,7 +88,7 @@ public class TARDISTrackerInstanceKeeper {
     private final HashMap<UUID, String> secondary = new HashMap<UUID, String>();
     private final HashMap<UUID, String> telepathicPlacements = new HashMap<UUID, String>();
     private final HashMap<UUID, TARDISInfoMenu> infoMenu = new HashMap<UUID, TARDISInfoMenu>();
-    private final HashMap<UUID, TARDISMaterialisationData> flightData = new HashMap<UUID, TARDISMaterialisationData>();
+    private final HashMap<UUID, BuildData> flightData = new HashMap<UUID, BuildData>();
     private final HashMap<UUID, TARDISMoveSession> moveSessions = new HashMap<UUID, TARDISMoveSession>();
     private final HashMap<UUID, TARDISRegulatorRunnable> regulating = new HashMap<UUID, TARDISRegulatorRunnable>();
     private final HashMap<UUID, TARDISSeedData> roomSeed = new HashMap<UUID, TARDISSeedData>();
@@ -130,6 +131,10 @@ public class TARDISTrackerInstanceKeeper {
 
     public HashMap<Integer, Integer> getHasDestination() {
         return hasDestination;
+    }
+
+    public HashMap<Integer, Integer> getDestinationVortex() {
+        return destinationVortex;
     }
 
     public HashMap<Integer, String> getRenderer() {
@@ -216,7 +221,7 @@ public class TARDISTrackerInstanceKeeper {
         return regulating;
     }
 
-    public HashMap<UUID, TARDISMaterialisationData> getFlightData() {
+    public HashMap<UUID, BuildData> getFlightData() {
         return flightData;
     }
 

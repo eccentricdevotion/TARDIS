@@ -116,7 +116,7 @@ public class TARDISBindListener implements Listener {
                                     TARDISMessage.send(player, "ISO_HANDS_OFF");
                                     return;
                                 }
-                                if (!tardis.isHandbrake_on()) {
+                                if (!tardis.isHandbrake_on() && !plugin.getTrackerKeeper().getDestinationVortex().containsKey(id)) {
                                     TARDISMessage.send(player, "NOT_WHILE_TRAVELLING");
                                     return;
                                 }

@@ -20,12 +20,12 @@ import java.util.HashMap;
 import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.advanced.TARDISCircuitChecker;
-import me.eccentric_nz.TARDIS.builders.TARDISMaterialisationData;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetCurrentLocation;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import me.eccentric_nz.TARDIS.database.ResultSetTravellers;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
+import me.eccentric_nz.TARDIS.destroyers.DestroyData;
 import me.eccentric_nz.TARDIS.enumeration.DIFFICULTY;
 import me.eccentric_nz.TARDIS.enumeration.PRESET;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
@@ -92,6 +92,10 @@ public class TARDISHideCommand {
                 TARDISMessage.send(player.getPlayer(), "TARDIS_NO_HIDE");
                 return true;
             }
+            if (plugin.getTrackerKeeper().getDestinationVortex().containsKey(id)) {
+                TARDISMessage.send(player.getPlayer(), "NOT_IN_VORTEX");
+                return true;
+            }
             if (plugin.getTrackerKeeper().getInVortex().contains(id)) {
                 TARDISMessage.send(player.getPlayer(), "NOT_WHILE_MAT");
                 return true;
@@ -110,18 +114,17 @@ public class TARDISHideCommand {
                 TARDISMessage.send(player.getPlayer(), "ENERGY_NO_HIDE");
                 return false;
             }
-            final TARDISMaterialisationData pdd = new TARDISMaterialisationData(plugin, player.getUniqueId().toString());
-            pdd.setChameleon(false);
-            pdd.setDirection(rsc.getDirection());
-            pdd.setLocation(l);
-            pdd.setDematerialise(plugin.getConfig().getBoolean("police_box.materialise"));
-            pdd.setPlayer(player.getPlayer());
-            pdd.setHide(true);
-            pdd.setOutside(false);
-            pdd.setSubmarine(rsc.isSubmarine());
-            pdd.setTardisID(id);
-            pdd.setBiome(rsc.getBiome());
-            plugin.getPresetDestroyer().destroyPreset(pdd);
+            final DestroyData dd = new DestroyData(plugin, player.getUniqueId().toString());
+            dd.setChameleon(false);
+            dd.setDirection(rsc.getDirection());
+            dd.setLocation(l);
+            dd.setPlayer(player.getPlayer());
+            dd.setHide(true);
+            dd.setOutside(false);
+            dd.setSubmarine(rsc.isSubmarine());
+            dd.setTardisID(id);
+            dd.setBiome(rsc.getBiome());
+            plugin.getPresetDestroyer().destroyPreset(dd);
             plugin.getTrackerKeeper().getInVortex().add(id);
             TARDISMessage.send(player.getPlayer(), "TARDIS_HIDDEN", ChatColor.GREEN + " /tardis rebuild " + ChatColor.RESET);
             QueryFactory qf = new QueryFactory(plugin);

@@ -115,6 +115,10 @@ public class TARDISDoorWalkListener extends TARDISDoorListener implements Listen
                             TARDISMessage.send(player, "NOT_WHILE_MAT");
                             return;
                         }
+                        if (plugin.getTrackerKeeper().getDestinationVortex().containsKey(id)) {
+                            TARDISMessage.send(player, "LOST_IN_VORTEX");
+                            return;
+                        }
                         QueryFactory qf = new QueryFactory(plugin);
                         COMPASS dd = rsd.getDoor_direction();
                         int doortype = rsd.getDoor_type();

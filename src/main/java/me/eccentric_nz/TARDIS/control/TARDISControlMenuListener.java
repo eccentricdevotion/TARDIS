@@ -98,9 +98,26 @@ public class TARDISControlMenuListener extends TARDISMenuListener implements Lis
                                 return;
                             }
                             if (!tardis.isHandbrake_on()) {
-                                String message = (slot == 2) ? "ARS_NO_TRAVEL" : "NOT_WHILE_TRAVELLING";
-                                TARDISMessage.send(player, message);
-                                return;
+                                switch (slot) {
+                                    case 2:
+                                        TARDISMessage.send(player, "ARS_NO_TRAVEL");
+                                        return;
+                                    case 4:
+                                    case 11:
+                                    case 13:
+                                    case 15:
+                                    case 20:
+                                    case 22:
+                                    case 31:
+                                    case 40:
+                                        if (!plugin.getTrackerKeeper().getDestinationVortex().containsKey(id)) {
+                                            TARDISMessage.send(player, "NOT_WHILE_TRAVELLING");
+                                            return;
+                                        }
+                                        break;
+                                    default:
+                                        break;
+                                }
                             }
                             boolean lights = tardis.isLights_on();
                             final int level = tardis.getArtron_level();

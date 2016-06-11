@@ -18,10 +18,11 @@ package me.eccentric_nz.TARDIS.commands.remote;
 
 import java.util.HashMap;
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.builders.TARDISMaterialisationData;
+import me.eccentric_nz.TARDIS.builders.BuildData;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetBackLocation;
 import me.eccentric_nz.TARDIS.database.ResultSetCurrentLocation;
+import me.eccentric_nz.TARDIS.destroyers.DestroyData;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import org.bukkit.Location;
 import org.bukkit.OfflinePlayer;
@@ -80,35 +81,36 @@ public class TARDISRemoteBackCommand {
         tid.put("tardis_id", id);
         qf.doUpdate("current", set, tid);
         plugin.getTrackerKeeper().getInVortex().add(id);
-        // destroy the police box
-        final TARDISMaterialisationData pdd = new TARDISMaterialisationData(plugin, player.getUniqueId().toString());
-        pdd.setChameleon(false);
-        pdd.setDirection(rsc.getDirection());
-        pdd.setLocation(new Location(rsc.getWorld(), rsc.getX(), rsc.getY(), rsc.getZ()));
-        pdd.setDematerialise(false);
-        pdd.setPlayer(player);
-        pdd.setHide(false);
-        pdd.setOutside(true);
-        pdd.setSubmarine(rsc.isSubmarine());
-        pdd.setTardisID(id);
-        pdd.setBiome(rsc.getBiome());
-        plugin.getTrackerKeeper().getDematerialising().add(id);
-        plugin.getPresetDestroyer().destroyPreset(pdd);
+        if (!plugin.getTrackerKeeper().getDestinationVortex().containsKey(id)) {
+            // destroy the police box
+            final DestroyData dd = new DestroyData(plugin, player.getUniqueId().toString());
+            dd.setChameleon(false);
+            dd.setDirection(rsc.getDirection());
+            dd.setLocation(new Location(rsc.getWorld(), rsc.getX(), rsc.getY(), rsc.getZ()));
+            dd.setPlayer(player);
+            dd.setHide(false);
+            dd.setOutside(true);
+            dd.setSubmarine(rsc.isSubmarine());
+            dd.setTardisID(id);
+            dd.setBiome(rsc.getBiome());
+            plugin.getTrackerKeeper().getDematerialising().add(id);
+            plugin.getPresetDestroyer().destroyPreset(dd);
+        }
         // rebuild the police box
-        final TARDISMaterialisationData pbd = new TARDISMaterialisationData(plugin, player.getUniqueId().toString());
-        pbd.setChameleon(false);
-        pbd.setDirection(rsb.getDirection());
-        pbd.setLocation(new Location(rsb.getWorld(), rsb.getX(), rsb.getY(), rsb.getZ()));
-        pbd.setMalfunction(false);
-        pbd.setOutside(true);
-        pbd.setPlayer(player);
-        pbd.setRebuild(false);
-        pbd.setSubmarine(rsb.isSubmarine());
-        pbd.setTardisID(id);
+        final BuildData bd = new BuildData(plugin, player.getUniqueId().toString());
+        bd.setChameleon(false);
+        bd.setDirection(rsb.getDirection());
+        bd.setLocation(new Location(rsb.getWorld(), rsb.getX(), rsb.getY(), rsb.getZ()));
+        bd.setMalfunction(false);
+        bd.setOutside(true);
+        bd.setPlayer(player);
+        bd.setRebuild(false);
+        bd.setSubmarine(rsb.isSubmarine());
+        bd.setTardisID(id);
         plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
             @Override
             public void run() {
-                plugin.getPresetBuilder().buildPreset(pbd);
+                plugin.getPresetBuilder().buildPreset(bd);
             }
         }, 20L);
         plugin.getTrackerKeeper().getHasDestination().remove(id);

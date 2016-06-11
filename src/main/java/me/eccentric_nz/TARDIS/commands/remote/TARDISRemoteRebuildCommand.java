@@ -56,7 +56,6 @@ public class TARDISRemoteRebuildCommand {
         }
         final TARDISMaterialisationData pbd = new TARDISMaterialisationData(plugin, player.getUniqueId().toString());
         pbd.setChameleon(cham);
-        pbd.setDirection(rsc.getDirection());
         pbd.setLocation(l);
         pbd.setMalfunction(false);
         pbd.setOutside(false);

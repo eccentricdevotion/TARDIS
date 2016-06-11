@@ -162,6 +162,10 @@ public class TARDISSignListener implements Listener {
                             TARDISMessage.send(player, "NOT_WHILE_DISPERSED");
                             return;
                         }
+                        if (plugin.getTrackerKeeper().getDestinationVortex().containsKey(id)) {
+                            TARDISMessage.send(player.getPlayer(), "NOT_IN_VORTEX");
+                            return;
+                        }
                         // open Chameleon Circuit GUI
                         ItemStack[] cc = new TARDISChameleonInventory(plugin, tardis.isChamele_on(), tardis.isAdapti_on()).getTerminal();
                         Inventory cc_gui = plugin.getServer().createInventory(player, 54, "§4Chameleon Circuit");
