@@ -10,14 +10,11 @@
     * Determine a use for Acid and Rust Buckets
     * Add other worlds (Silurian cave world, Gallifrey)?
 3. [Abandoned TARDISes](http://dev.bukkit.org/bukkit-plugins/tardis/tickets/1277-possibility-to-abandon-a-tardis/)
-4. [Destination 'vortex'](http://dev.bukkit.org/bukkit-plugins/tardis/tickets/1023-set-the-tardis-inflight-without-setting-a-destination/) - dematerialise without setting a destination.
-   * remove `police_box.materialise` config option (who wants a TARDIS that doesn't materialise?)
-   * persist TARDISes in Time Vortex to database
-5. [Improve Control Centre](http://dev.bukkit.org/bukkit-plugins/tardis/tickets/1324-improving-control-centre/)
+4. [Improve Control Centre](http://dev.bukkit.org/bukkit-plugins/tardis/tickets/1324-improving-control-centre/)
     * Update console schematics to add Control Centre sign, Sonic Generator
     * Remove other control signs from console schematics
-6. TARDIS Junk Mode - `/tprefs junk [wall|floor] [block_type]`?
-7. Update for Minecraft 1.10
+5. TARDIS Junk Mode - `/tprefs junk [wall|floor] [block_type]`?
+6. Update for Minecraft 1.10
    * Waiting on LibsDisguises to update (so we can finish Lazarus Device)
 
 ##Upcoming minor version `3.7`  

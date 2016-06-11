@@ -28,6 +28,7 @@ import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import me.eccentric_nz.TARDIS.database.ResultSetTravellers;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
+import me.eccentric_nz.TARDIS.flight.TARDISLand;
 import me.eccentric_nz.TARDIS.travel.TARDISMalfunction;
 import me.eccentric_nz.TARDIS.travel.TARDISTimeTravel;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
@@ -190,6 +191,9 @@ public class TARDISRandomButton {
                     if (plugin.getTrackerKeeper().getRescue().containsKey(id)) {
                         plugin.getTrackerKeeper().getRescue().remove(id);
                     }
+                    if (plugin.getTrackerKeeper().getDestinationVortex().containsKey(id)) {
+                        new TARDISLand(plugin, id, player).exitVortex();
+                    }
                 } else if (plugin.getConfig().getBoolean("travel.no_destination_malfunctions")) {
                     HashMap<String, Object> where = new HashMap<String, Object>();
                     where.put("tardis_id", id);
@@ -233,6 +237,9 @@ public class TARDISRandomButton {
                                     @Override
                                     public void run() {
                                         TARDISSounds.playTARDISSound(handbrake_loc, "tardis_cloister_bell");
+                                        if (plugin.getTrackerKeeper().getDestinationVortex().containsKey(id)) {
+                                            new TARDISLand(plugin, id, player).exitVortex();
+                                        }
                                     }
                                 }, 300L);
                             } else {
