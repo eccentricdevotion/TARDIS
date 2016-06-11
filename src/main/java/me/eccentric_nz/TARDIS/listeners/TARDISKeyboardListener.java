@@ -182,7 +182,7 @@ public class TARDISKeyboardListener implements Listener {
             try {
                 String upper = event.getLine(0).toUpperCase(Locale.ENGLISH);
                 Biome biome = Biome.valueOf(upper);
-                if (!upper.equals("HELL") && !upper.equals("SKY")) {
+                if (!upper.equals("HELL") && !upper.equals("SKY") && !upper.equals("VOID")) {
                     p.performCommand("tardistravel biome " + upper);
                     plugin.getConsole().sendMessage(p.getName() + " issued server command: /tardistravel biome " + upper);
                     removeTracker(id);
