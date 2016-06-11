@@ -41,7 +41,7 @@ public class ResultSetVoid {
 
     /**
      * Creates a class instance that can be used to retrieve an SQL ResultSet
-     * from the vaults table.
+     * from the thevoid table.
      *
      * @param plugin an instance of the main class.
      * @param tardis_id the TARDIS id to check

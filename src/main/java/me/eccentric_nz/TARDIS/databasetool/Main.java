@@ -257,6 +257,11 @@ public class Main {
                                     str = String.format(SQL.VALUES.get(i), rs.getInt("v_id"), rs.getInt("tardis_id"), rs.getString("location"), rs.getInt("x"), rs.getInt("y"), rs.getInt("z")) + end;
                                     bw.write(str);
                                     break;
+                                case thevoid:
+                                case vortex:
+                                    str = String.format(SQL.VALUES.get(i), rs.getInt("tardis_id")) + end;
+                                    bw.write(str);
+                                    break;
                                 default:
                                     break;
                             }
