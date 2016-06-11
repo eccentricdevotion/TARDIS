@@ -77,28 +77,28 @@ public class TARDISPresetBuilderFactory {
     /**
      * Builds the TARDIS Police Box.
      *
-     * @param tmd the TARDIS build data
+     * @param bd the TARDIS build data
      */
-    public void buildPreset(final TARDISMaterialisationData tmd) {
+    public void buildPreset(final BuildData bd) {
         HashMap<String, Object> where = new HashMap<String, Object>();
-        where.put("tardis_id", tmd.getTardisID());
+        where.put("tardis_id", bd.getTardisID());
         ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);
         if (rs.resultSet()) {
             Tardis tardis = rs.getTardis();
             PRESET preset = tardis.getPreset();
             Biome biome;
             // keep the chunk this Police box is in loaded
-            Chunk thisChunk = tmd.getLocation().getChunk();
+            Chunk thisChunk = bd.getLocation().getChunk();
             while (!thisChunk.isLoaded()) {
                 thisChunk.load();
             }
-            if (tmd.isRebuild()) {
-                biome = tmd.getLocation().getWorld().getBlockAt(tmd.getLocation()).getRelative(getOppositeFace(tmd.getDirection()), 2).getBiome();
+            if (bd.isRebuild()) {
+                biome = bd.getLocation().getWorld().getBlockAt(bd.getLocation()).getRelative(getOppositeFace(bd.getDirection()), 2).getBiome();
             } else {
-                biome = tmd.getLocation().getWorld().getBiome(tmd.getLocation().getBlockX(), tmd.getLocation().getBlockZ());
+                biome = bd.getLocation().getWorld().getBiome(bd.getLocation().getBlockX(), bd.getLocation().getBlockZ());
             }
-            tmd.setBiome(biome);
-            if (plugin.getConfig().getBoolean("police_box.set_biome") && !tmd.isRebuild()) {
+            bd.setBiome(biome);
+            if (plugin.getConfig().getBoolean("police_box.set_biome") && !bd.isRebuild()) {
                 // remember the current biome (unless rebuilding)
                 new QueryFactory(plugin).saveBiome(tardis.getTardis_id(), biome.toString());
             }
@@ -108,25 +108,25 @@ public class TARDISPresetBuilderFactory {
             PRESET demat = tardis.getDemat();
             int cham_id = tardis.getChameleon_id();
             byte cham_data = tardis.getChameleon_data();
-            if (tmd.isChameleon() && (preset.equals(PRESET.NEW) || preset.equals(PRESET.OLD) || preset.equals(PRESET.SUBMERGED))) {
+            if (bd.isChameleon() && (preset.equals(PRESET.NEW) || preset.equals(PRESET.OLD) || preset.equals(PRESET.SUBMERGED))) {
                 Block chameleonBlock;
                 // chameleon circuit is on - get block under TARDIS
-                if (tmd.getLocation().getBlock().getType() == Material.SNOW) {
-                    chameleonBlock = tmd.getLocation().getBlock();
+                if (bd.getLocation().getBlock().getType() == Material.SNOW) {
+                    chameleonBlock = bd.getLocation().getBlock();
                 } else {
-                    chameleonBlock = tmd.getLocation().getBlock().getRelative(BlockFace.DOWN);
+                    chameleonBlock = bd.getLocation().getBlock().getRelative(BlockFace.DOWN);
                 }
                 // determine cham_id
                 TARDISChameleonCircuit tcc = new TARDISChameleonCircuit(plugin);
-                int[] b_data = tcc.getChameleonBlock(chameleonBlock, tmd.getPlayer(), false);
+                int[] b_data = tcc.getChameleonBlock(chameleonBlock, bd.getPlayer(), false);
                 cham_id = b_data[0];
                 cham_data = (byte) b_data[1];
             }
             boolean hidden = tardis.isHidden();
             // get submarine preferences
-            if (tmd.isSubmarine() && notSubmarinePresets.contains(preset)) {
+            if (bd.isSubmarine() && notSubmarinePresets.contains(preset)) {
                 preset = PRESET.YELLOW;
-                TARDISMessage.send(tmd.getPlayer().getPlayer(), "SUB_UNSUITED");
+                TARDISMessage.send(bd.getPlayer().getPlayer(), "SUB_UNSUITED");
             }
             /*
              * We can always add the chunk, as List.remove() only removes the
@@ -137,47 +137,49 @@ public class TARDISPresetBuilderFactory {
                 thisChunk.load();
             }
             plugin.getGeneralKeeper().getTardisChunkList().add(thisChunk);
-            if (tmd.isRebuild()) {
+            if (bd.isRebuild()) {
                 // always destroy it first as the player may just be switching presets
                 if (!hidden) {
                     TARDISDeinstaPreset deinsta = new TARDISDeinstaPreset(plugin);
-                    deinsta.instaDestroyPreset(tmd, false, demat);
+                    deinsta.instaDestroyPreset(bd, false, demat);
                 }
-                plugin.getTrackerKeeper().getMaterialising().add(tmd.getTardisID());
-                TARDISMaterialisationPreset runnable = new TARDISMaterialisationPreset(plugin, tmd, preset, cham_id, cham_data, 3);
+                plugin.getTrackerKeeper().getMaterialising().add(bd.getTardisID());
+                TARDISMaterialisationPreset runnable = new TARDISMaterialisationPreset(plugin, bd, preset, cham_id, cham_data, 3);
                 int taskID = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, runnable, 10L, 20L);
                 runnable.setTask(taskID);
-                TARDISSounds.playTARDISSound(tmd.getLocation(), "tardis_land_fast");
-                if (plugin.getUtils().inTARDISWorld(tmd.getPlayer().getPlayer())) {
-                    TARDISSounds.playTARDISSound(tmd.getPlayer().getPlayer().getLocation(), "tardis_land_fast");
+                TARDISSounds.playTARDISSound(bd.getLocation(), "tardis_land_fast");
+                if (plugin.getUtils().inTARDISWorld(bd.getPlayer().getPlayer())) {
+                    TARDISSounds.playTARDISSound(bd.getPlayer().getPlayer().getLocation(), "tardis_land_fast");
                 }
-            } else if (plugin.getConfig().getBoolean("police_box.materialise") && !preset.equals(PRESET.INVISIBLE)) {
-                plugin.getTrackerKeeper().getMaterialising().add(tmd.getTardisID());
+//            } else if (plugin.getConfig().getBoolean("police_box.materialise") && !preset.equals(PRESET.INVISIBLE)) {
+            } else if (!preset.equals(PRESET.INVISIBLE)) {
+                plugin.getTrackerKeeper().getMaterialising().add(bd.getTardisID());
                 if (preset.equals(PRESET.JUNK)) {
-                    TARDISJunkBuilder runnable = new TARDISJunkBuilder(plugin, tmd);
+                    TARDISJunkBuilder runnable = new TARDISJunkBuilder(plugin, bd);
                     int taskID = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, runnable, 10L, 20L);
                     runnable.setTask(taskID);
                 } else {
-                    TARDISMaterialisationPreset runnable = new TARDISMaterialisationPreset(plugin, tmd, preset, cham_id, cham_data, 18);
+                    TARDISMaterialisationPreset runnable = new TARDISMaterialisationPreset(plugin, bd, preset, cham_id, cham_data, 18);
                     int taskID = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, runnable, 10L, 20L);
                     runnable.setTask(taskID);
                 }
-            } else {
-                final int id = cham_id;
-                final byte data = cham_data;
-                // delay by the usual time so handbrake message shows after materialisation sound
-                plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
-                    @Override
-                    public void run() {
-                        plugin.getTrackerKeeper().getMaterialising().add(tmd.getTardisID());
-                        TARDISInstaPreset insta = new TARDISInstaPreset(plugin, tmd, PRESET.INVISIBLE, id, data, false);
-                        insta.buildPreset();
-                    }
-                }, 430L);
             }
+//            else {
+//                final int id = cham_id;
+//                final byte data = cham_data;
+//                // delay by the usual time so handbrake message shows after materialisation sound
+//                plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
+//                    @Override
+//                    public void run() {
+//                        plugin.getTrackerKeeper().getMaterialising().add(tmd.getTardisID());
+//                        TARDISInstaPreset insta = new TARDISInstaPreset(plugin, tmd, PRESET.INVISIBLE, id, data, false);
+//                        insta.buildPreset();
+//                    }
+//                }, 430L);
+//            }
             // update demat so it knows about the current preset after it has changed
             HashMap<String, Object> whered = new HashMap<String, Object>();
-            whered.put("tardis_id", tmd.getTardisID());
+            whered.put("tardis_id", bd.getTardisID());
             HashMap<String, Object> set = new HashMap<String, Object>();
             set.put("chameleon_demat", preset.toString());
             new QueryFactory(plugin).doUpdate("tardis", set, whered);

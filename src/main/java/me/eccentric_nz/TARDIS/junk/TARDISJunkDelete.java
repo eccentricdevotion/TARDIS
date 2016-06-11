@@ -18,10 +18,10 @@ package me.eccentric_nz.TARDIS.junk;
 
 import java.util.HashMap;
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.builders.TARDISMaterialisationData;
 import me.eccentric_nz.TARDIS.commands.admin.TARDISDeleteCommand;
 import me.eccentric_nz.TARDIS.database.ResultSetCurrentLocation;
 import me.eccentric_nz.TARDIS.database.ResultSetTardisID;
+import me.eccentric_nz.TARDIS.destroyers.DestroyData;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
 import me.eccentric_nz.TARDIS.enumeration.SCHEMATIC;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
@@ -66,17 +66,16 @@ public class TARDISJunkDelete {
                 return true;
             }
             // destroy junk TARDIS
-            final TARDISMaterialisationData pdd = new TARDISMaterialisationData(plugin, "00000000-aaaa-bbbb-cccc-000000000000");
-            pdd.setChameleon(false);
-            pdd.setDirection(COMPASS.SOUTH);
-            pdd.setLocation(bb_loc);
-            pdd.setDematerialise(true);
-            pdd.setHide(false);
-            pdd.setOutside(false);
-            pdd.setSubmarine(rsc.isSubmarine());
-            pdd.setTardisID(id);
-            pdd.setBiome(biome);
-            plugin.getPresetDestroyer().destroyPreset(pdd);
+            final DestroyData dd = new DestroyData(plugin, "00000000-aaaa-bbbb-cccc-000000000000");
+            dd.setChameleon(false);
+            dd.setDirection(COMPASS.SOUTH);
+            dd.setLocation(bb_loc);
+            dd.setHide(false);
+            dd.setOutside(false);
+            dd.setSubmarine(rsc.isSubmarine());
+            dd.setTardisID(id);
+            dd.setBiome(biome);
+            plugin.getPresetDestroyer().destroyPreset(dd);
             // destroy the vortex TARDIS
             final World cw = plugin.getServer().getWorld(plugin.getConfig().getString("creation.default_world_name"));
             // give the TARDIS time to remove itself as it's not hidden

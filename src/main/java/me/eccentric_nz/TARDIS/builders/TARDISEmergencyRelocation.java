@@ -51,15 +51,15 @@ public class TARDISEmergencyRelocation {
             World w = plugin.getServer().getWorlds().get(0);
             Location emergency = new TARDISTimeTravel(plugin).randomDestination(p, (byte) 15, (byte) 15, (byte) 15, COMPASS.EAST, "THIS", w, false, w.getSpawnLocation());
             if (emergency != null) {
-                TARDISMaterialisationData tmd = new TARDISMaterialisationData(plugin, p.getUniqueId().toString());
-                tmd.setLocation(emergency);
-                tmd.setTardisID(id);
-                tmd.setDirection(COMPASS.EAST);
-                tmd.setMalfunction(false);
-                tmd.setSubmarine(false);
+                BuildData bd = new BuildData(plugin, p.getUniqueId().toString());
+                bd.setLocation(emergency);
+                bd.setTardisID(id);
+                bd.setDirection(COMPASS.EAST);
+                bd.setMalfunction(false);
+                bd.setSubmarine(false);
                 // TODO get player preferences
                 Tardis tardis = rs.getTardis();
-                new TARDISInstaPreset(plugin, tmd, tardis.getPreset(), tardis.getChameleon_id(), tardis.getChameleon_data(), false).buildPreset();
+                new TARDISInstaPreset(plugin, bd, tardis.getPreset(), tardis.getChameleon_id(), tardis.getChameleon_data(), false).buildPreset();
                 QueryFactory qf = new QueryFactory(plugin);
                 HashMap<String, Object> wherec = new HashMap<String, Object>();
                 wherec.put("tardis_id", id);

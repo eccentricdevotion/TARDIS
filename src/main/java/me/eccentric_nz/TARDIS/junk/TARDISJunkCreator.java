@@ -18,7 +18,7 @@ package me.eccentric_nz.TARDIS.junk;
 
 import java.util.HashMap;
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.builders.TARDISMaterialisationData;
+import me.eccentric_nz.TARDIS.builders.BuildData;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetPlayerPrefs;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
@@ -119,24 +119,24 @@ public class TARDISJunkCreator {
         setlocs.put("direction", "SOUTH");
         qf.insertLocations(setlocs, l.getBlock().getBiome().toString(), lastInsertId);
         // build the TARDIS at the location
-        final TARDISMaterialisationData pbd = new TARDISMaterialisationData(plugin, "00000000-aaaa-bbbb-cccc-000000000000");
-        pbd.setChameleon(false);
-        pbd.setDirection(COMPASS.SOUTH);
-        pbd.setLocation(l);
-        pbd.setMalfunction(false);
-        pbd.setOutside(true);
-        pbd.setPlayer(p);
-        pbd.setRebuild(false);
-        pbd.setSubmarine(false);
-        pbd.setTardisID(lastInsertId);
-        pbd.setBiome(l.getBlock().getBiome());
+        final BuildData bd = new BuildData(plugin, "00000000-aaaa-bbbb-cccc-000000000000");
+        bd.setChameleon(false);
+        bd.setDirection(COMPASS.SOUTH);
+        bd.setLocation(l);
+        bd.setMalfunction(false);
+        bd.setOutside(true);
+        bd.setPlayer(p);
+        bd.setRebuild(false);
+        bd.setSubmarine(false);
+        bd.setTardisID(lastInsertId);
+        bd.setBiome(l.getBlock().getBiome());
         // build the TARDIS in the Vortex
         plugin.getInteriorBuilder().buildInner(junk, chunkworld, lastInsertId, p, wall_type, wall_data, floor_type, floor_data, true);
         // build the TARDIS in the world
         plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
             @Override
             public void run() {
-                plugin.getPresetBuilder().buildPreset(pbd);
+                plugin.getPresetBuilder().buildPreset(bd);
             }
         }, 5L);
         return true;

@@ -23,9 +23,10 @@ import java.util.List;
 import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.api.Parameters;
-import me.eccentric_nz.TARDIS.builders.TARDISMaterialisationData;
+import me.eccentric_nz.TARDIS.builders.BuildData;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetCurrentLocation;
+import me.eccentric_nz.TARDIS.destroyers.DestroyData;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
 import me.eccentric_nz.TARDIS.enumeration.FLAG;
 import me.eccentric_nz.TARDIS.enumeration.PRESET;
@@ -116,42 +117,42 @@ public class TARDISHostileDisplacement {
                         set.put("submarine", (rsc.isSubmarine()) ? 1 : 0);
                         qf.doUpdate("current", set, tid);
                         plugin.getTrackerKeeper().getDamage().remove(id);
-                        boolean mat = plugin.getConfig().getBoolean("police_box.materialise");
-                        long delay = (mat) ? 1L : 180L;
+//                        boolean mat = plugin.getConfig().getBoolean("police_box.materialise");
+//                        long delay = (mat) ? 1L : 180L;
+                        long delay = 1L;
                         // move TARDIS
                         plugin.getTrackerKeeper().getInVortex().add(id);
-                        final TARDISMaterialisationData pdd = new TARDISMaterialisationData(plugin, uuid.toString());
-                        pdd.setChameleon(cham);
-                        pdd.setDirection(d);
-                        pdd.setLocation(loc);
-                        pdd.setDematerialise(mat);
-                        pdd.setPlayer(player);
-                        pdd.setHide(false);
-                        pdd.setOutside(true);
-                        pdd.setSubmarine(rsc.isSubmarine());
-                        pdd.setTardisID(id);
-                        pdd.setBiome(rsc.getBiome());
+                        final DestroyData dd = new DestroyData(plugin, uuid.toString());
+                        dd.setChameleon(cham);
+                        dd.setDirection(d);
+                        dd.setLocation(loc);
+                        dd.setPlayer(player);
+                        dd.setHide(false);
+                        dd.setOutside(true);
+                        dd.setSubmarine(rsc.isSubmarine());
+                        dd.setTardisID(id);
+                        dd.setBiome(rsc.getBiome());
                         plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
                             @Override
                             public void run() {
                                 plugin.getTrackerKeeper().getDematerialising().add(id);
-                                plugin.getPresetDestroyer().destroyPreset(pdd);
+                                plugin.getPresetDestroyer().destroyPreset(dd);
                             }
                         }, delay);
-                        final TARDISMaterialisationData pbd = new TARDISMaterialisationData(plugin, uuid.toString());
-                        pbd.setChameleon(cham);
-                        pbd.setDirection(d);
-                        pbd.setLocation(fl);
-                        pbd.setMalfunction(false);
-                        pbd.setOutside(true);
-                        pbd.setPlayer(player);
-                        pbd.setRebuild(false);
-                        pbd.setSubmarine(rsc.isSubmarine());
-                        pbd.setTardisID(id);
+                        final BuildData bd = new BuildData(plugin, uuid.toString());
+                        bd.setChameleon(cham);
+                        bd.setDirection(d);
+                        bd.setLocation(fl);
+                        bd.setMalfunction(false);
+                        bd.setOutside(true);
+                        bd.setPlayer(player);
+                        bd.setRebuild(false);
+                        bd.setSubmarine(rsc.isSubmarine());
+                        bd.setTardisID(id);
                         plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
                             @Override
                             public void run() {
-                                plugin.getPresetBuilder().buildPreset(pbd);
+                                plugin.getPresetBuilder().buildPreset(bd);
                             }
                         }, delay * 2);
                         // message time lord

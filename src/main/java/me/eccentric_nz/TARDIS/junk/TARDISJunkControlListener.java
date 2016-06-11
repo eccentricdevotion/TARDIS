@@ -22,10 +22,10 @@ import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.api.Parameters;
-import me.eccentric_nz.TARDIS.builders.TARDISMaterialisationData;
 import me.eccentric_nz.TARDIS.database.ResultSetControls;
 import me.eccentric_nz.TARDIS.database.ResultSetCurrentLocation;
 import me.eccentric_nz.TARDIS.database.ResultSetTardisPreset;
+import me.eccentric_nz.TARDIS.destroyers.DestroyData;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
 import me.eccentric_nz.TARDIS.enumeration.FLAG;
 import me.eccentric_nz.TARDIS.enumeration.PRESET;
@@ -119,18 +119,17 @@ public class TARDISJunkControlListener implements Listener {
                             state.setData(lever);
                             state.update();
                             // destroy junk TARDIS
-                            final TARDISMaterialisationData pdd = new TARDISMaterialisationData(plugin, "00000000-aaaa-bbbb-cccc-000000000000");
-                            pdd.setPlayer(player);
-                            pdd.setChameleon(false);
-                            pdd.setDirection(COMPASS.SOUTH);
-                            pdd.setLocation(junkloc);
-                            pdd.setDematerialise(true);
-                            pdd.setHide(false);
-                            pdd.setOutside(false);
-                            pdd.setSubmarine(rsc.isSubmarine());
-                            pdd.setTardisID(id);
-                            pdd.setBiome(biome);
-                            plugin.getPresetDestroyer().destroyPreset(pdd);
+                            final DestroyData dd = new DestroyData(plugin, "00000000-aaaa-bbbb-cccc-000000000000");
+                            dd.setPlayer(player);
+                            dd.setChameleon(false);
+                            dd.setDirection(COMPASS.SOUTH);
+                            dd.setLocation(junkloc);
+                            dd.setHide(false);
+                            dd.setOutside(false);
+                            dd.setSubmarine(rsc.isSubmarine());
+                            dd.setTardisID(id);
+                            dd.setBiome(biome);
+                            plugin.getPresetDestroyer().destroyPreset(dd);
                             // fly my pretties
                             plugin.getGeneralKeeper().setJunkTravelling(true);
                         } else {

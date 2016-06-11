@@ -19,7 +19,6 @@ package me.eccentric_nz.TARDIS.destroyers;
 import java.util.Collections;
 import java.util.HashMap;
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.builders.TARDISMaterialisationData;
 import me.eccentric_nz.TARDIS.chameleon.TARDISChameleonCircuit;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetDoors;
@@ -53,57 +52,57 @@ public class TARDISPresetDestroyerFactory {
         this.plugin = plugin;
     }
 
-    public void destroyPreset(TARDISMaterialisationData pdd) {
+    public void destroyPreset(DestroyData dd) {
         HashMap<String, Object> where = new HashMap<String, Object>();
-        where.put("tardis_id", pdd.getTardisID());
+        where.put("tardis_id", dd.getTardisID());
         ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);
         if (rs.resultSet()) {
             Tardis tardis = rs.getTardis();
             PRESET demat = tardis.getDemat();
             PRESET preset = tardis.getPreset();
             // load the chunk if unloaded
-            if (!pdd.getLocation().getWorld().isChunkLoaded(pdd.getLocation().getChunk())) {
-                pdd.getLocation().getWorld().loadChunk(pdd.getLocation().getChunk());
+            if (!dd.getLocation().getWorld().isChunkLoaded(dd.getLocation().getChunk())) {
+                dd.getLocation().getWorld().loadChunk(dd.getLocation().getChunk());
             }
-            if (pdd.isDematerialise() && !demat.equals(PRESET.INVISIBLE)) {
+            if (!demat.equals(PRESET.INVISIBLE)) {
                 int cham_id = tardis.getChameleon_id();
                 byte cham_data = tardis.getChameleon_data();
-                if (pdd.isChameleon() && (demat.equals(PRESET.NEW) || demat.equals(PRESET.OLD) || demat.equals(PRESET.SUBMERGED))) {
+                if (dd.isChameleon() && (demat.equals(PRESET.NEW) || demat.equals(PRESET.OLD) || demat.equals(PRESET.SUBMERGED))) {
                     Block chameleonBlock;
                     // chameleon circuit is on - get block under TARDIS
-                    if (pdd.getLocation().getBlock().getType() == Material.SNOW) {
-                        chameleonBlock = pdd.getLocation().getBlock();
+                    if (dd.getLocation().getBlock().getType() == Material.SNOW) {
+                        chameleonBlock = dd.getLocation().getBlock();
                     } else {
-                        chameleonBlock = pdd.getLocation().getBlock().getRelative(BlockFace.DOWN);
+                        chameleonBlock = dd.getLocation().getBlock().getRelative(BlockFace.DOWN);
                     }
                     // determine cham_id
                     TARDISChameleonCircuit tcc = new TARDISChameleonCircuit(plugin);
-                    int[] b_data = tcc.getChameleonBlock(chameleonBlock, pdd.getPlayer(), false);
+                    int[] b_data = tcc.getChameleonBlock(chameleonBlock, dd.getPlayer(), false);
                     cham_id = b_data[0];
                     cham_data = (byte) b_data[1];
                 }
                 int loops = 18;
-                if (pdd.isHide()) {
+                if (dd.isHide()) {
                     loops = 3;
-                    TARDISSounds.playTARDISSound(pdd.getLocation(), "tardis_takeoff_fast");
-                    if (plugin.getUtils().inTARDISWorld(pdd.getPlayer().getPlayer())) {
-                        TARDISSounds.playTARDISSound(pdd.getPlayer().getPlayer().getLocation(), "tardis_takeoff_fast");
+                    TARDISSounds.playTARDISSound(dd.getLocation(), "tardis_takeoff_fast");
+                    if (plugin.getUtils().inTARDISWorld(dd.getPlayer().getPlayer())) {
+                        TARDISSounds.playTARDISSound(dd.getPlayer().getPlayer().getLocation(), "tardis_takeoff_fast");
                     }
                 } else if (preset.equals(PRESET.JUNK_MODE)) {
                     loops = 25;
                 }
                 if (demat.equals(PRESET.JUNK)) {
-                    TARDISJunkDestroyer runnable = new TARDISJunkDestroyer(plugin, pdd);
+                    TARDISJunkDestroyer runnable = new TARDISJunkDestroyer(plugin, dd);
                     int taskID = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, runnable, 10L, 20L);
                     runnable.setTask(taskID);
                 } else {
-                    plugin.getTrackerKeeper().getDematerialising().add(pdd.getTardisID());
-                    TARDISDematerialisationPreset runnable = new TARDISDematerialisationPreset(plugin, pdd, demat, cham_id, cham_data, loops);
+                    plugin.getTrackerKeeper().getDematerialising().add(dd.getTardisID());
+                    TARDISDematerialisationPreset runnable = new TARDISDematerialisationPreset(plugin, dd, demat, cham_id, cham_data, loops);
                     int taskID = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, runnable, 10L, 20L);
                     runnable.setTask(taskID);
                 }
             } else {
-                new TARDISDeinstaPreset(plugin).instaDestroyPreset(pdd, pdd.isHide(), demat);
+                new TARDISDeinstaPreset(plugin).instaDestroyPreset(dd, dd.isHide(), demat);
             }
         }
     }

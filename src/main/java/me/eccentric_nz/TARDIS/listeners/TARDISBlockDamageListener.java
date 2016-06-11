@@ -21,7 +21,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.builders.TARDISMaterialisationData;
+import me.eccentric_nz.TARDIS.builders.BuildData;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetBlocks;
 import me.eccentric_nz.TARDIS.database.ResultSetCurrentLocation;
@@ -159,20 +159,20 @@ public class TARDISBlockDamageListener implements Listener {
             HashMap<String, Object> wheret = new HashMap<String, Object>();
             wheret.put("tardis_id", id);
             QueryFactory qf = new QueryFactory(plugin);
-            final TARDISMaterialisationData pbd = new TARDISMaterialisationData(plugin, player.getUniqueId().toString());
-            pbd.setChameleon(cham);
-            pbd.setDirection(rsc.getDirection());
-            pbd.setLocation(l);
-            pbd.setMalfunction(false);
-            pbd.setOutside(false);
-            pbd.setPlayer(player);
-            pbd.setRebuild(true);
-            pbd.setSubmarine(rsc.isSubmarine());
-            pbd.setTardisID(id);
+            final BuildData bd = new BuildData(plugin, player.getUniqueId().toString());
+            bd.setChameleon(cham);
+            bd.setDirection(rsc.getDirection());
+            bd.setLocation(l);
+            bd.setMalfunction(false);
+            bd.setOutside(false);
+            bd.setPlayer(player);
+            bd.setRebuild(true);
+            bd.setSubmarine(rsc.isSubmarine());
+            bd.setTardisID(id);
             plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
                 @Override
                 public void run() {
-                    plugin.getPresetBuilder().buildPreset(pbd);
+                    plugin.getPresetBuilder().buildPreset(bd);
                 }
             }, 5L);
             // set hidden to false

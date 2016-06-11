@@ -21,7 +21,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.builders.TARDISMaterialisationData;
+import me.eccentric_nz.TARDIS.builders.BuildData;
 import me.eccentric_nz.TARDIS.builders.TARDISSpace;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetCount;
@@ -250,17 +250,17 @@ public class TARDISBlockStackListener implements Listener {
                         blockBelow.setType(Material.AIR);
                         blockBottom.setType(Material.AIR);
                         // turn the block stack into a TARDIS
-                        final TARDISMaterialisationData pbd = new TARDISMaterialisationData(plugin, player.getUniqueId().toString());
-                        pbd.setChameleon(false);
-                        pbd.setDirection(COMPASS.valueOf(d));
-                        pbd.setLocation(block_loc);
-                        pbd.setMalfunction(false);
-                        pbd.setOutside(true);
-                        pbd.setPlayer(player);
-                        pbd.setRebuild(false);
-                        pbd.setSubmarine(isSub(blockBottom));
-                        pbd.setTardisID(lastInsertId);
-                        plugin.getPresetBuilder().buildPreset(pbd);
+                        final BuildData bd = new BuildData(plugin, player.getUniqueId().toString());
+                        bd.setChameleon(false);
+                        bd.setDirection(COMPASS.valueOf(d));
+                        bd.setLocation(block_loc);
+                        bd.setMalfunction(false);
+                        bd.setOutside(true);
+                        bd.setPlayer(player);
+                        bd.setRebuild(false);
+                        bd.setSubmarine(isSub(blockBottom));
+                        bd.setTardisID(lastInsertId);
+                        plugin.getPresetBuilder().buildPreset(bd);
                         plugin.getInteriorBuilder().buildInner(schm, chunkworld, lastInsertId, player, wall_type, wall_data, Material.WOOL, (byte) 8, tips);
                         // set achievement completed
                         if (player.hasPermission("tardis.book")) {

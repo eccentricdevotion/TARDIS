@@ -18,7 +18,7 @@ package me.eccentric_nz.TARDIS.junk;
 
 import java.util.List;
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.builders.TARDISMaterialisationData;
+import me.eccentric_nz.TARDIS.builders.BuildData;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
 import me.eccentric_nz.TARDIS.utility.TARDISJunkParticles;
 import me.eccentric_nz.TARDIS.utility.TARDISSounds;
@@ -71,26 +71,21 @@ public class TARDISJunkVortexRunnable implements Runnable {
             }
             if (i == 2) {
                 // play sound
-//                for (Entity e : getJunkTravellers()) {
-//                    if (e instanceof Player) {
-//                        Player p = (Player) e;
                 TARDISSounds.playTARDISSound(vortexJunkLoc, "junk_arc");
-//                    }
-//                }
             }
             if (i == loops - 1) {
                 // build the TARDIS at the location
-                final TARDISMaterialisationData tmd = new TARDISMaterialisationData(plugin, "00000000-aaaa-bbbb-cccc-000000000000");
-                tmd.setChameleon(false);
-                tmd.setDirection(COMPASS.SOUTH);
-                tmd.setLocation(destJunkLoc);
-                tmd.setMalfunction(false);
-                tmd.setOutside(true);
-                tmd.setPlayer(player);
-                tmd.setRebuild(false);
-                tmd.setSubmarine(false);
-                tmd.setTardisID(id);
-                plugin.getPresetBuilder().buildPreset(tmd);
+                final BuildData bd = new BuildData(plugin, "00000000-aaaa-bbbb-cccc-000000000000");
+                bd.setChameleon(false);
+                bd.setDirection(COMPASS.SOUTH);
+                bd.setLocation(destJunkLoc);
+                bd.setMalfunction(false);
+                bd.setOutside(true);
+                bd.setPlayer(player);
+                bd.setRebuild(false);
+                bd.setSubmarine(false);
+                bd.setTardisID(id);
+                plugin.getPresetBuilder().buildPreset(bd);
             }
             if (i == loops) {
                 // teleport players

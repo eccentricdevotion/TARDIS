@@ -21,7 +21,7 @@ import java.util.Collections;
 import java.util.List;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.api.Parameters;
-import me.eccentric_nz.TARDIS.builders.TARDISMaterialisationData;
+import me.eccentric_nz.TARDIS.builders.BuildData;
 import me.eccentric_nz.TARDIS.enumeration.FLAG;
 import me.eccentric_nz.TARDIS.travel.TARDISTimeTravel;
 import org.bukkit.Location;
@@ -47,10 +47,10 @@ public class TARDISFlightAdjustment {
         this.angles = Arrays.asList(0, 45, 90, 135, 180, 225, 270, 315);
     }
 
-    public Location getLocation(TARDISMaterialisationData data, int r) {
+    public Location getLocation(BuildData bd, int r) {
         Location final_location;
         TARDISTimeTravel tt = new TARDISTimeTravel(plugin);
-        Location adjusted_location = data.getLocation().clone();
+        Location adjusted_location = bd.getLocation().clone();
         // randomise the direction
         Collections.shuffle(angles);
         for (Integer a : angles) {
@@ -66,27 +66,27 @@ public class TARDISFlightAdjustment {
                 y = adjusted_location.getWorld().getHighestBlockAt(adjusted_location).getY();
             }
             adjusted_location.setY(y);
-            if (adjusted_location.getBlock().getRelative(BlockFace.DOWN).isLiquid() && !plugin.getConfig().getBoolean("travel.land_on_water") && !data.isSubmarine()) {
+            if (adjusted_location.getBlock().getRelative(BlockFace.DOWN).isLiquid() && !plugin.getConfig().getBoolean("travel.land_on_water") && !bd.isSubmarine()) {
                 bool = false;
             }
             if (bool) {
                 Location sub = null;
                 boolean safe;
-                if (data.isSubmarine()) {
-                    sub = tt.submarine(adjusted_location.getBlock(), data.getDirection());
+                if (bd.isSubmarine()) {
+                    sub = tt.submarine(adjusted_location.getBlock(), bd.getDirection());
                     safe = (sub != null);
                 } else {
-                    int[] start = tt.getStartLocation(adjusted_location, data.getDirection());
-                    safe = (tt.safeLocation(start[0], y, start[2], start[1], start[3], adjusted_location.getWorld(), data.getDirection()) < 1);
+                    int[] start = tt.getStartLocation(adjusted_location, bd.getDirection());
+                    safe = (tt.safeLocation(start[0], y, start[2], start[1], start[3], adjusted_location.getWorld(), bd.getDirection()) < 1);
                 }
                 if (safe) {
-                    final_location = (data.isSubmarine()) ? sub : adjusted_location;
-                    if (plugin.getPluginRespect().getRespect(final_location, new Parameters(data.getPlayer().getPlayer(), FLAG.getNoMessageFlags()))) {
+                    final_location = (bd.isSubmarine()) ? sub : adjusted_location;
+                    if (plugin.getPluginRespect().getRespect(final_location, new Parameters(bd.getPlayer().getPlayer(), FLAG.getNoMessageFlags()))) {
                         return final_location;
                     }
                 }
             }
         }
-        return data.getLocation();
+        return bd.getLocation();
     }
 }

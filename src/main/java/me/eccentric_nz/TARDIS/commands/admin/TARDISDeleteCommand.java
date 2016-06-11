@@ -22,12 +22,12 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.builders.TARDISMaterialisationData;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetCurrentLocation;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import me.eccentric_nz.TARDIS.database.ResultSetTravellers;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
+import me.eccentric_nz.TARDIS.destroyers.DestroyData;
 import static me.eccentric_nz.TARDIS.destroyers.TARDISExterminator.deleteFolder;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
 import me.eccentric_nz.TARDIS.enumeration.SCHEMATIC;
@@ -124,18 +124,17 @@ public class TARDISDeleteCommand {
                 }
                 // destroy outer TARDIS
                 if (!hidden) {
-                    final TARDISMaterialisationData pdd = new TARDISMaterialisationData(plugin, uuid.toString());
-                    pdd.setChameleon(false);
-                    pdd.setDirection(d);
-                    pdd.setLocation(bb_loc);
-                    pdd.setDematerialise(false);
-                    pdd.setPlayer(plugin.getServer().getOfflinePlayer(uuid));
-                    pdd.setHide(false);
-                    pdd.setOutside(false);
-                    pdd.setSubmarine(rsc.isSubmarine());
-                    pdd.setTardisID(id);
-                    pdd.setBiome(biome);
-                    plugin.getPresetDestroyer().destroyPreset(pdd);
+                    final DestroyData dd = new DestroyData(plugin, uuid.toString());
+                    dd.setChameleon(false);
+                    dd.setDirection(d);
+                    dd.setLocation(bb_loc);
+                    dd.setPlayer(plugin.getServer().getOfflinePlayer(uuid));
+                    dd.setHide(false);
+                    dd.setOutside(false);
+                    dd.setSubmarine(rsc.isSubmarine());
+                    dd.setTardisID(id);
+                    dd.setBiome(biome);
+                    plugin.getPresetDestroyer().destroyPreset(dd);
                 } else {
                     // restore biome
                     plugin.getUtils().restoreBiome(bb_loc, biome);

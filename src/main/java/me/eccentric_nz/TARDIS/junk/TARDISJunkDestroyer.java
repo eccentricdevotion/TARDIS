@@ -20,11 +20,11 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.builders.TARDISMaterialisationData;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetBlocks;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import me.eccentric_nz.TARDIS.database.data.ReplacedBlock;
+import me.eccentric_nz.TARDIS.destroyers.DestroyData;
 import me.eccentric_nz.TARDIS.utility.TARDISBlockSetters;
 import me.eccentric_nz.TARDIS.utility.TARDISJunkParticles;
 import me.eccentric_nz.TARDIS.utility.TARDISSounds;
@@ -46,7 +46,7 @@ import org.bukkit.entity.Player;
 public class TARDISJunkDestroyer implements Runnable {
 
     private final TARDIS plugin;
-    private final TARDISMaterialisationData pdd;
+    private final DestroyData pdd;
     private int task;
     private int i = 0;
     private final int sx, ex, sy, ey, sz, ez;
@@ -57,7 +57,7 @@ public class TARDISJunkDestroyer implements Runnable {
     Biome biome;
     private int fryTask;
 
-    public TARDISJunkDestroyer(TARDIS plugin, TARDISMaterialisationData pdd) {
+    public TARDISJunkDestroyer(TARDIS plugin, DestroyData pdd) {
         this.plugin = plugin;
         this.pdd = pdd;
         this.junkLoc = this.pdd.getLocation();

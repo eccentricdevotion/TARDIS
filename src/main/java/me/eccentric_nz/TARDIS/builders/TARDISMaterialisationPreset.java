@@ -65,7 +65,7 @@ import org.bukkit.entity.Player;
 public class TARDISMaterialisationPreset implements Runnable {
 
     private final TARDIS plugin;
-    private final TARDISMaterialisationData tmd;
+    private final BuildData bd;
     private final int loops;
     private final PRESET preset;
     public int task;
@@ -90,15 +90,15 @@ public class TARDISMaterialisationPreset implements Runnable {
      * GLASS, then STAINED_GLASS, then the normal preset wall block.
      *
      * @param plugin instance of the TARDIS plugin
-     * @param tmd the Materialisation data
+     * @param bd the Materialisation data
      * @param preset the preset to construct
      * @param cham_id the chameleon block id for the police box
      * @param cham_data the chameleon block data for the police box
      * @param loops the number of loops to run
      */
-    public TARDISMaterialisationPreset(TARDIS plugin, TARDISMaterialisationData tmd, PRESET preset, int cham_id, byte cham_data, int loops) {
+    public TARDISMaterialisationPreset(TARDIS plugin, BuildData bd, PRESET preset, int cham_id, byte cham_data, int loops) {
         this.plugin = plugin;
-        this.tmd = tmd;
+        this.bd = bd;
         this.loops = loops;
         this.i = 0;
         this.preset = preset;
@@ -109,13 +109,13 @@ public class TARDISMaterialisationPreset implements Runnable {
             plugin.getPresets().setR(rand.nextInt(2));
         }
         if (this.preset.equals(PRESET.CONSTRUCT)) {
-            column = new TARDISConstructColumn(plugin, tmd.getTardisID(), "blueprint", tmd.getDirection()).getColumn();
-            stained_column = new TARDISConstructColumn(plugin, tmd.getTardisID(), "stain", tmd.getDirection()).getColumn();
-            glass_column = new TARDISConstructColumn(plugin, tmd.getTardisID(), "glass", tmd.getDirection()).getColumn();
+            column = new TARDISConstructColumn(plugin, bd.getTardisID(), "blueprint", bd.getDirection()).getColumn();
+            stained_column = new TARDISConstructColumn(plugin, bd.getTardisID(), "stain", bd.getDirection()).getColumn();
+            glass_column = new TARDISConstructColumn(plugin, bd.getTardisID(), "glass", bd.getDirection()).getColumn();
         } else {
-            column = plugin.getPresets().getColumn(preset, tmd.getDirection());
-            stained_column = plugin.getPresets().getStained(preset, tmd.getDirection());
-            glass_column = plugin.getPresets().getGlass(preset, tmd.getDirection());
+            column = plugin.getPresets().getColumn(preset, bd.getDirection());
+            stained_column = plugin.getPresets().getStained(preset, bd.getDirection());
+            glass_column = plugin.getPresets().getGlass(preset, bd.getDirection());
         }
         colours = new byte[]{0, 1, 2, 3, 4, 5, 6, 9, 10, 11, 12, 13, 14};
         random_colour = colours[rand.nextInt(13)];
@@ -124,18 +124,18 @@ public class TARDISMaterialisationPreset implements Runnable {
 
     @Override
     public void run() {
-        if (!plugin.getTrackerKeeper().getDematerialising().contains(tmd.getTardisID())) {
+        if (!plugin.getTrackerKeeper().getDematerialising().contains(bd.getTardisID())) {
             int[][] ids;
             byte[][] datas;
             // get relative locations
-            int x = tmd.getLocation().getBlockX(), plusx = tmd.getLocation().getBlockX() + 1, minusx = tmd.getLocation().getBlockX() - 1, y;
+            int x = bd.getLocation().getBlockX(), plusx = bd.getLocation().getBlockX() + 1, minusx = bd.getLocation().getBlockX() - 1, y;
             if (preset.equals(PRESET.SUBMERGED)) {
-                y = tmd.getLocation().getBlockY() - 1;
+                y = bd.getLocation().getBlockY() - 1;
             } else {
-                y = tmd.getLocation().getBlockY();
+                y = bd.getLocation().getBlockY();
             }
-            int z = tmd.getLocation().getBlockZ(), plusz = tmd.getLocation().getBlockZ() + 1, minusz = tmd.getLocation().getBlockZ() - 1;
-            World world = tmd.getLocation().getWorld();
+            int z = bd.getLocation().getBlockZ(), plusz = bd.getLocation().getBlockZ() + 1, minusz = bd.getLocation().getBlockZ() - 1;
+            World world = bd.getLocation().getWorld();
             int signx = 0, signz = 0;
             if (i < loops) {
                 i++;
@@ -161,38 +161,38 @@ public class TARDISMaterialisationPreset implements Runnable {
                 }
                 QueryFactory qf = new QueryFactory(plugin);
                 // rescue player?
-                if (i == 10 && plugin.getTrackerKeeper().getRescue().containsKey(tmd.getTardisID())) {
-                    UUID playerUUID = plugin.getTrackerKeeper().getRescue().get(tmd.getTardisID());
+                if (i == 10 && plugin.getTrackerKeeper().getRescue().containsKey(bd.getTardisID())) {
+                    UUID playerUUID = plugin.getTrackerKeeper().getRescue().get(bd.getTardisID());
                     Player saved = plugin.getServer().getPlayer(playerUUID);
                     if (saved != null) {
-                        TARDISDoorLocation idl = plugin.getGeneralKeeper().getDoorListener().getDoor(1, tmd.getTardisID());
+                        TARDISDoorLocation idl = plugin.getGeneralKeeper().getDoorListener().getDoor(1, bd.getTardisID());
                         Location l = idl.getL();
-                        plugin.getGeneralKeeper().getDoorListener().movePlayer(saved, l, false, world, false, 0, tmd.useMinecartSounds());
+                        plugin.getGeneralKeeper().getDoorListener().movePlayer(saved, l, false, world, false, 0, bd.useMinecartSounds());
                         TARDISSounds.playTARDISSound(saved, "tardis_land_fast");
                         // put player into travellers table
                         HashMap<String, Object> set = new HashMap<String, Object>();
-                        set.put("tardis_id", tmd.getTardisID());
+                        set.put("tardis_id", bd.getTardisID());
                         set.put("uuid", playerUUID.toString());
                         qf.doInsert("travellers", set);
                     }
-                    plugin.getTrackerKeeper().getRescue().remove(tmd.getTardisID());
+                    plugin.getTrackerKeeper().getRescue().remove(bd.getTardisID());
                 }
                 // first run - remember blocks
                 if (i == 1) {
                     // if configured and it's a Whovian preset set biome
-                    setBiome(world, x, z, tmd.useTexture());
+                    setBiome(world, x, z, bd.useTexture());
                     HashMap<String, Object> where = new HashMap<String, Object>();
-                    where.put("tardis_id", tmd.getTardisID());
-                    if (tmd.isOutside()) {
-                        if (!tmd.useMinecartSounds()) {
+                    where.put("tardis_id", bd.getTardisID());
+                    if (bd.isOutside()) {
+                        if (!bd.useMinecartSounds()) {
                             String sound = (preset.equals(PRESET.JUNK_MODE)) ? "junk_land" : "tardis_land";
-                            TARDISSounds.playTARDISSound(tmd.getLocation(), sound);
+                            TARDISSounds.playTARDISSound(bd.getLocation(), sound);
                         } else {
-                            world.playSound(tmd.getLocation(), Sound.ENTITY_MINECART_INSIDE, 1.0F, 0.0F);
+                            world.playSound(bd.getLocation(), Sound.ENTITY_MINECART_INSIDE, 1.0F, 0.0F);
                         }
                     }
                     // get direction player is facing from yaw place block under door if block is in list of blocks an iron door cannot go on
-                    switch (tmd.getDirection()) {
+                    switch (bd.getDirection()) {
                         case SOUTH:
                             //if (yaw >= 315 || yaw < 45)
                             signx = x;
@@ -269,19 +269,19 @@ public class TARDISMaterialisationPreset implements Runnable {
                                     if (loops == 3) {
                                         TARDISBlockSetters.setBlock(world, xx, y, zz, rail.getTypeId(), rail.getData());
                                     } else {
-                                        plugin.getBlockUtils().setBlockAndRemember(world, xx, y, zz, rail.getTypeId(), rail.getData(), tmd.getTardisID());
+                                        plugin.getBlockUtils().setBlockAndRemember(world, xx, y, zz, rail.getTypeId(), rail.getData(), bd.getTardisID());
                                     }
                                 }
                             }
                             if (yy == 0 && n == 8 && !plugin.getPresetBuilder().no_block_under_door.contains(preset)) {
-                                plugin.getBlockUtils().setUnderDoorBlock(world, xx, (y - 1), zz, tmd.getTardisID(), true);
+                                plugin.getBlockUtils().setUnderDoorBlock(world, xx, (y - 1), zz, bd.getTardisID(), true);
                             }
                             switch (colids[yy]) {
                                 case 2:
                                 case 3:
                                     int subi = (preset.equals(PRESET.SUBMERGED)) ? cham_id : colids[yy];
                                     byte subd = (preset.equals(PRESET.SUBMERGED)) ? cham_data : coldatas[yy];
-                                    plugin.getBlockUtils().setBlockAndRemember(world, xx, (y + yy), zz, subi, subd, tmd.getTardisID());
+                                    plugin.getBlockUtils().setBlockAndRemember(world, xx, (y + yy), zz, subi, subd, bd.getTardisID());
                                     break;
                                 case 35:
                                     int chai = (preset.equals(PRESET.NEW) || preset.equals(PRESET.OLD)) ? cham_id : colids[yy];
@@ -289,21 +289,21 @@ public class TARDISMaterialisationPreset implements Runnable {
                                     if (preset.equals(PRESET.PARTY) || (preset.equals(PRESET.FLOWER) && coldatas[yy] == 0)) {
                                         chad = random_colour;
                                     }
-                                    plugin.getBlockUtils().setBlockAndRemember(world, xx, (y + yy), zz, chai, chad, tmd.getTardisID());
+                                    plugin.getBlockUtils().setBlockAndRemember(world, xx, (y + yy), zz, chai, chad, bd.getTardisID());
                                     break;
                                 case 50: // lamps, glowstone and torches
                                 case 89:
                                 case 124:
                                     Material light;
                                     byte ld;
-                                    if (tmd.isSubmarine() && colids[yy] == 50) {
+                                    if (bd.isSubmarine() && colids[yy] == 50) {
                                         light = Material.GLOWSTONE;
                                         ld = 0;
                                     } else {
-                                        light = (preset.equals(PRESET.NEW) || preset.equals(PRESET.OLD)) ? tmd.getLamp() : Material.getMaterial(colids[yy]);
+                                        light = (preset.equals(PRESET.NEW) || preset.equals(PRESET.OLD)) ? bd.getLamp() : Material.getMaterial(colids[yy]);
                                         ld = coldatas[yy];
                                     }
-                                    plugin.getBlockUtils().setBlockAndRemember(world, xx, (y + yy), zz, light, ld, tmd.getTardisID());
+                                    plugin.getBlockUtils().setBlockAndRemember(world, xx, (y + yy), zz, light, ld, bd.getTardisID());
                                     break;
                                 case 64: // wood, iron & trap doors, rails
                                 case 66:
@@ -321,41 +321,41 @@ public class TARDISMaterialisationPreset implements Runnable {
                                             // should insert the door when tardis is first made, and then update location there after!
                                             HashMap<String, Object> whered = new HashMap<String, Object>();
                                             whered.put("door_type", 0);
-                                            whered.put("tardis_id", tmd.getTardisID());
+                                            whered.put("tardis_id", bd.getTardisID());
                                             ResultSetDoors rsd = new ResultSetDoors(plugin, whered, false);
                                             HashMap<String, Object> setd = new HashMap<String, Object>();
                                             setd.put("door_location", doorloc);
-                                            setd.put("door_direction", tmd.getDirection().toString());
+                                            setd.put("door_direction", bd.getDirection().toString());
                                             if (rsd.resultSet()) {
                                                 HashMap<String, Object> whereid = new HashMap<String, Object>();
                                                 whereid.put("door_id", rsd.getDoor_id());
                                                 qf.doUpdate("doors", setd, whereid);
                                             } else {
-                                                setd.put("tardis_id", tmd.getTardisID());
+                                                setd.put("tardis_id", bd.getTardisID());
                                                 setd.put("door_type", 0);
                                                 qf.doInsert("doors", setd);
                                             }
                                         }
                                     }
                                     if (yy == 0) {
-                                        if (tmd.isSubmarine() && plugin.isWorldGuardOnServer()) {
+                                        if (bd.isSubmarine() && plugin.isWorldGuardOnServer()) {
                                             int sy = y - 1;
-                                            plugin.getBlockUtils().setBlockAndRemember(world, xx, sy, zz, 19, (byte) 0, tmd.getTardisID());
+                                            plugin.getBlockUtils().setBlockAndRemember(world, xx, sy, zz, 19, (byte) 0, bd.getTardisID());
                                             sponge = world.getBlockAt(xx, sy, zz);
                                             plugin.getWorldGuardUtils().sponge(sponge, true);
                                         } else if (!plugin.getPresetBuilder().no_block_under_door.contains(preset)) {
-                                            plugin.getBlockUtils().setUnderDoorBlock(world, xx, (y - 1), zz, tmd.getTardisID(), false);
+                                            plugin.getBlockUtils().setUnderDoorBlock(world, xx, (y - 1), zz, bd.getTardisID(), false);
                                         }
                                     }
                                     if (doors.contains(colids[yy]) && coldatas[yy] > 8) {
-                                        plugin.getBlockUtils().setBlockAndRemember(world, xx, (y + yy), zz, colids[yy], tmd.getDirection().getUpperData(), tmd.getTardisID());
+                                        plugin.getBlockUtils().setBlockAndRemember(world, xx, (y + yy), zz, colids[yy], bd.getDirection().getUpperData(), bd.getTardisID());
                                     } else {
-                                        plugin.getBlockUtils().setBlockAndRemember(world, xx, (y + yy), zz, colids[yy], coldatas[yy], tmd.getTardisID());
+                                        plugin.getBlockUtils().setBlockAndRemember(world, xx, (y + yy), zz, colids[yy], coldatas[yy], bd.getTardisID());
                                     }
                                     break;
                                 case 63:
                                     if (preset.equals(PRESET.APPERTURE)) {
-                                        plugin.getBlockUtils().setUnderDoorBlock(world, xx, (y - 1), zz, tmd.getTardisID(), false);
+                                        plugin.getBlockUtils().setUnderDoorBlock(world, xx, (y - 1), zz, bd.getTardisID(), false);
                                     }
                                     break;
                                 case 68: // sign - if there is one
@@ -375,14 +375,14 @@ public class TARDISMaterialisationPreset implements Runnable {
                                             s.setLine(3, "");
                                             s.update();
                                         }
-                                    } else if (tmd.shouldAddSign()) {
+                                    } else if (bd.shouldAddSign()) {
                                         TARDISBlockSetters.setBlock(world, xx, (y + yy), zz, colids[yy], coldatas[yy]);
                                         Block sign = world.getBlockAt(xx, (y + yy), zz);
                                         if (sign.getType().equals(Material.WALL_SIGN) || sign.getType().equals(Material.SIGN_POST)) {
                                             Sign s = (Sign) sign.getState();
                                             if (plugin.getConfig().getBoolean("police_box.name_tardis")) {
                                                 HashMap<String, Object> wheret = new HashMap<String, Object>();
-                                                wheret.put("tardis_id", tmd.getTardisID());
+                                                wheret.put("tardis_id", bd.getTardisID());
                                                 ResultSetTardis rst = new ResultSetTardis(plugin, wheret, "", false);
                                                 if (rst.resultSet()) {
                                                     Tardis tardis = rst.getTardis();
@@ -461,25 +461,25 @@ public class TARDISMaterialisationPreset implements Runnable {
                                     }
                                     break;
                                 case 144:
-                                    if (tmd.isSubmarine()) {
+                                    if (bd.isSubmarine()) {
                                         TARDISBlockSetters.setBlock(world, xx, (y + yy), zz, 89, (byte) 0);
                                     } else {
-                                        plugin.getBlockUtils().setBlockAndRemember(world, xx, (y + yy), zz, colids[yy], coldatas[yy], tmd.getTardisID());
+                                        plugin.getBlockUtils().setBlockAndRemember(world, xx, (y + yy), zz, colids[yy], coldatas[yy], bd.getTardisID());
                                         Skull skull = (Skull) world.getBlockAt(xx, (y + yy), zz).getState();
-                                        skull.setRotation(plugin.getPresetBuilder().getSkullDirection(tmd.getDirection()));
+                                        skull.setRotation(plugin.getPresetBuilder().getSkullDirection(bd.getDirection()));
                                         skull.update();
                                     }
                                     break;
                                 case 152:
-                                    if (!tmd.getLamp().equals(Material.REDSTONE_LAMP_OFF) && (preset.equals(PRESET.NEW) || preset.equals(PRESET.OLD))) {
-                                        plugin.getBlockUtils().setBlockAndRemember(world, xx, (y + yy), zz, cham_id, cham_data, tmd.getTardisID());
+                                    if (!bd.getLamp().equals(Material.REDSTONE_LAMP_OFF) && (preset.equals(PRESET.NEW) || preset.equals(PRESET.OLD))) {
+                                        plugin.getBlockUtils().setBlockAndRemember(world, xx, (y + yy), zz, cham_id, cham_data, bd.getTardisID());
                                     } else {
-                                        plugin.getBlockUtils().setBlockAndRemember(world, xx, (y + yy), zz, colids[yy], coldatas[yy], tmd.getTardisID());
+                                        plugin.getBlockUtils().setBlockAndRemember(world, xx, (y + yy), zz, colids[yy], coldatas[yy], bd.getTardisID());
                                     }
                                     break;
                                 default: // everything else
                                     if (change) {
-                                        plugin.getBlockUtils().setBlockAndRemember(world, xx, (y + yy), zz, colids[yy], coldatas[yy], tmd.getTardisID());
+                                        plugin.getBlockUtils().setBlockAndRemember(world, xx, (y + yy), zz, colids[yy], coldatas[yy], bd.getTardisID());
                                     }
                                     break;
                             }
@@ -488,10 +488,10 @@ public class TARDISMaterialisationPreset implements Runnable {
                 }
                 if (preset.equals(PRESET.JUNK_MODE) && plugin.getConfig().getBoolean("junk.particles")) {
                     // animate particles
-                    for (Entity e : plugin.getUtils().getJunkTravellers(tmd.getLocation())) {
+                    for (Entity e : plugin.getUtils().getJunkTravellers(bd.getLocation())) {
                         if (e instanceof Player) {
                             Player p = (Player) e;
-                            Location effectsLoc = tmd.getLocation().clone().add(0.5d, 0, 0.5d);
+                            Location effectsLoc = bd.getLocation().clone().add(0.5d, 0, 0.5d);
                             TARDISJunkParticles.sendVortexParticles(effectsLoc, p);
                         }
                     }
@@ -568,9 +568,9 @@ public class TARDISMaterialisationPreset implements Runnable {
                                 if (preset.equals(PRESET.PARTY) || (preset.equals(PRESET.FLOWER) && coldatas[yy] == 0)) {
                                     chad = random_colour;
                                 }
-                                if (tmd.shouldUseCTM() && n == TARDISStaticUtils.getCol(tmd.getDirection()) && yy == 1 && cham_id == 35 && (cham_data == (byte) 11 || cham_data == (byte) 3) && (preset.equals(PRESET.NEW) || preset.equals(PRESET.OLD)) && plugin.getConfig().getBoolean("police_box.set_biome")) {
+                                if (bd.shouldUseCTM() && n == TARDISStaticUtils.getCol(bd.getDirection()) && yy == 1 && cham_id == 35 && (cham_data == (byte) 11 || cham_data == (byte) 3) && (preset.equals(PRESET.NEW) || preset.equals(PRESET.OLD)) && plugin.getConfig().getBoolean("police_box.set_biome")) {
                                     // set a quartz pillar block instead
-                                    byte pillar = (tmd.getDirection().equals(COMPASS.EAST) || tmd.getDirection().equals(COMPASS.WEST)) ? (byte) 3 : (byte) 4;
+                                    byte pillar = (bd.getDirection().equals(COMPASS.EAST) || bd.getDirection().equals(COMPASS.WEST)) ? (byte) 3 : (byte) 4;
                                     TARDISBlockSetters.setBlock(world, xx, (y + yy), zz, 155, pillar);
                                 } else {
                                     TARDISBlockSetters.setBlock(world, xx, (y + yy), zz, chai, chad);
@@ -586,11 +586,11 @@ public class TARDISMaterialisationPreset implements Runnable {
                             case 124:
                                 Material light;
                                 byte ld;
-                                if (tmd.isSubmarine() && colids[yy] == 50) {
+                                if (bd.isSubmarine() && colids[yy] == 50) {
                                     light = Material.GLOWSTONE;
                                     ld = 0;
                                 } else {
-                                    light = (preset.equals(PRESET.NEW) || preset.equals(PRESET.OLD)) ? tmd.getLamp() : Material.getMaterial(colids[yy]);
+                                    light = (preset.equals(PRESET.NEW) || preset.equals(PRESET.OLD)) ? bd.getLamp() : Material.getMaterial(colids[yy]);
                                     ld = coldatas[yy];
                                 }
                                 TARDISBlockSetters.setBlock(world, xx, (y + yy), zz, light, ld);
@@ -646,17 +646,17 @@ public class TARDISMaterialisationPreset implements Runnable {
                                 }
                                 break;
                             case 144:
-                                if (tmd.isSubmarine()) {
+                                if (bd.isSubmarine()) {
                                     TARDISBlockSetters.setBlock(world, xx, (y + yy), zz, 89, (byte) 0);
                                 } else {
                                     TARDISBlockSetters.setBlock(world, xx, (y + yy), zz, colids[yy], coldatas[yy]);
                                     Skull skull = (Skull) world.getBlockAt(xx, (y + yy), zz).getState();
-                                    skull.setRotation(plugin.getPresetBuilder().getSkullDirection(tmd.getDirection()));
+                                    skull.setRotation(plugin.getPresetBuilder().getSkullDirection(bd.getDirection()));
                                     skull.update();
                                 }
                                 break;
                             case 152:
-                                if (!tmd.getLamp().equals(Material.REDSTONE_LAMP_OFF) && (preset.equals(PRESET.NEW) || preset.equals(PRESET.OLD))) {
+                                if (!bd.getLamp().equals(Material.REDSTONE_LAMP_OFF) && (preset.equals(PRESET.NEW) || preset.equals(PRESET.OLD))) {
                                     TARDISBlockSetters.setBlock(world, xx, (y + yy), zz, cham_id, cham_data);
                                 } else {
                                     TARDISBlockSetters.setBlock(world, xx, (y + yy), zz, colids[yy], coldatas[yy]);
@@ -680,27 +680,30 @@ public class TARDISMaterialisationPreset implements Runnable {
                     // set handbake to on ?
                 }
                 // just in case
-                setBiome(world, x, z, tmd.useTexture());
+                setBiome(world, x, z, bd.useTexture());
                 // remove trackers
-                plugin.getTrackerKeeper().getMaterialising().removeAll(Collections.singleton(tmd.getTardisID()));
-                plugin.getTrackerKeeper().getInVortex().removeAll(Collections.singleton(tmd.getTardisID()));
+                plugin.getTrackerKeeper().getMaterialising().removeAll(Collections.singleton(bd.getTardisID()));
+                plugin.getTrackerKeeper().getInVortex().removeAll(Collections.singleton(bd.getTardisID()));
                 plugin.getServer().getScheduler().cancelTask(task);
                 task = 0;
                 // tardis has moved so remove HADS damage count
-                if (plugin.getTrackerKeeper().getDamage().containsKey(tmd.getTardisID())) {
-                    plugin.getTrackerKeeper().getDamage().remove(tmd.getTardisID());
+                if (plugin.getTrackerKeeper().getDamage().containsKey(bd.getTardisID())) {
+                    plugin.getTrackerKeeper().getDamage().remove(bd.getTardisID());
+                }
+                if (plugin.getTrackerKeeper().getDestinationVortex().containsKey(bd.getTardisID())) {
+                    plugin.getTrackerKeeper().getDestinationVortex().remove(bd.getTardisID());
                 }
                 // message travellers in tardis
                 if (loops > 3) {
                     HashMap<String, Object> where = new HashMap<String, Object>();
-                    where.put("tardis_id", tmd.getTardisID());
+                    where.put("tardis_id", bd.getTardisID());
                     ResultSetTravellers rst = new ResultSetTravellers(plugin, where, true);
                     if (rst.resultSet()) {
                         List<UUID> travellers = rst.getData();
                         for (UUID s : travellers) {
                             Player p = plugin.getServer().getPlayer(s);
                             if (p != null) {
-                                String message = (tmd.isMalfunction()) ? "MALFUNCTION" : "HANDBRAKE_LEFT_CLICK";
+                                String message = (bd.isMalfunction()) ? "MALFUNCTION" : "HANDBRAKE_LEFT_CLICK";
                                 TARDISMessage.send(p, message);
                                 // TARDIS has travelled so add players to list so they can receive Artron on exit
                                 if (!plugin.getTrackerKeeper().getHasTravelled().contains(s)) {
@@ -708,19 +711,19 @@ public class TARDISMaterialisationPreset implements Runnable {
                                 }
                             }
                         }
-                    } else if (plugin.getTrackerKeeper().getJunkPlayers().containsKey(tmd.getPlayer().getUniqueId())) {
-                        TARDISMessage.send(tmd.getPlayer().getPlayer(), "JUNK_HANDBRAKE_LEFT_CLICK");
+                    } else if (plugin.getTrackerKeeper().getJunkPlayers().containsKey(bd.getPlayer().getUniqueId())) {
+                        TARDISMessage.send(bd.getPlayer().getPlayer(), "JUNK_HANDBRAKE_LEFT_CLICK");
                     }
                     // restore beacon up block if present
                     HashMap<String, Object> whereb = new HashMap<String, Object>();
-                    whereb.put("tardis_id", tmd.getTardisID());
+                    whereb.put("tardis_id", bd.getTardisID());
                     whereb.put("police_box", 2);
                     ResultSetBlocks rs = new ResultSetBlocks(plugin, whereb, false);
                     if (rs.resultSet()) {
                         ReplacedBlock rb = rs.getReplacedBlock();
                         TARDISBlockSetters.setBlock(rb.getLocation(), rb.getBlock(), rb.getData());
                         HashMap<String, Object> whered = new HashMap<String, Object>();
-                        whered.put("tardis_id", tmd.getTardisID());
+                        whered.put("tardis_id", bd.getTardisID());
                         whered.put("police_box", 2);
                         new QueryFactory(plugin).doDelete("blocks", whered);
                     }
@@ -732,11 +735,11 @@ public class TARDISMaterialisationPreset implements Runnable {
     public void setBiome(World world, int x, int z, boolean pp) {
         if (plugin.getConfig().getBoolean("police_box.set_biome") && (preset.equals(PRESET.NEW) || preset.equals(PRESET.OLD) || preset.equals(PRESET.PANDORICA)) && pp) {
             List<Chunk> chunks = new ArrayList<Chunk>();
-            Chunk chunk = tmd.getLocation().getChunk();
+            Chunk chunk = bd.getLocation().getChunk();
             chunks.add(chunk);
             // load the chunk
-            final int cx = tmd.getLocation().getBlockX() >> 4;
-            final int cz = tmd.getLocation().getBlockZ() >> 4;
+            final int cx = bd.getLocation().getBlockX() >> 4;
+            final int cz = bd.getLocation().getBlockZ() >> 4;
             if (!world.loadChunk(cx, cz, false)) {
                 world.loadChunk(cx, cz, true);
             }
@@ -747,12 +750,12 @@ public class TARDISMaterialisationPreset implements Runnable {
             for (int c = -1; c < 2; c++) {
                 for (int r = -1; r < 2; r++) {
                     world.setBiome(x + c, z + r, Biome.DEEP_OCEAN);
-                    if (TARDISConstants.NO_RAIN.contains(tmd.getBiome())) {
+                    if (TARDISConstants.NO_RAIN.contains(bd.getBiome())) {
                         // add an invisible roof
                         if (loops == 3) {
                             TARDISBlockSetters.setBlock(world, x + c, 255, z + r, Material.BARRIER, (byte) 0);
                         } else {
-                            plugin.getBlockUtils().setBlockAndRemember(world, x + c, 255, z + r, Material.BARRIER, (byte) 0, tmd.getTardisID());
+                            plugin.getBlockUtils().setBlockAndRemember(world, x + c, 255, z + r, Material.BARRIER, (byte) 0, bd.getTardisID());
                         }
                     }
                     Chunk tmp_chunk = world.getChunkAt(new Location(world, x + c, 64, z + r));
@@ -772,7 +775,7 @@ public class TARDISMaterialisationPreset implements Runnable {
     private void saveJunkControl(String location, String field) {
         // remember control location
         HashMap<String, Object> wherej = new HashMap<String, Object>();
-        wherej.put("tardis_id", tmd.getTardisID());
+        wherej.put("tardis_id", bd.getTardisID());
         HashMap<String, Object> setj = new HashMap<String, Object>();
         setj.put(field, location);
         new QueryFactory(plugin).doUpdate("junk", setj, wherej);

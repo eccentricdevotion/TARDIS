@@ -19,7 +19,7 @@ package me.eccentric_nz.TARDIS.destroyers;
 import java.util.Collections;
 import java.util.HashMap;
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.builders.TARDISMaterialisationData;
+import me.eccentric_nz.TARDIS.builders.MaterialisationData;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetBlocks;
 import me.eccentric_nz.TARDIS.database.data.ReplacedBlock;
@@ -54,25 +54,25 @@ public class TARDISDeinstaPreset {
     /**
      * Destroys the TARDIS Police Box. A 3 x 3 x 3 block area.
      *
-     * @param tmd the TARDISMaterialisationData
+     * @param dd the MaterialisationData
      * @param hide boolean determining whether to forget the protected Police
      * Box blocks.
      * @param preset the preset to destroy
      */
     @SuppressWarnings("deprecation")
-    public void instaDestroyPreset(TARDISMaterialisationData tmd, boolean hide, PRESET preset) {
-        Location l = tmd.getLocation();
-        COMPASS d = tmd.getDirection();
-        final int id = tmd.getTardisID();
-        boolean sub = tmd.isSubmarine();
-        Biome biome = tmd.getBiome();
+    public void instaDestroyPreset(MaterialisationData dd, boolean hide, PRESET preset) {
+        Location l = dd.getLocation();
+        COMPASS d = dd.getDirection();
+        final int id = dd.getTardisID();
+        boolean sub = dd.isSubmarine();
+        Biome biome = dd.getBiome();
         if (plugin.getConfig().getBoolean("preferences.walk_in_tardis")) {
             // always remove the portal
             if (plugin.getTrackerKeeper().getPortals().containsKey(l)) {
                 plugin.getTrackerKeeper().getPortals().remove(l);
             }
             // toggle the doors if neccessary
-            new TARDISDoorCloser(plugin, tmd.getPlayer().getUniqueId(), id).closeDoors();
+            new TARDISDoorCloser(plugin, dd.getPlayer().getUniqueId(), id).closeDoors();
         }
         final World w = l.getWorld();
         // make sure chunk is loaded

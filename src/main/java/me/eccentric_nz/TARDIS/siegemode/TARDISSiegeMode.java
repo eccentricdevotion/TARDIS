@@ -20,13 +20,14 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.builders.TARDISMaterialisationData;
+import me.eccentric_nz.TARDIS.builders.BuildData;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetCurrentLocation;
 import me.eccentric_nz.TARDIS.database.ResultSetPlayerPrefs;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.desktop.TARDISUpgradeData;
+import me.eccentric_nz.TARDIS.destroyers.DestroyData;
 import me.eccentric_nz.TARDIS.enumeration.SCHEMATIC;
 import me.eccentric_nz.TARDIS.rooms.TARDISWalls.Pair;
 import me.eccentric_nz.TARDIS.utility.TARDISLocationGetters;
@@ -89,21 +90,21 @@ public class TARDISSiegeMode {
             // remove siege block
             siege.setType(Material.AIR);
             // rebuild preset
-            final TARDISMaterialisationData pbd = new TARDISMaterialisationData(plugin, p.getUniqueId().toString());
-            pbd.setChameleon(cham);
-            pbd.setDirection(rsc.getDirection());
-            pbd.setLocation(current);
-            pbd.setMalfunction(false);
-            pbd.setOutside(false);
-            pbd.setPlayer(p);
-            pbd.setRebuild(true);
-            pbd.setSubmarine(rsc.isSubmarine());
-            pbd.setTardisID(id);
-            pbd.setBiome(rsc.getBiome());
+            final BuildData bd = new BuildData(plugin, p.getUniqueId().toString());
+            bd.setChameleon(cham);
+            bd.setDirection(rsc.getDirection());
+            bd.setLocation(current);
+            bd.setMalfunction(false);
+            bd.setOutside(false);
+            bd.setPlayer(p);
+            bd.setRebuild(true);
+            bd.setSubmarine(rsc.isSubmarine());
+            bd.setTardisID(id);
+            bd.setBiome(rsc.getBiome());
             plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
                 @Override
                 public void run() {
-                    plugin.getPresetBuilder().buildPreset(pbd);
+                    plugin.getPresetBuilder().buildPreset(bd);
                 }
             }, 10L);
             set.put("siege_on", 0);
@@ -147,18 +148,17 @@ public class TARDISSiegeMode {
             TARDISMessage.send(p, "SIEGE_OFF");
         } else {
             // destroy tardis
-            final TARDISMaterialisationData pdd = new TARDISMaterialisationData(plugin, p.getUniqueId().toString());
-            pdd.setChameleon(false);
-            pdd.setDirection(rsc.getDirection());
-            pdd.setLocation(current);
-            pdd.setDematerialise(false);
-            pdd.setPlayer(p.getPlayer());
-            pdd.setHide(false);
-            pdd.setOutside(false);
-            pdd.setSubmarine(rsc.isSubmarine());
-            pdd.setTardisID(id);
-            pdd.setBiome(rsc.getBiome());
-            plugin.getPresetDestroyer().destroyPreset(pdd);
+            final DestroyData dd = new DestroyData(plugin, p.getUniqueId().toString());
+            dd.setChameleon(false);
+            dd.setDirection(rsc.getDirection());
+            dd.setLocation(current);
+            dd.setPlayer(p.getPlayer());
+            dd.setHide(false);
+            dd.setOutside(false);
+            dd.setSubmarine(rsc.isSubmarine());
+            dd.setTardisID(id);
+            dd.setBiome(rsc.getBiome());
+            plugin.getPresetDestroyer().destroyPreset(dd);
             // place siege block
             siege.setType(Material.HUGE_MUSHROOM_1);
             siege.setData((byte) 14, true);

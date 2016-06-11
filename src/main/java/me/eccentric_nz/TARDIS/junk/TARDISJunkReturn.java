@@ -4,7 +4,7 @@
 package me.eccentric_nz.TARDIS.junk;
 
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.builders.TARDISMaterialisationData;
+import me.eccentric_nz.TARDIS.destroyers.DestroyData;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import org.bukkit.Location;
@@ -31,17 +31,16 @@ public class TARDISJunkReturn {
         if (tjl.isNotHome()) {
             Location home = tjl.getHome();
             // fly home
-            TARDISMaterialisationData pdd = new TARDISMaterialisationData(plugin, "00000000-aaaa-bbbb-cccc-000000000000");
-            pdd.setLocation(tjl.getCurrent());
-            pdd.setChameleon(false);
-            pdd.setDirection(COMPASS.SOUTH);
-            pdd.setDematerialise(true);
-            pdd.setHide(false);
-            pdd.setOutside(false);
-            pdd.setSubmarine(false);
-            pdd.setTardisID(tjl.getId());
-            pdd.setBiome(tjl.getBiome());
-            plugin.getPresetDestroyer().destroyPreset(pdd);
+            DestroyData dd = new DestroyData(plugin, "00000000-aaaa-bbbb-cccc-000000000000");
+            dd.setLocation(tjl.getCurrent());
+            dd.setChameleon(false);
+            dd.setDirection(COMPASS.SOUTH);
+            dd.setHide(false);
+            dd.setOutside(false);
+            dd.setSubmarine(false);
+            dd.setTardisID(tjl.getId());
+            dd.setBiome(tjl.getBiome());
+            plugin.getPresetDestroyer().destroyPreset(dd);
             // fly my pretties
             plugin.getGeneralKeeper().setJunkTravelling(true);
             plugin.getGeneralKeeper().setJunkDestination(home);
