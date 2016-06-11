@@ -48,9 +48,9 @@ public class TARDISLand {
         ResultSetControls rsh = new ResultSetControls(plugin, whereh, false);
         if (rsh.resultSet()) {
             Location handbrake = plugin.getLocationUtils().getLocationFromBukkitString(rsh.getLocation());
-            new TARDISTravelBar(plugin).showTravelRemaining(player, 400L);
+            new TARDISTravelBar(plugin).showTravelRemaining(player, 410L);
             // materialise
-            new TARDISMaterialseFromVortex(plugin, id, player, handbrake).run();
+            plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new TARDISMaterialseFromVortex(plugin, id, player, handbrake), 10L);
         }
     }
 }
