@@ -264,7 +264,7 @@ public class TARDISTravelCommands implements CommandExecutor {
                                 // find a village
                                 Location village = new TARDISVillageTravel(plugin).getRandomVillage(player, id);
                                 if (village == null) {
-                                    TARDISMessage.send(player, "CAVE_NOT_FOUND");
+                                    TARDISMessage.send(player, "VILLAGE_NOT_FOUND");
                                     return true;
                                 }
                                 // check respect
@@ -279,7 +279,7 @@ public class TARDISTravelCommands implements CommandExecutor {
                                 which = "Village";
                             }
                             qf.doUpdate("next", set, tid);
-                            TARDISMessage.send(player, "TRAVEL_LOADED", which, true);
+                            TARDISMessage.send(player, "TRAVEL_LOADED", which, !plugin.getTrackerKeeper().getDestinationVortex().containsKey(id));
                             plugin.getTrackerKeeper().getHasDestination().put(id, travel);
                             if (plugin.getTrackerKeeper().getRescue().containsKey(id)) {
                                 plugin.getTrackerKeeper().getRescue().remove(id);
@@ -452,7 +452,7 @@ public class TARDISTravelCommands implements CommandExecutor {
                                     set.put("direction", rsc.getDirection().toString());
                                     set.put("submarine", 0);
                                     qf.doUpdate("next", set, tid);
-                                    TARDISMessage.send(player, "BIOME_SET", true);
+                                    TARDISMessage.send(player, "BIOME_SET", !plugin.getTrackerKeeper().getDestinationVortex().containsKey(id));
                                     plugin.getTrackerKeeper().getHasDestination().put(id, travel);
                                     if (plugin.getTrackerKeeper().getRescue().containsKey(id)) {
                                         plugin.getTrackerKeeper().getRescue().remove(id);
@@ -521,7 +521,7 @@ public class TARDISTravelCommands implements CommandExecutor {
                                 }
                                 set.put("submarine", (rsd.isSubmarine()) ? 1 : 0);
                                 qf.doUpdate("next", set, tid);
-                                TARDISMessage.send(player, "LOC_SET", true);
+                                TARDISMessage.send(player, "LOC_SET", !plugin.getTrackerKeeper().getDestinationVortex().containsKey(id));
                                 plugin.getTrackerKeeper().getHasDestination().put(id, travel);
                                 if (plugin.getTrackerKeeper().getRescue().containsKey(id)) {
                                     plugin.getTrackerKeeper().getRescue().remove(id);

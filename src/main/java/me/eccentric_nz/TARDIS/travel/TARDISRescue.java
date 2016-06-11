@@ -99,7 +99,7 @@ public class TARDISRescue {
         QueryFactory qf = new QueryFactory(plugin);
         qf.doUpdate("next", set, where);
         if (!rescue) {
-            TARDISMessage.send(player, "RESCUE_SET", true);
+            TARDISMessage.send(player, "RESCUE_SET", !plugin.getTrackerKeeper().getDestinationVortex().containsKey(id));
         }
         plugin.getTrackerKeeper().getHasDestination().put(id, plugin.getArtronConfig().getInt("travel"));
         if (rescue) {

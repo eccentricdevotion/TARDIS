@@ -168,7 +168,8 @@ public class TARDISAreaCommands implements CommandExecutor {
                 if (args.length < 2) {
                     TARDISMessage.send(player, "AREA_NEED");
                     return false;
-                }                // set some basic defaults
+                }
+                // set some basic defaults
                 Material fill = Material.COBBLESTONE;
                 Material dock = Material.BRICK;
                 if (args.length > 2) {

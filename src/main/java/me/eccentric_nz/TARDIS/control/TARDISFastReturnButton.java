@@ -75,7 +75,7 @@ public class TARDISFastReturnButton {
                     if (plugin.getTrackerKeeper().getDestinationVortex().containsKey(id)) {
                         new TARDISLand(plugin, id, player).exitVortex();
                     }
-                    TARDISMessage.send(player, "PREV_SET", rsb.getWorld().getName() + ":" + rsb.getX() + ":" + rsb.getY() + ":" + rsb.getZ(), true);
+                    TARDISMessage.send(player, "PREV_SET", rsb.getWorld().getName() + ":" + rsb.getX() + ":" + rsb.getY() + ":" + rsb.getZ(), !plugin.getTrackerKeeper().getDestinationVortex().containsKey(id));
                 } else {
                     TARDISMessage.send(player, "TRAVEL_NO_BACK");
                 }

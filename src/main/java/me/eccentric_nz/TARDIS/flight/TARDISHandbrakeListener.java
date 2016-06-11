@@ -158,7 +158,6 @@ public class TARDISHandbrakeListener implements Listener {
                             Action action = event.getAction();
                             BlockState state = block.getState();
                             Lever lever = (Lever) state.getData();
-                            int dist = 0;
                             // should the beacon turn on
                             HashMap<String, Object> wherek = new HashMap<String, Object>();
                             wherek.put("uuid", uuid.toString());

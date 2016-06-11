@@ -210,7 +210,7 @@ public class TARDISConsoleCloseListener implements Listener {
                                                 set_next.put("z", nsob.getBlockZ());
                                                 set_next.put("direction", rsc.getDirection().toString());
                                                 set_next.put("submarine", 0);
-                                                TARDISMessage.send(p, "BIOME_SET", true);
+                                                TARDISMessage.send(p, "BIOME_SET", !plugin.getTrackerKeeper().getDestinationVortex().containsKey(id));
                                             }
                                             break;
                                         case RECORD_12: // player
@@ -266,7 +266,7 @@ public class TARDISConsoleCloseListener implements Listener {
                                                 boolean sub = Boolean.valueOf(lore.get(7));
                                                 set_next.put("submarine", (sub) ? 1 : 0);
                                                 set_tardis.put("chameleon_preset", lore.get(5));
-                                                TARDISMessage.send(p, "LOC_SET", true);
+                                                TARDISMessage.send(p, "LOC_SET", !plugin.getTrackerKeeper().getDestinationVortex().containsKey(id));
                                             } else {
                                                 TARDISMessage.send(p, "TRAVEL_NO_PERM_SAVE");
                                                 continue;
