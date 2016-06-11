@@ -121,7 +121,7 @@ public class TARDISConfiguration {
         boolOptions.put("growth.rooms_require_blocks", false);
         boolOptions.put("junk.enabled", true);
         boolOptions.put("junk.particles", true);
-        boolOptions.put("police_box.materialise", true);
+//        boolOptions.put("police_box.materialise", true);
         boolOptions.put("police_box.name_tardis", false);
         boolOptions.put("police_box.set_biome", true);
         boolOptions.put("preferences.nerf_pistons.enabled", false);

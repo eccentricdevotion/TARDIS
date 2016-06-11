@@ -63,7 +63,7 @@ public class TARDISConfigConverter {
         sectionsBool.put("keep_night", "creation.keep_night");
         sectionsBool.put("land_on_water", "travel.land_on_water");
         sectionsBool.put("location_conversion_done", "conversions.location_conversion_done");
-        sectionsBool.put("materialise", "police_box.materialise");
+//        sectionsBool.put("materialise", "police_box.materialise");
         sectionsBool.put("name_tardis", "police_box.name_tardis");
         sectionsBool.put("nether", "travel.nether");
         sectionsBool.put("per_world_perms", "travel.per_world_perms");
