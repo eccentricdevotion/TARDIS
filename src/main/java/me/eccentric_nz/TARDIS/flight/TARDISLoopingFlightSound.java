@@ -42,7 +42,7 @@ public class TARDISLoopingFlightSound implements Runnable {
         int taskID = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, new Runnable() {
             @Override
             public void run() {
-                TARDISSounds.playTARDISSound(location, "time_rotor");
+                TARDISSounds.playTARDISSound(location, "time_rotor", 0.5f);
             }
         }, 1L, 280L);
         plugin.getTrackerKeeper().getDestinationVortex().put(id, taskID);

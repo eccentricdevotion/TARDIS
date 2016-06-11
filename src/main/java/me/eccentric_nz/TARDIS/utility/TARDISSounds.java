@@ -24,8 +24,6 @@ import me.eccentric_nz.TARDIS.database.ResultSetPlayerPrefs;
 import me.eccentric_nz.TARDIS.database.ResultSetTravellers;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
-import org.bukkit.entity.Entity;
-import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 
 /**
@@ -77,23 +75,21 @@ public class TARDISSounds {
      *
      * @param l The location
      * @param s The sound to play
+     * @param volume The volume to play the sound at
+     */
+    public static void playTARDISSound(Location l, String s, float volume) {
+        l.getWorld().playSound(l, s, VOLUME, volume);
+    }
+
+    /**
+     * Plays a TARDIS sound for the player and surrounding players at the
+     * current location.
+     *
+     * @param l The location
+     * @param s The sound to play
      */
     public static void playTARDISSound(Location l, String s) {
-        try {
-            l.getWorld().playSound(l, s, VOLUME, 1.0f);
-        } catch (NoSuchMethodError ex) {
-            // spawn an entity at the location - an exp orb will do
-            Entity orb = l.getWorld().spawnEntity(l, EntityType.EXPERIENCE_ORB);
-            for (Entity e : orb.getNearbyEntities(16.0d, 16.0d, 16.0d)) {
-                if (e instanceof Player) {
-                    Player pp = (Player) e;
-                    pp.playSound(pp.getLocation(), s, VOLUME, 1.0f);
-                }
-            }
-            // remove entity
-            orb.remove();
-            TARDISMessage.message(TARDIS.plugin.getConsole(), "Sound method not found, please update Spigot / CraftBukkit using BuildTools!");
-        }
+        l.getWorld().playSound(l, s, VOLUME, 1.0f);
     }
 
     /**
