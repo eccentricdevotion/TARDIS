@@ -218,6 +218,10 @@ public class TARDISAnyoneDoorListener extends TARDISDoorListener implements List
                                                     }
                                                 }
                                             }
+                                            if (open && rs.getTardis().isAbandoned()) {
+                                                TARDISMessage.send(player, "ABANDONED_DOOR");
+                                                return;
+                                            }
                                             // toggle the door
                                             if (toggle) {
                                                 new TARDISDoorToggler(plugin, block, player, minecart, open, id).toggleDoors();

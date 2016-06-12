@@ -39,6 +39,7 @@ public class TARDISPortalPersister {
     private PreparedStatement ps = null;
     private ResultSet rs = null;
     private int count = 0;
+    private int counta = 0;
     private final String prefix;
 
     public TARDISPortalPersister(TARDIS plugin) {
@@ -49,16 +50,26 @@ public class TARDISPortalPersister {
     public void save() {
         try {
             // save the portals
-            ps = connection.prepareStatement("INSERT INTO " + prefix + "portals (portal, teleport, direction, tardis_id) VALUES (?,?,?,?)");
+            ps = connection.prepareStatement("INSERT INTO " + prefix + "portals (portal, teleport, direction, tardis_id, abandoned) VALUES (?,?,?,?,?)");
             for (Map.Entry<Location, TARDISTeleportLocation> map : plugin.getTrackerKeeper().getPortals().entrySet()) {
                 TARDISTeleportLocation ttpl = map.getValue();
                 ps.setString(1, map.getKey().toString());
                 ps.setString(2, ttpl.getLocation().toString());
                 ps.setString(3, ttpl.getDirection().toString());
                 ps.setInt(4, ttpl.getTardisId());
-                count += ps.executeUpdate();
+                ps.setInt(5, (ttpl.isAbandoned() ? 1 : 0));
+                if (ttpl.isAbandoned()) {
+                    counta += ps.executeUpdate();
+                } else {
+                    count += ps.executeUpdate();
+                }
             }
-            plugin.getConsole().sendMessage(plugin.getPluginName() + "Saved " + count + " portals.");
+            if (count > 0) {
+                plugin.getConsole().sendMessage(plugin.getPluginName() + "Saved " + count + " portals.");
+            }
+            if (counta > 0) {
+                plugin.getConsole().sendMessage(plugin.getPluginName() + "Saved " + counta + " abandoned portals.");
+            }
             // save the players
             ps = connection.prepareStatement("INSERT INTO " + prefix + "movers (uuid) VALUES (?)");
             for (UUID uuid : plugin.getTrackerKeeper().getMover()) {
@@ -96,13 +107,24 @@ public class TARDISPortalPersister {
                             ttpl.setLocation(teleport);
                             ttpl.setDirection(direction);
                             ttpl.setTardisId(rs.getInt("tardis_id"));
+                            boolean abandoned = rs.getBoolean("abandoned");
+                            ttpl.setAbandoned(abandoned);
                             plugin.getTrackerKeeper().getPortals().put(portal, ttpl);
-                            count++;
+                            if (abandoned) {
+                                counta++;
+                            } else {
+                                count++;
+                            }
                         }
                     }
                 }
             }
-            plugin.getConsole().sendMessage(plugin.getPluginName() + "Loaded " + count + " portals.");
+            if (count > 0) {
+                plugin.getConsole().sendMessage(plugin.getPluginName() + "Loaded " + count + " portals.");
+            }
+            if (counta > 0) {
+                plugin.getConsole().sendMessage(plugin.getPluginName() + "Loaded " + counta + " abandoned portals.");
+            }
             // clear the portals table so we don't get any duplicates when saving them
             ps = connection.prepareStatement("DELETE FROM " + prefix + "portals");
             ps.executeUpdate();

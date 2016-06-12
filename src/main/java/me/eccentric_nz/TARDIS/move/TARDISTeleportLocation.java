@@ -28,6 +28,7 @@ public class TARDISTeleportLocation {
     private Location location;
     private int tardisId;
     private COMPASS direction;
+    private boolean abandoned;
 
     public Location getLocation() {
         return location;
@@ -51,5 +52,13 @@ public class TARDISTeleportLocation {
 
     public void setDirection(COMPASS direction) {
         this.direction = direction;
+    }
+
+    public boolean isAbandoned() {
+        return abandoned;
+    }
+
+    public void setAbandoned(boolean abandoned) {
+        this.abandoned = abandoned;
     }
 }

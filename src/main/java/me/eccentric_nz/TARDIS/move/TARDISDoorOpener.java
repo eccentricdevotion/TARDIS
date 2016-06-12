@@ -108,9 +108,11 @@ public class TARDISDoorOpener {
                 ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);
                 Tardis tardis = null;
                 PRESET preset = null;
+                boolean abandoned = false;
                 if (rs.resultSet()) {
                     tardis = rs.getTardis();
                     preset = tardis.getPreset();
+                    abandoned = tardis.isAbandoned();
                     if (!plugin.getConfig().getBoolean("preferences.open_door_policy")) {
                         String[] companions = tardis.getCompanions().split(":");
                         for (String c : companions) {
@@ -187,10 +189,12 @@ public class TARDISDoorOpener {
                     tp_in.setLocation(indoor);
                     tp_in.setTardisId(id);
                     tp_in.setDirection(indirection);
+                    tp_in.setAbandoned(abandoned);
                     TARDISTeleportLocation tp_out = new TARDISTeleportLocation();
                     tp_out.setLocation(exdoor);
                     tp_out.setTardisId(id);
                     tp_out.setDirection(exdirection);
+                    tp_out.setAbandoned(abandoned);
                     if (!plugin.getConfig().getBoolean("preferences.open_door_policy")) {
                         // players
                         for (UUID u : uuids) {

@@ -81,7 +81,7 @@ public class TARDISMoveListener implements Listener {
             final int id = tpl.getTardisId();
             // are they a companion of this TARDIS?
             List<UUID> companions = new ResultSetCompanions(plugin, id).getCompanions();
-            if (companions.contains(uuid)) {
+            if (tpl.isAbandoned() || companions.contains(uuid)) {
                 Location to = tpl.getLocation();
                 boolean exit;
                 if (plugin.getConfig().getBoolean("creation.create_worlds_with_perms") && plugin.getServer().getPlayer(uuid).hasPermission("tardis.create_world")) {
