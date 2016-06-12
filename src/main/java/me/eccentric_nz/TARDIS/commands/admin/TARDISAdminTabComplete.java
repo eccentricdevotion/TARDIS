@@ -50,6 +50,7 @@ public class TARDISAdminTabComplete extends TARDISCompleter implements TabComple
     private final ImmutableList<String> TIPS_SUBS = ImmutableList.of("400", "800", "1200", "1600");
     private final ImmutableList<String> TOWNY_SUBS = ImmutableList.of("none", "wilderness", "town", "nation");
     private final ImmutableList<String> VORTEX_SUBS = ImmutableList.of("kill", "teleport");
+    private final ImmutableList<String> LIST_SUBS = ImmutableList.of("abandoned", "portals", "save");
     private final ImmutableList<String> WORLD_SUBS;
 
     public TARDISAdminTabComplete(TARDIS plugin) {
@@ -88,6 +89,9 @@ public class TARDISAdminTabComplete extends TARDISCompleter implements TabComple
             if (sub.equals("difficulty")) {
                 return partial(lastArg, DIFFICULTY_SUBS);
             }
+            if (sub.equals("list")) {
+                return partial(lastArg, LIST_SUBS);
+            }
             if (sub.equals("respect_towny")) {
                 return partial(lastArg, TOWNY_SUBS);
             }
@@ -124,7 +128,8 @@ public class TARDISAdminTabComplete extends TARDISCompleter implements TabComple
             if (sub.equals("tips_limit")) {
                 return partial(lastArg, TIPS_SUBS);
             }
-            if (sub.equals("delete") || sub.equals("enter") || sub.equals("purge") || sub.equals("desiege")) { // return null to default to online player name matching
+            if (sub.equals("delete") || sub.equals("enter") || sub.equals("purge") || sub.equals("desiege")) {
+                // return null to default to online player name matching
                 return null;
             } else {
                 return partial(lastArg, BOOL_SUBS);

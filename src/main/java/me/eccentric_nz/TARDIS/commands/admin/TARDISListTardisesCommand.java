@@ -45,7 +45,7 @@ public class TARDISListTardisesCommand {
     }
 
     public boolean listTardises(CommandSender sender, String[] args) {
-        if (args.length > 1 && (args[1].equalsIgnoreCase("save") || args[1].equalsIgnoreCase("portals"))) {
+        if (args.length > 1 && (args[1].equalsIgnoreCase("save") || args[1].equalsIgnoreCase("portals") || args[1].equalsIgnoreCase("abandoned"))) {
             if (args[1].equalsIgnoreCase("save")) {
                 ResultSetTardis rsl = new ResultSetTardis(plugin, null, "", true);
                 if (rsl.resultSet()) {
@@ -71,10 +71,13 @@ public class TARDISListTardisesCommand {
                 }
                 TARDISMessage.send(sender, "FILE_SAVED");
                 return true;
-            } else {
+            } else if (args[1].equalsIgnoreCase("portals")) {
                 for (Map.Entry<Location, TARDISTeleportLocation> map : plugin.getTrackerKeeper().getPortals().entrySet()) {
                     sender.sendMessage("TARDIS id: " + map.getValue().getTardisId() + " has a portal open at: " + map.getKey().toString());
                 }
+                return true;
+            } else {
+                new TARDISAbandonLister(plugin).list(sender);
                 return true;
             }
         } else {
