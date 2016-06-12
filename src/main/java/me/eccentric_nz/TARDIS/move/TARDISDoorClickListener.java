@@ -285,7 +285,7 @@ public class TARDISDoorClickListener extends TARDISDoorListener implements Liste
                                     float pitch = player.getLocation().getPitch();
                                     String companions = tardis.getCompanions();
                                     boolean hb = tardis.isHandbrake_on();
-                                    boolean po = tardis.isPowered_on();
+                                    boolean po = !tardis.isPowered_on() && !tardis.isAbandoned();
                                     HashMap<String, Object> wherecl = new HashMap<String, Object>();
                                     wherecl.put("tardis_id", tardis.getTardis_id());
                                     ResultSetCurrentLocation rsc = new ResultSetCurrentLocation(plugin, wherecl);
@@ -448,7 +448,7 @@ public class TARDISDoorClickListener extends TARDISDoorListener implements Liste
                                                         new TARDISResourcePackChanger(plugin).changeRP(player, rsp.getTextureIn());
                                                     }
                                                 }
-                                                if (canPowerUp && !po) {
+                                                if (canPowerUp && po) {
                                                     // power up the TARDIS
                                                     plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
                                                         @Override

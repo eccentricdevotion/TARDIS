@@ -151,7 +151,15 @@ public class TARDISDoorWalkListener extends TARDISDoorListener implements Listen
                             hasPrefs = true;
                             key = (!rsp.getKey().isEmpty()) ? rsp.getKey() : plugin.getConfig().getString("preferences.key");
                             willFarm = rsp.isFarmOn();
-                            canPowerUp = (rsp.isAutoPowerUp() && plugin.getConfig().getBoolean("allow.power_down"));
+                            if (rsp.isAutoPowerUp() && plugin.getConfig().getBoolean("allow.power_down")) {
+                                // check TARDIS is not abandoned
+                                HashMap<String, Object> tid = new HashMap<String, Object>();
+                                tid.put("tardis_id", id);
+                                ResultSetTardis rs = new ResultSetTardis(plugin, tid, "", false);
+                                if (rs.resultSet()) {
+                                    canPowerUp = !rs.getTardis().isAbandoned();
+                                }
+                            }
                         } else {
                             key = plugin.getConfig().getString("preferences.key");
                         }
@@ -305,7 +313,7 @@ public class TARDISDoorWalkListener extends TARDISDoorListener implements Listen
                                 float pitch = player.getLocation().getPitch();
                                 String companions = tardis.getCompanions();
                                 boolean hb = tardis.isHandbrake_on();
-                                boolean po = tardis.isPowered_on();
+                                boolean po = !tardis.isPowered_on() && !tardis.isAbandoned();
                                 HashMap<String, Object> wherecl = new HashMap<String, Object>();
                                 wherecl.put("tardis_id", tardis.getTardis_id());
                                 ResultSetCurrentLocation rsc = new ResultSetCurrentLocation(plugin, wherecl);
@@ -468,7 +476,7 @@ public class TARDISDoorWalkListener extends TARDISDoorListener implements Listen
                                                     new TARDISResourcePackChanger(plugin).changeRP(player, rsp.getTextureIn());
                                                 }
                                             }
-                                            if (canPowerUp && po == false) {
+                                            if (canPowerUp && po) {
                                                 // power up the TARDIS
                                                 plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
                                                     @Override
