@@ -404,7 +404,15 @@ public class QueryFactory {
                 ps.setString(2, (String) claim.get("owner"));
                 ps.setString(3, (String) claim.get("owner"));
                 ps.setInt(4, (Integer) claim.get("tardis_id"));
-                return ps.executeUpdate() == 1;
+                boolean bool = (ps.executeUpdate() == 1);
+                if (bool) {
+                    query = "UPDATE " + prefix + "ars SET uuid = ? WHERE tardis_id = ?";
+                    ps.setString(1, (String) claim.get("uuid"));
+                    ps.setInt(2, (Integer) claim.get("tardis_id"));
+                    ps = connection.prepareStatement(query);
+                    ps.executeUpdate();
+                }
+                return bool;
             } catch (SQLException e) {
                 plugin.debug("Update error for claiming abandoned TARDIS! " + e.getMessage());
                 return false;
