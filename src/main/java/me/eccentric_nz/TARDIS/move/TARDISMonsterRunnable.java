@@ -91,7 +91,7 @@ public class TARDISMonsterRunnable implements Runnable {
         // get open portals
         for (Map.Entry<Location, TARDISTeleportLocation> map : plugin.getTrackerKeeper().getPortals().entrySet()) {
             // only portals in police box worlds
-            if (!map.getKey().getWorld().getName().contains("TARDIS")) {
+            if (!map.getKey().getWorld().getName().contains("TARDIS") && !map.getValue().isAbandoned()) {
                 // only police boxes that are not hidden
                 boolean hidden = new ResultSetHidden(plugin, map.getValue().getTardisId()).isVisible();
                 if (!hidden) {
