@@ -343,7 +343,7 @@ public class TARDISStattenheimListener implements Listener {
                         }
                         // if beacon is off turn it on
                         if (beacon_on) {
-                            new TARDISBeaconToggler(plugin).flickSwitch(uuid, true);
+                            new TARDISBeaconToggler(plugin).flickSwitch(uuid, id, true);
                         }
                         // police box lamp
                         if (preset.equals(PRESET.NEW) || preset.equals(PRESET.OLD)) {

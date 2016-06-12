@@ -265,7 +265,11 @@ public class TARDISPrefsMenuListener implements Listener {
                     im.setLore(lore);
                     is.setItemMeta(im);
                     if (im.getDisplayName().equals("Beacon")) {
-                        new TARDISBeaconToggler(plugin).flickSwitch(uuid, !bool);
+                        // get tardis id
+                        ResultSetTardisID rsi = new ResultSetTardisID(plugin);
+                        if (rsi.fromUUID(uuid.toString())) {
+                            new TARDISBeaconToggler(plugin).flickSwitch(uuid, rsi.getTardis_id(), !bool);
+                        }
                     }
                 }
             }

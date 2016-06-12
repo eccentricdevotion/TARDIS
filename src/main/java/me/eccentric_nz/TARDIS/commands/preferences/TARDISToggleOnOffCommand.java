@@ -19,9 +19,11 @@ package me.eccentric_nz.TARDIS.commands.preferences;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
+import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.artron.TARDISBeaconToggler;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
+import me.eccentric_nz.TARDIS.database.ResultSetTardisID;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import org.bukkit.entity.Player;
 
@@ -63,7 +65,12 @@ public class TARDISToggleOnOffCommand {
         if (args[1].equalsIgnoreCase("on")) {
             setp.put(pref + "_on", 1);
             if (pref.equals("beacon")) {
-                new TARDISBeaconToggler(plugin).flickSwitch(player.getUniqueId(), true);
+                UUID uuid = player.getUniqueId();
+                // get tardis id
+                ResultSetTardisID rsi = new ResultSetTardisID(plugin);
+                if (rsi.fromUUID(uuid.toString())) {
+                    new TARDISBeaconToggler(plugin).flickSwitch(uuid, rsi.getTardis_id(), true);
+                }
             }
             String grammar = (was.contains(pref)) ? "PREF_WAS_ON" : "PREF_WERE_ON";
             TARDISMessage.send(player, grammar, pref);
@@ -71,7 +78,12 @@ public class TARDISToggleOnOffCommand {
         if (args[1].equalsIgnoreCase("off")) {
             setp.put(pref + "_on", 0);
             if (pref.equals("beacon")) {
-                new TARDISBeaconToggler(plugin).flickSwitch(player.getUniqueId(), false);
+                UUID uuid = player.getUniqueId();
+                // get tardis id
+                ResultSetTardisID rsi = new ResultSetTardisID(plugin);
+                if (rsi.fromUUID(uuid.toString())) {
+                    new TARDISBeaconToggler(plugin).flickSwitch(uuid, rsi.getTardis_id(), false);
+                }
             }
             String grammar = (was.contains(pref)) ? "PREF_WAS_OFF" : "PREF_WERE_OFF";
             TARDISMessage.send(player, grammar, pref);

@@ -105,7 +105,7 @@ public class TARDISQuitListener implements Listener {
                         new TARDISLampToggler(plugin).flickSwitch(id, uuid, true, tardis.getSchematic().hasLanterns());
                     }
                     // if beacon is on turn it off
-                    new TARDISBeaconToggler(plugin).flickSwitch(uuid, false);
+                    new TARDISBeaconToggler(plugin).flickSwitch(uuid, id, false);
                     // update database
                     HashMap<String, Object> wheret = new HashMap<String, Object>();
                     wheret.put("tardis_id", id);
