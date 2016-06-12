@@ -22,6 +22,7 @@ package me.eccentric_nz.TARDIS.enumeration;
  */
 public enum TARDIS_COMMAND {
 
+    abandon,
     abort,
     add,
     arch_time,

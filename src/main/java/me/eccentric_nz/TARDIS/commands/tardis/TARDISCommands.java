@@ -91,6 +91,9 @@ public class TARDISCommands implements CommandExecutor {
                     TARDISMessage.send(player, "SIEGE_NO_CMD");
                     return true;
                 }
+                if (args[0].equalsIgnoreCase("abandon")) {
+                    return new TARDISAbandonCommand(plugin).doAbandon(sender, args.length > 1);
+                }
                 if (args[0].equalsIgnoreCase("add")) {
                     if (args.length == 1) {
                         return new TARDISAddCompanionCommand(plugin).doAddGUI(player);
