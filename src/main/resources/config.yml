@@ -169,6 +169,10 @@ junk:
     enabled: true
     return: -1
     particles: true
+# abandoment
+abandon:
+    enabled: true
+    reduce_count: true
 # don't touch
 conversions:
     biome_update: true

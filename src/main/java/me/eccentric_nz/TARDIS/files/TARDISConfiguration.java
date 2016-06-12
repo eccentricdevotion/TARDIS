@@ -75,8 +75,9 @@ public class TARDISConfiguration {
         this.chameleon_config = plugin.getChameleonGuis();
         this.planets_config = plugin.getPlanetsConfig();
         // boolean
+        boolOptions.put("abandon.enabled", true);
+        boolOptions.put("abandon.reduce_count", true);
         boolOptions.put("allow.3d_doors", false);
-        boolOptions.put("allow.abandon", true);
         boolOptions.put("allow.achievements", true);
         boolOptions.put("allow.all_blocks", false);
         boolOptions.put("allow.autonomous", true);

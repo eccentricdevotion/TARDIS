@@ -119,7 +119,6 @@ circuits:
         temporal: 20
 # restrictions
 allow:
-    abandon: true
     mob_farming: true
     spawn_eggs: true
     emergency_npc: true
@@ -169,6 +168,10 @@ junk:
     enabled: true
     return: -1
     particles: true
+# abandoment
+abandon:
+    enabled: true
+    reduce_count: true
 # don't touch
 conversions:
     biome_update: false

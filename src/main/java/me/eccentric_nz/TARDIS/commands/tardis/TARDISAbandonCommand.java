@@ -22,6 +22,8 @@ import me.eccentric_nz.TARDIS.commands.admin.TARDISAbandonLister;
 import me.eccentric_nz.TARDIS.control.TARDISPowerButton;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetTardisAbandoned;
+import me.eccentric_nz.TARDIS.database.ResultSetTravellers;
+import me.eccentric_nz.TARDIS.enumeration.PRESET;
 import me.eccentric_nz.TARDIS.move.TARDISDoorCloser;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import org.bukkit.command.CommandSender;
@@ -40,7 +42,7 @@ public class TARDISAbandonCommand {
     }
 
     public boolean doAbandon(CommandSender sender, boolean list) {
-        if (sender.hasPermission("tardis.abandon") && plugin.getConfig().getBoolean("allow.abandon")) {
+        if (sender.hasPermission("tardis.abandon") && plugin.getConfig().getBoolean("abandon.enabled")) {
             if (list) {
                 // list abandoned TARDISes
                 if (sender.hasPermission("tardis.admin")) {
@@ -65,7 +67,31 @@ public class TARDISAbandonCommand {
                     TARDISMessage.send(player, "NO_TARDIS");
                     return true;
                 } else {
+                    // need to be in tardis
+                    HashMap<String, Object> where = new HashMap<String, Object>();
+                    where.put("uuid", player.getUniqueId().toString());
+                    ResultSetTravellers rst = new ResultSetTravellers(plugin, where, false);
+                    if (!rst.resultSet()) {
+                        TARDISMessage.send(player, "NOT_IN_TARDIS");
+                        return true;
+                    }
+                    if (rs.getPreset().equals(PRESET.JUNK_MODE)) {
+                        TARDISMessage.send(player, "ABANDONED_NOT_JUNK");
+                        return true;
+                    }
                     int id = rs.getTardis_id();
+                    if (rst.getTardis_id() != id) {
+                        TARDISMessage.send(player, "ABANDONED_OWN");
+                        return true;
+                    }
+                    if (!rs.isHandbrake_on()) {
+                        TARDISMessage.send(player, "HANDBRAKE_ENGAGE");
+                        return true;
+                    }
+                    if (plugin.getTrackerKeeper().getDestinationVortex().containsKey(id)) {
+                        TARDISMessage.send(player, "NOT_IN_VORTEX");
+                        return true;
+                    }
                     HashMap<String, Object> set = new HashMap<String, Object>();
                     set.put("abandoned", 1);
                     set.put("powered_on", 0);
