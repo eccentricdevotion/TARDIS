@@ -46,7 +46,6 @@ public class ResultSetDiskStorage {
     private int id;
     private int tardis_id;
     private UUID uuid;
-    private String owner;
     private String savesOne;
     private String savesTwo;
     private String areas;
@@ -116,10 +115,6 @@ public class ResultSetDiskStorage {
                         this.uuid = UUID.fromString(rs.getString("uuid"));
                     } else {
                         this.uuid = plugin.getGeneralKeeper().getUUIDCache().getZERO_UUID();
-                    }
-                    this.owner = rs.getString("owner");
-                    if (rs.wasNull()) {
-                        this.owner = "";
                     }
                     this.savesOne = rs.getString("saves_one");
                     if (rs.wasNull()) {

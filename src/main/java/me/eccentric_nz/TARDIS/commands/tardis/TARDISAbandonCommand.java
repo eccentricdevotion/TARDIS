@@ -20,9 +20,9 @@ import java.util.HashMap;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.commands.admin.TARDISAbandonLister;
 import me.eccentric_nz.TARDIS.control.TARDISPowerButton;
-import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetTardisAbandoned;
 import me.eccentric_nz.TARDIS.database.ResultSetTravellers;
+import me.eccentric_nz.TARDIS.database.TARDISAbandonUpdate;
 import me.eccentric_nz.TARDIS.enumeration.PRESET;
 import me.eccentric_nz.TARDIS.move.TARDISDoorCloser;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
@@ -92,18 +92,13 @@ public class TARDISAbandonCommand {
                         TARDISMessage.send(player, "NOT_IN_VORTEX");
                         return true;
                     }
-                    HashMap<String, Object> set = new HashMap<String, Object>();
-                    set.put("abandoned", 1);
-                    set.put("powered_on", 0);
-                    HashMap<String, Object> wherei = new HashMap<String, Object>();
-                    wherei.put("tardis_id", id);
-                    new QueryFactory(plugin).doUpdate("tardis", set, wherei);
+                    new TARDISAbandonUpdate(plugin, id, player.getUniqueId().toString()).run();
                     if (rs.isPowered_on()) {
                         // power down TARDIS
                         new TARDISPowerButton(plugin, id, player, rs.getPreset(), true, rs.isHidden(), rs.isLights_on(), player.getLocation(), rs.getArtron_level(), rs.getSchematic().hasLanterns()).clickButton();
-                        // close the door
-                        new TARDISDoorCloser(plugin, player.getUniqueId(), id).closeDoors();
                     }
+                    // close the door
+                    new TARDISDoorCloser(plugin, player.getUniqueId(), id).closeDoors();
                     TARDISMessage.send(player, "ABANDONED_SUCCESS");
                 }
             }
