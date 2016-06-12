@@ -391,7 +391,7 @@ public class QueryFactory {
      */
     public boolean claimTARDIS(HashMap<String, Object> claim) {
         PreparedStatement ps = null;
-        String query = "UPDATE " + prefix + "tardis SET uuid = ?, owner = ?, last_known_name = ?, adandoned = 0 , tardis_init = 1 WHERE tardis_id = ?";
+        String query = "UPDATE " + prefix + "tardis SET uuid = ?, owner = ?, last_known_name = ?, abandoned = 0 , tardis_init = 1 WHERE tardis_id = ?";
         try {
             service.testConnection(connection);
             ps = connection.prepareStatement(query);

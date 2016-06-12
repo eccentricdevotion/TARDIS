@@ -43,7 +43,7 @@ public class TARDISAbandonCommand {
     public boolean doAbandon(CommandSender sender, boolean list) {
         if (sender.hasPermission("tardis.abandon") && plugin.getConfig().getBoolean("allow.abandon")) {
             if (list) {
-                // list adandoned TARDISes
+                // list abandoned TARDISes
                 if (sender.hasPermission("tardis.admin")) {
                     new TARDISAbandonLister(plugin).list(sender);
                     return true;

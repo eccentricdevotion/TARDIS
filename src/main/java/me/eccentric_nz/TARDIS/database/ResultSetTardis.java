@@ -129,7 +129,7 @@ public class ResultSetTardis {
                             rs.getString("chunk"),
                             rs.getInt("tips"),
                             CONSOLES.SCHEMATICFor(rs.getString("size").toLowerCase()),
-                            rs.getBoolean("adandoned"),
+                            rs.getBoolean("abandoned"),
                             replaced,
                             companions,
                             rs.getString("save_sign"),
