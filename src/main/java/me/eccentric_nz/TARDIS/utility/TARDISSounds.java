@@ -78,7 +78,7 @@ public class TARDISSounds {
      * @param volume The volume to play the sound at
      */
     public static void playTARDISSound(Location l, String s, float volume) {
-        l.getWorld().playSound(l, s, VOLUME, volume);
+        l.getWorld().playSound(l, s, VOLUME * volume, 1.0f);
     }
 
     /**
