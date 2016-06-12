@@ -10,6 +10,9 @@
     * Determine a use for Acid and Rust Buckets
     * Add other worlds (Silurian cave world, Gallifrey)?
 3. [Abandoned TARDISes](http://dev.bukkit.org/bukkit-plugins/tardis/tickets/1277-possibility-to-abandon-a-tardis/)
+    * add `/tardisadmin abandon [true|false]` and `/tardisadmin reduce_count [true|false]` commands
+    * test `/tardis abandon list` click entry to enter TARDIS functionality
+    * add ability to delete abandoned TARDISes
 4. [Improve Control Centre](http://dev.bukkit.org/bukkit-plugins/tardis/tickets/1324-improving-control-centre/)
     * Update console schematics to add Control Centre sign, Sonic Generator
     * Remove other control signs from console schematics
