@@ -173,17 +173,17 @@ public class TARDISHandbrakeListener implements Listener {
                             final QueryFactory qf = new QueryFactory(plugin);
                             if (action == Action.RIGHT_CLICK_BLOCK) {
                                 if (tardis.isHandbrake_on()) {
+                                    // check if door is open
+                                    if (isDoorOpen(id)) {
+                                        TARDISMessage.send(player, "DOOR_CLOSE");
+                                        return;
+                                    }
                                     // Changes the lever to off
                                     lever.setPowered(false);
                                     state.setData(lever);
                                     state.update();
                                     if (plugin.getConfig().getBoolean("circuits.damage") && plugin.getTrackerKeeper().getHasNotClickedHandbrake().contains(id)) {
                                         plugin.getTrackerKeeper().getHasNotClickedHandbrake().remove(Integer.valueOf(id));
-                                    }
-                                    // check if door is open
-                                    if (isDoorOpen(id)) {
-                                        TARDISMessage.send(player, "DOOR_CLOSE");
-                                        return;
                                     }
                                     TARDISSounds.playTARDISSound(handbrake_loc, "tardis_handbrake_release");
                                     if (!beac_on && !beacon.isEmpty()) {
