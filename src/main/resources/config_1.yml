@@ -119,6 +119,7 @@ circuits:
         temporal: 20
 # restrictions
 allow:
+    abandon: true
     mob_farming: true
     spawn_eggs: true
     emergency_npc: true

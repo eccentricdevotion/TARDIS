@@ -76,6 +76,7 @@ public class TARDISConfiguration {
         this.planets_config = plugin.getPlanetsConfig();
         // boolean
         boolOptions.put("allow.3d_doors", false);
+        boolOptions.put("allow.abandon", true);
         boolOptions.put("allow.achievements", true);
         boolOptions.put("allow.all_blocks", false);
         boolOptions.put("allow.autonomous", true);
