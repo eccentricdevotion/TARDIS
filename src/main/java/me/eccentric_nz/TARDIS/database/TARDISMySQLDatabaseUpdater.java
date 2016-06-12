@@ -60,6 +60,7 @@ public class TARDISMySQLDatabaseUpdater {
         tardisupdates.add("last_known_name varchar(32) DEFAULT ''");
         tardisupdates.add("lights_on int(1) DEFAULT '1'");
         tardisupdates.add("monsters int(2) DEFAULT '0'");
+        tardisupdates.add("abandoned int(1) DEFAULT '0'");
         tardisupdates.add("powered_on int(1) DEFAULT '0'");
         tardisupdates.add("renderer varchar(512) DEFAULT ''");
         tardisupdates.add("siege_on int(1) DEFAULT '0'");

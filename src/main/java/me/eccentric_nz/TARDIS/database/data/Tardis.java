@@ -33,6 +33,7 @@ public class Tardis {
     private final String chunk;
     private final int tips;
     private final SCHEMATIC schematic;
+    private final boolean abandoned;
     private final String replaced;
     private final String companions;
     private final String save_sign;
@@ -68,7 +69,7 @@ public class Tardis {
     private final boolean siege_on;
     private final int monsters;
 
-    public Tardis(int tardis_id, UUID uuid, String owner, String lastKnownName, String chunk, int tips, SCHEMATIC schematic, String replaced, String companions, String save_sign, String chameleon, boolean chamele_on, int chameleon_id, byte chameleon_data, PRESET preset, PRESET demat, boolean adapti_on, int artron_level, String creeper, String condenser, String beacon, boolean handbrake_on, boolean tardis_init, boolean recharging, String scanner, String farm, String stable, boolean hidden, long lastuse, boolean iso_on, String eps, String rail, String village, String renderer, String zero, String hutch, String igloo, boolean powered_on, boolean lights_on, boolean siege_on, int monsters) {
+    public Tardis(int tardis_id, UUID uuid, String owner, String lastKnownName, String chunk, int tips, SCHEMATIC schematic, boolean abandoned, String replaced, String companions, String save_sign, String chameleon, boolean chamele_on, int chameleon_id, byte chameleon_data, PRESET preset, PRESET demat, boolean adapti_on, int artron_level, String creeper, String condenser, String beacon, boolean handbrake_on, boolean tardis_init, boolean recharging, String scanner, String farm, String stable, boolean hidden, long lastuse, boolean iso_on, String eps, String rail, String village, String renderer, String zero, String hutch, String igloo, boolean powered_on, boolean lights_on, boolean siege_on, int monsters) {
         this.tardis_id = tardis_id;
         this.uuid = uuid;
         this.owner = owner;
@@ -76,6 +77,7 @@ public class Tardis {
         this.chunk = chunk;
         this.tips = tips;
         this.schematic = schematic;
+        this.abandoned = abandoned;
         this.replaced = replaced;
         this.companions = companions;
         this.save_sign = save_sign;
@@ -138,6 +140,10 @@ public class Tardis {
 
     public SCHEMATIC getSchematic() {
         return schematic;
+    }
+
+    public boolean isAbandoned() {
+        return abandoned;
     }
 
     public String getReplaced() {
