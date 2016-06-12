@@ -391,26 +391,34 @@ public class QueryFactory {
      */
     public boolean claimTARDIS(HashMap<String, Object> claim) {
         PreparedStatement ps = null;
-        String query = "UPDATE " + prefix + "tardis SET uuid = ?, owner = ?, last_known_name = ?, abandoned = 0 , tardis_init = 1 WHERE tardis_id = ?";
-        try {
-            service.testConnection(connection);
-            ps = connection.prepareStatement(query);
-            ps.setString(1, (String) claim.get("uuid"));
-            ps.setString(2, (String) claim.get("owner"));
-            ps.setString(3, (String) claim.get("owner"));
-            ps.setInt(4, (Integer) claim.get("tardis_id"));
-            return ps.executeUpdate() == 1;
-        } catch (SQLException e) {
-            plugin.debug("Update error for claiming abandoned TARDIS! " + e.getMessage());
-            return false;
-        } finally {
+        // check if they have a non-abandoned TARDIS
+        HashMap<String, Object> where = new HashMap<String, Object>();
+        where.put("uuid", claim.get("uuid"));
+        ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false, 0);
+        if (!rs.resultSet()) {
+            String query = "UPDATE " + prefix + "tardis SET uuid = ?, owner = ?, last_known_name = ?, abandoned = 0 , tardis_init = 1 WHERE tardis_id = ?";
             try {
-                if (ps != null) {
-                    ps.close();
-                }
+                service.testConnection(connection);
+                ps = connection.prepareStatement(query);
+                ps.setString(1, (String) claim.get("uuid"));
+                ps.setString(2, (String) claim.get("owner"));
+                ps.setString(3, (String) claim.get("owner"));
+                ps.setInt(4, (Integer) claim.get("tardis_id"));
+                return ps.executeUpdate() == 1;
             } catch (SQLException e) {
-                plugin.debug("Error closing abandoned TARDIS claim statement! " + e.getMessage());
+                plugin.debug("Update error for claiming abandoned TARDIS! " + e.getMessage());
+                return false;
+            } finally {
+                try {
+                    if (ps != null) {
+                        ps.close();
+                    }
+                } catch (SQLException e) {
+                    plugin.debug("Error closing abandoned TARDIS claim statement! " + e.getMessage());
+                }
             }
+        } else {
+            return false;
         }
     }
 }
