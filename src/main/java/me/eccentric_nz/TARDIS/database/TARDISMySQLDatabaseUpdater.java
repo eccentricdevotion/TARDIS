@@ -39,6 +39,7 @@ public class TARDISMySQLDatabaseUpdater {
     private final List<String> prefsupdates = new ArrayList<String>();
     private final List<String> destsupdates = new ArrayList<String>();
     private final List<String> countupdates = new ArrayList<String>();
+    private final List<String> portalsupdates = new ArrayList<String>();
     private final List<String> inventoryupdates = new ArrayList<String>();
     private final HashMap<String, String> uuidUpdates = new HashMap<String, String>();
     private final Statement statement;
@@ -88,6 +89,7 @@ public class TARDISMySQLDatabaseUpdater {
         prefsupdates.add("auto_powerup_on int(1) DEFAULT '0'");
         destsupdates.add("slot int(1) DEFAULT '-1'");
         countupdates.add("grace int(3) DEFAULT '0'");
+        portalsupdates.add("abandoned int(1) DEFAULT '0'");
         inventoryupdates.add("attributes text");
         inventoryupdates.add("armour_attributes text");
     }
@@ -145,6 +147,16 @@ public class TARDISMySQLDatabaseUpdater {
                     i++;
                     String c_alter = "ALTER TABLE " + prefix + "t_count ADD " + c;
                     statement.executeUpdate(c_alter);
+                }
+            }
+            for (String o : portalsupdates) {
+                String[] osplit = o.split(" ");
+                String o_query = "SHOW COLUMNS FROM " + prefix + "portals LIKE '" + osplit[0] + "'";
+                ResultSet rso = statement.executeQuery(o_query);
+                if (!rso.next()) {
+                    i++;
+                    String o_alter = "ALTER TABLE " + prefix + "portals ADD " + o;
+                    statement.executeUpdate(o_alter);
                 }
             }
             for (String v : inventoryupdates) {

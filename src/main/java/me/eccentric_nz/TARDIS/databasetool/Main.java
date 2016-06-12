@@ -218,7 +218,7 @@ public class Main {
                                     bw.write(str);
                                     break;
                                 case portals:
-                                    str = String.format(SQL.VALUES.get(i), rs.getInt("portal_id"), rs.getString("portal"), rs.getString("teleport"), rs.getString("direction"), rs.getInt("tardis_id")) + end;
+                                    str = String.format(SQL.VALUES.get(i), rs.getInt("portal_id"), rs.getString("portal"), rs.getString("teleport"), rs.getString("direction"), rs.getInt("tardis_id"), rs.getInt("abandoned")) + end;
                                     bw.write(str);
                                     break;
                                 case storage:

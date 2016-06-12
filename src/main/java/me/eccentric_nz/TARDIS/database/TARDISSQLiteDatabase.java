@@ -141,7 +141,7 @@ public class TARDISSQLiteDatabase {
             statement.executeUpdate(queryPlayers);
 
             // Table structure for table 'portals'
-            String queryPortals = "CREATE TABLE IF NOT EXISTS " + prefix + "portals (portal_id INTEGER PRIMARY KEY NOT NULL, portal TEXT DEFAULT '', teleport TEXT DEFAULT '', direction TEXT DEFAULT '', tardis_id INTEGER DEFAULT 0)";
+            String queryPortals = "CREATE TABLE IF NOT EXISTS " + prefix + "portals (portal_id INTEGER PRIMARY KEY NOT NULL, portal TEXT DEFAULT '', teleport TEXT DEFAULT '', direction TEXT DEFAULT '', tardis_id INTEGER DEFAULT 0, abandoned INTEGER DEFAULT 0)";
             statement.executeUpdate(queryPortals);
 
             // Table structure for table 'siege'

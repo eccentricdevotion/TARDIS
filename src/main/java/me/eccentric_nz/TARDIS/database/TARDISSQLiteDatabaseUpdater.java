@@ -40,6 +40,7 @@ public class TARDISSQLiteDatabaseUpdater {
     private final List<String> destupdates = new ArrayList<String>();
     private final List<String> doorupdates = new ArrayList<String>();
     private final List<String> gravityupdates = new ArrayList<String>();
+    private final List<String> portalsupdates = new ArrayList<String>();
     private final List<String> prefsupdates = new ArrayList<String>();
     private final List<String> tardisupdates = new ArrayList<String>();
     private final List<String> inventoryupdates = new ArrayList<String>();
@@ -65,6 +66,7 @@ public class TARDISSQLiteDatabaseUpdater {
         doorupdates.add("locked INTEGER DEFAULT 0");
         gravityupdates.add("distance INTEGER DEFAULT 11");
         gravityupdates.add("velocity REAL DEFAULT 0.5");
+        portalsupdates.add("abandoned INTEGER DEFAULT 0");
         prefsupdates.add("artron_level INTEGER DEFAULT 0");
         prefsupdates.add("auto_on INTEGER DEFAULT 0");
         prefsupdates.add("auto_siege_on INTEGER DEFAULT 0");
@@ -208,6 +210,17 @@ public class TARDISSQLiteDatabaseUpdater {
                     i++;
                     String g_alter = "ALTER TABLE " + prefix + "gravity_well ADD " + g;
                     statement.executeUpdate(g_alter);
+                }
+            }
+            for (String o : portalsupdates) {
+                String[] osplit = o.split(" ");
+                String ocheck = osplit[0] + " " + osplit[1].substring(0, 3);
+                String o_query = "SELECT sql FROM sqlite_master WHERE tbl_name = '" + prefix + "portals' AND sql LIKE '%" + ocheck + "%'";
+                ResultSet rso = statement.executeQuery(o_query);
+                if (!rso.next()) {
+                    i++;
+                    String o_alter = "ALTER TABLE " + prefix + "portals ADD " + o;
+                    statement.executeUpdate(o_alter);
                 }
             }
             for (String p : prefsupdates) {
