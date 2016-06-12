@@ -370,7 +370,7 @@ public class QueryFactory {
             ps.setInt(1, id);
             ps.executeUpdate();
         } catch (SQLException e) {
-            plugin.debug("Update error for saving tardis_id to thevoid! " + e.getMessage());
+            plugin.debug("Insert error for saving tardis_id to thevoid! " + e.getMessage());
         } finally {
             try {
                 if (ps != null) {
@@ -378,6 +378,38 @@ public class QueryFactory {
                 }
             } catch (SQLException e) {
                 plugin.debug("Error closing thevoid statement! " + e.getMessage());
+            }
+        }
+    }
+
+    /**
+     * Claim an abandoned TARDIS.
+     *
+     * @param claim a HashMap<String, Object> of table fields and values to
+     * alter.
+     * @return true if the claim was a success
+     */
+    public boolean claimTARDIS(HashMap<String, Object> claim) {
+        PreparedStatement ps = null;
+        String query = "UPDATE " + prefix + "tardis SET uuid = ?, owner = ?, last_known_name = ?, adandoned = 0 , tardis_init = 1 WHERE tardis_id = ?";
+        try {
+            service.testConnection(connection);
+            ps = connection.prepareStatement(query);
+            ps.setString(1, (String) claim.get("uuid"));
+            ps.setString(2, (String) claim.get("owner"));
+            ps.setString(3, (String) claim.get("owner"));
+            ps.setInt(4, (Integer) claim.get("tardis_id"));
+            return ps.executeUpdate() == 1;
+        } catch (SQLException e) {
+            plugin.debug("Update error for claiming abandoned TARDIS! " + e.getMessage());
+            return false;
+        } finally {
+            try {
+                if (ps != null) {
+                    ps.close();
+                }
+            } catch (SQLException e) {
+                plugin.debug("Error closing abandoned TARDIS claim statement! " + e.getMessage());
             }
         }
     }

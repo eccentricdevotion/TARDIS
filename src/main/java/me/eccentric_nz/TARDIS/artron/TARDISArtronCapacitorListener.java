@@ -113,10 +113,11 @@ public class TARDISArtronCapacitorListener implements Listener {
                             if (tardis.getPreset().equals(PRESET.JUNK)) {
                                 return;
                             }
+                            final boolean abandoned = tardis.isAbandoned();
                             HashMap<String, Object> whereid = new HashMap<String, Object>();
                             whereid.put("tardis_id", id);
                             int current_level = tardis.getArtron_level();
-                            boolean init = tardis.isTardis_init();
+                            boolean init = (tardis.isTardis_init() && !abandoned);
                             boolean lights = tardis.isLights_on();
                             int fc = plugin.getArtronConfig().getInt("full_charge");
                             Material item = player.getInventory().getItemInMainHand().getType();
@@ -242,7 +243,21 @@ public class TARDISArtronCapacitorListener implements Listener {
                                     TARDISMessage.send(player, "ENERGY_INIT");
                                 } else // toggle power
                                  if (plugin.getConfig().getBoolean("allow.power_down")) {
-                                        new TARDISPowerButton(plugin, id, player, tardis.getPreset(), tardis.isPowered_on(), tardis.isHidden(), lights, player.getLocation(), current_level, tardis.getSchematic().hasLanterns()).clickButton();
+                                        boolean pu = true;
+                                        if (abandoned) {
+                                            // transfer ownership to the player who clicked
+                                            HashMap<String, Object> claim = new HashMap<String, Object>();
+                                            claim.put("tardis_id", id);
+                                            claim.put("uuid", player.getUniqueId().toString());
+                                            claim.put("owner", player.getName());
+                                            pu = qf.claimTARDIS(claim);
+                                            if (pu) {
+                                                TARDISMessage.send(player, "ABANDON_CLAIMED");
+                                            }
+                                        }
+                                        if (pu) {
+                                            new TARDISPowerButton(plugin, id, player, tardis.getPreset(), tardis.isPowered_on(), tardis.isHidden(), lights, player.getLocation(), current_level, tardis.getSchematic().hasLanterns()).clickButton();
+                                        }
                                     }
                             } else if (player.isSneaking()) {
                                 if (!init) {
