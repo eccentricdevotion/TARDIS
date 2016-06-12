@@ -70,7 +70,7 @@ public class ResultSetTardisSign {
     public boolean resultSet() {
         PreparedStatement statement = null;
         ResultSet rs = null;
-        String query = "SELECT * FROM " + prefix + "tardis WHERE chameleon = ? OR save_sign = ?";
+        String query = "SELECT * FROM " + prefix + "tardis WHERE chameleon = ? OR save_sign = ? AND abandoned = 0";
         try {
             service.testConnection(connection);
             statement = connection.prepareStatement(query);

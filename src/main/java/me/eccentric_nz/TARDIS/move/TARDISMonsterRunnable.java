@@ -216,7 +216,7 @@ public class TARDISMonsterRunnable implements Runnable {
                         if (r.nextInt(4) == 0 && canSpawn(map.getKey(), r.nextInt(4))) {
                             HashMap<String, Object> wheret = new HashMap<String, Object>();
                             wheret.put("tardis_id", map.getValue().getTardisId());
-                            ResultSetTardis rs = new ResultSetTardis(plugin, wheret, "", false);
+                            ResultSetTardis rs = new ResultSetTardis(plugin, wheret, "", false, 2);
                             if (rs.resultSet() && rs.getTardis().getMonsters() < plugin.getConfig().getInt("preferences.spawn_limit")) {
                                 TARDISMonster rtm = new TARDISMonster();
                                 // choose a random monster
@@ -297,7 +297,7 @@ public class TARDISMonsterRunnable implements Runnable {
                                 // need to get the console location - will be different for non-TIPS TARDISes
                                 HashMap<String, Object> wheret = new HashMap<String, Object>();
                                 wheret.put("tardis_id", tpl.getTardisId());
-                                ResultSetTardis rs = new ResultSetTardis(plugin, wheret, "", false);
+                                ResultSetTardis rs = new ResultSetTardis(plugin, wheret, "", false, 2);
                                 if (rs.resultSet()) {
                                     int pos = rs.getTardis().getTIPS();
                                     int tx = 0, tz = 0;
@@ -342,7 +342,7 @@ public class TARDISMonsterRunnable implements Runnable {
                 // else message the Time Lord
                 HashMap<String, Object> wheret = new HashMap<String, Object>();
                 wheret.put("tardis_id", tpl.getTardisId());
-                ResultSetTardis rst = new ResultSetTardis(plugin, wheret, "", false);
+                ResultSetTardis rst = new ResultSetTardis(plugin, wheret, "", false, 2);
                 if (rst.resultSet()) {
                     Player p = plugin.getServer().getPlayer(rst.getTardis().getUuid());
                     if (p != null) {

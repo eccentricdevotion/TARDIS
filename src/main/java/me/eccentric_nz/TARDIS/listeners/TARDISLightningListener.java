@@ -60,7 +60,7 @@ public class TARDISLightningListener implements Listener {
         if (!strike.isEffect()) {
             Location l = strike.getLocation();
             World strikeworld = l.getWorld();
-            ResultSetTardis rs = new ResultSetTardis(plugin, null, "", true);
+            ResultSetTardis rs = new ResultSetTardis(plugin, new HashMap<String, Object>(), "", true, 0);
             if (rs.resultSet()) {
                 for (Tardis t : rs.getData()) {
                     boolean charging = true;

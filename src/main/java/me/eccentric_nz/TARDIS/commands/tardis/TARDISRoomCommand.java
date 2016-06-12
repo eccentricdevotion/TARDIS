@@ -66,7 +66,7 @@ public class TARDISRoomCommand {
         }
         HashMap<String, Object> where = new HashMap<String, Object>();
         where.put("uuid", player.getUniqueId().toString());
-        ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);
+        ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false, 0);
         if (!rs.resultSet()) {
             TARDISMessage.send(player, "NOT_A_TIMELORD");
             return true;

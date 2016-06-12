@@ -48,6 +48,7 @@ public class ResultSetTardis {
     private Tardis tardis;
     private final List<Tardis> data = new ArrayList<Tardis>();
     private final String prefix;
+    private final int abandoned;
 
     /**
      * Creates a class instance that can be used to retrieve an SQL ResultSet
@@ -59,13 +60,15 @@ public class ResultSetTardis {
      * @param limit
      * @param multiple a boolean indicating whether multiple rows should be
      * fetched
+     * @param abandoned whether to select TARDISes that abandoned (1) or not (0)
      */
-    public ResultSetTardis(TARDIS plugin, HashMap<String, Object> where, String limit, boolean multiple) {
+    public ResultSetTardis(TARDIS plugin, HashMap<String, Object> where, String limit, boolean multiple, int abandoned) {
         this.plugin = plugin;
         this.where = where;
         this.limit = limit;
         this.multiple = multiple;
         this.prefix = this.plugin.getPrefix();
+        this.abandoned = abandoned;
     }
 
     /**
@@ -85,7 +88,11 @@ public class ResultSetTardis {
             for (Map.Entry<String, Object> entry : where.entrySet()) {
                 sbw.append(entry.getKey()).append(" = ? AND ");
             }
-            wheres = " WHERE " + sbw.toString().substring(0, sbw.length() - 5);
+            if (abandoned < 2) {
+                wheres = " WHERE " + sbw.toString() + "abandoned = " + abandoned;
+            } else {
+                wheres = " WHERE " + sbw.toString().substring(0, sbw.length() - 5);
+            }
         }
         if (!limit.isEmpty()) {
             thelimit = " LIMIT " + limit;

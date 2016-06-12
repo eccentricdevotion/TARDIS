@@ -63,10 +63,11 @@ public class TARDISEnterCommand {
         if (uuid != null) {
             plugin.debug("uuid: " + uuid);
             where.put("uuid", uuid.toString());
+            where.put("abandoned", 0);
         } else {
             where.put("tardis_id", args[1]);
         }
-        ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);
+        ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false, 2);
         if (rs.resultSet()) {
             Tardis tardis = rs.getTardis();
             int id = tardis.getTardis_id();

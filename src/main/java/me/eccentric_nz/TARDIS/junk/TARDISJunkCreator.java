@@ -57,7 +57,7 @@ public class TARDISJunkCreator {
         // check if there is a junk TARDIS already
         HashMap<String, Object> where = new HashMap<String, Object>();
         where.put("uuid", "00000000-aaaa-bbbb-cccc-000000000000");
-        ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);
+        ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false, 2);
         if (rs.resultSet()) {
             TARDISMessage.send(p, "JUNK_EXISTS");
             return true;

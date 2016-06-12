@@ -112,7 +112,7 @@ public class TARDISScannerListener implements Listener {
                 // get tardis from saved scanner location
                 HashMap<String, Object> where = new HashMap<String, Object>();
                 where.put("scanner", scanner_loc);
-                ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);
+                ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false, 0);
                 if (rs.resultSet()) {
                     Tardis tardis = rs.getTardis();
                     final int id = tardis.getTardis_id();

@@ -54,7 +54,7 @@ public class TARDISQuitListener implements Listener {
         // forget the players Police Box chunk
         HashMap<String, Object> wherep = new HashMap<String, Object>();
         wherep.put("uuid", uuid.toString());
-        ResultSetTardis rs = new ResultSetTardis(plugin, wherep, "", false);
+        ResultSetTardis rs = new ResultSetTardis(plugin, wherep, "", false, 0);
         if (rs.resultSet()) {
             Tardis tardis = rs.getTardis();
             HashMap<String, Object> wherecl = new HashMap<String, Object>();

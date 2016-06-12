@@ -135,7 +135,7 @@ public class TARDII implements TardisAPI {
         TARDISData data = null;
         HashMap<String, Object> where = new HashMap<String, Object>();
         where.put("tardis_id", id);
-        ResultSetTardis rs = new ResultSetTardis(TARDIS.plugin, where, "", false);
+        ResultSetTardis rs = new ResultSetTardis(TARDIS.plugin, where, "", false, 2);
         if (rs.resultSet()) {
             Tardis tardis = rs.getTardis();
             Location current = getTARDISCurrentLocation(id);
@@ -143,8 +143,9 @@ public class TARDII implements TardisAPI {
             String chameleon = tardis.getPreset().toString();
             String powered = (tardis.isPowered_on()) ? "Yes" : "No";
             String siege = (tardis.isSiege_on()) ? "Yes" : "No";
+            String abandoned = (tardis.isAbandoned()) ? "Yes" : "No";
             List<String> occupants = getPlayersInTARDIS(id);
-            data = new TARDISData(current, console, chameleon, powered, siege, occupants);
+            data = new TARDISData(current, console, chameleon, powered, siege, abandoned, occupants);
         }
         return data;
     }
@@ -245,9 +246,13 @@ public class TARDII implements TardisAPI {
             if (rs.resultSet()) {
                 HashMap<String, Object> wheret = new HashMap<String, Object>();
                 wheret.put("tardis_id", rs.getTardis_id());
-                ResultSetTardis rst = new ResultSetTardis(TARDIS.plugin, wheret, "", false);
+                ResultSetTardis rst = new ResultSetTardis(TARDIS.plugin, wheret, "", false, 2);
                 if (rst.resultSet()) {
-                    str = " is in " + rst.getTardis().getOwner() + "'s TARDIS.";
+                    if (rst.getTardis().isAbandoned()) {
+                        str = " is in an abandoned TARDIS.";
+                    } else {
+                        str = " is in " + rst.getTardis().getOwner() + "'s TARDIS.";
+                    }
                 }
             }
             return p.getName() + str;

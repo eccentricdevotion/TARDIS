@@ -155,7 +155,7 @@ public class TARDISDoorWalkListener extends TARDISDoorListener implements Listen
                                 // check TARDIS is not abandoned
                                 HashMap<String, Object> tid = new HashMap<String, Object>();
                                 tid.put("tardis_id", id);
-                                ResultSetTardis rs = new ResultSetTardis(plugin, tid, "", false);
+                                ResultSetTardis rs = new ResultSetTardis(plugin, tid, "", false, 2);
                                 if (rs.resultSet()) {
                                     canPowerUp = !rs.getTardis().isAbandoned();
                                 }
@@ -199,7 +199,7 @@ public class TARDISDoorWalkListener extends TARDISDoorListener implements Listen
                             // handbrake must be on
                             HashMap<String, Object> tid = new HashMap<String, Object>();
                             tid.put("tardis_id", id);
-                            ResultSetTardis rs = new ResultSetTardis(plugin, tid, "", false);
+                            ResultSetTardis rs = new ResultSetTardis(plugin, tid, "", false, 2);
                             if (rs.resultSet()) {
                                 if (!rs.getTardis().isHandbrake_on()) {
                                     TARDISMessage.send(player, "HANDBRAKE_ENGAGE");
@@ -302,7 +302,7 @@ public class TARDISDoorWalkListener extends TARDISDoorListener implements Listen
                             }
                             HashMap<String, Object> tid = new HashMap<String, Object>();
                             tid.put("tardis_id", id);
-                            ResultSetTardis rs = new ResultSetTardis(plugin, tid, "", false);
+                            ResultSetTardis rs = new ResultSetTardis(plugin, tid, "", false, 2);
                             if (rs.resultSet()) {
                                 final Tardis tardis = rs.getTardis();
                                 final int artron = tardis.getArtron_level();

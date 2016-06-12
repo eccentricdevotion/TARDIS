@@ -59,7 +59,7 @@ public class TARDISUpgradeBlockScanner {
         // calculate startx, starty, startz
         HashMap<String, Object> wheret = new HashMap<String, Object>();
         wheret.put("uuid", uuid.toString());
-        ResultSetTardis rs = new ResultSetTardis(plugin, wheret, "", false);
+        ResultSetTardis rs = new ResultSetTardis(plugin, wheret, "", false, 0);
         if (rs.resultSet()) {
             Tardis tardis = rs.getTardis();
             int slot = tardis.getTIPS();

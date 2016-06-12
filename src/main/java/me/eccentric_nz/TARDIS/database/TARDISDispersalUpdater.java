@@ -55,7 +55,6 @@ public class TARDISDispersalUpdater {
         PreparedStatement ps_update = null;
         try {
             service.testConnection(connection);
-            // clear the controls table first - just incase they have reset `conversion_done` in the config
             statement = connection.createStatement();
             rs = statement.executeQuery("SELECT d_id, uuid FROM " + prefix + "dispersed");
             // insert values from tardis table

@@ -130,7 +130,7 @@ public class TARDISButtonListener implements Listener {
                     }
                     HashMap<String, Object> whereid = new HashMap<String, Object>();
                     whereid.put("tardis_id", id);
-                    ResultSetTardis rs = new ResultSetTardis(plugin, whereid, "", false);
+                    ResultSetTardis rs = new ResultSetTardis(plugin, whereid, "", false, 0);
                     if (rs.resultSet()) {
                         Tardis tardis = rs.getTardis();
                         if (tardis.getPreset().equals(PRESET.JUNK)) {

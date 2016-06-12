@@ -58,12 +58,13 @@ public class ResultSetTardisAbandoned {
     }
 
     /**
-     * Gets to the artron_level of a TARDIS. This method builds an SQL query
-     * string from the parameters supplied and then executes the query.
+     * Gets to the TARDIS data required to claim abandon a TARDIS. This method
+     * builds an SQL query string from the parameters supplied and then executes
+     * the query.
      *
      * @param uuid the Time Lord uuid to check
      *
-     * @return true or false depending on whether the TARDIS is powered on
+     * @return true if the TARDIS is not yet abandoned
      */
     public boolean fromUUID(String uuid) {
         PreparedStatement statement = null;
@@ -88,7 +89,7 @@ public class ResultSetTardisAbandoned {
             }
             return false;
         } catch (SQLException e) {
-            plugin.debug("ResultSet error for tardis [artron_level fromUUID] table! " + e.getMessage());
+            plugin.debug("ResultSet error for tardis [not abandoned] table! " + e.getMessage());
             return false;
         } finally {
             try {
@@ -99,7 +100,7 @@ public class ResultSetTardisAbandoned {
                     statement.close();
                 }
             } catch (SQLException e) {
-                plugin.debug("Error closing tardis [artron_level fromUUID] table! " + e.getMessage());
+                plugin.debug("Error closing tardis [not abandoned] table! " + e.getMessage());
             }
         }
     }

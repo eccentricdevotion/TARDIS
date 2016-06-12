@@ -87,7 +87,7 @@ public class TARDISTimeLordDeathListener implements Listener {
             if (player.hasPermission("tardis.autonomous")) {
                 HashMap<String, Object> where = new HashMap<String, Object>();
                 where.put("uuid", uuid.toString());
-                ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);
+                ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false, 0);
                 // are they a time lord?
                 if (rs.resultSet()) {
                     Tardis tardis = rs.getTardis();

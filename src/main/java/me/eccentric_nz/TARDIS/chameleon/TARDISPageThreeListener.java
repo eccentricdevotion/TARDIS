@@ -77,7 +77,7 @@ public class TARDISPageThreeListener extends TARDISMenuListener implements Liste
                         int id = rst.getTardis_id();
                         HashMap<String, Object> where = new HashMap<String, Object>();
                         where.put("tardis_id", id);
-                        ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);
+                        ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false, 0);
                         if (rs.resultSet()) {
                             Tardis tardis = rs.getTardis();
                             String last_line = TARDISStaticUtils.getLastLine(tardis.getChameleon());

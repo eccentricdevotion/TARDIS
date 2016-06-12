@@ -55,7 +55,7 @@ public class TARDISPresetDestroyerFactory {
     public void destroyPreset(DestroyData dd) {
         HashMap<String, Object> where = new HashMap<String, Object>();
         where.put("tardis_id", dd.getTardisID());
-        ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);
+        ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false, 2);
         if (rs.resultSet()) {
             Tardis tardis = rs.getTardis();
             PRESET demat = tardis.getDemat();

@@ -260,7 +260,7 @@ public class TARDISSonicListener implements Listener {
                                     // get the TARDIS owner's name
                                     HashMap<String, Object> wheren = new HashMap<String, Object>();
                                     wheren.put("tardis_id", id);
-                                    ResultSetTardis rsn = new ResultSetTardis(plugin, wheren, "", false);
+                                    ResultSetTardis rsn = new ResultSetTardis(plugin, wheren, "", false, 0);
                                     if (rsn.resultSet()) {
                                         Tardis tardis = rsn.getTardis();
                                         String name = plugin.getServer().getOfflinePlayer(tardis.getUuid()).getName();

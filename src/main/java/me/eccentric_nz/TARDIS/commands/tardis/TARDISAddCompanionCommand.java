@@ -60,7 +60,7 @@ public class TARDISAddCompanionCommand {
         if (player.hasPermission("tardis.add")) {
             HashMap<String, Object> where = new HashMap<String, Object>();
             where.put("uuid", player.getUniqueId().toString());
-            ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);
+            ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false, 0);
             String comps;
             int id;
             String[] data;

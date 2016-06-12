@@ -39,7 +39,7 @@ public class TARDISIsomorphicCommand {
     public boolean toggleIsomorphicControls(Player player, String[] args, QueryFactory qf) {
         HashMap<String, Object> where = new HashMap<String, Object>();
         where.put("uuid", player.getUniqueId().toString());
-        ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);
+        ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false, 0);
         // does the player have a TARDIS
         if (rs.resultSet()) {
             Tardis tardis = rs.getTardis();

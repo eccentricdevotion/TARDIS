@@ -63,7 +63,7 @@ public class TARDISExterminator {
     public boolean exterminate(int id) {
         HashMap<String, Object> where = new HashMap<String, Object>();
         where.put("tardis_id", id);
-        ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);
+        ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false, 2);
         try {
             if (rs.resultSet()) {
                 Tardis tardis = rs.getTardis();
@@ -129,6 +129,7 @@ public class TARDISExterminator {
         int signx = 0, signz = 0;
         Location sign_loc = block.getLocation();
         HashMap<String, Object> where = new HashMap<String, Object>();
+        ResultSetTardis rs;
         if (player.hasPermission("tardis.delete")) {
             Block blockbehind = null;
             byte data = block.getData();
@@ -158,14 +159,15 @@ public class TARDISExterminator {
                     return false;
                 }
                 where.put("tardis_id", rsc.getTardis_id());
+                rs = new ResultSetTardis(plugin, where, "", false, 2);
             } else {
                 TARDISMessage.send(player, "CURRENT_NOT_FOUND");
                 return false;
             }
         } else {
             where.put("uuid", player.getUniqueId().toString());
+            rs = new ResultSetTardis(plugin, where, "", false, 0);
         }
-        ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);
         if (rs.resultSet()) {
             Tardis tardis = rs.getTardis();
             final int id = tardis.getTardis_id();

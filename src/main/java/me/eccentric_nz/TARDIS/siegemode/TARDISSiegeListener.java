@@ -94,7 +94,7 @@ public class TARDISSiegeListener implements Listener {
         int id = rsc.getTardis_id();
         HashMap<String, Object> wheret = new HashMap<String, Object>();
         wheret.put("tardis_id", id);
-        ResultSetTardis rs = new ResultSetTardis(plugin, wheret, "", false);
+        ResultSetTardis rs = new ResultSetTardis(plugin, wheret, "", false, 0);
         if (!rs.resultSet()) {
             return;
         }
@@ -288,7 +288,7 @@ public class TARDISSiegeListener implements Listener {
         // must be the Time Lord or companion of this TARDIS
         HashMap<String, Object> wheret = new HashMap<String, Object>();
         wheret.put("tardis_id", rsc.getTardis_id());
-        ResultSetTardis rst = new ResultSetTardis(plugin, wheret, "", false);
+        ResultSetTardis rst = new ResultSetTardis(plugin, wheret, "", false, 0);
         if (!rst.resultSet()) {
             return;
         }

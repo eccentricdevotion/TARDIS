@@ -116,7 +116,7 @@ public class TARDISARSMapListener extends TARDISARSMethods implements Listener {
         // need to get the console location - will be different for non-TIPS TARDISes
         HashMap<String, Object> where = new HashMap<String, Object>();
         where.put("tardis_id", id);
-        ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);
+        ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false, 0);
         if (rs.resultSet()) {
             Tardis tardis = rs.getTardis();
             int pos = tardis.getTIPS();

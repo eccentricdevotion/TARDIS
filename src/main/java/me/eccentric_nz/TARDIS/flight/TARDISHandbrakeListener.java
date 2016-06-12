@@ -132,7 +132,7 @@ public class TARDISHandbrakeListener implements Listener {
                     }
                     HashMap<String, Object> wherei = new HashMap<String, Object>();
                     wherei.put("tardis_id", id);
-                    ResultSetTardis rs = new ResultSetTardis(plugin, wherei, "", false);
+                    ResultSetTardis rs = new ResultSetTardis(plugin, wherei, "", false, 2);
                     HashMap<String, Object> set = new HashMap<String, Object>();
                     if (rs.resultSet()) {
                         Tardis tardis = rs.getTardis();

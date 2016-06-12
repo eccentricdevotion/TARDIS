@@ -541,7 +541,7 @@ public class TARDISARSMethods {
     public boolean hasRenderer(UUID uuid) {
         HashMap<String, Object> where = new HashMap<String, Object>();
         where.put("tardis_id", ids.get(uuid));
-        ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);
+        ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false, 0);
         if (rs.resultSet()) {
             return !rs.getTardis().getRenderer().isEmpty();
         }
@@ -557,7 +557,7 @@ public class TARDISARSMethods {
         HashMap<String, Object> where = new HashMap<String, Object>();
         where.put("tardis_id", id);
         where.put("uuid", uuid);
-        ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);
+        ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false, 0);
         return rs.resultSet();
     }
 }

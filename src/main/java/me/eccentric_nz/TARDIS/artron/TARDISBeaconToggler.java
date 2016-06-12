@@ -48,7 +48,7 @@ public class TARDISBeaconToggler {
     public void flickSwitch(UUID uuid, boolean on) {
         HashMap<String, Object> whereb = new HashMap<String, Object>();
         whereb.put("uuid", uuid.toString());
-        ResultSetTardis rs = new ResultSetTardis(plugin, whereb, "", false);
+        ResultSetTardis rs = new ResultSetTardis(plugin, whereb, "", false, 0);
         if (rs.resultSet()) {
             Tardis tardis = rs.getTardis();
             SCHEMATIC schm = tardis.getSchematic();

@@ -61,7 +61,7 @@ public class ResultSetTardisCompanions {
     public boolean fromUUID(String uuid) {
         PreparedStatement statement = null;
         ResultSet rs = null;
-        String query = "SELECT companions FROM " + prefix + "tardis WHERE uuid = ?";
+        String query = "SELECT companions FROM " + prefix + "tardis WHERE uuid = ? AND abandoned = 0";
         try {
             service.testConnection(connection);
             statement = connection.prepareStatement(query);

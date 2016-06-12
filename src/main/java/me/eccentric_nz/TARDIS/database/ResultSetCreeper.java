@@ -50,7 +50,7 @@ public class ResultSetCreeper {
     }
 
     /**
-     * Retrieves an SQL ResultSet from the doors table. This method builds an
+     * Retrieves an SQL ResultSet from the tardis table. This method builds an
      * SQL query string from the parameters supplied and then executes the
      * query. Use the getters to retrieve the results.
      *

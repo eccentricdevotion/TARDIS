@@ -63,7 +63,7 @@ public class TARDISARSRunnable implements Runnable {
         String whichroom = room.getActualName();
         HashMap<String, Object> where = new HashMap<String, Object>();
         where.put("uuid", p.getUniqueId().toString());
-        ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);
+        ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false, 0);
         if (rs.resultSet()) {
             Tardis tardis = rs.getTardis();
             String[] chunk_data = tardis.getChunk().split(":");

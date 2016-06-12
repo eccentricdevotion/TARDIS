@@ -45,7 +45,7 @@ public class TARDISEmergencyRelocation {
         // get the TARDIS
         HashMap<String, Object> where = new HashMap<String, Object>();
         where.put("tardis_id", id);
-        ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);
+        ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false, 0);
         if (rs.resultSet()) {
             // get the servers main world
             World w = plugin.getServer().getWorlds().get(0);

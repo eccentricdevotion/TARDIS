@@ -145,7 +145,7 @@ public class TARDISMoveListener implements Listener {
                         public void run() {
                             HashMap<String, Object> where = new HashMap<String, Object>();
                             where.put("tardis_id", id);
-                            ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);
+                            ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false, 2);
                             if (rs.resultSet()) {
                                 Tardis tardis = rs.getTardis();
                                 if (!tardis.isPowered_on()) {

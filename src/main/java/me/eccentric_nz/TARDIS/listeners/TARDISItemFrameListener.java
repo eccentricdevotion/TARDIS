@@ -95,7 +95,7 @@ public class TARDISItemFrameListener implements Listener {
                 // prevent other players from stealing the tripwire hook
                 HashMap<String, Object> wherep = new HashMap<String, Object>();
                 wherep.put("tardis_id", id);
-                ResultSetTardis rso = new ResultSetTardis(plugin, wherep, "", false);
+                ResultSetTardis rso = new ResultSetTardis(plugin, wherep, "", false, 2);
                 if (rso.resultSet() && !rso.getTardis().getUuid().equals(uuid)) {
                     event.setCancelled(true);
                     return;
@@ -151,8 +151,7 @@ public class TARDISItemFrameListener implements Listener {
                         TARDISMessage.send(player, "DIRECTON_SET", direction);
                     }
                 } else // are they placing a tripwire hook?
-                {
-                    if (frame.getItem().getType().equals(Material.AIR) && player.getInventory().getItemInMainHand().getType().equals(Material.TRIPWIRE_HOOK)) {
+                 if (frame.getItem().getType().equals(Material.AIR) && player.getInventory().getItemInMainHand().getType().equals(Material.TRIPWIRE_HOOK)) {
                         // get current tardis direction
                         HashMap<String, Object> wherec = new HashMap<String, Object>();
                         wherec.put("tardis_id", id);
@@ -183,7 +182,6 @@ public class TARDISItemFrameListener implements Listener {
                             }, 4L);
                         }
                     }
-                }
             }
         }
     }

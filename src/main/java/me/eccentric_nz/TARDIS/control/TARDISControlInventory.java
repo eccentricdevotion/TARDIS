@@ -55,7 +55,7 @@ public class TARDISControlInventory {
         // get player prefs
         HashMap<String, Object> where = new HashMap<String, Object>();
         where.put("uuid", uuid.toString());
-        ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);
+        ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false, 0);
         String lights_onoff = "";
         String siege_onoff = "";
         String toggle_openclosed = "";

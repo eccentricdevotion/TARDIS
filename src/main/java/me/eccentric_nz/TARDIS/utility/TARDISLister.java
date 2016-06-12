@@ -89,7 +89,7 @@ public class TARDISLister {
         } else {
             HashMap<String, Object> where = new HashMap<String, Object>();
             where.put("uuid", p.getUniqueId().toString());
-            ResultSetTardis rst = new ResultSetTardis(TARDIS.plugin, where, "", false);
+            ResultSetTardis rst = new ResultSetTardis(TARDIS.plugin, where, "", false, 0);
             if (rst.resultSet()) {
                 Tardis tardis = rst.getTardis();
                 int id = tardis.getTardis_id();

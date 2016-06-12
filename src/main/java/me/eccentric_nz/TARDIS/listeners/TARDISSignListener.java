@@ -125,7 +125,7 @@ public class TARDISSignListener implements Listener {
                     event.setCancelled(true);
                     HashMap<String, Object> wheret = new HashMap<String, Object>();
                     wheret.put("tardis_id", id);
-                    ResultSetTardis rs = new ResultSetTardis(plugin, wheret, "", false);
+                    ResultSetTardis rs = new ResultSetTardis(plugin, wheret, "", false, 2);
                     rs.resultSet();
                     Tardis tardis = rs.getTardis();
                     int tid = tardis.getTardis_id();

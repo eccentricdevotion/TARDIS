@@ -49,7 +49,7 @@ public class TARDISEmergencyProgrammeCommand {
             }
             HashMap<String, Object> where = new HashMap<String, Object>();
             where.put("uuid", p.getUniqueId().toString());
-            ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);
+            ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false, 0);
             if (!rs.resultSet()) {
                 TARDISMessage.send(p, "NOT_A_TIMELORD");
                 return true;

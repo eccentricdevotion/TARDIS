@@ -87,7 +87,7 @@ public class TARDISWallFloorRunnable extends TARDISThemeRunnable implements Runn
             // calculate startx, starty, startz
             HashMap<String, Object> wheret = new HashMap<String, Object>();
             wheret.put("uuid", uuid.toString());
-            ResultSetTardis rs = new ResultSetTardis(plugin, wheret, "", false);
+            ResultSetTardis rs = new ResultSetTardis(plugin, wheret, "", false, 0);
             if (!rs.resultSet()) {
                 // abort and return energy
                 HashMap<String, Object> wherea = new HashMap<String, Object>();

@@ -142,7 +142,7 @@ public class TARDISJoinListener implements Listener {
         // load and remember the players Police Box chunk
         HashMap<String, Object> wherep = new HashMap<String, Object>();
         wherep.put("uuid", player.getUniqueId().toString());
-        ResultSetTardis rs = new ResultSetTardis(plugin, wherep, "", false);
+        ResultSetTardis rs = new ResultSetTardis(plugin, wherep, "", false, 0);
         if (rs.resultSet()) {
             Tardis tardis = rs.getTardis();
             int id = tardis.getTardis_id();

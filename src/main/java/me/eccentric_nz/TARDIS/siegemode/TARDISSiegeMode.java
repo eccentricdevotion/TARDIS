@@ -62,7 +62,7 @@ public class TARDISSiegeMode {
         // get the current siege status
         HashMap<String, Object> where = new HashMap<String, Object>();
         where.put("tardis_id", id);
-        ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);
+        ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false, 2);
         if (!rs.resultSet()) {
             return;
         }

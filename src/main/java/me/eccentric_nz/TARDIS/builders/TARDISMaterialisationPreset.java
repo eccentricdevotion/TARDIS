@@ -383,7 +383,7 @@ public class TARDISMaterialisationPreset implements Runnable {
                                             if (plugin.getConfig().getBoolean("police_box.name_tardis")) {
                                                 HashMap<String, Object> wheret = new HashMap<String, Object>();
                                                 wheret.put("tardis_id", bd.getTardisID());
-                                                ResultSetTardis rst = new ResultSetTardis(plugin, wheret, "", false);
+                                                ResultSetTardis rst = new ResultSetTardis(plugin, wheret, "", false, 0);
                                                 if (rst.resultSet()) {
                                                     Tardis tardis = rst.getTardis();
                                                     String player_name = plugin.getGeneralKeeper().getUUIDCache().getNameCache().get(tardis.getUuid());

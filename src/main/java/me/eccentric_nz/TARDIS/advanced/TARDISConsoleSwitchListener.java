@@ -78,7 +78,7 @@ public class TARDISConsoleSwitchListener implements Listener {
                         if (gui_circuits.contains(map)) {
                             HashMap<String, Object> where = new HashMap<String, Object>();
                             where.put("uuid", p.getUniqueId().toString());
-                            ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);
+                            ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false, 0);
                             if (rs.resultSet()) {
                                 final Tardis tardis = rs.getTardis();
                                 plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {

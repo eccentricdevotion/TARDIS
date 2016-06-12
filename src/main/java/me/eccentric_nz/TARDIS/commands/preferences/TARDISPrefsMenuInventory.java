@@ -256,7 +256,7 @@ public class TARDISPrefsMenuInventory {
         // get TARDIS preset
         HashMap<String, Object> wherej = new HashMap<String, Object>();
         wherej.put("uuid", uuid.toString());
-        ResultSetTardis rs = new ResultSetTardis(plugin, wherej, "", false);
+        ResultSetTardis rs = new ResultSetTardis(plugin, wherej, "", false, 0);
         String junk_value = plugin.getLanguage().getString("SET_OFF");
         String hb_value = plugin.getLanguage().getString("SET_ON");
         if (rs.resultSet()) {

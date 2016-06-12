@@ -62,7 +62,7 @@ public class ResultSetTardisPowered {
     public boolean fromUUID(String uuid) {
         PreparedStatement statement = null;
         ResultSet rs = null;
-        String query = "SELECT powered_on FROM " + prefix + "tardis WHERE uuid = ?";
+        String query = "SELECT powered_on FROM " + prefix + "tardis WHERE uuid = ? AND abandoned = 0";
         try {
             service.testConnection(connection);
             statement = connection.prepareStatement(query);

@@ -90,7 +90,7 @@ public class TARDISMinecartListener implements Listener {
                             id = rsd.getTardis_id();
                             HashMap<String, Object> whereid = new HashMap<String, Object>();
                             whereid.put("tardis_id", id);
-                            ResultSetTardis rs = new ResultSetTardis(plugin, whereid, "", false);
+                            ResultSetTardis rs = new ResultSetTardis(plugin, whereid, "", false, 0);
                             if (rs.resultSet() && !plugin.getTrackerKeeper().getMinecart().contains(id)) {
                                 Tardis tardis = rs.getTardis();
                                 data = tardis.getRail().split(":");
@@ -103,7 +103,7 @@ public class TARDISMinecartListener implements Listener {
                         // get police box location
                         HashMap<String, Object> wherep = new HashMap<String, Object>();
                         wherep.put("rail", db_loc);
-                        ResultSetTardis rsp = new ResultSetTardis(plugin, wherep, "", false);
+                        ResultSetTardis rsp = new ResultSetTardis(plugin, wherep, "", false, 0);
                         if (rsp.resultSet()) {
                             Tardis tardis = rsp.getTardis();
                             playerUUID = tardis.getUuid();

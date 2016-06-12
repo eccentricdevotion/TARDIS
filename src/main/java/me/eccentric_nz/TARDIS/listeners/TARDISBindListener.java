@@ -99,7 +99,7 @@ public class TARDISBindListener implements Listener {
                         int id = rst.getTardis_id();
                         HashMap<String, Object> wheret = new HashMap<String, Object>();
                         wheret.put("tardis_id", id);
-                        ResultSetTardis rs = new ResultSetTardis(plugin, wheret, "", false);
+                        ResultSetTardis rs = new ResultSetTardis(plugin, wheret, "", false, 0);
                         if (rs.resultSet()) {
                             Tardis tardis = rs.getTardis();
                             UUID ownerUUID = tardis.getUuid();

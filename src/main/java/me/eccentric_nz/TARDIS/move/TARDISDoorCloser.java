@@ -102,7 +102,7 @@ public class TARDISDoorCloser {
             List<UUID> uuids = new ArrayList<UUID>();
             HashMap<String, Object> where = new HashMap<String, Object>();
             where.put("tardis_id", id);
-            ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);
+            ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false, 2);
             if (rs.resultSet()) {
                 if (!plugin.getConfig().getBoolean("preferences.open_door_policy")) {
                     String[] companions = rs.getTardis().getCompanions().split(":");

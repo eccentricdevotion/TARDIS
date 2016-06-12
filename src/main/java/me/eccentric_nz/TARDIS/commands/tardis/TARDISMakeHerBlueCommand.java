@@ -62,7 +62,7 @@ public class TARDISMakeHerBlueCommand {
         plugin.getTrackerKeeper().getRebuildCooldown().put(uuid, System.currentTimeMillis());
         HashMap<String, Object> where = new HashMap<String, Object>();
         where.put("uuid", uuid.toString());
-        ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);
+        ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false, 0);
         if (!rs.resultSet()) {
             TARDISMessage.send(player.getPlayer(), "NO_TARDIS");
             return true;

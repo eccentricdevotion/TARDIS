@@ -47,7 +47,7 @@ public class TARDISListTardisesCommand {
     public boolean listTardises(CommandSender sender, String[] args) {
         if (args.length > 1 && (args[1].equalsIgnoreCase("save") || args[1].equalsIgnoreCase("portals") || args[1].equalsIgnoreCase("abandoned"))) {
             if (args[1].equalsIgnoreCase("save")) {
-                ResultSetTardis rsl = new ResultSetTardis(plugin, null, "", true);
+                ResultSetTardis rsl = new ResultSetTardis(plugin, new HashMap<String, Object>(), "", true, 1);
                 if (rsl.resultSet()) {
                     String file = plugin.getDataFolder() + File.separator + "TARDIS_list.txt";
                     try {
@@ -89,7 +89,7 @@ public class TARDISListTardisesCommand {
                 end = tmp * 18;
             }
             String limit = start + ", " + end;
-            ResultSetTardis rsl = new ResultSetTardis(plugin, null, limit, true);
+            ResultSetTardis rsl = new ResultSetTardis(plugin, new HashMap<String, Object>(), limit, true, 1);
             if (rsl.resultSet()) {
                 TARDISMessage.send(sender, "TARDIS_LOCS");
                 for (Tardis t : rsl.getData()) {

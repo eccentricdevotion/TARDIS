@@ -107,7 +107,7 @@ public class TARDISArtronCapacitorListener implements Listener {
                         final int id = rsc.getTardis_id();
                         HashMap<String, Object> wheret = new HashMap<String, Object>();
                         wheret.put("tardis_id", id);
-                        ResultSetTardis rs = new ResultSetTardis(plugin, wheret, "", false);
+                        ResultSetTardis rs = new ResultSetTardis(plugin, wheret, "", false, 2);
                         if (rs.resultSet()) {
                             Tardis tardis = rs.getTardis();
                             if (tardis.getPreset().equals(PRESET.JUNK)) {
@@ -242,7 +242,8 @@ public class TARDISArtronCapacitorListener implements Listener {
                                     qf.doUpdate("tardis", set, whereid);
                                     TARDISMessage.send(player, "ENERGY_INIT");
                                 } else // toggle power
-                                 if (plugin.getConfig().getBoolean("allow.power_down")) {
+                                {
+                                    if (plugin.getConfig().getBoolean("allow.power_down")) {
                                         boolean pu = true;
                                         if (abandoned) {
                                             // transfer ownership to the player who clicked
@@ -259,6 +260,7 @@ public class TARDISArtronCapacitorListener implements Listener {
                                             new TARDISPowerButton(plugin, id, player, tardis.getPreset(), tardis.isPowered_on(), tardis.isHidden(), lights, player.getLocation(), current_level, tardis.getSchematic().hasLanterns()).clickButton();
                                         }
                                     }
+                                }
                             } else if (player.isSneaking()) {
                                 if (!init) {
                                     TARDISMessage.send(player, "ENERGY_NO_INIT");

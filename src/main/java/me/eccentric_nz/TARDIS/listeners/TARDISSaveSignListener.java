@@ -213,7 +213,7 @@ public class TARDISSaveSignListener extends TARDISMenuListener implements Listen
                     HashMap<String, Object> wherez = new HashMap<String, Object>();
                     wherez.put("tardis_id", id);
                     wherez.put("uuid", player.getUniqueId().toString());
-                    ResultSetTardis rs = new ResultSetTardis(plugin, wherez, "", false);
+                    ResultSetTardis rs = new ResultSetTardis(plugin, wherez, "", false, 0);
                     if (rs.resultSet()) {
                         if (!plugin.getTrackerKeeper().getArrangers().contains(uuid)) {
                             // Only add one at a time

@@ -189,7 +189,7 @@ public class TARDISDoorClickListener extends TARDISDoorListener implements Liste
                                 // handbrake must be on
                                 HashMap<String, Object> tid = new HashMap<String, Object>();
                                 tid.put("tardis_id", id);
-                                ResultSetTardis rs = new ResultSetTardis(plugin, tid, "", false);
+                                ResultSetTardis rs = new ResultSetTardis(plugin, tid, "", false, 2);
                                 if (rs.resultSet()) {
                                     if (!rs.getTardis().isHandbrake_on()) {
                                         TARDISMessage.send(player, "HANDBRAKE_ENGAGE");
@@ -274,7 +274,7 @@ public class TARDISDoorClickListener extends TARDISDoorListener implements Liste
                                 }
                                 HashMap<String, Object> tid = new HashMap<String, Object>();
                                 tid.put("tardis_id", id);
-                                ResultSetTardis rs = new ResultSetTardis(plugin, tid, "", false);
+                                ResultSetTardis rs = new ResultSetTardis(plugin, tid, "", false, 2);
                                 if (rs.resultSet()) {
                                     final Tardis tardis = rs.getTardis();
                                     final int artron = tardis.getArtron_level();

@@ -78,7 +78,7 @@ public class TARDISMaterialseFromVortex implements Runnable {
         boolean malfunction = false;
         HashMap<String, Object> wherei = new HashMap<String, Object>();
         wherei.put("tardis_id", id);
-        ResultSetTardis rs = new ResultSetTardis(plugin, wherei, "", false);
+        ResultSetTardis rs = new ResultSetTardis(plugin, wherei, "", false, 2);
         if (rs.resultSet()) {
             Tardis tardis = rs.getTardis();
             boolean cham = tardis.isChamele_on();

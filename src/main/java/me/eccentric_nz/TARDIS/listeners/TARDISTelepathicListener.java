@@ -69,7 +69,7 @@ public class TARDISTelepathicListener implements Listener {
             // get the Time Lord of this TARDIS
             HashMap<String, Object> wheret = new HashMap<String, Object>();
             wheret.put("tardis_id", id);
-            ResultSetTardis rs = new ResultSetTardis(plugin, wheret, "", false);
+            ResultSetTardis rs = new ResultSetTardis(plugin, wheret, "", false, 0);
             if (rs.resultSet()) {
                 UUID o_uuid = rs.getTardis().getUuid();
                 String owner = o_uuid.toString();

@@ -85,7 +85,7 @@ public class TARDISControlMenuListener extends TARDISMenuListener implements Lis
                         final int id = rst.getTardis_id();
                         HashMap<String, Object> where = new HashMap<String, Object>();
                         where.put("tardis_id", id);
-                        ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);
+                        ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false, 0);
                         if (rs.resultSet()) {
                             final Tardis tardis = rs.getTardis();
                             // check they initialised

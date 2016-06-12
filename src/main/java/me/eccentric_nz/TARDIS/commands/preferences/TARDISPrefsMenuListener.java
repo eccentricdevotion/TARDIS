@@ -198,7 +198,7 @@ public class TARDISPrefsMenuListener implements Listener {
                         // get preset
                         HashMap<String, Object> wherep = new HashMap<String, Object>();
                         wherep.put("uuid", uuid.toString());
-                        ResultSetTardis rsp = new ResultSetTardis(plugin, wherep, "", false);
+                        ResultSetTardis rsp = new ResultSetTardis(plugin, wherep, "", false, 0);
                         if (rsp.resultSet()) {
                             QueryFactory qf = new QueryFactory(plugin);
                             Tardis tardis = rsp.getTardis();

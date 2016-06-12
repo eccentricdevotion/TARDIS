@@ -17,14 +17,16 @@ public class TARDISData {
     private final String chameleon;
     private final String powered;
     private final String siege;
+    private final String abandoned;
     private final List<String> occupants;
 
-    public TARDISData(Location location, String console, String chameleon, String powered, String siege, List<String> occupants) {
+    public TARDISData(Location location, String console, String chameleon, String powered, String siege, String abandoned, List<String> occupants) {
         this.location = location;
         this.console = console;
         this.chameleon = chameleon;
         this.powered = powered;
         this.siege = siege;
+        this.abandoned = abandoned;
         this.occupants = occupants;
     }
 
@@ -46,6 +48,10 @@ public class TARDISData {
 
     public String getSiege() {
         return siege;
+    }
+
+    public String getAbandoned() {
+        return abandoned;
     }
 
     public List<String> getOccupants() {

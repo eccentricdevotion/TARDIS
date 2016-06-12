@@ -105,7 +105,7 @@ public class TARDISDoorOpener {
                 uuids.add(uuid);
                 HashMap<String, Object> where = new HashMap<String, Object>();
                 where.put("tardis_id", id);
-                ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);
+                ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false, 2);
                 Tardis tardis = null;
                 PRESET preset = null;
                 boolean abandoned = false;

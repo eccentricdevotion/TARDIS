@@ -69,16 +69,12 @@ public class TARDISRemoteCommands implements CommandExecutor {
                 return true;
             }
             UUID oluuid = plugin.getServer().getOfflinePlayer(args[0]).getUniqueId();
-//            if (oluuid == null) {
-//                oluuid = plugin.getGeneralKeeper().getUUIDCache().getIdOptimistic(args[0]);
-//                plugin.getGeneralKeeper().getUUIDCache().getId(args[0]);
-//            }
             if (oluuid != null) {
                 final UUID uuid = oluuid;
                 // check the player has a TARDIS
                 HashMap<String, Object> where = new HashMap<String, Object>();
                 where.put("uuid", uuid.toString());
-                ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);
+                ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false, 0);
                 if (rs.resultSet()) {
                     Tardis tardis = rs.getTardis();
                     // not in siege mode
@@ -95,7 +91,7 @@ public class TARDISRemoteCommands implements CommandExecutor {
                     if (sender instanceof Player && !sender.hasPermission("tardis.admin")) {
                         HashMap<String, Object> wheret = new HashMap<String, Object>();
                         wheret.put("uuid", ((Player) sender).getUniqueId().toString());
-                        ResultSetTardis rst = new ResultSetTardis(plugin, wheret, "", false);
+                        ResultSetTardis rst = new ResultSetTardis(plugin, wheret, "", false, 0);
                         if (!rst.resultSet()) {
                             TARDISMessage.send(sender, "NOT_A_TIMELORD");
                             return true;

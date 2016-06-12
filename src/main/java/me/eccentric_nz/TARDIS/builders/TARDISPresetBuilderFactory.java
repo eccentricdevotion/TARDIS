@@ -82,7 +82,7 @@ public class TARDISPresetBuilderFactory {
     public void buildPreset(final BuildData bd) {
         HashMap<String, Object> where = new HashMap<String, Object>();
         where.put("tardis_id", bd.getTardisID());
-        ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);
+        ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false, 0);
         if (rs.resultSet()) {
             Tardis tardis = rs.getTardis();
             PRESET preset = tardis.getPreset();

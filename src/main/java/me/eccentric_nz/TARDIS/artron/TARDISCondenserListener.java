@@ -101,12 +101,12 @@ public class TARDISCondenserListener implements Listener {
                     }
                     chest_loc = loc.getWorld().getName() + ":" + loc.getBlockX() + ":" + loc.getBlockY() + ":" + loc.getBlockZ();
                     where.put("condenser", chest_loc);
-                    rs = new ResultSetTardis(plugin, where, "", false);
+                    rs = new ResultSetTardis(plugin, where, "", false, 0);
                     isCondenser = rs.resultSet();
                 } else {
                     chest_loc = loc.toString();
                     where.put("uuid", player.getUniqueId().toString());
-                    rs = new ResultSetTardis(plugin, where, "", false);
+                    rs = new ResultSetTardis(plugin, where, "", false, 0);
                     isCondenser = (plugin.getArtronConfig().contains("condenser") && plugin.getArtronConfig().getString("condenser").equals(chest_loc) && rs.resultSet());
                 }
                 if (isCondenser) {
@@ -203,7 +203,7 @@ public class TARDISCondenserListener implements Listener {
             String chest_loc = loc.getWorld().getName() + ":" + loc.getBlockX() + ":" + loc.getBlockY() + ":" + loc.getBlockZ();
             HashMap<String, Object> where = new HashMap<String, Object>();
             where.put("condenser", chest_loc);
-            ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);
+            ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false, 0);
             if (rs.resultSet()) {
                 event.setCancelled(true);
                 openCondenser(b, event.getPlayer(), "Artron Condenser");

@@ -111,14 +111,14 @@ public class TARDISBlockDamageListener implements Listener {
         HashMap<String, Object> where = new HashMap<String, Object>();
         where.put("tardis_id", id);
         where.put("uuid", uuid);
-        ResultSetTardis rst = new ResultSetTardis(plugin, where, "", false);
+        ResultSetTardis rst = new ResultSetTardis(plugin, where, "", false, 0);
         return rst.resultSet();
     }
 
     private boolean isOwnerOnline(int id) {
         HashMap<String, Object> where = new HashMap<String, Object>();
         where.put("tardis_id", id);
-        ResultSetTardis rst = new ResultSetTardis(plugin, where, "", false);
+        ResultSetTardis rst = new ResultSetTardis(plugin, where, "", false, 0);
         if (rst.resultSet()) {
             Tardis tardis = rst.getTardis();
             if (!tardis.isTardis_init()) {
@@ -141,7 +141,7 @@ public class TARDISBlockDamageListener implements Listener {
     private void unhide(final int id, Player player) {
         HashMap<String, Object> where = new HashMap<String, Object>();
         where.put("tardis_id", id);
-        ResultSetTardis rst = new ResultSetTardis(plugin, where, "", false);
+        ResultSetTardis rst = new ResultSetTardis(plugin, where, "", false, 2);
         if (rst.resultSet() && rst.getTardis().isHidden()) {
 //            Player p = (Player) plugin.getServer().getOfflinePlayer(rst.getUuid());
             // unhide this tardis

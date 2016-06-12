@@ -102,7 +102,7 @@ public class TARDISStattenheimListener implements Listener {
                 UUID uuid = player.getUniqueId();
                 HashMap<String, Object> where = new HashMap<String, Object>();
                 where.put("uuid", uuid.toString());
-                ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);
+                ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false, 0);
                 if (!rs.resultSet()) {
                     TARDISMessage.send(player, "NO_TARDIS");
                     return;

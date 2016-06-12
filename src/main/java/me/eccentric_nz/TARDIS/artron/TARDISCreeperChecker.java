@@ -58,7 +58,7 @@ public class TARDISCreeperChecker {
      * Checks the creeper is there and spawns in a new one if not.
      */
     private void checkCreepers() {
-        ResultSetTardis rs = new ResultSetTardis(plugin, null, "", true);
+        ResultSetTardis rs = new ResultSetTardis(plugin, null, "", true, 0);
         if (rs.resultSet()) {
             List<Tardis> data = rs.getData();
             for (Tardis t : data) {
