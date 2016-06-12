@@ -15,6 +15,9 @@ permissions:
   tardis.delete:
     description: Allow players to delete any TARDIS.
     default: false
+  tardis.adandon:
+    description: Allow players to adandon their TARDIS.
+    default: op
   tardis.skeletonkey:
     description: Allow players to enter any TARDIS.
     default: false
@@ -410,6 +413,58 @@ commands:
     lamps:
       description: Scan the main control room for new or moved lamp blocks.
       usage: /<command> lamps
+    abandon:
+      description: Abandon your current TARDIS.
+      usage: /<command> abandon
+      permission: tardis.abandon
+    arch_time:
+      description: Display the time that a player must remain Chameleon arched.
+      usage: /<command> arch_time
+      permission: tardis.chameleonarch
+    arsremove:
+      description: Remove the TARDIS' ARS records so that manual room growing can be used.
+      usage: /<command> arsremove
+    colourise:
+      description: Allows a player to change the colour of their TARDIS beacon glass with a Sonic Screwdriver.
+      usage: /<command> colourise
+      permission: tardis.upgrade
+      aliases: [colorize]
+    cube:
+      description: Show a list of players who are carrying a Siege Cube.
+      usage: /<command> cube
+      permission: tardis.find
+    desktop:
+      description: Open the Desktop Theme GUI.
+      usage: /<command> desktop
+      permission: tardis.upgrade
+      aliases: [theme,upgrade]
+    eject:
+      description: Allows a player to eject entities from their TARDIS.
+      usage: /<command> eject
+      permission: tardis.eject
+    ep1:
+      description: Allows a player to make Emergency Program One appear.
+      usage: /<command> abandon
+      permission: tardis.use
+    erase:
+      description: Allows a player to erase the TARDIS Storage Disk they have in their hand.
+      usage: /<command> erase
+      permission: tardis.storage
+    make_her_blue:
+      description: Makes the TARDIS visible again if it was using the INVISIBLE preset.
+      usage: /<command> make_her_blue
+      permission: tardis.use
+    save_player:
+      description: Allows a player to save a Player to a blank TARDIS Storage Disk.
+      usage: /<command> save_player [player]
+      permission: tardis.storage
+    section:
+      description: Open the TARDIS Update chat GUI.
+      usage: /<command> section
+      permission: tardis.update
+    tagtheood:
+      description: Display the 'Tag the Ood' game statistics.
+      usage: /<command> tagtheood
   tardistravel:
     aliases: ttravel
     description: Travel to destinations in various ways.
@@ -447,6 +502,18 @@ commands:
       description: Time travel to an underground cave.
       usage: /<command> cave
       permission: tardis.timetravel.cave
+    village:
+      description: Time travel to a village.
+      usage: /<command> village
+      permission: tardis.timetravel.village
+    costs:
+      description: Display a list of Artron Energy travel costs.
+      usage: /<command> costs
+      permission: tardis.timetravel
+    cancel:
+      description: Removes the currently set travel destination.
+      usage: /<command> cancel
+      permission: tardis.timetravel
   tardisadmin:
     aliases: tadmin
     description: Set TARDIS configuration options.
@@ -533,6 +600,72 @@ commands:
     submarine:
       description: Toggle submarine landings on and off.
       usage: /<command> submarine [on|off]
+    auto_powerup:
+      description: Toggle automatic powerup on and off (when entering the TARDIS).
+      usage: /<command> auto_powerup [on|off]
+    auto_siege:
+      description: Toggle automatic Siege Mode on and off (when the Time Lord dies).
+      usage: /<command> submarine [on|off]
+    build:
+      description: Toggle companion building inside the TARDIS on and off.
+      usage: /<command> build [on|off]
+    beacon:
+      description: Toggle whether the TARDIS beacon is only on while travelling.
+      usage: /<command> beacon [on|off]
+    ctm:
+      description: Toggle the Police Box telephone sign on and off.
+      usage: /<command> ctm [on|off]
+    difficulty:
+      description: Change your personal difficulty level.
+      usage: /<command> difficulty [easy|medium|hard]
+    dnd:
+      description: Toggle whether other players can request travel/rescue to you.
+      usage: /<command> dnd [on|off]
+    eps_message:
+      description: Set the Emergency Program One message.
+      usage: /<command> eps_message [message]
+    farm:
+      description: Toggle mob farming on and off.
+      usage: /<command> farm [on|off]
+    flight:
+      description: Set the TARDIS flight mode.
+      usage: /<command> flight [normal|regulator|manual]
+    hads_type:
+      description: Set the TARDIS HADS type.
+      usage: /<command> hads_type [dispersal|displacement]
+    junk:
+      description: Toggle Junk mode on and off.
+      usage: /<command> junk [on|off]
+    key_menu:
+      description: Open the TARDIS Key preferences GUI.
+      usage: /<command> key_menu
+    language:
+      description: Set the langiuage used in the '/tardis say' command.
+      usage: /<command> language [language]
+    lanterns:
+      description: Toggle Sea Lanterns for lights on and off.
+      usage: /<command> lanterns [on|off]
+    minecart:
+      description: Toggle default Minecraft SFX on and off.
+      usage: /<command> minecart [on|off]
+    policebox_textures:
+      description: Toggle Police Box textures on and off.
+      usage: /<command> policebox_textures [on|off]
+    renderer:
+      description: Toggle entering the Renderer room after scanning on and off.
+      usage: /<command> renderer [on|off]
+    siege_floor:
+      description: Set the block used for the TARDIS floor when Siege Mode is engaged.
+      usage: /<command> siege_floor [block type]
+    siege_wall:
+      description: Set the block used for the TARDIS walls when Siege Mode is engaged.
+      usage: /<command> siege_wall [block type]
+    sign:
+      description: Toggle the Police Box 'name' sign on and off.
+      usage: /<command> sugn [on|off]
+    sonic:
+      description: Open the Sonic Screwdriver preferences GUI.
+      usage: /<command> sonic
   tardisarea:
     aliases: tarea
     description: Set up predefined TARDIS travel areas.
@@ -578,7 +711,7 @@ commands:
       usage: /<command> save [save name]
     cmd:
       description: Bind the 'home', 'hide' or 'rebuild' commands to a button.
-      usage: /<command> cmd [home|hide|rebuild]
+      usage: /<command> cmd [home|hide|rebuild|cave|make_her_blue]
     player:
       description: Bind a player location to a button.
       usage: /<command> player [player]
