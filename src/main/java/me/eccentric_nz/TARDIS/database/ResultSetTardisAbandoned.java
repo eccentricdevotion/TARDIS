@@ -43,6 +43,7 @@ public class ResultSetTardisAbandoned {
     private PRESET preset;
     private boolean handbrake_on;
     private boolean hidden;
+    private boolean tardis_init;
     private boolean powered_on;
     private boolean lights_on;
 
@@ -69,7 +70,7 @@ public class ResultSetTardisAbandoned {
     public boolean fromUUID(String uuid) {
         PreparedStatement statement = null;
         ResultSet rs = null;
-        String query = "SELECT tardis_id, artron_level, size, chameleon_preset, handbrake_on, hidden, powered_on, lights_on FROM " + prefix + "tardis WHERE uuid = ? AND abandoned = 0";
+        String query = "SELECT tardis_id, artron_level, size, chameleon_preset, handbrake_on, hidden, tardis_init, powered_on, lights_on FROM " + prefix + "tardis WHERE uuid = ? AND abandoned = 0";
         try {
             service.testConnection(connection);
             statement = connection.prepareStatement(query);
@@ -83,6 +84,7 @@ public class ResultSetTardisAbandoned {
                 preset = PRESET.valueOf(rs.getString("chameleon_preset"));
                 handbrake_on = rs.getBoolean("handbrake_on");
                 hidden = rs.getBoolean("hidden");
+                tardis_init = rs.getBoolean("tardis_init");
                 powered_on = rs.getBoolean("powered_on");
                 lights_on = rs.getBoolean("lights_on");
                 return true;
@@ -127,6 +129,10 @@ public class ResultSetTardisAbandoned {
 
     public boolean isHidden() {
         return hidden;
+    }
+
+    public boolean isTardis_init() {
+        return tardis_init;
     }
 
     public boolean isPowered_on() {

@@ -23,6 +23,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Random;
 import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.utility.TARDISNumberParsers;
@@ -385,31 +386,39 @@ public class QueryFactory {
     /**
      * Claim an abandoned TARDIS.
      *
-     * @param claim a HashMap<String, Object> of table fields and values to
-     * alter.
+     * @param player the claiming player
+     * @param id the TARDIS id
      * @return true if the claim was a success
      */
-    public boolean claimTARDIS(HashMap<String, Object> claim) {
+    public boolean claimTARDIS(Player player, int id) {
         PreparedStatement ps = null;
         // check if they have a non-abandoned TARDIS
         HashMap<String, Object> where = new HashMap<String, Object>();
-        where.put("uuid", claim.get("uuid"));
+        String uuid = player.getUniqueId().toString();
+        where.put("uuid", uuid);
         ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false, 0);
         if (!rs.resultSet()) {
-            String query = "UPDATE " + prefix + "tardis SET uuid = ?, owner = ?, last_known_name = ?, abandoned = 0 , tardis_init = 1 WHERE tardis_id = ?";
+            String query = "UPDATE " + prefix + "tardis SET uuid = ?, owner = ?, last_known_name = ?, abandoned = 0 , tardis_init = 1, powered_on = 1, lastuse = ? WHERE tardis_id = ?";
             try {
                 service.testConnection(connection);
+                Long now;
+                if (player.hasPermission("tardis.prune.bypass")) {
+                    now = Long.MAX_VALUE - new Random().nextInt(1000);
+                } else {
+                    now = System.currentTimeMillis();
+                }
                 ps = connection.prepareStatement(query);
-                ps.setString(1, (String) claim.get("uuid"));
-                ps.setString(2, (String) claim.get("owner"));
-                ps.setString(3, (String) claim.get("owner"));
-                ps.setInt(4, (Integer) claim.get("tardis_id"));
+                ps.setString(1, uuid);
+                ps.setString(2, player.getName());
+                ps.setString(3, player.getName());
+                ps.setLong(4, now);
+                ps.setInt(5, (Integer) id);
                 boolean bool = (ps.executeUpdate() == 1);
                 if (bool) {
                     query = "UPDATE " + prefix + "ars SET uuid = ? WHERE tardis_id = ?";
-                    ps.setString(1, (String) claim.get("uuid"));
-                    ps.setInt(2, (Integer) claim.get("tardis_id"));
                     ps = connection.prepareStatement(query);
+                    ps.setString(1, uuid);
+                    ps.setInt(2, (Integer) id);
                     ps.executeUpdate();
                 }
                 return bool;

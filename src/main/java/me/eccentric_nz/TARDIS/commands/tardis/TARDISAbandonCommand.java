@@ -84,6 +84,10 @@ public class TARDISAbandonCommand {
                         TARDISMessage.send(player, "ABANDONED_OWN");
                         return true;
                     }
+                    if (!rs.isTardis_init()) {
+                        TARDISMessage.send(player, "ENERGY_NO_INIT");
+                        return true;
+                    }
                     if (!rs.isHandbrake_on()) {
                         TARDISMessage.send(player, "HANDBRAKE_ENGAGE");
                         return true;
@@ -95,7 +99,7 @@ public class TARDISAbandonCommand {
                     new TARDISAbandonUpdate(plugin, id, player.getUniqueId().toString()).run();
                     if (rs.isPowered_on()) {
                         // power down TARDIS
-                        new TARDISPowerButton(plugin, id, player, rs.getPreset(), true, rs.isHidden(), rs.isLights_on(), player.getLocation(), rs.getArtron_level(), rs.getSchematic().hasLanterns()).clickButton();
+                        new TARDISPowerButton(plugin, id, player, rs.getPreset(), rs.isPowered_on(), rs.isHidden(), rs.isLights_on(), player.getLocation(), rs.getArtron_level(), rs.getSchematic().hasLanterns()).clickButton();
                     }
                     // close the door
                     new TARDISDoorCloser(plugin, player.getUniqueId(), id).closeDoors();

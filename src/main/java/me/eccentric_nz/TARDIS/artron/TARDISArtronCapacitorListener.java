@@ -27,6 +27,7 @@ import me.eccentric_nz.TARDIS.database.ResultSetPlayerPrefs;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.enumeration.PRESET;
+import me.eccentric_nz.TARDIS.move.TARDISDoorCloser;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import me.eccentric_nz.TARDIS.utility.TARDISNumberParsers;
 import me.eccentric_nz.TARDIS.utility.TARDISSounds;
@@ -117,7 +118,7 @@ public class TARDISArtronCapacitorListener implements Listener {
                             HashMap<String, Object> whereid = new HashMap<String, Object>();
                             whereid.put("tardis_id", id);
                             int current_level = tardis.getArtron_level();
-                            boolean init = (tardis.isTardis_init() && !abandoned);
+                            boolean init = tardis.isTardis_init();
                             boolean lights = tardis.isLights_on();
                             int fc = plugin.getArtronConfig().getInt("full_charge");
                             Material item = player.getInventory().getItemInMainHand().getType();
@@ -247,12 +248,9 @@ public class TARDISArtronCapacitorListener implements Listener {
                                         boolean pu = true;
                                         if (abandoned) {
                                             // transfer ownership to the player who clicked
-                                            HashMap<String, Object> claim = new HashMap<String, Object>();
-                                            claim.put("tardis_id", id);
-                                            claim.put("uuid", player.getUniqueId().toString());
-                                            claim.put("owner", player.getName());
-                                            pu = qf.claimTARDIS(claim);
+                                            pu = qf.claimTARDIS(player, id);
                                             if (pu) {
+                                                new TARDISDoorCloser(plugin, player.getUniqueId(), id).closeDoors();
                                                 TARDISMessage.send(player, "ABANDON_CLAIMED");
                                             }
                                         }
