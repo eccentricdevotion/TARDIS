@@ -21,8 +21,7 @@ import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.commands.admin.TARDISAbandonLister;
 import me.eccentric_nz.TARDIS.control.TARDISPowerButton;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
-import me.eccentric_nz.TARDIS.database.ResultSetTardis;
-import me.eccentric_nz.TARDIS.database.data.Tardis;
+import me.eccentric_nz.TARDIS.database.ResultSetTardisAbandoned;
 import me.eccentric_nz.TARDIS.move.TARDISDoorCloser;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import org.bukkit.command.CommandSender;
@@ -61,24 +60,21 @@ public class TARDISAbandonCommand {
                     return true;
                 }
                 // abandon TARDIS
-                HashMap<String, Object> where = new HashMap<String, Object>();
-                where.put("uuid", player.getUniqueId().toString());
-                ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);
-                if (!rs.resultSet()) {
+                ResultSetTardisAbandoned rs = new ResultSetTardisAbandoned(plugin);
+                if (!rs.fromUUID(player.getUniqueId().toString())) {
                     TARDISMessage.send(player, "NO_TARDIS");
                     return true;
                 } else {
-                    Tardis tardis = rs.getTardis();
-                    int id = tardis.getTardis_id();
+                    int id = rs.getTardis_id();
                     HashMap<String, Object> set = new HashMap<String, Object>();
                     set.put("abandoned", 1);
                     set.put("powered_on", 0);
                     HashMap<String, Object> wherei = new HashMap<String, Object>();
                     wherei.put("tardis_id", id);
                     new QueryFactory(plugin).doUpdate("tardis", set, wherei);
-                    if (tardis.isPowered_on()) {
+                    if (rs.isPowered_on()) {
                         // power down TARDIS
-                        new TARDISPowerButton(plugin, id, player, tardis.getPreset(), true, tardis.isHidden(), tardis.isLights_on(), player.getLocation(), tardis.getArtron_level(), tardis.getSchematic().hasLanterns()).clickButton();
+                        new TARDISPowerButton(plugin, id, player, rs.getPreset(), true, rs.isHidden(), rs.isLights_on(), player.getLocation(), rs.getArtron_level(), rs.getSchematic().hasLanterns()).clickButton();
                         // close the door
                         new TARDISDoorCloser(plugin, player.getUniqueId(), id).closeDoors();
                     }
