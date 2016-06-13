@@ -56,7 +56,7 @@ public class TARDISAbandonLister {
                     String w = (plugin.isMVOnServer()) ? plugin.getMVHelper().getAlias(rsc.getWorld()) : rsc.getWorld().getName();
                     String l = w + " " + rsc.getX() + ", " + rsc.getY() + ", " + rsc.getZ();
                     if (click) {
-                        String json = "{\"text\":\"" + i + ". Abandoned by: " + t.getOwner() + ", location: " + l + "\",\"clickEvent\":{\"action\":\"run_command\",\"value\":\"tardisadmin enter " + t.getTardis_id() + "\"},\"hoverEvent\":{\"action\":\"show_text\",\"value\":{\"text\":\"\",\"extra\":[{\"text\":\"Click me\"}]}}}";
+                        String json = "{\"text\":\"" + i + ". Abandoned by: " + t.getOwner() + ", location: " + l + "\",\"clickEvent\":{\"action\":\"run_command\",\"value\":\"/tardisadmin enter " + t.getTardis_id() + "\"},\"hoverEvent\":{\"action\":\"show_text\",\"value\":{\"text\":\"\",\"extra\":[{\"text\":\"Click me\"}]}}}";
                         TARDISUpdateChatGUI.sendJSON(json, (Player) sender);
                     } else {
                         sender.sendMessage(i + ". Abandoned by: " + t.getOwner() + ", location: " + l);

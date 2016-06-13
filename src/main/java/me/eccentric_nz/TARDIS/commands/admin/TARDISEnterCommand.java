@@ -57,15 +57,21 @@ public class TARDISEnterCommand {
             TARDISMessage.send(player, "NO_PERMS");
             return true;
         }
-        // Look up this player's UUID
-        UUID uuid = plugin.getServer().getOfflinePlayer(args[1]).getUniqueId();
+        int tmp = -1;
+        try {
+            tmp = Integer.parseInt(args[1]);
+        } catch (NumberFormatException nfe) {
+            // do nothing
+        }
         HashMap<String, Object> where = new HashMap<String, Object>();
-        if (uuid != null) {
+        if (tmp == -1) {
+            // Look up this player's UUID
+            UUID uuid = plugin.getServer().getOfflinePlayer(args[1]).getUniqueId();
             plugin.debug("uuid: " + uuid);
             where.put("uuid", uuid.toString());
             where.put("abandoned", 0);
         } else {
-            where.put("tardis_id", args[1]);
+            where.put("tardis_id", tmp);
         }
         ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false, 2);
         if (rs.resultSet()) {
@@ -149,7 +155,7 @@ public class TARDISEnterCommand {
                 return true;
             }
         } else {
-            String message = (uuid != null) ? "PLAYER_NO_TARDIS" : "ABANDONED_NOT_FOUND";
+            String message = (tmp == -1) ? "PLAYER_NO_TARDIS" : "ABANDONED_NOT_FOUND";
             TARDISMessage.send(player, message);
         }
         return true;
