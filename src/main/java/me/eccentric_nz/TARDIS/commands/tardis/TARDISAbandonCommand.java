@@ -61,6 +61,10 @@ public class TARDISAbandonCommand {
                     TARDISMessage.send(sender, "CMD_NO_CONSOLE");
                     return true;
                 }
+                if (!plugin.getConfig().getBoolean("allow.power_down")) {
+                    TARDISMessage.send(sender, "ABANDON_POWER_DOWN");
+                    return true;
+                }
                 // abandon TARDIS
                 ResultSetTardisAbandoned rs = new ResultSetTardisAbandoned(plugin);
                 if (!rs.fromUUID(player.getUniqueId().toString())) {
