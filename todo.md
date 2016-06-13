@@ -13,6 +13,8 @@
     * add `/tardisadmin abandon [true|false]` and `/tardisadmin reduce_count [true|false]` commands
     * test `/tardis abandon list` click entry to enter TARDIS functionality
     * add ability to delete abandoned TARDISes
+    * when abandoning clear sign (if there is one)
+    * When claiming set name on sign
 4. [Improve Control Centre](http://dev.bukkit.org/bukkit-plugins/tardis/tickets/1324-improving-control-centre/)
     * Update console schematics to add Control Centre sign, Sonic Generator
     * Remove other control signs from console schematics
@@ -45,7 +47,6 @@
    * Wolves -> K-9? (All the textures I seen so far just don't work - you shouldn't see the legs...)
    * Slimes -> Adipose
    * Something with an invisible Shulker passenger?
-2. Spawn flying daleks `/twas DALEK flying`
 
 ##Waiting on Bukkit / SpigotAPI
 0. IDs/data are soon to be history... so convert all ID/data use to block states 

@@ -89,7 +89,7 @@ public class TARDISConfiguration {
         boolOptions.put("allow.mob_farming", true);
         boolOptions.put("allow.perception_filter", true);
         boolOptions.put("allow.player_difficulty", true);
-        boolOptions.put("allow.power_down", false);
+        boolOptions.put("allow.power_down", true);
         boolOptions.put("allow.power_down_on_quit", false);
         boolOptions.put("allow.sfx", true);
         boolOptions.put("allow.spawn_eggs", true);

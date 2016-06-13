@@ -134,7 +134,7 @@ allow:
     wg_flag_set: true
     zero_room: false
     external_gravity: false
-    power_down: false
+    power_down: true
     power_down_on_quit: false
     player_difficulty: true
     3d_doors: false
