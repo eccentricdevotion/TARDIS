@@ -44,6 +44,7 @@ import me.libraryaddict.disguise.disguisetypes.watchers.RabbitWatcher;
 import me.libraryaddict.disguise.disguisetypes.watchers.SheepWatcher;
 import me.libraryaddict.disguise.disguisetypes.watchers.SkeletonWatcher;
 import me.libraryaddict.disguise.disguisetypes.watchers.SlimeWatcher;
+import me.libraryaddict.disguise.disguisetypes.watchers.SnowmanWatcher;
 import me.libraryaddict.disguise.disguisetypes.watchers.VillagerWatcher;
 import me.libraryaddict.disguise.disguisetypes.watchers.WolfWatcher;
 import me.libraryaddict.disguise.disguisetypes.watchers.ZombieWatcher;
@@ -78,6 +79,7 @@ public class TARDISLazarusGUIListener extends TARDISMenuListener implements List
     private final HashMap<UUID, Integer> rabbits = new HashMap<UUID, Integer>();
     private final HashMap<UUID, Integer> professions = new HashMap<UUID, Integer>();
     private final HashMap<UUID, Integer> slimes = new HashMap<UUID, Integer>();
+    private final HashMap<UUID, Boolean> snowmen = new HashMap<UUID, Boolean>();
     private final HashMap<UUID, Integer> skeletons = new HashMap<UUID, Integer>();
     private final HashMap<UUID, Integer> zombies = new HashMap<UUID, Integer>();
     private final List<Integer> slimeSizes = Arrays.asList(1, 2, 4);
@@ -305,7 +307,7 @@ public class TARDISLazarusGUIListener extends TARDISMenuListener implements List
                                             break;
                                         case VILLAGER:
                                             VillagerWatcher vw = (VillagerWatcher) livingWatcher;
-// TODO                                           vw.setProfession(getProfession(inv));
+                                            vw.setProfession(getProfession(inv));
                                             vw.setBaby(getBaby(inv));
                                             break;
                                         case WOLF:
@@ -348,11 +350,15 @@ public class TARDISLazarusGUIListener extends TARDISMenuListener implements List
                                         case ZOMBIE:
                                             ZombieWatcher zw = (ZombieWatcher) livingWatcher;
                                             zw.setBaby(getBaby(inv));
-// TODO                                            zw.setProfession(getZombieProfession(inv));
+                                            zw.setProfession(getZombieProfession(inv));
                                             break;
                                         case SKELETON:
                                             SkeletonWatcher skw = (SkeletonWatcher) livingWatcher;
-// TODO                                           skw.setType(getSkeletonType(inv));
+                                            skw.setType(getSkeletonType(inv));
+                                            break;
+                                        case SNOWMAN:
+                                            SnowmanWatcher snw = (SnowmanWatcher) livingWatcher;
+                                            snw.setHat(snowmen.get(uuid));
                                             break;
                                         default:
                                             break;
@@ -439,6 +445,16 @@ public class TARDISLazarusGUIListener extends TARDISMenuListener implements List
             }
             t = SkeletonType.values()[o].toString();
             skeletons.put(uuid, o);
+        }
+        if (d.equals("SNOWMAN")) {
+            boolean derp;
+            if (snowmen.containsKey(uuid)) {
+                derp = !snowmen.get(uuid);
+            } else {
+                derp = true;
+            }
+            snowmen.put(uuid, derp);
+            t = (derp) ? "Pumpkin head" : "Derp face";
         }
         if (d.equals("SHEEP") || d.equals("WOLF")) {
             if (sheep.containsKey(uuid)) {
