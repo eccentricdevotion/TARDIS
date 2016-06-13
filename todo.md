@@ -22,6 +22,7 @@
 
 ##Upcoming minor version `3.7`  
  
+1. [Spawn abandoned TARDISes](http://dev.bukkit.org/bukkit-plugins/tardis/tickets/1277-possibility-to-abandon-a-tardis/?comment=6)
 2. TARDISSonicBlaster addon?
 
 ?
