@@ -100,6 +100,7 @@ public class TARDISTrackerInstanceKeeper {
     private final List<Integer> dematerialising = new ArrayList<Integer>();
     private final List<Integer> dispersedTARDII = new ArrayList<Integer>();
     private final List<Integer> hasNotClickedHandbrake = new ArrayList<Integer>();
+    private final List<Integer> hasClickedHandbrake = new ArrayList<Integer>();
     private final List<Integer> hasRandomised = new ArrayList<Integer>();
     private final List<Integer> inSiegeMode = new ArrayList<Integer>();
     private final List<Integer> inVortex = new ArrayList<Integer>();
@@ -300,6 +301,10 @@ public class TARDISTrackerInstanceKeeper {
 
     public List<Integer> getHasNotClickedHandbrake() {
         return hasNotClickedHandbrake;
+    }
+
+    public List<Integer> getHasClickedHandbrake() {
+        return hasClickedHandbrake;
     }
 
     public List<Integer> getHasRandomised() {

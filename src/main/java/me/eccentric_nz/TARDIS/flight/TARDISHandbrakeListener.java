@@ -16,6 +16,7 @@
  */
 package me.eccentric_nz.TARDIS.flight;
 
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
@@ -176,35 +177,18 @@ public class TARDISHandbrakeListener implements Listener {
                                     // check if door is open
                                     if (isDoorOpen(id)) {
                                         TARDISMessage.send(player, "DOOR_CLOSE");
+                                        // track handbrake clicked for takeoff when door closed
+                                        plugin.getTrackerKeeper().getHasClickedHandbrake().add(id);
+                                        // give them 30 seconds to close the door
+                                        plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
+                                            @Override
+                                            public void run() {
+                                                plugin.getTrackerKeeper().getHasClickedHandbrake().removeAll(Collections.singleton(id));
+                                            }
+                                        }, 600L);
                                         return;
                                     }
-                                    // Changes the lever to off
-                                    lever.setPowered(false);
-                                    state.setData(lever);
-                                    state.update();
-                                    if (plugin.getConfig().getBoolean("circuits.damage") && plugin.getTrackerKeeper().getHasNotClickedHandbrake().contains(id)) {
-                                        plugin.getTrackerKeeper().getHasNotClickedHandbrake().remove(Integer.valueOf(id));
-                                    }
-                                    TARDISSounds.playTARDISSound(handbrake_loc, "tardis_handbrake_release");
-                                    if (!beac_on && !beacon.isEmpty()) {
-                                        toggleBeacon(beacon, true);
-                                    }
-                                    set.put("handbrake_on", 0);
-                                    TARDISMessage.send(player, "HANDBRAKE_OFF");
-                                    plugin.getTrackerKeeper().getInVortex().add(id);
-                                    // dematerialise
-                                    new TARDISDematerialiseToVortex(plugin, id, player, handbrake_loc).run();
-                                    if (plugin.getTrackerKeeper().getHasDestination().containsKey(id)) {
-                                        if (bar) {
-                                            long bar_time = (flight_mode == 2 || flight_mode == 3) ? 1500L : 890L;
-                                            new TARDISTravelBar(plugin).showTravelRemaining(player, bar_time);
-                                        }
-                                        // materialise
-                                        new TARDISMaterialseFromVortex(plugin, id, player, handbrake_loc).run();
-                                    } else {
-                                        new TARDISTravelBar(plugin).showTravelRemaining(player, 445L);
-                                        plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new TARDISLoopingFlightSound(plugin, handbrake_loc, id), 500L);
-                                    }
+                                    new TARDISTakeoff(plugin).run(id, block, handbrake_loc, player, beac_on, beacon, bar, flight_mode);
                                 } else {
                                     TARDISMessage.send(player, "HANDBRAKE_OFF_ERR");
                                     error = true;

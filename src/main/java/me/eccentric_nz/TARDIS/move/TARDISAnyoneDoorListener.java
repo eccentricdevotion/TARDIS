@@ -16,6 +16,7 @@
  */
 package me.eccentric_nz.TARDIS.move;
 
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.UUID;
@@ -31,6 +32,7 @@ import me.eccentric_nz.TARDIS.database.ResultSetTardisID;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
 import me.eccentric_nz.TARDIS.enumeration.PRESET;
+import me.eccentric_nz.TARDIS.flight.TARDISTakeoff;
 import me.eccentric_nz.TARDIS.mobfarming.TARDISFarmer;
 import me.eccentric_nz.TARDIS.mobfarming.TARDISMob;
 import me.eccentric_nz.TARDIS.travel.TARDISDoorLocation;
@@ -221,6 +223,11 @@ public class TARDISAnyoneDoorListener extends TARDISDoorListener implements List
                                             if (open && rs.getTardis().isAbandoned()) {
                                                 TARDISMessage.send(player, "ABANDONED_DOOR");
                                                 return;
+                                            }
+                                            if (plugin.getTrackerKeeper().getHasClickedHandbrake().contains(id) && doortype == 1) {
+                                                plugin.getTrackerKeeper().getHasClickedHandbrake().removeAll(Collections.singleton(id));
+                                                // toggle handbrake && dematerialise
+                                                new TARDISTakeoff(plugin).run(id, player, rs.getTardis().getBeacon());
                                             }
                                             // toggle the door
                                             if (toggle) {
