@@ -115,7 +115,7 @@ public class TARDISLazarusInventory {
         i++;
         // if TARDISWeepingAngels is enabled angels, cybermen and ice warriors will be available
         if (plugin.checkTWA()) {
-            ItemStack weep = new ItemStack(Material.SMOOTH_BRICK, 1, (short) 2);
+            ItemStack weep = new ItemStack(Material.CLAY_BRICK, 1);
             ItemMeta ing = weep.getItemMeta();
             ing.setDisplayName("WEEPING ANGEL");
             weep.setItemMeta(ing);
@@ -127,7 +127,7 @@ public class TARDISLazarusInventory {
             cyber.setItemMeta(men);
             eggs[i] = cyber;
             i++;
-            ItemStack ice = new ItemStack(Material.ICE, 1);
+            ItemStack ice = new ItemStack(Material.SNOW_BALL, 1);
             ItemMeta war = ice.getItemMeta();
             war.setDisplayName("ICE WARRIOR");
             ice.setItemMeta(war);
@@ -195,18 +195,18 @@ public class TARDISLazarusInventory {
         tamed.setItemMeta(tf);
         eggs[49] = tamed;
         // add buttons
-        ItemStack rem = new ItemStack(Material.DAYLIGHT_DETECTOR, 1);
+        ItemStack rem = new ItemStack(Material.APPLE, 1);
         ItemMeta ove = rem.getItemMeta();
         ove.setDisplayName(plugin.getLanguage().getString("BUTTON_RESTORE"));
         rem.setItemMeta(ove);
         eggs[51] = rem;
         // set
-        ItemStack s = new ItemStack(Material.ANVIL, 1);
+        ItemStack s = new ItemStack(Material.BOOK_AND_QUILL, 1);
         ItemMeta sim = s.getItemMeta();
         sim.setDisplayName(plugin.getLanguage().getString("BUTTON_DNA"));
         s.setItemMeta(sim);
         eggs[52] = s;
-        ItemStack can = new ItemStack(Material.OBSIDIAN, 1);
+        ItemStack can = new ItemStack(Material.BOWL, 1);
         ItemMeta cel = can.getItemMeta();
         cel.setDisplayName(plugin.getLanguage().getString("BUTTON_CANCEL"));
         can.setItemMeta(cel);
