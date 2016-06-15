@@ -134,7 +134,6 @@ public class TARDISHandbrakeListener implements Listener {
                     HashMap<String, Object> wherei = new HashMap<String, Object>();
                     wherei.put("tardis_id", id);
                     ResultSetTardis rs = new ResultSetTardis(plugin, wherei, "", false, 2);
-                    HashMap<String, Object> set = new HashMap<String, Object>();
                     if (rs.resultSet()) {
                         Tardis tardis = rs.getTardis();
                         final PRESET preset = tardis.getPreset();
@@ -152,7 +151,6 @@ public class TARDISHandbrakeListener implements Listener {
                             return;
                         }
                         String beacon = tardis.getBeacon();
-                        boolean error = false;
                         if (plugin.getTrackerKeeper().getInVortex().contains(id) || plugin.getTrackerKeeper().getDestinationVortex().containsKey(id)) {
                             TARDISMessage.send(player, "HANDBRAKE_IN_VORTEX");
                         } else {
@@ -191,7 +189,6 @@ public class TARDISHandbrakeListener implements Listener {
                                     new TARDISTakeoff(plugin).run(id, block, handbrake_loc, player, beac_on, beacon, bar, flight_mode);
                                 } else {
                                     TARDISMessage.send(player, "HANDBRAKE_OFF_ERR");
-                                    error = true;
                                 }
                             }
                             if (action == Action.LEFT_CLICK_BLOCK) {
@@ -208,7 +205,6 @@ public class TARDISHandbrakeListener implements Listener {
                                         toggleBeacon(beacon, false);
                                     }
                                     // Remove energy from TARDIS and sets database
-                                    set.put("handbrake_on", 1);
                                     TARDISMessage.send(player, "HANDBRAKE_ON");
                                     if (plugin.getTrackerKeeper().getHasDestination().containsKey(id)) {
                                         int amount = plugin.getTrackerKeeper().getHasDestination().get(id) * -1;
@@ -232,15 +228,14 @@ public class TARDISHandbrakeListener implements Listener {
                                         int uses_left = tcc.getMaterialisationUses();
                                         new TARDISCircuitDamager(plugin, DISK_CIRCUIT.MATERIALISATION, uses_left, id, player).damage();
                                     }
+                                    HashMap<String, Object> set = new HashMap<String, Object>();
+                                    set.put("handbrake_on", 1);
+                                    HashMap<String, Object> whereh = new HashMap<String, Object>();
+                                    whereh.put("tardis_id", id);
+                                    qf.doUpdate("tardis", set, whereh);
                                 } else {
                                     TARDISMessage.send(player, "HANDBRAKE_ON_ERR");
-                                    error = true;
                                 }
-                            }
-                            if (!error) {
-                                HashMap<String, Object> whereh = new HashMap<String, Object>();
-                                whereh.put("tardis_id", id);
-                                qf.doUpdate("tardis", set, whereh);
                             }
                         }
                     }
