@@ -160,7 +160,6 @@ public class TARDISMaterialseFromVortex implements Runnable {
                     bd.setTardisID(id);
                     bd.setTexture(set_biome);
 
-                    //plugin.getPresetBuilder().buildPreset(pbd);
                     // remember flight data
                     plugin.getTrackerKeeper().getFlightData().put(uuid, bd);
                     long delay = (plugin.getTrackerKeeper().getDestinationVortex().containsKey(id)) ? 0L : 500L;
@@ -187,6 +186,9 @@ public class TARDISMaterialseFromVortex implements Runnable {
                                     if (!malchk) {
                                         TARDISSounds.playTARDISSound(sound_loc, "tardis_land");
                                         TARDISSounds.playTARDISSound(external_sound_loc, "tardis_land");
+                                    } else {
+                                        TARDISSounds.playTARDISSound(sound_loc, "tardis_emergency_land");
+                                        TARDISSounds.playTARDISSound(external_sound_loc, "tardis_emergency_land");
                                     }
                                 } else {
                                     TARDISSounds.playTARDISSound(sound_loc, "junk_land");
@@ -234,8 +236,10 @@ public class TARDISMaterialseFromVortex implements Runnable {
                                     }
                                 }
                             }
-                            // forget flight data
-                            plugin.getTrackerKeeper().getFlightData().remove(uuid);
+                            if (!malchk) {
+                                // forget flight data
+                                plugin.getTrackerKeeper().getFlightData().remove(uuid);
+                            }
                         }
                     }, delay);
                     if (plugin.getTrackerKeeper().getDamage().containsKey(id)) {
