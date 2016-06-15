@@ -19,13 +19,20 @@
     * Update console schematics to add Control Centre sign, Sonic Generator
     * Remove other control signs from console schematics
 5. TARDIS Junk Mode - `/tprefs junk [wall|floor] [block_type]`?
-6. Update for Minecraft 1.10
-   * Waiting on LibsDisguises to update (so we can finish Lazarus Device)
+
 
 ##Upcoming minor version `3.7`  
  
 1. [Spawn abandoned TARDISes](http://dev.bukkit.org/bukkit-plugins/tardis/tickets/1277-possibility-to-abandon-a-tardis/?comment=6)
-2. TARDISSonicBlaster addon?
+2. Add API Events that other plugins can listen for
+   * Chameleon Arch events
+   * Desktop Theme events
+   * Zero Room events
+   * Materialisation events
+   * Sonic Screwdriver events
+   * Lazarus Device events
+   * Malfunction event
+3. TARDISSonicBlaster addon?
 
 ?
 
@@ -36,7 +43,8 @@
 
 ##Resource Pack / TARDISWeepingAngels
 
-1. Re-skin mobs for Resource pack, and add new mob sounds
+1. Something with an invisible Shulker passenger
+2. Re-skin mobs for Resource pack, and add new mob sounds
 
    * Villagers -> Ood - _started texture_
    * Villagers -> Hath
@@ -46,7 +54,6 @@
    * Witches -> Slitheen / Whispermen?
    * Wolves -> K-9? (All the textures I seen so far just don't work - you shouldn't see the legs...)
    * Slimes -> Adipose
-   * Something with an invisible Shulker passenger?
 
 ##Waiting on Bukkit / SpigotAPI
 0. IDs/data are soon to be history... so convert all ID/data use to block states 
