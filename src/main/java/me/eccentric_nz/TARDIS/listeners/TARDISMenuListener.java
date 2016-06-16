@@ -90,6 +90,7 @@ public class TARDISMenuListener {
         map.put("§4TARDIS Console", 9);
         map.put("§4TARDIS Control Menu", 54);
         map.put("§4TARDIS Floor Menu", 54);
+        map.put("§4TARDIS Interior Sounds", 18);
         map.put("§4TARDIS Key Prefs Menu", 27);
         map.put("§4TARDIS Map", 54);
         map.put("§4TARDIS Seeds Menu", 90);
