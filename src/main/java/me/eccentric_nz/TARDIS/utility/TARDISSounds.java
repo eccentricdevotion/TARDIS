@@ -21,7 +21,7 @@ import java.util.List;
 import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.ResultSetPlayerPrefs;
-import me.eccentric_nz.TARDIS.database.ResultSetTravellers;
+import me.eccentric_nz.TARDIS.database.ResultSetSounds;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
@@ -45,7 +45,7 @@ public class TARDISSounds {
      */
     public static void randomTARDISSound() {
         if (TARDIS.plugin.getConfig().getBoolean("allow.sfx") == true) {
-            ResultSetTravellers rs = new ResultSetTravellers(TARDIS.plugin, null, true);
+            ResultSetSounds rs = new ResultSetSounds(TARDIS.plugin);
             if (rs.resultSet()) {
                 List<UUID> data = rs.getData();
                 for (UUID u : data) {
