@@ -82,6 +82,7 @@ public class TARDISSQLiteDatabaseUpdater {
         prefsupdates.add("flying_mode INTEGER DEFAULT 1");
         prefsupdates.add("hads_on INTEGER DEFAULT 1");
         prefsupdates.add("hads_type TEXT DEFAULT 'DISPLACEMENT'");
+        prefsupdates.add("hum TEXT DEFAULT ''");
         prefsupdates.add("key TEXT DEFAULT ''");
         prefsupdates.add("language TEXT DEFAULT 'AUTO_DETECT'");
         prefsupdates.add("lanterns_on INTEGER DEFAULT 0");

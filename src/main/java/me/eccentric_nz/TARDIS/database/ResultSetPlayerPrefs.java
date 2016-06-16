@@ -78,6 +78,7 @@ public class ResultSetPlayerPrefs {
     private int flightMode;
     private boolean easyDifficulty;
     private boolean autoPowerUp;
+    private String hum;
     private final String prefix;
 
     /**
@@ -190,6 +191,7 @@ public class ResultSetPlayerPrefs {
                 this.flightMode = rs.getInt("flying_mode");
                 this.easyDifficulty = rs.getBoolean("difficulty");
                 this.autoPowerUp = rs.getBoolean("auto_powerup_on");
+                this.hum = rs.getString("hum");
             } else {
                 return false;
             }
@@ -361,5 +363,9 @@ public class ResultSetPlayerPrefs {
 
     public boolean isAutoPowerUp() {
         return autoPowerUp;
+    }
+
+    public String getHum() {
+        return hum;
     }
 }
