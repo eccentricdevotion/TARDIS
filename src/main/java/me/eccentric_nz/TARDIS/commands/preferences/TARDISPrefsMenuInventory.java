@@ -57,11 +57,6 @@ public class TARDISPrefsMenuInventory {
      */
     @SuppressWarnings("deprecation")
     private ItemStack[] getItemStack() {
-        // map
-        ItemStack tt = new ItemStack(Material.MAP, 1);
-        ItemMeta map = tt.getItemMeta();
-        map.setDisplayName("TARDIS Map");
-        tt.setItemMeta(map);
         // get player prefs
         HashMap<String, Object> where = new HashMap<String, Object>();
         where.put("uuid", uuid.toString());
@@ -284,6 +279,14 @@ public class TARDISPrefsMenuInventory {
                 stack[s] = null;
             }
         }
+        // interior hum sound
+        ItemStack hum = new ItemStack(Material.BOWL, 1);
+        ItemMeta hum_im = hum.getItemMeta();
+        hum_im.setDisplayName("Interior hum sound");
+        String hum_value = (rsp.getHum().isEmpty()) ? "random" : rsp.getHum();
+        hum_im.setLore(Arrays.asList(hum_value));
+        hum.setItemMeta(hum_im);
+        stack[23] = hum;
         // handbrake
         ItemStack hand = new ItemStack(Material.LEVER, 1);
         ItemMeta brake = hand.getItemMeta();
@@ -291,6 +294,11 @@ public class TARDISPrefsMenuInventory {
         brake.setLore(Arrays.asList(hb_value));
         hand.setItemMeta(brake);
         stack[24] = hand;
+        // map
+        ItemStack tt = new ItemStack(Material.MAP, 1);
+        ItemMeta map = tt.getItemMeta();
+        map.setDisplayName("TARDIS Map");
+        tt.setItemMeta(map);
         stack[25] = tt;
         if (plugin.getServer().getPlayer(uuid).hasPermission("tardis.admin")) {
             // admin

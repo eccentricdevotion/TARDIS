@@ -91,6 +91,21 @@ public class TARDISPrefsMenuListener implements Listener {
                     final Player p = (Player) event.getWhoClicked();
                     UUID uuid = p.getUniqueId();
                     ItemMeta im = is.getItemMeta();
+                    if (slot == 23 && im.getDisplayName().equals("Interior hum sound")) {
+                        // close this gui and load the sounds GUI
+                        plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
+                            @Override
+                            public void run() {
+                                Inventory hum_inv = plugin.getServer().createInventory(p, 18, "§4TARDIS Interior Sounds");
+                                // close inventory
+                                p.closeInventory();
+                                // open new inventory
+                                hum_inv.setContents(new TARDISHumInventory(plugin).getSounds());
+                                p.openInventory(hum_inv);
+                            }
+                        }, 1L);
+                        return;
+                    }
                     if (slot == 24 && im.getDisplayName().equals("Handbrake")) {
                         // you can only set it to ON!
                         List<String> lore = im.getLore();
