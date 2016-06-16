@@ -11,7 +11,6 @@
     * Add other worlds (Silurian cave world, Gallifrey)?
 3. [Abandoned TARDISes](http://dev.bukkit.org/bukkit-plugins/tardis/tickets/1277-possibility-to-abandon-a-tardis/)
     * add `/tardisadmin abandon [true|false]` and `/tardisadmin reduce_count [true|false]` commands
-    * test `/tardis abandon list` click entry to enter TARDIS functionality
     * add ability to delete abandoned TARDISes
     * when abandoning clear sign (if there is one)
     * When claiming set name on sign
@@ -43,9 +42,12 @@
 
 ##Resource Pack / TARDISWeepingAngels
 
-1. Something with an invisible Shulker passenger
-2. Re-skin mobs for Resource pack, and add new mob sounds
-
+1. Something with an invisible Shulker passenger - or an invisible bat with a Shulker passemger (Toclafane?)
+2. SFX for monsters hits
+   * Stone pick hit - angel
+   * Metal whack - cyberman
+   * Meat chop - silurian, sontaran, zygon, empty, silent
+3. Re-skin mobs for Resource pack, and add new mob sounds
    * Villagers -> Ood - _started texture_
    * Villagers -> Hath
    * Endermen -> The Silence - _implemented, but texture needs to be finished_
@@ -54,6 +56,8 @@
    * Witches -> Slitheen / Whispermen?
    * Wolves -> K-9? (All the textures I seen so far just don't work - you shouldn't see the legs...)
    * Slimes -> Adipose
+ 4. Sycorax
+ 5. Scarecrows
 
 ##Waiting on Bukkit / SpigotAPI
 0. IDs/data are soon to be history... so convert all ID/data use to block states 

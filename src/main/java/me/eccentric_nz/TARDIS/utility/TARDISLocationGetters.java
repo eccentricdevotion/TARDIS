@@ -97,16 +97,16 @@ public class TARDISLocationGetters {
      * @return a Location.
      */
     public static Location getLocationFromDB(String s, float yaw, float pitch) {
-        int savedx, savedy, savedz;
+        double savedx, savedy, savedz;
         // compile location from string
         String[] data = s.split(":");
         World savedw = Bukkit.getServer().getWorld(data[0]);
         if (savedw == null) {
             return null;
         }
-        savedx = TARDISNumberParsers.parseInt(data[1]);
-        savedy = TARDISNumberParsers.parseInt(data[2]);
-        savedz = TARDISNumberParsers.parseInt(data[3]);
+        savedx = TARDISNumberParsers.parseDouble(data[1]);
+        savedy = TARDISNumberParsers.parseDouble(data[2]);
+        savedz = TARDISNumberParsers.parseDouble(data[3]);
         Location dest = new Location(savedw, savedx, savedy, savedz, yaw, pitch);
         return dest;
     }
