@@ -35,10 +35,11 @@ import org.bukkit.command.TabCompleter;
 public class TARDISPrefsTabComplete extends TARDISCompleter implements TabCompleter {
 
     private final TARDIS plugin;
-    private final ImmutableList<String> ROOT_SUBS = ImmutableList.of("auto", "auto_powerup", "auto_siege", "build", "beacon", "ctm", "difficulty", "dnd", "eps", "eps_message", "farm", "flight", "floor", "hads", "hads_type", "isomorphic", "junk", "key", "key_menu", "lamp", "language", "lanterns", "minecart", "policebox_textures", "quotes", "renderer", "sfx", "siege_floor", "siege_wall", "sign", "sonic", "submarine", "telepathy", "travelbar", "wall", "wool_lights");
+    private final ImmutableList<String> ROOT_SUBS = ImmutableList.of("auto", "auto_powerup", "auto_siege", "build", "beacon", "ctm", "difficulty", "dnd", "eps", "eps_message", "farm", "flight", "floor", "hads", "hads_type", "hum", "isomorphic", "junk", "key", "key_menu", "lamp", "language", "lanterns", "minecart", "policebox_textures", "quotes", "renderer", "sfx", "siege_floor", "siege_wall", "sign", "sonic", "submarine", "telepathy", "travelbar", "wall", "wool_lights");
     private final ImmutableList<String> DIFF_SUBS = ImmutableList.of("easy", "hard");
     private final ImmutableList<String> ONOFF_SUBS = ImmutableList.of("on", "off");
     private final ImmutableList<String> HADS_SUBS = ImmutableList.of("DISPLACEMENT", "DISPERSAL");
+    private final ImmutableList<String> HUM_SUBS = ImmutableList.of("alien", "atmosphere", "computer", "copper", "coral", "galaxy", "learning", "mind", "neon", "sleeping", "void", "random");
     private final ImmutableList<String> FLIGHT_SUBS = ImmutableList.of("normal", "regulator", "manual");
     private final ImmutableList<String> KEY_SUBS;
     private final ImmutableList<String> MAT_SUBS;
@@ -88,6 +89,8 @@ public class TARDISPrefsTabComplete extends TARDISCompleter implements TabComple
                 return partial(lastArg, DIFF_SUBS);
             } else if (sub.equals("hads_type")) {
                 return partial(lastArg, HADS_SUBS);
+            } else if (sub.equals("hum")) {
+                return partial(lastArg, HUM_SUBS);
             } else {
                 return partial(lastArg, ONOFF_SUBS);
             }

@@ -65,6 +65,7 @@ public class TARDISPrefsCommands implements CommandExecutor {
         firstArgs.add("floor");
         firstArgs.add("hads");
         firstArgs.add("hads_type");
+        firstArgs.add("hum");
         firstArgs.add("isomorphic");
         firstArgs.add("key");
         firstArgs.add("key_menu");
@@ -138,6 +139,9 @@ public class TARDISPrefsCommands implements CommandExecutor {
                     }
                     if (pref.equals("hads_type")) {
                         return new TARDISHadsTypeCommand(plugin).setHadsPref(player, args, qf);
+                    }
+                    if (pref.equals("hum")) {
+                        return new TARDISHumCommand(plugin).setHumPref(player, args, qf);
                     }
                     if (pref.equals("key")) {
                         return new TARDISSetKeyCommand(plugin).setKeyPref(player, args, qf);

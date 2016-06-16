@@ -53,15 +53,18 @@ public class TARDISSounds {
                     where.put("uuid", u.toString());
                     ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(TARDIS.plugin, where);
                     boolean userSFX;
+                    String hum;
                     if (rsp.resultSet()) {
                         userSFX = rsp.isSfxOn();
+                        hum = (rsp.getHum().isEmpty()) ? "tardis_hum" : "tardis_hum_" + rsp.getHum();
                     } else {
                         userSFX = true;
+                        hum = "tardis_hum";
                     }
                     final Player player = Bukkit.getServer().getPlayer(u);
                     if (player != null) {
                         if (userSFX) {
-                            playTARDISSound(player.getLocation(), "tardis_hum");
+                            playTARDISSound(player.getLocation(), hum);
                         }
                     }
                 }
