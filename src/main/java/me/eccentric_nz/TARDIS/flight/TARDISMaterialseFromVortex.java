@@ -102,7 +102,7 @@ public class TARDISMaterialseFromVortex implements Runnable {
                             setsave.put("y", exit.getBlockY());
                             setsave.put("z", exit.getBlockZ());
                             setsave.put("submarine", 0);
-                            qf.doUpdate("next", setsave, wheress);
+                            qf.doSyncUpdate("next", setsave, wheress);
                             if (plugin.getTrackerKeeper().getHasDestination().containsKey(id)) {
                                 int amount = plugin.getTrackerKeeper().getHasDestination().get(id) * -1;
                                 HashMap<String, Object> wheret = new HashMap<String, Object>();

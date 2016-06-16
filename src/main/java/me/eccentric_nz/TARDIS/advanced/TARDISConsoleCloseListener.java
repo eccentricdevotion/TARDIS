@@ -279,7 +279,7 @@ public class TARDISConsoleCloseListener implements Listener {
                                     if (set_next.size() > 0) {
                                         // update next
                                         where_next.put("tardis_id", id);
-                                        qf.doUpdate("next", set_next, where_next);
+                                        qf.doSyncUpdate("next", set_next, where_next);
                                         plugin.getTrackerKeeper().getHasDestination().put(id, plugin.getArtronConfig().getInt("travel"));
                                     }
                                     if (set_tardis.size() > 0) {
@@ -322,7 +322,7 @@ public class TARDISConsoleCloseListener implements Listener {
                                     plugin.getTrackerKeeper().getSubmarine().remove(Integer.valueOf(id));
                                 }
                                 where_next.put("tardis_id", id);
-                                new QueryFactory(plugin).doUpdate("next", set_next, where_next);
+                                new QueryFactory(plugin).doSyncUpdate("next", set_next, where_next);
                                 plugin.getTrackerKeeper().getHasDestination().put(id, plugin.getArtronConfig().getInt("random_circuit"));
                                 plugin.getTrackerKeeper().getHasRandomised().add(id);
                                 TARDISMessage.send(p, "RANDOMISER");

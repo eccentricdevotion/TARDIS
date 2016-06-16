@@ -167,7 +167,7 @@ public class TARDISTravelCommands implements CommandExecutor {
                     set.put("y", l.getBlockY());
                     set.put("z", l.getBlockZ());
                     set.put("submarine", 0);
-                    qf.doUpdate("next", set, tid);
+                    qf.doSyncUpdate("next", set, tid);
                     TARDISMessage.send(player, "TRAVEL_APPROVED", permArea);
                     plugin.getTrackerKeeper().getHasDestination().put(id, travel);
                     if (plugin.getTrackerKeeper().getRescue().containsKey(id)) {
@@ -278,7 +278,7 @@ public class TARDISTravelCommands implements CommandExecutor {
                                 set.put("submarine", 0);
                                 which = "Village";
                             }
-                            qf.doUpdate("next", set, tid);
+                            qf.doSyncUpdate("next", set, tid);
                             TARDISMessage.send(player, "TRAVEL_LOADED", which, !plugin.getTrackerKeeper().getDestinationVortex().containsKey(id));
                             plugin.getTrackerKeeper().getHasDestination().put(id, travel);
                             if (plugin.getTrackerKeeper().getRescue().containsKey(id)) {
@@ -451,7 +451,7 @@ public class TARDISTravelCommands implements CommandExecutor {
                                     set.put("z", tb.getBlockZ());
                                     set.put("direction", rsc.getDirection().toString());
                                     set.put("submarine", 0);
-                                    qf.doUpdate("next", set, tid);
+                                    qf.doSyncUpdate("next", set, tid);
                                     TARDISMessage.send(player, "BIOME_SET", !plugin.getTrackerKeeper().getDestinationVortex().containsKey(id));
                                     plugin.getTrackerKeeper().getHasDestination().put(id, travel);
                                     if (plugin.getTrackerKeeper().getRescue().containsKey(id)) {
@@ -520,7 +520,7 @@ public class TARDISTravelCommands implements CommandExecutor {
                                     set.put("direction", rsc.getDirection().toString());
                                 }
                                 set.put("submarine", (rsd.isSubmarine()) ? 1 : 0);
-                                qf.doUpdate("next", set, tid);
+                                qf.doSyncUpdate("next", set, tid);
                                 TARDISMessage.send(player, "LOC_SET", !plugin.getTrackerKeeper().getDestinationVortex().containsKey(id));
                                 plugin.getTrackerKeeper().getHasDestination().put(id, travel);
                                 if (plugin.getTrackerKeeper().getRescue().containsKey(id)) {
@@ -566,7 +566,7 @@ public class TARDISTravelCommands implements CommandExecutor {
                         set.put("y", l.getBlockY());
                         set.put("z", l.getBlockZ());
                         set.put("submarine", 0);
-                        qf.doUpdate("next", set, tid);
+                        qf.doSyncUpdate("next", set, tid);
                         TARDISMessage.send(player, "TRAVEL_APPROVED", args[1]);
                         plugin.getTrackerKeeper().getHasDestination().put(id, travel);
                         if (plugin.getTrackerKeeper().getRescue().containsKey(id)) {
@@ -622,7 +622,7 @@ public class TARDISTravelCommands implements CommandExecutor {
                                         set.put("y", location.getBlockY());
                                         set.put("z", location.getBlockZ());
                                         set.put("submarine", 0);
-                                        qf.doUpdate("next", set, tid);
+                                        qf.doSyncUpdate("next", set, tid);
                                         TARDISMessage.send(player, "LOC_SAVED", true);
                                         plugin.getTrackerKeeper().getHasDestination().put(id, travel);
                                         if (plugin.getTrackerKeeper().getRescue().containsKey(id)) {
@@ -647,7 +647,7 @@ public class TARDISTravelCommands implements CommandExecutor {
                                             set.put("y", determiney.getBlockY());
                                             set.put("z", determiney.getBlockZ());
                                             set.put("submarine", 0);
-                                            qf.doUpdate("next", set, tid);
+                                            qf.doSyncUpdate("next", set, tid);
                                             TARDISMessage.send(player, "LOC_SAVED", true);
                                             plugin.getTrackerKeeper().getHasDestination().put(id, travel);
                                             if (plugin.getTrackerKeeper().getRescue().containsKey(id)) {
@@ -676,7 +676,7 @@ public class TARDISTravelCommands implements CommandExecutor {
                                         set.put("y", giveny.getBlockY());
                                         set.put("z", giveny.getBlockZ());
                                         set.put("submarine", 0);
-                                        qf.doUpdate("next", set, tid);
+                                        qf.doSyncUpdate("next", set, tid);
                                         TARDISMessage.send(player, "LOC_SAVED", true);
                                         plugin.getTrackerKeeper().getHasDestination().put(id, travel);
                                         if (plugin.getTrackerKeeper().getRescue().containsKey(id)) {

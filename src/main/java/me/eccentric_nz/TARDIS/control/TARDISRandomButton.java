@@ -186,7 +186,7 @@ public class TARDISRandomButton {
                     }
                     HashMap<String, Object> wherel = new HashMap<String, Object>();
                     wherel.put("tardis_id", id);
-                    new QueryFactory(plugin).doUpdate("next", set, wherel);
+                    new QueryFactory(plugin).doSyncUpdate("next", set, wherel);
                     plugin.getTrackerKeeper().getHasDestination().put(id, cost);
                     if (plugin.getTrackerKeeper().getRescue().containsKey(id)) {
                         plugin.getTrackerKeeper().getRescue().remove(id);
@@ -220,7 +220,7 @@ public class TARDISRandomButton {
                                 setsave.put("y", exit.getBlockY());
                                 setsave.put("z", exit.getBlockZ());
                                 setsave.put("submarine", 0);
-                                qf.doUpdate("next", setsave, wheress);
+                                qf.doSyncUpdate("next", setsave, wheress);
                                 if (plugin.getTrackerKeeper().getHasDestination().containsKey(id)) {
                                     int amount = plugin.getTrackerKeeper().getHasDestination().get(id) * -1;
                                     HashMap<String, Object> wheret = new HashMap<String, Object>();

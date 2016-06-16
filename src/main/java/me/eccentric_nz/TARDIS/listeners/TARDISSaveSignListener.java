@@ -186,7 +186,7 @@ public class TARDISSaveSignListener extends TARDISMenuListener implements Listen
                                     }
                                     HashMap<String, Object> wheret = new HashMap<String, Object>();
                                     wheret.put("tardis_id", id);
-                                    new QueryFactory(plugin).doUpdate("next", set, wheret);
+                                    new QueryFactory(plugin).doSyncUpdate("next", set, wheret);
                                     plugin.getTrackerKeeper().getHasDestination().put(id, travel);
                                     if (plugin.getTrackerKeeper().getRescue().containsKey(id)) {
                                         plugin.getTrackerKeeper().getRescue().remove(id);

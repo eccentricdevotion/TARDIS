@@ -67,7 +67,7 @@ public class TARDISFastReturnButton {
                     set.put("submarine", (rsb.isSubmarine()) ? 1 : 0);
                     HashMap<String, Object> wherel = new HashMap<String, Object>();
                     wherel.put("tardis_id", id);
-                    new QueryFactory(plugin).doUpdate("next", set, wherel);
+                    new QueryFactory(plugin).doSyncUpdate("next", set, wherel);
                     plugin.getTrackerKeeper().getHasDestination().put(id, cost);
                     if (plugin.getTrackerKeeper().getRescue().containsKey(id)) {
                         plugin.getTrackerKeeper().getRescue().remove(id);

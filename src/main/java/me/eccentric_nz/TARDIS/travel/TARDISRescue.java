@@ -97,7 +97,7 @@ public class TARDISRescue {
         HashMap<String, Object> where = new HashMap<String, Object>();
         where.put("tardis_id", id);
         QueryFactory qf = new QueryFactory(plugin);
-        qf.doUpdate("next", set, where);
+        qf.doSyncUpdate("next", set, where);
         if (!rescue) {
             TARDISMessage.send(player, "RESCUE_SET", !plugin.getTrackerKeeper().getDestinationVortex().containsKey(id));
         }
