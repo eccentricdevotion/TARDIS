@@ -70,7 +70,7 @@ public class ResultSetSounds {
         ResultSet rs = null;
         ResultSet rsTARDIS = null;
         ResultSet rsTravellers = null;
-        String queryTARDIS = "SELECT uuid FROM " + prefix + "travellers WHERE tardis_id = ?";
+        String queryTARDIS = "SELECT tardis_id, powered_on FROM " + prefix + "tardis WHERE tardis_id = ?";
         String queryTravellers = "SELECT uuid FROM " + prefix + "travellers WHERE tardis_id = ?";
         try {
             service.testConnection(connection);
