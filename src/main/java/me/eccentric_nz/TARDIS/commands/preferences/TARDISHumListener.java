@@ -80,6 +80,7 @@ public class TARDISHumListener extends TARDISMenuListener implements Listener {
                             setr.put("hum", "");
                             new QueryFactory(plugin).doUpdate("player_prefs", setr, wherer);
                             close(p);
+                            TARDISMessage.send(p, "HUM_SAVED");
                             break;
                         case 15:
                             // toggle play save
@@ -111,6 +112,7 @@ public class TARDISHumListener extends TARDISMenuListener implements Listener {
                                 set.put("hum", im.getDisplayName().toLowerCase());
                                 new QueryFactory(plugin).doUpdate("player_prefs", set, where);
                                 close(p);
+                                TARDISMessage.send(p, "HUM_SAVED");
                             }
                             break;
                     }
