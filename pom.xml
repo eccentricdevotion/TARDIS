@@ -260,7 +260,7 @@
         <dependency>
             <groupId>me.gnat008.perworldinventory</groupId>
             <artifactId>PerWorldInventory</artifactId>
-            <version>1.7.4</version>
+            <version>1.7.5</version>
             <type>jar</type>
             <scope>system</scope>
             <systemPath>${basedir}/lib/PerWorldInventory.jar</systemPath>
@@ -316,7 +316,7 @@
         <dependency>
             <groupId>me.ryanhamshire</groupId>
             <artifactId>GriefPrevention</artifactId>
-            <version>14.6</version>
+            <version>14.8</version>
             <type>jar</type>
             <scope>system</scope>
             <systemPath>${basedir}/lib/GriefPrevention.jar</systemPath>
