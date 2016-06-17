@@ -67,7 +67,6 @@ public class TARDISEnterCommand {
         if (tmp == -1) {
             // Look up this player's UUID
             UUID uuid = plugin.getServer().getOfflinePlayer(args[1]).getUniqueId();
-            plugin.debug("uuid: " + uuid);
             where.put("uuid", uuid.toString());
             where.put("abandoned", 0);
         } else {
