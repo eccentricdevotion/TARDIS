@@ -3,22 +3,14 @@
 ##Current bugfix version `3.6-beta-1`
 1. Fix bugs!
 
-##Next minor version `3.6-beta-1
-
-1. TIPS visulisation tool (using WorldGuard region data)
-2. [TARDIS planets](http://dev.bukkit.org/bukkit-plugins/tardis/tickets/1168-a-dalek-conquest/)
+##Next minor version `3.6-beta-1`
+1. [TARDIS planets](http://dev.bukkit.org/bukkit-plugins/tardis/tickets/1168-a-dalek-conquest/)
     * Determine a use for Acid and Rust Buckets
-    * Add other worlds (Silurian cave world, Gallifrey)?
-3. [Improve Control Centre](http://dev.bukkit.org/bukkit-plugins/tardis/tickets/1324-improving-control-centre/)
-    * Update console schematics to add Control Centre sign, Sonic Generator
-    * Remove other control signs from console schematics
-4. TARDIS Junk Mode - `/tprefs junk [wall|floor] [block_type]`?
-
 
 ##Upcoming minor version `3.7`  
- 
 1. [Spawn abandoned TARDISes](http://dev.bukkit.org/bukkit-plugins/tardis/tickets/1277-possibility-to-abandon-a-tardis/?comment=6)
-2. Add API Events that other plugins can listen for
+2. Add other worlds (Silurian cave world, Gallifrey)?
+3. Add API Events that other plugins can listen for
    * Chameleon Arch events
    * Desktop Theme events
    * Zero Room events
@@ -26,9 +18,9 @@
    * Sonic Screwdriver events
    * Lazarus Device events
    * Malfunction event
-3. TARDISSonicBlaster addon?
-
-?
+4. Update console schematics to add Control Centre sign, Sonic Generator
+5. TARDIS Junk Mode - `/tprefs junk [wall|floor] [block_type]`?
+6. TARDISSonicBlaster addon?
 
 ##Future version `4+`
 * SpongeAPI
@@ -36,7 +28,6 @@
 * Slimmer TARDIS option?
 
 ##Resource Pack / TARDISWeepingAngels
-
 1. Something with an invisible Shulker passenger - or an invisible bat with a Shulker passemger (Toclafane?)
 2. SFX for monsters hits
    * Stone pick hit - angel
@@ -53,6 +44,9 @@
    * Slimes -> Adipose
  4. Sycorax
  5. Scarecrows
+ 
+##TIPS visulisation tool
+* Use WorldGuard region data
 
 ##Waiting on Bukkit / SpigotAPI
 0. IDs/data are soon to be history... so convert all ID/data use to block states 

@@ -129,7 +129,7 @@ public class TARDISUpgradeBlockScanner {
                             type = Material.DIODE_BLOCK_OFF;
                         }
                         if (type.equals(Material.MONSTER_EGGS)) {
-                            type = Material.WALL_SIGN;
+                            type = Material.AIR;
                         }
                         if (type.equals(Material.BEDROCK)) {
                             type = Material.GLASS;
