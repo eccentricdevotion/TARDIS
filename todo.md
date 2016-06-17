@@ -9,13 +9,10 @@
 2. [TARDIS planets](http://dev.bukkit.org/bukkit-plugins/tardis/tickets/1168-a-dalek-conquest/)
     * Determine a use for Acid and Rust Buckets
     * Add other worlds (Silurian cave world, Gallifrey)?
-3. [Abandoned TARDISes](http://dev.bukkit.org/bukkit-plugins/tardis/tickets/1277-possibility-to-abandon-a-tardis/)
-    * when abandoning clear sign (if there is one)
-    * When claiming set name on sign
-4. [Improve Control Centre](http://dev.bukkit.org/bukkit-plugins/tardis/tickets/1324-improving-control-centre/)
+3. [Improve Control Centre](http://dev.bukkit.org/bukkit-plugins/tardis/tickets/1324-improving-control-centre/)
     * Update console schematics to add Control Centre sign, Sonic Generator
     * Remove other control signs from console schematics
-5. TARDIS Junk Mode - `/tprefs junk [wall|floor] [block_type]`?
+4. TARDIS Junk Mode - `/tprefs junk [wall|floor] [block_type]`?
 
 
 ##Upcoming minor version `3.7`  

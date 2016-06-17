@@ -20,12 +20,19 @@ import java.util.HashMap;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.commands.admin.TARDISAbandonLister;
 import me.eccentric_nz.TARDIS.control.TARDISPowerButton;
+import me.eccentric_nz.TARDIS.database.ResultSetCurrentLocation;
 import me.eccentric_nz.TARDIS.database.ResultSetTardisAbandoned;
 import me.eccentric_nz.TARDIS.database.ResultSetTravellers;
 import me.eccentric_nz.TARDIS.database.TARDISAbandonUpdate;
+import me.eccentric_nz.TARDIS.enumeration.COMPASS;
 import me.eccentric_nz.TARDIS.enumeration.PRESET;
 import me.eccentric_nz.TARDIS.move.TARDISDoorCloser;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
+import org.bukkit.Location;
+import org.bukkit.Material;
+import org.bukkit.World;
+import org.bukkit.block.Block;
+import org.bukkit.block.Sign;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
@@ -71,6 +78,7 @@ public class TARDISAbandonCommand {
                     TARDISMessage.send(player, "NO_TARDIS");
                     return true;
                 } else {
+                    PRESET preset = rs.getPreset();
                     // need to be in tardis
                     HashMap<String, Object> where = new HashMap<String, Object>();
                     where.put("uuid", player.getUniqueId().toString());
@@ -79,7 +87,7 @@ public class TARDISAbandonCommand {
                         TARDISMessage.send(player, "NOT_IN_TARDIS");
                         return true;
                     }
-                    if (rs.getPreset().equals(PRESET.JUNK_MODE)) {
+                    if (preset.equals(PRESET.JUNK_MODE)) {
                         TARDISMessage.send(player, "ABANDONED_NOT_JUNK");
                         return true;
                     }
@@ -108,11 +116,170 @@ public class TARDISAbandonCommand {
                     // close the door
                     new TARDISDoorCloser(plugin, player.getUniqueId(), id).closeDoors();
                     TARDISMessage.send(player, "ABANDONED_SUCCESS");
+                    // clear sign
+                    if (plugin.getConfig().getBoolean("police_box.name_tardis")) {
+                        HashMap<String, Object> wherec = new HashMap<String, Object>();
+                        wherec.put("tardis_id", id);
+                        ResultSetCurrentLocation rsc = new ResultSetCurrentLocation(plugin, wherec);
+                        if (rsc.resultSet()) {
+                            Location current = new Location(rsc.getWorld(), rsc.getX(), rsc.getY(), rsc.getZ());
+                            Sign sign = getSign(current, rsc.getDirection(), preset);
+                            if (sign != null) {
+                                switch (preset) {
+                                    case GRAVESTONE:
+                                        sign.setLine(3, "");
+                                        break;
+                                    case ANGEL:
+                                    case JAIL:
+                                        sign.setLine(2, "");
+                                        break;
+                                    default:
+                                        sign.setLine(0, "");
+                                        break;
+                                }
+                                sign.update();
+                            }
+                        }
+                    }
                 }
             }
         } else {
             TARDISMessage.send(sender, "NO_PERMS_ABANDON");
         }
         return true;
+    }
+
+    public static Sign getSign(Location l, COMPASS d, PRESET p) {
+        Sign sign = null;
+        World w = l.getWorld();
+        int signx, signz, signy;
+        switch (p) {
+            case JUNK_MODE:
+                switch (d) {
+                    case EAST:
+                        signx = 0;
+                        signz = 1;
+                        break;
+                    case WEST:
+                        signx = 0;
+                        signz = -1;
+                        break;
+                    default:
+                        signx = 1;
+                        signz = 0;
+                        break;
+                }
+                break;
+            case GRAVESTONE:
+                signx = 0;
+                signz = 0;
+                break;
+            case TORCH:
+                switch (d) {
+                    case EAST:
+                        signx = -1;
+                        signz = 0;
+                        break;
+                    case SOUTH:
+                        signx = 0;
+                        signz = -1;
+                        break;
+                    case WEST:
+                        signx = 1;
+                        signz = 0;
+                        break;
+                    default:
+                        signx = 0;
+                        signz = 1;
+                        break;
+                }
+                break;
+            case TOILET:
+                switch (d) {
+                    case EAST:
+                        signx = 1;
+                        signz = -1;
+                        break;
+                    case SOUTH:
+                        signx = 1;
+                        signz = 1;
+                        break;
+                    case WEST:
+                        signx = -1;
+                        signz = 1;
+                        break;
+                    default:
+                        signx = -1;
+                        signz = -1;
+                        break;
+                }
+                break;
+            case APPERTURE:
+                switch (d) {
+                    case EAST:
+                        signx = 1;
+                        signz = 0;
+                        break;
+                    case SOUTH:
+                        signx = 0;
+                        signz = 1;
+                        break;
+                    case WEST:
+                        signx = -1;
+                        signz = 0;
+                        break;
+                    default:
+                        signx = 0;
+                        signz = -1;
+                        break;
+                }
+                break;
+            default:
+                switch (d) {
+                    case EAST:
+                        signx = -2;
+                        signz = 0;
+                        break;
+                    case SOUTH:
+                        signx = 0;
+                        signz = -2;
+                        break;
+                    case WEST:
+                        signx = 2;
+                        signz = 0;
+                        break;
+                    default:
+                        signx = 0;
+                        signz = 2;
+                        break;
+                }
+                break;
+        }
+        switch (p) {
+            case GAZEBO:
+            case JAIL:
+            case SHROOM:
+            case SWAMP:
+                signy = 3;
+                break;
+            case TOPSYTURVEY:
+            case TOILET:
+            case TORCH:
+                signy = 1;
+                break;
+            case ANGEL:
+            case APPERTURE:
+            case LAMP:
+                signy = 0;
+                break;
+            default:
+                signy = 2;
+                break;
+        }
+        Block b = new Location(w, l.getBlockX() + signx, l.getBlockY() + signy, l.getBlockZ() + signz).getBlock();
+        if (b.getType().equals(Material.WALL_SIGN)) {
+            sign = (Sign) b.getState();
+        }
+        return sign;
     }
 }

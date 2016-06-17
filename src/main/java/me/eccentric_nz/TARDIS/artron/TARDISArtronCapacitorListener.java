@@ -20,9 +20,11 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import me.eccentric_nz.TARDIS.TARDIS;
+import static me.eccentric_nz.TARDIS.commands.tardis.TARDISAbandonCommand.getSign;
 import me.eccentric_nz.TARDIS.control.TARDISPowerButton;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetControls;
+import me.eccentric_nz.TARDIS.database.ResultSetCurrentLocation;
 import me.eccentric_nz.TARDIS.database.ResultSetPlayerPrefs;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
@@ -37,6 +39,7 @@ import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.block.Block;
+import org.bukkit.block.Sign;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Creeper;
 import org.bukkit.entity.Entity;
@@ -252,6 +255,38 @@ public class TARDISArtronCapacitorListener implements Listener {
                                             if (pu) {
                                                 new TARDISDoorCloser(plugin, player.getUniqueId(), id).closeDoors();
                                                 TARDISMessage.send(player, "ABANDON_CLAIMED");
+                                            }
+                                            if (plugin.getConfig().getBoolean("police_box.name_tardis")) {
+                                                HashMap<String, Object> wherec = new HashMap<String, Object>();
+                                                wherec.put("tardis_id", id);
+                                                ResultSetCurrentLocation rscl = new ResultSetCurrentLocation(plugin, wherec);
+                                                if (rsc.resultSet()) {
+                                                    PRESET preset = rs.getTardis().getPreset();
+                                                    Location current = new Location(rscl.getWorld(), rscl.getX(), rscl.getY(), rscl.getZ());
+                                                    Sign sign = getSign(current, rscl.getDirection(), preset);
+                                                    if (sign != null) {
+                                                        String player_name = player.getName();
+                                                        String owner;
+                                                        if (preset.equals(PRESET.GRAVESTONE) || preset.equals(PRESET.PUNKED) || preset.equals(PRESET.ROBOT)) {
+                                                            owner = (player_name.length() > 14) ? player_name.substring(0, 14) : player_name;
+                                                        } else {
+                                                            owner = (player_name.length() > 14) ? player_name.substring(0, 12) + "'s" : player_name + "'s";
+                                                        }
+                                                        switch (preset) {
+                                                            case GRAVESTONE:
+                                                                sign.setLine(3, owner);
+                                                                break;
+                                                            case ANGEL:
+                                                            case JAIL:
+                                                                sign.setLine(2, owner);
+                                                                break;
+                                                            default:
+                                                                sign.setLine(0, owner);
+                                                                break;
+                                                        }
+                                                        sign.update();
+                                                    }
+                                                }
                                             }
                                         }
                                         if (pu) {
