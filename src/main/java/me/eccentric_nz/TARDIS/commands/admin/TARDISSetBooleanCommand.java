@@ -63,7 +63,11 @@ public class TARDISSetBooleanCommand {
                 plugin.debug("Could not save artron.yml, " + ex.getMessage());
             }
         } else {
-            plugin.getConfig().set(first, Boolean.valueOf(tf));
+            if (first.equals("abandon")) {
+                plugin.getConfig().set(section, Boolean.valueOf(tf));
+            } else {
+                plugin.getConfig().set(first, Boolean.valueOf(tf));
+            }
             plugin.saveConfig();
         }
         TARDISMessage.send(sender, "CONFIG_UPDATED");
