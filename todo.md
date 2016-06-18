@@ -12,7 +12,7 @@
 ##Upcoming minor version `3.7`  
 1. [Spawn abandoned TARDISes](http://dev.bukkit.org/bukkit-plugins/tardis/tickets/1277-possibility-to-abandon-a-tardis/?comment=6)
 2. Add other worlds (Silurian cave world, Gallifrey)?
-3. Add API Events that other plugins can listen for
+3. Add [API Events](http://wiki.bukkit.org/Event_API_Reference#Creating_Custom_Events) that other plugins can listen for
    * Chameleon Arch events
    * Desktop Theme events
    * Zero Room events
@@ -20,6 +20,14 @@
    * Sonic Screwdriver events
    * Lazarus Device events
    * Malfunction event
+   * Artron Energy event
+   * TARDIS creation / destruction event
+   * TARDIS enter / exit event
+   * HADS event
+   * Mob farming / ejection events
+   * ARS / room growing event
+   * Siege / desiege events
+   * Abandon / claim events
 4. Update console schematics to remove MONSTER_EGG blocks
 5. TARDIS Junk Mode - `/tprefs junk [wall|floor] [block_type]`?
 6. TARDISSonicBlaster addon?
