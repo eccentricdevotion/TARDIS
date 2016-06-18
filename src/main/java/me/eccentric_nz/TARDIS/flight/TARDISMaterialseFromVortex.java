@@ -167,8 +167,8 @@ public class TARDISMaterialseFromVortex implements Runnable {
                     if (flight_mode == 2 || flight_mode == 3) {
                         delay += 650L;
                         Runnable runner = (flight_mode == 2) ? new TARDISRegulatorStarter(plugin, player) : new TARDISManualFlightStarter(plugin, player, id);
-                        // start the flying mode when demat has finished
-                        plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, runner, 500L);
+                        // start the flying mode
+                        plugin.getServer().getScheduler().runTask(plugin, runner);
                     }
                     final boolean mine_sound = minecart;
                     final Location sound_loc = (preset.equals(PRESET.JUNK_MODE)) ? exit : handbrake;

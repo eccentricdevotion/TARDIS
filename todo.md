@@ -4,8 +4,10 @@
 1. Fix bugs!
 
 ##Next minor version `3.6-beta-1`
-1. [TARDIS planets](http://dev.bukkit.org/bukkit-plugins/tardis/tickets/1168-a-dalek-conquest/)
-    * Determine a use for Acid and Rust Buckets
+1. Determine a use for Acid and Rust Buckets
+    * [Coronic acid](http://tardis.wikia.com/wiki/Coronic_acid) is harmful to Sontarans
+    * An [acid jar](http://tardis.wikia.com/wiki/Acid_jar) was a source of power that acted like a large battery
+    * The [rust plague](http://tardis.wikia.com/wiki/Rust_plague) was a virus that attacked the Daleks' metal casings, destroying them
 
 ##Upcoming minor version `3.7`  
 1. [Spawn abandoned TARDISes](http://dev.bukkit.org/bukkit-plugins/tardis/tickets/1277-possibility-to-abandon-a-tardis/?comment=6)
@@ -18,7 +20,7 @@
    * Sonic Screwdriver events
    * Lazarus Device events
    * Malfunction event
-4. Update console schematics to add Control Centre sign, Sonic Generator
+4. Update console schematics to remove MONSTER_EGG blocks
 5. TARDIS Junk Mode - `/tprefs junk [wall|floor] [block_type]`?
 6. TARDISSonicBlaster addon?
 
