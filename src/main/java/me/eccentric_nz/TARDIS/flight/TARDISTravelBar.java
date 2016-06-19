@@ -38,9 +38,10 @@ public class TARDISTravelBar {
         this.plugin = plugin;
     }
 
-    public void showTravelRemaining(Player player, final long duration) {
+    public void showTravelRemaining(Player player, final long duration, boolean takeoff) {
 
-        final BossBar bb = Bukkit.createBossBar("TARDIS travel time remaining", BarColor.WHITE, BarStyle.SOLID, EMPTY_ARRAY);
+        String title = (takeoff) ? plugin.getLanguage().getString("TRAVEL_BAR_TAKEOFF") : plugin.getLanguage().getString("TRAVEL_BAR_LAND");
+        final BossBar bb = Bukkit.createBossBar(title, BarColor.WHITE, BarStyle.SOLID, EMPTY_ARRAY);
         bb.setProgress(0);
         bb.addPlayer(player);
         bb.setVisible(true);

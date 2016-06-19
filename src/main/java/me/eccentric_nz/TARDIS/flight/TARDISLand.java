@@ -39,8 +39,6 @@ public class TARDISLand {
     }
 
     public void exitVortex() {
-        // cancel repeating sfx task
-        plugin.getServer().getScheduler().cancelTask(plugin.getTrackerKeeper().getDestinationVortex().get(id));
         // get handbrake location
         HashMap<String, Object> whereh = new HashMap<String, Object>();
         whereh.put("tardis_id", id);
@@ -48,7 +46,6 @@ public class TARDISLand {
         ResultSetControls rsh = new ResultSetControls(plugin, whereh, false);
         if (rsh.resultSet()) {
             Location handbrake = plugin.getLocationUtils().getLocationFromBukkitString(rsh.getLocation());
-            new TARDISTravelBar(plugin).showTravelRemaining(player, 410L);
             // materialise
             plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new TARDISMaterialseFromVortex(plugin, id, player, handbrake), 10L);
         }

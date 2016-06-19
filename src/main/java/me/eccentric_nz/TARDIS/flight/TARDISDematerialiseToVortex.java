@@ -55,7 +55,7 @@ public class TARDISDematerialiseToVortex implements Runnable {
 
     @Override
     public void run() {
-        UUID uuid = player.getUniqueId();
+        final UUID uuid = player.getUniqueId();
         plugin.getTrackerKeeper().getInVortex().add(id);
         HashMap<String, Object> wherei = new HashMap<String, Object>();
         wherei.put("tardis_id", id);
@@ -88,7 +88,7 @@ public class TARDISDematerialiseToVortex implements Runnable {
             dd.setSubmarine(sub);
             dd.setTardisID(id);
             dd.setBiome(biome);
-            PRESET preset = tardis.getPreset();
+            final PRESET preset = tardis.getPreset();
             if (preset.equals(PRESET.JUNK_MODE)) {
                 HashMap<String, Object> wherenl = new HashMap<String, Object>();
                 wherenl.put("tardis_id", id);
@@ -101,21 +101,28 @@ public class TARDISDematerialiseToVortex implements Runnable {
                 dd.setFromToLocation(exit);
             }
             if (!hidden && !plugin.getTrackerKeeper().getReset().contains(resetw)) {
-                HashMap<String, Object> wherek = new HashMap<String, Object>();
-                wherek.put("uuid", uuid.toString());
-                ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, wherek);
-                boolean minecart = (rsp.resultSet()) ? rsp.isMinecartOn() : false;
-                // play demat sfx
-                if (!minecart) {
-                    if (!preset.equals(PRESET.JUNK_MODE)) {
-                        TARDISSounds.playTARDISSound(handbrake, "tardis_takeoff");
-                        TARDISSounds.playTARDISSound(l, "tardis_takeoff");
-                    } else {
-                        TARDISSounds.playTARDISSound(handbrake, "junk_takeoff");
+                long delay = (plugin.getTrackerKeeper().getMalfunction().get(id) && plugin.getTrackerKeeper().getHasDestination().containsKey(id)) ? 299L : 1L;
+                final Location exterior = l;
+                plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
+                    @Override
+                    public void run() {
+                        HashMap<String, Object> wherek = new HashMap<String, Object>();
+                        wherek.put("uuid", uuid.toString());
+                        ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, wherek);
+                        boolean minecart = (rsp.resultSet()) ? rsp.isMinecartOn() : false;
+                        // play demat sfx
+                        if (!minecart) {
+                            if (!preset.equals(PRESET.JUNK_MODE)) {
+                                TARDISSounds.playTARDISSound(handbrake, "tardis_takeoff");
+                                TARDISSounds.playTARDISSound(exterior, "tardis_takeoff");
+                            } else {
+                                TARDISSounds.playTARDISSound(handbrake, "junk_takeoff");
+                            }
+                        } else {
+                            handbrake.getWorld().playSound(handbrake, Sound.ENTITY_MINECART_INSIDE, 1.0F, 0.0F);
+                        }
                     }
-                } else {
-                    handbrake.getWorld().playSound(handbrake, Sound.ENTITY_MINECART_INSIDE, 1.0F, 0.0F);
-                }
+                }, delay);
                 plugin.getTrackerKeeper().getDematerialising().add(id);
                 plugin.getPresetDestroyer().destroyPreset(dd);
             } else {

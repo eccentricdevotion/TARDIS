@@ -17,7 +17,6 @@
 package me.eccentric_nz.TARDIS.flight;
 
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.utility.TARDISSounds;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
@@ -33,10 +32,12 @@ public class TARDISRegulatorStarter implements Runnable {
 
     private final TARDIS plugin;
     private final Player player;
+    private final int id;
 
-    public TARDISRegulatorStarter(TARDIS plugin, Player player) {
+    public TARDISRegulatorStarter(TARDIS plugin, Player player, int id) {
         this.plugin = plugin;
         this.player = player;
+        this.id = id;
     }
 
     @Override
@@ -47,6 +48,8 @@ public class TARDISRegulatorStarter implements Runnable {
         inv.setContents(items);
         player.openInventory(inv);
         // play inflight sound
-        TARDISSounds.playTARDISSound(player.getLocation(), "time_rotor");
+        if (!plugin.getTrackerKeeper().getDestinationVortex().containsKey(id)) {
+            plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new TARDISLoopingFlightSound(plugin, player.getLocation(), id), 500L);
+        }
     }
 }

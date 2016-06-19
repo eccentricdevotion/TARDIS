@@ -21,6 +21,7 @@ import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetControls;
 import me.eccentric_nz.TARDIS.database.ResultSetPlayerPrefs;
+import me.eccentric_nz.TARDIS.travel.TARDISMalfunction;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import me.eccentric_nz.TARDIS.utility.TARDISNumberParsers;
 import me.eccentric_nz.TARDIS.utility.TARDISSounds;
@@ -44,7 +45,7 @@ public class TARDISTakeoff {
         this.plugin = plugin;
     }
 
-    public void run(int id, Block block, Location handbrake, Player player, boolean beac_on, String beacon, boolean bar, int flight_mode) {
+    public void run(int id, Block block, Location handbrake, final Player player, boolean beac_on, String beacon, boolean bar, int flight_mode) {
         BlockState state = block.getState();
         Lever lever = (Lever) state.getData();
         lever.setPowered(false);
@@ -64,22 +65,30 @@ public class TARDISTakeoff {
         new QueryFactory(plugin).doUpdate("tardis", set, whereh);
         TARDISMessage.send(player, "HANDBRAKE_OFF");
         plugin.getTrackerKeeper().getInVortex().add(id);
+        // check if we should malfunction
+        boolean malfunction = new TARDISMalfunction(plugin).isMalfunction();
+        plugin.getTrackerKeeper().getMalfunction().put(id, malfunction);
         // dematerialise
         new TARDISDematerialiseToVortex(plugin, id, player, handbrake).run();
+        long delay = 1L;
         if (plugin.getTrackerKeeper().getHasDestination().containsKey(id)) {
-            if (bar) {
-                long bar_time = (flight_mode == 2 || flight_mode == 3) ? 1500L : 890L;
-                new TARDISTravelBar(plugin).showTravelRemaining(player, bar_time);
-            }
             // materialise
+            delay = (malfunction) ? 300L : 1L;
             new TARDISMaterialseFromVortex(plugin, id, player, handbrake).run();
         } else {
-            new TARDISTravelBar(plugin).showTravelRemaining(player, 445L);
             plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new TARDISLoopingFlightSound(plugin, handbrake, id), 500L);
+        }
+        if (bar) {
+            plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
+                @Override
+                public void run() {
+                    new TARDISTravelBar(plugin).showTravelRemaining(player, 445L, true);
+                }
+            }, delay);
         }
     }
 
-    public void run(int id, Player player, String beacon) {
+    public void run(int id, final Player player, String beacon) {
         HashMap<String, Object> where = new HashMap<String, Object>();
         where.put("tardis_id", id);
         where.put("type", 0);
@@ -92,10 +101,8 @@ public class TARDISTakeoff {
             ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, wherek);
             boolean beac_on = true;
             boolean bar = false;
-            int flight_mode = 1;
             if (rsp.resultSet()) {
                 beac_on = rsp.isBeaconOn();
-                flight_mode = rsp.getFlightMode();
                 bar = rsp.isTravelbarOn();
             }
             BlockState state = handbrake.getBlock().getState();
@@ -117,18 +124,26 @@ public class TARDISTakeoff {
             new QueryFactory(plugin).doUpdate("tardis", set, whereh);
             TARDISMessage.send(player, "HANDBRAKE_OFF");
             plugin.getTrackerKeeper().getInVortex().add(id);
+            // check if we should malfunction
+            boolean malfunction = new TARDISMalfunction(plugin).isMalfunction();
+            plugin.getTrackerKeeper().getMalfunction().put(id, malfunction);
             // dematerialise
             new TARDISDematerialiseToVortex(plugin, id, player, handbrake).run();
+            long delay = 1L;
             if (plugin.getTrackerKeeper().getHasDestination().containsKey(id)) {
-                if (bar) {
-                    long bar_time = (flight_mode == 2 || flight_mode == 3) ? 1500L : 890L;
-                    new TARDISTravelBar(plugin).showTravelRemaining(player, bar_time);
-                }
                 // materialise
+                delay = (malfunction) ? 300L : 1L;
                 new TARDISMaterialseFromVortex(plugin, id, player, handbrake).run();
             } else {
-                new TARDISTravelBar(plugin).showTravelRemaining(player, 445L);
                 plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new TARDISLoopingFlightSound(plugin, handbrake, id), 500L);
+            }
+            if (bar) {
+                plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
+                    @Override
+                    public void run() {
+                        new TARDISTravelBar(plugin).showTravelRemaining(player, 445L, true);
+                    }
+                }, delay);
             }
         }
     }

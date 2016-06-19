@@ -47,6 +47,7 @@ import org.bukkit.entity.Player;
 public class TARDISTrackerInstanceKeeper {
 
     private String immortalityGate = "";
+    private final HashMap<Integer, Boolean> malfunction = new HashMap<Integer, Boolean>();
     private final HashMap<Integer, Integer> damage = new HashMap<Integer, Integer>();
     private final HashMap<Integer, Integer> hasDestination = new HashMap<Integer, Integer>();
     private final HashMap<Integer, Integer> destinationVortex = new HashMap<Integer, Integer>();
@@ -125,6 +126,10 @@ public class TARDISTrackerInstanceKeeper {
     private final List<UUID> temporallyLocated = new ArrayList<UUID>();
     private final List<UUID> renderRoomOccupants = new ArrayList<UUID>();
     private final List<UUID> zeroRoomOccupants = new ArrayList<UUID>();
+
+    public HashMap<Integer, Boolean> getMalfunction() {
+        return malfunction;
+    }
 
     public HashMap<Integer, Integer> getDamage() {
         return damage;

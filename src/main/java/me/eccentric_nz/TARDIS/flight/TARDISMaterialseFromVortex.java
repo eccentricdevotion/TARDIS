@@ -43,6 +43,7 @@ import org.bukkit.block.BlockFace;
 import org.bukkit.entity.Player;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
+import org.bukkit.scheduler.BukkitScheduler;
 
 /**
  *
@@ -75,7 +76,7 @@ public class TARDISMaterialseFromVortex implements Runnable {
         Location exit = new Location(rsn.getWorld(), rsn.getX(), rsn.getY(), rsn.getZ());
         final QueryFactory qf = new QueryFactory(plugin);
         boolean is_next_sub = rsn.isSubmarine();
-        boolean malfunction = false;
+        boolean malfunction = (plugin.getTrackerKeeper().getMalfunction().containsKey(id) && plugin.getTrackerKeeper().getMalfunction().get(id));
         HashMap<String, Object> wherei = new HashMap<String, Object>();
         wherei.put("tardis_id", id);
         ResultSetTardis rs = new ResultSetTardis(plugin, wherei, "", false, 2);
@@ -87,47 +88,47 @@ public class TARDISMaterialseFromVortex implements Runnable {
             wherecu.put("tardis_id", id);
             final ResultSetCurrentLocation rscl = new ResultSetCurrentLocation(plugin, wherecu);
             if (rscl.resultSet()) {
-                if (plugin.getConfig().getInt("preferences.malfunction") > 0) {
+                final BukkitScheduler scheduler = plugin.getServer().getScheduler();
+                long malfunction_delay = 0L;
+                if (malfunction) {
                     // check for a malfunction
-                    TARDISMalfunction m = new TARDISMalfunction(plugin, id, player, rscl.getDirection(), handbrake, tardis.getEps(), tardis.getCreeper());
-                    malfunction = m.isMalfunction();
-                    if (malfunction) {
-                        exit = m.getMalfunction();
-                        if (exit != null) {
-                            HashMap<String, Object> wheress = new HashMap<String, Object>();
-                            wheress.put("tardis_id", id);
-                            HashMap<String, Object> setsave = new HashMap<String, Object>();
-                            setsave.put("world", exit.getWorld().getName());
-                            setsave.put("x", exit.getBlockX());
-                            setsave.put("y", exit.getBlockY());
-                            setsave.put("z", exit.getBlockZ());
-                            setsave.put("submarine", 0);
-                            qf.doSyncUpdate("next", setsave, wheress);
-                            if (plugin.getTrackerKeeper().getHasDestination().containsKey(id)) {
-                                int amount = plugin.getTrackerKeeper().getHasDestination().get(id) * -1;
-                                HashMap<String, Object> wheret = new HashMap<String, Object>();
-                                wheret.put("tardis_id", id);
-                                qf.alterEnergyLevel("tardis", amount, wheret, player);
-                                TARDISMessage.send(player, "Q_FLY");
-                                plugin.getTrackerKeeper().getHasDestination().remove(id);
-                            }
-                            // set beacon colour to red
-                            if (!tardis.getBeacon().isEmpty()) {
-                                setBeaconUpBlock(tardis.getBeacon(), id);
-                            }
-                            // play tardis crash sound
-                            TARDISSounds.playTARDISSound(handbrake, "tardis_malfunction");
-                            // add a potion effect to the player
-                            player.addPotionEffect(new PotionEffect(PotionEffectType.CONFUSION, 150, 5));
-                            plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
-                                @Override
-                                public void run() {
-                                    TARDISSounds.playTARDISSound(handbrake, "tardis_cloister_bell");
-                                }
-                            }, 300L);
-                        } else {
-                            malfunction = false;
+                    TARDISMalfunction m = new TARDISMalfunction(plugin);
+                    exit = m.getMalfunction(id, player, rscl.getDirection(), handbrake, tardis.getEps(), tardis.getCreeper());
+                    if (exit != null) {
+                        malfunction_delay = 300L;
+                        HashMap<String, Object> wheress = new HashMap<String, Object>();
+                        wheress.put("tardis_id", id);
+                        HashMap<String, Object> setsave = new HashMap<String, Object>();
+                        setsave.put("world", exit.getWorld().getName());
+                        setsave.put("x", exit.getBlockX());
+                        setsave.put("y", exit.getBlockY());
+                        setsave.put("z", exit.getBlockZ());
+                        setsave.put("submarine", 0);
+                        qf.doSyncUpdate("next", setsave, wheress);
+                        if (plugin.getTrackerKeeper().getHasDestination().containsKey(id)) {
+                            int amount = plugin.getTrackerKeeper().getHasDestination().get(id) * -1;
+                            HashMap<String, Object> wheret = new HashMap<String, Object>();
+                            wheret.put("tardis_id", id);
+                            qf.alterEnergyLevel("tardis", amount, wheret, player);
+                            TARDISMessage.send(player, "Q_FLY");
+                            plugin.getTrackerKeeper().getHasDestination().remove(id);
                         }
+                        // set beacon colour to red
+                        if (!tardis.getBeacon().isEmpty()) {
+                            setBeaconUpBlock(tardis.getBeacon(), id);
+                        }
+                        // play tardis crash sound
+                        TARDISSounds.playTARDISSound(handbrake, "tardis_malfunction");
+                        // add a potion effect to the player
+                        player.addPotionEffect(new PotionEffect(PotionEffectType.CONFUSION, 150, 5));
+                        scheduler.scheduleSyncDelayedTask(plugin, new Runnable() {
+                            @Override
+                            public void run() {
+                                TARDISSounds.playTARDISSound(handbrake, "tardis_cloister_bell");
+                            }
+                        }, malfunction_delay);
+                    } else {
+                        malfunction = false;
                     }
                 }
                 if (exit != null) {
@@ -141,10 +142,12 @@ public class TARDISMaterialseFromVortex implements Runnable {
                     ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, wherek);
                     boolean minecart = false;
                     boolean set_biome = true;
+                    boolean bar = false;
                     int flight_mode = 1;
                     if (rsp.resultSet()) {
                         minecart = rsp.isMinecartOn();
                         set_biome = rsp.isPoliceboxTexturesOn();
+                        bar = rsp.isTravelbarOn();
                         flight_mode = rsp.getFlightMode();
                     }
                     // set destination flight data
@@ -162,20 +165,41 @@ public class TARDISMaterialseFromVortex implements Runnable {
 
                     // remember flight data
                     plugin.getTrackerKeeper().getFlightData().put(uuid, bd);
-                    long flight_mode_delay = (plugin.getTrackerKeeper().getDestinationVortex().containsKey(id)) ? 0L : 500L;
+                    long flight_mode_delay = ((plugin.getTrackerKeeper().getDestinationVortex().containsKey(id)) ? 0L : 500L) + malfunction_delay;
                     long materialisation_delay = flight_mode_delay;
+                    long travel_time = 400L;
                     // flight mode
                     if (flight_mode == 2 || flight_mode == 3) {
                         materialisation_delay += 650L;
-                        Runnable runner = (flight_mode == 2) ? new TARDISRegulatorStarter(plugin, player) : new TARDISManualFlightStarter(plugin, player, id);
+                        travel_time += 650L;
+                        Runnable runner = (flight_mode == 2) ? new TARDISRegulatorStarter(plugin, player, id) : new TARDISManualFlightStarter(plugin, player, id);
                         // start the flying mode (after demat if not in vortex already)
-                        plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, runner, flight_mode_delay);
+                        scheduler.scheduleSyncDelayedTask(plugin, runner, flight_mode_delay);
                     }
+                    if (bar) {
+                        final long tt = travel_time;
+                        // start travel bar
+                        scheduler.scheduleSyncDelayedTask(plugin, new Runnable() {
+                            @Override
+                            public void run() {
+                                new TARDISTravelBar(plugin).showTravelRemaining(player, tt, false);
+                            }
+                        }, flight_mode_delay);
+                    }
+                    // cancel repeating sfx task
+                    scheduler.scheduleSyncDelayedTask(plugin, new Runnable() {
+                        @Override
+                        public void run() {
+                            if (plugin.getTrackerKeeper().getDestinationVortex().containsKey(id)) {
+                                scheduler.cancelTask(plugin.getTrackerKeeper().getDestinationVortex().get(id));
+                            }
+                        }
+                    }, materialisation_delay - 140L);
                     final boolean mine_sound = minecart;
                     final Location sound_loc = (preset.equals(PRESET.JUNK_MODE)) ? exit : handbrake;
                     final Location external_sound_loc = exit;
                     final boolean malchk = malfunction;
-                    plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
+                    scheduler.scheduleSyncDelayedTask(plugin, new Runnable() {
                         @Override
                         public void run() {
                             BuildData b_data = plugin.getTrackerKeeper().getFlightData().get(uuid);
