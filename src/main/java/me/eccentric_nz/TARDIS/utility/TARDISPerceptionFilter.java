@@ -59,7 +59,9 @@ public class TARDISPerceptionFilter {
         Team perceptionFilter = board.getTeam("PerceptionFilter");
         if (perceptionFilter != null) {
             for (OfflinePlayer olp : Bukkit.getServer().getOfflinePlayers()) {
-                perceptionFilter.removePlayer(olp);
+                if (olp != null) {
+                    perceptionFilter.removePlayer(olp);
+                }
             }
             perceptionFilter.unregister();
         }

@@ -4,9 +4,7 @@
 1. Fix bugs!
 
 ##Next minor version `3.6-beta-1`
-1. Determine a use for Acid and Rust Buckets
-    * [Coronic acid](http://tardis.wikia.com/wiki/Coronic_acid) is harmful to Sontarans
-    * An [acid jar](http://tardis.wikia.com/wiki/Acid_jar) was a source of power that acted like a large battery - perhaps [Player made rechargers](http://dev.bukkit.org/bukkit-plugins/tardis/tickets/932-player-made-rechargers/)
+1. Determine a use for Rust Buckets
     * The [rust plague](http://tardis.wikia.com/wiki/Rust_plague) was a virus that attacked the Daleks' metal casings, destroying them
 
 ##Upcoming minor version `3.7`  
