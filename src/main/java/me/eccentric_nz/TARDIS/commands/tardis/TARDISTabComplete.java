@@ -38,6 +38,7 @@ public class TARDISTabComplete extends TARDISCompleter implements TabCompleter {
     private final List<String> LIST_SUBS = ImmutableList.of("companions", "saves", "areas", "rechargers");
     private final List<String> SEC_SUBS = ImmutableList.of("button", "world-repeater", "x-repeater", "z-repeater", "y-repeater", "artron", "handbrake", "door", "back");
     private final List<String> UPD_SUBS = ImmutableList.of("advanced", "ars", "artron", "back", "backdoor", "beacon", "button", "chameleon", "condenser", "control", "creeper", "direction", "door", "eps", "farm", "generator", "handbrake", "igloo", "info", "keyboard", "light", "rail", "save-sign", "scanner", "siege", "stable", "storage", "telepathic", "temporal", "terminal", "toggle_wool", "vault", "village", "world-repeater", "x-repeater", "y-repeater", "z-repeater", "zero");
+    private final List<String> RECHARGER_SUBS;
 
     public TARDISTabComplete(TARDIS plugin) {
         this.plugin = plugin;
@@ -46,6 +47,7 @@ public class TARDISTabComplete extends TARDISCompleter implements TabCompleter {
             tcs.add(tc.toString());
         }
         ROOT_SUBS = ImmutableList.copyOf(tcs);
+        RECHARGER_SUBS = getPublicRechargers();
     }
 
     @Override
@@ -77,9 +79,19 @@ public class TARDISTabComplete extends TARDISCompleter implements TabCompleter {
         } else if (args.length == 3) {
             String sub = args[1];
             if (sub.equals("rechargers")) {
-                return partial(lastArg, plugin.getConfig().getConfigurationSection("rechargers").getKeys(false));
+                return partial(lastArg, RECHARGER_SUBS);
             }
         }
         return ImmutableList.of();
+    }
+
+    private List<String> getPublicRechargers() {
+        List<String> ret = new ArrayList<String>();
+        for (String r : plugin.getConfig().getConfigurationSection("rechargers").getKeys(false)) {
+            if (!r.startsWith("rift")) {
+                ret.add(r);
+            }
+        }
+        return ret;
     }
 }

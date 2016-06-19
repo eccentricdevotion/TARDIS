@@ -62,15 +62,18 @@ public class TARDISLister {
             int a = 1;
 
             for (String s : therechargers) {
-                if (a == 1) {
-                    TARDISMessage.send(p, "CHARGERS");
+                // only list public rechargers
+                if (!s.startsWith("rift")) {
+                    if (a == 1) {
+                        TARDISMessage.send(p, "CHARGERS");
+                    }
+                    String w = TARDIS.plugin.getConfig().getString("rechargers." + s + ".world");
+                    int x = TARDIS.plugin.getConfig().getInt("rechargers." + s + ".x");
+                    int y = TARDIS.plugin.getConfig().getInt("rechargers." + s + ".y");
+                    int z = TARDIS.plugin.getConfig().getInt("rechargers." + s + ".z");
+                    p.sendMessage(a + ". [" + s + "] in world: " + w + ", at " + x + ":" + y + ":" + z);
+                    a++;
                 }
-                String w = TARDIS.plugin.getConfig().getString("rechargers." + s + ".world");
-                int x = TARDIS.plugin.getConfig().getInt("rechargers." + s + ".x");
-                int y = TARDIS.plugin.getConfig().getInt("rechargers." + s + ".y");
-                int z = TARDIS.plugin.getConfig().getInt("rechargers." + s + ".z");
-                p.sendMessage(a + ". [" + s + "] in world: " + w + ", at " + x + ":" + y + ":" + z);
-                a++;
             }
         }
         if (l.equals("areas")) {
