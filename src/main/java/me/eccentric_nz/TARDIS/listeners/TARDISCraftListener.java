@@ -44,6 +44,7 @@ import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.event.inventory.PrepareItemCraftEvent;
+import org.bukkit.inventory.CraftingInventory;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.Recipe;
@@ -118,7 +119,6 @@ public class TARDISCraftListener implements Listener {
         UUID uuid = p.getUniqueId();
         Inventory inv = event.getInventory();
         if (crafters.contains(uuid) && inv.getType().equals(InventoryType.WORKBENCH)) {
-            plugin.debug("inventory closed after crafting seed");
             // remove dropped items around workbench
             plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
                 @Override
@@ -285,11 +285,12 @@ public class TARDISCraftListener implements Listener {
     }
 
     @EventHandler(ignoreCancelled = true)
-    public void onCraftInvisibilityCircuit(PrepareItemCraftEvent event) {
+    public void onCraftTARDISItem(PrepareItemCraftEvent event) {
         Recipe recipe = event.getRecipe();
         ItemStack is = recipe.getResult();
         if (is.hasItemMeta() && is.getItemMeta().hasDisplayName()) {
             String dn = is.getItemMeta().getDisplayName();
+            CraftingInventory ci = event.getInventory();
             if (is.getType().equals(Material.MAP)) {
                 if (DISK_CIRCUIT.getCircuitNames().contains(dn)) {
                     // which circuit is it?
@@ -307,13 +308,29 @@ public class TARDISCraftListener implements Listener {
                     }
                     im.setLore(lore);
                     is.setItemMeta(im);
-                    event.getInventory().setResult(is);
+                    ci.setResult(is);
+                }
+            } else if (is.getType().equals(Material.NETHER_BRICK_ITEM) && dn.equals("Acid Battery")) {
+                for (int i = 2; i < 9; i += 2) {
+                    ItemStack water = ci.getItem(i);
+                    if (!water.hasItemMeta() || !water.getItemMeta().hasDisplayName() || !water.getItemMeta().getDisplayName().equals("Acid Bucket")) {
+                        ci.setResult(null);
+                        break;
+                    }
+                }
+            } else if (is.getType().equals(Material.BEACON) && dn.equals("Rift Manipulator")) {
+                for (int i = 2; i < 9; i += 2) {
+                    ItemStack acid = ci.getItem(i);
+                    if (!acid.hasItemMeta() || !acid.getItemMeta().hasDisplayName() || !acid.getItemMeta().getDisplayName().equals("Acid Battery")) {
+                        ci.setResult(null);
+                        break;
+                    }
                 }
             } else if (is.getType().equals(Material.LEATHER_HELMET) && dn.equals("3-D Glasses")) {
                 LeatherArmorMeta lam = (LeatherArmorMeta) is.getItemMeta();
                 lam.setColor(Color.WHITE);
                 is.setItemMeta(lam);
-                event.getInventory().setResult(is);
+                ci.setResult(is);
             }
         }
     }

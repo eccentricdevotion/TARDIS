@@ -132,7 +132,7 @@ public class TARDISSonicUpgradeListener implements Listener {
                 }
             }
         } else if (recipe instanceof ShapedRecipe) {
-            if (!is.hasItemMeta() || !is.getItemMeta().hasDisplayName() || !is.getItemMeta().getDisplayName().equals("TARDIS Remote Key")) {
+            if (is == null || !is.hasItemMeta() || !is.getItemMeta().hasDisplayName() || !is.getItemMeta().getDisplayName().equals("TARDIS Remote Key")) {
                 return;
             }
             ItemStack key = ci.getItem(5);
