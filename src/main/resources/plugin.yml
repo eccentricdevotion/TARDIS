@@ -288,6 +288,9 @@ permissions:
   tardis.acid.bypass:
     description: Allows a player to not dissolve in the Skaro planet's acid water.
     default: false
+  tardis.rift:
+    description: Allows a player to create personal time rift rechargers.
+    default: op
 commands:
   tardis:
     aliases: [tt, ttardis, /tardis, timelord]
