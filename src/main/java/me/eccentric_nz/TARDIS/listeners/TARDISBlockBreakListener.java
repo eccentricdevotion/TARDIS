@@ -26,7 +26,9 @@ import me.eccentric_nz.TARDIS.enumeration.PRESET;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import org.bukkit.ChatColor;
 import org.bukkit.GameMode;
+import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.World;
 import org.bukkit.block.Block;
 import org.bukkit.block.Sign;
 import org.bukkit.entity.Player;
@@ -34,6 +36,8 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
+import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
 
 /**
  * The Silurians, also known as Earth Reptiles, Eocenes, Homo reptilia and
@@ -112,6 +116,41 @@ public class TARDISBlockBreakListener implements Listener {
                     }, timeout * 20);
                 } else {
                     TARDISMessage.send(player, "NO_PERM_DELETE");
+                }
+            }
+        }
+        if (blockType == Material.BEACON) {
+            Location loc = event.getBlock().getLocation();
+            if (loc.getWorld().getName().startsWith("TARDIS")) {
+                return;
+            }
+            String b = loc.getWorld().getName() + "," + loc.getBlockX() + "," + loc.getBlockY() + "," + loc.getBlockZ();
+            // check if it is a rift manipulator
+            for (String r : plugin.getConfig().getConfigurationSection("rechargers").getKeys(false)) {
+                if (r.startsWith("rift")) {
+                    // get the location
+                    World w = plugin.getServer().getWorld(plugin.getConfig().getString("rechargers." + r + ".world"));
+                    int x = plugin.getConfig().getInt("rechargers." + r + ".x");
+                    int y = plugin.getConfig().getInt("rechargers." + r + ".y");
+                    int z = plugin.getConfig().getInt("rechargers." + r + ".z");
+                    String l = w.getName() + "," + x + "," + y + "," + z;
+                    if (l.equals(b) && plugin.getConfig().getString("rechargers." + r + ".uuid").equals(player.getUniqueId().toString())) {
+                        plugin.getConfig().set("rechargers." + r, null);
+                        TARDISMessage.send(player, "RIFT_REMOVED");
+                        event.setCancelled(true);
+                        // drop Rift Manipulator
+                        event.getBlock().setType(Material.AIR);
+                        ItemStack rm = new ItemStack(Material.BEACON, 1);
+                        ItemMeta im = rm.getItemMeta();
+                        im.setDisplayName("Rift Manipulator");
+                        rm.setItemMeta(im);
+                        w.dropItem(loc, rm);
+                        break;
+                    } else {
+                        event.setCancelled(true);
+                        TARDISMessage.send(player, "RIFT_PLAYER");
+                        break;
+                    }
                 }
             }
         }

@@ -16,12 +16,19 @@
  */
 package me.eccentric_nz.TARDIS.listeners;
 
+import java.util.HashMap;
+import java.util.Random;
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.database.ResultSetTravellers;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
+import org.bukkit.Location;
+import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockPlaceEvent;
+import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
 
 /**
  * TARDISes are bioships that are grown from a species of coral presumably
@@ -60,6 +67,39 @@ public class TARDISBlockPlaceListener implements Listener {
         if (plugin.getGeneralKeeper().getProtectBlockMap().containsKey(block)) {
             event.setCancelled(true);
             TARDISMessage.send(player, "NO_PLACE");
+        }
+        if (!player.hasPermission("tardis.rift")) {
+            return;
+        }
+        ItemStack is = event.getItemInHand();
+        if (!is.getType().equals(Material.BEACON) || !is.hasItemMeta()) {
+            return;
+        }
+        ItemMeta im = is.getItemMeta();
+        if (im.hasDisplayName() && im.getDisplayName().equals("Rift Manipulator")) {
+            // make sure they're not inside the TARDIS
+            HashMap<String, Object> where = new HashMap<String, Object>();
+            where.put("uuid", player.getUniqueId().toString());
+            ResultSetTravellers rst = new ResultSetTravellers(plugin, where, false);
+            if (rst.resultSet()) {
+                event.setCancelled(true);
+                TARDISMessage.send(player, "RIFT_OUTSIDE");
+                return;
+            }
+            // add recharger to to config
+            Location l = event.getBlockPlaced().getLocation();
+            Random rand = new Random();
+            String name = "rift_" + player.getName() + "_" + rand.nextInt(Integer.MAX_VALUE);
+            while (plugin.getConfig().contains("rechargers." + name)) {
+                name = "rift_" + player.getName() + "_" + rand.nextInt(Integer.MAX_VALUE);
+            }
+            plugin.getConfig().set("rechargers." + name + ".world", l.getWorld().getName());
+            plugin.getConfig().set("rechargers." + name + ".x", l.getBlockX());
+            plugin.getConfig().set("rechargers." + name + ".y", l.getBlockY());
+            plugin.getConfig().set("rechargers." + name + ".z", l.getBlockZ());
+            plugin.getConfig().set("rechargers." + name + ".uuid", player.getUniqueId().toString());
+            plugin.saveConfig();
+            TARDISMessage.send(player, "RIFT_SUCCESS");
         }
     }
 }
