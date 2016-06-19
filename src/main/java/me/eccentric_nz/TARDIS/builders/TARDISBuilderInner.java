@@ -421,7 +421,7 @@ public class TARDISBuilderInner {
                     }
                     if (type.equals(Material.BEACON) && schm.getPermission().equals("ender")) {
                         /*
-                        * get the ender crytal location
+                        * get the ender crystal location
                          */
                         ender = world.getBlockAt(x, y, z).getLocation().add(0.5d, 4d, 0.5d);
                     }
