@@ -754,6 +754,44 @@ shaped:
         result: CLAY_BRICK
         amount: 1
         lore: ""
+    Acid Battery:
+        easy_shape: -A-,ARA,-A-
+        easy_ingredients:
+            A: WATER_BUCKET
+            R: REDSTONE
+        hard_shape: -A-,ARA,-A-
+        hard_ingredients:
+            A: WATER_BUCKET
+            R: REDSTONE_BLOCK
+        result: NETHER_BRICK_ITEM
+        amount: 1
+        lore: ""
+    Rift Circuit:
+        easy_shape: -D-,DND,-D-
+        easy_ingredients:
+            D: DIAMOND
+            R: NETHER_STAR
+        hard_shape: -D-,DND,-D-
+        hard_ingredients:
+            D: DIAMOND
+            R: NETHER_STAR
+        result: 'MAP:1983'
+        amount: 1
+        lore: ""
+    Rift Manipulator:
+        easy_shape: -A-,ACA,-A-
+        easy_ingredients:
+            A: NETHER_BRICK_ITEM
+            C: 'MAP:1983'
+            R: REDSTONE
+        hard_shape: -A-,ACA,NAN
+        hard_ingredients:
+            A: NETHER_BRICK_ITEM
+            C: 'MAP:1983'
+            R: NETHER_STAR
+        result: BEACON
+        amount: 1
+        lore: ""
 # -------------------
 # these are the shapeless recipes
 # -------------------

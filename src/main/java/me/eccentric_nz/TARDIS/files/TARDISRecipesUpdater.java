@@ -87,6 +87,39 @@ public class TARDISRecipesUpdater {
         recipes_config.set("shaped.Stattenheim Remote.lore", "Right-click block~to call TARDIS");
         recipes_config.set("shaped.Artron Storage Cell.lore", "Charge Level~0");
         //
+        if (!recipes_config.contains("shaped.Acid Battery")) {
+            recipes_config.set("shaped.Acid Battery.easy_shape", "-A-,ARA,-A-");
+            recipes_config.set("shaped.Acid Battery.easy_ingredients.A", "WATER_BUCKET");
+            recipes_config.set("shaped.Acid Battery.easy_ingredients.R", "REDSTONE");
+            recipes_config.set("shaped.Acid Battery.hard_shape", "-A-,ARA,-A-");
+            recipes_config.set("shaped.Acid Battery.hard_ingredients.A", "WATER_BUCKET");
+            recipes_config.set("shaped.Acid Battery.hard_ingredients.R", "REDSTONE_BLOCK");
+            recipes_config.set("shaped.Acid Battery.result", "NETHER_BRICK_ITEM");
+            recipes_config.set("shaped.Acid Battery.amount", 1);
+            recipes_config.set("shaped.Acid Battery.lore", "");
+            //
+            recipes_config.set("shaped.Rift Circuit.easy_shape", "-D-,DND,-D-");
+            recipes_config.set("shaped.Rift Circuit.easy_ingredients.D", "DIAMOND");
+            recipes_config.set("shaped.Rift Circuit.easy_ingredients.N", "NETHER_STAR");
+            recipes_config.set("shaped.Rift Circuit.hard_shape", "-D-,DND,-D-");
+            recipes_config.set("shaped.Rift Circuit.hard_ingredients.D", "DIAMOND");
+            recipes_config.set("shaped.Rift Circuit.hard_ingredients.N", "NETHER_STAR");
+            recipes_config.set("shaped.Rift Circuit.result", "MAP:1983");
+            recipes_config.set("shaped.Rift Circuit.amount", 1);
+            recipes_config.set("shaped.Rift Circuit.lore", "");
+            //
+            recipes_config.set("shaped.Rift Manipulator.easy_shape", "-A-,ACA,RAR");
+            recipes_config.set("shaped.Rift Manipulator.easy_ingredients.A", "NETHER_BRICK_ITEM");
+            recipes_config.set("shaped.Rift Manipulator.easy_ingredients.C", "MAP:1983");
+            recipes_config.set("shaped.Rift Manipulator.easy_ingredients.R", "REDSTONE");
+            recipes_config.set("shaped.Rift Manipulator.hard_shape", "-A-,ACA,NAN");
+            recipes_config.set("shaped.Rift Manipulator.hard_ingredients.A", "NETHER_BRICK_ITEM");
+            recipes_config.set("shaped.Rift Manipulator.hard_ingredients.C", "MAP:1983");
+            recipes_config.set("shaped.Rift Manipulator.hard_ingredients.R", "NETHER_STAR");
+            recipes_config.set("shaped.Rift Manipulator.result", "BEACON");
+            recipes_config.set("shaped.Rift Manipulator.amount", 1);
+            recipes_config.set("shaped.Rift Manipulator.lore", "");
+        }
         if (!recipes_config.contains("shaped.Sonic Generator")) {
             recipes_config.set("shaped.Sonic Generator.easy_shape", "-S-,-F-,GRG");
             recipes_config.set("shaped.Sonic Generator.easy_ingredients.G", "GOLD_NUGGET");

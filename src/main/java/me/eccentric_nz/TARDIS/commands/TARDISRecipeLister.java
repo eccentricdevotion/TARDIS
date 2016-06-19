@@ -72,6 +72,7 @@ public class TARDISRecipeLister {
         item_circuits.add(ChatColor.RED + "generator" + ChatColor.RESET + " - " + ChatColor.DARK_RED + "Sonic Generator");
         item_circuits.add(ChatColor.RED + "oscillator" + ChatColor.RESET + " - " + ChatColor.DARK_RED + "Sonic Oscillator");
         item_circuits.add(ChatColor.RED + "p-circuit" + ChatColor.RESET + " - " + ChatColor.DARK_RED + "Perception Circuit");
+        item_circuits.add(ChatColor.RED + "rift-circuit" + ChatColor.RESET + " - " + ChatColor.DARK_RED + "Rift Circuit");
         item_circuits.add(ChatColor.RED + "s-circuit" + ChatColor.RESET + " - " + ChatColor.DARK_RED + "Stattenheim Circuit");
         recipe_options.put("Item Circuits", item_circuits);
         List<String> sonic_circuits = new ArrayList<String>();
@@ -111,6 +112,8 @@ public class TARDISRecipeLister {
         List<String> accessories = new ArrayList<String>();
         accessories.add(ChatColor.GREEN + "bow-tie" + ChatColor.RESET + " - " + ChatColor.DARK_GREEN + "Bow Tie");
         accessories.add(ChatColor.GREEN + "glasses" + ChatColor.RESET + " - " + ChatColor.DARK_GREEN + "3-D Glasses");
+        accessories.add(ChatColor.GREEN + "acid-battery" + ChatColor.RESET + " - " + ChatColor.DARK_GREEN + "Acid Battery");
+        accessories.add(ChatColor.GREEN + "rift-manipulator" + ChatColor.RESET + " - " + ChatColor.DARK_GREEN + "Rift Manipulator");
         if (plugin.getPM().isPluginEnabled("TARDISSonicBlaster")) {
             accessories.add(ChatColor.GREEN + "blaster" + ChatColor.RESET + " - " + ChatColor.DARK_GREEN + "Sonic Blaster");
             accessories.add(ChatColor.GREEN + "battery" + ChatColor.RESET + " - " + ChatColor.DARK_GREEN + "Blaster Battery");

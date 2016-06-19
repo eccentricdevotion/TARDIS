@@ -55,6 +55,7 @@ public class TARDISGiveCommand implements CommandExecutor {
         this.plugin = plugin;
         this.full = this.plugin.getArtronConfig().getInt("full_charge");
         items.put("a-circuit", "Server Admin Circuit");
+        items.put("acid-battery", "Acid Battery");
         items.put("ars-circuit", "TARDIS ARS Circuit");
         items.put("artron", "");
         items.put("bio-circuit", "Bio-scanner Circuit");
@@ -95,6 +96,8 @@ public class TARDISGiveCommand implements CommandExecutor {
         items.put("randomiser-circuit", "TARDIS Randomiser Circuit");
         items.put("remote", "Stattenheim Remote");
         items.put("reader", "TARDIS Biome Reader");
+        items.put("rift-circuit", "Rift Circuit");
+        items.put("rift-manipulator", "Rift Manipulator");
         items.put("s-circuit", "TARDIS Stattenheim Circuit");
         items.put("save-disk", "Save Storage Disk");
         items.put("scanner-circuit", "TARDIS Scanner Circuit");

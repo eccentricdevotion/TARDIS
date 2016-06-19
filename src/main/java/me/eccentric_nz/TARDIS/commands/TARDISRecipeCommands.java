@@ -54,6 +54,7 @@ public class TARDISRecipeCommands implements CommandExecutor {
     public TARDISRecipeCommands(TARDIS plugin) {
         this.plugin = plugin;
         firstArgs.add("a-circuit"); // Admin Circuit
+        firstArgs.add("acid-battery"); // Admin Circuit
         firstArgs.add("ars-circuit"); // ARS Circuit
         firstArgs.add("bio-circuit"); // Bio-scanner Circuit
         firstArgs.add("biome-disk"); // Biome Storage Disk
@@ -92,6 +93,8 @@ public class TARDISRecipeCommands implements CommandExecutor {
         firstArgs.add("randomiser-circuit"); // Randomiser Circuit
         firstArgs.add("reader"); // TARDIS Biome Reader
         firstArgs.add("remote"); // Stattenheim Remote
+        firstArgs.add("rift-circuit"); // Rift Circuit
+        firstArgs.add("rift-manipulator"); // Rift Manipulator
         firstArgs.add("s-circuit"); // Stattenheim Circuit
         firstArgs.add("save-disk"); // Save Storage Disk
         firstArgs.add("scanner-circuit"); // Scanner Circuit
@@ -166,6 +169,10 @@ public class TARDISRecipeCommands implements CommandExecutor {
             }
             if (args[0].equalsIgnoreCase("a-circuit")) {
                 this.showShapedRecipe(player, "Server Admin Circuit");
+                return true;
+            }
+            if (args[0].equalsIgnoreCase("acid-battery")) {
+                this.showShapedRecipe(player, "Acid Battery");
                 return true;
             }
             if (args[0].equalsIgnoreCase("ars-circuit")) {
@@ -308,6 +315,14 @@ public class TARDISRecipeCommands implements CommandExecutor {
                 showShapedRecipe(player, "Stattenheim Remote");
                 return true;
             }
+            if (args[0].equalsIgnoreCase("rift-circuit")) {
+                showShapedRecipe(player, "Rift Circuit");
+                return true;
+            }
+            if (args[0].equalsIgnoreCase("rift-manipulator")) {
+                showShapedRecipe(player, "Rift Manipulator");
+                return true;
+            }
             if (args[0].equalsIgnoreCase("s-circuit")) {
                 showShapedRecipe(player, "TARDIS Stattenheim Circuit");
                 return true;
@@ -390,6 +405,21 @@ public class TARDISRecipeCommands implements CommandExecutor {
                 if (str.equals("Sonic Blaster") && item.getType().equals(Material.BUCKET)) {
                     ItemMeta im = item.getItemMeta();
                     im.setDisplayName("Blaster Battery");
+                    item.setItemMeta(im);
+                }
+                if (str.equals("Acid Battery") && item.getType().equals(Material.WATER_BUCKET)) {
+                    ItemMeta im = item.getItemMeta();
+                    im.setDisplayName("Acid Bucket");
+                    item.setItemMeta(im);
+                }
+                if (str.equals("Rift Manipulator") && item.getType().equals(Material.NETHER_BRICK_ITEM)) {
+                    ItemMeta im = item.getItemMeta();
+                    im.setDisplayName("Acid Battery");
+                    item.setItemMeta(im);
+                }
+                if (str.equals("Rift Manipulator") && item.getType().equals(Material.MAP)) {
+                    ItemMeta im = item.getItemMeta();
+                    im.setDisplayName("Rift Circuit");
                     item.setItemMeta(im);
                 }
                 view.getTopInventory().setItem(j * 3 + k + 1, item);
