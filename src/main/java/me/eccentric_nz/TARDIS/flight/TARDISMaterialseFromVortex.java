@@ -95,6 +95,9 @@ public class TARDISMaterialseFromVortex implements Runnable {
                     TARDISMalfunction m = new TARDISMalfunction(plugin);
                     exit = m.getMalfunction(id, player, rscl.getDirection(), handbrake, tardis.getEps(), tardis.getCreeper());
                     if (exit != null) {
+                        if (plugin.getTrackerKeeper().getRescue().containsKey(id)) {
+                            plugin.getTrackerKeeper().getRescue().remove(id);
+                        }
                         malfunction_delay = 300L;
                         HashMap<String, Object> wheress = new HashMap<String, Object>();
                         wheress.put("tardis_id", id);
