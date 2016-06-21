@@ -70,21 +70,14 @@ public class TARDISTakeoff {
         plugin.getTrackerKeeper().getMalfunction().put(id, malfunction);
         // dematerialise
         new TARDISDematerialiseToVortex(plugin, id, player, handbrake).run();
-        long delay = 1L;
         if (plugin.getTrackerKeeper().getHasDestination().containsKey(id)) {
             // materialise
-            delay = (malfunction) ? 300L : 1L;
             new TARDISMaterialseFromVortex(plugin, id, player, handbrake).run();
         } else {
             plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new TARDISLoopingFlightSound(plugin, handbrake, id), 500L);
         }
         if (bar) {
-            plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
-                @Override
-                public void run() {
-                    new TARDISTravelBar(plugin).showTravelRemaining(player, 445L, true);
-                }
-            }, delay);
+            new TARDISTravelBar(plugin).showTravelRemaining(player, 500L, true);
         }
     }
 
@@ -129,21 +122,14 @@ public class TARDISTakeoff {
             plugin.getTrackerKeeper().getMalfunction().put(id, malfunction);
             // dematerialise
             new TARDISDematerialiseToVortex(plugin, id, player, handbrake).run();
-            long delay = 1L;
             if (plugin.getTrackerKeeper().getHasDestination().containsKey(id)) {
                 // materialise
-                delay = (malfunction) ? 300L : 1L;
                 new TARDISMaterialseFromVortex(plugin, id, player, handbrake).run();
             } else {
                 plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new TARDISLoopingFlightSound(plugin, handbrake, id), 500L);
             }
             if (bar) {
-                plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
-                    @Override
-                    public void run() {
-                        new TARDISTravelBar(plugin).showTravelRemaining(player, 445L, true);
-                    }
-                }, delay);
+                new TARDISTravelBar(plugin).showTravelRemaining(player, 500L, true);
             }
         }
     }
