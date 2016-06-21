@@ -166,35 +166,32 @@ public class TARDISButtonListener implements Listener {
                         if (action == Action.RIGHT_CLICK_BLOCK) {
                             switch (type) {
                                 case 1: // random location button
-                                    if (plugin.getTrackerKeeper().getMaterialising().contains(id) || plugin.getTrackerKeeper().getDematerialising().contains(id)) {
+                                    if (plugin.getTrackerKeeper().getMaterialising().contains(id) || plugin.getTrackerKeeper().getDematerialising().contains(id) || (!hb && !plugin.getTrackerKeeper().getDestinationVortex().containsKey(id)) || plugin.getTrackerKeeper().getHasRandomised().contains(id)) {
                                         TARDISMessage.send(player, "NOT_WHILE_TRAVELLING");
                                         return;
                                     }
-                                    if (!hb && !plugin.getTrackerKeeper().getDestinationVortex().containsKey(id)) {
-                                        TARDISMessage.send(player, "NOT_WHILE_TRAVELLING");
-                                        return;
+                                    if (plugin.getTrackerKeeper().getDestinationVortex().containsKey(id)) {
+                                        plugin.getTrackerKeeper().getHasRandomised().add(id);
                                     }
                                     new TARDISRandomButton(plugin, player, id, level, 0, tardis.getCompanions(), tardis.getUuid()).clickButton();
                                     break;
                                 case 8: // fast return button
-                                    if (plugin.getTrackerKeeper().getMaterialising().contains(id) || plugin.getTrackerKeeper().getDematerialising().contains(id)) {
+                                    if (plugin.getTrackerKeeper().getMaterialising().contains(id) || plugin.getTrackerKeeper().getDematerialising().contains(id) || (!hb && !plugin.getTrackerKeeper().getDestinationVortex().containsKey(id)) || plugin.getTrackerKeeper().getHasRandomised().contains(id)) {
                                         TARDISMessage.send(player, "NOT_WHILE_TRAVELLING");
                                         return;
                                     }
-                                    if (!hb && !plugin.getTrackerKeeper().getDestinationVortex().containsKey(id)) {
-                                        TARDISMessage.send(player, "NOT_WHILE_TRAVELLING");
-                                        return;
+                                    if (plugin.getTrackerKeeper().getDestinationVortex().containsKey(id)) {
+                                        plugin.getTrackerKeeper().getHasRandomised().add(id);
                                     }
                                     new TARDISFastReturnButton(plugin, player, id, level).clickButton();
                                     break;
                                 case 9: // terminal sign
-                                    if (plugin.getTrackerKeeper().getMaterialising().contains(id) || plugin.getTrackerKeeper().getDematerialising().contains(id)) {
+                                    if (plugin.getTrackerKeeper().getMaterialising().contains(id) || plugin.getTrackerKeeper().getDematerialising().contains(id) || (!hb && !plugin.getTrackerKeeper().getDestinationVortex().containsKey(id)) || plugin.getTrackerKeeper().getHasRandomised().contains(id)) {
                                         TARDISMessage.send(player, "NOT_WHILE_TRAVELLING");
                                         return;
                                     }
-                                    if (!hb && !plugin.getTrackerKeeper().getDestinationVortex().containsKey(id)) {
-                                        TARDISMessage.send(player, "NOT_WHILE_TRAVELLING");
-                                        return;
+                                    if (plugin.getTrackerKeeper().getDestinationVortex().containsKey(id)) {
+                                        plugin.getTrackerKeeper().getHasRandomised().add(id);
                                     }
                                     if (level < plugin.getArtronConfig().getInt("travel")) {
                                         TARDISMessage.send(player, "NOT_ENOUGH_ENERGY");

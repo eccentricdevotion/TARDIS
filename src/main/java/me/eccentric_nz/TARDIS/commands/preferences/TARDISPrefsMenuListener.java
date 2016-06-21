@@ -17,6 +17,7 @@
 package me.eccentric_nz.TARDIS.commands.preferences;
 
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.UUID;
@@ -134,7 +135,7 @@ public class TARDISPrefsMenuListener implements Listener {
                                     }
                                     plugin.getTrackerKeeper().getHasDestination().remove(id);
                                     if (plugin.getTrackerKeeper().getHasRandomised().contains(id)) {
-                                        plugin.getTrackerKeeper().getHasRandomised().remove(Integer.valueOf(id));
+                                        plugin.getTrackerKeeper().getHasRandomised().removeAll(Collections.singleton(id));
                                     }
                                     TARDISCircuitChecker tcc = null;
                                     if (!plugin.getDifficulty().equals(DIFFICULTY.EASY) && !plugin.getUtils().inGracePeriod(p, true)) {

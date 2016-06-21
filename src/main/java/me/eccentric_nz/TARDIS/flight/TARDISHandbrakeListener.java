@@ -220,7 +220,7 @@ public class TARDISHandbrakeListener implements Listener {
                                     }
                                     plugin.getTrackerKeeper().getHasDestination().remove(id);
                                     if (plugin.getTrackerKeeper().getHasRandomised().contains(id)) {
-                                        plugin.getTrackerKeeper().getHasRandomised().remove(Integer.valueOf(id));
+                                        plugin.getTrackerKeeper().getHasRandomised().removeAll(Collections.singleton(id));
                                     }
                                     // damage the circuit if configured
                                     if (tcc != null && plugin.getConfig().getBoolean("circuits.damage") && plugin.getConfig().getInt("circuits.uses.materialisation") > 0) {
