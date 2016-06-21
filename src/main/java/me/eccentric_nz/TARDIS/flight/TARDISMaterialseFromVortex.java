@@ -89,7 +89,6 @@ public class TARDISMaterialseFromVortex implements Runnable {
             final ResultSetCurrentLocation rscl = new ResultSetCurrentLocation(plugin, wherecu);
             if (rscl.resultSet()) {
                 final BukkitScheduler scheduler = plugin.getServer().getScheduler();
-                long malfunction_delay = 0L;
                 if (malfunction) {
                     // check for a malfunction
                     TARDISMalfunction m = new TARDISMalfunction(plugin);
@@ -98,7 +97,6 @@ public class TARDISMaterialseFromVortex implements Runnable {
                         if (plugin.getTrackerKeeper().getRescue().containsKey(id)) {
                             plugin.getTrackerKeeper().getRescue().remove(id);
                         }
-                        malfunction_delay = 300L;
                         HashMap<String, Object> wheress = new HashMap<String, Object>();
                         wheress.put("tardis_id", id);
                         HashMap<String, Object> setsave = new HashMap<String, Object>();
@@ -121,15 +119,18 @@ public class TARDISMaterialseFromVortex implements Runnable {
                             setBeaconUpBlock(tardis.getBeacon(), id);
                         }
                         // play tardis crash sound
-                        TARDISSounds.playTARDISSound(handbrake, "tardis_malfunction");
+                        if (plugin.getTrackerKeeper().getDestinationVortex().containsKey(id)) {
+                            TARDISSounds.playTARDISSound(handbrake, "tardis_malfunction");
+                        }
                         // add a potion effect to the player
                         player.addPotionEffect(new PotionEffect(PotionEffectType.CONFUSION, 150, 5));
+                        long cloister_delay = (plugin.getTrackerKeeper().getDestinationVortex().containsKey(id)) ? 262L : 360L;
                         scheduler.scheduleSyncDelayedTask(plugin, new Runnable() {
                             @Override
                             public void run() {
                                 TARDISSounds.playTARDISSound(handbrake, "tardis_cloister_bell");
                             }
-                        }, malfunction_delay);
+                        }, cloister_delay);
                     } else {
                         malfunction = false;
                     }
@@ -168,9 +169,9 @@ public class TARDISMaterialseFromVortex implements Runnable {
 
                     // remember flight data
                     plugin.getTrackerKeeper().getFlightData().put(uuid, bd);
-                    long flight_mode_delay = ((plugin.getTrackerKeeper().getDestinationVortex().containsKey(id)) ? 0L : 500L) + malfunction_delay;
+                    long flight_mode_delay = ((plugin.getTrackerKeeper().getDestinationVortex().containsKey(id)) ? 0L : 518L);
                     long materialisation_delay = flight_mode_delay;
-                    long travel_time = 400L;
+                    long travel_time = (malfunction) ? 400L : 375L;
                     // flight mode
                     if (flight_mode == 2 || flight_mode == 3) {
                         materialisation_delay += 650L;
