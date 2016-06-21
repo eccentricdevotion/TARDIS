@@ -51,7 +51,7 @@ public class TARDISManualFlightStarter implements Runnable {
         mfr.setTaskID(taskid);
         // play inflight sound
         if (!plugin.getTrackerKeeper().getDestinationVortex().containsKey(id)) {
-            plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new TARDISLoopingFlightSound(plugin, player.getLocation(), id), 500L);
+            plugin.getServer().getScheduler().runTask(plugin, new TARDISLoopingFlightSound(plugin, player.getLocation(), id));
         }
     }
 }
