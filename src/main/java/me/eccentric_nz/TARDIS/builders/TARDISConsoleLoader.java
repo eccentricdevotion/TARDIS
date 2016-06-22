@@ -51,6 +51,8 @@ public class TARDISConsoleLoader {
         CONSOLES.getBY_NAMES().put("ARS", new SCHEMATIC("QUARTZ_BLOCK", "ars", "ARS Console", true, false, true, false, false));
         CONSOLES.getBY_NAMES().put("BIGGER", new SCHEMATIC("GOLD_BLOCK", "bigger", "A Bigger Console", false, false, true, false, false));
         CONSOLES.getBY_NAMES().put("BUDGET", new SCHEMATIC("IRON_BLOCK", "budget", "Default Console", true, false, true, false, false));
+        // CORAL schematic designed by vistaero
+        CONSOLES.getBY_NAMES().put("CORAL", new SCHEMATIC("NETHER_WART_BLOCK", "coral", "10th Doctor's Console", false, true, true, false, false));
         CONSOLES.getBY_NAMES().put("DELUXE", new SCHEMATIC("DIAMOND_BLOCK", "deluxe", "Supersized Deluxe Console", false, true, true, false, false));
         CONSOLES.getBY_NAMES().put("ELEVENTH", new SCHEMATIC("EMERALD_BLOCK", "eleventh", "11th Doctor's Console", false, true, true, true, false));
         // ENDER schematic designed by ToppanaFIN (player at thatsnotacreeper.com)

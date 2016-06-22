@@ -26,7 +26,7 @@
    * ARS / room growing event
    * Siege / desiege events
    * Abandon / claim events
-4. Update console schematics to remove MONSTER_EGG blocks
+4. Update console schematics to remove MONSTER_EGG blocks, except for the ARS one (data = 2), as it is needed for initially setting up the ARS data and updating it when using the Desktop Theme
 5. TARDIS Junk Mode - `/tprefs junk [wall|floor] [block_type]`?
 6. TARDISSonicBlaster addon?
 

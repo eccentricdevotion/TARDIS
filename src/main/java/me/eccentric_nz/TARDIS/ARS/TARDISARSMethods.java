@@ -419,7 +419,7 @@ public class TARDISARSMethods {
             for (int j = 0; j < 5; j++) {
                 int slot = i + (j * 9);
                 int id = map[indexx][indexz];
-                String name = TARDISARS.ARSFor(Integer.valueOf(id)).getDescriptiveName();
+                String name = TARDISARS.ARSFor(id).getDescriptiveName();
                 setSlot(inv, slot, id, name, uuid, false);
                 indexz++;
             }

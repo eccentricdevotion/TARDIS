@@ -505,7 +505,7 @@ public class TARDISUpdateListener implements Listener {
                             }
                         }
                         int control = schm.getSeedId();
-                        if (schm.getPermission().equals("deluxe") || schm.getPermission().equals("eleventh") || schm.getPermission().equals("master")) {
+                        if (schm.getPermission().equals("coral") || schm.getPermission().equals("deluxe") || schm.getPermission().equals("eleventh") || schm.getPermission().equals("master")) {
                             empty[0][4][4] = control;
                             empty[0][4][5] = control;
                             empty[0][5][4] = control;
