@@ -59,10 +59,6 @@ public class TARDISSetIntegerCommand {
             first = "circuits.uses.invisibility";
         }
         plugin.getConfig().set(first, val);
-//        if (first.equals("terminal_step")) {
-//            // reset the terminal inventory
-//            plugin.getGeneralKeeper().getButtonListener().items = new TARDISTerminalInventory(plugin).getTerminal();
-//        }
         plugin.saveConfig();
         TARDISMessage.send(sender, "CONFIG_UPDATED");
         return true;
