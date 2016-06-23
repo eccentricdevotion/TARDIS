@@ -97,6 +97,7 @@ public class TARDISAnyoneMoveListener implements Listener {
             boolean minecart = (hasPrefs) ? rsp.isMinecartOn() : false;
             boolean userQuotes = (hasPrefs) ? rsp.isQuotesOn() : false;
             boolean willFarm = (hasPrefs) ? rsp.isFarmOn() : false;
+            boolean hum = (hasPrefs) ? rsp.isSfxOn() : false;
             // check for entities near the police box
             List<TARDISMob> pets = null;
             if (plugin.getConfig().getBoolean("allow.mob_farming") && p.hasPermission("tardis.farm") && !plugin.getTrackerKeeper().getFarming().contains(uuid) && willFarm) {
@@ -118,7 +119,7 @@ public class TARDISAnyoneMoveListener implements Listener {
                 qf.doSyncInsert("travellers", set);
             }
             // tp player
-            plugin.getGeneralKeeper().getDoorListener().movePlayer(p, to, exit, l.getWorld(), userQuotes, 0, minecart);
+            plugin.getGeneralKeeper().getDoorListener().movePlayer(p, to, exit, l.getWorld(), userQuotes, 0, minecart, hum);
             if (pets != null && pets.size() > 0) {
                 plugin.getGeneralKeeper().getDoorListener().movePets(pets, tpl.getLocation(), p, d, true);
             }

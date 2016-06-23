@@ -471,7 +471,6 @@ public class TARDISFullThemeRunnable extends TARDISThemeRunnable implements Runn
                         if (rsa.resultSet()) {
                             int[][][] existing = TARDISARSMethods.getGridFromJSON(rsa.getJson());
                             int control = tud.getSchematic().getSeedId();
-                            plugin.debug("control block: " + control);
                             existing[1][4][4] = control;
                             if (downgrade) {
                                 // reset slots to stone

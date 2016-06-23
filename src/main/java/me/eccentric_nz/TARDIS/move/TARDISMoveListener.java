@@ -105,6 +105,7 @@ public class TARDISMoveListener implements Listener {
                 boolean hasPrefs = rsp.resultSet();
                 boolean minecart = (hasPrefs) ? rsp.isMinecartOn() : false;
                 boolean userQuotes = (hasPrefs) ? rsp.isQuotesOn() : false;
+                boolean hum = (hasPrefs) ? rsp.isSfxOn() : true;
                 boolean willFarm = (hasPrefs) ? rsp.isFarmOn() : false;
                 boolean canPowerUp = (hasPrefs) ? rsp.isAutoPowerUp() && !tpl.isAbandoned() : false;
                 // check for entities near the police box
@@ -134,7 +135,7 @@ public class TARDISMoveListener implements Listener {
                     }
                 }
                 // tp player
-                plugin.getGeneralKeeper().getDoorListener().movePlayer(p, to, exit, l.getWorld(), userQuotes, 0, minecart);
+                plugin.getGeneralKeeper().getDoorListener().movePlayer(p, to, exit, l.getWorld(), userQuotes, 0, minecart, hum);
                 if (pets != null && pets.size() > 0) {
                     plugin.getGeneralKeeper().getDoorListener().movePets(pets, tpl.getLocation(), p, d, true);
                 }
