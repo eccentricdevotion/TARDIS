@@ -647,7 +647,7 @@ public class TARDIS extends JavaPlugin {
         this.getServer().getScheduler().scheduleSyncRepeatingTask(this, new Runnable() {
             @Override
             public void run() {
-                TARDISSounds.randomTARDISSound();
+                TARDISSounds.playTARDISHum();
             }
         }, 60L, 1500L);
     }

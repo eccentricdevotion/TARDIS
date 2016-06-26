@@ -99,7 +99,7 @@ public class TARDISPlayerKickListener implements Listener {
                     final Location tardis_loc = tmp_loc;
                     World playerWorld = player.getLocation().getWorld();
                     player.setFallDistance(0.0f);
-                    plugin.getGeneralKeeper().getDoorListener().movePlayer(player, tardis_loc, false, playerWorld, false, 3, true, false);
+                    plugin.getGeneralKeeper().getDoorListener().movePlayer(player, tardis_loc, false, playerWorld, false, 3, true);
                 } else {
                     player.setHealth(0);
                 }

@@ -92,10 +92,9 @@ public class TARDISDoorListener {
      * @param q whether the player will receive a TARDIS quote message
      * @param sound an integer representing the sound to play
      * @param m whether to play the resource pack sound
-     * @param hum whether to play the interior hum sound
      */
     @SuppressWarnings("deprecation")
-    public void movePlayer(final Player p, final Location l, final boolean exit, final World from, boolean q, final int sound, final boolean m, final boolean hum) {
+    public void movePlayer(final Player p, final Location l, final boolean exit, final World from, boolean q, final int sound, final boolean m) {
         final int i = r.nextInt(plugin.getGeneralKeeper().getQuotes().size());
         final World to = l.getWorld();
         final boolean allowFlight = p.getAllowFlight();
@@ -147,9 +146,7 @@ public class TARDISDoorListener {
                     if (p.isPlayerTimeRelative()) {
                         setTemporalLocation(p, -1);
                     }
-                    if (hum) {
-                        TARDISSounds.playTARDISSound(p.getLocation(), "tardis_hum");
-                    }
+                    TARDISSounds.playTARDISHum(p);
                 }
                 // give a key
                 giveKey(p);

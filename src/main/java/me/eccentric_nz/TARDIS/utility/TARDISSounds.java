@@ -40,10 +40,10 @@ public class TARDISSounds {
     private static final float VOLUME = TARDIS.plugin.getConfig().getInt("preferences.sfx_volume") / 10.0F;
 
     /**
-     * Plays a random TARDIS sound to players who are inside the TARDIS and
+     * Plays an interior hum sound to players who are inside the TARDIS and
      * don't have SFX set to false.
      */
-    public static void randomTARDISSound() {
+    public static void playTARDISHum() {
         if (TARDIS.plugin.getConfig().getBoolean("allow.sfx") == true) {
             ResultSetSounds rs = new ResultSetSounds(TARDIS.plugin);
             if (rs.resultSet()) {
@@ -69,6 +69,29 @@ public class TARDISSounds {
                     }
                 }
             }
+        }
+    }
+
+    /**
+     * Plays the interior hum sound upon TARDIS entry.
+     *
+     * @param p the player to play the sound to
+     */
+    public static void playTARDISHum(Player p) {
+        HashMap<String, Object> where = new HashMap<String, Object>();
+        where.put("uuid", p.getUniqueId().toString());
+        ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(TARDIS.plugin, where);
+        boolean userSFX;
+        String hum;
+        if (rsp.resultSet()) {
+            userSFX = rsp.isSfxOn();
+            hum = (rsp.getHum().isEmpty()) ? "tardis_hum" : "tardis_hum_" + rsp.getHum();
+        } else {
+            userSFX = true;
+            hum = "tardis_hum";
+        }
+        if (userSFX) {
+            playTARDISSound(p.getLocation(), hum);
         }
     }
 

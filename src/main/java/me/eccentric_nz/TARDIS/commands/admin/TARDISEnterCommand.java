@@ -144,7 +144,7 @@ public class TARDISEnterCommand {
                 tmp_loc.setYaw(yaw);
                 final Location tardis_loc = tmp_loc;
                 World playerWorld = player.getLocation().getWorld();
-                plugin.getGeneralKeeper().getDoorListener().movePlayer(player, tardis_loc, false, playerWorld, false, 3, true, false);
+                plugin.getGeneralKeeper().getDoorListener().movePlayer(player, tardis_loc, false, playerWorld, false, 3, true);
                 // put player into travellers table
                 QueryFactory qf = new QueryFactory(plugin);
                 HashMap<String, Object> set = new HashMap<String, Object>();

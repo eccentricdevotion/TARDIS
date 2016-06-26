@@ -2,6 +2,9 @@
 
 ##Current bugfix version `3.6-beta-1`
 1. Fix bugs!
+   * Check Junk Mode
+   * Check `has_lanterns` for custom consoles
+   * Check malfunction sfx
 
 ##Next minor version `3.6-beta-1`
 1. Determine a use for Rust Buckets
