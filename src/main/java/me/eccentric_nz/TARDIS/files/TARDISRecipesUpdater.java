@@ -115,10 +115,11 @@ public class TARDISRecipesUpdater {
             recipes_config.set("shaped.Rift Manipulator.hard_shape", "-A-,ACA,NAN");
             recipes_config.set("shaped.Rift Manipulator.hard_ingredients.A", "NETHER_BRICK_ITEM");
             recipes_config.set("shaped.Rift Manipulator.hard_ingredients.C", "MAP:1983");
-            recipes_config.set("shaped.Rift Manipulator.hard_ingredients.R", "NETHER_STAR");
+            recipes_config.set("shaped.Rift Manipulator.hard_ingredients.N", "NETHER_STAR");
             recipes_config.set("shaped.Rift Manipulator.result", "BEACON");
             recipes_config.set("shaped.Rift Manipulator.amount", 1);
             recipes_config.set("shaped.Rift Manipulator.lore", "");
+            i++;
         }
         if (!recipes_config.contains("shaped.Sonic Generator")) {
             recipes_config.set("shaped.Sonic Generator.easy_shape", "-S-,-F-,GRG");

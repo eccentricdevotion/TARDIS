@@ -770,16 +770,16 @@ shaped:
         easy_shape: -D-,DND,-D-
         easy_ingredients:
             D: DIAMOND
-            R: NETHER_STAR
+            N: NETHER_STAR
         hard_shape: -D-,DND,-D-
         hard_ingredients:
             D: DIAMOND
-            R: NETHER_STAR
+            N: NETHER_STAR
         result: 'MAP:1983'
         amount: 1
         lore: ""
     Rift Manipulator:
-        easy_shape: -A-,ACA,-A-
+        easy_shape: -A-,ACA,RAR
         easy_ingredients:
             A: NETHER_BRICK_ITEM
             C: 'MAP:1983'
@@ -788,7 +788,7 @@ shaped:
         hard_ingredients:
             A: NETHER_BRICK_ITEM
             C: 'MAP:1983'
-            R: NETHER_STAR
+            N: NETHER_STAR
         result: BEACON
         amount: 1
         lore: ""
