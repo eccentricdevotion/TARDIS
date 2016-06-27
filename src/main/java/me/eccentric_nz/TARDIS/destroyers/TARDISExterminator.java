@@ -222,7 +222,7 @@ public class TARDISExterminator {
             dd.setDirection(d);
             dd.setLocation(bb_loc);
             dd.setPlayer(player);
-            dd.setHide(false);
+            dd.setHide(true);
             dd.setOutside(false);
             dd.setSubmarine(rsc.isSubmarine());
             dd.setTardisID(id);

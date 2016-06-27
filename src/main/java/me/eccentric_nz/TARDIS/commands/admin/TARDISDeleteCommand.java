@@ -134,7 +134,7 @@ public class TARDISDeleteCommand {
                 dd.setDirection(d);
                 dd.setLocation(bb_loc);
                 dd.setPlayer(plugin.getServer().getOfflinePlayer(u));
-                dd.setHide(false);
+                dd.setHide(true);
                 dd.setOutside(false);
                 dd.setSubmarine(rsc.isSubmarine());
                 dd.setTardisID(id);
