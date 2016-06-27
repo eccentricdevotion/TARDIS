@@ -9,7 +9,7 @@
 # This should be the value of the biomeConfig you wish to extend.
 # The extended config will be loaded, at which point the configs included below
 # will overwrite any configs loaded from the extended config.
-BiomeExtends: 
+BiomeExtends:
 
 # When set to true, all resources of the parent biome (if any) will be copied
 # to the resources queue of this biome. If a resource in the parent biome looks
@@ -77,11 +77,11 @@ BiomeRarityWhenIsle: 90
 # List of biomes this biome can be a border of.
 # For example, the Beach biome is a border on the Ocean biome, so
 # it can spawn anywhere on the border of an ocean.
-BiomeIsBorder: 
+BiomeIsBorder:
 
 # List of biomes that cancel spawning of this biome.
 # For example, the Beach biome will never spawn next to an Extreme Hills biome.
-NotBorderNear: 
+NotBorderNear:
 
 # Size of this biome when spawned as a border biome.
 # Valid values range from 0 to GenerationDepth.
@@ -114,7 +114,7 @@ SmoothRadius: 2
 # If the value is less than 0, then it will cause the terrain to either increase to a lower height before leveling out or decrease in height if the value is a large enough negative.
 MaxAverageHeight: 0.0
 
-# If this value is greater than 0, then it will affect how much, on average, the terrain (usually at the ottom of the ocean) will fall before leveling off when it begins to decrease in elevation. 
+# If this value is greater than 0, then it will affect how much, on average, the terrain (usually at the ottom of the ocean) will fall before leveling off when it begins to decrease in elevation.
 # If the value is less than 0, then it will cause the terrain to either fall to a lesser depth before leveling out or increase in height if the value is a large enough negative.
 MaxAverageDepth: 0.0
 
@@ -136,7 +136,7 @@ DisableBiomeHeight: false
 # Values which affect your configuration may be found only experimental. That may be very big, like ~3000.0 depends from height
 # Example:
 #   CustomHeightControl:0.0,-2500.0,0.0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0
-# Make empty layer above bedrock layer. 
+# Make empty layer above bedrock layer.
 CustomHeightControl: 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0
 
 
@@ -211,7 +211,7 @@ SurfaceAndGroundControl: MesaBryce
 # Replace Variable: (blockFrom,blockTo[:blockDataTo][,minHeight,maxHeight])
 # Example :
 #   ReplacedBlocks: (GRASS,DIRT,100,127),(GRAVEL,GLASS)
-# Replace grass block to dirt from 100 to 127 height and replace gravel to glass on all height 
+# Replace grass block to dirt from 100 to 127 height and replace gravel to glass on all height
 ReplacedBlocks: None
 
 ################################
@@ -312,7 +312,7 @@ FoliageColorIsMultiplier: true
 # Frequency:      number of attempts to place this resource in each chunk.
 # Rarity:         chance for each attempt, Rarity:100 - mean 100% to pass, Rarity:1 - mean 1% to pass.
 # MinAltitude and MaxAltitude: height limits.
-# BlockSource:    mean where or whereupon resource will be placed 
+# BlockSource:    mean where or whereupon resource will be placed
 # TreeType:       Tree (original oak tree) - BigTree - Birch - TallBirch - SwampTree -
 #                 HugeMushroom (randomly red or brown) - HugeRedMushroom - HugeBrownMushroom -
 #                 Taiga1 - Taiga2 - HugeTaiga1 - HugeTaiga2 -
@@ -388,7 +388,7 @@ CustomStructure(dalek1,100.0)
 #######################################################################
 
 # These objects will spawn when using the UseBiome keyword.
-BiomeObjects: 
+BiomeObjects:
 
 
 #######################################################################
@@ -413,7 +413,12 @@ NetherFortressesEnabled: true
 # The village type in this biome. Can be wood, sandstone or disabled.
 VillageType: disabled
 
+# The mineshaft type in this biome. Can be normal, mesa or disabled.
+MineshaftType: normal
+
 # The mineshaft rarity from 0 to 100. 0 = no mineshafts, 1 = default rarity, 100 = a wooden chaos.
+# Note that mineshafts will never spawn, regardless of this setting, if
+# MineshaftType was set to disabled
 MineshaftRarity: 1.0
 
 # The type of the aboveground rare building in this biome. Can be desertPyramid, jungleTemple, swampHut, igloo or disabled.
