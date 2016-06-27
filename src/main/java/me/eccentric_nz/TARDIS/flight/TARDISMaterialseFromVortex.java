@@ -172,6 +172,10 @@ public class TARDISMaterialseFromVortex implements Runnable {
                     long flight_mode_delay = ((plugin.getTrackerKeeper().getDestinationVortex().containsKey(id)) ? 0L : 518L);
                     long materialisation_delay = flight_mode_delay;
                     long travel_time = (malfunction) ? 400L : 375L;
+                    if (plugin.getTrackerKeeper().getDestinationVortex().containsKey(id) && malfunction) {
+                        materialisation_delay += 262L;
+                        travel_time += 262L;
+                    }
                     // flight mode
                     if (flight_mode == 2 || flight_mode == 3) {
                         materialisation_delay += 650L;

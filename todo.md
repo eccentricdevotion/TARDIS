@@ -2,8 +2,7 @@
 
 ##Current bugfix version `3.6-beta-1`
 1. Fix bugs!
-   * Check Junk Mode
-   * Check malfunction sfx
+   * `travel.no_destination_malfunctions`
 
 ##Next minor version `3.6-beta-1`
 1. Determine a use for Rust Buckets
