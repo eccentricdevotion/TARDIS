@@ -171,7 +171,7 @@
         <dependency>
             <groupId>org.spigotmc</groupId>
             <artifactId>spigot-api</artifactId>
-            <version>1.10-R0.1-SNAPSHOT</version>
+            <version>1.10.2-R0.1-SNAPSHOT</version>
             <type>jar</type>
             <scope>compile</scope>
             <exclusions>
@@ -260,7 +260,7 @@
         <dependency>
             <groupId>me.gnat008.perworldinventory</groupId>
             <artifactId>PerWorldInventory</artifactId>
-            <version>1.7.5</version>
+            <version>1.7.6</version>
             <type>jar</type>
             <scope>system</scope>
             <systemPath>${basedir}/lib/PerWorldInventory.jar</systemPath>
