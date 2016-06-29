@@ -21,22 +21,15 @@ import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.builders.TARDISEmergencyRelocation;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
-import me.eccentric_nz.TARDIS.database.ResultSetControls;
 import me.eccentric_nz.TARDIS.database.ResultSetCurrentLocation;
 import me.eccentric_nz.TARDIS.database.ResultSetRepeaters;
-import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import me.eccentric_nz.TARDIS.database.ResultSetTravellers;
-import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
 import me.eccentric_nz.TARDIS.flight.TARDISLand;
-import me.eccentric_nz.TARDIS.travel.TARDISMalfunction;
 import me.eccentric_nz.TARDIS.travel.TARDISTimeTravel;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
-import me.eccentric_nz.TARDIS.utility.TARDISSounds;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
-import org.bukkit.potion.PotionEffect;
-import org.bukkit.potion.PotionEffectType;
 
 /**
  *
@@ -195,58 +188,7 @@ public class TARDISRandomButton {
                         new TARDISLand(plugin, id, player).exitVortex();
                     }
                 } else if (plugin.getConfig().getBoolean("travel.no_destination_malfunctions")) {
-                    HashMap<String, Object> where = new HashMap<String, Object>();
-                    where.put("tardis_id", id);
-                    ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false, 0);
-                    if (rs.resultSet()) {
-                        Tardis tardis = rs.getTardis();
-                        String eps = tardis.getEps();
-                        String creeper = tardis.getCreeper();
-                        HashMap<String, Object> whereh = new HashMap<String, Object>();
-                        whereh.put("type", 0);
-                        whereh.put("tardis_id", id);
-                        ResultSetControls rsc = new ResultSetControls(plugin, whereh, false);
-                        if (rsc.resultSet()) {
-                            final Location handbrake_loc = plugin.getLocationUtils().getLocationFromBukkitString(rsc.getLocation());
-                            TARDISMalfunction m = new TARDISMalfunction(plugin);
-                            Location exit = m.getMalfunction(id, player, dir, handbrake_loc, eps, creeper);
-                            if (exit != null) {
-                                QueryFactory qf = new QueryFactory(plugin);
-                                HashMap<String, Object> wheress = new HashMap<String, Object>();
-                                wheress.put("tardis_id", id);
-                                HashMap<String, Object> setsave = new HashMap<String, Object>();
-                                setsave.put("world", exit.getWorld().getName());
-                                setsave.put("x", exit.getBlockX());
-                                setsave.put("y", exit.getBlockY());
-                                setsave.put("z", exit.getBlockZ());
-                                setsave.put("submarine", 0);
-                                qf.doSyncUpdate("next", setsave, wheress);
-                                if (plugin.getTrackerKeeper().getHasDestination().containsKey(id)) {
-                                    int amount = plugin.getTrackerKeeper().getHasDestination().get(id) * -1;
-                                    HashMap<String, Object> wheret = new HashMap<String, Object>();
-                                    wheret.put("tardis_id", id);
-                                    qf.alterEnergyLevel("tardis", amount, wheret, player);
-                                    TARDISMessage.send(player, "Q_FLY");
-                                    plugin.getTrackerKeeper().getHasDestination().remove(id);
-                                }
-                                // play tardis crash sound
-                                TARDISSounds.playTARDISSound(handbrake_loc, "tardis_malfunction");
-                                // add a potion effect to the player
-                                player.addPotionEffect(new PotionEffect(PotionEffectType.CONFUSION, 150, 5));
-                                plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
-                                    @Override
-                                    public void run() {
-                                        TARDISSounds.playTARDISSound(handbrake_loc, "tardis_cloister_bell");
-                                        if (plugin.getTrackerKeeper().getDestinationVortex().containsKey(id)) {
-                                            new TARDISLand(plugin, id, player).exitVortex();
-                                        }
-                                    }
-                                }, 300L);
-                            } else {
-                                TARDISMessage.send(player, "PROTECTED");
-                            }
-                        }
-                    }
+                    plugin.getTrackerKeeper().getMalfunction().put(id, true);
                 } else {
                     TARDISMessage.send(player, "PROTECTED");
                 }

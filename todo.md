@@ -2,11 +2,10 @@
 
 ##Current bugfix version `3.6-beta-1`
 1. Fix bugs!
-   * `travel.no_destination_malfunctions`
 
 ##Next minor version `3.6-beta-1`
 1. Determine a use for Rust Buckets
-    * The [rust plague](http://tardis.wikia.com/wiki/Rust_plague) was a virus that attacked the Daleks' metal casings, destroying them
+   * The [rust plague](http://tardis.wikia.com/wiki/Rust_plague) was a virus that attacked the Daleks' metal casings, destroying them
 2. Update TIS with new consoles/TARDIS items/worlds
 
 ##Upcoming minor version `3.7`  
@@ -29,8 +28,9 @@
    * Siege / desiege events
    * Abandon / claim events
 4. Update console schematics to remove MONSTER_EGG blocks, except for the ARS one (data = 2), as it is needed for initially setting up the ARS data and updating it when using the Desktop Theme
-5. TARDIS Junk Mode - `/tprefs junk [wall|floor] [block_type]`?
-6. TARDISSonicBlaster addon?
+5. Update [Chameleon Circuit GUI](http://dev.bukkit.org/bukkit-plugins/tardis/tickets/1341-new-chameleon-circuit-gui/)
+6. TARDIS Junk Mode - `/tprefs junk [wall|floor] [block_type]`?
+7. TARDISSonicBlaster addon?
 
 ##Future version `4+`
 * SpongeAPI
@@ -39,11 +39,7 @@
 
 ##Resource Pack / TARDISWeepingAngels
 1. Something with an invisible Shulker passenger - or an invisible bat with a Shulker passemger (Toclafane?)
-2. SFX for monsters hits
-   * Stone pick hit - angel
-   * Metal whack - cyberman
-   * Meat chop - silurian, sontaran, zygon, empty, silent
-3. Re-skin mobs for Resource pack, and add new mob sounds
+2. Re-skin mobs for Resource pack, and add new mob sounds
    * Villagers -> Ood - _started texture_
    * Villagers -> Hath
    * Endermen -> The Silence - _implemented, but texture needs to be finished_
@@ -52,8 +48,8 @@
    * Witches -> Slitheen / Whispermen?
    * Wolves -> K-9? (All the textures I seen so far just don't work - you shouldn't see the legs...)
    * Slimes -> Adipose
- 4. Sycorax
- 5. Scarecrows
+ 3. Sycorax
+ 4. Scarecrows
  
 ##TIPS visulisation tool
 * Use WorldGuard region data

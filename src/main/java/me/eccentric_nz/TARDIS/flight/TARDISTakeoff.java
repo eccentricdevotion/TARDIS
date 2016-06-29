@@ -66,8 +66,10 @@ public class TARDISTakeoff {
         TARDISMessage.send(player, "HANDBRAKE_OFF");
         plugin.getTrackerKeeper().getInVortex().add(id);
         // check if we should malfunction
-        boolean malfunction = new TARDISMalfunction(plugin).isMalfunction();
-        plugin.getTrackerKeeper().getMalfunction().put(id, malfunction);
+        if (!plugin.getTrackerKeeper().getMalfunction().containsKey(id)) {
+            boolean malfunction = new TARDISMalfunction(plugin).isMalfunction();
+            plugin.getTrackerKeeper().getMalfunction().put(id, malfunction);
+        }
         // dematerialise
         new TARDISDematerialiseToVortex(plugin, id, player, handbrake).run();
         if (plugin.getTrackerKeeper().getHasDestination().containsKey(id)) {

@@ -244,7 +244,11 @@ public class TARDISTravelCommands implements CommandExecutor {
                                 }
                                 // check respect
                                 if (!plugin.getPluginRespect().getRespect(cave, new Parameters(player, FLAG.getDefaultFlags()))) {
-                                    return true;
+                                    if (plugin.getConfig().getBoolean("travel.no_destination_malfunctions")) {
+                                        plugin.getTrackerKeeper().getMalfunction().put(id, true);
+                                    } else {
+                                        return true;
+                                    }
                                 }
                                 set.put("world", cave.getWorld().getName());
                                 set.put("x", cave.getBlockX());
@@ -269,7 +273,11 @@ public class TARDISTravelCommands implements CommandExecutor {
                                 }
                                 // check respect
                                 if (!plugin.getPluginRespect().getRespect(village, new Parameters(player, FLAG.getDefaultFlags()))) {
-                                    return true;
+                                    if (plugin.getConfig().getBoolean("travel.no_destination_malfunctions")) {
+                                        plugin.getTrackerKeeper().getMalfunction().put(id, true);
+                                    } else {
+                                        return true;
+                                    }
                                 }
                                 set.put("world", village.getWorld().getName());
                                 set.put("x", village.getBlockX());
@@ -429,7 +437,11 @@ public class TARDISTravelCommands implements CommandExecutor {
                                     return true;
                                 } else {
                                     if (!plugin.getPluginRespect().getRespect(tb, new Parameters(player, FLAG.getDefaultFlags()))) {
-                                        return true;
+                                        if (plugin.getConfig().getBoolean("travel.no_destination_malfunctions")) {
+                                            plugin.getTrackerKeeper().getMalfunction().put(id, true);
+                                        } else {
+                                            return true;
+                                        }
                                     }
                                     World bw = tb.getWorld();
                                     // check location
@@ -487,7 +499,11 @@ public class TARDISTravelCommands implements CommandExecutor {
                                 }
                                 Location save_dest = new Location(w, rsd.getX(), rsd.getY(), rsd.getZ());
                                 if (!plugin.getPluginRespect().getRespect(save_dest, new Parameters(player, FLAG.getDefaultFlags()))) {
-                                    return true;
+                                    if (plugin.getConfig().getBoolean("travel.no_destination_malfunctions")) {
+                                        plugin.getTrackerKeeper().getMalfunction().put(id, true);
+                                    } else {
+                                        return true;
+                                    }
                                 }
                                 if (!plugin.getTardisArea().areaCheckInExisting(save_dest)) {
                                     // save is in a TARDIS area, so check that the spot is not occupied
