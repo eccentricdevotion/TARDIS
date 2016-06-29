@@ -172,6 +172,10 @@ public class TARDISHandbrakeListener implements Listener {
                             final QueryFactory qf = new QueryFactory(plugin);
                             if (action == Action.RIGHT_CLICK_BLOCK) {
                                 if (tardis.isHandbrake_on()) {
+                                    if (preset.equals(PRESET.JUNK_MODE) && !plugin.getTrackerKeeper().getHasDestination().containsKey(id)) {
+                                        TARDISMessage.send(player, "TRAVEL_NEED_DEST");
+                                        return;
+                                    }
                                     // check if door is open
                                     if (isDoorOpen(id)) {
                                         TARDISMessage.send(player, "DOOR_CLOSE");
