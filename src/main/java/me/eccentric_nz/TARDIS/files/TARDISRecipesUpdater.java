@@ -94,8 +94,8 @@ public class TARDISRecipesUpdater {
             recipes_config.set("shaped.Rust Plague Sword.hard_shape", "RIR,RIR,DSD");
             recipes_config.set("shaped.Rust Plague Sword.hard_ingredients.R", "LAVA_BUCKET");
             recipes_config.set("shaped.Rust Plague Sword.hard_ingredients.I", "IRON_INGOT");
-            recipes_config.set("shaped.Rust Plague Sword.easy_ingredients.D", "DIAMOND");
-            recipes_config.set("shaped.Rust Plague Sword.easy_ingredients.S", "STICK");
+            recipes_config.set("shaped.Rust Plague Sword.hard_ingredients.D", "DIAMOND");
+            recipes_config.set("shaped.Rust Plague Sword.hard_ingredients.S", "STICK");
             recipes_config.set("shaped.Rust Plague Sword.result", "IRON_SWORD");
             recipes_config.set("shaped.Rust Plague Sword.amount", 1);
             recipes_config.set("shaped.Rust Plague Sword.lore", "Dalek Virus Dispenser");
