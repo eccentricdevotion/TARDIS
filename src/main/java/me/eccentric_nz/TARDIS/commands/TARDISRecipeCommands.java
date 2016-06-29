@@ -95,6 +95,7 @@ public class TARDISRecipeCommands implements CommandExecutor {
         firstArgs.add("remote"); // Stattenheim Remote
         firstArgs.add("rift-circuit"); // Rift Circuit
         firstArgs.add("rift-manipulator"); // Rift Manipulator
+        firstArgs.add("rust"); // Rust Plague Sword
         firstArgs.add("s-circuit"); // Stattenheim Circuit
         firstArgs.add("save-disk"); // Save Storage Disk
         firstArgs.add("scanner-circuit"); // Scanner Circuit
@@ -322,6 +323,10 @@ public class TARDISRecipeCommands implements CommandExecutor {
             }
             if (args[0].equalsIgnoreCase("rift-manipulator")) {
                 showShapedRecipe(player, "Rift Manipulator");
+                return true;
+            }
+            if (args[0].equalsIgnoreCase("rust")) {
+                showShapedRecipe(player, "Rust Plague Sword");
                 return true;
             }
             if (args[0].equalsIgnoreCase("s-circuit")) {

@@ -33,6 +33,7 @@ import org.bukkit.ChatColor;
 import org.bukkit.Color;
 import org.bukkit.DyeColor;
 import org.bukkit.Material;
+import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Item;
 import org.bukkit.entity.Player;
@@ -323,6 +324,18 @@ public class TARDISCraftListener implements Listener {
                 for (int i = 2; i < 9; i += 2) {
                     ItemStack acid = ci.getItem(i);
                     if (!acid.hasItemMeta() || !acid.getItemMeta().hasDisplayName() || !acid.getItemMeta().getDisplayName().equals("Acid Battery")) {
+                        ci.setResult(null);
+                        break;
+                    }
+                }
+            } else if (is.getType().equals(Material.IRON_SWORD) && dn.equals("Rust Plague Sword")) {
+                // enchant the result
+                is.addEnchantment(Enchantment.DAMAGE_UNDEAD, 2);
+                ci.setResult(is);
+                List<Integer> slots = Arrays.asList(1, 3, 4, 6);
+                for (int i : slots) {
+                    ItemStack rust = ci.getItem(i);
+                    if (!rust.hasItemMeta() || !rust.getItemMeta().hasDisplayName() || !rust.getItemMeta().getDisplayName().equals("Rust Bucket")) {
                         ci.setResult(null);
                         break;
                     }

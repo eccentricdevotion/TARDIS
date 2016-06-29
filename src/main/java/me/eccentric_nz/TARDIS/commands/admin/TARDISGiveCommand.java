@@ -98,6 +98,7 @@ public class TARDISGiveCommand implements CommandExecutor {
         items.put("reader", "TARDIS Biome Reader");
         items.put("rift-circuit", "Rift Circuit");
         items.put("rift-manipulator", "Rift Manipulator");
+        items.put("rust", "Rust Plague Sword");
         items.put("s-circuit", "TARDIS Stattenheim Circuit");
         items.put("save-disk", "Save Storage Disk");
         items.put("scanner-circuit", "TARDIS Scanner Circuit");

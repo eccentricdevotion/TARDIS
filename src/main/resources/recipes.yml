@@ -792,6 +792,21 @@ shaped:
         result: BEACON
         amount: 1
         lore: ""
+    Rust Plague Sword:
+        easy_shape: RIR,RIR,-S-
+        easy_ingredients:
+            R: LAVA_BUCKET
+            I: IRON_INGOT
+            S: STICK
+        hard_shape: RIR,RIR,DSD
+        hard_ingredients:
+            R: LAVA_BUCKET
+            I: IRON_INGOT
+            D: DIAMOND
+            S: STICK
+        result: IRON_SWORD
+        amount: 1
+        lore: Dalek Virus Dispenser
 # -------------------
 # these are the shapeless recipes
 # -------------------

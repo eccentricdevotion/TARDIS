@@ -86,7 +86,20 @@ public class TARDISRecipesUpdater {
         // fix lore
         recipes_config.set("shaped.Stattenheim Remote.lore", "Right-click block~to call TARDIS");
         recipes_config.set("shaped.Artron Storage Cell.lore", "Charge Level~0");
-        //
+        if (!recipes_config.contains("shaped.Rust Plague Sword")) {
+            recipes_config.set("shaped.Rust Plague Sword.easy_shape", "RIR,RIR,-S-");
+            recipes_config.set("shaped.Rust Plague Sword.easy_ingredients.R", "LAVA_BUCKET");
+            recipes_config.set("shaped.Rust Plague Sword.easy_ingredients.I", "IRON_INGOT");
+            recipes_config.set("shaped.Rust Plague Sword.easy_ingredients.S", "STICK");
+            recipes_config.set("shaped.Rust Plague Sword.hard_shape", "RIR,RIR,DSD");
+            recipes_config.set("shaped.Rust Plague Sword.hard_ingredients.R", "LAVA_BUCKET");
+            recipes_config.set("shaped.Rust Plague Sword.hard_ingredients.I", "IRON_INGOT");
+            recipes_config.set("shaped.Rust Plague Sword.easy_ingredients.D", "DIAMOND");
+            recipes_config.set("shaped.Rust Plague Sword.easy_ingredients.S", "STICK");
+            recipes_config.set("shaped.Rust Plague Sword.result", "IRON_SWORD");
+            recipes_config.set("shaped.Rust Plague Sword.amount", 1);
+            recipes_config.set("shaped.Rust Plague Sword.lore", "Dalek Virus Dispenser");
+        }
         if (!recipes_config.contains("shaped.Acid Battery")) {
             recipes_config.set("shaped.Acid Battery.easy_shape", "-A-,ARA,-A-");
             recipes_config.set("shaped.Acid Battery.easy_ingredients.A", "WATER_BUCKET");
