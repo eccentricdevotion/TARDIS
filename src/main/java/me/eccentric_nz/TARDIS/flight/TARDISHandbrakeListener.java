@@ -176,6 +176,11 @@ public class TARDISHandbrakeListener implements Listener {
                                         TARDISMessage.send(player, "TRAVEL_NEED_DEST");
                                         return;
                                     }
+                                    // check there is enough power for at last random travel
+                                    if (!plugin.getTrackerKeeper().getHasDestination().containsKey(id) && tardis.getArtron_level() < plugin.getArtronConfig().getInt("random")) {
+                                        TARDISMessage.send(player, "ENERGY_NOT_ENOUGH");
+                                        return;
+                                    }
                                     // check if door is open
                                     if (isDoorOpen(id)) {
                                         TARDISMessage.send(player, "DOOR_CLOSE");
