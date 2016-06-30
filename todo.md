@@ -3,9 +3,6 @@
 ##Current bugfix version `3.6-beta-1`
 1. Fix bugs!
 
-##Next minor version `3.6-beta-1`
-1. Update TIS with new consoles/TARDIS items/worlds
-
 ##Upcoming minor version `3.7`  
 1. [Spawn abandoned TARDISes](http://dev.bukkit.org/bukkit-plugins/tardis/tickets/1277-possibility-to-abandon-a-tardis/?comment=6)
 2. Add other worlds (Silurian cave world, Gallifrey)?
