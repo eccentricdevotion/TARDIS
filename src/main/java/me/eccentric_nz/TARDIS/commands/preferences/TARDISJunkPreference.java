@@ -59,7 +59,7 @@ public class TARDISJunkPreference {
                 TARDISMessage.send(player, "JUNK_PRESET_OUTSIDE");
                 return true;
             }
-            // check if they have junk record
+            // check if they have a junk record
             HashMap<String, Object> wherej = new HashMap<String, Object>();
             wherej.put("uuid", uuid);
             ResultSetJunk rsj = new ResultSetJunk(plugin, wherej);
