@@ -1,9 +1,9 @@
 #TODO
 
-##Current bugfix version `3.6-beta-1`
+##Current bugfix version `3.6.1`
 1. Fix bugs!
 
-##Upcoming minor version `3.7`  
+##Next minor version `3.7`  
 1. [Spawn abandoned TARDISes](http://dev.bukkit.org/bukkit-plugins/tardis/tickets/1277-possibility-to-abandon-a-tardis/?comment=6)
 2. Add other worlds (Silurian cave world, Gallifrey)?
 3. Add [API Events](http://wiki.bukkit.org/Event_API_Reference#Creating_Custom_Events) that other plugins can listen for
