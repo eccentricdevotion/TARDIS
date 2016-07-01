@@ -1,0 +1,64 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="chrome=1">
+<title>TARDIS: Sonic Generator</title>
+<link rel="stylesheet" href="stylesheets/styles.css">
+<link rel="stylesheet" href="stylesheets/pygment_trac.css">
+<script src="javascripts/scale.fix.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+<!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-53340539-1', 'auto');
+  ga('send', 'pageview');
+</script>
+</head>
+<body>
+<div class="wrapper">
+    <header>
+        <h1>TARDIS</h1>
+        <p>A Bukkit plugin for all Doctor Who fans &mdash; create and use a TARDIS! It&rsquo;s bigger on the inside!</p>
+        <p class="view"><a href="https://github.com/eccentricdevotion/TARDIS">View the Project on GitHub <small>eccentricdevotion/TARDIS</small></a></p>
+        <ul>
+            <li><a href="/TARDIS/">Back <strong>home</strong></a></li>
+            <li><a href="site-map.html"><strong>Index</strong> File</a></li>
+        </ul>
+    </header>
+    <section>
+        <p><a href="#video">Jump to video</a></p>
+        <h1>Sonic Generator</h1>
+        <p>The Sonic Generator allows players to configure and produce a new screwdriver from the console. Each time a sonic is generated it costs a certain amount of Artron Energy.</p>
+        <p>You can craft a Sonic Generator (use <code>/tardisrecipe generator</code> to see the recipe), or place a flower pot and update it (<code>/tardis update generator</code>). If you place a flower pot, you will need to activate the generator the first time you use it. You do this by placing the craft ingredients into the GUI.</p>
+        <p>Right-clicking the generator opens the GUI where you can select the Sonic Screwdriver type and apply upgrades to it. The settings are saved when you generate a new sonic, so that in the future, SHIFT-right-clicking the generator will build a sonic with the last used settings without having to open the GUI.</p>
+        <h3>Costs</h3>
+        <p>The Artron cost for building a sonic is based on a percentage of the <code>full_charge</code> amount (by default <code>5000</code>) in <em>artron.yml</em>, not the amount that a TARDIS actually has in its Artron Capacitor (which may be massively overcharged, 45549% perhaps).</p>
+        <p>The way it is calculated is: Standard sonic + upgrades</p>
+        <ul>
+            <li>The cost for the standard sonic is (by default) 10% of full charge</li>
+            <li>The cost of each upgrade is also (by default) 10% of full charge</li>
+            <li>The percentage can be adjusted by server admins in artron.yml in the sonic_generator: config section</li>
+        </ul>
+        <p>So if I had a sonic with the Emerald and Redstone upgrades it would cost by default:</p>
+        <p>standard sonic + emerald upgrade + redstone upgrade which is equal to<br>
+            10% of full charge + 10% of full charge + 10% of full charge which is equal to<br>
+            500 + 500 + 500 which is equal to<br>
+            1500</p>
+        <p>The Sonic Generator GUI will show you the cost in the lower right hand corner :)</p>
+        <p><strong>Note:</strong> Only upgrades the player has permission for will appear in the GUI, and the Admin Upgrade will never appear at all.</p>
+        <h3 id="video">Video</h3>
+        <iframe src="http://player.vimeo.com/video/169341113" width="600" height="365" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
+        <p><img src="images/docs/sonic-generator.jpg" alt="sonic generator"></p>
+    </section>
+</div>
+<footer>
+    <p>Project maintained by <a href="https://github.com/eccentricdevotion">eccentricdevotion</a></p>
+    <p>Hosted on GitHub Pages &mdash; Theme by <a href="https://github.com/orderedlist">orderedlist</a></p>
+</footer>
+<!--[if !IE]><script>fixScale(document);</script><![endif]-->
+</body>
+</html>

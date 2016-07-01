@@ -1,0 +1,109 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="chrome=1">
+<title>TARDIS: Planet Skaro</title>
+<link rel="stylesheet" href="stylesheets/styles.css">
+<link rel="stylesheet" href="stylesheets/pygment_trac.css">
+<script src="javascripts/scale.fix.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+<!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-53340539-1', 'auto');
+  ga('send', 'pageview');
+</script>
+</head>
+<body>
+<div class="wrapper">
+    <header>
+        <h1>TARDIS</h1>
+        <p>A Bukkit plugin for all Doctor Who fans &mdash; create and use a TARDIS! It&rsquo;s bigger on the inside!</p>
+        <p class="view"><a href="https://github.com/eccentricdevotion/TARDIS">View the Project on GitHub <small>eccentricdevotion/TARDIS</small></a></p>
+        <ul>
+            <li><a href="/TARDIS/">Back <strong>home</strong></a></li>
+            <li><a href="site-map.html"><strong>Index</strong> File</a></li>
+        </ul>
+    </header>
+    <section>
+    	<h1>Planet Skaro</h1>
+        <p><img src="images/docs/skaro.jpg" alt="planet skaro"></p>
+        <ul>
+            <li>This world is limited to Desert, Mesa and Ocean biomes.</li>
+            <li>If configured, all water is acid and will harm / kill the player (wearing armour reduces the effect). Use a boat!</li>
+            <li>Dalek structures will generate automatically as you explore the world &mdash; there are currently two building types, a big main building and a smaller corridor type one.</li>
+            <li>Daleks will spawn in the big main buildings &mdash; you will need to have TARDISWeepingAngels plugin installed and the TARDISWeepingAngels-Resource-Pack to see them properly. There is a 10% chance that a Dalek will spawn flying in the air.</li>
+            <li>A random loot chest is located in the main Dalek building &mdash; wear plenty of amour if you want to raid these!</li>
+            <li>You can fill Acid Buckets and Rust Buckets by using an empty bucket on water and lava. Acid Buckets can be used to make Acid Batteries, which in turn can be used to make <a href="rift-manipulator.html">Rift Manipulators</a>. Rust Buckets are used in the crafting recipe for the <a href="http://tardis.wikia.com/wiki/Rust_plague" target="_blank">Rust Plague</a> Sword - this deals more damage to Daleks (Update the TARDIS-MCP resource pack to see the textures).</li>
+        </ul>
+        <p></p>
+        <h2>Enabling Skaro</h2>
+        <p>The new Skaro Dalek homeworld is disabled by default, here are some instructions on enabling it.</p>
+        <h3>Minimum requirements</h3>
+        <ul>
+            <li><a href="https://www.spigotmc.org/threads/spigot-craftbukkit-bungeecord-1-10.154136/">Spigot 1.10</a></li>
+            <li><a href="http://tardisjenkins.duckdns.org:8080/job/TARDIS/lastSuccessfulBuild/me.eccentric_nz.TARDIS$TARDIS/">TARDIS v3.6-beta-1</a> (build #1499 or higher)</li>
+            <li><a href="https://ci.onarandombox.com/view/Multiverse/job/Multiverse-Core/">Multiverse-Core v2.5</a></li>
+            <li><a href="http://build.mctcp.com/job/TerrainControl%20-%20Master%20-%20Gradle/default/">TerrainControl v2.8.2</a></li>
+        </ul>
+        <h3>Optional (but recommended) requirements</h3>
+        <ul>
+            <li><a href="http://tardisjenkins.duckdns.org:8080/job/TARDISWeepingAngels/lastSuccessfulBuild/me.eccentric_nz.tardisweepingangels$TARDISWeepingAngels/">TARDISWeepingAngels v2.3</a> (build #71 or higher)</li>
+            <li><a href="https://github.com/eccentricdevotion/TARDISWeepingAngels-Resource-Pack">TARDISWeepingAngels-ResourcePack</a></li>
+            <li><a href="https://www.spigotmc.org/resources/libs-disguises.81/">LibsDisguises v9.0.7</a> (required by TARDISWeepingAngels)</li>
+            <li><a href="https://www.spigotmc.org/resources/protocollib.1997/">ProtocolLib v4.0.2</a> (required by LibsDisguises)</li>
+        </ul>
+        <h3>Step-by-step instructions</h3>
+        <ol>
+            <li>Install the plugin versions above</li>
+            <li>Start the server so that the default plugin files are generated</li>
+            <li>Stop the server</li>
+            <li>Edit the TARDIS planets.yml file (found in the <em>plugins/TARDIS/</em> folder). It looks like this: </li>
+        </ol>
+        <pre><code>switch_resource_packs: false
+set_pack_on_join: true
+default_resource_pack: https://dl.dropboxusercontent.com/u/53758864/rp/Default.zip
+planets:
+    Skaro:
+        enabled: false
+        resource_pack: https://dl.dropboxusercontent.com/u/53758864/rp/Skaro.zip
+        acid: true
+        acid_damage: 5
+        acid_potions:
+        &mdash; WEAKNESS
+        &mdash; POISON
+        rust: true
+    TARDIS_TimeVortex:
+        resource_pack: default</code></pre>
+        <p><code>switch_resource_packs: [true|false]</code> &mdash; To make the Skaro world look a little different than a regular world, TARDIS can set a small (79KB) resource pack when you switch worlds (you must enable server resource packs in the Minecraft client). The resource pack changes the colour of the sky, clouds, water, lava and fog &mdash; you will need to install <a href="http://www.minecraftforum.net/forums/mapping-and-modding/minecraft-mods/1272953">Optifine</a>.</p>
+        <p><code>set_pack_on_join: [true|false]</code> &mdash; if players join the server in the Skaro world, setting this to <code>true</code> will switch the resource pack for them.</p>
+        <p><code>default_resource_pack: https://dl.dropboxusercontent.com/u/53758864/rp/Default.zip</code> &mdash; This is just an empty resource pack (954 bytes). It is needed to revert back to the default (or other installed) resource pack colours. You can either host your own, or use the one provided. Worlds not listed in the <code>planets</code> section will use this.</p>
+        <p><code>planets</code> &mdash; This is a list of worlds on your server. If you want to use the world resource pack switching feature for other server worlds, you can add them here. Use the <code>TARDIS_TimeVortex</code> entry as an example.</p>
+        <p><code>planets: Skaro</code> &mdash; this is the config section for the custom Skaro world. The options are explaind below:</p>
+        <div style="padding-left:30px;">
+            <p><code>enabled: [true|false]</code> &mdash; whether this world should be created and managed by TARDIS.</p>
+            <p><code>resource_pack: https://dl.dropboxusercontent.com/u/53758864/rp/Skaro.zip</code> &mdash; this is where you specify the URL to the resource pack you want to switch to when entering the world. Host your own, or use the one provided.</p>
+            <p><code>acid: [true|false]</code> &mdash; whether all the water in the world is acid (and harms the player).</p>
+            <p><code>acid_damage: [amount]</code> &mdash; the amount of damage a player takes when in acid water.</p>
+            <p><code>acid_potions: []</code> &mdash; optional list of potion effects to give the player when they are in acid water. You can add any potion types from the list here: <a href="https://hub.spigotmc.org/stash/projects/SPIGOT/repos/bukkit/browse/src/main/java/org/bukkit/potion/PotionType.java">SPIGOT PotionType.java</a>.</p>
+            <p><code>rust: [true|false]</code> &mdash; whether rust is enabled (not actually used yet).</p>
+        </div>
+        <h3>Step-by-step instructions (continued...)</h3>
+        <ol>
+            <li>Set, at a minimum, <code>planets: Skaro: enabled: true</code>, to use resource pack switching set <code>switch_resource_packs: true</code></li>
+            <li>Start the server</li>
+        </ol>
+        <p>TARDIS will copy the required TerrainControl config files to the server and create a new world called &lsquo;Skaro&rsquo; that uses TerrainControl as the world generator. The Skaro world will also be enabled for TARDIS travel.</p>
+    </section>
+</div>
+<footer>
+    <p>Project maintained by <a href="https://github.com/eccentricdevotion">eccentricdevotion</a></p>
+    <p>Hosted on GitHub Pages &mdash; Theme by <a href="https://github.com/orderedlist">orderedlist</a></p>
+</footer>
+<!--[if !IE]><script>fixScale(document);</script><![endif]-->
+</body>
+</html>
