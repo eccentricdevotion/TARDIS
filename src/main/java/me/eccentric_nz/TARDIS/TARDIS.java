@@ -86,6 +86,7 @@ import me.eccentric_nz.TARDIS.siegemode.TARDISSiegeRunnable;
 import me.eccentric_nz.TARDIS.travel.TARDISArea;
 import me.eccentric_nz.TARDIS.travel.TARDISPluginRespect;
 import me.eccentric_nz.TARDIS.utility.TARDISBlockSetters;
+import me.eccentric_nz.TARDIS.utility.TARDISJunkPlayerPersister;
 import me.eccentric_nz.TARDIS.utility.TARDISLocationGetters;
 import me.eccentric_nz.TARDIS.utility.TARDISMapChecker;
 import me.eccentric_nz.TARDIS.utility.TARDISMultiverseHelper;
@@ -361,6 +362,7 @@ public class TARDIS extends JavaPlugin {
                 thp.load();
             }
             new TARDISVortexPersister(this).load();
+            new TARDISJunkPlayerPersister(this).load();
             setDates();
             startStandBy();
             if (getConfig().getBoolean("allow.perception_filter")) {
