@@ -34,6 +34,7 @@ public enum ROOM {
     HUTCH,
     IGLOO,
     KITCHEN,
+    LAZARUS,
     LIBRARY,
     MUSHROOM,
     PASSAGE,

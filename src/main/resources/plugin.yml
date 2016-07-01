@@ -176,6 +176,8 @@ permissions:
       tardis.room.gravity: true
       tardis.room.greenhouse: true
       tardis.room.harmony: true
+      tardis.room.hutch: true
+      tardis.room.igloo: true
       tardis.room.kitchen: true
       tardis.room.lazarus: true
       tardis.room.library: true
