@@ -1,20 +1,34 @@
 #TODO
 
-##Current version `3.5`
-1. Fix stuff!
-2. Throw malfunction if no destination found or player is denied travel (configurable)
-3. `/tprefs policebox_textures [on|off]`
-4. * Hostile Action Dispersal System
-5. TARDIS Junk Mode
-   * `/tprefs junk [on|off]`
-   * `/tprefs junk [wall|floor] [block_type]`
-6. Telepathic circuit
-7. Companion GUI
-8. TARDISDalekCities addon?
+##Current bugfix version `3.6.1`
+1. Fix bugs!
+   * Relocate player to safe location when upgrading to / from coral console
+   * Add missing room perms to plugin.yml
+   * Add missing LAZARUS enum to ROOM
 
-##Upcoming version `3.6`
-* TARDISSonicBlaster addon?
-
+##Next minor version `3.7`  
+1. [Spawn abandoned TARDISes](http://dev.bukkit.org/bukkit-plugins/tardis/tickets/1277-possibility-to-abandon-a-tardis/?comment=6)
+2. Add other worlds (Silurian cave world, Gallifrey)?
+3. Add [API Events](http://wiki.bukkit.org/Event_API_Reference#Creating_Custom_Events) that other plugins can listen for
+   * Chameleon Arch events
+   * Desktop Theme events
+   * Zero Room events
+   * Materialisation events
+   * Sonic Screwdriver events
+   * Lazarus Device events
+   * Malfunction event
+   * Artron Energy event
+   * TARDIS creation / destruction event
+   * TARDIS enter / exit event
+   * HADS event
+   * Mob farming / ejection events
+   * ARS / room growing event
+   * Siege / desiege events
+   * Abandon / claim events
+4. Update console schematics to remove MONSTER_EGG blocks, except for the ARS one (data = 2), as it is needed for initially setting up the ARS data and updating it when using the Desktop Theme
+5. Update [Chameleon Circuit GUI](http://dev.bukkit.org/bukkit-plugins/tardis/tickets/1341-new-chameleon-circuit-gui/)
+6. TARDIS Junk Mode - `/tprefs junk [wall|floor] [block_type]`?
+7. TARDISSonicBlaster addon?
 
 ##Future version `4+`
 * SpongeAPI
@@ -22,9 +36,8 @@
 * Slimmer TARDIS option?
 
 ##Resource Pack / TARDISWeepingAngels
-
-1. Re-skin mobs for Resource pack, and add new mob sounds
-
+1. Something with an invisible Shulker passenger - or an invisible bat with a Shulker passemger (Toclafane?)
+2. Re-skin mobs for Resource pack, and add new mob sounds
    * Villagers -> Ood - _started texture_
    * Villagers -> Hath
    * Endermen -> The Silence - _implemented, but texture needs to be finished_
@@ -33,13 +46,18 @@
    * Witches -> Slitheen / Whispermen?
    * Wolves -> K-9? (All the textures I seen so far just don't work - you shouldn't see the legs...)
    * Slimes -> Adipose
+ 3. Sycorax
+ 4. Scarecrows
+ 
+##TIPS visulisation tool
+* Use WorldGuard region data
 
 ##Waiting on Bukkit / SpigotAPI
 0. IDs/data are soon to be history... so convert all ID/data use to block states 
 1. Get/set horse speed (Attribute API)
-2. Achievements API is now available, but doesn't allow custom achievements :( [https://bukkit.atlassian.net/browse/BUKKIT-5672](https://bukkit.atlassian.net/browse/BUKKIT-5672)
+2. Achievements API is now available, but doesn't allow custom achievements :(
 
-##Minecraft API when available
+##Minecraft API if ever available
 1. Recreate everything with the new API :)
 2. Create custom blocks for the TARDIS and console.
 3. Custom TARDIS items and crafting recipes for the same.

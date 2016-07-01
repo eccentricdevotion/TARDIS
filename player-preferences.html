@@ -20,116 +20,140 @@
 </head>
 <body>
 <div class="wrapper">
-	<header>
-		<h1>TARDIS</h1>
-		<p>A Bukkit plugin for all Doctor Who fans &mdash; create and use a TARDIS! It&rsquo;s bigger on the inside!</p>
-		<p class="view"><a href="https://github.com/eccentricdevotion/TARDIS">View the Project on GitHub <small>eccentricdevotion/TARDIS</small></a></p>
-		<ul>
-			<li><a href="/TARDIS/">Back <strong>home</strong></a></li>
-			<li><a href="commands.html"><strong>Commands</strong> page</a></li>
-			<li><a href="site-map.html"><strong>Index</strong> File</a></li>
-		</ul>
-	</header>
-	<section>
-		<h1>Player Preferences</h1>
-		<p>There are a number of specific player preferences that you can change:</p>
-		<ul>
-			<li>TARDIS key</li>
-			<li>Sound effects</li>
-			<li>Who quotes</li>
-			<li>Wall material</li>
-			<li>Floor material</li>
-			<li>Siege Wall material</li>
-			<li>Siege Floor material</li>
-			<li>Isomorphic controls</li>
-			<li>Autonomous homing function</li>
-			<li>HADS</li>
-			<li>Emergency Program One</li>
-			<li>Police Box sign (not available in TARDIS v2.6 to v2.8)</li>
-			<li>Police Box lamp (only available if the TARDIS preset is a Police Box)</li>
-			<li>Beacon</li>
-			<li>Do Not Disturb (DND)</li>
-			<li>Build flag</li>
-			<li>Minecart sounds</li>
-			<li>Exterior Rendering Room</li>
-			<li>Wool Lights</li>
-			<li>Connected Textures</li>
-			<li>Travel Bar</li>
-			<li>Difficulty</li>
-			<li>Farming</li>
-			<li>Lanterns</li>
-		</ul>
-		<p>Each preference can be set with a command, and some of them can be set via an inventory based GUI (if the player has a Sonic Screwdriver, sneaking and right-clicking air will open the Player Preferences GUI).</p>
-		<h2>Player preference commands</h2>
-		<h3><code>/tardisprefs</code></h3>
-		<p>To change the TARDIS Key item, type:</p>
-		<pre><code>/tardisprefs key [item]</code></pre>
-		<p>The server admin may have restricted the list of items that may be used for the TARDIS Key. Use auto-completion to see a list of available items e.g. type <code>/tardisprefs key</code> then press the TAB key.</p>
-		<p>To change the look of your TARDIS Key, type:</p>
-		<pre><code>/tardisprefs key_menu</code></pre>
-		<p>This requires the TARDIS Resource Pack and Custom Item Textures Mod (included in MCPatcher and Optifine).  Players without the mod will see no change in the appearance of their key.</p>
-		<p>To toggle the TARDIS sound effects on or off, type:</p>
-		<pre><code>/tardisprefs sfx [on|off]</code></pre>
-		<p>If the server admin has disabled sound effects in the plugin config, this command will have no effect.</p>
-		<p>To toggle the Who quotes on or off, type:</p>
-		<pre><code>/tardisprefs quotes [on|off]</code></pre>
-		<p>To change the block room walls and floors are grown with, type:</p>
-		<pre><code>/tardisprefs [wall|floor] [material]</code></pre>
-		<p>To change the block type that changes when a TARDIS enters siege mode, type:</p>
-		<pre><code>/tardisprefs [siege_wall|siege_floor] [material]</code></pre>
-		<p>Where <code>[material]</code> is a block from the list on the <a href="walls.html">Wall materials</a> page. This setting has no effect if <code>siege.textures: false</code> is set in the coinfig.</p>
-		<p>To change whether the TARDIS Autonomous homing function takes the Police Box to the nearest recharge point or the Tardis &lsquo;home&rsquo; (whichever is closest) when the Time Lord owner dies, type:</p>
-		<pre><code>/tardisprefs auto [on|off]</code></pre>
-		<p>If the server admin has disabled the autonomous homing function in the plugin config, this command will have no effect.</p>
-		<p>To toggle HADS on or off, type:</p>
-		<pre><code>/tardisprefs hads [on|off]</code></pre>
-		<p>To toggle the Isomorphic controls on or off, type:</p>
-		<pre><code>/tardisprefs isomorphic [on|off]</code></pre>
-		<p>To toggle whether the TARDIS console beacon is on or off during time travel, type:</p>
-		<pre><code>/tardisprefs beacon [on|off]</code></pre>
-		<p>Annoyed by other players time travelling to your location? To toggle whether you want to allow other players to time travel to you, type:</p>
-		<pre><code>/tardisprefs dnd [on|off]</code></pre>
-		<p>To toggle the Police Box sign on or off, type:</p>
-		<pre><code>/tardisprefs sign [on|off]</code></pre>
-		<p>To toggle whether you enter the Exterior Rendering Room after a scan is completed, type:</p>
-		<pre><code>/tardisprefs renderer [on|off]</code></pre>
-		<p>To set the type of block used as the Police Box lamp, type:</p>
-		<pre><code>/tardisprefs lamp [material]</code></pre>
-		<p>The server admin may have restricted the blocks that can be used as a lamp.</p>
-		<h3><code>/tardisprefs build</code></h3>
-		<p>You can toggle the whether companions can build inside your TARDIS with this command, type:</p>
-		<pre><code>/tardis build [on|off]</code></pre>
-		<h3><code>/tardisprefs minecart</code></h3>
-		<p>You can choose whether to use TARDIS Resource Pack sounds or default Minecraft sounds for TARDIS doors and materialisation with this command, type:</p>
-		<pre><code>/tardisprefs minecart [on|off]</code></pre>	
-		<h3><code>/tardisprefs wool_lights</code></h3>
-		<p>You can choose whether to use black wool or sponge (re-textured with the TARDIS Resource Pack to look like Redstone Lamp Off blocks) for the off state of the TARDIS lights with this command, type:</p>
-		<pre><code>/tardisprefs wool_lights [on|off]</code></pre>
-		<h3><code>/tardisprefs ctm</code></h3>
-		<p>You can choose whether your Police Box preset uses the Connected Textures Mod to change the block to the left of the door to a quartz pillar that is retextured to the Police Box sign (players without the mod installed will see a plain quartz pillar instead of the regular blue wool when this is <code>on</code>) with this command, type:</p>
-		<pre><code>/tardisprefs ctm [on|off]</code></pre>
-		<h3><code>/tardisprefs travelbar</code></h3>
-		<p>You can choose whether to show a <em>travel time remaining</em> status bar with this command, type:</p>
-		<pre><code>/tardisprefs travelbar [on|off]</code></pre>
-		<h3 id="diff"><code>/tardisprefs difficulty</code></h3>
-		<p>If allowed by the plugin configuration (and the server difficulty is set to <code>hard</code>), you can choose a TARDIS difficulty level with this command, type:</p>
-		<pre><code>/tardisprefs difficulty [easy|hard]</code></pre>
-		<h3><code>/tardisprefs farm</code></h3>
-		<p>Turn on TARDIS mob farming (requires the appropriate room, or <code>allow.spawn_eggs: true</code> in the config) with this command, type:</p>
-		<pre><code>/tardisprefs farm [on|off]</code></pre>
-		<h3><code>/tardisprefs lanterns</code></h3>
-		<p>Set whether your TARDIS console uses lanterns or redstone lamps with this command, type:</p>
-		<pre><code>/tardisprefs lanterns [on|off]</code></pre>
+    <header>
+        <h1>TARDIS</h1>
+        <p>A Bukkit plugin for all Doctor Who fans &mdash; create and use a TARDIS! It&rsquo;s bigger on the inside!</p>
+        <p class="view"><a href="https://github.com/eccentricdevotion/TARDIS">View the Project on GitHub <small>eccentricdevotion/TARDIS</small></a></p>
+        <ul>
+            <li><a href="/TARDIS/">Back <strong>home</strong></a></li>
+            <li><a href="commands.html"><strong>Commands</strong> page</a></li>
+            <li><a href="site-map.html"><strong>Index</strong> File</a></li>
+        </ul>
+    </header>
+    <section>
+        <h1>Player Preferences</h1>
+        <p>There are a number of specific player preferences that you can change:</p>
+        <ul>
+            <li>TARDIS key</li>
+            <li>Sound effects</li>
+            <li>Who quotes</li>
+            <li>Wall material</li>
+            <li>Floor material</li>
+            <li>Siege Wall material</li>
+            <li>Siege Floor material</li>
+            <li>Isomorphic controls</li>
+            <li>Autonomous homing function</li>
+            <li>HADS</li>
+            <li>Emergency Program One</li>
+            <li>Police Box sign (not available in TARDIS v2.6 to v2.8)</li>
+            <li>Police Box lamp (only available if the TARDIS preset is a Police Box)</li>
+            <li>Beacon</li>
+            <li>Do Not Disturb (DND)</li>
+            <li>Build flag</li>
+            <li>Minecart sounds</li>
+            <li>Exterior Rendering Room</li>
+            <li>Wool Lights</li>
+            <li>Connected Textures</li>
+            <li>Travel Bar</li>
+            <li>Difficulty</li>
+            <li>Farming</li>
+            <li>Lanterns</li>
+            <li>Junk Mode</li>
+            <li>Interior hum sound effects</li>
+        </ul>
+        <p>Each preference can be set with a command, and some of them can be set via an inventory based GUI (if the player has a Sonic Screwdriver, sneaking and right-clicking air will open the Player Preferences GUI).</p>
+        <h2>Player preference commands</h2>
+        <h3><code>/tardisprefs</code></h3>
+        <p>To change the TARDIS Key item, type:</p>
+        <pre><code>/tardisprefs key [item]</code></pre>
+        <p>The server admin may have restricted the list of items that may be used for the TARDIS Key. Use auto-completion to see a list of available items e.g. type <code>/tardisprefs key</code> then press the TAB key.</p>
+        <p>To change the look of your TARDIS Key, type:</p>
+        <pre><code>/tardisprefs key_menu</code></pre>
+        <p>This requires the TARDIS Resource Pack and Custom Item Textures Mod (included in MCPatcher and Optifine).  Players without the mod will see no change in the appearance of their key.</p>
+        <p>To toggle the TARDIS sound effects on or off, type:</p>
+        <pre><code>/tardisprefs sfx [on|off]</code></pre>
+        <p>To choose the TARDIS interior hum sound effect that you want to hear, type:</p>
+        <pre><code>/tardisprefs hum [sound]</code></pre>
+        <p>The sounds are called:</p>
+        <ul>
+            <li>alien</li>
+            <li>atmosphere</li>
+            <li>computer</li>
+            <li>copper</li>
+            <li>coral</li>
+            <li>galaxy</li>
+            <li>learning</li>
+            <li>mind</li>
+            <li>neon</li>
+            <li>sleeping</li>
+            <li>void</li>
+            <li>random</li>
+        </ul>
+        <p>If the server admin has disabled sound effects in the plugin config, these last two commands will have no effect.</p>
+        <p>To toggle the Who quotes on or off, type:</p>
+        <pre><code>/tardisprefs quotes [on|off]</code></pre>
+        <p>To change the block room walls and floors are grown with, type:</p>
+        <pre><code>/tardisprefs [wall|floor] [material]</code></pre>
+        <p>To change the block type that changes when a TARDIS enters siege mode, type:</p>
+        <pre><code>/tardisprefs [siege_wall|siege_floor] [material]</code></pre>
+        <p>Where <code>[material]</code> is a block from the list on the <a href="walls.html">Wall materials</a> page. This setting has no effect if <code>siege.textures: false</code> is set in the coinfig.</p>
+        <p>To change whether the TARDIS Autonomous homing function takes the Police Box to the nearest recharge point or the Tardis &lsquo;home&rsquo; (whichever is closest) when the Time Lord owner dies, type:</p>
+        <pre><code>/tardisprefs auto [on|off]</code></pre>
+        <p>If the server admin has disabled the autonomous homing function in the plugin config, this command will have no effect.</p>
+        <p>To toggle HADS on or off, type:</p>
+        <pre><code>/tardisprefs hads [on|off]</code></pre>
+        <p>To toggle the Isomorphic controls on or off, type:</p>
+        <pre><code>/tardisprefs isomorphic [on|off]</code></pre>
+        <p>To toggle whether the TARDIS console beacon is on or off during time travel, type:</p>
+        <pre><code>/tardisprefs beacon [on|off]</code></pre>
+        <p>Annoyed by other players time travelling to your location? To toggle whether you want to allow other players to time travel to you, type:</p>
+        <pre><code>/tardisprefs dnd [on|off]</code></pre>
+        <p>To toggle the Police Box sign on or off, type:</p>
+        <pre><code>/tardisprefs sign [on|off]</code></pre>
+        <p>To toggle whether you enter the Exterior Rendering Room after a scan is completed, type:</p>
+        <pre><code>/tardisprefs renderer [on|off]</code></pre>
+        <p>To set the type of block used as the Police Box lamp, type:</p>
+        <pre><code>/tardisprefs lamp [material]</code></pre>
+        <p>The server admin may have restricted the blocks that can be used as a lamp.</p>
+        <h3><code>/tardisprefs build</code></h3>
+        <p>You can toggle the whether companions can build inside your TARDIS with this command, type:</p>
+        <pre><code>/tardis build [on|off]</code></pre>
+        <h3><code>/tardisprefs minecart</code></h3>
+        <p>You can choose whether to use TARDIS Resource Pack sounds or default Minecraft sounds for TARDIS doors and materialisation with this command, type:</p>
+        <pre><code>/tardisprefs minecart [on|off]</code></pre>
+        <h3><code>/tardisprefs wool_lights</code></h3>
+        <p>You can choose whether to use black wool or sponge (re-textured with the TARDIS Resource Pack to look like Redstone Lamp Off blocks) for the off state of the TARDIS lights with this command, type:</p>
+        <pre><code>/tardisprefs wool_lights [on|off]</code></pre>
+        <h3><code>/tardisprefs ctm</code></h3>
+        <p>You can choose whether your Police Box preset uses the Connected Textures Mod to change the block to the left of the door to a quartz pillar that is retextured to the Police Box sign (players without the mod installed will see a plain quartz pillar instead of the regular blue wool when this is <code>on</code>) with this command, type:</p>
+        <pre><code>/tardisprefs ctm [on|off]</code></pre>
+        <h3><code>/tardisprefs travelbar</code></h3>
+        <p>You can choose whether to show a <em>travel time remaining</em> status bar with this command, type:</p>
+        <pre><code>/tardisprefs travelbar [on|off]</code></pre>
+        <h3 id="diff"><code>/tardisprefs difficulty</code></h3>
+        <p>If allowed by the plugin configuration (and the server difficulty is set to <code>hard</code>), you can choose a TARDIS difficulty level with this command, type:</p>
+        <pre><code>/tardisprefs difficulty [easy|hard]</code></pre>
+        <h3><code>/tardisprefs farm</code></h3>
+        <p>Turn on TARDIS mob farming (requires the appropriate room, or <code>allow.spawn_eggs: true</code> in the config) with this command, type:</p>
+        <pre><code>/tardisprefs farm [on|off]</code></pre>
+        <h3><code>/tardisprefs auto_powerup</code></h3>
+        <p>To toggle automatically powering up the TARDIS when entering (if it is powered down), type:</p>
+        <pre><code>/tardisprefs auto_powerup [on|off]</code></pre>
+        <h3><code>/tardisprefs lanterns</code></h3>
+        <p>Set whether your TARDIS console uses lanterns or redstone lamps with this command, type:</p>
+        <pre><code>/tardisprefs lanterns [on|off]</code></pre>
         <p>ON means that the console will use sea lanterns, toggle the lights off and on to see the change.</p>
-		<h2>Other preferences</h2>
-		<h3><code>/tardis chameleon</code></h3>
-		<p>You can toggle the Chameleon Circuit on or off with this command, type:</p>
-		<pre><code>/tardis chameleon [on|off]</code></pre>
-	</section>
+        <h2>Other preferences</h2>
+        <h3><code>/tardis chameleon</code></h3>
+        <p>You can toggle the Chameleon Circuit on or off with this command, type:</p>
+        <pre><code>/tardis chameleon [on|off]</code></pre>
+        <p>You can toggle Junk Mode on or off with this command, type:</p>
+        <pre><code>/tardisprefs junk [on|off]</code></pre>
+    </section>
 </div>
 <footer>
-	<p>Project maintained by <a href="https://github.com/eccentricdevotion">eccentricdevotion</a></p>
-	<p>Hosted on GitHub Pages &mdash; Theme by <a href="https://github.com/orderedlist">orderedlist</a></p>
+    <p>Project maintained by <a href="https://github.com/eccentricdevotion">eccentricdevotion</a></p>
+    <p>Hosted on GitHub Pages &mdash; Theme by <a href="https://github.com/orderedlist">orderedlist</a></p>
 </footer>
 <!--[if !IE]><script>fixScale(document);</script><![endif]-->
 </body>
