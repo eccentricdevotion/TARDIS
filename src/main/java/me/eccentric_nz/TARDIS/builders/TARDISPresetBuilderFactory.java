@@ -151,7 +151,6 @@ public class TARDISPresetBuilderFactory {
                 if (plugin.getUtils().inTARDISWorld(bd.getPlayer().getPlayer())) {
                     TARDISSounds.playTARDISSound(bd.getPlayer().getPlayer().getLocation(), "tardis_land_fast");
                 }
-//            } else if (plugin.getConfig().getBoolean("police_box.materialise") && !preset.equals(PRESET.INVISIBLE)) {
             } else if (!preset.equals(PRESET.INVISIBLE)) {
                 plugin.getTrackerKeeper().getMaterialising().add(bd.getTardisID());
                 if (preset.equals(PRESET.JUNK)) {
@@ -163,20 +162,19 @@ public class TARDISPresetBuilderFactory {
                     int taskID = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, runnable, 10L, 20L);
                     runnable.setTask(taskID);
                 }
+            } else {
+                final int id = cham_id;
+                final byte data = cham_data;
+                // delay by the usual time so handbrake message shows after materialisation sound
+                plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
+                    @Override
+                    public void run() {
+                        plugin.getTrackerKeeper().getMaterialising().add(bd.getTardisID());
+                        TARDISInstaPreset insta = new TARDISInstaPreset(plugin, bd, PRESET.INVISIBLE, id, data, false);
+                        insta.buildPreset();
+                    }
+                }, 375L);
             }
-//            else {
-//                final int id = cham_id;
-//                final byte data = cham_data;
-//                // delay by the usual time so handbrake message shows after materialisation sound
-//                plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
-//                    @Override
-//                    public void run() {
-//                        plugin.getTrackerKeeper().getMaterialising().add(tmd.getTardisID());
-//                        TARDISInstaPreset insta = new TARDISInstaPreset(plugin, tmd, PRESET.INVISIBLE, id, data, false);
-//                        insta.buildPreset();
-//                    }
-//                }, 430L);
-//            }
             // update demat so it knows about the current preset after it has changed
             HashMap<String, Object> whered = new HashMap<String, Object>();
             whered.put("tardis_id", bd.getTardisID());
