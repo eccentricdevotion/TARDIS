@@ -207,6 +207,15 @@ public class TARDISPrefsMenuListener implements Listener {
                             TARDISMessage.send(p, "JUNK_PRESET_OUTSIDE");
                             return;
                         }
+                        if (plugin.getTrackerKeeper().getRebuildCooldown().containsKey(uuid)) {
+                            long now = System.currentTimeMillis();
+                            long cooldown = plugin.getConfig().getLong("police_box.rebuild_cooldown");
+                            long then = plugin.getTrackerKeeper().getRebuildCooldown().get(uuid) + cooldown;
+                            if (now < then) {
+                                TARDISMessage.send(p, "COOLDOWN", String.format("%d", cooldown / 1000));
+                                return;
+                            }
+                        }
                         HashMap<String, Object> where = new HashMap<String, Object>();
                         where.put("uuid", uuid.toString());
                         ResultSetJunk rsj = new ResultSetJunk(plugin, where);

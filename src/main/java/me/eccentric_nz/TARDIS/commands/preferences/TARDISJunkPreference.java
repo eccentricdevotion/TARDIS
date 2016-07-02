@@ -17,6 +17,7 @@
 package me.eccentric_nz.TARDIS.commands.preferences;
 
 import java.util.HashMap;
+import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetJunk;
@@ -40,10 +41,11 @@ public class TARDISJunkPreference {
     }
 
     public boolean toggle(Player player, String arg, QueryFactory qf) {
-        String uuid = player.getUniqueId().toString();
+        UUID uuid = player.getUniqueId();
+        String ustr = uuid.toString();
         // get TARDIS
         HashMap<String, Object> where = new HashMap<String, Object>();
-        where.put("uuid", uuid);
+        where.put("uuid", ustr);
         ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false, 0);
         if (rs.resultSet()) {
             Tardis tardis = rs.getTardis();
@@ -53,15 +55,24 @@ public class TARDISJunkPreference {
             String chameleon = tardis.getChameleon();
             // must be outside of the TARDIS
             HashMap<String, Object> wheret = new HashMap<String, Object>();
-            wheret.put("uuid", uuid);
+            wheret.put("uuid", ustr);
             ResultSetTravellers rst = new ResultSetTravellers(plugin, wheret, false);
             if (rst.resultSet()) {
                 TARDISMessage.send(player, "JUNK_PRESET_OUTSIDE");
                 return true;
             }
+            if (plugin.getTrackerKeeper().getRebuildCooldown().containsKey(uuid)) {
+                long now = System.currentTimeMillis();
+                long cooldown = plugin.getConfig().getLong("police_box.rebuild_cooldown");
+                long then = plugin.getTrackerKeeper().getRebuildCooldown().get(uuid) + cooldown;
+                if (now < then) {
+                    TARDISMessage.send(player.getPlayer(), "COOLDOWN", String.format("%d", cooldown / 1000));
+                    return true;
+                }
+            }
             // check if they have a junk record
             HashMap<String, Object> wherej = new HashMap<String, Object>();
-            wherej.put("uuid", uuid);
+            wherej.put("uuid", ustr);
             ResultSetJunk rsj = new ResultSetJunk(plugin, wherej);
             boolean has = rsj.resultSet();
             HashMap<String, Object> sett = new HashMap<String, Object>();
@@ -71,12 +82,12 @@ public class TARDISJunkPreference {
                 if (has) {
                     // update record
                     HashMap<String, Object> whereu = new HashMap<String, Object>();
-                    whereu.put("uuid", uuid);
+                    whereu.put("uuid", ustr);
                     set.put("preset", current);
                     qf.doSyncUpdate("junk", set, whereu);
                 } else {
                     // insert record
-                    set.put("uuid", uuid);
+                    set.put("uuid", ustr);
                     set.put("tardis_id", id);
                     set.put("preset", current);
                     qf.doSyncInsert("junk", set);
@@ -97,7 +108,7 @@ public class TARDISJunkPreference {
             }
             // update tardis table
             HashMap<String, Object> whereu = new HashMap<String, Object>();
-            whereu.put("uuid", uuid);
+            whereu.put("uuid", ustr);
             qf.doSyncUpdate("tardis", sett, whereu);
             // set the Chameleon Circuit sign
             TARDISStaticUtils.setSign(chameleon, 3, cham_set, player);
