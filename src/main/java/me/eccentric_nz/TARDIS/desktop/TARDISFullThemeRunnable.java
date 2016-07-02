@@ -290,7 +290,6 @@ public class TARDISFullThemeRunnable extends TARDISThemeRunnable implements Runn
                     psb.setData(psdata, true);
                     if (psb.getType().equals(Material.WALL_SIGN)) {
                         Sign cs = (Sign) psb.getState();
-//                        if (s > 0) {
                         cs.setLine(0, "");
                         cs.setLine(1, plugin.getSigns().getStringList("control").get(0));
                         cs.setLine(2, plugin.getSigns().getStringList("control").get(1));
@@ -348,6 +347,13 @@ public class TARDISFullThemeRunnable extends TARDISThemeRunnable implements Runn
                 qf.alterEnergyLevel("tardis", refund, setr, null);
                 if (player.isOnline()) {
                     TARDISMessage.send(player, "ENERGY_RECOVERED", String.format("%d", refund));
+                }
+            } else if (tud.getSchematic().getPermission().equals("coral") && tud.getPrevious().isTall()) {
+                // clean up space above coral console
+                int tidy = starty + h;
+                int plus = 32 - h;
+                for (Chunk chk : chunks) {
+                    setAir(chk.getBlock(0, 64, 0).getX(), tidy, chk.getBlock(0, 64, 0).getZ(), chk.getWorld(), plus);
                 }
             }
             // add / remove chunks from the chunks table

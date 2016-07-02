@@ -2,6 +2,8 @@
 
 ##Current bugfix version `3.6.1`
 1. Fix bugs!
+   * Don't toggle junk mode if rebuild cooldown is in effect
+   * Properly set? / restore biome when setting junk mode
 
 ##Next minor version `3.7`  
 1. [Spawn abandoned TARDISes](http://dev.bukkit.org/bukkit-plugins/tardis/tickets/1277-possibility-to-abandon-a-tardis/?comment=6)
