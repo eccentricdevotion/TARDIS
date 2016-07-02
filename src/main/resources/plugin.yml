@@ -126,13 +126,19 @@ permissions:
     description: Allow players to build the 'Architectural Reconfiguration System' TARDIS.
     default: op
   tardis.war:
-    description: Allow players to build the 'War Doctor's TARDIS.
+    description: Allow players to build the 'War Doctor's' TARDIS.
     default: op
   tardis.pyramid:
     description: Allow players to build the Sandstone Pyramid TARDIS.
     default: op
   tardis.master:
     description: Allow players to build the Master's TARDIS.
+    default: op
+  tardis.ender:
+    description: Allow players to build the Ender TARDIS.
+    default: op
+  tardis.coral:
+    description: Allow players to build the Tenth Doctor's coral TARDIS.
     default: op
   tardis.storage:
     description: Allow players to utilise the TARDIS Disk Storage.
