@@ -24,8 +24,9 @@
    * Abandon / claim events
 4. Update console schematics to remove MONSTER_EGG blocks, except for the ARS one (data = 2), as it is needed for initially setting up the ARS data and updating it when using the Desktop Theme
 5. Update [Chameleon Circuit GUI](http://dev.bukkit.org/bukkit-plugins/tardis/tickets/1341-new-chameleon-circuit-gui/)
-6. TARDIS Junk Mode - `/tprefs junk [wall|floor] [block_type]`?
-7. TARDISSonicBlaster addon?
+6. [Player console archiving](http://dev.bukkit.org/bukkit-plugins/tardis/tickets/1201-player-console-archive-feature/)
+7. TARDIS Junk Mode - `/tprefs junk [wall|floor] [block_type]`?
+8. TARDISSonicBlaster addon?
 
 ##Future version `4+`
 * SpongeAPI
