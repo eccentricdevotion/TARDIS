@@ -45,6 +45,7 @@ public class TARDISShapedRecipe {
         this.sonic_colour_lookup.put("master", ChatColor.DARK_BLUE);
         this.sonic_colour_lookup.put("sarah_jane", ChatColor.RED);
         this.sonic_colour_lookup.put("river_song", ChatColor.GOLD);
+        this.sonic_colour_lookup.put("twelfth", ChatColor.UNDERLINE);
         this.sonic_colour_lookup.put("war", ChatColor.DARK_RED);
         this.key_colour_lookup.put("first", ChatColor.AQUA);
         this.key_colour_lookup.put("second", ChatColor.DARK_BLUE);

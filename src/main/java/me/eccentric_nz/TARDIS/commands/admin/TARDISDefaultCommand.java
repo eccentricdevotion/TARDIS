@@ -32,7 +32,7 @@ public class TARDISDefaultCommand {
         this.plugin = plugin;
     }
 
-    public boolean setSonic(CommandSender sender, String[] args) {
+    public boolean setDefaultItem(CommandSender sender, String[] args) {
         String which = args[0].toLowerCase();
         int count = args.length;
         StringBuilder buf = new StringBuilder();
