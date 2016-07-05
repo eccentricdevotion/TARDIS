@@ -24,6 +24,7 @@ import me.eccentric_nz.TARDIS.database.ResultSetGravity;
 import me.eccentric_nz.TARDIS.database.ResultSetTardisID;
 import me.eccentric_nz.TARDIS.rooms.TARDISGravityWellRunnable;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
+import me.eccentric_nz.TARDIS.utility.TARDISVoidFall;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
@@ -156,19 +157,33 @@ public class TARDISGravityWellListener implements Listener {
      */
     @EventHandler(ignoreCancelled = true)
     public void onEntityDamage(EntityDamageEvent e) {
-        if (e.getCause() == EntityDamageEvent.DamageCause.FALL) {
-            Entity ent = e.getEntity();
-            if ((ent instanceof Player)) {
-                Location l = ent.getLocation();
-                l.setX(l.getBlockX());
-                l.setY(l.getBlockY() - 1);
-                l.setZ(l.getBlockZ());
-                l.setPitch(0.0F);
-                l.setYaw(0.0F);
-                String loc = l.toString();
-                if (plugin.getGeneralKeeper().getGravityDownList().contains(loc)) {
-                    e.setCancelled(true);
-                }
+        Entity ent = e.getEntity();
+        if ((ent instanceof Player)) {
+            Location l = ent.getLocation();
+            switch (e.getCause()) {
+                case FALL:
+                    l.setX(l.getBlockX());
+                    l.setY(l.getBlockY() - 1);
+                    l.setZ(l.getBlockZ());
+                    l.setPitch(0.0F);
+                    l.setYaw(0.0F);
+                    String loc = l.toString();
+                    if (plugin.getGeneralKeeper().getGravityDownList().contains(loc)) {
+                        e.setCancelled(true);
+                    }
+                    break;
+                case VOID:
+                    Player p = (Player) ent;
+                    if (l.getBlockY() < 1 && plugin.getUtils().inTARDISWorld(p)) {
+                        if (plugin.getConfig().getString("preferences.vortex_fall").equals("kill")) {
+                            p.setHealth(0);
+                        } else {
+                            new TARDISVoidFall(plugin).teleport(p);
+                        }
+                    }
+                    break;
+                default:
+                    break;
             }
         }
     }
