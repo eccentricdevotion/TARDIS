@@ -14,3 +14,4 @@ planets:
         flying_daleks: true
     TARDIS_TimeVortex:
         resource_pack: default
+        void: true

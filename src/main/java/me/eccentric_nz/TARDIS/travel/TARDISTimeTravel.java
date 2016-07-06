@@ -143,6 +143,13 @@ public class TARDISTimeTravel {
             }
         }
         if (randworld.getEnvironment().equals(Environment.THE_END)) {
+            if (plugin.getPlanetsConfig().getBoolean("planets." + randworld.getName() + ".void")) {
+                // any location will do!
+                int voidx = randomX(rand, range, quarter, rx, ry, e, current);
+                int voidy = rand.nextInt(240) + 5;
+                int voidz = randomZ(rand, range, quarter, rz, ry, e, current);
+                return new Location(randworld, voidx, voidy, voidz);
+            }
             for (int n = 0; n < attempts; n++) {
                 wherex = rand.nextInt(240);
                 wherez = rand.nextInt(240);
@@ -180,6 +187,13 @@ public class TARDISTimeTravel {
         }
         // Assume every non-nether/non-END world qualifies as NORMAL.
         if (!randworld.getEnvironment().equals(Environment.NETHER) && !randworld.getEnvironment().equals(Environment.THE_END)) {
+            if (plugin.getPlanetsConfig().getBoolean("planets." + randworld.getName() + ".void")) {
+                // any location will do!
+                int voidx = randomX(rand, range, quarter, rx, ry, e, current);
+                int voidy = rand.nextInt(240) + 5;
+                int voidz = randomZ(rand, range, quarter, rz, ry, e, current);
+                return new Location(randworld, voidx, voidy, voidz);
+            }
             long timeout = System.currentTimeMillis() + (plugin.getConfig().getLong("travel.timeout") * 1000);
             while (true) {
                 if (System.currentTimeMillis() < timeout) {
