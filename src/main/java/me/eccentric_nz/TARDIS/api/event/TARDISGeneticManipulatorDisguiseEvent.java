@@ -16,7 +16,6 @@
  */
 package me.eccentric_nz.TARDIS.api.event;
 
-import me.eccentric_nz.TARDIS.database.data.Tardis;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;
@@ -25,15 +24,15 @@ import org.bukkit.event.HandlerList;
  *
  * @author eccentric_nz
  */
-public class TARDISEvent extends Event {
+public final class TARDISGeneticManipulatorDisguiseEvent extends Event {
 
     private static final HandlerList HANDLERS = new HandlerList();
     private final Player player;
-    private final Tardis tardis;
+    private final String disguise;
 
-    public TARDISEvent(Player player, Tardis tardis) {
+    public TARDISGeneticManipulatorDisguiseEvent(Player player, String disguise) {
         this.player = player;
-        this.tardis = tardis;
+        this.disguise = disguise;
     }
 
     /**
@@ -46,13 +45,12 @@ public class TARDISEvent extends Event {
     }
 
     /**
-     * Returns a Tardis data object. Use the object's getter methods to retrieve
-     * any data that is stored in the database for this TARDIS.
+     * Returns the name of the disguise the player used.
      *
-     * @return the Tardis data object
+     * @return the disguise name
      */
-    public Tardis getTardis() {
-        return tardis;
+    public String getDisguise() {
+        return disguise;
     }
 
     @Override

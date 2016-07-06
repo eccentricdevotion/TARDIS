@@ -16,7 +16,7 @@
  */
 package me.eccentric_nz.TARDIS.api.event;
 
-import me.eccentric_nz.TARDIS.database.data.Tardis;
+import me.eccentric_nz.TARDIS.arch.TARDISWatchData;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;
@@ -25,15 +25,15 @@ import org.bukkit.event.HandlerList;
  *
  * @author eccentric_nz
  */
-public class TARDISEvent extends Event {
+public final class TARDISChameleonArchEvent extends Event {
 
     private static final HandlerList HANDLERS = new HandlerList();
     private final Player player;
-    private final Tardis tardis;
+    private final TARDISWatchData tardisWatchData;
 
-    public TARDISEvent(Player player, Tardis tardis) {
+    public TARDISChameleonArchEvent(Player player, TARDISWatchData tardisWatchData) {
         this.player = player;
-        this.tardis = tardis;
+        this.tardisWatchData = tardisWatchData;
     }
 
     /**
@@ -46,13 +46,15 @@ public class TARDISEvent extends Event {
     }
 
     /**
-     * Returns a Tardis data object. Use the object's getter methods to retrieve
-     * any data that is stored in the database for this TARDIS.
+     * Returns the Chameleon Arch
+     * {@link me.eccentric_nz.TARDIS.arch.TARDISWatchData TARDISWatchData}
+     * object. This contains the 'arched' player's new display name, and the
+     * time (in milliseconds) that they became 'arched'.
      *
-     * @return the Tardis data object
+     * @return the TARDISWatchData object
      */
-    public Tardis getTardis() {
-        return tardis;
+    public TARDISWatchData getTardisWatchData() {
+        return tardisWatchData;
     }
 
     @Override

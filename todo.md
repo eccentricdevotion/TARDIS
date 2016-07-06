@@ -7,21 +7,28 @@
 1. [Spawn abandoned TARDISes](http://dev.bukkit.org/bukkit-plugins/tardis/tickets/1277-possibility-to-abandon-a-tardis/?comment=6)
 2. Add other worlds (Silurian cave world, Gallifrey)?
 3. Add [API Events](http://wiki.bukkit.org/Event_API_Reference#Creating_Custom_Events) that other plugins can listen for
-   * Chameleon Arch events
-   * Desktop Theme events
-   * Zero Room events
-   * Materialisation events
-   * Sonic Screwdriver events
-   * Lazarus Device events
-   * Malfunction event
-   * Artron Energy event
-   * TARDIS creation / destruction event
-   * TARDIS enter / exit event
-   * HADS event
-   * Mob farming / ejection events
-   * ARS / room growing event
-   * Siege / desiege events
-   * Abandon / claim events
+   * ~~Chameleon Arch events~~
+   * ~~Desktop Theme event~~
+   * ~~Zero Room events~~
+   * ~~Materialisation events~~
+   * Sonic Screwdriver events?
+   * ~~Lazarus Device events~~
+   * ~~Malfunction event~~
+   * Artron Energy event?
+   * ~~TARDIS creation / destruction events~~
+   * ~~TARDIS enter / exit events~~
+   * ~~HADS event~~
+   * Mob farming / ejection events?
+   * ~~ARS / room growing events~~
+   * ~~Siege / desiege events~~
+   * ~~Abandon / claim events~~
+4. Add more API methods
+   * Get a `Tardis` object from `UUID`, `tardis_id`, `Player`
+   * Set a TARDISes next destination
+   * Set a TARDISes next destination and travel to it
+   * Initiate a desktop theme change
+   * Change the Chameleon circuit
+   * Spawn an abandoned TARDIS at a Bukkit Location
 4. Update console schematics to remove MONSTER_EGG blocks, except for the ARS one (data = 2), as it is needed for initially setting up the ARS data and updating it when using the Desktop Theme
 5. Update [Chameleon Circuit GUI](http://dev.bukkit.org/bukkit-plugins/tardis/tickets/1341-new-chameleon-circuit-gui/)
 6. [Player console archiving](http://dev.bukkit.org/bukkit-plugins/tardis/tickets/1201-player-console-archive-feature/)

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2014 eccentric_nz
+ * Copyright (C) 2016 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,6 +18,8 @@ package me.eccentric_nz.TARDIS.arch;
 
 import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.api.event.TARDISChameleonArchEvent;
+import me.eccentric_nz.TARDIS.api.event.TARDISChameleonArchOffEvent;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import me.libraryaddict.disguise.DisguiseAPI;
 import me.libraryaddict.disguise.disguisetypes.PlayerDisguise;
@@ -85,6 +87,7 @@ public class TARDISFobWatchListener implements Listener {
                 DisguiseAPI.disguiseToAll(player, playerDisguise);
                 player.setDisplayName(name);
                 player.setPlayerListName(name);
+                plugin.getPM().callEvent(new TARDISChameleonArchEvent(player, twd));
             } else if (plugin.getTrackerKeeper().getJohnSmith().get(uuid).getTime() <= System.currentTimeMillis()) {
                 // no permission check, always allow 'de-fobbing'
                 if (DisguiseAPI.isDisguised(player)) {
@@ -98,6 +101,7 @@ public class TARDISFobWatchListener implements Listener {
                 player.setPlayerListName(player.getName());
                 // remove player from arched table
                 new TARDISArchPersister(plugin).removeArch(uuid);
+                plugin.getPM().callEvent(new TARDISChameleonArchOffEvent(player));
             }
         }
     }

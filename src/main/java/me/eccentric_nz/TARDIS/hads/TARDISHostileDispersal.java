@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2014 eccentric_nz
+ * Copyright (C) 2016 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -22,8 +22,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.api.event.TARDISHADSEvent;
 import me.eccentric_nz.TARDIS.database.ResultSetCurrentLocation;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
+import me.eccentric_nz.TARDIS.enumeration.HADS;
 import me.eccentric_nz.TARDIS.enumeration.PRESET;
 import me.eccentric_nz.TARDIS.move.TARDISDoorCloser;
 import me.eccentric_nz.TARDIS.utility.TARDISBlockSetters;
@@ -206,6 +208,7 @@ public class TARDISHostileDispersal {
         }, 15L);
         plugin.getTrackerKeeper().getDispersed().put(uuid, l);
         plugin.getTrackerKeeper().getDispersedTARDII().add(id);
+        plugin.getPM().callEvent(new TARDISHADSEvent(hostile, id, l, HADS.DISPERSAL));
     }
 
     private List<Material> buildList() {

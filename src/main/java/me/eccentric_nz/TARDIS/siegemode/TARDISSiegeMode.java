@@ -20,6 +20,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.api.event.TARDISSiegeOffEvent;
+import me.eccentric_nz.TARDIS.api.event.TARDISSiegeEvent;
 import me.eccentric_nz.TARDIS.builders.BuildData;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetCurrentLocation;
@@ -87,6 +89,7 @@ public class TARDISSiegeMode {
                 TARDISMessage.send(p, "SIEGE_POWER");
                 return;
             }
+            plugin.getPM().callEvent(new TARDISSiegeOffEvent(p, tardis));
             // remove siege block
             siege.setType(Material.AIR);
             // rebuild preset
@@ -166,6 +169,7 @@ public class TARDISSiegeMode {
             plugin.getTrackerKeeper().getInSiegeMode().add(id);
             set.put("siege_on", 1);
             TARDISMessage.send(p, "SIEGE_ON");
+            plugin.getPM().callEvent(new TARDISSiegeEvent(p, tardis));
             // butcher hostile mobs?
             if (plugin.getConfig().getBoolean("siege.butcher")) {
                 TARDISMessage.send(p, "SIEGE_BUTCHER");

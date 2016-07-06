@@ -18,6 +18,7 @@ package me.eccentric_nz.TARDIS.commands.tardis;
 
 import java.util.HashMap;
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.api.event.TARDISAbandonEvent;
 import me.eccentric_nz.TARDIS.commands.admin.TARDISAbandonLister;
 import me.eccentric_nz.TARDIS.control.TARDISPowerButton;
 import me.eccentric_nz.TARDIS.database.ResultSetCurrentLocation;
@@ -116,13 +117,14 @@ public class TARDISAbandonCommand {
                     // close the door
                     new TARDISDoorCloser(plugin, player.getUniqueId(), id).closeDoors();
                     TARDISMessage.send(player, "ABANDONED_SUCCESS");
-                    // clear sign
-                    if (plugin.getConfig().getBoolean("police_box.name_tardis")) {
-                        HashMap<String, Object> wherec = new HashMap<String, Object>();
-                        wherec.put("tardis_id", id);
-                        ResultSetCurrentLocation rsc = new ResultSetCurrentLocation(plugin, wherec);
-                        if (rsc.resultSet()) {
-                            Location current = new Location(rsc.getWorld(), rsc.getX(), rsc.getY(), rsc.getZ());
+                    HashMap<String, Object> wherec = new HashMap<String, Object>();
+                    wherec.put("tardis_id", id);
+                    ResultSetCurrentLocation rsc = new ResultSetCurrentLocation(plugin, wherec);
+                    if (rsc.resultSet()) {
+                        Location current = new Location(rsc.getWorld(), rsc.getX(), rsc.getY(), rsc.getZ());
+                        plugin.getPM().callEvent(new TARDISAbandonEvent(player, id, current));
+                        // clear sign
+                        if (plugin.getConfig().getBoolean("police_box.name_tardis")) {
                             Sign sign = getSign(current, rsc.getDirection(), preset);
                             if (sign != null) {
                                 switch (preset) {

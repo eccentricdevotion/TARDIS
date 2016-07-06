@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2014 eccentric_nz
+ * Copyright (C) 2016 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -22,6 +22,7 @@ import java.util.UUID;
 import me.eccentric_nz.TARDIS.JSON.JSONArray;
 import me.eccentric_nz.TARDIS.JSON.JSONObject;
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.api.event.TARDISDesktopThemeEvent;
 import me.eccentric_nz.TARDIS.builders.TARDISInteriorPostioning;
 import me.eccentric_nz.TARDIS.builders.TARDISTIPSData;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
@@ -128,6 +129,7 @@ public class TARDISWallFloorRunnable extends TARDISThemeRunnable implements Runn
             // set running
             running = true;
             player = plugin.getServer().getPlayer(uuid);
+            plugin.getPM().callEvent(new TARDISDesktopThemeEvent(player, tardis, tud));
             // remove upgrade data
             plugin.getTrackerKeeper().getUpgrades().remove(uuid);
         }

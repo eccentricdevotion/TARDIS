@@ -21,6 +21,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.api.event.TARDISCreationEvent;
 import me.eccentric_nz.TARDIS.builders.BuildData;
 import me.eccentric_nz.TARDIS.builders.TARDISSpace;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
@@ -260,6 +261,7 @@ public class TARDISBlockStackListener implements Listener {
                         bd.setRebuild(false);
                         bd.setSubmarine(isSub(blockBottom));
                         bd.setTardisID(lastInsertId);
+                        plugin.getPM().callEvent(new TARDISCreationEvent(player, lastInsertId, block_loc));
                         plugin.getPresetBuilder().buildPreset(bd);
                         plugin.getInteriorBuilder().buildInner(schm, chunkworld, lastInsertId, player, wall_type, wall_data, Material.WOOL, (byte) 8, tips);
                         // set achievement completed

@@ -16,7 +16,7 @@
  */
 package me.eccentric_nz.TARDIS.api.event;
 
-import me.eccentric_nz.TARDIS.database.data.Tardis;
+import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;
@@ -25,34 +25,49 @@ import org.bukkit.event.HandlerList;
  *
  * @author eccentric_nz
  */
-public class TARDISEvent extends Event {
+public final class TARDISDestructionEvent extends Event {
 
-    private static final HandlerList HANDLERS = new HandlerList();
     private final Player player;
-    private final Tardis tardis;
-
-    public TARDISEvent(Player player, Tardis tardis) {
-        this.player = player;
-        this.tardis = tardis;
-    }
+    private final Location location;
+    private final String owner;
+    private static final HandlerList HANDLERS = new HandlerList();
 
     /**
-     * Returns the player involved in this event.
+     * A TARDIS extermination event.
      *
-     * @return the player
+     * @param player the player who is destroying the TARDIS - may be null if it
+     * is initiated by the console.
+     * @param location the location of the TARDIS exterior preset
+     * @param owner the Time Lord of the TARDIS
      */
+    public TARDISDestructionEvent(Player player, Location location, String owner) {
+        this.player = player;
+        this.location = location;
+        this.owner = owner;
+    }
+
     public Player getPlayer() {
         return player;
     }
 
     /**
-     * Returns a Tardis data object. Use the object's getter methods to retrieve
-     * any data that is stored in the database for this TARDIS.
+     * Returns the exterior location of the TARDIS being destroyed.
      *
-     * @return the Tardis data object
+     * @return the TARDIS location
      */
-    public Tardis getTardis() {
-        return tardis;
+    public Location getLocation() {
+        return location;
+    }
+
+    /**
+     * Returns the Time Lord of the TARDIS being destroyed. This may be
+     * different from the player who is doing the destroying, i.e. a server
+     * admin.
+     *
+     * @return the TARDIS owner's name
+     */
+    public String getOwner() {
+        return owner;
     }
 
     @Override

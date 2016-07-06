@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2014 eccentric_nz
+ * Copyright (C) 2016 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -21,6 +21,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.api.event.TARDISGeneticManipulatorDisguiseEvent;
+import me.eccentric_nz.TARDIS.api.event.TARDISGeneticManipulatorUndisguiseEvent;
 import me.eccentric_nz.TARDIS.listeners.TARDISMenuListener;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import me.eccentric_nz.TARDIS.utility.TARDISNumberParsers;
@@ -182,6 +184,7 @@ public class TARDISLazarusGUIListener extends TARDISMenuListener implements List
                             twaOff(player);
                         }
                         TARDISMessage.send(player, "GENETICS_RESTORED");
+                        plugin.getPM().callEvent(new TARDISGeneticManipulatorUndisguiseEvent(player));
                     }
                 }, 80L);
                 // open the door
@@ -216,6 +219,7 @@ public class TARDISLazarusGUIListener extends TARDISMenuListener implements List
                                 }
                             }
                             plugin.getServer().broadcastMessage(plugin.getPluginName() + "The Master has cloned his genetic template to all players. Behold the Master Race!");
+                            plugin.getPM().callEvent(new TARDISGeneticManipulatorDisguiseEvent(player, player.getName()));
                             // schedule a delayed task to remove the disguise
                             plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
                                 @Override
@@ -227,6 +231,7 @@ public class TARDISLazarusGUIListener extends TARDISMenuListener implements List
                                     }
                                     plugin.getServer().broadcastMessage(plugin.getPluginName() + "Lord Rassilon has reset the Master Race back to human form.");
                                     plugin.getTrackerKeeper().setImmortalityGate("");
+                                    plugin.getPM().callEvent(new TARDISGeneticManipulatorUndisguiseEvent(player));
                                 }
                             }, 3600L);
                         } else if (disguises.containsKey(uuid)) {
@@ -367,6 +372,7 @@ public class TARDISLazarusGUIListener extends TARDISMenuListener implements List
                                 }
                             }
                             TARDISMessage.send(player, "GENETICS_MODIFIED", disguise);
+                            plugin.getPM().callEvent(new TARDISGeneticManipulatorDisguiseEvent(player, disguise));
                         }
                     }
                 }, 80L);

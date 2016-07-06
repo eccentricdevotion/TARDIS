@@ -116,10 +116,6 @@ public class ResultSetTardis {
             rs = statement.executeQuery();
             if (rs.isBeforeFirst()) {
                 while (rs.next()) {
-                    String replaced = rs.getString("replaced");
-                    if (rs.wasNull()) {
-                        replaced = "";
-                    }
                     String companions = rs.getString("companions");
                     if (rs.wasNull()) {
                         companions = "";
@@ -137,7 +133,6 @@ public class ResultSetTardis {
                             rs.getInt("tips"),
                             CONSOLES.SCHEMATICFor(rs.getString("size").toLowerCase()),
                             rs.getBoolean("abandoned"),
-                            replaced,
                             companions,
                             rs.getString("save_sign"),
                             rs.getString("chameleon"),

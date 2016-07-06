@@ -22,6 +22,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.api.event.TARDISDestructionEvent;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetCurrentLocation;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
@@ -63,10 +64,11 @@ public class TARDISDeleteCommand {
             // do nothing
         }
         HashMap<String, Object> where = new HashMap<String, Object>();
+        Player player = null;
         if (tmp == -1) {
             // this should be run from the console if the player running it is the player to be deleted
             if (sender instanceof Player) {
-                Player player = (Player) sender;
+                player = (Player) sender;
                 if (player.getName().equals(args[1])) {
                     HashMap<String, Object> wherep = new HashMap<String, Object>();
                     wherep.put("uuid", player.getUniqueId().toString());
@@ -126,6 +128,7 @@ public class TARDISDeleteCommand {
                 TARDISMessage.send(sender, "CURRENT_NOT_FOUND");
                 return true;
             }
+            plugin.getPM().callEvent(new TARDISDestructionEvent(player, bb_loc, tardis.getOwner()));
             // destroy outer TARDIS
             if (!hidden) {
                 UUID u = rs.getTardis().getUuid();

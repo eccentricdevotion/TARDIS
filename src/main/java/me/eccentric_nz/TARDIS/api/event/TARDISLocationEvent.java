@@ -16,7 +16,7 @@
  */
 package me.eccentric_nz.TARDIS.api.event;
 
-import me.eccentric_nz.TARDIS.database.data.Tardis;
+import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;
@@ -25,15 +25,17 @@ import org.bukkit.event.HandlerList;
  *
  * @author eccentric_nz
  */
-public class TARDISEvent extends Event {
+public class TARDISLocationEvent extends Event {
 
     private static final HandlerList HANDLERS = new HandlerList();
     private final Player player;
-    private final Tardis tardis;
+    private final int tardis_id;
+    private final Location location;
 
-    public TARDISEvent(Player player, Tardis tardis) {
+    public TARDISLocationEvent(Player player, int tardisid, Location location) {
         this.player = player;
-        this.tardis = tardis;
+        this.tardis_id = tardisid;
+        this.location = location;
     }
 
     /**
@@ -46,13 +48,21 @@ public class TARDISEvent extends Event {
     }
 
     /**
-     * Returns a Tardis data object. Use the object's getter methods to retrieve
-     * any data that is stored in the database for this TARDIS.
+     * Returns the tardis_id of the TARDIS in the database.
      *
-     * @return the Tardis data object
+     * @return the TARDIS location
      */
-    public Tardis getTardis() {
-        return tardis;
+    public int getTardis_id() {
+        return tardis_id;
+    }
+
+    /**
+     * Returns the exterior location of the TARDIS.
+     *
+     * @return the TARDIS location
+     */
+    public Location getLocation() {
+        return location;
     }
 
     @Override

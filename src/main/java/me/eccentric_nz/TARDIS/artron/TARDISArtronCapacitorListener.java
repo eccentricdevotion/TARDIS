@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2014 eccentric_nz
+ * Copyright (C) 2016 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -20,6 +20,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.api.event.TARDISClaimEvent;
 import static me.eccentric_nz.TARDIS.commands.tardis.TARDISAbandonCommand.getSign;
 import me.eccentric_nz.TARDIS.control.TARDISPowerButton;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
@@ -252,17 +253,18 @@ public class TARDISArtronCapacitorListener implements Listener {
                                         if (abandoned) {
                                             // transfer ownership to the player who clicked
                                             pu = qf.claimTARDIS(player, id);
-                                            if (pu) {
-                                                new TARDISDoorCloser(plugin, player.getUniqueId(), id).closeDoors();
-                                                TARDISMessage.send(player, "ABANDON_CLAIMED");
-                                            }
-                                            if (plugin.getConfig().getBoolean("police_box.name_tardis")) {
-                                                HashMap<String, Object> wherec = new HashMap<String, Object>();
-                                                wherec.put("tardis_id", id);
-                                                ResultSetCurrentLocation rscl = new ResultSetCurrentLocation(plugin, wherec);
-                                                if (rsc.resultSet()) {
+                                            HashMap<String, Object> wherec = new HashMap<String, Object>();
+                                            wherec.put("tardis_id", id);
+                                            ResultSetCurrentLocation rscl = new ResultSetCurrentLocation(plugin, wherec);
+                                            if (rsc.resultSet()) {
+                                                Location current = new Location(rscl.getWorld(), rscl.getX(), rscl.getY(), rscl.getZ());
+                                                if (pu) {
+                                                    new TARDISDoorCloser(plugin, player.getUniqueId(), id).closeDoors();
+                                                    TARDISMessage.send(player, "ABANDON_CLAIMED");
+                                                    plugin.getPM().callEvent(new TARDISClaimEvent(player, tardis, current));
+                                                }
+                                                if (plugin.getConfig().getBoolean("police_box.name_tardis")) {
                                                     PRESET preset = rs.getTardis().getPreset();
-                                                    Location current = new Location(rscl.getWorld(), rscl.getX(), rscl.getY(), rscl.getZ());
                                                     Sign sign = getSign(current, rscl.getDirection(), preset);
                                                     if (sign != null) {
                                                         String player_name = player.getName();

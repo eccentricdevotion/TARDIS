@@ -19,6 +19,7 @@ package me.eccentric_nz.TARDIS.builders;
 import java.util.HashMap;
 import java.util.Map;
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.api.event.TARDISCreationEvent;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetCount;
 import me.eccentric_nz.TARDIS.database.ResultSetCurrentLocation;
@@ -207,6 +208,7 @@ public class TARDISSeedBlockProcessor {
                 bd.setTardisID(lastInsertId);
                 bd.setBiome(l.getBlock().getBiome());
                 // police box needs to use chameleon id/data
+                plugin.getPM().callEvent(new TARDISCreationEvent(player, lastInsertId, l));
                 plugin.getPresetBuilder().buildPreset(bd);
                 plugin.getInteriorBuilder().buildInner(schm, chunkworld, lastInsertId, player, wall_type, wall_data, floor_type, floor_data, tips);
                 // set achievement completed

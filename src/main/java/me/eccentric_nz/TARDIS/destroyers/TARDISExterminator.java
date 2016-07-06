@@ -23,6 +23,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.api.event.TARDISDestructionEvent;
 import me.eccentric_nz.TARDIS.builders.TARDISInteriorPostioning;
 import me.eccentric_nz.TARDIS.builders.TARDISTIPSData;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
@@ -227,6 +228,7 @@ public class TARDISExterminator {
             dd.setSubmarine(rsc.isSubmarine());
             dd.setTardisID(id);
             dd.setBiome(rsc.getBiome());
+            plugin.getPM().callEvent(new TARDISDestructionEvent(player, bb_loc, owner));
             if (sign_loc.getBlockX() == bb_loc.getBlockX() + signx && sign_loc.getBlockY() + signy == bb_loc.getBlockY() && sign_loc.getBlockZ() == bb_loc.getBlockZ() + signz) {
                 if (!tardis.isHidden()) {
                     // remove Police Box

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2014 eccentric_nz
+ * Copyright (C) 2016 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -23,12 +23,14 @@ import java.util.List;
 import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.api.Parameters;
+import me.eccentric_nz.TARDIS.api.event.TARDISHADSEvent;
 import me.eccentric_nz.TARDIS.builders.BuildData;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetCurrentLocation;
 import me.eccentric_nz.TARDIS.destroyers.DestroyData;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
 import me.eccentric_nz.TARDIS.enumeration.FLAG;
+import me.eccentric_nz.TARDIS.enumeration.HADS;
 import me.eccentric_nz.TARDIS.enumeration.PRESET;
 import me.eccentric_nz.TARDIS.travel.TARDISTimeTravel;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
@@ -117,8 +119,6 @@ public class TARDISHostileDisplacement {
                         set.put("submarine", (rsc.isSubmarine()) ? 1 : 0);
                         qf.doUpdate("current", set, tid);
                         plugin.getTrackerKeeper().getDamage().remove(id);
-//                        boolean mat = plugin.getConfig().getBoolean("police_box.materialise");
-//                        long delay = (mat) ? 1L : 180L;
                         long delay = 1L;
                         // move TARDIS
                         plugin.getTrackerKeeper().getInVortex().add(id);
@@ -163,6 +163,7 @@ public class TARDISHostileDisplacement {
                         if (player != hostile) {
                             hostile.sendMessage(message);
                         }
+                        plugin.getPM().callEvent(new TARDISHADSEvent(hostile, id, fl, HADS.DISPLACEMENT));
                         return;
                     } else {
                         TARDISMessage.send(player, "HADS_PROTECTED");

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2014 eccentric_nz
+ * Copyright (C) 2016 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -32,6 +32,11 @@ public class TARDISUpgradeData {
     private String siegeFloor;
     private int level;
 
+    /**
+     * Returns the desktop theme the upgrade will change to.
+     *
+     * @return the SCHEMATIC
+     */
     public SCHEMATIC getSchematic() {
         return schematic;
     }
@@ -40,6 +45,11 @@ public class TARDISUpgradeData {
         this.schematic = schematic;
     }
 
+    /**
+     * Returns the desktop theme the TARDIS had previously.
+     *
+     * @return the SCHEMATIC
+     */
     public SCHEMATIC getPrevious() {
         return previous;
     }
@@ -48,6 +58,11 @@ public class TARDISUpgradeData {
         this.previous = previous;
     }
 
+    /**
+     * Returns the wall block the theme use when changing.
+     *
+     * @return the SCHEMATIC
+     */
     public String getWall() {
         return wall;
     }
@@ -56,6 +71,11 @@ public class TARDISUpgradeData {
         this.wall = wall;
     }
 
+    /**
+     * Returns the floor block the theme use when changing.
+     *
+     * @return the SCHEMATIC
+     */
     public String getFloor() {
         return floor;
     }
