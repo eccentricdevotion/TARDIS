@@ -96,6 +96,7 @@ public class TARDISAdminCommands implements CommandExecutor {
         firstsStr.put("siege", "siege");
         firstsStr.put("sign_colour", "police_box");
         firstsStr.put("skaro", "");
+        firstsStr.put("spawn_abandoned", "");
         firstsStr.put("tardis_lamp", "police_box");
         firstsStr.put("vortex_fall", "preferences");
         firstsStrArtron.add("full_charge_item");
@@ -301,6 +302,9 @@ public class TARDISAdminCommands implements CommandExecutor {
                 }
                 if (first.equals("sign_colour")) {
                     return new TARDISSignColourCommand(plugin).setColour(sender, args);
+                }
+                if (first.equals("spawn_abandoned")) {
+                    return new TARDISAbandonedCommand(plugin).spawn(sender, args);
                 }
                 if (first.equals("make_preset")) {
                     return new TARDISMakePresetCommand(plugin).scanBlocks(sender, args);

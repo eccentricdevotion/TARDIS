@@ -21,6 +21,7 @@ import java.util.ArrayList;
 import java.util.List;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.commands.TARDISCompleter;
+import me.eccentric_nz.TARDIS.enumeration.CONSOLES;
 import me.eccentric_nz.TARDIS.enumeration.PRESET;
 import me.eccentric_nz.TARDIS.utility.TARDISWorldGuardFlag;
 import org.bukkit.World;
@@ -51,7 +52,9 @@ public class TARDISAdminTabComplete extends TARDISCompleter implements TabComple
     private final ImmutableList<String> TOWNY_SUBS = ImmutableList.of("none", "wilderness", "town", "nation");
     private final ImmutableList<String> VORTEX_SUBS = ImmutableList.of("kill", "teleport");
     private final ImmutableList<String> LIST_SUBS = ImmutableList.of("abandoned", "portals", "save");
+    private final ImmutableList<String> COMPASS_SUBS = ImmutableList.of("NORTH", "EAST", "SOUTH", "WEST");
     private final ImmutableList<String> WORLD_SUBS;
+    private final ImmutableList<String> SEED_SUBS;
 
     public TARDISAdminTabComplete(TARDIS plugin) {
         this.plugin = plugin;
@@ -70,7 +73,8 @@ public class TARDISAdminTabComplete extends TARDISCompleter implements TabComple
         for (World w : plugin.getServer().getWorlds()) {
             worlds.add(w.getName());
         }
-        WORLD_SUBS = ImmutableList.copyOf(worlds);
+        this.WORLD_SUBS = ImmutableList.copyOf(worlds);
+        this.SEED_SUBS = ImmutableList.copyOf(CONSOLES.getBY_NAMES().keySet());
     }
 
     @Override
@@ -128,6 +132,9 @@ public class TARDISAdminTabComplete extends TARDISCompleter implements TabComple
             if (sub.equals("tips_limit")) {
                 return partial(lastArg, TIPS_SUBS);
             }
+            if (sub.equals("spawn_abandoned")) {
+                return partial(lastArg, SEED_SUBS);
+            }
             if (sub.equals("delete") || sub.equals("enter") || sub.equals("purge") || sub.equals("desiege")) {
                 // return null to default to online player name matching
                 return null;
@@ -135,7 +142,15 @@ public class TARDISAdminTabComplete extends TARDISCompleter implements TabComple
                 return partial(lastArg, BOOL_SUBS);
             }
         } else if (args.length == 3) {
-            return partial(lastArg, BOOL_SUBS);
+            if (args[0].equalsIgnoreCase("spawn_abandoned")) {
+                return partial(lastArg, PRESETS);
+            } else {
+                return partial(lastArg, BOOL_SUBS);
+            }
+        } else if (args.length == 4) {
+            return partial(lastArg, COMPASS_SUBS);
+        } else if (args.length == 5) {
+            return partial(lastArg, WORLD_SUBS);
         }
         return ImmutableList.of();
     }
