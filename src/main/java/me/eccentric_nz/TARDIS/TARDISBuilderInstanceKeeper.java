@@ -34,16 +34,16 @@ public class TARDISBuilderInstanceKeeper {
     private final HashMap<String, HashMap<String, Integer>> roomBlockCounts = new HashMap<String, HashMap<String, Integer>>();
     private final TARDISStainedGlassLookup stainedGlassLookup = new TARDISStainedGlassLookup();
     private HashMap<Material, String> seeds;
-    private static final List<Material> precious = new ArrayList<Material>();
+    private static final List<Material> PRECIOUS = new ArrayList<Material>();
 
     static {
-        precious.add(Material.BEACON);
-        precious.add(Material.DIAMOND_BLOCK);
-        precious.add(Material.EMERALD_BLOCK);
-        precious.add(Material.GOLD_BLOCK);
-        precious.add(Material.IRON_BLOCK);
-        precious.add(Material.REDSTONE_BLOCK);
-        precious.add(Material.BEDROCK);
+        PRECIOUS.add(Material.BEACON);
+        PRECIOUS.add(Material.DIAMOND_BLOCK);
+        PRECIOUS.add(Material.EMERALD_BLOCK);
+        PRECIOUS.add(Material.GOLD_BLOCK);
+        PRECIOUS.add(Material.IRON_BLOCK);
+        PRECIOUS.add(Material.REDSTONE_BLOCK);
+        PRECIOUS.add(Material.BEDROCK);
     }
 
     public HashMap<String, HashMap<String, Integer>> getRoomBlockCounts() {
@@ -63,6 +63,6 @@ public class TARDISBuilderInstanceKeeper {
     }
 
     public static List<Material> getPrecious() {
-        return precious;
+        return PRECIOUS;
     }
 }
