@@ -90,15 +90,23 @@ public final class BuildData extends MaterialisationData {
 
     @Override
     public void setPlayerDefaults(String uuid) {
-        HashMap<String, Object> wherep = new HashMap<String, Object>();
-        wherep.put("uuid", uuid);
-        final ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(TARDIS.plugin, wherep);
-        if (rsp.resultSet()) {
-            super.setLamp(rsp.getLamp());
-            texture = rsp.isPoliceboxTexturesOn();
-            addSign = rsp.isSignOn();
-            CTM = rsp.isCtmOn();
-            minecartSounds = rsp.isMinecartOn();
+        if (uuid == null) {
+            // sane defaults
+            texture = TARDIS.plugin.getConfig().getBoolean("police_box.set_biome");
+            addSign = true;
+            CTM = true;
+            minecartSounds = false;
+        } else {
+            HashMap<String, Object> wherep = new HashMap<String, Object>();
+            wherep.put("uuid", uuid);
+            final ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(TARDIS.plugin, wherep);
+            if (rsp.resultSet()) {
+                super.setLamp(rsp.getLamp());
+                texture = rsp.isPoliceboxTexturesOn();
+                addSign = rsp.isSignOn();
+                CTM = rsp.isCtmOn();
+                minecartSounds = rsp.isMinecartOn();
+            }
         }
     }
 }

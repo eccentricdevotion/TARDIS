@@ -2,40 +2,28 @@
 
 ##Current bugfix version `3.6.1`
 1. Fix bugs!
+2. When claiming an abandoned TARDIS add player as owner to WorldGuard region
+   * how do we get the region, by location?
+   * can we remove the previous owner and companions?
+   * can we update the region name?
 
 ##Next minor version `3.7`  
 1. [Spawn abandoned TARDISes](http://dev.bukkit.org/bukkit-plugins/tardis/tickets/1277-possibility-to-abandon-a-tardis/?comment=6)
 2. Add other worlds (Silurian cave world, Gallifrey)?
-3. Add [API Events](http://wiki.bukkit.org/Event_API_Reference#Creating_Custom_Events) that other plugins can listen for
-   * ~~Chameleon Arch events~~
-   * ~~Desktop Theme event~~
-   * ~~Zero Room events~~
-   * ~~Materialisation events~~
-   * Sonic Screwdriver events?
-   * ~~Lazarus Device events~~
-   * ~~Malfunction event~~
-   * Artron Energy event?
-   * ~~TARDIS creation / destruction events~~
-   * ~~TARDIS enter / exit events~~
-   * ~~HADS event~~
-   * Mob farming / ejection events?
-   * ~~ARS / room growing events~~
-   * ~~Siege / desiege events~~
-   * ~~Abandon / claim events~~
+3. Add more API Events that other plugins can listen for?
+   * Sonic Screwdriver events
+   * Artron Energy event
+   * Mob farming / ejection events
 4. Add more API methods
-   * Get a `Tardis` object from `UUID`, `tardis_id`, `Player`
-   * Set a TARDISes next destination
-   * Set a TARDISes next destination and travel to it
-   * Initiate a desktop theme change
-   * Change the Chameleon circuit
-   * Spawn an abandoned TARDIS at a Bukkit Location
-4. Update console schematics to remove MONSTER_EGG blocks, except for the ARS one (data = 2), as it is needed for initially setting up the ARS data and updating it when using the Desktop Theme
-5. Update [Chameleon Circuit GUI](http://dev.bukkit.org/bukkit-plugins/tardis/tickets/1341-new-chameleon-circuit-gui/)
-6. [Player console archiving](http://dev.bukkit.org/bukkit-plugins/tardis/tickets/1201-player-console-archive-feature/)
-7. TARDIS Junk Mode - `/tprefs junk [wall|floor] [block_type]`?
-8. TARDISSonicBlaster addon?
+   * Initiate a desktop theme change - _this is problematic as the desktop could only be changed to one that is the same size (as there is no player interaction to decide if rooms should be jettisoned)_
+5. Update console schematics to remove MONSTER_EGG blocks, except for the ARS one (data = 2), as it is needed for initially setting up the ARS data and updating it when using the Desktop Theme
+6. Update [Chameleon Circuit GUI](http://dev.bukkit.org/bukkit-plugins/tardis/tickets/1341-new-chameleon-circuit-gui/)
+7. [Player console archiving](http://dev.bukkit.org/bukkit-plugins/tardis/tickets/1201-player-console-archive-feature/)
 
-##Future version `4+`
+
+##Future version `?+`
+* TARDIS Junk Mode - `/tprefs junk [wall|floor] [block_type]`?
+* TARDISSonicBlaster addon?
 * SpongeAPI
 * Forge mod for custom items and blocks (to tie in with Sponge version)
 * Slimmer TARDIS option?

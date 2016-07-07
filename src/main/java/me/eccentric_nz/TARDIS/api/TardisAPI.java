@@ -19,6 +19,9 @@ package me.eccentric_nz.TARDIS.api;
 import java.util.HashMap;
 import java.util.List;
 import java.util.UUID;
+import me.eccentric_nz.TARDIS.database.data.Tardis;
+import me.eccentric_nz.TARDIS.enumeration.COMPASS;
+import me.eccentric_nz.TARDIS.enumeration.PRESET;
 import me.eccentric_nz.TARDIS.travel.TARDISPluginRespect;
 import me.eccentric_nz.TARDIS.utility.TARDISBlockSetters;
 import me.eccentric_nz.TARDIS.utility.TARDISLocationGetters;
@@ -339,4 +342,148 @@ public interface TardisAPI {
      * recipes
      */
     public HashMap<String, ShapelessRecipe> getShapelessRecipes();
+
+    /**
+     * Get the TARDIS wall and floor block names.
+     *
+     * @return a String List containing the TARDIS wall and floor block names
+     */
+    public List<String> getWallFloorBlocks();
+
+    /**
+     * Set a TARDIS's next destination.
+     *
+     * @param id the TARDIS id to set the destination for
+     * @param location the next location to travel to
+     * @param travel whether the TARDIS should travel to the destination
+     * @return true if the destination was set successfully
+     */
+    public boolean setDestination(int id, Location location, boolean travel);
+
+    /**
+     * Convenience method to set a TARDIS's next destination.
+     *
+     * @param uuid the UUID of the Time Lord (player) to set the destination for
+     * @param location the next location to travel to
+     * @param travel whether the TARDIS should travel to the destination
+     * @return true if the destination was set successfully
+     */
+    public boolean setDestination(UUID uuid, Location location, boolean travel);
+
+    /**
+     * Convenience method to set a TARDIS's next destination.
+     *
+     * @param player the Time Lord (player) to set the destination for
+     * @param location the next location to travel to
+     * @param travel whether the TARDIS should travel to the destination
+     * @return true if the destination was set successfully
+     */
+    public boolean setDestination(Player player, Location location, boolean travel);
+
+    /**
+     * Get information from the database for a TARDIS.
+     *
+     * @param id the TARDIS id to get information for
+     * @return return a {@link Tardis} data object, or null if no data was found
+     */
+    public Tardis getTardisData(int id);
+
+    /**
+     * Convenience method to get information from the database for a TARDIS.
+     *
+     * @param uuid the UUID of the Time Lord (player) of the TARDIS id to get
+     * information for
+     * @return return a {@link Tardis} data object, or null if no data was found
+     */
+    public Tardis getTardisData(UUID uuid);
+
+    /**
+     * Convenience method to get information from the database for a TARDIS.
+     *
+     * @param player the Time Lord (player) of the TARDIS to get information for
+     * @return return a {@link Tardis} data object, or null if no data was found
+     */
+    public Tardis getTardisData(Player player);
+
+    /**
+     * Set the Chameleon Preset for a TARDIS.
+     *
+     * @param id the TARDIS id to set the destination for
+     * @param preset the exterior preset to use
+     * @param rebuild whether to rebuild the TARDIS exterior
+     * @return true if the preset was set
+     */
+    public boolean setChameleonPreset(int id, PRESET preset, boolean rebuild);
+
+    /**
+     * Convenience method to set the Chameleon Preset for a TARDIS.
+     *
+     * @param uuid the UUID of the Time Lord (player) of the TARDIS to set the
+     * destination for
+     * @param preset the exterior preset to use
+     * @param rebuild whether to rebuild the TARDIS exterior
+     * @return true if the preset was set
+     */
+    public boolean setChameleonPreset(UUID uuid, PRESET preset, boolean rebuild);
+
+    /**
+     * Convenience method to set the Chameleon Preset for a TARDIS.
+     *
+     * @param player the Time Lord (player) of the TARDIS to set the destination
+     * for
+     * @param preset the exterior preset to use
+     * @param rebuild whether to rebuild the TARDIS exterior
+     * @return true if the preset was set
+     */
+    public boolean setChameleonPreset(Player player, PRESET preset, boolean rebuild);
+
+    /**
+     * Spawn an abandoned TARDIS at the specified Bukkit Location.
+     *
+     * @param location the location to spawn the TARDIS
+     * @param type the type of interior to build
+     * @param preset the Chameleon preset of the exterior
+     * @param direction the direction of the TARDIS exterior ( this is the
+     * direction the player is facing when looking at the door)
+     * @throws TARDISException if the console type is not valid or TARDIS
+     * abandonment is disabled on the server
+     */
+    public void spawnAbandonedTARDIS(Location location, String type, PRESET preset, COMPASS direction) throws TARDISException;
+
+    /**
+     * Convenience method to spawn an abandoned TARDIS at the specified Bukkit
+     * Location. The interior will default to BUDGET, the exterior Chameleon
+     * Preset to FACTORY and the direction to SOUTH.
+     *
+     * @param location the location to spawn the TARDIS
+     */
+    public void spawnAbandonedTARDIS(Location location);
+
+    /**
+     * Change the desktop theme of a TARDIS.
+     *
+     * @param id the TARDIS id to change the desktop for
+     * @param wall the wall block type to change to
+     * @param floor the floor block type to change to
+     * @param artron whether to check for and charge Artron Energy
+     * @return a comma separated String containing the wall and floor block
+     * names (so they can be restored) if the walls and floor were successfully
+     * changed, an empty String if not
+     */
+    public String setDesktopWallAndFloor(int id, String wall, String floor, boolean artron);
+
+    /**
+     * Convenience method to change the desktop theme of a TARDIS.
+     *
+     * @param uuid the UUID of the Time Lord (player) of the TARDIS to change
+     * the desktop for
+     * @param wall the wall block type to change to
+     * @param floor the floor block type to change to
+     * @param artron whether to check for and charge Artron Energy
+     * @return a comma separated String containing the wall and floor block
+     * names (so they can be restored) if the walls and floor were successfully
+     * changed, an empty String if not
+     * @throws TARDISException if the wall or floor type is not valid
+     */
+    public String setDesktopWallAndFloor(UUID uuid, String wall, String floor, boolean artron) throws TARDISException;
 }
