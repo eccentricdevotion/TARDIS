@@ -70,6 +70,15 @@ public class TARDISJunkPreference {
                     return true;
                 }
             }
+            // make sure is opposite
+            if (current.equals("JUNK_MODE") && arg.equalsIgnoreCase("on")) {
+                TARDISMessage.send(player, "JUNK_ALREADY_ON");
+                return true;
+            }
+            if (!current.equals("JUNK_MODE") && arg.equalsIgnoreCase("off")) {
+                TARDISMessage.send(player, "JUNK_ALREADY_OFF");
+                return true;
+            }
             // check if they have a junk record
             HashMap<String, Object> wherej = new HashMap<String, Object>();
             wherej.put("uuid", ustr);

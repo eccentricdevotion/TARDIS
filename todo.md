@@ -8,17 +8,16 @@
    * can we update the region name?
 
 ##Next minor version `3.7`  
-1. [Spawn abandoned TARDISes](http://dev.bukkit.org/bukkit-plugins/tardis/tickets/1277-possibility-to-abandon-a-tardis/?comment=6)
-2. Add other worlds (Silurian cave world, Gallifrey)?
-3. Add more API Events that other plugins can listen for?
+1. Add other worlds (Silurian cave world, Gallifrey)?
+2. Add more API Events that other plugins can listen for?
    * Sonic Screwdriver events
    * Artron Energy event
    * Mob farming / ejection events
-4. Add more API methods
+3. Add more API methods
    * Initiate a desktop theme change - _this is problematic as the desktop could only be changed to one that is the same size (as there is no player interaction to decide if rooms should be jettisoned)_
-5. Update console schematics to remove MONSTER_EGG blocks, except for the ARS one (data = 2), as it is needed for initially setting up the ARS data and updating it when using the Desktop Theme
-6. Update [Chameleon Circuit GUI](http://dev.bukkit.org/bukkit-plugins/tardis/tickets/1341-new-chameleon-circuit-gui/)
-7. [Player console archiving](http://dev.bukkit.org/bukkit-plugins/tardis/tickets/1201-player-console-archive-feature/)
+4. Update console schematics to remove MONSTER_EGG blocks, except for the ARS one (data = 2), as it is needed for initially setting up the ARS data and updating it when using the Desktop Theme
+5. Update [Chameleon Circuit GUI](http://dev.bukkit.org/bukkit-plugins/tardis/tickets/1341-new-chameleon-circuit-gui/)
+6. [Player console archiving](http://dev.bukkit.org/bukkit-plugins/tardis/tickets/1201-player-console-archive-feature/)
 
 
 ##Future version `?+`
