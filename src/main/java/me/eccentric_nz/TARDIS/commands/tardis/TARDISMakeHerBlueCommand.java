@@ -72,7 +72,7 @@ public class TARDISMakeHerBlueCommand {
             TARDISMessage.send(player.getPlayer(), "POWER_DOWN");
             return true;
         }
-        if (!tardis.getPreset().equals(PRESET.INVISIBLE)) {
+        if (!tardis.getPreset().equals(PRESET.INVISIBLE) && !tardis.getPreset().equals(PRESET.JUNK_MODE)) {
             TARDISMessage.send(player.getPlayer(), "INVISIBILITY_NOT");
             return true;
         }
@@ -83,7 +83,7 @@ public class TARDISMakeHerBlueCommand {
             tcc.getCircuits();
         }
         if (tcc != null) {
-            if (!tcc.hasInvisibility()) {
+            if (!tcc.hasInvisibility() && !tardis.getPreset().equals(PRESET.JUNK_MODE)) {
                 TARDISMessage.send(player.getPlayer(), "INVISIBILITY_MISSING");
                 return true;
             }
@@ -139,7 +139,8 @@ public class TARDISMakeHerBlueCommand {
                 plugin.getPresetBuilder().buildPreset(bd);
             }
         }, 20L);
-        TARDISMessage.send(player.getPlayer(), "INVISIBILITY_REMOVED");
+        String message = (tardis.getPreset().equals(PRESET.JUNK_MODE)) ? "JUNK_PRESET_OFF" : "INVISIBILITY_REMOVED";
+        TARDISMessage.send(player.getPlayer(), message);
         HashMap<String, Object> wheret = new HashMap<String, Object>();
         wheret.put("tardis_id", id);
         qf.alterEnergyLevel("tardis", -rebuild, wheret, player.getPlayer());
