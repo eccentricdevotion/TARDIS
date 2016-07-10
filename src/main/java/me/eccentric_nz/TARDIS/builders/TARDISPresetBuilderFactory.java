@@ -193,22 +193,48 @@ public class TARDISPresetBuilderFactory {
             case DESERT:
             case DESERT_HILLS:
                 return PRESET.DESERT;
+            case EXTREME_HILLS:
+            case EXTREME_HILLS_WITH_TREES:
+                return PRESET.EXTREME_HILLS;
+            case FOREST:
+            case FOREST_HILLS:
+                return PRESET.FOREST;
             case HELL:
                 return PRESET.NETHER;
+            case ICE_FLATS:
+                return PRESET.ICE_FLATS;
+            case ICE_MOUNTAINS:
+                return PRESET.ICE_SPIKES;
             case JUNGLE:
             case JUNGLE_HILLS:
+            case JUNGLE_EDGE:
                 return PRESET.JUNGLE;
-            case PLAINS:
-                return PRESET.VILLAGE;
+            case MESA:
+            case MESA_ROCK:
+            case MESA_CLEAR_ROCK:
+                return PRESET.MESA;
             case MUSHROOM_ISLAND:
             case MUSHROOM_ISLAND_SHORE:
                 return PRESET.SHROOM;
+            case PLAINS:
+                return PRESET.PLAINS;
+            case ROOFED_FOREST:
+                return PRESET.ROOFED_FOREST;
+            case SAVANNA:
+            case SAVANNA_ROCK:
+                return PRESET.SAVANNA;
             case SWAMPLAND:
                 return PRESET.SWAMP;
             case SKY:
                 return PRESET.THEEND;
+            case TAIGA:
+            case TAIGA_HILLS:
+                return PRESET.TAIGA;
+            case TAIGA_COLD:
+            case TAIGA_COLD_HILLS:
+                return PRESET.COLD_TAIGA;
             default:
-                return preset;
+                return PRESET.FACTORY;
         }
     }
 

@@ -80,7 +80,18 @@ public enum PRESET {
     CUSTOM(Material.OBSIDIAN, "", "", false, false),
     JUNK(Material.BARRIER, "", "", false, false),
     JUNK_MODE(Material.BARRIER, "", "", false, false),
-    CONSTRUCT(Material.BARRIER, "CONSTRUCT", "", true, true);
+    CONSTRUCT(Material.BARRIER, "CONSTRUCT", "", true, true),
+    // biome adaptive
+    EXTREME_HILLS(Material.BARRIER, "EXTREME_HILLS", "", true, true),
+    FOREST(Material.BARRIER, "FOREST", "", true, true),
+    ICE_FLATS(Material.BARRIER, "ICE_FLATS", "", true, true),
+    ICE_SPIKES(Material.BARRIER, "ICE_SPIKES", "", true, true),
+    MESA(Material.BARRIER, "MESA", "", true, true),
+    PLAINS(Material.BARRIER, "PLAINS", "", true, true),
+    ROOFED_FOREST(Material.BARRIER, "ROOFED_FOREST", "", true, true),
+    SAVANNA(Material.BARRIER, "SAVANNA", "", true, true),
+    TAIGA(Material.BARRIER, "TAIGA", "", true, true),
+    COLD_TAIGA(Material.BARRIER, "COLD_TAIGA", "", true, true);
 
     Material material;
     String firstLine;
