@@ -27,6 +27,7 @@ import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.enumeration.SCHEMATIC;
 import me.eccentric_nz.TARDIS.schematic.TARDISSchematicGZip;
 import me.eccentric_nz.TARDIS.utility.TARDISBlockSetters;
+import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.block.Block;
@@ -67,6 +68,7 @@ public class TARDISDestroyerInner {
     public void destroyInner(SCHEMATIC schm, int id, World w, int i, String p, int slot) {
         // destroy TARDIS
         boolean below = (!plugin.getConfig().getBoolean("creation.create_worlds") && !plugin.getConfig().getBoolean("creation.default_world"));
+        Location wgl;
         if (below) {
             // get dimensions
             String directory = (schm.isCustom()) ? "user_schematics" : "schematics";
@@ -91,6 +93,7 @@ public class TARDISDestroyerInner {
             starty = 14 + h;
             startz = gsl[2];
             resetz = gsl[3];
+            wgl = new Location(w, startx + (width / 2), starty, startz + (width / 2));
             for (level = 0; level < h; level++) {
                 for (row = 0; row < width; row++) {
                     for (col = 0; col < l; col++) {
@@ -138,6 +141,7 @@ public class TARDISDestroyerInner {
                 coords = tips.getTIPSData(slot);
             }
             tips.reclaimChunks(w, coords);
+            wgl = new Location(w, coords.getMinX(), 64, coords.getMinZ());
         }
         // remove blocks saved to blocks table (iron/gold/diamond/emerald)
         QueryFactory qf = new QueryFactory(plugin);
@@ -147,7 +151,7 @@ public class TARDISDestroyerInner {
         // remove from protectBlockMap - remove(id) would only remove the first one
         plugin.getGeneralKeeper().getProtectBlockMap().values().removeAll(Collections.singleton(id));
         if (plugin.isWorldGuardOnServer()) {
-            plugin.getWorldGuardUtils().removeRegion(w, p);
+            plugin.getWorldGuardUtils().removeRegion(wgl);
         }
     }
 

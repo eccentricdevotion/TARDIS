@@ -31,6 +31,7 @@ import com.sk89q.worldguard.protection.regions.ProtectedCuboidRegion;
 import com.sk89q.worldguard.protection.regions.ProtectedRegion;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
@@ -274,6 +275,40 @@ public class TARDISWorldGuardUtils {
     }
 
     /**
+     * Removes the WorldGuard region when the TARDIS is deleted.
+     *
+     * @param l the TARDIS interior location
+     */
+    public void removeRegion(Location l) {
+        RegionManager rm = wg.getRegionManager(l.getWorld());
+        ApplicableRegionSet ars = rm.getApplicableRegions(l);
+        if (ars.size() > 0) {
+            LinkedList< String> parentNames = new LinkedList< String>();
+            LinkedList< String> regions = new LinkedList< String>();
+            for (ProtectedRegion pr : ars) {
+                String id = pr.getId();
+                regions.add(id);
+                ProtectedRegion parent = pr.getParent();
+                while (parent != null) {
+                    parentNames.add(parent.getId());
+                    parent = parent.getParent();
+                }
+            }
+            for (String name : parentNames) {
+                regions.remove(name);
+            }
+            rm.removeRegion(regions.getFirst());
+            try {
+                rm.save();
+            } catch (StorageException e) {
+                plugin.getConsole().sendMessage(plugin.getPluginName() + "Could not remove WorldGuard Protection for TARDIS! " + e.getMessage());
+            }
+        } else {
+            plugin.getConsole().sendMessage(plugin.getPluginName() + "Could not get WorldGuard region for TARDIS location!");
+        }
+    }
+
+    /**
      * Removes the WorldGuard region when the recharger is removed.
      *
      * @param name the name of the recharger to remove
@@ -357,6 +392,44 @@ public class TARDISWorldGuardUtils {
                 rm.save();
             } catch (StorageException e) {
                 plugin.getConsole().sendMessage(plugin.getPluginName() + "Could not update WorldGuard Protection for TARDIS owner name change! " + e.getMessage());
+            }
+        }
+    }
+
+    /**
+     * Updates the TARDIS WorldGuard region when the TARDIS has been claimed by
+     * a new player.
+     *
+     * @param location the TARDIS interior location
+     * @param uuid the UUID of the player
+     */
+    public void updateRegionForClaim(Location location, UUID uuid) {
+        RegionManager rm = wg.getRegionManager(location.getWorld());
+        ApplicableRegionSet ars = rm.getApplicableRegions(location);
+        if (ars.size() > 0) {
+            LinkedList< String> parentNames = new LinkedList< String>();
+            LinkedList< String> regions = new LinkedList< String>();
+            for (ProtectedRegion pr : ars) {
+                String id = pr.getId();
+                regions.add(id);
+                ProtectedRegion parent = pr.getParent();
+                while (parent != null) {
+                    parentNames.add(parent.getId());
+                    parent = parent.getParent();
+                }
+            }
+            for (String name : parentNames) {
+                regions.remove(name);
+            }
+            String region = regions.getFirst();
+            ProtectedRegion pr = rm.getRegion(region);
+            DefaultDomain dd = pr.getOwners();
+            dd.addPlayer(uuid);
+            pr.setOwners(dd);
+            try {
+                rm.save();
+            } catch (StorageException e) {
+                plugin.getConsole().sendMessage(plugin.getPluginName() + "Could not update WorldGuard Protection for abandoned TARDIS claim! " + e.getMessage());
             }
         }
     }

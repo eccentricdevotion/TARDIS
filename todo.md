@@ -2,10 +2,6 @@
 
 ##Current bugfix version `3.6.1`
 1. Fix bugs!
-2. When claiming an abandoned TARDIS add player as owner to WorldGuard region
-   * how do we get the region, by location?
-   * can we remove the previous owner and companions?
-   * can we update the region name?
 
 ##Next minor version `3.7`  
 1. Add other worlds (Silurian cave world, Gallifrey)?
