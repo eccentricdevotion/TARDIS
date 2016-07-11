@@ -33,7 +33,7 @@ public class TARDISTabComplete extends TARDISCompleter implements TabCompleter {
 
     private final TARDIS plugin;
     private final List<String> ROOT_SUBS;
-    private final List<String> CHAM_SUBS = ImmutableList.of("on", "off", "short", "reset");
+    private final List<String> CHAM_SUBS = ImmutableList.of("on", "off");
     private final List<String> DIR_SUBS = ImmutableList.of("north", "west", "south", "east");
     private final List<String> LIST_SUBS = ImmutableList.of("companions", "saves", "areas", "rechargers");
     private final List<String> SEC_SUBS = ImmutableList.of("button", "world-repeater", "x-repeater", "z-repeater", "y-repeater", "artron", "handbrake", "door", "back");

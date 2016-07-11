@@ -19,7 +19,6 @@ package me.eccentric_nz.TARDIS.commands.tardis;
 import java.util.HashMap;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.advanced.TARDISCircuitChecker;
-import me.eccentric_nz.TARDIS.chameleon.TARDISChameleonCircuit;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
@@ -52,7 +51,7 @@ public class TARDISChameleonCommand {
             return false;
         }
         if (player.hasPermission("tardis.timetravel")) {
-            if (args.length < 2 || (!args[1].equalsIgnoreCase("on") && !args[1].equalsIgnoreCase("off") && !args[1].equalsIgnoreCase("short") && !args[1].equalsIgnoreCase("reset"))) {
+            if (args.length < 2 || (!args[1].equalsIgnoreCase("on") && !args[1].equalsIgnoreCase("off"))) {
                 TARDISMessage.send(player, "TOO_FEW_ARGS");
                 return false;
             }
@@ -109,28 +108,6 @@ public class TARDISChameleonCommand {
                         }
                         cs.update();
                     }
-                }
-                int dwid = plugin.getConfig().getInt("police_box.wall_id");
-                int dwd = plugin.getConfig().getInt("police_box.wall_data");
-                if (args[1].equalsIgnoreCase("short")) {
-                    // get the block the player is targeting
-                    Block target_block = player.getTargetBlock(plugin.getGeneralKeeper().getTransparent(), 50).getLocation().getBlock();
-                    TARDISChameleonCircuit tcc = new TARDISChameleonCircuit(plugin);
-                    int[] b_data = tcc.getChameleonBlock(target_block, player, true);
-                    int c_id = b_data[0], c_data = b_data[1];
-                    set.put("chameleon_id", c_id);
-                    set.put("chameleon_data", c_data);
-                    qf.doUpdate("tardis", set, tid);
-                    boolean bluewool = (c_id == dwid && c_data == dwd);
-                    if (!bluewool) {
-                        TARDISMessage.send(player, "CHAM_SET", target_block.getType().toString());
-                    }
-                }
-                if (args[1].equalsIgnoreCase("reset")) {
-                    set.put("chameleon_id", dwid);
-                    set.put("chameleon_data", dwd);
-                    qf.doUpdate("tardis", set, tid);
-                    TARDISMessage.send(player, "CHAM_REPAIR");
                 }
             }
             return true;
