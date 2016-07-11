@@ -16,8 +16,6 @@
  */
 package me.eccentric_nz.TARDIS.chameleon;
 
-import java.util.Arrays;
-import java.util.List;
 import me.eccentric_nz.TARDIS.TARDIS;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
@@ -57,8 +55,7 @@ public class TARDISChameleonConstructorGUI {
         ItemStack info = new ItemStack(Material.BOWL, 1);
         ItemMeta io = info.getItemMeta();
         io.setDisplayName(plugin.getChameleonGuis().getString("INFO"));
-        List<String> infoList = plugin.getChameleonGuis().getStringList("INFO_CONSTRUCT");
-        io.setLore(Arrays.asList(infoList.get(0), infoList.get(1), infoList.get(2), infoList.get(3)));
+        io.setLore(plugin.getChameleonGuis().getStringList("INFO_CONSTRUCT"));
         info.setItemMeta(io);
         is[3] = info;
         // abort

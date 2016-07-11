@@ -48,8 +48,7 @@ public class TARDISChameleonTemplateGUI {
         ItemStack info = new ItemStack(Material.BOWL, 1);
         ItemMeta io = info.getItemMeta();
         io.setDisplayName(plugin.getChameleonGuis().getString("INFO"));
-        List<String> infoListTemp = plugin.getChameleonGuis().getStringList("INFO_TEMPLATE");
-        io.setLore(Arrays.asList(infoListTemp.get(0), infoListTemp.get(1), infoListTemp.get(2), infoListTemp.get(3)));
+        io.setLore(plugin.getChameleonGuis().getStringList("INFO_TEMPLATE"));
         info.setItemMeta(io);
         // next button
         ItemStack next = new ItemStack(Material.ARROW, 1);

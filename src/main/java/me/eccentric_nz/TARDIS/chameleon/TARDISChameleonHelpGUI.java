@@ -17,7 +17,6 @@
 package me.eccentric_nz.TARDIS.chameleon;
 
 import java.util.Arrays;
-import java.util.List;
 import me.eccentric_nz.TARDIS.TARDIS;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
@@ -48,15 +47,13 @@ public class TARDISChameleonHelpGUI {
         ItemStack info = new ItemStack(Material.BOWL, 1);
         ItemMeta io = info.getItemMeta();
         io.setDisplayName(plugin.getChameleonGuis().getString("INFO"));
-        List<String> infoListOne = plugin.getChameleonGuis().getStringList("INFO_HELP_1");
-        io.setLore(Arrays.asList(infoListOne.get(0), infoListOne.get(1), infoListOne.get(2), infoListOne.get(3), infoListOne.get(4), infoListOne.get(5)));
+        io.setLore(plugin.getChameleonGuis().getStringList("INFO_HELP_1"));
         info.setItemMeta(io);
         // help
         ItemStack info2 = new ItemStack(Material.BOWL, 1);
         ItemMeta io2 = info2.getItemMeta();
         io2.setDisplayName(plugin.getChameleonGuis().getString("INFO"));
-        List<String> infoListTwo = plugin.getChameleonGuis().getStringList("INFO_HELP_2");
-        io2.setLore(Arrays.asList(infoListTwo.get(0), infoListTwo.get(1), infoListTwo.get(2), infoListTwo.get(3), infoListTwo.get(4)));
+        io2.setLore(plugin.getChameleonGuis().getStringList("INFO_HELP_2"));
         info2.setItemMeta(io2);
         // one
         ItemStack one = new ItemStack(Material.BOWL, 1);
@@ -116,15 +113,13 @@ public class TARDISChameleonHelpGUI {
         ItemStack grid = new ItemStack(Material.BOWL, 1);
         ItemMeta gd = grid.getItemMeta();
         gd.setDisplayName(plugin.getChameleonGuis().getString("INFO"));
-        List<String> infoListThree = plugin.getChameleonGuis().getStringList("INFO_HELP_3");
-        gd.setLore(Arrays.asList(infoListThree.get(0), infoListThree.get(1)));
+        gd.setLore(plugin.getChameleonGuis().getStringList("INFO_HELP_3"));
         grid.setItemMeta(gd);
         // grid
         ItemStack column = new ItemStack(Material.BOWL, 1);
         ItemMeta cn = column.getItemMeta();
         cn.setDisplayName(plugin.getChameleonGuis().getString("INFO"));
-        List<String> infoListFour = plugin.getChameleonGuis().getStringList("INFO_HELP_4");
-        cn.setLore(Arrays.asList(infoListFour.get(0), infoListFour.get(1)));
+        cn.setLore(plugin.getChameleonGuis().getStringList("INFO_HELP_4"));
         column.setItemMeta(cn);
         // example
         ItemStack example = new ItemStack(Material.BOWL, 1);
