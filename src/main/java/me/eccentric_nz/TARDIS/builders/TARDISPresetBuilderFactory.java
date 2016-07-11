@@ -26,6 +26,7 @@ import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.destroyers.TARDISDeinstaPreset;
+import me.eccentric_nz.TARDIS.enumeration.ADAPTION;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
 import me.eccentric_nz.TARDIS.enumeration.PRESET;
 import me.eccentric_nz.TARDIS.junk.TARDISJunkBuilder;
@@ -102,8 +103,8 @@ public class TARDISPresetBuilderFactory {
                 // remember the current biome (unless rebuilding)
                 new QueryFactory(plugin).saveBiome(tardis.getTardis_id(), biome.toString());
             }
-            if (tardis.isAdapti_on()) {
-                preset = adapt(biome, preset);
+            if (!tardis.getAdaption().equals(ADAPTION.OFF)) {
+                preset = adapt(biome, tardis.getAdaption());
             }
             PRESET demat = tardis.getDemat();
             int cham_id = tardis.getChameleon_id();
@@ -184,57 +185,66 @@ public class TARDISPresetBuilderFactory {
         }
     }
 
-    public PRESET adapt(Biome biome, PRESET preset) {
-        switch (biome) {
-            case DEEP_OCEAN:
-            case FROZEN_OCEAN:
-            case OCEAN:
-                return PRESET.YELLOW;
-            case DESERT:
-            case DESERT_HILLS:
-                return PRESET.DESERT;
-            case EXTREME_HILLS:
-            case EXTREME_HILLS_WITH_TREES:
-                return PRESET.EXTREME_HILLS;
-            case FOREST:
-            case FOREST_HILLS:
-                return PRESET.FOREST;
-            case HELL:
-                return PRESET.NETHER;
-            case ICE_FLATS:
-                return PRESET.ICE_FLATS;
-            case ICE_MOUNTAINS:
-                return PRESET.ICE_SPIKES;
-            case JUNGLE:
-            case JUNGLE_HILLS:
-            case JUNGLE_EDGE:
-                return PRESET.JUNGLE;
-            case MESA:
-            case MESA_ROCK:
-            case MESA_CLEAR_ROCK:
-                return PRESET.MESA;
-            case MUSHROOM_ISLAND:
-            case MUSHROOM_ISLAND_SHORE:
-                return PRESET.SHROOM;
-            case PLAINS:
-                return PRESET.PLAINS;
-            case ROOFED_FOREST:
-                return PRESET.ROOFED_FOREST;
-            case SAVANNA:
-            case SAVANNA_ROCK:
-                return PRESET.SAVANNA;
-            case SWAMPLAND:
-                return PRESET.SWAMP;
-            case SKY:
-                return PRESET.THEEND;
-            case TAIGA:
-            case TAIGA_HILLS:
-                return PRESET.TAIGA;
-            case TAIGA_COLD:
-            case TAIGA_COLD_HILLS:
-                return PRESET.COLD_TAIGA;
-            default:
-                return PRESET.FACTORY;
+    public PRESET adapt(Biome biome, ADAPTION adaption) {
+        if (adaption.equals(ADAPTION.BLOCK)) {
+            return PRESET.OLD;
+        } else {
+            switch (biome) {
+                case BEACHES:
+                case COLD_BEACH:
+                case RIVER:
+                case FROZEN_RIVER:
+                    return PRESET.BOAT;
+                case DEEP_OCEAN:
+                case FROZEN_OCEAN:
+                case OCEAN:
+                    return PRESET.YELLOW;
+                case DESERT:
+                case DESERT_HILLS:
+                    return PRESET.DESERT;
+                case EXTREME_HILLS:
+                case EXTREME_HILLS_WITH_TREES:
+                    return PRESET.EXTREME_HILLS;
+                case FOREST:
+                case FOREST_HILLS:
+                    return PRESET.FOREST;
+                case HELL:
+                    return PRESET.NETHER;
+                case ICE_FLATS:
+                    return PRESET.ICE_FLATS;
+                case ICE_MOUNTAINS:
+                    return PRESET.ICE_SPIKES;
+                case JUNGLE:
+                case JUNGLE_HILLS:
+                case JUNGLE_EDGE:
+                    return PRESET.JUNGLE;
+                case MESA:
+                case MESA_ROCK:
+                case MESA_CLEAR_ROCK:
+                    return PRESET.MESA;
+                case MUSHROOM_ISLAND:
+                case MUSHROOM_ISLAND_SHORE:
+                    return PRESET.SHROOM;
+                case PLAINS:
+                    return PRESET.PLAINS;
+                case ROOFED_FOREST:
+                    return PRESET.ROOFED_FOREST;
+                case SAVANNA:
+                case SAVANNA_ROCK:
+                    return PRESET.SAVANNA;
+                case SWAMPLAND:
+                    return PRESET.SWAMP;
+                case SKY:
+                    return PRESET.THEEND;
+                case TAIGA:
+                case TAIGA_HILLS:
+                    return PRESET.TAIGA;
+                case TAIGA_COLD:
+                case TAIGA_COLD_HILLS:
+                    return PRESET.COLD_TAIGA;
+                default:
+                    return PRESET.FACTORY;
+            }
         }
     }
 

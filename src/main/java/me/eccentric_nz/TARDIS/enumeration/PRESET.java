@@ -91,7 +91,8 @@ public enum PRESET {
     ROOFED_FOREST(Material.BARRIER, "ROOFED_FOREST", "", true, true),
     SAVANNA(Material.BARRIER, "SAVANNA", "", true, true),
     TAIGA(Material.BARRIER, "TAIGA", "", true, true),
-    COLD_TAIGA(Material.BARRIER, "COLD_TAIGA", "", true, true);
+    COLD_TAIGA(Material.BARRIER, "COLD_TAIGA", "", true, true),
+    BOAT(Material.BARRIER, "BOAT", "", false, false);
 
     Material material;
     String firstLine;
