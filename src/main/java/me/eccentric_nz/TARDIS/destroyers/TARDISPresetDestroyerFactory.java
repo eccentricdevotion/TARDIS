@@ -85,7 +85,7 @@ public class TARDISPresetDestroyerFactory {
                 if (dd.isHide()) {
                     loops = 3;
                     TARDISSounds.playTARDISSound(dd.getLocation(), "tardis_takeoff_fast");
-                    if (dd.getPlayer() != null && plugin.getUtils().inTARDISWorld(dd.getPlayer().getPlayer())) {
+                    if (dd.getPlayer() != null && dd.getPlayer().getPlayer() != null && plugin.getUtils().inTARDISWorld(dd.getPlayer().getPlayer())) {
                         TARDISSounds.playTARDISSound(dd.getPlayer().getPlayer().getLocation(), "tardis_takeoff_fast");
                     }
                 } else if (preset.equals(PRESET.JUNK_MODE)) {
