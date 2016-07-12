@@ -42,7 +42,7 @@ public class TARDISChameleonConstructorGUI {
         // back
         ItemStack back = new ItemStack(Material.ARROW, 1);
         ItemMeta bk = back.getItemMeta();
-        bk.setDisplayName(plugin.getChameleonGuis().getString("BACK_PRESETS"));
+        bk.setDisplayName(plugin.getChameleonGuis().getString("BACK_CHAM_OPTS"));
         back.setItemMeta(bk);
         is[0] = back;
         // help

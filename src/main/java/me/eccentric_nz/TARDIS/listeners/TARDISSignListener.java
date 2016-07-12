@@ -167,8 +167,8 @@ public class TARDISSignListener implements Listener {
                             return;
                         }
                         // open Chameleon Circuit GUI
-                        ItemStack[] cc = new TARDISChameleonInventory(plugin, tardis.isChamele_on(), tardis.isAdapti_on()).getTerminal();
-                        Inventory cc_gui = plugin.getServer().createInventory(player, 54, "§4Chameleon Circuit");
+                        ItemStack[] cc = new TARDISChameleonInventory(plugin, tardis.getAdaption(), tardis.getPreset()).getMenu();
+                        Inventory cc_gui = plugin.getServer().createInventory(player, 27, "§4Chameleon Circuit");
                         cc_gui.setContents(cc);
                         player.openInventory(cc_gui);
                     } else if (which == 1 && line1.contains("TARDIS")) {

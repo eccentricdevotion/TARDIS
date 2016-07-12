@@ -13,7 +13,6 @@
    * Initiate a desktop theme change - _this is problematic as the desktop could only be changed to one that is the same size (as there is no player interaction to decide if rooms should be jettisoned)_
 4. Update console schematics to remove MONSTER_EGG blocks, except for the ARS one (data = 2), as it is needed for initially setting up the ARS data and updating it when using the Desktop Theme
 5. Update [Chameleon Circuit GUI](http://dev.bukkit.org/bukkit-plugins/tardis/tickets/1341-new-chameleon-circuit-gui/)
-   * Remove the `/tardis chameleon short` command
    * When adapting to a biome and there is no preset available, switch to the FACTORY preset and change the wall block to the block under the TARDIS location (as is done with current chameleon circuit)
 6. [Player console archiving](http://dev.bukkit.org/bukkit-plugins/tardis/tickets/1201-player-console-archive-feature/)
 

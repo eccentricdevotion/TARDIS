@@ -16,18 +16,26 @@
  */
 package me.eccentric_nz.TARDIS.chameleon;
 
-import java.util.Arrays;
+import java.util.List;
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.enumeration.ADAPTION;
+import me.eccentric_nz.TARDIS.enumeration.PRESET;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
 /**
- * Time travel is, as the name suggests, the (usually controlled) process of
- * travelling through time, even in a non-linear direction. In the 26th century
- * individuals who time travel are sometimes known as persons of meta-temporal
- * displacement.
+ * A TARDIS with a functioning chameleon circuit can appear as almost anything
+ * desired. The owner can program the circuit to make it assume a specific
+ * shape. If no appearance is specified, the TARDIS automatically choses its own
+ * shape. When a TARDIS materialises in a new location, within the first
+ * nanosecond of landing, its chameleon circuit analyses the surrounding area,
+ * calculates a twelve-dimensional data map of all objects within a
+ * thousand-mile radius and then determines which outer shell will best blend in
+ * with the environment. According to the Eleventh Doctor, the TARDIS would
+ * perform these functions, but then disguise itself as a 1960s era police box
+ * anyway.
  *
  * @author eccentric_nz
  */
@@ -35,13 +43,17 @@ public class TARDISChameleonInventory {
 
     private final ItemStack[] terminal;
     private final TARDIS plugin;
-    private final boolean bool;
-    private final boolean adapt;
+    private final ADAPTION adapt;
+    private final PRESET preset;
+    private final ItemStack on;
+    private final ItemStack off;
 
-    public TARDISChameleonInventory(TARDIS plugin, boolean bool, boolean adapt) {
+    public TARDISChameleonInventory(TARDIS plugin, ADAPTION adapt, PRESET preset) {
         this.plugin = plugin;
-        this.bool = bool;
         this.adapt = adapt;
+        this.preset = preset;
+        this.on = new ItemStack(Material.WOOL, 1, (byte) 5);
+        this.off = new ItemStack(Material.CARPET, 1, (byte) 8);
         this.terminal = getItemStack();
     }
 
@@ -51,122 +63,87 @@ public class TARDISChameleonInventory {
      * @return an Array of itemStacks (an inventory)
      */
     private ItemStack[] getItemStack() {
-        // on/off
-        ItemStack con = new ItemStack(Material.REDSTONE_COMPARATOR, 1);
-        ItemMeta ing = con.getItemMeta();
-        ing.setDisplayName(plugin.getLanguage().getString("BUTTON_CIRC"));
-        String on_off = (bool) ? ChatColor.GREEN + plugin.getLanguage().getString("SET_ON") : ChatColor.RED + plugin.getLanguage().getString("SET_OFF");
-        String to_engage = (bool) ? plugin.getLanguage().getString("SET_OFF") : plugin.getLanguage().getString("SET_ON");
-        ing.setLore(Arrays.asList(on_off, String.format(plugin.getLanguage().getString("CHAM_CLICK"), to_engage)));
-        con.setItemMeta(ing);
-        // Apply preset
-        ItemStack apply = new ItemStack(Material.BOOKSHELF, 1);
+
+        // Apply now
+        ItemStack apply = new ItemStack(Material.REDSTONE_COMPARATOR, 1);
         ItemMeta now = apply.getItemMeta();
-        now.setDisplayName(plugin.getLanguage().getString("BUTTON_APPLY"));
+        now.setDisplayName(plugin.getChameleonGuis().getString("APPLY"));
+        now.setLore(plugin.getChameleonGuis().getStringList("APPLY_LORE"));
         apply.setItemMeta(now);
-        // page two
-        ItemStack page = new ItemStack(Material.ARROW, 1);
-        ItemMeta two = page.getItemMeta();
-        two.setDisplayName(plugin.getLanguage().getString("BUTTON_PAGE_2"));
-        page.setItemMeta(two);
-        // New Police Box
-        ItemStack box = new ItemStack(Material.WOOL, 1, (short) 11);
-        ItemMeta day = box.getItemMeta();
-        day.setDisplayName("New Police Box");
-        box.setItemMeta(day);
-        // disengaged
-        ItemStack off = new ItemStack(Material.WOOL, 1, (short) 8);
-        ItemMeta ht = off.getItemMeta();
-        ht.setDisplayName("Factory Fresh");
-        off.setItemMeta(ht);
-        // Stone Brick Column
-        ItemStack stone = new ItemStack(Material.SMOOTH_BRICK, 1);
-        ItemMeta hrs = stone.getItemMeta();
-        hrs.setDisplayName("Stone Brick Column");
-        stone.setItemMeta(hrs);
-        // Desert Temple
-        ItemStack desert = new ItemStack(Material.SANDSTONE, 1);
-        ItemMeta tmp = desert.getItemMeta();
-        tmp.setDisplayName("Desert Temple");
-        desert.setItemMeta(tmp);
-        // Jungle Temple
-        ItemStack jungle = new ItemStack(Material.MOSSY_COBBLESTONE, 1);
-        ItemMeta tpl = jungle.getItemMeta();
-        tpl.setDisplayName("Jungle Temple");
-        jungle.setItemMeta(tpl);
-        // Nether Fortress
-        ItemStack nether = new ItemStack(Material.NETHER_BRICK, 1);
-        ItemMeta frt = nether.getItemMeta();
-        frt.setDisplayName("Nether Fortress");
-        nether.setItemMeta(frt);
-        // Old Police Box
-        ItemStack def = new ItemStack(Material.WOOL, 1, (short) 3);
-        ItemMeta dpb = def.getItemMeta();
-        dpb.setDisplayName("Old Police Box");
-        def.setItemMeta(dpb);
-        // Swamp Hut
-        ItemStack swamp = new ItemStack(Material.LOG, 1);
-        ItemMeta hut = swamp.getItemMeta();
-        hut.setDisplayName("Swamp Hut");
-        swamp.setItemMeta(hut);
-        // Party Tent
-        ItemStack tent = new ItemStack(Material.WOOL, 1, (short) 5);
-        ItemMeta pry = tent.getItemMeta();
-        pry.setDisplayName("Party Tent");
-        tent.setItemMeta(pry);
-        // Village House
-        ItemStack village = new ItemStack(Material.COBBLESTONE, 1);
-        ItemMeta hse = village.getItemMeta();
-        hse.setDisplayName("Village House");
-        village.setItemMeta(hse);
-        // Yellow Submarine
-        ItemStack yellow = new ItemStack(Material.WOOL, 1, (short) 4);
-        ItemMeta sme = yellow.getItemMeta();
-        sme.setDisplayName("Yellow Submarine");
-        yellow.setItemMeta(sme);
-        // Telephone Box
-        ItemStack tel = new ItemStack(Material.WOOL, 1, (short) 14);
-        ItemMeta pho = tel.getItemMeta();
-        pho.setDisplayName("Red Telephone Box");
-        tel.setItemMeta(pho);
-        // Partly Submerged
-        ItemStack sub = new ItemStack(Material.DIRT, 1);
-        ItemMeta mer = sub.getItemMeta();
-        mer.setDisplayName("Submerged");
-        sub.setItemMeta(mer);
-        // Daisy Flower
-        ItemStack flo = new ItemStack(Material.WOOL, 1, (short) 0);
-        ItemMeta wer = flo.getItemMeta();
-        wer.setDisplayName("Daisy Flower");
-        flo.setItemMeta(wer);
-        // Chalice
-        ItemStack chal = new ItemStack(Material.QUARTZ_BLOCK, 1);
-        ItemMeta ice = chal.getItemMeta();
-        ice.setDisplayName("Quartz Chalice");
-        chal.setItemMeta(ice);
-        // Angel
-        ItemStack ang = new ItemStack(Material.FEATHER, 1);
-        ItemMeta wee = ang.getItemMeta();
-        wee.setDisplayName("Weeping Angel");
-        ang.setItemMeta(wee);
-        // Windmill
-        ItemStack win = new ItemStack(Material.WOOL, 1, (short) 1);
-        ItemMeta mill = win.getItemMeta();
-        mill.setDisplayName("Windmill");
-        win.setItemMeta(mill);
-        // Well
-        ItemStack well = new ItemStack(Material.MOSSY_COBBLESTONE, 1);
-        ItemMeta ivy = well.getItemMeta();
-        ivy.setDisplayName("Mossy Well");
-        well.setItemMeta(ivy);
-        // Biome
-        ItemStack bio = new ItemStack(Material.LOG, 1, (short) 2);
-        ItemMeta me = bio.getItemMeta();
-        me.setDisplayName(plugin.getLanguage().getString("BUTTON_ADAPT"));
-        String biome = (adapt) ? ChatColor.GREEN + plugin.getLanguage().getString("SET_ON") : ChatColor.RED + plugin.getLanguage().getString("SET_OFF");
-        String to_turn = (adapt) ? plugin.getLanguage().getString("SET_OFF") : plugin.getLanguage().getString("SET_ON");
-        me.setLore(Arrays.asList(biome, String.format(plugin.getLanguage().getString("CHAM_CLICK"), to_turn)));
-        bio.setItemMeta(me);
+        // Disabled
+        ItemStack dis = new ItemStack(Material.BOWL, 1);
+        ItemMeta abled = dis.getItemMeta();
+        abled.setDisplayName("Chameleon Circuit");
+        abled.setLore(plugin.getChameleonGuis().getStringList("DISABLED_LORE"));
+        dis.setItemMeta(abled);
+        // Adaptive
+        ItemStack adap = new ItemStack(Material.BOWL, 1);
+        ItemMeta tive = adap.getItemMeta();
+        tive.setDisplayName(plugin.getChameleonGuis().getString("ADAPT"));
+        tive.setLore(plugin.getChameleonGuis().getStringList("ADAPT_LORE"));
+        adap.setItemMeta(tive);
+        // Invisible
+        ItemStack invis;
+        if (plugin.getConfig().getBoolean("allow.invisibility")) {
+            invis = new ItemStack(Material.BOWL, 1);
+            ItemMeta ible = invis.getItemMeta();
+            ible.setDisplayName(plugin.getChameleonGuis().getString("INVISIBLE"));
+            List<String> ilore = plugin.getChameleonGuis().getStringList("INVISIBLE_LORE");
+            if (plugin.getConfig().getBoolean("circuits.damage")) {
+                ilore.add(plugin.getLanguage().getString("INVISIBILITY_LORE_1"));
+                ilore.add(plugin.getLanguage().getString("INVISIBILITY_LORE_2"));
+            }
+            ible.setLore(ilore);
+            invis.setItemMeta(ible);
+        } else {
+            invis = null;
+        }
+        // Shorted out
+        ItemStack shor = new ItemStack(Material.BOWL, 1);
+        ItemMeta tout = shor.getItemMeta();
+        tout.setDisplayName(plugin.getChameleonGuis().getString("SHORT"));
+        tout.setLore(plugin.getChameleonGuis().getStringList("SHORT_LORE"));
+        shor.setItemMeta(tout);
+        // construction GUI
+        ItemStack cons = new ItemStack(Material.BOWL, 1);
+        ItemMeta truct = cons.getItemMeta();
+        truct.setDisplayName(plugin.getChameleonGuis().getString("CONSTRUCT"));
+        truct.setLore(plugin.getChameleonGuis().getStringList("CONSTRUCT_LORE"));
+        cons.setItemMeta(truct);
+        // Disabled radio button
+        ItemStack fac = (preset.equals(PRESET.FACTORY) && adapt.equals(ADAPTION.OFF)) ? on : off;
+        ItemMeta tory = fac.getItemMeta();
+        String donoff = (preset.equals(PRESET.FACTORY) && adapt.equals(ADAPTION.OFF)) ? ChatColor.RED + plugin.getChameleonGuis().getString("DISABLED") : ChatColor.GREEN + plugin.getLanguage().getString("SET_ON");
+        tory.setDisplayName(donoff);
+        fac.setItemMeta(tory);
+        // Adaptive radio button
+        ItemStack biome = (adapt.equals(ADAPTION.OFF)) ? off : on;
+        ItemMeta block = biome.getItemMeta();
+        block.setDisplayName(adapt.getColour() + adapt.toString());
+        biome.setItemMeta(block);
+        // Invisible radio button
+        ItemStack not;
+        if (plugin.getConfig().getBoolean("allow.invisibility")) {
+            not = (preset.equals(PRESET.INVISIBLE)) ? on : off;
+            ItemMeta blue = not.getItemMeta();
+            String ionoff = (preset.equals(PRESET.INVISIBLE)) ? ChatColor.GREEN + plugin.getLanguage().getString("SET_ON") : ChatColor.RED + plugin.getLanguage().getString("SET_OFF");
+            blue.setDisplayName(ionoff);
+            not.setItemMeta(blue);
+        } else {
+            not = null;
+        }
+        // Shorted out radio button
+        ItemStack pre = (!preset.equals(PRESET.INVISIBLE) && !preset.equals(PRESET.FACTORY) && !preset.equals(PRESET.CONSTRUCT)) ? on : off;
+        ItemMeta set = pre.getItemMeta();
+        String sonoff = (!preset.equals(PRESET.INVISIBLE) && !preset.equals(PRESET.FACTORY) && !preset.equals(PRESET.CONSTRUCT)) ? ChatColor.GREEN + preset.toString() + " " + plugin.getLanguage().getString("SET_ON") : ChatColor.RED + plugin.getLanguage().getString("SET_OFF");
+        set.setDisplayName(sonoff);
+        pre.setItemMeta(set);
+        // Construct radio button
+        ItemStack bui = (preset.equals(PRESET.CONSTRUCT)) ? on : off;
+        ItemMeta lder = bui.getItemMeta();
+        String conoff = (preset.equals(PRESET.CONSTRUCT)) ? ChatColor.GREEN + plugin.getLanguage().getString("SET_ON") : ChatColor.RED + plugin.getLanguage().getString("SET_OFF");
+        lder.setDisplayName(conoff);
+        bui.setItemMeta(lder);
         // Cancel / close
         ItemStack close = new ItemStack(Material.BOWL, 1);
         ItemMeta can = close.getItemMeta();
@@ -174,17 +151,14 @@ public class TARDISChameleonInventory {
         close.setItemMeta(can);
 
         ItemStack[] is = {
-            con, null, apply, null, bio, null, close, null, page,
-            null, null, null, null, null, null, null, null, null,
-            box, null, off, null, jungle, null, nether, null, def,
-            null, swamp, null, tent, null, village, null, yellow, null,
-            tel, null, ang, null, sub, null, flo, null, stone,
-            null, chal, null, desert, null, well, null, win, null
+            apply, null, null, null, null, null, null, null, null,
+            null, null, dis, adap, invis, shor, cons, null, null,
+            null, null, fac, biome, not, pre, bui, null, close
         };
         return is;
     }
 
-    public ItemStack[] getTerminal() {
+    public ItemStack[] getMenu() {
         return terminal;
     }
 }

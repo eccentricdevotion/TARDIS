@@ -62,6 +62,7 @@ public class TARDISConfiguration {
     HashMap<String, Integer> artronIntOptions = new HashMap<String, Integer>();
     HashMap<String, List<String>> signListOptions = new HashMap<String, List<String>>();
     HashMap<String, String> chameleonOptions = new HashMap<String, String>();
+    HashMap<String, List<String>> chameleonListOptions = new HashMap<String, List<String>>();
     List<String> removeOptions = new ArrayList<String>();
 
     public TARDISConfiguration(TARDIS plugin) {
@@ -413,6 +414,19 @@ public class TARDISConfiguration {
         roomStrOptions.put("rooms.WORKSHOP.seed", "NETHER_BRICK");
         roomStrOptions.put("rooms.ZERO.seed", "WOOD_BUTTON");
         signListOptions.put("junk", Arrays.asList("Destination"));
+        chameleonListOptions.put("ADAPT_LORE", Arrays.asList("The Chameleon Circuit", "will choose a preset", "that blends in with", "the environment.", "Use BIOME or BLOCK mode."));
+        chameleonListOptions.put("APPLY_LORE", Arrays.asList("Rebuild the TARDIS", "exterior with the", "current settings."));
+        chameleonListOptions.put("CONSTRUCT_LORE", Arrays.asList("Build your own", "Chameleon preset."));
+        chameleonListOptions.put("DISABLED_LORE", Arrays.asList("Disable the Chameleon", "Circuit and revert", "to the FACTORY preset."));
+        chameleonListOptions.put("INVISIBLE_LORE", Arrays.asList("Engages the TARDIS", "Invisiblity Circuit."));
+        chameleonListOptions.put("SHORT_LORE", Arrays.asList("Make the Chameleon", "Circuit malfunction and", "always choose the", "same appearance."));
+        chameleonOptions.put("ADAPT", "Adaptive");
+        chameleonOptions.put("APPLY", "Apply");
+        chameleonOptions.put("BACK_CHAM_OPTS", "Back to Chameleon Circuit");
+        chameleonOptions.put("CONSTRUCT", "Construct");
+        chameleonOptions.put("DISABLED", "DISABLED");
+        chameleonOptions.put("INVISIBLE", "Invisible");
+        chameleonOptions.put("SHORT", "Shorted out");
         chameleonOptions.put("USE_PREV", "Use last saved construct");
 
         removeOptions.add("creation.materialise");
@@ -803,6 +817,12 @@ public class TARDISConfiguration {
         }
         int i = 0;
         for (Map.Entry<String, String> entry : chameleonOptions.entrySet()) {
+            if (!chameleon_config.contains(entry.getKey())) {
+                chameleon_config.set(entry.getKey(), entry.getValue());
+                i++;
+            }
+        }
+        for (Map.Entry<String, List<String>> entry : chameleonListOptions.entrySet()) {
             if (!chameleon_config.contains(entry.getKey())) {
                 chameleon_config.set(entry.getKey(), entry.getValue());
                 i++;

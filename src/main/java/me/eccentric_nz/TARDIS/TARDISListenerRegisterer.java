@@ -36,7 +36,6 @@ import me.eccentric_nz.TARDIS.chameleon.TARDISChameleonConstructorListener;
 import me.eccentric_nz.TARDIS.chameleon.TARDISChameleonHelpListener;
 import me.eccentric_nz.TARDIS.chameleon.TARDISChameleonListener;
 import me.eccentric_nz.TARDIS.chameleon.TARDISChameleonTemplateListener;
-import me.eccentric_nz.TARDIS.chameleon.TARDISPageThreeListener;
 import me.eccentric_nz.TARDIS.chameleon.TARDISPresetListener;
 import me.eccentric_nz.TARDIS.commands.admin.TARDISAdminMenuListener;
 import me.eccentric_nz.TARDIS.commands.preferences.TARDISHumListener;
@@ -254,7 +253,6 @@ public class TARDISListenerRegisterer {
         plugin.getPM().registerEvents(new TARDISMakePresetListener(plugin), plugin);
         plugin.getPM().registerEvents(new TARDISManualFlightListener(plugin), plugin);
         plugin.getPM().registerEvents(new TARDISMinecartListener(plugin), plugin);
-        plugin.getPM().registerEvents(new TARDISPageThreeListener(plugin), plugin);
         if (plugin.getConfig().getBoolean("allow.perception_filter")) {
             plugin.getPM().registerEvents(new TARDISPerceptionFilterListener(plugin), plugin);
         }

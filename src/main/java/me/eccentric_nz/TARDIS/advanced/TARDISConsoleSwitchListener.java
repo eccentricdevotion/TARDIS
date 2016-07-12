@@ -88,8 +88,8 @@ public class TARDISConsoleSwitchListener implements Listener {
                                         Inventory new_inv = null;
                                         switch (map) {
                                             case (byte) 1966: // Chameleon circuit
-                                                new_inv = plugin.getServer().createInventory(p, 54, "§4Chameleon Circuit");
-                                                stack = new TARDISChameleonInventory(plugin, tardis.isChamele_on(), tardis.isAdapti_on()).getTerminal();
+                                                new_inv = plugin.getServer().createInventory(p, 27, "§4Chameleon Circuit");
+                                                stack = new TARDISChameleonInventory(plugin, tardis.getAdaption(), tardis.getPreset()).getMenu();
                                                 break;
                                             case (byte) 1973: // ARS circuit
                                                 new_inv = plugin.getServer().createInventory(p, 54, "§4Architectural Reconfiguration");

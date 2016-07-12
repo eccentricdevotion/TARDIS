@@ -29,8 +29,10 @@ import me.eccentric_nz.TARDIS.database.ResultSetChameleon;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import me.eccentric_nz.TARDIS.database.ResultSetTravellers;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
+import me.eccentric_nz.TARDIS.enumeration.ADAPTION;
 import me.eccentric_nz.TARDIS.enumeration.DIFFICULTY;
 import me.eccentric_nz.TARDIS.enumeration.DISK_CIRCUIT;
+import me.eccentric_nz.TARDIS.enumeration.PRESET;
 import me.eccentric_nz.TARDIS.listeners.TARDISMenuListener;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import me.eccentric_nz.TARDIS.utility.TARDISStaticUtils;
@@ -132,8 +134,8 @@ public class TARDISChameleonConstructorListener extends TARDISMenuListener imple
                         if (rs.resultSet()) {
                             Tardis tardis = rs.getTardis();
                             UUID uuid = player.getUniqueId();
-                            final boolean bool = tardis.isChamele_on();
-                            final boolean adapt = tardis.isAdapti_on();
+                            final PRESET preset = tardis.getPreset();
+                            final ADAPTION adapt = tardis.getAdaption();
                             switch (slot) {
                                 case 0:
                                     // back
@@ -141,9 +143,9 @@ public class TARDISChameleonConstructorListener extends TARDISMenuListener imple
                                     plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
                                         @Override
                                         public void run() {
-                                            TARDISPageThreeInventory tci = new TARDISPageThreeInventory(plugin, bool, adapt);
-                                            ItemStack[] items = tci.getPageThree();
-                                            Inventory chaminv = plugin.getServer().createInventory(player, 54, "§4Even More Presets");
+                                            TARDISChameleonInventory tci = new TARDISChameleonInventory(plugin, adapt, preset);
+                                            ItemStack[] items = tci.getMenu();
+                                            Inventory chaminv = plugin.getServer().createInventory(player, 27, "§4Chameleon Circuit");
                                             chaminv.setContents(items);
                                             player.openInventory(chaminv);
                                         }

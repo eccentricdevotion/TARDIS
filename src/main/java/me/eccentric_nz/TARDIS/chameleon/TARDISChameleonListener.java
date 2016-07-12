@@ -16,7 +16,6 @@
  */
 package me.eccentric_nz.TARDIS.chameleon;
 
-import java.util.Arrays;
 import java.util.HashMap;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.advanced.TARDISCircuitChecker;
@@ -25,12 +24,15 @@ import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import me.eccentric_nz.TARDIS.database.ResultSetTravellers;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
+import me.eccentric_nz.TARDIS.enumeration.ADAPTION;
+import me.eccentric_nz.TARDIS.enumeration.CHAMELEON_OPTION;
 import me.eccentric_nz.TARDIS.enumeration.DIFFICULTY;
 import me.eccentric_nz.TARDIS.enumeration.DISK_CIRCUIT;
 import me.eccentric_nz.TARDIS.listeners.TARDISMenuListener;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import me.eccentric_nz.TARDIS.utility.TARDISStaticUtils;
 import org.bukkit.ChatColor;
+import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -59,14 +61,14 @@ public class TARDISChameleonListener extends TARDISMenuListener implements Liste
      * @param event a player clicking an inventory slot
      */
     @EventHandler(ignoreCancelled = true)
-    public void onChameleonTerminalClick(InventoryClickEvent event) {
+    public void onChameleonMenuClick(InventoryClickEvent event) {
         Inventory inv = event.getInventory();
         String name = inv.getTitle();
         if (name.equals("§4Chameleon Circuit")) {
             event.setCancelled(true);
             int slot = event.getRawSlot();
             final Player player = (Player) event.getWhoClicked();
-            if (slot >= 0 && slot < 54) {
+            if (slot >= 0 && slot < 27) {
                 ItemStack is = inv.getItem(slot);
                 if (is != null) {
                     // get the TARDIS the player is in
@@ -80,38 +82,13 @@ public class TARDISChameleonListener extends TARDISMenuListener implements Liste
                         ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false, 0);
                         if (rs.resultSet()) {
                             Tardis tardis = rs.getTardis();
-                            String last_line = TARDISStaticUtils.getLastLine(tardis.getChameleon());
-                            final boolean bool = tardis.isChamele_on();
-                            final boolean adapt = tardis.isAdapti_on();
-                            String preset = tardis.getPreset().toString();
+                            final ADAPTION adapt = tardis.getAdaption();
+//                            String preset = tardis.getPreset().toString();
                             HashMap<String, Object> set = new HashMap<String, Object>();
-                            HashMap<String, Object> set_oo = new HashMap<String, Object>();
-                            QueryFactory qf = new QueryFactory(plugin);
                             HashMap<String, Object> wherec = new HashMap<String, Object>();
                             wherec.put("tardis_id", id);
                             switch (slot) {
                                 case 0:
-                                    // toggle chameleon circuit
-                                    String onoff;
-                                    String engage;
-                                    int oo;
-                                    if (bool) {
-                                        onoff = ChatColor.RED + plugin.getLanguage().getString("SET_OFF");
-                                        engage = plugin.getLanguage().getString("SET_ON");
-                                        oo = 0;
-                                    } else {
-                                        onoff = ChatColor.GREEN + plugin.getLanguage().getString("SET_ON");
-                                        engage = plugin.getLanguage().getString("SET_OFF");
-                                        oo = 1;
-                                    }
-                                    ItemMeta im = is.getItemMeta();
-                                    im.setLore(Arrays.asList(onoff, String.format(plugin.getLanguage().getString("CHAM_CLICK"), engage)));
-                                    is.setItemMeta(im);
-                                    // set sign text
-                                    TARDISStaticUtils.setSign(tardis.getChameleon(), 2, onoff, player);
-                                    set_oo.put("chamele_on", oo);
-                                    break;
-                                case 2:
                                     player.performCommand("tardis rebuild");
                                     close(player);
                                     // damage the circuit if configured
@@ -123,197 +100,149 @@ public class TARDISChameleonListener extends TARDISMenuListener implements Liste
                                         new TARDISCircuitDamager(plugin, DISK_CIRCUIT.CHAMELEON, uses_left, id, player).damage();
                                     }
                                     break;
-                                case 4:
-                                    // toggle biome adaption
-                                    String biome;
-                                    String to_turn;
-                                    int ba;
-                                    if (adapt) {
-                                        biome = ChatColor.RED + plugin.getLanguage().getString("SET_OFF");
-                                        to_turn = plugin.getLanguage().getString("SET_ON");
-                                        ba = 0;
+                                case 11:
+                                    // factory
+                                    set.put("adapti_on", 0);
+                                    ItemStack frb = inv.getItem(20);
+                                    ItemMeta fact = frb.getItemMeta();
+                                    String ory = fact.getDisplayName();
+                                    if (ory.equals(ChatColor.GREEN + plugin.getLanguage().getString("SET_ON"))) {
+                                        set.put("chameleon_preset", "FACTORY");
+                                        toggleOthers(CHAMELEON_OPTION.FACTORY, inv);
+                                        TARDISStaticUtils.setSign(tardis.getChameleon(), 3, "FACTORY", player);
+                                        TARDISMessage.send(player, "CHAM_SET", ChatColor.AQUA + "Factory Fresh");
                                     } else {
-                                        biome = ChatColor.GREEN + plugin.getLanguage().getString("SET_ON");
-                                        to_turn = plugin.getLanguage().getString("SET_OFF");
-                                        ba = 1;
+                                        set.put("chameleon_preset", "NEW");
+                                        toggleOthers(CHAMELEON_OPTION.PRESET, inv);
+                                        setDefault(inv);
                                     }
-                                    ItemMeta bio = is.getItemMeta();
-                                    bio.setLore(Arrays.asList(biome, String.format(plugin.getLanguage().getString("CHAM_CLICK"), to_turn)));
-                                    is.setItemMeta(bio);
-                                    set_oo.put("adapti_on", ba);
                                     break;
-                                case 8:
-                                    // page two
+                                case 12:
+                                    // cycle biome adaption
+                                    int ca = adapt.ordinal() + 1;
+                                    if (ca >= ADAPTION.values().length) {
+                                        ca = 0;
+                                    }
+                                    ADAPTION a = ADAPTION.values()[ca];
+                                    if (a.equals(ADAPTION.OFF)) {
+                                        // default to Blue Police Box
+                                        set.put("chameleon_preset", "NEW");
+                                        toggleOthers(CHAMELEON_OPTION.PRESET, inv);
+                                        setDefault(inv);
+                                    } else {
+                                        toggleOthers(CHAMELEON_OPTION.ADAPTIVE, inv);
+                                        set.put("chameleon_preset", "FACTORY");
+                                    }
+                                    set.put("adapti_on", ca);
+                                    ItemStack arb = inv.getItem(21);
+                                    ItemMeta bio = arb.getItemMeta();
+                                    bio.setDisplayName(a.getColour() + a.toString());
+                                    arb.setItemMeta(bio);
+                                    break;
+                                case 13:
+                                    // Invisibility
+                                    set.put("adapti_on", 0);
+                                    ItemStack irb = inv.getItem(22);
+                                    ItemMeta invis = irb.getItemMeta();
+                                    String ible = invis.getDisplayName();
+                                    if (ible.equals(ChatColor.RED + plugin.getLanguage().getString("SET_OFF"))) {
+                                        // check they have an Invisibility Circuit
+                                        TARDISCircuitChecker tcc = new TARDISCircuitChecker(plugin, id);
+                                        tcc.getCircuits();
+                                        if (!plugin.getDifficulty().equals(DIFFICULTY.EASY)) {
+                                            if (!plugin.getUtils().inGracePeriod(player, false) && !tcc.hasInvisibility()) {
+                                                close(player);
+                                                TARDISMessage.send(player, "INVISIBILITY_MISSING");
+                                                break;
+                                            }
+                                        }
+                                        if (plugin.getConfig().getBoolean("circuits.damage") && !plugin.getDifficulty().equals(DIFFICULTY.EASY) && plugin.getConfig().getInt("circuits.uses.invisibility") > 0) {
+                                            // decrement uses
+                                            int uses_left = tcc.getInvisibilityUses();
+                                            new TARDISCircuitDamager(plugin, DISK_CIRCUIT.INVISIBILITY, uses_left, id, player).damage();
+                                        }
+                                        toggleOthers(CHAMELEON_OPTION.INVISIBLE, inv);
+                                        set.put("chameleon_preset", "INVISIBLE");
+                                        TARDISStaticUtils.setSign(tardis.getChameleon(), 3, "INVISIBLE", player);
+                                        TARDISMessage.send(player, "CHAM_SET", ChatColor.AQUA + "Invisibility");
+                                    } else {
+                                        toggleOthers(CHAMELEON_OPTION.PRESET, inv);
+                                        // default to Blue Police Box
+                                        set.put("chameleon_preset", "NEW");
+                                        setDefault(inv);
+                                    }
+                                    break;
+                                case 14:
+                                    // presets
                                     close(player);
                                     plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
                                         @Override
                                         public void run() {
-                                            TARDISPresetInventory tpi = new TARDISPresetInventory(plugin, bool, adapt);
-                                            ItemStack[] items = tpi.getTerminal();
-                                            Inventory presetinv = plugin.getServer().createInventory(player, 54, "§4More Presets");
+                                            TARDISPresetInventory tpi = new TARDISPresetInventory(plugin);
+                                            ItemStack[] items = tpi.getPresets();
+                                            Inventory presetinv = plugin.getServer().createInventory(player, 54, "§4Chameleon Presets");
                                             presetinv.setContents(items);
                                             player.openInventory(presetinv);
                                         }
                                     }, 2L);
                                     break;
-                                case 18:
-                                    // new Police Box
-                                    if (!last_line.equals("NEW")) {
-                                        set.put("chameleon_preset", "NEW");
-                                        TARDISStaticUtils.setSign(tardis.getChameleon(), 3, "NEW", player);
-                                    }
-                                    TARDISMessage.send(player, "CHAM_SET", ChatColor.AQUA + "New Police Box");
-                                    break;
-                                case 20:
-                                    // factory
-                                    if (!last_line.equals("FACTORY")) {
-                                        set.put("chameleon_preset", "FACTORY");
-                                        TARDISStaticUtils.setSign(tardis.getChameleon(), 3, "FACTORY", player);
-                                    }
-                                    TARDISMessage.send(player, "CHAM_SET", ChatColor.AQUA + "Factory Fresh");
-                                    break;
-                                case 22:
-                                    // jungle temple
-                                    if (!last_line.equals("JUNGLE")) {
-                                        set.put("chameleon_preset", "JUNGLE");
-                                        TARDISStaticUtils.setSign(tardis.getChameleon(), 3, "JUNGLE", player);
-                                    }
-                                    TARDISMessage.send(player, "CHAM_SET", ChatColor.AQUA + "Jungle Temple");
-                                    break;
-                                case 24:
-                                    // nether fortress
-                                    if (!last_line.equals("NETHER")) {
-                                        set.put("chameleon_preset", "NETHER");
-                                        TARDISStaticUtils.setSign(tardis.getChameleon(), 3, "NETHER", player);
-                                    }
-                                    TARDISMessage.send(player, "CHAM_SET", ChatColor.AQUA + "Nether Fortress");
-                                    break;
-                                case 26:
-                                    // old police box
-                                    if (!last_line.equals("OLD")) {
-                                        set.put("chameleon_preset", "OLD");
-                                        TARDISStaticUtils.setSign(tardis.getChameleon(), 3, "OLD", player);
-                                    }
-                                    TARDISMessage.send(player, "CHAM_SET", ChatColor.AQUA + "Old Police Box");
-                                    break;
-                                case 28:
-                                    // swamp
-                                    if (!last_line.equals("SWAMP")) {
-                                        set.put("chameleon_preset", "SWAMP");
-                                        TARDISStaticUtils.setSign(tardis.getChameleon(), 3, "SWAMP", player);
-                                    }
-                                    TARDISMessage.send(player, "CHAM_SET", ChatColor.AQUA + "Swamp Hut");
-                                    break;
-                                case 30:
-                                    // party tent
-                                    if (!last_line.equals("PARTY")) {
-                                        set.put("chameleon_preset", "PARTY");
-                                        TARDISStaticUtils.setSign(tardis.getChameleon(), 3, "PARTY", player);
-                                    }
-                                    TARDISMessage.send(player, "CHAM_SET", ChatColor.AQUA + "Party Tent");
-                                    break;
-                                case 32:
-                                    // village house
-                                    if (!last_line.equals("VILLAGE")) {
-                                        set.put("chameleon_preset", "VILLAGE");
-                                        TARDISStaticUtils.setSign(tardis.getChameleon(), 3, "VILLAGE", player);
-                                    }
-                                    TARDISMessage.send(player, "CHAM_SET", ChatColor.AQUA + "Village House");
-                                    break;
-                                case 34:
-                                    // yellow submarine
-                                    if (!last_line.equals("YELLOW")) {
-                                        set.put("chameleon_preset", "YELLOW");
-                                        TARDISStaticUtils.setSign(tardis.getChameleon(), 3, "YELLOW", player);
-                                    }
-                                    TARDISMessage.send(player, "CHAM_SET", ChatColor.AQUA + "Yellow Submarine");
-                                    break;
-                                case 36:
-                                    // telephone
-                                    if (!last_line.equals("TELEPHONE")) {
-                                        set.put("chameleon_preset", "TELEPHONE");
-                                        TARDISStaticUtils.setSign(tardis.getChameleon(), 3, "TELEPHONE", player);
-                                    }
-                                    TARDISMessage.send(player, "CHAM_SET", ChatColor.AQUA + "Red Telephone Box");
-                                    break;
-                                case 38:
-                                    // weeping angel
-                                    if (!last_line.equals("ANGEL")) {
-                                        set.put("chameleon_preset", "ANGEL");
-                                        TARDISStaticUtils.setSign(tardis.getChameleon(), 3, "ANGEL", player);
-                                    }
-                                    TARDISMessage.send(player, "CHAM_SET", ChatColor.AQUA + "Weeping Angel");
-                                    break;
-                                case 40:
-                                    // submerged
-                                    if (!last_line.equals("SUBMERGED")) {
-                                        set.put("chameleon_preset", "SUBMERGED");
-                                        TARDISStaticUtils.setSign(tardis.getChameleon(), 3, "SUBMERGED", player);
-                                    }
-                                    TARDISMessage.send(player, "CHAM_SET", ChatColor.AQUA + "Submerged");
-                                    break;
-                                case 42:
-                                    // flower
-                                    if (!last_line.equals("FLOWER")) {
-                                        set.put("chameleon_preset", "FLOWER");
-                                        TARDISStaticUtils.setSign(tardis.getChameleon(), 3, "FLOWER", player);
-                                    }
-                                    TARDISMessage.send(player, "CHAM_SET", ChatColor.AQUA + "Daisy Flower");
-                                    break;
-                                case 44:
-                                    // stone brick column
-                                    if (!last_line.equals("STONE")) {
-                                        set.put("chameleon_preset", "STONE");
-                                        TARDISStaticUtils.setSign(tardis.getChameleon(), 3, "STONE", player);
-                                    }
-                                    TARDISMessage.send(player, "CHAM_SET", ChatColor.AQUA + "Stone Brick Column");
-                                    break;
-                                case 46:
-                                    // chalice
-                                    if (!last_line.equals("CHALICE")) {
-                                        set.put("chameleon_preset", "CHALICE");
-                                        TARDISStaticUtils.setSign(tardis.getChameleon(), 3, "CHALICE", player);
-                                    }
-                                    TARDISMessage.send(player, "CHAM_SET", ChatColor.AQUA + "Quartz Chalice");
-                                    break;
-                                case 48:
-                                    // desert temple
-                                    if (!last_line.equals("DESERT")) {
-                                        set.put("chameleon_preset", "DESERT");
-                                        TARDISStaticUtils.setSign(tardis.getChameleon(), 3, "DESERT", player);
-                                    }
-                                    TARDISMessage.send(player, "CHAM_SET", ChatColor.AQUA + "Desert Temple");
-                                    break;
-                                case 50:
-                                    // mossy well
-                                    if (!last_line.equals("WELL")) {
-                                        set.put("chameleon_preset", "WELL");
-                                        TARDISStaticUtils.setSign(tardis.getChameleon(), 3, "WELL", player);
-                                    }
-                                    TARDISMessage.send(player, "CHAM_SET", ChatColor.AQUA + "Mossy Well");
-                                    break;
-                                case 52:
-                                    // windmill
-                                    if (!last_line.equals("WINDMILL")) {
-                                        set.put("chameleon_preset", "WINDMILL");
-                                        TARDISStaticUtils.setSign(tardis.getChameleon(), 3, "WINDMILL", player);
-                                    }
-                                    TARDISMessage.send(player, "CHAM_SET", ChatColor.AQUA + "Windmill");
+                                case 15:
+                                    // constructor GUI
+                                    close(player);
+                                    plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
+                                        @Override
+                                        public void run() {
+                                            TARDISChameleonConstructorGUI tci = new TARDISChameleonConstructorGUI(plugin);
+                                            ItemStack[] items = tci.getConstruct();
+                                            Inventory chamcon = plugin.getServer().createInventory(player, 54, "§4Chameleon Construction");
+                                            chamcon.setContents(items);
+                                            player.openInventory(chamcon);
+                                        }
+                                    }, 2L);
                                     break;
                                 default:
                                     close(player);
                             }
                             if (set.size() > 0) {
-                                set.put("chameleon_demat", preset);
-                                qf.doUpdate("tardis", set, wherec);
-                            }
-                            if (set_oo.size() > 0) {
-                                qf.doUpdate("tardis", set_oo, wherec);
+                                //set.put("chameleon_demat", preset);
+                                new QueryFactory(plugin).doUpdate("tardis", set, wherec);
                             }
                         }
                     }
                 }
             }
+        }
+    }
+
+    private void setDefault(Inventory inv) {
+        // default to Blue Police Box
+        // set preset lore
+        ItemStack p = inv.getItem(23);
+        ItemMeta pim = p.getItemMeta();
+        pim.setDisplayName(ChatColor.GREEN + "NEW ON");
+        p.setItemMeta(pim);
+    }
+
+    private void toggleOthers(CHAMELEON_OPTION c, Inventory inv) {
+        for (CHAMELEON_OPTION co : CHAMELEON_OPTION.values()) {
+            ItemStack is = inv.getItem(co.getSlot());
+            ItemMeta im = is.getItemMeta();
+            String onoff;
+            Material m;
+            byte data;
+            if (!co.equals(c)) {
+                onoff = (co.getOff()) ? ChatColor.RED + plugin.getLanguage().getString("SET_OFF") : ChatColor.GREEN + plugin.getLanguage().getString("SET_ON");
+                m = Material.CARPET;
+                data = 8;
+            } else {
+                onoff = (!co.getOff()) ? ChatColor.RED + plugin.getLanguage().getString("SET_OFF") : ChatColor.GREEN + plugin.getLanguage().getString("SET_ON");
+                m = Material.WOOL;
+                data = 5;
+            }
+            im.setDisplayName(onoff);
+            is.setItemMeta(im);
+            is.setType(m);
+            is.setDurability(data);
         }
     }
 }

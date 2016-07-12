@@ -16,9 +16,7 @@
  */
 package me.eccentric_nz.TARDIS.chameleon;
 
-import java.util.Arrays;
 import me.eccentric_nz.TARDIS.TARDIS;
-import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -35,13 +33,9 @@ public class TARDISPresetInventory {
 
     private final ItemStack[] terminal;
     private final TARDIS plugin;
-    private final boolean bool;
-    private final boolean adapt;
 
-    public TARDISPresetInventory(TARDIS plugin, boolean bool, boolean adapt) {
+    public TARDISPresetInventory(TARDIS plugin) {
         this.plugin = plugin;
-        this.bool = bool;
-        this.adapt = adapt;
         this.terminal = getItemStack();
     }
 
@@ -51,24 +45,96 @@ public class TARDISPresetInventory {
      * @return an Array of itemStacks (an inventory)
      */
     private ItemStack[] getItemStack() {
-        // on / off
-        ItemStack con = new ItemStack(Material.REDSTONE_COMPARATOR, 1);
-        ItemMeta ing = con.getItemMeta();
-        ing.setDisplayName(plugin.getLanguage().getString("BUTTON_CIRC"));
-        String on_off = (bool) ? ChatColor.GREEN + plugin.getLanguage().getString("SET_ON") : ChatColor.RED + plugin.getLanguage().getString("SET_OFF");
-        String to_engage = (bool) ? plugin.getLanguage().getString("SET_OFF") : plugin.getLanguage().getString("SET_ON");
-        ing.setLore(Arrays.asList(on_off, String.format(plugin.getLanguage().getString("CHAM_CLICK"), to_engage)));
-        con.setItemMeta(ing);
-        // Apply preset
-        ItemStack apply = new ItemStack(Material.BOOKSHELF, 1);
-        ItemMeta now = apply.getItemMeta();
-        now.setDisplayName(plugin.getLanguage().getString("BUTTON_APPLY"));
-        apply.setItemMeta(now);
-        // page one
+        // page two
         ItemStack page = new ItemStack(Material.ARROW, 1);
         ItemMeta two = page.getItemMeta();
-        two.setDisplayName(plugin.getLanguage().getString("BUTTON_PAGE_3"));
+        two.setDisplayName(plugin.getLanguage().getString("BUTTON_PAGE_2"));
         page.setItemMeta(two);
+        // New Police Box
+        ItemStack box = new ItemStack(Material.WOOL, 1, (short) 11);
+        ItemMeta day = box.getItemMeta();
+        day.setDisplayName("New Police Box");
+        box.setItemMeta(day);
+        // Stone Brick Column
+        ItemStack stone = new ItemStack(Material.SMOOTH_BRICK, 1);
+        ItemMeta hrs = stone.getItemMeta();
+        hrs.setDisplayName("Stone Brick Column");
+        stone.setItemMeta(hrs);
+        // Desert Temple
+        ItemStack desert = new ItemStack(Material.SANDSTONE, 1);
+        ItemMeta tmp = desert.getItemMeta();
+        tmp.setDisplayName("Desert Temple");
+        desert.setItemMeta(tmp);
+        // Jungle Temple
+        ItemStack jungle = new ItemStack(Material.MOSSY_COBBLESTONE, 1);
+        ItemMeta tpl = jungle.getItemMeta();
+        tpl.setDisplayName("Jungle Temple");
+        jungle.setItemMeta(tpl);
+        // Nether Fortress
+        ItemStack nether = new ItemStack(Material.NETHER_BRICK, 1);
+        ItemMeta frt = nether.getItemMeta();
+        frt.setDisplayName("Nether Fortress");
+        nether.setItemMeta(frt);
+        // Old Police Box
+        ItemStack def = new ItemStack(Material.WOOL, 1, (short) 3);
+        ItemMeta dpb = def.getItemMeta();
+        dpb.setDisplayName("Old Police Box");
+        def.setItemMeta(dpb);
+        // Swamp Hut
+        ItemStack swamp = new ItemStack(Material.LOG, 1);
+        ItemMeta hut = swamp.getItemMeta();
+        hut.setDisplayName("Swamp Hut");
+        swamp.setItemMeta(hut);
+        // Party Tent
+        ItemStack tent = new ItemStack(Material.WOOL, 1, (short) 5);
+        ItemMeta pry = tent.getItemMeta();
+        pry.setDisplayName("Party Tent");
+        tent.setItemMeta(pry);
+        // Village House
+        ItemStack village = new ItemStack(Material.COBBLESTONE, 1);
+        ItemMeta hse = village.getItemMeta();
+        hse.setDisplayName("Village House");
+        village.setItemMeta(hse);
+        // Yellow Submarine
+        ItemStack yellow = new ItemStack(Material.WOOL, 1, (short) 4);
+        ItemMeta sme = yellow.getItemMeta();
+        sme.setDisplayName("Yellow Submarine");
+        yellow.setItemMeta(sme);
+        // Telephone Box
+        ItemStack tel = new ItemStack(Material.WOOL, 1, (short) 14);
+        ItemMeta pho = tel.getItemMeta();
+        pho.setDisplayName("Red Telephone Box");
+        tel.setItemMeta(pho);
+        // Partly Submerged
+        ItemStack sub = new ItemStack(Material.DIRT, 1);
+        ItemMeta mer = sub.getItemMeta();
+        mer.setDisplayName("Submerged");
+        sub.setItemMeta(mer);
+        // Daisy Flower
+        ItemStack flo = new ItemStack(Material.WOOL, 1, (short) 0);
+        ItemMeta wer = flo.getItemMeta();
+        wer.setDisplayName("Daisy Flower");
+        flo.setItemMeta(wer);
+        // Chalice
+        ItemStack chal = new ItemStack(Material.QUARTZ_BLOCK, 1);
+        ItemMeta ice = chal.getItemMeta();
+        ice.setDisplayName("Quartz Chalice");
+        chal.setItemMeta(ice);
+        // Angel
+        ItemStack ang = new ItemStack(Material.FEATHER, 1);
+        ItemMeta wee = ang.getItemMeta();
+        wee.setDisplayName("Weeping Angel");
+        ang.setItemMeta(wee);
+        // Windmill
+        ItemStack win = new ItemStack(Material.WOOL, 1, (short) 1);
+        ItemMeta mill = win.getItemMeta();
+        mill.setDisplayName("Windmill");
+        win.setItemMeta(mill);
+        // Well
+        ItemStack well = new ItemStack(Material.MOSSY_COBBLESTONE, 1);
+        ItemMeta ivy = well.getItemMeta();
+        ivy.setDisplayName("Mossy Well");
+        well.setItemMeta(ivy);
         // Rubber duck
         ItemStack rub = new ItemStack(Material.STAINED_CLAY, 1, (short) 4);
         ItemMeta ber = rub.getItemMeta();
@@ -153,19 +219,76 @@ public class TARDISPresetInventory {
         ItemStack fen = new ItemStack(Material.BRICK, 1, (short) 6);
         ItemMeta cer = fen.getItemMeta();
         cer.setDisplayName("Random Fence");
+        // Gazebo
+        ItemStack gaz = new ItemStack(Material.FENCE, 1);
+        ItemMeta ebo = gaz.getItemMeta();
+        ebo.setDisplayName("Gazebo");
+        gaz.setItemMeta(ebo);
+        // Apperture Science
+        ItemStack app = new ItemStack(Material.IRON_TRAPDOOR, 1);
+        ItemMeta sci = app.getItemMeta();
+        sci.setDisplayName("Apperture Science");
+        app.setItemMeta(sci);
+        // Lighthouse
+        ItemStack lig = new ItemStack(Material.REDSTONE_LAMP_OFF, 1);
+        ItemMeta hou = lig.getItemMeta();
+        hou.setDisplayName("Tiny Lighthouse");
+        lig.setItemMeta(hou);
+        // Library
+        ItemStack lib = new ItemStack(Material.BOOK, 1);
+        ItemMeta rar = lib.getItemMeta();
+        rar.setDisplayName("Library");
+        lib.setItemMeta(rar);
+        // Snowman
+        ItemStack sno = new ItemStack(Material.SNOW_BLOCK, 1);
+        ItemMeta man = sno.getItemMeta();
+        man.setDisplayName("Snowman");
+        sno.setItemMeta(man);
+        // Jail
+        ItemStack jail = new ItemStack(Material.IRON_FENCE, 1);
+        ItemMeta gaol = jail.getItemMeta();
+        gaol.setDisplayName("Jail Cell");
+        jail.setItemMeta(gaol);
+        // Pandorica
+        ItemStack pan = new ItemStack(Material.BEDROCK, 1);
+        ItemMeta dor = pan.getItemMeta();
+        dor.setDisplayName("Pandorica");
+        pan.setItemMeta(dor);
+        // Double Helix
+        ItemStack dou = new ItemStack(Material.SMOOTH_STAIRS, 1);
+        ItemMeta lix = dou.getItemMeta();
+        lix.setDisplayName("Double Helix");
+        dou.setItemMeta(lix);
+        // Prismarine
+        ItemStack pris = new ItemStack(Material.PRISMARINE, 1);
+        ItemMeta mar = pris.getItemMeta();
+        mar.setDisplayName("Guardian Temple");
+        pris.setItemMeta(mar);
+        // Chorus
+        ItemStack cho = new ItemStack(Material.CHORUS_FLOWER, 1);
+        ItemMeta rus = cho.getItemMeta();
+        rus.setDisplayName("Chorus Flower");
+        cho.setItemMeta(rus);
+        // Andesite
+        ItemStack and = new ItemStack(Material.STONE, 1, (byte) 6);
+        ItemMeta esi = and.getItemMeta();
+        esi.setDisplayName("Andesite Box");
+        and.setItemMeta(esi);
+        // Diorite
+        ItemStack dio = new ItemStack(Material.STONE, 1, (byte) 4);
+        ItemMeta rit = dio.getItemMeta();
+        rit.setDisplayName("Diorite Box");
+        dio.setItemMeta(rit);
+        // Granite
+        ItemStack gra = new ItemStack(Material.STONE, 1, (byte) 2);
+        ItemMeta nit = gra.getItemMeta();
+        nit.setDisplayName("Granite Box");
+        gra.setItemMeta(nit);
         // custom
         ItemStack custom = new ItemStack(Material.ENDER_CHEST, 1);
         ItemMeta pre = custom.getItemMeta();
         pre.setDisplayName("Custom");
         custom.setItemMeta(pre);
-        // Biome
-        ItemStack bio = new ItemStack(Material.LOG, 1, (short) 2);
-        ItemMeta me = bio.getItemMeta();
-        me.setDisplayName(plugin.getLanguage().getString("BUTTON_ADAPT"));
-        String biome = (adapt) ? ChatColor.GREEN + plugin.getLanguage().getString("SET_ON") : ChatColor.RED + plugin.getLanguage().getString("SET_OFF");
-        String to_turn = (adapt) ? plugin.getLanguage().getString("SET_OFF") : plugin.getLanguage().getString("SET_ON");
-        me.setLore(Arrays.asList(biome, String.format(plugin.getLanguage().getString("CHAM_CLICK"), to_turn)));
-        bio.setItemMeta(me);
         // Cancel / close
         ItemStack close = new ItemStack(Material.BOWL, 1);
         ItemMeta can = close.getItemMeta();
@@ -173,18 +296,17 @@ public class TARDISPresetInventory {
         close.setItemMeta(can);
 
         ItemStack[] is = {
-            con, null, apply, null, bio, null, close, null, page,
-            null, null, null, null, null, null, null, null, null,
-            custom, null, cake, null, grave, null, topsy, null, mush,
-            null, rub, null, mine, null, cre, null, pea, null,
-            lamp, null, candy, null, toi, null, rob, null, tor,
-            null, pine, null, pun, null, fen, null, por, null
-
+            box, jungle, nether, def, swamp, tent, village, yellow, tel,
+            ang, sub, flo, stone, chal, desert, well, win, rub,
+            mine, cre, pea, lamp, candy, toi, rob, tor, pine,
+            pun, por, cake, grave, topsy, mush, fen, gaz, app,
+            lig, lib, sno, jail, pan, dou, pris, cho, and,
+            dio, gra, null, custom, null, null, null, null, close
         };
         return is;
     }
 
-    public ItemStack[] getTerminal() {
+    public ItemStack[] getPresets() {
         return terminal;
     }
 }
