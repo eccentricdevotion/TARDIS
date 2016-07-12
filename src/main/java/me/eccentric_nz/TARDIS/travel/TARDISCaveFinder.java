@@ -184,7 +184,7 @@ public class TARDISCaveFinder {
 
     private int getLowestAirBlock(World w, int x, int y, int z) {
         int yy = y;
-        while (w.getBlockAt(x, yy, z).getRelative(BlockFace.DOWN).getType().equals(Material.AIR)) {
+        while (w.getBlockAt(x, yy, z).getRelative(BlockFace.DOWN).getType().equals(Material.AIR) && yy > 7) {
             yy--;
         }
         return yy;
@@ -194,6 +194,8 @@ public class TARDISCaveFinder {
         Location spawn = w.getSpawnLocation();
         int y = w.getHighestBlockYAt(spawn);
         if (y < 15) {
+            return false;
+        } else if (w.getBlockAt(spawn.getBlockX(), 0, spawn.getBlockZ()).getType().equals(Material.AIR)) {
             return false;
         } else {
             // move 20 blocks north
