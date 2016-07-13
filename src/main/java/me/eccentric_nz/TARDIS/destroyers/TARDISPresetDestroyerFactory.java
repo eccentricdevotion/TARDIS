@@ -24,6 +24,7 @@ import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetDoors;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
+import me.eccentric_nz.TARDIS.enumeration.ADAPTION;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
 import me.eccentric_nz.TARDIS.enumeration.PRESET;
 import me.eccentric_nz.TARDIS.junk.TARDISJunkDestroyer;
@@ -65,9 +66,9 @@ public class TARDISPresetDestroyerFactory {
                 dd.getLocation().getWorld().loadChunk(dd.getLocation().getChunk());
             }
             if (!demat.equals(PRESET.INVISIBLE)) {
-                int cham_id = tardis.getChameleon_id();
-                byte cham_data = tardis.getChameleon_data();
-                if (dd.isChameleon() && (demat.equals(PRESET.NEW) || demat.equals(PRESET.OLD) || demat.equals(PRESET.SUBMERGED))) {
+                int cham_id = 159;
+                byte cham_data = 8;
+                if ((tardis.getAdaption().equals(ADAPTION.BIOME) && demat.equals(PRESET.FACTORY)) || demat.equals(PRESET.SUBMERGED) || tardis.getAdaption().equals(ADAPTION.BLOCK)) {
                     Block chameleonBlock;
                     // chameleon circuit is on - get block under TARDIS
                     if (dd.getLocation().getBlock().getType() == Material.SNOW) {
@@ -77,7 +78,7 @@ public class TARDISPresetDestroyerFactory {
                     }
                     // determine cham_id
                     TARDISChameleonCircuit tcc = new TARDISChameleonCircuit(plugin);
-                    int[] b_data = tcc.getChameleonBlock(chameleonBlock, dd.getPlayer(), false);
+                    int[] b_data = tcc.getChameleonBlock(chameleonBlock, dd.getPlayer());
                     cham_id = b_data[0];
                     cham_data = (byte) b_data[1];
                 }

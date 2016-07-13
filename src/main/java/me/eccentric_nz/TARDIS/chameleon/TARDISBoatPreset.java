@@ -24,7 +24,7 @@ package me.eccentric_nz.TARDIS.chameleon;
  *
  * @author eccentric_nz
  */
-public class TARDISDBoatPreset extends TARDISPreset {
+public class TARDISBoatPreset extends TARDISPreset {
 
     private final String blueprint_id = "[[53,0,0,0],[53,0,0,0],[0,0,0,0],[53,85,85,85],[0,0,0,0],[53,0,0,0],[53,0,0,0],[126,0,35,0],[53,0,35,35],[96,0,0,0]]";
     private final String blueprint_data = "[[6,0,0,0],[6,0,0,0],[0,0,0,0],[5,0,0,0],[0,0,0,0],[7,0,0,0],[7,0,0,0],[0,0,0,0],[0,0,0,0],[6,0,0,0]]";
@@ -33,7 +33,7 @@ public class TARDISDBoatPreset extends TARDISPreset {
     private final String glass_id = "[[20,0,0,0],[20,0,0,0],[0,0,0,0],[20,20,20,20],[0,0,0,0],[20,0,0,0],[20,0,0,0],[20,0,20,0],[20,0,20,20],[96,0,0,0]]";
     private final String glass_data = "[[0,0,0,0],[0,0,0,0],[0,0,0,0],[0,0,0,0],[0,0,0,0],[0,0,0,0],[0,0,0,0],[0,0,0,0],[0,0,0,0],[6,0,0,0]]";
 
-    public TARDISDBoatPreset() {
+    public TARDISBoatPreset() {
         setBlueprint_id(blueprint_id);
         setBlueprint_data(blueprint_data);
         setStained_id(stained_id);

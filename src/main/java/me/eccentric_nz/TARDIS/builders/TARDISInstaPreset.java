@@ -272,17 +272,16 @@ public class TARDISInstaPreset {
                         }
                         break;
                     case 35:
-                        int chai = (preset.equals(PRESET.NEW) || preset.equals(PRESET.OLD)) ? cham_id : colids[yy];
-                        byte chad = (preset.equals(PRESET.NEW) || preset.equals(PRESET.OLD)) ? cham_data : coldatas[yy];
+                        byte chad = coldatas[yy];
                         if (preset.equals(PRESET.PARTY) || (preset.equals(PRESET.FLOWER) && coldatas[yy] == 0)) {
                             chad = random_colour;
                         }
-                        if (bd.shouldUseCTM() && i == TARDISStaticUtils.getCol(bd.getDirection()) && yy == 1 && cham_id == 35 && (cham_data == (byte) 11 || cham_data == (byte) 3) && (preset.equals(PRESET.NEW) || preset.equals(PRESET.OLD)) && plugin.getConfig().getBoolean("police_box.set_biome")) {
+                        if (bd.shouldUseCTM() && i == TARDISStaticUtils.getCol(bd.getDirection()) && yy == 1 && (preset.equals(PRESET.NEW) || preset.equals(PRESET.OLD)) && plugin.getConfig().getBoolean("police_box.set_biome")) {
                             // set a quartz pillar block instead
                             byte pillar = (bd.getDirection().equals(COMPASS.EAST) || bd.getDirection().equals(COMPASS.WEST)) ? (byte) 3 : (byte) 4;
                             plugin.getBlockUtils().setBlockAndRemember(world, xx, (y + yy), zz, 155, pillar, bd.getTardisID());
                         } else {
-                            plugin.getBlockUtils().setBlockAndRemember(world, xx, (y + yy), zz, chai, chad, bd.getTardisID());
+                            plugin.getBlockUtils().setBlockAndRemember(world, xx, (y + yy), zz, colids[yy], chad, bd.getTardisID());
                         }
                         break;
                     case 50: // lamps, glowstone and torches
@@ -441,10 +440,15 @@ public class TARDISInstaPreset {
                         break;
                     case 152:
                         if (!bd.getLamp().equals(Material.REDSTONE_LAMP_OFF) && (preset.equals(PRESET.NEW) || preset.equals(PRESET.OLD))) {
-                            plugin.getBlockUtils().setBlockAndRemember(world, xx, (y + yy), zz, cham_id, cham_data, bd.getTardisID());
+                            plugin.getBlockUtils().setBlockAndRemember(world, xx, (y + yy), zz, 35, (byte) 11, bd.getTardisID());
                         } else {
                             plugin.getBlockUtils().setBlockAndRemember(world, xx, (y + yy), zz, colids[yy], coldatas[yy], bd.getTardisID());
                         }
+                        break;
+                    case 159:
+                        int chai = (preset.equals(PRESET.FACTORY)) ? cham_id : colids[yy];
+                        byte chaf = (preset.equals(PRESET.FACTORY)) ? cham_data : coldatas[yy];
+                        plugin.getBlockUtils().setBlockAndRemember(world, xx, (y + yy), zz, chai, chaf, bd.getTardisID());
                         break;
                     default: // everything else
                         if (change) {

@@ -40,19 +40,18 @@ public class TARDISChameleonCircuit {
     }
 
     @SuppressWarnings("deprecation")
-    public int[] getChameleonBlock(Block b, OfflinePlayer p, boolean short_out) {
+    public int[] getChameleonBlock(Block b, OfflinePlayer p) {
         int[] data = new int[2];
         int chameleonType = b.getTypeId();
-        int wall_block = 35;
-        byte chameleonData = 11;
+        int wall_block = 159;
+        byte chameleonData = 8;
         // determine wall_block
         if (plugin.getBlocksConfig().getIntegerList("chameleon_blocks").contains((Integer) chameleonType)) {
             wall_block = chameleonType;
             chameleonData = b.getData();
         }
         if (TARDISConstants.CHAMELEON_BLOCKS_BAD.contains((Integer) chameleonType)) {
-            String message = (short_out) ? "CHAM_NOT_SHORT" : "CHAM_NOT_ENGAGE";
-            TARDISMessage.send(p.getPlayer(), message);
+            TARDISMessage.send(p.getPlayer(), "CHAM_NOT_ENGAGE");
         }
         if (TARDISConstants.CHAMELEON_BLOCKS_CHANGE.contains((Integer) chameleonType)) {
             wall_block = swapId(chameleonType);

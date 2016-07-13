@@ -92,7 +92,19 @@ public class TARDISChameleonPreset {
     public final TARDISWindmillPreset windmill;
     public final TARDISYellowSubmarinePreset yellow;
     public final TARDISCustomPreset custom;
+    // biome adaptive presets
     public final TARDISRenderPreset render;
+    public final TARDISExtremeHillsPreset extreme;
+    public final TARDISForestPreset forest;
+    public final TARDISIcePlainsPreset flats;
+    public final TARDISIcePlainsSpikesPreset spikes;
+    public final TARDISMesaPreset mesa;
+    public final TARDISPlainsPreset plains;
+    public final TARDISRoofedForestPreset roofed;
+    public final TARDISSavannaPreset savanna;
+    public final TARDISTaigaPreset taiga;
+    public final TARDISColdTaigaPreset cold;
+    public final TARDISBoatPreset boat;
     int r;
 
     public TARDISChameleonPreset() {
@@ -150,6 +162,17 @@ public class TARDISChameleonPreset {
         this.yellow = new TARDISYellowSubmarinePreset();
         this.custom = new TARDISCustomPreset();
         this.render = new TARDISRenderPreset();
+        this.extreme = new TARDISExtremeHillsPreset();
+        this.forest = new TARDISForestPreset();
+        this.flats = new TARDISIcePlainsPreset();
+        this.spikes = new TARDISIcePlainsSpikesPreset();
+        this.mesa = new TARDISMesaPreset();
+        this.plains = new TARDISPlainsPreset();
+        this.roofed = new TARDISRoofedForestPreset();
+        this.savanna = new TARDISSavannaPreset();
+        this.taiga = new TARDISTaigaPreset();
+        this.cold = new TARDISColdTaigaPreset();
+        this.boat = new TARDISBoatPreset();
     }
 
     public void makePresets() {
@@ -207,6 +230,17 @@ public class TARDISChameleonPreset {
         yellow.makePresets(false, false, false);
         custom.makePresets();
         render.makePresets(false, false, false);
+        extreme.makePresets(false, false, false);
+        forest.makePresets(true, false, false);
+        flats.makePresets(true, false, false);
+        spikes.makePresets(false, false, false);
+        mesa.makePresets(true, false, false);
+        plains.makePresets(false, false, false);
+        roofed.makePresets(false, false, false);
+        savanna.makePresets(true, false, false);
+        taiga.makePresets(false, false, false);
+        cold.makePresets(false, false, false);
+        boat.makePresets(true, false, false);
     }
 
     public static TARDISChameleonColumn buildTARDISChameleonColumn(COMPASS d, String id, String data, boolean asymmetric, boolean duck, boolean istorch) {
@@ -627,6 +661,28 @@ public class TARDISChameleonPreset {
                 return yellow.getBlueprint().get(d);
             case CUSTOM:
                 return custom.getBlueprint().get(d);
+            case EXTREME_HILLS:
+                return extreme.getBlueprint().get(d);
+            case FOREST:
+                return forest.getBlueprint().get(d);
+            case ICE_FLATS:
+                return flats.getBlueprint().get(d);
+            case ICE_SPIKES:
+                return spikes.getBlueprint().get(d);
+            case MESA:
+                return mesa.getBlueprint().get(d);
+            case PLAINS:
+                return plains.getBlueprint().get(d);
+            case ROOFED_FOREST:
+                return roofed.getBlueprint().get(d);
+            case SAVANNA:
+                return savanna.getBlueprint().get(d);
+            case TAIGA:
+                return taiga.getBlueprint().get(d);
+            case COLD_TAIGA:
+                return cold.getBlueprint().get(d);
+            case BOAT:
+                return boat.getBlueprint().get(d);
             default:
                 return taller.getBlueprint().get(d);
         }
@@ -742,6 +798,28 @@ public class TARDISChameleonPreset {
                 return yellow.getGlass().get(d);
             case CUSTOM:
                 return custom.getGlass().get(d);
+            case EXTREME_HILLS:
+                return extreme.getGlass().get(d);
+            case FOREST:
+                return forest.getGlass().get(d);
+            case ICE_FLATS:
+                return flats.getGlass().get(d);
+            case ICE_SPIKES:
+                return spikes.getGlass().get(d);
+            case MESA:
+                return mesa.getGlass().get(d);
+            case PLAINS:
+                return plains.getGlass().get(d);
+            case ROOFED_FOREST:
+                return roofed.getGlass().get(d);
+            case SAVANNA:
+                return savanna.getGlass().get(d);
+            case TAIGA:
+                return taiga.getGlass().get(d);
+            case COLD_TAIGA:
+                return cold.getGlass().get(d);
+            case BOAT:
+                return boat.getGlass().get(d);
             default:
                 return taller.getGlass().get(d);
         }
@@ -857,6 +935,28 @@ public class TARDISChameleonPreset {
                 return yellow.getStained().get(d);
             case CUSTOM:
                 return custom.getStained().get(d);
+            case EXTREME_HILLS:
+                return extreme.getStained().get(d);
+            case FOREST:
+                return forest.getStained().get(d);
+            case ICE_FLATS:
+                return flats.getStained().get(d);
+            case ICE_SPIKES:
+                return spikes.getStained().get(d);
+            case MESA:
+                return mesa.getStained().get(d);
+            case PLAINS:
+                return plains.getStained().get(d);
+            case ROOFED_FOREST:
+                return roofed.getStained().get(d);
+            case SAVANNA:
+                return savanna.getStained().get(d);
+            case TAIGA:
+                return taiga.getStained().get(d);
+            case COLD_TAIGA:
+                return cold.getStained().get(d);
+            case BOAT:
+                return boat.getStained().get(d);
             default:
                 return taller.getStained().get(d);
         }

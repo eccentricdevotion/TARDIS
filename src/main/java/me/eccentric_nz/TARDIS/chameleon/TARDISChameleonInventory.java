@@ -135,7 +135,7 @@ public class TARDISChameleonInventory {
         // Shorted out radio button
         ItemStack pre = (!preset.equals(PRESET.INVISIBLE) && !preset.equals(PRESET.FACTORY) && !preset.equals(PRESET.CONSTRUCT)) ? on : off;
         ItemMeta set = pre.getItemMeta();
-        String sonoff = (!preset.equals(PRESET.INVISIBLE) && !preset.equals(PRESET.FACTORY) && !preset.equals(PRESET.CONSTRUCT)) ? ChatColor.GREEN + preset.toString() + " " + plugin.getLanguage().getString("SET_ON") : ChatColor.RED + plugin.getLanguage().getString("SET_OFF");
+        String sonoff = (!preset.equals(PRESET.INVISIBLE) && !preset.equals(PRESET.FACTORY) && !preset.equals(PRESET.CONSTRUCT)) ? ChatColor.GREEN + preset.toString() : ChatColor.RED + plugin.getLanguage().getString("SET_OFF");
         set.setDisplayName(sonoff);
         pre.setItemMeta(set);
         // Construct radio button

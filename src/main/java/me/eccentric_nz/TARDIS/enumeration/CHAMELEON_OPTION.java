@@ -16,31 +16,51 @@
  */
 package me.eccentric_nz.TARDIS.enumeration;
 
+import org.bukkit.ChatColor;
+
 /**
  *
  * @author eccentric_nz
  */
 public enum CHAMELEON_OPTION {
 
-    FACTORY(20, false),
-    ADAPTIVE(21, true),
-    INVISIBLE(22, true),
-    PRESET(23, true),
-    CONSTRUCT(24, true);
+    FACTORY(20, "DISABLED", ChatColor.RED, "SET_ON", ChatColor.GREEN),
+    ADAPTIVE(21, "SET_ON", ChatColor.GREEN, "SET_OFF", ChatColor.RED),
+    INVISIBLE(22, "SET_ON", ChatColor.GREEN, "SET_OFF", ChatColor.RED),
+    PRESET(23, "SET_ON", ChatColor.GREEN, "SET_OFF", ChatColor.RED),
+    CONSTRUCT(24, "SET_ON", ChatColor.GREEN, "SET_OFF", ChatColor.RED);
 
     public int slot;
-    public boolean off;
+    public String on;
+    public ChatColor onColour;
+    public String off;
+    public ChatColor offColour;
 
-    private CHAMELEON_OPTION(int slot, boolean off) {
+    private CHAMELEON_OPTION(int slot, String on, ChatColor onColour, String off, ChatColor offColour) {
         this.slot = slot;
+        this.on = on;
         this.off = off;
+        this.onColour = onColour;
+        this.offColour = offColour;
     }
 
     public int getSlot() {
         return slot;
     }
 
-    public boolean getOff() {
+    public String getOn() {
+        return on;
+    }
+
+    public ChatColor getOnColour() {
+        return onColour;
+    }
+
+    public String getOff() {
         return off;
+    }
+
+    public ChatColor getOffColour() {
+        return offColour;
     }
 }

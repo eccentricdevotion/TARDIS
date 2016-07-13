@@ -114,7 +114,7 @@ public class TARDISChameleonListener extends TARDISMenuListener implements Liste
                                     } else {
                                         set.put("chameleon_preset", "NEW");
                                         toggleOthers(CHAMELEON_OPTION.PRESET, inv);
-                                        setDefault(inv);
+                                        setDefault(inv, player, tardis.getChameleon());
                                     }
                                     break;
                                 case 12:
@@ -128,7 +128,7 @@ public class TARDISChameleonListener extends TARDISMenuListener implements Liste
                                         // default to Blue Police Box
                                         set.put("chameleon_preset", "NEW");
                                         toggleOthers(CHAMELEON_OPTION.PRESET, inv);
-                                        setDefault(inv);
+                                        setDefault(inv, player, tardis.getChameleon());
                                     } else {
                                         toggleOthers(CHAMELEON_OPTION.ADAPTIVE, inv);
                                         set.put("chameleon_preset", "FACTORY");
@@ -169,7 +169,7 @@ public class TARDISChameleonListener extends TARDISMenuListener implements Liste
                                         toggleOthers(CHAMELEON_OPTION.PRESET, inv);
                                         // default to Blue Police Box
                                         set.put("chameleon_preset", "NEW");
-                                        setDefault(inv);
+                                        setDefault(inv, player, tardis.getChameleon());
                                     }
                                     break;
                                 case 14:
@@ -214,13 +214,15 @@ public class TARDISChameleonListener extends TARDISMenuListener implements Liste
         }
     }
 
-    private void setDefault(Inventory inv) {
+    private void setDefault(Inventory inv, Player player, String chameleon) {
         // default to Blue Police Box
         // set preset lore
         ItemStack p = inv.getItem(23);
         ItemMeta pim = p.getItemMeta();
-        pim.setDisplayName(ChatColor.GREEN + "NEW ON");
+        pim.setDisplayName(ChatColor.GREEN + "NEW");
         p.setItemMeta(pim);
+        TARDISStaticUtils.setSign(chameleon, 3, "NEW", player);
+        TARDISMessage.send(player, "CHAM_SET", ChatColor.AQUA + "New Police Box");
     }
 
     private void toggleOthers(CHAMELEON_OPTION c, Inventory inv) {
@@ -231,11 +233,11 @@ public class TARDISChameleonListener extends TARDISMenuListener implements Liste
             Material m;
             byte data;
             if (!co.equals(c)) {
-                onoff = (co.getOff()) ? ChatColor.RED + plugin.getLanguage().getString("SET_OFF") : ChatColor.GREEN + plugin.getLanguage().getString("SET_ON");
+                onoff = co.getOffColour() + plugin.getLanguage().getString(co.getOff());
                 m = Material.CARPET;
                 data = 8;
             } else {
-                onoff = (!co.getOff()) ? ChatColor.RED + plugin.getLanguage().getString("SET_OFF") : ChatColor.GREEN + plugin.getLanguage().getString("SET_ON");
+                onoff = co.getOnColour() + plugin.getLanguage().getString(co.getOn());
                 m = Material.WOOL;
                 data = 5;
             }
