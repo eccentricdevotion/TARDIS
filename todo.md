@@ -15,7 +15,6 @@
 5. Update [Chameleon Circuit GUI](http://dev.bukkit.org/bukkit-plugins/tardis/tickets/1341-new-chameleon-circuit-gui/)
    * Redo TARDIS seed blocks - remove exterior wall and lamp preference - try to fix crafting hacks when doing it...
    * Default new TARDIS exteriors to FACTORY preset
-   * Convert NEW / OLD preset TARDISes with non blue wool walls to CONSTRUCTs
 6. [Player console archiving](http://dev.bukkit.org/bukkit-plugins/tardis/tickets/1201-player-console-archive-feature/)
 
 

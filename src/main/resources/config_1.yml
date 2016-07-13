@@ -180,3 +180,4 @@ conversions:
     companion_clearing_done: false
     condenser_done: false
     lastknownname_conversion_done: false
+    constructs_done: true

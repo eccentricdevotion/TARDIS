@@ -50,6 +50,7 @@ import me.eccentric_nz.TARDIS.control.TARDISControlRunnable;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.TARDISBiomeUpdater;
 import me.eccentric_nz.TARDIS.database.TARDISCompanionClearer;
+import me.eccentric_nz.TARDIS.database.TARDISConstructConverter;
 import me.eccentric_nz.TARDIS.database.TARDISDatabaseConnection;
 import me.eccentric_nz.TARDIS.database.TARDISLastKnownNameUpdater;
 import me.eccentric_nz.TARDIS.database.TARDISLocationsConverter;
@@ -274,10 +275,16 @@ public class TARDIS extends JavaPlugin {
                     console.sendMessage(pluginName + "Cleared companion lists as they now use UUIDs!");
                 }
             }
-            // update database add and populate uuid fields
+            // update database update last known names
             if (!getConfig().getBoolean("conversions.lastknownname_conversion_done")) {
                 new TARDISLastKnownNameUpdater(this).update();
                 getConfig().set("conversions.lastknownname_conversion_done", true);
+            }
+            // update database convert to constructs
+            if (!getConfig().getBoolean("conversions.constructs_done")) {
+                if (new TARDISConstructConverter(this).convert()) {
+                    getConfig().set("conversions.constructs_done", true);
+                }
             }
             loadMultiverse();
             loadInventoryManager();

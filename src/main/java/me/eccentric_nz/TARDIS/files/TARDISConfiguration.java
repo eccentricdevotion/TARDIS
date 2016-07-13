@@ -105,6 +105,7 @@ public class TARDISConfiguration {
         boolOptions.put("conversions.biome_update", false);
         boolOptions.put("conversions.companion_clearing_done", false);
         boolOptions.put("conversions.condenser_done", false);
+        boolOptions.put("conversions.constructs_done", false);
         boolOptions.put("conversions.conversion_done", false);
         boolOptions.put("conversions.location_conversion_done", false);
         boolOptions.put("conversions.uuid_conversion_done", false);
@@ -124,7 +125,6 @@ public class TARDISConfiguration {
         boolOptions.put("growth.rooms_require_blocks", false);
         boolOptions.put("junk.enabled", true);
         boolOptions.put("junk.particles", true);
-//        boolOptions.put("police_box.materialise", true);
         boolOptions.put("police_box.name_tardis", false);
         boolOptions.put("police_box.set_biome", true);
         boolOptions.put("preferences.nerf_pistons.enabled", false);
@@ -431,6 +431,7 @@ public class TARDISConfiguration {
         removeOptions.add("creation.materialise");
         removeOptions.add("police_box.platform_data");
         removeOptions.add("police_box.platform_id");
+        removeOptions.add("travel.chameleon");
         removeOptions.add("rooms.FIRST");
     }
 
