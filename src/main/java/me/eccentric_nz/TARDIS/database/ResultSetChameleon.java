@@ -105,14 +105,6 @@ public class ResultSetChameleon {
                     for (int i = 1; i <= columns; i++) {
                         data.put(rsmd.getColumnName(i), rs.getString(i));
                     }
-//                    this.chameleon_id = rs.getInt("chameleon_id");
-//                    this.tardis_id = rs.getInt("tardis_id");
-//                    this.blueprintID = rs.getString("blueprintID");
-//                    this.blueprintData = rs.getString("blueprintData");
-//                    this.stainID = rs.getString("stainID");
-//                    this.stainData = rs.getString("stainData");
-//                    this.glassID = rs.getString("glassID");
-//                    this.glassData = rs.getString("glassData");
                 }
             } else {
                 return false;
@@ -135,37 +127,6 @@ public class ResultSetChameleon {
         return true;
     }
 
-//    public int getChameleon_id() {
-//        return chameleon_id;
-//    }
-//
-//    public int getTardis_id() {
-//        return tardis_id;
-//    }
-//
-//    public String getBlueprintID() {
-//        return blueprintID;
-//    }
-//
-//    public String getBlueprintData() {
-//        return blueprintData;
-//    }
-//
-//    public String getStainID() {
-//        return stainID;
-//    }
-//
-//    public String getStainData() {
-//        return stainData;
-//    }
-//
-//    public String getGlassID() {
-//        return glassID;
-//    }
-//
-//    public String getGlassData() {
-//        return glassData;
-//    }
     public HashMap<String, String> getData() {
         return data;
     }

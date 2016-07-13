@@ -17,6 +17,7 @@
 package me.eccentric_nz.TARDIS.database.data;
 
 import java.util.UUID;
+import me.eccentric_nz.TARDIS.enumeration.ADAPTION;
 import me.eccentric_nz.TARDIS.enumeration.PRESET;
 import me.eccentric_nz.TARDIS.enumeration.SCHEMATIC;
 
@@ -37,12 +38,9 @@ public class Tardis {
     private final String companions;
     private final String save_sign;
     private final String chameleon;
-    private final boolean chamele_on;
-    private final int chameleon_id;
-    private final byte chameleon_data;
     private final PRESET preset;
     private final PRESET demat;
-    private final boolean adapti_on;
+    private final ADAPTION adaption;
     private final int artron_level;
     private final String creeper;
     private final String condenser;
@@ -68,7 +66,7 @@ public class Tardis {
     private final boolean siege_on;
     private final int monsters;
 
-    public Tardis(int tardis_id, UUID uuid, String owner, String lastKnownName, String chunk, int tips, SCHEMATIC schematic, boolean abandoned, String companions, String save_sign, String chameleon, boolean chamele_on, int chameleon_id, byte chameleon_data, PRESET preset, PRESET demat, boolean adapti_on, int artron_level, String creeper, String condenser, String beacon, boolean handbrake_on, boolean tardis_init, boolean recharging, String scanner, String farm, String stable, boolean hidden, long lastuse, boolean iso_on, String eps, String rail, String village, String renderer, String zero, String hutch, String igloo, boolean powered_on, boolean lights_on, boolean siege_on, int monsters) {
+    public Tardis(int tardis_id, UUID uuid, String owner, String lastKnownName, String chunk, int tips, SCHEMATIC schematic, boolean abandoned, String companions, String save_sign, String chameleon, PRESET preset, PRESET demat, int adapt, int artron_level, String creeper, String condenser, String beacon, boolean handbrake_on, boolean tardis_init, boolean recharging, String scanner, String farm, String stable, boolean hidden, long lastuse, boolean iso_on, String eps, String rail, String village, String renderer, String zero, String hutch, String igloo, boolean powered_on, boolean lights_on, boolean siege_on, int monsters) {
         this.tardis_id = tardis_id;
         this.uuid = uuid;
         this.owner = owner;
@@ -80,12 +78,9 @@ public class Tardis {
         this.companions = companions;
         this.save_sign = save_sign;
         this.chameleon = chameleon;
-        this.chamele_on = chamele_on;
-        this.chameleon_id = chameleon_id;
-        this.chameleon_data = chameleon_data;
         this.preset = preset;
         this.demat = demat;
-        this.adapti_on = adapti_on;
+        this.adaption = ADAPTION.values()[adapt];
         this.artron_level = artron_level;
         this.creeper = creeper;
         this.condenser = condenser;
@@ -213,33 +208,6 @@ public class Tardis {
     }
 
     /**
-     * Returns whether the Chameleon Circuit is turned on for this TARDIS.
-     *
-     * @return true if the Chameleon Circuit is on
-     */
-    public boolean isChamele_on() {
-        return chamele_on;
-    }
-
-    /**
-     * Returns Material id of the block the Chameleon Circuit will use.
-     *
-     * @return the Material id
-     */
-    public int getChameleon_id() {
-        return chameleon_id;
-    }
-
-    /**
-     * Returns Material data of the block the Chameleon Circuit will use.
-     *
-     * @return the Material data
-     */
-    public byte getChameleon_data() {
-        return chameleon_data;
-    }
-
-    /**
      * Returns the exterior PRESET the Chameleon Circuit will use when next
      * materialising.
      *
@@ -260,13 +228,13 @@ public class Tardis {
     }
 
     /**
-     * Returns whether the Chameleon Circuit biome adaption is turned on for
-     * this TARDIS.
+     * Returns the Chameleon Circuit adaptive setting for this TARDIS. It will
+     * be one of BIOME, BLOCK or OFF.
      *
-     * @return true if the Chameleon Circuit biome adaption is on
+     * @return the Chameleon Circuit adaptive setting
      */
-    public boolean isAdapti_on() {
-        return adapti_on;
+    public ADAPTION getAdaption() {
+        return adaption;
     }
 
     /**

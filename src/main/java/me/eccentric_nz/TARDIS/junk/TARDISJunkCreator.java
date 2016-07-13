@@ -78,8 +78,6 @@ public class TARDISJunkCreator {
         set.put("powered_on", 1);
         set.put("chameleon_preset", "JUNK");
         set.put("chameleon_demat", "JUNK");
-        set.put("chameleon_id", 35);
-        set.put("chameleon_data", 11);
         set.put("lastuse", System.currentTimeMillis());
         final int lastInsertId = qf.doSyncInsert("tardis", set);
         // get wall floor prefs
@@ -120,7 +118,6 @@ public class TARDISJunkCreator {
         qf.insertLocations(setlocs, l.getBlock().getBiome().toString(), lastInsertId);
         // build the TARDIS at the location
         final BuildData bd = new BuildData(plugin, "00000000-aaaa-bbbb-cccc-000000000000");
-        bd.setChameleon(false);
         bd.setDirection(COMPASS.SOUTH);
         bd.setLocation(l);
         bd.setMalfunction(false);

@@ -235,8 +235,8 @@ public class TARDISChameleonConstructorListener extends TARDISMenuListener imple
                                                         // torches
                                                         blueID[first][second] = tid;
                                                         blueData[first][second] = (byte) 5;
-                                                        glassID[first][second] = tid;
-                                                        glassData[first][second] = (byte) 5;
+                                                        glassID[first][second] = 20;
+                                                        glassData[first][second] = (byte) 0;
                                                         stainID[first][second] = 95;
                                                         stainData[first][second] = (tid == 50) ? (byte) 4 : 14;
                                                     }

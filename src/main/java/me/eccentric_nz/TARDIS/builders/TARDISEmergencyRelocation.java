@@ -59,7 +59,7 @@ public class TARDISEmergencyRelocation {
                 bd.setSubmarine(false);
                 // TODO get player preferences
                 Tardis tardis = rs.getTardis();
-                new TARDISInstaPreset(plugin, bd, tardis.getPreset(), tardis.getChameleon_id(), tardis.getChameleon_data(), false).buildPreset();
+                new TARDISInstaPreset(plugin, bd, tardis.getPreset(), 159, (byte) 8, false).buildPreset();
                 QueryFactory qf = new QueryFactory(plugin);
                 HashMap<String, Object> wherec = new HashMap<String, Object>();
                 wherec.put("tardis_id", id);
