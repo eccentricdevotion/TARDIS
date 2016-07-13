@@ -33,7 +33,6 @@ public class TARDISJunkReturn {
             // fly home
             DestroyData dd = new DestroyData(plugin, "00000000-aaaa-bbbb-cccc-000000000000");
             dd.setLocation(tjl.getCurrent());
-            dd.setChameleon(false);
             dd.setDirection(COMPASS.SOUTH);
             dd.setHide(false);
             dd.setOutside(false);

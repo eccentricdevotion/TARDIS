@@ -20,8 +20,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.api.event.TARDISSiegeOffEvent;
 import me.eccentric_nz.TARDIS.api.event.TARDISSiegeEvent;
+import me.eccentric_nz.TARDIS.api.event.TARDISSiegeOffEvent;
 import me.eccentric_nz.TARDIS.builders.BuildData;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetCurrentLocation;
@@ -69,7 +69,6 @@ public class TARDISSiegeMode {
             return;
         }
         Tardis tardis = rs.getTardis();
-        boolean cham = (plugin.getConfig().getBoolean("travel.chameleon")) ? tardis.isChamele_on() : false;
         // get current location
         HashMap<String, Object> wherec = new HashMap<String, Object>();
         wherec.put("tardis_id", id);
@@ -94,7 +93,6 @@ public class TARDISSiegeMode {
             siege.setType(Material.AIR);
             // rebuild preset
             final BuildData bd = new BuildData(plugin, p.getUniqueId().toString());
-            bd.setChameleon(cham);
             bd.setDirection(rsc.getDirection());
             bd.setLocation(current);
             bd.setMalfunction(false);
@@ -152,7 +150,6 @@ public class TARDISSiegeMode {
         } else {
             // destroy tardis
             final DestroyData dd = new DestroyData(plugin, p.getUniqueId().toString());
-            dd.setChameleon(false);
             dd.setDirection(rsc.getDirection());
             dd.setLocation(current);
             dd.setPlayer(p.getPlayer());

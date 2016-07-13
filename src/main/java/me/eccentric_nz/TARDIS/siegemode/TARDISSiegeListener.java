@@ -344,7 +344,6 @@ public class TARDISSiegeListener implements Listener {
             // rebuild the TARDIS
             Location current = b.getLocation();
             final BuildData bd = new BuildData(plugin, p.getUniqueId().toString());
-            bd.setChameleon(tardis.isChamele_on());
             bd.setDirection(rsc.getDirection());
             bd.setLocation(current);
             bd.setMalfunction(false);

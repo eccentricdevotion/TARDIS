@@ -170,7 +170,6 @@ public class TARDISStattenheimListener implements Listener {
                         }
                         boolean hidden = tardis.isHidden();
                         int level = tardis.getArtron_level();
-                        boolean cham = (plugin.getConfig().getBoolean("travel.chameleon") && tardis.isChamele_on());
                         // check they are not in the tardis
                         HashMap<String, Object> wherettrav = new HashMap<String, Object>();
                         wherettrav.put("uuid", uuid.toString());
@@ -265,14 +264,11 @@ public class TARDISStattenheimListener implements Listener {
                             plugin.getUtils().restoreBiome(oldSave, rsc.getBiome());
                         }
                         TARDISMessage.send(player, "TARDIS_COMING");
-//                        boolean mat = plugin.getConfig().getBoolean("police_box.materialise");
-//                        long delay = (mat) ? 10L : 180L;
                         long delay = 10L;
                         plugin.getTrackerKeeper().getInVortex().add(id);
                         final boolean hid = hidden;
                         if (!plugin.getTrackerKeeper().getDestinationVortex().containsKey(id)) {
                             final DestroyData dd = new DestroyData(plugin, uuid.toString());
-                            dd.setChameleon(cham);
                             dd.setDirection(d);
                             dd.setLocation(oldSave);
                             dd.setPlayer(player);
@@ -294,7 +290,6 @@ public class TARDISStattenheimListener implements Listener {
                             }, delay);
                         }
                         final BuildData bd = new BuildData(plugin, uuid.toString());
-                        bd.setChameleon(cham);
                         bd.setDirection(player_d);
                         bd.setLocation(remoteLocation);
                         bd.setMalfunction(false);

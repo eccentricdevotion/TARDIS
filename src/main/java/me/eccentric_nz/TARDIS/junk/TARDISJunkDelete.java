@@ -67,7 +67,6 @@ public class TARDISJunkDelete {
             }
             // destroy junk TARDIS
             final DestroyData dd = new DestroyData(plugin, "00000000-aaaa-bbbb-cccc-000000000000");
-            dd.setChameleon(false);
             dd.setDirection(COMPASS.SOUTH);
             dd.setLocation(bb_loc);
             dd.setHide(false);

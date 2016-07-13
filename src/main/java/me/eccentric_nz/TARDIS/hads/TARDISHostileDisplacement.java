@@ -60,7 +60,7 @@ public class TARDISHostileDisplacement {
         this.plugin = plugin;
     }
 
-    public void moveTARDIS(final int id, boolean cham, UUID uuid, Player hostile, PRESET preset) {
+    public void moveTARDIS(final int id, UUID uuid, Player hostile, PRESET preset) {
 
         TARDISTimeTravel tt = new TARDISTimeTravel(plugin);
         int r = plugin.getConfig().getInt("preferences.hads_distance");
@@ -123,7 +123,6 @@ public class TARDISHostileDisplacement {
                         // move TARDIS
                         plugin.getTrackerKeeper().getInVortex().add(id);
                         final DestroyData dd = new DestroyData(plugin, uuid.toString());
-                        dd.setChameleon(cham);
                         dd.setDirection(d);
                         dd.setLocation(loc);
                         dd.setPlayer(player);
@@ -140,7 +139,6 @@ public class TARDISHostileDisplacement {
                             }
                         }, delay);
                         final BuildData bd = new BuildData(plugin, uuid.toString());
-                        bd.setChameleon(cham);
                         bd.setDirection(d);
                         bd.setLocation(fl);
                         bd.setMalfunction(false);
@@ -177,7 +175,7 @@ public class TARDISHostileDisplacement {
                 } else if (count > 7) {
                     // only if count is 8 or more
                     // use dispersal instead...
-                    new TARDISHostileDispersal(plugin).disperseTARDIS(id, cham, uuid, hostile, preset);
+                    new TARDISHostileDispersal(plugin).disperseTARDIS(id, uuid, hostile, preset);
                 }
             } else {
                 plugin.getTrackerKeeper().getDamage().remove(id);

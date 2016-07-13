@@ -63,7 +63,6 @@ public class TARDISDematerialiseToVortex implements Runnable {
         ResultSetTardis rs = new ResultSetTardis(plugin, wherei, "", false, 2);
         if (rs.resultSet()) {
             Tardis tardis = rs.getTardis();
-            boolean cham = tardis.isChamele_on();
             boolean hidden = tardis.isHidden();
             HashMap<String, Object> wherecl = new HashMap<String, Object>();
             wherecl.put("tardis_id", id);
@@ -80,7 +79,6 @@ public class TARDISDematerialiseToVortex implements Runnable {
             boolean sub = rscl.isSubmarine();
             Biome biome = rscl.getBiome();
             DestroyData dd = new DestroyData(plugin, uuid.toString());
-            dd.setChameleon(cham);
             dd.setDirection(cd);
             dd.setLocation(l);
             dd.setPlayer(player);

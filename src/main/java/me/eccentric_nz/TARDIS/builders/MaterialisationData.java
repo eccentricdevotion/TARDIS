@@ -39,7 +39,6 @@ public class MaterialisationData {
     private Location location;
     private Material lamp = Material.REDSTONE_LAMP_OFF;
     private OfflinePlayer player;
-    private boolean chameleon;
     private boolean outside;
     private boolean submarine;
     private int tardisID;
@@ -89,14 +88,6 @@ public class MaterialisationData {
 
     public void setPlayer(OfflinePlayer player) {
         this.player = player;
-    }
-
-    public boolean isChameleon() {
-        return chameleon;
-    }
-
-    public void setChameleon(boolean chameleon) {
-        this.chameleon = chameleon;
     }
 
     public boolean isOutside() {

@@ -123,7 +123,6 @@ public class TARDISMakeHerBlueCommand {
         set.put("chameleon_preset", "NEW");
         qf.doUpdate("tardis", set, wherep);
         final BuildData bd = new BuildData(plugin, uuid.toString());
-        bd.setChameleon(false);
         bd.setDirection(rsc.getDirection());
         bd.setLocation(l);
         bd.setMalfunction(false);

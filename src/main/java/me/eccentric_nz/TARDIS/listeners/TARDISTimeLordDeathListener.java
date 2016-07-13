@@ -178,12 +178,10 @@ public class TARDISTimeLordDeathListener implements Listener {
                                             return;
                                         }
                                         final QueryFactory qf = new QueryFactory(plugin);
-                                        boolean cham = tardis.isChamele_on();
                                         COMPASS fd = (going_home) ? hd : cd;
                                         if (!plugin.getTrackerKeeper().getDestinationVortex().containsKey(id)) {
                                             // destroy police box
                                             final DestroyData dd = new DestroyData(plugin, uuid.toString());
-                                            dd.setChameleon(cham);
                                             dd.setDirection(cd);
                                             dd.setLocation(sl);
                                             dd.setPlayer(player);
@@ -212,7 +210,6 @@ public class TARDISTimeLordDeathListener implements Listener {
                                             qf.doUpdate("tardis", set, tid);
                                         }
                                         final BuildData bd = new BuildData(plugin, uuid.toString());
-                                        bd.setChameleon(cham);
                                         bd.setDirection(fd);
                                         bd.setLocation(goto_loc);
                                         bd.setMalfunction(false);
@@ -303,7 +300,6 @@ public class TARDISTimeLordDeathListener implements Listener {
                                     HashMap<String, Object> set = new HashMap<String, Object>();
                                     // destroy tardis
                                     final DestroyData dd = new DestroyData(plugin, uuid.toString());
-                                    dd.setChameleon(false);
                                     dd.setDirection(rsc.getDirection());
                                     dd.setLocation(sl);
                                     dd.setPlayer(player);

@@ -52,7 +52,6 @@ public class TARDISRemoteTravelCommand {
         ResultSetTardis rs = new ResultSetTardis(plugin, wherei, "", false, 2);
         if (rs.resultSet()) {
             Tardis tardis = rs.getTardis();
-            boolean cham = tardis.isChamele_on();
             boolean hidden = tardis.isHidden();
             HashMap<String, Object> wherecl = new HashMap<String, Object>();
             wherecl.put("tardis_id", id);
@@ -82,12 +81,10 @@ public class TARDISRemoteTravelCommand {
             if (!exit.getWorld().isChunkLoaded(exit.getChunk())) {
                 exit.getWorld().loadChunk(exit.getChunk());
             }
-//            boolean mat = plugin.getConfig().getBoolean("police_box.materialise");
             HashMap<String, Object> set = new HashMap<String, Object>();
             if (!plugin.getTrackerKeeper().getDestinationVortex().containsKey(id)) {
                 plugin.getTrackerKeeper().getInVortex().add(id);
                 final DestroyData dd = new DestroyData(plugin, player.getUniqueId().toString());
-                dd.setChameleon(cham);
                 dd.setDirection(cd);
                 dd.setLocation(l);
                 dd.setPlayer(player);
@@ -107,10 +104,8 @@ public class TARDISRemoteTravelCommand {
                     plugin.getUtils().restoreBiome(l, biome);
                 }
             }
-//            long delay = (mat) ? 500L : 1L;
             long delay = (plugin.getTrackerKeeper().getDestinationVortex().containsKey(id)) ? 1L : 500L;
             final BuildData bd = new BuildData(plugin, player.getUniqueId().toString());
-            bd.setChameleon(cham);
             bd.setDirection(sd);
             bd.setLocation(exit);
             bd.setMalfunction(false);

@@ -71,7 +71,6 @@ public class TARDISAbandoned {
         qf.insertLocations(setlocs, biome, lastInsertId);
         // turn the block stack into a TARDIS
         final BuildData bd = new BuildData(plugin, null);
-        bd.setChameleon(false);
         bd.setDirection(d);
         bd.setLocation(l);
         bd.setMalfunction(false);

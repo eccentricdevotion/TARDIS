@@ -133,7 +133,6 @@ public class TARDISDeleteCommand {
             if (!hidden) {
                 UUID u = rs.getTardis().getUuid();
                 final DestroyData dd = new DestroyData(plugin, u.toString());
-                dd.setChameleon(false);
                 dd.setDirection(d);
                 dd.setLocation(bb_loc);
                 dd.setPlayer(plugin.getServer().getOfflinePlayer(u));

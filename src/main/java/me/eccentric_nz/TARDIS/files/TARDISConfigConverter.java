@@ -49,7 +49,6 @@ public class TARDISConfigConverter {
         sectionsBool.put("allow_hads", "allow.hads");
         sectionsBool.put("allow_mob_farming", "allow.mob_farming");
         sectionsBool.put("allow_tp_switch", "allow.tp_switch");
-        sectionsBool.put("chameleon", "travel.chameleon");
         sectionsBool.put("conversion_done", "conversions.conversion_done");
         sectionsBool.put("create_worlds", "creation.create_worlds");
         sectionsBool.put("create_worlds_with_perms", "creation.create_worlds_with_perms");

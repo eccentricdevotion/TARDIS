@@ -83,7 +83,6 @@ public class TARDISDesiegeCommand {
                 qf.doUpdate("current", setc, wherec);
                 // rebuild the TARDIS
                 final BuildData bd = new BuildData(plugin, uuid.toString());
-                bd.setChameleon(false);
                 bd.setDirection(rsh.getDirection());
                 bd.setLocation(new Location(rsh.getWorld(), rsh.getX(), rsh.getY(), rsh.getZ()));
                 bd.setMalfunction(false);

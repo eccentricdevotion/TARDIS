@@ -57,7 +57,6 @@ public class TARDISRebuildCommand {
                 }
             }
             plugin.getTrackerKeeper().getRebuildCooldown().put(uuid, System.currentTimeMillis());
-            boolean cham = false;
             HashMap<String, Object> where = new HashMap<String, Object>();
             where.put("uuid", uuid.toString());
             ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false, 0);
@@ -103,9 +102,6 @@ public class TARDISRebuildCommand {
                 TARDISMessage.send(player.getPlayer(), "NOT_WHILE_DISPERSED");
                 return true;
             }
-            if (plugin.getConfig().getBoolean("travel.chameleon")) {
-                cham = tardis.isChamele_on();
-            }
             HashMap<String, Object> wherecl = new HashMap<String, Object>();
             wherecl.put("tardis_id", tardis.getTardis_id());
             ResultSetCurrentLocation rsc = new ResultSetCurrentLocation(plugin, wherecl);
@@ -122,7 +118,6 @@ public class TARDISRebuildCommand {
                 return false;
             }
             final BuildData bd = new BuildData(plugin, uuid.toString());
-            bd.setChameleon(cham);
             bd.setDirection(rsc.getDirection());
             bd.setLocation(l);
             bd.setMalfunction(false);

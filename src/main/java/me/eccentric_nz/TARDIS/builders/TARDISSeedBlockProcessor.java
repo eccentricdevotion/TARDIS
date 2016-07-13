@@ -197,7 +197,6 @@ public class TARDISSeedBlockProcessor {
                 qf.insertLocations(setlocs, biome, lastInsertId);
                 // turn the block stack into a TARDIS
                 BuildData bd = new BuildData(plugin, player.getUniqueId().toString());
-                bd.setChameleon(false);
                 bd.setDirection(COMPASS.valueOf(d));
                 bd.setLocation(l);
                 bd.setMalfunction(false);

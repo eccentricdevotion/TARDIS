@@ -35,7 +35,6 @@ import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.enumeration.SCHEMATIC;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import me.eccentric_nz.TARDIS.utility.TARDISStaticUtils;
-import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
@@ -367,13 +366,12 @@ public class TARDISUpdateListener implements Listener {
             }
             if (blockName.equalsIgnoreCase("chameleon") && validSigns.contains(blockType)) {
                 set.put("chameleon", blockLocStr);
-                set.put("chamele_on", 0);
                 if (blockType == Material.WALL_SIGN || blockType == Material.SIGN_POST) {
                     // add text to sign
                     Sign s = (Sign) block.getState();
                     s.setLine(0, plugin.getSigns().getStringList("chameleon").get(0));
                     s.setLine(1, plugin.getSigns().getStringList("chameleon").get(1));
-                    s.setLine(2, ChatColor.RED + plugin.getLanguage().getString("SET_OFF"));
+                    s.setLine(2, "");
                     s.setLine(3, preset);
                     s.update();
                 }

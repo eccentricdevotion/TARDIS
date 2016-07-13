@@ -97,11 +97,6 @@ public class TARDISDirectionCommand {
                 TARDISMessage.send(player.getPlayer(), "NOT_WHILE_DISPERSED");
                 return true;
             }
-            boolean tmp_cham = false;
-            if (plugin.getConfig().getBoolean("travel.chameleon")) {
-                tmp_cham = tardis.isChamele_on();
-            }
-            boolean cham = tmp_cham;
             boolean hid = tardis.isHidden();
             PRESET demat = tardis.getDemat();
             String dir = args[1].toUpperCase(Locale.ENGLISH);
@@ -144,7 +139,6 @@ public class TARDISDirectionCommand {
                 plugin.getPresetDestroyer().destroyDoor(id);
                 plugin.getPresetDestroyer().destroySign(l, old_d, demat);
                 final BuildData bd = new BuildData(plugin, uuid.toString());
-                bd.setChameleon(cham);
                 bd.setDirection(d);
                 bd.setLocation(l);
                 bd.setMalfunction(false);

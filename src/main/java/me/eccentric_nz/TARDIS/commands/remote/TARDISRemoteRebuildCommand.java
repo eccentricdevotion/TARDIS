@@ -55,7 +55,6 @@ public class TARDISRemoteRebuildCommand {
             return true;
         }
         final BuildData bd = new BuildData(plugin, player.getUniqueId().toString());
-        bd.setChameleon(cham);
         bd.setDirection(rsc.getDirection());
         bd.setLocation(l);
         bd.setMalfunction(false);

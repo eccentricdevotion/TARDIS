@@ -30,6 +30,7 @@ import me.eccentric_nz.TARDIS.database.ResultSetCurrentLocation;
 import me.eccentric_nz.TARDIS.database.ResultSetHomeLocation;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
+import me.eccentric_nz.TARDIS.enumeration.ADAPTION;
 import me.eccentric_nz.TARDIS.enumeration.DIFFICULTY;
 import me.eccentric_nz.TARDIS.enumeration.FLAG;
 import me.eccentric_nz.TARDIS.enumeration.REMOTE;
@@ -84,7 +85,7 @@ public class TARDISRemoteCommands implements CommandExecutor {
                     }
                     // we're good to go
                     final int id = tardis.getTardis_id();
-                    boolean chameleon = tardis.isChamele_on();
+                    boolean chameleon = tardis.getAdaption().equals(ADAPTION.BLOCK);
                     boolean hidden = tardis.isHidden();
                     boolean handbrake = tardis.isHandbrake_on();
                     int level = tardis.getArtron_level();
@@ -126,17 +127,6 @@ public class TARDISRemoteCommands implements CommandExecutor {
                             return true;
                         }
                         switch (remote) {
-                            case CHAMELEON:
-                                // toggle the chameleon circuit on/off
-                                int cham = (chameleon) ? 0 : 1;
-                                String onoff = (chameleon) ? plugin.getLanguage().getString("SET_OFF") : plugin.getLanguage().getString("SET_ON");
-                                HashMap<String, Object> setc = new HashMap<String, Object>();
-                                setc.put("chamele_on", cham);
-                                HashMap<String, Object> wherec = new HashMap<String, Object>();
-                                wherec.put("tardis_id", id);
-                                new QueryFactory(plugin).doUpdate("tardis", setc, wherec);
-                                TARDISMessage.send(sender, "CHAM_SET_ON_OFF", onoff);
-                                return true;
                             case HIDE:
                                 // if it's a non-admin player or command block running the command
                                 // check the usual requirements (circuits/energy) - else just do it

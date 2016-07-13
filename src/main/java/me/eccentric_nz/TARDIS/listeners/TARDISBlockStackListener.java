@@ -252,7 +252,6 @@ public class TARDISBlockStackListener implements Listener {
                         blockBottom.setType(Material.AIR);
                         // turn the block stack into a TARDIS
                         final BuildData bd = new BuildData(plugin, player.getUniqueId().toString());
-                        bd.setChameleon(false);
                         bd.setDirection(COMPASS.valueOf(d));
                         bd.setLocation(block_loc);
                         bd.setMalfunction(false);

@@ -62,7 +62,7 @@ public class TARDISHostileDispersal {
     }
 
     @SuppressWarnings("deprecation")
-    public void disperseTARDIS(final int id, boolean cham, UUID uuid, Player hostile, PRESET preset) {
+    public void disperseTARDIS(final int id, UUID uuid, Player hostile, PRESET preset) {
         HashMap<String, Object> wherecl = new HashMap<String, Object>();
         wherecl.put("tardis_id", id);
         ResultSetCurrentLocation rsc = new ResultSetCurrentLocation(plugin, wherecl);
@@ -71,7 +71,7 @@ public class TARDISHostileDispersal {
         }
         if (rsc.isSubmarine()) {
             // underwater use displacement
-            new TARDISHostileDisplacement(plugin).moveTARDIS(id, cham, uuid, hostile, preset);
+            new TARDISHostileDisplacement(plugin).moveTARDIS(id, uuid, hostile, preset);
             return;
         }
         Location l = new Location(rsc.getWorld(), rsc.getX(), rsc.getY(), rsc.getZ());

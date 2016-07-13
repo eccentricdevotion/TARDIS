@@ -84,7 +84,6 @@ public class TARDISMaterialseFromVortex implements Runnable {
         ResultSetTardis rs = new ResultSetTardis(plugin, wherei, "", false, 2);
         if (rs.resultSet()) {
             final Tardis tardis = rs.getTardis();
-            boolean cham = tardis.isChamele_on();
             // get current location for back
             HashMap<String, Object> wherecu = new HashMap<String, Object>();
             wherecu.put("tardis_id", id);
@@ -159,7 +158,6 @@ public class TARDISMaterialseFromVortex implements Runnable {
                     }
                     // set destination flight data
                     final BuildData bd = new BuildData(plugin, uuid.toString());
-                    bd.setChameleon(cham);
                     bd.setDirection(sd);
                     bd.setLocation(exit);
                     bd.setMalfunction(false);

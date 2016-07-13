@@ -145,7 +145,6 @@ public class TARDISConfiguration {
         boolOptions.put("siege.creeper", false);
         boolOptions.put("siege.healing", false);
         boolOptions.put("siege.texture", false);
-        boolOptions.put("travel.chameleon", true);
         boolOptions.put("travel.exile", false);
         boolOptions.put("travel.give_key", false);
         boolOptions.put("travel.include_default_world", false);

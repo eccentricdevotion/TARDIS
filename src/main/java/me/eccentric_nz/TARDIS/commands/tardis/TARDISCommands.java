@@ -107,9 +107,6 @@ public class TARDISCommands implements CommandExecutor {
                 if (args[0].equalsIgnoreCase("arsremove")) {
                     return new TARDISARSRemoveCommand(plugin).resetARS(player);
                 }
-                if (args[0].equalsIgnoreCase("chameleon")) {
-                    new TARDISChameleonCommand(plugin).doChameleon(player, args);
-                }
                 if (args[0].equalsIgnoreCase("check_loc")) {
                     return new TARDISCheckLocCommand(plugin).doACheckLocation(player, args);
                 }

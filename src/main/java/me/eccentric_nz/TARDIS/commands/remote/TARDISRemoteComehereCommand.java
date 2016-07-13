@@ -101,10 +101,6 @@ public class TARDISRemoteComehereCommand {
             TARDISMessage.send(player, "NOT_WHILE_MAT");
             return true;
         }
-        boolean chamtmp = false;
-        if (plugin.getConfig().getBoolean("travel.chameleon")) {
-            chamtmp = tardis.isChamele_on();
-        }
         boolean hidden = tardis.isHidden();
         // get current police box location
         HashMap<String, Object> wherecl = new HashMap<String, Object>();
@@ -140,7 +136,6 @@ public class TARDISRemoteComehereCommand {
             TARDISMessage.send(player, "WOULD_GRIEF_BLOCKS");
             return true;
         }
-        boolean cham = chamtmp;
         final QueryFactory qf = new QueryFactory(plugin);
         Location oldSave = null;
         HashMap<String, Object> bid = new HashMap<String, Object>();
@@ -184,14 +179,11 @@ public class TARDISRemoteComehereCommand {
         }
         qf.doUpdate("current", set, tid);
         TARDISMessage.send(player, "TARDIS_COMING");
-//        boolean mat = plugin.getConfig().getBoolean("police_box.materialise");
-//        long delay = (mat) ? 1L : 180L;
         long delay = 1L;
         plugin.getTrackerKeeper().getInVortex().add(id);
         final boolean hid = hidden;
         if (!plugin.getTrackerKeeper().getDestinationVortex().containsKey(id)) {
             final DestroyData dd = new DestroyData(plugin, player.getUniqueId().toString());
-            dd.setChameleon(cham);
             dd.setDirection(d);
             dd.setLocation(oldSave);
             dd.setPlayer(player);
@@ -213,7 +205,6 @@ public class TARDISRemoteComehereCommand {
             }, delay);
         }
         final BuildData bd = new BuildData(plugin, player.getUniqueId().toString());
-        bd.setChameleon(cham);
         bd.setDirection(player_d);
         bd.setLocation(eyeLocation);
         bd.setMalfunction(false);

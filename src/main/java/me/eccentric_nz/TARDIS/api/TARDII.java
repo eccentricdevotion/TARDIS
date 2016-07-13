@@ -532,7 +532,6 @@ public class TARDII implements TardisAPI {
                 OfflinePlayer player = Bukkit.getOfflinePlayer(rs.getTardis().getUuid());
                 Location l = new Location(rsc.getWorld(), rsc.getX(), rsc.getY(), rsc.getZ());
                 final BuildData bd = new BuildData(TARDIS.plugin, player.getUniqueId().toString());
-                bd.setChameleon(false);
                 bd.setDirection(rsc.getDirection());
                 bd.setLocation(l);
                 bd.setMalfunction(false);

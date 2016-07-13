@@ -76,7 +76,6 @@ public class TARDISJunkVortexRunnable implements Runnable {
             if (i == loops - 1) {
                 // build the TARDIS at the location
                 final BuildData bd = new BuildData(plugin, "00000000-aaaa-bbbb-cccc-000000000000");
-                bd.setChameleon(false);
                 bd.setDirection(COMPASS.SOUTH);
                 bd.setLocation(destJunkLoc);
                 bd.setMalfunction(false);

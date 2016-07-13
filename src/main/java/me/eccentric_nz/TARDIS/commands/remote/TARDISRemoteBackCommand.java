@@ -84,7 +84,6 @@ public class TARDISRemoteBackCommand {
         if (!plugin.getTrackerKeeper().getDestinationVortex().containsKey(id)) {
             // destroy the police box
             final DestroyData dd = new DestroyData(plugin, player.getUniqueId().toString());
-            dd.setChameleon(false);
             dd.setDirection(rsc.getDirection());
             dd.setLocation(new Location(rsc.getWorld(), rsc.getX(), rsc.getY(), rsc.getZ()));
             dd.setPlayer(player);
@@ -98,7 +97,6 @@ public class TARDISRemoteBackCommand {
         }
         // rebuild the police box
         final BuildData bd = new BuildData(plugin, player.getUniqueId().toString());
-        bd.setChameleon(false);
         bd.setDirection(rsb.getDirection());
         bd.setLocation(new Location(rsb.getWorld(), rsb.getX(), rsb.getY(), rsb.getZ()));
         bd.setMalfunction(false);

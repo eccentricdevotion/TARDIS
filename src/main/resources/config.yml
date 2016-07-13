@@ -45,7 +45,6 @@ travel:
     include_default_world: false
     tp_radius: 500
     max_distance: 29999983
-    chameleon: true
     give_key: false
     the_end: false
     nether: false

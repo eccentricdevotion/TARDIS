@@ -115,7 +115,6 @@ public class TARDISHideCommand {
                 return false;
             }
             final DestroyData dd = new DestroyData(plugin, player.getUniqueId().toString());
-            dd.setChameleon(false);
             dd.setDirection(rsc.getDirection());
             dd.setLocation(l);
             dd.setPlayer(player.getPlayer());

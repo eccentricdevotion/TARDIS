@@ -143,12 +143,7 @@ public class TARDISBlockDamageListener implements Listener {
         where.put("tardis_id", id);
         ResultSetTardis rst = new ResultSetTardis(plugin, where, "", false, 2);
         if (rst.resultSet() && rst.getTardis().isHidden()) {
-//            Player p = (Player) plugin.getServer().getOfflinePlayer(rst.getUuid());
             // unhide this tardis
-            boolean cham = false;
-            if (plugin.getConfig().getBoolean("travel.chameleon")) {
-                cham = rst.getTardis().isChamele_on();
-            }
             HashMap<String, Object> wherecl = new HashMap<String, Object>();
             wherecl.put("tardis_id", id);
             ResultSetCurrentLocation rsc = new ResultSetCurrentLocation(plugin, wherecl);
@@ -160,7 +155,6 @@ public class TARDISBlockDamageListener implements Listener {
             wheret.put("tardis_id", id);
             QueryFactory qf = new QueryFactory(plugin);
             final BuildData bd = new BuildData(plugin, player.getUniqueId().toString());
-            bd.setChameleon(cham);
             bd.setDirection(rsc.getDirection());
             bd.setLocation(l);
             bd.setMalfunction(false);

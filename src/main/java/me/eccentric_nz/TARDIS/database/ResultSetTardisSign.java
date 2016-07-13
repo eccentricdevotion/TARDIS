@@ -22,6 +22,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.enumeration.ADAPTION;
 
 /**
  * Many facts, figures, and formulas are contained within the Matrix,
@@ -40,8 +41,7 @@ public class ResultSetTardisSign {
     private String owner;
     private String save_sign;
     private String chameleon;
-    private boolean chamele_on;
-    private boolean adapti_on;
+    private ADAPTION adaption;
     private boolean iso_on;
     private boolean powered_on;
     private int which;
@@ -83,8 +83,7 @@ public class ResultSetTardisSign {
                 this.owner = rs.getString("owner");
                 this.save_sign = rs.getString("save_sign");
                 this.chameleon = rs.getString("chameleon");
-                this.chamele_on = rs.getBoolean("chamele_on");
-                this.adapti_on = rs.getBoolean("adapti_on");
+                this.adaption = ADAPTION.values()[rs.getInt("adapti_on")];
                 this.iso_on = rs.getBoolean("iso_on");
                 this.powered_on = rs.getBoolean("powered_on");
                 this.which = (this.chameleon.equals(where)) ? 0 : 1;
@@ -129,12 +128,8 @@ public class ResultSetTardisSign {
         return chameleon;
     }
 
-    public boolean isChamele_on() {
-        return chamele_on;
-    }
-
-    public boolean isAdapti_on() {
-        return adapti_on;
+    public ADAPTION getAdaption() {
+        return adaption;
     }
 
     public boolean isIso_on() {

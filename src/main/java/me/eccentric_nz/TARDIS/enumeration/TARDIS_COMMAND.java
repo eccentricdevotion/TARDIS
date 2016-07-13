@@ -27,7 +27,6 @@ public enum TARDIS_COMMAND {
     add,
     arch_time,
     arsremove,
-    chameleon,
     colourise,
     colorize,
     comehere,
@@ -67,7 +66,6 @@ public enum TARDIS_COMMAND {
 
     public boolean noSiege() {
         switch (this) {
-            case chameleon:
             case colourise:
             case colorize:
             case comehere:

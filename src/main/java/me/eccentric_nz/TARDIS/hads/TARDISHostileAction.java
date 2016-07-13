@@ -45,7 +45,6 @@ public class TARDISHostileAction {
         if (rs.resultSet()) {
             Tardis tardis = rs.getTardis();
             UUID uuid = tardis.getUuid();
-            boolean cham = tardis.isChamele_on();
             boolean poweredOn = tardis.isPowered_on();
             PRESET preset = tardis.getPreset();
             HashMap<String, Object> wherep = new HashMap<String, Object>();
@@ -55,10 +54,10 @@ public class TARDISHostileAction {
                 if (rsp.isHadsOn() && poweredOn) {
                     switch (rsp.getHadsType()) {
                         case DISPLACEMENT:
-                            new TARDISHostileDisplacement(plugin).moveTARDIS(id, cham, uuid, hostile, preset);
+                            new TARDISHostileDisplacement(plugin).moveTARDIS(id, uuid, hostile, preset);
                             break;
                         case DISPERSAL:
-                            new TARDISHostileDispersal(plugin).disperseTARDIS(id, cham, uuid, hostile, preset);
+                            new TARDISHostileDispersal(plugin).disperseTARDIS(id, uuid, hostile, preset);
                             break;
                         default:
                             break;

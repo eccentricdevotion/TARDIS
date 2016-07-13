@@ -83,7 +83,6 @@ public class TARDISExterminator {
                 }
                 Location bb_loc = new Location(rsc.getWorld(), rsc.getX(), rsc.getY(), rsc.getZ());
                 final DestroyData dd = new DestroyData(plugin, uuid.toString());
-                dd.setChameleon(false);
                 dd.setDirection(rsc.getDirection());
                 dd.setLocation(bb_loc);
                 dd.setPlayer(plugin.getServer().getOfflinePlayer(uuid));
@@ -219,7 +218,6 @@ public class TARDISExterminator {
             int signy = -2;
             // if the sign was on the TARDIS destroy the TARDIS!
             final DestroyData dd = new DestroyData(plugin, player.getUniqueId().toString());
-            dd.setChameleon(false);
             dd.setDirection(d);
             dd.setLocation(bb_loc);
             dd.setPlayer(player);

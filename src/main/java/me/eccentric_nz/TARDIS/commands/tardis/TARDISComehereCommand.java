@@ -75,10 +75,6 @@ public class TARDISComehereCommand {
                     return true;
                 }
                 int level = tardis.getArtron_level();
-                boolean chamtmp = false;
-                if (plugin.getConfig().getBoolean("travel.chameleon")) {
-                    chamtmp = tardis.isChamele_on();
-                }
                 boolean hidden = tardis.isHidden();
                 // get location
                 Location eyeLocation = player.getTargetBlock(plugin.getGeneralKeeper().getTransparent(), 50).getLocation();
@@ -167,7 +163,6 @@ public class TARDISComehereCommand {
                     TARDISMessage.send(player, "NOT_ENOUGH_ENERGY");
                     return true;
                 }
-                boolean cham = chamtmp;
                 World w = rsc.getWorld();
                 final QueryFactory qf = new QueryFactory(plugin);
                 Location oldSave = null;
@@ -212,14 +207,11 @@ public class TARDISComehereCommand {
                 }
                 qf.doUpdate("current", set, tid);
                 TARDISMessage.send(player, "TARDIS_COMING");
-//                boolean mat = plugin.getConfig().getBoolean("police_box.materialise");
-//                long delay = (mat) ? 1L : 180L;
                 long delay = 1L;
                 plugin.getTrackerKeeper().getInVortex().add(id);
                 final boolean hid = hidden;
                 if (!plugin.getTrackerKeeper().getDestinationVortex().containsKey(id)) {
                     final DestroyData dd = new DestroyData(plugin, uuid.toString());
-                    dd.setChameleon(cham);
                     dd.setDirection(d);
                     dd.setLocation(oldSave);
                     dd.setPlayer(player);
@@ -241,7 +233,6 @@ public class TARDISComehereCommand {
                     }, delay);
                 }
                 final BuildData bd = new BuildData(plugin, uuid.toString());
-                bd.setChameleon(cham);
                 bd.setDirection(player_d);
                 bd.setLocation(eyeLocation);
                 bd.setMalfunction(false);

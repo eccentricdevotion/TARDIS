@@ -73,7 +73,6 @@ public class TARDISRemoteHideCommand {
             return true;
         }
         final DestroyData dd = new DestroyData(plugin, olp.getUniqueId().toString());
-        dd.setChameleon(false);
         dd.setDirection(rsc.getDirection());
         dd.setLocation(l);
         dd.setPlayer(olp);
