@@ -206,12 +206,12 @@ public class TARDISBlockStackListener implements Listener {
                             now = System.currentTimeMillis();
                         }
                         set.put("lastuse", now);
-                        // set preset if default is not 'NEW'
+                        // set preset if default is not 'FACTORY'
                         String preset = plugin.getConfig().getString("police_box.default_preset").toUpperCase();
-                        if (!preset.equals("NEW")) {
+//                        if (!preset.equals("NEW")) {
                             set.put("chameleon_preset", preset);
                             set.put("chameleon_demat", preset);
-                        }
+//                        }
                         HashMap<String, Object> setpp = new HashMap<String, Object>();
                         if (wall_type.equals(Material.LAPIS_BLOCK)) {
                             if (blockBottom.getType().equals(Material.EMERALD_BLOCK)) {

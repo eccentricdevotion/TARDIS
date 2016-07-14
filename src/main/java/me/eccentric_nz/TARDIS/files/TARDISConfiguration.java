@@ -365,7 +365,7 @@ public class TARDISConfiguration {
         strOptions.put("creation.custom_schematic_seed", "OBSIDIAN");
         strOptions.put("creation.default_world_name", "TARDIS_TimeVortex");
         strOptions.put("creation.gamemode", "survival");
-        strOptions.put("police_box.default_preset", "NEW");
+        strOptions.put("police_box.default_preset", "FACTORY");
         strOptions.put("police_box.tardis_lamp", "REDSTONE_LAMP_OFF");
         strOptions.put("police_box.sign_colour", "WHITE");
         strOptions.put("preferences.default_key", "eleventh");
@@ -498,6 +498,9 @@ public class TARDISConfiguration {
             }
             if (config.contains("difficulty") && config.getString("difficulty").equals("normal")) {
                 plugin.getConfig().set("difficulty", "hard");
+            }
+            if (config.contains("police_box.default_preset") && config.getString("police_box.default_preset").equals("NEW")) {
+                plugin.getConfig().set("police_box.default_preset", "FACTORY");
             }
             if (config.contains("police_box.tardis_lamp") && NumberUtils.isNumber(config.getString("police_box.tardis_lamp"))) {
                 String setlamp = "REDSTONE_LAMP_OFF";
