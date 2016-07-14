@@ -246,12 +246,11 @@ public class TARDISDematerialisationPreset implements Runnable {
                                 TARDISBlockSetters.setBlock(world, xx, (y + yy), zz, subi, subd);
                                 break;
                             case 35: // wool
-                                int chai = (preset.equals(PRESET.NEW) || preset.equals(PRESET.OLD)) ? cham_id : colids[yy];
                                 byte chad = (preset.equals(PRESET.NEW) || preset.equals(PRESET.OLD)) ? cham_data : coldatas[yy];
                                 if (preset.equals(PRESET.PARTY) || (preset.equals(PRESET.FLOWER) && coldatas[yy] == 0)) {
                                     chad = the_colour;
                                 }
-                                TARDISBlockSetters.setBlock(world, xx, (y + yy), zz, chai, chad);
+                                TARDISBlockSetters.setBlock(world, xx, (y + yy), zz, colids[yy], chad);
                                 break;
                             case 38:
                                 break;
@@ -292,6 +291,11 @@ public class TARDISDematerialisationPreset implements Runnable {
                                 } else {
                                     TARDISBlockSetters.setBlock(world, xx, (y + yy), zz, colids[yy], coldatas[yy]);
                                 }
+                                break;
+                            case 159:
+                                int chai = (preset.equals(PRESET.FACTORY)) ? cham_id : colids[yy];
+                                byte chaf = (preset.equals(PRESET.FACTORY)) ? cham_data : coldatas[yy];
+                                TARDISBlockSetters.setBlock(world, xx, (y + yy), zz, chai, chaf);
                                 break;
                             default: // everything else
                                 if (change) {

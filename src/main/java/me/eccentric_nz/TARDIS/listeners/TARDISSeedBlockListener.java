@@ -29,7 +29,6 @@ import me.eccentric_nz.TARDIS.enumeration.SCHEMATIC;
 import me.eccentric_nz.TARDIS.rooms.TARDISWalls.Pair;
 import me.eccentric_nz.TARDIS.rooms.TARDISWallsLookup;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
-import me.eccentric_nz.TARDIS.utility.TARDISStaticUtils;
 import org.bukkit.DyeColor;
 import org.bukkit.GameMode;
 import org.bukkit.Location;
@@ -129,22 +128,22 @@ public class TARDISSeedBlockListener implements Listener {
                 lore.add(data.getSchematic().getPermission().toUpperCase());
                 lore.add("Walls: " + twl.wall_lookup.get(data.getWallType() + ":" + data.getWallData()));
                 lore.add("Floors: " + twl.wall_lookup.get(data.getFloorType() + ":" + data.getFloorData()));
-                // do some funky stuff to get data values for wool/stained glass & clay/wood/log/log_2
-                if (hasColour.contains(data.getBox_id())) {
-                    switch (data.getBox_id()) {
-                        case 35:
-                        case 95:
-                        case 159:
-                            lore.add("Chameleon block: " + DyeColor.getByWoolData(data.getBox_data()) + " " + Material.getMaterial(data.getBox_id()).toString());
-                            break;
-                        default:
-                            lore.add("Chameleon block: " + TARDISStaticUtils.getWoodType(Material.getMaterial(data.getBox_id()), data.getBox_data()) + " " + Material.getMaterial(data.getBox_id()).toString());
-                    }
-                } else {
-                    lore.add("Chameleon block: " + Material.getMaterial(data.getBox_id()).toString());
-                }
-//                lore.add("Chameleon block: " + ((data.getBox_id() == 35 || data.getBox_id() == 159) ? DyeColor.getByWoolData(data.getBox_data()) + " " : "") + Material.getMaterial(data.getBox_id()).toString());
-                lore.add("Lamp: " + Material.getMaterial(data.getLamp()).toString());
+//                // do some funky stuff to get data values for wool/stained glass & clay/wood/log/log_2
+//                if (hasColour.contains(data.getBox_id())) {
+//                    switch (data.getBox_id()) {
+//                        case 35:
+//                        case 95:
+//                        case 159:
+//                            lore.add("Chameleon block: " + DyeColor.getByWoolData(data.getBox_data()) + " " + Material.getMaterial(data.getBox_id()).toString());
+//                            break;
+//                        default:
+//                            lore.add("Chameleon block: " + TARDISStaticUtils.getWoodType(Material.getMaterial(data.getBox_id()), data.getBox_data()) + " " + Material.getMaterial(data.getBox_id()).toString());
+//                    }
+//                } else {
+//                    lore.add("Chameleon block: " + Material.getMaterial(data.getBox_id()).toString());
+//                }
+////                lore.add("Chameleon block: " + ((data.getBox_id() == 35 || data.getBox_id() == 159) ? DyeColor.getByWoolData(data.getBox_data()) + " " : "") + Material.getMaterial(data.getBox_id()).toString());
+//                lore.add("Lamp: " + Material.getMaterial(data.getLamp()).toString());
                 im.setLore(lore);
                 is.setItemMeta(im);
                 // set the block to AIR

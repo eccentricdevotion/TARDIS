@@ -28,10 +28,8 @@ import me.eccentric_nz.TARDIS.enumeration.DISK_CIRCUIT;
 import me.eccentric_nz.TARDIS.enumeration.SCHEMATIC;
 import me.eccentric_nz.TARDIS.rooms.TARDISWallsLookup;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
-import me.eccentric_nz.TARDIS.utility.TARDISStaticUtils;
 import org.bukkit.ChatColor;
 import org.bukkit.Color;
-import org.bukkit.DyeColor;
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Entity;
@@ -59,12 +57,13 @@ import org.bukkit.inventory.meta.LeatherArmorMeta;
 public class TARDISCraftListener implements Listener {
 
     private final TARDIS plugin;
-    private final List<Integer> c = new ArrayList<Integer>();
-    private final List<Material> l = new ArrayList<Material>();
+//    private final List<Integer> c = new ArrayList<Integer>();
+//    private final List<Material> l = new ArrayList<Material>();
     private final HashMap<Material, String> t = new HashMap<Material, String>();
-    private final List<Material> hasColour = new ArrayList<Material>();
+//    private final List<Material> hasColour = new ArrayList<Material>();
     private final TARDISWallsLookup twl;
     private final List<UUID> crafters = new ArrayList<UUID>();
+    private final List<Integer> spaces = Arrays.asList(1, 4, 7, 6, 9);
 
     public TARDISCraftListener(TARDIS plugin) {
         this.plugin = plugin;
@@ -95,23 +94,23 @@ public class TARDISCraftListener implements Listener {
                 }
             }
         }
-        for (Integer i : plugin.getBlocksConfig().getIntegerList("chameleon_blocks")) {
-            c.add(i);
-        }
-        for (String a : plugin.getBlocksConfig().getStringList("lamp_blocks")) {
-            try {
-                l.add(Material.valueOf(a));
-            } catch (IllegalArgumentException e) {
-                plugin.debug("Invalid Material in lamp_blocks section.");
-            }
-        }
-        hasColour.add(Material.WOOL);
-        hasColour.add(Material.STAINED_CLAY);
-        hasColour.add(Material.STAINED_GLASS);
-        hasColour.add(Material.WOOD);
-        hasColour.add(Material.LOG);
-        hasColour.add(Material.LOG_2);
-        hasColour.add(Material.STONE);
+//        for (Integer i : plugin.getBlocksConfig().getIntegerList("chameleon_blocks")) {
+//            c.add(i);
+//        }
+//        for (String a : plugin.getBlocksConfig().getStringList("lamp_blocks")) {
+//            try {
+//                l.add(Material.valueOf(a));
+//            } catch (IllegalArgumentException e) {
+//                plugin.debug("Invalid Material in lamp_blocks section.");
+//            }
+//        }
+//        hasColour.add(Material.WOOL);
+//        hasColour.add(Material.STAINED_CLAY);
+//        hasColour.add(Material.STAINED_GLASS);
+//        hasColour.add(Material.WOOD);
+//        hasColour.add(Material.LOG);
+//        hasColour.add(Material.LOG_2);
+//        hasColour.add(Material.STONE);
         twl = new TARDISWallsLookup(plugin);
     }
 
@@ -160,9 +159,9 @@ public class TARDISCraftListener implements Listener {
                             event.setCancelled(true);
                         }
                         // get the materials in crafting slots
-                        Material m5 = inv.getItem(5).getType(); // lamp
+//                        Material m5 = inv.getItem(5).getType(); // lamp
                         Material m7 = inv.getItem(7).getType(); // tardis type
-                        Material m8 = inv.getItem(8).getType(); // chameleon
+//                        Material m8 = inv.getItem(8).getType(); // chameleon
                         final ItemStack is = new ItemStack(m7, 1);
                         ItemMeta im = is.getItemMeta();
                         im.setDisplayName("§6TARDIS Seed Block");
@@ -170,24 +169,24 @@ public class TARDISCraftListener implements Listener {
                         lore.add(t.get(m7));
                         lore.add("Walls: " + twl.wall_lookup.get(inv.getItem(6).getType().toString() + ":" + inv.getItem(6).getData().getData()));
                         lore.add("Floors: " + twl.wall_lookup.get(inv.getItem(9).getType().toString() + ":" + inv.getItem(9).getData().getData()));
-                        // do some funky stuff to get data values for wool/stained glass & clay/wood/log/log_2
-                        if (hasColour.contains(m8)) {
-                            switch (m8) {
-                                case WOOL:
-                                case STAINED_CLAY:
-                                case STAINED_GLASS:
-                                    lore.add("Chameleon block: " + DyeColor.getByWoolData(inv.getItem(8).getData().getData()) + " " + m8.toString());
-                                    break;
-                                case STONE:
-                                    lore.add("Chameleon block: " + TARDISStaticUtils.getStoneType(inv.getItem(8).getData().getData()));
-                                    break;
-                                default:
-                                    lore.add("Chameleon block: " + TARDISStaticUtils.getWoodType(m8, inv.getItem(8).getData().getData()) + " " + m8.toString());
-                            }
-                        } else {
-                            lore.add("Chameleon block: " + m8.toString());
-                        }
-                        lore.add("Lamp: " + m5.toString());
+//                        // do some funky stuff to get data values for wool/stained glass & clay/wood/log/log_2
+//                        if (hasColour.contains(m8)) {
+//                            switch (m8) {
+//                                case WOOL:
+//                                case STAINED_CLAY:
+//                                case STAINED_GLASS:
+//                                    lore.add("Chameleon block: " + DyeColor.getByWoolData(inv.getItem(8).getData().getData()) + " " + m8.toString());
+//                                    break;
+//                                case STONE:
+//                                    lore.add("Chameleon block: " + TARDISStaticUtils.getStoneType(inv.getItem(8).getData().getData()));
+//                                    break;
+//                                default:
+//                                    lore.add("Chameleon block: " + TARDISStaticUtils.getWoodType(m8, inv.getItem(8).getData().getData()) + " " + m8.toString());
+//                            }
+//                        } else {
+//                            lore.add("Chameleon block: " + m8.toString());
+//                        }
+//                        lore.add("Lamp: " + m5.toString());
                         im.setLore(lore);
                         is.setItemMeta(im);
                         if (checkPerms(player, m7)) {
@@ -228,28 +227,21 @@ public class TARDISCraftListener implements Listener {
      */
     @SuppressWarnings("deprecation")
     private boolean checkSlots(Inventory inv) {
-        // check first slot
-        ItemStack first = inv.getItem(1);
-        if (first == null || !first.getType().equals(Material.REDSTONE_TORCH_ON)) {
-            return false;
-        }
-        for (int j = 4; j < 10; j++) {
-            ItemStack is = inv.getItem(j);
+        for (int s : spaces) {
+            ItemStack is = inv.getItem(s);
             if (is == null) {
                 return false;
             }
-            int id = is.getTypeId();
             Material m = is.getType();
-            switch (j) {
-                case 4:
-                    // must be lapis block
-                    if (!m.equals(Material.LAPIS_BLOCK)) {
+            switch (s) {
+                case 1:
+                    if (!m.equals(Material.REDSTONE_TORCH_ON)) {
                         return false;
                     }
                     break;
-                case 5:
-                    // must be a valid lamp block
-                    if (!l.contains(m)) {
+                case 4:
+                    // must be lapis block
+                    if (!m.equals(Material.LAPIS_BLOCK)) {
                         return false;
                     }
                     break;
@@ -259,13 +251,7 @@ public class TARDISCraftListener implements Listener {
                         return false;
                     }
                     break;
-                case 8:
-                    // must be a valid chameleon block
-                    if (!c.contains(id)) {
-                        return false;
-                    }
-                    break;
-                default:
+                default: // 6, 9
                     // must be a valid wall / floor block
                     if (!twl.wall_lookup.containsKey(m.toString() + ":" + is.getData().getData())) {
                         return false;
