@@ -43,15 +43,18 @@ public class TARDISConstructConverter {
     public boolean convert() {
         PreparedStatement statement = null;
         ResultSet rs = null;
-        String query = "SELECT tardis_id, chameleon_preset, chameleon_id, chameleon_data FROM " + prefix + "tardis WHERE (chameleon_preset = 'NEW' OR chameleon_preset = 'OLD') AND (chameleon_id != '35' || chameleon_data != '11'";
+        String query = "SELECT tardis_id, chameleon_preset, chameleon_id, chameleon_data FROM " + prefix + "tardis WHERE (chameleon_preset = 'NEW' OR chameleon_preset = 'OLD') AND (chameleon_id != '35' OR chameleon_data != '11')";
         try {
             service.testConnection(connection);
             statement = connection.prepareStatement(query);
             rs = statement.executeQuery();
+            int i = 0;
             while (rs.next()) {
                 PRESET preset = PRESET.valueOf(rs.getString("chameleon_preset"));
                 new TARDISConstructBuilder(plugin, preset, rs.getInt("tardis_id"), rs.getInt("chameleon_id"), rs.getInt("chameleon_data")).buildAndSave();
+                i++;
             }
+            plugin.debug("Converted " + i + " shorted out Police Boxes to CONSTRUCTS.");
         } catch (SQLException e) {
             plugin.debug("ResultSet error for construct converter! " + e.getMessage());
             return false;
