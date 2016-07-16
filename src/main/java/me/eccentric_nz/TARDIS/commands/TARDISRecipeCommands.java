@@ -460,18 +460,18 @@ public class TARDISRecipeCommands implements CommandExecutor {
         ItemStack red = new ItemStack(Material.REDSTONE_TORCH_ON, 1);
         // lapis block
         ItemStack lapis = new ItemStack(Material.LAPIS_BLOCK, 1);
-        // restone lamp
-        ItemStack lamp = new ItemStack(Material.REDSTONE_LAMP_OFF, 1);
-        ItemMeta lamp_meta = lamp.getItemMeta();
-        lamp_meta.setDisplayName("Police Box lamp");
-        lamp_meta.setLore(Arrays.asList("Any valid lamp item:", "Redstone Lamp", "Glowstone", "Torches"));
-        lamp.setItemMeta(lamp_meta);
-        // police box wall
-        ItemStack pb_wall = new ItemStack(Material.WOOL, 1, (byte) 11);
-        ItemMeta pb_meta = pb_wall.getItemMeta();
-        pb_meta.setDisplayName("Police Box walls");
-        pb_meta.setLore(Arrays.asList("Any valid Chameleon block"));
-        pb_wall.setItemMeta(pb_meta);
+//        // restone lamp
+//        ItemStack lamp = new ItemStack(Material.REDSTONE_LAMP_OFF, 1);
+//        ItemMeta lamp_meta = lamp.getItemMeta();
+//        lamp_meta.setDisplayName("Police Box lamp");
+//        lamp_meta.setLore(Arrays.asList("Any valid lamp item:", "Redstone Lamp", "Glowstone", "Torches"));
+//        lamp.setItemMeta(lamp_meta);
+//        // police box wall
+//        ItemStack pb_wall = new ItemStack(Material.WOOL, 1, (byte) 11);
+//        ItemMeta pb_meta = pb_wall.getItemMeta();
+//        pb_meta.setDisplayName("Police Box walls");
+//        pb_meta.setLore(Arrays.asList("Any valid Chameleon block"));
+//        pb_wall.setItemMeta(pb_meta);
         // interior wall
         ItemStack in_wall = new ItemStack(Material.WOOL, 1, (byte) 1);
         ItemMeta in_meta = in_wall.getItemMeta();
@@ -491,10 +491,10 @@ public class TARDISRecipeCommands implements CommandExecutor {
         tardis.setItemMeta(seed);
         view.setItem(1, red);
         view.setItem(4, lapis);
-        view.setItem(5, lamp);
+//        view.setItem(5, lamp);
         view.setItem(6, in_wall);
         view.setItem(7, tardis);
-        view.setItem(8, pb_wall);
+//        view.setItem(8, pb_wall);
         view.setItem(9, in_floor);
     }
 

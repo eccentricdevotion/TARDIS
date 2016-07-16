@@ -81,19 +81,19 @@ public class TARDISRecipeMenuListener extends TARDISMenuListener implements List
                                 }
                             }, 2L);
                             break;
-                        case 19:
-                            // chameleon
-                            close(p);
-                            plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
-                                @Override
-                                public void run() {
-                                    ItemStack[] chameleon = new TARDISChameleonInventory(plugin).getMenu();
-                                    Inventory gui = plugin.getServer().createInventory(p, 54, "§4Police Box Wall Menu");
-                                    gui.setContents(chameleon);
-                                    p.openInventory(gui);
-                                }
-                            }, 2L);
-                            break;
+//                        case 19:
+//                            // chameleon
+//                            close(p);
+//                            plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
+//                                @Override
+//                                public void run() {
+//                                    ItemStack[] chameleon = new TARDISChameleonInventory(plugin).getMenu();
+//                                    Inventory gui = plugin.getServer().createInventory(p, 54, "§4Police Box Wall Menu");
+//                                    gui.setContents(chameleon);
+//                                    p.openInventory(gui);
+//                                }
+//                            }, 2L);
+//                            break;
                         case 26:
                             // close
                             close(p);
