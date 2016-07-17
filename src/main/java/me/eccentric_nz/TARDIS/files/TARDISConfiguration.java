@@ -101,6 +101,7 @@ public class TARDISConfiguration {
         boolOptions.put("arch.clear_inv_on_death", false);
         boolOptions.put("arch.enabled", true);
         boolOptions.put("arch.switch_inventory", true);
+        boolOptions.put("archive.enabled", true);
         boolOptions.put("circuits.damage", false);
         boolOptions.put("conversions.biome_update", false);
         boolOptions.put("conversions.companion_clearing_done", false);
@@ -262,6 +263,7 @@ public class TARDISConfiguration {
         artronIntOptions.put("upgrades.war", 5000);
         artronIntOptions.put("upgrades.custom", 10000);
         intOptions.put("arch.min_time", 20);
+        intOptions.put("archive.limit", 3);
         intOptions.put("circuits.uses.ars", 20);
         intOptions.put("circuits.uses.chameleon", 25);
         intOptions.put("circuits.uses.input", 50);

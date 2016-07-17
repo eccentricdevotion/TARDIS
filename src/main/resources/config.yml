@@ -172,6 +172,9 @@ junk:
 abandon:
     enabled: true
     reduce_count: true
+archive:
+    enabled: true
+    limit: 3
 # don't touch
 conversions:
     biome_update: true

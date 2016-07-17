@@ -172,6 +172,10 @@ abandon:
     enabled: true
     reduce_count: true
 # don't touch
+archive:
+    enabled: true
+    limit: 3
+# don't touch
 conversions:
     biome_update: false
     conversion_done: true

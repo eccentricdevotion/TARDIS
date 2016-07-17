@@ -87,7 +87,7 @@ public class TARDISSchematicCommand implements CommandExecutor {
                 int maxy = (sy < ey) ? ey : sy;
                 int minz = (sz < ez) ? sz : ez;
                 int maxz = (sz < ez) ? ez : sz;
-                // create a JSON objet for relative position
+                // create a JSON object for relative position
                 JSONObject relative = new JSONObject();
                 int px = player.getLocation().getBlockX() - minx;
                 int py = player.getLocation().getBlockY() - miny;
@@ -95,7 +95,7 @@ public class TARDISSchematicCommand implements CommandExecutor {
                 relative.put("x", px);
                 relative.put("y", py);
                 relative.put("z", pz);
-                // create a JSON objet for dimensions
+                // create a JSON object for dimensions
                 JSONObject dimensions = new JSONObject();
                 int width = (maxx - minx) + 1;
                 int height = (maxy - miny) + 1;
