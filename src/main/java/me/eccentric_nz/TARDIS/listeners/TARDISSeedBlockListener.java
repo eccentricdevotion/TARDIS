@@ -17,7 +17,6 @@
 package me.eccentric_nz.TARDIS.listeners;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import me.eccentric_nz.TARDIS.TARDIS;
@@ -54,12 +53,12 @@ public class TARDISSeedBlockListener implements Listener {
     private final TARDIS plugin;
     private final TARDISWallsLookup twl;
     private final HashMap<Location, TARDISBuildData> trackTARDISSeed = new HashMap<Location, TARDISBuildData>();
-    private final List<Integer> hasColour = new ArrayList<Integer>();
+//    private final List<Integer> hasColour = new ArrayList<Integer>();
 
     public TARDISSeedBlockListener(TARDIS plugin) {
         this.plugin = plugin;
         twl = new TARDISWallsLookup(plugin);
-        hasColour.addAll(Arrays.asList(5, 17, 35, 95, 159, 162));
+//        hasColour.addAll(Arrays.asList(5, 17, 35, 95, 159, 162));
     }
 
     /**
@@ -84,17 +83,17 @@ public class TARDISSeedBlockListener implements Listener {
             SCHEMATIC schm = CONSOLES.getBY_NAMES().get(lore.get(0));
             Pair wall_data = getValuesFromWallString(lore.get(1));
             Pair floor_data = getValuesFromWallString(lore.get(2));
-            TwoValues cham_data = getValuesFromString(lore.get(3));
-            TwoValues lamp_data = getValuesFromString(lore.get(4));
+//            TwoValues cham_data = getValuesFromString(lore.get(3));
+//            TwoValues lamp_data = getValuesFromString(lore.get(4));
             TARDISBuildData seed = new TARDISBuildData();
             seed.setSchematic(schm);
             seed.setWallType(wall_data.getType());
             seed.setWallData(wall_data.getData());
             seed.setFloorType(floor_data.getType());
             seed.setFloorData(floor_data.getData());
-            seed.setBox_id(cham_data.getId());
-            seed.setBox_data(cham_data.getData());
-            seed.setLamp(lamp_data.getId());
+//            seed.setBox_id(cham_data.getId());
+//            seed.setBox_data(cham_data.getData());
+//            seed.setLamp(lamp_data.getId());
             Location l = event.getBlockPlaced().getLocation();
             trackTARDISSeed.put(l, seed);
             TARDISMessage.send(player, "SEED_PLACE");

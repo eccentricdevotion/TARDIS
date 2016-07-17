@@ -231,7 +231,6 @@ public class TARDISUtils {
             }
             // refresh the chunk
             Chunk chunk = w.getChunkAt(l);
-            //w.refreshChunk(chunk.getX(), chunk.getZ());
             plugin.getTardisHelper().refreshChunk(chunk);
         }
         return run;
