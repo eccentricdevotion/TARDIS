@@ -104,6 +104,9 @@ public class TARDISCommands implements CommandExecutor {
                 if (args[0].equalsIgnoreCase("arch_time")) {
                     return new TARDISArchCommand(plugin).getTime(player);
                 }
+                if (args[0].equalsIgnoreCase("archive")) {
+                    return new TARDISArchiveCommand(plugin).zip(player, args);
+                }
                 if (args[0].equalsIgnoreCase("arsremove")) {
                     return new TARDISARSRemoveCommand(plugin).resetARS(player);
                 }

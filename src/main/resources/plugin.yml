@@ -18,6 +18,9 @@ permissions:
   tardis.adandon:
     description: Allow players to adandon their TARDIS.
     default: op
+  tardis.archive:
+    description: Allow players to archive their TARDIS console.
+    default: op
   tardis.skeletonkey:
     description: Allow players to enter any TARDIS.
     default: false
@@ -428,6 +431,10 @@ commands:
       description: Abandon your current TARDIS.
       usage: /<command> abandon
       permission: tardis.abandon
+    archive:
+      description: Archive your current TARDIS console.
+      usage: /<command> archive [scan|add|remove|update|description] [name]
+      permission: tardis.archive
     arch_time:
       description: Display the time that a player must remain Chameleon arched.
       usage: /<command> arch_time
