@@ -20,8 +20,6 @@
    * scan for prohibited blocks
    * only scan in the default sizes - 16x16x16, 32x32x16, 32x32x32 - find a way to minimize height
    * look up control locations, substitute control blocks eg random repeaters -> `HUGE_MUSHROOM:15`, handbrake -> `CAKE_BLOCK`, beacon block off -> `BEDROCK` etc
-6. Add a way to access/use save-disks when in Junk Mode on `hard` difficulty
-
 
 ##Future version `?+`
 * TARDIS Junk Mode - `/tprefs junk [wall|floor] [block_type]`?
