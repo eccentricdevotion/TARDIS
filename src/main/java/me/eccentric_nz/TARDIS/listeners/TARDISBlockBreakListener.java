@@ -134,22 +134,24 @@ public class TARDISBlockBreakListener implements Listener {
                     int y = plugin.getConfig().getInt("rechargers." + r + ".y");
                     int z = plugin.getConfig().getInt("rechargers." + r + ".z");
                     String l = w.getName() + "," + x + "," + y + "," + z;
-                    if (l.equals(b) && plugin.getConfig().getString("rechargers." + r + ".uuid").equals(player.getUniqueId().toString())) {
-                        plugin.getConfig().set("rechargers." + r, null);
-                        TARDISMessage.send(player, "RIFT_REMOVED");
-                        event.setCancelled(true);
-                        // drop Rift Manipulator
-                        event.getBlock().setType(Material.AIR);
-                        ItemStack rm = new ItemStack(Material.BEACON, 1);
-                        ItemMeta im = rm.getItemMeta();
-                        im.setDisplayName("Rift Manipulator");
-                        rm.setItemMeta(im);
-                        w.dropItem(loc, rm);
-                        break;
-                    } else {
-                        event.setCancelled(true);
-                        TARDISMessage.send(player, "RIFT_PLAYER");
-                        break;
+                    if (l.equals(b)) {
+                        if (plugin.getConfig().getString("rechargers." + r + ".uuid").equals(player.getUniqueId().toString())) {
+                            plugin.getConfig().set("rechargers." + r, null);
+                            TARDISMessage.send(player, "RIFT_REMOVED");
+                            event.setCancelled(true);
+                            // drop Rift Manipulator
+                            event.getBlock().setType(Material.AIR);
+                            ItemStack rm = new ItemStack(Material.BEACON, 1);
+                            ItemMeta im = rm.getItemMeta();
+                            im.setDisplayName("Rift Manipulator");
+                            rm.setItemMeta(im);
+                            w.dropItem(loc, rm);
+                            break;
+                        } else {
+                            event.setCancelled(true);
+                            TARDISMessage.send(player, "RIFT_PLAYER");
+                            break;
+                        }
                     }
                 }
             }
