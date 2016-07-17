@@ -200,6 +200,12 @@ public class TARDISChameleonListener extends TARDISMenuListener implements Liste
                                         }
                                     }, 2L);
                                     break;
+                                case 20:
+                                case 21:
+                                case 22:
+                                case 23:
+                                case 24:
+                                    break;
                                 default:
                                     close(player);
                             }
