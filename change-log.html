@@ -32,6 +32,26 @@
     <section>
         <h1>Change log</h1>
         <h2>What&rsquo;s been changed?</h2>
+        <h3>TARDIS v3.6.1</h3>
+        <h4>Additions</h4>
+        <ul>
+            <li>Added a config option to <em>planets.yml</em> to set whether the world is an empty &ldquo;void&rdquo; world &mdash; <code>void: [true|false]</code> &mdash; if not set, will default to <code>false</code>. This will speed up random location finding considerably.</li>
+        </ul>
+        <h4>Changes</h4>
+        <ul>
+            <li>Falling in to the Time Vortex in TARDIS worlds now uses the <code>preferences.vortex_fall</code> config option regardless of whether the player was kicked.</li>
+            <li>The plugin now allows the <code>/tardis make_her_blue</code> command to turn off Junk Mode</li>
+            <li>When claiming an abandoned TARDIS the WorldGuard region is updated with the the claiming player's UUID</li>
+            <li>When the plugin difficulty is set to hard, you can now use Save Storage Disks to set the Junk Mode destination</li>
+        </ul>
+        <h4>Bug fixes</h4>
+        <ul>
+            <li>Fixed blocks required for IGLOO room when <code>growth.rooms_require_blocks</code> is <code>true</code></li>
+            <li>Made sure Junk Mode is ON before allowing it to be OFF (and vice versa)</li>
+            <li>Fixed a NullPointerException related to the perception filter  when disabling the plugin</li>
+            <li>Added more world checks to cave finder top prevent server crashes when running the <code>/tardistravel cave</code> command in empty &ldquo;void&rdquo; worlds</li>
+            <li>Fixed the ENDER console entry in TARDIS Information System</li>
+        </ul>
         <h3>TARDIS v3.6</h3>
         <h4>Additions</h4>
         <ul>
@@ -64,7 +84,7 @@
             </li>
             <li>Added <code>hum</code> player preference and GUI to set the TARDIS interior hum sound effect preference &mdash; use the Sonic Preferences GUI or the <code>/tardisprefs hum [sound name]</code> command</li>
             <li>Added Acid Batteries, the Rift Circuit, <a href="rift-manipulator.html">Rift Manipulator</a> and the Rust Plague Sword
-<ul>
+                <ul>
                     <li><code>/tardisrecipe [acid-battery|rift-circuit|rift-manipulator|rust]</code></li>
                     <li>Acid Batteries and the Rift Circuit are ingredients in crafting the Rift Manipulator</li>
                     <li>The Rift Manipulator allows players to create personal TARDIS rechargers &mdash; permission <code>tardis.rift</code></li>
