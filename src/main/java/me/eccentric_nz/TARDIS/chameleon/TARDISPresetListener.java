@@ -73,7 +73,7 @@ public class TARDISPresetListener extends TARDISMenuListener implements Listener
                         where.put("tardis_id", id);
                         ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false, 0);
                         if (rs.resultSet()) {
-                            Tardis tardis = rs.getTardis();
+                            final Tardis tardis = rs.getTardis();
                             String last_line = TARDISStaticUtils.getLastLine(tardis.getChameleon());
                             String preset = tardis.getPreset().toString();
                             HashMap<String, Object> set = new HashMap<String, Object>();
@@ -465,8 +465,22 @@ public class TARDISPresetListener extends TARDISMenuListener implements Listener
                                     }
                                     TARDISMessage.send(player, "CHAM_SET", ChatColor.AQUA + "Server's Custom");
                                     break;
+                                case 52:
+                                    // return to Chameleon Circuit GUI
+                                    close(player);
+                                    plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
+                                        @Override
+                                        public void run() {
+                                            ItemStack[] chameleon = new TARDISChameleonInventory(plugin, tardis.getAdaption(), tardis.getPreset()).getMenu();
+                                            Inventory gui = plugin.getServer().createInventory(player, 27, "§4Chameleon Circuit");
+                                            gui.setContents(chameleon);
+                                            player.openInventory(gui);
+                                        }
+                                    }, 2L);
+                                    break;
                                 default:
                                     close(player);
+                                    break;
                             }
                             if (set.size() > 0) {
                                 set.put("chameleon_demat", preset);

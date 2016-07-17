@@ -289,11 +289,17 @@ public class TARDISPresetInventory {
         ItemMeta pre = custom.getItemMeta();
         pre.setDisplayName("Custom");
         custom.setItemMeta(pre);
+        // back
+        ItemStack back = new ItemStack(Material.BOWL, 1);
+        ItemMeta but = back.getItemMeta();
+        but.setDisplayName("Back");
+        back.setItemMeta(but);
         // Cancel / close
         ItemStack close = new ItemStack(Material.BOWL, 1);
         ItemMeta can = close.getItemMeta();
         can.setDisplayName(plugin.getLanguage().getString("BUTTON_CLOSE"));
         close.setItemMeta(can);
+
 
         ItemStack[] is = {
             box, jungle, nether, def, swamp, tent, village, yellow, tel,
@@ -301,7 +307,7 @@ public class TARDISPresetInventory {
             mine, cre, pea, lamp, candy, toi, rob, tor, pine,
             pun, por, cake, grave, topsy, mush, fen, gaz, app,
             lig, lib, sno, jail, pan, dou, pris, cho, and,
-            dio, gra, null, custom, null, null, null, null, close
+            dio, gra, null, custom, null, null, null, back, close
         };
         return is;
     }
