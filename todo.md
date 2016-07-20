@@ -13,13 +13,11 @@
    * Initiate a desktop theme change - _this is problematic as the desktop could only be changed to one that is the same size (as there is no player interaction to decide if rooms should be jettisoned)_
 4. Update console schematics to remove MONSTER_EGG blocks, except for the ARS one (data = 2), as it is needed for initially setting up the ARS data and updating it when using the Desktop Theme
 5. [Player console archiving](http://dev.bukkit.org/bukkit-plugins/tardis/tickets/1201-player-console-archive-feature/)
-   * `/tardis archive [scan|add|remove|description?] [name]` command
+   * `/tardis archive [scan|add|remove|update|description?] [name]` command
    * `tardis.archive` permission
-   * _archive.yml?_ - `enabled`, `limit`, `block-limit`, `prohibited blocks`
-   * own database? `CREATE TABLE IF NOT EXISTS " + prefix + "archive (archive_id INTEGER PRIMARY KEY NOT NULL, uuid TEXT, name TEXT, small INTEGER, tall INTEGER, beacon INTEGER, lanterns INTEGER, data TEXT)`
-   * scan for prohibited blocks
-   * only scan in the default sizes - 16x16x16, 32x32x16, 32x32x32 - find a way to minimize height
-   * look up control locations, substitute control blocks eg random repeaters -> `HUGE_MUSHROOM:15`, handbrake -> `CAKE_BLOCK`, beacon block off -> `BEDROCK` etc
+   * _archive.yml?_ - `enabled`, `limit`
+   * own database? `CREATE TABLE IF NOT EXISTS " + prefix + "archive (archive_id INTEGER PRIMARY KEY NOT NULL, uuid TEXT, name TEXT, small INTEGER, tall INTEGER, beacon INTEGER, lanterns INTEGER, data TEXT, description TEXT)`
+   * get lamp preference
 
 ##Future version `?+`
 * TARDIS Junk Mode - `/tprefs junk [wall|floor] [block_type]`?
