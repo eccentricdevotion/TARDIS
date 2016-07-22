@@ -56,4 +56,8 @@ public class TARDISMultiverseHelper {
         GameMode gm = mvw.getGameMode();
         return (gm.equals(GameMode.SURVIVAL));
     }
+
+    public World getWorld(String w) {
+        return mvc.getMVWorldManager().getMVWorld(w).getCBWorld();
+    }
 }

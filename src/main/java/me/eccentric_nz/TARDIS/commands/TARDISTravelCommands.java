@@ -757,7 +757,11 @@ public class TARDISTravelCommands implements CommandExecutor {
             }
             w = rsc.getWorld();
         } else {
-            w = plugin.getServer().getWorld(w_str);
+            if (plugin.isMVOnServer()) {
+                w = plugin.getMVHelper().getWorld(w_str);
+            } else {
+                w = plugin.getServer().getWorld(w_str);
+            }
         }
         if (w == null) {
             TARDISMessage.send(player, "WORLD_NOT_FOUND");

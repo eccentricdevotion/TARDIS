@@ -227,7 +227,11 @@ public class TARDII implements TardisAPI {
         for (World w : Bukkit.getWorlds()) {
             String name = w.getName();
             if (TARDIS.plugin.getConfig().getBoolean("worlds." + name)) {
-                worlds.add(name);
+                if (TARDIS.plugin.isMVOnServer()) {
+                    worlds.add(TARDIS.plugin.getMVHelper().getAlias(name));
+                } else {
+                    worlds.add(name);
+                }
             }
         }
         return worlds;
@@ -239,7 +243,11 @@ public class TARDII implements TardisAPI {
         for (World w : Bukkit.getWorlds()) {
             String name = w.getName();
             if (TARDIS.plugin.getConfig().getBoolean("worlds." + name) && !w.getEnvironment().equals(Environment.NETHER) && !w.getEnvironment().equals(Environment.THE_END)) {
-                worlds.add(name);
+                if (TARDIS.plugin.isMVOnServer()) {
+                    worlds.add(TARDIS.plugin.getMVHelper().getAlias(name));
+                } else {
+                    worlds.add(name);
+                }
             }
         }
         return worlds;
