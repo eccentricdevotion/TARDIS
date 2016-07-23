@@ -43,6 +43,10 @@ upgrades:
     twelfth: 7500
     war: 5000
     custom: 10000
+    archive:
+        small: 5000
+        medium: 7500
+        tall: 10000
 just_wall_floor: 50
 # artron furnace
 artron_furnace:

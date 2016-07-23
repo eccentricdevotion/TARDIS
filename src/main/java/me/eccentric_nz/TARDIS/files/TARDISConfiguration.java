@@ -262,6 +262,10 @@ public class TARDISConfiguration {
         artronIntOptions.put("upgrades.twelfth", 7500);
         artronIntOptions.put("upgrades.war", 5000);
         artronIntOptions.put("upgrades.custom", 10000);
+        artronIntOptions.put("upgrades.archive.small", 5000);
+        artronIntOptions.put("upgrades.archive.medium", 7500);
+        artronIntOptions.put("upgrades.archive.tall", 10000);
+
         intOptions.put("arch.min_time", 20);
         intOptions.put("archive.limit", 3);
         intOptions.put("circuits.uses.ars", 20);
