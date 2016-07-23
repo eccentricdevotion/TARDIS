@@ -67,7 +67,12 @@ public class TARDISLister {
                     if (a == 1) {
                         TARDISMessage.send(p, "CHARGERS");
                     }
-                    String w = TARDIS.plugin.getConfig().getString("rechargers." + s + ".world");
+                    String w;
+                    if (plugin.isMVOnServer()) {
+                        w = plugin.getMVHelper().getAlias(TARDIS.plugin.getConfig().getString("rechargers." + s + ".world"));
+                    } else {
+                        w = TARDIS.plugin.getConfig().getString("rechargers." + s + ".world");
+                    }
                     int x = TARDIS.plugin.getConfig().getInt("rechargers." + s + ".x");
                     int y = TARDIS.plugin.getConfig().getInt("rechargers." + s + ".y");
                     int z = TARDIS.plugin.getConfig().getInt("rechargers." + s + ".z");
