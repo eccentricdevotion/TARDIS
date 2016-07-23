@@ -52,10 +52,6 @@ public class TARDISSQLiteDatabase {
         try {
             statement = connection.createStatement();
 
-            // Table structure for table 'ars'
-            String queryARS = "CREATE TABLE IF NOT EXISTS " + prefix + "ars (ars_id INTEGER PRIMARY KEY NOT NULL, tardis_id INTEGER, uuid TEXT DEFAULT '', player TEXT COLLATE NOCASE DEFAULT '', ars_x_east INTEGER DEFAULT 2, ars_z_south INTEGER DEFAULT 2, ars_y_layer INTEGER DEFAULT 1, json TEXT DEFAULT '')";
-            statement.executeUpdate(queryARS);
-
             // Table structure for table 'achievements'
             String queryAchievements = "CREATE TABLE IF NOT EXISTS " + prefix + "achievements (a_id INTEGER PRIMARY KEY NOT NULL, uuid TEXT DEFAULT '', player TEXT COLLATE NOCASE DEFAULT '', name TEXT DEFAULT '', amount TEXT DEFAULT '', completed INTEGER DEFAULT 0)";
             statement.executeUpdate(queryAchievements);
@@ -64,9 +60,17 @@ public class TARDISSQLiteDatabase {
             String queryArched = "CREATE TABLE IF NOT EXISTS " + prefix + "arched (uuid TEXT PRIMARY KEY NOT NULL, arch_name TEXT DEFAULT '', arch_time INTEGER DEFAULT 0)";
             statement.executeUpdate(queryArched);
 
+            // Table structure for table 'archive'
+            String queryArchive = "CREATE TABLE IF NOT EXISTS " + prefix + "archive (archive_id INTEGER PRIMARY KEY NOT NULL, uuid TEXT, name TEXT, small INTEGER, tall INTEGER, beacon INTEGER, lanterns INTEGER, data TEXT, description TEXT default '')";
+            statement.executeUpdate(queryArchive);
+
             // Table structure for table 'areas'
             String queryPresets = "CREATE TABLE IF NOT EXISTS " + prefix + "areas (area_id INTEGER PRIMARY KEY NOT NULL, area_name TEXT COLLATE NOCASE DEFAULT '', world TEXT COLLATE NOCASE DEFAULT '', minx INTEGER, minz INTEGER, maxx INTEGER, maxz INTEGER, y INTEGER, parking_distance INTEGER DEFAULT 2)";
             statement.executeUpdate(queryPresets);
+
+            // Table structure for table 'ars'
+            String queryARS = "CREATE TABLE IF NOT EXISTS " + prefix + "ars (ars_id INTEGER PRIMARY KEY NOT NULL, tardis_id INTEGER, uuid TEXT DEFAULT '', player TEXT COLLATE NOCASE DEFAULT '', ars_x_east INTEGER DEFAULT 2, ars_z_south INTEGER DEFAULT 2, ars_y_layer INTEGER DEFAULT 1, json TEXT DEFAULT '')";
+            statement.executeUpdate(queryARS);
 
             // Table structure for table 'back'
             String queryBack = "CREATE TABLE IF NOT EXISTS " + prefix + "back (back_id INTEGER PRIMARY KEY NOT NULL, tardis_id INTEGER, world TEXT COLLATE NOCASE DEFAULT '', x INTEGER, y INTEGER, z INTEGER, direction TEXT DEFAULT '', submarine INTEGER DEFAULT 0)";

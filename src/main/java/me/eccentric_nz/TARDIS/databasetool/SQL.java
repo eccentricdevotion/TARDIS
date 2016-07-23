@@ -29,6 +29,7 @@ public class SQL {
 
         achievements,
         arched,
+        archive,
         areas,
         ars,
         back,
@@ -65,6 +66,7 @@ public class SQL {
     public static final List<String> CREATES = Arrays.asList(
             "CREATE TABLE IF NOT EXISTS %sachievements (a_id int(11) NOT NULL AUTO_INCREMENT, uuid varchar(48) DEFAULT '', player varchar(32) DEFAULT '', `name` varchar(32) DEFAULT '', amount text, completed int(1) DEFAULT '0', PRIMARY KEY (a_id)) DEFAULT CHARSET=utf8 COLLATE utf8_general_ci;",
             "CREATE TABLE IF NOT EXISTS %sarched (uuid varchar(48) DEFAULT '', arch_name varchar(16) DEFAULT '', arch_time bigint(20) DEFAULT '0', PRIMARY KEY (uuid)) DEFAULT CHARSET=utf8 COLLATE utf8_general_ci;",
+            "CREATE TABLE IF NOT EXISTS %sarchive (archive_id int(11) NOT NULL AUTO_INCREMENT, uuid varchar(48) DEFAULT '', name varchar(32) DEFAULT '', small int(1) DEFAULT '0', tall int(1) DEFAULT '0', beacon int(1) DEFAULT '0', lanterns int(1) DEFAULT '0', date text, description varchar(256), PRIMARY KEY (archive_id)) DEFAULT CHARSET=utf8 COLLATE utf8_general_ci;",
             "CREATE TABLE IF NOT EXISTS %sareas (area_id int(11) NOT NULL AUTO_INCREMENT, area_name varchar(64) DEFAULT '', world varchar(64) DEFAULT '', minx int(7) DEFAULT '0', minz int(7) DEFAULT '0', maxx int(7) DEFAULT '0', maxz int(7) DEFAULT '0', y int(3) DEFAULT '0', parking_distance int(2) DEFAULT '2', PRIMARY KEY (area_id)) DEFAULT CHARSET=utf8 COLLATE utf8_general_ci;",
             "CREATE TABLE IF NOT EXISTS %sars (ars_id int(11) NOT NULL AUTO_INCREMENT, tardis_id int(11) DEFAULT '0', uuid varchar(48) DEFAULT '', player varchar(32) DEFAULT '', ars_x_east int(2) DEFAULT '2', ars_z_south int(2) DEFAULT '2', ars_y_layer int(1) DEFAULT '1', json text, PRIMARY KEY (ars_id)) DEFAULT CHARSET=utf8 COLLATE utf8_general_ci;",
             "CREATE TABLE IF NOT EXISTS %sback (back_id int(11) NOT NULL AUTO_INCREMENT, tardis_id int(11) DEFAULT '0', world varchar(64) DEFAULT '', x int(7) DEFAULT '0', y int(3) DEFAULT '0', z int(7) DEFAULT '0', direction varchar(5) DEFAULT '', submarine int(1) DEFAULT '0', PRIMARY KEY (back_id)) DEFAULT CHARSET=utf8 COLLATE utf8_general_ci;",
@@ -101,6 +103,7 @@ public class SQL {
     public static final List<String> INSERTS = Arrays.asList(
             "INSERT INTO `%sachievements` (`a_id`, `uuid`, `player`, `name`, `amount`, `completed`) VALUES",
             "INSERT INTO `%sarched` (`uuid`, `arch_name`, `arch_time`) VALUES",
+            "INSERT INTO `%sarchive` (`archive_id`, `uuid`, `name`, `small`, `tall`, `beacon`, `lanterns`, `data`, `description`) VALUES",
             "INSERT INTO `%sareas` (`area_id`, `area_name`, `world`, `minx`, `minz`, `maxx`, `maxz`, `y`, `parking_distance`) VALUES",
             "INSERT INTO `%sars` (`ars_id`, `tardis_id`, `uuid`, `player`, `ars_x_east`, `ars_z_south`, `ars_y_layer`, `json`) VALUES",
             "INSERT INTO `%sback` (`back_id`, `tardis_id`, `world`, `x`, `y`, `z`, `direction`, `submarine`) VALUES",
@@ -137,6 +140,7 @@ public class SQL {
     public static final List<String> VALUES = Arrays.asList(
             "(%s, '%s', '%s', '%s', '%s', %s)",
             "('%s', '%s', %s)",
+            "(%s, '%s', '%s', %s, %s, %s, %s, '%s', '%s')",
             "(%s, '%s', '%s', %s, %s, %s, %s, %s, %s)",
             "(%s, %s, '%s', '%s', %s, %s, %s, '%s')",
             "(%s, %s, '%s', %s, %s, %s, '%s', %s)",

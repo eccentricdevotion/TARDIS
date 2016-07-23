@@ -137,6 +137,10 @@ public class Main {
                                     str = String.format(SQL.VALUES.get(i), rs.getString("uuid"), rs.getString("arch_name"), rs.getLong("arch_time")) + end;
                                     bw.write(str);
                                     break;
+                                case archive:
+                                    str = String.format(SQL.VALUES.get(i), rs.getInt("archive_id"), rs.getString("uuid"), rs.getString("name"), rs.getInt("small"), rs.getInt("tall"), rs.getInt("beacon"), rs.getInt("lanterns"), rs.getString("data"), rs.getString("description")) + end;
+                                    bw.write(str);
+                                    break;
                                 case areas:
                                     str = String.format(SQL.VALUES.get(i), rs.getInt("area_id"), rs.getString("area_name"), rs.getString("world"), rs.getInt("minx"), rs.getInt("minz"), rs.getInt("maxx"), rs.getInt("maxz"), rs.getInt("y"), rs.getInt("parking_distance")) + end;
                                     bw.write(str);
