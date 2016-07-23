@@ -13,11 +13,8 @@
    * Initiate a desktop theme change - _this is problematic as the desktop could only be changed to one that is the same size (as there is no player interaction to decide if rooms should be jettisoned)_
 4. Update console schematics to remove MONSTER_EGG blocks, except for the ARS one (data = 2), as it is needed for initially setting up the ARS data and updating it when using the Desktop Theme
 5. [Player console archiving](http://dev.bukkit.org/bukkit-plugins/tardis/tickets/1201-player-console-archive-feature/)
-   * `/tardis archive [scan|add|remove|update|description?] [name]` command
-   * `tardis.archive` permission
-   * _archive.yml?_ - `enabled`, `limit`
-   * own database? `CREATE TABLE IF NOT EXISTS " + prefix + "archive (archive_id INTEGER PRIMARY KEY NOT NULL, uuid TEXT, name TEXT, small INTEGER, tall INTEGER, beacon INTEGER, lanterns INTEGER, data TEXT, description TEXT)`
    * get lamp preference
+   * add archived consoles to desktop theme GUI
 
 ##Future version `?+`
 * TARDIS Junk Mode - `/tprefs junk [wall|floor] [block_type]`?
