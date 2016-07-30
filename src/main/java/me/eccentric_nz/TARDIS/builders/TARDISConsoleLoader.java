@@ -21,6 +21,7 @@ import java.io.IOException;
 import me.eccentric_nz.TARDIS.JSON.JSONObject;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.enumeration.CONSOLES;
+import me.eccentric_nz.TARDIS.enumeration.ConsoleSize;
 import me.eccentric_nz.TARDIS.enumeration.SCHEMATIC;
 import me.eccentric_nz.TARDIS.schematic.TARDISSchematicGZip;
 import org.bukkit.Material;
@@ -35,8 +36,6 @@ public class TARDISConsoleLoader {
     String seed;
     String permission;
     String description;
-    boolean small;
-    boolean tall;
     boolean beacon;
     boolean lanterns;
     boolean save = false;
@@ -48,25 +47,25 @@ public class TARDISConsoleLoader {
 //    new SCHEMATIC(String seed, String permission, String description, boolean small, boolean tall, boolean beacon, boolean lanterns, boolean custom)
     public void addSchematics() {
         // DELUXE, ELEVENTH, TWELFTH, ARS & REDSTONE schematics designed by Lord_Rahl and killeratnight at mcnovus.net
-        CONSOLES.getBY_NAMES().put("ARS", new SCHEMATIC("QUARTZ_BLOCK", "ars", "ARS Console", true, false, true, false, false));
-        CONSOLES.getBY_NAMES().put("BIGGER", new SCHEMATIC("GOLD_BLOCK", "bigger", "A Bigger Console", false, false, true, false, false));
-        CONSOLES.getBY_NAMES().put("BUDGET", new SCHEMATIC("IRON_BLOCK", "budget", "Default Console", true, false, true, false, false));
+        CONSOLES.getBY_NAMES().put("ARS", new SCHEMATIC("QUARTZ_BLOCK", "ars", "ARS Console", ConsoleSize.SMALL, true, false, false));
+        CONSOLES.getBY_NAMES().put("BIGGER", new SCHEMATIC("GOLD_BLOCK", "bigger", "A Bigger Console", ConsoleSize.MEDIUM, true, false, false));
+        CONSOLES.getBY_NAMES().put("BUDGET", new SCHEMATIC("IRON_BLOCK", "budget", "Default Console", ConsoleSize.SMALL, true, false, false));
         // CORAL schematic designed by vistaero
-        CONSOLES.getBY_NAMES().put("CORAL", new SCHEMATIC("NETHER_WART_BLOCK", "coral", "10th Doctor's Console", false, true, true, false, false));
-        CONSOLES.getBY_NAMES().put("DELUXE", new SCHEMATIC("DIAMOND_BLOCK", "deluxe", "Supersized Deluxe Console", false, true, true, false, false));
-        CONSOLES.getBY_NAMES().put("ELEVENTH", new SCHEMATIC("EMERALD_BLOCK", "eleventh", "11th Doctor's Console", false, true, true, true, false));
+        CONSOLES.getBY_NAMES().put("CORAL", new SCHEMATIC("NETHER_WART_BLOCK", "coral", "10th Doctor's Console", ConsoleSize.TALL, true, false, false));
+        CONSOLES.getBY_NAMES().put("DELUXE", new SCHEMATIC("DIAMOND_BLOCK", "deluxe", "Supersized Deluxe Console", ConsoleSize.TALL, true, false, false));
+        CONSOLES.getBY_NAMES().put("ELEVENTH", new SCHEMATIC("EMERALD_BLOCK", "eleventh", "11th Doctor's Console", ConsoleSize.TALL, true, true, false));
         // ENDER schematic designed by ToppanaFIN (player at thatsnotacreeper.com)
-        CONSOLES.getBY_NAMES().put("ENDER", new SCHEMATIC("PURPUR_BLOCK", "ender", "Ender Console", true, false, true, true, false));
-        CONSOLES.getBY_NAMES().put("PLANK", new SCHEMATIC("BOOKSHELF", "plank", "Wood Console", true, false, false, false, false));
-        CONSOLES.getBY_NAMES().put("REDSTONE", new SCHEMATIC("REDSTONE_BLOCK", "redstone", "Redstone Console", false, false, true, false, false));
-        CONSOLES.getBY_NAMES().put("STEAMPUNK", new SCHEMATIC("COAL_BLOCK", "steampunk", "Steampunk Console", true, false, true, false, false));
-        CONSOLES.getBY_NAMES().put("TOM", new SCHEMATIC("LAPIS_BLOCK", "tom", "4th Doctor's Console", true, false, false, false, false));
-        CONSOLES.getBY_NAMES().put("TWELFTH", new SCHEMATIC("PRISMARINE", "twelfth", "12th Doctor's Console", false, false, true, true, false));
-        CONSOLES.getBY_NAMES().put("WAR", new SCHEMATIC("STAINED_CLAY", "war", "War Doctor's Console", true, false, true, false, false));
+        CONSOLES.getBY_NAMES().put("ENDER", new SCHEMATIC("PURPUR_BLOCK", "ender", "Ender Console", ConsoleSize.SMALL, true, true, false));
+        CONSOLES.getBY_NAMES().put("PLANK", new SCHEMATIC("BOOKSHELF", "plank", "Wood Console", ConsoleSize.SMALL, false, false, false));
+        CONSOLES.getBY_NAMES().put("REDSTONE", new SCHEMATIC("REDSTONE_BLOCK", "redstone", "Redstone Console", ConsoleSize.MEDIUM, true, false, false));
+        CONSOLES.getBY_NAMES().put("STEAMPUNK", new SCHEMATIC("COAL_BLOCK", "steampunk", "Steampunk Console", ConsoleSize.SMALL, true, false, false));
+        CONSOLES.getBY_NAMES().put("TOM", new SCHEMATIC("LAPIS_BLOCK", "tom", "4th Doctor's Console", ConsoleSize.SMALL, false, false, false));
+        CONSOLES.getBY_NAMES().put("TWELFTH", new SCHEMATIC("PRISMARINE", "twelfth", "12th Doctor's Console", ConsoleSize.MEDIUM, true, true, false));
+        CONSOLES.getBY_NAMES().put("WAR", new SCHEMATIC("STAINED_CLAY", "war", "War Doctor's Console", ConsoleSize.SMALL, true, false, false));
         // PYRAMID schematic designed by airomis (player at thatsnotacreeper.com)
-        CONSOLES.getBY_NAMES().put("PYRAMID", new SCHEMATIC("SANDSTONE_STAIRS", "pyramid", "A Sandstone Pyramid Console", true, false, true, false, false));
+        CONSOLES.getBY_NAMES().put("PYRAMID", new SCHEMATIC("SANDSTONE_STAIRS", "pyramid", "A Sandstone Pyramid Console", ConsoleSize.SMALL, true, false, false));
         // MASTER's schematic designed by shadowhawk14269 (while playing at pvpcraft.ca)
-        CONSOLES.getBY_NAMES().put("MASTER", new SCHEMATIC("NETHER_BRICK", "master", "The Master's Console", false, true, true, false, false));
+        CONSOLES.getBY_NAMES().put("MASTER", new SCHEMATIC("NETHER_BRICK", "master", "The Master's Console", ConsoleSize.TALL, true, false, false));
         for (final String console : plugin.getCustomConsolesConfig().getKeys(false)) {
             if (plugin.getCustomConsolesConfig().getBoolean(console + ".enabled")) {
                 // check that the .tschm file exists
@@ -99,8 +98,7 @@ public class TARDISConsoleLoader {
                 final int h = dimensions.getInt("height");
                 final int w = dimensions.getInt("width");
                 description = plugin.getCustomConsolesConfig().getString(console + ".description");
-                small = (w == 16);
-                tall = (h > 16);
+                ConsoleSize consoleSize = ConsoleSize.getByWidthAndHeight(w, h);
                 beacon = plugin.getCustomConsolesConfig().getBoolean(console + ".has_beacon");
                 if (plugin.getCustomConsolesConfig().contains(console + ".has_lanterns")) {
                     lanterns = plugin.getCustomConsolesConfig().getBoolean(console + ".has_lanterns");
@@ -110,7 +108,7 @@ public class TARDISConsoleLoader {
                     save = true;
                 }
                 // add the schematic
-                CONSOLES.getBY_NAMES().put(console.toUpperCase(), new SCHEMATIC(seed, permission, description, small, tall, beacon, lanterns, true));
+                CONSOLES.getBY_NAMES().put(console.toUpperCase(), new SCHEMATIC(seed, permission, description, consoleSize, beacon, lanterns, true));
             }
         }
         // reload lookup maps

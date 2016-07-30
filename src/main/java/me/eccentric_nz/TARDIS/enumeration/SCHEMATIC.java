@@ -24,21 +24,19 @@ import org.bukkit.Material;
  */
 public class SCHEMATIC {
 
-    String seed;
-    String permission;
-    String description;
-    boolean small;
-    boolean tall;
-    boolean beacon;
-    boolean lanterns;
-    boolean custom;
+    private final String seed;
+    private final String permission;
+    private final String description;
+    private final ConsoleSize consoleSize;
+    private final boolean beacon;
+    private final boolean lanterns;
+    private final boolean custom;
 
-    public SCHEMATIC(String seed, String permission, String description, boolean small, boolean tall, boolean beacon, boolean lanterns, boolean custom) {
+    public SCHEMATIC(String seed, String permission, String description, ConsoleSize consoleSize, boolean beacon, boolean lanterns, boolean custom) {
         this.seed = seed;
         this.permission = permission;
         this.description = description;
-        this.small = small;
-        this.tall = tall;
+        this.consoleSize = consoleSize;
         this.beacon = beacon;
         this.lanterns = lanterns;
         this.custom = custom;
@@ -91,21 +89,12 @@ public class SCHEMATIC {
     }
 
     /**
-     * Checks if this SCHEMATIC is 1 chunk wide.
+     * Gets the console size for this SCHEMATIC.
      *
-     * @return true if this SCHEMATIC is 1 chunk wide.
+     * @return the ConsoleSize.
      */
-    public boolean isSmall() {
-        return small;
-    }
-
-    /**
-     * Checks if this SCHEMATIC is 2 chunks high.
-     *
-     * @return true if this SCHEMATIC is 2 chunks high.
-     */
-    public boolean isTall() {
-        return tall;
+    public ConsoleSize getConsoleSize() {
+        return consoleSize;
     }
 
     /**

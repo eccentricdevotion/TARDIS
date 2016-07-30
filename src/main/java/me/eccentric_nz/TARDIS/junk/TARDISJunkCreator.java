@@ -23,7 +23,7 @@ import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetPlayerPrefs;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
-import me.eccentric_nz.TARDIS.enumeration.SCHEMATIC;
+import me.eccentric_nz.TARDIS.enumeration.CONSOLES;
 import me.eccentric_nz.TARDIS.rooms.TARDISWalls;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import org.bukkit.Location;
@@ -64,8 +64,6 @@ public class TARDISJunkCreator {
         }
         // get player's target block
         Location l = p.getTargetBlock(plugin.getGeneralKeeper().getTransparent(), 16).getLocation().add(0.0d, 1.0d, 0.0d);
-        // get the schematic
-        SCHEMATIC junk = new SCHEMATIC("AIR", "junk", "Junk TARDIS", true, false, false, false, false);
         // save a tardis record
         String cw = plugin.getConfig().getString("creation.default_world_name");
         final QueryFactory qf = new QueryFactory(plugin);
@@ -128,7 +126,7 @@ public class TARDISJunkCreator {
         bd.setTardisID(lastInsertId);
         bd.setBiome(l.getBlock().getBiome());
         // build the TARDIS in the Vortex
-        plugin.getInteriorBuilder().buildInner(junk, chunkworld, lastInsertId, p, wall_type, wall_data, floor_type, floor_data, true);
+        plugin.getInteriorBuilder().buildInner(CONSOLES.SCHEMATICFor("junk"), chunkworld, lastInsertId, p, wall_type, wall_data, floor_type, floor_data, true);
         // build the TARDIS in the world
         plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
             @Override

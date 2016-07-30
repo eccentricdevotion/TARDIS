@@ -23,7 +23,7 @@ import me.eccentric_nz.TARDIS.database.ResultSetCurrentLocation;
 import me.eccentric_nz.TARDIS.database.ResultSetTardisID;
 import me.eccentric_nz.TARDIS.destroyers.DestroyData;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
-import me.eccentric_nz.TARDIS.enumeration.SCHEMATIC;
+import me.eccentric_nz.TARDIS.enumeration.CONSOLES;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import org.bukkit.Location;
 import org.bukkit.World;
@@ -50,7 +50,6 @@ public class TARDISJunkDelete {
         ResultSetTardisID rs = new ResultSetTardisID(plugin);
         if (rs.fromUUID("00000000-aaaa-bbbb-cccc-000000000000")) {
             final int id = rs.getTardis_id();
-            final SCHEMATIC junk = new SCHEMATIC("AIR", "junk", "Junk TARDIS", true, false, false, false, false);
             // get the current location
             Location bb_loc = null;
             Biome biome = null;
@@ -82,7 +81,7 @@ public class TARDISJunkDelete {
                 plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
                     @Override
                     public void run() {
-                        plugin.getInteriorDestroyer().destroyInner(junk, id, cw, 0, "junk", -999);
+                        plugin.getInteriorDestroyer().destroyInner(CONSOLES.SCHEMATICFor("junk"), id, cw, 0, "junk", -999);
                         TARDISDeleteCommand.cleanDatabase(id);
                         TARDISMessage.send(sender, "JUNK_DELETED");
                     }
