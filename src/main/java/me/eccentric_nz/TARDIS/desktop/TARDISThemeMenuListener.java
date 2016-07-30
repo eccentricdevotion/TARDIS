@@ -52,14 +52,17 @@ public class TARDISThemeMenuListener extends TARDISMenuListener implements Liste
             Player p = (Player) event.getWhoClicked();
             int slot = event.getRawSlot();
             if (slot >= 0 && slot < 27) {
+                event.setCancelled(true);
                 switch (slot) {
+                    case 18:
+                        // archive
+                        archive(p);
+                        break;
                     case 26:
                         // close
-                        event.setCancelled(true);
                         close(p);
                         break;
                     default:
-                        event.setCancelled(true);
                         // get Display name of selected console
                         ItemStack choice = inv.getItem(slot);
                         if (choice != null) {
@@ -119,6 +122,25 @@ public class TARDISThemeMenuListener extends TARDISMenuListener implements Liste
                 Inventory wall = plugin.getServer().createInventory(p, 54, "§4TARDIS Wall Menu");
                 wall.setContents(wall_blocks);
                 p.openInventory(wall);
+            }
+        }, 1L);
+    }
+
+    /**
+     * Closes the inventory and opens the archive consoles menu.
+     *
+     * @param p the player using the GUI
+     */
+    private void archive(final Player p) {
+        plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
+            @Override
+            public void run() {
+                TARDISUpgradeData tud = plugin.getTrackerKeeper().getUpgrades().get(p.getUniqueId());
+                p.closeInventory();
+                ItemStack[] archive = new TARDISArchiveInventory(plugin, p).getArchives();
+                Inventory menu = plugin.getServer().createInventory(p, 27, "§4TARDIS Archive");
+                menu.setContents(archive);
+                p.openInventory(menu);
             }
         }, 1L);
     }

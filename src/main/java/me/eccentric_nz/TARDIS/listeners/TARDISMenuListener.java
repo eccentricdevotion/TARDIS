@@ -80,14 +80,13 @@ public class TARDISMenuListener {
         map.put("§4Chameleon Template", 54);
         map.put("§4Companions", 54);
         map.put("§4Destination Terminal", 54);
-//        map.put("§4Even More Presets", 54);
         map.put("§4Genetic Manipulator", 54);
-//        map.put("§4More Presets", 54);
         map.put("§4Player Prefs Menu", 18);
         map.put("§4Police Box Wall Menu", 90);
         map.put("§4Sonic Activator", 9);
         map.put("§4Sonic Generator", 54);
         map.put("§4Sonic Prefs Menu", 27);
+        map.put("§4TARDIS Archive", 27);
         map.put("§4TARDIS Console", 9);
         map.put("§4TARDIS Control Menu", 54);
         map.put("§4TARDIS Floor Menu", 54);

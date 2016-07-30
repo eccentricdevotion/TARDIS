@@ -89,6 +89,14 @@ public class TARDISThemeInventory {
             stack[i] = is;
             i++;
         }
+        if (player.hasPermission("tardis.archive")) {
+            // archive consoles
+            ItemStack arc = new ItemStack(Material.BOWL, 1);
+            ItemMeta hive_im = arc.getItemMeta();
+            hive_im.setDisplayName("Archive Consoles");
+            arc.setItemMeta(hive_im);
+            stack[18] = arc;
+        }
         // close
         ItemStack close = new ItemStack(Material.BOWL, 1);
         ItemMeta close_im = close.getItemMeta();
