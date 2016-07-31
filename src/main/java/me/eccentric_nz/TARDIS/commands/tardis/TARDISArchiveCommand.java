@@ -14,7 +14,6 @@
      * You should have received a copy of the GNU General Public License
      * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-
 package me.eccentric_nz.TARDIS.commands.tardis;
 
 import java.io.File;
@@ -30,6 +29,7 @@ import me.eccentric_nz.TARDIS.database.ResultSetPlayerPrefs;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import me.eccentric_nz.TARDIS.database.ResultSetTravellers;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
+import me.eccentric_nz.TARDIS.enumeration.ConsoleSize;
 import me.eccentric_nz.TARDIS.enumeration.SCHEMATIC;
 import me.eccentric_nz.TARDIS.schematic.ResultSetArchiveCount;
 import me.eccentric_nz.TARDIS.schematic.ResultSetArchiveName;
@@ -150,8 +150,9 @@ public class TARDISArchiveCommand {
                     }
                     HashMap<String, Object> set = new HashMap<String, Object>();
                     set.put("data", ad.getJSON().toString());
-                    set.put("small", (w < 17) ? 1 : 0);
-                    set.put("tall", (h > 16) ? 1 : 0);
+                    // get console size
+                    ConsoleSize console_size = ConsoleSize.getByWidthAndHeight(w, h);
+                    set.put("console_size", console_size.toString());
                     set.put("beacon", ad.getBeacon());
                     // get lanterns preference
                     int lanterns = 0;
