@@ -33,8 +33,11 @@ import me.eccentric_nz.TARDIS.builders.TARDISTIPSData;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetARS;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
+import me.eccentric_nz.TARDIS.database.data.Archive;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
+import me.eccentric_nz.TARDIS.enumeration.ConsoleSize;
 import me.eccentric_nz.TARDIS.enumeration.SCHEMATIC;
+import me.eccentric_nz.TARDIS.schematic.ResultSetArchive;
 import me.eccentric_nz.TARDIS.schematic.TARDISSchematicGZip;
 import me.eccentric_nz.TARDIS.utility.TARDISBlockSetters;
 import me.eccentric_nz.TARDIS.utility.TARDISLocationGetters;
@@ -95,6 +98,8 @@ public class TARDISFullThemeRunnable extends TARDISThemeRunnable implements Runn
     Chunk chunk;
     Player player;
     Location ender = null;
+    private Archive archive_next;
+    private Archive archive_prev;
 
     public TARDISFullThemeRunnable(TARDIS plugin, UUID uuid, TARDISUpgradeData tud) {
         this.plugin = plugin;
@@ -114,17 +119,51 @@ public class TARDISFullThemeRunnable extends TARDISThemeRunnable implements Runn
     public void run() {
         // initialise
         if (!running) {
+            // get Archive if nescessary
+            if (tud.getSchematic().getPermission().equals("archive")) {
+                HashMap<String, Object> wherean = new HashMap<String, Object>();
+                wherean.put("uuid", uuid.toString());
+                wherean.put("use", 1);
+                ResultSetArchive rs = new ResultSetArchive(plugin, wherean);
+                if (rs.resultSet()) {
+                    archive_next = rs.getArchive();
+                } else {
+                    // abort
+                    Player cp = plugin.getServer().getPlayer(uuid);
+                    TARDISMessage.send(cp, "ARCHIVE_NOT_FOUND");
+                    return;
+                }
+            }
+            if (tud.getPrevious().getPermission().equals("archive")) {
+                HashMap<String, Object> whereap = new HashMap<String, Object>();
+                whereap.put("uuid", uuid.toString());
+                whereap.put("use", 2);
+                ResultSetArchive rs = new ResultSetArchive(plugin, whereap);
+                if (rs.resultSet()) {
+                    archive_prev = rs.getArchive();
+                } else {
+                    // abort
+                    Player cp = plugin.getServer().getPlayer(uuid);
+                    TARDISMessage.send(cp, "ARCHIVE_NOT_FOUND");
+                    return;
+                }
+            }
             set = new HashMap<String, Object>();
             where = new HashMap<String, Object>();
-            String directory = (tud.getSchematic().isCustom()) ? "user_schematics" : "schematics";
-            String path = plugin.getDataFolder() + File.separator + directory + File.separator + tud.getSchematic().getPermission() + ".tschm";
-            File file = new File(path);
-            if (!file.exists()) {
-                plugin.debug(plugin.getPluginName() + "Could not find a schematic with that name!");
-                return;
+            JSONObject obj;
+            if (archive_next == null) {
+                String directory = (tud.getSchematic().isCustom()) ? "user_schematics" : "schematics";
+                String path = plugin.getDataFolder() + File.separator + directory + File.separator + tud.getSchematic().getPermission() + ".tschm";
+                File file = new File(path);
+                if (!file.exists()) {
+                    plugin.debug(plugin.getPluginName() + "Could not find a schematic with that name!");
+                    return;
+                }
+                // get JSON
+                obj = TARDISSchematicGZip.unzip(path);
+            } else {
+                obj = archive_next.getJSON();
             }
-            // get JSON
-            JSONObject obj = TARDISSchematicGZip.unzip(path);
             // get dimensions
             JSONObject dimensions = (JSONObject) obj.get("dimensions");
             h = dimensions.getInt("height");
@@ -350,7 +389,7 @@ public class TARDISFullThemeRunnable extends TARDISThemeRunnable implements Runn
                 if (player.isOnline()) {
                     TARDISMessage.send(player, "ENERGY_RECOVERED", String.format("%d", refund));
                 }
-            } else if (tud.getSchematic().getPermission().equals("coral") && tud.getPrevious().isTall()) {
+            } else if (tud.getSchematic().getPermission().equals("coral") && tud.getPrevious().getConsoleSize().equals(ConsoleSize.TALL)) {
                 // clean up space above coral console
                 int tidy = starty + h;
                 int plus = 32 - h;
@@ -652,7 +691,16 @@ public class TARDISFullThemeRunnable extends TARDISThemeRunnable implements Runn
     }
 
     private boolean compare(SCHEMATIC prev, SCHEMATIC next) {
-        return (!prev.equals(next) && ((!prev.isSmall() && next.isSmall()) || (prev.isTall() && !next.isTall())));
+        // special case for archives
+        if (archive_next != null && archive_prev == null) {
+            return (!prev.getPermission().equals(archive_next.getName()) && ((!prev.getConsoleSize().equals(ConsoleSize.SMALL) && archive_next.getConsoleSize().equals(ConsoleSize.SMALL)) || (prev.getConsoleSize().equals(ConsoleSize.TALL) && !archive_next.getConsoleSize().equals(ConsoleSize.TALL))));
+        } else if (archive_next == null && archive_prev != null) {
+            return (!archive_prev.getName().equals(next.getPermission()) && ((!archive_prev.getConsoleSize().equals(ConsoleSize.SMALL) && next.getConsoleSize().equals(ConsoleSize.SMALL)) || (archive_prev.getConsoleSize().equals(ConsoleSize.TALL) && !next.getConsoleSize().equals(ConsoleSize.TALL))));
+        } else if (archive_next != null && archive_prev != null) {
+            return (!archive_prev.getName().equals(archive_next.getName()) && ((!archive_prev.getConsoleSize().equals(ConsoleSize.SMALL) && archive_next.getConsoleSize().equals(ConsoleSize.SMALL)) || (archive_prev.getConsoleSize().equals(ConsoleSize.TALL) && !archive_next.getConsoleSize().equals(ConsoleSize.TALL))));
+        } else {
+            return (!prev.equals(next) && ((!prev.getConsoleSize().equals(ConsoleSize.SMALL) && next.getConsoleSize().equals(ConsoleSize.SMALL)) || (prev.getConsoleSize().equals(ConsoleSize.TALL) && !next.getConsoleSize().equals(ConsoleSize.TALL))));
+        }
     }
 
     private List<TARDISARSJettison> getJettisons(SCHEMATIC prev, SCHEMATIC next, Chunk chunk) {
@@ -707,7 +755,7 @@ public class TARDISFullThemeRunnable extends TARDISThemeRunnable implements Runn
     private List<Chunk> getChunks(Chunk c, SCHEMATIC s) {
         List<Chunk> chinks = new ArrayList<Chunk>();
         chinks.add(c);
-        if (!s.isSmall()) {
+        if (!s.getConsoleSize().equals(ConsoleSize.SMALL)) {
             chinks.add(c.getWorld().getChunkAt(c.getX() + 1, c.getZ()));
             chinks.add(c.getWorld().getChunkAt(c.getX(), c.getZ() + 1));
             chinks.add(c.getWorld().getChunkAt(c.getX() + 1, c.getZ() + 1));
