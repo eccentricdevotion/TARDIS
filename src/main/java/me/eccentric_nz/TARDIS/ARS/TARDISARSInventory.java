@@ -16,6 +16,8 @@
  */
 package me.eccentric_nz.TARDIS.ARS;
 
+import java.util.Arrays;
+import java.util.List;
 import me.eccentric_nz.TARDIS.TARDIS;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
@@ -143,6 +145,8 @@ public class TARDISARSInventory {
                 ItemStack room = new ItemStack(a.getId(), 1);
                 ItemMeta im = room.getItemMeta();
                 im.setDisplayName(a.getDescriptiveName());
+                List<String> lore = Arrays.asList("Cost: " + plugin.getRoomsConfig().getInt("rooms." + a.getActualName() + ".cost"));
+                im.setLore(lore);
                 room.setItemMeta(im);
                 is[i] = room;
                 i++;

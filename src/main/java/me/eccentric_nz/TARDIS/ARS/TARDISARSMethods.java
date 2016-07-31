@@ -169,7 +169,13 @@ public class TARDISARSMethods {
         ItemStack is = new ItemStack(id, 1);
         ItemMeta im = is.getItemMeta();
         im.setDisplayName(room);
-        im.setLore(null);
+        if (!room.equals("Empty slot")) {
+            String config_path = TARDISARS.ARSFor(room).getActualName();
+            List<String> lore = Arrays.asList("Cost: " + plugin.getRoomsConfig().getInt("rooms." + config_path + ".cost"));
+            im.setLore(lore);
+        } else {
+            im.setLore(null);
+        }
         is.setItemMeta(im);
         inv.setItem(slot, is);
         if (update) {
