@@ -44,6 +44,7 @@ import me.eccentric_nz.TARDIS.commands.preferences.TARDISPrefsMenuListener;
 import me.eccentric_nz.TARDIS.companionGUI.TARDISCompanionAddGUIListener;
 import me.eccentric_nz.TARDIS.companionGUI.TARDISCompanionGUIListener;
 import me.eccentric_nz.TARDIS.control.TARDISControlMenuListener;
+import me.eccentric_nz.TARDIS.desktop.TARDISArchiveMenuListener;
 import me.eccentric_nz.TARDIS.desktop.TARDISThemeMenuListener;
 import me.eccentric_nz.TARDIS.desktop.TARDISWallMenuListener;
 import me.eccentric_nz.TARDIS.enumeration.DIFFICULTY;
@@ -294,6 +295,7 @@ public class TARDISListenerRegisterer {
         plugin.getPM().registerEvents(new TARDISTemporalListener(plugin), plugin);
         plugin.getPM().registerEvents(new TARDISTemporalLocatorListener(plugin), plugin);
         plugin.getPM().registerEvents(new TARDISThemeMenuListener(plugin), plugin);
+        plugin.getPM().registerEvents(new TARDISArchiveMenuListener(plugin), plugin);
         plugin.getPM().registerEvents(new TARDISTerminalListener(plugin), plugin);
         plugin.getPM().registerEvents(new TARDISTimeLordDeathListener(plugin), plugin);
         plugin.getPM().registerEvents(new TARDISUpdateListener(plugin), plugin);
