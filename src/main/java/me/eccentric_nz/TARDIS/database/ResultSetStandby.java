@@ -25,6 +25,7 @@ import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.enumeration.CONSOLES;
 import me.eccentric_nz.TARDIS.enumeration.PRESET;
+import me.eccentric_nz.TARDIS.schematic.ResultSetArchive;
 
 /**
  * Gets a list of TARDIS ids whose power is on.
@@ -57,6 +58,16 @@ public class ResultSetStandby {
                     StandbyData sd;
                     if (rs.getString("size").equals("JUNK")) {
                         sd = new StandbyData(Integer.MAX_VALUE, UUID.fromString(rs.getString("uuid")), false, false, PRESET.JUNK, false);
+                    } else if (rs.getString("size").equals("ARCHIVE")) {
+                        HashMap<String, Object> wherea = new HashMap<String, Object>();
+                        wherea.put("uuid", rs.getString("uuid"));
+                        wherea.put("use", 1);
+                        ResultSetArchive rsa = new ResultSetArchive(plugin, wherea);
+                        boolean lanterns = false;
+                        if (rsa.resultSet()) {
+                            lanterns = rsa.getArchive().isLanterns();
+                        }
+                        sd = new StandbyData(Integer.MAX_VALUE, UUID.fromString(rs.getString("uuid")), rs.getBoolean("hidden"), rs.getBoolean("lights_on"), PRESET.valueOf(rs.getString("chameleon_preset")), lanterns);
                     } else {
                         sd = new StandbyData(rs.getInt("artron_level"), UUID.fromString(rs.getString("uuid")), rs.getBoolean("hidden"), rs.getBoolean("lights_on"), PRESET.valueOf(rs.getString("chameleon_preset")), CONSOLES.getBY_NAMES().get(rs.getString("size")).hasLanterns());
                     }
