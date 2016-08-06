@@ -150,7 +150,8 @@ public class TARDISTerminalListener implements Listener {
                             if (terminalDestination.containsKey(uuid)) {
                                 HashMap<String, Object> set = new HashMap<String, Object>();
                                 String[] data = terminalDestination.get(uuid).split(":");
-                                set.put("world", data[0]);
+                                String ww = (plugin.isMVOnServer()) ? plugin.getMVHelper().getWorld(data[0]).getName() : data[0];
+                                set.put("world", ww);
                                 set.put("x", data[1]);
                                 set.put("y", data[2]);
                                 set.put("z", data[3]);
@@ -426,7 +427,7 @@ public class TARDISTerminalListener implements Listener {
             // if all else fails return the current world
             world = this_world;
         }
-        return world;
+        return (plugin.isMVOnServer()) ? plugin.getMVHelper().getAlias(world) : world;
     }
 
     private void checkSettings(Inventory inv, Player p) {
@@ -446,7 +447,7 @@ public class TARDISTerminalListener implements Listener {
                 String world = inv.getItem(i).getItemMeta().getLore().get(0);
                 if (!world.equals("No permission")) {
                     found = true;
-                    World w = plugin.getServer().getWorld(world);
+                    World w = (plugin.isMVOnServer()) ? plugin.getMVHelper().getWorld(world) : plugin.getServer().getWorld(world);
                     e = w.getEnvironment();
                     TARDISTimeTravel tt = new TARDISTimeTravel(plugin);
                     if (world.equals(terminalUsers.get(uuid).getWorld().getName())) {
