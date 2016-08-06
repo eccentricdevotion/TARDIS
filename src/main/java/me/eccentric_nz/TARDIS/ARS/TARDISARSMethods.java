@@ -327,6 +327,14 @@ public class TARDISARSMethods {
                         TARDISARSProcessor tap = new TARDISARSProcessor(plugin, ids.get(uuid));
                         boolean changed = tap.compare3DArray(save_map_data.get(uuid).getData(), map_data.get(uuid).getData());
                         if (changed && tap.checkCosts(tap.getChanged(), tap.getJettison())) {
+                            if (plugin.getConfig().getBoolean("growth.rooms_require_blocks")) {
+                                if (!hasCondensables(uuid.toString(), tap.getChanged(), ids.get(uuid))) {
+                                    String message = (tap.getChanged().size() > 1) ? "ARS_CONDENSE_MULTIPLE" : "ARS_CONDENSE";
+                                    TARDISMessage.send(p, message);
+                                    p.closeInventory();
+                                    return;
+                                }
+                            }
                             TARDISMessage.send(p, "ARS_START");
                             // do all jettisons first
                             if (tap.getJettison().size() > 0) {
@@ -475,16 +483,16 @@ public class TARDISARSMethods {
 
     /**
      * Checks whether a player has condensed the required blocks to grow the
-     * room.
+     * room (s).
      *
      * @param uuid the UUID of the player to check for
-     * @param room the room to check
+     * @param map a HashMap where the key is the changed room slot and the value
+     * is the ARS room type
      * @param id the TARDIS id
      * @return true or false
      */
-    public boolean hasCondensables(String uuid, String room, int id) {
+    public boolean hasCondensables(String uuid, HashMap<TARDISARSSlot, ARS> map, int id) {
         boolean hasRequired = true;
-        HashMap<String, Integer> roomBlocks = plugin.getBuildKeeper().getRoomBlockCounts().get(room);
         String wall = "ORANGE_WOOL";
         String floor = "LIGHT_GREY_WOOL";
         HashMap<String, Object> wherepp = new HashMap<String, Object>();
@@ -497,33 +505,36 @@ public class TARDISARSMethods {
             floor = rsp.getFloor();
         }
         HashMap<String, Integer> item_counts = new HashMap<String, Integer>();
-        for (Map.Entry<String, Integer> entry : roomBlocks.entrySet()) {
-            String[] block_data = entry.getKey().split(":");
-            String bid = block_data[0];
-            String mat;
-            String bkey;
-            if (hasPrefs && block_data.length == 2 && (block_data[1].equals("1") || block_data[1].equals("8"))) {
-                mat = (block_data[1].equals("1")) ? wall : floor;
-                Pair iddata = plugin.getTardisWalls().blocks.get(mat);
-                bkey = iddata.getType().toString();
-            } else {
-                bkey = bid;
-            }
-            int tmp = Math.round((entry.getValue() / 100.0F) * plugin.getConfig().getInt("growth.rooms_condenser_percent"));
-            int required = (tmp > 0) ? tmp : 1;
-            if (item_counts.containsKey(bkey)) {
-                item_counts.put(bkey, (item_counts.get(bkey) + required));
-            } else {
-                item_counts.put(bkey, required);
+        for (Map.Entry<TARDISARSSlot, ARS> rooms : map.entrySet()) {
+            HashMap<String, Integer> roomBlocks = plugin.getBuildKeeper().getRoomBlockCounts().get(rooms.getValue().getActualName());
+            for (Map.Entry<String, Integer> entry : roomBlocks.entrySet()) {
+                String[] block_data = entry.getKey().split(":");
+                String bid = block_data[0];
+                String mat;
+                String bkey;
+                if (hasPrefs && block_data.length == 2 && (block_data[1].equals("1") || block_data[1].equals("8"))) {
+                    mat = (block_data[1].equals("1")) ? wall : floor;
+                    Pair iddata = plugin.getTardisWalls().blocks.get(mat);
+                    bkey = iddata.getType().toString();
+                } else {
+                    bkey = bid;
+                }
+                int tmp = Math.round((entry.getValue() / 100.0F) * plugin.getConfig().getInt("growth.rooms_condenser_percent"));
+                int required = (tmp > 0) ? tmp : 1;
+                if (item_counts.containsKey(bkey)) {
+                    item_counts.put(bkey, (item_counts.get(bkey) + required));
+                } else {
+                    item_counts.put(bkey, required);
+                }
             }
         }
-        for (Map.Entry<String, Integer> map : item_counts.entrySet()) {
+        for (Map.Entry<String, Integer> blocks : item_counts.entrySet()) {
             HashMap<String, Object> wherec = new HashMap<String, Object>();
             wherec.put("tardis_id", id);
-            wherec.put("block_data", map.getKey());
+            wherec.put("block_data", blocks.getKey());
             ResultSetCondenser rsc = new ResultSetCondenser(plugin, wherec);
             if (rsc.resultSet()) {
-                if (rsc.getBlock_count() < map.getValue()) {
+                if (rsc.getBlock_count() < blocks.getValue()) {
                     hasRequired = false;
                 }
             } else {

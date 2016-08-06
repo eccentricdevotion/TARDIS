@@ -232,12 +232,12 @@ public class TARDISARSListener extends TARDISARSMethods implements Listener {
                                         break;
                                     }
                                 }
-                                if (plugin.getConfig().getBoolean("growth.rooms_require_blocks")) {
-                                    if (!hasCondensables(player.getUniqueId().toString(), room, ids.get(uuid))) {
-                                        setLore(inv, slot, "You haven't condensed enough blocks for this room!");
-                                        break;
-                                    }
-                                }
+//                                if (plugin.getConfig().getBoolean("growth.rooms_require_blocks")) {
+//                                    if (!hasCondensables(player.getUniqueId().toString(), room, ids.get(uuid))) {
+//                                        setLore(inv, slot, "You haven't condensed enough blocks for this room!");
+//                                        break;
+//                                    }
+//                                }
                                 if (room.equals("RENDERER") && hasRenderer(uuid)) {
                                     setLore(inv, slot, "You already have one of these!");
                                     break;
