@@ -17,6 +17,7 @@
 package me.eccentric_nz.TARDIS.builders;
 
 import java.util.HashMap;
+import java.util.Locale;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.api.event.TARDISCreationEvent;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
@@ -54,7 +55,7 @@ public class TARDISAbandoned {
         HashMap<String, Object> set = new HashMap<String, Object>();
         set.put("owner", "");
         set.put("chunk", chun);
-        set.put("size", s.getPermission().toUpperCase());
+        set.put("size", s.getPermission().toUpperCase(Locale.ENGLISH));
         set.put("abandoned", 1);
         set.put("lastuse", Long.MAX_VALUE);
         set.put("chameleon_preset", p.toString());

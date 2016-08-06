@@ -20,6 +20,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Locale;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.enumeration.CONSOLES;
 import me.eccentric_nz.TARDIS.enumeration.PRESET;
@@ -80,7 +81,7 @@ public class ResultSetTardisAbandoned {
                 rs.next();
                 tardis_id = rs.getInt("tardis_id");
                 artron_level = rs.getInt("artron_level");
-                schematic = CONSOLES.SCHEMATICFor(rs.getString("size").toLowerCase());
+                schematic = CONSOLES.SCHEMATICFor(rs.getString("size").toLowerCase(Locale.ENGLISH));
                 preset = PRESET.valueOf(rs.getString("chameleon_preset"));
                 handbrake_on = rs.getBoolean("handbrake_on");
                 hidden = rs.getBoolean("hidden");

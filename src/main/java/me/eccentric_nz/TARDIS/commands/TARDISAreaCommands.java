@@ -17,6 +17,7 @@
 package me.eccentric_nz.TARDIS.commands;
 
 import java.util.HashMap;
+import java.util.Locale;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetAreas;
@@ -174,9 +175,9 @@ public class TARDISAreaCommands implements CommandExecutor {
                 Material dock = Material.BRICK;
                 if (args.length > 2) {
                     try {
-                        fill = Material.valueOf(args[2].toUpperCase());
+                        fill = Material.valueOf(args[2].toUpperCase(Locale.ENGLISH));
                         if (args.length > 3) {
-                            dock = Material.valueOf(args[3].toUpperCase());
+                            dock = Material.valueOf(args[3].toUpperCase(Locale.ENGLISH));
                         }
                     } catch (IllegalArgumentException e) {
                         TARDISMessage.send(player, "ARG_MATERIAL");

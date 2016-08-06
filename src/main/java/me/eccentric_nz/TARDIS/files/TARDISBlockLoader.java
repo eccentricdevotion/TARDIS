@@ -24,7 +24,6 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.ResultSetBlocks;
 import me.eccentric_nz.TARDIS.database.ResultSetGravity;
@@ -45,7 +44,6 @@ import org.bukkit.util.Vector;
 public class TARDISBlockLoader {
 
     private final TARDIS plugin;
-    private final List<Integer> fixBlocks = new ArrayList<Integer>();
 
     public TARDISBlockLoader(TARDIS plugin) {
         this.plugin = plugin;

@@ -44,19 +44,18 @@ import org.bukkit.entity.Player;
  *
  * @author eccentric_nz
  */
-public class TARDISWallFloorRunnable extends TARDISThemeRunnable implements Runnable {
+public class TARDISWallFloorRunnable extends TARDISThemeRunnable {
 
     private final TARDIS plugin;
     private final UUID uuid;
     private final TARDISUpgradeData tud;
     private boolean running;
-    int id, slot, level = 0, row = 0, h, w, c, startx, starty, startz, resetx, resetz, j = 2;
+    int slot, level = 0, row = 0, h, w, c, startx, starty, startz;
     World world;
     JSONArray arr;
     Material wall_type, floor_type;
     byte wall_data, floor_data;
     QueryFactory qf;
-    boolean own_world;
     Player player;
 
     public TARDISWallFloorRunnable(TARDIS plugin, UUID uuid, TARDISUpgradeData tud) {
@@ -98,25 +97,19 @@ public class TARDISWallFloorRunnable extends TARDISThemeRunnable implements Runn
             }
             Tardis tardis = rs.getTardis();
             slot = tardis.getTIPS();
-            id = tardis.getTardis_id();
             if (slot != -1) { // default world - use TIPS
                 TARDISInteriorPostioning tintpos = new TARDISInteriorPostioning(plugin);
                 TARDISTIPSData pos = tintpos.getTIPSData(slot);
                 startx = pos.getCentreX();
-                resetx = pos.getCentreX();
                 startz = pos.getCentreZ();
-                resetz = pos.getCentreZ();
             } else {
                 int gsl[] = plugin.getLocationUtils().getStartLocation(tardis.getTardis_id());
                 startx = gsl[0];
-                resetx = gsl[1];
                 startz = gsl[2];
-                resetz = gsl[3];
             }
             starty = (tud.getSchematic().getPermission().equals("redstone")) ? 65 : 64;
             String[] split = tardis.getChunk().split(":");
             world = plugin.getServer().getWorld(split[0]);
-            own_world = plugin.getConfig().getBoolean("creation.create_worlds");
             // wall/floor block prefs
             String wall[] = tud.getWall().split(":");
             String floor[] = tud.getFloor().split(":");

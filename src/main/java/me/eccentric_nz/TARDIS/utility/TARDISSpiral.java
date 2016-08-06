@@ -26,7 +26,7 @@ import java.util.List;
  */
 public class TARDISSpiral {
 
-    public static List<Point> SPIRAL;
+    public static final List<Point> SPIRAL;
 
     static {
         SPIRAL = new ArrayList<Point>() {

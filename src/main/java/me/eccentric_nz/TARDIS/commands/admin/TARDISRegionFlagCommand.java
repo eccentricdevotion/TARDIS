@@ -5,6 +5,7 @@ package me.eccentric_nz.TARDIS.commands.admin;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Locale;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import org.bukkit.command.CommandSender;
@@ -23,7 +24,7 @@ public class TARDISRegionFlagCommand {
     }
 
     public boolean toggleEntryExit(CommandSender sender, String[] args) {
-        String flag = args[1].toLowerCase();
+        String flag = args[1].toLowerCase(Locale.ENGLISH);
         if (!which.contains(flag)) {
             TARDISMessage.message(sender, "You need to specify which flag type you want to change to - entry or exit.");
             return true;

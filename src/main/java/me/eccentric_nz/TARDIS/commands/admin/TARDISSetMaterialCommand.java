@@ -38,7 +38,7 @@ public class TARDISSetMaterialCommand {
     }
 
     public boolean setConfigMaterial(CommandSender sender, String[] args, String section) {
-        String first = (section.isEmpty()) ? args[0].toLowerCase() : section + "." + args[0].toLowerCase();
+        String first = (section.isEmpty()) ? args[0].toLowerCase(Locale.ENGLISH) : section + "." + args[0].toLowerCase(Locale.ENGLISH);
         String setMaterial = args[1].toUpperCase(Locale.ENGLISH);
         if (!checkMaterial(setMaterial)) {
             TARDISMessage.send(sender, "MATERIAL_NOT_VALID");
@@ -52,7 +52,7 @@ public class TARDISSetMaterialCommand {
     }
 
     public boolean setConfigMaterial(CommandSender sender, String[] args) {
-        String first = args[0].toLowerCase();
+        String first = args[0].toLowerCase(Locale.ENGLISH);
         String setMaterial = args[1].toUpperCase(Locale.ENGLISH);
         if (!checkMaterial(setMaterial)) {
             TARDISMessage.send(sender, "MATERIAL_NOT_VALID");

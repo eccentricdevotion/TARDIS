@@ -209,7 +209,7 @@ public class TARDISCaveFinder {
         }
     }
 
-    private class Check {
+    private static class Check {
 
         private boolean safe;
         private int y;

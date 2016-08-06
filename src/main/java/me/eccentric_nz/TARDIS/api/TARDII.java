@@ -24,6 +24,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Random;
 import java.util.UUID;
 import java.util.logging.Level;
@@ -91,7 +92,6 @@ public class TARDII implements TardisAPI {
             }
         } catch (SQLException e) {
             TARDIS.plugin.debug("ResultSet error for tardis table! " + e.getMessage());
-
         } finally {
             try {
                 if (rs != null) {
@@ -154,7 +154,7 @@ public class TARDII implements TardisAPI {
         if (rs.resultSet()) {
             Tardis tardis = rs.getTardis();
             Location current = getTARDISCurrentLocation(id);
-            String console = tardis.getSchematic().getPermission().toUpperCase();
+            String console = tardis.getSchematic().getPermission().toUpperCase(Locale.ENGLISH);
             String chameleon = tardis.getPreset().toString();
             String powered = (tardis.isPowered_on()) ? "Yes" : "No";
             String siege = (tardis.isSiege_on()) ? "Yes" : "No";
@@ -581,7 +581,7 @@ public class TARDII implements TardisAPI {
 
     @Override
     public void spawnAbandonedTARDIS(Location location, String type, PRESET preset, COMPASS direction) throws TARDISException {
-        if (!CONSOLES.getBY_NAMES().containsKey(type.toUpperCase())) {
+        if (!CONSOLES.getBY_NAMES().containsKey(type.toUpperCase(Locale.ENGLISH))) {
             throw new TARDISException("Not a valid Console type");
         }
         if (!TARDIS.plugin.getConfig().getBoolean("abandon.enabled")) {
@@ -590,7 +590,7 @@ public class TARDII implements TardisAPI {
         if (!TARDIS.plugin.getConfig().getBoolean("creation.default_world")) {
             throw new TARDISException("TARDIS must be configured to create TARDISes in a default world");
         }
-        SCHEMATIC schm = CONSOLES.getBY_NAMES().get(type.toUpperCase());
+        SCHEMATIC schm = CONSOLES.getBY_NAMES().get(type.toUpperCase(Locale.ENGLISH));
         new TARDISAbandoned(TARDIS.plugin).spawn(location, schm, preset, direction);
     }
 
@@ -623,10 +623,10 @@ public class TARDII implements TardisAPI {
 
     @Override
     public String setDesktopWallAndFloor(UUID uuid, String wall, String floor, boolean artron) throws TARDISException {
-        if (!TARDIS.plugin.getTardisWalls().blocks.containsKey(wall.toUpperCase())) {
+        if (!TARDIS.plugin.getTardisWalls().blocks.containsKey(wall.toUpperCase(Locale.ENGLISH))) {
             throw new TARDISException("Not a valid wall type");
         }
-        if (!TARDIS.plugin.getTardisWalls().blocks.containsKey(floor.toUpperCase())) {
+        if (!TARDIS.plugin.getTardisWalls().blocks.containsKey(floor.toUpperCase(Locale.ENGLISH))) {
             throw new TARDISException("Not a valid wall type");
         }
         // get current SCHEMATIC

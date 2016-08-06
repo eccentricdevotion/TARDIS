@@ -27,6 +27,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Properties;
 import java.util.Set;
@@ -304,7 +305,7 @@ public class TARDIS extends JavaPlugin {
             generalKeeper.setQuotes(quotes());
             loadHelper();
             try {
-                this.difficulty = DIFFICULTY.valueOf(getConfig().getString("preferences.difficulty").toUpperCase());
+                this.difficulty = DIFFICULTY.valueOf(getConfig().getString("preferences.difficulty").toUpperCase(Locale.ENGLISH));
             } catch (IllegalArgumentException e) {
                 debug("Could not determine difficulty setting, using EASY");
                 this.difficulty = DIFFICULTY.EASY;
@@ -653,7 +654,7 @@ public class TARDIS extends JavaPlugin {
      * they are inside the TARDIS.
      */
     private void startSound() {
-        this.getServer().getScheduler().scheduleSyncRepeatingTask(this, new Runnable() {
+        getServer().getScheduler().scheduleSyncRepeatingTask(this, new Runnable() {
             @Override
             public void run() {
                 TARDISSounds.playTARDISHum();

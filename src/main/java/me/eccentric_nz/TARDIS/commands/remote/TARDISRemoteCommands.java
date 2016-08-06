@@ -17,6 +17,7 @@
 package me.eccentric_nz.TARDIS.commands.remote;
 
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.advanced.TARDISCircuitChecker;
@@ -120,7 +121,7 @@ public class TARDISRemoteCommands implements CommandExecutor {
                     }
                     // what are we going to do?
                     try {
-                        REMOTE remote = REMOTE.valueOf(args[1].toUpperCase());
+                        REMOTE remote = REMOTE.valueOf(args[1].toUpperCase(Locale.ENGLISH));
                         OfflinePlayer p = plugin.getServer().getOfflinePlayer(uuid);
                         // we can't get permissions for offline players!
                         if (sender instanceof BlockCommandSender && p.getPlayer() == null) {
@@ -183,7 +184,7 @@ public class TARDISRemoteCommands implements CommandExecutor {
                                 }
                                 // home, area or coords?
                                 HashMap<String, Object> set = new HashMap<String, Object>();
-                                if (args[2].toLowerCase().equals("home")) {
+                                if (args[2].toLowerCase(Locale.ENGLISH).equals("home")) {
                                     // get home location
                                     HashMap<String, Object> wherehl = new HashMap<String, Object>();
                                     wherehl.put("tardis_id", id);
@@ -198,7 +199,7 @@ public class TARDISRemoteCommands implements CommandExecutor {
                                     set.put("z", rsh.getZ());
                                     set.put("direction", rsh.getDirection().toString());
                                     set.put("submarine", (rsh.isSubmarine()) ? 1 : 0);
-                                } else if (args[2].toLowerCase().equals("area")) {
+                                } else if (args[2].toLowerCase(Locale.ENGLISH).equals("area")) {
                                     // check area name
                                     HashMap<String, Object> wherea = new HashMap<String, Object>();
                                     wherea.put("area_name", args[3]);
@@ -322,12 +323,5 @@ public class TARDISRemoteCommands implements CommandExecutor {
             }
         }
         return false;
-    }
-
-    private void sendMessage(CommandSender sender, String message) {
-        if (sender instanceof BlockCommandSender) {
-            return;
-        }
-        sender.sendMessage(message);
     }
 }

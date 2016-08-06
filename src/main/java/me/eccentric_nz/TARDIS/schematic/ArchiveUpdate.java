@@ -22,7 +22,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.TARDISDatabaseConnection;
-import me.eccentric_nz.TARDIS.database.data.Archive;
 
 /**
  *
@@ -36,7 +35,6 @@ public class ArchiveUpdate {
     private final String uuid;
     private final String name;
     private final String prefix;
-    private Archive archive;
 
     public ArchiveUpdate(TARDIS plugin, String uuid, String name) {
         this.plugin = plugin;
@@ -92,9 +90,5 @@ public class ArchiveUpdate {
             }
         }
         return true;
-    }
-
-    public Archive getArchive() {
-        return archive;
     }
 }

@@ -19,6 +19,7 @@ package me.eccentric_nz.TARDIS.listeners;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.api.event.TARDISCreationEvent;
@@ -140,7 +141,7 @@ public class TARDISBlockStackListener implements Listener {
                 }
                 // check perms
                 if (!schm.getPermission().equals("budget") && !player.hasPermission("tardis." + schm.getPermission())) {
-                    TARDISMessage.send(player, "NO_PERM_TARDIS", schm.getPermission().toUpperCase());
+                    TARDISMessage.send(player, "NO_PERM_TARDIS", schm.getPermission().toUpperCase(Locale.ENGLISH));
                     return;
                 }
                 if (player.hasPermission("tardis.create")) {
@@ -198,7 +199,7 @@ public class TARDISBlockStackListener implements Listener {
                         set.put("uuid", player.getUniqueId().toString());
                         set.put("owner", playerNameStr);
                         set.put("chunk", chun);
-                        set.put("size", schm.getPermission().toUpperCase());
+                        set.put("size", schm.getPermission().toUpperCase(Locale.ENGLISH));
                         Long now;
                         if (player.hasPermission("tardis.prune.bypass")) {
                             now = Long.MAX_VALUE;
@@ -207,10 +208,10 @@ public class TARDISBlockStackListener implements Listener {
                         }
                         set.put("lastuse", now);
                         // set preset if default is not 'FACTORY'
-                        String preset = plugin.getConfig().getString("police_box.default_preset").toUpperCase();
+                        String preset = plugin.getConfig().getString("police_box.default_preset").toUpperCase(Locale.ENGLISH);
 //                        if (!preset.equals("NEW")) {
-                            set.put("chameleon_preset", preset);
-                            set.put("chameleon_demat", preset);
+                        set.put("chameleon_preset", preset);
+                        set.put("chameleon_demat", preset);
 //                        }
                         HashMap<String, Object> setpp = new HashMap<String, Object>();
                         if (wall_type.equals(Material.LAPIS_BLOCK)) {

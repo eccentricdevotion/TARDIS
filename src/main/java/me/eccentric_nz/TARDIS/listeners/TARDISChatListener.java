@@ -43,7 +43,7 @@ import org.bukkit.inventory.ItemStack;
 public class TARDISChatListener implements Listener {
 
     private final TARDIS plugin;
-    private final String howToRegEx = "(^|.*\\W)how\\W.*\\W(create|make|build|get)\\W.*tardis(\\W.*|$)";
+    private static final String HOW_TO_REG_EX = "(^|.*\\W)how\\W.*\\W(create|make|build|get)\\W.*tardis(\\W.*|$)";
     private Pattern howToPattern = null;
 
     public TARDISChatListener(TARDIS plugin) {
@@ -109,7 +109,7 @@ public class TARDISChatListener implements Listener {
             return;
         }
         if (this.howToPattern == null) {
-            this.howToPattern = Pattern.compile(this.howToRegEx, Pattern.CASE_INSENSITIVE);
+            this.howToPattern = Pattern.compile(this.HOW_TO_REG_EX, Pattern.CASE_INSENSITIVE);
         }
         if (this.howToPattern.matcher(message).matches()) {
             plugin.getTrackerKeeper().getHowTo().add(p.getUniqueId());

@@ -16,6 +16,7 @@
  */
 package me.eccentric_nz.TARDIS.commands.admin;
 
+import java.util.Locale;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import org.bukkit.command.CommandSender;
@@ -33,7 +34,7 @@ public class TARDISDefaultCommand {
     }
 
     public boolean setDefaultItem(CommandSender sender, String[] args) {
-        String which = args[0].toLowerCase();
+        String which = args[0].toLowerCase(Locale.ENGLISH);
         int count = args.length;
         StringBuilder buf = new StringBuilder();
         for (int i = 1; i < count; i++) {

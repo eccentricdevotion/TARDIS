@@ -166,7 +166,7 @@ public class TARDISRescue {
 
     }
 
-    public class RescueData {
+    public static class RescueData {
 
         private final boolean success;
         private final int tardis_id;

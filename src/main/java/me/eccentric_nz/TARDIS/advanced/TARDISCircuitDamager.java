@@ -20,6 +20,7 @@ import java.io.IOException;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetDiskStorage;
@@ -52,7 +53,7 @@ public class TARDISCircuitDamager {
 
     public void damage() {
         if (uses_left == 0) {
-            uses_left = plugin.getConfig().getInt("circuits.uses." + circuit.toString().toLowerCase());
+            uses_left = plugin.getConfig().getInt("circuits.uses." + circuit.toString().toLowerCase(Locale.ENGLISH));
         }
         if ((uses_left - 1) == 0) {
             // destroy

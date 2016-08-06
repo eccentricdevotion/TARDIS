@@ -22,6 +22,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import me.eccentric_nz.TARDIS.TARDIS;
@@ -75,7 +76,7 @@ public class ResultSetArchiveButtons {
                         }
                     }
                     // add cost
-                    int cost = plugin.getArtronConfig().getInt("upgrades.archive." + rs.getString("console_size").toLowerCase());
+                    int cost = plugin.getArtronConfig().getInt("upgrades.archive." + rs.getString("console_size").toLowerCase(Locale.ENGLISH));
                     lore.add("Cost: " + cost);
                     // add current
                     if (rs.getInt("use") == 1) {

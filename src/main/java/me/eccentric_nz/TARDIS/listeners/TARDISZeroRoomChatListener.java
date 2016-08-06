@@ -17,6 +17,7 @@
 package me.eccentric_nz.TARDIS.listeners;
 
 import java.util.List;
+import java.util.Locale;
 import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
@@ -71,7 +72,7 @@ public class TARDISZeroRoomChatListener implements Listener {
             return;
         }
         UUID uuid = player.getUniqueId();
-        String command = event.getMessage().toLowerCase();
+        String command = event.getMessage().toLowerCase(Locale.ENGLISH);
         if (plugin.getTrackerKeeper().getTelepaths().containsKey(uuid)) {
             if (command.contains("tardis ") || command.contains("tardistravel ") || command.contains("ttravel ")) {
                 UUID owner = plugin.getTrackerKeeper().getTelepaths().get(uuid);
@@ -79,7 +80,7 @@ public class TARDISZeroRoomChatListener implements Listener {
                 if (timelord != null && timelord.isOnline()) {
                     // message console so it is logged
                     TARDISMessage.message(plugin.getConsole(), "[TARDIS] Companion [" + player.getName() + "] ran a telepathic command as Time Lord [" + timelord.getName() + "]");
-                    if (command.contains("rescue") && command.contains(timelord.getName().toLowerCase())) {
+                    if (command.contains("rescue") && command.contains(timelord.getName().toLowerCase(Locale.ENGLISH))) {
                         // track the timelord
                         plugin.getTrackerKeeper().getTelepathicRescue().put(owner, uuid);
                     }

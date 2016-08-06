@@ -164,7 +164,7 @@ public class TARDISTownyChecker {
     /**
      * Data class to store check results so we can reuse them again if needed.
      */
-    public class TownyData {
+    public static class TownyData {
 
         private boolean travel;
         private TownBlock townBlock;

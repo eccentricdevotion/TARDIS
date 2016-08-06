@@ -41,7 +41,7 @@ public class TARDISJunkVortexRunnable implements Runnable {
     private final OfflinePlayer player;
     private final int id;
     private int i = 0;
-    private final int loops = 12;
+    private static final int LOOPS = 12;
     private int task;
     private int fryTask;
 
@@ -56,7 +56,7 @@ public class TARDISJunkVortexRunnable implements Runnable {
 
     @Override
     public void run() {
-        if (i < loops) {
+        if (i < LOOPS) {
             i++;
             if (i == 1) {
                 fryTask = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, new TARDISJunkItsDangerousRunnable(plugin, vortexJunkLoc), 0, 1L);
@@ -73,7 +73,7 @@ public class TARDISJunkVortexRunnable implements Runnable {
                 // play sound
                 TARDISSounds.playTARDISSound(vortexJunkLoc, "junk_arc");
             }
-            if (i == loops - 1) {
+            if (i == LOOPS - 1) {
                 // build the TARDIS at the location
                 final BuildData bd = new BuildData(plugin, "00000000-aaaa-bbbb-cccc-000000000000");
                 bd.setDirection(COMPASS.SOUTH);
@@ -86,7 +86,7 @@ public class TARDISJunkVortexRunnable implements Runnable {
                 bd.setTardisID(id);
                 plugin.getPresetBuilder().buildPreset(bd);
             }
-            if (i == loops) {
+            if (i == LOOPS) {
                 // teleport players
                 for (Entity e : getJunkTravellers()) {
                     if (e instanceof Player) {

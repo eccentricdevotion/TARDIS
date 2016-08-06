@@ -20,6 +20,7 @@ import java.io.File;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import me.eccentric_nz.TARDIS.JSON.JSONObject;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.builders.TARDISInteriorPostioning;
@@ -60,13 +61,13 @@ public class TARDISArchiveCommand {
         if (args.length < 2) {
             return false;
         }
-        String sub = args[1].toLowerCase();
+        String sub = args[1].toLowerCase(Locale.ENGLISH);
         if (!subs.contains(sub)) {
             TARDISMessage.send(player, "ARG_NOT_VALID");
             return true;
         }
         String uuid = player.getUniqueId().toString();
-        String name = (args.length > 2) ? args[2].toUpperCase() : "ARCHIVE";
+        String name = (args.length > 2) ? args[2].toUpperCase(Locale.ENGLISH) : "ARCHIVE";
         if (sub.equals("add") || sub.equals("description") || sub.equals("remove") || sub.equals("update")) {
             if (args.length < 3) {
                 TARDISMessage.send(player, "SCHM_NAME");
@@ -140,10 +141,10 @@ public class TARDISArchiveCommand {
                     }
                     int sy = (current.getPermission().equals("redstone")) ? 65 : 64;
                     ArchiveData ad = new TARDISSchematicBuilder(plugin, id, player.getLocation().getWorld(), sx, sx + w, sy, sy + h, sz, sz + c).build();
-                    if (ad == null) {
-                        TARDISMessage.send(player, "ARCHIVE_FAIL");
-                        return true;
-                    }
+//                    if (ad == null) {
+//                        TARDISMessage.send(player, "ARCHIVE_FAIL");
+//                        return true;
+//                    }
                     if (sub.equals("scan")) {
                         TARDISMessage.send(player, "ARCHIVE_SCAN");
                         return true;

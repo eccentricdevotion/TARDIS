@@ -18,6 +18,7 @@ package me.eccentric_nz.TARDIS.commands.preferences;
 
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
@@ -101,7 +102,7 @@ public class TARDISHumListener extends TARDISMenuListener implements Listener {
                                     close(p);
                                     TARDISMessage.send(p, "HUM_WAIT");
                                 } else {
-                                    TARDISSounds.playTARDISSound(p, "tardis_hum_" + im.getDisplayName().toLowerCase());
+                                    TARDISSounds.playTARDISSound(p, "tardis_hum_" + im.getDisplayName().toLowerCase(Locale.ENGLISH));
                                     last.put(uuid, slot);
                                     cooldown.put(uuid, System.currentTimeMillis());
                                 }
@@ -109,7 +110,7 @@ public class TARDISHumListener extends TARDISMenuListener implements Listener {
                                 HashMap<String, Object> set = new HashMap<String, Object>();
                                 HashMap<String, Object> where = new HashMap<String, Object>();
                                 where.put("uuid", uuid.toString());
-                                set.put("hum", im.getDisplayName().toLowerCase());
+                                set.put("hum", im.getDisplayName().toLowerCase(Locale.ENGLISH));
                                 new QueryFactory(plugin).doUpdate("player_prefs", set, where);
                                 close(p);
                                 TARDISMessage.send(p, "HUM_SAVED");

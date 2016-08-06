@@ -22,6 +22,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.util.Locale;
 import me.eccentric_nz.TARDIS.ARS.TARDISARS;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.enumeration.CONSOLES;
@@ -81,8 +82,8 @@ public class TARDISFileCopier {
         // copy default room files as well
         for (TARDISARS ta : TARDISARS.values()) {
             if (ta.getOffset() != 0) {
-                String str = basepath + ta.getActualName().toLowerCase() + ".tschm";
-                copy(str, plugin.getResource(ta.getActualName().toLowerCase() + ".tschm"), false, plugin.getPluginName());
+                String str = basepath + ta.getActualName().toLowerCase(Locale.ENGLISH) + ".tschm";
+                copy(str, plugin.getResource(ta.getActualName().toLowerCase(Locale.ENGLISH) + ".tschm"), false, plugin.getPluginName());
             }
         }
         String zeronstr = basepath + "zero.tschm";

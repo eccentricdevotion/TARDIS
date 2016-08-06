@@ -16,6 +16,7 @@
  */
 package me.eccentric_nz.TARDIS.commands.admin;
 
+import java.util.Locale;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.builders.TARDISAbandoned;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
@@ -57,7 +58,7 @@ public class TARDISAbandonedCommand {
             TARDISMessage.send(sender, "ABANDONED_ARGS");
             return true;
         }
-        String schm = args[1].toUpperCase();
+        String schm = args[1].toUpperCase(Locale.ENGLISH);
         if (!CONSOLES.getBY_NAMES().containsKey(schm)) {
             TARDISMessage.send(sender, "TOO_FEW_ARGS");
             return true;
@@ -65,14 +66,14 @@ public class TARDISAbandonedCommand {
         SCHEMATIC s = CONSOLES.getBY_NAMES().get(schm);
         PRESET preset;
         try {
-            preset = PRESET.valueOf(args[2].toUpperCase());
+            preset = PRESET.valueOf(args[2].toUpperCase(Locale.ENGLISH));
         } catch (IllegalArgumentException e) {
             TARDISMessage.send(sender, "ABANDONED_PRESET");
             return true;
         }
         COMPASS d;
         try {
-            d = COMPASS.valueOf(args[3].toUpperCase());
+            d = COMPASS.valueOf(args[3].toUpperCase(Locale.ENGLISH));
         } catch (IllegalArgumentException e) {
             TARDISMessage.send(sender, "ABANDONED_COMPASS");
             return true;

@@ -28,7 +28,7 @@ public class TARDISJunkFloorWall {
     }
 
     public boolean setJunkWallOrFloor(CommandSender sender, String[] args) {
-        String pref = args[0].toLowerCase();
+        String pref = args[0].toLowerCase(Locale.ENGLISH);
         // check args
         if (args.length < 2) {
             TARDISMessage.send(sender, "PREF_WALL", pref);

@@ -19,6 +19,7 @@ package me.eccentric_nz.TARDIS.move;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Random;
 import me.eccentric_nz.TARDIS.ARS.TARDISARSMethods;
@@ -114,7 +115,7 @@ public class TARDISMonsterRunnable implements Runnable {
                             for (Entity e : entities) {
                                 EntityType type = e.getType();
                                 TARDISMonster tm = new TARDISMonster();
-                                String dn = WordUtils.capitalize(type.toString().toLowerCase());
+                                String dn = WordUtils.capitalize(type.toString().toLowerCase(Locale.ENGLISH));
                                 if (monsters.contains(type)) {
                                     found = true;
                                     switch (type) {
@@ -181,7 +182,7 @@ public class TARDISMonsterRunnable implements Runnable {
                                                         dn = "Husk";
                                                         break;
                                                     default:
-                                                        dn = "Zombie " + WordUtils.capitalize(prof.toString().toLowerCase());
+                                                        dn = "Zombie " + WordUtils.capitalize(prof.toString().toLowerCase(Locale.ENGLISH));
                                                 }
                                             }
                                             tm.setBaby(zombie.isBaby());
@@ -222,7 +223,7 @@ public class TARDISMonsterRunnable implements Runnable {
                                 // choose a random monster
                                 EntityType type = random_monsters.get(r.nextInt(random_monsters.size()));
                                 rtm.setType(type);
-                                String dn = WordUtils.capitalize(type.toString().toLowerCase());
+                                String dn = WordUtils.capitalize(type.toString().toLowerCase(Locale.ENGLISH));
                                 // set random sub types eg. Husk, Zombie Villagers, Stray & Wither Skeletons
                                 switch (type) {
                                     case SKELETON:
@@ -249,7 +250,7 @@ public class TARDISMonsterRunnable implements Runnable {
                                                 dn = "Husk";
                                                 break;
                                             default:
-                                                dn = "Zombie " + WordUtils.capitalize(prof.toString().toLowerCase());
+                                                dn = "Zombie " + WordUtils.capitalize(prof.toString().toLowerCase(Locale.ENGLISH));
                                         }
                                         break;
                                     default:
@@ -417,6 +418,8 @@ public class TARDISMonsterRunnable implements Runnable {
                         ez.setArmorContents(m.getEquipment().getArmorContents());
                         ez.setItemInMainHand(m.getEquipment().getItemInMainHand());
                     }
+                    break;
+                default:
                     break;
             }
             if (m.getAge() > 0) {

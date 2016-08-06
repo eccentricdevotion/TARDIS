@@ -18,7 +18,6 @@ package me.eccentric_nz.TARDIS.companionGUI;
 
 import java.util.HashMap;
 import java.util.List;
-import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
@@ -42,7 +41,6 @@ import org.bukkit.inventory.meta.ItemMeta;
 public class TARDISCompanionAddGUIListener extends TARDISMenuListener implements Listener {
 
     private final TARDIS plugin;
-    private final HashMap<UUID, Integer> selected_head = new HashMap<UUID, Integer>();
 
     public TARDISCompanionAddGUIListener(TARDIS plugin) {
         super(plugin);

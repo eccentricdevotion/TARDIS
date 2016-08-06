@@ -20,7 +20,6 @@ import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
-import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
@@ -31,12 +30,10 @@ import org.bukkit.entity.Player;
  */
 public class TARDISUpdateLister {
 
-    private final TARDIS plugin;
     private final Player player;
     private final LinkedHashMap<String, List<String>> options;
 
-    public TARDISUpdateLister(TARDIS plugin, Player player) {
-        this.plugin = plugin;
+    public TARDISUpdateLister(Player player) {
         this.player = player;
         this.options = createUpdateOptions();
     }

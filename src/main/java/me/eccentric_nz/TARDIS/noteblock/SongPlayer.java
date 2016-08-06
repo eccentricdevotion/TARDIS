@@ -87,12 +87,12 @@ public class SongPlayer {
         synchronized (this) {
             if (!playerList.contains(p.getUniqueId())) {
                 playerList.add(p.getUniqueId());
-                List<SongPlayer> songs = NoteBlockPlayer.playingSongs.get(p.getUniqueId());
+                List<SongPlayer> songs = NoteBlockPlayer.PLAYING_SONGS.get(p.getUniqueId());
                 if (songs == null) {
                     songs = new ArrayList<SongPlayer>();
                 }
                 songs.add(this);
-                NoteBlockPlayer.playingSongs.put(p.getUniqueId(), songs);
+                NoteBlockPlayer.PLAYING_SONGS.put(p.getUniqueId(), songs);
             }
         }
     }
@@ -142,12 +142,12 @@ public class SongPlayer {
     public void removePlayer(Player p) {
         synchronized (this) {
             playerList.remove(p.getUniqueId());
-            if (NoteBlockPlayer.playingSongs.get(p.getUniqueId()) == null) {
+            if (NoteBlockPlayer.PLAYING_SONGS.get(p.getUniqueId()) == null) {
                 return;
             }
-            List<SongPlayer> songs = new ArrayList<SongPlayer>(NoteBlockPlayer.playingSongs.get(p.getUniqueId()));
+            List<SongPlayer> songs = new ArrayList<SongPlayer>(NoteBlockPlayer.PLAYING_SONGS.get(p.getUniqueId()));
             songs.remove(this);
-            NoteBlockPlayer.playingSongs.put(p.getUniqueId(), songs);
+            NoteBlockPlayer.PLAYING_SONGS.put(p.getUniqueId(), songs);
             if ((playerList.isEmpty())) {
                 SongEndEvent event = new SongEndEvent(this);
                 Bukkit.getPluginManager().callEvent(event);

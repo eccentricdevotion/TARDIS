@@ -169,6 +169,8 @@ public class TARDISStorageListener extends TARDISMenuListener implements Listene
                         loadInventory(rs.getCircuits(), player, STORAGE.CIRCUIT);
                     }
                     break;
+                default:
+                    break;
             }
             switch (store) {
                 case BIOME_1:

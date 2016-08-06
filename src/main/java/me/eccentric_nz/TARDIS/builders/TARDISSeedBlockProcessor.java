@@ -17,6 +17,7 @@
 package me.eccentric_nz.TARDIS.builders;
 
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.api.event.TARDISCreationEvent;
@@ -90,7 +91,7 @@ public class TARDISSeedBlockProcessor {
                 SCHEMATIC schm = seed.getSchematic();
                 // check perms
                 if (!schm.getPermission().equals("budget") && !player.hasPermission("tardis." + schm.getPermission())) {
-                    TARDISMessage.send(player, "NO_PERM_TARDIS", schm.getPermission().toUpperCase());
+                    TARDISMessage.send(player, "NO_PERM_TARDIS", schm.getPermission().toUpperCase(Locale.ENGLISH));
                     return false;
                 }
                 int cx;
@@ -142,7 +143,7 @@ public class TARDISSeedBlockProcessor {
                 set.put("uuid", player.getUniqueId().toString());
                 set.put("owner", playerNameStr);
                 set.put("chunk", chun);
-                set.put("size", schm.getPermission().toUpperCase());
+                set.put("size", schm.getPermission().toUpperCase(Locale.ENGLISH));
                 HashMap<String, Object> setpp = new HashMap<String, Object>();
                 Material wall_type = seed.getWallType();
                 byte wall_data = seed.getWallData();
@@ -160,10 +161,10 @@ public class TARDISSeedBlockProcessor {
                 }
                 set.put("lastuse", now);
                 // set preset if default is not 'FACTORY'
-                String preset = plugin.getConfig().getString("police_box.default_preset").toUpperCase();
+                String preset = plugin.getConfig().getString("police_box.default_preset").toUpperCase(Locale.ENGLISH);
 //                if (!preset.equals("NEW")) {
-                    set.put("chameleon_preset", preset);
-                    set.put("chameleon_demat", preset);
+                set.put("chameleon_preset", preset);
+                set.put("chameleon_demat", preset);
 //                }
                 // determine wall block material from HashMap
                 setpp.put("wall", getWallKey(wall_type, wall_data));

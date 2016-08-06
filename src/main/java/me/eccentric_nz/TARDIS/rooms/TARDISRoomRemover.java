@@ -18,6 +18,7 @@ package me.eccentric_nz.TARDIS.rooms;
 
 import java.io.File;
 import java.util.HashMap;
+import java.util.Locale;
 import me.eccentric_nz.TARDIS.JSON.JSONObject;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
@@ -69,7 +70,7 @@ public class TARDISRoomRemover {
         int sx, sy, sz, ex, ey, ez, downy, upy;
         // calculate values for downy and upy from schematic dimensions / config
         String directory = (plugin.getRoomsConfig().getBoolean("rooms." + r + ".user")) ? "user_schematics" : "schematics";
-        String path = plugin.getDataFolder() + File.separator + directory + File.separator + r.toLowerCase() + ".tschm";
+        String path = plugin.getDataFolder() + File.separator + directory + File.separator + r.toLowerCase(Locale.ENGLISH) + ".tschm";
         // get JSON
         JSONObject obj = TARDISSchematicGZip.unzip(path);
         // get dimensions
@@ -126,7 +127,7 @@ public class TARDISRoomRemover {
         if (r.equals("FARM") || r.equals("STABLE") || r.equals("RAIL") || r.equals("VILLAGE") || r.equals("RENDERER") || r.equals("HUTCH") || r.equals("IGLOO")) {
             // remove stored location from the database
             HashMap<String, Object> set = new HashMap<String, Object>();
-            set.put(r.toLowerCase(), "");
+            set.put(r.toLowerCase(Locale.ENGLISH), "");
             HashMap<String, Object> where = new HashMap<String, Object>();
             where.put("tardis_id", id);
             qf.doUpdate("tardis", set, where);

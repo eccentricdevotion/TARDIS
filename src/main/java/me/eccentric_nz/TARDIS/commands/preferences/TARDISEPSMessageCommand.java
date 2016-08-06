@@ -18,7 +18,6 @@ package me.eccentric_nz.TARDIS.commands.preferences;
 
 import java.util.HashMap;
 import java.util.List;
-import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import org.bukkit.Material;
@@ -31,12 +30,6 @@ import org.bukkit.inventory.meta.BookMeta;
  * @author eccentric_nz
  */
 public class TARDISEPSMessageCommand {
-
-    private final TARDIS plugin;
-
-    public TARDISEPSMessageCommand(TARDIS plugin) {
-        this.plugin = plugin;
-    }
 
     public boolean setMessage(Player player, String[] args, QueryFactory qf) {
         String message;

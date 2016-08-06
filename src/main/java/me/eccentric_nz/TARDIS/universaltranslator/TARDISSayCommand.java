@@ -19,6 +19,7 @@ package me.eccentric_nz.TARDIS.universaltranslator;
 import com.memetix.mst.Language;
 import com.memetix.mst.Translate;
 import java.util.HashMap;
+import java.util.Locale;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.ResultSetPlayerPrefs;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
@@ -71,7 +72,7 @@ public class TARDISSayCommand implements CommandExecutor {
                 sb.append(" ").append(args[i]);
             }
             String whatToTranslate = sb.toString().substring(1);
-            String lang = args[0].toUpperCase();
+            String lang = args[0].toUpperCase(Locale.ENGLISH);
             try {
                 Language to = Language.valueOf(lang);
                 Language from = Language.valueOf(preferedLang);

@@ -18,7 +18,6 @@ package me.eccentric_nz.TARDIS.commands.preferences;
 
 import java.util.HashMap;
 import java.util.Locale;
-import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.enumeration.HUM;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
@@ -29,12 +28,6 @@ import org.bukkit.entity.Player;
  * @author eccentric_nz
  */
 public class TARDISHumCommand {
-
-    private final TARDIS plugin;
-
-    public TARDISHumCommand(TARDIS plugin) {
-        this.plugin = plugin;
-    }
 
     public boolean setHumPref(Player player, String[] args, QueryFactory qf) {
         if (args.length < 2) {

@@ -14,7 +14,6 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-
 package me.eccentric_nz.TARDIS.schematic;
 
 import java.util.HashMap;
@@ -221,7 +220,7 @@ public class TARDISSchematicBuilder {
         return (l != null && n.equals(l));
     }
 
-    public class ArchiveData {
+    public static class ArchiveData {
 
         private final JSONObject JSON;
         private final int beacon;

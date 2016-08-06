@@ -380,7 +380,7 @@ public class TARDISTravelCommands implements CommandExecutor {
                             return true;
                         }
                         String upper = args[1].toUpperCase(Locale.ENGLISH);
-                        if (!plugin.getDifficulty().equals(DIFFICULTY.EASY) && mustUseAdvanced.contains(args[0].toLowerCase()) && !plugin.getUtils().inGracePeriod(player, false) && !upper.equals("LIST")) {
+                        if (!plugin.getDifficulty().equals(DIFFICULTY.EASY) && mustUseAdvanced.contains(args[0].toLowerCase(Locale.ENGLISH)) && !plugin.getUtils().inGracePeriod(player, false) && !upper.equals("LIST")) {
                             if (plugin.getDifficulty().equals(DIFFICULTY.MEDIUM)) {
                                 // check they have a biome disk in storage
                                 boolean hasBiomeDisk = false;
@@ -568,7 +568,7 @@ public class TARDISTravelCommands implements CommandExecutor {
                             TARDISMessage.send(player, "TRAVEL_NO_AREA_PERM", args[1]);
                             return true;
                         }
-                        if (!plugin.getDifficulty().equals(DIFFICULTY.EASY) && mustUseAdvanced.contains(args[0].toLowerCase()) && !plugin.getUtils().inGracePeriod(player, false)) {
+                        if (!plugin.getDifficulty().equals(DIFFICULTY.EASY) && mustUseAdvanced.contains(args[0].toLowerCase(Locale.ENGLISH)) && !plugin.getUtils().inGracePeriod(player, false)) {
                             TARDISMessage.send(player, "ADV_AREA");
                             return true;
                         }

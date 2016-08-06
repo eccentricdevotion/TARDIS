@@ -18,6 +18,7 @@ package me.eccentric_nz.TARDIS.builders;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.Locale;
 import me.eccentric_nz.TARDIS.JSON.JSONObject;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.enumeration.CONSOLES;
@@ -77,7 +78,7 @@ public class TARDISConsoleLoader {
                     continue;
                 }
                 // check there is an Artron value
-                permission = console.toLowerCase();
+                permission = console.toLowerCase(Locale.ENGLISH);
                 if (plugin.getArtronConfig().get("upgrades." + permission) == null) {
                     plugin.debug(plugin.getPluginName() + "Could not find a corresponding config entry in artron.yml for " + permission + "!");
                     continue;
@@ -108,7 +109,7 @@ public class TARDISConsoleLoader {
                     save = true;
                 }
                 // add the schematic
-                CONSOLES.getBY_NAMES().put(console.toUpperCase(), new SCHEMATIC(seed, permission, description, consoleSize, beacon, lanterns, true));
+                CONSOLES.getBY_NAMES().put(console.toUpperCase(Locale.ENGLISH), new SCHEMATIC(seed, permission, description, consoleSize, beacon, lanterns, true));
             }
         }
         // reload lookup maps

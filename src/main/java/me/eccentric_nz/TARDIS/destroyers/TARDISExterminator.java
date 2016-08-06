@@ -97,11 +97,11 @@ public class TARDISExterminator {
                 cleanHashMaps(id);
                 String[] chunkworld = chunkLoc.split(":");
                 World cw = plugin.getServer().getWorld(chunkworld[0]);
-                int restore = getRestore(cw);
                 if (cw == null) {
                     plugin.debug("The server could not find the TARDIS world, has it been deleted?");
                     return false;
                 }
+                int restore = getRestore(cw);
                 if (!cw.getName().contains("TARDIS_WORLD_")) {
                     plugin.getInteriorDestroyer().destroyInner(schm, id, cw, restore, owner, tips);
                 }

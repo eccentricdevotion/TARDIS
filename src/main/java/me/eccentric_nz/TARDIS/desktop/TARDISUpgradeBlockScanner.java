@@ -29,7 +29,7 @@ public class TARDISUpgradeBlockScanner {
     private final TARDIS plugin;
     private final TARDISUpgradeData tud;
     private final UUID uuid;
-    int startx, starty, startz, resetx, resetz;
+    int startx, starty, startz;
     int count = 0;
     Material type;
     byte data;
@@ -67,15 +67,11 @@ public class TARDISUpgradeBlockScanner {
                 TARDISInteriorPostioning tintpos = new TARDISInteriorPostioning(plugin);
                 TARDISTIPSData pos = tintpos.getTIPSData(slot);
                 startx = pos.getCentreX();
-                resetx = pos.getCentreX();
                 startz = pos.getCentreZ();
-                resetz = pos.getCentreZ();
             } else {
                 int gsl[] = plugin.getLocationUtils().getStartLocation(tardis.getTardis_id());
                 startx = gsl[0];
-                resetx = gsl[1];
                 startz = gsl[2];
-                resetz = gsl[3];
             }
             starty = (tud.getPrevious().getPermission().equals("redstone")) ? 65 : 64;
             String[] split = tardis.getChunk().split(":");

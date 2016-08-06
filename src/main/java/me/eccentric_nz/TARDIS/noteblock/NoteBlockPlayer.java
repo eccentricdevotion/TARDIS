@@ -25,17 +25,17 @@ import org.bukkit.entity.Player;
 
 public class NoteBlockPlayer {
 
-    public static HashMap<UUID, List<SongPlayer>> playingSongs = new HashMap<UUID, List<SongPlayer>>();
+    public static final HashMap<UUID, List<SongPlayer>> PLAYING_SONGS = new HashMap<UUID, List<SongPlayer>>();
 
     public boolean isReceivingSong(Player p) {
-        return (playingSongs.get(p.getUniqueId()) != null) && (!((ArrayList) playingSongs.get(p.getUniqueId())).isEmpty());
+        return (PLAYING_SONGS.get(p.getUniqueId()) != null) && (!((ArrayList<SongPlayer>) PLAYING_SONGS.get(p.getUniqueId())).isEmpty());
     }
 
     public void stopPlaying(Player p) {
-        if (playingSongs.get(p.getUniqueId()) == null) {
+        if (PLAYING_SONGS.get(p.getUniqueId()) == null) {
             return;
         }
-        for (SongPlayer s : playingSongs.get(p.getUniqueId())) {
+        for (SongPlayer s : PLAYING_SONGS.get(p.getUniqueId())) {
             s.removePlayer(p);
         }
     }

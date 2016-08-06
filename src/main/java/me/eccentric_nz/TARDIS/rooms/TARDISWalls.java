@@ -157,7 +157,7 @@ public class TARDISWalls {
         }
     }
 
-    public class Pair {
+    public static class Pair {
 
         private final Material type;
         private final Byte data;

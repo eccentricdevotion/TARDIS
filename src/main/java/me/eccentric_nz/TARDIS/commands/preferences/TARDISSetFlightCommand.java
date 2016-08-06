@@ -17,7 +17,7 @@
 package me.eccentric_nz.TARDIS.commands.preferences;
 
 import java.util.HashMap;
-import me.eccentric_nz.TARDIS.TARDIS;
+import java.util.Locale;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import org.bukkit.entity.Player;
@@ -28,12 +28,6 @@ import org.bukkit.entity.Player;
  */
 public class TARDISSetFlightCommand {
 
-    private final TARDIS plugin;
-
-    public TARDISSetFlightCommand(TARDIS plugin) {
-        this.plugin = plugin;
-    }
-
     public boolean setMode(Player player, String[] args, QueryFactory qf) {
         if (args.length < 2) {
             TARDISMessage.send(player, "FLIGHT_NEED");
@@ -41,7 +35,7 @@ public class TARDISSetFlightCommand {
         }
         FlightMode fm;
         try {
-            fm = FlightMode.valueOf(args[1].toUpperCase());
+            fm = FlightMode.valueOf(args[1].toUpperCase(Locale.ENGLISH));
         } catch (IllegalArgumentException e) {
             TARDISMessage.send(player, "FLIGHT_INFO");
             return true;

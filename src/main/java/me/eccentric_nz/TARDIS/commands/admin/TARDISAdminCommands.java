@@ -357,7 +357,7 @@ public class TARDISAdminCommands implements CommandExecutor {
                         return true;
                     }
                     plugin.getConfig().set("preferences.difficulty", args[1].toLowerCase(Locale.ENGLISH));
-                    plugin.setDifficulty(DIFFICULTY.valueOf(args[1].toUpperCase()));
+                    plugin.setDifficulty(DIFFICULTY.valueOf(args[1].toUpperCase(Locale.ENGLISH)));
                 }
                 if (first.equals("default_preset")) {
                     try {

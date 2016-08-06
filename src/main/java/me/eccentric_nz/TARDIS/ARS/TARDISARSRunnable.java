@@ -18,6 +18,7 @@ package me.eccentric_nz.TARDIS.ARS;
 
 import java.io.File;
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
 import me.eccentric_nz.TARDIS.JSON.JSONObject;
 import me.eccentric_nz.TARDIS.TARDIS;
@@ -98,7 +99,7 @@ public class TARDISARSRunnable implements Runnable {
             Location l = new Location(w, slot.getX(), slot.getY(), slot.getZ());
             roomData.setDirection(COMPASS.SOUTH);
             String directory = (plugin.getRoomsConfig().getBoolean("rooms." + whichroom + ".user")) ? "user_schematics" : "schematics";
-            String path = plugin.getDataFolder() + File.separator + directory + File.separator + whichroom.toLowerCase() + ".tschm";
+            String path = plugin.getDataFolder() + File.separator + directory + File.separator + whichroom.toLowerCase(Locale.ENGLISH) + ".tschm";
             // get JSON
             JSONObject obj = TARDISSchematicGZip.unzip(path);
             // set y offset - this needs to be how many blocks above ground 0 of the 16x16x16 chunk the room starts

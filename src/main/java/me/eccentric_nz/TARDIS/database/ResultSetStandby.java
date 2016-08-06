@@ -91,7 +91,7 @@ public class ResultSetStandby {
         return ids;
     }
 
-    public class StandbyData {
+    public static class StandbyData {
 
         int level;
         UUID uuid;

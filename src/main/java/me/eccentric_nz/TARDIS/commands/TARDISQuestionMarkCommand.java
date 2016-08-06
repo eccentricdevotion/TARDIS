@@ -16,6 +16,7 @@
  */
 package me.eccentric_nz.TARDIS.commands;
 
+import java.util.Locale;
 import me.eccentric_nz.TARDIS.TARDIS;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -39,11 +40,11 @@ public class TARDISQuestionMarkCommand implements CommandExecutor {
             TARDISCommandHelper tch = new TARDISCommandHelper(plugin);
             switch (args.length) {
                 case 2:
-                    String cmds = args[0].toLowerCase() + " " + args[1].toLowerCase();
+                    String cmds = args[0].toLowerCase(Locale.ENGLISH) + " " + args[1].toLowerCase(Locale.ENGLISH);
                     tch.getCommand(cmds, sender);
                     return true;
                 case 1:
-                    tch.getCommand(args[0].toLowerCase(), sender);
+                    tch.getCommand(args[0].toLowerCase(Locale.ENGLISH), sender);
                     return true;
                 default:
                     tch.getCommand("", sender);

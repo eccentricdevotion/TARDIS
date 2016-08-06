@@ -25,6 +25,7 @@ import com.comphenix.protocol.events.PacketAdapter;
 import com.comphenix.protocol.events.PacketEvent;
 import com.comphenix.protocol.wrappers.WrappedChatComponent;
 import java.util.Arrays;
+import java.util.Locale;
 import me.eccentric_nz.TARDIS.JSON.JSONArray;
 import me.eccentric_nz.TARDIS.JSON.JSONException;
 import me.eccentric_nz.TARDIS.JSON.JSONObject;
@@ -68,7 +69,7 @@ public final class TARDISZeroRoomPacketListener implements Listener {
                                 JSONObject tmp = (JSONObject) extra.get(i);
                                 if (tmp.has("text")) {
                                     String text = (String) tmp.get("text");
-                                    if (text.toLowerCase().contains("broadcast")) {
+                                    if (text.toLowerCase(Locale.ENGLISH).contains("broadcast")) {
                                         send = true;
                                         break;
                                     }

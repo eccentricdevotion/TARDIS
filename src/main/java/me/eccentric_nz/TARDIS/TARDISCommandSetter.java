@@ -86,7 +86,7 @@ public class TARDISCommandSetter {
         plugin.getCommand("tardisgravity").setExecutor(new TARDISGravityCommands(plugin));
         plugin.getCommand("tardisgravity").setTabCompleter(new TARDISGravityTabComplete());
         plugin.getCommand("tardisjunk").setExecutor(new TARDISJunkCommands(plugin));
-        plugin.getCommand("tardisjunk").setTabCompleter(new TARDISJunkTabComplete(plugin));
+        plugin.getCommand("tardisjunk").setTabCompleter(new TARDISJunkTabComplete());
         plugin.getCommand("tardisprefs").setExecutor(new TARDISPrefsCommands(plugin));
         plugin.getCommand("tardisprefs").setTabCompleter(new TARDISPrefsTabComplete(plugin));
         plugin.getCommand("tardisrecipe").setExecutor(new TARDISRecipeCommands(plugin));

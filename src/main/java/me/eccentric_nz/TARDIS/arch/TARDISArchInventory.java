@@ -42,14 +42,17 @@ public class TARDISArchInventory {
         String attr = TARDISAttributeSerialization.toDatabase(getAttributeMap(p.getInventory().getContents()));
         String arm_attr = TARDISAttributeSerialization.toDatabase(getAttributeMap(p.getInventory().getArmorContents()));
         String arm = TARDISArchSerialization.toDatabase(p.getInventory().getArmorContents());
+        Statement statement = null;
+        PreparedStatement ps = null;
+        ResultSet rsInv = null;
+        ResultSet rsToInv = null;
         try {
             Connection connection = service.getConnection();
             service.testConnection(connection);
-            Statement statement = connection.createStatement();
-            PreparedStatement ps;
-            // get their current gamemode inventory from database
+            statement = connection.createStatement();
+            // get their current inventory from database
             String getQuery = "SELECT id FROM " + prefix + "inventories WHERE uuid = '" + uuid + "' AND arch = '" + arch + "'";
-            ResultSet rsInv = statement.executeQuery(getQuery);
+            rsInv = statement.executeQuery(getQuery);
             if (rsInv.next()) {
                 // update it with their current inventory
                 int id = rsInv.getInt("id");
@@ -80,7 +83,7 @@ public class TARDISArchInventory {
             // check if they have an inventory for the apposing chameleon arch state
             int to = (arch == 0) ? 1 : 0;
             String getToQuery = "SELECT * FROM " + prefix + "inventories WHERE uuid = '" + uuid + "' AND arch = '" + to + "'";
-            ResultSet rsToInv = statement.executeQuery(getToQuery);
+            rsToInv = statement.executeQuery(getToQuery);
             if (rsToInv.next()) {
                 // set their inventory to the saved one
                 try {
@@ -129,6 +132,23 @@ public class TARDISArchInventory {
             p.updateInventory();
         } catch (SQLException e) {
             System.err.println("Could not save inventory on Chameleon Arch change, " + e);
+        } finally {
+            try {
+                if (rsToInv != null) {
+                    rsToInv.close();
+                }
+                if (rsInv != null) {
+                    rsInv.close();
+                }
+                if (ps != null) {
+                    ps.close();
+                }
+                if (statement != null) {
+                    statement.close();
+                }
+            } catch (SQLException ex) {
+                System.err.println("Could not close resources: " + ex.getMessage());
+            }
         }
     }
 

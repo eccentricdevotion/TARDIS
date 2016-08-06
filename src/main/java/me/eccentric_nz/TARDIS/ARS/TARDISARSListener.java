@@ -18,6 +18,7 @@ package me.eccentric_nz.TARDIS.ARS;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 import java.util.Set;
 import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
@@ -220,7 +221,7 @@ public class TARDISARSListener extends TARDISARSMethods implements Listener {
                                 String displayName = ris.getItemMeta().getDisplayName();
                                 String room;
                                 room = TARDISARS.ARSFor(displayName).getActualName();
-                                if (!player.hasPermission("tardis.room." + room.toLowerCase())) {
+                                if (!player.hasPermission("tardis.room." + room.toLowerCase(Locale.ENGLISH))) {
                                     setLore(inv, slot, "You don't have permission for this room!");
                                     break;
                                 }
@@ -294,7 +295,6 @@ public class TARDISARSListener extends TARDISARSMethods implements Listener {
         List<String> custom_names = getCustomRoomNames();
         TARDISARS[] ars = TARDISARS.values();
         // less non-room types
-        int l = (custom_names.size() + ars.length) - 3;
         this.room_ids = new ArrayList<Integer>();
         this.room_names = new ArrayList<String>();
         for (TARDISARS a : ars) {

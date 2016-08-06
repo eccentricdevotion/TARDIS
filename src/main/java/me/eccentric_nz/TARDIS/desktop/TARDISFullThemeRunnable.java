@@ -64,13 +64,13 @@ import org.bukkit.entity.Player;
  *
  * @author eccentric_nz
  */
-public class TARDISFullThemeRunnable extends TARDISThemeRunnable implements Runnable {
+public class TARDISFullThemeRunnable extends TARDISThemeRunnable {
 
     private final TARDIS plugin;
     private final UUID uuid;
     private final TARDISUpgradeData tud;
     private boolean running;
-    int id, slot, level = 0, row = 0, h, w, c, startx, starty, startz, resetx, resetz, j = 2;
+    int id, slot, level = 0, row = 0, h, w, c, startx, starty, startz, j = 2;
     World world;
     private final List<Block> lampblocks = new ArrayList<Block>();
     private final List<Material> precious = new ArrayList<Material>();
@@ -206,15 +206,11 @@ public class TARDISFullThemeRunnable extends TARDISThemeRunnable implements Runn
                 TARDISInteriorPostioning tintpos = new TARDISInteriorPostioning(plugin);
                 TARDISTIPSData pos = tintpos.getTIPSData(slot);
                 startx = pos.getCentreX();
-                resetx = pos.getCentreX();
                 startz = pos.getCentreZ();
-                resetz = pos.getCentreZ();
             } else {
                 int gsl[] = plugin.getLocationUtils().getStartLocation(tardis.getTardis_id());
                 startx = gsl[0];
-                resetx = gsl[1];
                 startz = gsl[2];
-                resetz = gsl[3];
             }
             starty = (tud.getSchematic().getPermission().equals("redstone")) ? 65 : 64;
             downgrade = compare(tud.getPrevious(), tud.getSchematic());

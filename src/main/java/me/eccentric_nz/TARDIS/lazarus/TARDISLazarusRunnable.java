@@ -32,7 +32,7 @@ public class TARDISLazarusRunnable implements Runnable {
     private final TARDIS plugin;
     private final Block b;
     private int taskID;
-    private final int loops = 12;
+    private static final int LOOPS = 12;
     private int i = 0;
 
     public TARDISLazarusRunnable(TARDIS plugin, Block b) {
@@ -43,7 +43,7 @@ public class TARDISLazarusRunnable implements Runnable {
     @Override
     @SuppressWarnings("deprecation")
     public void run() {
-        if (i < loops) {
+        if (i < LOOPS) {
             for (BlockFace face : plugin.getGeneralKeeper().getFaces()) {
                 if ((i % 4) == face.ordinal()) {
                     // set mossy

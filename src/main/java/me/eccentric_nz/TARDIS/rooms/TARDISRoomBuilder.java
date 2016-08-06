@@ -18,6 +18,7 @@ package me.eccentric_nz.TARDIS.rooms;
 
 import java.io.File;
 import java.util.HashMap;
+import java.util.Locale;
 import me.eccentric_nz.TARDIS.JSON.JSONObject;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.api.event.TARDISRoomGrowEvent;
@@ -98,7 +99,7 @@ public class TARDISRoomBuilder {
             roomData.setBlock(b);
             roomData.setDirection(d);
             String directory = (plugin.getRoomsConfig().getBoolean("rooms." + r + ".user")) ? "user_schematics" : "schematics";
-            String path = plugin.getDataFolder() + File.separator + directory + File.separator + r.toLowerCase() + ".tschm";
+            String path = plugin.getDataFolder() + File.separator + directory + File.separator + r.toLowerCase(Locale.ENGLISH) + ".tschm";
             // get JSON
             JSONObject obj = TARDISSchematicGZip.unzip(path);
             JSONObject dimensions = obj.getJSONObject("dimensions");

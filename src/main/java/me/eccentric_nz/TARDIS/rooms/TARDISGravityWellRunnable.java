@@ -84,6 +84,8 @@ public class TARDISGravityWellRunnable implements Runnable {
                     plugin.getServer().getScheduler().cancelTask(task);
                 }
                 break;
+            default:
+                break;
         }
     }
 

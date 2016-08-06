@@ -16,7 +16,6 @@
  */
 package me.eccentric_nz.TARDIS.sonic;
 
-import java.util.HashMap;
 import java.util.List;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
@@ -41,7 +40,6 @@ public class TARDISSonicEntityListener implements Listener {
 
     private final TARDIS plugin;
     private final Material sonic;
-    private final HashMap<String, Long> timeout = new HashMap<String, Long>();
 
     public TARDISSonicEntityListener(TARDIS plugin) {
         this.plugin = plugin;

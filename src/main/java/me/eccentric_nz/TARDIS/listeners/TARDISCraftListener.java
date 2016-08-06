@@ -20,6 +20,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.UUID;
 import java.util.logging.Level;
 import me.eccentric_nz.TARDIS.TARDIS;
@@ -86,9 +87,9 @@ public class TARDISCraftListener implements Listener {
         // custom seeds
         for (String console : plugin.getCustomConsolesConfig().getKeys(false)) {
             if (plugin.getCustomConsolesConfig().getBoolean(console + ".enabled")) {
-                if (plugin.getArtronConfig().contains("upgrades." + console.toLowerCase())) {
+                if (plugin.getArtronConfig().contains("upgrades." + console.toLowerCase(Locale.ENGLISH))) {
                     Material cmat = Material.valueOf(plugin.getCustomConsolesConfig().getString(console + ".seed"));
-                    t.put(cmat, console.toUpperCase());
+                    t.put(cmat, console.toUpperCase(Locale.ENGLISH));
                 } else {
                     plugin.getLogger().log(Level.WARNING, "The custom console {0} does not have a corresponding upgrade value in artron.", console);
                 }
@@ -283,7 +284,7 @@ public class TARDISCraftListener implements Listener {
                 if (DISK_CIRCUIT.getCircuitNames().contains(dn)) {
                     // which circuit is it?
                     String[] split = dn.split(" ");
-                    String which = split[1].toLowerCase();
+                    String which = split[1].toLowerCase(Locale.ENGLISH);
                     // set the second line of lore
                     ItemMeta im = is.getItemMeta();
                     List<String> lore;

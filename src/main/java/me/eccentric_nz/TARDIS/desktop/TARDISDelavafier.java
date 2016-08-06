@@ -22,7 +22,7 @@ public class TARDISDelavafier {
 
     private final TARDIS plugin;
     private final UUID uuid;
-    int startx, starty = 64, startz, resetx, resetz;
+    int startx, starty = 64, startz;
 
     public TARDISDelavafier(TARDIS plugin, UUID uuid) {
         this.plugin = plugin;
@@ -41,15 +41,11 @@ public class TARDISDelavafier {
                 TARDISInteriorPostioning tintpos = new TARDISInteriorPostioning(plugin);
                 TARDISTIPSData pos = tintpos.getTIPSData(slot);
                 startx = pos.getCentreX();
-                resetx = pos.getCentreX();
                 startz = pos.getCentreZ();
-                resetz = pos.getCentreZ();
             } else {
                 int gsl[] = plugin.getLocationUtils().getStartLocation(tardis.getTardis_id());
                 startx = gsl[0];
-                resetx = gsl[1];
                 startz = gsl[2];
-                resetz = gsl[3];
             }
             String[] split = tardis.getChunk().split(":");
             World world = plugin.getServer().getWorld(split[0]);

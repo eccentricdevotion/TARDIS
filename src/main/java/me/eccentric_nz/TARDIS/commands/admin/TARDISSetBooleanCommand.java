@@ -39,7 +39,7 @@ public class TARDISSetBooleanCommand {
     }
 
     public boolean setConfigBool(CommandSender sender, String[] args, String section) {
-        String tolower = args[0].toLowerCase();
+        String tolower = args[0].toLowerCase(Locale.ENGLISH);
         String first = (section.isEmpty()) ? tolower : section + "." + tolower;
         // check they typed true of false
         String tf = args[1].toLowerCase(Locale.ENGLISH);

@@ -39,11 +39,8 @@ import org.bukkit.inventory.meta.ItemMeta;
  */
 public class TARDISSonicMenuListener extends TARDISMenuListener implements Listener {
 
-    private final TARDIS plugin;
-
     public TARDISSonicMenuListener(TARDIS plugin) {
         super(plugin);
-        this.plugin = plugin;
     }
 
     @EventHandler(ignoreCancelled = true)

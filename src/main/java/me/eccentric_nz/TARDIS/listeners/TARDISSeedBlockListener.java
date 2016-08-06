@@ -19,6 +19,7 @@ package me.eccentric_nz.TARDIS.listeners;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.builders.TARDISBuildData;
 import me.eccentric_nz.TARDIS.builders.TARDISSeedBlockProcessor;
@@ -28,7 +29,6 @@ import me.eccentric_nz.TARDIS.enumeration.SCHEMATIC;
 import me.eccentric_nz.TARDIS.rooms.TARDISWalls.Pair;
 import me.eccentric_nz.TARDIS.rooms.TARDISWallsLookup;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
-import org.bukkit.DyeColor;
 import org.bukkit.GameMode;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -124,7 +124,7 @@ public class TARDISSeedBlockListener implements Listener {
                 }
                 im.setDisplayName("§6TARDIS Seed Block");
                 List<String> lore = new ArrayList<String>();
-                lore.add(data.getSchematic().getPermission().toUpperCase());
+                lore.add(data.getSchematic().getPermission().toUpperCase(Locale.ENGLISH));
                 lore.add("Walls: " + twl.wall_lookup.get(data.getWallType() + ":" + data.getWallData()));
                 lore.add("Floors: " + twl.wall_lookup.get(data.getFloorType() + ":" + data.getFloorData()));
 //                // do some funky stuff to get data values for wool/stained glass & clay/wood/log/log_2
@@ -202,64 +202,63 @@ public class TARDISSeedBlockListener implements Listener {
         }
     }
 
-    /**
-     * Determines the id and data values of the block. Values are calculated by
-     * converting the string values stored in a TARDIS Seed block.
-     *
-     * @param str the lore stored in the TARDIS Seed block's Item Meta
-     * @return an int and a byte stored in a simple data class
-     */
-    @SuppressWarnings("deprecation")
-    private TwoValues getValuesFromString(String str) {
-        TwoValues data = new TwoValues();
-        String[] split1 = str.split(": ");
-        String[] split2 = split1[1].split(" ");
-        if (split2.length > 1) {
-            String mat = split2[1];
-            if (mat.equals("ANDESITE") || mat.equals("DIORITE") || mat.equals("GRANITE")) {
-                mat = "STONE";
-            }
-            Material m = Material.getMaterial(mat);
-            data.setId(m.getId());
-            switch (m) {
-                case STONE:
-                    if (split2[1].endsWith("ANDESITE")) {
-                        data.setData((byte) 6);
-                    }
-                    if (split2[1].endsWith("DIORITE")) {
-                        data.setData((byte) 4);
-                    }
-                    if (split2[1].endsWith("GRANITE")) {
-                        data.setData((byte) 2);
-                    }
-                    break;
-                case WOOL:
-                case STAINED_CLAY:
-                case STAINED_GLASS:
-                    data.setData(DyeColor.valueOf(split2[0]).getWoolData());
-                    break;
-                default:
-                    data.setData(getWoodDataType(m, split2[0]));
-                    break;
-            }
-        } else if (split1[1].equals("ANDESITE") || split1[1].equals("DIORITE") || split1[1].equals("GRANITE")) {
-            data.setId(1);
-            if (split1[1].equals("ANDESITE")) {
-                data.setData((byte) 5);
-            }
-            if (split1[1].equals("DIORITE")) {
-                data.setData((byte) 3);
-            }
-            if (split1[1].equals("GRANITE")) {
-                data.setData((byte) 1);
-            }
-        } else {
-            data.setId(Material.getMaterial(split1[1]).getId());
-            data.setData((byte) 0);
-        }
-        return data;
-    }
-
+//    /**
+//     * Determines the id and data values of the block. Values are calculated by
+//     * converting the string values stored in a TARDIS Seed block.
+//     *
+//     * @param str the lore stored in the TARDIS Seed block's Item Meta
+//     * @return an int and a byte stored in a simple data class
+//     */
+//    @SuppressWarnings("deprecation")
+//    private TwoValues getValuesFromString(String str) {
+//        TwoValues data = new TwoValues();
+//        String[] split1 = str.split(": ");
+//        String[] split2 = split1[1].split(" ");
+//        if (split2.length > 1) {
+//            String mat = split2[1];
+//            if (mat.equals("ANDESITE") || mat.equals("DIORITE") || mat.equals("GRANITE")) {
+//                mat = "STONE";
+//            }
+//            Material m = Material.getMaterial(mat);
+//            data.setId(m.getId());
+//            switch (m) {
+//                case STONE:
+//                    if (split2[1].endsWith("ANDESITE")) {
+//                        data.setData((byte) 6);
+//                    }
+//                    if (split2[1].endsWith("DIORITE")) {
+//                        data.setData((byte) 4);
+//                    }
+//                    if (split2[1].endsWith("GRANITE")) {
+//                        data.setData((byte) 2);
+//                    }
+//                    break;
+//                case WOOL:
+//                case STAINED_CLAY:
+//                case STAINED_GLASS:
+//                    data.setData(DyeColor.valueOf(split2[0]).getWoolData());
+//                    break;
+//                default:
+//                    data.setData(getWoodDataType(m, split2[0]));
+//                    break;
+//            }
+//        } else if (split1[1].equals("ANDESITE") || split1[1].equals("DIORITE") || split1[1].equals("GRANITE")) {
+//            data.setId(1);
+//            if (split1[1].equals("ANDESITE")) {
+//                data.setData((byte) 5);
+//            }
+//            if (split1[1].equals("DIORITE")) {
+//                data.setData((byte) 3);
+//            }
+//            if (split1[1].equals("GRANITE")) {
+//                data.setData((byte) 1);
+//            }
+//        } else {
+//            data.setId(Material.getMaterial(split1[1]).getId());
+//            data.setData((byte) 0);
+//        }
+//        return data;
+//    }
     /**
      * Determines the id and data values of the block. Values are calculated by
      * converting the string values stored in a TARDIS Seed block.
@@ -272,71 +271,71 @@ public class TARDISSeedBlockListener implements Listener {
         return plugin.getTardisWalls().blocks.get(split[1]);
     }
 
-    private byte getWoodDataType(Material m, String w) {
-        byte b = (byte) 0;
-        switch (m) {
-            case LOG:
-                if (w.equals("SPRUCE")) {
-                    b = (byte) 1;
-                }
-                if (w.equals("BIRCH")) {
-                    b = (byte) 2;
-                }
-                if (w.equals("JUNGLE")) {
-                    b = (byte) 3;
-                }
-                break;
-            case LOG_2:
-                if (w.equals("DARK_OAK")) {
-                    b = (byte) 1;
-                }
-                break;
-            default:
-                if (w.equals("SPRUCE")) {
-                    b = (byte) 1;
-                }
-                if (w.equals("BIRCH")) {
-                    b = (byte) 2;
-                }
-                if (w.equals("JUNGLE")) {
-                    b = (byte) 3;
-                }
-                if (w.equals("ACACIA")) {
-                    b = (byte) 4;
-                }
-                if (w.equals("DARK_OAK")) {
-                    b = (byte) 5;
-                }
-                break;
-        }
-        return b;
-    }
-
-    /**
-     * Simple inner class to store two variables returned by the
-     * getValuesFromString() method.
-     */
-    public class TwoValues {
-
-        public TwoValues() {
-        }
-        private int id;
-        private byte data;
-
-        public int getId() {
-            return id;
-        }
-
-        public void setId(int id) {
-            this.id = id;
-        }
-
-        public byte getData() {
-            return data;
-        }
-
-        public void setData(byte data) {
-            this.data = data;
-        }
-    }
+//    private byte getWoodDataType(Material m, String w) {
+//        byte b = (byte) 0;
+//        switch (m) {
+//            case LOG:
+//                if (w.equals("SPRUCE")) {
+//                    b = (byte) 1;
+//                }
+//                if (w.equals("BIRCH")) {
+//                    b = (byte) 2;
+//                }
+//                if (w.equals("JUNGLE")) {
+//                    b = (byte) 3;
+//                }
+//                break;
+//            case LOG_2:
+//                if (w.equals("DARK_OAK")) {
+//                    b = (byte) 1;
+//                }
+//                break;
+//            default:
+//                if (w.equals("SPRUCE")) {
+//                    b = (byte) 1;
+//                }
+//                if (w.equals("BIRCH")) {
+//                    b = (byte) 2;
+//                }
+//                if (w.equals("JUNGLE")) {
+//                    b = (byte) 3;
+//                }
+//                if (w.equals("ACACIA")) {
+//                    b = (byte) 4;
+//                }
+//                if (w.equals("DARK_OAK")) {
+//                    b = (byte) 5;
+//                }
+//                break;
+//        }
+//        return b;
+//    }
+//
+//    /**
+//     * Simple inner class to store two variables returned by the
+//     * getValuesFromString() method.
+//     */
+//    public class TwoValues {
+//
+//        public TwoValues() {
+//        }
+//        private int id;
+//        private byte data;
+//
+//        public int getId() {
+//            return id;
+//        }
+//
+//        public void setId(int id) {
+//            this.id = id;
+//        }
+//
+//        public byte getData() {
+//            return data;
+//        }
+//
+//        public void setData(byte data) {
+//            this.data = data;
+//        }
+//    }
 }

@@ -54,7 +54,6 @@ public class TARDISJunkBuilder implements Runnable {
     private final Location loc;
     private final Location effectsLoc;
     World world;
-    Biome biome;
     private final QueryFactory qf;
 
     public TARDISJunkBuilder(TARDIS plugin, BuildData bd) {
@@ -66,7 +65,6 @@ public class TARDISJunkBuilder implements Runnable {
         this.sy = this.loc.getBlockY();
         this.sz = this.loc.getBlockZ() - 2;
         this.world = this.loc.getWorld();
-        this.biome = this.bd.getBiome();
         this.qf = new QueryFactory(this.plugin);
     }
 

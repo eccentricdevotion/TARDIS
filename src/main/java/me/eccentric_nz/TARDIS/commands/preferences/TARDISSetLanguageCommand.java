@@ -18,7 +18,7 @@ package me.eccentric_nz.TARDIS.commands.preferences;
 
 import com.memetix.mst.Language;
 import java.util.HashMap;
-import me.eccentric_nz.TARDIS.TARDIS;
+import java.util.Locale;
 import static me.eccentric_nz.TARDIS.commands.preferences.TARDISPrefsCommands.ucfirst;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
@@ -30,12 +30,6 @@ import org.bukkit.entity.Player;
  */
 public class TARDISSetLanguageCommand {
 
-    private final TARDIS plugin;
-
-    public TARDISSetLanguageCommand(TARDIS plugin) {
-        this.plugin = plugin;
-    }
-
     public boolean setLanguagePref(Player player, String[] args, QueryFactory qf) {
         String pref = args[0];
         if (args.length < 2) {
@@ -44,7 +38,7 @@ public class TARDISSetLanguageCommand {
         }
         Language lang;
         try {
-            lang = Language.valueOf(args[1].toUpperCase());
+            lang = Language.valueOf(args[1].toUpperCase(Locale.ENGLISH));
         } catch (IllegalArgumentException e) {
             TARDISMessage.send(player, "LANG_NOT_VALID");
             return true;

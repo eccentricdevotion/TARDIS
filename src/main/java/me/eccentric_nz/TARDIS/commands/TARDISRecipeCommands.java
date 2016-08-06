@@ -125,7 +125,7 @@ public class TARDISRecipeCommands implements CommandExecutor {
         for (String console : plugin.getCustomConsolesConfig().getKeys(false)) {
             if (plugin.getCustomConsolesConfig().getBoolean(console + ".enabled")) {
                 Material cmat = Material.valueOf(plugin.getCustomConsolesConfig().getString(console + ".seed"));
-                t.put(console.toUpperCase(), cmat);
+                t.put(console.toUpperCase(Locale.ENGLISH), cmat);
             }
         }
     }
@@ -162,7 +162,7 @@ public class TARDISRecipeCommands implements CommandExecutor {
                 return true;
             }
             if (args[0].equalsIgnoreCase("tardis") && args.length == 2) {
-                if (!t.containsKey(args[1].toUpperCase())) {
+                if (!t.containsKey(args[1].toUpperCase(Locale.ENGLISH))) {
                     TARDISMessage.send(player, "ARG_NOT_VALID");
                     return true;
                 }
@@ -485,9 +485,9 @@ public class TARDISRecipeCommands implements CommandExecutor {
         fl_meta.setLore(Arrays.asList("Any valid Wall/Floor block"));
         in_floor.setItemMeta(fl_meta);
         // tardis type
-        ItemStack tardis = new ItemStack(t.get(type.toUpperCase()), 1);
+        ItemStack tardis = new ItemStack(t.get(type.toUpperCase(Locale.ENGLISH)), 1);
         ItemMeta seed = tardis.getItemMeta();
-        seed.setLore(Arrays.asList(type.toUpperCase()));
+        seed.setLore(Arrays.asList(type.toUpperCase(Locale.ENGLISH)));
         tardis.setItemMeta(seed);
         view.setItem(1, red);
         view.setItem(4, lapis);

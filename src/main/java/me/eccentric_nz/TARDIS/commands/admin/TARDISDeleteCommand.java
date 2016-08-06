@@ -20,6 +20,7 @@ import java.io.File;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.api.event.TARDISDestructionEvent;
@@ -56,7 +57,7 @@ public class TARDISDeleteCommand {
 
     @SuppressWarnings("deprecation")
     public boolean deleteTARDIS(final CommandSender sender, final String[] args) {
-        boolean junk = (args[1].toLowerCase().equals("junk"));
+        boolean junk = (args[1].toLowerCase(Locale.ENGLISH).equals("junk"));
         int tmp = -1;
         try {
             tmp = Integer.parseInt(args[1]);

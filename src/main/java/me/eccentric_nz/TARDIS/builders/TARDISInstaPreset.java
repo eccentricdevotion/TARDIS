@@ -518,7 +518,7 @@ public class TARDISInstaPreset {
         }
     }
 
-    private class ProblemBlock {
+    private static class ProblemBlock {
 
         Location l;
         Material id;

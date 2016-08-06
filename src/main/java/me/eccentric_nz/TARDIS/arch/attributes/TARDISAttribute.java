@@ -67,7 +67,6 @@ public class TARDISAttribute {
     }
 
     public final void setUUID(UUID id) {
-        Preconditions.checkNotNull("id", "id cannot be NULL.");
         data.put("UUIDLeast", id.getLeastSignificantBits());
         data.put("UUIDMost", id.getMostSignificantBits());
     }

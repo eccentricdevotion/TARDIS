@@ -18,6 +18,7 @@ package me.eccentric_nz.TARDIS.commands.admin;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 import java.util.Set;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
@@ -45,7 +46,7 @@ public class TARDISConfigCommand {
     }
 
     public boolean showConfigOptions(CommandSender sender, String[] args) {
-        String section = args[1].toLowerCase();
+        String section = args[1].toLowerCase(Locale.ENGLISH);
         TARDISMessage.send(sender, "CONFIG");
         if (sections.contains(section)) {
             sender.sendMessage(ChatColor.AQUA + section + ":" + ChatColor.RESET);

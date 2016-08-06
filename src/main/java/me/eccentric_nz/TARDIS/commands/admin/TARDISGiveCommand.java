@@ -19,6 +19,7 @@ package me.eccentric_nz.TARDIS.commands.admin;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
@@ -125,7 +126,7 @@ public class TARDISGiveCommand implements CommandExecutor {
                     TARDISMessage.send(sender, "TOO_FEW_ARGS", " /tardisgive [player] [item] [amount]");
                     return true;
                 }
-                String item = args[1].toLowerCase();
+                String item = args[1].toLowerCase(Locale.ENGLISH);
                 if (!items.containsKey(item)) {
                     new TARDISGiveLister(plugin, sender).list();
                     return true;
@@ -147,7 +148,7 @@ public class TARDISGiveCommand implements CommandExecutor {
                     return true;
                 }
                 if (item.equals("seed")) {
-                    return this.giveSeed(sender, args[0], args[2].toUpperCase());
+                    return this.giveSeed(sender, args[0], args[2].toUpperCase(Locale.ENGLISH));
                 }
                 if (item.equals("tachyon")) {
                     return this.giveTachyon(sender, args[0], args[2]);

@@ -27,8 +27,8 @@ public class TARDISSiegeArea {
 
     private final int id;
     private final Chunk chunk;
-    private final int minY = 48;
-    private final int maxY = 80;
+    private static final int MIN_Y = 48;
+    private static final int MAX_Y = 80;
     private int minX;
     private int maxX;
     private int minZ;
@@ -71,7 +71,7 @@ public class TARDISSiegeArea {
         int x = l.getBlockX();
         int y = l.getBlockY();
         int z = l.getBlockZ();
-        return (x >= minX && x <= maxX && y >= minY && y <= maxY && z >= minZ && z <= maxZ);
+        return (x >= minX && x <= maxX && y >= MIN_Y && y <= MAX_Y && z >= minZ && z <= maxZ);
     }
 
     public int getId() {

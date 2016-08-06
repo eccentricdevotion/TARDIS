@@ -33,7 +33,6 @@ public class TARDISVoidUpdate {
 
     private final TARDIS plugin;
     private final int id;
-    private int slot = -1;
     private int taskID;
 
     public TARDISVoidUpdate(TARDIS plugin, int id) {
@@ -48,7 +47,6 @@ public class TARDISVoidUpdate {
         ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false, 0);
         if (rs.resultSet()) {
             Tardis tardis = rs.getTardis();
-            slot = tardis.getTIPS();
             // get start chunk for this TARDIS
             String[] cstr = tardis.getChunk().split(":");
             World w = plugin.getServer().getWorld(cstr[0]);

@@ -20,7 +20,6 @@ import com.google.common.collect.ImmutableList;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.commands.TARDISCompleter;
 import me.eccentric_nz.TARDIS.rooms.TARDISWalls;
 import org.bukkit.command.Command;
@@ -32,12 +31,10 @@ import org.bukkit.command.TabCompleter;
  */
 public class TARDISJunkTabComplete extends TARDISCompleter implements TabCompleter {
 
-    private final TARDIS plugin;
     private final ImmutableList<String> ROOT_SUBS = ImmutableList.of("create", "find", "floor", "return", "delete", "time", "wall");
     private final ImmutableList<String> MAT_SUBS;
 
-    public TARDISJunkTabComplete(TARDIS plugin) {
-        this.plugin = plugin;
+    public TARDISJunkTabComplete() {
         HashMap<String, TARDISWalls.Pair> map = new TARDISWalls().blocks;
         List<String> mats = new ArrayList<String>();
         for (String key : map.keySet()) {

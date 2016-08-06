@@ -17,6 +17,7 @@
 package me.eccentric_nz.TARDIS.desktop;
 
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.UUID;
 import me.eccentric_nz.TARDIS.ARS.TARDISARSMethods;
 import me.eccentric_nz.TARDIS.TARDIS;
@@ -115,14 +116,14 @@ public class TARDISThemeProcessor {
         qf.doUpdate("player_prefs", setp, wherep);
         // update TARDIS
         HashMap<String, Object> sett = new HashMap<String, Object>();
-        sett.put("size", tud.getSchematic().getPermission().toUpperCase());
+        sett.put("size", tud.getSchematic().getPermission().toUpperCase(Locale.ENGLISH));
         HashMap<String, Object> wheret = new HashMap<String, Object>();
         wheret.put("uuid", uuid.toString());
         qf.doUpdate("tardis", sett, wheret);
         // take the Artron Energy
         HashMap<String, Object> wherea = new HashMap<String, Object>();
         wherea.put("uuid", uuid.toString());
-        String config_path = (archive_next != null) ? "upgrades.archive." + archive_next.getConsoleSize().getConfigPath() : "upgrades." + tud.getSchematic().getPermission().toLowerCase();
+        String config_path = (archive_next != null) ? "upgrades.archive." + archive_next.getConsoleSize().getConfigPath() : "upgrades." + tud.getSchematic().getPermission().toLowerCase(Locale.ENGLISH);
         int amount = plugin.getArtronConfig().getInt(config_path);
         TARDISThemeRunnable ttr;
         boolean master = tud.getPrevious().getPermission().equals("master");

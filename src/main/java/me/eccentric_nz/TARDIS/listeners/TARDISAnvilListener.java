@@ -36,11 +36,9 @@ import org.bukkit.inventory.meta.ItemMeta;
  */
 public class TARDISAnvilListener implements Listener {
 
-    private final TARDIS plugin;
     HashMap<String, Material> disallow = new HashMap<String, Material>();
 
     public TARDISAnvilListener(TARDIS plugin) {
-        this.plugin = plugin;
         for (String r : plugin.getRecipesConfig().getConfigurationSection("shaped").getKeys(false)) {
             String[] result = plugin.getRecipesConfig().getString("shaped." + r + ".result").split(":");
             disallow.put(r, Material.valueOf(result[0]));

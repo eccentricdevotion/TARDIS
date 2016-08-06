@@ -27,7 +27,6 @@ import me.eccentric_nz.TARDIS.JSON.JSONObject;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
-import me.eccentric_nz.TARDIS.enumeration.COMPASS;
 import me.eccentric_nz.TARDIS.enumeration.ROOM;
 import static me.eccentric_nz.TARDIS.schematic.TARDISBannerSetter.setBanners;
 import me.eccentric_nz.TARDIS.utility.TARDISBlockSetters;
@@ -61,8 +60,6 @@ public class TARDISRoomRunnable implements Runnable {
     private final Material wall_type, floor_type;
     Material type;
     byte data, wall_data, floor_data;
-    Block b;
-    COMPASS d;
     String room;
     String grammar;
     private boolean running;
@@ -94,8 +91,6 @@ public class TARDISRoomRunnable implements Runnable {
         this.plugin = plugin;
         this.l = roomData.getLocation();
         this.s = roomData.getSchematic();
-        this.b = roomData.getBlock();
-        this.d = roomData.getDirection();
         this.wall_type = roomData.getMiddleType();
         this.wall_data = roomData.getMiddleData();
         this.floor_type = roomData.getFloorType();

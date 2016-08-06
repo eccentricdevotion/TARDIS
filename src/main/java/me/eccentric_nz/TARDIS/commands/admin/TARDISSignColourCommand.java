@@ -18,6 +18,7 @@ package me.eccentric_nz.TARDIS.commands.admin;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Locale;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import org.bukkit.command.CommandSender;
@@ -36,7 +37,7 @@ public class TARDISSignColourCommand {
     }
 
     public boolean setColour(CommandSender sender, String[] args) {
-        String colour = args[1].toUpperCase();
+        String colour = args[1].toUpperCase(Locale.ENGLISH);
         if (!COLOURS.contains(colour)) {
             TARDISMessage.send(sender, "ARG_COLOUR");
             return true;

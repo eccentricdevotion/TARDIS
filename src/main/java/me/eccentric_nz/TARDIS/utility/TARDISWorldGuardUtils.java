@@ -33,6 +33,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
@@ -89,15 +90,15 @@ public class TARDISWorldGuardUtils {
     public boolean canLand(Player p, Location l) {
         // get the flag we should be checking
         String f = plugin.getConfig().getString("preferences.respect_worldguard");
-        if (f.toLowerCase().equals("none")) {
+        if (f.toLowerCase(Locale.ENGLISH).equals("none")) {
             return true;
         }
         // WorldGuard will throw an IllegalArgumentException if the build flag is given to allows()
-        if (f.toLowerCase().equals("build")) {
+        if (f.toLowerCase(Locale.ENGLISH).equals("build")) {
             return wg.canBuild(p, l);
         }
         // get the flag to check
-        StateFlag flag = TARDISWorldGuardFlag.getFLAG_LOOKUP().get(f.toLowerCase());
+        StateFlag flag = TARDISWorldGuardFlag.getFLAG_LOOKUP().get(f.toLowerCase(Locale.ENGLISH));
         if (flag == null) {
             return true;
         }

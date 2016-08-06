@@ -20,6 +20,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Locale;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import org.bukkit.command.CommandSender;
@@ -38,9 +39,9 @@ public class TARDISSetIntegerCommand {
     }
 
     public boolean setConfigInt(CommandSender sender, String[] args, String section) {
-        String first = (section.isEmpty()) ? args[0].toLowerCase() : section + "." + args[0].toLowerCase();
+        String first = (section.isEmpty()) ? args[0].toLowerCase(Locale.ENGLISH) : section + "." + args[0].toLowerCase(Locale.ENGLISH);
         String a = args[1];
-        if (args[0].toLowerCase().equals("tips_limit") && !TIPS_SUBS.contains(a)) {
+        if (args[0].toLowerCase(Locale.ENGLISH).equals("tips_limit") && !TIPS_SUBS.contains(a)) {
             TARDISMessage.send(sender, "ARG_TIPS");
             return false;
         }
@@ -101,7 +102,7 @@ public class TARDISSetIntegerCommand {
             TARDISMessage.send(sender, "ARG_LAST_NUMBER");
             return false;
         }
-        plugin.getConfig().set("travel." + first + "." + which.toLowerCase(), val);
+        plugin.getConfig().set("travel." + first + "." + which.toLowerCase(Locale.ENGLISH), val);
         plugin.saveConfig();
         TARDISMessage.send(sender, "CONFIG_UPDATED");
         return true;

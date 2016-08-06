@@ -116,7 +116,7 @@ public class TARDISVaultListener implements Listener {
         }
     }
 
-    public class MatData {
+    public static class MatData {
 
         private Material material;
         private byte data;

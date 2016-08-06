@@ -19,7 +19,6 @@ package me.eccentric_nz.TARDIS.siegemode;
 import java.io.File;
 import java.util.HashMap;
 import java.util.UUID;
-import me.eccentric_nz.TARDIS.JSON.JSONArray;
 import me.eccentric_nz.TARDIS.JSON.JSONObject;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.builders.TARDISInteriorPostioning;
@@ -51,13 +50,11 @@ public class TARDISSiegeWallFloorRunnable implements Runnable {
     private final TARDISUpgradeData tud;
     private final boolean toSiege;
     private boolean running;
-    int id, slot, level = 0, row = 0, h, w, c, startx, starty, startz, resetx, resetz, j = 2;
+    int id, slot, level = 0, row = 0, h, w, c, startx, starty, startz;
     World world;
-    JSONArray arr;
     Material wall_type, floor_type, siege_wall_type, siege_floor_type;
     byte wall_data, floor_data, siege_wall_data, siege_floor_data;
     QueryFactory qf;
-    boolean own_world;
     Player player;
     int taskID;
 
@@ -106,20 +103,15 @@ public class TARDISSiegeWallFloorRunnable implements Runnable {
                 TARDISInteriorPostioning tintpos = new TARDISInteriorPostioning(plugin);
                 TARDISTIPSData pos = tintpos.getTIPSData(slot);
                 startx = pos.getCentreX();
-                resetx = pos.getCentreX();
                 startz = pos.getCentreZ();
-                resetz = pos.getCentreZ();
             } else {
                 int gsl[] = plugin.getLocationUtils().getStartLocation(id);
                 startx = gsl[0];
-                resetx = gsl[1];
                 startz = gsl[2];
-                resetz = gsl[3];
             }
             starty = (tud.getSchematic().getPermission().equals("redstone")) ? 65 : 64;
             String[] split = tardis.getChunk().split(":");
             world = plugin.getServer().getWorld(split[0]);
-            own_world = plugin.getConfig().getBoolean("creation.create_worlds");
             // wall/floor block prefs
             String wall[] = tud.getWall().split(":");
             String floor[] = tud.getFloor().split(":");
@@ -134,8 +126,6 @@ public class TARDISSiegeWallFloorRunnable implements Runnable {
             siege_floor_type = Material.valueOf(siege_floor[0]);
             siege_wall_data = TARDISNumberParsers.parseByte(siege_wall[1]);
             siege_floor_data = TARDISNumberParsers.parseByte(siege_floor[1]);
-            // get input array
-            arr = (JSONArray) obj.get("input");
             // set running
             running = true;
             player = plugin.getServer().getPlayer(uuid);

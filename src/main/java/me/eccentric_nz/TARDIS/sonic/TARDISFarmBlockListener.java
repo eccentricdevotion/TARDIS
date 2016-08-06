@@ -46,7 +46,6 @@ public class TARDISFarmBlockListener implements Listener {
             ItemMeta im = stack.getItemMeta();
             if (im.hasDisplayName() && ChatColor.stripColor(im.getDisplayName()).equals("Sonic Screwdriver") && im.hasLore() && im.getLore().contains("Emerald Upgrade")) {
                 Block block = event.getBlock();
-                Material type = block.getType();
                 Byte data = block.getData();
                 switch (block.getType()) {
                     case BEETROOT_BLOCK:

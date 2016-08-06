@@ -16,6 +16,7 @@
  */
 package me.eccentric_nz.TARDIS.commands.tardis;
 
+import java.util.Locale;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.commands.TARDISCommandHelper;
 import org.bukkit.command.CommandSender;
@@ -39,11 +40,11 @@ public class TARDISHelpCommand {
             return true;
         }
         if (args.length == 2) {
-            tch.getCommand(args[1].toLowerCase(), sender);
+            tch.getCommand(args[1].toLowerCase(Locale.ENGLISH), sender);
             return true;
         }
         if (args.length > 2) {
-            String cmds = args[1].toLowerCase() + " " + args[2].toLowerCase();
+            String cmds = args[1].toLowerCase(Locale.ENGLISH) + " " + args[2].toLowerCase(Locale.ENGLISH);
             tch.getCommand(cmds, sender);
             return true;
         }

@@ -35,7 +35,6 @@ import org.bukkit.plugin.Plugin;
 public class TARDISSkaro {
 
     private final TARDIS plugin;
-    public World skaroWorld = null;
 
     public TARDISSkaro(TARDIS plugin) {
         this.plugin = plugin;

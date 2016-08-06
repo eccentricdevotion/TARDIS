@@ -159,7 +159,7 @@ public class TARDISCondenserListener implements Listener {
                             } else {
                                 setc.put("tardis_id", tardis.getTardis_id());
                                 setc.put("block_data", map.getKey());
-                                setc.put("block_count", (int) map.getValue());
+                                setc.put("block_count", map.getValue());
                                 qf.doInsert("condenser", setc);
                             }
                         }

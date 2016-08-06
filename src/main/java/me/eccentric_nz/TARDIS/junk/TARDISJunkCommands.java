@@ -18,6 +18,7 @@ package me.eccentric_nz.TARDIS.junk;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import org.bukkit.command.Command;
@@ -53,7 +54,7 @@ public class TARDISJunkCommands implements CommandExecutor {
                 // find Junk TARDIS
                 return new TARDISJunkFind(plugin).find(sender);
             }
-            String first = args[0].toLowerCase();
+            String first = args[0].toLowerCase(Locale.ENGLISH);
             if (args.length == 1 && firstArgs.contains(first)) {
                 if (first.equals("create")) {
                     Player p = null;

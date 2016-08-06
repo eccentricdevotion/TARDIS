@@ -23,6 +23,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
@@ -131,7 +132,7 @@ public class ResultSetTardis {
                             rs.getString("last_known_name"),
                             rs.getString("chunk"),
                             rs.getInt("tips"),
-                            CONSOLES.SCHEMATICFor(rs.getString("size").toLowerCase()),
+                            CONSOLES.SCHEMATICFor(rs.getString("size").toLowerCase(Locale.ENGLISH)),
                             rs.getBoolean("abandoned"),
                             companions,
                             rs.getString("save_sign"),

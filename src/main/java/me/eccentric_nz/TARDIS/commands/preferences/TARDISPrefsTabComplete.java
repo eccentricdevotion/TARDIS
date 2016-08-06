@@ -34,7 +34,6 @@ import org.bukkit.command.TabCompleter;
  */
 public class TARDISPrefsTabComplete extends TARDISCompleter implements TabCompleter {
 
-    private final TARDIS plugin;
     private final ImmutableList<String> ROOT_SUBS = ImmutableList.of("auto", "auto_powerup", "auto_siege", "build", "beacon", "ctm", "difficulty", "dnd", "eps", "eps_message", "farm", "flight", "floor", "hads", "hads_type", "hum", "isomorphic", "junk", "key", "key_menu", "lamp", "language", "lanterns", "minecart", "policebox_textures", "quotes", "renderer", "sfx", "siege_floor", "siege_wall", "sign", "sonic", "submarine", "telepathy", "travelbar", "wall", "wool_lights");
     private final ImmutableList<String> DIFF_SUBS = ImmutableList.of("easy", "hard");
     private final ImmutableList<String> ONOFF_SUBS = ImmutableList.of("on", "off");
@@ -46,7 +45,6 @@ public class TARDISPrefsTabComplete extends TARDISCompleter implements TabComple
     private final ImmutableList<String> LANGUAGE_SUBS = ImmutableList.of("ARABIC", "BULGARIAN", "CATALAN", "CHINESE_SIMPLIFIED", "CHINESE_TRADITIONAL", "CZECH", "DANISH", "DUTCH", "ENGLISH", "ESTONIAN", "FINNISH", "FRENCH", "GERMAN", "GREEK", "HAITIAN_CREOLE", "HEBREW", "HINDI", "HMONG_DAW", "HUNGARIAN", "INDONESIAN", "ITALIAN", "JAPANESE", "KOREAN", "LATVIAN", "LITHUANIAN", "MALAY", "NORWEGIAN", "PERSIAN", "POLISH", "PORTUGUESE", "ROMANIAN", "RUSSIAN", "SLOVAK", "SLOVENIAN", "SPANISH", "SWEDISH", "THAI", "TURKISH", "UKRAINIAN", "URDU", "VIETNAMESE");
 
     public TARDISPrefsTabComplete(TARDIS plugin) {
-        this.plugin = plugin;
         HashMap<String, Pair> map = new TARDISWalls().blocks;
         List<String> mats = new ArrayList<String>();
         for (String key : map.keySet()) {

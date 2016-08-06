@@ -138,10 +138,10 @@ public class TARDISPrefsCommands implements CommandExecutor {
                         qf.doInsert("player_prefs", set);
                     }
                     if (pref.equals("hads_type")) {
-                        return new TARDISHadsTypeCommand(plugin).setHadsPref(player, args, qf);
+                        return new TARDISHadsTypeCommand().setHadsPref(player, args, qf);
                     }
                     if (pref.equals("hum")) {
-                        return new TARDISHumCommand(plugin).setHumPref(player, args, qf);
+                        return new TARDISHumCommand().setHumPref(player, args, qf);
                     }
                     if (pref.equals("key")) {
                         return new TARDISSetKeyCommand(plugin).setKeyPref(player, args, qf);
@@ -153,19 +153,19 @@ public class TARDISPrefsCommands implements CommandExecutor {
                         return new TARDISSetLampCommand(plugin).setLampPref(player, args, qf);
                     }
                     if (pref.equals("language")) {
-                        return new TARDISSetLanguageCommand(plugin).setLanguagePref(player, args, qf);
+                        return new TARDISSetLanguageCommand().setLanguagePref(player, args, qf);
                     }
                     if (pref.equals("isomorphic")) {
                         return new TARDISIsomorphicCommand(plugin).toggleIsomorphicControls(player, args, qf);
                     }
                     if (pref.equals("eps_message")) {
-                        return new TARDISEPSMessageCommand(plugin).setMessage(player, args, qf);
+                        return new TARDISEPSMessageCommand().setMessage(player, args, qf);
                     }
                     if (pref.equals("wall") || pref.equals("floor") || pref.equals("siege_wall") || pref.equals("siege_floor")) {
                         return new TARDISFloorCommand(plugin).setFloorOrWallBlock(player, args, qf);
                     }
                     if (pref.equals("flight")) {
-                        return new TARDISSetFlightCommand(plugin).setMode(player, args, qf);
+                        return new TARDISSetFlightCommand().setMode(player, args, qf);
                     }
                     if (pref.equals("difficulty")) {
                         return new TARDISSetDifficultyCommand(plugin).setDiff(player, args, qf);

@@ -43,7 +43,7 @@ public class TARDISManualFlightRunnable implements Runnable {
     private final List<Location> target;
     private final List<String> controls = Arrays.asList("Helmic Regulator", "Astrosextant Rectifier", "Gravitic Anomaliser", "Absolute Tesseractulator");
     private int taskID;
-    private final int loops = 10;
+    private static final int LOOPS = 10;
     private int i = 0;
     private final Random random = new Random();
     private final Player player;
@@ -63,7 +63,7 @@ public class TARDISManualFlightRunnable implements Runnable {
     public void run() {
         // always add them to the tracker, in case they sit there and do nothing...
         plugin.getTrackerKeeper().getCount().put(uuid, 0);
-        if (i < loops) {
+        if (i < LOOPS) {
             i++;
             if (target.size() < 4) {
                 TARDISMessage.send(player, "FLIGHT_BAD");
