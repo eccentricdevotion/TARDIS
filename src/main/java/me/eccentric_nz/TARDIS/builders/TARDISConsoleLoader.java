@@ -57,16 +57,16 @@ public class TARDISConsoleLoader {
         CONSOLES.getBY_NAMES().put("ELEVENTH", new SCHEMATIC("EMERALD_BLOCK", "eleventh", "11th Doctor's Console", ConsoleSize.TALL, true, true, false));
         // ENDER schematic designed by ToppanaFIN (player at thatsnotacreeper.com)
         CONSOLES.getBY_NAMES().put("ENDER", new SCHEMATIC("PURPUR_BLOCK", "ender", "Ender Console", ConsoleSize.SMALL, true, true, false));
+        // MASTER's schematic designed by shadowhawk14269 (while playing at pvpcraft.ca)
+        CONSOLES.getBY_NAMES().put("MASTER", new SCHEMATIC("NETHER_BRICK", "master", "The Master's Console", ConsoleSize.TALL, true, false, false));
         CONSOLES.getBY_NAMES().put("PLANK", new SCHEMATIC("BOOKSHELF", "plank", "Wood Console", ConsoleSize.SMALL, false, false, false));
+        // PYRAMID schematic designed by airomis (player at thatsnotacreeper.com)
+        CONSOLES.getBY_NAMES().put("PYRAMID", new SCHEMATIC("SANDSTONE_STAIRS", "pyramid", "A Sandstone Pyramid Console", ConsoleSize.SMALL, true, false, false));
         CONSOLES.getBY_NAMES().put("REDSTONE", new SCHEMATIC("REDSTONE_BLOCK", "redstone", "Redstone Console", ConsoleSize.MEDIUM, true, false, false));
         CONSOLES.getBY_NAMES().put("STEAMPUNK", new SCHEMATIC("COAL_BLOCK", "steampunk", "Steampunk Console", ConsoleSize.SMALL, true, false, false));
         CONSOLES.getBY_NAMES().put("TOM", new SCHEMATIC("LAPIS_BLOCK", "tom", "4th Doctor's Console", ConsoleSize.SMALL, false, false, false));
         CONSOLES.getBY_NAMES().put("TWELFTH", new SCHEMATIC("PRISMARINE", "twelfth", "12th Doctor's Console", ConsoleSize.MEDIUM, true, true, false));
         CONSOLES.getBY_NAMES().put("WAR", new SCHEMATIC("STAINED_CLAY", "war", "War Doctor's Console", ConsoleSize.SMALL, true, false, false));
-        // PYRAMID schematic designed by airomis (player at thatsnotacreeper.com)
-        CONSOLES.getBY_NAMES().put("PYRAMID", new SCHEMATIC("SANDSTONE_STAIRS", "pyramid", "A Sandstone Pyramid Console", ConsoleSize.SMALL, true, false, false));
-        // MASTER's schematic designed by shadowhawk14269 (while playing at pvpcraft.ca)
-        CONSOLES.getBY_NAMES().put("MASTER", new SCHEMATIC("NETHER_BRICK", "master", "The Master's Console", ConsoleSize.TALL, true, false, false));
         for (final String console : plugin.getCustomConsolesConfig().getKeys(false)) {
             if (plugin.getCustomConsolesConfig().getBoolean(console + ".enabled")) {
                 // check that the .tschm file exists
