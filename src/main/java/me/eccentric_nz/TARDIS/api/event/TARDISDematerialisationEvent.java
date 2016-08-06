@@ -37,7 +37,7 @@ public final class TARDISDematerialisationEvent extends TARDISEvent {
      * Returns the Bukkit Location of the TARDIS exterior preset where it
      * dematerialise from.
      *
-     * @return
+     * @return the location of the dematerialisation event
      */
     public Location getLocation() {
         return location;

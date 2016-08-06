@@ -39,7 +39,7 @@ public final class TARDISDesktopThemeEvent extends TARDISEvent {
      * to determine the previous theme, the theme that the TARDIS is changing
      * to, the wall and floor block types using the object's getter methods.
      *
-     * @return
+     * @return the desktop theme data object
      */
     public TARDISUpgradeData getUpgradeData() {
         return upgradeData;
