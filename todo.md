@@ -1,16 +1,10 @@
 #TODO
 
-##Current bugfix version `3.6.2`
+##Current bugfix version `3.7-beta-1`
 1. Fix bugs!
 
-##Next minor version `3.7`  
+##Next minor version `3.7-beta-1`  
 1. Add other worlds (Silurian cave world, Gallifrey)?
-2. Add more API Events that other plugins can listen for?
-   * Sonic Screwdriver events
-   * Artron Energy event
-   * Mob farming / ejection events
-3. Add more API methods
-   * Initiate a desktop theme change - _this is problematic as the desktop could only be changed to one that is the same size (as there is no player interaction to decide if rooms should be jettisoned)_
 
 ##Future version `?+`
 * TARDIS Junk Mode - `/tprefs junk [wall|floor] [block_type]`?
@@ -18,6 +12,10 @@
 * SpongeAPI
 * Forge mod for custom items and blocks (to tie in with Sponge version)
 * Slimmer TARDIS option?
+* Add more API Events that other plugins can listen for?
+   * Sonic Screwdriver events
+   * Artron Energy event
+   * Mob farming / ejection events
 
 ##Resource Pack / TARDISWeepingAngels
 1. Something with an invisible Shulker passenger - or an invisible bat with a Shulker passemger (Toclafane?)
