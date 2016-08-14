@@ -16,6 +16,7 @@
  */
 package me.eccentric_nz.TARDIS.listeners;
 
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
@@ -42,6 +43,7 @@ import org.bukkit.entity.minecart.StorageMinecart;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.vehicle.VehicleBlockCollisionEvent;
+import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.InventoryHolder;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.util.Vector;
@@ -65,7 +67,6 @@ public class TARDISMinecartListener implements Listener {
             Material mat = b.getType();
             if (mat.equals(Material.IRON_DOOR_BLOCK) || mat.equals(Material.FENCE)) {
                 Vehicle minecart = event.getVehicle();
-                ItemStack[] inv = ((InventoryHolder) minecart).getInventory().getContents();
                 String[] data = null;
                 UUID playerUUID = null;
                 int id = 0;
@@ -153,6 +154,9 @@ public class TARDISMinecartListener implements Listener {
                             } else {
                                 plugin.getGeneralKeeper().getTardisChunkList().remove(w.getChunkAt(in_out));
                             }
+                            Inventory inventory = ((InventoryHolder) minecart).getInventory();
+                            ItemStack[] inv = Arrays.copyOf(inventory.getContents(), inventory.getSize());
+                            inventory.clear();
                             teleportMinecart(minecart, in_out, d, inv, minecart.getType());
                             shouldPrevent = false;
                     }

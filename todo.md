@@ -5,6 +5,7 @@
 
 ##Next minor version `3.7-beta-1`  
 1. Add other worlds (Silurian cave world, Gallifrey)?
+2. [Smelting room](https://dev.bukkit.org/bukkit-plugins/tardis/tickets/1371-smelting-room/)
 
 ##Future version `?+`
 * TARDIS Junk Mode - `/tprefs junk [wall|floor] [block_type]`?
