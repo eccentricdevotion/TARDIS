@@ -27,6 +27,10 @@ public class TARDISPerWorldInventoryChecker {
         PerWorldInventory pwi = (PerWorldInventory) Bukkit.getServer().getPluginManager().getPlugin("PerWorldInventory");
         GroupManager gm = pwi.getGroupManager();
         Group gf = gm.getGroupFromWorld(from);
-        return (gf.containsWorld(to));
+        if (gf == null) {
+            return true;
+        } else {
+            return (gf.containsWorld(to));
+        }
     }
 }
