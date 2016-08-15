@@ -203,6 +203,9 @@ permissions:
       tardis.room.workshop: true
       tardis.room.zero: true
     default: op
+  tardis.jettison:
+    description: Allow players to use the /tardis jettison command.
+    default: op
   tardis.gravity:
     description: Allow players to use the /tardisgravity command.
     default: op

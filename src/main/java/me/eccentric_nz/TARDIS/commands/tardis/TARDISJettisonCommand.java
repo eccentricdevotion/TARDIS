@@ -38,7 +38,7 @@ public class TARDISJettisonCommand {
     }
 
     public boolean startJettison(Player player, String[] args) {
-        if (player.hasPermission("tardis.room")) {
+        if (player.hasPermission("tardis.jettison")) {
             if (args.length < 2) {
                 TARDISMessage.send(player, "TOO_FEW_ARGS");
                 return false;
