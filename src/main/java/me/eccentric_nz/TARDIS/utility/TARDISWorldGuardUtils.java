@@ -134,7 +134,7 @@ public class TARDISWorldGuardUtils {
         dd.addPlayer(p.getName());
         region.setOwners(dd);
         HashMap<Flag<?>, Object> flags = new HashMap<Flag<?>, Object>();
-        flags.put(DefaultFlag.TNT, State.DENY);
+        //flags.put(DefaultFlag.TNT, State.DENY);
         flags.put(DefaultFlag.ENDER_BUILD, State.DENY);
         flags.put(DefaultFlag.FIRE_SPREAD, State.DENY);
         flags.put(DefaultFlag.LAVA_FIRE, State.DENY);
@@ -173,7 +173,7 @@ public class TARDISWorldGuardUtils {
         } else {
             flags.put(DefaultFlag.BUILD, State.DENY);
         }
-        flags.put(DefaultFlag.TNT, State.DENY);
+        //flags.put(DefaultFlag.TNT, State.DENY);
         flags.put(DefaultFlag.FIRE_SPREAD, State.DENY);
         flags.put(DefaultFlag.LAVA_FIRE, State.DENY);
         flags.put(DefaultFlag.LAVA_FLOW, State.DENY);
