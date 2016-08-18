@@ -1,0 +1,195 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="chrome=1">
+<title>TARDIS: Control Menu</title>
+<link rel="stylesheet" href="stylesheets/styles.css">
+<link rel="stylesheet" href="stylesheets/pygment_trac.css">
+<style type="text/css">
+td img {
+	width: 40px;
+	height: 40px;
+}
+</style>
+<script src="javascripts/scale.fix.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+<!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-53340539-1', 'auto');
+  ga('send', 'pageview');
+</script>
+</head>
+<body>
+<div class="wrapper">
+    <header>
+        <h1>TARDIS</h1>
+        <p>A Bukkit plugin for all Doctor Who fans &mdash; create and use a TARDIS! It&rsquo;s bigger on the inside!</p>
+        <p class="view"><a href="https://github.com/eccentricdevotion/TARDIS">View the Project on GitHub <small>eccentricdevotion/TARDIS</small></a></p>
+        <ul>
+            <li><a href="/TARDIS/">Back <strong>home</strong></a></li>
+            <li><a href="site-map.html"><strong>Index</strong> File</a></li>
+        </ul>
+    </header>
+    <section>
+        <h1>The TARDIS Control Menu</h1>
+        <p>From TARDIS version 3.6 and higher, the TARDIS Control Menu is the main way to access the TARDIS&rsquo;s functions. Previously the TARDIS had multiple signs scattered throughout the console to access its various GUIs. The TARDIS Control Menu brings them all together in one place.</p>
+        <p>The TARDIS Control Menu sign displays information about the TARDIS&rsquo;s location and Artron Energy levels.</p>
+        <p><img src="images/docs/control_menu_sign.jpg" alt="TARDIS Control Menu sign" /></p>
+        <p>If you have an existing TARDIS without the Control Menu, you can add it by placing a sign where you want the Control Menu to be, and running the command:</p>
+        <pre><code>/tardis update control</code></pre>
+        <p>Click on the sign and its position will be added to the TARDIS database.</p>
+        <h2>Control Menu use</h2>
+        <p>To use the TARDIS Control Menu, right-click on the Control Menu sign.</p>
+        <p><img src="images/docs/control_menu.jpg" alt="TARDIS Control Menu" /></p>
+        <p>The Control Menu opens, giving you a range of buttons grouped by type / colour. Hover each button to see what it does. The button functions are explained below:</p>
+        <table>
+            <tr>
+                <th>Button</th>
+                <th style="width:40px;">Icon</th>
+                <th>Action</th>
+            </tr>
+            <tr>
+                <th colspan="3">TARDIS Travel functions</th>
+            </tr>
+            <tr>
+                <td>Random Location</td>
+                <td><img src="https://github.com/eccentricdevotion/TARDIS-MCP/blob/master/assets/minecraft/mcpatcher/cit/control_panel/random_button.png?raw=true" alt="rand"></td>
+                <td>Sets a random destination based on the position of the console <em>world, x, z</em> and <em>multiplier</em> repeaters.</td>
+            </tr>
+            <tr>
+                <td>Saved Locations</td>
+                <td><img src="https://github.com/eccentricdevotion/TARDIS-MCP/blob/master/assets/minecraft/mcpatcher/cit/control_panel/saves_button.png?raw=true" alt="saves"></td>
+                <td>Opens the TARDIS Saves GUI.</td>
+            </tr>
+            <tr>
+                <td>Fast Return</td>
+                <td><img src="https://github.com/eccentricdevotion/TARDIS-MCP/blob/master/assets/minecraft/mcpatcher/cit/control_panel/back_button.png?raw=true" alt="back"></td>
+                <td>Sets the destination to the last location the TARDIS travelled to.</td>
+            </tr>
+            <tr>
+                <td>TARDIS Areas</td>
+                <td><img src="https://github.com/eccentricdevotion/TARDIS-MCP/blob/master/assets/minecraft/mcpatcher/cit/control_panel/areas_button.png?raw=true" alt="areas"></td>
+                <td>Opens the TARDIS Areas GUI.</td>
+            </tr>
+            <tr>
+                <td>Destination Terminal</td>
+                <td><img src="https://github.com/eccentricdevotion/TARDIS-MCP/blob/master/assets/minecraft/mcpatcher/cit/control_panel/dest_terminal.png?raw=true" alt="dest"></td>
+                <td>Opens the TARDIS Areas GUI.</td>
+            </tr>
+            <tr>
+                <th colspan="3">TARDIS Interior functions</th>
+            </tr>
+            <tr>
+                <td>Architectural Reconfiguration System</td>
+                <td><img src="https://github.com/eccentricdevotion/TARDIS-MCP/blob/master/assets/minecraft/mcpatcher/cit/control_panel/ars_button.png?raw=true" alt="ars"></td>
+                <td>Opens the Architectural Reconfiguration GUI.</td>
+            </tr>
+            <tr>
+                <td>Desktop Theme</td>
+                <td><img src="https://github.com/eccentricdevotion/TARDIS-MCP/blob/master/assets/minecraft/mcpatcher/cit/control_panel/theme_button.png?raw=true" alt="theme"></td>
+                <td>Opens the Desktop Theme GUI.</td>
+            </tr>
+            <tr>
+                <td>Power</td>
+                <td><img src="https://github.com/eccentricdevotion/TARDIS-MCP/blob/master/assets/minecraft/mcpatcher/cit/control_panel/power_on.png?raw=true" alt="power"></td>
+                <td>Toggles the TARDIS power on and off.</td>
+            </tr>
+            <tr>
+                <td>Light Switch</td>
+                <td><img src="https://github.com/eccentricdevotion/TARDIS-MCP/blob/master/assets/minecraft/mcpatcher/cit/control_panel/on_switch.png?raw=true" alt="lights"></td>
+                <td>Toggles the TARDIS lamps on and off.</td>
+            </tr>
+            <tr>
+                <td>Toggle blocks behind door</td>
+                <td><img src="https://github.com/eccentricdevotion/TARDIS-MCP/blob/master/assets/minecraft/mcpatcher/cit/control_panel/toggle_open.png?raw=true" alt="toggle"></td>
+                <td>Removes or places the wool behind the TARDIS door.</td>
+            </tr>
+            <tr>
+                <td>TARDIS Map</td>
+                <td><img src="https://github.com/eccentricdevotion/TARDIS-MCP/blob/master/assets/minecraft/mcpatcher/cit/control_panel/map_button.png?raw=true" alt="map"></td>
+                <td>Opens the TARDIS Map GUI.</td>
+            </tr>
+            <tr>
+                <th colspan="3">TARDIS Exterior functions</th>
+            </tr>
+            <tr>
+                <td>Chameleon Circuit</td>
+                <td><img src="https://github.com/eccentricdevotion/TARDIS-MCP/blob/master/assets/minecraft/mcpatcher/cit/control_panel/chameleon_button.png?raw=true" alt="cham"></td>
+                <td>Opens the Chameleon Circuit GUI.</td>
+            </tr>
+            <tr>
+                <td>Siege Mode</td>
+                <td><img src="https://github.com/eccentricdevotion/TARDIS-MCP/blob/master/assets/minecraft/mcpatcher/cit/control_panel/siege_on.png?raw=true" alt="siege"></td>
+                <td>Toggles Siege Mode on and off.</td>
+            </tr>
+            <tr>
+                <td>Hide</td>
+                <td><img src="https://github.com/eccentricdevotion/TARDIS-MCP/blob/master/assets/minecraft/mcpatcher/cit/control_panel/hide_button.png?raw=true" alt="hide"></td>
+                <td>Hides the TARDIS exterior.</td>
+            </tr>
+            <tr>
+                <td>Rebuild</td>
+                <td><img src="https://github.com/eccentricdevotion/TARDIS-MCP/blob/master/assets/minecraft/mcpatcher/cit/control_panel/rebuild_button.png?raw=true" alt="rebuild"></td>
+                <td>Rebuilds the TARDIS exterior.</td>
+            </tr>
+            <tr>
+                <td>Direction</td>
+                <td><img src="https://github.com/eccentricdevotion/TARDIS-MCP/blob/master/assets/minecraft/mcpatcher/cit/control_panel/direction_button.png?raw=true" alt="nwse"></td>
+                <td>Changes the direction the TARDIS exterior faces.</td>
+            </tr>
+            <tr>
+                <td>Temporal Locator</td>
+                <td><img src="https://github.com/eccentricdevotion/TARDIS-MCP/blob/master/assets/minecraft/mcpatcher/cit/control_panel/temporal_button.png?raw=true" alt="temporal"></td>
+                <td>Opens the Temporal Locator GUI.</td>
+            </tr>
+            <tr>
+                <th colspan="3">TARDIS Information functions</th>
+            </tr>
+            <tr>
+                <td>Artron Energy Levels</td>
+                <td><img src="https://github.com/eccentricdevotion/TARDIS-MCP/blob/master/assets/minecraft/mcpatcher/cit/control_panel/artron_button.png?raw=true" alt="artron"></td>
+                <td>Displays the current TARDIS Artron Energy levels.</td>
+            </tr>
+            <tr>
+                <td>Scanner</td>
+                <td><img src="https://github.com/eccentricdevotion/TARDIS-MCP/blob/master/assets/minecraft/mcpatcher/cit/control_panel/scan_button.png?raw=true" alt="scan"></td>
+                <td>Performs a scan of the TARDIS current (or next if set) destination.</td>
+            </tr>
+            <tr>
+                <td>TARDIS Information System</td>
+                <td><img src="https://github.com/eccentricdevotion/TARDIS-MCP/blob/master/assets/minecraft/mcpatcher/cit/control_panel/info_button.png?raw=true" alt="hide"></td>
+                <td>Opens the TARDIS Information System chat interface.</td>
+            </tr>
+            <tr>
+                <th colspan="3">Miscellaneous functions</th>
+            </tr>
+            <tr>
+                <td>Zero Room transmat</td>
+                <td><img src="https://github.com/eccentricdevotion/TARDIS-MCP/blob/master/assets/minecraft/mcpatcher/cit/control_panel/zero_button.png?raw=true" alt="artron"></td>
+                <td>Transmats the player into the Zero Room.</td>
+            </tr>
+            <tr>
+                <td>Player Preferences</td>
+                <td><img src="https://github.com/eccentricdevotion/TARDIS-MCP/blob/master/assets/minecraft/mcpatcher/cit/control_panel/prefs_button.png?raw=true" alt="scan"></td>
+                <td>Opens the Player Prefs Menu GUI.</td>
+            </tr>
+            <tr>
+                <td>Close</td>
+                <td><img src="https://github.com/eccentricdevotion/TARDIS-MCP/blob/master/assets/minecraft/mcpatcher/cit/close.png?raw=true" alt="close"></td>
+                <td>Close the TARDIS Control Menu GUI.</td>
+            </tr>
+        </table>
+    </section>
+</div>
+<footer>
+    <p>Project maintained by <a href="https://github.com/eccentricdevotion">eccentricdevotion</a></p>
+    <p>Hosted on GitHub Pages &mdash; Theme by <a href="https://github.com/orderedlist">orderedlist</a></p>
+</footer>
+<!--[if !IE]><script>fixScale(document);</script><![endif]-->
+</body>
+</html>
