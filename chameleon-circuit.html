@@ -29,38 +29,58 @@
             <li><a href="site-map.html"><strong>Index</strong> File</a></li>
         </ul>
     </header>
-    <section>
-        <p><a href="#video">Jump to video</a></p>
+    <section> 
         <h1>The Chameleon Circuit</h1>
-        <p>To make your TARDIS Police Box blend in with its surroundings you can use the Chameleon Circuit. The Chameleon Circuit will be created automatically when you make a new TARDIS, and is located on a wall sign on the TARDIS console.</p>
-        <p><img src="images/chameleon/sign.jpg" alt="Chameleon Circuit sign" /></p>
-        <p>If you have an existing TARDIS, you can add the Chameleon Circuit by placing a sign where you want the Chameleon Circuit to be, and running the command:</p>
-        <pre><code>/tardis update chameleon</code></pre>
-        <p>Click on the sign and its position will be added to the TARDIS database.</p>
+        <p>The Chameleon Circuit has changed in TARDIS version 3.7 and higher. The old Chameleon Circuit documentation can be found <a href="chameleon-circuit-legacy.html">here</a>.</p>
+        <p>To make your TARDIS Police Box blend in with its surroundings you can use the Chameleon Circuit. The Chameleon Circuit will be created automatically when you make a new TARDIS, and can be accessed from the TARDIS Control Menu sign.</p>
+        <p><img src="images/chameleon/control_menu.jpg" alt="TARDIS Control Menu" /></p>
         <h2>Using the circuit</h2>
-        <p>To use the Chameleon Circuit, right-click on the sign.</p>
-		<p>The Chameleon GUI opens, giving you a range of options. Hover each button to see what it does. The top row of buttons have special functions as explained below:</p>
-		<p><strong>Circuit button</strong> &mdash; use this to toggle the Chameleon Circuit on and off.</p>
-		<p><img src="images/chameleon/circuitonoff.jpg" alt="Toggle on / off" /></p>
-        <p>If the Chameleon circuit is <strong>ON</strong> and the current preset is a Police Box or submerged, the next time you time travel the TARDIS will blend in.</p>
-        <p><img src="https://dl.dropboxusercontent.com/u/53758864/chameleonoutside.jpg" alt="Chameleon circuit ON" /></p>
-		<p><strong>Apply button</strong> &mdash; use this to rebuild the TARDIS exterior with the currently selected Chameleon preset.</p>
-		<p><strong>Biome adaption button</strong> &mdash; use this to toggle biome adaption on and off. If ON, the TARDIS will choose a Chameleon preset suited to the biome that the TARDIS lands in (for example the swamp hut preset for the SWAMP biome).</p>
-		<p><img src="images/chameleon/morebuttons.jpg" alt="Apply and Biome Adaption buttons" /></p>
-		<h2>Chameleon presets</h2>
-		<p>The rest of the Chameleon GUI buttons are for Chameleon presets. You can see a what all the presets look like on the <a href="presets.html">Preset page</a>. Selecting one of the presets will change the appearance of the TARDIS exterior next time you time travel. To change the appearance immediately, use the Apply button.</p>
-		<p><img src="images/chameleon/page1.jpg" alt="Page 1 presets" /></p>
-		<p>There are two pages of presets, use the arrow button in the bottom right-hand corner to navigate between pages.</p>
-		<p><img src="images/chameleon/page2.jpg" alt="Page 2 presets" /></p>
-        <p>You can also create your own custom preset using the <a href="chameleon-construction.html">Chameleon construction GUI</a>.</p>
-        <h2>Shorting out the circuit</h2>
-        <p>If you want your Police Box to keep a certain chameleon appearance, you can run the following command while targeting the type of block you want to use:</p>
-        <pre><code>/tardis chameleon short</code></pre>
-        <p>Now each time the TARDIS travels, it will use the targeted block for the Police Box walls.</p>
-        <p>To repair the &lsquo;shorted&rsquo; Chameleon Circuit and reset the wall block back to BLUE WOOL, type:</p>
-        <pre><code>/tardis chameleon reset</code></pre>
-        <h3 id="video">Video</h3>
-        <iframe src="http://player.vimeo.com/video/59827874" width="600" height="366" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
+        <p>To use the Chameleon Circuit, right-click on the Control Menu sign, then click the Chameleon Circuit button.</p>
+        <p><img src="images/chameleon/new_circuit.jpg" alt="TARDIS Control Menu" /></p>
+        <p>The Chameleon GUI opens, giving you a range of options. Hover each button to see what it does. The button functions are explained below:</p>
+        <table>
+            <tr>
+                <th>Button</th>
+                <th>Icon</th>
+                <th>Action</th>
+            </tr>
+            <tr>
+                <td>Apply</td>
+                <td><img src="https://github.com/eccentricdevotion/TARDIS-MCP/blob/master/assets/minecraft/mcpatcher/cit/control_panel/apply_button.png?raw=true" alt="apply"></td>
+                <td>Use this to rebuild the TARDIS exterior with the current Chameleon settings.</td>
+            </tr>
+            <tr>
+                <td>Chameleon Circuit</td>
+                <td><img src="https://github.com/eccentricdevotion/TARDIS-MCP/blob/master/assets/minecraft/mcpatcher/cit/control_panel/chameleon_button.png?raw=true" alt="cham"></td>
+                <td>Toggle the Chameleon Circuit on or off. When OFF, the TARDIS exterior will revert to the FACTORY preset.</td>
+            </tr>
+            <tr>
+                <td>Adaptive</td>
+                <td><img src="https://github.com/eccentricdevotion/TARDIS-MCP/blob/master/assets/minecraft/mcpatcher/cit/control_panel/adapt_button.png?raw=true" alt="adapt"></td>
+                <td>Use this to make the Chameleon Circuit blend in with its environment. There are two modes you can choose from: BIOME and BLOCK. If set to BIOME the TARDIS will choose a Chameleon preset suited to the biome that the TARDIS lands in (for example the swamp hut preset for the SWAMP biome). If set to BLOCK, the TARDIS will scan the block at the next landing location and then change the wall block of the TARDIS to the same kind of block. BLOCK mode will only run if the previous Chameleon preset was set to NEW, OLD or SUBMERGED.</td>
+            </tr>
+            <tr>
+                <td>Invisible</td>
+                <td><img src="https://github.com/eccentricdevotion/TARDIS-MCP/blob/master/assets/minecraft/mcpatcher/cit/control_panel/invisible_button.png?raw=true" alt="invsbl"></td>
+                <td>Make the TARDIS <a href="invisibility.html">invisible</a>.</td>
+            </tr>
+            <tr>
+                <td>Shorted out</td>
+                <td><img src="https://github.com/eccentricdevotion/TARDIS-MCP/blob/master/assets/minecraft/mcpatcher/cit/control_panel/shorted_button.png?raw=true" alt="short"></td>
+                <td>Make the Chameleon Circuit malfunction and always choose the same appearance, for example: a Police Box. Clicking this button will open the Chameleon <a href="presets.html">Presets</a> GUI. Selecting one of the presets will change the appearance of the TARDIS exterior next time you time travel. To change the appearance immediately, use the Apply button.</td>
+            </tr>
+            <tr>
+                <td>Construct</td>
+                <td><img src="https://github.com/eccentricdevotion/TARDIS-MCP/blob/master/assets/minecraft/mcpatcher/cit/build.png?raw=true" alt="build"></td>
+                <td>Create your own custom preset using the <a href="chameleon-construction.html">Chameleon construction GUI</a>.</td>
+            </tr>
+            <tr>
+                <td>Close</td>
+                <td><img src="https://github.com/eccentricdevotion/TARDIS-MCP/blob/master/assets/minecraft/mcpatcher/cit/close.png?raw=true" alt="close"></td>
+                <td>Close the Chameleon Circuit GUI.</td>
+            </tr>
+        </table>
+        <p>Underneath the buttons are indicators for the current Chameleon settings, hover the mouse over the items to view details. A lime green wool block indicates the currently selected setting.</p>
     </section>
 </div>
 <footer>
