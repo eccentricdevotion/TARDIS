@@ -62,6 +62,8 @@ public class TARDISTabComplete extends TARDISCompleter implements TabCompleter {
             String sub = args[0];
             if (sub.equals("add") || sub.equals("remove")) {
                 return null;
+            } else if (sub.equals("archive")) {
+                return partial(lastArg, ARCHIVE_SUBS);
             } else if (sub.equals("chameleon")) {
                 return partial(lastArg, CHAM_SUBS);
             } else if (sub.equals("direction")) {
