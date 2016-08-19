@@ -1,0 +1,122 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="chrome=1">
+<title>TARDIS: Archiving consoles</title>
+<link rel="stylesheet" href="stylesheets/styles.css">
+<link rel="stylesheet" href="stylesheets/pygment_trac.css">
+<script src="javascripts/scale.fix.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+<!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-53340539-1', 'auto');
+  ga('send', 'pageview');
+</script>
+</head>
+<body>
+<div class="wrapper">
+    <header>
+        <h1>TARDIS</h1>
+        <p>A Bukkit plugin for all Doctor Who fans &mdash; create and use a TARDIS! It&rsquo;s bigger on the inside!</p>
+        <p class="view"><a href="https://github.com/eccentricdevotion/TARDIS">View the Project on GitHub <small>eccentricdevotion/TARDIS</small></a></p>
+        <ul>
+            <li><a href="/TARDIS/">Back <strong>home</strong></a></li>
+            <li><a href="site-map.html"><strong>Index</strong> File</a></li>
+        </ul>
+    </header>
+    <section>
+        <h1>Archiving TARDIS consoles</h1>
+        <p>In TARDIS version 3.7 and higher you can archive a custom TARDIS console for use in the Desktop Theme GUI.</p>
+        <h3>Permission</h3>
+        <p>Players will need the permission <code>tardis.archive</code></p>
+        <h3 id="config">Config options</h3>
+        <style type="text/css">
+			table, table code { font-size:85%; }
+			td { vertical-align:top; }
+			td.noborder { border-bottom: none; }
+			tr.coption { background-color: #eee; }
+		</style>
+        <table>
+            <tr>
+                <th>Option</th>
+                <th>Type</th>
+                <th>Default Value</th>
+            </tr>
+            <tr>
+                <th colspan="4">archive:</th>
+            </tr>
+            <tr class="coption">
+                <td class="noborder">&nbsp;&nbsp;&nbsp;&nbsp;<code>enabled</code></td>
+                <td class="noborder">boolean</td>
+                <td class="noborder"><code>true</code></td>
+            </tr>
+            <tr>
+                <td>&nbsp;</td>
+                <td colspan="2">Sets whether archiving of consoles is allowed on the server.</td>
+            </tr>
+            <tr class="coption">
+                <td class="noborder">&nbsp;&nbsp;&nbsp;&nbsp;<code>limit</code></td>
+                <td class="noborder">integer</td>
+                <td class="noborder"><code>3</code></td>
+            </tr>
+            <tr>
+                <td>&nbsp;</td>
+                <td colspan="2">Sets the number of archives that can be saved per player.</td>
+            </tr>
+        </table>
+        <h3>Commands</h3>
+        <p></p>
+        <pre><code>/tardis archive [scan|add|remove|update|description] [name]</code></pre>
+        <p><code>/tardis archive scan</code> &mdash; scan the current console to check whether it can successfully be archived. You should run this command before using <code>/tardis archive add [name]</code></p>
+        <p><code>/tardis archive add [name]</code> &mdash; save an archived schematic with the given name.</p>
+        <p><code>/tardis archive remove [name]</code> &mdash; delete an archived schematic with the given name.</p>
+        <p><code>/tardis archive update [name]</code> &mdash; update an archived schematic with the given name if you have made new / extra changes to the console.</p>
+        <p><code>/tardis archive description [name]</code> &mdash; set the descripton text of the archived console that shows in the TARDIS Archive GUI.</p>
+        <h2>The GUI</h2>
+        <p>The GUI is accessed by clicking the Archive Consoles button in the Desktop Theme GUI.</p>
+        <p><img src="images/docs/archive_button.jpg" alt="Archive button" /></p>
+        <p>The TARDIS Archive GUI opens, and shows any consoles that have already been saved along with three buttons. The button functions are explained below:</p>
+        <p><img src="images/docs/archive_gui.jpg" alt="TARDIS Archive GUI" /></p>
+        <table>
+            <tr>
+                <th>Button</th>
+                <th>Icon</th>
+                <th>Action</th>
+            </tr>
+            <tr>
+                <td>Console(s)</td>
+                <td>Stained clay</td>
+                <td>Clicking this changes the desktop theme to the selected archived console.</td>
+            </tr>
+            <tr>
+                <td>Scan</td>
+                <td><img src="https://github.com/eccentricdevotion/TARDIS-MCP/blob/master/assets/minecraft/mcpatcher/cit/scan_button.png?raw=true" alt="scan"></td>
+                <td>Use this to scan the current console to check whether it can successfully be archived.</td>
+            </tr>
+            <tr>
+                <td>Archive</td>
+                <td><img src="https://github.com/eccentricdevotion/TARDIS-MCP/blob/master/assets/minecraft/mcpatcher/cit/archive_button.png?raw=true" alt="archive"></td>
+                <td>Archives the current console. A random console name will be generated &mdash; if you want to name the console yourself, use the <code>/tardis archive add [name]</code> command.</td>
+            </tr>
+            <tr>
+                <td>Close</td>
+                <td><img src="https://github.com/eccentricdevotion/TARDIS-MCP/blob/master/assets/minecraft/mcpatcher/cit/close.png?raw=true" alt="close"></td>
+                <td>Close the TARDIS Archive GUI.</td>
+            </tr>
+        </table>
+        <h2>Caveat</h2>
+        <p>Due to the complexity of creating schematics from player created designs there is one major restriction to creating console archives. This is that the console being archived must be the <em>same size</em> as the console that the TARDIS was originally created with.</p>
+    </section>
+</div>
+<footer>
+    <p>Project maintained by <a href="https://github.com/eccentricdevotion">eccentricdevotion</a></p>
+    <p>Hosted on GitHub Pages &mdash; Theme by <a href="https://github.com/orderedlist">orderedlist</a></p>
+</footer>
+<!--[if !IE]><script>fixScale(document);</script><![endif]-->
+</body>
+</html>
