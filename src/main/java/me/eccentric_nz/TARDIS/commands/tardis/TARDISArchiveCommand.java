@@ -193,11 +193,11 @@ public class TARDISArchiveCommand {
         if (sub.equals("description")) {
             // get description
             StringBuilder sb = new StringBuilder();
-            for (int i = 4; i < args.length; i++) {
-                if (i != 4) {
-                    sb.append(args[i]);
-                } else {
+            for (int i = 3; i < args.length; i++) {
+                if (i != 3) {
                     sb.append(" ").append(args[i]);
+                } else {
+                    sb.append(args[i]);
                 }
             }
             // update description
