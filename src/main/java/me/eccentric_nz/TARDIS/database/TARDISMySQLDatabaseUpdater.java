@@ -41,6 +41,7 @@ public class TARDISMySQLDatabaseUpdater {
     private final List<String> countupdates = new ArrayList<String>();
     private final List<String> portalsupdates = new ArrayList<String>();
     private final List<String> inventoryupdates = new ArrayList<String>();
+    private final List<String> chameleonupdates = new ArrayList<String>();
     private final HashMap<String, String> uuidUpdates = new HashMap<String, String>();
     private final Statement statement;
     private final TARDIS plugin;
@@ -93,6 +94,10 @@ public class TARDISMySQLDatabaseUpdater {
         portalsupdates.add("abandoned int(1) DEFAULT '0'");
         inventoryupdates.add("attributes text");
         inventoryupdates.add("armour_attributes text");
+        chameleonupdates.add("line1 varchar(48) DEFAULT ''");
+        chameleonupdates.add("line2 varchar(48) DEFAULT ''");
+        chameleonupdates.add("line3 varchar(48) DEFAULT ''");
+        chameleonupdates.add("line4 varchar(48) DEFAULT ''");
     }
 
     /**
@@ -168,6 +173,16 @@ public class TARDISMySQLDatabaseUpdater {
                     i++;
                     String v_alter = "ALTER TABLE " + prefix + "inventories ADD " + v;
                     statement.executeUpdate(v_alter);
+                }
+            }
+            for (String h : chameleonupdates) {
+                String[] hsplit = h.split(" ");
+                String h_query = "SHOW COLUMNS FROM " + prefix + "chameleon LIKE '" + hsplit[0] + "'";
+                ResultSet rsh = statement.executeQuery(h_query);
+                if (!rsh.next()) {
+                    i++;
+                    String h_alter = "ALTER TABLE " + prefix + "chameleon ADD " + h;
+                    statement.executeUpdate(h_alter);
                 }
             }
             // update data type for lamp in player_prefs

@@ -119,6 +119,9 @@ public class TARDISCommands implements CommandExecutor {
                 if (args[0].equalsIgnoreCase("comehere")) {
                     return new TARDISComehereCommand(plugin).doComeHere(player);
                 }
+                if (args[0].equalsIgnoreCase("construct")) {
+                    return new TARDISConstructCommand(plugin).setLine(player, args);
+                }
                 if (args[0].equalsIgnoreCase("cube")) {
                     return new TARDISCubeCommand(plugin).whoHasCube(player);
                 }

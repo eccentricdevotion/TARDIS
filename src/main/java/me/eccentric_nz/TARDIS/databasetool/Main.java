@@ -162,7 +162,7 @@ public class Main {
                                     bw.write(str);
                                     break;
                                 case chameleon:
-                                    str = String.format(SQL.VALUES.get(i), rs.getInt("chameleon_id"), rs.getInt("tardis_id"), rs.getString("blueprintID"), rs.getString("blueprintData"), rs.getString("stainID"), rs.getString("stainData"), rs.getString("glassID"), rs.getString("glassData")) + end;
+                                    str = String.format(SQL.VALUES.get(i), rs.getInt("chameleon_id"), rs.getInt("tardis_id"), rs.getString("blueprintID"), rs.getString("blueprintData"), rs.getString("stainID"), rs.getString("stainData"), rs.getString("glassID"), rs.getString("glassData"), rs.getString("line1"), rs.getString("line2"), rs.getString("line3"), rs.getString("line4")) + end;
                                     bw.write(str);
                                     break;
                                 case chunks:

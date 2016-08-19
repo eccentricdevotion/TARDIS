@@ -44,6 +44,7 @@ public class TARDISSQLiteDatabaseUpdater {
     private final List<String> prefsupdates = new ArrayList<String>();
     private final List<String> tardisupdates = new ArrayList<String>();
     private final List<String> inventoryupdates = new ArrayList<String>();
+    private final List<String> chameleonupdates = new ArrayList<String>();
     private final List<String> uuidUpdates = Arrays.asList("achievements", "ars", "player_prefs", "storage", "t_count", "tardis", "travellers");
     private final long now = System.currentTimeMillis();
     private final Statement statement;
@@ -133,6 +134,10 @@ public class TARDISSQLiteDatabaseUpdater {
         tardisupdates.add("zero TEXT DEFAULT ''");
         inventoryupdates.add("attributes TEXT DEFAULT ''");
         inventoryupdates.add("armour_attributes TEXT DEFAULT ''");
+        chameleonupdates.add("line1 TEXT DEFAULT ''");
+        chameleonupdates.add("line2 TEXT DEFAULT ''");
+        chameleonupdates.add("line3 TEXT DEFAULT ''");
+        chameleonupdates.add("line4 TEXT DEFAULT ''");
     }
 
     /**
@@ -268,6 +273,16 @@ public class TARDISSQLiteDatabaseUpdater {
                     i++;
                     String v_alter = "ALTER TABLE " + prefix + "inventories ADD " + v;
                     statement.executeUpdate(v_alter);
+                }
+            }
+            for (String h : chameleonupdates) {
+                String[] hsplit = h.split(" ");
+                String h_query = "SELECT sql FROM sqlite_master WHERE tbl_name = '" + prefix + "chameleon' AND sql LIKE '%" + hsplit[0] + "%'";
+                ResultSet rsh = statement.executeQuery(h_query);
+                if (!rsh.next()) {
+                    i++;
+                    String h_alter = "ALTER TABLE " + prefix + "chameleon ADD " + h;
+                    statement.executeUpdate(h_alter);
                 }
             }
             // add biome to current location

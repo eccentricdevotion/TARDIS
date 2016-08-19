@@ -81,7 +81,7 @@ public class TARDISSQLiteDatabase {
             statement.executeUpdate(queryProtectBlocks);
 
             // Table structure for table 'chameleon'
-            String queryChameleon = "CREATE TABLE IF NOT EXISTS " + prefix + "chameleon (chameleon_id INTEGER PRIMARY KEY NOT NULL, tardis_id INTEGER, blueprintID TEXT, blueprintData TEXT, stainID TEXT, stainData TEXT, glassID TEXT, glassData TEXT)";
+            String queryChameleon = "CREATE TABLE IF NOT EXISTS " + prefix + "chameleon (chameleon_id INTEGER PRIMARY KEY NOT NULL, tardis_id INTEGER, blueprintID TEXT, blueprintData TEXT, stainID TEXT, stainData TEXT, glassID TEXT, glassData TEXT, line1 TEXT DEFAULT '', line2 TEXT DEFAULT '', line3 TEXT DEFAULT '', line4 TEXT DEFAULT '')";
             statement.executeUpdate(queryChameleon);
 
             // Table structure for table 'chunks'

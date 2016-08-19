@@ -29,6 +29,7 @@ import me.eccentric_nz.TARDIS.chameleon.TARDISChameleonColumn;
 import me.eccentric_nz.TARDIS.chameleon.TARDISConstructColumn;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetBlocks;
+import me.eccentric_nz.TARDIS.database.ResultSetConstructSign;
 import me.eccentric_nz.TARDIS.database.ResultSetDoors;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import me.eccentric_nz.TARDIS.database.ResultSetTravellers;
@@ -439,6 +440,21 @@ public class TARDISMaterialisationPreset implements Runnable {
                                                     s.setLine(1, sign_colour + line1);
                                                     s.setLine(2, sign_colour + line2);
                                                     s.setLine(3, sign_colour + "HOT ROD");
+                                                    break;
+                                                case CONSTRUCT:
+                                                    // get sign text from database
+                                                    ResultSetConstructSign rscs = new ResultSetConstructSign(plugin, bd.getTardisID());
+                                                    if (rscs.resultSet()) {
+                                                        if (rscs.getLine1().isEmpty() && rscs.getLine2().isEmpty() && rscs.getLine3().isEmpty() && rscs.getLine4().isEmpty()) {
+                                                            s.setLine(1, sign_colour + line1);
+                                                            s.setLine(2, sign_colour + line2);
+                                                        } else {
+                                                            s.setLine(0, rscs.getLine1());
+                                                            s.setLine(1, rscs.getLine2());
+                                                            s.setLine(2, rscs.getLine3());
+                                                            s.setLine(3, rscs.getLine4());
+                                                        }
+                                                    }
                                                     break;
                                                 case CUSTOM:
                                                     break;

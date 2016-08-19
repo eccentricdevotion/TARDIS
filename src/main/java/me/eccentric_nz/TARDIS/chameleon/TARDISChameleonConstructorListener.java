@@ -179,7 +179,6 @@ public class TARDISChameleonConstructorListener extends TARDISMenuListener imple
                                     close(player);
                                     break;
                                 case 7:
-                                    plugin.debug("loading from db");
                                     HashMap<String, Object> wherecl = new HashMap<String, Object>();
                                     wherecl.put("tardis_id", id);
                                     ResultSetChameleon rscl = new ResultSetChameleon(plugin, wherecl);
