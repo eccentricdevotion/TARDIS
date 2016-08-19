@@ -171,6 +171,12 @@ public class TARDISSiegeListener implements Listener {
             TARDISMessage.send(p, "SIEGE_NO_TARDIS");
             return;
         }
+        String w = p.getLocation().getWorld().getName();
+        if (!plugin.getConfig().getBoolean("worlds." + w)) {
+            event.setCancelled(true);
+            TARDISMessage.send(p, "SIEGE_NO_WORLD");
+            return;
+        }
         item.setInvulnerable(true);
         plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
             @Override
@@ -229,6 +235,12 @@ public class TARDISSiegeListener implements Listener {
         if (plugin.getUtils().inTARDISWorld(loc)) {
             event.setCancelled(true);
             TARDISMessage.send(p, "SIEGE_NO_TARDIS");
+            return;
+        }
+        String w = p.getLocation().getWorld().getName();
+        if (!plugin.getConfig().getBoolean("worlds." + w)) {
+            event.setCancelled(true);
+            TARDISMessage.send(p, "SIEGE_NO_WORLD");
             return;
         }
         // check there is room to expand to a police box
