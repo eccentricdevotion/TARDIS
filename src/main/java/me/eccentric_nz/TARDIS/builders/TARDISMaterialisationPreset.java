@@ -181,7 +181,7 @@ public class TARDISMaterialisationPreset implements Runnable {
                 // first run - remember blocks
                 if (i == 1) {
                     // if configured and it's a Whovian preset set biome
-                    setBiome(world, x, z, bd.useTexture());
+                    setBiome(world, x, z, bd.useTexture(), true);
                     HashMap<String, Object> where = new HashMap<String, Object>();
                     where.put("tardis_id", bd.getTardisID());
                     if (bd.isOutside()) {
@@ -704,7 +704,7 @@ public class TARDISMaterialisationPreset implements Runnable {
                     // set handbake to on ?
                 }
                 // just in case
-                setBiome(world, x, z, bd.useTexture());
+                setBiome(world, x, z, bd.useTexture(), false);
                 // remove trackers
                 plugin.getTrackerKeeper().getMaterialising().removeAll(Collections.singleton(bd.getTardisID()));
                 plugin.getTrackerKeeper().getInVortex().removeAll(Collections.singleton(bd.getTardisID()));
@@ -759,7 +759,7 @@ public class TARDISMaterialisationPreset implements Runnable {
         }
     }
 
-    public void setBiome(World world, int x, int z, boolean pp) {
+    public void setBiome(World world, int x, int z, boolean pp, boolean umbrella) {
         if (plugin.getConfig().getBoolean("police_box.set_biome") && (preset.equals(PRESET.NEW) || preset.equals(PRESET.OLD) || preset.equals(PRESET.PANDORICA)) && pp) {
             List<Chunk> chunks = new ArrayList<Chunk>();
             Chunk chunk = bd.getLocation().getChunk();
@@ -777,7 +777,7 @@ public class TARDISMaterialisationPreset implements Runnable {
             for (int c = -1; c < 2; c++) {
                 for (int r = -1; r < 2; r++) {
                     world.setBiome(x + c, z + r, Biome.DEEP_OCEAN);
-                    if (TARDISConstants.NO_RAIN.contains(bd.getBiome())) {
+                    if (umbrella && TARDISConstants.NO_RAIN.contains(bd.getBiome())) {
                         // add an invisible roof
                         if (loops == 3) {
                             TARDISBlockSetters.setBlock(world, x + c, 255, z + r, Material.BARRIER, (byte) 0);

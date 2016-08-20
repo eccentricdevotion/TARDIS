@@ -169,7 +169,6 @@ public class TARDISDeinstaPreset {
                 }
             }
         }
-
         // check protected blocks if has block id and data stored then put the block back!
         HashMap<String, Object> tid = new HashMap<String, Object>();
         tid.put("tardis_id", id);
