@@ -96,7 +96,7 @@ public class TARDISMakeHerBlueCommand {
             TARDISMessage.send(player.getPlayer(), "NOT_IN_VORTEX");
             return true;
         }
-        if (plugin.getTrackerKeeper().getInVortex().contains(id)) {
+        if (plugin.getTrackerKeeper().getInVortex().contains(id) || plugin.getTrackerKeeper().getMaterialising().contains(id) || plugin.getTrackerKeeper().getDematerialising().contains(id)) {
             TARDISMessage.send(player.getPlayer(), "NOT_WHILE_MAT");
             return true;
         }

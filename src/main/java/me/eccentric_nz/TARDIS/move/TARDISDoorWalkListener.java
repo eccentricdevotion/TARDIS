@@ -194,7 +194,7 @@ public class TARDISDoorWalkListener extends TARDISDoorListener implements Listen
                                 TARDISMessage.send(player, "SIEGE_NO_EXIT");
                                 return;
                             }
-                            if (plugin.getTrackerKeeper().getInVortex().contains(id)) {
+                            if (plugin.getTrackerKeeper().getInVortex().contains(id) || plugin.getTrackerKeeper().getMaterialising().contains(id) || plugin.getTrackerKeeper().getDematerialising().contains(id)) {
                                 TARDISMessage.send(player, "NOT_WHILE_MAT");
                                 return;
                             }
@@ -354,7 +354,7 @@ public class TARDISDoorWalkListener extends TARDISDoorListener implements Listen
                                     case 1:
                                     case 4:
                                         // is the TARDIS materialising?
-                                        if (plugin.getTrackerKeeper().getInVortex().contains(id)) {
+                                        if (plugin.getTrackerKeeper().getInVortex().contains(id) || plugin.getTrackerKeeper().getMaterialising().contains(id) || plugin.getTrackerKeeper().getDematerialising().contains(id)) {
                                             TARDISMessage.send(player, "LOST_IN_VORTEX");
                                             return;
                                         }
@@ -428,7 +428,7 @@ public class TARDISDoorWalkListener extends TARDISDoorListener implements Listen
                                         break;
                                     case 0:
                                         // is the TARDIS materialising?
-                                        if (plugin.getTrackerKeeper().getInVortex().contains(id)) {
+                                        if (plugin.getTrackerKeeper().getInVortex().contains(id) || plugin.getTrackerKeeper().getMaterialising().contains(id) || plugin.getTrackerKeeper().getDematerialising().contains(id)) {
                                             TARDISMessage.send(player, "LOST_IN_VORTEX");
                                             return;
                                         }
