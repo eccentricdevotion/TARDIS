@@ -19,7 +19,8 @@
    * Mob farming / ejection events
 
 ##Resource Pack / TARDISWeepingAngels
-1. Something with an invisible Shulker passenger - or an invisible bat with a Shulker passemger (Toclafane?)
+0. Rare armour drops
+1. Something with an invisible Shulker passenger - or an invisible bat with a Shulker passenger (Toclafane?)
 2. Re-skin mobs for Resource pack, and add new mob sounds
    * Villagers -> Ood - _started texture_
    * Villagers -> Hath
