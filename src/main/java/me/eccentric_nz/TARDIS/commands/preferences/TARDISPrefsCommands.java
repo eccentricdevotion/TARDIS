@@ -146,9 +146,6 @@ public class TARDISPrefsCommands implements CommandExecutor {
                     if (pref.equals("key")) {
                         return new TARDISSetKeyCommand(plugin).setKeyPref(player, args, qf);
                     }
-                    if (pref.equals("junk")) {
-                        return new TARDISJunkPreference(plugin).toggle(player, args[1], qf);
-                    }
                     if (pref.equals("lamp")) {
                         return new TARDISSetLampCommand(plugin).setLampPref(player, args, qf);
                     }
@@ -173,6 +170,9 @@ public class TARDISPrefsCommands implements CommandExecutor {
                     if (args.length < 2 || (!args[1].equalsIgnoreCase("on") && !args[1].equalsIgnoreCase("off"))) {
                         TARDISMessage.send(player, "PREF_ON_OFF", pref);
                         return false;
+                    }
+                    if (pref.equals("junk")) {
+                        return new TARDISJunkPreference(plugin).toggle(player, args[1], qf);
                     }
                     if (pref.equals("build")) {
                         return new TARDISBuildCommand(plugin).toggleCompanionBuilding(player, args);
