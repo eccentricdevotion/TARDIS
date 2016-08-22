@@ -58,6 +58,7 @@ public class TARDISDematerialiseToVortex implements Runnable {
     public void run() {
         final UUID uuid = player.getUniqueId();
         plugin.getTrackerKeeper().getInVortex().add(id);
+        plugin.getTrackerKeeper().getDidDematToVortex().add(id);
         HashMap<String, Object> wherei = new HashMap<String, Object>();
         wherei.put("tardis_id", id);
         ResultSetTardis rs = new ResultSetTardis(plugin, wherei, "", false, 2);

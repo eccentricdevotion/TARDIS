@@ -151,7 +151,7 @@ public class TARDISHandbrakeListener implements Listener {
                             return;
                         }
                         String beacon = tardis.getBeacon();
-                        if (plugin.getTrackerKeeper().getInVortex().contains(id) || plugin.getTrackerKeeper().getDestinationVortex().containsKey(id)) {
+                        if (plugin.getTrackerKeeper().getInVortex().contains(id) || plugin.getTrackerKeeper().getDidDematToVortex().contains(id) || plugin.getTrackerKeeper().getDestinationVortex().containsKey(id) || plugin.getTrackerKeeper().getMaterialising().contains(id) || plugin.getTrackerKeeper().getDematerialising().contains(id)) {
                             TARDISMessage.send(player, "HANDBRAKE_IN_VORTEX");
                         } else {
                             Action action = event.getAction();

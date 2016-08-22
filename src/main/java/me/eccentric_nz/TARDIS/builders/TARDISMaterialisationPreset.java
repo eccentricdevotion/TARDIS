@@ -720,6 +720,9 @@ public class TARDISMaterialisationPreset implements Runnable {
                 if (plugin.getTrackerKeeper().getMalfunction().containsKey(bd.getTardisID())) {
                     plugin.getTrackerKeeper().getMalfunction().remove(bd.getTardisID());
                 }
+                if (plugin.getTrackerKeeper().getDidDematToVortex().contains(bd.getTardisID())) {
+                    plugin.getTrackerKeeper().getDidDematToVortex().removeAll(Collections.singleton(bd.getTardisID()));
+                }
                 // message travellers in tardis
                 if (loops > 3) {
                     HashMap<String, Object> where = new HashMap<String, Object>();

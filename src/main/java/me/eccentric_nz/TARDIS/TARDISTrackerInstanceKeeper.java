@@ -99,6 +99,7 @@ public class TARDISTrackerInstanceKeeper {
     private final HashMap<UUID, UUID> telepathicRescue = new HashMap<UUID, UUID>();
     private final List<String> artronFurnaces = new ArrayList<String>();
     private final List<Integer> dematerialising = new ArrayList<Integer>();
+    private final List<Integer> didDematToVortex = new ArrayList<Integer>();
     private final List<Integer> dispersedTARDII = new ArrayList<Integer>();
     private final List<Integer> hasNotClickedHandbrake = new ArrayList<Integer>();
     private final List<Integer> hasClickedHandbrake = new ArrayList<Integer>();
@@ -298,6 +299,10 @@ public class TARDISTrackerInstanceKeeper {
 
     public List<Integer> getDematerialising() {
         return dematerialising;
+    }
+
+    public List<Integer> getDidDematToVortex() {
+        return didDematToVortex;
     }
 
     public HashMap<UUID, Location> getDispersed() {
