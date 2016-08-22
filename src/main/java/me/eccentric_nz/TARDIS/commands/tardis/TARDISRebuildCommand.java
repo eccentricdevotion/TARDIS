@@ -69,7 +69,7 @@ public class TARDISRebuildCommand {
                 TARDISMessage.send(player.getPlayer(), "POWER_DOWN");
                 return true;
             }
-            if (tardis.getPreset().equals(PRESET.INVISIBLE)) {
+            if (tardis.getPreset().equals(PRESET.INVISIBLE) && tardis.getDemat().equals(PRESET.INVISIBLE)) {
                 TARDISMessage.send(player.getPlayer(), "INVISIBILITY_ENGAGED");
                 return true;
             }
