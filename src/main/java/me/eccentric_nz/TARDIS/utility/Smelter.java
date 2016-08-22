@@ -27,42 +27,42 @@ import org.bukkit.util.Vector;
  */
 public class Smelter {
 
-    private static final List<Vector> fuelVectors = new ArrayList<Vector>();
-    private static final List<Vector> oreVectors = new ArrayList<Vector>();
+    private static final List<Vector> FUEL_VECTORS = new ArrayList<Vector>();
+    private static final List<Vector> ORE_VECTORS = new ArrayList<Vector>();
 
     static {
-        fuelVectors.add(new Vector(-6.0, 2.0, 4.0));
-        fuelVectors.add(new Vector(-6.0, 2.0, 3.0));
-        fuelVectors.add(new Vector(-6.0, 2.0, -3.0));
-        fuelVectors.add(new Vector(-6.0, 2.0, -4.0));
-        fuelVectors.add(new Vector(-4.0, 2.0, 6.0));
-        fuelVectors.add(new Vector(-4.0, 2.0, -6.0));
-        fuelVectors.add(new Vector(-3.0, 2.0, 6.0));
-        fuelVectors.add(new Vector(-3.0, 2.0, -6.0));
-        fuelVectors.add(new Vector(3.0, 2.0, 6.0));
-        fuelVectors.add(new Vector(3.0, 2.0, -6.0));
-        fuelVectors.add(new Vector(4.0, 2.0, 6.0));
-        fuelVectors.add(new Vector(4.0, 2.0, -6.0));
-        fuelVectors.add(new Vector(6.0, 2.0, 4.0));
-        fuelVectors.add(new Vector(6.0, 2.0, 3.0));
-        fuelVectors.add(new Vector(6.0, 2.0, -3.0));
-        fuelVectors.add(new Vector(6.0, 2.0, -4.0));
-        oreVectors.add(new Vector(-5.0, 3.0, 4.0));
-        oreVectors.add(new Vector(-5.0, 3.0, 3.0));
-        oreVectors.add(new Vector(-5.0, 3.0, -3.0));
-        oreVectors.add(new Vector(-5.0, 3.0, -4.0));
-        oreVectors.add(new Vector(-4.0, 3.0, 5.0));
-        oreVectors.add(new Vector(-4.0, 3.0, -5.0));
-        oreVectors.add(new Vector(-3.0, 3.0, 5.0));
-        oreVectors.add(new Vector(-3.0, 3.0, -5.0));
-        oreVectors.add(new Vector(3.0, 3.0, 5.0));
-        oreVectors.add(new Vector(3.0, 3.0, -5.0));
-        oreVectors.add(new Vector(4.0, 3.0, 5.0));
-        oreVectors.add(new Vector(4.0, 3.0, -5.0));
-        oreVectors.add(new Vector(5.0, 3.0, 4.0));
-        oreVectors.add(new Vector(5.0, 3.0, 3.0));
-        oreVectors.add(new Vector(5.0, 3.0, -3.0));
-        oreVectors.add(new Vector(5.0, 3.0, -4.0));
+        FUEL_VECTORS.add(new Vector(-6.0, 2.0, 4.0));
+        FUEL_VECTORS.add(new Vector(-6.0, 2.0, 3.0));
+        FUEL_VECTORS.add(new Vector(-6.0, 2.0, -3.0));
+        FUEL_VECTORS.add(new Vector(-6.0, 2.0, -4.0));
+        FUEL_VECTORS.add(new Vector(-4.0, 2.0, 6.0));
+        FUEL_VECTORS.add(new Vector(-4.0, 2.0, -6.0));
+        FUEL_VECTORS.add(new Vector(-3.0, 2.0, 6.0));
+        FUEL_VECTORS.add(new Vector(-3.0, 2.0, -6.0));
+        FUEL_VECTORS.add(new Vector(3.0, 2.0, 6.0));
+        FUEL_VECTORS.add(new Vector(3.0, 2.0, -6.0));
+        FUEL_VECTORS.add(new Vector(4.0, 2.0, 6.0));
+        FUEL_VECTORS.add(new Vector(4.0, 2.0, -6.0));
+        FUEL_VECTORS.add(new Vector(6.0, 2.0, 4.0));
+        FUEL_VECTORS.add(new Vector(6.0, 2.0, 3.0));
+        FUEL_VECTORS.add(new Vector(6.0, 2.0, -3.0));
+        FUEL_VECTORS.add(new Vector(6.0, 2.0, -4.0));
+        ORE_VECTORS.add(new Vector(-5.0, 3.0, 4.0));
+        ORE_VECTORS.add(new Vector(-5.0, 3.0, 3.0));
+        ORE_VECTORS.add(new Vector(-5.0, 3.0, -3.0));
+        ORE_VECTORS.add(new Vector(-5.0, 3.0, -4.0));
+        ORE_VECTORS.add(new Vector(-4.0, 3.0, 5.0));
+        ORE_VECTORS.add(new Vector(-4.0, 3.0, -5.0));
+        ORE_VECTORS.add(new Vector(-3.0, 3.0, 5.0));
+        ORE_VECTORS.add(new Vector(-3.0, 3.0, -5.0));
+        ORE_VECTORS.add(new Vector(3.0, 3.0, 5.0));
+        ORE_VECTORS.add(new Vector(3.0, 3.0, -5.0));
+        ORE_VECTORS.add(new Vector(4.0, 3.0, 5.0));
+        ORE_VECTORS.add(new Vector(4.0, 3.0, -5.0));
+        ORE_VECTORS.add(new Vector(5.0, 3.0, 4.0));
+        ORE_VECTORS.add(new Vector(5.0, 3.0, 3.0));
+        ORE_VECTORS.add(new Vector(5.0, 3.0, -3.0));
+        ORE_VECTORS.add(new Vector(5.0, 3.0, -4.0));
     }
 
     public static boolean isSmeltable(Material material) {
@@ -74,8 +74,8 @@ public class Smelter {
             case COBBLESTONE:
             case GOLD_ORE:
             case IRON_ORE:
-//            case LOG:
-//            case LOG_2:
+            case LOG:
+            case LOG_2:
             case MUTTON:
             case NETHERRACK:
             case PORK:
@@ -120,8 +120,6 @@ public class Smelter {
             case JUNGLE_FENCE_GATE:
             case JUNGLE_WOOD_STAIRS:
             case LAVA_BUCKET:
-            case LOG:
-            case LOG_2:
             case NOTE_BLOCK:
             case SAPLING:
             case SPRUCE_FENCE:
@@ -168,10 +166,10 @@ public class Smelter {
     }
 
     public static List<Vector> getFuelVectors() {
-        return fuelVectors;
+        return FUEL_VECTORS;
     }
 
     public static List<Vector> getOreVectors() {
-        return oreVectors;
+        return ORE_VECTORS;
     }
 }
