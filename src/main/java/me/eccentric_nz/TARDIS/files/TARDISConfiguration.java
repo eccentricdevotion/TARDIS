@@ -193,6 +193,8 @@ public class TARDISConfiguration {
         roomBoolOptions.put("rooms.RAIL.user", false);
         roomBoolOptions.put("rooms.RENDERER.enabled", true);
         roomBoolOptions.put("rooms.RENDERER.user", false);
+        roomBoolOptions.put("rooms.SMELTER.enabled", true);
+        roomBoolOptions.put("rooms.SMELTER.user", false);
         roomBoolOptions.put("rooms.STABLE.enabled", true);
         roomBoolOptions.put("rooms.STABLE.user", false);
         roomBoolOptions.put("rooms.TRENZALORE.enabled", true);
@@ -351,6 +353,8 @@ public class TARDISConfiguration {
         roomIntOptions.put("rooms.RAIL.offset", -4);
         roomIntOptions.put("rooms.RENDERER.cost", 650);
         roomIntOptions.put("rooms.RENDERER.offset", -4);
+        roomIntOptions.put("rooms.SMELTER.cost", 750);
+        roomIntOptions.put("rooms.SMELTER.offset", -4);
         roomIntOptions.put("rooms.STABLE.cost", 350);
         roomIntOptions.put("rooms.STABLE.offset", -4);
         roomIntOptions.put("rooms.TRENZALORE.cost", 550);
@@ -411,6 +415,7 @@ public class TARDISConfiguration {
         roomStrOptions.put("rooms.POOL.seed", "SNOW_BLOCK");
         roomStrOptions.put("rooms.RAIL.seed", "HOPPER");
         roomStrOptions.put("rooms.RENDERER.seed", "HARD_CLAY");
+        roomStrOptions.put("rooms.SMELTER.seed", "CHEST");
         roomStrOptions.put("rooms.STABLE.seed", "HAY_BLOCK");
         roomStrOptions.put("rooms.TRENZALORE.seed", "BRICK");
         roomStrOptions.put("rooms.VAULT.seed", "DISPENSER");

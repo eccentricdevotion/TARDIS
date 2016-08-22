@@ -400,6 +400,15 @@ public class TARDISRoomRunnable implements Runnable {
                         break;
                 }
             }
+            if (type.equals(Material.SOUL_SAND) && room.equals("SMELTER")) {
+                String pos = new Location(world, startx, starty, startz).toString();
+                HashMap<String, Object> setsm = new HashMap<String, Object>();
+                setsm.put("tardis_id", tardis_id);
+                setsm.put("location", pos);
+                qf.doInsert("vaults", setsm);
+                type = Material.CHEST;
+                data = 0;
+            }
             // remember village doors
             if (type.equals(Material.WOODEN_DOOR) && room.equals("VILLAGE")) {
                 Block door = world.getBlockAt(startx, starty, startz);

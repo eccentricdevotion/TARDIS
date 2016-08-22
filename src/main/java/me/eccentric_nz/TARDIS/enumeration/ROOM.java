@@ -41,6 +41,7 @@ public enum ROOM {
     POOL,
     RAIL,
     RENDERER,
+    SMELTER,
     STABLE,
     TRENZALORE,
     VAULT,

@@ -44,6 +44,7 @@ public enum TARDISARS implements ARS {
     POOL(80, "POOL", "Pool", 1),
     RAIL(154, "RAIL", "Rail Transfer Station", 1),
     RENDERER(172, "RENDERER", "Exterior Renderer", 1),
+    SMELTER(54, "SMELTER", "Smelter", 1),
     STABLE(170, "STABLE", "Horse Stable", 1),
     TRENZALORE(45, "TRENZALORE", "Trenzalore", 1),
     VAULT(23, "VAULT", "Storage Vault", 1),

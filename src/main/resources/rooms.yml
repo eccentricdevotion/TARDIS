@@ -120,6 +120,12 @@ rooms:
     offset: -4
     seed: GRAVEL
     user: false
+  SMELTER:
+    enabled: true
+    cost: 750
+    offset: -4
+    seed: CHEST
+    user: false
   STABLE:
     enabled: true
     cost: 350

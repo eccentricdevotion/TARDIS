@@ -196,6 +196,7 @@ permissions:
       tardis.room.rail: true
       tardis.room.renderer: true
       tardis.room.stable: true
+      tardis.room.smelter: true
       tardis.room.trenzalore: true
       tardis.room.vault: true
       tardis.room.village: true
