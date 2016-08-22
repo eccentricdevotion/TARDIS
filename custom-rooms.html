@@ -32,9 +32,10 @@
 	<section>
 		<p><a href="#video">Jump to video</a></p>
 		<h1>Custom rooms</h1>
-		<p>TARDIS has the ability to add your own custom rooms using WorldEdit/MCEdit schematic files and the <code>/tardisroom</code> command.</p>
-		<p>You can download community contributed schematics from <a href="http://tardis.thatsnotacreeper.com/">http://tardis.thatsnotacreeper.com/</a></p>
-		<p>Put your custom schematic in the <em>plugins/TARDIS/user_schematics</em> folder &mdash; it should be called <strong>[something]</strong>.schematic &mdash; then run the following commands:</p>
+		<p>TARDIS has the ability to add your own custom rooms using <a href="schematics.html">TARDIS schematic</a> files and the <code>/tardisroom</code> command.</p>
+		<!--<p>You can download community contributed schematics from <a href="http://tardis.thatsnotacreeper.com/">http://tardis.thatsnotacreeper.com/</a></p>-->
+		<p>Custom schematics created with the <code>/tardisschematic</code> command are automatically saved in the <em>plugins/TARDIS/user_schematics</em> folder, if you have got a schematic from somewhere else you will need to manually put it in the correct folder on the server &mdash; it should be called <strong>[something]</strong>.tschm.</p>
+		<p>To add the room, run the following commands:</p>
 		<pre><code>/tardisroom add [something]
 /tardisroom [something] [cost]
 /tardisroom [something] [offset]
@@ -49,15 +50,18 @@
 		<p>The last command enables the room.</p>
 		<h2>Tips</h2>
 		<ul>
+		    <li>A room template with the correct door circuits is supplied with the plugin. You can load and paste it into a world with the <code>/tardisschematic</code> command and then modify it as needed.
+<pre><code>/tardisschematic load template
+/tardisschematic paste</code></pre></li>
 			<li>Any room can be enabled/disabled with <code>/tardisroom [name] [true|false]</code>, and all other settings can be changed using the same command <code>/tardisroom [name] [value]</code></li>
-			<li>Rooms schematics must be the same width and length i.e. square</li>
+			<li>Rooms schematics must be 16 blocks in width and 16 blocks in length </li>
 			<li>Don&rsquo;t put doors in the walls they will be added automatically (always in the centre of the wall)</li>
 			<li>If you want to be able to have the rooms use the player wall and floor preferences, then you need to use orange wool for the walls and light grey wool for the floors</li>
 			<li>Not all items will work &mdash; things that will NOT are: paintings, item frames, plants in flower pots (the pots are OK)</li>
 			<li>Rooms are grown from the bottom to top so keep that in mind when designing the room &mdash; you can&rsquo;t place levers upside down for example as there will be no block for them to stick to and they will just fall into the void</li>
 		</ul>
 		<h3 id="video">Video</h3>
-		<p><strong>Note:</strong> The video shows the custom room schematic being put into the <em>schematics</em> folder, but it sould now be put into the <em>user_schematics</em> folder.</p>
+		<p><strong>Note:</strong> This video is very outdated! The plugin no longer uses WorldEdit schematics and rooms should be grown with ARS. The video shows also the custom room schematic being put into the <em>schematics</em> folder, but it sould now be put into the <em>user_schematics</em> folder.</p>
 		<iframe src="http://player.vimeo.com/video/64474578" width="600" height="365" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
 	</section>
 </div>
