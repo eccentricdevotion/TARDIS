@@ -20,10 +20,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.HashMap;
-import java.util.Map;
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.utility.TARDISNumberParsers;
 
 /**
  * Many facts, figures, and formulas are contained within the Matrix,
@@ -39,7 +36,7 @@ public class ResultSetVault {
     private final TARDISDatabaseConnection service = TARDISDatabaseConnection.getInstance();
     private final Connection connection = service.getConnection();
     private final TARDIS plugin;
-    private final HashMap<String, Object> where;
+    private final String where;
     private int vault_id;
     private int tardis_id;
     private String location;
@@ -53,10 +50,9 @@ public class ResultSetVault {
      * from the vaults table.
      *
      * @param plugin an instance of the main class.
-     * @param where a HashMap<String, Object> of table fields and values to
-     * refine the search.
+     * @param where the location of the drop chest.
      */
-    public ResultSetVault(TARDIS plugin, HashMap<String, Object> where) {
+    public ResultSetVault(TARDIS plugin, String where) {
         this.plugin = plugin;
         this.where = where;
         this.prefix = this.plugin.getPrefix();
@@ -72,30 +68,11 @@ public class ResultSetVault {
     public boolean resultSet() {
         PreparedStatement statement = null;
         ResultSet rs = null;
-        String wheres = "";
-        if (where != null) {
-            StringBuilder sbw = new StringBuilder();
-            for (Map.Entry<String, Object> entry : where.entrySet()) {
-                sbw.append(entry.getKey()).append(" = ? AND ");
-            }
-            wheres = " WHERE " + sbw.toString().substring(0, sbw.length() - 5);
-        }
-        String query = "SELECT * FROM " + prefix + "vaults" + wheres;
+        String query = "SELECT * FROM " + prefix + "vaults WHERE location = ?";
         try {
             service.testConnection(connection);
             statement = connection.prepareStatement(query);
-            if (where != null) {
-                int s = 1;
-                for (Map.Entry<String, Object> entry : where.entrySet()) {
-                    if (entry.getValue().getClass().equals(String.class)) {
-                        statement.setString(s, entry.getValue().toString());
-                    } else {
-                        statement.setInt(s, TARDISNumberParsers.parseInt(entry.getValue().toString()));
-                    }
-                    s++;
-                }
-                where.clear();
-            }
+            statement.setString(1, where);
             rs = statement.executeQuery();
             if (rs.isBeforeFirst()) {
                 while (rs.next()) {

@@ -1,7 +1,6 @@
 package me.eccentric_nz.TARDIS.listeners;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.ResultSetVault;
@@ -27,16 +26,14 @@ public class TARDISVaultListener implements Listener {
     }
 
     @EventHandler(priority = EventPriority.NORMAL)
-    public void onDropChestClose(InventoryCloseEvent event) {
+    public void onVaultDropChestClose(InventoryCloseEvent event) {
         final Inventory inv = event.getInventory();
         InventoryHolder holder = inv.getHolder();
         if (holder instanceof Chest) {
             Chest chest = (Chest) holder;
             String loc = chest.getLocation().toString();
             // check is drop chest
-            HashMap<String, Object> where = new HashMap<String, Object>();
-            where.put("location", loc);
-            ResultSetVault rs = new ResultSetVault(plugin, where);
+            ResultSetVault rs = new ResultSetVault(plugin, loc);
             if (!rs.resultSet()) {
                 return;
             }
