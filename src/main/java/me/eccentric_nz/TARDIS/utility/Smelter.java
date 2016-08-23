@@ -31,38 +31,38 @@ public class Smelter {
     private static final List<Vector> ORE_VECTORS = new ArrayList<Vector>();
 
     static {
-        FUEL_VECTORS.add(new Vector(-6.0, 2.0, 4.0));
-        FUEL_VECTORS.add(new Vector(-6.0, 2.0, 3.0));
-        FUEL_VECTORS.add(new Vector(-6.0, 2.0, -3.0));
-        FUEL_VECTORS.add(new Vector(-6.0, 2.0, -4.0));
-        FUEL_VECTORS.add(new Vector(-4.0, 2.0, 6.0));
-        FUEL_VECTORS.add(new Vector(-4.0, 2.0, -6.0));
-        FUEL_VECTORS.add(new Vector(-3.0, 2.0, 6.0));
-        FUEL_VECTORS.add(new Vector(-3.0, 2.0, -6.0));
-        FUEL_VECTORS.add(new Vector(3.0, 2.0, 6.0));
-        FUEL_VECTORS.add(new Vector(3.0, 2.0, -6.0));
-        FUEL_VECTORS.add(new Vector(4.0, 2.0, 6.0));
-        FUEL_VECTORS.add(new Vector(4.0, 2.0, -6.0));
-        FUEL_VECTORS.add(new Vector(6.0, 2.0, 4.0));
-        FUEL_VECTORS.add(new Vector(6.0, 2.0, 3.0));
-        FUEL_VECTORS.add(new Vector(6.0, 2.0, -3.0));
-        FUEL_VECTORS.add(new Vector(6.0, 2.0, -4.0));
-        ORE_VECTORS.add(new Vector(-5.0, 3.0, 4.0));
-        ORE_VECTORS.add(new Vector(-5.0, 3.0, 3.0));
-        ORE_VECTORS.add(new Vector(-5.0, 3.0, -3.0));
-        ORE_VECTORS.add(new Vector(-5.0, 3.0, -4.0));
-        ORE_VECTORS.add(new Vector(-4.0, 3.0, 5.0));
-        ORE_VECTORS.add(new Vector(-4.0, 3.0, -5.0));
-        ORE_VECTORS.add(new Vector(-3.0, 3.0, 5.0));
-        ORE_VECTORS.add(new Vector(-3.0, 3.0, -5.0));
-        ORE_VECTORS.add(new Vector(3.0, 3.0, 5.0));
-        ORE_VECTORS.add(new Vector(3.0, 3.0, -5.0));
-        ORE_VECTORS.add(new Vector(4.0, 3.0, 5.0));
-        ORE_VECTORS.add(new Vector(4.0, 3.0, -5.0));
-        ORE_VECTORS.add(new Vector(5.0, 3.0, 4.0));
-        ORE_VECTORS.add(new Vector(5.0, 3.0, 3.0));
-        ORE_VECTORS.add(new Vector(5.0, 3.0, -3.0));
-        ORE_VECTORS.add(new Vector(5.0, 3.0, -4.0));
+        FUEL_VECTORS.add(new Vector(-6.0, 3.0, 4.0));
+        FUEL_VECTORS.add(new Vector(-6.0, 3.0, 3.0));
+        FUEL_VECTORS.add(new Vector(-6.0, 3.0, -3.0));
+        FUEL_VECTORS.add(new Vector(-6.0, 3.0, -4.0));
+        FUEL_VECTORS.add(new Vector(-4.0, 3.0, 6.0));
+        FUEL_VECTORS.add(new Vector(-4.0, 3.0, -6.0));
+        FUEL_VECTORS.add(new Vector(-3.0, 3.0, 6.0));
+        FUEL_VECTORS.add(new Vector(-3.0, 3.0, -6.0));
+        FUEL_VECTORS.add(new Vector(3.0, 3.0, 6.0));
+        FUEL_VECTORS.add(new Vector(3.0, 3.0, -6.0));
+        FUEL_VECTORS.add(new Vector(4.0, 3.0, 6.0));
+        FUEL_VECTORS.add(new Vector(4.0, 3.0, -6.0));
+        FUEL_VECTORS.add(new Vector(6.0, 3.0, 4.0));
+        FUEL_VECTORS.add(new Vector(6.0, 3.0, 3.0));
+        FUEL_VECTORS.add(new Vector(6.0, 3.0, -3.0));
+        FUEL_VECTORS.add(new Vector(6.0, 3.0, -4.0));
+        ORE_VECTORS.add(new Vector(-5.0, 4.0, 4.0));
+        ORE_VECTORS.add(new Vector(-5.0, 4.0, 3.0));
+        ORE_VECTORS.add(new Vector(-5.0, 4.0, -3.0));
+        ORE_VECTORS.add(new Vector(-5.0, 4.0, -4.0));
+        ORE_VECTORS.add(new Vector(-4.0, 4.0, 5.0));
+        ORE_VECTORS.add(new Vector(-4.0, 4.0, -5.0));
+        ORE_VECTORS.add(new Vector(-3.0, 4.0, 5.0));
+        ORE_VECTORS.add(new Vector(-3.0, 4.0, -5.0));
+        ORE_VECTORS.add(new Vector(3.0, 4.0, 5.0));
+        ORE_VECTORS.add(new Vector(3.0, 4.0, -5.0));
+        ORE_VECTORS.add(new Vector(4.0, 4.0, 5.0));
+        ORE_VECTORS.add(new Vector(4.0, 4.0, -5.0));
+        ORE_VECTORS.add(new Vector(5.0, 4.0, 4.0));
+        ORE_VECTORS.add(new Vector(5.0, 4.0, 3.0));
+        ORE_VECTORS.add(new Vector(5.0, 4.0, -3.0));
+        ORE_VECTORS.add(new Vector(5.0, 4.0, -4.0));
     }
 
     public static boolean isSmeltable(Material material) {
@@ -106,11 +106,12 @@ public class Smelter {
             case BOOKSHELF:
             case CHEST:
             case COAL:
-            case COAL_ORE:
+            case COAL_BLOCK:
             case DARK_OAK_FENCE:
             case DARK_OAK_FENCE_GATE:
             case DARK_OAK_STAIRS:
             case DAYLIGHT_DETECTOR:
+            case DAYLIGHT_DETECTOR_INVERTED:
             case FENCE:
             case FENCE_GATE:
             case HUGE_MUSHROOM_1:
@@ -130,7 +131,7 @@ public class Smelter {
             case TRAP_DOOR:
             case WOOD:
             case WOOD_AXE:
-            case WOOD_DOOR:
+            case WOOD_DOUBLE_STEP:
             case WOOD_HOE:
             case WOOD_PICKAXE:
             case WOOD_PLATE:
@@ -158,6 +159,7 @@ public class Smelter {
 //            case SIGN:
 //            case SPRUCE_DOOR_ITEM:
 //            case WOOD_BUTTON:
+//            case WOOD_DOOR:
 //            case WOOL:
                 return true;
             default:

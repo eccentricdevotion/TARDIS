@@ -157,7 +157,6 @@ public class TARDISArtronFurnaceListener implements Listener {
                 // set biome
                 l.getWorld().setBiome(l.getBlockX(), l.getBlockZ(), Biome.DEEP_OCEAN);
                 Chunk c = l.getChunk();
-                //l.getWorld().refreshChunk(c.getX(), c.getZ());
                 plugin.getTardisHelper().refreshChunk(c);
             }
         } else {
@@ -197,7 +196,6 @@ public class TARDISArtronFurnaceListener implements Listener {
                     Location l = block.getLocation();
                     l.getWorld().setBiome(l.getBlockX(), l.getBlockZ(), b);
                     Chunk c = l.getChunk();
-                    //l.getWorld().refreshChunk(c.getX(), c.getZ());
                     plugin.getTardisHelper().refreshChunk(c);
                 }
             }
