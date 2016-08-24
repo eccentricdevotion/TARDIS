@@ -37,6 +37,7 @@ import me.eccentric_nz.TARDIS.database.data.Archive;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.enumeration.ConsoleSize;
 import me.eccentric_nz.TARDIS.enumeration.SCHEMATIC;
+import me.eccentric_nz.TARDIS.schematic.ArchiveReset;
 import me.eccentric_nz.TARDIS.schematic.ResultSetArchive;
 import me.eccentric_nz.TARDIS.schematic.TARDISSchematicGZip;
 import me.eccentric_nz.TARDIS.utility.TARDISBlockSetters;
@@ -131,6 +132,8 @@ public class TARDISFullThemeRunnable extends TARDISThemeRunnable {
                     // abort
                     Player cp = plugin.getServer().getPlayer(uuid);
                     TARDISMessage.send(cp, "ARCHIVE_NOT_FOUND");
+                    // cancel task
+                    plugin.getServer().getScheduler().cancelTask(taskID);
                     return;
                 }
             }
@@ -145,6 +148,8 @@ public class TARDISFullThemeRunnable extends TARDISThemeRunnable {
                     // abort
                     Player cp = plugin.getServer().getPlayer(uuid);
                     TARDISMessage.send(cp, "ARCHIVE_NOT_FOUND");
+                    // cancel task
+                    plugin.getServer().getScheduler().cancelTask(taskID);
                     return;
                 }
             }
@@ -157,6 +162,8 @@ public class TARDISFullThemeRunnable extends TARDISThemeRunnable {
                 File file = new File(path);
                 if (!file.exists()) {
                     plugin.debug(plugin.getPluginName() + "Could not find a schematic with that name!");
+                    // cancel task
+                    plugin.getServer().getScheduler().cancelTask(taskID);
                     return;
                 }
                 // get JSON
@@ -339,7 +346,7 @@ public class TARDISFullThemeRunnable extends TARDISThemeRunnable {
                 s++;
             }
             for (Block lamp : lampblocks) {
-                Material l = (tud.getSchematic().hasLanterns()) ? Material.SEA_LANTERN : Material.REDSTONE_LAMP_ON;
+                Material l = (tud.getSchematic().hasLanterns() || (archive_next != null && archive_next.isLanterns())) ? Material.SEA_LANTERN : Material.REDSTONE_LAMP_ON;
                 lamp.setType(l);
             }
             lampblocks.clear();
@@ -356,8 +363,14 @@ public class TARDISFullThemeRunnable extends TARDISThemeRunnable {
                 ((EnderCrystal) ender_crystal).setShowingBottom(false);
             }
             // finished processing - update tardis table!
-            where.put("tardis_id", id);
-            qf.doUpdate("tardis", set, where);
+            if (set.size() > 0) {
+                where.put("tardis_id", id);
+                qf.doUpdate("tardis", set, where);
+            }
+            if (!tud.getSchematic().getPermission().equals("archive")) {
+                // reset archive use back to 0
+                new ArchiveReset(plugin, uuid.toString(), 0).resetUse();
+            }
             // jettison blocks if downgrading to smaller size
             if (downgrade) {
                 List<TARDISARSJettison> jettisons = getJettisons(tud.getPrevious(), tud.getSchematic(), chunk);
@@ -701,13 +714,13 @@ public class TARDISFullThemeRunnable extends TARDISThemeRunnable {
 
     private List<TARDISARSJettison> getJettisons(SCHEMATIC prev, SCHEMATIC next, Chunk chunk) {
         List<TARDISARSJettison> list = new ArrayList<TARDISARSJettison>();
-        if (prev.getPermission().equals("bigger") || prev.getPermission().equals("redstone") || prev.getPermission().equals("twelfth")) {
+        if (prev.getConsoleSize().equals(ConsoleSize.MEDIUM) || (archive_prev != null && archive_prev.getConsoleSize().equals(ConsoleSize.MEDIUM))) {
             // the 3 chunks on the same level
             list.add(new TARDISARSJettison(chunk, 1, 4, 5));
             list.add(new TARDISARSJettison(chunk, 1, 5, 4));
             list.add(new TARDISARSJettison(chunk, 1, 5, 5));
-        } else if (prev.getPermission().equals("coral") || prev.getPermission().equals("deluxe") || prev.getPermission().equals("eleventh") || prev.getPermission().equals("master")) {
-            if (next.getPermission().equals("bigger") || next.getPermission().equals("redstone") || next.getPermission().equals("twelfth")) {
+        } else if (prev.getConsoleSize().equals(ConsoleSize.TALL) || (archive_prev != null && archive_prev.getConsoleSize().equals(ConsoleSize.TALL))) {
+            if (next.getConsoleSize().equals(ConsoleSize.MEDIUM) || (archive_next != null && archive_next.getConsoleSize().equals(ConsoleSize.MEDIUM))) {
                 // the 4 chunks on the level above
                 list.add(new TARDISARSJettison(chunk, 2, 4, 4));
                 list.add(new TARDISARSJettison(chunk, 2, 4, 5));

@@ -79,8 +79,8 @@ public class TARDISArchiveMenuListener extends TARDISMenuListener implements Lis
                         if (choice != null) {
                             // remember the upgrade choice
                             SCHEMATIC schm = CONSOLES.SCHEMATICFor("archive");
-                            UUID uuid = p.getUniqueId();
-                            TARDISUpgradeData tud = plugin.getTrackerKeeper().getUpgrades().get(uuid);
+                            final UUID uuid = p.getUniqueId();
+                            final TARDISUpgradeData tud = plugin.getTrackerKeeper().getUpgrades().get(uuid);
                             ItemStack is = inv.getItem(slot);
                             ItemMeta im = is.getItemMeta();
                             List<String> lore = im.getLore();
@@ -99,9 +99,14 @@ public class TARDISArchiveMenuListener extends TARDISMenuListener implements Lis
                                 tud.setSchematic(schm);
                                 tud.setWall("WOOL:1");
                                 tud.setFloor("WOOL:8");
-                                plugin.getTrackerKeeper().getUpgrades().put(uuid, tud);
-                                // process upgrade
-                                new TARDISThemeProcessor(plugin, uuid).changeDesktop();
+                                plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        plugin.getTrackerKeeper().getUpgrades().put(uuid, tud);
+                                        // process upgrade
+                                        new TARDISThemeProcessor(plugin, uuid).changeDesktop();
+                                    }
+                                }, 10L);
                                 close(p);
                             }
                         }

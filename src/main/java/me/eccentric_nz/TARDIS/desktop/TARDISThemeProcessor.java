@@ -27,6 +27,7 @@ import me.eccentric_nz.TARDIS.database.data.Archive;
 import me.eccentric_nz.TARDIS.enumeration.ConsoleSize;
 import me.eccentric_nz.TARDIS.enumeration.SCHEMATIC;
 import me.eccentric_nz.TARDIS.rooms.TARDISWallsLookup;
+import me.eccentric_nz.TARDIS.schematic.ArchiveReset;
 import me.eccentric_nz.TARDIS.schematic.ResultSetArchive;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import org.bukkit.entity.Player;
@@ -92,6 +93,10 @@ public class TARDISThemeProcessor {
                 TARDISMessage.send(cp, "UPGRADE_PERCENT_BLOCKS", plugin.getConfig().getInt("desktop.block_change_percent") + "");
                 TARDISMessage.send(cp, "UPGRADE_PERCENT_EXPLAIN", check.getCount() + "", check.getVolume() + "", check.getChanged() + "");
                 TARDISMessage.send(cp, "UPGRADE_PERCENT_REASON");
+                if (tud.getPrevious().getPermission().equals("archive")) {
+                    // reset archive use back to 1
+                    new ArchiveReset(plugin, uuid.toString(), 1).resetUse();
+                }
                 return;
             }
         }
@@ -101,6 +106,10 @@ public class TARDISThemeProcessor {
             if (checkARSGrid(tud.getPrevious(), tud.getSchematic(), uuid)) {
                 TARDISMessage.send(plugin.getServer().getPlayer(uuid), "UPGRADE_ABORT_SPACE");
                 plugin.getTrackerKeeper().getUpgrades().remove(uuid);
+                if (tud.getPrevious().getPermission().equals("archive")) {
+                    // reset archive use back to 1
+                    new ArchiveReset(plugin, uuid.toString(), 1).resetUse();
+                }
                 return;
             }
         }

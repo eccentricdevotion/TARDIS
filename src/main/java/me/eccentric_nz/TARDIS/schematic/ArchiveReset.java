@@ -27,27 +27,27 @@ import me.eccentric_nz.TARDIS.database.TARDISDatabaseConnection;
  *
  * @author eccentric_nz
  */
-public class ArchiveUpdate {
+public class ArchiveReset {
 
     private final TARDISDatabaseConnection service = TARDISDatabaseConnection.getInstance();
     private final Connection connection = service.getConnection();
     private final TARDIS plugin;
     private final String uuid;
-    private final String name;
+    private final int use;
     private final String prefix;
 
-    public ArchiveUpdate(TARDIS plugin, String uuid, String name) {
+    public ArchiveReset(TARDIS plugin, String uuid, int use) {
         this.plugin = plugin;
         this.uuid = uuid;
-        this.name = name;
+        this.use = use;
         this.prefix = this.plugin.getPrefix();
     }
 
-    public boolean setInUse() {
+    public boolean resetUse() {
         PreparedStatement statement = null;
         PreparedStatement ps = null;
         ResultSet rs = null;
-        String query = "SELECT archive_id, name, use FROM " + prefix + "archive WHERE uuid = ?";
+        String query = "SELECT archive_id FROM " + prefix + "archive WHERE uuid = ? AND use = 2";
         try {
             service.testConnection(connection);
             statement = connection.prepareStatement(query);
@@ -57,14 +57,7 @@ public class ArchiveUpdate {
                 String update = "UPDATE " + prefix + "archive SET use = ? WHERE archive_id = ?";
                 ps = connection.prepareStatement(update);
                 while (rs.next()) {
-                    int i = 0;
-                    if (rs.getString("name").equals(name)) {
-                        i = 1;
-                    }
-                    if (rs.getInt("use") == 1) {
-                        i = 2;
-                    }
-                    ps.setInt(1, i);
+                    ps.setInt(1, use);
                     ps.setInt(2, rs.getInt("archive_id"));
                     ps.executeUpdate();
                 }
@@ -72,7 +65,7 @@ public class ArchiveUpdate {
                 return false;
             }
         } catch (SQLException e) {
-            plugin.debug("ResultSet error for archive update! " + e.getMessage());
+            plugin.debug("ResultSet error for archive reset! " + e.getMessage());
             return false;
         } finally {
             try {
@@ -86,7 +79,7 @@ public class ArchiveUpdate {
                     statement.close();
                 }
             } catch (SQLException e) {
-                plugin.debug("Error closing archive update! " + e.getMessage());
+                plugin.debug("Error closing archive reset! " + e.getMessage());
             }
         }
         return true;

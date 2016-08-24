@@ -20,6 +20,7 @@ import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.enumeration.CONSOLES;
 import me.eccentric_nz.TARDIS.enumeration.SCHEMATIC;
 import me.eccentric_nz.TARDIS.listeners.TARDISMenuListener;
+import me.eccentric_nz.TARDIS.schematic.ArchiveUpdate;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -78,6 +79,9 @@ public class TARDISThemeMenuListener extends TARDISMenuListener implements Liste
                                     plugin.getTrackerKeeper().getUpgrades().put(p.getUniqueId(), tud);
                                     // open the wall block GUI
                                     wall(p);
+                                    if (tud.getPrevious().getPermission().equals("archive")) {
+                                        new ArchiveUpdate(plugin, p.getUniqueId().toString(), "ª°º").setInUse();
+                                    }
                                 }
                             }
                         }
