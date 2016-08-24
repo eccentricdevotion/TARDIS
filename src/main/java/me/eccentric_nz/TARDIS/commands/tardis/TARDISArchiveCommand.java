@@ -29,9 +29,11 @@ import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetPlayerPrefs;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import me.eccentric_nz.TARDIS.database.ResultSetTravellers;
+import me.eccentric_nz.TARDIS.database.data.Archive;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.enumeration.ConsoleSize;
 import me.eccentric_nz.TARDIS.enumeration.SCHEMATIC;
+import me.eccentric_nz.TARDIS.schematic.ResultSetArchive;
 import me.eccentric_nz.TARDIS.schematic.ResultSetArchiveCount;
 import me.eccentric_nz.TARDIS.schematic.ResultSetArchiveName;
 import me.eccentric_nz.TARDIS.schematic.TARDISSchematicBuilder;
@@ -111,74 +113,91 @@ public class TARDISArchiveCommand {
                     Tardis tardis = rs.getTardis();
                     SCHEMATIC current = tardis.getSchematic();
                     // get the schematic start location, width, length and height
-                    String directory = (current.isCustom()) ? "user_schematics" : "schematics";
-                    String path = plugin.getDataFolder() + File.separator + directory + File.separator + current.getPermission() + ".tschm";
-                    File file = new File(path);
-                    if (!file.exists()) {
-                        plugin.debug(plugin.getPluginName() + "Could not find a schematic with that name!");
-                        return true;
-                    }
-                    // get JSON
-                    JSONObject obj = TARDISSchematicGZip.unzip(path);
-                    // get dimensions
-                    JSONObject dimensions = (JSONObject) obj.get("dimensions");
-                    int h = dimensions.getInt("height") - 1;
-                    int w = dimensions.getInt("width") - 1;
-                    int c = dimensions.getInt("length") - 1;
-                    // calculate startx, starty, startz
-                    int slot = tardis.getTIPS();
-                    id = tardis.getTardis_id();
-                    int sx, sz;
-                    if (slot != -1) { // default world - use TIPS
-                        TARDISInteriorPostioning tintpos = new TARDISInteriorPostioning(plugin);
-                        TARDISTIPSData pos = tintpos.getTIPSData(slot);
-                        sx = pos.getCentreX();
-                        sz = pos.getCentreZ();
+                    JSONObject obj = null;
+                    if (current.getPermission().equals("archive")) {
+                        HashMap<String, Object> wherean = new HashMap<String, Object>();
+                        wherean.put("uuid", uuid);
+                        wherean.put("name", name);
+                        ResultSetArchive rsa = new ResultSetArchive(plugin, wherean);
+                        if (rsa.resultSet()) {
+                            Archive archive = rsa.getArchive();
+                            obj = archive.getJSON();
+                        }
                     } else {
-                        int gsl[] = plugin.getLocationUtils().getStartLocation(tardis.getTardis_id());
-                        sx = gsl[0];
-                        sz = gsl[2];
+                        String directory = (current.isCustom()) ? "user_schematics" : "schematics";
+                        String path = plugin.getDataFolder() + File.separator + directory + File.separator + current.getPermission() + ".tschm";
+                        File file = new File(path);
+                        if (!file.exists()) {
+                            plugin.debug(plugin.getPluginName() + "Could not find a schematic with that name!");
+                            return true;
+                        }
+                        // get JSON
+                        obj = TARDISSchematicGZip.unzip(path);
                     }
-                    int sy = (current.getPermission().equals("redstone")) ? 65 : 64;
-                    ArchiveData ad = new TARDISSchematicBuilder(plugin, id, player.getLocation().getWorld(), sx, sx + w, sy, sy + h, sz, sz + c).build();
+                    if (obj != null) {
+                        // get dimensions
+                        JSONObject dimensions = (JSONObject) obj.get("dimensions");
+                        int h = dimensions.getInt("height") - 1;
+                        int w = dimensions.getInt("width") - 1;
+                        int c = dimensions.getInt("length") - 1;
+                        // calculate startx, starty, startz
+                        int slot = tardis.getTIPS();
+                        id = tardis.getTardis_id();
+                        int sx, sz;
+                        if (slot != -1) { // default world - use TIPS
+                            TARDISInteriorPostioning tintpos = new TARDISInteriorPostioning(plugin);
+                            TARDISTIPSData pos = tintpos.getTIPSData(slot);
+                            sx = pos.getCentreX();
+                            sz = pos.getCentreZ();
+                        } else {
+                            int gsl[] = plugin.getLocationUtils().getStartLocation(tardis.getTardis_id());
+                            sx = gsl[0];
+                            sz = gsl[2];
+                        }
+                        int sy = (current.getPermission().equals("redstone")) ? 65 : 64;
+                        ArchiveData ad = new TARDISSchematicBuilder(plugin, id, player.getLocation().getWorld(), sx, sx + w, sy, sy + h, sz, sz + c).build();
 //                    if (ad == null) {
 //                        TARDISMessage.send(player, "ARCHIVE_FAIL");
 //                        return true;
 //                    }
-                    if (sub.equals("scan")) {
-                        TARDISMessage.send(player, "ARCHIVE_SCAN");
-                        return true;
-                    }
-                    HashMap<String, Object> set = new HashMap<String, Object>();
-                    set.put("data", ad.getJSON().toString());
-                    // get console size
-                    ConsoleSize console_size = ConsoleSize.getByWidthAndHeight(w, h);
-                    set.put("console_size", console_size.toString());
-                    set.put("beacon", ad.getBeacon());
-                    // get lanterns preference
-                    int lanterns = 0;
-                    HashMap<String, Object> wherep = new HashMap<String, Object>();
-                    wherep.put("uuid", uuid);
-                    ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, wherep);
-                    if (rsp.resultSet() && rsp.isLanternsOn()) {
-                        lanterns = 1;
-                    }
-                    set.put("lanterns", lanterns);
-                    if (sub.equals("add")) {
-                        // save json to database
-                        set.put("uuid", uuid);
-                        set.put("name", name);
-                        qf.doInsert("archive", set);
-                        TARDISMessage.send(player, "ARCHIVE_ADD", name);
-                        return true;
-                    }
-                    if (sub.equals("update")) {
-                        // update json in database
-                        HashMap<String, Object> whereu = new HashMap<String, Object>();
-                        whereu.put("uuid", uuid);
-                        whereu.put("name", name);
-                        qf.doUpdate("archive", set, whereu);
-                        TARDISMessage.send(player, "ARCHIVE_UPDATE", name);
+                        if (sub.equals("scan")) {
+                            TARDISMessage.send(player, "ARCHIVE_SCAN");
+                            return true;
+                        }
+                        HashMap<String, Object> set = new HashMap<String, Object>();
+                        set.put("data", ad.getJSON().toString());
+                        // get console size
+                        ConsoleSize console_size = ConsoleSize.getByWidthAndHeight(w, h);
+                        set.put("console_size", console_size.toString());
+                        set.put("beacon", ad.getBeacon());
+                        // get lanterns preference
+                        int lanterns = 0;
+                        HashMap<String, Object> wherep = new HashMap<String, Object>();
+                        wherep.put("uuid", uuid);
+                        ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, wherep);
+                        if (rsp.resultSet() && rsp.isLanternsOn()) {
+                            lanterns = 1;
+                        }
+                        set.put("lanterns", lanterns);
+                        if (sub.equals("add")) {
+                            // save json to database
+                            set.put("uuid", uuid);
+                            set.put("name", name);
+                            qf.doInsert("archive", set);
+                            TARDISMessage.send(player, "ARCHIVE_ADD", name);
+                            return true;
+                        }
+                        if (sub.equals("update")) {
+                            // update json in database
+                            HashMap<String, Object> whereu = new HashMap<String, Object>();
+                            whereu.put("uuid", uuid);
+                            whereu.put("name", name);
+                            qf.doUpdate("archive", set, whereu);
+                            TARDISMessage.send(player, "ARCHIVE_UPDATE", name);
+                            return true;
+                        }
+                    } else {
+                        TARDISMessage.send(player, "ARCHIVE_NO_JSON");
                         return true;
                     }
                 } else {
