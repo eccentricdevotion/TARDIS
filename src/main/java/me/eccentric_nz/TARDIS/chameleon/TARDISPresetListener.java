@@ -483,6 +483,7 @@ public class TARDISPresetListener extends TARDISMenuListener implements Listener
                                     break;
                             }
                             if (set.size() > 0) {
+                                set.put("adapti_on", 0);
                                 set.put("chameleon_demat", preset);
                                 qf.doUpdate("tardis", set, wherec);
                             }
