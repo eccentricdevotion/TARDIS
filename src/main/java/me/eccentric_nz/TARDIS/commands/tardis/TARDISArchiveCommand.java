@@ -140,6 +140,35 @@ public class TARDISArchiveCommand {
                         int h = dimensions.getInt("height") - 1;
                         int w = dimensions.getInt("width") - 1;
                         int c = dimensions.getInt("length") - 1;
+                        // get console size
+                        ConsoleSize console_size = ConsoleSize.getByWidthAndHeight(w, h);
+                        if (((args[1].equalsIgnoreCase("add") || args[1].equalsIgnoreCase("update")) && args.length == 4) || (args[1].equalsIgnoreCase("scan") && args.length == 3)) {
+                            // size from args[2/3]
+                            try {
+                                String size = (args[1].equalsIgnoreCase("scan")) ? args[2] : args[3];
+                                console_size = ConsoleSize.valueOf(size.toUpperCase(Locale.ENGLISH));
+                                switch (console_size) {
+                                    case TALL:
+                                        h = 31;
+                                        w = 31;
+                                        c = 31;
+                                        break;
+                                    case MEDIUM:
+                                        h = 15;
+                                        w = 31;
+                                        c = 31;
+                                        break;
+                                    default:
+                                        h = 15;
+                                        w = 15;
+                                        c = 15;
+                                        break;
+                                }
+                            } catch (IllegalArgumentException e) {
+                                TARDISMessage.send(player, "ARCHIVE_SIZE");
+                                return true;
+                            }
+                        }
                         // calculate startx, starty, startz
                         int slot = tardis.getTIPS();
                         id = tardis.getTardis_id();
@@ -156,18 +185,12 @@ public class TARDISArchiveCommand {
                         }
                         int sy = (current.getPermission().equals("redstone")) ? 65 : 64;
                         ArchiveData ad = new TARDISSchematicBuilder(plugin, id, player.getLocation().getWorld(), sx, sx + w, sy, sy + h, sz, sz + c).build();
-//                    if (ad == null) {
-//                        TARDISMessage.send(player, "ARCHIVE_FAIL");
-//                        return true;
-//                    }
                         if (sub.equals("scan")) {
                             TARDISMessage.send(player, "ARCHIVE_SCAN");
                             return true;
                         }
                         HashMap<String, Object> set = new HashMap<String, Object>();
                         set.put("data", ad.getJSON().toString());
-                        // get console size
-                        ConsoleSize console_size = ConsoleSize.getByWidthAndHeight(w, h);
                         set.put("console_size", console_size.toString());
                         set.put("beacon", ad.getBeacon());
                         // get lanterns preference

@@ -18,7 +18,9 @@ package me.eccentric_nz.TARDIS.desktop;
 
 import java.util.Arrays;
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.database.ResultSetTardisSize;
 import me.eccentric_nz.TARDIS.schematic.ResultSetArchiveButtons;
+import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
@@ -61,19 +63,40 @@ public class TARDISArchiveInventory {
                 i++;
             }
         }
+        // size
+        ItemStack size = new ItemStack(Material.BOWL, 1);
+        ItemMeta size_im = size.getItemMeta();
+        size_im.setDisplayName("Set size");
+        String s = "SMALL";
+        String b = "16 x 16 x 16 blocks";
+        // get current console size
+        ResultSetTardisSize rss = new ResultSetTardisSize(plugin);
+        if (rss.fromUUID(player.getUniqueId().toString())) {
+            s = rss.getConsoleSize().toString();
+            b = rss.getConsoleSize().getBlocks();
+        }
+        size_im.setLore(Arrays.asList(s, b, ChatColor.AQUA + "Click to change"));
+        size.setItemMeta(size_im);
+        stack[18] = size;
         // scan
         ItemStack scan = new ItemStack(Material.BOWL, 1);
         ItemMeta but_im = scan.getItemMeta();
         but_im.setDisplayName("Scan console");
         scan.setItemMeta(but_im);
-        stack[18] = scan;
+        stack[19] = scan;
         // archive
         ItemStack arc = new ItemStack(Material.BOWL, 1);
         ItemMeta hive_im = arc.getItemMeta();
         hive_im.setDisplayName("Archive current console");
         hive_im.setLore(Arrays.asList("A random name will", "be generated - use the", "/tardis archive command", "to set your own."));
         arc.setItemMeta(hive_im);
-        stack[19] = arc;
+        stack[20] = arc;
+        // back
+        ItemStack back = new ItemStack(Material.BOWL, 1);
+        ItemMeta back_im = back.getItemMeta();
+        back_im.setDisplayName("Back");
+        back.setItemMeta(back_im);
+        stack[25] = back;
         // close
         ItemStack close = new ItemStack(Material.BOWL, 1);
         ItemMeta close_im = close.getItemMeta();

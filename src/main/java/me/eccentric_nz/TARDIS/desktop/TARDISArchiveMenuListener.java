@@ -16,10 +16,16 @@
  */
 package me.eccentric_nz.TARDIS.desktop;
 
+import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
 import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.control.TARDISThemeButton;
+import me.eccentric_nz.TARDIS.database.ResultSetTardis;
+import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.enumeration.CONSOLES;
+import me.eccentric_nz.TARDIS.enumeration.ConsoleSize;
 import me.eccentric_nz.TARDIS.enumeration.SCHEMATIC;
 import me.eccentric_nz.TARDIS.listeners.TARDISMenuListener;
 import me.eccentric_nz.TARDIS.schematic.ArchiveUpdate;
@@ -56,18 +62,51 @@ public class TARDISArchiveMenuListener extends TARDISMenuListener implements Lis
         Inventory inv = event.getInventory();
         String name = inv.getTitle();
         if (name.equals("§4TARDIS Archive")) {
-            Player p = (Player) event.getWhoClicked();
+            final Player p = (Player) event.getWhoClicked();
             int slot = event.getRawSlot();
             if (slot >= 0 && slot < 27) {
                 event.setCancelled(true);
                 switch (slot) {
                     case 18:
-                        // scan
-                        scan(p);
+                        // size
+                        ItemStack iss = inv.getItem(18);
+                        ItemMeta ims = iss.getItemMeta();
+                        List<String> lores = ims.getLore();
+                        String t;
+                        String b;
+                        int s;
+                        int o = ConsoleSize.valueOf(lores.get(0)).ordinal();
+                        s = (o < 2) ? o + 1 : 0;
+                        t = ConsoleSize.values()[s].toString();
+                        b = ConsoleSize.values()[s].getBlocks();
+                        if (t != null) {
+                            ims.setLore(Arrays.asList(t, b, ChatColor.AQUA + "Click to change"));
+                            iss.setItemMeta(ims);
+                        }
                         break;
                     case 19:
-                        // arcive
-                        archive(p);
+                        // scan
+                        scan(p, inv);
+                        break;
+                    case 20:
+                        // archive
+                        archive(p, inv);
+                        break;
+                    case 25:
+                        // back
+                        HashMap<String, Object> where = new HashMap<String, Object>();
+                        where.put("uuid", p.getUniqueId().toString());
+                        ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false, 2);
+                        rs.resultSet();
+                        final Tardis tardis = rs.getTardis();
+                        // return to Desktop Theme GUI
+                        close(p);
+                        plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
+                            @Override
+                            public void run() {
+                                new TARDISThemeButton(plugin, p, tardis.getSchematic(), tardis.getArtron_level(), tardis.getTardis_id()).clickButton();
+                            }
+                        }, 2L);
                         break;
                     case 26:
                         // close
@@ -142,12 +181,14 @@ public class TARDISArchiveMenuListener extends TARDISMenuListener implements Lis
      *
      * @param p the player using the GUI
      */
-    private void scan(final Player p) {
+    private void scan(final Player p, final Inventory inv) {
         plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
             @Override
             public void run() {
+                List<String> lore = getSizeLore(inv);
+                String size = lore.get(0);
                 p.closeInventory();
-                p.performCommand("tardis archive scan");
+                p.performCommand("tardis archive scan " + size);
             }
         }, 1L);
     }
@@ -158,15 +199,23 @@ public class TARDISArchiveMenuListener extends TARDISMenuListener implements Lis
      *
      * @param p the player using the GUI
      */
-    private void archive(final Player p) {
+    private void archive(final Player p, final Inventory inv) {
         plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
             @Override
             public void run() {
+                List<String> lore = getSizeLore(inv);
+                String size = lore.get(0);
                 p.closeInventory();
                 // generate random name
                 String name = TARDISRandomArchiveName.getRandomName();
-                p.performCommand("tardis archive add " + name);
+                p.performCommand("tardis archive add " + name + " " + size);
             }
         }, 1L);
+    }
+
+    private List<String> getSizeLore(Inventory inv) {
+        ItemStack is = inv.getItem(18);
+        ItemMeta im = is.getItemMeta();
+        return im.getLore();
     }
 }

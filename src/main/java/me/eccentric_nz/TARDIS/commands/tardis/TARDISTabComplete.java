@@ -37,6 +37,7 @@ public class TARDISTabComplete extends TARDISCompleter implements TabCompleter {
     private final List<String> DIR_SUBS = ImmutableList.of("north", "west", "south", "east");
     private final List<String> LIST_SUBS = ImmutableList.of("companions", "saves", "areas", "rechargers");
     private final List<String> ARCHIVE_SUBS = ImmutableList.of("add", "description", "remove", "scan", "update");
+    private final List<String> CONSOLE_SIZE_SUBS = ImmutableList.of("SMALL", "MEDIUM", "TALL");
     private final List<String> SEC_SUBS = ImmutableList.of("button", "world-repeater", "x-repeater", "z-repeater", "y-repeater", "artron", "handbrake", "door", "back");
     private final List<String> UPD_SUBS = ImmutableList.of("advanced", "ars", "artron", "back", "backdoor", "beacon", "button", "chameleon", "condenser", "control", "creeper", "direction", "door", "eps", "farm", "generator", "handbrake", "igloo", "info", "keyboard", "light", "rail", "save-sign", "scanner", "siege", "stable", "storage", "telepathic", "temporal", "terminal", "toggle_wool", "vault", "village", "world-repeater", "x-repeater", "y-repeater", "z-repeater", "zero");
     private final List<String> RECHARGER_SUBS;
@@ -83,6 +84,14 @@ public class TARDISTabComplete extends TARDISCompleter implements TabCompleter {
             String sub = args[1];
             if (sub.equals("rechargers")) {
                 return partial(lastArg, RECHARGER_SUBS);
+            }
+            if (sub.equals("scan")) {
+                return partial(lastArg, CONSOLE_SIZE_SUBS);
+            }
+        } else if (args.length == 4) {
+            String sub = args[1];
+            if (sub.equals("add") || sub.equals("update")) {
+                return partial(lastArg, CONSOLE_SIZE_SUBS);
             }
         }
         return ImmutableList.of();
