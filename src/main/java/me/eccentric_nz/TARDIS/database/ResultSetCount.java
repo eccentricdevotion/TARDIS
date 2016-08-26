@@ -19,15 +19,9 @@ package me.eccentric_nz.TARDIS.database;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Locale;
-import java.util.Map;
 import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.utility.TARDISNumberParsers;
 
 /**
  * A numerical Type designates each model of TARDIS. Every TARDIS that is
@@ -42,13 +36,12 @@ public class ResultSetCount {
     private final TARDISDatabaseConnection service = TARDISDatabaseConnection.getInstance();
     private final Connection connection = service.getConnection();
     private final TARDIS plugin;
-    private final HashMap<String, Object> where;
-    private final boolean multiple;
+    private final String where;
     private int id;
     private UUID uuid;
     private int count;
     private int grace;
-    private final ArrayList<HashMap<String, String>> data = new ArrayList<HashMap<String, String>>();
+    private int repair;
     private final String prefix;
 
     /**
@@ -56,15 +49,11 @@ public class ResultSetCount {
      * from the count table.
      *
      * @param plugin an instance of the main class.
-     * @param where a HashMap<String, Object> of table fields and values to
-     * refine the search.
-     * @param multiple a boolean indicating whether multiple rows should be
-     * fetched
+     * @param where a player's UUID.toString() to refine the search.
      */
-    public ResultSetCount(TARDIS plugin, HashMap<String, Object> where, boolean multiple) {
+    public ResultSetCount(TARDIS plugin, String where) {
         this.plugin = plugin;
         this.where = where;
-        this.multiple = multiple;
         this.prefix = this.plugin.getPrefix();
     }
 
@@ -78,46 +67,19 @@ public class ResultSetCount {
     public boolean resultSet() {
         PreparedStatement statement = null;
         ResultSet rs = null;
-        String wheres = "";
-        if (where != null) {
-            StringBuilder sbw = new StringBuilder();
-            for (Map.Entry<String, Object> entry : where.entrySet()) {
-                sbw.append(entry.getKey()).append(" = ? AND ");
-            }
-            wheres = " WHERE " + sbw.toString().substring(0, sbw.length() - 5);
-        }
-        String query = "SELECT * FROM " + prefix + "t_count" + wheres;
+        String query = "SELECT * FROM " + prefix + "t_count WHERE uuid = ?";
         try {
             service.testConnection(connection);
             statement = connection.prepareStatement(query);
-            if (where != null) {
-                int s = 1;
-                for (Map.Entry<String, Object> entry : where.entrySet()) {
-                    if (entry.getValue().getClass().equals(String.class) || entry.getValue().getClass().equals(UUID.class)) {
-                        statement.setString(s, entry.getValue().toString());
-                    } else {
-                        statement.setInt(s, TARDISNumberParsers.parseInt(entry.getValue().toString()));
-                    }
-                    s++;
-                }
-                where.clear();
-            }
+            statement.setString(1, where);
             rs = statement.executeQuery();
             if (rs.isBeforeFirst()) {
                 while (rs.next()) {
-                    if (multiple) {
-                        HashMap<String, String> row = new HashMap<String, String>();
-                        ResultSetMetaData rsmd = rs.getMetaData();
-                        int columns = rsmd.getColumnCount();
-                        for (int i = 1; i < columns + 1; i++) {
-                            row.put(rsmd.getColumnName(i).toLowerCase(Locale.ENGLISH), rs.getString(i));
-                        }
-                        data.add(row);
-                    }
                     this.id = rs.getInt("t_id");
                     this.uuid = UUID.fromString(rs.getString("uuid"));
                     this.count = rs.getInt("count");
                     this.grace = rs.getInt("grace");
+                    this.repair = rs.getInt("repair");
                 }
             } else {
                 return false;
@@ -156,7 +118,7 @@ public class ResultSetCount {
         return grace;
     }
 
-    public ArrayList<HashMap<String, String>> getData() {
-        return data;
+    public int getRepair() {
+        return repair;
     }
 }

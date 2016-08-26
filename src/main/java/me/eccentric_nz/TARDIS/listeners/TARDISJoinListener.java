@@ -107,9 +107,7 @@ public class TARDISJoinListener implements Listener {
         }
         if (!plugin.getDifficulty().equals(DIFFICULTY.EASY) && ((plugin.getConfig().getBoolean("allow.player_difficulty") && player.hasPermission("tardis.difficulty")) || (plugin.getConfig().getInt("travel.grace_period") > 0 && player.hasPermission("tardis.create")))) {
             // check if they have t_count record - create one if not
-            HashMap<String, Object> wherec = new HashMap<String, Object>();
-            wherec.put("uuid", uuid);
-            ResultSetCount rsc = new ResultSetCount(plugin, wherec, false);
+            ResultSetCount rsc = new ResultSetCount(plugin, uuid);
             if (!rsc.resultSet()) {
                 HashMap<String, Object> setc = new HashMap<String, Object>();
                 setc.put("uuid", uuid);

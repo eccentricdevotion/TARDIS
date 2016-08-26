@@ -165,9 +165,7 @@ public class TARDISUtils {
         // check grace period
         int grace = plugin.getConfig().getInt("travel.grace_period");
         if (grace > 0) {
-            HashMap<String, Object> wherec = new HashMap<String, Object>();
-            wherec.put("uuid", p.getUniqueId().toString());
-            ResultSetCount rsc = new ResultSetCount(plugin, wherec, false);
+            ResultSetCount rsc = new ResultSetCount(plugin, p.getUniqueId().toString());
             if (rsc.resultSet()) {
                 int grace_count = rsc.getGrace();
                 if (grace_count < grace) {

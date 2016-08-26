@@ -123,9 +123,7 @@ public class TARDISBlockStackListener implements Listener {
                 int player_count = 0;
                 int grace_count = 0;
                 boolean has_count = false;
-                HashMap<String, Object> wherec = new HashMap<String, Object>();
-                wherec.put("uuid", player.getUniqueId().toString());
-                ResultSetCount rsc = new ResultSetCount(plugin, wherec, false);
+                ResultSetCount rsc = new ResultSetCount(plugin, player.getUniqueId().toString());
                 if (rsc.resultSet()) {
                     player_count = rsc.getCount();
                     grace_count = rsc.getGrace();

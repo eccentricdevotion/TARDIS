@@ -45,9 +45,7 @@ public class TARDISPlayerCountCommand {
             return true;
         }
         String uuid = player.getUniqueId().toString();
-        HashMap<String, Object> where = new HashMap<String, Object>();
-        where.put("uuid", uuid);
-        ResultSetCount rsc = new ResultSetCount(plugin, where, false);
+        ResultSetCount rsc = new ResultSetCount(plugin, uuid);
         if (rsc.resultSet()) {
             if (args.length == 3) {
                 // set count
