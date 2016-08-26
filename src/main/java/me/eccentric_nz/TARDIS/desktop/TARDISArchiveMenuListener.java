@@ -19,6 +19,7 @@ package me.eccentric_nz.TARDIS.desktop;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.control.TARDISThemeButton;
@@ -67,6 +68,22 @@ public class TARDISArchiveMenuListener extends TARDISMenuListener implements Lis
             if (slot >= 0 && slot < 27) {
                 event.setCancelled(true);
                 switch (slot) {
+                    case 17:
+                        // back
+                        HashMap<String, Object> where = new HashMap<String, Object>();
+                        where.put("uuid", p.getUniqueId().toString());
+                        ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false, 2);
+                        rs.resultSet();
+                        final Tardis tardis = rs.getTardis();
+                        // return to Desktop Theme GUI
+                        close(p);
+                        plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
+                            @Override
+                            public void run() {
+                                new TARDISThemeButton(plugin, p, tardis.getSchematic(), tardis.getArtron_level(), tardis.getTardis_id()).clickButton();
+                            }
+                        }, 2L);
+                        break;
                     case 18:
                         // size
                         ItemStack iss = inv.getItem(18);
@@ -92,21 +109,32 @@ public class TARDISArchiveMenuListener extends TARDISMenuListener implements Lis
                         // archive
                         archive(p, inv);
                         break;
-                    case 25:
-                        // back
-                        HashMap<String, Object> where = new HashMap<String, Object>();
-                        where.put("uuid", p.getUniqueId().toString());
-                        ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false, 2);
-                        rs.resultSet();
-                        final Tardis tardis = rs.getTardis();
-                        // return to Desktop Theme GUI
-                        close(p);
-                        plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
-                            @Override
-                            public void run() {
-                                new TARDISThemeButton(plugin, p, tardis.getSchematic(), tardis.getArtron_level(), tardis.getTardis_id()).clickButton();
+                    case 22:
+                    case 23:
+                    case 24:
+                        ItemStack template = inv.getItem(slot);
+                        if (template != null) {
+                            final UUID uuid = p.getUniqueId();
+                            final TARDISUpgradeData tud = plugin.getTrackerKeeper().getUpgrades().get(uuid);
+                            ItemMeta im = template.getItemMeta();
+                            String size = im.getDisplayName().toLowerCase(Locale.ENGLISH);
+                            int upgrade = plugin.getArtronConfig().getInt("upgrades." + size);
+                            if (tud.getLevel() >= upgrade) {
+                                new ArchiveUpdate(plugin, uuid.toString(), im.getDisplayName()).setInUse();
+                                tud.setSchematic(CONSOLES.SCHEMATICFor(size));
+                                tud.setWall("WOOL:1");
+                                tud.setFloor("WOOL:8");
+                                plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        plugin.getTrackerKeeper().getUpgrades().put(uuid, tud);
+                                        // process upgrade
+                                        new TARDISThemeProcessor(plugin, uuid).changeDesktop();
+                                    }
+                                }, 10L);
+                                close(p);
                             }
-                        }, 2L);
+                        }
                         break;
                     case 26:
                         // close
@@ -120,8 +148,7 @@ public class TARDISArchiveMenuListener extends TARDISMenuListener implements Lis
                             SCHEMATIC schm = CONSOLES.SCHEMATICFor("archive");
                             final UUID uuid = p.getUniqueId();
                             final TARDISUpgradeData tud = plugin.getTrackerKeeper().getUpgrades().get(uuid);
-                            ItemStack is = inv.getItem(slot);
-                            ItemMeta im = is.getItemMeta();
+                            ItemMeta im = choice.getItemMeta();
                             List<String> lore = im.getLore();
                             if (lore.contains(ChatColor.GREEN + plugin.getLanguage().getString("CURRENT_CONSOLE"))) {
                                 TARDISMessage.send(p, "ARCHIVE_NOT_CURRENT");

@@ -263,6 +263,9 @@ public class TARDISConfiguration {
         artronIntOptions.put("upgrades.tom", 5000);
         artronIntOptions.put("upgrades.twelfth", 7500);
         artronIntOptions.put("upgrades.war", 5000);
+        artronIntOptions.put("upgrades.small", 1666);
+        artronIntOptions.put("upgrades.medium", 2500);
+        artronIntOptions.put("upgrades.tall", 3333);
         artronIntOptions.put("upgrades.custom", 10000);
         artronIntOptions.put("upgrades.archive.small", 5000);
         artronIntOptions.put("upgrades.archive.medium", 7500);

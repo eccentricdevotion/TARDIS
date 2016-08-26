@@ -45,7 +45,7 @@ public class TARDISConsoleLoader {
         this.plugin = plugin;
     }
 
-//    new SCHEMATIC(String seed, String permission, String description, boolean small, boolean tall, boolean beacon, boolean lanterns, boolean custom)
+//    new SCHEMATIC(String seed, String permission, String description, ConsoleSize size, boolean beacon, boolean lanterns, boolean custom)
     public void addSchematics() {
         // DELUXE, ELEVENTH, TWELFTH, ARS & REDSTONE schematics designed by Lord_Rahl and killeratnight at mcnovus.net
         CONSOLES.getBY_NAMES().put("ARS", new SCHEMATIC("QUARTZ_BLOCK", "ars", "ARS Console", ConsoleSize.SMALL, true, false, false));
@@ -67,6 +67,10 @@ public class TARDISConsoleLoader {
         CONSOLES.getBY_NAMES().put("TOM", new SCHEMATIC("LAPIS_BLOCK", "tom", "4th Doctor's Console", ConsoleSize.SMALL, false, false, false));
         CONSOLES.getBY_NAMES().put("TWELFTH", new SCHEMATIC("PRISMARINE", "twelfth", "12th Doctor's Console", ConsoleSize.MEDIUM, true, true, false));
         CONSOLES.getBY_NAMES().put("WAR", new SCHEMATIC("STAINED_CLAY", "war", "War Doctor's Console", ConsoleSize.SMALL, true, false, false));
+        // cobblestone templates
+        CONSOLES.getBY_NAMES().put("SMALL", new SCHEMATIC("COBBLESTONE", "small", "16x16x16 cobblestone template", ConsoleSize.SMALL, false, true, false));
+        CONSOLES.getBY_NAMES().put("MEDIUM", new SCHEMATIC("COBBLESTONE", "medium", "32x16x32 cobblestone template", ConsoleSize.MEDIUM, false, true, false));
+        CONSOLES.getBY_NAMES().put("TALL", new SCHEMATIC("COBBLESTONE", "tall", "32x32x32 cobblestone template", ConsoleSize.TALL, false, true, false));
         for (final String console : plugin.getCustomConsolesConfig().getKeys(false)) {
             if (plugin.getCustomConsolesConfig().getBoolean(console + ".enabled")) {
                 // check that the .tschm file exists

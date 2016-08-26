@@ -64,30 +64,32 @@ public class TARDISThemeInventory {
         // get consoles
         for (SCHEMATIC a : CONSOLES.getBY_NAMES().values()) {
             Material m = Material.getMaterial(a.getSeed());
-            ItemStack is = new ItemStack(m, 1);
-            ItemMeta im = is.getItemMeta();
-            im.setDisplayName(a.getDescription());
-            int cost = plugin.getArtronConfig().getInt("upgrades." + a.getPermission());
-            if (current_console.equals(a.getPermission())) {
-                cost = Math.round((plugin.getArtronConfig().getInt("just_wall_floor") / 100F) * cost);
+            if (!m.equals(Material.COBBLESTONE)) {
+                ItemStack is = new ItemStack(m, 1);
+                ItemMeta im = is.getItemMeta();
+                im.setDisplayName(a.getDescription());
+                int cost = plugin.getArtronConfig().getInt("upgrades." + a.getPermission());
+                if (current_console.equals(a.getPermission())) {
+                    cost = Math.round((plugin.getArtronConfig().getInt("just_wall_floor") / 100F) * cost);
+                }
+                List<String> lore = new ArrayList<String>();
+                lore.add("Cost: " + cost);
+                if (!player.hasPermission("tardis." + a.getPermission())) {
+                    lore.add(ChatColor.RED + plugin.getLanguage().getString("NO_PERM_CONSOLE"));
+                } else if (level < cost && !current_console.equals(a.getPermission())) {
+                    lore.add(plugin.getLanguage().getString("UPGRADE_ABORT_ENERGY"));
+                }
+                if (current_console.equals(a.getPermission())) {
+                    lore.add(ChatColor.GREEN + plugin.getLanguage().getString("CURRENT_CONSOLE"));
+                } else {
+                    lore.add(ChatColor.GREEN + plugin.getLanguage().getString("RESET"));
+                    lore.add(ChatColor.GREEN + plugin.getLanguage().getString("REMEMBER"));
+                }
+                im.setLore(lore);
+                is.setItemMeta(im);
+                stack[i] = is;
+                i++;
             }
-            List<String> lore = new ArrayList<String>();
-            lore.add("Cost: " + cost);
-            if (!player.hasPermission("tardis." + a.getPermission())) {
-                lore.add(ChatColor.RED + plugin.getLanguage().getString("NO_PERM_CONSOLE"));
-            } else if (level < cost && !current_console.equals(a.getPermission())) {
-                lore.add(plugin.getLanguage().getString("UPGRADE_ABORT_ENERGY"));
-            }
-            if (current_console.equals(a.getPermission())) {
-                lore.add(ChatColor.GREEN + plugin.getLanguage().getString("CURRENT_CONSOLE"));
-            } else {
-                lore.add(ChatColor.GREEN + plugin.getLanguage().getString("RESET"));
-                lore.add(ChatColor.GREEN + plugin.getLanguage().getString("REMEMBER"));
-            }
-            im.setLore(lore);
-            is.setItemMeta(im);
-            stack[i] = is;
-            i++;
         }
         if (player.hasPermission("tardis.archive")) {
             // archive consoles

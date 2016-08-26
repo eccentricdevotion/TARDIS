@@ -19,6 +19,7 @@ package me.eccentric_nz.TARDIS.desktop;
 import java.util.Arrays;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.ResultSetTardisSize;
+import me.eccentric_nz.TARDIS.enumeration.ConsoleSize;
 import me.eccentric_nz.TARDIS.schematic.ResultSetArchiveButtons;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -63,6 +64,12 @@ public class TARDISArchiveInventory {
                 i++;
             }
         }
+        // back
+        ItemStack back = new ItemStack(Material.BOWL, 1);
+        ItemMeta back_im = back.getItemMeta();
+        back_im.setDisplayName("Back");
+        back.setItemMeta(back_im);
+        stack[17] = back;
         // size
         ItemStack size = new ItemStack(Material.BOWL, 1);
         ItemMeta size_im = size.getItemMeta();
@@ -91,12 +98,17 @@ public class TARDISArchiveInventory {
         hive_im.setLore(Arrays.asList("A random name will", "be generated - use the", "/tardis archive command", "to set your own."));
         arc.setItemMeta(hive_im);
         stack[20] = arc;
-        // back
-        ItemStack back = new ItemStack(Material.BOWL, 1);
-        ItemMeta back_im = back.getItemMeta();
-        back_im.setDisplayName("Back");
-        back.setItemMeta(back_im);
-        stack[25] = back;
+        // templates
+        int t = 22;
+        for (ConsoleSize c : ConsoleSize.values()) {
+            ItemStack temp = new ItemStack(Material.BOWL, 1);
+            ItemMeta late = temp.getItemMeta();
+            late.setDisplayName(c.toString());
+            late.setLore(Arrays.asList("Cobblestone template", c.getBlocks()));
+            temp.setItemMeta(late);
+            stack[t] = temp;
+            t++;
+        }
         // close
         ItemStack close = new ItemStack(Material.BOWL, 1);
         ItemMeta close_im = close.getItemMeta();

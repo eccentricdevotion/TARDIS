@@ -95,23 +95,6 @@ public class TARDISCraftListener implements Listener {
                 }
             }
         }
-//        for (Integer i : plugin.getBlocksConfig().getIntegerList("chameleon_blocks")) {
-//            c.add(i);
-//        }
-//        for (String a : plugin.getBlocksConfig().getStringList("lamp_blocks")) {
-//            try {
-//                l.add(Material.valueOf(a));
-//            } catch (IllegalArgumentException e) {
-//                plugin.debug("Invalid Material in lamp_blocks section.");
-//            }
-//        }
-//        hasColour.add(Material.WOOL);
-//        hasColour.add(Material.STAINED_CLAY);
-//        hasColour.add(Material.STAINED_GLASS);
-//        hasColour.add(Material.WOOD);
-//        hasColour.add(Material.LOG);
-//        hasColour.add(Material.LOG_2);
-//        hasColour.add(Material.STONE);
         twl = new TARDISWallsLookup(plugin);
     }
 
@@ -160,9 +143,7 @@ public class TARDISCraftListener implements Listener {
                             event.setCancelled(true);
                         }
                         // get the materials in crafting slots
-//                        Material m5 = inv.getItem(5).getType(); // lamp
                         Material m7 = inv.getItem(7).getType(); // tardis type
-//                        Material m8 = inv.getItem(8).getType(); // chameleon
                         final ItemStack is = new ItemStack(m7, 1);
                         ItemMeta im = is.getItemMeta();
                         im.setDisplayName("§6TARDIS Seed Block");
@@ -170,24 +151,6 @@ public class TARDISCraftListener implements Listener {
                         lore.add(t.get(m7));
                         lore.add("Walls: " + twl.wall_lookup.get(inv.getItem(6).getType().toString() + ":" + inv.getItem(6).getData().getData()));
                         lore.add("Floors: " + twl.wall_lookup.get(inv.getItem(9).getType().toString() + ":" + inv.getItem(9).getData().getData()));
-//                        // do some funky stuff to get data values for wool/stained glass & clay/wood/log/log_2
-//                        if (hasColour.contains(m8)) {
-//                            switch (m8) {
-//                                case WOOL:
-//                                case STAINED_CLAY:
-//                                case STAINED_GLASS:
-//                                    lore.add("Chameleon block: " + DyeColor.getByWoolData(inv.getItem(8).getData().getData()) + " " + m8.toString());
-//                                    break;
-//                                case STONE:
-//                                    lore.add("Chameleon block: " + TARDISStaticUtils.getStoneType(inv.getItem(8).getData().getData()));
-//                                    break;
-//                                default:
-//                                    lore.add("Chameleon block: " + TARDISStaticUtils.getWoodType(m8, inv.getItem(8).getData().getData()) + " " + m8.toString());
-//                            }
-//                        } else {
-//                            lore.add("Chameleon block: " + m8.toString());
-//                        }
-//                        lore.add("Lamp: " + m5.toString());
                         im.setLore(lore);
                         is.setItemMeta(im);
                         if (checkPerms(player, m7)) {
