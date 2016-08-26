@@ -135,7 +135,7 @@ public class TARDISAdminTabComplete extends TARDISCompleter implements TabComple
             if (sub.equals("spawn_abandoned")) {
                 return partial(lastArg, SEED_SUBS);
             }
-            if (sub.equals("delete") || sub.equals("enter") || sub.equals("purge") || sub.equals("desiege")) {
+            if (sub.equals("delete") || sub.equals("enter") || sub.equals("purge") || sub.equals("desiege") || sub.equals("repair")) {
                 // return null to default to online player name matching
                 return null;
             } else {

@@ -91,6 +91,7 @@ public class TARDISAdminCommands implements CommandExecutor {
         firstsStr.put("region_flag", "");
         firstsStr.put("reload", "");
         firstsStr.put("remove_flag", "");
+        firstsStr.put("repair", "");
         firstsStr.put("respect_towny", "preferences");
         firstsStr.put("respect_worldguard", "preferences");
         firstsStr.put("siege", "siege");
@@ -383,6 +384,9 @@ public class TARDISAdminCommands implements CommandExecutor {
                 }
                 if (first.equals("region_flag")) {
                     return new TARDISRegionFlagCommand(plugin).toggleEntryExit(sender, args);
+                }
+                if (first.equals("repair")) {
+                    return new TARDISRepairCommand(plugin).setFreeCount(sender, args);
                 }
                 if (first.equals("vortex_fall")) {
                     if (!args[1].equalsIgnoreCase("kill") && !args[1].equalsIgnoreCase("teleport")) {
