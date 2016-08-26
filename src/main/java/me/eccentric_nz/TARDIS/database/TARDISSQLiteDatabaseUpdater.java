@@ -293,6 +293,14 @@ public class TARDISSQLiteDatabaseUpdater {
                 String bio_alter = "ALTER TABLE " + prefix + "current ADD biome TEXT DEFAULT ''";
                 statement.executeUpdate(bio_alter);
             }
+            // add repair to t_count
+            String rep_query = "SELECT sql FROM sqlite_master WHERE tbl_name = '" + prefix + "t_count' AND sql LIKE '%repair%'";
+            ResultSet rsrep = statement.executeQuery(rep_query);
+            if (!rsrep.next()) {
+                i++;
+                String rep_alter = "ALTER TABLE " + prefix + "t_count ADD repair INTEGER DEFAULT 0";
+                statement.executeUpdate(rep_alter);
+            }
             // add tardis_id to dispersed
             String dispersed_query = "SELECT sql FROM sqlite_master WHERE tbl_name = '" + prefix + "dispersed' AND sql LIKE '%tardis_id%'";
             ResultSet rsdispersed = statement.executeQuery(dispersed_query);

@@ -185,7 +185,7 @@ public class TARDISSQLiteDatabase {
             statement.executeUpdate(queryTravellers);
 
             // Table structure for table 't_count'
-            String queryT_Counts = "CREATE TABLE IF NOT EXISTS " + prefix + "t_count (t_id INTEGER PRIMARY KEY NOT NULL, uuid TEXT DEFAULT '', player TEXT COLLATE NOCASE DEFAULT '', count INTEGER DEFAULT 0, grace INTEGER DEFAULT 0)";
+            String queryT_Counts = "CREATE TABLE IF NOT EXISTS " + prefix + "t_count (t_id INTEGER PRIMARY KEY NOT NULL, uuid TEXT DEFAULT '', player TEXT COLLATE NOCASE DEFAULT '', count INTEGER DEFAULT 0, grace INTEGER DEFAULT 0, repair INTEGER DEFAULT 0)";
             statement.executeUpdate(queryT_Counts);
 
             // Table structure for table 'vaults'

@@ -218,6 +218,14 @@ public class TARDISMySQLDatabaseUpdater {
                 // update tardis_id column for existing records
                 new TARDISDispersalUpdater(plugin).updateTardis_ids();
             }
+            // add repair to t_count
+            String rep_query = "SHOW COLUMNS FROM " + prefix + "t_count LIKE 'repair'";
+            ResultSet rsrep = statement.executeQuery(rep_query);
+            if (!rsrep.next()) {
+                i++;
+                String rep_alter = "ALTER TABLE " + prefix + "t_count ADD repair int(3) DEFAULT '0'";
+                statement.executeUpdate(rep_alter);
+            }
             // transfer `void` data to `thevoid`, then remove `void` table
             String voidQuery = "SHOW TABLES LIKE '" + prefix + "void'";
             ResultSet rsvoid = statement.executeQuery(voidQuery);

@@ -234,7 +234,7 @@ public class Main {
                                     bw.write(str);
                                     break;
                                 case t_count:
-                                    str = String.format(SQL.VALUES.get(i), rs.getInt("t_id"), rs.getString("uuid"), rs.getString("player"), rs.getInt("count"), rs.getInt("grace")) + end;
+                                    str = String.format(SQL.VALUES.get(i), rs.getInt("t_id"), rs.getString("uuid"), rs.getString("player"), rs.getInt("count"), rs.getInt("grace"), rs.getInt("repair")) + end;
                                     bw.write(str);
                                     break;
                                 case tag:
