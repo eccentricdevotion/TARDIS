@@ -16,7 +16,10 @@
  */
 package me.eccentric_nz.TARDIS.desktop;
 
+import java.util.HashMap;
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.database.QueryFactory;
+import me.eccentric_nz.TARDIS.database.ResultSetCount;
 import me.eccentric_nz.TARDIS.enumeration.CONSOLES;
 import me.eccentric_nz.TARDIS.enumeration.SCHEMATIC;
 import me.eccentric_nz.TARDIS.listeners.TARDISMenuListener;
@@ -58,6 +61,14 @@ public class TARDISThemeMenuListener extends TARDISMenuListener implements Liste
                     case 18:
                         // archive
                         archive(p);
+                        break;
+                    case 19:
+                        // repair
+                        repair(p);
+                        break;
+                    case 20:
+                        // clean
+                        clean(p);
                         break;
                     case 26:
                         // close
@@ -139,12 +150,60 @@ public class TARDISThemeMenuListener extends TARDISMenuListener implements Liste
         plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
             @Override
             public void run() {
-                TARDISUpgradeData tud = plugin.getTrackerKeeper().getUpgrades().get(p.getUniqueId());
                 p.closeInventory();
                 ItemStack[] archive = new TARDISArchiveInventory(plugin, p).getArchives();
                 Inventory menu = plugin.getServer().createInventory(p, 27, "§4TARDIS Archive");
                 menu.setContents(archive);
                 p.openInventory(menu);
+            }
+        }, 1L);
+    }
+
+    /**
+     * Initiates a TARDIS repair. Resets the console back to the original
+     * console schematic, Players must condense all missing blocks - unless the
+     * /tardisadmin repair [player] [amount] command has been run, assigning the
+     * player a 'free' repair(s).
+     */
+    private void repair(final Player p) {
+        plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
+            @Override
+            public void run() {
+                p.closeInventory();
+                String uuid = p.getUniqueId().toString();
+                boolean repair;
+                TARDISRepair tr = new TARDISRepair(plugin, p);
+                // is it a free repair?
+                ResultSetCount rsc = new ResultSetCount(plugin, uuid);
+                if (rsc.resultSet() && rsc.getRepair() > 0) {
+                    // decrement repair
+                    HashMap<String, Object> where = new HashMap<String, Object>();
+                    where.put("uuid", uuid);
+                    HashMap<String, Object> set = new HashMap<String, Object>();
+                    set.put("repair", rsc.getRepair() - 1);
+                    new QueryFactory(plugin).doUpdate("t_count", set, where);
+                    repair = true;
+                } else {
+                    // scan console and check condensed blocks
+                    repair = tr.hasCondensedMissingBlocks();
+                }
+                if (repair) {
+                    tr.restore(false);
+                }
+            }
+        }, 1L);
+    }
+
+    /**
+     * Initiates a TARDIS clean. Removes any blocks that are not part of the
+     * original console schematic (missing blocks will not be restored).
+     */
+    private void clean(final Player p) {
+        plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
+            @Override
+            public void run() {
+                p.closeInventory();
+                new TARDISRepair(plugin, p).restore(true);
             }
         }, 1L);
     }
