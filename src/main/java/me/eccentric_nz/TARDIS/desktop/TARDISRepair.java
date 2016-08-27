@@ -300,6 +300,8 @@ public class TARDISRepair {
                     ResultSetArchive rsa2 = new ResultSetArchive(plugin, wherea2);
                     if (rsa2.resultSet()) {
                         obj = rsa2.getArchive().getJSON();
+                        // set as active
+                        new ArchiveUpdate(plugin, uuid, rsa2.getArchive().getName()).setInUse();
                     } else {
                         // try 3
                         HashMap<String, Object> wherea3 = new HashMap<String, Object>();
@@ -308,6 +310,8 @@ public class TARDISRepair {
                         ResultSetArchive rsa3 = new ResultSetArchive(plugin, wherea3);
                         if (rsa3.resultSet()) {
                             obj = rsa2.getArchive().getJSON();
+                            // set as active
+                            new ArchiveUpdate(plugin, uuid, rsa3.getArchive().getName()).setInUse();
                         }
                     }
                 }
