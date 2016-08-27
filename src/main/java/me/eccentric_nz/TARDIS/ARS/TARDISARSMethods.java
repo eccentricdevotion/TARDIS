@@ -21,6 +21,7 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.UUID;
 import me.eccentric_nz.TARDIS.JSON.JSONArray;
 import me.eccentric_nz.TARDIS.TARDIS;
@@ -32,6 +33,7 @@ import me.eccentric_nz.TARDIS.database.ResultSetCondenser;
 import me.eccentric_nz.TARDIS.database.ResultSetPlayerPrefs;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
 import me.eccentric_nz.TARDIS.database.ResultSetTravellers;
+import me.eccentric_nz.TARDIS.enumeration.CONSOLES;
 import me.eccentric_nz.TARDIS.enumeration.DIFFICULTY;
 import me.eccentric_nz.TARDIS.enumeration.DISK_CIRCUIT;
 import me.eccentric_nz.TARDIS.rooms.TARDISWalls.Pair;
@@ -60,7 +62,8 @@ public class TARDISARSMethods {
     public final HashMap<UUID, TARDISARSSaveData> save_map_data = new HashMap<UUID, TARDISARSSaveData>();
     public final HashMap<UUID, TARDISARSMapData> map_data = new HashMap<UUID, TARDISARSMapData>();
     public final String[] levels = new String[]{"Bottom level", "Main level", "Top level"};
-    public final List<Material> consoleBlocks = Arrays.asList(Material.IRON_BLOCK, Material.GOLD_BLOCK, Material.DIAMOND_BLOCK, Material.EMERALD_BLOCK, Material.REDSTONE_BLOCK, Material.COAL_BLOCK, Material.QUARTZ_BLOCK, Material.LAPIS_BLOCK, Material.BOOKSHELF, Material.STAINED_CLAY, Material.DRAGON_EGG, Material.PRISMARINE);
+    //public final List<Material> consoleBlocks = Arrays.asList(Material.IRON_BLOCK, Material.GOLD_BLOCK, Material.DIAMOND_BLOCK, Material.EMERALD_BLOCK, Material.REDSTONE_BLOCK, Material.COAL_BLOCK, Material.QUARTZ_BLOCK, Material.LAPIS_BLOCK, Material.BOOKSHELF, Material.STAINED_CLAY, Material.DRAGON_EGG, Material.PRISMARINE);
+    public final Set<String> consoleBlocks = CONSOLES.getBY_MATERIALS().keySet();
     public final HashMap<UUID, Integer> ids = new HashMap<UUID, Integer>();
     public final List<UUID> hasLoadedMap = new ArrayList<UUID>();
 
@@ -567,7 +570,7 @@ public class TARDISARSMethods {
 
     public boolean checkSlotForConsole(Inventory inv, int slot) {
         Material m = inv.getItem(slot).getType();
-        return (consoleBlocks.contains(m));
+        return (consoleBlocks.contains(m.toString()));
     }
 
     public boolean playerIsOwner(String uuid, int id) {

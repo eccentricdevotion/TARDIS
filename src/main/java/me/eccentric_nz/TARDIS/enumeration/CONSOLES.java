@@ -65,7 +65,9 @@ public class CONSOLES {
             }
         }
         BY_PERMS.put("junk", new SCHEMATIC("MILK_BUCKET", "junk", "Junk Console", ConsoleSize.SMALL, false, false, false));
-        BY_PERMS.put("archive", new SCHEMATIC("BONE_BLOCK", "archive", "Archived Console", ConsoleSize.MEDIUM, false, false, true));
+        SCHEMATIC archive = new SCHEMATIC("BONE_BLOCK", "archive", "Archived Console", ConsoleSize.MEDIUM, false, false, true);
+        BY_PERMS.put("archive", archive);
+        BY_MATERIALS.put("BONE_BLOCK", archive);
     }
 
     public static HashMap<String, SCHEMATIC> getBY_NAMES() {
