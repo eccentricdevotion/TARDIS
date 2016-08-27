@@ -118,7 +118,7 @@ public class TARDISArchiveMenuListener extends TARDISMenuListener implements Lis
                             final TARDISUpgradeData tud = plugin.getTrackerKeeper().getUpgrades().get(uuid);
                             ItemMeta im = template.getItemMeta();
                             String size = im.getDisplayName().toLowerCase(Locale.ENGLISH);
-                            int upgrade = plugin.getArtronConfig().getInt("upgrades." + size);
+                            int upgrade = plugin.getArtronConfig().getInt("upgrades.template." + size);
                             if (tud.getLevel() >= upgrade) {
                                 new ArchiveUpdate(plugin, uuid.toString(), im.getDisplayName()).setInUse();
                                 tud.setSchematic(CONSOLES.SCHEMATICFor(size));

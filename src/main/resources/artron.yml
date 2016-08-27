@@ -47,6 +47,10 @@ upgrades:
         small: 5000
         medium: 7500
         tall: 10000
+    template:
+        small: 1666
+        medium: 2500
+        tall: 3333
 just_wall_floor: 50
 # artron furnace
 artron_furnace:

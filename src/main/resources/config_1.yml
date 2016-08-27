@@ -107,7 +107,7 @@ desktop:
 circuits:
     damage: false
     uses:
-        ARS: 20
+        ars: 20
         chameleon: 25
         input: 50
         invisibility: 5
@@ -138,6 +138,7 @@ allow:
     3d_doors: false
     village_travel: false
     perception_filter: true
+    repair: true
 # room related
 growth:
     gravity_max_distance: 15
@@ -171,7 +172,6 @@ junk:
 abandon:
     enabled: true
     reduce_count: true
-# don't touch
 archive:
     enabled: true
     limit: 3

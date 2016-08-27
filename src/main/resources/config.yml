@@ -118,7 +118,6 @@ circuits:
         temporal: 20
 # restrictions
 allow:
-    abandon: true
     mob_farming: true
     spawn_eggs: true
     emergency_npc: true
@@ -139,6 +138,7 @@ allow:
     3d_doors: false
     village_travel: false
     perception_filter: true
+    repair: true
 # room related
 growth:
     gravity_max_distance: 15

@@ -92,6 +92,7 @@ public class TARDISConfiguration {
         boolOptions.put("allow.player_difficulty", true);
         boolOptions.put("allow.power_down", true);
         boolOptions.put("allow.power_down_on_quit", false);
+        boolOptions.put("allow.repair", true);
         boolOptions.put("allow.sfx", true);
         boolOptions.put("allow.spawn_eggs", true);
         boolOptions.put("allow.tp_switch", true);
@@ -263,9 +264,9 @@ public class TARDISConfiguration {
         artronIntOptions.put("upgrades.tom", 5000);
         artronIntOptions.put("upgrades.twelfth", 7500);
         artronIntOptions.put("upgrades.war", 5000);
-        artronIntOptions.put("upgrades.small", 1666);
-        artronIntOptions.put("upgrades.medium", 2500);
-        artronIntOptions.put("upgrades.tall", 3333);
+        artronIntOptions.put("upgrades.template.small", 1666);
+        artronIntOptions.put("upgrades.template.medium", 2500);
+        artronIntOptions.put("upgrades.template.tall", 3333);
         artronIntOptions.put("upgrades.custom", 10000);
         artronIntOptions.put("upgrades.archive.small", 5000);
         artronIntOptions.put("upgrades.archive.medium", 7500);
@@ -442,6 +443,7 @@ public class TARDISConfiguration {
         chameleonOptions.put("SHORT", "Shorted out");
         chameleonOptions.put("USE_PREV", "Use last saved construct");
 
+        removeOptions.add("allow.abandon");
         removeOptions.add("creation.materialise");
         removeOptions.add("police_box.platform_data");
         removeOptions.add("police_box.platform_id");
@@ -798,6 +800,11 @@ public class TARDISConfiguration {
                     i++;
                 }
             }
+        }
+        if (artron_config.contains("upgrades.small")) {
+            artron_config.set("upgrades.small", null);
+            artron_config.set("upgrades.medium", null);
+            artron_config.set("upgrades.tall", null);
         }
         try {
             artron_config.save(new File(plugin.getDataFolder(), "artron.yml"));
