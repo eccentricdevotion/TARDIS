@@ -127,7 +127,7 @@ public class TARDISCondenserListener implements Listener {
                                 int stack_size = is.getAmount();
                                 amount += stack_size * plugin.getCondensables().get(item);
                                 String block_data = is.getType().toString();
-                                if (plugin.getConfig().getBoolean("growth.rooms_require_blocks")) {
+                                if (plugin.getConfig().getBoolean("growth.rooms_require_blocks") || plugin.getConfig().getBoolean("allow.repair")) {
                                     if (item_counts.containsKey(block_data)) {
                                         Integer add_this = (item_counts.get(block_data) + stack_size);
                                         item_counts.put(block_data, add_this);
@@ -145,7 +145,7 @@ public class TARDISCondenserListener implements Listener {
                     }
                     Tardis tardis = rs.getTardis();
                     // process item_counts
-                    if (plugin.getConfig().getBoolean("growth.rooms_require_blocks")) {
+                    if (plugin.getConfig().getBoolean("growth.rooms_require_blocks") || plugin.getConfig().getBoolean("allow.repair")) {
                         for (Map.Entry<String, Integer> map : item_counts.entrySet()) {
                             // check if the tardis has condensed this material before
                             HashMap<String, Object> wherec = new HashMap<String, Object>();
