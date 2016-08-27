@@ -99,21 +99,23 @@ public class TARDISThemeInventory {
             arc.setItemMeta(hive_im);
             stack[18] = arc;
         }
-        // repair
-        if (player.hasPermission("tardis.repair")) {
-            ItemStack rep = new ItemStack(Material.BOWL, 1);
-            ItemMeta air_im = rep.getItemMeta();
-            air_im.setDisplayName("Repair Console");
-            rep.setItemMeta(air_im);
-            stack[19] = rep;
-        }
-        // clean
-        if (player.hasPermission("tardis.repair")) {
-            ItemStack cle = new ItemStack(Material.BOWL, 1);
-            ItemMeta an_im = cle.getItemMeta();
-            an_im.setDisplayName("Clean");
-            cle.setItemMeta(an_im);
-            stack[20] = cle;
+        if (plugin.getConfig().getBoolean("allow.repair")) {
+            // repair
+            if (player.hasPermission("tardis.repair")) {
+                ItemStack rep = new ItemStack(Material.BOWL, 1);
+                ItemMeta air_im = rep.getItemMeta();
+                air_im.setDisplayName("Repair Console");
+                rep.setItemMeta(air_im);
+                stack[19] = rep;
+            }
+            // clean
+            if (player.hasPermission("tardis.repair")) {
+                ItemStack cle = new ItemStack(Material.BOWL, 1);
+                ItemMeta an_im = cle.getItemMeta();
+                an_im.setDisplayName("Clean");
+                cle.setItemMeta(an_im);
+                stack[20] = cle;
+            }
         }
         // close
         ItemStack close = new ItemStack(Material.BOWL, 1);

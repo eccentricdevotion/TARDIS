@@ -64,11 +64,15 @@ public class TARDISThemeMenuListener extends TARDISMenuListener implements Liste
                         break;
                     case 19:
                         // repair
-                        repair(p);
+                        if (plugin.getConfig().getBoolean("allow.repair")) {
+                            repair(p);
+                        }
                         break;
                     case 20:
                         // clean
-                        clean(p);
+                        if (plugin.getConfig().getBoolean("allow.repair")) {
+                            clean(p);
+                        }
                         break;
                     case 26:
                         // close
