@@ -113,7 +113,6 @@ public class TARDISRoomCommand {
             return true;
         }
         if (plugin.getConfig().getBoolean("growth.rooms_require_blocks")) {
-            HashMap<String, Integer> blockTypeCount = new HashMap<String, Integer>();
             boolean hasRequired = true;
             HashMap<String, Integer> roomBlocks = plugin.getBuildKeeper().getRoomBlockCounts().get(room);
             String wall = "ORANGE_WOOL";
@@ -145,11 +144,6 @@ public class TARDISRoomCommand {
                 }
                 int tmp = Math.round((entry.getValue() / 100.0F) * plugin.getConfig().getInt("growth.rooms_condenser_percent"));
                 int required = (tmp > 0) ? tmp : 1;
-                if (blockTypeCount.containsKey(bkey)) {
-                    blockTypeCount.put(bkey, blockTypeCount.get(bkey) + required);
-                } else {
-                    blockTypeCount.put(bkey, required);
-                }
                 if (item_counts.containsKey(block_id)) {
                     item_counts.put(block_id, item_counts.get(block_id) + required);
                 } else {
@@ -177,7 +171,7 @@ public class TARDISRoomCommand {
                 return true;
             }
             TARDISCondenserData c_data = new TARDISCondenserData();
-            c_data.setBlockIDCount(blockTypeCount);
+            c_data.setBlockIDCount(item_counts);
             c_data.setTardis_id(id);
             plugin.getGeneralKeeper().getRoomCondenserData().put(player.getUniqueId(), c_data);
         }
