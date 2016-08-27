@@ -17,9 +17,7 @@
 package me.eccentric_nz.TARDIS.files;
 
 import java.io.File;
-import java.util.Arrays;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Locale;
 import me.eccentric_nz.TARDIS.JSON.JSONArray;
 import me.eccentric_nz.TARDIS.JSON.JSONObject;
@@ -40,47 +38,9 @@ import org.bukkit.ChatColor;
 public class TARDISRoomMap {
 
     private final TARDIS plugin;
-    private final HashMap<String, String> blockConversion = new HashMap<String, String>();
-    private final List<String> ignoreBlocks = Arrays.asList(new String[]{"AIR", "BEDROCK", "WATER", "STATIONARY_WATER", "LAVA", "STATIONARY_LAVA", "GOLD_ORE", "SPONGE", "PISTON_EXTENSION", "MOB_SPAWNER", "ICE"});
 
     public TARDISRoomMap(TARDIS plugin) {
         this.plugin = plugin;
-        blockConversion.put("BED_BLOCK", "BED");
-        blockConversion.put("BREWING_STAND", "BREWING_STAND_ITEM");
-        blockConversion.put("CAKE_BLOCK", "LEVER");
-        blockConversion.put("CARROT", "CARROT_ITEM");
-        blockConversion.put("CAULDRON", "CAULDRON_ITEM");
-        blockConversion.put("COCOA", "INK_SACK");
-        blockConversion.put("CROPS", "SEEDS");
-        blockConversion.put("DIODE_BLOCK_OFF", "DIODE");
-        blockConversion.put("DIODE_BLOCK_ON", "DIODE");
-        blockConversion.put("DOUBLE_STEP", "STEP");
-        blockConversion.put("FLOWER_POT", "FLOWER_POT_ITEM");
-        blockConversion.put("GRASS", "DIRT");
-        blockConversion.put("HUGE_MUSHROOM_1", "BROWN_MUSHROOM");
-        blockConversion.put("HUGE_MUSHROOM_2", "RED_MUSHROOM");
-        blockConversion.put("IRON_DOOR_BLOCK", "IRON_DOOR");
-        blockConversion.put("LEAVES", "SAPLING");
-        blockConversion.put("LEAVES_2", "SAPLING");
-        blockConversion.put("LONG_GRASS", "SEEDS");
-        blockConversion.put("MELON_STEM", "MELON_SEEDS");
-        blockConversion.put("MYCEL", "DIRT");
-        blockConversion.put("NETHER_WARTS", "NETHER_STALK");
-        blockConversion.put("POTATO", "POTATO_ITEM");
-        blockConversion.put("PUMPKIN_STEM", "PUMPKIN_SEEDS");
-        blockConversion.put("REDSTONE_COMPARATOR_OFF", "REDSTONE_COMPARATOR");
-        blockConversion.put("REDSTONE_COMPARATOR_ON", "REDSTONE_COMPARATOR");
-        blockConversion.put("REDSTONE_LAMP_ON", "REDSTONE_LAMP_OFF");
-        blockConversion.put("REDSTONE_TORCH_OFF", "REDSTONE_TORCH_ON");
-        blockConversion.put("REDSTONE_WIRE", "REDSTONE");
-        blockConversion.put("SIGN_POST", "SIGN");
-        blockConversion.put("SNOW", "SNOW_BALL");
-        blockConversion.put("SOIL", "DIRT");
-        blockConversion.put("STONE", "COBBLESTONE");
-        blockConversion.put("SUGAR_CANE_BLOCK", "SUGAR_CANE");
-        blockConversion.put("WALL_SIGN", "SIGN");
-        blockConversion.put("WEB", "STRING");
-        blockConversion.put("WOODEN_DOOR", "WOOD_DOOR");
     }
 
     /**
@@ -141,11 +101,11 @@ public class TARDISRoomMap {
                     for (int col = 0; col < l; col++) {
                         JSONObject c = (JSONObject) r.get(col);
                         String bid = c.getString("type");
-                        if (ignoreBlocks.contains(bid)) {
+                        if (plugin.getBuildKeeper().getIgnoreBlocks().contains(bid)) {
                             continue;
                         }
-                        if (blockConversion.containsKey(bid)) {
-                            bid = blockConversion.get(bid);
+                        if (plugin.getBuildKeeper().getBlockConversion().containsKey(bid)) {
+                            bid = plugin.getBuildKeeper().getBlockConversion().get(bid);
                         }
                         if (bid.equals("WOOL") && (c.getByte("data") == 1 || c.getByte("data") == 8)) {
                             String bstr = bid + ":" + c.getByte("data");

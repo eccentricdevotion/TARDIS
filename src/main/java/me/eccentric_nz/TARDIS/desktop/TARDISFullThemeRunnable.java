@@ -27,6 +27,7 @@ import me.eccentric_nz.TARDIS.ARS.TARDISARSMethods;
 import me.eccentric_nz.TARDIS.JSON.JSONArray;
 import me.eccentric_nz.TARDIS.JSON.JSONObject;
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.TARDISBuilderInstanceKeeper;
 import me.eccentric_nz.TARDIS.api.event.TARDISDesktopThemeEvent;
 import me.eccentric_nz.TARDIS.builders.TARDISInteriorPostioning;
 import me.eccentric_nz.TARDIS.builders.TARDISTIPSData;
@@ -74,7 +75,6 @@ public class TARDISFullThemeRunnable extends TARDISThemeRunnable {
     int id, slot, level = 0, row = 0, h, w, c, startx, starty, startz, j = 2;
     World world;
     private final List<Block> lampblocks = new ArrayList<Block>();
-    private final List<Material> precious = new ArrayList<Material>();
     private List<Chunk> chunks;
     private final HashMap<Block, Byte> postDoorBlocks = new HashMap<Block, Byte>();
     private final HashMap<Block, Byte> postRedstoneTorchBlocks = new HashMap<Block, Byte>();
@@ -106,12 +106,6 @@ public class TARDISFullThemeRunnable extends TARDISThemeRunnable {
         this.plugin = plugin;
         this.uuid = uuid;
         this.tud = tud;
-        this.precious.add(Material.BEACON);
-        this.precious.add(Material.DIAMOND_BLOCK);
-        this.precious.add(Material.EMERALD_BLOCK);
-        this.precious.add(Material.GOLD_BLOCK);
-        this.precious.add(Material.IRON_BLOCK);
-        this.precious.add(Material.REDSTONE_BLOCK);
         this.qf = new QueryFactory(this.plugin);
     }
 
@@ -613,7 +607,7 @@ public class TARDISFullThemeRunnable extends TARDISThemeRunnable {
                     ender = world.getBlockAt(x, y, z).getLocation().add(0.5d, 4d, 0.5d);
                 }
                 // if it's an iron/gold/diamond/emerald/beacon/redstone block put it in the blocks table
-                if (precious.contains(type)) {
+                if (TARDISBuilderInstanceKeeper.getPrecious().contains(type) && type.equals(Material.BEDROCK)) {
                     HashMap<String, Object> setpb = new HashMap<String, Object>();
                     String loc = TARDISLocationGetters.makeLocationStr(world, x, y, z);
                     setpb.put("tardis_id", id);
