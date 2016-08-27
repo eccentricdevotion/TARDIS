@@ -219,8 +219,7 @@ public class TARDISARSListener extends TARDISARSMethods implements Listener {
                             } else {
                                 ItemStack ris = inv.getItem(slot);
                                 String displayName = ris.getItemMeta().getDisplayName();
-                                String room;
-                                room = TARDISARS.ARSFor(displayName).getActualName();
+                                String room = TARDISARS.ARSFor(displayName).getActualName();
                                 if (!player.hasPermission("tardis.room." + room.toLowerCase(Locale.ENGLISH))) {
                                     setLore(inv, slot, "You don't have permission for this room!");
                                     break;
@@ -232,19 +231,13 @@ public class TARDISARSListener extends TARDISARSMethods implements Listener {
                                         break;
                                     }
                                 }
-//                                if (plugin.getConfig().getBoolean("growth.rooms_require_blocks")) {
-//                                    if (!hasCondensables(player.getUniqueId().toString(), room, ids.get(uuid))) {
-//                                        setLore(inv, slot, "You haven't condensed enough blocks for this room!");
-//                                        break;
-//                                    }
-//                                }
                                 if (room.equals("RENDERER") && hasRenderer(uuid)) {
                                     setLore(inv, slot, "You already have one of these!");
                                     break;
                                 }
                                 // setSlot(Inventory inv, int slot, ItemStack is, String player, boolean update)
                                 setSlot(inv, selected_slot.get(uuid), ris, uuid, true);
-                                setLore(inv, slot, null);
+                                setSlot(inv, slot, ris.getTypeId(), displayName, uuid, false);
                             }
                         } else {
                             setLore(inv, slot, "No slot selected!");
