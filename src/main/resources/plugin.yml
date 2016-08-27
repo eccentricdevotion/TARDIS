@@ -21,6 +21,9 @@ permissions:
   tardis.archive:
     description: Allow players to archive their TARDIS console.
     default: op
+  tardis.repair:
+    description: Allow players to repair or clean their TARDIS console.
+    default: op
   tardis.skeletonkey:
     description: Allow players to enter any TARDIS.
     default: false
