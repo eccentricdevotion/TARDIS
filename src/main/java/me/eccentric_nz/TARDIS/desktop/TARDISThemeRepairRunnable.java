@@ -359,13 +359,20 @@ public class TARDISThemeRepairRunnable extends TARDISThemeRunnable {
             // remove blocks from condenser table if necessary
             if (!clean && plugin.getGeneralKeeper().getRoomCondenserData().containsKey(uuid)) {
                 TARDISCondenserData c_data = plugin.getGeneralKeeper().getRoomCondenserData().get(uuid);
+                int amount = 0;
                 for (Map.Entry<String, Integer> entry : c_data.getBlockIDCount().entrySet()) {
                     HashMap<String, Object> whered = new HashMap<String, Object>();
                     whered.put("tardis_id", c_data.getTardis_id());
                     whered.put("block_data", entry.getKey());
                     qf.alterCondenserBlockCount(entry.getValue(), whered);
+                    amount += entry.getValue() * plugin.getCondensables().get(entry.getKey());
                 }
                 plugin.getGeneralKeeper().getRoomCondenserData().remove(uuid);
+                if (amount > 0) {
+                    HashMap<String, Object> wheret = new HashMap<String, Object>();
+                    wheret.put("tardis_id", id);
+                    qf.alterEnergyLevel("tardis", -amount, wheret, player);
+                }
             }
             // cancel the task
             plugin.getServer().getScheduler().cancelTask(taskID);
