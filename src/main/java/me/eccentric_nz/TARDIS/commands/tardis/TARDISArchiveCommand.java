@@ -36,6 +36,7 @@ import me.eccentric_nz.TARDIS.enumeration.SCHEMATIC;
 import me.eccentric_nz.TARDIS.schematic.ResultSetArchive;
 import me.eccentric_nz.TARDIS.schematic.ResultSetArchiveCount;
 import me.eccentric_nz.TARDIS.schematic.ResultSetArchiveName;
+import me.eccentric_nz.TARDIS.schematic.ResultSetArchiveUse;
 import me.eccentric_nz.TARDIS.schematic.TARDISSchematicBuilder;
 import me.eccentric_nz.TARDIS.schematic.TARDISSchematicBuilder.ArchiveData;
 import me.eccentric_nz.TARDIS.schematic.TARDISSchematicGZip;
@@ -91,6 +92,14 @@ public class TARDISArchiveCommand {
                     ResultSetArchiveCount rsc = new ResultSetArchiveCount(plugin, uuid);
                     if (rsc.count() >= plugin.getConfig().getInt("archive.limit")) {
                         TARDISMessage.send(player, "ARCHIVE_LIMIT");
+                        return true;
+                    }
+                }
+                if (sub.equals("remove")) {
+                    // check archive is not active
+                    ResultSetArchiveUse rsu = new ResultSetArchiveUse(plugin, uuid, name);
+                    if (rsu.inActive()) {
+                        TARDISMessage.send(player, "ARCHIVE_IN_USE");
                         return true;
                     }
                 }

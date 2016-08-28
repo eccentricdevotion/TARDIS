@@ -27,37 +27,40 @@ import me.eccentric_nz.TARDIS.database.TARDISDatabaseConnection;
  *
  * @author eccentric_nz
  */
-public class ResultSetArchiveCount {
+public class ResultSetArchiveUse {
 
     private final TARDISDatabaseConnection service = TARDISDatabaseConnection.getInstance();
     private final Connection connection = service.getConnection();
     private final TARDIS plugin;
     private final String uuid;
+    private final String name;
     private final String prefix;
 
-    public ResultSetArchiveCount(TARDIS plugin, String uuid) {
+    public ResultSetArchiveUse(TARDIS plugin, String uuid, String name) {
         this.plugin = plugin;
         this.uuid = uuid;
+        this.name = name;
         this.prefix = this.plugin.getPrefix();
     }
 
-    public int count() {
-        int count = 0;
+    public boolean inActive() {
         PreparedStatement ps = null;
         ResultSet rs = null;
-        String query = "SELECT COUNT(*) FROM " + prefix + "archive WHERE uuid = ?";
+        String query = "SELECT use FROM " + prefix + "archive WHERE uuid = ? AND name = ?";
         try {
             service.testConnection(connection);
             ps = connection.prepareStatement(query);
             ps.setString(1, uuid);
+            ps.setString(2, name);
             rs = ps.executeQuery();
-            while (rs.next()) {
-                count = rs.getInt(1);
+            if (rs.isBeforeFirst()) {
+                rs.next();
+                return rs.getInt("use") == 1;
             }
-            return count;
+            return true;
         } catch (SQLException e) {
-            plugin.debug("ResultSet error for archive count! " + e.getMessage());
-            return 0;
+            plugin.debug("ResultSet error for archive in use! " + e.getMessage());
+            return false;
         } finally {
             try {
                 if (rs != null) {
@@ -67,7 +70,7 @@ public class ResultSetArchiveCount {
                     ps.close();
                 }
             } catch (SQLException e) {
-                plugin.debug("Error closing archive count! " + e.getMessage());
+                plugin.debug("Error closing archive in use! " + e.getMessage());
             }
         }
     }
