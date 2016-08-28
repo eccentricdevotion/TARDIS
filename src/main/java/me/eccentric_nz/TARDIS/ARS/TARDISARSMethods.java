@@ -334,6 +334,7 @@ public class TARDISARSMethods {
                                 if (!hasCondensables(uuid.toString(), tap.getChanged(), ids.get(uuid))) {
                                     String message = (tap.getChanged().size() > 1) ? "ARS_CONDENSE_MULTIPLE" : "ARS_CONDENSE";
                                     TARDISMessage.send(p, message);
+                                    revert(uuid);
                                     p.closeInventory();
                                     return;
                                 }
