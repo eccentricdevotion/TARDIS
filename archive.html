@@ -74,7 +74,7 @@
         <pre><code>/tardis archive [scan|add|remove|update|description] [name]</code></pre>
         <p><code>/tardis archive scan</code> &mdash; scan the current console to check whether it can successfully be archived. You should run this command before using <code>/tardis archive add [name]</code></p>
         <p><code>/tardis archive add [name]</code> &mdash; save an archived schematic with the given name.</p>
-        <p><code>/tardis archive remove [name]</code> &mdash; delete an archived schematic with the given name.</p>
+        <p><code>/tardis archive remove [name]</code> &mdash; delete an archived schematic with the given name. You cannot remove an archive that is currently in use.</p>
         <p><code>/tardis archive update [name]</code> &mdash; update an archived schematic with the given name if you have made new / extra changes to the console.</p>
         <p><code>/tardis archive description [name]</code> &mdash; set the descripton text of the archived console that shows in the TARDIS Archive GUI.</p>
         <h2>The GUI</h2>
@@ -94,6 +94,11 @@
                 <td>Clicking this changes the desktop theme to the selected archived console.</td>
             </tr>
             <tr>
+                <td>Size</td>
+                <td><img src="https://github.com/eccentricdevotion/TARDIS-MCP/blob/master/assets/minecraft/mcpatcher/cit/size_button.png?raw=true" alt="size"></td>
+                <td>Use this to set the size of the console to archive. Clicking the button multiple times will cycle through the three different sizes.</td>
+            </tr>
+            <tr>
                 <td>Scan</td>
                 <td><img src="https://github.com/eccentricdevotion/TARDIS-MCP/blob/master/assets/minecraft/mcpatcher/cit/scan_button.png?raw=true" alt="scan"></td>
                 <td>Use this to scan the current console to check whether it can successfully be archived.</td>
@@ -104,13 +109,26 @@
                 <td>Archives the current console. A random console name will be generated &mdash; if you want to name the console yourself, use the <code>/tardis archive add [name]</code> command.</td>
             </tr>
             <tr>
+                <td>Small</td>
+                <td><img src="https://github.com/eccentricdevotion/TARDIS-MCP/blob/master/assets/minecraft/mcpatcher/cit/small.png?raw=true" alt="small"></td>
+                <td>Changes the Desktop Theme to the small (16 x 16 x 16 block) cobblestone template.</td>
+            </tr>
+            <tr>
+                <td>Medium</td>
+                <td><img src="https://github.com/eccentricdevotion/TARDIS-MCP/blob/master/assets/minecraft/mcpatcher/cit/medium.png?raw=true" alt="medium"></td>
+                <td>Changes the Desktop Theme to the medium (32 x 16 x 32 block)  cobblestone template.</td>
+            </tr>
+            <tr>
+                <td>Tall</td>
+                <td><img src="https://github.com/eccentricdevotion/TARDIS-MCP/blob/master/assets/minecraft/mcpatcher/cit/tall.png?raw=true" alt="tall"></td>
+                <td>Changes the Desktop Theme to the tall (32 x 32 x 32 block) cobblestone template.</td>
+            </tr>
+            <tr>
                 <td>Close</td>
                 <td><img src="https://github.com/eccentricdevotion/TARDIS-MCP/blob/master/assets/minecraft/mcpatcher/cit/close.png?raw=true" alt="close"></td>
                 <td>Close the TARDIS Archive GUI.</td>
             </tr>
         </table>
-        <h2>Caveat</h2>
-        <p>Due to the complexity of creating schematics from player created designs there is one major restriction to creating console archives. This is that the console being archived must be the <em>same size</em> as the console that the TARDIS was originally created with.</p>
     </section>
 </div>
 <footer>
