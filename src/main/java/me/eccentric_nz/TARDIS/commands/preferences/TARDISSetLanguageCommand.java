@@ -44,7 +44,7 @@ public class TARDISSetLanguageCommand {
             return true;
         }
         HashMap<String, Object> setl = new HashMap<String, Object>();
-        setl.put(pref, lang.toString());
+        setl.put(pref, args[1].toUpperCase(Locale.ENGLISH));
         HashMap<String, Object> where = new HashMap<String, Object>();
         where.put("uuid", player.getUniqueId().toString());
         qf.doUpdate("player_prefs", setl, where);
