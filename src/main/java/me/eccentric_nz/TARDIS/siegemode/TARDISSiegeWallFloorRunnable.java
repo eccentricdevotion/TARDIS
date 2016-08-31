@@ -25,10 +25,13 @@ import me.eccentric_nz.TARDIS.builders.TARDISInteriorPostioning;
 import me.eccentric_nz.TARDIS.builders.TARDISTIPSData;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
+import me.eccentric_nz.TARDIS.database.data.Archive;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.desktop.*;
+import me.eccentric_nz.TARDIS.schematic.ResultSetArchive;
 import me.eccentric_nz.TARDIS.schematic.TARDISSchematicGZip;
 import me.eccentric_nz.TARDIS.utility.TARDISBlockSetters;
+import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import me.eccentric_nz.TARDIS.utility.TARDISNumberParsers;
 import org.bukkit.Material;
 import org.bukkit.World;
@@ -57,6 +60,7 @@ public class TARDISSiegeWallFloorRunnable implements Runnable {
     QueryFactory qf;
     Player player;
     int taskID;
+    private Archive archive;
 
     public TARDISSiegeWallFloorRunnable(TARDIS plugin, UUID uuid, TARDISUpgradeData tud, boolean toSiege) {
         this.plugin = plugin;
@@ -71,15 +75,39 @@ public class TARDISSiegeWallFloorRunnable implements Runnable {
     public void run() {
         // initialise
         if (!running) {
-            String directory = (tud.getSchematic().isCustom()) ? "user_schematics" : "schematics";
-            String path = plugin.getDataFolder() + File.separator + directory + File.separator + tud.getSchematic().getPermission() + ".tschm";
-            File file = new File(path);
-            if (!file.exists()) {
-                plugin.debug(plugin.getPluginName() + "Could not find a schematic with that name!");
-                return;
+            // get Archive if nescessary
+            if (tud.getSchematic().getPermission().equals("archive")) {
+                HashMap<String, Object> wherean = new HashMap<String, Object>();
+                wherean.put("uuid", uuid.toString());
+                wherean.put("use", 1);
+                ResultSetArchive rs = new ResultSetArchive(plugin, wherean);
+                if (rs.resultSet()) {
+                    archive = rs.getArchive();
+                } else {
+                    // abort
+                    Player cp = plugin.getServer().getPlayer(uuid);
+                    TARDISMessage.send(cp, "ARCHIVE_NOT_FOUND");
+                    // cancel task
+                    plugin.getServer().getScheduler().cancelTask(taskID);
+                    return;
+                }
             }
-            // get JSON
-            JSONObject obj = TARDISSchematicGZip.unzip(path);
+            JSONObject obj;
+            if (archive == null) {
+                String directory = (tud.getSchematic().isCustom()) ? "user_schematics" : "schematics";
+                String path = plugin.getDataFolder() + File.separator + directory + File.separator + tud.getSchematic().getPermission() + ".tschm";
+                File file = new File(path);
+                if (!file.exists()) {
+                    plugin.debug(plugin.getPluginName() + "Could not find a schematic with that name!");
+                    // cancel task
+                    plugin.getServer().getScheduler().cancelTask(taskID);
+                    return;
+                }
+                // get JSON
+                obj = TARDISSchematicGZip.unzip(path);
+            } else {
+                obj = archive.getJSON();
+            }
             // get dimensions
             JSONObject dimensions = (JSONObject) obj.get("dimensions");
             h = dimensions.getInt("height");
