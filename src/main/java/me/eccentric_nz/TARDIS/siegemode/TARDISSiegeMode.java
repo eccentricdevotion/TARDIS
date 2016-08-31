@@ -77,7 +77,7 @@ public class TARDISSiegeMode {
             return;
         }
         Location current = new Location(rsc.getWorld(), rsc.getX(), rsc.getY(), rsc.getZ());
-        Block siege = current.getBlock();
+        final Block siege = current.getBlock();
         HashMap<String, Object> wheres = new HashMap<String, Object>();
         wheres.put("tardis_id", id);
         HashMap<String, Object> set = new HashMap<String, Object>();
@@ -155,13 +155,11 @@ public class TARDISSiegeMode {
             dd.setPlayer(p.getPlayer());
             dd.setHide(false);
             dd.setOutside(false);
+            dd.setSiege(true);
             dd.setSubmarine(rsc.isSubmarine());
             dd.setTardisID(id);
             dd.setBiome(rsc.getBiome());
             plugin.getPresetDestroyer().destroyPreset(dd);
-            // place siege block
-            siege.setType(Material.HUGE_MUSHROOM_1);
-            siege.setData((byte) 14, true);
             // track this siege block
             plugin.getTrackerKeeper().getInSiegeMode().add(id);
             set.put("siege_on", 1);

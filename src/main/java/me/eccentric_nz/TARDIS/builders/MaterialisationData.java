@@ -41,6 +41,7 @@ public class MaterialisationData {
     private OfflinePlayer player;
     private boolean outside;
     private boolean submarine;
+    private boolean siege;
     private int tardisID;
 
     public MaterialisationData(TARDIS plugin, String uuid) {
@@ -104,6 +105,14 @@ public class MaterialisationData {
 
     public void setSubmarine(boolean submarine) {
         this.submarine = submarine;
+    }
+
+    public boolean isSiege() {
+        return siege;
+    }
+
+    public void setSiege(boolean siege) {
+        this.siege = siege;
     }
 
     public int getTardisID() {

@@ -183,6 +183,11 @@ public class TARDISDeinstaPreset {
         if (!hide) {
             plugin.getPresetDestroyer().removeBlockProtection(id, new QueryFactory(plugin));
         }
+        if (dd.isSiege()) {
+            Block siege = dd.getLocation().getBlock();
+            siege.setType(Material.HUGE_MUSHROOM_1);
+            siege.setData((byte) 14, true);
+        }
         // refresh chunk
         plugin.getTardisHelper().refreshChunk(chunk);
         plugin.getTrackerKeeper().getDematerialising().removeAll(Collections.singleton(id));

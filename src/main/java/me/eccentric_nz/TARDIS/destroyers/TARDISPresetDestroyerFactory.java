@@ -83,7 +83,7 @@ public class TARDISPresetDestroyerFactory {
                     cham_data = (byte) b_data[1];
                 }
                 int loops = 18;
-                if (dd.isHide()) {
+                if (dd.isHide() || dd.isSiege()) {
                     loops = 3;
                     TARDISSounds.playTARDISSound(dd.getLocation(), "tardis_takeoff_fast");
                     if (dd.getPlayer() != null && dd.getPlayer().getPlayer() != null && plugin.getUtils().inTARDISWorld(dd.getPlayer().getPlayer())) {
