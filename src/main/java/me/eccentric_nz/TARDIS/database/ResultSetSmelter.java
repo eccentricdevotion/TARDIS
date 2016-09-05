@@ -75,7 +75,7 @@ public class ResultSetSmelter {
     public boolean resultSet() {
         PreparedStatement statement = null;
         ResultSet rs = null;
-        String query = "SELECT * FROM " + prefix + "vaults WHERE location = ?";
+        String query = "SELECT * FROM " + prefix + "vaults WHERE location = ? AND x = 0 AND y = 0 AND z = 0";
         try {
             service.testConnection(connection);
             statement = connection.prepareStatement(query);
