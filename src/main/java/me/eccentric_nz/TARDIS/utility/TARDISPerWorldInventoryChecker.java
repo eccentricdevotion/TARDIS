@@ -17,20 +17,19 @@
 package me.eccentric_nz.TARDIS.utility;
 
 import me.gnat008.perworldinventory.PerWorldInventory;
-import me.gnat008.perworldinventory.groups.Group;
-import me.gnat008.perworldinventory.groups.GroupManager;
+import me.gnat008.perworldinventory.api.PerWorldInventoryAPI;
 import org.bukkit.Bukkit;
 
 public class TARDISPerWorldInventoryChecker {
 
+    private static PerWorldInventoryAPI api;
+
     public static boolean checkWorldsCanShare(String from, String to) {
+        return api.canWorldsShare(from, to);
+    }
+
+    public static void setupPWI() {
         PerWorldInventory pwi = (PerWorldInventory) Bukkit.getServer().getPluginManager().getPlugin("PerWorldInventory");
-        GroupManager gm = pwi.getGroupManager();
-        Group gf = gm.getGroupFromWorld(from);
-        if (gf == null) {
-            return true;
-        } else {
-            return (gf.containsWorld(to));
-        }
+        api = pwi.getAPI();
     }
 }

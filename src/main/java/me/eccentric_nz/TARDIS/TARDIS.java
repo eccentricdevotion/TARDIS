@@ -92,6 +92,7 @@ import me.eccentric_nz.TARDIS.utility.TARDISJunkPlayerPersister;
 import me.eccentric_nz.TARDIS.utility.TARDISLocationGetters;
 import me.eccentric_nz.TARDIS.utility.TARDISMapChecker;
 import me.eccentric_nz.TARDIS.utility.TARDISMultiverseHelper;
+import me.eccentric_nz.TARDIS.utility.TARDISPerWorldInventoryChecker;
 import me.eccentric_nz.TARDIS.utility.TARDISPerceptionFilter;
 import me.eccentric_nz.TARDIS.utility.TARDISSounds;
 import me.eccentric_nz.TARDIS.utility.TARDISUtils;
@@ -199,6 +200,7 @@ public class TARDIS extends JavaPlugin {
         this.versions.put("Multiverse-Inventories", "2.5");
         this.versions.put("MultiInv", "3.3.6");
         this.versions.put("My Worlds", "1.67");
+        this.versions.put("PerWorldInventory", "1.8.2");
         this.versions.put("ProtocolLib", "4.0.2");
         this.versions.put("TARDISChunkGenerator", "2.4.1");
         this.versions.put("TerrainControl", "2.8.2");
@@ -722,6 +724,7 @@ public class TARDIS extends JavaPlugin {
         }
         if (pm.isPluginEnabled("PerWorldInventory")) {
             this.invManager = INVENTORY_MANAGER.PER_WORLD;
+            TARDISPerWorldInventoryChecker.setupPWI();
         }
         if (pm.isPluginEnabled("GameModeInventories")) {
             this.invManager = INVENTORY_MANAGER.GAMEMODE;
