@@ -28,8 +28,10 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.player.PlayerInteractEntityEvent;
+import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.PlayerInventory;
 import org.bukkit.inventory.meta.ItemMeta;
 
 /**
@@ -49,6 +51,9 @@ public class TARDISSonicEntityListener implements Listener {
 
     @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
     public void onInteract(PlayerInteractEntityEvent event) {
+        if (event.getHand() == null || event.getHand().equals(EquipmentSlot.OFF_HAND)) {
+            return;
+        }
         final Player player = event.getPlayer();
         long now = System.currentTimeMillis();
         final ItemStack is = player.getInventory().getItemInMainHand();
@@ -65,9 +70,9 @@ public class TARDISSonicEntityListener implements Listener {
                         plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
                             @Override
                             public void run() {
-                                Inventory pinv = scanned.getInventory();
-                                ItemStack[] items = pinv.getContents();
-                                Inventory menu = plugin.getServer().createInventory(player, pinv.getSize(), "§4" + scanned.getName() + "'s Inventory");
+                                PlayerInventory pinv = scanned.getInventory();
+                                ItemStack[] items = pinv.getStorageContents();
+                                Inventory menu = plugin.getServer().createInventory(player, items.length, "§4" + scanned.getName() + "'s Inventory");
                                 menu.setContents(items);
                                 player.openInventory(menu);
                             }
