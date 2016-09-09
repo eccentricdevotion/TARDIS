@@ -734,11 +734,39 @@ public class TARDISTravelCommands implements CommandExecutor {
         return w_str;
     }
 
+    public static boolean isNumber(String str) {
+        if (str == null) {
+            return false;
+        }
+        int length = str.length();
+        if (length == 0) {
+            return false;
+        }
+        int i = 0;
+        if (str.charAt(0) == '-') {
+            if (length == 1) {
+                return false;
+            }
+            i = 1;
+        }
+        for (; i < length; i++) {
+            char c = str.charAt(i);
+            if (c < '0' || c > '9') {
+                return false;
+            }
+        }
+        return true;
+    }
+
     private Location getCoordinateLocation(String[] args, Player player, int id) {
         // coords
         String w_str = args[0];
         if (w_str.contains("'")) {
             w_str = getQuotedString(args);
+        }
+        if (isNumber(args[0])) {
+            TARDISMessage.send(player, "WORLD_NOT_FOUND");
+            return null;
         }
         if (args[1].startsWith("~")) {
             TARDISMessage.send(player, "NO_WORLD_RELATIVE");
