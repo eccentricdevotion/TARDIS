@@ -431,6 +431,10 @@ public class TARDISTravelCommands implements CommandExecutor {
                                     TARDISMessage.send(player, "CURRENT_NOT_FOUND");
                                     return true;
                                 }
+                                if (rsc.getWorld().getName().equals("Skaro")) {
+                                    TARDISMessage.send(player, "BIOME_NOT_SKARO");
+                                    return true;
+                                }
                                 Location tb = searchBiome(player, id, biome, rsc.getWorld(), rsc.getX() + 5, rsc.getZ() + 5);
                                 if (tb == null) {
                                     TARDISMessage.send(player, "BIOME_NOT_FOUND");
