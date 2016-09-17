@@ -94,6 +94,7 @@ public class TARDISAdminCommands implements CommandExecutor {
         firstsStr.put("repair", "");
         firstsStr.put("respect_towny", "preferences");
         firstsStr.put("respect_worldguard", "preferences");
+        firstsStr.put("set_size", "");
         firstsStr.put("siege", "siege");
         firstsStr.put("sign_colour", "police_box");
         firstsStr.put("skaro", "");
@@ -297,6 +298,9 @@ public class TARDISAdminCommands implements CommandExecutor {
                         return true;
                     }
                     plugin.getConfig().set("database", dbtype);
+                }
+                if (first.equals("set_size")) {
+                    return new TARDISSetSizeCommand(plugin).overwrite(sender, args);
                 }
                 if (first.equals("siege")) {
                     return new TARDISSiegeCommand(plugin).setOption(sender, args);
