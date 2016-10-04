@@ -33,6 +33,7 @@ import org.bukkit.entity.MushroomCow;
 import org.bukkit.entity.Ocelot;
 import org.bukkit.entity.Pig;
 import org.bukkit.entity.Player;
+import org.bukkit.entity.PolarBear;
 import org.bukkit.entity.Rabbit;
 import org.bukkit.entity.Sheep;
 import org.bukkit.entity.Tameable;
@@ -170,6 +171,19 @@ public class TARDISEjectListener implements Listener {
                 }
                 if (g.hasSaddle()) {
                     pig.setSaddle(true);
+                }
+                ent.remove();
+                break;
+            case POLAR_BEAR:
+                PolarBear b = (PolarBear) ent;
+                PolarBear polarbear = (PolarBear) l.getWorld().spawnEntity(l, EntityType.POLAR_BEAR);
+                polarbear.setTicksLived(b.getTicksLived());
+                if ((!b.isAdult())) {
+                    polarbear.setBaby();
+                }
+                String bearname = ((LivingEntity) ent).getCustomName();
+                if (bearname != null && !bearname.isEmpty()) {
+                    polarbear.setCustomName(bearname);
                 }
                 ent.remove();
                 break;

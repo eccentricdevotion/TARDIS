@@ -5,7 +5,8 @@
 
 ##Next minor version `3.7-beta-1`  
 1. Add other worlds (Silurian cave world, Gallifrey)?
-2. Condenser records should be purged when deleting a TARDIS as the records are tied to the `tardis_id` 
+2. Condenser records should be purged when deleting a TARDIS as the records are tied to the `tardis_id`
+3. Fix Biome adaptive presets dropping flowers & seeds
 
 ##Future version `?+`
 * TARDIS Junk Mode - `/tprefs junk [wall|floor] [block_type]`?
