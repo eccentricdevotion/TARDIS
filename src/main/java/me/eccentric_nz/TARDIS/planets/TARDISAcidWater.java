@@ -87,7 +87,7 @@ public class TARDISAcidWater implements Listener {
             return;
         }
         // Return if players are immune
-        if (player.hasPermission("tardis.bypass.acid")) {
+        if (player.hasPermission("tardis.acid.bypass")) {
             return;
         }
         if (player.getGameMode().equals(GameMode.CREATIVE)) {
