@@ -207,6 +207,11 @@ public class TARDISControlInventory {
         ItemMeta prefs = player.getItemMeta();
         prefs.setDisplayName(plugin.getLanguage().getString("BUTTON_PREFS"));
         player.setItemMeta(prefs);
+        // companion menu
+        ItemStack companion = new ItemStack(Material.BOWL, 1);
+        ItemMeta list = companion.getItemMeta();
+        list.setDisplayName(plugin.getLanguage().getString("COMPANIONS_MENU"));
+        companion.setItemMeta(list);
         // close
         ItemStack close = new ItemStack(Material.BOWL, 1);
         ItemMeta can = close.getItemMeta();
@@ -216,7 +221,7 @@ public class TARDISControlInventory {
         ItemStack[] is = {
             ran, null, ars, null, cham, null, art, null, zero,
             save, null, upg, null, siege, null, scan, null, player,
-            fast, null, pow, null, hide, null, info, null, null,
+            fast, null, pow, null, hide, null, info, null, companion,
             area, null, lig, null, reb, null, null, null, null,
             ter, null, tog, null, dir, null, null, null, null,
             null, null, map, null, temp, null, null, null, close
