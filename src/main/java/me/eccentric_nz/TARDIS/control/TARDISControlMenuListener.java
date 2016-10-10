@@ -28,6 +28,7 @@ import me.eccentric_nz.TARDIS.commands.preferences.TARDISPrefsMenuInventory;
 import me.eccentric_nz.TARDIS.commands.tardis.TARDISDirectionCommand;
 import me.eccentric_nz.TARDIS.commands.tardis.TARDISHideCommand;
 import me.eccentric_nz.TARDIS.commands.tardis.TARDISRebuildCommand;
+import me.eccentric_nz.TARDIS.companionGUI.TARDISCompanionInventory;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.ResultSetCurrentLocation;
 import me.eccentric_nz.TARDIS.database.ResultSetTardis;
@@ -300,6 +301,23 @@ public class TARDISControlMenuListener extends TARDISMenuListener implements Lis
                                     // TIS
                                     close(player);
                                     new TARDISInfoMenuButton(plugin, player).clickButton();
+                                    break;
+                                case 26:
+                                    // Companions Menu
+                                    String comps = tardis.getCompanions();
+                                    
+                                    if (comps == null || comps.isEmpty()) {
+                                        close(player);
+                                        TARDISMessage.send(player, "COMPANIONS_NONE");
+                                        break;
+                                    }
+                                    
+                                    String[] companionData = comps.split(":");
+                                    ItemStack[] heads = new TARDISCompanionInventory(plugin, companionData).getSkulls();
+                                    
+                                    Inventory companions = plugin.getServer().createInventory(player, 54, "§4Companions");
+                                    companions.setContents(heads);
+                                    player.openInventory(companions);
                                     break;
                                 case 27:
                                     // areas
