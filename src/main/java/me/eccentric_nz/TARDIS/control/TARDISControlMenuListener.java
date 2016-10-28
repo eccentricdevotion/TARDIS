@@ -305,16 +305,13 @@ public class TARDISControlMenuListener extends TARDISMenuListener implements Lis
                                 case 26:
                                     // Companions Menu
                                     String comps = tardis.getCompanions();
-                                    
                                     if (comps == null || comps.isEmpty()) {
                                         close(player);
                                         TARDISMessage.send(player, "COMPANIONS_NONE");
-                                        break;
+                                        return;
                                     }
-                                    
                                     String[] companionData = comps.split(":");
                                     ItemStack[] heads = new TARDISCompanionInventory(plugin, companionData).getSkulls();
-                                    
                                     Inventory companions = plugin.getServer().createInventory(player, 54, "§4Companions");
                                     companions.setContents(heads);
                                     player.openInventory(companions);

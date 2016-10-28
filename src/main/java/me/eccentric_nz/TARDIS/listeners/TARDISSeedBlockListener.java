@@ -83,17 +83,12 @@ public class TARDISSeedBlockListener implements Listener {
             SCHEMATIC schm = CONSOLES.getBY_NAMES().get(lore.get(0));
             Pair wall_data = getValuesFromWallString(lore.get(1));
             Pair floor_data = getValuesFromWallString(lore.get(2));
-//            TwoValues cham_data = getValuesFromString(lore.get(3));
-//            TwoValues lamp_data = getValuesFromString(lore.get(4));
             TARDISBuildData seed = new TARDISBuildData();
             seed.setSchematic(schm);
             seed.setWallType(wall_data.getType());
             seed.setWallData(wall_data.getData());
             seed.setFloorType(floor_data.getType());
             seed.setFloorData(floor_data.getData());
-//            seed.setBox_id(cham_data.getId());
-//            seed.setBox_data(cham_data.getData());
-//            seed.setLamp(lamp_data.getId());
             Location l = event.getBlockPlaced().getLocation();
             trackTARDISSeed.put(l, seed);
             TARDISMessage.send(player, "SEED_PLACE");
@@ -127,22 +122,6 @@ public class TARDISSeedBlockListener implements Listener {
                 lore.add(data.getSchematic().getPermission().toUpperCase(Locale.ENGLISH));
                 lore.add("Walls: " + twl.wall_lookup.get(data.getWallType() + ":" + data.getWallData()));
                 lore.add("Floors: " + twl.wall_lookup.get(data.getFloorType() + ":" + data.getFloorData()));
-//                // do some funky stuff to get data values for wool/stained glass & clay/wood/log/log_2
-//                if (hasColour.contains(data.getBox_id())) {
-//                    switch (data.getBox_id()) {
-//                        case 35:
-//                        case 95:
-//                        case 159:
-//                            lore.add("Chameleon block: " + DyeColor.getByWoolData(data.getBox_data()) + " " + Material.getMaterial(data.getBox_id()).toString());
-//                            break;
-//                        default:
-//                            lore.add("Chameleon block: " + TARDISStaticUtils.getWoodType(Material.getMaterial(data.getBox_id()), data.getBox_data()) + " " + Material.getMaterial(data.getBox_id()).toString());
-//                    }
-//                } else {
-//                    lore.add("Chameleon block: " + Material.getMaterial(data.getBox_id()).toString());
-//                }
-////                lore.add("Chameleon block: " + ((data.getBox_id() == 35 || data.getBox_id() == 159) ? DyeColor.getByWoolData(data.getBox_data()) + " " : "") + Material.getMaterial(data.getBox_id()).toString());
-//                lore.add("Lamp: " + Material.getMaterial(data.getLamp()).toString());
                 im.setLore(lore);
                 is.setItemMeta(im);
                 // set the block to AIR
