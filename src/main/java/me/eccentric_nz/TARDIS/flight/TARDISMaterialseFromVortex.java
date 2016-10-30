@@ -305,7 +305,7 @@ public class TARDISMaterialseFromVortex implements Runnable {
         int bz = TARDISNumberParsers.parseInt(beaconData[3]);
         Location bl = new Location(w, bx, by, bz);
         Block b = bl.getBlock();
-        while (!b.getType().equals(Material.BEACON)) {
+        while (!b.getType().equals(Material.BEACON) && b.getLocation().getBlockY() > 0) {
             b = b.getRelative(BlockFace.DOWN);
         }
         TARDISBlockSetters.setBlockAndRemember(b.getRelative(BlockFace.UP), Material.STAINED_GLASS, (byte) 14, id, 2);
