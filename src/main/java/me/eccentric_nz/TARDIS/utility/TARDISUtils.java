@@ -78,8 +78,12 @@ public class TARDISUtils {
 
     public boolean inTARDISWorld(Player player) {
         // check they are still in the TARDIS world
-        World world = player.getLocation().getWorld();
-        String name = world.getName();
+        World world = plugin.getServer().getWorlds().get(0);
+        String name = "";
+        if (player.isOnline()) {
+            world = player.getLocation().getWorld();
+            name = world.getName();
+        }
         ChunkGenerator gen = world.getGenerator();
         // get default world name
         String dn = "TARDIS_TimeVortex";
