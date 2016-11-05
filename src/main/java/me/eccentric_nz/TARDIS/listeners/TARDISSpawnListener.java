@@ -49,10 +49,18 @@ public class TARDISSpawnListener implements Listener {
         good_spawns.add(SpawnReason.BREEDING);
         good_spawns.add(SpawnReason.BUILD_IRONGOLEM);
         good_spawns.add(SpawnReason.BUILD_SNOWMAN);
+        good_spawns.add(SpawnReason.BUILD_WITHER);
+        good_spawns.add(SpawnReason.CHUNK_GEN);
         good_spawns.add(SpawnReason.CUSTOM);
-        good_spawns.add(SpawnReason.EGG);
-        good_spawns.add(SpawnReason.SPAWNER_EGG);
         good_spawns.add(SpawnReason.DISPENSE_EGG);
+        good_spawns.add(SpawnReason.EGG);
+        good_spawns.add(SpawnReason.ENDER_PEARL);
+        good_spawns.add(SpawnReason.JOCKEY);
+        good_spawns.add(SpawnReason.LIGHTNING);
+        good_spawns.add(SpawnReason.MOUNT);
+        good_spawns.add(SpawnReason.NETHER_PORTAL);
+        good_spawns.add(SpawnReason.OCELOT_BABY);
+        good_spawns.add(SpawnReason.SPAWNER_EGG);
         biomes.add(Biome.DEEP_OCEAN);
         biomes.add(Biome.HELL);
         biomes.add(Biome.MUSHROOM_ISLAND);
@@ -107,7 +115,7 @@ public class TARDISSpawnListener implements Listener {
             if (!event.getSpawnReason().equals(SpawnReason.NATURAL)) {
                 return;
             }
-            // only in DEEP_OCEAN, MUSHROOM_ISLAND
+            // only in DEEP_OCEAN, MUSHROOM_ISLAND, NETHER & THE END
             if (!biomes.contains(l.getBlock().getBiome())) {
                 return;
             }
@@ -119,7 +127,10 @@ public class TARDISSpawnListener implements Listener {
             switch (l.getBlock().getBiome()) {
                 case MUSHROOM_ISLAND:
                 case HELL:
-                    event.setCancelled(true);
+                    if (!event.getEntity().getType().equals(EntityType.SKELETON)) {
+                        event.setCancelled(true);
+                        return;
+                    }
                     return;
                 case SKY:
                     if (!event.getEntity().getType().equals(EntityType.ENDERMAN)) {
