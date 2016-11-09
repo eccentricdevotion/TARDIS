@@ -26,9 +26,11 @@ import me.eccentric_nz.TARDIS.enumeration.COMPASS;
 import me.eccentric_nz.TARDIS.utility.TARDISNumberParsers;
 import org.bukkit.Location;
 import org.bukkit.World;
+import org.bukkit.World.Environment;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 import org.bukkit.entity.Creeper;
+import org.bukkit.entity.EntityType;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
@@ -60,6 +62,9 @@ public class TARDISExplosionListener implements Listener {
      */
     @EventHandler(priority = EventPriority.LOW)
     public void onEntityExplode(EntityExplodeEvent e) {
+        if (e.getEntityType().equals(EntityType.ENDER_DRAGON)) {
+            return;
+        }
         Location explode = e.getLocation();
         // check if the explosion is in a TARDIS world
         if ((explode.getWorld().getName().contains("TARDIS") || explode.getWorld().getName().equals(plugin.getConfig().getString("creation.default_world_name"))) && e.getEntity() instanceof Creeper) {
@@ -71,6 +76,10 @@ public class TARDISExplosionListener implements Listener {
                 explode.getWorld().createExplosion(explode.getX(), explode.getY(), explode.getZ(), 4.0f, false, false);
             }
         } else {
+            Environment env = explode.getWorld().getEnvironment();
+            if ((env.equals(Environment.THE_END) && !plugin.getConfig().getBoolean("travel.the_end")) || (env.equals(Environment.NETHER) && !plugin.getConfig().getBoolean("travel.nether"))) {
+                return;
+            }
             int idchk = 0;
             // get list of police box blocks from DB
             HashMap<String, Object> whereb = new HashMap<String, Object>();

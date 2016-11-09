@@ -111,6 +111,9 @@ public class TARDISSpawnListener implements Listener {
             if (!plugin.getConfig().getBoolean("police_box.set_biome")) {
                 return;
             }
+            if (!event.getEntityType().isAlive()) {
+                return;
+            }
             // only natural spawning
             if (!event.getSpawnReason().equals(SpawnReason.NATURAL)) {
                 return;
