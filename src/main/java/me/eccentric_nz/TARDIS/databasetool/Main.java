@@ -121,7 +121,8 @@ public class Main {
                         bw.write(String.format(SQL.INSERTS.get(i), prefix));
                         bw.newLine();
                         while (rs.next()) {
-                            String end = (b == c) ? ";" : ",";
+                            boolean section = (b % 100 == 0);
+                            String end = (b == c || section) ? ";" : ",";
                             b++;
                             String str;
                             switch (table) {
@@ -225,12 +226,16 @@ public class Main {
                                     str = String.format(SQL.VALUES.get(i), rs.getInt("portal_id"), rs.getString("portal"), rs.getString("teleport"), rs.getString("direction"), rs.getInt("tardis_id"), rs.getInt("abandoned")) + end;
                                     bw.write(str);
                                     break;
-                                case storage:
-                                    str = String.format(SQL.VALUES.get(i), rs.getInt("storage_id"), rs.getInt("tardis_id"), rs.getString("uuid"), rs.getString("owner"), rs.getString("saves_one"), rs.getString("saves_two"), rs.getString("areas"), rs.getString("presets_one"), rs.getString("presets_two"), rs.getString("biomes_one"), rs.getString("biomes_two"), rs.getString("players"), rs.getString("circuits"), rs.getString("console")) + end;
-                                    bw.write(str);
-                                    break;
                                 case siege:
                                     str = String.format(SQL.VALUES.get(i), rs.getInt("siege_id"), rs.getString("uuid"), rs.getInt("tardis_id")) + end;
+                                    bw.write(str);
+                                    break;
+                                case sonic:
+                                    str = String.format(SQL.VALUES.get(i), rs.getInt("sonic_id"), rs.getString("uuid"), rs.getInt("activated"), rs.getString("sonic_type"), rs.getInt("bio"), rs.getInt("diamond"), rs.getInt("emerald"), rs.getInt("redstone"), rs.getInt("painter"), rs.getInt("ignite")) + end;
+                                    bw.write(str);
+                                    break;
+                                case storage:
+                                    str = String.format(SQL.VALUES.get(i), rs.getInt("storage_id"), rs.getInt("tardis_id"), rs.getString("uuid"), rs.getString("owner"), rs.getString("saves_one"), rs.getString("saves_two"), rs.getString("areas"), rs.getString("presets_one"), rs.getString("presets_two"), rs.getString("biomes_one"), rs.getString("biomes_two"), rs.getString("players"), rs.getString("circuits"), rs.getString("console")) + end;
                                     bw.write(str);
                                     break;
                                 case t_count:
@@ -270,6 +275,10 @@ public class Main {
                                     break;
                             }
                             bw.newLine();
+                            if (section) {
+                                bw.write(String.format(SQL.INSERTS.get(i), prefix));
+                                bw.newLine();
+                            }
                         }
                     }
                 }
