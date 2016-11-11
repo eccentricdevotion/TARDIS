@@ -37,6 +37,7 @@ import org.bukkit.event.hanging.HangingBreakByEntityEvent;
 import org.bukkit.event.player.PlayerInteractEntityEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.EquipmentSlot;
+import org.bukkit.inventory.ItemStack;
 import org.bukkit.util.Vector;
 
 /**
@@ -127,7 +128,13 @@ public class TARDISAntiBuildListener implements Listener {
             return;
         }
         EquipmentSlot hand = event.getHand();
-        Material m = (hand.equals(EquipmentSlot.HAND)) ? event.getPlayer().getInventory().getItemInMainHand().getType() : event.getPlayer().getInventory().getItemInOffHand().getType();
+        ItemStack t = (hand.equals(EquipmentSlot.HAND)) ? event.getPlayer().getInventory().getItemInMainHand() : event.getPlayer().getInventory().getItemInOffHand();
+        Material m;
+        if (t != null) {
+            m = t.getType();
+        } else {
+            m = Material.AIR;
+        }
         if ((hand.equals(EquipmentSlot.HAND) && no_place.contains(m)) || (hand.equals(EquipmentSlot.OFF_HAND) && no_place.contains(m)) && !allow_interact.contains(event.getClickedBlock().getType())) {
             event.setUseItemInHand(Result.DENY);
             event.setCancelled(true);
