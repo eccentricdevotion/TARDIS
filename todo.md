@@ -7,6 +7,7 @@
 1. Add other worlds (Silurian cave world, Gallifrey)?
 2. Condenser records should be purged when deleting a TARDIS as the records are tied to the `tardis_id`
 3. Fix Biome adaptive presets dropping flowers & seeds
+4. Update for Spigot 1.11
 
 ##Future version `?+`
 * TARDIS Junk Mode - `/tprefs junk [wall|floor] [block_type]`?
@@ -29,10 +30,10 @@
    * Endermites -> Cybermats
    * Iron Golem -> Gunslinger
    * Witches -> Slitheen / Whispermen?
-   * Wolves -> K-9? (All the textures I seen so far just don't work - you shouldn't see the legs...)
+   * Wolves -> K-9? (Make new model using OptiFine Custom Entity Model mod)
    * Slimes -> Adipose
- 3. Sycorax
- 4. Scarecrows
+   * Husk -> Sycorax
+   * Stray -> Scarecrows
  
 ##TIPS visulisation tool
 * Use WorldGuard region data
