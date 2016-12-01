@@ -16,10 +16,10 @@
  */
 package me.eccentric_nz.TARDIS.utility;
 
+import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 import org.bukkit.ChatColor;
-import org.bukkit.util.Java15Compat;
 
 /**
  * The TARDISChatPaginator takes a raw string of arbitrary length and breaks it down
@@ -61,7 +61,7 @@ public class TARDISChatPaginator {
         int actualPageNumber = pageNumber <= totalPages ? pageNumber : totalPages;
         int from = (actualPageNumber - 1) * pageHeight;
         int to = from + pageHeight <= lines.length ? from + pageHeight : lines.length;
-        String[] selectedLines = Java15Compat.Arrays_copyOfRange(lines, from, to);
+        String[] selectedLines = Arrays.copyOfRange(lines, from, to);
         return new ChatPage(selectedLines, actualPageNumber, totalPages);
     }
 
