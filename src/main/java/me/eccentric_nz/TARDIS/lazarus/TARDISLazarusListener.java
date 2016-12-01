@@ -76,7 +76,11 @@ public class TARDISLazarusListener implements Listener {
                     b.getRelative(BlockFace.SOUTH).getRelative(BlockFace.UP).setType(Material.COBBLE_WALL);
                     // open the GUI
                     Inventory inv = plugin.getServer().createInventory(player, 54, "§4Genetic Manipulator");
-                    inv.setContents(new TARDISLazarusInventory(plugin).getTerminal());
+                    if (player.isSneaking()) {
+                        inv.setContents(new TARDISLazarusTWAInventory(plugin).getTerminal());
+                    } else {
+                        inv.setContents(new TARDISLazarusInventory(plugin).getTerminal());
+                    }
                     player.openInventory(inv);
                 }
             }

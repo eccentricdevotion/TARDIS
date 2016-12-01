@@ -19,6 +19,7 @@ package me.eccentric_nz.TARDIS.lazarus;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Random;
 import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.api.event.TARDISGeneticManipulatorDisguiseEvent;
@@ -38,26 +39,25 @@ import me.libraryaddict.disguise.disguisetypes.watchers.BatWatcher;
 import me.libraryaddict.disguise.disguisetypes.watchers.BlazeWatcher;
 import me.libraryaddict.disguise.disguisetypes.watchers.CreeperWatcher;
 import me.libraryaddict.disguise.disguisetypes.watchers.EndermanWatcher;
+import me.libraryaddict.disguise.disguisetypes.watchers.HorseChestedWatcher;
 import me.libraryaddict.disguise.disguisetypes.watchers.HorseWatcher;
 import me.libraryaddict.disguise.disguisetypes.watchers.LivingWatcher;
+import me.libraryaddict.disguise.disguisetypes.watchers.LlamaWatcher;
 import me.libraryaddict.disguise.disguisetypes.watchers.OcelotWatcher;
 import me.libraryaddict.disguise.disguisetypes.watchers.PigWatcher;
 import me.libraryaddict.disguise.disguisetypes.watchers.RabbitWatcher;
 import me.libraryaddict.disguise.disguisetypes.watchers.SheepWatcher;
-import me.libraryaddict.disguise.disguisetypes.watchers.SkeletonWatcher;
 import me.libraryaddict.disguise.disguisetypes.watchers.SlimeWatcher;
 import me.libraryaddict.disguise.disguisetypes.watchers.SnowmanWatcher;
 import me.libraryaddict.disguise.disguisetypes.watchers.VillagerWatcher;
 import me.libraryaddict.disguise.disguisetypes.watchers.WolfWatcher;
-import me.libraryaddict.disguise.disguisetypes.watchers.ZombieWatcher;
+import me.libraryaddict.disguise.disguisetypes.watchers.ZombieVillagerWatcher;
 import org.bukkit.DyeColor;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
-import org.bukkit.entity.Horse.Color;
 import org.bukkit.entity.Ocelot.Type;
 import org.bukkit.entity.Player;
-import org.bukkit.entity.Skeleton.SkeletonType;
 import org.bukkit.entity.Villager.Profession;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -76,14 +76,13 @@ public class TARDISLazarusGUIListener extends TARDISMenuListener implements List
     private final TARDIS plugin;
     private final HashMap<UUID, String> disguises = new HashMap<UUID, String>();
     private final HashMap<UUID, Integer> horses = new HashMap<UUID, Integer>();
+    private final HashMap<UUID, Integer> llamas = new HashMap<UUID, Integer>();
     private final HashMap<UUID, Integer> sheep = new HashMap<UUID, Integer>();
     private final HashMap<UUID, Integer> cats = new HashMap<UUID, Integer>();
     private final HashMap<UUID, Integer> rabbits = new HashMap<UUID, Integer>();
     private final HashMap<UUID, Integer> professions = new HashMap<UUID, Integer>();
     private final HashMap<UUID, Integer> slimes = new HashMap<UUID, Integer>();
     private final HashMap<UUID, Boolean> snowmen = new HashMap<UUID, Boolean>();
-    private final HashMap<UUID, Integer> skeletons = new HashMap<UUID, Integer>();
-    private final HashMap<UUID, Integer> zombies = new HashMap<UUID, Integer>();
     private final List<Integer> slimeSizes = Arrays.asList(1, 2, 4);
     private final List<String> twaMonsters = Arrays.asList("WEEPING ANGEL", "CYBERMAN", "ICE WARRIOR", "EMPTY CHILD", "SILURIAN", "SONTARAN", "STRAX", "VASHTA NERADA", "ZYGON");
     private final List<String> twaChests = Arrays.asList("Weeping Angel Chest", "Cyberman Chest", "Ice Warrior Chest", "Empty Child Chest", "Silurian Chest", "Sontaran Chest", "Strax Chest", "Vashta Nerada Chest", "Zygon Chest");
@@ -281,6 +280,11 @@ public class TARDISLazarusGUIListener extends TARDISMenuListener implements List
                                         return;
                                     }
                                     switch (dt) {
+                                        case DONKEY:
+                                        case MULE:
+                                            HorseChestedWatcher hcw = (HorseChestedWatcher) livingWatcher;
+                                            hcw.setCarryingChest(getBoolean(inv));
+                                            break;
                                         case SHEEP:
                                             SheepWatcher sw = (SheepWatcher) livingWatcher;
                                             sw.setColor(getColor(inv));
@@ -294,6 +298,14 @@ public class TARDISLazarusGUIListener extends TARDISMenuListener implements List
                                             HorseWatcher hw = (HorseWatcher) livingWatcher;
                                             hw.setColor(getHorseColor(inv));
                                             hw.setBaby(getBaby(inv));
+                                            break;
+                                        case LLAMA:
+                                            LlamaWatcher llw = (LlamaWatcher) livingWatcher;
+                                            llw.setColor(getLlamaColor(inv));
+                                            if (getBoolean(inv)) {
+                                                Random rand = new Random();
+                                                llw.setCarpet(AnimalColor.values()[rand.nextInt(16)]);
+                                            }
                                             break;
                                         case OCELOT:
                                             OcelotWatcher ow = (OcelotWatcher) livingWatcher;
@@ -345,21 +357,16 @@ public class TARDISLazarusGUIListener extends TARDISMenuListener implements List
                                             ew.setAggressive(getBoolean(inv));
                                             break;
                                         case COW:
-                                        case DONKEY:
-                                        case MULE:
                                         case SKELETON_HORSE:
-                                        case UNDEAD_HORSE:
+                                        case ZOMBIE_HORSE:
+                                        case ZOMBIE:
                                             AgeableWatcher aw = (AgeableWatcher) livingWatcher;
                                             aw.setBaby(getBaby(inv));
                                             break;
-                                        case ZOMBIE:
-                                            ZombieWatcher zw = (ZombieWatcher) livingWatcher;
-                                            zw.setBaby(getBaby(inv));
-                                            zw.setProfession(getZombieProfession(inv));
-                                            break;
-                                        case SKELETON:
-                                            SkeletonWatcher skw = (SkeletonWatcher) livingWatcher;
-                                            skw.setType(getSkeletonType(inv));
+                                        case ZOMBIE_VILLAGER:
+                                            ZombieVillagerWatcher zvw = (ZombieVillagerWatcher) livingWatcher;
+                                            zvw.setBaby(getBaby(inv));
+                                            zvw.setProfession(getZombieProfession(inv));
                                             break;
                                         case SNOWMAN:
                                             SnowmanWatcher snw = (SnowmanWatcher) livingWatcher;
@@ -443,15 +450,6 @@ public class TARDISLazarusGUIListener extends TARDISMenuListener implements List
     private void setSlotFourtyEight(Inventory i, String d, UUID uuid) {
         String t = null;
         int o;
-        if (d.equals("SKELETON")) {
-            if (skeletons.containsKey(uuid)) {
-                o = (skeletons.get(uuid) + 1 < 3) ? skeletons.get(uuid) + 1 : 0;
-            } else {
-                o = 0;
-            }
-            t = SkeletonType.values()[o].toString();
-            skeletons.put(uuid, o);
-        }
         if (d.equals("SNOWMAN")) {
             boolean derp;
             if (snowmen.containsKey(uuid)) {
@@ -462,7 +460,7 @@ public class TARDISLazarusGUIListener extends TARDISMenuListener implements List
             snowmen.put(uuid, derp);
             t = (derp) ? "Pumpkin head" : "Derp face";
         }
-        if (d.equals("SHEEP") || d.equals("WOLF")) {
+        if (d.equals("SHEEP") || d.equals("WOLF") || d.equals("SHULKER")) {
             if (sheep.containsKey(uuid)) {
                 o = (sheep.get(uuid) + 1 < 16) ? sheep.get(uuid) + 1 : 0;
             } else {
@@ -477,8 +475,17 @@ public class TARDISLazarusGUIListener extends TARDISMenuListener implements List
             } else {
                 o = 0;
             }
-            t = Color.values()[o].toString();
+            t = org.bukkit.entity.Horse.Color.values()[o].toString();
             horses.put(uuid, o);
+        }
+        if (d.equals("LLAMA")) {
+            if (llamas.containsKey(uuid)) {
+                o = (llamas.get(uuid) + 1 < 4) ? llamas.get(uuid) + 1 : 0;
+            } else {
+                o = 0;
+            }
+            t = org.bukkit.entity.Llama.Color.values()[o].toString();
+            llamas.put(uuid, o);
         }
         if (d.equals("OCELOT")) {
             if (cats.containsKey(uuid)) {
@@ -498,7 +505,7 @@ public class TARDISLazarusGUIListener extends TARDISMenuListener implements List
             t = RabbitType.values()[o].toString();
             rabbits.put(uuid, o);
         }
-        if (d.equals("VILLAGER")) {
+        if (d.equals("VILLAGER") || d.equals("ZOMBIE_VILLAGER")) {
             if (professions.containsKey(uuid)) {
                 o = (professions.get(uuid) + 1 < 6) ? professions.get(uuid) + 1 : 1;
             } else {
@@ -506,15 +513,6 @@ public class TARDISLazarusGUIListener extends TARDISMenuListener implements List
             }
             t = Profession.values()[o].toString();
             professions.put(uuid, o);
-        }
-        if (d.equals("ZOMBIE")) {
-            if (zombies.containsKey(uuid)) {
-                o = (zombies.get(uuid) + 1 < 7) ? zombies.get(uuid) + 1 : 0;
-            } else {
-                o = 0;
-            }
-            t = Profession.values()[o].toString();
-            zombies.put(uuid, o);
         }
         if (d.equals("SLIME") || d.equals("MAGMA_CUBE")) {
             if (slimes.containsKey(uuid)) {
@@ -549,13 +547,23 @@ public class TARDISLazarusGUIListener extends TARDISMenuListener implements List
         }
     }
 
-    private Color getHorseColor(Inventory i) {
+    private org.bukkit.entity.Horse.Color getHorseColor(Inventory i) {
         ItemStack is = i.getItem(48);
         ItemMeta im = is.getItemMeta();
         try {
-            return Color.valueOf(im.getLore().get(0));
+            return org.bukkit.entity.Horse.Color.valueOf(im.getLore().get(0));
         } catch (IllegalArgumentException e) {
-            return Color.WHITE;
+            return org.bukkit.entity.Horse.Color.WHITE;
+        }
+    }
+
+    private org.bukkit.entity.Llama.Color getLlamaColor(Inventory i) {
+        ItemStack is = i.getItem(48);
+        ItemMeta im = is.getItemMeta();
+        try {
+            return org.bukkit.entity.Llama.Color.valueOf(im.getLore().get(0));
+        } catch (IllegalArgumentException e) {
+            return org.bukkit.entity.Llama.Color.CREAMY;
         }
     }
 
@@ -599,16 +607,15 @@ public class TARDISLazarusGUIListener extends TARDISMenuListener implements List
         }
     }
 
-    private SkeletonType getSkeletonType(Inventory i) {
-        ItemStack is = i.getItem(48);
-        ItemMeta im = is.getItemMeta();
-        try {
-            return SkeletonType.valueOf(im.getLore().get(0));
-        } catch (IllegalArgumentException e) {
-            return SkeletonType.NORMAL;
-        }
-    }
-
+//    private SkeletonType getSkeletonType(Inventory i) {
+//        ItemStack is = i.getItem(48);
+//        ItemMeta im = is.getItemMeta();
+//        try {
+//            return SkeletonType.valueOf(im.getLore().get(0));
+//        } catch (IllegalArgumentException e) {
+//            return SkeletonType.NORMAL;
+//        }
+//    }
     private int getSlimeSize(Inventory i) {
         ItemStack is = i.getItem(48);
         ItemMeta im = is.getItemMeta();

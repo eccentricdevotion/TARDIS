@@ -18,7 +18,6 @@ package me.eccentric_nz.TARDIS.lazarus;
 
 import java.util.Arrays;
 import java.util.LinkedHashMap;
-import java.util.Map;
 import me.eccentric_nz.TARDIS.TARDIS;
 import org.bukkit.Material;
 import org.bukkit.entity.EntityType;
@@ -34,54 +33,14 @@ import org.bukkit.inventory.meta.ItemMeta;
  *
  * @author eccentric_nz
  */
-public class TARDISLazarusInventory {
+public class TARDISLazarusTWAInventory {
 
     private final ItemStack[] terminal;
     private final TARDIS plugin;
     LinkedHashMap<String, EntityType> disguises = new LinkedHashMap<String, EntityType>();
 
-    public TARDISLazarusInventory(TARDIS plugin) {
+    public TARDISLazarusTWAInventory(TARDIS plugin) {
         this.plugin = plugin;
-        disguises.put("BAT", EntityType.BAT);
-        disguises.put("BLAZE", EntityType.BLAZE);
-        disguises.put("CAVE_SPIDER", EntityType.CAVE_SPIDER);
-        disguises.put("CHICKEN", EntityType.CHICKEN);
-        disguises.put("COW", EntityType.COW);
-        disguises.put("CREEPER", EntityType.CREEPER);
-        disguises.put("ENDERMAN", EntityType.ENDERMAN);
-        disguises.put("ENDERMITE", EntityType.ENDERMITE);
-        disguises.put("GUARDIAN", EntityType.GUARDIAN);
-        disguises.put("ELDER_GUARDIAN", EntityType.ELDER_GUARDIAN);
-        disguises.put("HORSE", EntityType.HORSE);
-        disguises.put("DONKEY", EntityType.DONKEY);
-        disguises.put("MULE", EntityType.MULE);
-        disguises.put("SKELETON_HORSE", EntityType.SKELETON_HORSE);
-        disguises.put("ZOMBIE_HORSE", EntityType.ZOMBIE_HORSE);
-        disguises.put("LLAMA", EntityType.LLAMA);
-        disguises.put("MAGMA_CUBE", EntityType.MAGMA_CUBE);
-        disguises.put("MUSHROOM_COW", EntityType.MUSHROOM_COW);
-        disguises.put("OCELOT", EntityType.OCELOT);
-        disguises.put("PIG", EntityType.PIG);
-        disguises.put("PIG_ZOMBIE", EntityType.PIG_ZOMBIE);
-        disguises.put("POLAR_BEAR", EntityType.POLAR_BEAR);
-        disguises.put("RABBIT", EntityType.RABBIT);
-        disguises.put("SHEEP", EntityType.SHEEP);
-        disguises.put("SILVERFISH", EntityType.SILVERFISH);
-        disguises.put("SKELETON", EntityType.SKELETON);
-        disguises.put("WITHER_SKELETON", EntityType.WITHER_SKELETON);
-        disguises.put("STRAY", EntityType.STRAY);
-        disguises.put("SLIME", EntityType.SLIME);
-        disguises.put("SPIDER", EntityType.SPIDER);
-        disguises.put("SQUID", EntityType.SQUID);
-        disguises.put("VILLAGER", EntityType.VILLAGER);
-        disguises.put("WITCH", EntityType.WITCH);
-        disguises.put("WOLF", EntityType.WOLF);
-        disguises.put("ZOMBIE", EntityType.ZOMBIE);
-        disguises.put("ZOMBIE_VILLAGER", EntityType.ZOMBIE_VILLAGER);
-        disguises.put("HUSK", EntityType.HUSK);
-        disguises.put("EVOKER", EntityType.EVOKER);
-        disguises.put("VEX", EntityType.VEX);
-        disguises.put("VINDICATOR", EntityType.VINDICATOR);
         this.terminal = getItemStack();
     }
 
@@ -93,34 +52,62 @@ public class TARDISLazarusInventory {
     private ItemStack[] getItemStack() {
         ItemStack[] eggs = new ItemStack[54];
         int i = 0;
-        for (Map.Entry<String, EntityType> map : disguises.entrySet()) {
-            ItemStack egg = plugin.getTardisHelper().setSpawnEggType(new ItemStack(Material.MONSTER_EGG, 1), map.getValue());
-            ItemMeta ime = egg.getItemMeta();
-            ime.setDisplayName(map.getKey());
-            egg.setItemMeta(ime);
-            eggs[i] = egg;
+        // if TARDISWeepingAngels is enabled angels, cybermen and ice warriors will be available
+        if (plugin.checkTWA()) {
+            ItemStack weep = new ItemStack(Material.CLAY_BRICK, 1);
+            ItemMeta ing = weep.getItemMeta();
+            ing.setDisplayName("WEEPING ANGEL");
+            weep.setItemMeta(ing);
+            eggs[i] = weep;
             i++;
+            ItemStack cyber = new ItemStack(Material.IRON_INGOT, 1);
+            ItemMeta men = cyber.getItemMeta();
+            men.setDisplayName("CYBERMAN");
+            cyber.setItemMeta(men);
+            eggs[i] = cyber;
+            i++;
+            ItemStack ice = new ItemStack(Material.SNOW_BALL, 1);
+            ItemMeta war = ice.getItemMeta();
+            war.setDisplayName("ICE WARRIOR");
+            ice.setItemMeta(war);
+            eggs[i] = ice;
+            i++;
+            ItemStack emp = new ItemStack(Material.SUGAR, 1);
+            ItemMeta tyc = emp.getItemMeta();
+            tyc.setDisplayName("EMPTY CHILD");
+            emp.setItemMeta(tyc);
+            eggs[i] = emp;
+            i++;
+            ItemStack sil = new ItemStack(Material.FEATHER, 1);
+            ItemMeta uri = sil.getItemMeta();
+            uri.setDisplayName("SILURIAN");
+            sil.setItemMeta(uri);
+            eggs[i] = sil;
+            i++;
+            ItemStack son = new ItemStack(Material.POTATO_ITEM, 1);
+            ItemMeta tar = son.getItemMeta();
+            tar.setDisplayName("SONTARAN");
+            son.setItemMeta(tar);
+            eggs[i] = son;
+            i++;
+            ItemStack str = new ItemStack(Material.BAKED_POTATO, 1);
+            ItemMeta axs = str.getItemMeta();
+            axs.setDisplayName("STRAX");
+            str.setItemMeta(axs);
+            eggs[i] = str;
+            i++;
+            ItemStack vas = new ItemStack(Material.BOOK, 1);
+            ItemMeta hta = vas.getItemMeta();
+            hta.setDisplayName("VASHTA NERADA");
+            vas.setItemMeta(hta);
+            eggs[i] = vas;
+            i++;
+            ItemStack zyg = new ItemStack(Material.PAINTING, 1);
+            ItemMeta onz = zyg.getItemMeta();
+            onz.setDisplayName("ZYGON");
+            zyg.setItemMeta(onz);
+            eggs[i] = zyg;
         }
-        // put iron golem
-        ItemStack iron = new ItemStack(Material.IRON_BLOCK, 1);
-        ItemMeta golem = iron.getItemMeta();
-        golem.setDisplayName("IRON_GOLEM");
-        iron.setItemMeta(golem);
-        eggs[i] = iron;
-        i++;
-        // put snowman
-        ItemStack snow = new ItemStack(Material.SNOW_BALL, 1);
-        ItemMeta man = snow.getItemMeta();
-        man.setDisplayName("SNOWMAN");
-        snow.setItemMeta(man);
-        eggs[i] = snow;
-        i++;
-        // put wither
-        ItemStack wit = new ItemStack(Material.SKULL_ITEM, 1, (byte) 1);
-        ItemMeta her = wit.getItemMeta();
-        her.setDisplayName("WITHER");
-        wit.setItemMeta(her);
-        eggs[i] = wit;
         // add options
         ItemStack the = new ItemStack(Material.REDSTONE_COMPARATOR, 1);
         ItemMeta master = the.getItemMeta();
