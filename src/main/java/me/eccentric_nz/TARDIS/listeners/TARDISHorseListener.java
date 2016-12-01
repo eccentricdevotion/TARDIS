@@ -29,10 +29,13 @@ import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
+import org.bukkit.entity.AbstractHorse;
+import org.bukkit.entity.ChestedHorse;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Horse;
 import org.bukkit.entity.LivingEntity;
+import org.bukkit.entity.Llama;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Tameable;
 import org.bukkit.event.EventHandler;
@@ -61,7 +64,7 @@ public class TARDISHorseListener implements Listener {
     @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
     public void onInteract(EntityInteractEvent event) {
         Entity e = event.getEntity();
-        if (e instanceof Horse) {
+        if (e instanceof AbstractHorse && !(e instanceof Llama)) {
             Horse h = (Horse) e;
             Material m = event.getBlock().getType();
             Entity passenger = h.getPassenger();
@@ -108,13 +111,18 @@ public class TARDISHorseListener implements Listener {
                         TARDISHorse tmhor = new TARDISHorse();
                         tmhor.setAge(h.getTicksLived());
                         tmhor.setBaby(!h.isAdult());
-                        tmhor.setHorseColour(h.getColor());
-                        tmhor.setHorseStyle(h.getStyle());
-                        tmhor.setHorseVariant(h.getVariant());
+                        if (e.getType().equals(EntityType.HORSE)) {
+                            tmhor.setHorseColour(h.getColor());
+                            tmhor.setHorseStyle(h.getStyle());
+                        }
+                        tmhor.setHorseVariant(e.getType());
                         tmhor.setName(((LivingEntity) h).getCustomName());
                         tmhor.setTamed(true);
-                        if (h.isCarryingChest()) {
-                            tmhor.setHasChest(true);
+                        if (h instanceof ChestedHorse) {
+                            ChestedHorse ch = (ChestedHorse) h;
+                            if (ch.isCarryingChest()) {
+                                tmhor.setHasChest(true);
+                            }
                         }
                         tmhor.setHorseInventory(h.getInventory().getContents());
                         tmhor.setDomesticity(h.getDomestication());
@@ -125,7 +133,6 @@ public class TARDISHorseListener implements Listener {
                             tmhor.setSpeed(plugin.getTardisHelper().getHorseSpeed(h));
                         }
                         // eject player
-                        // if (p.leaveVehicle()) {
                         if (h.eject()) {
                             // remove horse
                             h.remove();
@@ -135,12 +142,13 @@ public class TARDISHorseListener implements Listener {
                             while (!world.getChunkAt(l).isLoaded()) {
                                 world.getChunkAt(l).load();
                             }
-                            Entity ent = world.spawnEntity(l, EntityType.HORSE);
+                            Entity ent = world.spawnEntity(l, tmhor.getHorseVariant());
                             final Horse equine = (Horse) ent;
                             equine.setAge(tmhor.getAge());
-                            equine.setVariant(tmhor.getHorseVariant());
-                            equine.setColor(tmhor.getHorseColour());
-                            equine.setStyle(tmhor.getHorseStyle());
+                            if (tmhor.getHorseVariant().equals(EntityType.HORSE)) {
+                                equine.setColor(tmhor.getHorseColour());
+                                equine.setStyle(tmhor.getHorseStyle());
+                            }
                             equine.setDomestication(tmhor.getDomesticity());
                             equine.setJumpStrength(tmhor.getJumpStrength());
                             String name = tmhor.getName();
@@ -148,7 +156,8 @@ public class TARDISHorseListener implements Listener {
                                 equine.setCustomName(name);
                             }
                             if (tmhor.hasChest()) {
-                                equine.setCarryingChest(true);
+                                ChestedHorse chested = (ChestedHorse) equine;
+                                chested.setCarryingChest(true);
                             }
                             equine.setMaxHealth(tmhor.getHorseHealth());
                             equine.setHealth(tmhor.getHealth());

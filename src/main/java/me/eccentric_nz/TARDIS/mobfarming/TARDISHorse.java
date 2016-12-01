@@ -16,9 +16,9 @@
  */
 package me.eccentric_nz.TARDIS.mobfarming;
 
+import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Horse.Color;
 import org.bukkit.entity.Horse.Style;
-import org.bukkit.entity.Horse.Variant;
 import org.bukkit.inventory.ItemStack;
 
 /**
@@ -33,7 +33,7 @@ public class TARDISHorse extends TARDISMob {
 
     private Color horsecolor;
     private Style horsestyle;
-    private Variant horsevariant;
+    private EntityType horsevariant;
     private ItemStack[] horseinventory;
     private boolean haschest;
     private boolean leashed;
@@ -64,11 +64,11 @@ public class TARDISHorse extends TARDISMob {
         this.horsestyle = horsestyle;
     }
 
-    public Variant getHorseVariant() {
+    public EntityType getHorseVariant() {
         return horsevariant;
     }
 
-    public void setHorseVariant(Variant horsevariant) {
+    public void setHorseVariant(EntityType horsevariant) {
         this.horsevariant = horsevariant;
     }
 
