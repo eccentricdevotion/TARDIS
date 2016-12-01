@@ -43,6 +43,7 @@ public enum ROOM {
     RENDERER,
     SMELTER,
     STABLE,
+    STALL,
     TRENZALORE,
     VAULT,
     VILLAGE,

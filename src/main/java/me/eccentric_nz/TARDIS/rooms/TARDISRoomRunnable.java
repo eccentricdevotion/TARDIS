@@ -363,7 +363,7 @@ public class TARDISRoomRunnable implements Runnable {
                 qf.insertControl(tardis_id, 19, plate, 0);
             }
             // set stable
-            if (type.equals(Material.SOUL_SAND) && (room.equals("STABLE") || room.equals("VILLAGE") || room.equals("RENDERER") || room.equals("ZERO") || room.equals("HUTCH") || room.equals("IGLOO"))) {
+            if (type.equals(Material.SOUL_SAND) && (room.equals("STABLE") || room.equals("VILLAGE") || room.equals("RENDERER") || room.equals("ZERO") || room.equals("HUTCH") || room.equals("IGLOO") || room.equals("STALL"))) {
                 HashMap<String, Object> sets = new HashMap<String, Object>();
                 sets.put(room.toLowerCase(Locale.ENGLISH), world.getName() + ":" + startx + ":" + starty + ":" + startz);
                 HashMap<String, Object> wheres = new HashMap<String, Object>();
@@ -377,6 +377,7 @@ public class TARDISRoomRunnable implements Runnable {
                         break;
                     case HUTCH:
                     case STABLE:
+                    case STALL:
                         type = Material.GRASS;
                         data = 0;
                         break;

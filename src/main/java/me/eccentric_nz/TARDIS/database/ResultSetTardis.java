@@ -160,6 +160,7 @@ public class ResultSetTardis {
                             zero,
                             rs.getString("hutch"),
                             rs.getString("igloo"),
+                            rs.getString("stall"),
                             rs.getBoolean("powered_on"),
                             rs.getBoolean("lights_on"),
                             rs.getBoolean("siege_on"),

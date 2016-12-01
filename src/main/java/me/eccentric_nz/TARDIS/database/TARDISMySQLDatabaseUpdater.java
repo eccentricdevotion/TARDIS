@@ -68,6 +68,7 @@ public class TARDISMySQLDatabaseUpdater {
         tardisupdates.add("siege_on int(1) DEFAULT '0'");
         tardisupdates.add("zero varchar(512) DEFAULT ''");
         tardisupdates.add("igloo varchar(512) DEFAULT ''");
+        tardisupdates.add("stall varchar(512) DEFAULT ''");
         prefsupdates.add("auto_siege_on int(1) DEFAULT '0'");
         prefsupdates.add("build_on int(1) DEFAULT '1'");
         prefsupdates.add("ctm_on int(1) DEFAULT '0'");
