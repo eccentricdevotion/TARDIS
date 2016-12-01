@@ -2,12 +2,19 @@
 
 ##Current bugfix version `3.7-beta-1`
 1. Fix bugs!
+2. 1.11 updates
+   * Sound categories
+   * Entity changes - check door open random monsters
+   * Llama room
+3. Citizens support
+4. Check multiple custom consoles
+5. Add other worlds (Silurian cave world, Gallifrey)?
+6. Condenser records should be purged when deleting a TARDIS as the records are tied to the `tardis_id`
+7. Fix Biome adaptive presets dropping flowers & seeds
+8. `/tardisadmin undisperse [player]`
 
-##Next minor version `3.7-beta-1`  
-1. Add other worlds (Silurian cave world, Gallifrey)?
-2. Condenser records should be purged when deleting a TARDIS as the records are tied to the `tardis_id`
-3. Fix Biome adaptive presets dropping flowers & seeds
-4. Update for Spigot 1.11
+##Next minor version `3.8-beta-1`
+?
 
 ##Future version `?+`
 * TARDIS Junk Mode - `/tprefs junk [wall|floor] [block_type]`?
