@@ -140,8 +140,15 @@ public class TARDISEjectListener implements Listener {
                 }
                 ent.remove();
                 break;
+            case DONKEY:
             case HORSE:
+            case MULE:
+            case SKELETON_HORSE:
+            case ZOMBIE_HORSE:
                 TARDISMessage.send(player, "EJECT_HORSE");
+                break;
+            case LLAMA:
+                // TODO eject llama
                 break;
             case MUSHROOM_COW:
                 MushroomCow m = (MushroomCow) ent;
