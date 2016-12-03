@@ -88,7 +88,7 @@ public class TARDISConsoleLoader {
                     continue;
                 }
                 // check seed material
-                seed = plugin.getCustomConsolesConfig().getString(console + ".seed");
+                seed = plugin.getCustomConsolesConfig().getString(console + ".seed").toUpperCase(Locale.ENGLISH);
                 try {
                     Material.valueOf(seed);
                 } catch (IllegalArgumentException e) {
