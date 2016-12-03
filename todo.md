@@ -4,7 +4,6 @@
 1. Fix bugs!
 5. Add other worlds (Silurian cave world, Gallifrey)?
 7. Fix Biome adaptive presets dropping flowers & seeds
-8. `/tardisadmin undisperse [player]`
 
 ##Next minor version `3.8-beta-1`
 ?
