@@ -46,14 +46,16 @@ import org.bukkit.entity.Creeper;
 import org.bukkit.entity.Enderman;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
+import static org.bukkit.entity.EntityType.STRAY;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.PigZombie;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Skeleton;
-import org.bukkit.entity.Skeleton.SkeletonType;
 import org.bukkit.entity.Slime;
 import org.bukkit.entity.Villager.Profession;
+import org.bukkit.entity.Vindicator;
 import org.bukkit.entity.Zombie;
+import org.bukkit.entity.ZombieVillager;
 import org.bukkit.inventory.EntityEquipment;
 
 /**
@@ -72,13 +74,19 @@ public class TARDISMonsterRunnable implements Runnable {
         monsters.add(EntityType.CREEPER);
         monsters.add(EntityType.ENDERMAN);
         monsters.add(EntityType.ENDERMITE);
+        monsters.add(EntityType.HUSK);
         monsters.add(EntityType.PIG_ZOMBIE);
         monsters.add(EntityType.SILVERFISH);
         monsters.add(EntityType.SKELETON);
         monsters.add(EntityType.SLIME);
         monsters.add(EntityType.SPIDER);
+        monsters.add(EntityType.STRAY);
+        monsters.add(EntityType.VEX);
+        monsters.add(EntityType.VINDICATOR);
         monsters.add(EntityType.WITCH);
+        monsters.add(EntityType.WITHER_SKELETON);
         monsters.add(EntityType.ZOMBIE);
+        monsters.add(EntityType.ZOMBIE_VILLAGER);
         if (this.plugin.getConfig().getBoolean("allow.guardians")) {
             monsters.add(EntityType.GUARDIAN);
         } else {
@@ -146,45 +154,32 @@ public class TARDISMonsterRunnable implements Runnable {
                                             }
                                             break;
                                         case SKELETON:
+                                        case STRAY:
+                                        case WITHER_SKELETON:
                                             Skeleton skeleton = (Skeleton) e;
                                             tm.setEquipment(skeleton.getEquipment());
-                                            tm.setSkeletonType(skeleton.getSkeletonType());
                                             if (twa && skeleton.getEquipment().getHelmet() != null && skeleton.getEquipment().getHelmet().hasItemMeta() && skeleton.getEquipment().getHelmet().getItemMeta().hasDisplayName()) {
                                                 String name = skeleton.getEquipment().getHelmet().getItemMeta().getDisplayName();
                                                 if (name.equals("Dalek Head") || name.equals("Silurian Head") || name.equals("Weeping Angel Head")) {
                                                     dn = name.substring(0, name.length() - 5);
                                                 }
                                             }
-                                            switch (skeleton.getSkeletonType()) {
-                                                case WITHER:
-                                                    dn = "Wither Skeleton";
-                                                    break;
-                                                case STRAY:
-                                                    dn = "Stray";
-                                                    break;
-                                                default:
-                                                    break;
+                                            if (type.equals(EntityType.WITHER_SKELETON)) {
+                                                dn = "Wither Skeleton";
                                             }
                                             break;
                                         case SLIME:
                                             Slime slime = (Slime) e;
                                             tm.setSize(slime.getSize());
                                             break;
+                                        case VINDICATOR:
+                                            Vindicator vindicator = (Vindicator) e;
+                                            tm.setEquipment(vindicator.getEquipment());
+                                            break;
+                                        case HUSK:
                                         case ZOMBIE:
+                                        case ZOMBIE_VILLAGER:
                                             Zombie zombie = (Zombie) e;
-                                            Profession prof = zombie.getVillagerProfession();
-                                            tm.setProfession(prof);
-                                            if (prof != null) {
-                                                switch (prof) {
-                                                    case NORMAL:
-                                                        break;
-                                                    case HUSK:
-                                                        dn = "Husk";
-                                                        break;
-                                                    default:
-                                                        dn = "Zombie " + WordUtils.capitalize(prof.toString().toLowerCase(Locale.ENGLISH));
-                                                }
-                                            }
                                             tm.setBaby(zombie.isBaby());
                                             tm.setEquipment(zombie.getEquipment());
                                             if (twa && zombie.getEquipment().getHelmet() != null && zombie.getEquipment().getHelmet().hasItemMeta() && zombie.getEquipment().getHelmet().getItemMeta().hasDisplayName()) {
@@ -192,6 +187,12 @@ public class TARDISMonsterRunnable implements Runnable {
                                                 if (name.equals("Cyberman Head") || name.equals("Empty Child Head") || name.equals("Sontaran Head") || name.equals("Vashta Nerada Head") || name.equals("Zygon Head")) {
                                                     dn = name.substring(0, name.length() - 5);
                                                 }
+                                            }
+                                            if (type.equals(EntityType.ZOMBIE_VILLAGER)) {
+                                                ZombieVillager zombie_villager = (ZombieVillager) e;
+                                                Profession prof = zombie_villager.getVillagerProfession();
+                                                tm.setProfession(prof);
+                                                dn = "Zombie Villager";
                                             }
                                             break;
                                         default:
@@ -224,37 +225,10 @@ public class TARDISMonsterRunnable implements Runnable {
                                 EntityType type = random_monsters.get(r.nextInt(random_monsters.size()));
                                 rtm.setType(type);
                                 String dn = WordUtils.capitalize(type.toString().toLowerCase(Locale.ENGLISH));
-                                // set random sub types eg. Husk, Zombie Villagers, Stray & Wither Skeletons
-                                switch (type) {
-                                    case SKELETON:
-                                        SkeletonType st = SkeletonType.values()[r.nextInt(3)];
-                                        rtm.setSkeletonType(st);
-                                        switch (st) {
-                                            case WITHER:
-                                                dn = "Wither Skeleton";
-                                                break;
-                                            case STRAY:
-                                                dn = "Stray";
-                                                break;
-                                            default:
-                                                break;
-                                        }
-                                        break;
-                                    case ZOMBIE:
-                                        Profession prof = Profession.values()[r.nextInt(7)];
-                                        rtm.setProfession(prof);
-                                        switch (prof) {
-                                            case NORMAL:
-                                                break;
-                                            case HUSK:
-                                                dn = "Husk";
-                                                break;
-                                            default:
-                                                dn = "Zombie " + WordUtils.capitalize(prof.toString().toLowerCase(Locale.ENGLISH));
-                                        }
-                                        break;
-                                    default:
-                                        break;
+                                if (type.equals(EntityType.ZOMBIE_VILLAGER)) {
+                                    Profession prof = Profession.values()[r.nextInt(7)];
+                                    rtm.setProfession(prof);
+                                    dn = "Zombie " + WordUtils.capitalize(prof.toString().toLowerCase(Locale.ENGLISH));
                                 }
                                 rtm.setDisplayName(dn);
                                 moveMonster(map.getValue(), rtm, null, type.equals(EntityType.GUARDIAN));
@@ -390,6 +364,8 @@ public class TARDISMonsterRunnable implements Runnable {
                     }
                     break;
                 case SKELETON:
+                case STRAY:
+                case WITHER_SKELETON:
                     Skeleton skeleton = (Skeleton) ent;
                     EntityEquipment es = skeleton.getEquipment();
                     if (m.getEquipment() != null) {
@@ -399,7 +375,6 @@ public class TARDISMonsterRunnable implements Runnable {
                             TARDISDalekDisguiser.dalekanium(skeleton);
                         }
                     }
-                    skeleton.setSkeletonType(m.getSkeletonType());
                     break;
                 case SLIME:
                     Slime slime = (Slime) ent;
@@ -407,16 +382,34 @@ public class TARDISMonsterRunnable implements Runnable {
                         slime.setSize(m.getSize());
                     }
                     break;
+                case VINDICATOR:
+                    Vindicator vindicator = (Vindicator) ent;
+                    EntityEquipment ev = vindicator.getEquipment();
+                    if (m.getEquipment() != null) {
+                        ev.setArmorContents(m.getEquipment().getArmorContents());
+                        ev.setItemInMainHand(m.getEquipment().getItemInMainHand());
+                    }
+                    break;
+                case HUSK:
                 case ZOMBIE:
                     Zombie zombie = (Zombie) ent;
-                    if (m.getProfession() != null) {
-                        zombie.setVillagerProfession(m.getProfession());
-                    }
                     zombie.setBaby(m.isBaby());
                     EntityEquipment ez = zombie.getEquipment();
                     if (m.getEquipment() != null) {
                         ez.setArmorContents(m.getEquipment().getArmorContents());
                         ez.setItemInMainHand(m.getEquipment().getItemInMainHand());
+                    }
+                    break;
+                case ZOMBIE_VILLAGER:
+                    ZombieVillager zombie_villager = (ZombieVillager) ent;
+                    zombie_villager.setBaby(m.isBaby());
+                    if (m.getProfession() != null) {
+                        zombie_villager.setVillagerProfession(m.getProfession());
+                    }
+                    EntityEquipment zv = zombie_villager.getEquipment();
+                    if (m.getEquipment() != null) {
+                        zv.setArmorContents(m.getEquipment().getArmorContents());
+                        zv.setItemInMainHand(m.getEquipment().getItemInMainHand());
                     }
                     break;
                 default:

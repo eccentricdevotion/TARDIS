@@ -3,9 +3,6 @@
 ##Current bugfix version `3.7-beta-1`
 1. Fix bugs!
 2. 1.11 updates
-   * Sound categories
-   * Entity changes - check door open random monsters
-   * Llama room
    * New blocks - block colour lookup?
 3. Citizens support
 4. Check multiple custom consoles

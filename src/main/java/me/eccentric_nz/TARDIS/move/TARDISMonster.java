@@ -18,7 +18,6 @@ package me.eccentric_nz.TARDIS.move;
 
 import me.eccentric_nz.TARDIS.mobfarming.TARDISMob;
 import org.bukkit.entity.EntityType;
-import org.bukkit.entity.Skeleton.SkeletonType;
 import org.bukkit.entity.Villager.Profession;
 import org.bukkit.inventory.EntityEquipment;
 import org.bukkit.material.MaterialData;
@@ -36,7 +35,6 @@ public class TARDISMonster extends TARDISMob {
     private EntityEquipment equipment;
     private MaterialData carried;
     private EntityType passenger;
-    private SkeletonType skeletonType;
     private String displayName;
     private int size;
 
@@ -94,14 +92,6 @@ public class TARDISMonster extends TARDISMob {
 
     public void setPassenger(EntityType passenger) {
         this.passenger = passenger;
-    }
-
-    public SkeletonType getSkeletonType() {
-        return skeletonType;
-    }
-
-    public void setSkeletonType(SkeletonType skeletonType) {
-        this.skeletonType = skeletonType;
     }
 
     public String getDisplayName() {
