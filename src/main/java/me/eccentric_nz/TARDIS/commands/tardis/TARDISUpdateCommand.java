@@ -111,18 +111,22 @@ public class TARDISUpdateCommand {
                 TARDISMessage.send(player, "NO_PERM_TEMPORAL");
                 return true;
             }
-            if ((tardis_block.equals("farm") || tardis_block.equals("stable") || tardis_block.equals("village")) && !player.hasPermission("tardis.farm")) {
+            if ((tardis_block.equals("farm") || tardis_block.equals("stable") || tardis_block.equals("village") || tardis_block.equals("stall")) && !player.hasPermission("tardis.farm")) {
                 TARDISMessage.send(player, "UPDATE_NO_PERM", tardis_block);
                 return true;
             }
             // must grow a room first
-            if (tardis_block.equals("farm") || tardis_block.equals("stable") || tardis_block.equals("village") || tardis_block.equals("rail")) {
+            if (tardis_block.equals("farm") || tardis_block.equals("stable") || tardis_block.equals("village") || tardis_block.equals("rail") || tardis_block.equals("stall")) {
                 if (tardis_block.equals("farm") && tardis.getFarm().isEmpty()) {
                     TARDISMessage.send(player, "UPDATE_FARM");
                     return true;
                 }
                 if (tardis_block.equals("stable") && tardis.getStable().isEmpty()) {
                     TARDISMessage.send(player, "UPDATE_STABLE");
+                    return true;
+                }
+                if (tardis_block.equals("stall") && tardis.getStall().isEmpty()) {
+                    TARDISMessage.send(player, "UPDATE_STALL");
                     return true;
                 }
                 if (tardis_block.equals("village") && tardis.getVillage().isEmpty()) {

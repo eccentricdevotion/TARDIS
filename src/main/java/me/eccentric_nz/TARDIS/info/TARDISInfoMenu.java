@@ -188,6 +188,7 @@ public enum TARDISInfoMenu {
     RAIL("TIS|Rooms|Rail", "ROOMS", "R"),
     RENDERER("TIS|Rooms|External Renderer", "ROOMS", "x"),
     STABLE("TIS|Rooms|Stable", "ROOMS", "S"),
+    STALL("TIS|Rooms|Llama Stall", "ROOMS", "Ll"),
     TRENZALORE("TIS|Rooms|Trenzalore", "ROOMS", "T"),
     VAULT("TIS|Rooms|Vault", "ROOMS", "V"),
     VILLAGE("TIS|Rooms|Village", "ROOMS", "i"),
@@ -293,7 +294,8 @@ public enum TARDISInfoMenu {
     CONSOLE_RAIL("TIS|Manual|Console Blocks 2|Rails", "CONSOLE_BLOCKS_2", "R"), //R
     SAVE_SIGN("TIS|Manual|Console Blocks 2|Save Sign", "CONSOLE_BLOCKS_2", "S"), //S
     SCANNER("TIS|Manual|Console Blocks 2|Scanner", "CONSOLE_BLOCKS_2", "c"), //c
-    CONSOLE_STABLE("TIS|Manual|Console Blocks 2|Stable", "CONSOLE_BLOCKS_2", "t"), //t
+    CONSOLE_STABLE("TIS|Manual|Console Blocks 2|Stable", "CONSOLE_BLOCKS_2", "b"), //t
+    CONSOLE_STALL("TIS|Manual|Console Blocks 2|Stall", "CONSOLE_BLOCKS_2", "a"), //a
     TERMINAL("TIS|Manual|Console Blocks 2|Terminal", "CONSOLE_BLOCKS_2", "T"), //T
     TEMPORAL("TIS|Manual|Console Blocks 2|Temporal Locator", "CONSOLE_BLOCKS_2", "m"), //m
     WORLD_REPEATER("TIS|Manual|Console Blocks 2|World Repeater", "CONSOLE_BLOCKS_2", "W"), //W

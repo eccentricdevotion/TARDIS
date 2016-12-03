@@ -46,6 +46,7 @@ public enum TARDISARS implements ARS {
     RENDERER(172, "RENDERER", "Exterior Renderer", 1),
     SMELTER(54, "SMELTER", "Smelter", 1),
     STABLE(170, "STABLE", "Horse Stable", 1),
+    STALL(214, "STALL", "Llama Stall", 1),
     TRENZALORE(45, "TRENZALORE", "Trenzalore", 1),
     VAULT(23, "VAULT", "Storage Vault", 1),
     VILLAGE(17, "VILLAGE", "Village", 1),

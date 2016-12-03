@@ -124,7 +124,7 @@ public class TARDISRoomRemover {
                 }
             }
         }
-        if (r.equals("FARM") || r.equals("STABLE") || r.equals("RAIL") || r.equals("VILLAGE") || r.equals("RENDERER") || r.equals("HUTCH") || r.equals("IGLOO")) {
+        if (r.equals("FARM") || r.equals("STABLE") || r.equals("STALL") || r.equals("RAIL") || r.equals("VILLAGE") || r.equals("RENDERER") || r.equals("HUTCH") || r.equals("IGLOO")) {
             // remove stored location from the database
             HashMap<String, Object> set = new HashMap<String, Object>();
             set.put(r.toLowerCase(Locale.ENGLISH), "");

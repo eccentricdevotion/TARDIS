@@ -132,6 +132,12 @@ rooms:
     offset: -4
     seed: HAY_BLOCK
     user: false
+  STALL:
+    enabled: true
+    cost: 350
+    offset: -4
+    seed: NETHER_WART_BLOCK
+    user: false
   RAIL:
     enabled: true
     cost: 650

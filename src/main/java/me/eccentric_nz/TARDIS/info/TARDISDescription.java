@@ -119,6 +119,7 @@ public enum TARDISDescription {
     RAIL("You need this room to transport items into the TARDIS with a storgae minecart."),
     RENDERER("This room shows you the environment outside the TARDIS's current location."),
     STABLE("Giddyup, here come the horses..."),
+    STALL("Llamas, watch for spit!"),
     TRENZALORE("The final resting place of the Doctor."),
     VAULT("Some extra storage space."),
     VILLAGE("A home for the weary trader."),
@@ -213,6 +214,10 @@ public enum TARDISDescription {
     CONSOLE_STABLE(" INFO: Updates the block that horses spawn on when entering the TARDIS.\n"
             + "USAGE: Right-click the block that horses are to spawn on.\n"
             + "UPDATING: /tardis update stable\n"
+            + "BLOCK: any"),
+    CONSOLE_STALL(" INFO: Updates the block that llamas spawn on when entering the TARDIS.\n"
+            + "USAGE: Right-click the block that llamas are to spawn on.\n"
+            + "UPDATING: /tardis update stall\n"
             + "BLOCK: any"),
     STORAGE("The Disk Storage Container lets you store Storage Disks and Circuits.\n"
             + "USAGE: Right-click.\n"

@@ -81,6 +81,7 @@ public class TARDISUpdateLister {
         spawns.add(ChatColor.BLUE + "farm" + ChatColor.RESET + " - " + ChatColor.DARK_BLUE + "Farm room");
         spawns.add(ChatColor.BLUE + "rail" + ChatColor.RESET + " - " + ChatColor.DARK_BLUE + "Rail room");
         spawns.add(ChatColor.BLUE + "stable" + ChatColor.RESET + " - " + ChatColor.DARK_BLUE + "Stable room");
+        spawns.add(ChatColor.BLUE + "stall" + ChatColor.RESET + " - " + ChatColor.DARK_BLUE + "Llama stall room");
         spawns.add(ChatColor.BLUE + "village" + ChatColor.RESET + " - " + ChatColor.DARK_BLUE + "Village room");
         update_options.put("TARDIS Internal Spawn Locations", spawns);
         List<String> misc = new ArrayList<String>();
