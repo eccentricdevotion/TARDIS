@@ -2,12 +2,7 @@
 
 ##Current bugfix version `3.7-beta-1`
 1. Fix bugs!
-2. 1.11 updates
-   * New blocks - block colour lookup?
-3. Citizens support
-4. Check multiple custom consoles
 5. Add other worlds (Silurian cave world, Gallifrey)?
-6. Condenser records should be purged when deleting a TARDIS as the records are tied to the `tardis_id`
 7. Fix Biome adaptive presets dropping flowers & seeds
 8. `/tardisadmin undisperse [player]`
 
@@ -26,9 +21,10 @@
    * Mob farming / ejection events
 
 ##Resource Pack / TARDISWeepingAngels
-0. Rare armour drops
-1. Something with an invisible Shulker passenger - or an invisible bat with a Shulker passenger (Toclafane?)
-2. Re-skin mobs for Resource pack, and add new mob sounds
+1. Citizens support
+2. Rare armour drops
+3. Something with an invisible Shulker passenger - or an invisible bat with a Shulker passenger (Toclafane?)
+4. Re-skin mobs for Resource pack, and add new mob sounds
    * Villagers -> Ood - _started texture_
    * Villagers -> Hath
    * Endermen -> The Silence - _implemented, but texture needs to be finished_
