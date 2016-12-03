@@ -765,6 +765,7 @@ public class TARDISFarmer {
                         plugin.setTardisSpawn(true);
                         Entity llama = world.spawnEntity(llama_pen, EntityType.LLAMA);
                         Llama cria = (Llama) llama;
+                        cria.setColor(ll.getLlamacolor());
                         cria.setAge(ll.getAge());
                         if (ll.isBaby()) {
                             cria.setBaby();
