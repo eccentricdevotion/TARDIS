@@ -24,6 +24,7 @@ import org.bukkit.Material;
 import org.bukkit.entity.EntityType;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.inventory.meta.SpawnEggMeta;
 
 /**
  * The Genetic Manipulation Device was invented by Professor Richard Lazarus.
@@ -94,8 +95,9 @@ public class TARDISLazarusInventory {
         ItemStack[] eggs = new ItemStack[54];
         int i = 0;
         for (Map.Entry<String, EntityType> map : disguises.entrySet()) {
-            ItemStack egg = plugin.getTardisHelper().setSpawnEggType(new ItemStack(Material.MONSTER_EGG, 1), map.getValue());
-            ItemMeta ime = egg.getItemMeta();
+            ItemStack egg = new ItemStack(Material.MONSTER_EGG, 1);
+            SpawnEggMeta ime = (SpawnEggMeta) egg.getItemMeta();
+            ime.setSpawnedType(map.getValue());
             ime.setDisplayName(map.getKey());
             egg.setItemMeta(ime);
             eggs[i] = egg;

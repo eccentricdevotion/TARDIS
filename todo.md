@@ -2,6 +2,8 @@
 
 ##Current bugfix version `3.7-beta-1`
 1. Fix bugs!
+2. Eject Llamas
+3. Fix Lazarus Diguise Options button lore
 5. Add other worlds (Silurian cave world, Gallifrey)?
 7. Fix Biome adaptive presets dropping flowers & seeds
 

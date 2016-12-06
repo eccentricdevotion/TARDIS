@@ -57,6 +57,7 @@ import org.bukkit.entity.Villager;
 import org.bukkit.entity.Wolf;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.SpawnEggMeta;
 
 /**
  * Undefined Storage Holds make up most of a TARDIS's interior volume. Each Hold
@@ -617,23 +618,38 @@ public class TARDISFarmer {
                     // no farm, give the player spawn eggs
                     Inventory inv = p.getInventory();
                     if (old_macd_had_a_chicken.size() > 0) {
-                        ItemStack is = plugin.getTardisHelper().setSpawnEggType(new ItemStack(Material.MONSTER_EGG, old_macd_had_a_chicken.size()), EntityType.CHICKEN);
+                        ItemStack is = new ItemStack(Material.MONSTER_EGG, old_macd_had_a_chicken.size());
+                        SpawnEggMeta im = (SpawnEggMeta) is.getItemMeta();
+                        im.setSpawnedType(EntityType.CHICKEN);
+                        is.setItemMeta(im);
                         inv.addItem(is);
                     }
                     if (old_macd_had_a_cow.size() > 0) {
-                        ItemStack is = plugin.getTardisHelper().setSpawnEggType(new ItemStack(Material.MONSTER_EGG, old_macd_had_a_cow.size()), EntityType.COW);
+                        ItemStack is = new ItemStack(Material.MONSTER_EGG, old_macd_had_a_cow.size());
+                        SpawnEggMeta im = (SpawnEggMeta) is.getItemMeta();
+                        im.setSpawnedType(EntityType.COW);
+                        is.setItemMeta(im);
                         inv.addItem(is);
                     }
                     if (old_macd_had_a_pig.size() > 0) {
-                        ItemStack is = plugin.getTardisHelper().setSpawnEggType(new ItemStack(Material.MONSTER_EGG, old_macd_had_a_pig.size()), EntityType.PIG);
+                        ItemStack is = new ItemStack(Material.MONSTER_EGG, old_macd_had_a_pig.size());
+                        SpawnEggMeta im = (SpawnEggMeta) is.getItemMeta();
+                        im.setSpawnedType(EntityType.PIG);
+                        is.setItemMeta(im);
                         inv.addItem(is);
                     }
                     if (old_macd_had_a_sheep.size() > 0) {
-                        ItemStack is = plugin.getTardisHelper().setSpawnEggType(new ItemStack(Material.MONSTER_EGG, old_macd_had_a_sheep.size()), EntityType.SHEEP);
+                        ItemStack is = new ItemStack(Material.MONSTER_EGG, old_macd_had_a_sheep.size());
+                        SpawnEggMeta im = (SpawnEggMeta) is.getItemMeta();
+                        im.setSpawnedType(EntityType.SHEEP);
+                        is.setItemMeta(im);
                         inv.addItem(is);
                     }
                     if (old_macd_had_a_mooshroom.size() > 0) {
-                        ItemStack is = plugin.getTardisHelper().setSpawnEggType(new ItemStack(Material.MONSTER_EGG, old_macd_had_a_mooshroom.size()), EntityType.MUSHROOM_COW);
+                        ItemStack is = new ItemStack(Material.MONSTER_EGG, old_macd_had_a_mooshroom.size());
+                        SpawnEggMeta im = (SpawnEggMeta) is.getItemMeta();
+                        im.setSpawnedType(EntityType.MUSHROOM_COW);
+                        is.setItemMeta(im);
                         inv.addItem(is);
                     }
                     p.updateInventory();
@@ -744,7 +760,10 @@ public class TARDISFarmer {
                     }
                 } else if (plugin.getConfig().getBoolean("allow.spawn_eggs") && old_macd_had_a_horse.size() > 0) {
                     Inventory inv = p.getInventory();
-                    ItemStack is = plugin.getTardisHelper().setSpawnEggType(new ItemStack(Material.MONSTER_EGG, old_macd_had_a_horse.size()), EntityType.HORSE);
+                    ItemStack is = new ItemStack(Material.MONSTER_EGG, old_macd_had_a_horse.size());
+                    SpawnEggMeta im = (SpawnEggMeta) is.getItemMeta();
+                    im.setSpawnedType(EntityType.HORSE);
+                    is.setItemMeta(im);
                     inv.addItem(is);
                     p.updateInventory();
                 } else if (horsetotal > 0) {
@@ -807,7 +826,10 @@ public class TARDISFarmer {
                     }
                 } else if (plugin.getConfig().getBoolean("allow.spawn_eggs") && old_macd_had_a_llama.size() > 0) {
                     Inventory inv = p.getInventory();
-                    ItemStack is = plugin.getTardisHelper().setSpawnEggType(new ItemStack(Material.MONSTER_EGG, old_macd_had_a_llama.size()), EntityType.LLAMA);
+                    ItemStack is = new ItemStack(Material.MONSTER_EGG, old_macd_had_a_llama.size());
+                    SpawnEggMeta im = (SpawnEggMeta) is.getItemMeta();
+                    im.setSpawnedType(EntityType.LLAMA);
+                    is.setItemMeta(im);
                     inv.addItem(is);
                     p.updateInventory();
                 } else if (horsetotal > 0) {
@@ -841,7 +863,10 @@ public class TARDISFarmer {
                     }
                 } else if (plugin.getConfig().getBoolean("allow.spawn_eggs") && old_macd_had_a_rabbit.size() > 0) {
                     Inventory inv = p.getInventory();
-                    ItemStack is = plugin.getTardisHelper().setSpawnEggType(new ItemStack(Material.MONSTER_EGG, old_macd_had_a_rabbit.size()), EntityType.RABBIT);
+                    ItemStack is = new ItemStack(Material.MONSTER_EGG, old_macd_had_a_rabbit.size());
+                    SpawnEggMeta im = (SpawnEggMeta) is.getItemMeta();
+                    im.setSpawnedType(EntityType.RABBIT);
+                    is.setItemMeta(im);
                     inv.addItem(is);
                     p.updateInventory();
                 } else if (rabbittotal > 0) {
@@ -883,7 +908,10 @@ public class TARDISFarmer {
                     }
                 } else if (plugin.getConfig().getBoolean("allow.spawn_eggs") && old_macd_had_a_villager.size() > 0) {
                     Inventory inv = p.getInventory();
-                    ItemStack is = plugin.getTardisHelper().setSpawnEggType(new ItemStack(Material.MONSTER_EGG, old_macd_had_a_villager.size()), EntityType.VILLAGER);
+                    ItemStack is = new ItemStack(Material.MONSTER_EGG, old_macd_had_a_villager.size());
+                    SpawnEggMeta im = (SpawnEggMeta) is.getItemMeta();
+                    im.setSpawnedType(EntityType.VILLAGER);
+                    is.setItemMeta(im);
                     inv.addItem(is);
                     p.updateInventory();
                 } else if (villagertotal > 0) {
@@ -916,7 +944,10 @@ public class TARDISFarmer {
                     }
                 } else if (plugin.getConfig().getBoolean("allow.spawn_eggs") && old_macd_had_a_polarbear.size() > 0) {
                     Inventory inv = p.getInventory();
-                    ItemStack is = plugin.getTardisHelper().setSpawnEggType(new ItemStack(Material.MONSTER_EGG, old_macd_had_a_polarbear.size()), EntityType.POLAR_BEAR);
+                    ItemStack is = new ItemStack(Material.MONSTER_EGG, old_macd_had_a_polarbear.size());
+                    SpawnEggMeta im = (SpawnEggMeta) is.getItemMeta();
+                    im.setSpawnedType(EntityType.POLAR_BEAR);
+                    is.setItemMeta(im);
                     inv.addItem(is);
                     p.updateInventory();
                 } else if (beartotal > 0) {
