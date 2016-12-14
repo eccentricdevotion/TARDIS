@@ -16,10 +16,13 @@
  */
 package me.eccentric_nz.TARDIS.lazarus;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 import me.eccentric_nz.TARDIS.TARDIS;
+import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.EntityType;
 import org.bukkit.inventory.ItemStack;
@@ -145,7 +148,12 @@ public class TARDISLazarusInventory {
         ItemStack tamed = new ItemStack(Material.LEASH, 1);
         ItemMeta tf = tamed.getItemMeta();
         tf.setDisplayName(plugin.getLanguage().getString("BUTTON_OPTS"));
-        tf.setLore(Arrays.asList("FALSE"));
+        List<String> opts = new ArrayList<String>();
+        for (String o : plugin.getLanguage().getString("BUTTON_OPTS_LIST").split("/")) {
+            opts.add(ChatColor.ITALIC + o + ChatColor.RESET);
+        }
+        opts.add(ChatColor.RED + "FALSE");
+        tf.setLore(opts);
         tamed.setItemMeta(tf);
         eggs[49] = tamed;
         // add buttons

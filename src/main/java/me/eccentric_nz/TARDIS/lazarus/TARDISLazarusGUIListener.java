@@ -52,10 +52,12 @@ import me.libraryaddict.disguise.disguisetypes.watchers.SnowmanWatcher;
 import me.libraryaddict.disguise.disguisetypes.watchers.VillagerWatcher;
 import me.libraryaddict.disguise.disguisetypes.watchers.WolfWatcher;
 import me.libraryaddict.disguise.disguisetypes.watchers.ZombieVillagerWatcher;
+import org.bukkit.ChatColor;
 import org.bukkit.DyeColor;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
+import org.bukkit.entity.Llama;
 import org.bukkit.entity.Ocelot.Type;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Villager.Profession;
@@ -160,11 +162,14 @@ public class TARDISLazarusGUIListener extends TARDISMenuListener implements List
                     setSlotFourtyEight(inv, disguises.get(uuid), uuid);
                 }
             }
-            if (slot == 49) { // Tamed / Flying / Blazing / Powered / Agressive / Beaming : TRUE | FALSE
+            if (slot == 49) { // Tamed / Flying / Blazing / Powered / Beaming / Aggressive / Decorated / Chest carrying : TRUE | FALSE
                 ItemStack is = inv.getItem(slot);
                 ItemMeta im = is.getItemMeta();
-                String truefalse = (im.getLore().get(0).equals("FALSE")) ? "TRUE" : "FALSE";
-                im.setLore(Arrays.asList(truefalse));
+                List<String> lore = im.getLore();
+                int pos = lore.size() - 1;
+                String truefalse = (ChatColor.stripColor(lore.get(pos)).equals("FALSE")) ? ChatColor.GREEN + "TRUE" : ChatColor.RED + "FALSE";
+                lore.set(pos, truefalse);
+                im.setLore(lore);
                 is.setItemMeta(im);
             }
             if (slot == 51) { //remove disguise
@@ -557,11 +562,11 @@ public class TARDISLazarusGUIListener extends TARDISMenuListener implements List
         }
     }
 
-    private org.bukkit.entity.Llama.Color getLlamaColor(Inventory i) {
+    private Llama.Color getLlamaColor(Inventory i) {
         ItemStack is = i.getItem(48);
         ItemMeta im = is.getItemMeta();
         try {
-            return org.bukkit.entity.Llama.Color.valueOf(im.getLore().get(0));
+            return Llama.Color.valueOf(im.getLore().get(0));
         } catch (IllegalArgumentException e) {
             return org.bukkit.entity.Llama.Color.CREAMY;
         }
@@ -632,7 +637,9 @@ public class TARDISLazarusGUIListener extends TARDISMenuListener implements List
     private boolean getBoolean(Inventory i) {
         ItemStack is = i.getItem(49);
         ItemMeta im = is.getItemMeta();
-        return im.getLore().get(0).equals("TRUE");
+        List<String> lore = im.getLore();
+        int pos = lore.size() - 1;
+        return ChatColor.stripColor(lore.get(pos)).equals("TRUE");
     }
 
     private void twaOff(Player player) {
