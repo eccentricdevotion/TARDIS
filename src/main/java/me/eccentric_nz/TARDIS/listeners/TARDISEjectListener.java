@@ -20,15 +20,20 @@ import java.util.HashMap;
 import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
+import me.eccentric_nz.TARDIS.mobfarming.TARDISLlama;
 import me.eccentric_nz.TARDIS.travel.TARDISDoorLocation;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import org.bukkit.Location;
+import org.bukkit.Material;
 import org.bukkit.OfflinePlayer;
+import org.bukkit.entity.ChestedHorse;
 import org.bukkit.entity.Chicken;
 import org.bukkit.entity.Cow;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
+import org.bukkit.entity.LeashHitch;
 import org.bukkit.entity.LivingEntity;
+import org.bukkit.entity.Llama;
 import org.bukkit.entity.MushroomCow;
 import org.bukkit.entity.Ocelot;
 import org.bukkit.entity.Pig;
@@ -42,6 +47,8 @@ import org.bukkit.entity.Wolf;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerInteractEntityEvent;
+import org.bukkit.inventory.Inventory;
+import org.bukkit.inventory.ItemStack;
 
 /**
  *
@@ -148,7 +155,80 @@ public class TARDISEjectListener implements Listener {
                 TARDISMessage.send(player, "EJECT_HORSE");
                 break;
             case LLAMA:
-                // TODO eject llama
+                event.setCancelled(true);
+                Llama ll = (Llama) ent;
+                TARDISLlama tmlla = new TARDISLlama();
+                tmlla.setAge(ll.getAge());
+                tmlla.setBaby(!ll.isAdult());
+                tmlla.setHorseHealth(ll.getMaxHealth());
+                tmlla.setHealth(ll.getHealth());
+                // get horse colour, style and variant
+                tmlla.setLlamacolor(ll.getColor());
+                tmlla.setHorseVariant(EntityType.HORSE);
+                if (ll.isTamed()) {
+                    tmlla.setTamed(true);
+                } else {
+                    tmlla.setTamed(false);
+                }
+                if (ll.isCarryingChest()) {
+                    tmlla.setHasChest(true);
+                }
+                tmlla.setName(((LivingEntity) ll).getCustomName());
+                tmlla.setHorseInventory(ll.getInventory().getContents());
+                tmlla.setDomesticity(ll.getDomestication());
+                tmlla.setJumpStrength(ll.getJumpStrength());
+                if (plugin.isHelperOnServer()) {
+                    double speed = plugin.getTardisHelper().getHorseSpeed(ll);
+                    tmlla.setSpeed(speed);
+                }
+                // check the leash
+                if (ll.isLeashed()) {
+                    Entity leash = ll.getLeashHolder();
+                    tmlla.setLeashed(true);
+                    if (leash instanceof LeashHitch) {
+                        leash.remove();
+                    }
+                }
+                Llama llama = (Llama) l.getWorld().spawnEntity(l, EntityType.LLAMA);
+                llama.setColor(tmlla.getLlamacolor());
+                llama.setAge(tmlla.getAge());
+                if (tmlla.isBaby()) {
+                    llama.setBaby();
+                }
+                llama.setMaxHealth(tmlla.getHorseHealth());
+                llama.setHealth(tmlla.getHealth());
+                String name = tmlla.getName();
+                if (name != null && !name.isEmpty()) {
+                    llama.setCustomName(name);
+                }
+                Tameable tamed = (Tameable) llama;
+                if (tmlla.isTamed()) {
+                    tamed.setTamed(true);
+                    tamed.setOwner(player);
+                }
+                llama.setDomestication(tmlla.getDomesticity());
+                llama.setJumpStrength(tmlla.getJumpStrength());
+                if (tmlla.hasChest()) {
+                    ChestedHorse ch = (ChestedHorse) llama;
+                    ch.setCarryingChest(true);
+                }
+                Inventory inv = llama.getInventory();
+                inv.setContents(tmlla.getHorseinventory());
+                if (inv.contains(Material.CARPET)) {
+                    int carpet_slot = inv.first(Material.CARPET);
+                    ItemStack carpet = inv.getItem(carpet_slot);
+                    llama.getInventory().setDecor(carpet);
+                }
+                if (tmlla.isLeashed()) {
+                    Inventory pinv = player.getInventory();
+                    ItemStack leash = new ItemStack(Material.LEASH, 1);
+                    pinv.addItem(leash);
+                    player.updateInventory();
+                }
+                if (plugin.isHelperOnServer()) {
+                    plugin.getTardisHelper().setHorseSpeed(llama, tmlla.getSpeed());
+                }
+                ent.remove();
                 break;
             case MUSHROOM_COW:
                 MushroomCow m = (MushroomCow) ent;
