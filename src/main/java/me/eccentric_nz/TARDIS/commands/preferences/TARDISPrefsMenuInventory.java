@@ -240,7 +240,7 @@ public class TARDISPrefsMenuInventory {
         ItemStack tele = new ItemStack(Material.DIODE, 1);
         ItemMeta path = tele.getItemMeta();
         path.setDisplayName("Telepathic Circuit");
-        String tele_value = (rsp.isPoliceboxTexturesOn()) ? plugin.getLanguage().getString("SET_ON") : plugin.getLanguage().getString("SET_OFF");
+        String tele_value = (rsp.isTelepathyOn()) ? plugin.getLanguage().getString("SET_ON") : plugin.getLanguage().getString("SET_OFF");
         path.setLore(Arrays.asList(tele_value));
         tele.setItemMeta(path);
         options.add(tele);
