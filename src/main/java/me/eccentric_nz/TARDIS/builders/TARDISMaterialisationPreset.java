@@ -582,6 +582,17 @@ public class TARDISMaterialisationPreset implements Runnable {
                                     TARDISBlockSetters.setBlock(world, xx, (y + yy), zz, colids[yy], coldatas[yy]);
                                 }
                                 break;
+                            case 31:
+                            case 32:
+                            case 37:
+                            case 38:
+                            case 175:
+                                if (i == loops && (preset.equals(PRESET.GRAVESTONE) || preset.equals(PRESET.MESA) || preset.equals(PRESET.PLAINS) || preset.equals(PRESET.TAIGA))) {
+                                    TARDISBlockSetters.setBlock(world, xx, (y + yy), zz, colids[yy], coldatas[yy]);
+                                } else {
+                                    TARDISBlockSetters.setBlock(world, xx, (y + yy), zz, 0, (byte) 0);
+                                }
+                                break;
                             case 35: // wool
                                 byte chad = coldatas[yy];
                                 if (preset.equals(PRESET.PARTY) || (preset.equals(PRESET.FLOWER) && coldatas[yy] == 0)) {
@@ -593,11 +604,6 @@ public class TARDISMaterialisationPreset implements Runnable {
                                     TARDISBlockSetters.setBlock(world, xx, (y + yy), zz, 155, pillar);
                                 } else {
                                     TARDISBlockSetters.setBlock(world, xx, (y + yy), zz, colids[yy], chad);
-                                }
-                                break;
-                            case 38:
-                                if (i == loops && preset.equals(PRESET.GRAVESTONE)) {
-                                    TARDISBlockSetters.setBlock(world, xx, (y + yy), zz, colids[yy], coldatas[yy]);
                                 }
                                 break;
                             case 50: // lamps, glowstone and torches

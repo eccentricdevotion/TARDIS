@@ -252,7 +252,11 @@ public class TARDISDematerialisationPreset implements Runnable {
                                 }
                                 TARDISBlockSetters.setBlock(world, xx, (y + yy), zz, colids[yy], chad);
                                 break;
+                            case 31:
+                            case 32:
+                            case 37:
                             case 38:
+                            case 175:
                                 break;
                             case 50: // lamps, glowstone and torches
                             case 89:
