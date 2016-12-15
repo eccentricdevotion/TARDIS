@@ -215,7 +215,12 @@ public class TARDISJunkControlListener implements Listener {
                 TARDISMessage.send(p, "JUNK_LINES");
                 return;
             }
-            World w = plugin.getServer().getWorld(line1);
+            World w;
+            if (plugin.isMVOnServer()) {
+                w = plugin.getMVHelper().getWorld(line1);
+            } else {
+                w = plugin.getServer().getWorld(line1);
+            }
             int x = TARDISNumberParsers.parseInt(line2);
             int z = TARDISNumberParsers.parseInt(line3);
             // load the chunk
