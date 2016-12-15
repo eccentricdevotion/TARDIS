@@ -37,9 +37,9 @@ import me.libraryaddict.disguise.disguisetypes.RabbitType;
 import me.libraryaddict.disguise.disguisetypes.watchers.AgeableWatcher;
 import me.libraryaddict.disguise.disguisetypes.watchers.BatWatcher;
 import me.libraryaddict.disguise.disguisetypes.watchers.BlazeWatcher;
+import me.libraryaddict.disguise.disguisetypes.watchers.ChestedHorseWatcher;
 import me.libraryaddict.disguise.disguisetypes.watchers.CreeperWatcher;
 import me.libraryaddict.disguise.disguisetypes.watchers.EndermanWatcher;
-import me.libraryaddict.disguise.disguisetypes.watchers.HorseChestedWatcher;
 import me.libraryaddict.disguise.disguisetypes.watchers.HorseWatcher;
 import me.libraryaddict.disguise.disguisetypes.watchers.LivingWatcher;
 import me.libraryaddict.disguise.disguisetypes.watchers.LlamaWatcher;
@@ -287,7 +287,7 @@ public class TARDISLazarusGUIListener extends TARDISMenuListener implements List
                                     switch (dt) {
                                         case DONKEY:
                                         case MULE:
-                                            HorseChestedWatcher hcw = (HorseChestedWatcher) livingWatcher;
+                                            ChestedHorseWatcher hcw = (ChestedHorseWatcher) livingWatcher;
                                             hcw.setCarryingChest(getBoolean(inv));
                                             break;
                                         case SHEEP:
