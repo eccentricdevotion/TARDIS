@@ -28,14 +28,13 @@ import java.util.concurrent.ConcurrentHashMap;
 /**
  * Language - an enum of all language codes supported by the Microsoft
  * Translator API
- *
+ * <p>
  * Uses the AJAX Interface V2 - see:
  * http://msdn.microsoft.com/en-us/library/ff512399.aspx
  *
  * @author Jonathan Griggs <jonathan.griggs at gmail.com>
  */
 public enum Language {
-
     AUTO_DETECT(""),
     ARABIC("ar"),
     BULGARIAN("bg"),
@@ -87,7 +86,7 @@ public enum Language {
     /**
      * Internal Localized Name Cache
      */
-    private Map<Language, String> localizedCache = new ConcurrentHashMap<Language, String>();
+    private final Map<Language, String> localizedCache = new ConcurrentHashMap<Language, String>();
 
     /**
      * Enum constructor.
@@ -121,22 +120,18 @@ public enum Language {
         LanguageService.setKey(pKey);
     }
 
-    public static void setClientId(String pId) {
-        LanguageService.setClientId(pId);
-    }
-
-    public static void setClientSecret(String pSecret) {
-        LanguageService.setClientSecret(pSecret);
+    public static void setSubscriptionKey(String pSubscriptionKey) {
+        LanguageService.setSubscriptionKey(pSubscriptionKey);
     }
 
     /**
      * getName()
-     *
+     * <p>
      * Returns the name for this language in the tongue of the specified locale
-     *
+     * <p>
      * If the name is not cached, then it retrieves the name of ALL languages in
      * this locale. This is not bad behavior for 2 reasons:
-     *
+     * <p>
      * 1) We can make a reasonable assumption that the client will request the
      * name of another language in the same locale 2) The GetLanguageNames
      * service call expects an array and therefore we can retrieve ALL names in
@@ -176,12 +171,12 @@ public enum Language {
 
     /**
      * values(Language locale)
-     *
+     * <p>
      * Returns a map of all languages, keyed and sorted by the localized name in
      * the tongue of the specified locale
-     *
+     * <p>
      * It returns a map, sorted alphanumerically by the keys()
-     *
+     * <p>
      * Key: The localized language name Value: The Language instance
      *
      * @param locale The Language we should localize the Language names with

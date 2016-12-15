@@ -41,16 +41,17 @@ public final class BreakSentences extends MicrosoftTranslatorAPI {
     private BreakSentences() {
     }
 
-    ;
-	/**
-	 * Reports the number of sentences detected and the length of those sentences
-	 *
-	 * @param text The String to break into sentences
-	 * @param fromLang The Language of origin
-	 * @return an array of integers representing the size of each detected sentence
-	 * @throws Exception on error.
-	 */
-	public static Integer[] execute(final String text, final Language fromLang) throws Exception {
+    /**
+     * Reports the number of sentences detected and the length of those
+     * sentences
+     *
+     * @param text The String to break into sentences
+     * @param fromLang The Language of origin
+     * @return an array of integers representing the size of each detected
+     * sentence
+     * @throws Exception on error.
+     */
+    public static Integer[] execute(final String text, final Language fromLang) throws Exception {
         //Run the basic service validations first
         validateServiceState(text, fromLang);
         final URL url = new URL(SERVICE_URL

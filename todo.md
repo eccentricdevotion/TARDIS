@@ -3,7 +3,7 @@
 ##Current bugfix version `3.7-beta-1`
 1. Fix bugs!
 2. Add other worlds (Silurian cave world, Gallifrey)?
-3. Fix Biome adaptive presets dropping flowers & seeds
+3. Fix Biome adaptive presets dropping flowers & seeds (properly)
 
 ##Next minor version `3.8-beta-1`
 ?

@@ -76,8 +76,7 @@ public class TARDISSayCommand implements CommandExecutor {
             try {
                 Language to = Language.valueOf(lang);
                 Language from = Language.valueOf(preferedLang);
-                Translate.setClientId("TARDISforBukkit");
-                Translate.setClientSecret("+ziAoNOXlyGLTwLdhxi5bHrCuc6/0MUidZ4sz55xANE=");
+                Translate.setSubscriptionKey("5faaf2cc-abea-420c-a5dd-27fcf5d7ca0d");
                 try {
                     String translatedText = Translate.execute(whatToTranslate, from, to);
                     if (sender instanceof Player) {
@@ -88,6 +87,7 @@ public class TARDISSayCommand implements CommandExecutor {
                     return true;
                 } catch (Exception ex) {
                     plugin.debug("Could not get translation! " + ex);
+                    TARDISMessage.send(sender, "MS_UNAVAILABLE");
                 }
             } catch (IllegalArgumentException e) {
                 TARDISMessage.send(sender, "LANG_NOT_VALID");

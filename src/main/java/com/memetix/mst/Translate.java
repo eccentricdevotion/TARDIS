@@ -40,10 +40,9 @@ public final class Translate extends MicrosoftTranslatorAPI {
     private Translate() {
     }
 
-    ;
-
     /**
-     * Translates text from a given Language to another given Language using Microsoft Translator.
+     * Translates text from a given Language to another given Language using
+     * Microsoft Translator.
      *
      * @param text The String to translate.
      * @param from The language code to translate from.

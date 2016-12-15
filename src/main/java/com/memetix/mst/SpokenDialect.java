@@ -19,20 +19,19 @@ package com.memetix.mst;
 
 import java.net.URL;
 import java.net.URLEncoder;
+import java.util.EnumMap;
 import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * SpokenLanguage - an enum of all spoken language codes supported by the
  * Microsoft Translator API for the Speak Service
- *
+ * <p>
  * Uses the AJAX Interface V2 - see:
  * http://msdn.microsoft.com/en-us/library/ff512399.aspx
  *
  * @author Jonathan Griggs <jonathan.griggs at gmail.com>
  */
 public enum SpokenDialect {
-
     CATALAN_SPAIN("ca-es"),
     DANISH_DENMARK("da-dk"),
     GERMAN_GERMANY("de-de"),
@@ -68,7 +67,7 @@ public enum SpokenDialect {
     /**
      * Internal Localized Name Cache
      */
-    private Map<Language, String> localizedCache = new ConcurrentHashMap<Language, String>();
+    private final Map<Language, String> localizedCache = new EnumMap<Language, String>(Language.class);
 
     /**
      * Enum constructor.
@@ -102,22 +101,18 @@ public enum SpokenDialect {
         SpokenDialectService.setKey(pKey);
     }
 
-    public static void setClientId(String pId) {
-        SpokenDialectService.setClientId(pId);
-    }
-
-    public static void setClientSecret(String pSecret) {
-        SpokenDialectService.setClientSecret(pSecret);
+    public static void setSubscriptionKey(String pSubscriptionKey) {
+        SpokenDialectService.setSubscriptionKey(pSubscriptionKey);
     }
 
     /**
      * getName()
-     *
+     * <p>
      * Returns the name for this language in the tongue of the specified locale
-     *
+     * <p>
      * If the name is not cached, then it retrieves the name of ALL languages in
      * this locale. This is not bad behavior for 2 reasons:
-     *
+     * <p>
      * 1) We can make a reasonable assumption that the client will request the
      * name of another language in the same locale 2) The GetLanguageNames
      * service call expects an array and therefore we can retrieve ALL names in
