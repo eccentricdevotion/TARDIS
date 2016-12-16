@@ -32,6 +32,77 @@
     <section>
         <h1>Change log</h1>
         <h2>What&rsquo;s been changed?</h2>
+        <h3>TARDIS v3.7</h3>
+        <h4>Additions</h4>
+        <ul>
+            <li>Updated for Spigot 1.11
+                <ul>
+                    <li>Added new blocks</li>
+                    <li>Added new mobs</li>
+                </ul>
+            </li>
+            <li>Added more biome adaptive presets</li>
+            <li>Added new Chameleon Circuit GUI &mdash; see <a href="http://eccentricdevotion.github.io/TARDIS/chameleon-circuit.html">http://eccentricdevotion.github.io/TARDIS/chameleon-circuit.html</a></li>
+            <li>Added the ability to archive a TARDIS console
+                <ul>
+                    <li><code>/tardis archive</code> command</li>
+                    <li>TARDIS Archive GUI (can be accessed from the Desktop Theme GUI)</li>
+                    <li>Added 3 different sized cobblestone template consoles</li>
+                    <li>See <a href="http://eccentricdevotion.github.io/TARDIS/archive.html">http://eccentricdevotion.github.io/TARDIS/archive.html</a></li>
+                </ul>
+            </li>
+            <li>Added room costs to the ARS GUI</li>
+            <li>Added a <code>/tardis construct [line] [text with colour codes]</code> command to set the text on the TARDIS&rsquo; exterior sign (when using the CONSTRUCT preset)</li>
+            <li>Added a SMELTER room</li>
+            <li>Added a Llama STALL room</li>
+            <li>Added a <code>/tardisadmin repair [player] [number]</code> command</li>
+            <li>Added clean &amp; repair buttons to the Desktop Theme GUI</li>
+            <li>Added an admin command <code>/tardisadmin set_size [player] [size]</code></li>
+            <li>Add Polar Bears and Llamas to <code>/tardis eject</code> command</li>
+            <li>Added a companions menu button to control panel</li>
+        </ul>
+        <h4>Changes</h4>
+        <ul>
+            <li>Removed the <code>/tardis chameleon</code> commands</li>
+            <li>Converted NEW / OLD preset TARDISes with non blue wool walls to CONSTRUCT presets (due to new Chameleon Circuit GUI functioanlity)</li>
+            <li>The default preset for new installs is now set to FACTORY on TARDIS creation</li>
+            <li>TARDIS seed blocks no longer have a Chameleon or lamp block (use the Chameleon Construct GUI)</li>
+            <li>Use save-disks when in Junk Mode on <code>hard</code> difficulty</li>
+            <li>Use Multiverse world name alias if available</li>
+            <li>Changed the jettison permission to <code>tardis.jettison</code></li>
+            <li>Allow rebuilding to the INVISIBLE preset if the previous preset was visible</li>
+            <li>You can no longer use biome travel in the Skaro world</li>
+            <li>Improved the SQLite to MySQL database converter</li>
+            <li>To access TARDISWeepingAngels monsters in the Genetic Manipulator, trigger the pressure plate while sneaking</li>
+            <li>Condenser records are now purged when deleting a TARDIS (as the records are tied to the <code>tardis_id</code>)</li>
+            <li>Updated the Universal Translator to use new Microsoft Azure Portal</li>
+        </ul>
+        <h4>Bugfixes</h4>
+        <ul>
+            <li>Fixed ridiculously slow Ender Dragon movement</li>
+            <li>Fixed companion anti-build</li>
+            <li>Update the WorldGuard region when claiming an abandoned TARDIS</li>
+            <li>Fixed timeout problems with the cave finder feature</li>
+            <li>Fixed ENDER console entry in TARDIS Information System</li>
+            <li>Fixed breaking BEACON blocks</li>
+            <li>Fixed the handbrake not being able to be engaged if the Invisibility Circuit is engaged while floating in the vortex</li>
+            <li>Check the player has condensed blocks for all rooms</li>
+            <li>Fixed the RAIL room dropping items before teleporting the cart</li>
+            <li>Disallow the <code>/tardis comehere</code> command while the TARDIS is materialising</li>
+            <li>Prevent un-sieging in excluded worlds</li>
+            <li>Fixed the TARDIS umbrella being added twice and not being removed</li>
+            <li>Fixed wrong stained glass colour in dematerialisation animation</li>
+            <li>Fixed being able to jettison the console in the ARS GUI</li>
+            <li>Fixed Siege Mode block not appearing</li>
+            <li>Fixed setting the Universal Translator language preference</li>
+            <li>Fixed opening player inventories with the Admin Sonic</li>
+            <li>Fixed the permission for bypassing acid damage</li>
+            <li>Don&rsquo;t go into an endless loop if the TARDIS console beacon has been moved / removed</li>
+            <li>Fixed skeletons not spawning in the nether</li>
+            <li>Fixed the SQLite to MySQL database converter</li>
+            <li>Fixed most seeds and flowers dropping from Biome presets</li>
+            <li>Lots of other small bugfixes...</li>
+        </ul>
         <h3>TARDIS v3.6.2</h3>
         <h4>Additions</h4>
         <ul>
@@ -43,7 +114,7 @@
         </ul>
         <h4>Bug fixes</h4>
         <ul>
-            <li>Fixed breaking BEACON blocks when they weren't Rift Manipulators</li>
+            <li>Fixed breaking BEACON blocks when they weren&rsquo;t Rift Manipulators</li>
             <li>Fixed setting invisibility while drifting in vortex breaking the handbrake</li>
         </ul>
         <h3>TARDIS v3.6.1</h3>
@@ -55,7 +126,7 @@
         <ul>
             <li>Falling in to the Time Vortex in TARDIS worlds now uses the <code>preferences.vortex_fall</code> config option regardless of whether the player was kicked.</li>
             <li>The plugin now allows the <code>/tardis make_her_blue</code> command to turn off Junk Mode</li>
-            <li>When claiming an abandoned TARDIS the WorldGuard region is updated with the the claiming player's UUID</li>
+            <li>When claiming an abandoned TARDIS the WorldGuard region is updated with the the claiming player&rsquo;s UUID</li>
             <li>When the plugin difficulty is set to hard, you can now use Save Storage Disks to set the Junk Mode destination</li>
         </ul>
         <h4>Bug fixes</h4>
