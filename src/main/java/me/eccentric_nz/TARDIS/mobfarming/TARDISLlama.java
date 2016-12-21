@@ -29,6 +29,7 @@ import org.bukkit.entity.Llama;
 public class TARDISLlama extends TARDISHorse {
 
     private Llama.Color llamacolor;
+    private int strength;
 
     /**
      * Data storage class for TARDIS Llama.
@@ -42,5 +43,13 @@ public class TARDISLlama extends TARDISHorse {
 
     public void setLlamacolor(Llama.Color llamacolor) {
         this.llamacolor = llamacolor;
+    }
+
+    public int getStrength() {
+        return strength;
+    }
+
+    public void setStrength(int strength) {
+        this.strength = strength;
     }
 }

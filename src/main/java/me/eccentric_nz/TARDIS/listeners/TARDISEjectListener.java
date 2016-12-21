@@ -164,6 +164,7 @@ public class TARDISEjectListener implements Listener {
                 tmlla.setHealth(ll.getHealth());
                 // get horse colour, style and variant
                 tmlla.setLlamacolor(ll.getColor());
+                tmlla.setStrength(ll.getStrength());
                 tmlla.setHorseVariant(EntityType.HORSE);
                 if (ll.isTamed()) {
                     tmlla.setTamed(true);
@@ -191,6 +192,7 @@ public class TARDISEjectListener implements Listener {
                 }
                 Llama llama = (Llama) l.getWorld().spawnEntity(l, EntityType.LLAMA);
                 llama.setColor(tmlla.getLlamacolor());
+                llama.setStrength(tmlla.getStrength());
                 llama.setAge(tmlla.getAge());
                 if (tmlla.isBaby()) {
                     llama.setBaby();

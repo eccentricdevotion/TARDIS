@@ -321,6 +321,7 @@ public class TARDISFarmer {
                             tmlla.setHealth(llama.getHealth());
                             // get horse colour, style and variant
                             tmlla.setLlamacolor(llama.getColor());
+                            tmlla.setStrength(llama.getStrength());
                             tmlla.setHorseVariant(EntityType.HORSE);
                             if (ll_brokenin.isTamed()) {
                                 tmlla.setTamed(true);
@@ -785,6 +786,7 @@ public class TARDISFarmer {
                         Entity llama = world.spawnEntity(llama_pen, EntityType.LLAMA);
                         Llama cria = (Llama) llama;
                         cria.setColor(ll.getLlamacolor());
+                        cria.setStrength(ll.getStrength());
                         cria.setAge(ll.getAge());
                         if (ll.isBaby()) {
                             cria.setBaby();
@@ -832,7 +834,7 @@ public class TARDISFarmer {
                     is.setItemMeta(im);
                     inv.addItem(is);
                     p.updateInventory();
-                } else if (horsetotal > 0) {
+                } else if (llamatotal > 0) {
                     TARDISMessage.send(p, "FARM_STALL");
                 }
                 if (!hutch.isEmpty() && old_macd_had_a_rabbit.size() > 0) {
