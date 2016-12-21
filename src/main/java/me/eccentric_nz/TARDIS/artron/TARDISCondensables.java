@@ -189,6 +189,7 @@ public class TARDISCondensables {
             condensables.put("IRON_HOE", 22);
             condensables.put("IRON_INGOT", 22);
             condensables.put("IRON_LEGGINGS", 44);
+            condensables.put("IRON_NUGGET", 3);
             condensables.put("IRON_PICKAXE", 26);
             condensables.put("IRON_PLATE", 44);
             condensables.put("IRON_SPADE", 26);
