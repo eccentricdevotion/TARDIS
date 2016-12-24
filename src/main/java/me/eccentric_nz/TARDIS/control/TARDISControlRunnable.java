@@ -57,9 +57,9 @@ public class TARDISControlRunnable implements Runnable {
                                     sign.setLine(1, ChatColor.DARK_PURPLE + "time vortex...");
                                     sign.setLine(2, "");
                                 } else {
-                                    String worldname = rsc.getWorld();
-                                    if (plugin.isMVOnServer()) {
-                                        worldname = plugin.getMVHelper().getAlias(rsc.getWorld());
+                                    String worldname = (rsc.getWorld() != null) ? rsc.getWorld() : "";
+                                    if (plugin.isMVOnServer() && !worldname.equals("")) {
+                                        worldname = plugin.getMVHelper().getAlias(worldname);
                                     }
                                     sign.setLine(0, ChatColor.DARK_PURPLE + worldname);
                                     sign.setLine(1, rsc.getLocation());
