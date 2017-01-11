@@ -19,6 +19,9 @@ package me.eccentric_nz.TARDIS.utility;
 import me.eccentric_nz.TARDIS.TARDIS;
 import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
+import org.bukkit.entity.Bat;
+import org.bukkit.entity.Entity;
+import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
@@ -72,7 +75,16 @@ public class TARDISPerceptionFilter {
 
     public void addPerceptionFilter(Player player) {
         perceptionFilter.addEntry(player.getName());
-        player.addPotionEffect(new PotionEffect(PotionEffectType.INVISIBILITY, Integer.MAX_VALUE, 15));
+        player.addPotionEffect(new PotionEffect(PotionEffectType.INVISIBILITY, Integer.MAX_VALUE, 15, true, false));
+        Bat bat = (Bat) player.getWorld().spawnEntity(player.getLocation(), EntityType.BAT);
+        bat.setInvulnerable(true);
+        bat.setSilent(true);
+        bat.addPotionEffect(new PotionEffect(PotionEffectType.INVISIBILITY, Integer.MAX_VALUE, 2, true, false));
+        try {
+            player.addPassenger(bat);
+        } catch (Exception e) {
+            player.setPassenger(bat);
+        }
     }
 
     public void addPlayer(Player player) {
@@ -84,6 +96,18 @@ public class TARDISPerceptionFilter {
     public void removePerceptionFilter(Player player) {
         if (player.hasPotionEffect(PotionEffectType.INVISIBILITY)) {
             player.removePotionEffect(PotionEffectType.INVISIBILITY);
+            try {
+                for (Entity e : player.getPassengers()) {
+                    if (e.getType().equals(EntityType.BAT) && ((Bat) e).hasPotionEffect(PotionEffectType.INVISIBILITY)) {
+                        player.removePassenger(e);
+                    }
+                }
+            } catch (Exception e) {
+                Entity passenger = player.getPassenger();
+                if (passenger != null) {
+                    player.removePassenger(passenger);
+                }
+            }
         }
     }
 }
