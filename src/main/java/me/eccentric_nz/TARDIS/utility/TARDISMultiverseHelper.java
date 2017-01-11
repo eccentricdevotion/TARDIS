@@ -18,6 +18,7 @@ package me.eccentric_nz.TARDIS.utility;
 
 import com.onarandombox.MultiverseCore.MultiverseCore;
 import com.onarandombox.MultiverseCore.api.MultiverseWorld;
+import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.Location;
 import org.bukkit.World;
@@ -41,8 +42,12 @@ public class TARDISMultiverseHelper {
     }
 
     public String getAlias(String world) {
-        MultiverseWorld mvw = mvc.getMVWorldManager().getMVWorld(world);
-        return mvw.getAlias();
+        if (Bukkit.getWorld(world) != null) {
+            MultiverseWorld mvw = mvc.getMVWorldManager().getMVWorld(world);
+            return mvw.getAlias();
+        } else {
+            return world;
+        }
     }
 
     public void setSpawnLocation(World world, int x, int y, int z) {
