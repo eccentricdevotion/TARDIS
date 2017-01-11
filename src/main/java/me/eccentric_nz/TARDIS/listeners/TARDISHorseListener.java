@@ -191,7 +191,11 @@ public class TARDISHorseListener implements Listener {
                             plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
                                 @Override
                                 public void run() {
-                                    equine.setPassenger(p);
+                                    try {
+                                        equine.addPassenger(p);
+                                    } catch (Exception e) {
+                                        equine.setPassenger(p);
+                                    }
                                 }
                             }, 10L);
                         }

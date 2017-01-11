@@ -135,8 +135,14 @@ public class TARDISMonsterRunnable implements Runnable {
                                         case ENDERMAN:
                                             Enderman enderman = (Enderman) e;
                                             tm.setCarried(enderman.getCarriedMaterial());
-                                            if (twa && e.getPassenger() != null && e.getPassenger().getType().equals(EntityType.GUARDIAN)) {
-                                                dn = "Silent";
+                                            try {
+                                                if (twa && e.getPassengers().size() > 0 && e.getPassengers().get(0).getType().equals(EntityType.GUARDIAN)) {
+                                                    dn = "Silent";
+                                                }
+                                            } catch (Exception ex) {
+                                                if (twa && e.getPassenger() != null && e.getPassenger().getType().equals(EntityType.GUARDIAN)) {
+                                                    dn = "Silent";
+                                                }
                                             }
                                             break;
                                         case PIG_ZOMBIE:
@@ -203,8 +209,14 @@ public class TARDISMonsterRunnable implements Runnable {
                                     tm.setAge(e.getTicksLived());
                                     tm.setHealth(((LivingEntity) e).getHealth());
                                     tm.setName(((LivingEntity) e).getCustomName());
-                                    if (e.getPassenger() != null) {
-                                        tm.setPassenger(e.getPassenger().getType());
+                                    try {
+                                        if (e.getPassengers().size() > 0) {
+                                            tm.setPassenger(e.getPassengers().get(0).getType());
+                                        }
+                                    } catch (Exception ex) {
+                                        if (e.getPassenger() != null) {
+                                            tm.setPassenger(e.getPassenger().getType());
+                                        }
                                     }
                                     moveMonster(map.getValue(), tm, e, type.equals(EntityType.GUARDIAN));
                                 }
@@ -429,7 +441,11 @@ public class TARDISMonsterRunnable implements Runnable {
                     TARDISAngelsAPI.getAPI(plugin).setSilentEquipment((LivingEntity) ent);
                 } else {
                     Entity passenger = loc.getWorld().spawnEntity(loc, m.getPassenger());
-                    ent.setPassenger(passenger);
+                    try {
+                        ent.addPassenger(passenger);
+                    } catch (Exception ex) {
+                        ent.setPassenger(passenger);
+                    }
                 }
             }
         }
