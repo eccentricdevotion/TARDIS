@@ -218,7 +218,7 @@ public class TARDIS extends JavaPlugin {
         plugin = this;
         console = getServer().getConsoleSender();
         Version bukkitversion = getServerVersion(getServer().getVersion());
-        Version minversion = new Version("1.11.1");
+        Version minversion = new Version("1.11.2");
         // check CraftBukkit version
         if (bukkitversion.compareTo(minversion) >= 0) {
             // check for WorldBorder class
@@ -395,7 +395,7 @@ public class TARDIS extends JavaPlugin {
             startRecorderTask();
             getServer().getScheduler().scheduleSyncRepeatingTask(this, new TARDISControlRunnable(this), 200L, 200L);
         } else {
-            console.sendMessage(pluginName + ChatColor.RED + "This plugin requires CraftBukkit/Spigot " + minversion + " or higher, disabling...");
+            console.sendMessage(pluginName + ChatColor.RED + "This plugin requires CraftBukkit/Spigot " + minversion.toString() + " or higher, disabling...");
             pm.disablePlugin(this);
         }
     }
