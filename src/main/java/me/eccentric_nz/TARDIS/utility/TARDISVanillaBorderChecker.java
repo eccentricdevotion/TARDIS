@@ -46,6 +46,7 @@ public class TARDISVanillaBorderChecker {
         double maxZ = centre.getBlockZ() + size;
         double x = l.getX();
         double z = l.getZ();
+//        return border.isInside(l);
         return (x > minX && x < maxX && z > minZ && z < maxZ);
     }
 }
