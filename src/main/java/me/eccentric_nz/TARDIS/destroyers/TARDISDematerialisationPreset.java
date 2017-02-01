@@ -360,15 +360,19 @@ public class TARDISDematerialisationPreset implements Runnable {
         where.put("door_type", 0);
         ResultSetDoors rs = new ResultSetDoors(plugin, where, false);
         if (rs.resultSet()) {
-            Block b = TARDISLocationGetters.getLocationFromDB(rs.getDoor_location(), 0.0F, 0.0F).getBlock();
-            if (p.equals(PRESET.FLOWER)) {
-                return b.getRelative(BlockFace.UP, 3).getData();
-            } else {
-                for (BlockFace f : plugin.getGeneralKeeper().getFaces()) {
-                    if (b.getRelative(f).getType().equals(Material.WOOL)) {
-                        return b.getRelative(f).getData();
+            try {
+                Block b = TARDISLocationGetters.getLocationFromDB(rs.getDoor_location(), 0.0F, 0.0F).getBlock();
+                if (p.equals(PRESET.FLOWER)) {
+                    return b.getRelative(BlockFace.UP, 3).getData();
+                } else {
+                    for (BlockFace f : plugin.getGeneralKeeper().getFaces()) {
+                        if (b.getRelative(f).getType().equals(Material.WOOL)) {
+                            return b.getRelative(f).getData();
+                        }
                     }
                 }
+            } catch (Exception e) {
+                return (byte) 0;
             }
         }
         return (byte) 0;
