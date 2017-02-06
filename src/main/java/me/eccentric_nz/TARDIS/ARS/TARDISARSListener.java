@@ -276,7 +276,8 @@ public class TARDISARSListener extends TARDISARSMethods implements Listener {
                 return true;
             }
         }
-        return false;
+        String console = Material.getMaterial(prior).toString();
+        return consoleBlocks.contains(console);
     }
 
     /**
