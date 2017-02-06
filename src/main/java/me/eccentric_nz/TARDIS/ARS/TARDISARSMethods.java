@@ -569,8 +569,17 @@ public class TARDISARSMethods {
         return false;
     }
 
-    public boolean checkSlotForConsole(Inventory inv, int slot) {
+    public boolean checkSlotForConsole(Inventory inv, int slot, String uuid) {
         Material m = inv.getItem(slot).getType();
+        if (m.equals(Material.NETHER_BRICK)) {
+            // allow only if console is not MASTER
+            HashMap<String, Object> where = new HashMap<String, Object>();
+            where.put("uuid", uuid);
+            ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false, 0);
+            if (rs.resultSet() && !rs.getTardis().getSchematic().getSeed().equals("NETHER_BRICK")) {
+                return false;
+            }
+        }
         return (consoleBlocks.contains(m.toString()));
     }
 

@@ -51,7 +51,7 @@ public enum TARDISARS implements ARS {
     VAULT(23, "VAULT", "Storage Vault", 1),
     VILLAGE(17, "VILLAGE", "Village", 1),
     WOOD(5, "WOOD", "Wood Secondary Console", 1),
-    WORKSHOP(112, "WORKSHOP", "Workshop", 1),
+    WORKSHOP(215, "WORKSHOP", "Workshop", 1),
     ZERO(2, "ZERO", "Zero Room", 0),
     JETTISON(46, "JETTISON", "Jettison", 0),
     SLOT(1, "SLOT", "Empty slot", 0);

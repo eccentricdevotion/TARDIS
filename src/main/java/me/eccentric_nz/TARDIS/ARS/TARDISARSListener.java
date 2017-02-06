@@ -107,7 +107,7 @@ public class TARDISARSListener extends TARDISARSMethods implements Listener {
                     case 42:
                     case 43:
                     case 44:
-                        if (!checkSlotForConsole(inv, slot)) {
+                        if (!checkSlotForConsole(inv, slot, uuid.toString())) {
                             // select slot
                             selected_slot.put(uuid, slot);
                         }
