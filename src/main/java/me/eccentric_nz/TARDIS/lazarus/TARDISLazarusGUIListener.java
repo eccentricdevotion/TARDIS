@@ -375,7 +375,7 @@ public class TARDISLazarusGUIListener extends TARDISMenuListener implements List
                                             break;
                                         case SNOWMAN:
                                             SnowmanWatcher snw = (SnowmanWatcher) livingWatcher;
-                                            snw.setHat(snowmen.get(uuid));
+                                            snw.setDerp(!snowmen.get(uuid));
                                             break;
                                         default:
                                             break;
