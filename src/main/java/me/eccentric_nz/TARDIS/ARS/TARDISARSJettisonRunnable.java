@@ -17,6 +17,7 @@
 package me.eccentric_nz.TARDIS.ARS;
 
 import java.util.HashMap;
+import java.util.Locale;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
@@ -112,6 +113,14 @@ public class TARDISARSJettisonRunnable implements Runnable {
                 qf.doUpdate("tardis", setd, where);
                 // remove WorldGuard protection
                 plugin.getWorldGuardUtils().removeRoomRegion(w, p.getName(), "renderer");
+            }
+            // remove mob farming locations
+            if (r.equals("FARM") || r.equals("HUTCH") || r.equals("IGLOO") || r.equals("RAIL") || r.equals("STABLE") || r.equals("STALL") || r.equals("VILLAGE")) {
+                HashMap<String, Object> wheref = new HashMap<String, Object>();
+                wheref.put("tardis_id", id);
+                HashMap<String, Object> setf = new HashMap<String, Object>();
+                setf.put(r.toLowerCase(Locale.ENGLISH), "");
+                qf.doUpdate("tardis", setf, wheref);
             }
         }
     }
