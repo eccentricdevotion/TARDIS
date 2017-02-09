@@ -607,7 +607,7 @@ public class TARDISFullThemeRunnable extends TARDISThemeRunnable {
                     ender = world.getBlockAt(x, y, z).getLocation().add(0.5d, 4d, 0.5d);
                 }
                 // if it's an iron/gold/diamond/emerald/beacon/redstone block put it in the blocks table
-                if (TARDISBuilderInstanceKeeper.getPrecious().contains(type) && type.equals(Material.BEDROCK)) {
+                if (TARDISBuilderInstanceKeeper.getPrecious().contains(type) || type.equals(Material.BEDROCK)) {
                     HashMap<String, Object> setpb = new HashMap<String, Object>();
                     String loc = TARDISLocationGetters.makeLocationStr(world, x, y, z);
                     setpb.put("tardis_id", id);
