@@ -631,7 +631,7 @@ public class TARDISMaterialisationPreset implements Runnable {
                                 break;
                             case 69:
                                 // remember this block and do at end
-                                if (preset.equals(PRESET.JUNK_MODE)) {
+                                if (preset.equals(PRESET.JUNK_MODE) || preset.equals(PRESET.TOILET)) {
                                     // remember its location
                                     handbrake = world.getBlockAt(xx, (y + yy), zz);
                                     h_data = coldatas[yy];
@@ -701,7 +701,7 @@ public class TARDISMaterialisationPreset implements Runnable {
                     }
                 }
             } else {
-                if (preset.equals(PRESET.JUNK_MODE)) {
+                if (preset.equals(PRESET.JUNK_MODE) || preset.equals(PRESET.TOILET)) {
                     handbrake.setType(Material.LEVER);
                     handbrake.setData(h_data);
                     // remember its location
