@@ -213,7 +213,7 @@ public class TARDISMonsterRunnable implements Runnable {
                                         if (e.getPassengers().size() > 0) {
                                             tm.setPassenger(e.getPassengers().get(0).getType());
                                         }
-                                    } catch (Exception ex) {
+                                    } catch (NoSuchMethodError ex) {
                                         if (e.getPassenger() != null) {
                                             tm.setPassenger(e.getPassenger().getType());
                                         }
