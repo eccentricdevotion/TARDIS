@@ -27,6 +27,7 @@ import me.eccentric_nz.TARDIS.database.ResultSetTravellers;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
 import me.eccentric_nz.TARDIS.enumeration.FLAG;
+import me.eccentric_nz.TARDIS.flight.TARDISLand;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
@@ -56,13 +57,12 @@ public class TARDISRescue {
      * @param player The Time Lord
      * @param saved The player to be rescued
      * @param id The TARDIS unique ID
-     * @param tt an instance of the TARDISTimeTravel class
      * @param d the direction the Police Box is facing
      * @param rescue whether to rescue the player
      * @param request whether this is a travel to player request
      * @return true or false
      */
-    public boolean rescue(Player player, UUID saved, int id, TARDISTimeTravel tt, COMPASS d, boolean rescue, boolean request) {
+    public boolean rescue(Player player, UUID saved, int id, COMPASS d, boolean rescue, boolean request) {
         if (plugin.getServer().getPlayer(saved) == null) {
             TARDISMessage.send(player, "NOT_ONLINE");
             return false;
@@ -80,9 +80,9 @@ public class TARDISRescue {
             return false;
         }
         World w = player_loc.getWorld();
-        int[] start_loc = tt.getStartLocation(player_loc, d);
+        int[] start_loc = TARDISTimeTravel.getStartLocation(player_loc, d);
         int move = (rescue) ? 0 : 3;
-        int count = tt.safeLocation(start_loc[0] - move, player_loc.getBlockY(), start_loc[2], start_loc[1] - move, start_loc[3], w, d);
+        int count = TARDISTimeTravel.safeLocation(start_loc[0] - move, player_loc.getBlockY(), start_loc[2], start_loc[1] - move, start_loc[3], w, d);
         if (count > 0) {
             TARDISMessage.send(player, "RESCUE_NOT_SAFE");
             return false;
@@ -100,6 +100,9 @@ public class TARDISRescue {
         qf.doSyncUpdate("next", set, where);
         if (!rescue) {
             TARDISMessage.send(player, "RESCUE_SET", !plugin.getTrackerKeeper().getDestinationVortex().containsKey(id));
+            if (plugin.getTrackerKeeper().getDestinationVortex().containsKey(id)) {
+                new TARDISLand(plugin, id, player).exitVortex();
+            }
         }
         plugin.getTrackerKeeper().getHasDestination().put(id, plugin.getArtronConfig().getInt("travel"));
         if (rescue) {
@@ -118,7 +121,6 @@ public class TARDISRescue {
      */
     public RescueData tryRescue(Player player, UUID saved, boolean request) {
         if (player.hasPermission("tardis.timetravel") && !(player.hasPermission("tardis.exile") && plugin.getConfig().getBoolean("travel.exile"))) {
-            TARDISTimeTravel tt = new TARDISTimeTravel(plugin);
             // get tardis data
             HashMap<String, Object> where = new HashMap<String, Object>();
             where.put("uuid", player.getUniqueId().toString());
@@ -159,7 +161,7 @@ public class TARDISRescue {
                 TARDISMessage.send(player, "CURRENT_NOT_FOUND");
                 return new RescueData(false, 0);
             }
-            return new RescueData(rescue(player, saved, id, tt, rsc.getDirection(), !request, request), id);
+            return new RescueData(rescue(player, saved, id, rsc.getDirection(), !request, request), id);
         } else {
             return new RescueData(false, 0);
         }
