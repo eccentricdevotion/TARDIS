@@ -913,6 +913,10 @@ public class TARDISTravelCommands implements CommandExecutor {
     }
 
     private int checkLocation(Location location, Player player, int id, TARDISTimeTravel tt) {
+        if (location.getWorld().getEnvironment().equals(Environment.NETHER) && location.getY() > 127) {
+            TARDISMessage.send(player, "TRAVEL_NETHER");
+            return 1;
+        }
         if (!plugin.getTardisArea().areaCheckInExisting(location)) {
             TARDISMessage.send(player, "TRAVEL_IN_AREA", ChatColor.AQUA + "/tardistravel area [area name]");
             return 1;
