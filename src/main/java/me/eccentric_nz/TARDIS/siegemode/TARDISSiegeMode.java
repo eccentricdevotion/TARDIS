@@ -148,6 +148,11 @@ public class TARDISSiegeMode {
             }
             TARDISMessage.send(p, "SIEGE_OFF");
         } else {
+            // make sure TARDIS is not dispersed
+            if (plugin.getTrackerKeeper().getDispersedTARDII().contains(id) || plugin.getTrackerKeeper().getInVortex().contains(id)) {
+                TARDISMessage.send(p, "NOT_WHILE_DISPERSED");
+                return;
+            }
             // destroy tardis
             final DestroyData dd = new DestroyData(plugin, p.getUniqueId().toString());
             dd.setDirection(rsc.getDirection());
