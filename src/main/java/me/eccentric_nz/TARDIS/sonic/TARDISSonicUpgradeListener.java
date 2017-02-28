@@ -75,7 +75,7 @@ public class TARDISSonicUpgradeListener implements Listener {
         // upgrades are all shapeless so only check those
         if (recipe instanceof ShapelessRecipe) {
             // if the recipe result is the same type of material as the sonic screwdriver
-            if (is.getType().equals(sonicMaterial) && is.hasItemMeta()) {
+            if (is != null && is.getType().equals(sonicMaterial) && is.hasItemMeta()) {
                 ItemMeta im = is.getItemMeta();
                 // get the upgrade
                 String upgrade = im.getDisplayName();

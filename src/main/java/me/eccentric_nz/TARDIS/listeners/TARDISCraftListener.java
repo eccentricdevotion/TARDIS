@@ -24,6 +24,7 @@ import java.util.Locale;
 import java.util.UUID;
 import java.util.logging.Level;
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.enumeration.CONSOLES;
 import me.eccentric_nz.TARDIS.enumeration.DISK_CIRCUIT;
 import me.eccentric_nz.TARDIS.enumeration.SCHEMATIC;
@@ -240,6 +241,21 @@ public class TARDISCraftListener implements Listener {
     public void onCraftTARDISItem(PrepareItemCraftEvent event) {
         Recipe recipe = event.getRecipe();
         ItemStack is = recipe.getResult();
+        if (is.getType().equals(Material.AIR)) {
+            CraftingInventory ci = event.getInventory();
+            // get first map
+            int slot = ci.first(Material.MAP);
+            if (slot != -1) {
+                ItemStack map = ci.getItem(slot);
+                if (map.hasItemMeta() && map.getItemMeta().hasDisplayName() && TARDISConstants.CIRCUITS.contains(map.getItemMeta().getDisplayName())) {
+                    // disallow cloning
+                    if (ci.first(Material.EMPTY_MAP) != -1) {
+                        ci.setResult(null);
+                        return;
+                    }
+                }
+            }
+        }
         if (is.hasItemMeta() && is.getItemMeta().hasDisplayName()) {
             String dn = is.getItemMeta().getDisplayName();
             CraftingInventory ci = event.getInventory();
