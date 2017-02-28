@@ -65,7 +65,7 @@ public class TARDISHorseListener implements Listener {
     public void onInteract(EntityInteractEvent event) {
         Entity e = event.getEntity();
         if (e instanceof AbstractHorse && !(e instanceof Llama)) {
-            Horse h = (Horse) e;
+            AbstractHorse h = (AbstractHorse) e;
             Material m = event.getBlock().getType();
             Entity passenger = h.getPassenger();
             if (passenger != null && m.equals(Material.WOOD_PLATE)) {
@@ -112,8 +112,9 @@ public class TARDISHorseListener implements Listener {
                         tmhor.setAge(h.getTicksLived());
                         tmhor.setBaby(!h.isAdult());
                         if (e.getType().equals(EntityType.HORSE)) {
-                            tmhor.setHorseColour(h.getColor());
-                            tmhor.setHorseStyle(h.getStyle());
+                            Horse hh = (Horse) e;
+                            tmhor.setHorseColour(hh.getColor());
+                            tmhor.setHorseStyle(hh.getStyle());
                         }
                         tmhor.setHorseVariant(e.getType());
                         tmhor.setName(((LivingEntity) h).getCustomName());
@@ -143,12 +144,8 @@ public class TARDISHorseListener implements Listener {
                                 world.getChunkAt(l).load();
                             }
                             Entity ent = world.spawnEntity(l, tmhor.getHorseVariant());
-                            final Horse equine = (Horse) ent;
+                            final AbstractHorse equine = (AbstractHorse) ent;
                             equine.setAge(tmhor.getAge());
-                            if (tmhor.getHorseVariant().equals(EntityType.HORSE)) {
-                                equine.setColor(tmhor.getHorseColour());
-                                equine.setStyle(tmhor.getHorseStyle());
-                            }
                             equine.setDomestication(tmhor.getDomesticity());
                             equine.setJumpStrength(tmhor.getJumpStrength());
                             String name = tmhor.getName();
@@ -163,16 +160,21 @@ public class TARDISHorseListener implements Listener {
                             equine.setHealth(tmhor.getHealth());
                             Inventory inv = equine.getInventory();
                             inv.setContents(tmhor.getHorseinventory());
-                            if (inv.contains(Material.SADDLE)) {
-                                int saddle_slot = inv.first(Material.SADDLE);
-                                ItemStack saddle = inv.getItem(saddle_slot);
-                                equine.getInventory().setSaddle(saddle);
-                            }
-                            for (Material mat : barding) {
-                                if (inv.contains(mat)) {
-                                    int armour_slot = inv.first(mat);
-                                    ItemStack bard = inv.getItem(armour_slot);
-                                    equine.getInventory().setArmor(bard);
+                            if (tmhor.getHorseVariant().equals(EntityType.HORSE) || tmhor.getHorseVariant().equals(EntityType.DONKEY) || tmhor.getHorseVariant().equals(EntityType.MULE)) {
+                                Horse ee = (Horse) equine;
+                                ee.setColor(tmhor.getHorseColour());
+                                ee.setStyle(tmhor.getHorseStyle());
+                                if (inv.contains(Material.SADDLE)) {
+                                    int saddle_slot = inv.first(Material.SADDLE);
+                                    ItemStack saddle = inv.getItem(saddle_slot);
+                                    ee.getInventory().setSaddle(saddle);
+                                }
+                                for (Material mat : barding) {
+                                    if (inv.contains(mat)) {
+                                        int armour_slot = inv.first(mat);
+                                        ItemStack bard = inv.getItem(armour_slot);
+                                        ee.getInventory().setArmor(bard);
+                                    }
                                 }
                             }
                             if (plugin.isHelperOnServer()) {
