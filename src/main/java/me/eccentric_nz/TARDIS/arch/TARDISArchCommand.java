@@ -16,7 +16,6 @@
  */
 package me.eccentric_nz.TARDIS.arch;
 
-import java.util.ArrayList;
 import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
@@ -58,7 +57,7 @@ public class TARDISArchCommand {
     }
 
     public boolean whois(CommandSender sender, String[] args) {
-        for (Player p : new ArrayList<Player>(plugin.getServer().getOnlinePlayers())) {
+        for (Player p : plugin.getServer().getOnlinePlayers()) {
             if (ChatColor.stripColor(p.getPlayerListName()).equalsIgnoreCase(args[1])) {
                 TARDISMessage.send(sender, "ARCH_PLAYER", p.getName());
                 return true;

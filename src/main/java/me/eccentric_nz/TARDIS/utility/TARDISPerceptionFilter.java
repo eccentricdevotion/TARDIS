@@ -72,6 +72,9 @@ public class TARDISPerceptionFilter {
 
     public void addPerceptionFilter(Player player) {
         perceptionFilter.addEntry(player.getName());
+        for (Player olp : plugin.getServer().getOnlinePlayers()) {
+            addPlayer(olp);
+        }
         player.addPotionEffect(new PotionEffect(PotionEffectType.INVISIBILITY, Integer.MAX_VALUE, 15));
     }
 
