@@ -332,7 +332,7 @@
         <dependency>
             <groupId>LibsDisguises</groupId>
             <artifactId>LibsDisguises</artifactId>
-            <version>9.2.4-SNAPSHOT</version>
+            <version>9.3.0</version>
             <type>jar</type>
             <scope>system</scope>
             <systemPath>${basedir}/lib/LibsDisguises.jar</systemPath>
