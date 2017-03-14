@@ -879,7 +879,7 @@ public class TARDIS extends JavaPlugin {
      * @return The server specified texture pack.
      */
     public String getServerTP() {
-        String link = "https://dl.dropboxusercontent.com/u/53758864/Minecraft_Default.zip";
+        String link = "https://www.dropbox.com/s/utka3zxmer7f19g/Default.zip?dl=1";
         FileInputStream in = null;
         try {
             Properties properties = new Properties();

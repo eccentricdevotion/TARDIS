@@ -1,10 +1,10 @@
 switch_resource_packs: false
 set_pack_on_join: true
-default_resource_pack: https://dl.dropboxusercontent.com/u/53758864/rp/Default.zip
+default_resource_pack: https://www.dropbox.com/s/utka3zxmer7f19g/Default.zip?dl=1
 planets:
     Skaro:
         enabled: false
-        resource_pack: https://dl.dropboxusercontent.com/u/53758864/rp/Skaro.zip
+        resource_pack: https://www.dropbox.com/s/nr93rhbiyw2s5d0/Skaro.zip?dl=1
         acid: true
         acid_damage: 5
         acid_potions:

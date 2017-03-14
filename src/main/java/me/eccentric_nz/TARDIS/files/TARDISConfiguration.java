@@ -876,8 +876,20 @@ public class TARDISConfiguration {
     }
 
     public void checkPlanetsConfig() {
+        boolean save = false;
         if (!planets_config.contains("planets.Skaro.flying_daleks")) {
             planets_config.set("planets.Skaro.flying_daleks", true);
+            save = true;
+        }
+        if (planets_config.contains("default_resource_pack") && planets_config.getString("default_resource_pack").equalsIgnoreCase("https://dl.dropboxusercontent.com/u/53758864/rp/Default.zip")) {
+            planets_config.set("default_resource_pack", "https://www.dropbox.com/s/utka3zxmer7f19g/Default.zip?dl=1");
+            save = true;
+        }
+        if (planets_config.contains("planets.Skaro.resource_pack") && planets_config.getString("planets.Skaro.resource_pack").equalsIgnoreCase("https://dl.dropboxusercontent.com/u/53758864/rp/Skaro.zip")) {
+            planets_config.set("planets.Skaro.resource_pack", "https://www.dropbox.com/s/nr93rhbiyw2s5d0/Skaro.zip?dl=1");
+            save = true;
+        }
+        if (save) {
             try {
                 String planetsPath = plugin.getDataFolder() + File.separator + "planets.yml";
                 planets_config.save(new File(planetsPath));
