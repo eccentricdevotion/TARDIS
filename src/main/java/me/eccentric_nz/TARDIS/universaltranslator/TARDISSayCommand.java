@@ -16,8 +16,8 @@
  */
 package me.eccentric_nz.TARDIS.universaltranslator;
 
-import com.memetix.mst.Language;
-import com.memetix.mst.Translate;
+import com.rmtheis.yandtran.translate.Language;
+import com.rmtheis.yandtran.translate.Translate;
 import java.util.HashMap;
 import java.util.Locale;
 import me.eccentric_nz.TARDIS.TARDIS;
@@ -58,13 +58,15 @@ public class TARDISSayCommand implements CommandExecutor {
                 TARDISMessage.send(sender, "TOO_FEW_ARGS");
                 return false;
             }
-            String preferedLang = "AUTO_DETECT";
+            String preferedLang = "ENGLISH";
             HashMap<String, Object> where = new HashMap<String, Object>();
             if (sender instanceof Player) {
                 where.put("uuid", ((Player) sender).getUniqueId().toString());
                 ResultSetPlayerPrefs rs = new ResultSetPlayerPrefs(plugin, where);
                 if (rs.resultSet() && !rs.getLanguage().isEmpty()) {
-                    preferedLang = rs.getLanguage();
+                    if (!rs.getLanguage().equalsIgnoreCase("AUTO_DETECT")) {
+                        preferedLang = rs.getLanguage();
+                    }
                 }
             }
             StringBuilder sb = new StringBuilder();
@@ -76,7 +78,7 @@ public class TARDISSayCommand implements CommandExecutor {
             try {
                 Language to = Language.valueOf(lang);
                 Language from = Language.valueOf(preferedLang);
-                Translate.setSubscriptionKey("5faaf2cc-abea-420c-a5dd-27fcf5d7ca0d");
+                Translate.setKey("trnsl.1.1.20170312T202552Z.b0bd3c7ce48fe120.8d084aec9ae76b8d17b7882cd3026202c61ee7e0");
                 try {
                     String translatedText = Translate.execute(whatToTranslate, from, to);
                     if (sender instanceof Player) {
@@ -87,7 +89,7 @@ public class TARDISSayCommand implements CommandExecutor {
                     return true;
                 } catch (Exception ex) {
                     plugin.debug("Could not get translation! " + ex);
-                    TARDISMessage.send(sender, "MS_UNAVAILABLE");
+                    TARDISMessage.send(sender, "YT_UNAVAILABLE");
                 }
             } catch (IllegalArgumentException e) {
                 TARDISMessage.send(sender, "LANG_NOT_VALID");

@@ -85,7 +85,7 @@ public class TARDISSQLiteDatabaseUpdater {
         prefsupdates.add("hads_type TEXT DEFAULT 'DISPLACEMENT'");
         prefsupdates.add("hum TEXT DEFAULT ''");
         prefsupdates.add("key TEXT DEFAULT ''");
-        prefsupdates.add("language TEXT DEFAULT 'AUTO_DETECT'");
+        prefsupdates.add("language TEXT DEFAULT 'ENGLISH'");
         prefsupdates.add("lanterns_on INTEGER DEFAULT 0");
         prefsupdates.add("minecart_on INTEGER DEFAULT 0");
         prefsupdates.add("policebox_textures_on INTEGER DEFAULT 1");

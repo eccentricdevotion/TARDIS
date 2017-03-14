@@ -78,7 +78,7 @@ public class TARDISMySQLDatabaseUpdater {
         prefsupdates.add("flying_mode int(1) DEFAULT '1'");
         prefsupdates.add("hads_type varchar(12) DEFAULT 'DISPLACEMENT'");
         prefsupdates.add("hum varchar(24) DEFAULT ''");
-        prefsupdates.add("language varchar(32) DEFAULT 'AUTO_DETECT'");
+        prefsupdates.add("language varchar(32) DEFAULT 'ENGLISH'");
         prefsupdates.add("lanterns_on int(1) DEFAULT '0'");
         prefsupdates.add("minecart_on int(1) DEFAULT '0'");
         prefsupdates.add("policebox_textures_on int(1) DEFAULT '1'");

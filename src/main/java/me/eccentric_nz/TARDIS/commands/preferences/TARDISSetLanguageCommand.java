@@ -16,7 +16,7 @@
  */
 package me.eccentric_nz.TARDIS.commands.preferences;
 
-import com.memetix.mst.Language;
+import com.rmtheis.yandtran.translate.Language;
 import java.util.HashMap;
 import java.util.Locale;
 import static me.eccentric_nz.TARDIS.commands.preferences.TARDISPrefsCommands.ucfirst;
@@ -36,15 +36,16 @@ public class TARDISSetLanguageCommand {
             TARDISMessage.send(player, "PREF_NEED", pref);
             return false;
         }
+        String l = args[1].toUpperCase(Locale.ENGLISH);
         Language lang;
         try {
-            lang = Language.valueOf(args[1].toUpperCase(Locale.ENGLISH));
+            lang = Language.valueOf(l);
         } catch (IllegalArgumentException e) {
             TARDISMessage.send(player, "LANG_NOT_VALID");
             return true;
         }
         HashMap<String, Object> setl = new HashMap<String, Object>();
-        setl.put(pref, args[1].toUpperCase(Locale.ENGLISH));
+        setl.put(pref, l);
         HashMap<String, Object> where = new HashMap<String, Object>();
         where.put("uuid", player.getUniqueId().toString());
         qf.doUpdate("player_prefs", setl, where);
