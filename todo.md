@@ -4,6 +4,7 @@
 1. Fix bugs!
 2. Add other worlds (Silurian cave world, Gallifrey)?
 3. Fix Biome adaptive presets dropping flowers & seeds (properly)
+4. Add original old consoles to desktop themes
 
 ##Next minor version `3.8-beta-1`
 ?

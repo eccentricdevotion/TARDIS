@@ -542,6 +542,7 @@ public class TARDISConfiguration {
         checkRoomsConfig();
         checkSignsConfig();
         checkChameleonConfig();
+        checkPlanetsConfig();
         plugin.saveConfig();
     }
 
