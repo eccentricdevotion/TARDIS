@@ -49,7 +49,8 @@ public class TARDISSmelterListener implements Listener {
             for (ItemStack is : inv.getContents()) {
                 if (is != null) {
                     Material m = is.getType();
-                    if (Smelter.isFuel(m)) {
+//                    if (Smelter.isFuel(m)) {
+                    if (m.isFuel()) {
                         int amount = (fuels.containsKey(m)) ? fuels.get(m) + is.getAmount() : is.getAmount();
                         fuels.put(m, amount);
                         inv.remove(is);

@@ -87,6 +87,8 @@ public class Smelter {
             case SAND:
             case SMOOTH_BRICK:
             case SPONGE:
+                // available in minecraft 1.12
+//            case STAINED_CLAY:
                 return true;
             default:
                 return false;
@@ -140,27 +142,27 @@ public class Smelter {
             case WOOD_STEP:
             case WOOD_SWORD:
             case WORKBENCH:
-                // available in Minecraft 1.11
-//            case ACACIA_DOOR_ITEM:
-//            case BIRCH_DOOR_ITEM:
-//            case BOAT:
-//            case BOAT_ACACIA:
-//            case BOAT_BIRCH:
-//            case BOAT_DARK_OAK:
-//            case BOAT_JUNGLE:
-//            case BOAT_SPRUCE:
-//            case BOW:
-//            case BOWL:
-//            case CARPET:
-//            case DARK_OAK_DOOR_ITEM:
-//            case FISHING_ROD:
-//            case JUNGLE_DOOR_ITEM:
-//            case LADDER:
-//            case SIGN:
-//            case SPRUCE_DOOR_ITEM:
-//            case WOOD_BUTTON:
-//            case WOOD_DOOR:
-//            case WOOL:
+            // available in Minecraft 1.11.x
+            case ACACIA_DOOR_ITEM:
+            case BIRCH_DOOR_ITEM:
+            case BOAT:
+            case BOAT_ACACIA:
+            case BOAT_BIRCH:
+            case BOAT_DARK_OAK:
+            case BOAT_JUNGLE:
+            case BOAT_SPRUCE:
+            case BOW:
+            case BOWL:
+            case CARPET:
+            case DARK_OAK_DOOR_ITEM:
+            case FISHING_ROD:
+            case JUNGLE_DOOR_ITEM:
+            case LADDER:
+            case SIGN:
+            case SPRUCE_DOOR_ITEM:
+            case WOOD_BUTTON:
+            case WOOD_DOOR:
+            case WOOL:
                 return true;
             default:
                 return false;
