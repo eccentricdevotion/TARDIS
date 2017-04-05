@@ -260,7 +260,7 @@
         <dependency>
             <groupId>me.gnat008.perworldinventory</groupId>
             <artifactId>PerWorldInventory</artifactId>
-            <version>1.9.1</version>
+            <version>1.10.0</version>
             <type>jar</type>
             <scope>system</scope>
             <systemPath>${basedir}/lib/PerWorldInventory.jar</systemPath>
