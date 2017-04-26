@@ -26,6 +26,7 @@ import com.griefcraft.lwc.LWCPlugin;
 import java.util.Arrays;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
+import me.eccentric_nz.TARDIS.utility.TARDISTownyChecker;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
@@ -85,6 +86,9 @@ public class TARDISSonicSorterListener implements Listener {
                             if (!lwc.canAccessProtection(player, block)) {
                                 allow = false;
                             }
+                        }
+                        if (plugin.getPM().isPluginEnabled("Towny")) {
+                            allow = new TARDISTownyChecker(plugin, true).checkTowny(player, block.getLocation());
                         }
                         if (allow) {
                             sortInventory(inventory, 0, inventory.getSize());
