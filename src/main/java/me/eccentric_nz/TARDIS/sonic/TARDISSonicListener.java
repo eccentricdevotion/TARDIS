@@ -38,6 +38,7 @@ import me.eccentric_nz.TARDIS.utility.TARDISGriefPreventionChecker;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import me.eccentric_nz.TARDIS.utility.TARDISSounds;
 import me.eccentric_nz.TARDIS.utility.TARDISStaticUtils;
+import me.eccentric_nz.TARDIS.utility.TARDISTownyChecker;
 import me.eccentric_nz.TARDIS.utility.TARDISVector3D;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
@@ -296,6 +297,10 @@ public class TARDISSonicListener implements Listener {
                         this.scan(b.getLocation(), player);
                     }
                     if (redstone.contains(b.getType()) && player.hasPermission("tardis.sonic.redstone") && lore != null && lore.contains("Redstone Upgrade")) {
+                        // not protected blocks - WorldGuard / GriefPrevention / Lockette / LWC / Towny
+                        if (checkBlockRespect(player, b)) {
+                            return;
+                        }
                         playSonicSound(player, now, 600L, "sonic_short");
                         Material blockType = b.getType();
                         BlockState bs = b.getState();
@@ -325,10 +330,6 @@ public class TARDISSonicListener implements Listener {
                                 wheredoor.put("door_location", doorloc);
                                 ResultSetDoors rsd = new ResultSetDoors(plugin, wheredoor, false);
                                 if (rsd.resultSet()) {
-                                    return;
-                                }
-                                // not protected doors - WorldGuard / GriefPrevention / Lockette / LWC
-                                if (checkBlockRespect(player, tmp)) {
                                     return;
                                 }
                                 if (!plugin.getTrackerKeeper().getSonicDoors().contains(player.getUniqueId())) {
@@ -456,12 +457,17 @@ public class TARDISSonicListener implements Listener {
                             this.ignite(b, player);
                         }
                         if (diamond.contains(b.getType()) && player.hasPermission("tardis.sonic.diamond") && lore != null && lore.contains("Diamond Upgrade")) {
-                            // check the block is not protected by WorldGuard
-                            if (plugin.isWorldGuardOnServer()) {
-                                if (!plugin.getWorldGuardUtils().canBreakBlock(player, b)) {
-                                    TARDISMessage.send(player, "SONIC_PROTECT");
-                                    return;
-                                }
+//                            // check the block is not protected by WorldGuard
+//                            if (plugin.isWorldGuardOnServer()) {
+//                                if (!plugin.getWorldGuardUtils().canBreakBlock(player, b)) {
+//                                    TARDISMessage.send(player, "SONIC_PROTECT");
+//                                    return;
+//                                }
+//                            }
+                            // not protected blocks - WorldGuard / GriefPrevention / Lockette / LWC / Towny
+                            if (checkBlockRespect(player, b)) {
+                                TARDISMessage.send(player, "SONIC_PROTECT");
+                                return;
                             }
                             playSonicSound(player, now, 600L, "sonic_short");
                             // drop appropriate material
@@ -520,12 +526,17 @@ public class TARDISSonicListener implements Listener {
                             TARDISMessage.send(player, "UPDATE_IN_WORLD");
                             return;
                         }
-                        // check the block is not protected by WorldGuard
-                        if (plugin.isWorldGuardOnServer()) {
-                            if (!plugin.getWorldGuardUtils().canBreakBlock(player, b)) {
-                                TARDISMessage.send(player, "SONIC_PROTECT");
-                                return;
-                            }
+//                        // check the block is not protected by WorldGuard
+//                        if (plugin.isWorldGuardOnServer()) {
+//                            if (!plugin.getWorldGuardUtils().canBreakBlock(player, b)) {
+//                                TARDISMessage.send(player, "SONIC_PROTECT");
+//                                return;
+//                            }
+//                        }
+                        // not protected blocks - WorldGuard / GriefPrevention / Lockette / LWC / Towny
+                        if (checkBlockRespect(player, b)) {
+                            TARDISMessage.send(player, "SONIC_PROTECT");
+                            return;
                         }
                         playSonicSound(player, now, 600L, "sonic_short");
                         // check for dye in slot
@@ -692,12 +703,35 @@ public class TARDISSonicListener implements Listener {
         }, 60L);
         // get weather
         final String weather;
-        if (biome.equals(Biome.DESERT) || biome.equals(Biome.DESERT_HILLS) || biome.equals(Biome.MUTATED_DESERT) || biome.equals(Biome.SAVANNA) || biome.equals(Biome.SAVANNA_ROCK) || biome.equals(Biome.MUTATED_SAVANNA) || biome.equals(Biome.MUTATED_SAVANNA_ROCK) || biome.equals(Biome.MESA) || biome.equals(Biome.MUTATED_MESA) || biome.equals(Biome.MUTATED_MESA_CLEAR_ROCK) || biome.equals(Biome.MUTATED_MESA_ROCK) || biome.equals(Biome.MESA_ROCK) || biome.equals(Biome.MESA_CLEAR_ROCK)) {
-            weather = plugin.getLanguage().getString("WEATHER_DRY");
-        } else if (biome.equals(Biome.ICE_FLATS) || biome.equals(Biome.MUTATED_ICE_FLATS) || biome.equals(Biome.FROZEN_OCEAN) || biome.equals(Biome.FROZEN_RIVER) || biome.equals(Biome.COLD_BEACH) || biome.equals(Biome.TAIGA_COLD) || biome.equals(Biome.TAIGA_COLD_HILLS) || biome.equals(Biome.MUTATED_TAIGA_COLD)) {
-            weather = (scan_loc.getWorld().hasStorm()) ? plugin.getLanguage().getString("WEATHER_SNOW") : plugin.getLanguage().getString("WEATHER_COLD");
-        } else {
-            weather = (scan_loc.getWorld().hasStorm()) ? plugin.getLanguage().getString("WEATHER_RAIN") : plugin.getLanguage().getString("WEATHER_CLEAR");
+        switch (biome) {
+            case DESERT:
+            case DESERT_HILLS:
+            case MUTATED_DESERT:
+            case SAVANNA:
+            case SAVANNA_ROCK:
+            case MUTATED_SAVANNA:
+            case MUTATED_SAVANNA_ROCK:
+            case MESA:
+            case MUTATED_MESA:
+            case MUTATED_MESA_CLEAR_ROCK:
+            case MUTATED_MESA_ROCK:
+            case MESA_ROCK:
+            case MESA_CLEAR_ROCK:
+                weather = plugin.getLanguage().getString("WEATHER_DRY");
+                break;
+            case ICE_FLATS:
+            case MUTATED_ICE_FLATS:
+            case FROZEN_OCEAN:
+            case FROZEN_RIVER:
+            case COLD_BEACH:
+            case TAIGA_COLD:
+            case TAIGA_COLD_HILLS:
+            case MUTATED_TAIGA_COLD:
+                weather = (scan_loc.getWorld().hasStorm()) ? plugin.getLanguage().getString("WEATHER_SNOW") : plugin.getLanguage().getString("WEATHER_COLD");
+                break;
+            default:
+                weather = (scan_loc.getWorld().hasStorm()) ? plugin.getLanguage().getString("WEATHER_RAIN") : plugin.getLanguage().getString("WEATHER_CLEAR");
+                break;
         }
         bsched.scheduleSyncDelayedTask(plugin, new Runnable() {
             @Override
@@ -883,6 +917,7 @@ public class TARDISSonicListener implements Listener {
         boolean wgu = false;
         boolean lke = false;
         boolean lch = false;
+        boolean tny = false;
         // GriefPrevention
         if (plugin.getPM().isPluginEnabled("GriefPrevention")) {
             gpr = new TARDISGriefPreventionChecker(plugin, true).isInClaim(p, b.getLocation());
@@ -902,6 +937,10 @@ public class TARDISSonicListener implements Listener {
             LWC lwc = lwcplug.getLWC();
             lch = !lwc.canAccessProtection(p, b);
         }
-        return (gpr || wgu || lke || lch);
+        // Towny
+        if (plugin.getPM().isPluginEnabled("Towny")) {
+            tny = new TARDISTownyChecker(plugin, true).checkTowny(p, b.getLocation());
+        }
+        return (gpr || wgu || lke || lch || tny);
     }
 }
