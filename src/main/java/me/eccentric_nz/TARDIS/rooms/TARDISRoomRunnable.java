@@ -356,6 +356,13 @@ public class TARDISRoomRunnable implements Runnable {
                 // replace with floor material
                 type = (floor_type.equals(Material.WOOL) && floor_data == 8 && plugin.getConfig().getBoolean("creation.use_clay")) ? Material.STAINED_CLAY : floor_type;
                 data = floor_data;
+                // update player prefs - turn on mob farming
+                HashMap<String, Object> setpp = new HashMap<String, Object>();
+                setpp.put("farm_on", 1);
+                HashMap<String, Object> wherepp = new HashMap<String, Object>();
+                wherepp.put("uuid", p.getUniqueId().toString());
+                qf.doUpdate("player_prefs", setpp, wherepp);
+                TARDISMessage.send(p, "PREF_WAS_ON", "Mob farming");
             }
             // set lazarus
             if (type.equals(Material.WOOD_PLATE) && room.equals("LAZARUS")) {
