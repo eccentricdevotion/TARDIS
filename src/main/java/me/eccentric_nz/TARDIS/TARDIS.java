@@ -218,7 +218,7 @@ public class TARDIS extends JavaPlugin {
         plugin = this;
         console = getServer().getConsoleSender();
         Version bukkitversion = getServerVersion(getServer().getVersion());
-        Version minversion = new Version("1.11.2");
+        Version minversion = new Version("1.12");
         // check CraftBukkit version
         if (bukkitversion.compareTo(minversion) >= 0) {
             // check for WorldBorder class
@@ -406,7 +406,12 @@ public class TARDIS extends JavaPlugin {
         String v;
         if (mat.find()) {
             String[] split = mat.group(1).split(" ");
-            v = split[1];
+            String[] tmp = split[1].split("-");
+            if (tmp.length > 1) {
+                v = tmp[0];
+            } else {
+                v = split[1];
+            }
         } else {
             v = "1.7.10";
         }

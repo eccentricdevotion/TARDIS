@@ -59,10 +59,7 @@ import org.bukkit.inventory.meta.LeatherArmorMeta;
 public class TARDISCraftListener implements Listener {
 
     private final TARDIS plugin;
-//    private final List<Integer> c = new ArrayList<Integer>();
-//    private final List<Material> l = new ArrayList<Material>();
     private final HashMap<Material, String> t = new HashMap<Material, String>();
-//    private final List<Material> hasColour = new ArrayList<Material>();
     private final TARDISWallsLookup twl;
     private final List<UUID> crafters = new ArrayList<UUID>();
     private final List<Integer> spaces = Arrays.asList(1, 4, 7, 6, 9);

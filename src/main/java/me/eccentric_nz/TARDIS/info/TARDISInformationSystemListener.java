@@ -22,7 +22,6 @@ import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.utility.TARDISMessage;
 import org.bukkit.configuration.file.FileConfiguration;
-import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -42,7 +41,7 @@ public class TARDISInformationSystemListener implements Listener {
 
     public TARDISInformationSystemListener(TARDIS plugin) {
         this.plugin = plugin;
-        this.pluginYml = YamlConfiguration.loadConfiguration(this.plugin.getPM().getPlugin("TARDIS").getResource("plugin.yml"));
+        this.pluginYml = this.plugin.getPM().getPlugin("TARDIS").getConfig();
     }
 
     /**

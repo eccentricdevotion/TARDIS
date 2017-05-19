@@ -7,16 +7,13 @@ import com.google.common.collect.Lists;
 import com.google.common.collect.MapMaker;
 import com.google.common.io.Closeables;
 import com.google.common.io.Files;
-import com.google.common.io.OutputSupplier;
 import com.google.common.primitives.Primitives;
 import java.io.BufferedInputStream;
 import java.io.DataInput;
 import java.io.DataInputStream;
 import java.io.DataOutput;
-import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.OutputStream;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
@@ -31,7 +28,6 @@ import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.ConcurrentMap;
 import java.util.zip.GZIPInputStream;
-import java.util.zip.GZIPOutputStream;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.Server;
@@ -48,12 +44,6 @@ public class TARDISNbtFactory {
      *
      * @author Kristian
      */
-    public enum StreamOptions {
-
-        NO_COMPRESSION,
-        GZIP_COMPRESSION,
-    }
-
     private enum NbtType {
 
         TAG_END(0, Void.class),
@@ -227,7 +217,7 @@ public class TARDISNbtFactory {
          * Retrieve the value of a given entry in the tree.
          * <p>
          * Every element of the path (except the end) are assumed to be
-         * compounds. The retrieval operation will be cancelled if any of them
+         * compounds. The retrieval operation will be canceled if any of them
          * are missing.
          *
          * @param <T>
@@ -243,20 +233,6 @@ public class TARDISNbtFactory {
                 return (T) map.get(entries.get(entries.size() - 1));
             }
             return null;
-        }
-
-        /**
-         * Save the content of a NBT compound to a stream.
-         * <p>
-         * Use {@link Files#newOutputStreamSupplier(java.io.File)} to provide a
-         * stream supplier to a file.
-         *
-         * @param stream - the output stream.
-         * @param option - whether or not to compress the output.
-         * @throws IOException If anything went wrong.
-         */
-        public void saveTo(OutputSupplier<? extends OutputStream> stream, StreamOptions option) throws IOException {
-            saveStream(this, stream, option);
         }
 
         /**
@@ -487,43 +463,9 @@ public class TARDISNbtFactory {
     }
 
     /**
-     * Save the content of a NBT compound to a stream.
-     * <p>
-     * Use {@link Files#newOutputStreamSupplier(java.io.File)} to provide a
-     * stream supplier to a file.
-     *
-     * @param source - the NBT compound to save.
-     * @param stream - the stream.
-     * @param option - whether or not to compress the output.
-     * @throws IOException If anything went wrong.
-     */
-    public static void saveStream(NbtCompound source, OutputSupplier<? extends OutputStream> stream, StreamOptions option) throws IOException {
-        OutputStream output = null;
-        DataOutputStream data = null;
-        boolean suppress = true;
-
-        try {
-            output = stream.getOutput();
-            data = new DataOutputStream(
-                    option == StreamOptions.GZIP_COMPRESSION ? new GZIPOutputStream(output) : output
-            );
-
-            invokeMethod(get().SAVE_COMPOUND, null, source.getHandle(), data);
-            suppress = false;
-
-        } finally {
-            if (data != null) {
-                Closeables.close(data, suppress);
-            } else if (output != null) {
-                Closeables.close(output, suppress);
-            }
-        }
-    }
-
-    /**
      * Construct a new NBT wrapper from a compound.
      *
-     * @param nmsCompound - the NBT compund.
+     * @param nmsCompound - the NBT compound.
      * @return The wrapper.
      */
     public static NbtCompound fromCompound(Object nmsCompound) {
@@ -550,7 +492,7 @@ public class TARDISNbtFactory {
 
     /**
      * Construct a wrapper for an NBT tag stored (in memory) in an item stack.
-     * This is where auxillary data such as enchanting, name and lore is stored.
+     * This is where auxiliary data such as enchanting, name and lore is stored.
      * It does not include items material, damage value or count.
      * <p>
      * The item stack must be a wrapper for a CraftItemStack.
@@ -791,7 +733,7 @@ public class TARDISNbtFactory {
     }
 
     /**
-     * Search for the first publically and privately defined field of the given
+     * Search for the first publicly and privately defined field of the given
      * name.
      *
      * @param instance - an instance of the class with the field.
