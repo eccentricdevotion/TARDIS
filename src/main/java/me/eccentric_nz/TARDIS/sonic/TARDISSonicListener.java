@@ -526,13 +526,6 @@ public class TARDISSonicListener implements Listener {
                             TARDISMessage.send(player, "UPDATE_IN_WORLD");
                             return;
                         }
-//                        // check the block is not protected by WorldGuard
-//                        if (plugin.isWorldGuardOnServer()) {
-//                            if (!plugin.getWorldGuardUtils().canBreakBlock(player, b)) {
-//                                TARDISMessage.send(player, "SONIC_PROTECT");
-//                                return;
-//                            }
-//                        }
                         // not protected blocks - WorldGuard / GriefPrevention / Lockette / LWC / Towny
                         if (checkBlockRespect(player, b)) {
                             TARDISMessage.send(player, "SONIC_PROTECT");

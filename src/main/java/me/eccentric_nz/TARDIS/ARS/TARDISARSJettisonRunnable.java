@@ -112,7 +112,9 @@ public class TARDISARSJettisonRunnable implements Runnable {
                 where.put("tardis_id", id);
                 qf.doUpdate("tardis", setd, where);
                 // remove WorldGuard protection
-                plugin.getWorldGuardUtils().removeRoomRegion(w, p.getName(), "renderer");
+                if (plugin.isWorldGuardOnServer() && plugin.getConfig().getBoolean("preferences.use_worldguard")) {
+                    plugin.getWorldGuardUtils().removeRoomRegion(w, p.getName(), "renderer");
+                }
             }
             // remove mob farming locations
             if (r.equals("FARM") || r.equals("HUTCH") || r.equals("IGLOO") || r.equals("RAIL") || r.equals("STABLE") || r.equals("STALL") || r.equals("VILLAGE")) {
