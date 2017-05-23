@@ -7,7 +7,13 @@
 4. Add original old consoles to desktop themes
 
 ##Next minor version `3.8-beta-1`
-?
+1. Update for Spigot 1.12
+2. Add terracotta chameleon presets
+3. Add BIRDCAGE room
+4. Add farming of Parrots (into BIRDCAGE) - use `Sittable` class? (for cats and dogs too)
+5. Add new blocks _done_
+6. Add "TARDIS" namespace key to recipes?
+7. 
 
 ##Future version `?+`
 * TARDIS Junk Mode - `/tprefs junk [wall|floor] [block_type]`?

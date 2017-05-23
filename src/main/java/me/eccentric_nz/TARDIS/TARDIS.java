@@ -179,8 +179,8 @@ public class TARDIS extends JavaPlugin {
     private final TARDISChatGUIJSON jsonKeeper = new TARDISChatGUIJSON();
     private TARDISHelper tardisHelper = null;
     private TARDISMultiverseHelper mvHelper = null;
-    private final List<String> cleanUpWorlds = new ArrayList<String>();
-    private final HashMap<String, String> versions = new HashMap<String, String>();
+    private final List<String> cleanUpWorlds = new ArrayList<>();
+    private final HashMap<String, String> versions = new HashMap<>();
     private String prefix;
     private DIFFICULTY difficulty;
     private BukkitTask recordingTask;
@@ -577,7 +577,7 @@ public class TARDIS extends JavaPlugin {
     }
 
     /**
-     * Loads the chamelon_guis file.
+     * Loads the Chameleon GUIs file.
      */
     private void loadChameleonGUIs() {
         // check file exists
@@ -806,7 +806,7 @@ public class TARDIS extends JavaPlugin {
      * @return an ArrayList of quotes
      */
     public ArrayList<String> quotes() {
-        ArrayList<String> quotes = new ArrayList<String>();
+        ArrayList<String> quotes = new ArrayList<>();
         if (quotesfile != null) {
             BufferedReader bufRdr = null;
             try {
@@ -839,7 +839,7 @@ public class TARDIS extends JavaPlugin {
      * room type into a HashMap.
      */
     private HashMap<Material, String> getSeeds() {
-        HashMap<Material, String> map = new HashMap<Material, String>();
+        HashMap<Material, String> map = new HashMap<>();
         Set<String> rooms = getRoomsConfig().getConfigurationSection("rooms").getKeys(false);
         for (String s : rooms) {
             if (!getRoomsConfig().contains("rooms." + s + ".user")) {
@@ -871,9 +871,9 @@ public class TARDIS extends JavaPlugin {
     }
 
     private void cleanUpWorlds() {
-        for (String w : getCleanUpWorlds()) {
+        getCleanUpWorlds().forEach((w) -> {
             new TARDISWorldRemover(plugin).cleanWorld(w);
-        }
+        });
     }
 
     /**
@@ -944,7 +944,7 @@ public class TARDIS extends JavaPlugin {
     private void updateTagStats() {
         String it = getTagConfig().getString("it");
         if (!it.equals("")) {
-            HashMap<String, Object> set = new HashMap<String, Object>();
+            HashMap<String, Object> set = new HashMap<>();
             set.put("player", getTagConfig().getString("it"));
             long time = System.currentTimeMillis() - getTagConfig().getLong("time");
             set.put("time", time);
