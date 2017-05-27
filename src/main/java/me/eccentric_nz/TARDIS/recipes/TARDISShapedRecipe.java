@@ -29,7 +29,6 @@ public class TARDISShapedRecipe {
     private ChatColor sonicDisplay;
     private final HashMap<String, ChatColor> sonic_colour_lookup = new HashMap<>();
     private final HashMap<String, ChatColor> key_colour_lookup = new HashMap<>();
-    private final NamespacedKey key;
 
     public TARDISShapedRecipe(TARDIS plugin) {
         this.plugin = plugin;
@@ -63,7 +62,6 @@ public class TARDISShapedRecipe {
         this.key_colour_lookup.put("sally", ChatColor.DARK_AQUA);
         this.key_colour_lookup.put("perception", ChatColor.BLUE);
         this.key_colour_lookup.put("gold", ChatColor.GOLD);
-        this.key = new NamespacedKey(this.plugin, "TARDIS");
     }
 
     public void addShapedRecipes() {
@@ -110,6 +108,7 @@ public class TARDISShapedRecipe {
             im.setLore(Arrays.asList(plugin.getRecipesConfig().getString("shaped." + s + ".lore").split("~")));
         }
         is.setItemMeta(im);
+        NamespacedKey key = new NamespacedKey(plugin, s.replace(" ", "_"));
         ShapedRecipe r = new ShapedRecipe(key, is);
         // get shape
         String difficulty = (plugin.getDifficulty().equals(DIFFICULTY.MEDIUM)) ? "easy" : plugin.getConfig().getString("preferences.difficulty").toLowerCase(Locale.ENGLISH);

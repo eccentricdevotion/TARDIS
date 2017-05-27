@@ -22,12 +22,10 @@ public class TARDISShapelessRecipe {
 
     private final TARDIS plugin;
     private final HashMap<String, ShapelessRecipe> shapelessRecipes;
-    private final NamespacedKey key;
 
     public TARDISShapelessRecipe(TARDIS plugin) {
         this.plugin = plugin;
         this.shapelessRecipes = new HashMap<>();
-        this.key = new NamespacedKey(this.plugin, "TARDIS");
     }
 
     public void addShapelessRecipes() {
@@ -62,6 +60,7 @@ public class TARDISShapelessRecipe {
             im.setLore(Arrays.asList(plugin.getRecipesConfig().getString("shapeless." + s + ".lore").split("\n")));
         }
         is.setItemMeta(im);
+        NamespacedKey key = new NamespacedKey(plugin, s.replace(" ", "_"));
         ShapelessRecipe r = new ShapelessRecipe(key, is);
         for (String i : ingredients) {
             String[] recipe_idata = i.split(":");
