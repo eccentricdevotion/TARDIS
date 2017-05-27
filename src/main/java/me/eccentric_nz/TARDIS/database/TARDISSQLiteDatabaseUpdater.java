@@ -106,6 +106,7 @@ public class TARDISSQLiteDatabaseUpdater {
         tardisupdates.add("adapti_on INTEGER DEFAULT 0");
         tardisupdates.add("artron_level INTEGER DEFAULT 0");
         tardisupdates.add("beacon TEXT DEFAULT ''");
+        tardisupdates.add("birdcage TEXT DEFAULT ''");
         tardisupdates.add("chameleon_demat TEXT DEFAULT 'FACTORY'");
         tardisupdates.add("chameleon_preset TEXT DEFAULT 'FACTORY'");
         tardisupdates.add("condenser TEXT DEFAULT ''");

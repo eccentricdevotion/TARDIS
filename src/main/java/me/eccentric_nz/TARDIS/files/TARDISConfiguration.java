@@ -50,20 +50,20 @@ public class TARDISConfiguration {
     private FileConfiguration chameleon_config = null;
     private FileConfiguration planets_config = null;
     private File configFile = null;
-    HashMap<String, String> strOptions = new HashMap<String, String>();
-    HashMap<String, Integer> intOptions = new HashMap<String, Integer>();
-    HashMap<String, Boolean> boolOptions = new HashMap<String, Boolean>();
-    HashMap<String, String> roomStrOptions = new HashMap<String, String>();
-    HashMap<String, Integer> roomIntOptions = new HashMap<String, Integer>();
-    HashMap<String, Boolean> roomBoolOptions = new HashMap<String, Boolean>();
-    HashMap<String, Boolean> artronBoolOptions = new HashMap<String, Boolean>();
-    HashMap<String, String> artronStrOptions = new HashMap<String, String>();
-    HashMap<String, Double> artronDoubleOptions = new HashMap<String, Double>();
-    HashMap<String, Integer> artronIntOptions = new HashMap<String, Integer>();
-    HashMap<String, List<String>> signListOptions = new HashMap<String, List<String>>();
-    HashMap<String, String> chameleonOptions = new HashMap<String, String>();
-    HashMap<String, List<String>> chameleonListOptions = new HashMap<String, List<String>>();
-    List<String> removeOptions = new ArrayList<String>();
+    HashMap<String, String> strOptions = new HashMap<>();
+    HashMap<String, Integer> intOptions = new HashMap<>();
+    HashMap<String, Boolean> boolOptions = new HashMap<>();
+    HashMap<String, String> roomStrOptions = new HashMap<>();
+    HashMap<String, Integer> roomIntOptions = new HashMap<>();
+    HashMap<String, Boolean> roomBoolOptions = new HashMap<>();
+    HashMap<String, Boolean> artronBoolOptions = new HashMap<>();
+    HashMap<String, String> artronStrOptions = new HashMap<>();
+    HashMap<String, Double> artronDoubleOptions = new HashMap<>();
+    HashMap<String, Integer> artronIntOptions = new HashMap<>();
+    HashMap<String, List<String>> signListOptions = new HashMap<>();
+    HashMap<String, String> chameleonOptions = new HashMap<>();
+    HashMap<String, List<String>> chameleonListOptions = new HashMap<>();
+    List<String> removeOptions = new ArrayList<>();
 
     public TARDISConfiguration(TARDIS plugin) {
         this.plugin = plugin;
@@ -164,6 +164,8 @@ public class TARDISConfiguration {
         roomBoolOptions.put("rooms.BAKER.user", false);
         roomBoolOptions.put("rooms.BEDROOM.enabled", true);
         roomBoolOptions.put("rooms.BEDROOM.user", false);
+        roomBoolOptions.put("rooms.BIRDCAGE.enabled", true);
+        roomBoolOptions.put("rooms.BIRDCAGE.user", false);
         roomBoolOptions.put("rooms.EMPTY.enabled", true);
         roomBoolOptions.put("rooms.EMPTY.user", false);
         roomBoolOptions.put("rooms.FARM.enabled", true);
@@ -329,6 +331,8 @@ public class TARDISConfiguration {
         roomIntOptions.put("rooms.BAKER.offset", -4);
         roomIntOptions.put("rooms.BEDROOM.cost", 475);
         roomIntOptions.put("rooms.BEDROOM.offset", -4);
+        roomIntOptions.put("rooms.BIRDCAGE.cost", 350);
+        roomIntOptions.put("rooms.BIRDCAGE.offset", -4);
         roomIntOptions.put("rooms.EMPTY.cost", 250);
         roomIntOptions.put("rooms.EMPTY.offset", -4);
         roomIntOptions.put("rooms.FARM.cost", 350);
@@ -426,6 +430,7 @@ public class TARDISConfiguration {
         roomStrOptions.put("rooms.SMELTER.seed", "CHEST");
         roomStrOptions.put("rooms.STABLE.seed", "HAY_BLOCK");
         roomStrOptions.put("rooms.STALL.seed", "NETHER_WART_BLOCK");
+        roomStrOptions.put("rooms.BIRDCAGE.seed", "YELLOW_GLAZED_TERRACOTTA");
         roomStrOptions.put("rooms.TRENZALORE.seed", "BRICK");
         roomStrOptions.put("rooms.VAULT.seed", "DISPENSER");
         roomStrOptions.put("rooms.VILLAGE.seed", "LOG");

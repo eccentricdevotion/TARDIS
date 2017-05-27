@@ -18,6 +18,12 @@ rooms:
     offset: -4
     seed: GLOWSTONE
     user: false
+  BIRDCAGE:
+    enabled: true
+    cost: 350
+    offset: -4
+    seed: YELLOW_GLAZED_TERRACOTTA
+    user: false
   KITCHEN:
     enabled: true
     cost: 450

@@ -62,12 +62,13 @@ public class Tardis {
     private final String hutch;
     private final String igloo;
     private final String stall;
+    private final String birdcage;
     private final boolean powered_on;
     private final boolean lights_on;
     private final boolean siege_on;
     private final int monsters;
 
-    public Tardis(int tardis_id, UUID uuid, String owner, String lastKnownName, String chunk, int tips, SCHEMATIC schematic, boolean abandoned, String companions, String save_sign, String chameleon, PRESET preset, PRESET demat, int adapt, int artron_level, String creeper, String condenser, String beacon, boolean handbrake_on, boolean tardis_init, boolean recharging, String scanner, String farm, String stable, boolean hidden, long lastuse, boolean iso_on, String eps, String rail, String village, String renderer, String zero, String hutch, String igloo, String stall, boolean powered_on, boolean lights_on, boolean siege_on, int monsters) {
+    public Tardis(int tardis_id, UUID uuid, String owner, String lastKnownName, String chunk, int tips, SCHEMATIC schematic, boolean abandoned, String companions, String save_sign, String chameleon, PRESET preset, PRESET demat, int adapt, int artron_level, String creeper, String condenser, String beacon, boolean handbrake_on, boolean tardis_init, boolean recharging, String scanner, String farm, String stable, boolean hidden, long lastuse, boolean iso_on, String eps, String rail, String village, String renderer, String zero, String hutch, String igloo, String stall, String birdcage, boolean powered_on, boolean lights_on, boolean siege_on, int monsters) {
         this.tardis_id = tardis_id;
         this.uuid = uuid;
         this.owner = owner;
@@ -103,6 +104,7 @@ public class Tardis {
         this.hutch = hutch;
         this.igloo = igloo;
         this.stall = stall;
+        this.birdcage = birdcage;
         this.powered_on = powered_on;
         this.lights_on = lights_on;
         this.siege_on = siege_on;
@@ -455,6 +457,17 @@ public class Tardis {
      */
     public String getStall() {
         return stall;
+    }
+
+    /**
+     * Returns a String representation of the Birdcage room parrot spawn
+     * location in this TARDIS. It is in the form of {@code World name:x:y:z}
+     *
+     * @return the Birdcage room parrot spawn location string, or an empty
+     * string if the room does not exist
+     */
+    public String getBirdcage() {
+        return birdcage;
     }
 
     /**

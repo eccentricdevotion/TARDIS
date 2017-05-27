@@ -65,26 +65,26 @@ public class TARDISRoomRunnable implements Runnable {
     private boolean running;
     Player p;
     World world;
-    List<Chunk> chunkList = new ArrayList<Chunk>();
-    List<Block> iceblocks = new ArrayList<Block>();
-    List<Block> lampblocks = new ArrayList<Block>();
-    List<Block> caneblocks = new ArrayList<Block>();
-    List<Block> melonblocks = new ArrayList<Block>();
-    List<Block> potatoblocks = new ArrayList<Block>();
-    List<Block> carrotblocks = new ArrayList<Block>();
-    List<Block> pumpkinblocks = new ArrayList<Block>();
-    List<Block> wheatblocks = new ArrayList<Block>();
-    List<Material> notThese = new ArrayList<Material>();
-    HashMap<Block, Byte> cocoablocks = new HashMap<Block, Byte>();
-    HashMap<Block, Byte> doorblocks = new HashMap<Block, Byte>();
-    HashMap<Block, Byte> leverblocks = new HashMap<Block, Byte>();
-    HashMap<Block, Byte> torchblocks = new HashMap<Block, Byte>();
-    HashMap<Block, Byte> redstoneTorchblocks = new HashMap<Block, Byte>();
-    HashMap<Block, Byte> mushroomblocks = new HashMap<Block, Byte>();
-    HashMap<Block, JSONObject> standingBanners = new HashMap<Block, JSONObject>();
-    HashMap<Block, JSONObject> wallBanners = new HashMap<Block, JSONObject>();
+    List<Chunk> chunkList = new ArrayList<>();
+    List<Block> iceblocks = new ArrayList<>();
+    List<Block> lampblocks = new ArrayList<>();
+    List<Block> caneblocks = new ArrayList<>();
+    List<Block> melonblocks = new ArrayList<>();
+    List<Block> potatoblocks = new ArrayList<>();
+    List<Block> carrotblocks = new ArrayList<>();
+    List<Block> pumpkinblocks = new ArrayList<>();
+    List<Block> wheatblocks = new ArrayList<>();
+    List<Material> notThese = new ArrayList<>();
+    HashMap<Block, Byte> cocoablocks = new HashMap<>();
+    HashMap<Block, Byte> doorblocks = new HashMap<>();
+    HashMap<Block, Byte> leverblocks = new HashMap<>();
+    HashMap<Block, Byte> torchblocks = new HashMap<>();
+    HashMap<Block, Byte> redstoneTorchblocks = new HashMap<>();
+    HashMap<Block, Byte> mushroomblocks = new HashMap<>();
+    HashMap<Block, JSONObject> standingBanners = new HashMap<>();
+    HashMap<Block, JSONObject> wallBanners = new HashMap<>();
     byte[] repeaterData = new byte[6];
-    HashMap<Integer, Integer> repeaterOrder = new HashMap<Integer, Integer>();
+    HashMap<Integer, Integer> repeaterOrder = new HashMap<>();
     JSONArray arr;
 
     public TARDISRoomRunnable(TARDIS plugin, TARDISRoomData roomData, Player p) {
@@ -158,9 +158,9 @@ public class TARDISRoomRunnable implements Runnable {
             if (iceblocks.size() > 0) {
                 TARDISMessage.send(p, "ICE");
                 // set all the ice to water
-                for (Block ice : iceblocks) {
+                iceblocks.forEach((ice) -> {
                     ice.setType(Material.STATIONARY_WATER);
-                }
+                });
                 iceblocks.clear();
             }
             if (room.equals("BAKER") || room.equals("WOOD")) {
@@ -173,9 +173,9 @@ public class TARDISRoomRunnable implements Runnable {
             }
             if (room.equals("ARBORETUM") || room.equals("GREENHOUSE")) {
                 // plant the sugar cane
-                for (Block cane : caneblocks) {
+                caneblocks.forEach((cane) -> {
                     cane.setType(Material.SUGAR_CANE_BLOCK);
-                }
+                });
                 caneblocks.clear();
                 // attach the cocoa
                 for (Map.Entry<Block, Byte> entry : cocoablocks.entrySet()) {
@@ -184,34 +184,31 @@ public class TARDISRoomRunnable implements Runnable {
                 }
                 cocoablocks.clear();
                 // plant the melon
-                for (Block melon : melonblocks) {
+                melonblocks.forEach((melon) -> {
                     melon.setType(Material.MELON_STEM);
-                }
+                });
                 melonblocks.clear();
                 // plant the pumpkin
-                for (Block pumpkin : pumpkinblocks) {
+                pumpkinblocks.forEach((pumpkin) -> {
                     pumpkin.setType(Material.PUMPKIN_STEM);
-                }
+                });
                 pumpkinblocks.clear();
-                plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
-                    @Override
-                    public void run() {
-                        // plant the wheat
-                        for (Block wheat : wheatblocks) {
-                            wheat.setType(Material.CROPS);
-                        }
-                        wheatblocks.clear();
-                        // plant the carrot
-                        for (Block carrot : carrotblocks) {
-                            carrot.setType(Material.CARROT);
-                        }
-                        carrotblocks.clear();
-                        // plant the potato
-                        for (Block potato : potatoblocks) {
-                            potato.setType(Material.POTATO);
-                        }
-                        potatoblocks.clear();
-                    }
+                plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
+                    // plant the wheat
+                    wheatblocks.forEach((wheat) -> {
+                        wheat.setType(Material.CROPS);
+                    });
+                    wheatblocks.clear();
+                    // plant the carrot
+                    carrotblocks.forEach((carrot) -> {
+                        carrot.setType(Material.CARROT);
+                    });
+                    carrotblocks.clear();
+                    // plant the potato
+                    potatoblocks.forEach((potato) -> {
+                        potato.setType(Material.POTATO);
+                    });
+                    potatoblocks.clear();
                 }, 5L);
             }
             if (room.equals("VILLAGE")) {
@@ -229,19 +226,19 @@ public class TARDISRoomRunnable implements Runnable {
             leverblocks.clear();
             // update lamp block states
             TARDISMessage.send(p, "ROOM_POWER");
-            for (Block lamp : lampblocks) {
+            lampblocks.forEach((lamp) -> {
                 lamp.setType(Material.REDSTONE_LAMP_ON);
-            }
+            });
             lampblocks.clear();
             // put torches on
-            for (Map.Entry<Block, Byte> entry : torchblocks.entrySet()) {
+            torchblocks.entrySet().forEach((entry) -> {
                 entry.getKey().setTypeIdAndData(50, entry.getValue(), true);
-            }
+            });
             torchblocks.clear();
             // put redstone torches on
-            for (Map.Entry<Block, Byte> entry : redstoneTorchblocks.entrySet()) {
+            redstoneTorchblocks.entrySet().forEach((entry) -> {
                 entry.getKey().setTypeIdAndData(76, entry.getValue(), true);
-            }
+            });
             torchblocks.clear();
             // set banners
             setBanners(176, standingBanners);
@@ -317,9 +314,9 @@ public class TARDISRoomRunnable implements Runnable {
             QueryFactory qf = new QueryFactory(plugin);
             // set condenser
             if (type.equals(Material.CHEST) && room.equals("HARMONY")) {
-                HashMap<String, Object> setc = new HashMap<String, Object>();
+                HashMap<String, Object> setc = new HashMap<>();
                 setc.put("condenser", world.getName() + ":" + startx + ":" + starty + ":" + startz);
-                HashMap<String, Object> wherec = new HashMap<String, Object>();
+                HashMap<String, Object> wherec = new HashMap<>();
                 wherec.put("tardis_id", tardis_id);
                 qf.doUpdate("tardis", setc, wherec);
             }
@@ -338,7 +335,7 @@ public class TARDISRoomRunnable implements Runnable {
                 int y = starty - (starty % 16);
                 int z = startz - mz;
                 String pos = new Location(world, startx, starty, startz).toString();
-                HashMap<String, Object> setv = new HashMap<String, Object>();
+                HashMap<String, Object> setv = new HashMap<>();
                 setv.put("tardis_id", tardis_id);
                 setv.put("location", pos);
                 setv.put("x", x);
@@ -348,18 +345,18 @@ public class TARDISRoomRunnable implements Runnable {
             }
             // set farm
             if (type.equals(Material.MOB_SPAWNER) && room.equals("FARM")) {
-                HashMap<String, Object> setf = new HashMap<String, Object>();
+                HashMap<String, Object> setf = new HashMap<>();
                 setf.put("farm", world.getName() + ":" + startx + ":" + starty + ":" + startz);
-                HashMap<String, Object> wheref = new HashMap<String, Object>();
+                HashMap<String, Object> wheref = new HashMap<>();
                 wheref.put("tardis_id", tardis_id);
                 qf.doUpdate("tardis", setf, wheref);
                 // replace with floor material
                 type = (floor_type.equals(Material.WOOL) && floor_data == 8 && plugin.getConfig().getBoolean("creation.use_clay")) ? Material.STAINED_CLAY : floor_type;
                 data = floor_data;
                 // update player prefs - turn on mob farming
-                HashMap<String, Object> setpp = new HashMap<String, Object>();
+                HashMap<String, Object> setpp = new HashMap<>();
                 setpp.put("farm_on", 1);
-                HashMap<String, Object> wherepp = new HashMap<String, Object>();
+                HashMap<String, Object> wherepp = new HashMap<>();
                 wherepp.put("uuid", p.getUniqueId().toString());
                 qf.doUpdate("player_prefs", setpp, wherepp);
                 TARDISMessage.send(p, "PREF_WAS_ON", "Mob farming");
@@ -370,10 +367,10 @@ public class TARDISRoomRunnable implements Runnable {
                 qf.insertControl(tardis_id, 19, plate, 0);
             }
             // set stable
-            if (type.equals(Material.SOUL_SAND) && (room.equals("STABLE") || room.equals("VILLAGE") || room.equals("RENDERER") || room.equals("ZERO") || room.equals("HUTCH") || room.equals("IGLOO") || room.equals("STALL"))) {
-                HashMap<String, Object> sets = new HashMap<String, Object>();
+            if (type.equals(Material.SOUL_SAND) && (room.equals("STABLE") || room.equals("VILLAGE") || room.equals("RENDERER") || room.equals("ZERO") || room.equals("HUTCH") || room.equals("IGLOO") || room.equals("STALL") || room.equals("BIRDCAGE"))) {
+                HashMap<String, Object> sets = new HashMap<>();
                 sets.put(room.toLowerCase(Locale.ENGLISH), world.getName() + ":" + startx + ":" + starty + ":" + startz);
-                HashMap<String, Object> wheres = new HashMap<String, Object>();
+                HashMap<String, Object> wheres = new HashMap<>();
                 wheres.put("tardis_id", tardis_id);
                 qf.doUpdate("tardis", sets, wheres);
                 // replace with correct block
@@ -387,6 +384,10 @@ public class TARDISRoomRunnable implements Runnable {
                     case STALL:
                         type = Material.GRASS;
                         data = 0;
+                        break;
+                    case BIRDCAGE:
+                        type = Material.DIRT;
+                        data = 2;
                         break;
                     case IGLOO:
                         type = Material.PACKED_ICE;
@@ -410,7 +411,7 @@ public class TARDISRoomRunnable implements Runnable {
             }
             if (type.equals(Material.SOUL_SAND) && room.equals("SMELTER")) {
                 String pos = new Location(world, startx, starty, startz).toString();
-                HashMap<String, Object> setsm = new HashMap<String, Object>();
+                HashMap<String, Object> setsm = new HashMap<>();
                 setsm.put("tardis_id", tardis_id);
                 setsm.put("location", pos);
                 qf.doInsert("vaults", setsm);
@@ -500,9 +501,9 @@ public class TARDISRoomRunnable implements Runnable {
             if (room.equals("RAIL") && type.equals(Material.FENCE)) {
                 // remember fence location so we can teleport the storage minecart
                 String loc = world.getName() + ":" + startx + ":" + starty + ":" + startz;
-                HashMap<String, Object> set = new HashMap<String, Object>();
+                HashMap<String, Object> set = new HashMap<>();
                 set.put("rail", loc);
-                HashMap<String, Object> where = new HashMap<String, Object>();
+                HashMap<String, Object> where = new HashMap<>();
                 where.put("tardis_id", tardis_id);
                 qf.doUpdate("tardis", set, where);
             }
@@ -592,7 +593,7 @@ public class TARDISRoomRunnable implements Runnable {
                 if (type.equals(Material.WOOL) && data == 6) {
                     // pink wool - gravity well down
                     loc = new Location(world, startx, starty, startz).toString();
-                    HashMap<String, Object> setd = new HashMap<String, Object>();
+                    HashMap<String, Object> setd = new HashMap<>();
                     setd.put("tardis_id", tardis_id);
                     setd.put("location", loc);
                     setd.put("direction", 0);
@@ -604,7 +605,7 @@ public class TARDISRoomRunnable implements Runnable {
                 if (type.equals(Material.WOOL) && data == 5) {
                     // light green wool - gravity well up
                     loc = new Location(world, startx, starty, startz).toString();
-                    HashMap<String, Object> setu = new HashMap<String, Object>();
+                    HashMap<String, Object> setu = new HashMap<>();
                     setu.put("tardis_id", tardis_id);
                     setu.put("location", loc);
                     setu.put("direction", 1);

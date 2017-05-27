@@ -66,7 +66,7 @@ public class TARDISARSJettisonRunnable implements Runnable {
                         byte d = b.getData();
                         if ((d == (byte) 5 || d == (byte) 6) && b.getType().equals(Material.WOOL)) {
                             String l = new Location(w, xx, yy, zz).toString();
-                            HashMap<String, Object> where = new HashMap<String, Object>();
+                            HashMap<String, Object> where = new HashMap<>();
                             where.put("location", l);
                             where.put("tardis_id", id);
                             qf.doDelete("gravity_well", where);
@@ -89,7 +89,7 @@ public class TARDISARSJettisonRunnable implements Runnable {
                 // halve it because they have to jettison top and bottom
                 amount /= 2;
             }
-            HashMap<String, Object> set = new HashMap<String, Object>();
+            HashMap<String, Object> set = new HashMap<>();
             set.put("tardis_id", id);
             qf.alterEnergyLevel("tardis", amount, set, null);
             if (p.isOnline()) {
@@ -99,16 +99,16 @@ public class TARDISARSJettisonRunnable implements Runnable {
             if (r.equals("BAKER") || r.equals("WOOD")) {
                 // get tardis_id
                 int secondary = (r.equals("BAKER")) ? 1 : 2;
-                HashMap<String, Object> del = new HashMap<String, Object>();
+                HashMap<String, Object> del = new HashMap<>();
                 del.put("tardis_id", id);
                 del.put("secondary", secondary);
                 qf.doDelete("controls", del);
             }
             if (r.equals("RENDERER")) {
                 // remove stored location from the database
-                HashMap<String, Object> setd = new HashMap<String, Object>();
+                HashMap<String, Object> setd = new HashMap<>();
                 setd.put("renderer", "");
-                HashMap<String, Object> where = new HashMap<String, Object>();
+                HashMap<String, Object> where = new HashMap<>();
                 where.put("tardis_id", id);
                 qf.doUpdate("tardis", setd, where);
                 // remove WorldGuard protection
@@ -117,10 +117,10 @@ public class TARDISARSJettisonRunnable implements Runnable {
                 }
             }
             // remove mob farming locations
-            if (r.equals("FARM") || r.equals("HUTCH") || r.equals("IGLOO") || r.equals("RAIL") || r.equals("STABLE") || r.equals("STALL") || r.equals("VILLAGE")) {
-                HashMap<String, Object> wheref = new HashMap<String, Object>();
+            if (r.equals("FARM") || r.equals("HUTCH") || r.equals("IGLOO") || r.equals("RAIL") || r.equals("STABLE") || r.equals("STALL") || r.equals("VILLAGE") || r.equals("BIRDCAGE")) {
+                HashMap<String, Object> wheref = new HashMap<>();
                 wheref.put("tardis_id", id);
-                HashMap<String, Object> setf = new HashMap<String, Object>();
+                HashMap<String, Object> setf = new HashMap<>();
                 setf.put(r.toLowerCase(Locale.ENGLISH), "");
                 qf.doUpdate("tardis", setf, wheref);
             }

@@ -29,6 +29,7 @@ public enum TARDISARS implements ARS {
     ARBORETUM(18, "ARBORETUM", "Arboretum", 1),
     BAKER(121, "BAKER", "4th Doctor's Secondary Console", 1),
     BEDROOM(89, "BEDROOM", "Bedroom", 1),
+    BIRDCAGE(239, "BIRDCAGE", "Bird Cage", 1),
     EMPTY(20, "EMPTY", "Empty", 1),
     FARM(3, "FARM", "Mob Farm", 1),
     GRAVITY(48, "GRAVITY", "Gravity Well", 1),

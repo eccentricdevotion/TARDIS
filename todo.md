@@ -2,25 +2,24 @@
 
 ##Current bugfix version `3.7.1`
 1. Fix bugs!
-2. Add other worlds (Silurian cave world, Gallifrey)?
-3. Fix Biome adaptive presets dropping flowers & seeds (properly)
-4. Add original old consoles to desktop themes
 
 ##Next minor version `3.8-beta-1`
-1. Update for Spigot 1.12
+1. Update for Spigot 1.12 - _pretty much done_
 2. Add terracotta chameleon presets
-3. Add BIRDCAGE room
-4. Add farming of Parrots (into BIRDCAGE) - use `Sittable` class? (for cats and dogs too)
-5. Add new blocks _done_
-6. Add "TARDIS" namespace key to recipes?
-7. 
+3. Add farming of Parrots (into BIRDCAGE) - use `Sittable` class? (for cats and dogs too)
+4. Add new 1.12 blocks - _check desktop theme GUI_
+5. Add `TARDIS` namespace key to recipes?
+6. Add other worlds (Silurian cave world, Gallifrey)?
+7. Fix Biome adaptive presets dropping flowers & seeds (properly)
+8. Add original old consoles to desktop themes
+9. Add config option to use Concrete blocks for interior walls
 
 ##Future version `?+`
 * TARDIS Junk Mode - `/tprefs junk [wall|floor] [block_type]`?
-* TARDISSonicBlaster addon?
-* SpongeAPI
-* Forge mod for custom items and blocks (to tie in with Sponge version)
-* Slimmer TARDIS option?
+* TARDISSonicBlaster addon? - _unlikely_
+* SpongeAPI - _unlikely_
+* Forge mod for custom items and blocks (to tie in with Sponge version) - _unlikely_
+* Slimmer TARDIS option? - _unlikely_
 * Add more API Events that other plugins can listen for?
    * Sonic Screwdriver events
    * Artron Energy event
